@@ -1,11 +1,11 @@
 # Progression Gates (Canonical)
 
 <!--
-PUPPET MASTER — PROGRESSION / VERIFICATION GATES
+PUPPET MASTER -- PROGRESSION / VERIFICATION GATES
 
 ABSOLUTE NAMING RULE:
-- Platform name is “Puppet Master” only.
-- If older naming exists, refer to it only as “legacy naming” (do not quote it).
+- Platform name is "Puppet Master" only.
+- If older naming exists, refer to it only as "legacy naming" (do not quote it).
 -->
 
 ## 0. Scope
@@ -16,7 +16,7 @@ ContractRef: Primitive:Gate
 ---
 
 <a id="GATE-003"></a>
-## GATE-003 — Architecture invariants
+## GATE-003 -- Architecture invariants
 **Pass condition:** All referenced invariants hold for the change under test.
 
 Minimum checks:
@@ -32,7 +32,7 @@ ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invari
 ---
 
 <a id="GATE-009"></a>
-## GATE-009 — ContractRef coverage
+## GATE-009 -- ContractRef coverage
 **Pass condition:** Every operational requirement line contains at least one `ContractRef:`.
 
 Deterministic detection:

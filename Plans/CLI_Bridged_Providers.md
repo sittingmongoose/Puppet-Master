@@ -66,13 +66,13 @@ The Provider facade MUST be expressible as a single logical interface, regardles
 - Callers MUST NOT branch on transport type (stream-json vs ACP). They only consume the normalized provider stream.
 
 ### Deterministic defaults (autonomous)
-To keep the system autonomous and avoid “ask humans later” drift, Puppet Master MUST adopt the following defaults whenever a caller does not specify a stricter option:
+To keep the system autonomous and avoid "ask humans later" drift, Puppet Master MUST adopt the following defaults whenever a caller does not specify a stricter option:
 
 1. **Cursor supports two transports under one facade:** `stream_json` and `acp`.
 2. **Claude Code transport:** `stream_json`.
 3. **Headless approval fallback:** If tool policy resolution is `ask` but HITL is not active, treat it as `deny` and emit a `tool.denied` event (SSOT: `Plans/Tools.md` §8.2; HITL boundaries: `Plans/human-in-the-loop.md`).
 4. **Cursor incremental output:** If the caller requests incremental text (streaming UI/consumer), enable Cursor partial streaming as implemented in the Cursor runner baseline.
-5. **Large prompt handling:** Preserve “stdin for large prompt” behavior as implemented in the Cursor runner baseline.
+5. **Large prompt handling:** Preserve "stdin for large prompt" behavior as implemented in the Cursor runner baseline.
 
 ---
 
@@ -140,7 +140,7 @@ Rules:
 | type | Purpose | Required payload fields |
 |---|---|---|
 | `text_delta` | Incremental assistant output | `text` |
-| `thinking_delta` | Incremental “thinking/reasoning” output (if provider exposes it) | `text` |
+| `thinking_delta` | Incremental "thinking/reasoning" output (if provider exposes it) | `text` |
 | `tool_use` | Tool invocation start | `tool_use_id`, `tool_name`, `arguments` (JSON value), optional `invocation_summary` |
 | `tool_result` | Tool invocation end/result | `tool_use_id`, `tool_name`, `ok` (bool), `result` (JSON value or string), optional `error` |
 | `usage` | Usage updates | provider-specific usage fields (at least `input_tokens`, `output_tokens` when available) |
@@ -164,7 +164,7 @@ Rules:
 - Malformed/partial lines MUST NOT crash the run; surface as `diagnostic` events and continue when safe.
 - Output buffering MUST be bounded (see `Plans/newfeatures.md`):
   - Cap max line length.
-  - Cap total buffered bytes for “unparsed remainder”.
+  - Cap total buffered bytes for "unparsed remainder".
   - Use a ring buffer for stderr diagnostics.
 
 ### stream-json ingestion (Cursor + Claude Code)
@@ -198,14 +198,14 @@ Consumers MUST NOT branch on transport type.
 
 ### stream-json transport requirements
 **CLI resolution**
-- Use the Cursor runner’s CLI resolution behavior (SSOT: `platform_specs.rs`).
+- Use the Cursor runner's CLI resolution behavior (SSOT: `platform_specs.rs`).
 
 **Invocation shape (normative)**
 - Output format MUST be `stream-json` for event-stream consumers.
 - When incremental text is required, enable Cursor partial streaming as implemented in the Cursor runner baseline.
 
 **Large prompt handling**
-- Preserve the existing “stdin for large prompt” behavior signaled in the Cursor runner baseline.
+- Preserve the existing "stdin for large prompt" behavior signaled in the Cursor runner baseline.
 
 **Correlation**
 - If Cursor-native correlation IDs are available, attach them to `provider_native_ids` and copy into emitted diagnostics (do not invent new normalized fields).
@@ -232,7 +232,7 @@ Claude Code MUST support:
 
 ### stream-json transport requirements
 **CLI resolution**
-- Use the Claude Code runner’s CLI resolution behavior (SSOT: `platform_specs.rs`).
+- Use the Claude Code runner's CLI resolution behavior (SSOT: `platform_specs.rs`).
 
 **Invocation shape (normative)**
 - Baseline flags MUST preserve the semantics in the Claude Code runner baseline:
@@ -322,7 +322,7 @@ Providers MUST use a layered approach:
    - Use the existing error categorization baseline over stderr + emitted error payloads to classify rate limit vs auth vs outage.
 
 3. **Exit-code + known CLI UX strings**
-   - If the CLI exits non-zero and output contains known “login required” signals, treat as `logged_out`.
+   - If the CLI exits non-zero and output contains known "login required" signals, treat as `logged_out`.
    - If output indicates token expired / refresh needed, treat as `expired_or_invalid`.
 
 ### Transition rules (minimum)

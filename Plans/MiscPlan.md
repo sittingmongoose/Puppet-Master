@@ -1,8 +1,8 @@
-# Misc Plan — Agent Artifacts, Cleanup & Related Improvements
+# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements
 
 ## Plan Document Status
 
-**This is a PLAN DOCUMENT ONLY** — No code changes have been made. This document covers:
+**This is a PLAN DOCUMENT ONLY** -- No code changes have been made. This document covers:
 
 - Agent-left-behind artifacts (docs, tests, builds) and cleanup policy
 - Runner contract implementation (prepare_working_directory, cleanup_after_execution)
@@ -13,7 +13,7 @@ Implement sections in dependency order. The **DRY Method** (AGENTS.md) applies: 
 
 ## Rewrite alignment (2026-02-21)
 
-This plan’s cleanup/artifact retention requirements remain authoritative, but implementation should align with `Plans/rewrite-tie-in-memo.md`:
+This plan's cleanup/artifact retention requirements remain authoritative, but implementation should align with `Plans/rewrite-tie-in-memo.md`:
 
 - Treat cleanup actions, retained artifacts, and evidence as first-class **artifacts/events** in the unified event model (seglog ledger)
 - Prefer enforcing cleanup boundaries via the **patch/apply/verify/rollback pipeline** (worktree/sandbox lifecycle), not UI-only affordances
@@ -64,7 +64,7 @@ This plan’s cleanup/artifact retention requirements remain authoritative, but 
 
 ### Target-project DRY (interview-seeded)
 
-Puppet Master uses the DRY method in its own codebase (AGENTS.md). **Target projects** (projects created or managed by Puppet Master) can use the same reuse-first approach: the **interview** can seed the target project’s **AGENTS.md** when it generates that file at interview completion. Seeded content includes a **DRY Method** section and a **Technology & version constraints** (or "Stack conventions") section — e.g. "always use React 18", "always use Pydantic v2" — born from the interview (especially Architecture & Technology phase) and optionally from convention templates for well-known stacks. That gives all agents working on the target project (during orchestrator runs or later) clear guidelines: check for existing code and docs before adding new, tag reusable items, and keep a single source of truth for config and specs. **Keep generated AGENTS.md minimal:** it is loaded into agent context; long files consume context and get skimmed, so critical rules get missed. The Interview plan §5.1 specifies: critical-first block at top, size budget (~150–200 lines), linked docs for long reference, and two-tier structure. Implementation belongs in the Interview plan and in `agents_md_generator` (or equivalent); see **Plans/interview-subagent-integration.md** §5.1 (AGENTS.md content: DRY Method and minimality). That subsection also lists **gaps and improvements**: config default for `generate_initial_agents_md`, stack parameterization, preserving the DRY section when agents update AGENTS.md, projects created without the full interview, and overwrite vs. merge if AGENTS.md already exists.
+Puppet Master uses the DRY method in its own codebase (AGENTS.md). **Target projects** (projects created or managed by Puppet Master) can use the same reuse-first approach: the **interview** can seed the target project's **AGENTS.md** when it generates that file at interview completion. Seeded content includes a **DRY Method** section and a **Technology & version constraints** (or "Stack conventions") section -- e.g. "always use React 18", "always use Pydantic v2" -- born from the interview (especially Architecture & Technology phase) and optionally from convention templates for well-known stacks. That gives all agents working on the target project (during orchestrator runs or later) clear guidelines: check for existing code and docs before adding new, tag reusable items, and keep a single source of truth for config and specs. **Keep generated AGENTS.md minimal:** it is loaded into agent context; long files consume context and get skimmed, so critical rules get missed. The Interview plan §5.1 specifies: critical-first block at top, size budget (~150-200 lines), linked docs for long reference, and two-tier structure. Implementation belongs in the Interview plan and in `agents_md_generator` (or equivalent); see **Plans/interview-subagent-integration.md** §5.1 (AGENTS.md content: DRY Method and minimality). That subsection also lists **gaps and improvements**: config default for `generate_initial_agents_md`, stack parameterization, preserving the DRY section when agents update AGENTS.md, projects created without the full interview, and overwrite vs. merge if AGENTS.md already exists.
 
 ---
 
@@ -94,7 +94,7 @@ REQUIREMENTS.md specifies "Clean working directory state (git checkout to last c
 - **Untracked files and directories** under the workspace (or under the worktree when using worktrees), **except** allowlisted paths.
 - **Allowlist (do not remove):**
   - `.puppet-master/`
-  - `.gitignore` (and any path/pattern needed so cleanup never deletes it — see §3.6).
+  - `.gitignore` (and any path/pattern needed so cleanup never deletes it -- see §3.6).
   - Sensitive patterns so we never delete credential or key files (see §3.6).
   - Any path listed in config (e.g. `paths.workspace`, explicit "preserve" list if added).
   - When **Plans/newtools.md** custom headless GUI tool is implemented: `.puppet-master/evidence/gui-automation/` (or equivalent evidence path from that plan) so headless tool evidence is never removed.
@@ -108,9 +108,9 @@ REQUIREMENTS.md specifies "Clean working directory state (git checkout to last c
 
 ### 3.4 Cleanup Mechanisms (Choose One or Combine)
 
-- **Option A — Conservative:** Remove only known temp dirs and known patterns (e.g. `target/` for Rust, a dedicated `.puppet-master/agent-output/`). No broad `git clean`.
-- **Option B — Moderate:** `git clean -fd` (untracked files/dirs) in workspace/worktree, with an exclude list so `.puppet-master/` and allowlisted paths are never touched. Optionally `git clean -fdx` to also remove ignored files (e.g. `target/`), with same excludes.
-- **Option C — Configurable:** Config flag (e.g. `cleanup.untracked: true/false`, `cleanup.ignored: true/false`) driving Option A vs B and whether to remove ignored dirs. Default: conservative.
+- **Option A -- Conservative:** Remove only known temp dirs and known patterns (e.g. `target/` for Rust, a dedicated `.puppet-master/agent-output/`). No broad `git clean`.
+- **Option B -- Moderate:** `git clean -fd` (untracked files/dirs) in workspace/worktree, with an exclude list so `.puppet-master/` and allowlisted paths are never touched. Optionally `git clean -fdx` to also remove ignored files (e.g. `target/`), with same excludes.
+- **Option C -- Configurable:** Config flag (e.g. `cleanup.untracked: true/false`, `cleanup.ignored: true/false`) driving Option A vs B and whether to remove ignored dirs. Default: conservative.
 
 Recommendation: **Option C** so operators can choose safety vs aggressiveness; default to conservative (Option A or B with only untracked, plus explicit exclude list).
 
@@ -121,10 +121,10 @@ The project follows the **DRY Method** (AGENTS.md): reusable code is tagged, and
 - **Single implementation:** All prepare/cleanup logic lives in one module. Runners and call sites **do not** reimplement git clean or allowlist logic; they call into the shared module.
 - **Allowlist as data:** Paths and patterns that must never be removed are defined in **one place** (a const, a fn, or a small data type) and used by every cleanup path. No hardcoded exclude lists at call sites.
 - **Tagging:** Every new public function, type, or data that is reusable gets a DRY comment:
-  - `// DRY:FN:<name>` — Reusable function (e.g. prepare_working_directory, cleanup_after_execution, run_with_cleanup, run_git_clean_with_excludes).
-  - `// DRY:DATA:<name>` — Single source of truth (e.g. cleanup allowlist / exclude patterns).
-  - `// DRY:HELPER:<name>` — Shared utility used by multiple DRY:FNs if needed.
-- **Before adding code:** Check `docs/gui-widget-catalog.md` for any UI; check `src/platforms/platform_specs.rs` for platform data (do not add cleanup-related platform logic there unless it’s platform-specific); grep `DRY:` in `src/git/` and `src/cleanup/` to reuse existing helpers.
+  - `// DRY:FN:<name>` -- Reusable function (e.g. prepare_working_directory, cleanup_after_execution, run_with_cleanup, run_git_clean_with_excludes).
+  - `// DRY:DATA:<name>` -- Single source of truth (e.g. cleanup allowlist / exclude patterns).
+  - `// DRY:HELPER:<name>` -- Shared utility used by multiple DRY:FNs if needed.
+- **Before adding code:** Check `docs/gui-widget-catalog.md` for any UI; check `src/platforms/platform_specs.rs` for platform data (do not add cleanup-related platform logic there unless it's platform-specific); grep `DRY:` in `src/git/` and `src/cleanup/` to reuse existing helpers.
 - **No duplication:** Runners implement the runner contract by **delegating** to the shared cleanup module (e.g. `crate::cleanup::prepare_working_directory(path).await`). The trait can provide default implementations that call the shared module so no runner duplicates logic.
 - **Widget catalog:** If any new UI is added (e.g. "Clean workspace" button, cleanup config toggles), check the widget catalog first and use existing widgets; run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` after changes.
 
@@ -137,7 +137,7 @@ Puppet Master must **respect .gitignore** in all git operations and **never expo
 **Respecting .gitignore**
 
 - **Staging (add):** The codebase uses `git add -A` (e.g. `GitManager::add_all`) for tier commits. That command stages all changes and adds untracked files that are **not** ignored by .gitignore. So by default, ignored files are not staged. **Do not introduce `git add -f` (force-add)** anywhere; force-add would allow staging files that are in .gitignore and could commit secrets.
-- **Cleanup:** The cleanup allowlist and `run_git_clean_with_excludes` must **exclude** `.gitignore` (and optionally other ignore-file names if used) so we never delete the project’s ignore rules. Exclude patterns: see "Sensitive patterns" below.
+- **Cleanup:** The cleanup allowlist and `run_git_clean_with_excludes` must **exclude** `.gitignore` (and optionally other ignore-file names if used) so we never delete the project's ignore rules. Exclude patterns: see "Sensitive patterns" below.
 - **Optional safeguard:** Before committing, optionally check that no staged file matches a "sensitive pattern" (e.g. `.env`, `*.pem`, `*.key`) and abort or warn. This protects against a previously force-added secret or a repo with no .gitignore for that file.
 
 **Sensitive patterns (never remove, never commit, never log)**
@@ -204,14 +204,14 @@ All code paths that invoke `runner.execute()` (or equivalent) should use prepare
 | Call site | Location | Working dir source | Update required |
 |-----------|----------|--------------------|-----------------|
 | **Orchestrator** | `ExecutionEngine::execute_iteration` in `core/execution_engine.rs`; invoked by `orchestrator.rs` (e.g. `execute_iteration(&context)`). | `context.working_dir` (from tier worktree or `config.project.working_directory`). | **Yes.** Call `prepare_working_directory(work_dir)` before building/running the request and `cleanup_after_execution(work_dir)` after `execute` returns (success or failure), for each iteration. This is the main iteration path where cleanup matters most. |
-| **Interview (research)** | `interview/research_engine.rs`: `execute_research_ai_call` builds request and calls `runner.execute(&request)`. | Passed in as `working_dir: &Path`. | **Yes.** Call prepare before and cleanup after the execute so research runs don’t leave cruft in the project directory. |
-| **Start chain** | `start_chain/prd_generator.rs`, `requirements_interviewer.rs`, `architecture_generator.rs`, `multi_pass_generator.rs`: each builds an `ExecutionRequest` with a `working_directory` and calls `runner.execute(&request)`. | Each has its own `working_directory` (e.g. project path). | **Yes.** Use the same prepare/cleanup around each `execute` so PRD/requirements/architecture generation don’t accumulate untracked files. |
-| **Conversation / wizard** | `app.rs`: `execute_ai_turn` builds request with `working_dir = std::env::current_dir()` and calls `runner.execute(&request)`. | `current_dir()` (process CWD, may not be project root). | **Optional but recommended.** If the conversation runs in a known project path, use that for prepare/cleanup; otherwise use `current_dir()` with the same policy, or skip cleanup when not in a “project” context to avoid cleaning the wrong directory. |
+| **Interview (research)** | `interview/research_engine.rs`: `execute_research_ai_call` builds request and calls `runner.execute(&request)`. | Passed in as `working_dir: &Path`. | **Yes.** Call prepare before and cleanup after the execute so research runs don't leave cruft in the project directory. |
+| **Start chain** | `start_chain/prd_generator.rs`, `requirements_interviewer.rs`, `architecture_generator.rs`, `multi_pass_generator.rs`: each builds an `ExecutionRequest` with a `working_directory` and calls `runner.execute(&request)`. | Each has its own `working_directory` (e.g. project path). | **Yes.** Use the same prepare/cleanup around each `execute` so PRD/requirements/architecture generation don't accumulate untracked files. |
+| **Conversation / wizard** | `app.rs`: `execute_ai_turn` builds request with `working_dir = std::env::current_dir()` and calls `runner.execute(&request)`. | `current_dir()` (process CWD, may not be project root). | **Optional but recommended.** If the conversation runs in a known project path, use that for prepare/cleanup; otherwise use `current_dir()` with the same policy, or skip cleanup when not in a "project" context to avoid cleaning the wrong directory. |
 
 **Implementation options**
 
 - **Option A (per call site):** At each call site, call `runner.prepare_working_directory(&request.working_directory).await?` (or equivalent) before `execute`, and `runner.cleanup_after_execution(&request.working_directory).await` after `execute` returns. Ensures every path is explicit but duplicates the prepare/execute/cleanup pattern.
-- **Option B (wrapper):** Introduce a single helper (e.g. `run_with_cleanup(runner, request) -> Result<ExecutionResult>`) that does: prepare(work_dir) → execute(request) → cleanup(work_dir), and use it from the orchestrator, execution_engine, interview, start_chain, and (optionally) execute_ai_turn. All call sites then go through the wrapper and get consistent behavior; config (e.g. “skip cleanup for interview”) can be applied inside the wrapper.
+- **Option B (wrapper):** Introduce a single helper (e.g. `run_with_cleanup(runner, request) -> Result<ExecutionResult>`) that does: prepare(work_dir) → execute(request) → cleanup(work_dir), and use it from the orchestrator, execution_engine, interview, start_chain, and (optionally) execute_ai_turn. All call sites then go through the wrapper and get consistent behavior; config (e.g. "skip cleanup for interview") can be applied inside the wrapper.
 
 **Recommendation:** Use **Option B** so prepare/cleanup semantics live in one place and call sites (orchestrator, interviewer, start chain, conversation) are updated to call the wrapper instead of `runner.execute()` directly. The wrapper can read config to skip prepare/cleanup when desired (e.g. for one-off conversation from an arbitrary CWD).
 
@@ -221,8 +221,8 @@ All code paths that invoke `runner.execute()` (or equivalent) should use prepare
 
 - **Purpose:** Single place for workspace prepare/cleanup policy and execution. No duplicate logic in runners or call sites.
 - **Files (suggested):**
-  - `src/cleanup/mod.rs` — Module root; re-exports and optional `CleanupConfig` (if config is not in a shared config crate).
-  - `src/cleanup/workspace.rs` — Prepare, cleanup, allowlist, and git-clean invocation. All DRY-tagged items below live here (or in mod.rs if small).
+  - `src/cleanup/mod.rs` -- Module root; re-exports and optional `CleanupConfig` (if config is not in a shared config crate).
+  - `src/cleanup/workspace.rs` -- Prepare, cleanup, allowlist, and git-clean invocation. All DRY-tagged items below live here (or in mod.rs if small).
 - **Parent declaration:** Add `pub mod cleanup;` where other top-level modules are declared (e.g. alongside `pub mod git;`).
 
 **DRY items to add (tag in code)**
@@ -231,14 +231,14 @@ All code paths that invoke `runner.execute()` (or equivalent) should use prepare
 |-----|------|----------|-------------|
 | DRY:DATA | `CLEANUP_EXCLUDE_PATTERNS` or `cleanup_allowlist()` | `cleanup/workspace.rs` | Single source of paths/patterns to never remove: `.puppet-master`, `progress.txt`, `AGENTS.md`, `prd.json`, `.gitignore`, and sensitive patterns (`.env`, `.env.*`, `*.pem`, `*.key`, etc.) per §3.6. Used by git-clean helper (in prepare only) and any conservative cleanup. |
 | DRY:FN | `prepare_working_directory` | `cleanup/workspace.rs` | Ensures path is a git repo (or skips git steps if not); optionally runs conservative clean. Called by wrapper or runners. |
-| DRY:FN | `cleanup_after_execution` | `cleanup/workspace.rs` | Terminates process if needed; cleans **runner temp files** only (e.g. context copy temp). **Does not** run broad git clean (untracked) — that runs only in prepare_working_directory (§9.1.13). Optionally removes known build-artifact dirs (e.g. `target/`) per config. Takes `work_dir` and optional config. |
+| DRY:FN | `cleanup_after_execution` | `cleanup/workspace.rs` | Terminates process if needed; cleans **runner temp files** only (e.g. context copy temp). **Does not** run broad git clean (untracked) -- that runs only in prepare_working_directory (§9.1.13). Optionally removes known build-artifact dirs (e.g. `target/`) per config. Takes `work_dir` and optional config. |
 | DRY:FN | `run_git_clean_with_excludes` | `cleanup/workspace.rs` | Builds and runs `git clean -fd` (or `-fdx` when configured) with `-e` exclude patterns from the allowlist. Single implementation for all callers. |
 | DRY:FN | `run_with_cleanup` | `core/` or `cleanup/` | Wrapper: prepare(work_dir) → runner.execute(request) → cleanup(work_dir). All call sites (orchestrator, interview, start_chain, execute_ai_turn) use this instead of calling `runner.execute()` directly. |
 
 **Runner contract and DRY**
 
 - **Trait:** `PlatformRunner` gains `prepare_working_directory` and `cleanup_after_execution` (or the contract extends to include them). **Default implementations** call `crate::cleanup::prepare_working_directory(path).await` and `crate::cleanup::cleanup_after_execution(work_dir).await` so platform runners do not duplicate logic; they can override only if a platform needs special behavior.
-- **Wrapper:** `run_with_cleanup` reads config (e.g. skip prepare/cleanup for conversation or when disabled), then calls the shared prepare and cleanup functions and the runner’s `execute`. No per-call-site prepare/cleanup code.
+- **Wrapper:** `run_with_cleanup` reads config (e.g. skip prepare/cleanup for conversation or when disabled), then calls the shared prepare and cleanup functions and the runner's `execute`. No per-call-site prepare/cleanup code.
 
 **Exact git clean invocation (single helper)**
 
@@ -251,32 +251,32 @@ All code paths that invoke `runner.execute()` (or equivalent) should use prepare
 **Pre-implementation checklist (DRY)**
 
 - [ ] Grep `DRY:` in `src/git/` and `src/core/` to see if any existing helper can be reused (e.g. git_manager for status; no existing workspace-clean helper expected).
-- [ ] Confirm `src/cleanup/` is the right place per AGENTS.md module responsibilities (cleanup is not purely “git operations”; it’s workspace hygiene, so a dedicated module is appropriate).
+- [ ] Confirm `src/cleanup/` is the right place per AGENTS.md module responsibilities (cleanup is not purely "git operations"; it's workspace hygiene, so a dedicated module is appropriate).
 - [ ] After adding code: tag every new public function/data with the correct DRY comment; add no duplicate allowlist or git-clean logic elsewhere.
 
 ### 4.8 Concrete implementation details
 
 The following gives implementers exact signatures, data, and step-by-step logic so the DRY module can be built without ambiguity.
 
-**Allowlist (DRY:DATA) — single source of truth**
+**Allowlist (DRY:DATA) -- single source of truth**
 
 - **Name and location:** In `src/cleanup/workspace.rs`, define a single constant or function that returns the exclude patterns used by `run_git_clean_with_excludes` and by any "sensitive path" check. Recommended: `pub fn cleanup_exclude_patterns() -> &'static [&'static str]` or `const CLEANUP_EXCLUDE_PATTERNS: &[&str]`.
 - **Exact patterns (gitignore-style; one entry per `-e`):**  
   `.puppet-master`, `.puppet-master/*`, `progress.txt`, `AGENTS.md`, `prd.json`, `.gitignore`, `.env`, `.env.*`, `*.env`, `*.pem`, `*.key`, `*.crt`, `*.p12`, `.ssh`, `.ssh/*`.  
   Git clean `-e` accepts one pattern per flag; multiple `-e` flags are allowed. Use patterns that match paths relative to `work_dir` (gitignore semantics). Ensure `.puppet-master` and state files are never removed; document in the same module that this list is the single source for both cleanup and (if added) pre-commit sensitive-file checks.
-- **Sensitive patterns subset:** Optionally split into `cleanup_exclude_patterns()` (all) and `sensitive_patterns()` (subset for staging checks); both in same file, no duplication of literal strings — e.g. `sensitive_patterns()` returns a slice of the same literals used in the full list.
+- **Sensitive patterns subset:** Optionally split into `cleanup_exclude_patterns()` (all) and `sensitive_patterns()` (subset for staging checks); both in same file, no duplication of literal strings -- e.g. `sensitive_patterns()` returns a slice of the same literals used in the full list.
 
 **DRY:FN:run_git_clean_with_excludes**
 
 - **Signature:** `pub async fn run_git_clean_with_excludes(work_dir: &Path, clean_untracked: bool, clean_ignored: bool) -> Result<()>`.
-- **DRY REQUIREMENT:** Tag with `// DRY:FN:run_git_clean_with_excludes`. MUST use `cleanup_exclude_patterns()` from the same module — DO NOT accept allowlist as parameter or hardcode exclude patterns. MUST use shared git binary resolution (e.g. `path_utils::resolve_executable("git")` or `resolve_git_executable()` from Worktree plan) — DO NOT hardcode `Command::new("git")`.
+- **DRY REQUIREMENT:** Tag with `// DRY:FN:run_git_clean_with_excludes`. MUST use `cleanup_exclude_patterns()` from the same module -- DO NOT accept allowlist as parameter or hardcode exclude patterns. MUST use shared git binary resolution (e.g. `path_utils::resolve_executable("git")` or `resolve_git_executable()` from Worktree plan) -- DO NOT hardcode `Command::new("git")`.
 - **Behavior:** If `clean_untracked` is false, return `Ok(())` without running git. Otherwise run `git clean -fd` (or `-fdx` if `clean_ignored`). Resolve the git binary via the same helper used by GitManager/Doctor (e.g. `crate::platforms::path_utils::resolve_executable("git")` until Worktree plan adds `resolve_git_executable()`; then switch to that). Build the command with one `-e <pattern>` per entry from `cleanup_exclude_patterns()`. Set `Command::current_dir(work_dir)`. Do not assume `Command::new("git")` is sufficient.
 - **Callers:** Only `prepare_working_directory` (and the manual "Clean workspace" action) call this; `cleanup_after_execution` does not.
 
 **DRY:FN:prepare_working_directory**
 
 - **Signature:** `pub async fn prepare_working_directory(work_dir: &Path, config: &CleanupConfig) -> Result<()>` (or take config from a shared app config if preferred).
-- **DRY REQUIREMENT:** Tag with `// DRY:FN:prepare_working_directory`. MUST call `run_git_clean_with_excludes()` for git clean operations — DO NOT duplicate git clean logic. MUST use `cleanup_exclude_patterns()` for allowlist — DO NOT hardcode exclude patterns.
+- **DRY REQUIREMENT:** Tag with `// DRY:FN:prepare_working_directory`. MUST call `run_git_clean_with_excludes()` for git clean operations -- DO NOT duplicate git clean logic. MUST use `cleanup_exclude_patterns()` for allowlist -- DO NOT hardcode exclude patterns.
 - **Step-by-step:**
   1. **Git check:** Run `git rev-parse --show-toplevel` with `current_dir(work_dir)`. If the command fails (non-repo or git not found), **do not fail the iteration**: log a warning (e.g. "Prepare: not a git repo or git unavailable, skipping git clean") and return `Ok(())`. Optionally run only non-git cleanup (e.g. clear agent-output dir per config) if implemented. This resolves §9.1.3 and §9.1.10 (best-effort; continue without prepare).
   2. **Optional tracked reset:** Do **not** run `git checkout -- .` or `git restore .` unless a future config flag is added and documented; see §9.1.4. For now, prepare only cleans **untracked** (and optionally ignored) files.
@@ -287,7 +287,7 @@ The following gives implementers exact signatures, data, and step-by-step logic 
 **DRY:FN:cleanup_after_execution**
 
 - **Signature:** `pub async fn cleanup_after_execution(pid: u32, work_dir: &Path, config: &CleanupConfig) -> Result<()>`.
-- **DRY REQUIREMENT:** Tag with `// DRY:FN:cleanup_after_execution`. MUST use `cleanup_exclude_patterns()` for any path checks — DO NOT hardcode exclude patterns. MUST use shared git binary resolution if git operations are needed — DO NOT hardcode `Command::new("git")`.
+- **DRY REQUIREMENT:** Tag with `// DRY:FN:cleanup_after_execution`. MUST use `cleanup_exclude_patterns()` for any path checks -- DO NOT hardcode exclude patterns. MUST use shared git binary resolution if git operations are needed -- DO NOT hardcode `Command::new("git")`.
 - **Step-by-step:**
   1. **Terminate process:** If `pid > 0`, attempt to terminate the process (e.g. `kill(pid, SIGTERM)` or platform equivalent); do not block indefinitely; log if termination fails.
   2. **Runner temp files:** Remove any temp files or dirs that the **runner** created for this execution (e.g. context copy temp dir). This requires the runner (or a shared base) to record the temp path(s) so cleanup can remove them; if no such path is stored, this step is a no-op for now. Do **not** run `run_git_clean_with_excludes` here.
@@ -298,7 +298,7 @@ The following gives implementers exact signatures, data, and step-by-step logic 
 
 - **Placement:** Prefer `src/core/run_with_cleanup.rs` (or a helper in `src/core/execution_engine.rs`) so the execution engine can call it; alternatively `src/cleanup/run_with_cleanup.rs` if the wrapper is considered part of cleanup. Document the choice in AGENTS.md.
 - **Signature:** `pub async fn run_with_cleanup<R: PlatformRunner>(runner: &R, request: &ExecutionRequest, config: &CleanupConfig) -> Result<ExecutionResult>`. Alternatively, accept an `Option<&CleanupConfig>` and skip prepare/cleanup when `None` or when config says skip (e.g. for conversation from arbitrary CWD).
-- **DRY REQUIREMENT:** Tag with `// DRY:FN:run_with_cleanup`. MUST call `prepare_working_directory()` and `cleanup_after_execution()` from the cleanup module — DO NOT duplicate prepare/cleanup logic. This wrapper ensures all call sites get consistent behavior.
+- **DRY REQUIREMENT:** Tag with `// DRY:FN:run_with_cleanup`. MUST call `prepare_working_directory()` and `cleanup_after_execution()` from the cleanup module -- DO NOT duplicate prepare/cleanup logic. This wrapper ensures all call sites get consistent behavior.
 - **Logic:** (1) If config says skip prepare for this context, skip to step 2. (2) Call `crate::cleanup::prepare_working_directory(&request.working_directory, config).await`; on error, log and continue (per §9.1.10: best-effort). (3) Call `runner.execute(request).await` and capture result. (4) Call `crate::cleanup::cleanup_after_execution(0, &request.working_directory, config).await` (pid may be 0 if not tracked). (5) Return execution result.
 - **Call sites (concrete):**
   - **ExecutionEngine:** In `execute_with_sdk_fallback`, replace `runner.execute(request).await` with `run_with_cleanup(&*runner, request, &cleanup_config).await`. The cleanup_config must be obtained from the same run config as the orchestrator (e.g. from `IterationContext` or from a shared config handle). ExecutionEngine currently has no access to config; add a way to pass cleanup config into ExecutionEngine (e.g. at construction or per execute_iteration).
@@ -358,8 +358,8 @@ Implementation should align with storage-plan.md: evidence lifecycle events in s
 
 ### 6.3 Implementation
 
-- **Config schema:** Add to run config (or GuiConfig-derived): `evidence.retention_days: Option<u32>` (None = retain all), `evidence.retain_last_runs: Option<u32>` (None = unused; if set, prefer defining "run" as one iteration or one subtask completion — see §9.1.7), `evidence.prune_on_cleanup: bool` (run pruning when manual "Clean workspace" or after prepare, not in the hot path of cleanup_after_execution).
-- **Concrete function:** `pub async fn prune_evidence_older_than(base_dir: &Path, config: &EvidenceRetentionConfig) -> Result<PruneResult>` in cleanup module (DRY:FN). List `.puppet-master/evidence/` recursively; for each file/dir, check mtime; if older than `retention_days` days (or if using retain_last_runs, sort by mtime and keep only the newest N "runs" — define run as e.g. one evidence subdir or one timestamped file set), delete. Return count of removed items. Do not block the main iteration path; call from manual action or a background task.
+- **Config schema:** Add to run config (or GuiConfig-derived): `evidence.retention_days: Option<u32>` (None = retain all), `evidence.retain_last_runs: Option<u32>` (None = unused; if set, prefer defining "run" as one iteration or one subtask completion -- see §9.1.7), `evidence.prune_on_cleanup: bool` (run pruning when manual "Clean workspace" or after prepare, not in the hot path of cleanup_after_execution).
+- **Concrete function:** `pub async fn prune_evidence_older_than(base_dir: &Path, config: &EvidenceRetentionConfig) -> Result<PruneResult>` in cleanup module (DRY:FN). List `.puppet-master/evidence/` recursively; for each file/dir, check mtime; if older than `retention_days` days (or if using retain_last_runs, sort by mtime and keep only the newest N "runs" -- define run as e.g. one evidence subdir or one timestamped file set), delete. Return count of removed items. Do not block the main iteration path; call from manual action or a background task.
 - **Safety:** Never delete evidence for runs that are still referenced in the current prd.json or progress.txt if that's feasible; otherwise rely on retention_days only until "run" is well-defined (§9.1.7).
 
 ### 6.4 Docs
@@ -375,7 +375,7 @@ Cleanup UX is required: it gives users control over workspace cleanup and eviden
 
 ### 7.1 Config Toggles (GUI or YAML)
 
-- **cleanup.untracked:** Run `git clean -fd` (with excludes) in work dir **before each run** (in `prepare_working_directory` only; not after execution — see §9.1.13) (default: true if implementing Option C).
+- **cleanup.untracked:** Run `git clean -fd` (with excludes) in work dir **before each run** (in `prepare_working_directory` only; not after execution -- see §9.1.13) (default: true if implementing Option C).
 - **cleanup.ignored:** When cleaning before run, include ignored files, e.g. `git clean -fdx` (default: false).
 - **cleanup.clear_agent_output:** Clear `.puppet-master/agent-output/` in prepare (default: true if Section 5 implemented).
 - **cleanup.remove_build_artifacts:** In cleanup_after_execution, remove known build dirs (e.g. `target/`) only; default false.
@@ -456,7 +456,7 @@ The Config view has **8 tabs**: Tiers, Branching, Verification, Memory, Budgets,
 
 ### 7.6 Leveraging platform CLI capabilities (hooks, skills, plugins, extensions)
 
-Platform CLIs (Cursor, Codex, Claude Code, Gemini, Copilot) support **hooks**, **skills**, **plugins**, **extensions**, and **MCP servers**. These can complement (not replace) Puppet Master’s own prepare/cleanup and orchestration.
+Platform CLIs (Cursor, Codex, Claude Code, Gemini, Copilot) support **hooks**, **skills**, **plugins**, **extensions**, and **MCP servers**. These can complement (not replace) Puppet Master's own prepare/cleanup and orchestration.
 
 **Current stance**
 
@@ -465,8 +465,8 @@ Platform CLIs (Cursor, Codex, Claude Code, Gemini, Copilot) support **hooks**, *
 
 **Ways we might leverage CLI capabilities (optional / future)**
 
-- **Pre-iteration hook (platform-side):** Some CLIs support a "before run" or "session start" hook. We could **document** an optional user-provided hook that runs `git clean -fd -e .puppet-master ...` in the project dir as a **backup** or for platforms we don’t control (e.g. when the user runs the CLI manually). Not a replacement for our prepare_working_directory; document in AGENTS.md or user docs as "Optional: if you run the CLI outside Puppet Master, you can add a hook to clean the workspace."
-- **Skills for context:** Orchestrator and Interview plans already reference platform **skills** (e.g. `.cursor/skills/`, `.codex/skills/`) for subagent-specific context. We could add a **Puppet Master–authored skill** (e.g. "ralph-clean-workspace" or "puppet-master-context") that agents can load when running under Puppet Master, reminding them to write scratch files under `.puppet-master/agent-output/` and to avoid leaving untracked cruft. Implement as a SKILL.md in the project or in a shared location; no change to our cleanup code.
+- **Pre-iteration hook (platform-side):** Some CLIs support a "before run" or "session start" hook. We could **document** an optional user-provided hook that runs `git clean -fd -e .puppet-master ...` in the project dir as a **backup** or for platforms we don't control (e.g. when the user runs the CLI manually). Not a replacement for our prepare_working_directory; document in AGENTS.md or user docs as "Optional: if you run the CLI outside Puppet Master, you can add a hook to clean the workspace."
+- **Skills for context:** Orchestrator and Interview plans already reference platform **skills** (e.g. `.cursor/skills/`, `.codex/skills/`) for subagent-specific context. We could add a **Puppet Master-authored skill** (e.g. "ralph-clean-workspace" or "puppet-master-context") that agents can load when running under Puppet Master, reminding them to write scratch files under `.puppet-master/agent-output/` and to avoid leaving untracked cruft. Implement as a SKILL.md in the project or in a shared location; no change to our cleanup code.
 - **Plugins / extensions:** Cursor plugins and Claude/Gemini extensions can add MCP servers, subagents, and hooks. We do not **require** any plugin for core cleanup or orchestration. If a **project** wants to use a platform plugin (e.g. a custom subagent definition), that is project-specific; our runners stay CLI-arg and prompt based. Document in platform_specs or AGENTS.md which platforms support plugins and that we do not depend on them for prepare/cleanup.
 - **MCP:** We use MCP for Context7 and other tooling; platform CLIs can also connect to MCP servers. Cleanup and evidence are **not** exposed as MCP tools; they remain internal to Puppet Master. Future: optional MCP tool "clean_workspace" for external orchestration could call our run_git_clean_with_excludes, but that is out of scope for the current plan.
 
@@ -482,7 +482,7 @@ A dedicated **GUI screen** is required to allow users to **change and customize 
 
 **Placement (exact UI location):** Add as a subsection under **Config**: either **Config → Advanced → Shortcuts** or a dedicated **Config → Shortcuts** tab (single canonical location; implementation chooses one). If the app has a **Settings / Preferences** area, Shortcuts may live there instead, but must be reachable from the same config surface as the rest of GuiConfig (Option B). Use existing widgets from `docs/gui-widget-catalog.md` (e.g. `styled_button`, `styled_text_input`, `page_header`); ensure shortcut keys are displayed with `selectable_label` or `selectable_label_mono` so users can copy them.
 
-**Default shortcuts (single source of truth):** The following table defines the default bindings. The GUI must allow viewing and overriding each action’s shortcut; persisted overrides live in config (e.g. `GuiConfig.shortcuts` or `~/.config/puppet-master/shortcuts.yaml`).
+**Default shortcuts (single source of truth):** The following table defines the default bindings. The GUI must allow viewing and overriding each action's shortcut; persisted overrides live in config (e.g. `GuiConfig.shortcuts` or `~/.config/puppet-master/shortcuts.yaml`).
 
 | Shortcut   | Action |
 |------------|--------|
@@ -551,14 +551,14 @@ A **GUI screen** is required to let users **manage Agent Skills**: discover, lis
 - **Discovery paths** (single source of truth in backend, §7.10):
   - Project: `.puppet-master/skills/<name>/SKILL.md`, `.opencode/skills/<name>/SKILL.md`, `.claude/skills/<name>/SKILL.md`, `.agents/skills/<name>/SKILL.md` (walk up from cwd to git worktree).
   - Global: `~/.config/puppet-master/skills/<name>/SKILL.md`, `~/.config/opencode/skills/<name>/SKILL.md`, `~/.claude/skills/<name>/SKILL.md`, `~/.agents/skills/<name>/SKILL.md`.
-- **Name rules:** 1–64 chars, lowercase alphanumeric with single hyphens, no leading/trailing `-`, no consecutive `--`; must match directory name. **Description:** 1–1024 chars.
+- **Name rules:** 1-64 chars, lowercase alphanumeric with single hyphens, no leading/trailing `-`, no consecutive `--`; must match directory name. **Description:** 1-1024 chars.
 
 **GUI behavior:**
 
 - **List view:** Show discovered skills (project + global) with name, description (truncated), source path, and permission. Use selectable labels for name/path so users can copy. Indicate source (project vs global).
 - **Add:** "Add skill" → user chooses "Create new" (name + directory under project or global path) or "Import from path" (pick existing folder containing `SKILL.md`). Validate name and frontmatter; create or link.
 - **Edit:** Open `SKILL.md` in an inline editor or external editor; validate on save (frontmatter + name match dir).
-- **Remove:** "Remove" / "Disable" — either delete the skill folder (with confirmation) or hide via permissions. Do not delete without explicit user confirmation.
+- **Remove:** "Remove" / "Disable" -- either delete the skill folder (with confirmation) or hide via permissions. Do not delete without explicit user confirmation.
 - **Permissions:** Per-skill or pattern-based (allow / deny / ask), stored in config (e.g. `GuiConfig.skill_permissions` or `opencode.json`-style `permission.skill`). GUI: list skills with a permission dropdown or edit permission in a modal.
 - **Refresh:** "Refresh" button to re-run discovery (e.g. after adding files on disk).
 
@@ -598,7 +598,7 @@ Backend components required so the Desktop Shortcuts GUI (§7.7) and in-app key 
 
 **Data and types:**
 
-- **ShortcutAction:** Enum or struct identifying each action (e.g. `MoveToLineStart`, `MoveToLineEnd`, …). One variant per row in the default table in §7.7. Tag **DRY:DATA:shortcut_actions**.
+- **ShortcutAction:** Enum or struct identifying each action (e.g. `MoveToLineStart`, `MoveToLineEnd`, ...). One variant per row in the default table in §7.7. Tag **DRY:DATA:shortcut_actions**.
 - **Default shortcuts:** A const or fn `default_shortcuts() -> Vec<(ShortcutAction, KeyBinding)>` (or `HashMap<ShortcutAction, KeyBinding>`) as the single source of truth. **DRY:DATA:default_shortcuts.** KeyBinding represents modifier + key (e.g. Ctrl+A, Alt+F); use a type that can be serialized for config and compared for conflicts.
 - **Config shape:** `GuiConfig.shortcuts` (or `keyboard_shortcuts`): map from action id (string or enum name) to user key binding. Only overrides are stored; missing key means use default.
 
@@ -609,7 +609,7 @@ Backend components required so the Desktop Shortcuts GUI (§7.7) and in-app key 
 
 **Persistence:**
 
-- Load/save `shortcuts` with the rest of `GuiConfig` (Option B in Worktree §5). No separate shortcuts file unless design mandates it. On app startup, load GuiConfig, build key map, install into the app’s key event handler.
+- Load/save `shortcuts` with the rest of `GuiConfig` (Option B in Worktree §5). No separate shortcuts file unless design mandates it. On app startup, load GuiConfig, build key map, install into the app's key event handler.
 
 **Wiring:**
 
@@ -643,15 +643,15 @@ Backend components required so the Agent Skills GUI (§7.8) and skill-aware flow
 **Discovery paths (DRY:DATA:skill_search_paths):**
 
 - Define the ordered list of (base_dir, relative_path) or full paths to search for `skills/<name>/SKILL.md`. Include:
-  - Project: `.puppet-master/skills`, `.opencode/skills`, `.claude/skills`, `.agents/skills` — resolve relative to project root (walk up from cwd to git worktree or use configured project path).
+  - Project: `.puppet-master/skills`, `.opencode/skills`, `.claude/skills`, `.agents/skills` -- resolve relative to project root (walk up from cwd to git worktree or use configured project path).
   - Global: `~/.config/puppet-master/skills`, `~/.config/opencode/skills`, `~/.claude/skills`, `~/.agents/skills`.
-- **discover_skills(project_root: Option<&Path>) -> Vec<SkillInfo>:** Walk each path; for each `<base>/<name>/SKILL.md` found, collect name, path, source (project vs global). Deduplicate by name (e.g. project overrides global, or first-wins — document the rule). Tag **DRY:FN:discover_skills**.
+- **discover_skills(project_root: Option<&Path>) -> Vec<SkillInfo>:** Walk each path; for each `<base>/<name>/SKILL.md` found, collect name, path, source (project vs global). Deduplicate by name (e.g. project overrides global, or first-wins -- document the rule). Tag **DRY:FN:discover_skills**.
 
 **Skill content and frontmatter:**
 
 - **SkillInfo:** Struct with at least `name: String`, `description: String`, `path: PathBuf`, `source: SkillSource` (Project | Global), and optionally `license`, `compatibility`, `metadata` from frontmatter.
 - **load_skill(path: &Path) -> Result<SkillInfo>:** Read `SKILL.md`, parse YAML frontmatter (first delimited block), validate `name` and `description` (length and name rules per §7.8). Parse body as markdown (keep raw for agent use). Tag **DRY:FN:load_skill**.
-- **Name validation:** 1–64 chars, `^[a-z0-9]+(-[a-z0-9]+)*$`, and name must match directory name. Reject or warn on invalid names in GUI and in discovery.
+- **Name validation:** 1-64 chars, `^[a-z0-9]+(-[a-z0-9]+)*$`, and name must match directory name. Reject or warn on invalid names in GUI and in discovery.
 
 **Permissions:**
 
@@ -672,7 +672,7 @@ Backend components required so the Agent Skills GUI (§7.8) and skill-aware flow
 
 **Discovery and platform_specs:**
 
-- How runners receive skills must be explicitly tied to **platform_specs** (or a dedicated doc section referenced from AGENTS.md). **Implementation plan must list per platform (Cursor, Codex, Claude, Gemini, Copilot) how skill paths or content are passed** — e.g. env var, prompt injection, or tool (e.g. `skill` tool). No implementation of runner wiring without this mapping.
+- How runners receive skills must be explicitly tied to **platform_specs** (or a dedicated doc section referenced from AGENTS.md). **Implementation plan must list per platform (Cursor, Codex, Claude, Gemini, Copilot) how skill paths or content are passed** -- e.g. env var, prompt injection, or tool (e.g. `skill` tool). No implementation of runner wiring without this mapping.
 
 **Error handling (backend):**
 
@@ -691,7 +691,7 @@ Backend components required so the Agent Skills GUI (§7.8) and skill-aware flow
 
 This subsection closes open decisions and documents gaps so an **implementation plan** can be derived without ambiguity. It also lists optional enhancements and states readiness for implementation planning.
 
-**Desktop Shortcuts — gaps and decisions**
+**Desktop Shortcuts -- gaps and decisions**
 
 | Gap / risk | Resolution or decision |
 |------------|------------------------|
@@ -704,10 +704,10 @@ This subsection closes open decisions and documents gaps so an **implementation 
 | **Config file corrupted or invalid shortcuts section** | **Resolution:** On load, if `GuiConfig.shortcuts` (or the shortcuts section) fails to parse or is structurally invalid: **fall back to defaults** (empty overrides), log a warning, and **show a toast** ("Shortcuts reset to defaults due to config error"). Do not crash; key map = `build_key_map(default_shortcuts(), empty_overrides)`. Optionally persist the repaired config (defaults) on next save. |
 | **Export format versioning** | **Resolution:** Export JSON must include a `version` field (e.g. `1`). On import, if `version` is missing or greater than the highest supported version, **reject** with message "Unsupported shortcut file version" (or "implementation must decide": skip unknown version and attempt to parse known fields for best-effort import). Document supported versions in code or STATE_FILES.md. |
 | **Filter: empty query vs no matches** | **Resolution:** **Empty filter** = show all shortcut rows. **Non-empty filter with no matches** = show empty list and a single inline message (e.g. "No shortcuts match 'xyz'") so the user can tell "no match" from "no data." Implementation must not show "No shortcuts" when the filter is the cause. |
-| **Tooltip/label when key map not yet loaded** | **Resolution:** Before first `build_key_map` (e.g. config not yet loaded or app init): show action label only, with no "(Key)" suffix, or show placeholder "(Loading…)". Once key map is built, show binding. Avoid blank or "(undefined)" in UI. |
+| **Tooltip/label when key map not yet loaded** | **Resolution:** Before first `build_key_map` (e.g. config not yet loaded or app init): show action label only, with no "(Key)" suffix, or show placeholder "(Loading...)". Once key map is built, show binding. Avoid blank or "(undefined)" in UI. |
 | **Tests** | Add unit tests: `build_key_map` (defaults + overrides merge correctly); `validate_shortcut_binding` (reject duplicate action, optional conflict); round-trip (defaults → config override → build_key_map → same bindings). See §8.8.8. |
 
-**Agent Skills — gaps and decisions**
+**Agent Skills -- gaps and decisions**
 
 | Gap / risk | Resolution or decision |
 |------------|------------------------|
@@ -715,7 +715,7 @@ This subsection closes open decisions and documents gaps so an **implementation 
 | **Create skill: directory already exists** | **Decision:** On "Create new" skill, if the target directory (e.g. `<base>/<name>/`) already exists and contains a `SKILL.md`, **do not overwrite**. Show an error (e.g. "A skill named &lt;name&gt; already exists at this location") and do not create. User must choose a different name or remove/import the existing skill first. Implementation must decide whether to treat "dir exists but no SKILL.md" as error or as partial state (e.g. offer to create SKILL.md only). |
 | **Edit: concurrent edit on disk** | **Implementation must decide:** If the user has the skill open in the GUI editor and the file is changed on disk (e.g. by another editor or process), on save: (1) overwrite and warn "File was modified on disk; your version was saved", or (2) detect mtime/content change and prompt "File changed on disk. Reload / Overwrite / Cancel", or (3) lock file for v1 (complex). Recommend (2) for clarity. |
 | **Validate all: show only errors vs full table** | **Decision:** Show a **full table** (all discovered skills) with a status column: OK or Error + message. This allows users to see which skills passed and which failed in one view. Summary line: "N OK, M errors." Optional: filter toggle "Show only errors" to collapse to errors-only. Implementation plan may choose errors-only modal for v1 if full table is deferred. |
-| **Permission "ask": when and where** | **Defer to later:** "Ask" means prompt user before an agent loads the skill. When implemented: user is prompted **at the moment the runner would load the skill** (e.g. when building iteration context or when platform CLI would invoke the skill)—i.e. in-app, before or at run start, not inside the platform CLI. Where: modal or toast from the app (e.g. "Allow skill 'doc-lookup' for this run?" Allow / Deny / Always / Never). Implementation plan can mark "ask" as phase 2 and leave exact UI location to implementation. |
+| **Permission "ask": when and where** | **Defer to later:** "Ask" means prompt user before an agent loads the skill. When implemented: user is prompted **at the moment the runner would load the skill** (e.g. when building iteration context or when platform CLI would invoke the skill)--i.e. in-app, before or at run start, not inside the platform CLI. Where: modal or toast from the app (e.g. "Allow skill 'doc-lookup' for this run?" Allow / Deny / Always / Never). Implementation plan can mark "ask" as phase 2 and leave exact UI location to implementation. |
 | **Pattern precedence: explicit vs pattern** | **Decision:** **Explicit per-skill entry wins over pattern.** When resolving permission for a skill name, check explicit entries in `skill_permissions` first; if none match, then apply pattern rules (e.g. `doc-*: allow`). So a skill "doc-release" with explicit "deny" remains denied even if pattern "doc-*" is allow. Document in backend resolve logic and in bulk-permission UI. |
 | **"Import from path"** | **Decision:** **Copy into a discovery path.** "Import" means: user picks an existing folder containing `SKILL.md`; we copy that folder into a chosen discovery base (e.g. `.puppet-master/skills/<name>` or `~/.config/puppet-master/skills/<name>`). We do not persist arbitrary external paths (keeps discovery simple and portable). Validate name and frontmatter after copy. |
 | **Create skill when no project** | When no project is open (no project root), "Create new" skill: offer **global only** (e.g. `~/.config/puppet-master/skills/<name>`). Disable or hide "project" option when `project_root` is None. |
@@ -732,13 +732,13 @@ This subsection closes open decisions and documents gaps so an **implementation 
 
 Required. Use existing widgets; tag new helpers with DRY.
 
-**Acceptance (summary):** (1) User can export current overrides to a JSON file and import from file with Replace/Merge and validation. (2) User can filter the shortcut list by action or key string; empty filter = all, non-empty with no match = empty list + "No shortcuts match…". (3) Menus/buttons that trigger shortcut actions show the binding in label or tooltip; when key map not loaded, show label only or "(Loading…)".
+**Acceptance (summary):** (1) User can export current overrides to a JSON file and import from file with Replace/Merge and validation. (2) User can filter the shortcut list by action or key string; empty filter = all, non-empty with no match = empty list + "No shortcuts match...". (3) Menus/buttons that trigger shortcut actions show the binding in label or tooltip; when key map not loaded, show label only or "(Loading...)".
 
 **1. Export / import shortcut set**
 
 - **Purpose:** Backup, restore, or share shortcut overrides across machines or with other users.
-- **Export:** Button "Export…" on Shortcuts tab opens a file picker (or native save dialog). Serialize current overrides only (or full key map) to JSON. Format: e.g. `{ "version": 1, "overrides": { "MoveToLineStart": "Ctrl+A", ... } }` using the same action-id and KeyBinding serialization as config. Include a `version` field for future compatibility. Write to user-chosen path. Success toast: "Exported N shortcuts."
-- **Import:** Button "Import…" opens file picker; user selects a JSON file. Parse and validate: all action ids must exist, all bindings must be valid (no duplicate action binding; optional conflict check). Then either **Replace** (set `GuiConfig.shortcuts` to imported overrides, persist) or **Merge** (imported wins on conflict; merge into existing overrides). Show confirmation modal: "Replace current shortcuts with N from file?" or "Merge N shortcuts from file?" with Cancel / Replace or Merge. On success, rebuild key map and persist; toast "Imported N shortcuts."
+- **Export:** Button "Export..." on Shortcuts tab opens a file picker (or native save dialog). Serialize current overrides only (or full key map) to JSON. Format: e.g. `{ "version": 1, "overrides": { "MoveToLineStart": "Ctrl+A", ... } }` using the same action-id and KeyBinding serialization as config. Include a `version` field for future compatibility. Write to user-chosen path. Success toast: "Exported N shortcuts."
+- **Import:** Button "Import..." opens file picker; user selects a JSON file. Parse and validate: all action ids must exist, all bindings must be valid (no duplicate action binding; optional conflict check). Then either **Replace** (set `GuiConfig.shortcuts` to imported overrides, persist) or **Merge** (imported wins on conflict; merge into existing overrides). Show confirmation modal: "Replace current shortcuts with N from file?" or "Merge N shortcuts from file?" with Cancel / Replace or Merge. On success, rebuild key map and persist; toast "Imported N shortcuts."
 - **Backend:** `export_shortcuts_to_json(overrides: &ShortcutOverrides) -> String` (DRY:FN); `import_shortcuts_from_json(json: &str) -> Result<ShortcutOverrides>` with validation (DRY:FN). Reuse same serialization as GuiConfig.shortcuts so format is consistent.
 - **Edge cases:** Empty overrides in file → valid (clear overrides if Replace). Unknown action id in file → skip or reject entire import; document to skip unknown and import known only, or reject with "Unknown action: X". **Invalid JSON or unparseable file:** Reject entire import with toast "Invalid shortcut file" (do not apply partial data). **Import would create duplicate binding** (same key for two actions): run `validate_shortcut_binding` after merge; if invalid, reject with "Conflict: key already used by &lt;Action&gt;" or apply and steal; implementation must decide (recommend reject). **Export format version:** Include `version: 1` in export; on import, if version &gt; supported, reject with "Unsupported shortcut file version."
 
@@ -747,14 +747,14 @@ Required. Use existing widgets; tag new helpers with DRY.
 - **Purpose:** When many actions exist, quickly find by action name or by key binding.
 - **GUI:** Text field above the shortcut list (e.g. "Filter by action or shortcut"). As user types, filter the list: show only rows where the action label (e.g. "Move to start of current line") or the shortcut display string (e.g. "Ctrl+A") contains the filter text (case-insensitive substring). Empty filter = show all. Optional "Clear" button or clear on Escape. Use `styled_text_input`; no new widget.
 - **Backend:** Filtering is in-memory on the list already built for the view. No new backend type; view holds filter string and filters the list of (ShortcutAction, KeyBinding) before rendering. Optional: `filter_shortcut_list(entries: &[(ShortcutAction, KeyBinding)], query: &str) -> Vec<...>` (DRY:FN) if used in more than one place.
-- **Empty filter vs no matches:** Empty filter shows all rows. When filter is non-empty and no row matches, show empty list plus a single inline message (e.g. "No shortcuts match '…'") so the user distinguishes "no match" from "no shortcuts loaded."
+- **Empty filter vs no matches:** Empty filter shows all rows. When filter is non-empty and no row matches, show empty list plus a single inline message (e.g. "No shortcuts match '...'") so the user distinguishes "no match" from "no shortcuts loaded."
 
 **3. Show shortcut in tooltip or menu label**
 
-- **Purpose:** Discoverability—user sees the key binding where the action is available (menus, buttons) without opening the Shortcuts tab.
+- **Purpose:** Discoverability--user sees the key binding where the action is available (menus, buttons) without opening the Shortcuts tab.
 - **Where:** Any UI that triggers an action that has a shortcut: e.g. menu item "Kill to end of line", button that cancels a popover. Show the binding in the label or in a tooltip: "Kill to end of line (Ctrl+K)" or tooltip "Shortcut: Ctrl+K".
 - **Implementation:** When building menu or button labels for actions that have a shortcut, resolve the current binding from the key map (or defaults + overrides) and append to the label or set as tooltip. Single helper: `shortcut_label(action: ShortcutAction, key_map: &KeyMap) -> String` or `format!("{} ({})", action_label, binding_display)`. Use it everywhere we show an action that has a shortcut. DRY:FN or DRY:HELPER.
-- **Edge cases:** If user removed the binding (e.g. no shortcut for that action), show only the action label with no "(…)" or show "No shortcut". Keep tooltip/label in sync with key map after changes. **When key map not yet loaded** (e.g. config not loaded at init): show action label only (no key suffix) or placeholder "(Loading…)"; never show blank or "(undefined)".
+- **Edge cases:** If user removed the binding (e.g. no shortcut for that action), show only the action label with no "(...)" or show "No shortcut". Keep tooltip/label in sync with key map after changes. **When key map not yet loaded** (e.g. config not loaded at init): show action label only (no key suffix) or placeholder "(Loading...)"; never show blank or "(undefined)".
 
 **Checklist:** See §8.10.1.
 
@@ -786,7 +786,7 @@ Required. Use existing widgets; tag new helpers with DRY.
 - **Acceptance criteria:** Selecting a skill in the list shows its body in a read-only pane (Skills tab); content is load-on-demand; user can copy text; "Edit" opens full editor. If load fails (missing file, invalid frontmatter), show error in pane instead of body.
 - **GUI:** When user selects a skill in the list (single click or "Preview" button), show the body of `SKILL.md` in a read-only pane (e.g. right panel or bottom drawer, or modal). Content = markdown body only (no frontmatter), or full file with frontmatter collapsed. Use scrollable selectable text (or selectable_label_mono for code-like display) so user can copy. "Edit" button opens the full editor. Load on demand when selection changes; do not load all bodies up front.
 - **Backend:** Reuse `load_skill(path)`; expose `.body` or equivalent on SkillInfo. If SkillInfo currently omits body to save memory, add optional `body: Option<String>` populated on demand for preview, or a separate `load_skill_body(path) -> Result<String>` (DRY:FN).
-- **Error handling:** If `load_skill` fails for selected skill (e.g. file deleted on disk), show message in preview pane (e.g. "Could not load skill: …") and optionally refresh list.
+- **Error handling:** If `load_skill` fails for selected skill (e.g. file deleted on disk), show message in preview pane (e.g. "Could not load skill: ...") and optionally refresh list.
 
 **4. Last modified / version**
 
@@ -795,25 +795,25 @@ Required. Use existing widgets; tag new helpers with DRY.
 - **Last modified:** For each skill, get file mtime: `std::fs::metadata(path).modified()` (or use a crate for cross-platform). Store in SkillInfo as `modified: Option<DateTime<Utc>>` (or SystemTime). Display in list row: "Modified: 2026-02-22" or "Modified: 2 days ago". Show in preview pane as well.
 - **Version:** If frontmatter supports an optional `version` field (or under `metadata.version`), parse and show in list or preview. Not required by OpenCode; add only if we extend frontmatter. Otherwise "version" = last modified for display.
 - **Backend:** Extend SkillInfo with `modified: Option<DateTime<Utc>>`; set in discovery or in load_skill from path metadata. Optional DRY:FN `skill_modified(path: &Path) -> Option<DateTime<Utc>>`.
-- **Error handling:** If mtime cannot be read for a path (e.g. permission denied), show empty or "—" in list; do not exclude skill from list.
+- **Error handling:** If mtime cannot be read for a path (e.g. permission denied), show empty or "--" in list; do not exclude skill from list.
 
 **5. Validate all SKILL.md on disk**
 
 - **Purpose:** Check all discovered skills for valid frontmatter, name match, and description length without opening each file.
 - **Acceptance criteria:** User clicks "Validate all" on Skills tab; all discovered skills are validated; results show in a full table (all skills) with status OK or Error + message; summary "N OK, M errors"; errors are copy-pasteable (selectable labels). See §7.11 for "show only errors vs full table" decision.
-- **GUI:** "Validate all" button on Skills tab. On click, run validation for every discovered skill (same rules as load_skill: frontmatter, name 1–64 chars and regex, name matches dir, description 1–1024 chars). Show results in a **full table** (all discovered skills) with status column: OK or Error + message (e.g. "my-skill: name in frontmatter does not match folder name"). Summary: "N OK, M errors." Use selectable labels for copy-paste of errors. Optional filter: "Show only errors."
+- **GUI:** "Validate all" button on Skills tab. On click, run validation for every discovered skill (same rules as load_skill: frontmatter, name 1-64 chars and regex, name matches dir, description 1-1024 chars). Show results in a **full table** (all discovered skills) with status column: OK or Error + message (e.g. "my-skill: name in frontmatter does not match folder name"). Summary: "N OK, M errors." Use selectable labels for copy-paste of errors. Optional filter: "Show only errors."
 - **Backend:** `validate_skill(path: &Path) -> Result<(), ValidationError>` (DRY:FN) that reads SKILL.md, parses frontmatter, checks name and description and dir-name match; returns Ok(()) or Err with message. Then for each skill: `discover_skills` then for each path call `validate_skill`. No write; read-only. Reuse validation logic from load_skill to avoid duplication.
-- **Error handling:** If a skill path becomes unreadable during validate-all, show Error with message (e.g. "Could not read file"); do not abort entire run — continue and report per-skill.
+- **Error handling:** If a skill path becomes unreadable during validate-all, show Error with message (e.g. "Could not read file"); do not abort entire run -- continue and report per-skill.
 
 **Checklist:** See §8.10.2.
 
 **Implementation plan readiness**
 
-- **Ready:** The spec (§7.7–§7.10) plus this subsection (§7.11) and checklists (§8.8, §8.9) are **sufficient for an implementer to produce a detailed implementation plan**. All open decisions above are resolved or scoped (with "defer" or "v1 preference" where needed).
+- **Ready:** The spec (§7.7-§7.10) plus this subsection (§7.11) and checklists (§8.8, §8.9) are **sufficient for an implementer to produce a detailed implementation plan**. All open decisions above are resolved or scoped (with "defer" or "v1 preference" where needed).
 
 **Implementation plan checklist** (for implementer before drafting the implementation plan)
 
-- [ ] Read §7.7–§7.11.2 (Shortcuts and Skills spec, gaps, and enhancements) and §8.8–§8.10.2 (implementation checklist items for Shortcuts and Skills).
+- [ ] Read §7.7-§7.11.2 (Shortcuts and Skills spec, gaps, and enhancements) and §8.8-§8.10.2 (implementation checklist items for Shortcuts and Skills).
 - [ ] Resolve project path for Skills when no project is open: "Create skill" must offer global-only path (e.g. `~/.config/puppet-master/skills/<name>`); disable or hide project option when `project_root` is None (per §7.11 "Create skill when no project").
 - [ ] Define Iced key-event integration point: where key events are captured (window vs focused widget) and how KeyMap is applied; document in implementation plan (per §7.11 "Iced key event wiring").
 - [ ] Confirm platform_specs (or orchestrator plan) documents how each platform receives skill list (paths vs content; CLI env vs prompt injection); implementation plan references this per platform.
@@ -826,7 +826,7 @@ Required. Use existing widgets; tag new helpers with DRY.
 **Recommended implementation order** (integrated with cleanup, worktree, and plan)
 
 1. **Cleanup and run config (foundation):** Core cleanup module (§8.1), wrapper and config wiring (§8.2), GuiConfig/run config with Option B (Worktree plan) so cleanup toggles and later Shortcuts/Skills config are in the same run config shape.
-2. **Shortcuts:** After GuiConfig exists, implement in order: (a) backend types and default_shortcuts (§8.8.1–8.8.2); (b) GuiConfig.shortcuts and build_key_map, including config load failure (§8.8.3–8.8.4, 8.8.7); (c) validate_shortcut_binding (§8.8.5); (d) Shortcuts GUI list/edit/reset (§8.6.5, §8.8.6); (e) key event wiring (single subscription + KeyMap, no hardcoded bindings); (f) export/import, search/filter, discoverability (§8.10.1). Tests alongside (§8.8.8).
+2. **Shortcuts:** After GuiConfig exists, implement in order: (a) backend types and default_shortcuts (§8.8.1-8.8.2); (b) GuiConfig.shortcuts and build_key_map, including config load failure (§8.8.3-8.8.4, 8.8.7); (c) validate_shortcut_binding (§8.8.5); (d) Shortcuts GUI list/edit/reset (§8.6.5, §8.8.6); (e) key event wiring (single subscription + KeyMap, no hardcoded bindings); (f) export/import, search/filter, discoverability (§8.10.1). Tests alongside (§8.8.8).
 3. **Skills:** Skills backend can start after project path resolution exists (discovery uses project_root; when None, global-only paths per §7.11). Then Skills GUI (list, add/edit/remove, permissions, refresh); then integration (runners receive skill list per platform_specs). Tests alongside.
 4. **Cleanup UX and optional worktree:** Cleanup UX (§8.6), "Clean workspace now," evidence retention (§8.5); optionally "Clean all worktrees" when worktree_manager is available (§9.1.8).
 5. **Shortcuts/Skills enhancements:** §8.10.1 (export/import, search/filter, discoverability), §8.10.2 (bulk permission, sort/filter, preview, last modified, validate all).
@@ -852,9 +852,9 @@ Required. Use existing widgets; tag new helpers with DRY.
 - [ ] **8.2.1** Implement `run_with_cleanup(runner, request, config)` per §4.8 (prepare → execute → cleanup; on prepare error log and continue). Place in `src/core/run_with_cleanup.rs` or inside `execution_engine.rs`; tag DRY:FN.
 - [ ] **8.2.2** Add `CleanupConfig` (or cleanup section) to the run config shape built from GuiConfig (Option B, Worktree §5). Ensure the orchestrator and other call sites can obtain a `CleanupConfig` when starting a run.
 - [ ] **8.2.3** Extend `IterationContext` (or equivalent) with `cleanup_config: Option<CleanupConfig>` per §9.1.16. When the orchestrator builds the context, set it from run config.
-- [ ] **8.2.4** In **ExecutionEngine::execute_iteration**: call `prepare_working_directory(&context.working_directory, &cleanup_config)` before the platform loop; then call `execute_with_sdk_fallback(...)` as today (do not replace `runner.execute` inside it with run_with_cleanup—see §9.1.17); then call `cleanup_after_execution(0, &context.working_directory, &cleanup_config)` after it returns. Obtain cleanup_config from context (e.g. `context.cleanup_config.unwrap_or_default()`). This way prepare/cleanup wrap the entire execution (SDK or CLI).
+- [ ] **8.2.4** In **ExecutionEngine::execute_iteration**: call `prepare_working_directory(&context.working_directory, &cleanup_config)` before the platform loop; then call `execute_with_sdk_fallback(...)` as today (do not replace `runner.execute` inside it with run_with_cleanup--see §9.1.17); then call `cleanup_after_execution(0, &context.working_directory, &cleanup_config)` after it returns. Obtain cleanup_config from context (e.g. `context.cleanup_config.unwrap_or_default()`). This way prepare/cleanup wrap the entire execution (SDK or CLI).
 - [ ] **8.2.5** In `interview/research_engine.rs` `execute_research_ai_call`, wrap `runner.execute(&request)` in `run_with_cleanup(runner, &request, &config).await`; obtain config from research engine config or caller.
-- [ ] **8.2.6** In start_chain: `prd_generator.rs`, `requirements_interviewer.rs`, `architecture_generator.rs`, `multi_pass_generator.rs` — replace each `runner.execute(&request).await` with `run_with_cleanup(..., &request, &config).await`; pass config from caller or discovery.
+- [ ] **8.2.6** In start_chain: `prd_generator.rs`, `requirements_interviewer.rs`, `architecture_generator.rs`, `multi_pass_generator.rs` -- replace each `runner.execute(&request).await` with `run_with_cleanup(..., &request, &config).await`; pass config from caller or discovery.
 - [ ] **8.2.7** In `app.rs` `execute_ai_turn`: optionally use run_with_cleanup when working_dir is a known project; otherwise keep direct execute and skip prepare/cleanup.
 
 ### 8.3 Tests and gaps (required)
@@ -904,7 +904,7 @@ Implement in order; discovery path order is canonical (§7.10).
 - [ ] **8.9.2** Define discovery paths (DRY:DATA:skill_search_paths) in **canonical order**: project first (`.puppet-master/skills`, `.opencode/skills`, `.claude/skills`, `.agents/skills`), then global (`~/.config/puppet-master/skills`, etc.); implement `discover_skills(project_root) -> Vec<SkillInfo>` with first-wins deduplication by name; tag DRY:FN:discover_skills.
 - [ ] **8.9.3** Implement `load_skill(path) -> Result<SkillInfo>` with YAML frontmatter parsing and name/description validation (length, regex, dir-name match); return clear errors for invalid frontmatter or missing file; tag DRY:FN:load_skill.
 - [ ] **8.9.4** Add `skill_permissions` to GuiConfig; implement pattern-based resolve (allow/deny/ask) with wildcards; **explicit per-skill entry wins over pattern**; tag DRY:FN:resolve_skill_permission.
-- [ ] **8.9.5** Implement CRUD: create skill dir + SKILL.md (if target dir already contains SKILL.md, return error and do not overwrite — §7.11); update SKILL.md; delete (with confirmation); persist only permissions in config. On config write failure, return error to caller.
+- [ ] **8.9.5** Implement CRUD: create skill dir + SKILL.md (if target dir already contains SKILL.md, return error and do not overwrite -- §7.11); update SKILL.md; delete (with confirmation); persist only permissions in config. On config write failure, return error to caller.
 - [ ] **8.9.6** Implement `list_skills_for_agent(project_root, permissions) -> Vec<SkillInfo>` for runner/prompt integration; tag DRY:FN:list_skills_for_agent. **Document per platform (Cursor, Codex, Claude, Gemini, Copilot) how skill paths or content are passed** (env, prompt, tool) in platform_specs or linked doc; implementation plan must list this mapping.
 - [ ] **8.9.7** Unit tests for skills: discover_skills (mock dirs, order and deduplication); load_skill (valid/invalid frontmatter, name validation, dir-name match); resolve_skill_permission (exact + wildcard, default allow, explicit over pattern). See §7.11.
 
@@ -917,21 +917,21 @@ Required. Implement with core Shortcuts (§8.8) and Skills (§8.9).
 **Order:** Implement after §8.8 is complete. Steps: (1) Config load failure, (2) Export/import, (3) Search/filter, (4) Discoverability.
 
 - [ ] **8.10.1.1** **Config load failure (Shortcuts):** Handle corrupted or invalid shortcuts section on load: fall back to defaults, show toast "Shortcuts reset to defaults due to config error", rebuild key map (§7.11, §8.8.7). Ensure this is wired at app startup and when opening Config → Shortcuts.
-- [ ] **8.10.1.2** **Export/import:** Add "Export…" and "Import…" buttons on **Config → Shortcuts** tab. Implement `export_shortcuts_to_json` and `import_shortcuts_from_json` (DRY:FN); validate on import (action ids, no duplicate binding per §7.11); Replace/Merge confirmation modal; on success persist and rebuild key map. Use same serialization as GuiConfig.shortcuts. Reject invalid JSON or unsupported version with toast (§7.11.1).
-- [ ] **8.10.1.3** **Search/filter:** Add filter text field above shortcut list on Shortcuts tab; filter by action label or shortcut string (case-insensitive substring). Empty filter = show all; non-empty with no match = show empty list + "No shortcuts match '…'" (§7.11). Optional DRY:FN `filter_shortcut_list` if reused.
-- [ ] **8.10.1.4** **Discoverability:** Where actions with shortcuts appear (menus, buttons), show binding in label or tooltip via a single helper (DRY:FN or DRY:HELPER). When key map not yet loaded, show action label only or "(Loading…)" (§7.11). Keep in sync with key map after changes.
+- [ ] **8.10.1.2** **Export/import:** Add "Export..." and "Import..." buttons on **Config → Shortcuts** tab. Implement `export_shortcuts_to_json` and `import_shortcuts_from_json` (DRY:FN); validate on import (action ids, no duplicate binding per §7.11); Replace/Merge confirmation modal; on success persist and rebuild key map. Use same serialization as GuiConfig.shortcuts. Reject invalid JSON or unsupported version with toast (§7.11.1).
+- [ ] **8.10.1.3** **Search/filter:** Add filter text field above shortcut list on Shortcuts tab; filter by action label or shortcut string (case-insensitive substring). Empty filter = show all; non-empty with no match = show empty list + "No shortcuts match '...'" (§7.11). Optional DRY:FN `filter_shortcut_list` if reused.
+- [ ] **8.10.1.4** **Discoverability:** Where actions with shortcuts appear (menus, buttons), show binding in label or tooltip via a single helper (DRY:FN or DRY:HELPER). When key map not yet loaded, show action label only or "(Loading...)" (§7.11). Keep in sync with key map after changes.
 
 **8.10.2 Skills: bulk permission, sort/filter, preview, last modified, validate all (§7.11.2)**
 
 Order: implement list/sort/filter first, then preview and last modified, then bulk permission and validate all.
 
 - [ ] **8.10.2.1** **Sort/filter:** Add sort (Name / Source / Permission) and filter (text, source, permission) on Skills tab. Apply in-memory to discovered list; persist sort preference in GuiConfig (e.g. `skills_list_sort`). Use styled_text_input and dropdowns from widget catalog.
-- [ ] **8.10.2.2** **Last modified:** Extend SkillInfo with `modified: Option<DateTime<Utc>>` from path metadata (discovery or load_skill); show in list row and in preview pane. If mtime unreadable, show empty or "—"; do not drop skill from list.
+- [ ] **8.10.2.2** **Last modified:** Extend SkillInfo with `modified: Option<DateTime<Utc>>` from path metadata (discovery or load_skill); show in list row and in preview pane. If mtime unreadable, show empty or "--"; do not drop skill from list.
 - [ ] **8.10.2.3** **Preview:** On skill selection in list, show SKILL.md body in read-only pane (load on demand). Reuse load_skill or add optional body / `load_skill_body`; on load failure show error in pane. "Edit" opens full editor.
 - [ ] **8.10.2.4** **Bulk permission:** Add "Bulk permission" / "Set by pattern" on Skills tab (pattern input + Allow/Deny/Ask + Apply). Confirmation modal with count; on confirm update GuiConfig.skill_permissions and persist. Document in UI that explicit per-skill wins over pattern. On persist failure show error toast; keep in-memory state for retry.
 - [ ] **8.10.2.5** **Validate all:** Add "Validate all" button; run `validate_skill` (DRY:FN) for each discovered skill; show **full table** (all skills) with status OK or Error + message; summary "N OK, M errors"; selectable labels for copy. Reuse validation logic from load_skill. Optional filter "Show only errors." On per-skill read error, report that skill and continue.
-- [ ] **8.10.2.6** **Create skill — dir exists:** On "Create new" skill, if target directory already exists and contains SKILL.md, show error and do not overwrite (§7.11). User must choose different name or remove existing skill first.
-- [ ] **8.10.2.7** **Edit — concurrent edit on disk:** On save, if SKILL.md was modified on disk since open, implementation must decide: recommend detect (mtime or content) and prompt "File changed on disk. Reload / Overwrite / Cancel" (§7.11).
+- [ ] **8.10.2.6** **Create skill -- dir exists:** On "Create new" skill, if target directory already exists and contains SKILL.md, show error and do not overwrite (§7.11). User must choose different name or remove existing skill first.
+- [ ] **8.10.2.7** **Edit -- concurrent edit on disk:** On save, if SKILL.md was modified on disk since open, implementation must decide: recommend detect (mtime or content) and prompt "File changed on disk. Reload / Overwrite / Cancel" (§7.11).
 
 ### 8.7 Pre-completion
 
@@ -956,7 +956,7 @@ The following gaps or issues should be resolved during implementation or explici
 ### 9.1.1 Signature and contract alignment
 
 - **REQUIREMENTS.md §26.2** specifies `prepare_working_directory(&self, path: &str)` and `cleanup_after_execution(&self, pid: u32)` with no `work_dir` on cleanup. This plan adds `work_dir: &Path` to `cleanup_after_execution` so the caller passes the directory the agent used (the runner may not know it from `pid`). Decide whether to update REQUIREMENTS to match or keep the extended signature only in code.
-- Use `Path`/`PathBuf` in the trait; REQUIREMENTS use `&str` for path — align for consistency.
+- Use `Path`/`PathBuf` in the trait; REQUIREMENTS use `&str` for path -- align for consistency.
 
 ### 9.1.2 Root-level state files and git clean
 
@@ -975,12 +975,12 @@ The following gaps or issues should be resolved during implementation or explici
 
 ### 9.1.5 Where work_dir comes from
 
-- In the codebase, **orchestrator** resolves `working_directory` via `get_tier_worktree(tier_id).unwrap_or_else(|| config.project.working_directory)` (execution_engine / orchestrator path). In **app.rs** `execute_ai_turn`, `working_dir` is set to `std::env::current_dir()` — i.e. process CWD, which may not be the configured project or a tier worktree.
+- In the codebase, **orchestrator** resolves `working_directory` via `get_tier_worktree(tier_id).unwrap_or_else(|| config.project.working_directory)` (execution_engine / orchestrator path). In **app.rs** `execute_ai_turn`, `working_dir` is set to `std::env::current_dir()` -- i.e. process CWD, which may not be the configured project or a tier worktree.
 - **Recommendation:** Ensure prepare/cleanup use the same source as the execution request: for orchestrator-driven runs use tier worktree or `config.project.working_directory`; for other flows (e.g. interview/wizard) either pass the same working_dir used for execution or document that cleanup is skipped when not using orchestrator workspace. Avoid using `current_dir()` for cleanup unless it is the intended workspace.
 
 ### 9.1.6 git clean exclude list
 
-- `git clean -fd -e <pattern>` can exclude paths by pattern; multiple `-e` flags are allowed. The plan says "exclude list so `.puppet-master/` and allowlisted paths are never touched" but does not specify exact patterns (e.g. `-e '.puppet-master'`, `-e 'progress.txt'`, `-e 'AGENTS.md'`). Git’s `-e` is a pattern (e.g. ignore pattern), not necessarily a path.
+- `git clean -fd -e <pattern>` can exclude paths by pattern; multiple `-e` flags are allowed. The plan says "exclude list so `.puppet-master/` and allowlisted paths are never touched" but does not specify exact patterns (e.g. `-e '.puppet-master'`, `-e 'progress.txt'`, `-e 'AGENTS.md'`). Git's `-e` is a pattern (e.g. ignore pattern), not necessarily a path.
 - **Recommendation:** Implement the single helper **DRY:FN:run_git_clean_with_excludes** (§4.7) that builds the command from the allowlist (DRY:DATA). Document the exact patterns there (or in `CLEANUP_EXCLUDE_PATTERNS`); test that excluded paths are never removed.
 
 ### 9.1.7 Evidence retention: definition of "run"
@@ -1001,11 +1001,11 @@ The following gaps or issues should be resolved during implementation or explici
 ### 9.1.10 Prepare failure policy
 
 - If **prepare_working_directory** fails (e.g. not a git repo, permission error), the plan does not say whether the iteration is aborted or continues without prepare.
-- **Resolved:** **Best-effort:** On failure (e.g. git check fails, or `run_git_clean_with_excludes` errors), log a warning and **continue** — do not abort the iteration. The wrapper `run_with_cleanup` should catch prepare errors, log them, and proceed to `runner.execute(request)`. This avoids one bad repo or permission flake from blocking all runs. Document in AGENTS.md and in §4.8.
+- **Resolved:** **Best-effort:** On failure (e.g. git check fails, or `run_git_clean_with_excludes` errors), log a warning and **continue** -- do not abort the iteration. The wrapper `run_with_cleanup` should catch prepare errors, log them, and proceed to `runner.execute(request)`. This avoids one bad repo or permission flake from blocking all runs. Document in AGENTS.md and in §4.8.
 
 ### 9.1.11 Worktree and .puppet-master location
 
-- When using worktrees, the agent’s cwd is the worktree path. The main repo’s `.puppet-master/` may not exist inside the worktree (worktrees share .git but have their own working tree). So cleanup in the worktree path may only see untracked files in that tree; no need to exclude `.puppet-master/` inside the worktree if it is not there. The allowlist still matters for the main workspace; for worktrees, excluding `.puppet-master/` is harmless if absent.
+- When using worktrees, the agent's cwd is the worktree path. The main repo's `.puppet-master/` may not exist inside the worktree (worktrees share .git but have their own working tree). So cleanup in the worktree path may only see untracked files in that tree; no need to exclude `.puppet-master/` inside the worktree if it is not there. The allowlist still matters for the main workspace; for worktrees, excluding `.puppet-master/` is harmless if absent.
 - No change needed; note during implementation that worktree cleanup runs in the worktree root and allowlist semantics apply per directory.
 
 ### 9.1.12 Optional: concurrent runs
@@ -1031,17 +1031,17 @@ The following gaps or issues should be resolved during implementation or explici
 - **prd.json:** Ensure the allowlist (DRY:DATA) and `run_git_clean_with_excludes` exclude `prd.json` at project root; added to §3.6 and §4.7 table; §9.1.2 recommendation updated.
 - **Config copy:** §7.1 previously said "cleanup.untracked" runs "after execution"; corrected to "before each run (in prepare_working_directory)". Implementors should wire the toggle to control only the **prepare** step, not cleanup_after_execution.
 - **Manual "Clean workspace":** Should invoke prepare-style logic (git clean with excludes), not cleanup_after_execution; §7.2 clarified.
-- **Checklist item 4.2–4.3:** The checklist says "cleanup_after_execution (… workspace cleanup with excludes)" — implement only runner temp (and optional build-artifact dirs) in cleanup_after_execution; workspace cleanup with excludes is in prepare_working_directory only.
+- **Checklist item 4.2-4.3:** The checklist says "cleanup_after_execution (... workspace cleanup with excludes)" -- implement only runner temp (and optional build-artifact dirs) in cleanup_after_execution; workspace cleanup with excludes is in prepare_working_directory only.
 
 ### 9.1.16 ExecutionEngine and CleanupConfig wiring
 
 - **Gap:** ExecutionEngine currently has no access to run config or CleanupConfig. To use `run_with_cleanup`, the orchestrator (or whoever calls `execute_iteration`) must pass CleanupConfig into the execution path.
-- **Concrete options:** (1) Add `cleanup_config: CleanupConfig` to `IterationContext` and have the orchestrator set it when building the context; (2) Add `cleanup_config: CleanupConfig` to ExecutionEngine at construction and pass it when creating the engine; (3) Use a thread-local or global "current run config" that ExecutionEngine reads (not recommended — prefer explicit passing). Recommendation: (1) extend `IterationContext` with an optional `cleanup_config: Option<CleanupConfig>`; when building the context, the orchestrator fills it from the run config. ExecutionEngine then passes it to `run_with_cleanup`. If None, skip prepare/cleanup (backward compatible).
+- **Concrete options:** (1) Add `cleanup_config: CleanupConfig` to `IterationContext` and have the orchestrator set it when building the context; (2) Add `cleanup_config: CleanupConfig` to ExecutionEngine at construction and pass it when creating the engine; (3) Use a thread-local or global "current run config" that ExecutionEngine reads (not recommended -- prefer explicit passing). Recommendation: (1) extend `IterationContext` with an optional `cleanup_config: Option<CleanupConfig>`; when building the context, the orchestrator fills it from the run config. ExecutionEngine then passes it to `run_with_cleanup`. If None, skip prepare/cleanup (backward compatible).
 - **CleanupConfig default:** When `cleanup_config` is `None` or `unwrap_or_default()` is used, document the default: e.g. `CleanupConfig { untracked: true, clean_ignored: false, clear_agent_output: false, remove_build_artifacts: false }` so prepare runs untracked clean by default and we don't accidentally disable cleanup when config is missing.
 
 ### 9.1.17 ExecutionEngine execute step is SDK fallback, not runner.execute only
 
-- **Gap:** `ExecutionEngine::execute_with_sdk_fallback` first tries `try_execute_with_sdk(request)`; only on failure does it call `runner.execute(request)`. So the "execute" step is **not** a single `runner.execute()` call—it can be SDK or runner. If we replace only `runner.execute(request).await` with `run_with_cleanup(&*runner, request, config).await`, then when the **SDK path** succeeds we would **never run prepare or cleanup** (because run_with_cleanup wouldn't be called).
+- **Gap:** `ExecutionEngine::execute_with_sdk_fallback` first tries `try_execute_with_sdk(request)`; only on failure does it call `runner.execute(request)`. So the "execute" step is **not** a single `runner.execute()` call--it can be SDK or runner. If we replace only `runner.execute(request).await` with `run_with_cleanup(&*runner, request, config).await`, then when the **SDK path** succeeds we would **never run prepare or cleanup** (because run_with_cleanup wouldn't be called).
 - **Resolved:** Do **not** use `run_with_cleanup` inside `execute_with_sdk_fallback`. Instead, in **execute_iteration** (or the caller of `execute_with_sdk_fallback`): (1) call `prepare_working_directory(&context.working_directory, &cleanup_config)` before the platform loop; (2) call `execute_with_sdk_fallback(...)` as today; (3) after it returns, call `cleanup_after_execution(0, &context.working_directory, &cleanup_config)`. So prepare and cleanup wrap the **entire** execution (SDK or CLI). `run_with_cleanup` remains for call sites that only do `runner.execute()` (research_engine, start_chain, app). Checklist 8.2.4 updated accordingly.
 
 ### 9.1.18 Unwired features, GUI gaps, and implementation status (sweep)
@@ -1052,15 +1052,15 @@ The following reflects a sweep of the codebase and plans. Use it to avoid missin
 
 - **Cleanup module:** No `src/cleanup/`; no `prepare_working_directory`, `cleanup_after_execution`, `run_git_clean_with_excludes`, or `run_with_cleanup`. All call sites still call `runner.execute()` (or SDK fallback) with no prepare/cleanup. Implement per §4 and §8.
 - **CleanupConfig / run config:** No `CleanupConfig` type; no cleanup or evidence section in the config the run uses. When implementing, add to the **run config** (Option B: build from gui_config at run start) so the orchestrator and other call sites receive cleanup settings.
-- **GUI — Config → Advanced:** No "Workspace / Cleanup" subsection; no toggles for clean untracked, clean ignored, clear agent-output, evidence retention. Add per §7.5 and checklist 8.6.
-- **GUI — Doctor:** No "Clean workspace now" button; no Workspace category. Doctor does not receive a project-path hint when run from the app (Worktree plan §7.2). Add button and project context per §7.5 and 8.6.2.
+- **GUI -- Config → Advanced:** No "Workspace / Cleanup" subsection; no toggles for clean untracked, clean ignored, clear agent-output, evidence retention. Add per §7.5 and checklist 8.6.
+- **GUI -- Doctor:** No "Clean workspace now" button; no Workspace category. Doctor does not receive a project-path hint when run from the app (Worktree plan §7.2). Add button and project context per §7.5 and 8.6.2.
 
 **Unwired (run does not use GUI state)**
 
 - **Orchestrator run config:** The backend uses `ConfigManager::discover()` (no hint) and `get_config()` which loads **PuppetMasterConfig** from the **file**. The Config page saves **GuiConfig** to the same path. The two shapes differ (Worktree plan §5); the run does **not** receive `gui_config.advanced.execution.enable_parallel` or other GUI-only fields unless Option B (build run config from gui_config at run start) is implemented. So **enable_parallel**, branching, and (once added) cleanup toggles are **unwired** until Option B is in place.
 - **Interview:** When building `InterviewOrchestratorConfig` in app.rs, only **generate_initial_agents_md** and **generate_playwright_requirements** are passed from `gui_config.interview`. The following are **in the GUI** but **not** passed to the orchestrator: **require_architecture_confirmation**, **vision_provider**, **max_questions_per_phase**. **min_questions_per_phase** does not exist in GUI or in `InterviewOrchestratorConfig`. Phase definitions use hardcoded `min_questions: 3`, `max_questions: 8`. Wire these per Interview plan "GUI gaps: Interview tab" and orchestrator plan "Interviewer Enhancements and Config Wiring."
 
-**Shortcuts and Skills (§7.7–§7.11)**
+**Shortcuts and Skills (§7.7-§7.11)**
 
 - **Shortcuts:** No `ShortcutAction`/`KeyBinding` or `default_shortcuts`; no `build_key_map` or key-event wiring; no Shortcuts tab or config. Implement per §7.7, §7.9, §8.8; resolve gaps in §7.11 (record flow, Iced wiring, serialization).
 - **Skills:** No `src/skills/`; no discovery, load_skill, or permissions; no Skills tab or config. Implement per §7.8, §7.10, §8.9; resolve gaps in §7.11 (deduplication rule, import semantics, no-project create, name-change on edit).
@@ -1085,7 +1085,7 @@ The following reflects a sweep of the codebase and plans. Use it to avoid missin
 - **Config load failure:** If the shortcuts section of GuiConfig is corrupted or invalid at load time, the app must not crash. **Recommendation:** Fall back to empty overrides, log a warning, show toast "Shortcuts reset to defaults due to config error", and build key map from defaults only (§7.11, §8.8.7). Wire this at app startup and when opening Config → Shortcuts.
 - **Key already bound to another action:** When the user records a new shortcut that is already assigned to a different action, **recommend rejecting** with tooltip "Already used by &lt;ActionName&gt;" and not saving (§7.11). Alternative (steal binding) is implementation-defined if preferred.
 - **Export/import versioning:** Export JSON must include a `version` field; reject imports with unsupported version and show clear error (§7.11). Document supported version(s) in code or STATE_FILES.md.
-- **Tooltip when key map not loaded:** Before the key map is built (e.g. config not yet loaded), show action label only or "(Loading…)" where shortcut labels appear; never show blank or "(undefined)" (§7.11).
+- **Tooltip when key map not loaded:** Before the key map is built (e.g. config not yet loaded), show action label only or "(Loading...)" where shortcut labels appear; never show blank or "(undefined)" (§7.11).
 
 ### 9.1.21 Skills: discovery, permissions, and runner wiring
 
@@ -1098,7 +1098,7 @@ The following reflects a sweep of the codebase and plans. Use it to avoid missin
 
 **Known risks**
 
-- **Iced key API may vary:** Key event subscription and key-map application depend on Iced’s key-event API (e.g. `on_key_press`, subscription level). API or behavior may differ by Iced version or platform; implementer should confirm the integration point and document it in the implementation plan.
+- **Iced key API may vary:** Key event subscription and key-map application depend on Iced's key-event API (e.g. `on_key_press`, subscription level). API or behavior may differ by Iced version or platform; implementer should confirm the integration point and document it in the implementation plan.
 - **Skill discovery on Windows path case:** Discovery paths (e.g. `.puppet-master/skills`, `.opencode/skills`) may behave differently on Windows (case-insensitivity, path separators). First-wins deduplication by name should account for case-normalization if needed.
 - **platform_specs skill injection:** How each platform (Cursor, Codex, Claude, Gemini, Copilot) receives the skill list (env var, prompt injection, tool) must be defined in platform_specs or orchestrator plan; until then, Skills integration with runners is stubbed.
 
@@ -1120,10 +1120,10 @@ This section ties the Misc Plan to **Plans/WorktreeGitImprovement.md**, **Plans/
 **Dependencies (MiscPlan depends on Worktree):**
 
 - **Config wiring (Phase 1):** Cleanup config (cleanup.untracked, cleanup.ignored, cleanup.clear_agent_output, etc.) must live in the **same** config shape that the run receives. When implementing MiscPlan §7 (Cleanup UX & Config), add cleanup fields to that schema and ensure they are populated from the GUI (or file) the same way as other run settings. If Option B is not yet implemented, cleanup toggles in the GUI would not affect the run; implement Option B first or in parallel so cleanup config is wired.
-- **Git binary resolution (Phase 3):** The Worktree plan introduces a shared helper for resolving the `git` executable (e.g. `path_utils::resolve_git_executable()` or equivalent) used by both GitManager and Doctor. **MiscPlan’s cleanup module** must use that same helper when running `git clean` (in `run_git_clean_with_excludes`). Do not use `Command::new("git")` alone; resolve the binary so cleanup works in environments where git is only in app-local or custom paths. See Worktree §3.1, §7.5.
+- **Git binary resolution (Phase 3):** The Worktree plan introduces a shared helper for resolving the `git` executable (e.g. `path_utils::resolve_git_executable()` or equivalent) used by both GitManager and Doctor. **MiscPlan's cleanup module** must use that same helper when running `git clean` (in `run_git_clean_with_excludes`). Do not use `Command::new("git")` alone; resolve the binary so cleanup works in environments where git is only in app-local or custom paths. See Worktree §3.1, §7.5.
 - **Worktree list for "Clean workspace" (optional):** If implementing "Clean workspace now" for **all active worktrees** (§7.2), the list of worktrees must come from the same place as the orchestrator (e.g. `worktree_manager.list_worktrees()` and/or `active_worktrees`). Worktree plan §2.2 and §7.6 describe repopulation of active_worktrees; if that is not done, "clean all worktrees" may only clean the main workspace. Prefer implementing after or with Worktree Phase 2 so worktree list is reliable.
 
-**Distinction:** Worktree plan’s "cleanup" is **removing the worktree directory** after merge (`cleanup_subtask_worktree`, `remove_worktree`). MiscPlan’s cleanup is **removing untracked/ignored files *inside* ** the workspace or worktree. Both apply: after an iteration, run MiscPlan’s cleanup_after_execution in that worktree; when the subtask is done and merged, run Worktree’s remove_worktree. No conflict.
+**Distinction:** Worktree plan's "cleanup" is **removing the worktree directory** after merge (`cleanup_subtask_worktree`, `remove_worktree`). MiscPlan's cleanup is **removing untracked/ignored files *inside* ** the workspace or worktree. Both apply: after an iteration, run MiscPlan's cleanup_after_execution in that worktree; when the subtask is done and merged, run Worktree's remove_worktree. No conflict.
 
 **STATE_FILES.md:** Worktree plan adds a worktrees subsection under `.puppet-master/`; MiscPlan adds agent-output and possibly evidence retention. Both can update STATE_FILES in their own subsections.
 
@@ -1134,8 +1134,8 @@ This section ties the Misc Plan to **Plans/WorktreeGitImprovement.md**, **Plans/
 **Impacts (MiscPlan impacts Orchestrator):**
 
 - **Single execution path:** All agent runs (main iteration and subagent runs) should go through the same prepare → execute → cleanup flow. When the orchestrator plan adds `execute_tier_with_subagents` or similar, that path must **use run_with_cleanup** (or the same prepare/execute/cleanup wrapper) so that both "main" iterations and subagent invocations get prepare_working_directory before run and cleanup_after_execution after run. Do not call `runner.execute()` directly from new orchestrator/subagent code; use the wrapper from MiscPlan §4.6.
-- **Ordering with start/end verification:** Orchestrator plan’s verify_tier_start runs at Phase/Task/Subtask (and optionally Iteration) **entry**; verify_tier_end runs at Phase/Task/Subtask **completion**. MiscPlan’s prepare/cleanup run at **iteration** boundaries (before and after each runner.execute). So the flow is: verify_tier_start (tier) → … → prepare_working_directory (iteration) → execute → cleanup_after_execution (iteration) → … → verify_tier_end (tier). No conflict; both apply. When implementing orchestrator start/end verification, keep iteration-level prepare/cleanup as defined in MiscPlan.
-- **Parallel subtasks:** Each parallel subtask has its own worktree and working_dir. cleanup_after_execution runs in that subtask’s work_dir only (per MiscPlan §3.3). Orchestrator plan’s parallel execution (worktree per subtask) is compatible; no extra change needed.
+- **Ordering with start/end verification:** Orchestrator plan's verify_tier_start runs at Phase/Task/Subtask (and optionally Iteration) **entry**; verify_tier_end runs at Phase/Task/Subtask **completion**. MiscPlan's prepare/cleanup run at **iteration** boundaries (before and after each runner.execute). So the flow is: verify_tier_start (tier) → ... → prepare_working_directory (iteration) → execute → cleanup_after_execution (iteration) → ... → verify_tier_end (tier). No conflict; both apply. When implementing orchestrator start/end verification, keep iteration-level prepare/cleanup as defined in MiscPlan.
+- **Parallel subtasks:** Each parallel subtask has its own worktree and working_dir. cleanup_after_execution runs in that subtask's work_dir only (per MiscPlan §3.3). Orchestrator plan's parallel execution (worktree per subtask) is compatible; no extra change needed.
 - **Commit order:** The orchestrator calls commit_tier_progress **after** the iteration returns; run_with_cleanup runs cleanup **before** that. So cleanup_after_execution must not remove untracked files (§9.1.13); only runner temp files. Full workspace untracked clean runs in prepare_working_directory (before the run).
 
 **Dependencies (MiscPlan depends on Orchestrator):** None. MiscPlan can be implemented first; orchestrator subagent integration should then wire its runner calls through run_with_cleanup.
@@ -1155,13 +1155,13 @@ This section ties the Misc Plan to **Plans/WorktreeGitImprovement.md**, **Plans/
 
 ### 10.4 newfeatures.md
 
-**Plans/newfeatures.md §13** (Bounded buffers and process isolation) requires that all subprocess output (runners, headless, stream consumers) use **bounded buffers** (fixed max size, drop oldest when full) and that the CLI always runs in a **separate process**. When implementing cleanup or any runner path, ensure we do not accumulate unbounded stdout/stderr; align with newfeatures §13 and document in AGENTS.md. **§2** (Background/async agents) defines output for background runs at `.puppet-master/agent-output/{run-id}/`; if that feature is implemented, the cleanup allowlist and optional “agent output” policy (§3.2, §5) should account for that path so background run output is preserved or cleared per policy.
+**Plans/newfeatures.md §13** (Bounded buffers and process isolation) requires that all subprocess output (runners, headless, stream consumers) use **bounded buffers** (fixed max size, drop oldest when full) and that the CLI always runs in a **separate process**. When implementing cleanup or any runner path, ensure we do not accumulate unbounded stdout/stderr; align with newfeatures §13 and document in AGENTS.md. **§2** (Background/async agents) defines output for background runs at `.puppet-master/agent-output/{run-id}/`; if that feature is implemented, the cleanup allowlist and optional "agent output" policy (§3.2, §5) should account for that path so background run output is preserved or cleared per policy.
 
 ### 10.5 Summary: what else needs to be done
 
 | Plan | What to do so MiscPlan fits |
 |------|-----------------------------|
-| **WorktreeGitImprovement** | Implement Phase 1 (config wiring) so cleanup config is in the same run config; implement Phase 3 shared git binary resolution and use it in MiscPlan’s run_git_clean_with_excludes; optionally Phase 2 (active_worktrees) for "Clean all worktrees." |
+| **WorktreeGitImprovement** | Implement Phase 1 (config wiring) so cleanup config is in the same run config; implement Phase 3 shared git binary resolution and use it in MiscPlan's run_git_clean_with_excludes; optionally Phase 2 (active_worktrees) for "Clean all worktrees." |
 | **orchestrator-subagent-integration** | When adding subagent/iteration execution, use run_with_cleanup (MiscPlan) for every runner invocation; keep verify_tier_start/verify_tier_end at tier boundaries and prepare/cleanup at iteration boundaries. |
 | **interview-subagent-integration** | When adding research or subagent runs that call the platform runner, use run_with_cleanup so interview runs get the same prepare/cleanup behavior. |
 
@@ -1463,10 +1463,10 @@ pub struct CleanupResult {
 
 **Severity levels:**
 
-- **Critical:** Workspace corruption, critical permission errors — **escalate to user**.
-- **Major:** Permission errors for specific files, locked files — **remediate automatically** (skip problematic files, retry with different strategy).
-- **Minor:** Non-fatal warnings (e.g., "some files could not be removed") — **log and proceed**.
-- **Info:** Informational messages — **log and proceed**.
+- **Critical:** Workspace corruption, critical permission errors -- **escalate to user**.
+- **Major:** Permission errors for specific files, locked files -- **remediate automatically** (skip problematic files, retry with different strategy).
+- **Minor:** Non-fatal warnings (e.g., "some files could not be removed") -- **log and proceed**.
+- **Info:** Informational messages -- **log and proceed**.
 
 **Remediation loop:**
 
@@ -1496,10 +1496,10 @@ pub struct CleanupResult {
 - REQUIREMENTS.md §26 (Fresh Agent Enforcement, Runner Contract, Process Isolation Mechanics)
 - STATE_FILES.md (§2 state hierarchy, evidence paths)
 - AGENTS.md (evidence logs tracked; no blanket *.log; .puppet-master/ not ignored)
-- Plans/WorktreeGitImprovement.md (worktree paths, config wiring, git binary resolution, Phase 1–3)
+- Plans/WorktreeGitImprovement.md (worktree paths, config wiring, git binary resolution, Phase 1-3)
 - Plans/orchestrator-subagent-integration.md (subagent execution, start/end verification, parallel worktrees)
 - Plans/interview-subagent-integration.md (research engine, subagent invocation)
-- [OpenCode Agent Skills](https://opencode.ai/docs/skills/) (SKILL.md format, discovery paths, frontmatter, permissions) — reference for §7.8 and §7.10.
+- [OpenCode Agent Skills](https://opencode.ai/docs/skills/) (SKILL.md format, discovery paths, frontmatter, permissions) -- reference for §7.8 and §7.10.
 - Previous discussion: agent-left-behind docs, tests, artifacts, old builds; runner contract not implemented in Rust.
 
 ---
@@ -1520,10 +1520,10 @@ pub struct CleanupResult {
 - REQUIREMENTS.md §26 (Fresh Agent Enforcement, Runner Contract, Process Isolation Mechanics)
 - STATE_FILES.md (§2 state hierarchy, evidence paths)
 - AGENTS.md (evidence logs tracked; no blanket *.log; .puppet-master/ not ignored)
-- Plans/WorktreeGitImprovement.md (worktree paths, config wiring, git binary resolution, Phase 1–3)
+- Plans/WorktreeGitImprovement.md (worktree paths, config wiring, git binary resolution, Phase 1-3)
 - Plans/orchestrator-subagent-integration.md (subagent execution, start/end verification, parallel worktrees)
 - Plans/interview-subagent-integration.md (research engine, subagent invocation)
-- [OpenCode Agent Skills](https://opencode.ai/docs/skills/) (SKILL.md format, discovery paths, frontmatter, permissions) — reference for §7.8 and §7.10.
+- [OpenCode Agent Skills](https://opencode.ai/docs/skills/) (SKILL.md format, discovery paths, frontmatter, permissions) -- reference for §7.8 and §7.10.
 - Previous discussion: agent-left-behind docs, tests, artifacts, old builds; runner contract not implemented in Rust.
 
 ---

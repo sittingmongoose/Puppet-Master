@@ -1,8 +1,8 @@
-# Chain Wizard & Interview Flexibility — Intent-Based Workflows
+# Chain Wizard & Interview Flexibility -- Intent-Based Workflows
 
 ## Plan Document Status
 
-**This is a PLAN DOCUMENT ONLY** — No code changes have been made. This document contains:
+**This is a PLAN DOCUMENT ONLY** -- No code changes have been made. This document contains:
 
 - Intent-based workflow definitions (New project, Fork & evolve, Enhance/rewrite/add, Contribute PR)
 - GUI and flow changes to support multiple entry points and flexible requirements
@@ -13,19 +13,19 @@
 
 ## Rewrite alignment (2026-02-21)
 
-This plan’s workflow semantics remain authoritative. Implementation should target the rewrite described in `Plans/rewrite-tie-in-memo.md`:
+This plan's workflow semantics remain authoritative. Implementation should target the rewrite described in `Plans/rewrite-tie-in-memo.md`:
 
 - Wizard/Interview/Assistant orchestration should emit and consume the **unified event model** (seglog ledger → projections)
-- “Canonical requirements” artifacts should be treated as first-class **artifacts** in the event stream and projection layer
+- "Canonical requirements" artifacts should be treated as first-class **artifacts** in the event stream and projection layer
 - UI implementation details should be re-expressed in Slint (not Iced) without changing user-visible flow
 
 ## Executive Summary
 
-The current Chain wizard and Interview flow assume a single path: **start a new project** (with an optional “existing project” toggle). That does not support users who want to **fork and evolve** a repo, **enhance/rewrite/add** to an existing project that is new to Puppet Master, or **contribute a feature and open a Pull Request**. This plan defines **intent-based workflows** so the wizard, Interview, and execution path adapt to what the user is trying to do. It also expands the requirements step (multiple uploads, Requirements Doc Builder via Assistant), makes the Interview phase set **adaptive** (AI decides what to cut or double down on), and strengthens Project setup and GitHub integration (create repo, offer to create fork or let the user do it, and guide PR start/finish for first-time contributors).
+The current Chain wizard and Interview flow assume a single path: **start a new project** (with an optional "existing project" toggle). That does not support users who want to **fork and evolve** a repo, **enhance/rewrite/add** to an existing project that is new to Puppet Master, or **contribute a feature and open a Pull Request**. This plan defines **intent-based workflows** so the wizard, Interview, and execution path adapt to what the user is trying to do. It also expands the requirements step (multiple uploads, Requirements Doc Builder via Assistant), makes the Interview phase set **adaptive** (AI decides what to cut or double down on), and strengthens Project setup and GitHub integration (create repo, offer to create fork or let the user do it, and guide PR start/finish for first-time contributors).
 
 **Scope:**
 
-- **§1–§2:** Intent-based workflows and how they affect the flow.
+- **§1-§2:** Intent-based workflows and how they affect the flow.
 - **§3:** GUI updates: intent selection, requirements step redesign, project setup.
 - **§4:** Requirements: multiple uploads, merge/canonical input, storage.
 - **§5:** Requirements Doc Builder: Assistant chat generates requirements and hands off to Interview; **§5.6** Multi-Pass Review (optional review agent + N subagents, user approves revised doc).
@@ -61,34 +61,34 @@ The wizard and Interview must support **four distinct intents**. Each intent cha
 ### 1.1 New Project (greenfield)
 
 - **User goal:** Start a new product or codebase from scratch.
-- **Entry:** User selects “New project” (or equivalent). Project path may be empty or a new directory we will initialize.
-- **Requirements:** User provides one or more requirements documents (upload and/or Requirements Doc Builder). No “existing codebase” context beyond optional reference docs.
+- **Entry:** User selects "New project" (or equivalent). Project path may be empty or a new directory we will initialize.
+- **Requirements:** User provides one or more requirements documents (upload and/or Requirements Doc Builder). No "existing codebase" context beyond optional reference docs.
 - **Interview:** Full product interview (all phases available); AI may still shorten or deepen phases based on scope signals.
 - **Outcome:** New repo (we may create it on GitHub), full PRD and plan, then execution.
 
 ### 1.2 Fork & Evolve
 
-- **User goal:** Fork an existing repo and evolve it (add features, change direction, maintain a derivative). Not “start new” and not “continue the same project”—it’s a **derivative**.
-- **Entry:** User selects “Fork & evolve.” We need **upstream repo** (URL or `owner/repo`). We **offer to create the fork** for the user (via GitHub/host API or `gh repo fork`), or the user can create the fork themselves and point us at the fork path or URL.
-- **Requirements:** User provides requirements that describe **what to add or change** in the fork (delta). Can be upload(s) and/or Requirements Doc Builder framed as “what are we changing/adding?”
-- **Interview:** Interview is framed as **delta/evolution**: “What are you adding or changing in this fork?” Phase set can be reduced (e.g. skip or shorten Deployment if no infra change) or deepened (e.g. Architecture if major refactor). AI decides.
+- **User goal:** Fork an existing repo and evolve it (add features, change direction, maintain a derivative). Not "start new" and not "continue the same project"--it's a **derivative**.
+- **Entry:** User selects "Fork & evolve." We need **upstream repo** (URL or `owner/repo`). We **offer to create the fork** for the user (via GitHub/host API or `gh repo fork`), or the user can create the fork themselves and point us at the fork path or URL.
+- **Requirements:** User provides requirements that describe **what to add or change** in the fork (delta). Can be upload(s) and/or Requirements Doc Builder framed as "what are we changing/adding?"
+- **Interview:** Interview is framed as **delta/evolution**: "What are you adding or changing in this fork?" Phase set can be reduced (e.g. skip or shorten Deployment if no infra change) or deepened (e.g. Architecture if major refactor). AI decides.
 - **Outcome:** Fork (created by us or user), PRD/plan as **delta** over upstream, then execution on the fork.
 
 ### 1.3 Enhance / Rewrite / Add (existing project, new to Puppet Master)
 
 - **User goal:** The project already exists; Puppet Master has never seen it. User wants to **enhance** it, **rewrite** parts, or **add** to it.
-- **Entry:** User selects “Enhance/rewrite/add” and supplies **project path** (existing clone or directory). No fork required unless they later choose to contribute upstream.
+- **Entry:** User selects "Enhance/rewrite/add" and supplies **project path** (existing clone or directory). No fork required unless they later choose to contribute upstream.
 - **Requirements:** User provides requirements describing the **scope of change** (what to enhance, rewrite, or add). Can be upload(s) and/or Requirements Doc Builder.
-- **Interview:** Same delta framing as Fork & evolve: “What are we changing/adding?” Interview phases adapt (e.g. double down on Architecture for rewrite, skip Deployment if unchanged). Existing codebase is scanned (current codebase_scanner) to seed context.
+- **Interview:** Same delta framing as Fork & evolve: "What are we changing/adding?" Interview phases adapt (e.g. double down on Architecture for rewrite, skip Deployment if unchanged). Existing codebase is scanned (current codebase_scanner) to seed context.
 - **Outcome:** PRD/plan as delta; execution in the existing project directory.
 
 ### 1.4 Contribute (PR)
 
-- **User goal:** Add a feature (or fix) to someone else’s project and open a **Pull Request**. First-time PR contributors may not know the steps; we guide them.
-- **Entry:** User selects “Contribute (PR).” We need **upstream repo** (URL or `owner/repo`). We **offer to create the fork** for the user, or they can create it themselves and point us at their fork.
-- **Requirements:** Lightweight: feature/fix scope and acceptance criteria. Can be a short doc upload or a quick Requirements Doc Builder session (“I want to add X; acceptance: Y”).
+- **User goal:** Add a feature (or fix) to someone else's project and open a **Pull Request**. First-time PR contributors may not know the steps; we guide them.
+- **Entry:** User selects "Contribute (PR)." We need **upstream repo** (URL or `owner/repo`). We **offer to create the fork** for the user, or they can create it themselves and point us at their fork.
+- **Requirements:** Lightweight: feature/fix scope and acceptance criteria. Can be a short doc upload or a quick Requirements Doc Builder session ("I want to add X; acceptance: Y").
 - **Interview:** **Lighter** than full product or delta: focus on feature scope, acceptance criteria, and compatibility with upstream (e.g. style, tests). Many phases skipped or collapsed; AI decides.
-- **Outcome:** Fork (if we created it or user did), **feature branch** created by us or user, work done on that branch, then we **offer to commit, push, and open the PR** (or user does it themselves). Optional in-app or linked help: “What’s a PR?” (fork → branch → push → open PR).
+- **Outcome:** Fork (if we created it or user did), **feature branch** created by us or user, work done on that branch, then we **offer to commit, push, and open the PR** (or user does it themselves). Optional in-app or linked help: "What's a PR?" (fork → branch → push → open PR).
 
 ### 1.5 Summary Table
 
@@ -104,9 +104,9 @@ The wizard and Interview must support **four distinct intents**. Each intent cha
 ## 2. How Intent Affects the Flow
 
 - **Intent selection** happens at flow start (Dashboard or first wizard step). It drives:
-  - Which **project setup** questions we ask (e.g. “upstream URL” for Fork/PR, “project path” for Enhance, “new directory” for New).
+  - Which **project setup** questions we ask (e.g. "upstream URL" for Fork/PR, "project path" for Enhance, "new directory" for New).
   - Whether we **offer to create a fork** and/or **create a repo** (GitHub).
-  - What **requirements prompt** we show (“Full product,” “What are you adding/changing?” or “Feature/fix scope”).
+  - What **requirements prompt** we show ("Full product," "What are you adding/changing?" or "Feature/fix scope").
   - How the **Interview** is configured (phase set and depth) and how **PRD/plan** are framed (full vs. delta vs. feature).
 - **State:** Store the selected intent in app state (and optionally in `.puppet-master/` for recovery). All downstream steps (Interview, start chain, orchestrator) receive intent so they can adapt.
 
@@ -208,10 +208,10 @@ pub struct ChainWizardState {
 | intent | ✓ | ✓ | ✓ | ✓ |
 | wizard_step | ✓ | ✓ | ✓ | ✓ |
 | project_path | ✓ (new or empty) | ✓ (fork clone path) | ✓ (existing dir) | ✓ (fork clone path) |
-| create_github_repo, repo_* | ✓ if creating repo | — | — | — |
-| upstream_url | — | ✓ | — | ✓ |
-| fork_created_by_app, fork_url_or_path | — | ✓ | — | ✓ |
-| branch_name | — | — | — | ✓ |
+| create_github_repo, repo_* | ✓ if creating repo | -- | -- | -- |
+| upstream_url | -- | ✓ | -- | ✓ |
+| fork_created_by_app, fork_url_or_path | -- | ✓ | -- | ✓ |
+| branch_name | -- | -- | -- | ✓ |
 | uploaded_requirements_paths, builder_used, canonical_requirements_path | ✓ | ✓ | ✓ | ✓ |
 
 **Where state is stored:**
@@ -222,7 +222,7 @@ pub struct ChainWizardState {
 **Invariants:**
 
 - `canonical_requirements_path` is set only after at least one of: uploads (merged) or Builder output (or both merged). It always points to `.puppet-master/requirements/canonical-requirements.md` when merge has been run (see §4).
-- For Contribute (PR), `branch_name` is set when the user (or app) creates the feature branch; all work for that flow happens on that branch in the **main clone** (no tier worktrees — see §7).
+- For Contribute (PR), `branch_name` is set when the user (or app) creates the feature branch; all work for that flow happens on that branch in the **main clone** (no tier worktrees -- see §7).
 
 ---
 
@@ -230,73 +230,73 @@ pub struct ChainWizardState {
 
 ### 3.1 Intent Selection at Flow Start
 
-- **Placement:** When the user starts the flow (e.g. “Start new project” or “Open project” from Dashboard, or a dedicated “Start flow” entry), present **intent selection** before or as the first step of the wizard.
-- **UI:** Four options (cards, list, or radio group) with short descriptions and optional “Learn more”:
-  - **New project** — Greenfield; we’ll create or use a new directory and optional GitHub repo.
-  - **Fork & evolve** — You’ll work from a fork of an existing repo; we can create the fork or you can use your own.
-  - **Enhance/rewrite/add** — You have an existing project (new to Puppet Master); we’ll scope changes and plan.
-  - **Contribute (PR)** — You want to add a feature or fix and open a Pull Request; we’ll guide fork, branch, and PR.
+- **Placement:** When the user starts the flow (e.g. "Start new project" or "Open project" from Dashboard, or a dedicated "Start flow" entry), present **intent selection** before or as the first step of the wizard.
+- **UI:** Four options (cards, list, or radio group) with short descriptions and optional "Learn more":
+  - **New project** -- Greenfield; we'll create or use a new directory and optional GitHub repo.
+  - **Fork & evolve** -- You'll work from a fork of an existing repo; we can create the fork or you can use your own.
+  - **Enhance/rewrite/add** -- You have an existing project (new to Puppet Master); we'll scope changes and plan.
+  - **Contribute (PR)** -- You want to add a feature or fix and open a Pull Request; we'll guide fork, branch, and PR.
 - **Persistence:** Selected intent is stored in wizard/app state and passed to Interview and start chain. If the user goes back and changes intent, downstream state (e.g. requirements, interview phase) may need to be invalidated or confirmed.
 
 ### 3.2 Requirements Step Redesign
 
-- **Single prompt:** “Provide your Requirements Document(s).”
+- **Single prompt:** "Provide your Requirements Document(s)."
 - **Options (at least two):**
-  1. **Upload your own** — Single or **multiple** files (see §4). Supported formats per REQUIREMENTS.md (md, pdf, txt, docx); store under `.puppet-master/requirements/`.
-  2. **Requirements Doc Builder** — Button that opens the **Assistant chat** (§5). User describes the project (or delta, or feature); Assistant generates a requirements document and **hands it off** to the flow so the Interview continues with that doc as input. No re-upload required.
-- **Framing by intent:** The exact label or helper text can vary by intent (e.g. “Describe the product” vs “Describe what you’re adding or changing” vs “Describe the feature and acceptance criteria”).
-- **After requirements:** Proceed to Interview (or skip to PRD if we add “Skip interview” for advanced users later). Interview receives the canonical requirements (merged multi-doc or Builder output).
+  1. **Upload your own** -- Single or **multiple** files (see §4). Supported formats per REQUIREMENTS.md (md, pdf, txt, docx); store under `.puppet-master/requirements/`.
+  2. **Requirements Doc Builder** -- Button that opens the **Assistant chat** (§5). User describes the project (or delta, or feature); Assistant generates a requirements document and **hands it off** to the flow so the Interview continues with that doc as input. No re-upload required.
+- **Framing by intent:** The exact label or helper text can vary by intent (e.g. "Describe the product" vs "Describe what you're adding or changing" vs "Describe the feature and acceptance criteria").
+- **After requirements:** Proceed to Interview (or skip to PRD if we add "Skip interview" for advanced users later). Interview receives the canonical requirements (merged multi-doc or Builder output).
 
 ### 3.3 Project Setup Step (including GitHub)
 
 - **When:** At the start of Project setup (wizard step 0 or equivalent), show:
   - **Project path** (new directory or existing path).
   - **Intent-specific fields:**
-    - **New project:** Optional “Create GitHub repo” with **repo name** (required if creating) and any other fields needed to **actually create** the repo (visibility, description, .gitignore template, license, default branch). See §7.1.
-    - **Fork & evolve / Contribute (PR):** **Upstream repo** (URL or `owner/repo`). Then: **“Create fork for me”** (we create the fork via API/CLI) or **“I’ll create the fork myself”** (user supplies fork path or clone URL after they fork). See §7.2.
-  - **Existing GitHub repo (link only):** If the user already has a repo (e.g. created elsewhere or fork already exists), allow “Use existing repo” with URL or path.
-- **GitHub create-repo:** The GUI must “punch in” the repo name and all fields required by the GitHub create-repo API (or `gh repo create`) so we can create the repo without a second manual step. See §7.1.
+    - **New project:** Optional "Create GitHub repo" with **repo name** (required if creating) and any other fields needed to **actually create** the repo (visibility, description, .gitignore template, license, default branch). See §7.1.
+    - **Fork & evolve / Contribute (PR):** **Upstream repo** (URL or `owner/repo`). Then: **"Create fork for me"** (we create the fork via API/CLI) or **"I'll create the fork myself"** (user supplies fork path or clone URL after they fork). See §7.2.
+  - **Existing GitHub repo (link only):** If the user already has a repo (e.g. created elsewhere or fork already exists), allow "Use existing repo" with URL or path.
+- **GitHub create-repo:** The GUI must "punch in" the repo name and all fields required by the GitHub create-repo API (or `gh repo create`) so we can create the repo without a second manual step. See §7.1.
 
 ### 3.4 Navigation and Recovery
 
-- **Back/forward:** User can go back and change intent or project setup; document behavior when intent changes mid-flow (e.g. clear requirements and interview state, or prompt “Changing intent will reset requirements and interview; continue?”).
+- **Back/forward:** User can go back and change intent or project setup; document behavior when intent changes mid-flow (e.g. clear requirements and interview state, or prompt "Changing intent will reset requirements and interview; continue?").
 - **Recovery:** Per newfeatures.md §4, recovery snapshot includes current view and wizard step; intent and project path should be in the snapshot so we restore to the right step and intent.
 
 ### 3.5 Agent activity and progress visibility
 
-When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the user should **see the agents working** (similar to Assistant chat), not just a spinner or “Working…” label.
+When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the user should **see the agents working** (similar to Assistant chat), not just a spinner or "Working..." label.
 
 **Agent activity view (embedded, non-interactive):**
 
-- **Concept:** A **chat-like window** embedded in the page (wizard step or Interview view) that shows **streaming agent output** — prompts, model responses, subagent reports — so the user can see progress in real time.
-- **Non-interactive:** This view is **read-only** during the run: no user input, no slash commands. Minimal chrome (no full Assistant toolbar/settings); it is an embedded “agent log” or “agent activity” pane.
+- **Concept:** A **chat-like window** embedded in the page (wizard step or Interview view) that shows **streaming agent output** -- prompts, model responses, subagent reports -- so the user can see progress in real time.
+- **Non-interactive:** This view is **read-only** during the run: no user input, no slash commands. Minimal chrome (no full Assistant toolbar/settings); it is an embedded "agent log" or "agent activity" pane.
 - **Where used:**
-  - **Requirements Doc Builder:** When the Assistant is generating the requirements doc, show the Builder conversation/stream in this pane (or reuse the Assistant chat surface with a “generating…” state if the Builder is the Assistant).
-  - **Multi-Pass Review (requirements doc):** When the review agent and subagents are running, stream their activity (e.g. “Review agent spawning subagents…”, “Subagent 1 reviewing…”, “Subagent 1 reported back.”) into this pane.
-- **Implementation:** Reuse the same streaming/event pipeline as Assistant chat where possible (assistant-chat-design.md); for Multi-Pass Review, feed review-agent and subagent stdout/events into a similar stream and render in the embedded pane. DRY: one “agent activity view” widget or component, used by Builder, Interview document creation, and Multi-Pass Review.
+  - **Requirements Doc Builder:** When the Assistant is generating the requirements doc, show the Builder conversation/stream in this pane (or reuse the Assistant chat surface with a "generating..." state if the Builder is the Assistant).
+  - **Multi-Pass Review (requirements doc):** When the review agent and subagents are running, stream their activity (e.g. "Review agent spawning subagents...", "Subagent 1 reviewing...", "Subagent 1 reported back.") into this pane.
+- **Implementation:** Reuse the same streaming/event pipeline as Assistant chat where possible (assistant-chat-design.md); for Multi-Pass Review, feed review-agent and subagent stdout/events into a similar stream and render in the embedded pane. DRY: one "agent activity view" widget or component, used by Builder, Interview document creation, and Multi-Pass Review.
 
 **Progress indicator:**
 
 - **Concept:** A **progress bar or status strip** that shows **which documents (or steps) are in progress** and **how many remain**.
-- **Requirements Doc Builder:** Simple case — e.g. “Generating requirements document…” with optional step (e.g. “Reviewing (pass 2 of 3)” when Multi-Pass Review is running).
-- **Multi-Pass Review (requirements):** E.g. “Review pass 1 of 2 — 2 subagents active” or “Review complete; producing revised doc.”
-- **Interview document creation and Multi-Pass Review (interview):** See interview-subagent-integration.md “Agent activity and progress visibility”: show which document is being written or reviewed, and how many documents remain (e.g. “Writing phase 4 document — 5 of 8 remaining”; “Reviewing document 7 of 15 — 9 subagents active”).
+- **Requirements Doc Builder:** Simple case -- e.g. "Generating requirements document..." with optional step (e.g. "Reviewing (pass 2 of 3)" when Multi-Pass Review is running).
+- **Multi-Pass Review (requirements):** E.g. "Review pass 1 of 2 -- 2 subagents active" or "Review complete; producing revised doc."
+- **Interview document creation and Multi-Pass Review (interview):** See interview-subagent-integration.md "Agent activity and progress visibility": show which document is being written or reviewed, and how many documents remain (e.g. "Writing phase 4 document -- 5 of 8 remaining"; "Reviewing document 7 of 15 -- 9 subagents active").
 
-**Placement:** The agent activity pane sits **on the same page where the action is triggered**. That means: (1) **requirements/wizard page** when Builder or Multi-Pass Review (requirements) is triggered there; (2) **Interview page** when document creation or Multi-Pass Review (interview) runs — on the Interview page the pane is shown **in addition to** the interviewer chat (redundant; see interview-subagent-integration.md “Agent activity and progress visibility”). So the pane appears in both places. We can revisit placement (e.g. drawer, modal) later if needed.
+**Placement:** The agent activity pane sits **on the same page where the action is triggered**. That means: (1) **requirements/wizard page** when Builder or Multi-Pass Review (requirements) is triggered there; (2) **Interview page** when document creation or Multi-Pass Review (interview) runs -- on the Interview page the pane is shown **in addition to** the interviewer chat (redundant; see interview-subagent-integration.md "Agent activity and progress visibility"). So the pane appears in both places. We can revisit placement (e.g. drawer, modal) later if needed.
 
-**Pause, cancel, resume:** Provide **pause**, **cancel**, and **resume** as user options during Multi-Pass Review and during document generation (Builder, Interview). **Pause:** Takes effect at **next handoff boundary** (no new subagents spawned; in-flight subagents complete and report; review agent is not started or is paused before consuming the next report). Do not kill in-flight subagents on pause. Persist state so resume can continue from that boundary. **Resume state:** Persist at least: run phase (spawning / reviewing / producing), number of completed review tasks (and which doc/pass if applicable), any partial reports already received, and review agent input state if in producing. Resume = continue spawning or producing from that point without re-running completed tasks. **Cancel:** On cancel, **stop spawning** new subagents immediately. **Do not kill** in-flight subagents; let them complete and discard their reports. Then set state to cancelled and surface Review cancelled; no changes applied. If the review agent is already producing, cancel after it finishes the current revision (do not truncate mid-write); then discard and set `cancelled`. **Recovery after crash:** Support **resume after crash** for Multi-Pass Review when recovery state is available: on restore, if state is "in progress," show "Run was interrupted" with options **Resume** (continue from persisted state) or **Start over** (clear state and re-run from step 1). If state is missing or corrupted, show only "Start over." **Recovery** (newfeatures §4) should persist “in progress” state so that after cancel or crash, the user can see “run was interrupted” and optionally start over or (if we support it) resume.
+**Pause, cancel, resume:** Provide **pause**, **cancel**, and **resume** as user options during Multi-Pass Review and during document generation (Builder, Interview). **Pause:** Takes effect at **next handoff boundary** (no new subagents spawned; in-flight subagents complete and report; review agent is not started or is paused before consuming the next report). Do not kill in-flight subagents on pause. Persist state so resume can continue from that boundary. **Resume state:** Persist at least: run phase (spawning / reviewing / producing), number of completed review tasks (and which doc/pass if applicable), any partial reports already received, and review agent input state if in producing. Resume = continue spawning or producing from that point without re-running completed tasks. **Cancel:** On cancel, **stop spawning** new subagents immediately. **Do not kill** in-flight subagents; let them complete and discard their reports. Then set state to cancelled and surface Review cancelled; no changes applied. If the review agent is already producing, cancel after it finishes the current revision (do not truncate mid-write); then discard and set `cancelled`. **Recovery after crash:** Support **resume after crash** for Multi-Pass Review when recovery state is available: on restore, if state is "in progress," show "Run was interrupted" with options **Resume** (continue from persisted state) or **Start over** (clear state and re-run from step 1). If state is missing or corrupted, show only "Start over." **Recovery** (newfeatures §4) should persist "in progress" state so that after cancel or crash, the user can see "run was interrupted" and optionally start over or (if we support it) resume.
 
 ---
 
 **Run states (canonical):** The progress indicator and pane must support exactly these states: `idle`, `generating`, `reviewing` (include pass index and subagents active when available), `paused`, `cancelling`, `cancelled`, `interrupted`, `complete`, `error`. All user-facing text (status strip, empty state, toasts) must key off these states.
 
-**Pause/cancel/resume UI:** Place **Pause**, **Cancel**, and **Resume** in a single control row (toolbar or footer of the agent activity pane). Order: Pause | Resume | Cancel. When running: show Pause and Cancel (Resume disabled). When paused: show Resume and Cancel (Pause disabled). **Cancel** must open a confirmation modal: "Stop this run? No changes will be applied." with "Stop run" and "Keep running." On confirm, transition to `cancelling` then `cancelled`; show toast: "Run cancelled — no changes applied." **Resume** continues from the exact checkpoint; show toast "Resuming…" then "Run resumed."
+**Pause/cancel/resume UI:** Place **Pause**, **Cancel**, and **Resume** in a single control row (toolbar or footer of the agent activity pane). Order: Pause | Resume | Cancel. When running: show Pause and Cancel (Resume disabled). When paused: show Resume and Cancel (Pause disabled). **Cancel** must open a confirmation modal: "Stop this run? No changes will be applied." with "Stop run" and "Keep running." On confirm, transition to `cancelling` then `cancelled`; show toast: "Run cancelled -- no changes applied." **Resume** continues from the exact checkpoint; show toast "Resuming..." then "Run resumed."
 
 **Builder surface (decision):** Use the **embedded agent activity pane** for the Requirements Doc Builder (same as Multi-Pass Review). Do not reuse the full Assistant chat surface for Builder progress; when the doc is "generating" or Multi-Pass Review is running, show that progress in the embedded pane on the requirements/wizard page.
 
-**Stale progress:** If no progress event is received for **30 seconds** during an active run, show a warning in the progress indicator: "Progress stalled — last update 30s ago" (amber). Do not auto-cancel; user may still pause or cancel.
+**Stale progress:** If no progress event is received for **30 seconds** during an active run, show a warning in the progress indicator: "Progress stalled -- last update 30s ago" (amber). Do not auto-cancel; user may still pause or cancel.
 
-**Recovery payload for in-progress runs:** Persist an optional **run checkpoint** when a doc-generation or Multi-Pass Review run is in progress. Schema: `run_type` (builder | multi_pass_review_requirements | document_creation | multi_pass_review_interview), `run_id`, `phase`, `step_index`, `document_index`, `total_documents`, `subagent_tasks_done`, `checkpoint_version`. On restore, show "Run was interrupted" with "Resume from checkpoint" and "Start over." If checkpoint is missing or invalid version, show "Cannot resume — start over" and do not offer Resume.
+**Recovery payload for in-progress runs:** Persist an optional **run checkpoint** when a doc-generation or Multi-Pass Review run is in progress. Schema: `run_type` (builder | multi_pass_review_requirements | document_creation | multi_pass_review_interview), `run_id`, `phase`, `step_index`, `document_index`, `total_documents`, `subagent_tasks_done`, `checkpoint_version`. On restore, show "Run was interrupted" with "Resume from checkpoint" and "Start over." If checkpoint is missing or invalid version, show "Cannot resume -- start over" and do not offer Resume.
 
 ---
 
@@ -304,11 +304,11 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 
 ### 4.1 Multiple Uploads
 
-- **UI:** In the requirements step, allow **multiple** file uploads (e.g. “Add file” or multi-file picker). Display a list of added files with optional remove/reorder.
+- **UI:** In the requirements step, allow **multiple** file uploads (e.g. "Add file" or multi-file picker). Display a list of added files with optional remove/reorder.
 - **Limits (exact):**
   - **Max number of uploads:** **10**. Reject or disable "Add file" when the list already has 10 entries. Show a short message: "Maximum 10 files."
   - **Max file size per file:** **5 MiB** (5 × 2^20 bytes). Reject any file larger than this before saving; show a clear error (e.g. "File X exceeds 5 MB limit").
-- **Order:** Merge order is the **list order** in the UI. User can reorder (e.g. drag-and-drop or up/down); that order is the only ordering used for canonical merge (see §4.2). No "primary" vs "supplements" — list order is the precedence.
+- **Order:** Merge order is the **list order** in the UI. User can reorder (e.g. drag-and-drop or up/down); that order is the only ordering used for canonical merge (see §4.2). No "primary" vs "supplements" -- list order is the precedence.
 - **Formats:** Same as REQUIREMENTS.md: md, pdf, txt, docx. Per-file type validation and optional normalization (e.g. to markdown) for downstream consumption.
 
 ### 4.2 Canonical Input for Interview/PRD
@@ -349,23 +349,23 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 ### 5.1 Concept
 
 - **Requirements Doc Builder** is a **button** in the requirements step that opens the **Assistant chat** (same surface as in assistant-chat-design.md).
-- User **talks** to the Assistant about the project (or delta, or feature). The Assistant **generates a requirements document** (format and template to be defined) and then **hands it off** to the flow: it becomes the “Requirements Document” for the next step, and the **Interview** starts the normal process with that doc as input.
+- User **talks** to the Assistant about the project (or delta, or feature). The Assistant **generates a requirements document** (format and template to be defined) and then **hands it off** to the flow: it becomes the "Requirements Document" for the next step, and the **Interview** starts the normal process with that doc as input.
 
 ### 5.2 Flow
 
-1. User clicks “Requirements Doc Builder” in the requirements step.
-2. App opens (or focuses) the **Assistant** chat, with **context** set: current project path (if any), selected **intent**, and optional system hint: “User is building a requirements document for the Interview; when complete, produce the document and hand off.”
+1. User clicks "Requirements Doc Builder" in the requirements step.
+2. App opens (or focuses) the **Assistant** chat, with **context** set: current project path (if any), selected **intent**, and optional system hint: "User is building a requirements document for the Interview; when complete, produce the document and hand off."
 3. User converses; Assistant may ask clarifying questions, suggest structure, or draft sections.
-4. When the user (or Assistant) considers the doc ready, user triggers **“Done — hand off to Interview”** (or equivalent: e.g. “Generate requirements doc” button or slash command).
+4. When the user (or Assistant) considers the doc ready, user triggers **"Done -- hand off to Interview"** (or equivalent: e.g. "Generate requirements doc" button or slash command).
 5. Assistant **produces** the requirements document (e.g. markdown). App **writes** it to `.puppet-master/requirements/` (e.g. `requirements-builder.md`) and sets it as the **canonical requirements** for the flow.
-6. App **returns** the user to the wizard at the **requirements step** (or the next step) with the doc **pre-loaded** (no re-upload). Optionally show a short confirmation: “Requirements doc generated; continue to Interview?”
+6. App **returns** the user to the wizard at the **requirements step** (or the next step) with the doc **pre-loaded** (no re-upload). Optionally show a short confirmation: "Requirements doc generated; continue to Interview?"
 7. User continues; **Interview** runs with that doc (and any other merged uploads, if we allow Builder + uploads in the same run).
 
 ### 5.3 Handoff Contract
 
 - **Output format:** Markdown recommended; structure (sections) must follow the **Builder output template** below so Interview and PRD generator get consistent input.
-- **Single vs. multiple:** For MVP, Builder produces **one** doc per handoff. If we later allow “Builder + uploads,” merge order and precedence (Builder last vs. first) to be defined.
-- **Persistence:** Handoff state (path to generated doc, “source = Builder”) stored in app state and in `.puppet-master/` if we need recovery.
+- **Single vs. multiple:** For MVP, Builder produces **one** doc per handoff. If we later allow "Builder + uploads," merge order and precedence (Builder last vs. first) to be defined.
+- **Persistence:** Handoff state (path to generated doc, "source = Builder") stored in app state and in `.puppet-master/` if we need recovery.
 
 **Builder output template (required):** The Assistant/Builder must emit a single Markdown document with the following **required top-level sections** (headings). Implementations may validate and warn if sections are missing.
 
@@ -382,14 +382,14 @@ Additional sections (e.g. **Risks**, **Dependencies**, **Constraints**) are allo
 ### 5.4 Dependencies
 
 - **Assistant chat** must be implemented (assistant-chat-design.md).
-- **Project/context:** Assistant must know current project path and intent so it can tailor questions and the generated doc (e.g. “delta” vs “full product” vs “feature scope”).
-- **No duplicate rules:** Use the same rules pipeline (agent-rules-context.md) for Assistant; do not duplicate interview-specific rules in the Builder prompt beyond “produce a requirements doc for handoff.”
+- **Project/context:** Assistant must know current project path and intent so it can tailor questions and the generated doc (e.g. "delta" vs "full product" vs "feature scope").
+- **No duplicate rules:** Use the same rules pipeline (agent-rules-context.md) for Assistant; do not duplicate interview-specific rules in the Builder prompt beyond "produce a requirements doc for handoff."
 
 ### 5.5 Gaps and Risks
 
-- **Token usage:** Long conversations before handoff may use significant context; consider “Summarize and produce doc” step to bound length.
-- **Quality:** Builder output is best-effort; Interview may still need to clarify. We don’t guarantee the doc is complete; we only guarantee it’s passed to Interview.
-- **Abandonment:** If user opens Builder but never hands off, flow is stuck on requirements step until they upload or hand off. Consider “Cancel Builder” that returns to requirements step without saving.
+- **Token usage:** Long conversations before handoff may use significant context; consider "Summarize and produce doc" step to bound length.
+- **Quality:** Builder output is best-effort; Interview may still need to clarify. We don't guarantee the doc is complete; we only guarantee it's passed to Interview.
+- **Abandonment:** If user opens Builder but never hands off, flow is stuck on requirements step until they upload or hand off. Consider "Cancel Builder" that returns to requirements step without saving.
 
 ### 5.6 Multi-Pass Review (Requirements Doc)
 
@@ -397,7 +397,7 @@ When the Requirements Doc Builder produces a document, an optional **Multi-Pass 
 
 **When it runs:** After the Assistant produces the requirements document and before it is set as canonical input for the Interview.
 
-**Settings (early in the flow — same page as requirements step or wizard):**
+**Settings (early in the flow -- same page as requirements step or wizard):**
 
 - **Multi-Pass Review:** On/off. **Default: off.** When on, review runs after the Builder produces a document and before handoff to Interview.
 - **Number of reviews (additional checks):** How many subagents review the doc. Default **2**, max **10**. So with 2, the review agent spawns 2 subagents; with 10, it spawns 10 subagents.
@@ -410,7 +410,7 @@ When the Requirements Doc Builder produces a document, an optional **Multi-Pass 
 
 1. Requirements doc is produced by the Assistant. **Empty or minimal doc:** Before starting Multi-Pass Review, check Builder output size (e.g. character or token count). If below a minimum (e.g. &lt; 100 characters or empty), **skip** Multi-Pass Review, set the Builder output as canonical, and show a brief notice: "Document too short for review; using as-is." Minimum threshold to be defined in implementation (document in config or constants).
 2. Review agent spawns N subagents (N = number of reviews). **Single document:** There is always exactly one document from the Builder. N subagents each review that same doc; no per-document batching. Whole-set pass does not apply (single doc = whole set). Each subagent receives the doc (and, for delta/feature intents, optional codebase context from codebase_scanner).
-3. Subagents look for: gaps, problems, missing information, unscoped items. Depth is lighter than the Interview — the Interview will flesh details out.
+3. Subagents look for: gaps, problems, missing information, unscoped items. Depth is lighter than the Interview -- the Interview will flesh details out.
 4. Each subagent reports findings back to the review agent, then is terminated (no long-lived context).
 5. Review agent **produces a revised requirements document** incorporating or responding to the feedback.
 6. **User approves** the revised document (option **b**). **Approval UI:** Surface the revised doc and a short summary of changes. Offer three actions: **Accept** (set as canonical requirements and continue to Interview), **Reject** (discard revised doc; keep original Builder output as canonical; user can continue to Interview or re-run Builder), **Edit** (open editor on revised doc; on save, treat as revised doc and re-show Accept/Reject/Edit). No per-section approval for requirements doc; single decision per run.
@@ -442,31 +442,31 @@ When the Requirements Doc Builder produces a document, an optional **Multi-Pass 
 
 - **Inputs to the decision:**
   - **Intent** (New project, Fork & evolve, Enhance/rewrite/add, Contribute PR).
-  - **Early context:** e.g. first answers, uploaded requirements summary, or a short “scope” question at the start.
-  - **Optional:** Project context (languages, frameworks) from codebase_scanner when it’s an existing project.
-- **Output:** A **phase plan** for this run: which phase IDs to include, optional **depth** or **weight** per phase (e.g. “Architecture: deep,” “Deployment: skip”), and optionally reorder.
+  - **Early context:** e.g. first answers, uploaded requirements summary, or a short "scope" question at the start.
+  - **Optional:** Project context (languages, frameworks) from codebase_scanner when it's an existing project.
+- **Output:** A **phase plan** for this run: which phase IDs to include, optional **depth** or **weight** per phase (e.g. "Architecture: deep," "Deployment: skip"), and optionally reorder.
 - **Implementation:** Extend the **phase manager** (interview-subagent-integration.md) to support:
-  - A **pre-interview step** (or first phase) that asks 1–2 scope questions and/or reads the requirements summary, then calls a **phase selector** (or the same agent with a structured prompt) that returns the phase plan.
-  - The rest of the interview runs only the selected phases, with depth hints (e.g. “ask 2–3 questions” vs “full phase”) where applicable.
+  - A **pre-interview step** (or first phase) that asks 1-2 scope questions and/or reads the requirements summary, then calls a **phase selector** (or the same agent with a structured prompt) that returns the phase plan.
+  - The rest of the interview runs only the selected phases, with depth hints (e.g. "ask 2-3 questions" vs "full phase") where applicable.
 
 ### 6.3 Phase Selector Contract
 
 **Input (Rust struct or JSON):**
 
-- `intent`: enum — `NewProject` | `ForkEvolve` | `EnhanceRewriteAdd` | `ContributePR`
-- `requirements_summary`: `String` — first 2000 characters of the canonical requirements document (after merge/Builder)
-- `codebase_summary`: `Option<String>` — from codebase_scanner when project path exists and is an existing project; `None` for new project or when scanner not run
+- `intent`: enum -- `NewProject` | `ForkEvolve` | `EnhanceRewriteAdd` | `ContributePR`
+- `requirements_summary`: `String` -- first 2000 characters of the canonical requirements document (after merge/Builder)
+- `codebase_summary`: `Option<String>` -- from codebase_scanner when project path exists and is an existing project; `None` for new project or when scanner not run
 
 **Output:**
 
 - `phase_plan`: `Vec<PhasePlanEntry>` where each entry is:
   - `phase_id`: `String` (e.g. `"scope_goals"`, `"architecture"`, `"ux"`, `"data"`, `"security"`, `"deployment"`, `"performance"`, `"testing"`, or other phase IDs from interview-subagent-integration.md)
-  - `depth`: enum — `Full` | `Short` | `Skip`
+  - `depth`: enum -- `Full` | `Short` | `Skip`
 
 **Depth semantics:**
 
-- **Full:** Run full phase — all questions for that phase, research if configured.
-- **Short:** Run abbreviated phase — maximum 2 questions for that phase, no research.
+- **Full:** Run full phase -- all questions for that phase, research if configured.
+- **Short:** Run abbreviated phase -- maximum 2 questions for that phase, no research.
 - **Skip:** Do not run this phase; omit from interview run.
 
 **Fallback when selector fails or returns empty:**
@@ -482,20 +482,20 @@ Use rule-based default (do not re-invoke selector):
 
 **Resume:** When resuming an interview, load `phase_plan` from stored state; do **not** re-run the phase selector. Run only the phases and depths already in the loaded plan.
 
-**User override — "Run all phases":** Add a GUI checkbox **"Run all phases"** (default **off**). When **on**, ignore stored/generated `phase_plan` and run all phases at **Full** depth. This overrides both selector output and fallback.
+**User override -- "Run all phases":** Add a GUI checkbox **"Run all phases"** (default **off**). When **on**, ignore stored/generated `phase_plan` and run all phases at **Full** depth. This overrides both selector output and fallback.
 
-**User override — Phase checklist (optional):** Show a list of phases with checkboxes. Checked = run the phase (use depth from `phase_plan` or Full when "Run all phases" is on). Unchecked = force-skip that phase regardless of plan. If "Run all phases" is on, all checkboxes default checked; user can uncheck to skip specific phases.
+**User override -- Phase checklist (optional):** Show a list of phases with checkboxes. Checked = run the phase (use depth from `phase_plan` or Full when "Run all phases" is on). Unchecked = force-skip that phase regardless of plan. If "Run all phases" is on, all checkboxes default checked; user can uncheck to skip specific phases.
 
 ### 6.4 Relationship to interview-subagent-integration.md
 
 - Phase **subagents** (product-manager, architect-reviewer, etc.) remain; we only **select** which phases run and at what depth.
 - **Document generation** and **research/validation** subagents still apply to the phases that are run.
-- **New subsection** in that plan: “Adaptive phases: intent and context drive phase selection and depth; phase manager implements phase selector and runs only selected phases.”
+- **New subsection** in that plan: "Adaptive phases: intent and context drive phase selection and depth; phase manager implements phase selector and runs only selected phases."
 
 ### 6.5 Gaps and Risks
 
 - **Determinism:** Phase selection is AI-driven; two runs with same intent might get different phase sets. Consider caching by (intent, requirements_hash) or making selection rule-based with optional AI override.
-- **User override:** Should the user be able to “force full interview” or “skip phase X”? If so, add a simple override in GUI (e.g. “Run all phases” checkbox or phase checklist).
+- **User override:** Should the user be able to "force full interview" or "skip phase X"? If so, add a simple override in GUI (e.g. "Run all phases" checkbox or phase checklist).
 
 ---
 
@@ -505,7 +505,7 @@ Use rule-based default (do not re-invoke selector):
 
 - **Requirement:** At Project setup, GitHub controls must support **actually creating** a repo, not only linking an existing one.
 - **Fields (minimum):**
-  - **Repository name** (required when “Create GitHub repo” is checked). Pre-fill from project name when possible; user can edit.
+  - **Repository name** (required when "Create GitHub repo" is checked). Pre-fill from project name when possible; user can edit.
   - **Visibility:** Public / Private (and any org-level options if applicable).
   - **Description:** Optional.
   - **Other fields** required by the create-repo API or `gh repo create`: e.g. .gitignore template, license, default branch name. Document the exact list per integration (GitHub API vs `gh` CLI).
@@ -520,7 +520,7 @@ Use rule-based default (do not re-invoke selector):
   | **license** | No | License identifier (e.g. `mit`, `apache-2.0`, `gpl-3.0`). |
   | **default branch** | No | Branch name for initial commit (e.g. `main`). Default if omitted: `main`. |
 
-  **CLI example:** `gh repo create <name> --public|--private [--description "…"] [--gitignore <template>] [--license <id>] [--source .]` (Exact flags may vary by `gh` version; implementation must use the current `gh repo create` contract and pass the above fields.)
+  **CLI example:** `gh repo create <name> --public|--private [--description "..."] [--gitignore <template>] [--license <id>] [--source .]` (Exact flags may vary by `gh` version; implementation must use the current `gh repo create` contract and pass the above fields.)
 - **Action:** On "Create," call `gh repo create` (or GitHub API) with these values; set the remote (e.g. `origin`) and optionally push initial commit so the project is ready. Use existing GitHub auth (Doctor/Setup; `gh auth status` or token).
 
 ### 7.2 Fork: Offer to Create or User Does It
@@ -528,39 +528,39 @@ Use rule-based default (do not re-invoke selector):
 - **Requirement:** For intents **Fork & evolve** and **Contribute (PR)**, we **offer** to create the fork for the user, but **allow the user to create the fork themselves**.
 - **Offer to create:**
   - User supplies **upstream repo** (URL or `owner/repo`).
-  - Button or link: **“Create fork for me.”** We call **`gh repo fork <upstream>`** where `<upstream>` is the upstream repo (URL or `owner/repo`). Do **not** pass an org flag for MVP; the fork is created in the **authenticated user’s account**. (“Fork to organization” is **future**: allow choosing an organization as fork destination when we support it.)
+  - Button or link: **"Create fork for me."** We call **`gh repo fork <upstream>`** where `<upstream>` is the upstream repo (URL or `owner/repo`). Do **not** pass an org flag for MVP; the fork is created in the **authenticated user's account**. ("Fork to organization" is **future**: allow choosing an organization as fork destination when we support it.)
   - After creation, we have the fork clone URL (e.g. from `gh repo view` or fork API). We **clone** the fork to the chosen project path, set that as the working project, and optionally set `upstream` remote to the original repo. Set `fork_created_by_app: true` and store `fork_url_or_path` in wizard state.
 - **User does it themselves:**
-  - Option: **“I’ll create the fork myself.”** We show brief instructions (e.g. “Fork the repo on GitHub, then paste your fork URL or clone path below”) and a field for **fork URL** or **local path** after they clone. We use that as the working project and do **not** call `gh repo fork`. Set `fork_created_by_app: false`. Validate path/URL is a valid git repo; optionally check for `upstream` or `origin` pointing to the expected repo.
-- **Validation:** If user chose “Create fork for me,” verify fork exists and we have clone URL before proceeding. If “I’ll do it myself,” verify the path or URL is a valid git repo and optionally that it has an `upstream` or origin pointing to the expected repo.
+  - Option: **"I'll create the fork myself."** We show brief instructions (e.g. "Fork the repo on GitHub, then paste your fork URL or clone path below") and a field for **fork URL** or **local path** after they clone. We use that as the working project and do **not** call `gh repo fork`. Set `fork_created_by_app: false`. Validate path/URL is a valid git repo; optionally check for `upstream` or `origin` pointing to the expected repo.
+- **Validation:** If user chose "Create fork for me," verify fork exists and we have clone URL before proceeding. If "I'll do it myself," verify the path or URL is a valid git repo and optionally that it has an `upstream` or origin pointing to the expected repo.
 
 ### 7.3 PR Flow: Start (Fork, Clone, Branch)
 
-- **Goal:** For “Contribute (PR),” we do (or guide) the standard **start** of a PR: fork → clone → create a **feature branch**.
+- **Goal:** For "Contribute (PR)," we do (or guide) the standard **start** of a PR: fork → clone → create a **feature branch**.
 - **Steps we offer:**
-  1. **Fork** — Already covered in §7.2 (offer to create or user does it).
-  2. **Clone** — If we created the fork, we clone it to the chosen path. If user provided fork path/URL, we use it (or clone if URL).
-  3. **Branch** — Create a **feature branch** (e.g. `feature/add-x` or `fix/issue-42`). User can name it or we suggest from intent/requirements (e.g. “feature/” + slug from first line of requirements). All work happens on this branch.
+  1. **Fork** -- Already covered in §7.2 (offer to create or user does it).
+  2. **Clone** -- If we created the fork, we clone it to the chosen path. If user provided fork path/URL, we use it (or clone if URL).
+  3. **Branch** -- Create a **feature branch** (e.g. `feature/add-x` or `fix/issue-42`). User can name it or we suggest from intent/requirements (e.g. "feature/" + slug from first line of requirements). All work happens on this branch.
 - **Worktree vs feature branch (Contribute PR):** For **Contribute (PR)** we do **not** create tier worktrees (no per-tier worktree branches). All work happens on a **single feature branch** in the **main clone** (the fork clone at `project_path`). Steps: fork → clone to project path → create one feature branch in that clone → run Interview and orchestrator work on that branch. No separate worktrees for subtasks for this intent.
-- **UI:** After fork/clone, show “Create feature branch” with optional branch name input; on confirm, run `git checkout -b <branch>` (or equivalent). Then proceed to requirements and Interview.
+- **UI:** After fork/clone, show "Create feature branch" with optional branch name input; on confirm, run `git checkout -b <branch>` (or equivalent). Then proceed to requirements and Interview.
 
 ### 7.4 PR Flow: Finish (Commit, Push, Open PR)
 
 - **Goal:** After the orchestrator (or user) has made changes, we **offer** to commit, push the branch to the fork, and open the Pull Request. User can also do these steps themselves.
 - **Steps we offer:**
-  1. **Commit** — Gather changed files (or use a suggested list from last run). User provides **commit message** (or we suggest one from task/phase). Run `git add` and `git commit`.
-  2. **Push** — Push the current branch to the fork (`origin` or user’s fork remote). Handle auth (e.g. `gh auth` or token); surface push errors (e.g. permission, network).
-  3. **Open PR** — Create the Pull Request: **from** current branch on the fork **to** default branch of **upstream**. Do **not** assume upstream default branch is `main` or `master`. Before opening the PR, **always** run: `gh repo view <upstream> --json defaultBranchRef -q .defaultBranchRef.name` and use the returned branch name as the **target** of the PR (e.g. `gh pr create --base <that_name>`). User can edit **title** and **body** (or we prefill from commit message and/or task summary). Use `gh pr create` or GitHub API. Link to the new PR in the UI.
-- **User does it themselves:** Option “I’ll commit and open the PR myself” with short instructions (commit, push, open PR on GitHub) and optional link to GitHub “Compare & pull request” for their branch.
-- **Help for first-time contributors:** Optional in-app blurb or link: “What’s a PR? You work on a branch of your fork; we push it and open a request for the upstream repo to merge your changes.”
+  1. **Commit** -- Gather changed files (or use a suggested list from last run). User provides **commit message** (or we suggest one from task/phase). Run `git add` and `git commit`.
+  2. **Push** -- Push the current branch to the fork (`origin` or user's fork remote). Handle auth (e.g. `gh auth` or token); surface push errors (e.g. permission, network).
+  3. **Open PR** -- Create the Pull Request: **from** current branch on the fork **to** default branch of **upstream**. Do **not** assume upstream default branch is `main` or `master`. Before opening the PR, **always** run: `gh repo view <upstream> --json defaultBranchRef -q .defaultBranchRef.name` and use the returned branch name as the **target** of the PR (e.g. `gh pr create --base <that_name>`). User can edit **title** and **body** (or we prefill from commit message and/or task summary). Use `gh pr create` or GitHub API. Link to the new PR in the UI.
+- **User does it themselves:** Option "I'll commit and open the PR myself" with short instructions (commit, push, open PR on GitHub) and optional link to GitHub "Compare & pull request" for their branch.
+- **Help for first-time contributors:** Optional in-app blurb or link: "What's a PR? You work on a branch of your fork; we push it and open a request for the upstream repo to merge your changes."
 
 ### 7.5 Integration with WorktreeGitImprovement and MiscPlan
 
 - **Branch naming:** Reuse sanitization and strategy from WorktreeGitImprovement.md (branch naming, no invalid refs).
-- **PR creation:** Existing `PrManager` and `gh` usage (MiscPlan §3.6: no secrets in PR body; use tier metadata, file lists, acceptance criteria). For “Contribute (PR)” finish flow, we may use a **different** PR body template (e.g. “Feature: …” and link to requirements or task). Document which template is used when.
+- **PR creation:** Existing `PrManager` and `gh` usage (MiscPlan §3.6: no secrets in PR body; use tier metadata, file lists, acceptance criteria). For "Contribute (PR)" finish flow, we may use a **different** PR body template (e.g. "Feature: ..." and link to requirements or task). Document which template is used when.
 - **Git auth:** Fork creation, push, and PR creation all require GitHub auth; use existing Doctor/Setup checks and `gh auth status`. Do not store tokens in code; use env or system auth.
 
-**Required GitHub auth scopes (MVP):** **repo** (full) — required for create repo, fork, push branch, open PR. **read:org** — optional for MVP; required only if we add "Fork to organization." Document these in Doctor/Setup and in user-facing docs. On permission errors (e.g. 403), show: "Permission denied: ensure your GitHub token has the **repo** scope (and **read:org** if using organization fork)." with a link to token/settings.
+**Required GitHub auth scopes (MVP):** **repo** (full) -- required for create repo, fork, push branch, open PR. **read:org** -- optional for MVP; required only if we add "Fork to organization." Document these in Doctor/Setup and in user-facing docs. On permission errors (e.g. 403), show: "Permission denied: ensure your GitHub token has the **repo** scope (and **read:org** if using organization fork)." with a link to token/settings.
 
 ### 7.6 Gaps and Risks
 
@@ -576,11 +576,11 @@ Use rule-based default (do not re-invoke selector):
 |------|-----------|
 | **REQUIREMENTS.md §5** | Start Chain steps: ingest requirements, PRD, plan, validate. This plan extends **ingest** (multiple uploads, Builder) and **how** we get to the chain (intent, project setup, fork/PR). |
 | **Plans/newfeatures.md** | §4 Recovery (snapshot includes wizard step and intent). §8 Restore points (rollback to phase). §14 redb (resume interview). Intent and requirements handoff are new entry-point flexibility. |
-| **Plans/assistant-chat-design.md** | Requirements Doc Builder **is** the Assistant chat with a specific handoff contract. Add subsection or reference: “Requirements Doc Builder: generate requirements and hand off to Chain/Interview.” |
-| **Plans/interview-subagent-integration.md** | Adaptive phases (§6) extend the interview: add “Phase selection and depth by intent and context.” Subagents and phase assignments unchanged; only which phases run and depth. |
+| **Plans/assistant-chat-design.md** | Requirements Doc Builder **is** the Assistant chat with a specific handoff contract. Add subsection or reference: "Requirements Doc Builder: generate requirements and hand off to Chain/Interview." |
+| **Plans/interview-subagent-integration.md** | Adaptive phases (§6) extend the interview: add "Phase selection and depth by intent and context." Subagents and phase assignments unchanged; only which phases run and depth. |
 | **Plans/orchestrator-subagent-integration.md** | Config and tier config apply to runs started from any intent. No change to tier/subtask execution; only how we **enter** the flow (intent, requirements, project setup). |
 | **Plans/agent-rules-context.md** | Application and project rules apply to Assistant (Builder), Interview, and orchestrator. Same rules pipeline for all. |
-| **Plans/WorktreeGitImprovement.md** | Branch naming, PR creation, worktree lifecycle. Fork creation and “PR start/finish” are **additional** GUI and flow steps; reuse branch/PR tooling where possible. |
+| **Plans/WorktreeGitImprovement.md** | Branch naming, PR creation, worktree lifecycle. Fork creation and "PR start/finish" are **additional** GUI and flow steps; reuse branch/PR tooling where possible. |
 | **Plans/MiscPlan.md** | Git ignore, no secrets in PR body, cleanup allowlist. `.puppet-master/requirements/` and any new paths under `.puppet-master/` must be allowlisted. |
 | **Plans/usage-feature.md** | No direct change; usage tracking applies to Builder, Interview, and orchestrator runs as today. |
 | **Plans/newtools.md** | MCP and tools apply to Assistant and Interview; Builder can use same tool set. |
@@ -616,7 +616,7 @@ Use rule-based default (do not re-invoke selector):
 - **Phase selector failure:** If the phase selector (AI or rule) fails or returns empty, fallback to "all phases" or "minimal safe set" (e.g. Scope + one technical phase) and log.
   **Resolution:** Use rule-based fallback per §6.3: by intent, NewProject/ForkEvolve/EnhanceRewriteAdd → all phases Full; ContributePR → scope_goals (Short), testing (Short). Log selector failure and applied fallback. Do not re-invoke selector.
 
-- **Depth semantics:** "Short" vs "full" depth must be defined per phase (e.g. "short = 1–2 questions") so the Interview agent has clear instructions.
+- **Depth semantics:** "Short" vs "full" depth must be defined per phase (e.g. "short = 1-2 questions") so the Interview agent has clear instructions.
   **Resolution:** Full = all questions for phase, research if configured. Short = max 2 questions for that phase, no research. Skip = do not run phase. Document in phase manager and interviewer prompt; enforce cap in phase runner (e.g. question count or token budget for Short).
 
 - **Resume with adaptive phases:** If we add "resume interview" (newfeatures §14), stored state must include the **phase plan** so we don't re-run phase selection and change the set on resume.

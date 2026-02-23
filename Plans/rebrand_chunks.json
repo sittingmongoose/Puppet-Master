@@ -1,0 +1,432 @@
+[
+  {
+    "chunk_id": "rebrand-1a",
+    "title": "Completion signals",
+    "allowed_paths": [
+      "puppet-master-rs/src/platforms/runner.rs",
+      "puppet-master-rs/src/core/orchestrator.rs",
+      "puppet-master-rs/src/core/prompt_builder.rs",
+      "puppet-master-rs/src/core/execution_engine.rs",
+      "puppet-master-rs/src/platforms/output_parser.rs",
+      "puppet-master-rs/examples/output_parser_usage.rs"
+    ],
+    "acceptance_checks": [
+      "grep -rE 'ralph|RWM' puppet-master-rs/src/platforms/runner.rs puppet-master-rs/src/core/orchestrator.rs puppet-master-rs/src/core/prompt_builder.rs puppet-master-rs/src/core/execution_engine.rs puppet-master-rs/src/platforms/output_parser.rs puppet-master-rs/examples/output_parser_usage.rs; test $? -ne 0",
+      "cd puppet-master-rs && cargo check && cargo test"
+    ],
+    "evidence_required": ["grep exit codes", "cargo test exit code and brief output", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-1b",
+    "title": "Commit prefix",
+    "allowed_paths": ["puppet-master-rs/src/git/commit_formatter.rs"],
+    "acceptance_checks": [
+      "grep -E 'ralph|RWM' puppet-master-rs/src/git/commit_formatter.rs; test $? -ne 0",
+      "grep 'pm:' puppet-master-rs/src/git/commit_formatter.rs",
+      "cd puppet-master-rs && cargo check && cargo test"
+    ],
+    "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-1c",
+    "title": "Default branch naming pattern",
+    "allowed_paths": [
+      "puppet-master-rs/src/config/gui_config.rs",
+      "puppet-master-rs/src/types/config.rs"
+    ],
+    "acceptance_checks": [
+      "grep -E 'rwm/\\{tier\\}|\"rwm/' puppet-master-rs/src/config/gui_config.rs puppet-master-rs/src/types/config.rs; test $? -ne 0",
+      "grep 'pm/{tier}/{id}' puppet-master-rs/src/config/gui_config.rs puppet-master-rs/src/types/config.rs",
+      "cd puppet-master-rs && cargo check && cargo test"
+    ],
+    "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-1d",
+    "title": "Build env vars",
+    "allowed_paths": ["puppet-master-rs/build.rs", "puppet-master-rs/src/build_info.rs"],
+    "acceptance_checks": [
+      "grep -E 'RWM_BUILD_|RWM ' puppet-master-rs/build.rs puppet-master-rs/src/build_info.rs; test $? -ne 0",
+      "grep 'PM_BUILD_' puppet-master-rs/build.rs",
+      "cd puppet-master-rs && cargo check && cargo test"
+    ],
+    "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-1e",
+    "title": "Phase 1 misc",
+    "allowed_paths": ["puppet-master-rs/src/interview/document_writer.rs"],
+    "acceptance_checks": [
+      "grep -iE 'ralph|RWM' puppet-master-rs/src/interview/document_writer.rs; test $? -ne 0",
+      "cd puppet-master-rs && cargo check && cargo test"
+    ],
+    "evidence_required": ["grep exit code", "cargo test exit code", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-2a",
+    "title": "ProjectDirs triplet",
+    "allowed_paths": [
+      "puppet-master-rs/src/utils/project_paths.rs",
+      "puppet-master-rs/src/install/app_paths.rs",
+      "puppet-master-rs/src/doctor/checks/runtime_check.rs",
+      "puppet-master-rs/src/config/default_config.rs",
+      "puppet-master-rs/src/projects/persistence.rs"
+    ],
+    "acceptance_checks": [
+      "grep -E 'ProjectDirs::from\\(\"com\", \"RWM\"|\"com\", \"rwm\", \"RWM\"|\\.join\\(\"RWM Puppet Master\"\\)' puppet-master-rs/src/utils/project_paths.rs puppet-master-rs/src/install/app_paths.rs puppet-master-rs/src/doctor/checks/runtime_check.rs puppet-master-rs/src/config/default_config.rs puppet-master-rs/src/projects/persistence.rs; test $? -ne 0",
+      "cd puppet-master-rs && cargo check && cargo test"
+    ],
+    "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-2b",
+    "title": "Fallback and temp dirs",
+    "allowed_paths": [
+      "puppet-master-rs/src/install/app_paths.rs",
+      "puppet-master-rs/src/config/default_config.rs",
+      "puppet-master-rs/src/utils/project_paths.rs",
+      "puppet-master-rs/src/automation/workspace_clone.rs"
+    ],
+    "acceptance_checks": [
+      "grep -E '\\.rwm-puppet-master|rwm-puppet-master|rwm-write-probe|rwm-puppet-master-gui' puppet-master-rs/src/install/app_paths.rs puppet-master-rs/src/config/default_config.rs puppet-master-rs/src/utils/project_paths.rs puppet-master-rs/src/automation/workspace_clone.rs; test $? -ne 0",
+      "cd puppet-master-rs && cargo check && cargo test"
+    ],
+    "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-2c",
+    "title": "Autostart identifiers",
+    "allowed_paths": ["puppet-master-rs/src/autostart.rs"],
+    "acceptance_checks": [
+      "grep -E 'com\\.rwm\\.puppet-master' puppet-master-rs/src/autostart.rs; test $? -ne 0",
+      "grep 'com.puppetmaster.puppet-master' puppet-master-rs/src/autostart.rs",
+      "cd puppet-master-rs && cargo check && cargo test"
+    ],
+    "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-2d",
+    "title": "User-Agent and temp dirs",
+    "allowed_paths": [
+      "puppet-master-rs/src/interview/reference_manager.rs",
+      "puppet-master-rs/src/install/github_cli_installer.rs",
+      "puppet-master-rs/src/install/copilot_installer.rs"
+    ],
+    "acceptance_checks": [
+      "grep -E 'rwm-puppet-master|RWM-PuppetMaster|rwm-gh-' puppet-master-rs/src/interview/reference_manager.rs puppet-master-rs/src/install/github_cli_installer.rs puppet-master-rs/src/install/copilot_installer.rs; test $? -ne 0",
+      "cd puppet-master-rs && cargo check && cargo test"
+    ],
+    "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-2e",
+    "title": "Test sentinels",
+    "allowed_paths": [
+      "puppet-master-rs/src/doctor/checks/sdk_checks.rs",
+      "puppet-master-rs/src/platforms/path_utils.rs",
+      "puppet-master-rs/src/install/script_installer.rs"
+    ],
+    "acceptance_checks": [
+      "grep '__rwm_nonexistent_binary' puppet-master-rs/src/doctor/checks/sdk_checks.rs puppet-master-rs/src/platforms/path_utils.rs puppet-master-rs/src/install/script_installer.rs; test $? -ne 0",
+      "grep '__pm_nonexistent_binary_42__' puppet-master-rs/src/doctor/checks/sdk_checks.rs puppet-master-rs/src/platforms/path_utils.rs puppet-master-rs/src/install/script_installer.rs",
+      "cd puppet-master-rs && cargo check && cargo test"
+    ],
+    "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-2f",
+    "title": "Platform detector and config UI",
+    "allowed_paths": [
+      "puppet-master-rs/src/platforms/platform_detector.rs",
+      "puppet-master-rs/src/views/config.rs"
+    ],
+    "acceptance_checks": [
+      "grep -E 'rwm-pm-test-gh|rwm/\\{tier\\}|Ralph Wiggum' puppet-master-rs/src/platforms/platform_detector.rs puppet-master-rs/src/views/config.rs; test $? -ne 0",
+      "cd puppet-master-rs && cargo check && cargo test"
+    ],
+    "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-3a",
+    "title": "Header widget",
+    "allowed_paths": ["puppet-master-rs/src/widgets/header.rs"],
+    "acceptance_checks": [
+      "grep -iE 'RWM|ralph' puppet-master-rs/src/widgets/header.rs; test $? -ne 0",
+      "cd puppet-master-rs && cargo check"
+    ],
+    "evidence_required": ["grep exit code", "cargo check exit code", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-3b",
+    "title": "Window, terminal, setup, tray, main",
+    "allowed_paths": [
+      "puppet-master-rs/src/app.rs",
+      "puppet-master-rs/src/views/setup.rs",
+      "puppet-master-rs/src/tray.rs",
+      "puppet-master-rs/src/main.rs"
+    ],
+    "acceptance_checks": [
+      "grep -iE 'RWM Puppet Master|RWM ' puppet-master-rs/src/app.rs puppet-master-rs/src/views/setup.rs puppet-master-rs/src/tray.rs puppet-master-rs/src/main.rs; test $? -ne 0",
+      "cd puppet-master-rs && cargo check"
+    ],
+    "evidence_required": ["grep exit codes", "cargo check exit code", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-3c",
+    "title": "PR body, install scripts, interview",
+    "allowed_paths": [
+      "puppet-master-rs/src/git/pr_manager.rs",
+      "puppet-master-rs/src/install/script_installer.rs",
+      "puppet-master-rs/src/interview/test_strategy_generator.rs"
+    ],
+    "acceptance_checks": [
+      "grep -iE 'RWM Puppet Master|RWM ' puppet-master-rs/src/git/pr_manager.rs puppet-master-rs/src/install/script_installer.rs puppet-master-rs/src/interview/test_strategy_generator.rs; test $? -ne 0",
+      "cd puppet-master-rs && cargo check && cargo test"
+    ],
+    "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-3d",
+    "title": "Module/crate docs and icons README",
+    "allowed_paths": [
+      "puppet-master-rs/src/lib.rs",
+      "puppet-master-rs/src/core/mod.rs",
+      "puppet-master-rs/src/platforms/mod.rs",
+      "puppet-master-rs/src/types/mod.rs",
+      "puppet-master-rs/src/types/config.rs",
+      "puppet-master-rs/src/widgets/mod.rs",
+      "puppet-master-rs/src/config/default_config.rs",
+      "puppet-master-rs/src/verification/mod.rs",
+      "puppet-master-rs/src/state/mod.rs",
+      "puppet-master-rs/src/git/mod.rs",
+      "puppet-master-rs/src/tray.rs",
+      "puppet-master-rs/icons/README.md"
+    ],
+    "acceptance_checks": [
+      "grep -iE 'RWM Puppet Master|Ralph Wiggum' puppet-master-rs/src/lib.rs puppet-master-rs/src/core/mod.rs puppet-master-rs/src/platforms/mod.rs puppet-master-rs/src/types/mod.rs puppet-master-rs/src/types/config.rs puppet-master-rs/src/widgets/mod.rs puppet-master-rs/src/config/default_config.rs puppet-master-rs/src/verification/mod.rs puppet-master-rs/src/state/mod.rs puppet-master-rs/src/git/mod.rs puppet-master-rs/src/tray.rs puppet-master-rs/icons/README.md; test $? -ne 0",
+      "cd puppet-master-rs && cargo check"
+    ],
+    "evidence_required": ["grep exit codes", "cargo check exit code", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-4a",
+    "title": "Cargo.toml bundle",
+    "allowed_paths": ["puppet-master-rs/Cargo.toml"],
+    "acceptance_checks": [
+      "grep -iE 'RWM |com\\.rwm\\.|ralph' puppet-master-rs/Cargo.toml; test $? -ne 0",
+      "cd puppet-master-rs && cargo check"
+    ],
+    "evidence_required": ["grep exit codes", "cargo check exit code", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-4b",
+    "title": "GitHub workflow",
+    "allowed_paths": [".github/workflows/build-installers.yml"],
+    "acceptance_checks": [
+      "grep -E 'RWM-Puppet-Master|RWM Puppet Master' .github/workflows/build-installers.yml; test $? -ne 0"
+    ],
+    "evidence_required": ["grep exit codes", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-4c",
+    "title": "Linux nfpm and desktop",
+    "allowed_paths": [
+      "installer/linux/nfpm.yaml",
+      "installer/linux/applications/"
+    ],
+    "acceptance_checks": [
+      "grep -E 'rwm-puppet-master|com\\.rwm\\.puppet-master' installer/linux/nfpm.yaml installer/linux/applications/*.desktop 2>/dev/null; test $? -ne 0",
+      "test -f installer/linux/applications/com.puppetmaster.puppet-master.desktop"
+    ],
+    "evidence_required": ["grep/ls exit codes", "list of files changed including rename"]
+  },
+  {
+    "chunk_id": "rebrand-4d",
+    "title": "Linux scripts",
+    "allowed_paths": [
+      "installer/linux/scripts/install.sh",
+      "installer/linux/scripts/preinstall"
+    ],
+    "acceptance_checks": [
+      "grep -iE 'rwm-puppet-master' installer/linux/scripts/install.sh installer/linux/scripts/preinstall; test $? -ne 0"
+    ],
+    "evidence_required": ["grep exit codes", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-4e",
+    "title": "macOS",
+    "allowed_paths": [
+      "installer/macos/build-dmg.sh",
+      "installer/macos/Info.plist"
+    ],
+    "acceptance_checks": [
+      "grep -iE 'RWM Puppet Master|RWM-Puppet-Master|com\\.rwm\\.' installer/macos/build-dmg.sh installer/macos/Info.plist; test $? -ne 0"
+    ],
+    "evidence_required": ["grep exit codes", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-4f",
+    "title": "Windows NSI",
+    "allowed_paths": ["installer/windows/puppet-master.nsi"],
+    "acceptance_checks": [
+      "grep -iE 'RWM Puppet Master|RWM\"|RWMPuppetMaster' installer/windows/puppet-master.nsi; test $? -ne 0"
+    ],
+    "evidence_required": ["grep exit codes", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-4g",
+    "title": "Build and uninstall scripts",
+    "allowed_paths": [
+      "build-all-installers.sh",
+      "scripts/build-linux-installer.sh",
+      "scripts/build-installer-windows.bat",
+      "scripts/test-linux-deb.sh",
+      "scripts/os-clean/linux-uninstall-puppet-master.sh",
+      "scripts/os-clean/windows-uninstall-puppet-master.ps1",
+      "scripts/os-clean/macos-uninstall-puppet-master.sh"
+    ],
+    "acceptance_checks": [
+      "grep -iE 'RWM Puppet Master|RWM-Puppet-Master|rwm-puppet-master|com\\.rwm\\.|\\.rwm-puppet-master|Ralph Wiggum' build-all-installers.sh scripts/build-linux-installer.sh scripts/build-installer-windows.bat scripts/test-linux-deb.sh scripts/os-clean/linux-uninstall-puppet-master.sh scripts/os-clean/windows-uninstall-puppet-master.ps1 scripts/os-clean/macos-uninstall-puppet-master.sh; test $? -ne 0"
+    ],
+    "evidence_required": ["grep exit codes", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-4h",
+    "title": "Installer README",
+    "allowed_paths": ["installer/README.md"],
+    "acceptance_checks": [
+      "grep -iE 'RWM Puppet Master|RWM-Puppet-Master|com\\.rwm\\.puppet-master|/RWM' installer/README.md; test $? -ne 0"
+    ],
+    "evidence_required": ["grep exit codes", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-5",
+    "title": "Config YAML",
+    "allowed_paths": [
+      ".puppet-master/config.yaml",
+      ".puppet-master/puppet-master.yaml",
+      "puppet-master-rs/puppet-master.yaml"
+    ],
+    "acceptance_checks": [
+      "grep -E 'ralph|rwm' .puppet-master/config.yaml .puppet-master/puppet-master.yaml puppet-master-rs/puppet-master.yaml 2>/dev/null; test $? -ne 0"
+    ],
+    "evidence_required": ["grep exit codes", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-6a",
+    "title": "Root and agent docs",
+    "allowed_paths": [
+      "AGENTS.md",
+      "README.md",
+      "REQUIREMENTS.md",
+      "STATE_FILES.md",
+      ".cursorrules",
+      ".claude/CLAUDE.md",
+      "puppet-master-rs/README.md"
+    ],
+    "acceptance_checks": [
+      "grep -iE 'RWM Puppet Master|Ralph Wiggum Method' AGENTS.md README.md REQUIREMENTS.md STATE_FILES.md .cursorrules .claude/CLAUDE.md puppet-master-rs/README.md; test $? -ne 0"
+    ],
+    "evidence_required": ["grep exit codes", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-6b",
+    "title": "Plans",
+    "allowed_paths": [
+      "Plans/newfeatures.md",
+      "Plans/orchestrator-subagent-integration.md",
+      "Plans/MiscPlan.md",
+      "Plans/WorktreeGitImprovement.md"
+    ],
+    "acceptance_checks": [
+      "grep -iE 'RWM Puppet Master|Ralph Loop|Ralph Wiggum|enableRalphLoopPatterns|ralph-clean-workspace|ralph:' Plans/newfeatures.md Plans/orchestrator-subagent-integration.md Plans/MiscPlan.md Plans/WorktreeGitImprovement.md; test $? -ne 0"
+    ],
+    "evidence_required": ["grep exit codes", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-6c",
+    "title": "Conductor and docs",
+    "allowed_paths": [
+      "conductor/product.md",
+      "conductor/tracks/gui_resizing_20260216/spec.md",
+      "docs/PLATFORM_AUTH_OAUTH_CONFIRMATION.md",
+      "docs/PROCESS_CLEANUP_README.md",
+      "docs/PROCESS_CLEANUP_SYSTEM.md"
+    ],
+    "acceptance_checks": [
+      "grep -iE 'RWM Puppet Master|Ralph Loops' conductor/product.md conductor/tracks/gui_resizing_20260216/spec.md docs/PLATFORM_AUTH_OAUTH_CONFIRMATION.md docs/PROCESS_CLEANUP_README.md docs/PROCESS_CLEANUP_SYSTEM.md; test $? -ne 0"
+    ],
+    "evidence_required": ["grep exit codes", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-6d",
+    "title": "Reference and .cursor",
+    "allowed_paths": [
+      "Reference/BUILD_INSTALLER_FIXES.md",
+      "Reference/APP_LAUNCHER_NO_TERMINAL_PROMPT.md",
+      "Reference/TEST_SUMMARY_REPORT.md",
+      "Reference/GUI_ISSUES_AND_FIXES.md",
+      ".cursor/MCP-CLI-vs-EXTENSION-PATHS.md",
+      ".cursor/CLAUDE_EXTENSION_AND_MCP.md",
+      ".cursor/commands/CHECK_STATUS.md"
+    ],
+    "acceptance_checks": [
+      "grep -iE 'com\\.rwm\\.|rwm-puppet-master|ralph' Reference/BUILD_INSTALLER_FIXES.md Reference/APP_LAUNCHER_NO_TERMINAL_PROMPT.md Reference/TEST_SUMMARY_REPORT.md Reference/GUI_ISSUES_AND_FIXES.md .cursor/MCP-CLI-vs-EXTENSION-PATHS.md .cursor/CLAUDE_EXTENSION_AND_MCP.md .cursor/commands/CHECK_STATUS.md 2>/dev/null; test $? -ne 0"
+    ],
+    "evidence_required": ["grep exit codes for listed files only", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-6e",
+    "title": "Widget refs and evidence/audits",
+    "allowed_paths": [
+      "WIDGETS_VISUAL_REFERENCE.md",
+      "WIDGETS_QUICK_REFERENCE.md",
+      ".puppet-master/evidence/gui-browser-test-report.md",
+      ".puppet-master/audits/integration-paths.md",
+      ".puppet-master/audits/integration-paths.json",
+      ".puppet-master/audits/wiring.json"
+    ],
+    "acceptance_checks": [
+      "grep -iE 'RWM Puppet Master|RWM\"|ralph.*commit' WIDGETS_VISUAL_REFERENCE.md WIDGETS_QUICK_REFERENCE.md .puppet-master/evidence/gui-browser-test-report.md .puppet-master/audits/integration-paths.md .puppet-master/audits/integration-paths.json .puppet-master/audits/wiring.json 2>/dev/null; test $? -ne 0"
+    ],
+    "evidence_required": ["grep exit codes", "list of files changed"]
+  },
+  {
+    "chunk_id": "rebrand-7a",
+    "title": "Update path references after rename",
+    "allowed_paths": [
+      ".puppet-master/puppet-master.yaml",
+      "puppet-master-rs/puppet-master.yaml",
+      ".puppet-master/audits/wiring.json",
+      ".puppet-master/audits/integration-paths.json"
+    ],
+    "acceptance_checks": [
+      "grep -l 'workingDirectory\\|rootDir\\|projectRoot' .puppet-master/puppet-master.yaml puppet-master-rs/puppet-master.yaml .puppet-master/audits/wiring.json .puppet-master/audits/integration-paths.json 2>/dev/null || true"
+    ],
+    "evidence_required": ["list of files changed", "optional grep for old root path in audits"]
+  },
+  {
+    "chunk_id": "rebrand-H1",
+    "title": "(Human) Rename GitHub repo",
+    "allowed_paths": [],
+    "acceptance_checks": [],
+    "evidence_required": ["manual step; no agent execution"],
+    "human_only": true
+  },
+  {
+    "chunk_id": "rebrand-H2",
+    "title": "(Human) Rename project folder",
+    "allowed_paths": [],
+    "acceptance_checks": [],
+    "evidence_required": ["manual step after Phases 1-6 committed; then run rebrand-7a"],
+    "human_only": true
+  },
+  {
+    "chunk_id": "rebrand-H3",
+    "title": "(Human) Signing/packaging identity",
+    "allowed_paths": [],
+    "acceptance_checks": [],
+    "evidence_required": ["if applicable: code signing, notary, human credentials"],
+    "human_only": true
+  }
+]

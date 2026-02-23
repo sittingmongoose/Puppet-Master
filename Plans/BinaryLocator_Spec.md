@@ -5,7 +5,7 @@ Provide a **deterministic, testable** mechanism for Puppet Master to locate and 
 
 ## Non-goals
 - Installing, updating, or uninstalling Provider CLIs. (ContractRef: Primitive:Provider)
-- Filesystem crawling or heuristic “best guess” scanning beyond the explicitly enumerated probe layers below. (ContractRef: Primitive:Provider)
+- Filesystem crawling or heuristic "best guess" scanning beyond the explicitly enumerated probe layers below. (ContractRef: Primitive:Provider)
 - Provider orchestration, authentication, or model discovery (owned by Provider layer). (ContractRef: Primitive:Provider)
 
 ---
@@ -17,7 +17,7 @@ Provide a **deterministic, testable** mechanism for Puppet Master to locate and 
 - UI toolkit is **Slint 1.15.1**; Iced is legacy. (ContractRef: SchemaID:spec_lock)
 - Storage is **seglog + redb + Tantivy**; SQLite is forbidden. (ContractRef: SchemaID:spec_lock)
 
-### Canonical sources (reference, don’t duplicate)
+### Canonical sources (reference, don't duplicate)
 - Primitive ownership boundaries: `Plans/Crosswalk.md` (ContractRef: Primitive:Provider)
 - DRY / ContractRef rule: `Plans/DRY_Rules.md` §7 (ContractRef: SchemaID:spec_lock)
 - Autonomy / deterministic defaults: `Plans/Decision_Policy.md` (ContractRef: SchemaID:spec_lock)
@@ -33,7 +33,7 @@ This spec may cite `puppet-master-rs/src/...` paths as **legacy-code behavior an
 ---
 
 ## Terminology (index only)
-- **Provider** is the canonical term (not “runner”). (ContractRef: SchemaID:spec_lock)
+- **Provider** is the canonical term (not "runner"). (ContractRef: SchemaID:spec_lock)
 - **Session** is the canonical user-facing term; legacy terminology must not appear in user-facing text. (ContractRef: Invariant:INV-010)
 - This spec uses **probe layer** terminology to avoid conflicting with the four-tier hierarchy naming rule. (ContractRef: SchemaID:spec_lock)
 
@@ -71,7 +71,7 @@ Optional fields:
   - `result`: `Hit | Miss | HitButInvalid(BinaryErrorCode)` (ContractRef: Primitive:Provider)
 
 #### Trace emission (storage contract note)
-BinaryLocator’s `trace` is diagnostic data that SHOULD be emitted as events when the event model is available; until then, it is returned as structured data to the caller. (ContractRef: SchemaID:EventEnvelopeV1)
+BinaryLocator's `trace` is diagnostic data that SHOULD be emitted as events when the event model is available; until then, it is returned as structured data to the caller. (ContractRef: SchemaID:EventEnvelopeV1)
 
 > Compatibility note: storage-plan defines `EventEnvelopeV1` as a minimal envelope; Contracts V0 defines `EventRecord` as the canonical persisted envelope with additional required fields; implementations must emit full `EventRecord` envelopes, while readers may accept both during transition. (ContractRef: SchemaID:EventEnvelopeV1, ContractRef: ContractName:Contracts_V0.md#1.1)
 
@@ -89,7 +89,7 @@ BinaryLocator MUST attempt probe layers in this exact order and MUST return the 
 Tie-break rules (deterministic):
 - Earlier probe layer wins. (ContractRef: Primitive:Provider)
 - Within a layer, earlier candidate name wins (ordered by SSOT list). (ContractRef: Invariant:INV-005)
-- Within a candidate name, earlier candidate path in that layer’s enumerated list wins. (ContractRef: Primitive:Provider)
+- Within a candidate name, earlier candidate path in that layer's enumerated list wins. (ContractRef: Primitive:Provider)
 
 Candidate name ordering MUST come from a single SSOT list owned by the Provider domain. (ContractRef: Invariant:INV-005)
 - Legacy anchor: `puppet-master-rs/src/platforms/platform_specs.rs` `PlatformSpec.cli_binary_names`.

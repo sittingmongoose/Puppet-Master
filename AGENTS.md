@@ -1,4 +1,4 @@
-# AGENTS.md - RWM Puppet Master
+# AGENTS.md - Puppet Master
 
 Always use the Context7 MCP. You need to take your time and be careful as this is something you can mess up easily and cause a lot of issues if you aren't careful.
 
@@ -31,13 +31,13 @@ Always use the Context7 MCP. You need to take your time and be careful as this i
 
 ## Keeping AGENTS.md minimal
 
-This file is loaded into agent context; long files consume context and get skimmed, so critical rules can be missed. When **adding or editing** this file: put **critical rules at the top**; move **long reference** (e.g. full platform CLI details, long tables) to `docs/` and link from here; **trim redundancy**. For **generated** (target-project) AGENTS.md, the Interview plan §5.1 specifies a size budget, critical-first block, and linked docs—see Plans/interview-subagent-integration.md.
+This file is loaded into agent context; long files consume context and get skimmed, so critical rules can be missed. When **adding or editing** this file: put **critical rules at the top**; move **long reference** (e.g. full platform CLI details, long tables) to `docs/` and link from here; **trim redundancy**. For **generated** (target-project) AGENTS.md, the Interview plan §5.1 specifies a size budget, critical-first block, and linked docs--see Plans/interview-subagent-integration.md.
 
 ---
 
 ## Project Overview
 
-RWM Puppet Master is a **Rust/Iced desktop orchestrator** implementing the Ralph Wiggum Method — a four-tier hierarchical approach to AI-assisted development. The system coordinates 5 AI CLI platforms (Cursor, Codex, Claude Code, Gemini, GitHub Copilot) without using APIs, relying exclusively on CLI invocations.
+RWM Puppet Master is a **Rust/Iced desktop orchestrator** implementing the Ralph Wiggum Method -- a four-tier hierarchical approach to AI-assisted development. The system coordinates 5 AI CLI platforms (Cursor, Codex, Claude Code, Gemini, GitHub Copilot) without using APIs, relying exclusively on CLI invocations.
 
 The codebase is **pure Rust/Iced** in `puppet-master-rs/`.
 
@@ -57,7 +57,7 @@ The codebase is **pure Rust/Iced** in `puppet-master-rs/`.
 **How to use:**
 1. Call `resolve-library-id` first with the library name to get the Context7-compatible ID
 2. Then call `query-docs` with the resolved ID and your specific question
-3. Maximum 3 calls per question — use the best result you have after that
+3. Maximum 3 calls per question -- use the best result you have after that
 
 **When to use:**
 - Looking up API docs for any dependency (iced, tokio, serde, rusqlite, etc.)
@@ -98,7 +98,7 @@ Headless screenshots use **Iced's `tiny-skia` software renderer** for pixel-perf
 1. `headless_runner.rs` creates a headless `iced::Renderer` via `<iced::Renderer as Headless>::new(Font::DEFAULT, Pixels(16.0), Some("tiny-skia"))`
 2. Calls `app.view()` to build the real widget tree, then lays it out with `UserInterface::build(element, size, cache, renderer)`
 3. Draws via `ui.draw(renderer, &theme, &style, cursor)` and extracts RGBA pixels via `renderer.screenshot()`
-4. Saves as PNG — identical to what the real GUI renders
+4. Saves as PNG -- identical to what the real GUI renders
 
 **Key dependencies:**
 - `iced` with `"advanced"` feature (exposes `Headless` trait)
@@ -118,7 +118,7 @@ All platform data is in `src/platforms/platform_specs.rs`. **Never hardcode plat
 | Gemini | `gemini` | Google OAuth on first run | Google subscription |
 | GitHub Copilot | `copilot` | `/login` (GitHub OAuth) | GitHub subscription |
 
-**CRITICAL: Subscription auth ONLY — NO API keys.** API keys are expensive and don't go towards subscriptions.
+**CRITICAL: Subscription auth ONLY -- NO API keys.** API keys are expensive and don't go towards subscriptions.
 
 ### State Machine Flow
 ```
@@ -149,7 +149,7 @@ Tier:         PENDING → PLANNING → RUNNING → GATING → PASSED
 
 ## Codebase Patterns
 
-**Platform data — always use platform_specs:**
+**Platform data -- always use platform_specs:**
 ```rust
 use crate::platforms::platform_specs;
 
@@ -162,7 +162,7 @@ let models = platform_specs::fallback_model_ids(platform);
 let binary = match platform { Platform::Cursor => "agent", ... };
 ```
 
-**Iced view functions — always check widgets first:**
+**Iced view functions -- always check widgets first:**
 ```rust
 use crate::widgets::{styled_button, page_header, status_badge, refresh_button};
 
@@ -197,13 +197,13 @@ The context menu is a global overlay managed in `App::view` via a `stack!` and `
 - **Target**: `ContextMenuTarget` determines what is copied to the clipboard.
 - **Dismissal**: Handled by a full-screen transparent `mouse_area` beneath the menu.
 
-**DRY tagging — tag all new reusable items:**
+**DRY tagging -- tag all new reusable items:**
 ```rust
 // DRY:FN:my_helper — What it does
 pub fn my_helper() { ... }
 ```
 
-### DRY Method — Reuse-First (Rust/Iced)
+### DRY Method -- Reuse-First (Rust/Iced)
 
 The codebase uses a DRY tagging system for agent discoverability. All reusable code is tagged with `// DRY:` comments.
 
@@ -224,30 +224,30 @@ grep -r "DRY:FN" puppet-master-rs/src/      # Functions
 ```
 
 **Before writing new code, ALWAYS check:**
-1. `docs/gui-widget-catalog.md` — Full widget + data source catalog
-2. `puppet-master-rs/src/widgets/` — Shared UI widgets
-3. `puppet-master-rs/src/platforms/platform_specs.rs` — Single source of truth for ALL platform CLI data (binary names, install paths, auth, models, effort, images, headless, experimental, subagents, SDKs)
+1. `docs/gui-widget-catalog.md` -- Full widget + data source catalog
+2. `puppet-master-rs/src/widgets/` -- Shared UI widgets
+3. `puppet-master-rs/src/platforms/platform_specs.rs` -- Single source of truth for ALL platform CLI data (binary names, install paths, auth, models, effort, images, headless, experimental, subagents, SDKs)
 4. Grep for `DRY:` tags in the area you're working
 
 **Key DRY data sources (non-widget):**
-- `platform_specs::get_spec(platform)` — Full platform spec (auth, models, effort, images, etc.)
-- `platform_specs::supports_effort(platform)` — Effort/reasoning support (true: Claude/Codex/Copilot)
-- `platform_specs::supports_images(platform)` — Image support (ALL 5 platforms)
-- `platform_specs::cli_binary_names(platform)` — CLI binary names to search for
-- `platform_specs::fallback_model_ids(platform)` — Fallback models when dynamic discovery fails
-- `platform_specs::reasoning_is_model_based(platform)` — True only for Cursor (reasoning in model names)
+- `platform_specs::get_spec(platform)` -- Full platform spec (auth, models, effort, images, etc.)
+- `platform_specs::supports_effort(platform)` -- Effort/reasoning support (true: Claude/Codex/Copilot)
+- `platform_specs::supports_images(platform)` -- Image support (ALL 5 platforms)
+- `platform_specs::cli_binary_names(platform)` -- CLI binary names to search for
+- `platform_specs::fallback_model_ids(platform)` -- Fallback models when dynamic discovery fails
+- `platform_specs::reasoning_is_model_based(platform)` -- True only for Cursor (reasoning in model names)
 
 **Key reusable widgets:**
-- `selectable_label` / `selectable_label_mono` — Read-only text that looks like static labels but supports selection and floating context menus
-- `selectable_text_field` — Read-only selectable text field with standard styling
-- `context_menu_actions` — Floating context menu actions (Copy)
-- `auth_status_chip` — Auth state badge
-- `page_header` + `refresh_button` — Page title with actions
-- `status_badge` / `status_dot` — Status indicators
-- `styled_button` — Themed buttons (primary/secondary/danger/etc.)
-- `styled_text_input` — Themed text inputs
-- `modal_overlay` / `confirm_modal` — Modal dialogs
-- `toast_overlay` — Toast notifications
+- `selectable_label` / `selectable_label_mono` -- Read-only text that looks like static labels but supports selection and floating context menus
+- `selectable_text_field` -- Read-only selectable text field with standard styling
+- `context_menu_actions` -- Floating context menu actions (Copy)
+- `auth_status_chip` -- Auth state badge
+- `page_header` + `refresh_button` -- Page title with actions
+- `status_badge` / `status_dot` -- Status indicators
+- `styled_button` -- Themed buttons (primary/secondary/danger/etc.)
+- `styled_text_input` -- Themed text inputs
+- `modal_overlay` / `confirm_modal` -- Modal dialogs
+- `toast_overlay` -- Toast notifications
 
 **When writing new code, ALWAYS tag reusable items:**
 ```rust
@@ -313,7 +313,7 @@ yarn-error.log*
 
 4. **Code Patterns**
    - [ ] No session reuse (fresh processes only, if applicable)
-   - [ ] No direct API calls (CLI only — subscription auth, not API keys)
+   - [ ] No direct API calls (CLI only -- subscription auth, not API keys)
    - [ ] Platform data sourced from `platform_specs` (single source of truth)
    - [ ] Widget reuse from `src/widgets/` (check catalog first)
 
@@ -331,7 +331,7 @@ yarn-error.log*
    - [ ] Git commit format followed
 
 7. **Documentation / AGENTS.md**
-   - [ ] When adding to AGENTS.md: keep it minimal—critical rules at top, long reference in docs/, trim redundancy (see "Keeping AGENTS.md minimal" above).
+   - [ ] When adding to AGENTS.md: keep it minimal--critical rules at top, long reference in docs/, trim redundancy (see "Keeping AGENTS.md minimal" above).
 
 **After completing this checklist, proceed to update the Task Status Log.**
 
@@ -377,7 +377,7 @@ platform_specs::supports_effort(platform)
 // Returns: true for Claude/Codex/Copilot, false for Gemini/Cursor
 ```
 
-#### Borrow Checker — Reference to Temporary
+#### Borrow Checker -- Reference to Temporary
 **Symptom**: `cannot return reference to temporary value`
 **Cause**: Returning reference to inline-constructed value
 **Fix**: Use `static` for data that needs `&'static` lifetime
@@ -402,7 +402,7 @@ platform_specs::supports_effort(platform)
 - ✅ Use specific `.log` patterns in gitignore (not `*.log`)
 - ✅ Use Session ID format `PM-YYYY-MM-DD-HH-MM-SS-NNN`
 - ✅ Save evidence for verification results
-- ✅ Use subscription auth ONLY — NO API keys for platform access
+- ✅ Use subscription auth ONLY -- NO API keys for platform access
 - ✅ Check `docs/gui-widget-catalog.md` and `src/widgets/` before creating new UI
 - ✅ Use `platform_specs::` functions for ALL platform data (models, CLI, auth, capabilities)
 - ✅ Tag reusable code with `// DRY:WIDGET:`, `// DRY:DATA:`, `// DRY:FN:`, `// DRY:HELPER:`
@@ -415,16 +415,16 @@ platform_specs::supports_effort(platform)
 
 - ❌ Reuse sessions or processes
 - ❌ Use "Thread" terminology (use "Session")
-- ❌ Call APIs directly (CLI only — subscription auth, NOT API keys)
+- ❌ Call APIs directly (CLI only -- subscription auth, NOT API keys)
 - ❌ Modify files outside task scope
 - ❌ Delete or simplify canonical documents
 - ❌ Ignore test failures
 - ❌ Use blanket `*.log` in gitignore (evidence logs are tracked!)
 - ❌ Ignore `.puppet-master/` directory in gitignore
-- ❌ Hardcode platform data (models, CLI commands, auth, capabilities) — use `platform_specs`
+- ❌ Hardcode platform data (models, CLI commands, auth, capabilities) -- use `platform_specs`
 - ❌ Re-implement existing widget patterns without checking `docs/gui-widget-catalog.md`
-- ❌ Duplicate effort/reasoning/image checks — use `platform_specs::supports_effort()` etc.
-- ❌ Use API keys for platform auth — subscription-only (OAuth/browser login)
+- ❌ Duplicate effort/reasoning/image checks -- use `platform_specs::supports_effort()` etc.
+- ❌ Use API keys for platform auth -- subscription-only (OAuth/browser login)
 
 ---
 
@@ -459,7 +459,7 @@ mod tests {
 
 ## Directory Structure
 
-### Rust/Iced Codebase (Primary — Active Development)
+### Rust/Iced Codebase (Primary -- Active Development)
 ```
 puppet-master-rs/                   # Rust/Iced desktop app
 ├── src/
@@ -673,12 +673,12 @@ copilot -p "prompt" --allow-all-tools [--allow-all-paths] [--allow-all-urls] [--
 Launch and orchestrator execution for Copilot use `npx -y @github/copilot` so the agentic CLI is used everywhere (the resolved `copilot` binary may be the old suggest/explain tool).
 
 **Key capabilities:**
-- `copilot -p "prompt"` — Programmatic mode with prompt
-- `--allow-all-tools` — Auto-approve all tools without manual approval
-- `--allow-tool <spec>` / `--deny-tool <spec>` — Fine-grained tool control
+- `copilot -p "prompt"` -- Programmatic mode with prompt
+- `--allow-all-tools` -- Auto-approve all tools without manual approval
+- `--allow-tool <spec>` / `--deny-tool <spec>` -- Fine-grained tool control
 - Tool specs: `'shell(COMMAND)'`, `'write'`, `'MCP_SERVER_NAME'`
-- `--allow-all-paths` — Disable path verification
-- `--allow-all-urls` / `--allow-url <domain>` — URL access control
+- `--allow-all-paths` -- Disable path verification
+- `--allow-all-urls` / `--allow-url <domain>` -- URL access control
 - Default model: Claude Sonnet 4.5
 - Output format: Text-based (no JSON output)
 
@@ -721,10 +721,10 @@ Puppet Master integrates platform-reported usage data for quota visibility:
 - **Claude**: Rate limit errors (429, 413, 503, 529) with `Retry-After` header
 
 ### Environment Variables
-- `ANTHROPIC_API_KEY` — Claude Admin API access
-- `GITHUB_TOKEN` / `GH_TOKEN` — GitHub Copilot Metrics API
-- `GOOGLE_CLOUD_PROJECT` — Gemini Cloud Quotas API
-- `GOOGLE_APPLICATION_CREDENTIALS` — Gemini service account credentials
+- `ANTHROPIC_API_KEY` -- Claude Admin API access
+- `GITHUB_TOKEN` / `GH_TOKEN` -- GitHub Copilot Metrics API
+- `GOOGLE_CLOUD_PROJECT` -- Gemini Cloud Quotas API
+- `GOOGLE_APPLICATION_CREDENTIALS` -- Gemini service account credentials
 
 ---
 

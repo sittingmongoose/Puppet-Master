@@ -8,11 +8,11 @@
 - **Replace with:** new value.
 - Paths are relative to repo root unless noted.
 - After each phase, run `cd puppet-master-rs && cargo check && cargo test` and fix any failures before proceeding.
-- `Reference/` is excluded from scope — it is external reference material, not part of this project.
+- `Reference/` is excluded from scope -- it is external reference material, not part of this project.
 
 ---
 
-## Token Inventory (Canonical Values — Decide Once, Apply Everywhere)
+## Token Inventory (Canonical Values -- Decide Once, Apply Everywhere)
 
 Treat these as constants for the entire rebrand. Never invent a new variant mid-task.
 
@@ -35,15 +35,15 @@ Treat these as constants for the entire rebrand. Never invent a new variant mid-
 
 ## Execution Order (What to Do First)
 
-1. **Phase 1 — Backend protocol** (signals, commit prefix, build env). No path or installer changes yet; keeps `cargo test` stable.
-2. **Phase 2 — App identity and paths** (ProjectDirs, autostart, temp dirs, probe file, user-agents). Single consistent triplet and path names.
-3. **Phase 3 — User-facing strings and header** (window title, banner, welcome, tray, build display name, config/setup copy, module docs).
-4. **Phase 4 — Package and installers** (Cargo.toml bundle, GitHub workflow, Linux nfpm/desktop/scripts, macOS build/Info.plist, Windows NSI, build/uninstall scripts).
-5. **Phase 5 — Config YAML** (naming_pattern, namingPattern, workingDirectory if folder renamed later).
-6. **Phase 6 — Docs and Plans** (AGENTS.md, README, REQUIREMENTS, .cursorrules, Plans/, conductor/, docs/, Reference/, .cursor/, WIDGETS_*, evidence/audit references).
-7. **Phase 7 — Project folder rename** (rename repo root folder; then fix any remaining path references in config/evidence/audits).
+1. **Phase 1 -- Backend protocol** (signals, commit prefix, build env). No path or installer changes yet; keeps `cargo test` stable.
+2. **Phase 2 -- App identity and paths** (ProjectDirs, autostart, temp dirs, probe file, user-agents). Single consistent triplet and path names.
+3. **Phase 3 -- User-facing strings and header** (window title, banner, welcome, tray, build display name, config/setup copy, module docs).
+4. **Phase 4 -- Package and installers** (Cargo.toml bundle, GitHub workflow, Linux nfpm/desktop/scripts, macOS build/Info.plist, Windows NSI, build/uninstall scripts).
+5. **Phase 5 -- Config YAML** (naming_pattern, namingPattern, workingDirectory if folder renamed later).
+6. **Phase 6 -- Docs and Plans** (AGENTS.md, README, REQUIREMENTS, .cursorrules, Plans/, conductor/, docs/, Reference/, .cursor/, WIDGETS_*, evidence/audit references).
+7. **Phase 7 -- Project folder rename** (rename repo root folder; then fix any remaining path references in config/evidence/audits).
 
-Do **not** rename the project folder until Phases 1–6 are complete and committed, so that paths in the plan and tools remain valid during the work.
+Do **not** rename the project folder until Phases 1-6 are complete and committed, so that paths in the plan and tools remain valid during the work.
 
 ---
 
@@ -79,7 +79,7 @@ In `puppet-master-rs/src/git/commit_formatter.rs`:
 
 ### 1.4 Build env vars
 
-Update both files together — `build.rs` emits the env vars at compile time; `build_info.rs` reads them. They must stay in sync.
+Update both files together -- `build.rs` emits the env vars at compile time; `build_info.rs` reads them. They must stay in sync.
 
 - `puppet-master-rs/build.rs`: Replace every `RWM_BUILD_*` with `PM_BUILD_*` (SEMVER, GIT_SHA, GIT_DIRTY, PROFILE, TARGET, BUILD_ID, BUILD_UTC).
 - `puppet-master-rs/src/build_info.rs`: Replace every `option_env!("RWM_BUILD_...")` with `option_env!("PM_BUILD_...")`. Set `APP_DISPLAY_NAME` to `"Puppet Master"` and update any format strings that say "RWM Puppet Master" to "Puppet Master".
@@ -280,7 +280,7 @@ Replace "RWM Puppet Master" / "Ralph Wiggum" in `//!` and `///` with "Puppet Mas
 
 ### 5.1 Repo config files
 
-**Canonical naming pattern: `pm/{tier}/{id}`** — use this everywhere.
+**Canonical naming pattern: `pm/{tier}/{id}`** -- use this everywhere.
 
 - `.puppet-master/config.yaml`: `naming_pattern: ralph/{phase}/{task}` → `naming_pattern: pm/{tier}/{id}`.
 - `.puppet-master/puppet-master.yaml`: `namingPattern: rwm/{tier}/{id}` → `namingPattern: pm/{tier}/{id}`. Leave `workingDirectory` as-is until Phase 7 (folder rename).
@@ -334,7 +334,7 @@ Replace "RWM Puppet Master" / "Ralph Wiggum" in `//!` and `///` with "Puppet Mas
 - `.puppet-master/audits/integration-paths.md` and `.puppet-master/audits/integration-paths.json`: "ralph.*commit" → "pm.*commit"; project root path can be updated in Phase 7.
 - `.puppet-master/audits/wiring.json`: `rootDir` path updated in Phase 7 if desired.
 
-**Note:** Evidence `timeline.jsonl` files under `.puppet-master/evidence/` contain historical paths (workspace, cloneRoot). Leave as-is — they are historical records. The verification grep excludes them (see checklist).
+**Note:** Evidence `timeline.jsonl` files under `.puppet-master/evidence/` contain historical paths (workspace, cloneRoot). Leave as-is -- they are historical records. The verification grep excludes them (see checklist).
 
 **Check:** Grep for `RWM|Ralph|ralph|Wiggum|rwm` in `*.md`, `*.yaml`, `*.json` (excluding evidence if not updated) and fix any remaining hits.
 
@@ -379,7 +379,7 @@ Before marking the rebrand complete:
    - [ ] Installer README and scripts reference "Puppet Master" and new identifier/paths.
 
 4. **Task status**
-   - [ ] Update this plan’s Task Status Log (below) with Status (PASS/FAIL), Date, summary, files changed, and commands run.
+   - [ ] Update this plan's Task Status Log (below) with Status (PASS/FAIL), Date, summary, files changed, and commands run.
 
 ---
 
@@ -387,6 +387,6 @@ Before marking the rebrand complete:
 
 | Status | Date | Summary | Files changed | Commands / Notes |
 |--------|------|---------|---------------|------------------|
-| (pending) | — | Rebrand not yet started. | — | — |
+| (pending) | -- | Rebrand not yet started. | -- | -- |
 
 *(After completion, fill in: Status PASS/FAIL, date YYYY-MM-DD, short summary, list of key files, `cargo check`/`cargo test` results, and any FAIL details.)*

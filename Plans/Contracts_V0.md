@@ -1,15 +1,15 @@
 # Contracts V0 (Canonical)
 
 <!--
-PUPPET MASTER — CANONICAL CONTRACTS
+PUPPET MASTER -- CANONICAL CONTRACTS
 
 Purpose:
 - This file is the single source of truth for core, cross-cutting **contracts** referenced by other plan documents.
 - Keep it DRY: define only stable envelopes + type contracts; other plans reference these contracts instead of redefining.
 
 ABSOLUTE NAMING RULE:
-- Platform name is “Puppet Master” only.
-- If older naming exists, refer to it only as “legacy naming” (do not quote it).
+- Platform name is "Puppet Master" only.
+- If older naming exists, refer to it only as "legacy naming" (do not quote it).
 -->
 
 ## 0. Scope
@@ -27,7 +27,7 @@ Other plans MUST reference these contracts rather than redefining them.
 
 <a id="1.1"></a>
 <a id="EventRecord"></a>
-### 1.1 EventRecord — canonical persisted envelope (schema: `pm.event.v0`)
+### 1.1 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)
 **Definition:** `EventRecord` is the canonical event envelope persisted to seglog (and mirrored to JSONL and projections).
 
 **Required fields:**
@@ -57,7 +57,7 @@ Other plans MUST reference these contracts rather than redefining them.
 ---
 
 <a id="EventEnvelopeV1"></a>
-### 1.2 EventEnvelopeV1 — minimal compatibility envelope
+### 1.2 EventEnvelopeV1 -- minimal compatibility envelope
 `EventEnvelopeV1` is the minimal event envelope used by some plans as an intermediate format.
 
 ```json
@@ -146,7 +146,7 @@ Rules:
 
 <a id="AuthEvent"></a>
 ### 4.3 AuthEvent
-Auth flows MUST emit persisted events using `EventRecord` (§1.1), with stable `type` strings owned by the provider’s plan.
+Auth flows MUST emit persisted events using `EventRecord` (§1.1), with stable `type` strings owned by the provider's plan.
 
 Example (GitHub):
 - `auth.github.device_code.issued`

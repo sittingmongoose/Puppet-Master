@@ -1,4 +1,4 @@
-# File Manager & IDE-style Editor — Plan
+# File Manager & IDE-style Editor -- Plan
 
 **Date:** 2026-02-20  
 **Status:** Plan document  
@@ -42,9 +42,9 @@ This plan also covers **image viewing** and **HTML-in-browser preview with hot r
 9. [Tabs: Editor, Terminal, Browser](#9-tabs-editor-terminal-browser)
 10. [Editor enhancements (MVP)](#10-editor-enhancements-mvp)  
     - [10.10 LSP support (MVP)](#1010-lsp-support-mvp)  
-    - [10.10.5 LSP features (MVP) — editing and refactor](#10105-lsp-features-mvp--editing-and-refactor)  
-    - [10.10.6 LSP features (MVP) — navigation and search](#10106-lsp-features-mvp--navigation-and-search)  
-    - [10.10.7 LSP features (MVP) — display and editing UX](#10107-lsp-features-mvp--display-and-editing-ux)  
+    - [10.10.5 LSP features (MVP) -- editing and refactor](#10105-lsp-features-mvp--editing-and-refactor)  
+    - [10.10.6 LSP features (MVP) -- navigation and search](#10106-lsp-features-mvp--navigation-and-search)  
+    - [10.10.7 LSP features (MVP) -- display and editing UX](#10107-lsp-features-mvp--display-and-editing-ux)  
     - [10.10.8 LSP and chat/agent integration (MVP)](#10108-lsp-and-chatagent-integration-mvp)
 11. [Language/framework presets](#11-languageframework-presets)
 12. [Gaps, potential problems, and enhancements](#12-gaps-potential-problems-and-enhancements)  
@@ -56,7 +56,7 @@ This plan also covers **image viewing** and **HTML-in-browser preview with hot r
 
 ## 1. File Manager panel
 
-**Done when:** (1) Tree lists all project files under root; (2) Selecting a file opens it in the editor via §4.1; (3) Virtualized tree handles 10k+ rows without freezing; (4) Expand/collapse state restores per project on reopen. **Error handling:** **Open failed** — If opening the selected file fails (permission denied, not found, too large), show "Open failed" with brief reason in status or toast; do not leave tree in inconsistent state. **Refresh failure** — If directory read fails (e.g. permission), show error on that node and optionally "Retry." **Edge cases:** **Empty project** — Show "No files" or project root only; no crash. **No permission on subfolder** — Show node but mark or filter; document whether children are hidden or shown as inaccessible. **Expand/collapse persistence:** Redb key e.g. `file_manager/expanded/{project_id}` → list of expanded path prefixes or node ids (§2.9). **Requires** §4.1 open-file contract before "select file opens it"; requires project context (project root). **Settings:** **Hide ignored** (toggle): Settings → File Manager (or header); default off (ignored dimmed); persist in redb. **Row cap per directory** (e.g. 10k): document default and whether configurable.
+**Done when:** (1) Tree lists all project files under root; (2) Selecting a file opens it in the editor via §4.1; (3) Virtualized tree handles 10k+ rows without freezing; (4) Expand/collapse state restores per project on reopen. **Error handling:** **Open failed** -- If opening the selected file fails (permission denied, not found, too large), show "Open failed" with brief reason in status or toast; do not leave tree in inconsistent state. **Refresh failure** -- If directory read fails (e.g. permission), show error on that node and optionally "Retry." **Edge cases:** **Empty project** -- Show "No files" or project root only; no crash. **No permission on subfolder** -- Show node but mark or filter; document whether children are hidden or shown as inaccessible. **Expand/collapse persistence:** Redb key e.g. `file_manager/expanded/{project_id}` → list of expanded path prefixes or node ids (§2.9). **Requires** §4.1 open-file contract before "select file opens it"; requires project context (project root). **Settings:** **Hide ignored** (toggle): Settings → File Manager (or header); default off (ignored dimmed); persist in redb. **Row cap per directory** (e.g. 10k): document default and whether configurable.
 
 - **Placement:** Pop-out side window (like the chat pop-out), default left. Per Composergui5 §5 and feature-list layout: header ("FILES"), refresh, pop-out; search; virtualized file tree; optional Git status strip.
 - **Virtualized file tree:** Only visible nodes are rendered; scroll position determines which slice of the tree is shown. Total height uses placeholder/estimated row height so the scrollbar is correct. Supports deep trees; **very large directories** (e.g. node_modules): virtualize by row, apply a row cap per directory (e.g. 10k entries) with "Show more" or type-ahead to narrow; document depth limit if any.
@@ -85,15 +85,15 @@ Users can move files between the project and the rest of the system by dragging:
 
 #### 1.1.2 How we're going to do it
 
-**Platform drag-and-drop APIs:** Use the host platform’s D&D mechanism so the OS handles cross-app drag (e.g. desktop ↔ app).
+**Platform drag-and-drop APIs:** Use the host platform's D&D mechanism so the OS handles cross-app drag (e.g. desktop ↔ app).
 
-- **Windows:** Implement `IDropTarget` (or the UI framework’s drop target) on the tree control; accept `CF_HDROP` for file drops. For **drag out**, use `DoDragDrop` with `CF_HDROP` and provide the project file paths (or a shell data object with file paths). Slint / winit may expose higher-level APIs; use those if available so we don’t hand-roll COM.
+- **Windows:** Implement `IDropTarget` (or the UI framework's drop target) on the tree control; accept `CF_HDROP` for file drops. For **drag out**, use `DoDragDrop` with `CF_HDROP` and provide the project file paths (or a shell data object with file paths). Slint / winit may expose higher-level APIs; use those if available so we don't hand-roll COM.
 - **macOS:** Use `NSView` / `NSDraggingDestination` for drop; `NSDraggingSource` for drag out. Pasteboard type `NSPasteboardTypeFileURL` (or `NSFilenamesPboardType`). Provide file URLs for the project paths when dragging out.
 - **Linux:** Use Xdnd (X11) or the Wayland drag-and-drop protocol. Accept `text/uri-list` for incoming drops (decode file:// URIs to paths). For drag out, offer `text/uri-list` with file:// URIs for the selected project paths.
 
-If the UI stack (e.g. Slint) provides a **unified drag-drop API** that abstracts these, use it and document which formats we register (file list / URI list). Fallback: if the framework only supports in-app D&D, we can still implement **drop onto tree** by accepting the platform’s file-drop format when the drag originates outside the app; **drag out** may require framework or OS support for exporting file URIs.
+If the UI stack (e.g. Slint) provides a **unified drag-drop API** that abstracts these, use it and document which formats we register (file list / URI list). Fallback: if the framework only supports in-app D&D, we can still implement **drop onto tree** by accepting the platform's file-drop format when the drag originates outside the app; **drag out** may require framework or OS support for exporting file URIs.
 
-**Resolving the drop target:** On drop, we have (a) the **drop location** (e.g. row index or node id under the tree) and (b) the **project root path**. Map the drop location to a **target directory path**: if the row is the project root, target = project root path; if the row is a folder, target = that folder’s full path (we must store or compute full path for each tree node). **Normalize** the target path (e.g. canonicalize) and **validate** that it is under the project root (see Security below). If validation fails, reject the drop and show a brief message (e.g. "Invalid drop target").
+**Resolving the drop target:** On drop, we have (a) the **drop location** (e.g. row index or node id under the tree) and (b) the **project root path**. Map the drop location to a **target directory path**: if the row is the project root, target = project root path; if the row is a folder, target = that folder's full path (we must store or compute full path for each tree node). **Normalize** the target path (e.g. canonicalize) and **validate** that it is under the project root (see Security below). If validation fails, reject the drop and show a brief message (e.g. "Invalid drop target").
 
 **Copy implementation:** For **drop onto tree:** For each source path from the OS D&D payload, copy the file or directory (recursively) into the target directory. Use a single **copy** operation (e.g. Rust `std::fs` or a crate that preserves permissions/timestamps if required). For **drag out:** The OS or target app performs the copy when it receives the file list/URIs; we only provide the paths. For **move:** After a successful copy, delete the source; if delete fails, report the error and do not remove the source.
 
@@ -102,7 +102,7 @@ If the UI stack (e.g. Slint) provides a **unified drag-drop API** that abstracts
 1. **Option A (default):** Show a **dialog** per conflict (or one dialog with a list): "File already exists: {name}. **Overwrite** / **Keep both** (rename to e.g. name (1)) / **Cancel**." If "Keep both," generate a unique name (e.g. append (1), (2) until free). If "Cancel," abort the whole drop (or skip that item and continue, document choice).
 2. **Option B (setting):** Add a **Settings → File Manager** option: "When dropping, if name exists" → **Always ask** | **Always overwrite** | **Always keep both (rename)**. "Always ask" uses the dialog above; the other two avoid the dialog for batch drops.
 
-**Progress and feedback:** For **large** drops (e.g. many files or one large folder), show a **progress indicator** (e.g. "Copying 3 of 50…" or a progress bar) so the UI doesn’t appear frozen. Run the copy on a **background task** (e.g. tokio spawn or a thread); do not block the UI thread. On completion: **toast** "Copied N items to {folder}" or "Dropped N items into project." On **error**: toast or dialog with the error (e.g. "Permission denied for …") and optionally "Retry" / "Skip" for multi-item.
+**Progress and feedback:** For **large** drops (e.g. many files or one large folder), show a **progress indicator** (e.g. "Copying 3 of 50..." or a progress bar) so the UI doesn't appear frozen. Run the copy on a **background task** (e.g. tokio spawn or a thread); do not block the UI thread. On completion: **toast** "Copied N items to {folder}" or "Dropped N items into project." On **error**: toast or dialog with the error (e.g. "Permission denied for ...") and optionally "Retry" / "Skip" for multi-item.
 
 **Visual feedback:** During drag-over-tree: **highlight** the drop target row (e.g. background color or border) so the user knows where the drop will go. Use a **cursor** or **drag image** that indicates copy vs move when the modifier is held (e.g. plus icon for copy, arrow for move) if the platform supports it.
 
@@ -124,7 +124,7 @@ If the UI stack (e.g. Slint) provides a **unified drag-drop API** that abstracts
 | **Security: dropping outside project** | When **dropping onto** the tree, resolve the drop target to an **absolute path** and check that it is **under the project root** (e.g. `target.starts_with(project_root)` with normalized paths). If not (e.g. path traversal), **reject** the drop and do not write anywhere. Never write to paths outside the project for this feature. |
 | **Security: drag out exposes sensitive paths** | When **dragging out**, we only expose **paths under the current project**. The user is explicitly moving project files; no other app state (e.g. config, tokens) is included in the D&D payload. |
 | **Large drop blocks UI** | Run copy (and optional move) in a **background task**; show progress and allow cancel. Do not block the main thread or the tree UI. |
-| **Partial failure (multi-item drop)** | If one of N items fails (e.g. permission denied), **continue** with the rest; at the end show a summary: "Copied N–1 items. Failed: {path} — {reason}." Optionally "Retry failed" to retry only the failed items. |
+| **Partial failure (multi-item drop)** | If one of N items fails (e.g. permission denied), **continue** with the rest; at the end show a summary: "Copied N-1 items. Failed: {path} -- {reason}." Optionally "Retry failed" to retry only the failed items. |
 | **Tree refresh after drop** | After a successful drop, **refresh** the target folder in the tree (e.g. re-read directory or invalidate cache) so the new items appear. If the tree uses a watcher (§10.7), the watcher may already fire; otherwise trigger an explicit refresh for the target path. |
 | **Floating/detached File Manager** | When the File Manager is in a **floating** window, D&D must still work: the floating window receives drag/drop events. Use the same drop-target and copy logic; ensure the window has a window handle that participates in the OS D&D. |
 | **Drop onto expanded-but-empty folder** | An empty folder is still a valid drop target; copy creates the first file(s) there. No special case. |
@@ -147,7 +147,7 @@ The app includes an **IDE-style editor** so users can open, view, and edit proje
 ### 2.1 Placement and layout
 
 - **Location:** File Editor strip (center-left between File Manager and Dashboard), per Composergui5 §8 and feature-list layout. When the File Manager or Chat panel is the focus, "open file" actions open or focus the editor and show the file there. The strip is **collapsible** (per feature-list); when collapsed and the user triggers "open file" from chat or File Manager, the editor **focuses and expands** so the file is visible. **Collapsed state** is persisted **per-project** (in redb); restore on reopen and when snapping the editor back.
-- **Drag out / drag back:** The user can **drag the editor** (or an editor group) **out** of the main application into **its own window**, and **drag it back in** to re-dock. Same detach/snap pattern as File Manager and Chat: undock by drag or "Pop out" action; floating editor window shows the same tabs and content; snap zones (e.g. near main window edge) with visual cue when dragging back; close floating window to re-dock (collapsed or last dock position). Buffers and tabs stay in sync whether the editor is docked or floating. **Floating editor policy (MVP):** Exactly **one** floating editor window is supported; if the user drags out again, re-dock the existing floating window and float the newly dragged group, or replace the floating window — document implementation choice. **Discoverability:** Provide affordance (e.g. drag handle or "Pop out") and optional first-time tooltip so users learn that the editor can be detached.
+- **Drag out / drag back:** The user can **drag the editor** (or an editor group) **out** of the main application into **its own window**, and **drag it back in** to re-dock. Same detach/snap pattern as File Manager and Chat: undock by drag or "Pop out" action; floating editor window shows the same tabs and content; snap zones (e.g. near main window edge) with visual cue when dragging back; close floating window to re-dock (collapsed or last dock position). Buffers and tabs stay in sync whether the editor is docked or floating. **Floating editor policy (MVP):** Exactly **one** floating editor window is supported; if the user drags out again, re-dock the existing floating window and float the newly dragged group, or replace the floating window -- document implementation choice. **Discoverability:** Provide affordance (e.g. drag handle or "Pop out") and optional first-time tooltip so users learn that the editor can be detached.
 - **Tabs:** Multiple open files are shown as **tabs** (or equivalent list). User can switch between open files, close a tab (with unsaved prompt if dirty), and reorder tabs if the design supports it (keyboard-accessible move tab left/right when reorder is supported). Persist open tab list per project so reopening the app restores the same set of open files (§2.9).
 
 ### 2.2 Editing and saving
@@ -159,13 +159,13 @@ The app includes an **IDE-style editor** so users can open, view, and edit proje
 
 ### 2.3 Display and navigation
 
-- **Line numbers:** Show **line numbers** in the gutter (toggle optional). Enables "go to line" and correlation with chat diffs (e.g. "Edited: path (lines 12–45)").
-- **Go to line / range:** When opening from chat with **line or range information**, the editor **opens the file and scrolls to that line or range** and **highlights the range** (read-only highlight). **Line/range format:** 1-based, inclusive; e.g. single line `12` or range `12–45`. Chat and editor use the same format (e.g. "lines 12–45" or L12–L45). Highlight stays until the user edits or moves the cursor; **optional fade** after a **configurable delay** (default e.g. 5 s; Settings → Editor). Command or action "Go to line…" (e.g. Ctrl+G) for manual jump. If the requested line is beyond the file length, **clamp to the last line** (and optionally show a brief "Clamped to line N" hint).
+- **Line numbers:** Show **line numbers** in the gutter (toggle optional). Enables "go to line" and correlation with chat diffs (e.g. "Edited: path (lines 12-45)").
+- **Go to line / range:** When opening from chat with **line or range information**, the editor **opens the file and scrolls to that line or range** and **highlights the range** (read-only highlight). **Line/range format:** 1-based, inclusive; e.g. single line `12` or range `12-45`. Chat and editor use the same format (e.g. "lines 12-45" or L12-L45). Highlight stays until the user edits or moves the cursor; **optional fade** after a **configurable delay** (default e.g. 5 s; Settings → Editor). Command or action "Go to line..." (e.g. Ctrl+G) for manual jump. If the requested line is beyond the file length, **clamp to the last line** (and optionally show a brief "Clamped to line N" hint).
 - **Syntax highlighting:** **Basic syntax highlighting** by language (inferred from file extension or shebang). Extension → language map for common types (e.g. `.rs`, `.py`, `.md`, `.json`, `.toml`, `.html`, `.css`, `.js`); shebang in first line for scripts. Unknown extension or plain text: no highlighting. Palette respects app theme (Retro Light/Dark, Basic); token→color mapping is app-owned. **When LSP is available** for the file's language (§10.10), **semantic highlighting** from the language server can augment or replace basic highlighting; basic highlighting remains the fallback when LSP is unavailable or for unsupported file types.
 
 ### 2.4 Split panes and editor groups
 
-**Split editor panes** are in scope for MVP. The user can split the editor area into **multiple editor groups** (e.g. side-by-side or top/bottom). **Tab bar model (MVP):** Each group has **its own tab list** and active tab; the **buffer model is shared** — one buffer per file path across all groups. Opening a file from File Manager or chat targets the **active (focused) editor group** by default; optional "Open in" (e.g. right-click) can offer "Open in other group" or "Open in new group." **Single buffer, multiple views:** When the same path is open in more than one editor group, all views show the **same buffer** and **same dirty state**; any edit in one group updates the other views immediately. Cursor/scroll position is per-view; only one "active" tab per group.
+**Split editor panes** are in scope for MVP. The user can split the editor area into **multiple editor groups** (e.g. side-by-side or top/bottom). **Tab bar model (MVP):** Each group has **its own tab list** and active tab; the **buffer model is shared** -- one buffer per file path across all groups. Opening a file from File Manager or chat targets the **active (focused) editor group** by default; optional "Open in" (e.g. right-click) can offer "Open in other group" or "Open in new group." **Single buffer, multiple views:** When the same path is open in more than one editor group, all views show the **same buffer** and **same dirty state**; any edit in one group updates the other views immediately. Cursor/scroll position is per-view; only one "active" tab per group.
 
 ### 2.5 Data model and dirty state
 
@@ -184,14 +184,14 @@ The app includes an **IDE-style editor** so users can open, view, and edit proje
 - **Encoding:** UTF-8 for editable text. If file cannot be decoded as UTF-8, open read-only with a clear message (e.g. "Cannot decode as UTF-8") and do not allow editing until the file is valid UTF-8 (e.g. user fixes externally and reverts).
 - **Line endings:** Preserve on save (keep CRLF/LF/CR).
 - **When content is written:** Only on explicit Save; no auto-save in MVP.
-- **Binary files:** Read-only with a clear reason: e.g. "Binary file — cannot edit." Hex view out of scope for MVP.
+- **Binary files:** Read-only with a clear reason: e.g. "Binary file -- cannot edit." Hex view out of scope for MVP.
 - **Read-only files:** OS or Git read-only: show read-only indicator and **reason** (e.g. "Read-only on disk"); block Save; Save As allowed. **Read-only reason in UI:** Whenever a file is read-only, the UI must indicate **why**: e.g. "Binary file", "File too large", "Read-only on disk", "Cannot decode as UTF-8" (§2.7), so users are not confused.
 
 ### 2.7 Large files
 
 - **Strategy (MVP):** Use **truncated view + "Load full file"** for files above the threshold. Open read-only with a truncated view (e.g. first N lines) and a "Load full file" control; if the user loads full, allow editing subject to the hard cap. Do not implement read-only virtualized editing in MVP unless needed.
 - **Default threshold:** **10 000 lines** (primary metric for editor UX). Files above this are not loaded into an editable buffer by default; show truncated read-only view and "Load full file."
-- **Hard cap:** Never load more than **5 MB** into a single buffer. Above 5 MB, show "File too large to edit" and offer "View read-only (truncated)" or "Open in system editor." Configurable in Settings → Editor: **Large file threshold (lines)** (e.g. 5k–50k) and **Hard cap (MB)** (e.g. 2–10); persist in redb.
+- **Hard cap:** Never load more than **5 MB** into a single buffer. Above 5 MB, show "File too large to edit" and offer "View read-only (truncated)" or "Open in system editor." Configurable in Settings → Editor: **Large file threshold (lines)** (e.g. 5k-50k) and **Hard cap (MB)** (e.g. 2-10); persist in redb.
 
 ### 2.8 Keyboard shortcuts
 
@@ -201,14 +201,14 @@ The app includes an **IDE-style editor** so users can open, view, and edit proje
 ### 2.9 Persistence (open tabs)
 
 - **Stored per project:** Open tab list (ordered paths), active tab index, and **scroll/cursor position per tab** (default: **persist**). Key: `project_id`. Persisted in **redb** (SSOT: Plans/storage-plan.md §2.3). **Editor state schema (redb):** Store in redb `editor` namespace per SSOT: `tabs.{project_id}` → ordered list of paths; `active_tab.{project_id}` → index; `scroll_cursor.{project_id}.{path_hash}` → optional scroll/cursor; `max_tabs` (app-level); and session-scoped view state under `session.{project_id}.{session_id}` when session-scoped view is used (§10.7). Do not persist full buffer content; recovery/unsaved content is separate (redb or temp).
-- **Max tabs (GUI setting):** The app exposes a **Max editor tabs** (or **Max open tabs**) setting in the GUI (e.g. Settings → Editor). This caps how many tabs (buffers) are kept in memory; when exceeded, LRU eviction applies (§10.7). Default e.g. 20–30; user can increase or decrease. Stored with other app settings in redb.
+- **Max tabs (GUI setting):** The app exposes a **Max editor tabs** (or **Max open tabs**) setting in the GUI (e.g. Settings → Editor). This caps how many tabs (buffers) are kept in memory; when exceeded, LRU eviction applies (§10.7). Default e.g. 20-30; user can increase or decrease. Stored with other app settings in redb.
 - **Other editor-related state in redb:** Consider storing **editor layout** (split groups, active group, collapse state of File Editor strip) and **recent files** list (for quick open / @ mention) in the same redb schema (settings/sessions) so they persist per project and survive restart.
 - **Restore order and lazy load:** On app start (or project open), restore the tab list and active tab index; **load only the active tab's buffer** immediately. Load other tab contents **on first switch** to that tab (lazy load). **Max persisted tab count:** Cap the restored tab list (e.g. 50) so startup and storage stay bounded even if the user had raised max open tabs; drop oldest from persisted list if over cap.
 - **Dirty buffers on exit:** On quit or project switch with unsaved changes, prompt Save / Discard / Cancel. **Recover unsaved:** Optional for MVP (e.g. on crash or quit-with-unsaved, offer to restore from recovery store); if implemented, use redb or temp per **Plans/storage-plan.md**. §10.9 lists it as in-scope; treat as optional for initial release so §2.9 and §10.9 are aligned.
 
-**Transient UI states:** The editor and File Manager must show clear, consistent states and copy for: **Loading…** (file open in progress); **Decoding…** (when applicable); **Cannot decode as UTF-8** (§2.6); **File not found** / **Deleted** (§7); **Binary file** (§2.6); **File too large** (§2.7); **Indexing…** (when building symbol index); **Open failed** (e.g. permission denied — with brief reason). Use these in tabs, placeholders, or status so tests and UI stay consistent.
+**Transient UI states:** The editor and File Manager must show clear, consistent states and copy for: **Loading...** (file open in progress); **Decoding...** (when applicable); **Cannot decode as UTF-8** (§2.6); **File not found** / **Deleted** (§7); **Binary file** (§2.6); **File too large** (§2.7); **Indexing...** (when building symbol index); **Open failed** (e.g. permission denied -- with brief reason). Use these in tabs, placeholders, or status so tests and UI stay consistent.
 
-**Accessibility:** Support keyboard-only use for File Manager tree (§1), editor tabs, and dialogs. Provide visible focus indicators, logical focus order, and screen reader–friendly labels/ARIA where the UI stack allows. Respect reduced-motion preferences for animations if applicable. Detailed a11y requirements may live in a dedicated accessibility doc; this plan requires that editor and File Manager are not mouse-only.
+**Accessibility:** Support keyboard-only use for File Manager tree (§1), editor tabs, and dialogs. Provide visible focus indicators, logical focus order, and screen reader-friendly labels/ARIA where the UI stack allows. Respect reduced-motion preferences for animations if applicable. Detailed a11y requirements may live in a dedicated accessibility doc; this plan requires that editor and File Manager are not mouse-only.
 
 ---
 
@@ -216,7 +216,7 @@ The app includes an **IDE-style editor** so users can open, view, and edit proje
 
 **Done when:** Typing @ opens file list (same as File Manager); selecting a file adds it to message context; UI explains @ = context vs click = open. **Requires** same file list source as File Manager; full UX in assistant-chat-design. **If file list fails:** Show message in @ popup (e.g. "No project" or "Could not load files"); do not send message with invalid ref. **File deleted after @:** At send time, if file is missing, either resolve to last-known content or warn and allow send without attachment.
 
-- **Trigger:** In the chat input, the user types **@** to open a **small search box** over the file list (same file list as File Manager — single source of truth).
+- **Trigger:** In the chat input, the user types **@** to open a **small search box** over the file list (same file list as File Manager -- single source of truth).
 - **Behavior:** User picks a file (search/filter by name or path); the selected file is **added to the agent's context** for that message (e.g. as an attachment or context reference so the agent can read it). This provides explicit file context without leaving the chat. **@ vs click-to-open:** **@** adds the file to the **message context** (agent can read it); **clicking** a path or code block **opens the file in the editor**. They are intentionally different: context vs open. Explain this in the UI (e.g. tooltip or short hint) so users are not confused.
 - **Scope:** Chat-specific; full UX for @ mention is in assistant-chat-design.md. This plan states that @ mention resolution uses the same file list as the File Manager.
 
@@ -232,7 +232,7 @@ The app includes an **IDE-style editor** so users can open, view, and edit proje
 
 **Done when:** All callers (chat, File Manager, Ctrl+P) use one handler; request shape and defaults as specified; response is add/switch tab + optional scroll/highlight; floating editor receives focus and file. **Implement §4.1 before §2 (editor), §1 (File Manager open), §5 (click-to-open).** Editor is the single target; contract is the API. **Response on failure:** If open fails (not found, permission, too large, binary), return or signal error; caller shows message; do not add tab with broken state. **Path outside project:** Reject or constrain to project root; document. **Response shape:** Success: tab added or focused; optional payload for line/range applied. Failure: error code + message (e.g. FileNotFound, PermissionDenied, FileTooLarge).
 
-All "open file" actions (chat click-to-open, File Manager selection, quick open Ctrl+P) use a **single internal contract** and one code path. **Request shape:** `OpenFile { path: PathBuf, line?: number, range?: { start: number, end: number }, target_group?: 'active' | 'other' | 'new' }`. **Defaults:** `line` and `range` are 1-based inclusive; `target_group` defaults to **active** (focused editor group). If the editor is floating, the target is still the single editor surface — focus the floating window and open the file there. **Response:** Add or switch to the tab for `path` in the target group; if `line` or `range` is set, scroll to and optionally highlight that range (§2.3). Implementors: one function/handler for all callers.
+All "open file" actions (chat click-to-open, File Manager selection, quick open Ctrl+P) use a **single internal contract** and one code path. **Request shape:** `OpenFile { path: PathBuf, line?: number, range?: { start: number, end: number }, target_group?: 'active' | 'other' | 'new' }`. **Defaults:** `line` and `range` are 1-based inclusive; `target_group` defaults to **active** (focused editor group). If the editor is floating, the target is still the single editor surface -- focus the floating window and open the file there. **Response:** Add or switch to the tab for `path` in the target group; if `line` or `range` is set, scroll to and optionally highlight that range (§2.3). Implementors: one function/handler for all callers.
 
 ---
 
@@ -243,30 +243,30 @@ All "open file" actions (chat click-to-open, File Manager selection, quick open 
 When the user clicks a **file path** or **code block** in the Assistant (or Interview) chat thread, the app **opens that file in the in-app IDE-style editor** via the open-file contract (§4.1). This applies to:
 
 - **Files-touched strip** (chat footer): each path with diff count (e.g. `src/main.rs` (+12 −3)); click opens the file in the editor. When the entry has line/range info, the editor opens at that location (assistant-chat-design §4.1).
-- **Activity transparency:** "Read: path" and "Edited: path" (and "Edited: path (lines 12–45)"); click opens the file and, when line/range is known, scrolls to it.
+- **Activity transparency:** "Read: path" and "Edited: path" (and "Edited: path (lines 12-45)"); click opens the file and, when line/range is known, scrolls to it.
 - **Code block / diff header:** The filename (and optional +N −M) at the top of an inline code block or diff in the thread; click opens that file and, when the block has line/range information, scrolls to that line or range.
 
-**Line/range:** Same 1-based inclusive format as §2.3 (e.g. lines 12–45). **Open already-open file:** If the file is already open in a tab (in any group), **focus that tab** (and switch to its group if needed); do not open a second tab for the same path. If line/range is provided, scroll to and highlight it in the existing tab. **Single behavior:** All such clicks open in the same editor; no separate "preview" vs "edit." Chat does not implement its own file viewer; it always targets the editor (this plan §2). **Discoverability:** Provide affordance that paths and code blocks are clickable (e.g. hover underline, cursor change, or first-time tooltip) so users learn the feature.
+**Line/range:** Same 1-based inclusive format as §2.3 (e.g. lines 12-45). **Open already-open file:** If the file is already open in a tab (in any group), **focus that tab** (and switch to its group if needed); do not open a second tab for the same path. If line/range is provided, scroll to and highlight it in the existing tab. **Single behavior:** All such clicks open in the same editor; no separate "preview" vs "edit." Chat does not implement its own file viewer; it always targets the editor (this plan §2). **Discoverability:** Provide affordance that paths and code blocks are clickable (e.g. hover underline, cursor change, or first-time tooltip) so users learn the feature.
 
 ---
 
 ## 6. Out of scope
 
-**MVP** in this plan means the **desktop build scope**: all features listed in §§1–11 are in scope for the initial desktop release unless marked optional. **LSP is in scope for MVP** (§10.10). There are no items explicitly out of scope for the current build beyond what is marked optional in the plan.
+**MVP** in this plan means the **desktop build scope**: all features listed in §§1-11 are in scope for the initial desktop release unless marked optional. **LSP is in scope for MVP** (§10.10). There are no items explicitly out of scope for the current build beyond what is marked optional in the plan.
 
 ### Implementation order (summary)
 
 Implement in roughly this order so that contracts and single sources of truth exist before features that depend on them:
 
-1. **Open-file contract (§4.1)** — Single request/response shape and one code path. Implement first; all "open file" callers use it.
-2. **Editor core (§2)** — Buffer model, tabs, save/revert, persistence schema (§2.9), transient UI states. Editor is the only target for open-file.
-3. **File Manager (§1)** — Tree, virtualization, expand/collapse; "select file" calls open-file contract. D&D (§1.1) can follow.
-4. **Click-to-open (§5)** — Chat and footer invoke open-file contract; no separate viewer.
-5. **@ mention (§3)** — Same file list as File Manager; UX details in assistant-chat-design.
-6. **Presets (§11)** — Detection and tool download; required for LSP server mapping and run/debug (§10.4).
-7. **LSP lifecycle and core (§10.10.2, §10.10.1)** — Start/stop server, protocol, editor integration; then §10.10.3–10.10.8 features.
-8. **Editor enhancements (§10.1–10.9)** — Search, layout, run/debug, watcher, review, etc.; many depend on §2 and §11; LSP features depend on §10.10.
-9. **Image/HTML (§8)** and **Tabs for Terminal/Browser (§9)** — Can be parallelized with editor work once layout and tab model exist.
+1. **Open-file contract (§4.1)** -- Single request/response shape and one code path. Implement first; all "open file" callers use it.
+2. **Editor core (§2)** -- Buffer model, tabs, save/revert, persistence schema (§2.9), transient UI states. Editor is the only target for open-file.
+3. **File Manager (§1)** -- Tree, virtualization, expand/collapse; "select file" calls open-file contract. D&D (§1.1) can follow.
+4. **Click-to-open (§5)** -- Chat and footer invoke open-file contract; no separate viewer.
+5. **@ mention (§3)** -- Same file list as File Manager; UX details in assistant-chat-design.
+6. **Presets (§11)** -- Detection and tool download; required for LSP server mapping and run/debug (§10.4).
+7. **LSP lifecycle and core (§10.10.2, §10.10.1)** -- Start/stop server, protocol, editor integration; then §10.10.3-10.10.8 features.
+8. **Editor enhancements (§10.1-10.9)** -- Search, layout, run/debug, watcher, review, etc.; many depend on §2 and §11; LSP features depend on §10.10.
+9. **Image/HTML (§8)** and **Tabs for Terminal/Browser (§9)** -- Can be parallelized with editor work once layout and tab model exist.
 
 **Critical path:** §4.1 → §2 → §1 and §5; then §11 → §10.10 → remaining §10.
 
@@ -280,7 +280,7 @@ Implement in roughly this order so that contracts and single sources of truth ex
 - **Project root moved/renamed:** Invalidate list and tabs; show File not found. **Detection:** Detect via failure on next I/O (e.g. read/save) or optional watcher on project root; document the chosen approach so behavior is reliable.
 - **Symlinks:** Specify in this spec or implementation docs whether symlinks are **followed** (show target contents) or **shown as a single node** (no follow). Document the choice.
 - **File replaced by directory (or vice versa) on disk:** If the path now refers to a directory (or was a directory and is now a file), on next open/save or refresh show a clear state (e.g. "Path is no longer a file") and offer to close the tab.
-- **Editor floating and main window closed:** If the user closes the main window while the editor is floating, define behavior: e.g. app keeps running until the floating editor window is closed, or app exits — document the choice in §2.1 or §12.1.10.
+- **Editor floating and main window closed:** If the user closes the main window while the editor is floating, define behavior: e.g. app keeps running until the floating editor window is closed, or app exits -- document the choice in §2.1 or §12.1.10.
 - **Read-only and binary:** See §2.6 (and read-only reason in UI).
 - **Large files:** See §2.7 (threshold, hard cap, truncated + "Load full file").
 - **LSP and format/rename:** When LSP is in use, server crash or hang is handled per §10.10.4 (fallback, no editor crash). If format-on-save times out, save without formatting. If the file is renamed on disk (by LSP rename or externally), detect and prompt to save to new path or close. Symbol index staleness: see §12.2.7.
@@ -294,13 +294,13 @@ Implement in roughly this order so that contracts and single sources of truth ex
 ### 8.1 Image files
 
 - **Opening images:** Selecting an image file in File Manager (or clicking image path in chat) opens it in an image viewer, not the text editor. Formats at minimum: PNG, JPEG, GIF, WebP, SVG (optionally BMP, ICO). Viewer shows image at sensible size (fit to pane or 1:1 with zoom).
-- **Placement (MVP):** Image viewer uses the **same tab area as the editor** — an image opens as a tab that shows the viewer instead of text. Switching tabs or opening a text file works as in §2. Optional setting (e.g. Settings → Editor) for **dedicated image pane** in a later release.
+- **Placement (MVP):** Image viewer uses the **same tab area as the editor** -- an image opens as a tab that shows the viewer instead of text. Switching tabs or opening a text file works as in §2. Optional setting (e.g. Settings → Editor) for **dedicated image pane** in a later release.
 - **Behavior:** View only (no in-app pixel editing). Zoom in/out, fit-to-width/fit-to-pane. Optional: copy image to clipboard, open in system viewer.
 
 ### 8.2 HTML in browser and hot reload
 
 - **Open HTML in browser:** When user opens an HTML file, app can open it in system or embedded browser (or "Open in browser" / "Preview" action). Use file: URL or local HTTP server so relative paths resolve.
-- **Edit + hot reload:** User opens HTML in editor; optionally preview in browser. When user saves the HTML file or any **linked** file, browser view refreshes automatically after a debounce. **Linked files:** Files that trigger refresh are the HTML file itself and any resource referenced by it (e.g. `<link href="…">`, `<script src="…">`) that lie under the project or the same directory; implementation may use a simple same-dir + referenced-path rule. **Debounce:** **400 ms** default (per file, per preview instance); configurable in Settings → Editor or Developer (e.g. 100–2000 ms); persist in redb. Rapid saves result in one refresh after the last save within the window. Tight loop: edit → Save → see result in browser.
+- **Edit + hot reload:** User opens HTML in editor; optionally preview in browser. When user saves the HTML file or any **linked** file, browser view refreshes automatically after a debounce. **Linked files:** Files that trigger refresh are the HTML file itself and any resource referenced by it (e.g. `<link href="...">`, `<script src="...">`) that lie under the project or the same directory; implementation may use a simple same-dir + referenced-path rule. **Debounce:** **400 ms** default (per file, per preview instance); configurable in Settings → Editor or Developer (e.g. 100-2000 ms); persist in redb. Rapid saves result in one refresh after the last save within the window. Tight loop: edit → Save → see result in browser.
 - **Scope:** One or more HTML files per project; embedded vs system browser is implementation choice. Local resources only; no remote deployment in MVP.
 - **Security:** Preview in sandboxed/local context (file: or localhost). Document any restrictions (e.g. no file:// to paths outside project).
 
@@ -316,11 +316,11 @@ When viewing a local HTML file in the built-in browser (with or without hot relo
 
 ## 9. Tabs: Editor, Terminal, Browser
 
-**Done when:** Editor tabs per §2; terminal tabs with pin semantics; browser instances capped and policy (reuse/LRU/prompt) documented. **Max browser instances:** Redb key e.g. `app.editor.max_browser_instances` (redb `settings` namespace; app-level); default 3–5. **Settings:** Max browser previews: Settings → Editor or Developer; range 1–10; persist in redb. Terminal tab limit: document default and key if applicable. **Pin semantics:** Editor pin (see §12.4 Suggested additions — Pin tab) aligns with or distinguishes from terminal pin; define in §2 or §9 if needed.
+**Done when:** Editor tabs per §2; terminal tabs with pin semantics; browser instances capped and policy (reuse/LRU/prompt) documented. **Max browser instances:** Redb key e.g. `app.editor.max_browser_instances` (redb `settings` namespace; app-level); default 3-5. **Settings:** Max browser previews: Settings → Editor or Developer; range 1-10; persist in redb. Terminal tab limit: document default and key if applicable. **Pin semantics:** Editor pin (see §12.4 Suggested additions -- Pin tab) aligns with or distinguishes from terminal pin; define in §2 or §9 if needed.
 
 - **Editor tabs:** Multiple open files in the editor are shown as **tabs** per editor group (§2.1, §2.4). Reorder, close (with unsaved prompt), persist per project.
 - **Terminal tabs:** The **Terminal** (bottom panel per feature-list/gui-layout) supports **tabs**: multiple terminal sessions (e.g. one per shell or task). User can open a new terminal tab, switch between them, close, and optionally name or **pin**. **Pin semantics:** Pinned terminal tabs are excluded from "Close others" (and optionally from LRU-style close when terminal tab limit exists); align with or explicitly distinguish from editor pin (§12.4). Each tab has its own cwd and history; project context applies when a project is selected.
-- **Browser:** The app supports **multiple browser instances** (e.g. multiple preview windows or browser panels). **Cap:** Enforce a **max browser instances** (e.g. 3–5; configurable in Settings, persist in redb). **One instance** = one WebView/preview window. When the user tries to open another preview over the cap: reuse an existing instance (switch its URL to the new file), or close least-recently-used and open the new one, or prompt "Max previews reached." Document choice. No requirement for **tabs within** a single browser. Each instance is the same WebView/browser surface (§8, newfeatures.md §15.18) with click-to-context available.
+- **Browser:** The app supports **multiple browser instances** (e.g. multiple preview windows or browser panels). **Cap:** Enforce a **max browser instances** (e.g. 3-5; configurable in Settings, persist in redb). **One instance** = one WebView/preview window. When the user tries to open another preview over the cap: reuse an existing instance (switch its URL to the new file), or close least-recently-used and open the new one, or prompt "Max previews reached." Document choice. No requirement for **tabs within** a single browser. Each instance is the same WebView/browser surface (§8, newfeatures.md §15.18) with click-to-context available.
 
 ---
 
@@ -330,7 +330,7 @@ All of the following are **in scope for MVP**. When **LSP is available** for the
 
 ### 10.1 Editor UX (text/code)
 
-- **Minimap:** Small overview of the file in the right gutter for quick scrolling and orientation (e.g. VS Code–style).
+- **Minimap:** Small overview of the file in the right gutter for quick scrolling and orientation (e.g. VS Code-style).
 - **Breadcrumbs:** Path above or below the editor (e.g. `file > function > block`) for in-file navigation. **When LSP is available**, use **LSP document outline** for accurate breadcrumbs (§10.10); **otherwise** use a simple heuristic (e.g. indent-based regions plus brace matching).
 - **Code folding:** Collapse/expand blocks (e.g. by braces or indent level). Configurable fold level and keyboard shortcuts.
 - **Multi-cursor:** Multiple carets/selections (e.g. Alt+Click, add next occurrence of word). Parallel edits in one buffer.
@@ -377,7 +377,7 @@ All of the following are **in scope for MVP**. When **LSP is available** for the
 
 ### 10.7 OpenCode-inspired
 
-- **Session-scoped view state:** Per-file view state (scroll, cursor, selected range) can be **session-scoped** as well as per-project. **Session** = chat thread (thread id) when in Assistant/Interview; optionally interview session id. State is keyed by `project_id` + `session_id`. When the user switches threads, **explicitly prompt:** e.g. "Restore N tabs from [thread name]?" with **Yes** / **No** / **Don't ask again** — do not restore silently without user choice.
+- **Session-scoped view state:** Per-file view state (scroll, cursor, selected range) can be **session-scoped** as well as per-project. **Session** = chat thread (thread id) when in Assistant/Interview; optionally interview session id. State is keyed by `project_id` + `session_id`. When the user switches threads, **explicitly prompt:** e.g. "Restore N tabs from [thread name]?" with **Yes** / **No** / **Don't ask again** -- do not restore silently without user choice.
 - **LRU content cache with eviction:** Limit in-memory open buffers by **size or count** with LRU eviction; the **max tabs** value (§2.9) is the cap. When reopening an evicted file, reload from disk. Prevents unbounded memory use with many open tabs.
 - **File tree + watcher invalidation:** File Manager tree **invalidates or refreshes** when files change on disk (e.g. via filesystem watcher). Optional "watch" toggle; refresh on focus or manual refresh remains available.
 
@@ -401,7 +401,7 @@ All of the following are **in scope for MVP**. Evaluate usefulness at implementa
 - **Minimap click-to-scroll:** Click on minimap to jump to that region of the file (common in IDEs).
 - **Terminal replay / log:** Persist terminal output per tab for replay or copy after close; optional.
 
-**Storage alignment:** Editor and panel state (open tabs, max tabs setting, layout, view state) are persisted in **redb** (§2.9 schema). Optional: editor **lifecycle events** (e.g. `FileOpened`, `FileClosed`, `TabSwitched`, `BufferSaved`, `BufferReverted`) can be written to **seglog** for analytics; projector pipeline can then index or roll up as needed. A minimal event set supports "revert last agent edit" (refresh after revert), analytics, and future features. **Confirm dialogs:** Standardize all confirmation prompts (Save/Discard/Cancel, Reload/Overwrite/Cancel, Discard unsaved and reload?, etc.) as one pattern: **message + optional "Show diff" + 2–3 buttons**; same UI component and accessibility behavior for all.
+**Storage alignment:** Editor and panel state (open tabs, max tabs setting, layout, view state) are persisted in **redb** (§2.9 schema). Optional: editor **lifecycle events** (e.g. `FileOpened`, `FileClosed`, `TabSwitched`, `BufferSaved`, `BufferReverted`) can be written to **seglog** for analytics; projector pipeline can then index or roll up as needed. A minimal event set supports "revert last agent edit" (refresh after revert), analytics, and future features. **Confirm dialogs:** Standardize all confirmation prompts (Save/Discard/Cancel, Reload/Overwrite/Cancel, Discard unsaved and reload?, etc.) as one pattern: **message + optional "Show diff" + 2-3 buttons**; same UI component and accessibility behavior for all.
 
 ### 10.10 LSP support (MVP)
 
@@ -409,19 +409,19 @@ All of the following are **in scope for MVP**. Evaluate usefulness at implementa
 
 **Done when:** For a file whose language has an LSP server configured in the current preset and started successfully: diagnostics appear in the editor and in a Problems panel; hover shows info; autocomplete works on typing or manual trigger; go-to-definition and go-to-symbol (current file and workspace) work. When LSP is unavailable or fails (not configured, failed to start, or crashed), fallback behavior is used (e.g. regex-based outline for go-to-symbol, grep/index for go-to-definition) and no LSP-only UI is shown without a defined fallback or a clear "LSP unavailable" message with Retry/Settings.
 
-LSP (Language Server Protocol) is **in scope for MVP**. When an LSP server is available for the current language or preset, the editor uses it for: **core** (diagnostics, hover, autocomplete, go-to-definition, symbol search, breadcrumbs) and **full feature set** (code actions, rename, format on save, inlay hints, signature help, find references, highlight occurrences, go to type definition/implementation/declaration, semantic folding, expand/shrink selection, document links, color picker, CodeLens, format on type, call hierarchy, semantic tokens, and chat/agent integration) as specified in §§10.10.1–10.10.8. When LSP is unavailable or fails, the app falls back to text-based or indexed behavior as specified in §10.1, §10.2, and §12.1.4.
+LSP (Language Server Protocol) is **in scope for MVP**. When an LSP server is available for the current language or preset, the editor uses it for: **core** (diagnostics, hover, autocomplete, go-to-definition, symbol search, breadcrumbs) and **full feature set** (code actions, rename, format on save, inlay hints, signature help, find references, highlight occurrences, go to type definition/implementation/declaration, semantic folding, expand/shrink selection, document links, color picker, CodeLens, format on type, call hierarchy, semantic tokens, and chat/agent integration) as specified in §§10.10.1-10.10.8. When LSP is unavailable or fails, the app falls back to text-based or indexed behavior as specified in §10.1, §10.2, and §12.1.4.
 
 #### 10.10.1 Behavior
 
-All of the following are **when LSP is available** for the current file's language and preset; fallback behavior is defined in §10.10.3, §10.10.4, and the sections referenced below. When a capability is not supported by the server or LSP is unavailable, the client behaves as specified in the Fallback / Gaps sections; no vague "optional" — the client always has a defined action.
+All of the following are **when LSP is available** for the current file's language and preset; fallback behavior is defined in §10.10.3, §10.10.4, and the sections referenced below. When a capability is not supported by the server or LSP is unavailable, the client behaves as specified in the Fallback / Gaps sections; no vague "optional" -- the client always has a defined action.
 
 - **Diagnostics:** Underline/squiggles in the editor for errors and warnings; **Problems** panel lists all diagnostics for the project (or current file). **Source:** LSP notification `textDocument/publishDiagnostics` (server pushes; client does not request). **Trigger:** None (server sends after document sync). **UI:** Inline squiggles by severity (error/warning/info); Problems panel shows file, line, message, source (server id); click opens file at range. **Keybinding:** Open Problems panel (e.g. Ctrl+Shift+M or View → Problems). When **multiple servers** publish diagnostics for the same file, merge by appending; show source label per diagnostic so user can distinguish (e.g. "rust-analyzer", "eslint").
 - **Hover:** At cursor, show hover info (type, doc comment, etc.). **Source:** LSP `textDocument/hover` (request). **Trigger:** Cursor idle at a position for **150 ms** (debounce); cancel any in-flight hover when cursor moves or document changes. **UI:** Tooltip (markdown or plain text) at cursor; dismiss on cursor move or Escape. **Keybinding:** Optional "Show hover" (e.g. Ctrl+K Ctrl+I) to force hover at cursor. **When not supported:** No tooltip; no error.
-- **Autocomplete:** Inline completion list. **Source:** LSP `textDocument/completion`; for items that need expansion, `completionItem/resolve` before insert. **Trigger:** On typing (debounce **50–100 ms** to avoid flooding) or manual trigger (e.g. Ctrl+Space). **Request:** Send `textDocument/completion` with `position` and optional `context.triggerKind` (Invoked, TriggerCharacter, TriggerForIncompleteCompletions). **UI:** Dropdown at cursor; select with Enter/Tab; dismiss with Escape. **Keybinding:** Ctrl+Space for manual trigger. **When not supported:** No LSP completions; editor may still offer word/snippet completion from buffer.
+- **Autocomplete:** Inline completion list. **Source:** LSP `textDocument/completion`; for items that need expansion, `completionItem/resolve` before insert. **Trigger:** On typing (debounce **50-100 ms** to avoid flooding) or manual trigger (e.g. Ctrl+Space). **Request:** Send `textDocument/completion` with `position` and optional `context.triggerKind` (Invoked, TriggerCharacter, TriggerForIncompleteCompletions). **UI:** Dropdown at cursor; select with Enter/Tab; dismiss with Escape. **Keybinding:** Ctrl+Space for manual trigger. **When not supported:** No LSP completions; editor may still offer word/snippet completion from buffer.
 - **Go to definition:** Jump to definition on action. **Source:** LSP `textDocument/definition`. **Trigger:** User action (e.g. F12 or Cmd+click on symbol). **Request:** Send `textDocument/definition` with current document URI and position. **UI:** Single location → open file (or tab) and go to range; multiple locations → show picker, then open chosen. **Keybinding:** F12 (or Cmd+click). **When not supported or empty:** Fallback: grep/index (§12.1.4); optionally show "No definition found."
 - **Go to symbol (current file):** List symbols in current file; jump on select. **Source:** LSP `textDocument/documentSymbol`. **Trigger:** User opens "Go to symbol in file" (e.g. Ctrl+Shift+O). **Request:** Send `textDocument/documentSymbol` for current document. **UI:** List or tree (by kind); select opens and jumps to range. **Keybinding:** Ctrl+Shift+O. **When not supported:** Fallback: regex-based outline (§12.1.4).
 - **Find symbol in workspace:** Search symbols across the project. **Source:** LSP `workspace/symbol`. **Trigger:** User invokes "Go to symbol in workspace" (e.g. Ctrl+T); optional query string. **Request:** Send `workspace/symbol` with optional `query`. **UI:** Panel or quick-pick list; select opens file and goes to range. **Keybinding:** Ctrl+T (or equivalent). **When not supported:** Fallback: project index (§12.1.4).
-- **Breadcrumbs:** Document outline for breadcrumb path. **Source:** Same as "Go to symbol (current file)" — `textDocument/documentSymbol`; build hierarchy from returned symbols. **Trigger:** Always (when document has symbols). **UI:** Breadcrumb bar above or below editor showing path to current symbol; click navigates. **When not supported:** Heuristic (indent/brace) per §10.1.
+- **Breadcrumbs:** Document outline for breadcrumb path. **Source:** Same as "Go to symbol (current file)" -- `textDocument/documentSymbol`; build hierarchy from returned symbols. **Trigger:** Always (when document has symbols). **UI:** Breadcrumb bar above or below editor showing path to current symbol; click navigates. **When not supported:** Heuristic (indent/brace) per §10.1.
 
 #### 10.10.2 How we're going to do it
 
@@ -431,7 +431,7 @@ All of the following are **when LSP is available** for the current file's langua
 - **Document sync:** On buffer open: send `didOpen` with `textDocument: { uri, languageId, version, text }`. On edit: **debounce** (e.g. 300 ms); then send `didChange`. Use **incremental sync** when server advertises `textDocumentSync.change === Incremental`: send `contentChanges: [{ range, rangeLength?, text }]` and increment client-held `version` per change. When server does **not** support incremental: send full `text` in `contentChanges: [{ text }]` and bump version. On buffer close: send `didClose`. On save: send `didSave` (with optional `text` if server requested it). **When server does not support a sync kind:** Client still sends the minimum the server accepts (per capability); never assume server has latest content without sending.
 - **Request cancellation:** For **idempotent** requests that depend on cursor position or document state (hover, completion, signature help, document highlight, inlay hints, selection range), **cancel the previous request** when a new one is triggered (e.g. cursor moved, key typed). Use LSP cancellation: send `$/cancelRequest` with the previous request id before or when sending the new request; discard the result of the cancelled request and do not update UI with it. **No cancellation** for user-explicit one-shot actions (e.g. go to definition, rename) until the user cancels (Escape) or a timeout applies.
 - **Applying WorkspaceEdit:** When the server returns a `WorkspaceEdit` (code action, rename, format, etc.): (1) **Order:** Apply `documentChanges` in the order given if present; otherwise apply `changes` (map of URI → TextEdit[]) in a deterministic order (e.g. sort URIs). (2) **Resource operations:** If `documentChanges` includes `CreateFile`, `RenameFile`, or `DeleteFile`, apply them in order: CreateFile before any TextEdit to that URI; RenameFile/DeleteFile after all edits to the old URI. If the client does not support resource operations, apply only the `changes` (text edits) and optionally show a message that renames/creates/deletes were skipped. (3) **Undo:** Apply all edits in a single undo group so one Undo reverts the whole change. (4) **After apply:** Send `textDocument/didChange` (or didOpen for new files) so server state stays in sync; do not send for format-on-save if the next action is didSave.
-- **Editor integration:** On buffer open: send `didOpen` with URI, languageId, version, and full text. On edit: debounce (300 ms) and send `didChange` (incremental or full per server capability). On save: send `didSave`. Request hover on cursor move (debounce 150 ms; cancel previous); completion on typing (debounce 50–100 ms; cancel previous) or manual trigger; definition/symbol on user action. Map LSP ranges (0-based line, character) to editor line/column; apply diagnostics as decorations; show hover in a tooltip and completion in a dropdown.
+- **Editor integration:** On buffer open: send `didOpen` with URI, languageId, version, and full text. On edit: debounce (300 ms) and send `didChange` (incremental or full per server capability). On save: send `didSave`. Request hover on cursor move (debounce 150 ms; cancel previous); completion on typing (debounce 50-100 ms; cancel previous) or manual trigger; definition/symbol on user action. Map LSP ranges (0-based line, character) to editor line/column; apply diagnostics as decorations; show hover in a tooltip and completion in a dropdown.
 - **Fallback:** If the server is **not configured** (missing from preset or PATH), **fails to start**, or **crashes**: no diagnostics, hover, or completion from LSP; use §12.1.4 for go-to-symbol and find-symbol-in-workspace; use §10.1 heuristics for breadcrumbs. Show a non-blocking message ("LSP unavailable for this language") and offer "Retry" or "Open Settings" (dismissible).
 
 #### 10.10.3 Gaps and how we address them
@@ -455,10 +455,10 @@ Each gap has a **Solution** so the client never has undefined behavior.
 Each problem has a **Solution** so the implementer knows exactly what to do.
 
 - **Server crash or hang:** **Solution:** If the server process exits unexpectedly, mark LSP as unavailable for that (project, server); optionally restart once (with backoff, e.g. 2 s). If a request doesn't respond within timeout (e.g. 5 s), cancel it and fall back; do not block the UI. Show "LSP disconnected" and offer Retry.
-- **UI blocking:** Long-running LSP requests could freeze the UI. **Solution:** All LSP requests are async; never block the main thread. For user-triggered actions (e.g. rename), show a progress indicator or "Working…"; allow cancel (Escape). Discard stale results when document/position changes (request cancellation).
-- **Performance (flooding server):** Too many requests (e.g. hover on every keystroke). **Solution:** Debounce: hover 150 ms, completion 50–100 ms, didChange 300 ms. Cap completion results (e.g. 100 items) if server returns more; show "N more" or truncate. Lazy-load symbol list (e.g. workspace/symbol) when panel opens, not on every keystroke.
+- **UI blocking:** Long-running LSP requests could freeze the UI. **Solution:** All LSP requests are async; never block the main thread. For user-triggered actions (e.g. rename), show a progress indicator or "Working..."; allow cancel (Escape). Discard stale results when document/position changes (request cancellation).
+- **Performance (flooding server):** Too many requests (e.g. hover on every keystroke). **Solution:** Debounce: hover 150 ms, completion 50-100 ms, didChange 300 ms. Cap completion results (e.g. 100 items) if server returns more; show "N more" or truncate. Lazy-load symbol list (e.g. workspace/symbol) when panel opens, not on every keystroke.
 - **Memory:** Each LSP server process uses memory. **Solution:** Limit concurrent servers per project (e.g. one per language or per preset); stop idle servers after configurable timeout (no open files of that language for N minutes) to free resources. Limit number of open documents sent to server if needed (e.g. cap at 50); close least-recently-used on overflow and send didClose.
-- **Slow or noisy diagnostics:** **Solution:** Debounce `didChange` (300–500 ms) so we don't flood the server. For large workspaces, cap Problems panel (e.g. 500 items) or scope to open files; allow "Load all" or "Show N more." Merge diagnostics from multiple servers; tag by source.
+- **Slow or noisy diagnostics:** **Solution:** Debounce `didChange` (300-500 ms) so we don't flood the server. For large workspaces, cap Problems panel (e.g. 500 items) or scope to open files; allow "Load all" or "Show N more." Merge diagnostics from multiple servers; tag by source.
 - **Multi-file rename (conflict, partial failure):** Rename returns WorkspaceEdit touching many files; one file is read-only or save fails. **Solution:** Apply edits in order (§10.10.2); if an edit fails (e.g. file locked), stop and show which file failed; do not apply further edits; offer "Retry" or "Apply remaining." Optionally show preview (diff) before apply.
 - **Format on save (long file, timeout):** Formatting request takes too long or times out. **Solution:** Set a format timeout (e.g. 5 s); on timeout, save without formatting and optionally show "Format timed out; file saved unformatted." For very large files (e.g. >10k lines), optionally skip format on save or use rangeFormatting for modified regions only.
 - **Inlay hints (too many, visibility):** Server returns hundreds of hints; UI is cluttered. **Solution:** Request inlay hints only for visible range; cap number rendered (e.g. 200); or reduce density (e.g. only parameter names, not all types). User can disable inlay hints in Settings.
@@ -468,13 +468,13 @@ Each problem has a **Solution** so the implementer knows exactly what to do.
 - **Folding (nested depth):** Very deep foldable regions. **Solution:** Use server's folding ranges as-is; editor limits expand depth (e.g. 10 levels) to avoid UI explosion; or collapse beyond depth by default.
 - **Document links (broken URI):** Server returns invalid or unresolvable URI. **Solution:** Validate URI before opening; if invalid, show in tooltip but do not open; or open in browser and let browser handle 404. Resolve via documentLink/resolve when server supports it.
 - **Color picker (unsupported format):** User chooses a format (e.g. HSL) server doesn't support in colorPresentation. **Solution:** Request colorPresentation with user's preferred format; if server returns empty, keep previous text or show hex only. Fallback: edit as plain text.
-- **CodeLens (click race, command failure):** User clicks lens while command is still resolving; or command fails. **Solution:** Disable lens click until resolve completes; show "Loading…" on lens if needed. On command failure, show toast "Command failed" and do not change buffer.
+- **CodeLens (click race, command failure):** User clicks lens while command is still resolving; or command fails. **Solution:** Disable lens click until resolve completes; show "Loading..." on lens if needed. On command failure, show toast "Command failed" and do not change buffer.
 - **Format on type (conflict with user edit):** Server returns edit that overlaps user's next keystroke. **Solution:** Apply format-on-type edit immediately after trigger character; if buffer version changed (user typed again), discard format edit and do not apply. Optional: disable format on type by default to avoid conflicts.
 - **Call hierarchy (deep tree):** Very deep incoming/outgoing calls. **Solution:** Lazy-load children on expand; cap depth (e.g. 20 levels) or node count per level; show "N more" at bottom.
 - **Semantic tokens (large file, delta):** Full semantic tokens for a big file are expensive; server may support delta. **Solution:** Prefer semanticTokens/range for visible range; if server supports semanticTokens/delta, use it after full once. Fall back to syntax-only if request times out or fails.
 - **Chat/agent (stale LSP state):** Agent applies edits; LSP state (diagnostics, symbols) is stale. **Solution:** After applying edits from chat/agent, send didChange so server updates; refresh diagnostics/hover when user focuses the file. Chat/agent "get diagnostics" returns last-known; document that it may be stale until server republishes.
 
-#### 10.10.5 LSP features (MVP) — editing and refactor
+#### 10.10.5 LSP features (MVP) -- editing and refactor
 
 All of the following are **in scope for MVP** when LSP is available for the current language; fallback when the server does not support the capability or when LSP is unavailable is described per feature. **Gaps** and **Potential problems** are listed per feature; see also §10.10.3 and §10.10.4 for cross-cutting items.
 
@@ -486,7 +486,7 @@ All of the following are **in scope for MVP** when LSP is available for the curr
 
 - **Inlay hints:** **Behavior:** Inline, read-only hints in the editor (e.g. parameter names at call sites, inferred types, chained types). Do not affect buffer content or selection. **How we do it:** Request LSP `textDocument/inlayHint` for the **visible range** (or full document if server is fast and document small); **trigger:** on scroll or visible range change, debounce 100 ms; cancel previous request when range changes. Render hints as decorations; support `inlayHint/resolve` if the server returns unresolved hints (e.g. tooltip on hover). **Fallback:** If the server does not support inlay hints, show none. **Settings:** **Show inlay hints** (toggle, Settings → Editor); per-hint-type toggles optional. Persist in redb. **Gaps:** Server doesn't support inlayHint → show none. Server returns empty → no hints. **Potential problems:** Too many hints / visibility → see §10.10.4 (visible range only; cap count; user can disable).
 
-#### 10.10.6 LSP features (MVP) — navigation and search
+#### 10.10.6 LSP features (MVP) -- navigation and search
 
 See §10.10.3 and §10.10.4 for cross-cutting gaps and problems; feature-specific ones below.
 
@@ -498,7 +498,7 @@ See §10.10.3 and §10.10.4 for cross-cutting gaps and problems; feature-specifi
 
 - **Go to type definition / implementation / declaration:** **Behavior:** Same UX as go-to-definition: user invokes "Go to type definition", "Go to implementation(s)", or "Go to declaration" (e.g. modifier+click or separate commands); editor opens the target file and jumps to the range. **How we do it:** Request LSP `textDocument/typeDefinition`, `textDocument/implementation`, or `textDocument/declaration` at the cursor. Single location → open and go; multiple → show picker then open chosen. **Trigger:** Keybinding or context menu per command. **Fallback:** If the server does not support a capability, hide or disable that command; no text-based fallback for MVP. **Settings:** Keybindings configurable. **Gaps:** Capability not in server → disable command. Returns empty → show "No type definition" (or implementation/declaration). **Potential problems:** None beyond §10.10.4 (timeout, cancel).
 
-#### 10.10.7 LSP features (MVP) — display and editing UX
+#### 10.10.7 LSP features (MVP) -- display and editing UX
 
 See §10.10.3 and §10.10.4 for cross-cutting gaps and problems; feature-specific ones below.
 
@@ -530,7 +530,7 @@ See §10.10.3 and §10.10.4 for cross-cutting gaps and problems; feature-specifi
 
 - **Presets (JetBrains-style):** The app supports **language/framework-aware presets** aligned with what JetBrains offers out of the box: **Rust**, **Java/Kotlin**, **Python**, **PHP**, **Go**, **C# / .NET**, **C/C++**, **JavaScript/TypeScript**, **Ruby**, and optionally **SQL/databases**, **data science**. Each preset defines: default run/debug configs, expected tools (e.g. Cargo, rust-analyzer, LLDB for Rust; for **JavaScript/TypeScript**: Node/npm, **ESLint** for linting), and optional UI defaults (e.g. project layout, test runner). **LSP servers** are specified per preset (§10.10).
 - **Preset detection:** When a project is added or opened, detect preset by **file-based heuristics** at project root. **File → preset table (examples):** `Cargo.toml` → Rust; `package.json` + `tsconfig.json` → TypeScript; `package.json` (with or without `eslint` dep or `eslint.config.*`) → JavaScript/ECMAScript; `pyproject.toml` or `requirements.txt` → Python; `composer.json` → PHP; `go.mod` → Go; `*.sln` / `*.csproj` → C#. **ESLint:** For JavaScript/TypeScript, presence of `eslint.config.js` / `eslint.config.mjs` / `eslint.config.ts` (ESLint v10 flat config) or `eslint` in `package.json` dependencies signals ESLint usage; the eslint LSP server is enabled for that preset per §10.10. If **multiple** match (monorepo), use primary by priority or prompt **"Select preset."** If **none** match, show **"Select preset"** dialog with the full list. If the project was configured via **chain start wizard / interviewer**, use interview output (e.g. architecture phase) to set or suggest the preset; user can override. See §12.1.5.
-- **Download tools when project is added:** When a project is added or opened for the first time, the app **downloads the correct tools** for the selected preset (e.g. language runtimes, debuggers, linters). **Order and UX:** Do **not** block opening the project. Run tool download **after** the project is considered open and the UI is usable; show **progress** (e.g. "Installing Rust toolchain…") and allow the user to continue working. On **failure** (network, permission, unsupported OS): show clear error with **Retry** and **Skip** ("Use project without full preset"); optionally persist "skip" and offer "Install preset tools" later from Settings or project menu. See §12.1.6.
+- **Download tools when project is added:** When a project is added or opened for the first time, the app **downloads the correct tools** for the selected preset (e.g. language runtimes, debuggers, linters). **Order and UX:** Do **not** block opening the project. Run tool download **after** the project is considered open and the UI is usable; show **progress** (e.g. "Installing Rust toolchain...") and allow the user to continue working. On **failure** (network, permission, unsupported OS): show clear error with **Retry** and **Skip** ("Use project without full preset"); optionally persist "skip" and offer "Install preset tools" later from Settings or project menu. See §12.1.6.
 - **Single preset per project:** One active preset per project (e.g. "Rust" or "Python + Django"). Stored with project config; **switchable** (e.g. Settings → Project → Preset) if the project is multi-language. Combined presets (e.g. "Rust + Node") optional; document in §12.2.5.
 - **LSP in presets:** Presets **can include LSP-based tools** (e.g. rust-analyzer, pylsp, eslint, typescript-language-server). LSP is in scope for MVP (§10.10); when a preset specifies an LSP server, the app starts it for the project and uses it for diagnostics, hover, autocomplete, go-to-definition, and symbol search. Fallback to regex/index when LSP is not configured or fails.
 
@@ -560,7 +560,7 @@ See §10.10.3 and §10.10.4 for cross-cutting gaps and problems; feature-specifi
 
 **Gap:** §2.7 gives examples (> 10 000 lines or > 2 MB) but no final value or hard cap.
 
-**Solution:** (1) **Pick one primary metric:** Either **line count** (e.g. 10 000 lines) or **file size** (e.g. 2 MB). Recommend **line count** for editor UX (virtualized rendering). (2) **Define hard cap:** e.g. never load more than 5 MB into a single buffer regardless of threshold; above that, show "File too large to edit" and offer "View read-only (truncated)" or "Open in system editor." (3) **Settings:** Add **Large file threshold** (lines or MB) and **Hard cap (MB)** in Settings → Editor; persist in redb. (4) Document the chosen default and range (e.g. threshold 5k–50k lines, hard cap 2–10 MB) in §2.7.
+**Solution:** (1) **Pick one primary metric:** Either **line count** (e.g. 10 000 lines) or **file size** (e.g. 2 MB). Recommend **line count** for editor UX (virtualized rendering). (2) **Define hard cap:** e.g. never load more than 5 MB into a single buffer regardless of threshold; above that, show "File too large to edit" and offer "View read-only (truncated)" or "Open in system editor." (3) **Settings:** Add **Large file threshold** (lines or MB) and **Hard cap (MB)** in Settings → Editor; persist in redb. (4) Document the chosen default and range (e.g. threshold 5k-50k lines, hard cap 2-10 MB) in §2.7.
 
 #### 12.1.4 Symbol search (LSP when available, fallback without)
 
@@ -570,7 +570,7 @@ See §10.10.3 and §10.10.4 for cross-cutting gaps and problems; feature-specifi
 
 #### 12.1.5 Preset detection vs interview
 
-**Gap:** "Detects or asks" for language/framework when a project is added — detection rules and fallback are not listed.
+**Gap:** "Detects or asks" for language/framework when a project is added -- detection rules and fallback are not listed.
 
 **Solution:** (1) **Detection order:** (a) **File-based heuristics** at project root: e.g. `Cargo.toml` → Rust, `package.json` + `tsconfig.json` → TypeScript, `pyproject.toml` or `requirements.txt` → Python, `composer.json` → PHP, `go.mod` → Go, `*.sln` / `*.csproj` → C#. (b) If multiple match (monorepo), use **primary** (e.g. first by priority list) or prompt "Select preset." (c) If none match, show **"Select preset"** dialog with the full preset list. (2) **When interview was run:** If the project was created or configured via chain start wizard / interviewer, use the **interview output** (e.g. architecture phase result) to set or suggest the preset; user can override. (3) Document the detection table (file → preset) and the "Select preset" flow in §11 or a short "Preset detection" subsection.
 
@@ -578,13 +578,13 @@ See §10.10.3 and §10.10.4 for cross-cutting gaps and problems; feature-specifi
 
 **Gap:** If a preset's tools fail to download (network, permission, unsupported OS), behavior is unspecified.
 
-**Solution:** (1) **On failure:** Show a **clear error** in the UI (e.g. "Could not install Rust toolchain: [reason]"). Include retry and skip actions. (2) **Retry:** "Retry" re-runs the download/install for that preset. (3) **Skip:** "Use project without full preset" — project opens with the preset selected but without the optional tools; run/debug may be limited (e.g. "Run" might prompt to install later). Do **not** block opening the project. (4) **Docs:** "Open docs" or "Troubleshoot" link to preset-specific setup or system-requirement docs. (5) Optionally persist "skip this preset's tools" so the user isn't prompted every time; allow "Install preset tools" from Settings or project menu later. Document in §11.
+**Solution:** (1) **On failure:** Show a **clear error** in the UI (e.g. "Could not install Rust toolchain: [reason]"). Include retry and skip actions. (2) **Retry:** "Retry" re-runs the download/install for that preset. (3) **Skip:** "Use project without full preset" -- project opens with the preset selected but without the optional tools; run/debug may be limited (e.g. "Run" might prompt to install later). Do **not** block opening the project. (4) **Docs:** "Open docs" or "Troubleshoot" link to preset-specific setup or system-requirement docs. (5) Optionally persist "skip this preset's tools" so the user isn't prompted every time; allow "Install preset tools" from Settings or project menu later. Document in §11.
 
 #### 12.1.7 Hot reload debounce
 
 **Gap:** §8.2 says "after short debounce" for browser refresh on save; duration and scope are unspecified.
 
-**Solution:** (1) **Debounce duration:** Use a **per-file** debounce of **300–500 ms** (e.g. 400 ms). On each save of a file that is "watched" for hot reload (the HTML or linked CSS/JS), start or reset a timer; when the timer fires, trigger one refresh of the browser view that shows that file. (2) **Scope:** Per preview instance: each browser instance watching a given HTML file has its own debounce; rapid saves to that file result in one refresh after the last save within the window. (3) **Settings:** Add **Hot reload debounce (ms)** in Settings → Editor or Developer (range e.g. 100–2000 ms); persist in redb. Document default and key in §8.2.
+**Solution:** (1) **Debounce duration:** Use a **per-file** debounce of **300-500 ms** (e.g. 400 ms). On each save of a file that is "watched" for hot reload (the HTML or linked CSS/JS), start or reset a timer; when the timer fires, trigger one refresh of the browser view that shows that file. (2) **Scope:** Per preview instance: each browser instance watching a given HTML file has its own debounce; rapid saves to that file result in one refresh after the last save within the window. (3) **Settings:** Add **Hot reload debounce (ms)** in Settings → Editor or Developer (range e.g. 100-2000 ms); persist in redb. Document default and key in §8.2.
 
 #### 12.1.8 Session-scoped view state scope
 
@@ -594,7 +594,7 @@ See §10.10.3 and §10.10.4 for cross-cutting gaps and problems; feature-specifi
 
 #### 12.1.9 Review rules storage
 
-**Gap:** §10.8 custom review rules — where they are stored (project vs app), format, and how they're applied are not specified.
+**Gap:** §10.8 custom review rules -- where they are stored (project vs app), format, and how they're applied are not specified.
 
 **Solution:** (1) **Storage:** Support both **project-level** and **application-level** rules. Project: e.g. `.puppet-master/review-rules.md` or `.puppet-master/review-rules.yaml` in project root. Application: e.g. in redb under `review_rules` or a user config file in app data dir. Project rules override or extend app rules when a project is selected. (2) **Format:** Prefer **markdown** or **YAML** for readability: e.g. a list of rule descriptions or named rules with description and severity. Example: `- "Flag TODOs in production code"` or `name: require-error-handling; description: "Require error handling here"; severity: warning`. (3) **Application:** When running AI/rule-based review (§10.8), the review engine loads app + project rules and applies them (e.g. inject into Assistant prompt or run a rule evaluator). Reference in agent-rules-context or a short "Review rules" plan so the rules pipeline can load them. Document path and format in §10.8.
 
@@ -602,7 +602,7 @@ See §10.10.3 and §10.10.4 for cross-cutting gaps and problems; feature-specifi
 
 **Gap:** With main window + floating editor + possibly detached Chat/File Manager, window count and focus for shortcuts (e.g. Ctrl+S) need clarity.
 
-**Solution:** (1) **Focus rule:** **Editor shortcuts** (Save, Close tab, Go to line, etc.) apply when **any editor window has focus** (docked or floating). So Ctrl+S in a floating editor window saves the current buffer in that window. App-level shortcuts (e.g. command palette Ctrl+P) apply when the main window or a non-editor panel has focus. (2) **Single floating editor:** For MVP, allow **one** floating editor window (one drag-out produces one floating window; if the user drags out again, either replace the existing floating window or re-dock the first and float the second — document choice). Alternatively allow multiple floating editor groups; then each has its own window and focus rule applies per window. (3) **Z-order:** OS manages window order; no special z-order requirement beyond "focus follows click." Document focus rule and single-vs-multiple floating policy in §2.1 or §2.4.
+**Solution:** (1) **Focus rule:** **Editor shortcuts** (Save, Close tab, Go to line, etc.) apply when **any editor window has focus** (docked or floating). So Ctrl+S in a floating editor window saves the current buffer in that window. App-level shortcuts (e.g. command palette Ctrl+P) apply when the main window or a non-editor panel has focus. (2) **Single floating editor:** For MVP, allow **one** floating editor window (one drag-out produces one floating window; if the user drags out again, either replace the existing floating window or re-dock the first and float the second -- document choice). Alternatively allow multiple floating editor groups; then each has its own window and focus rule applies per window. (3) **Z-order:** OS manages window order; no special z-order requirement beyond "focus follows click." Document focus rule and single-vs-multiple floating policy in §2.1 or §2.4.
 
 ### 12.2 Potential problems
 
@@ -634,13 +634,13 @@ See §10.10.3 and §10.10.4 for cross-cutting gaps and problems; feature-specifi
 
 **Problem:** Monorepos (e.g. Rust backend + TypeScript frontend) may need more than one preset; §11 says "single preset per project."
 
-**Solution:** (1) **Primary preset:** Keep **one active preset per project** as the default; it drives run/debug defaults and tool download. (2) **Switchable preset:** Allow the user to **switch** the project's preset (e.g. Settings → Project → Preset: Rust | TypeScript | …). Use case: "I'm working on the frontend today" → switch to TypeScript. (3) **Combined presets (optional):** Define **combined presets** (e.g. "Rust + Node") that include tools and run configs for both; when selected, both toolchains are available and the user picks run config per launch. (4) **Primary + secondary:** Alternatively, allow **primary** (default run/debug) and **secondary** (additional tools/languages); document in §11. Choose one of combined vs primary+secondary and document.
+**Solution:** (1) **Primary preset:** Keep **one active preset per project** as the default; it drives run/debug defaults and tool download. (2) **Switchable preset:** Allow the user to **switch** the project's preset (e.g. Settings → Project → Preset: Rust | TypeScript | ...). Use case: "I'm working on the frontend today" → switch to TypeScript. (3) **Combined presets (optional):** Define **combined presets** (e.g. "Rust + Node") that include tools and run configs for both; when selected, both toolchains are available and the user picks run config per launch. (4) **Primary + secondary:** Alternatively, allow **primary** (default run/debug) and **secondary** (additional tools/languages); document in §11. Choose one of combined vs primary+secondary and document.
 
 #### 12.2.6 Browser instances and resources
 
 **Problem:** Each browser (WebView) instance uses significant memory; many preview windows can exhaust resources.
 
-**Solution:** (1) **Cap:** Enforce a **max browser instances** (e.g. 3–5). When the user tries to open another preview (e.g. "Open in browser" on a second HTML file), either (a) **reuse** an existing instance (e.g. switch its URL to the new file) or (b) **close least-recently-used** and open the new one, or (c) **prompt:** "Max previews reached. Close one or open in existing?" (2) **LRU close:** If cap is reached and user opens a new preview, auto-close the least-recently-used preview window and open the new one; show a brief toast "Closed preview for X to open Y." (3) **Settings:** Add **Max browser previews** in Settings → Editor or Developer (e.g. 1–10); persist in redb. Document in §8 and §9.
+**Solution:** (1) **Cap:** Enforce a **max browser instances** (e.g. 3-5). When the user tries to open another preview (e.g. "Open in browser" on a second HTML file), either (a) **reuse** an existing instance (e.g. switch its URL to the new file) or (b) **close least-recently-used** and open the new one, or (c) **prompt:** "Max previews reached. Close one or open in existing?" (2) **LRU close:** If cap is reached and user opens a new preview, auto-close the least-recently-used preview window and open the new one; show a brief toast "Closed preview for X to open Y." (3) **Settings:** Add **Max browser previews** in Settings → Editor or Developer (e.g. 1-10); persist in redb. Document in §8 and §9.
 
 #### 12.2.7 Symbol index staleness
 
@@ -698,9 +698,9 @@ Use this list when deriving an implementation plan; order aligns with §6 Implem
 - 15. **Tabs (Terminal, Browser):** Terminal tabs; browser instance cap and reuse/LRU policy.
 - 16. **Optional / later:** Recover unsaved; Save As; Revert last agent edit (contract + refresh notification); "Open in" other/new group; Git status strip; modal editing; remote SSH; review rules storage; combined presets.
 
-### 12.6 Multi-agent review — addressed in main body
+### 12.6 Multi-agent review -- addressed in main body
 
-Four reviewer roles (architecture, UX, technical writing, frontend implementation) reviewed this document. **All identified gaps, potential problems, and enhancements have been folded into §§1–11.** Index of where each was addressed:
+Four reviewer roles (architecture, UX, technical writing, frontend implementation) reviewed this document. **All identified gaps, potential problems, and enhancements have been folded into §§1-11.** Index of where each was addressed:
 
 | Topic | Addressed in |
 |-------|----------------|
@@ -740,65 +740,65 @@ Four reviewer roles (architecture, UX, technical writing, frontend implementatio
 **Original gaps (now addressed in main body)**
 
 - **Open-file contract (§4, §5):** No single request shape (e.g. `path`, `line?`, `range?`, `target_group?`) or code path for chat, File Manager, and quick open. (A, F)
-- **Revert last agent edit / FileSafe (§2.5):** Who invokes whom and event/message shape (e.g. `BufferReverted(path)`) not defined; editor “reloads or is notified” is ambiguous. (A, F)
-- **File changed on disk (§2.5, §7):** “On next focus” undefined — per-tab, per-window, or app-global; who performs the check and when. (A, T, F)
+- **Revert last agent edit / FileSafe (§2.5):** Who invokes whom and event/message shape (e.g. `BufferReverted(path)`) not defined; editor "reloads or is notified" is ambiguous. (A, F)
+- **File changed on disk (§2.5, §7):** "On next focus" undefined -- per-tab, per-window, or app-global; who performs the check and when. (A, T, F)
 - **Single buffer, multiple views (§2.4, §2.5):** When the same path is open in more than one editor group, no explicit rule that all views share one buffer and stay in sync (cursor/scroll ownership, dirty state). (A, F)
 - **Editor state in redb (§2.9):** No schema for keys and value shapes (open tabs, active tab, scroll/cursor, max tabs, session-scoped state). (A, T)
-- **Save failure (§2.2):** No behavior for write failure (disk full, permission, path deleted): keep buffer dirty, error + retry / “Save As,” no “last saved” update. (A, F)
-- **Large-file strategy (§2.7):** Both “truncated + Load full” and “read-only virtualized” mentioned; pick one for MVP. Default threshold and hard cap only in §12.1.3 — state in §2.7. (T, F)
+- **Save failure (§2.2):** No behavior for write failure (disk full, permission, path deleted): keep buffer dirty, error + retry / "Save As," no "last saved" update. (A, F)
+- **Large-file strategy (§2.7):** Both "truncated + Load full" and "read-only virtualized" mentioned; pick one for MVP. Default threshold and hard cap only in §12.1.3 -- state in §2.7. (T, F)
 - **Collapsed editor state (§2.1):** Collapsible strip state (per-session, per-project, or per-window) not specified; affects restore and snap-back. (F)
-- **Tab bar model (§2.4):** “Each group has its own tab list (or shares a common tab bar)” — choose one for MVP. (F)
-- **Scroll/cursor persistence (§2.9):** “Optionally scroll/cursor per tab” — need a default (yes/no) and storage. (F)
-- **Image viewer placement (§8.1):** “Same tab area or dedicated pane” — decide which (or user preference) and document. (T, F)
-- **Hot reload (§8.2):** Which files count as “linked” (same dir, `<link>`/`<script>` refs) and debounce default (e.g. 400 ms) only in §12.1.7 — add to §8.2. (T, F)
-- **Line/range from chat (§2.3, §5):** Incoming format (e.g. L12, L12–45) not specified; state that it matches 1-based inclusive. (T)
+- **Tab bar model (§2.4):** "Each group has its own tab list (or shares a common tab bar)" -- choose one for MVP. (F)
+- **Scroll/cursor persistence (§2.9):** "Optionally scroll/cursor per tab" -- need a default (yes/no) and storage. (F)
+- **Image viewer placement (§8.1):** "Same tab area or dedicated pane" -- decide which (or user preference) and document. (T, F)
+- **Hot reload (§8.2):** Which files count as "linked" (same dir, `<link>`/`<script>` refs) and debounce default (e.g. 400 ms) only in §12.1.7 -- add to §8.2. (T, F)
+- **Line/range from chat (§2.3, §5):** Incoming format (e.g. L12, L12-45) not specified; state that it matches 1-based inclusive. (T)
 - **Floating editor policy (§2.1, §12.1.10):** Single vs multiple floating editor windows not decided in main body. (T, F)
 - **Definitions:** Terms **buffer**, **tab**, **editor group**, **dirty**, **preset**, and **redb** / **seglog** / **project storage design** / **rewrite-tie-in-memo** (with doc links) not defined here. (T)
 - **FileSafe (§2.5):** Referenced but not defined; add pointer (e.g. Plans/FileSafe.md). (T)
 - **Discoverability:** How users learn that paths/code blocks in chat are clickable, and that editor/panels can be detached (affordance, hover, tooltip, onboarding). (U)
-- **Open already-open file (§2.5, §5):** When file is already open (possibly dirty) and user opens again from chat or File Manager — focus existing tab vs new tab vs prompt unspecified. (U)
+- **Open already-open file (§2.5, §5):** When file is already open (possibly dirty) and user opens again from chat or File Manager -- focus existing tab vs new tab vs prompt unspecified. (U)
 - **@ vs click-to-open (§3, §5):** Intentional difference (context vs open) not explained in UI. (U)
 - **Accessibility:** No mention of screen reader, keyboard-only use (tree, tabs, dialogs), focus order, visible focus, ARIA, reduced motion. (U)
 - **File Manager tree keyboard:** Arrow keys, Enter to open, type-ahead not specified. (U)
 - **Read-only reason (§2.6, §2.7):** UI need not explain why (binary, too large, OS read-only); users can be confused. (U)
-- **Save success feedback (§2.2):** No requirement for “Saved” or visible clearing of dirty state. (U)
+- **Save success feedback (§2.2):** No requirement for "Saved" or visible clearing of dirty state. (U)
 - **Dirty + file changed on disk (§7):** Order of prompts (unsaved vs disk changed) not spelled out. (U)
-- **Transient UI states:** Loading, “Cannot decode as UTF-8”, “File not found”, “Binary file”, “File too large”, “Indexing…”, open failure — each needs at least one defined state and copy. (F)
-- **Terminal tab “pin” (§9):** Pin semantics (e.g. exclude from “Close others”) unspecified; align with or distinguish from editor pin. (F)
+- **Transient UI states:** Loading, "Cannot decode as UTF-8", "File not found", "Binary file", "File too large", "Indexing...", open failure -- each needs at least one defined state and copy. (F)
+- **Terminal tab "pin" (§9):** Pin semantics (e.g. exclude from "Close others") unspecified; align with or distinguish from editor pin. (F)
 - **Project root moved/renamed (§7):** Detection mechanism (watcher, periodic, or on I/O failure) not specified. (A)
-- **Symlinks (§7):** “Document follow or show” — clarify: specify in this spec or impl docs whether symlinks are followed or shown as one node. (T)
+- **Symlinks (§7):** "Document follow or show" -- clarify: specify in this spec or impl docs whether symlinks are followed or shown as one node. (T)
 
 **Potential problems**
 
 - **Very large directories (§1, §10.7):** No policy for e.g. node_modules (virtualization depth, row limit, caps). (A)
 - **Browser/Assistant boundary (§8, §10.6):** Same browser for preview and agent-driven actions; interface (commands, results) and security not defined. (A)
-- **Restore vs lazy load (§2.9, §12.2.1):** §2.9 doesn’t state “restore active tab first”; startup could load many buffers before cap. (A)
-- **Preset tool download (§11):** Order relative to “project open” and UI during download not specified; blocking or unclear progress hurts UX. (A)
+- **Restore vs lazy load (§2.9, §12.2.1):** §2.9 doesn't state "restore active tab first"; startup could load many buffers before cap. (A)
+- **Preset tool download (§11):** Order relative to "project open" and UI during download not specified; blocking or unclear progress hurts UX. (A)
 - **Summary and §12 (T):** Summary is one long sentence; §12 holds solutions that could live in main body (e.g. §12.1.3 threshold in §2.7); recover unsaved §2.9 vs §10.9 MVP wording inconsistent.
-- **Focus when editor floating (§2.8, §12.2.2):** Which window “editor has focus” for shortcuts and open-file target needs an explicit rule. (F)
+- **Focus when editor floating (§2.8, §12.2.2):** Which window "editor has focus" for shortcuts and open-file target needs an explicit rule. (F)
 - **Max persisted tab count (§12.2.1):** Cap restored list (e.g. 50) so startup/storage stay bounded. (F)
-- **Modal editing (§10.5):** Focus trap when modal on (e.g. Tab shouldn’t leave editor without “focus next panel” shortcut). (F)
-- **Browser instance cap (§12.2.6):** Define what counts as one instance and whether “Open in browser” reuses or creates new when under cap. (F)
-- **Line/range highlight duration (§2.3):** If “fades after short delay,” specify duration and configurability. (F)
+- **Modal editing (§10.5):** Focus trap when modal on (e.g. Tab shouldn't leave editor without "focus next panel" shortcut). (F)
+- **Browser instance cap (§12.2.6):** Define what counts as one instance and whether "Open in browser" reuses or creates new when under cap. (F)
+- **Line/range highlight duration (§2.3):** If "fades after short delay," specify duration and configurability. (F)
 
 **Enhancements (consider folding into main spec)**
 
 - **Single open-file contract:** Add subsection under §4 or §5: request shape `path`, `line?`, `range?`, `target_group?`; default active group. (A, F)
-- **Editor state schema:** Short “Editor state in redb” note (key names, value types) under §2.9 or §12. (A)
-- **Explicit “single buffer, multiple views” rule:** One sentence in §2.4/§2.5: same path in multiple groups ⇒ one buffer, all views in sync. (A)
-- **Save failure clause:** In §2.2 or §7: on failure, keep dirty, show error + retry / “Save As,” don’t update last-saved. (A)
+- **Editor state schema:** Short "Editor state in redb" note (key names, value types) under §2.9 or §12. (A)
+- **Explicit "single buffer, multiple views" rule:** One sentence in §2.4/§2.5: same path in multiple groups ⇒ one buffer, all views in sync. (A)
+- **Save failure clause:** In §2.2 or §7: on failure, keep dirty, show error + retry / "Save As," don't update last-saved. (A)
 - **Definitions subsection:** After Summary or in §2, define buffer, tab, editor group, dirty, preset; one line each for redb, seglog, doc links. (T)
 - **Defaults in body:** Large-file threshold + hard cap in §2.7; hot-reload debounce in §8.2; floating-editor policy (one window) in §2.1. (T, F)
-- **Scope/ownership:** 1–2 sentences after Summary: what this spec defines vs defers to assistant-chat-design, newfeatures, etc. (T)
-- **MVP definition (§6):** One sentence that “MVP” here means desktop build scope. (T)
+- **Scope/ownership:** 1-2 sentences after Summary: what this spec defines vs defers to assistant-chat-design, newfeatures, etc. (T)
+- **MVP definition (§6):** One sentence that "MVP" here means desktop build scope. (T)
 - **Onboarding/hints:** Lightweight discovery for click-to-open and detach/snap (e.g. first-time tooltip). (U)
 - **Search scope default and indicator (§10.2):** Default scope (current file vs project) and visible scope in search UI. (U)
-- **Session restore prompt (§10.7):** Explicit “Restore N tabs from [thread]?” (Yes / No / Don’t ask again) instead of “offer to restore.” (U)
+- **Session restore prompt (§10.7):** Explicit "Restore N tabs from [thread]?" (Yes / No / Don't ask again) instead of "offer to restore." (U)
 - **Broken/missing files list (§7):** Single place (list or badge) for tabs with missing/deleted files; bulk Close all / Reload if present. (U)
-- **Current file in File Manager (§1):** When editor has focus, highlight or scroll tree to current file (“you are here”). (U)
+- **Current file in File Manager (§1):** When editor has focus, highlight or scroll tree to current file ("you are here"). (U)
 - **Unsaved in two places (§2.2):** Tab plus one other (e.g. title or status bar) so visible with many tabs. (U)
 - **Unified confirm-dialog spec:** Standardize Save/Discard/Cancel, Reload/Overwrite/Cancel, etc. as one pattern (action + optional Show diff + buttons). (F)
 - **Editor lifecycle events:** Minimal set (e.g. FileOpened, FileClosed, TabSwitched, BufferSaved, BufferReverted) for bridge and analytics. (F)
 - **Symbol outline/index (§12.1.4):** Short note: outline `{ name, line, kind }`; workspace index `{ name, path, line, kind }`; invalidation on save/watcher/Reindex. (F)
-- **Preset detection table (§12.1.5):** File → preset table (Cargo.toml → Rust, etc.) and “Select preset” when none/multiple; reference in §11. (F)
+- **Preset detection table (§12.1.5):** File → preset table (Cargo.toml → Rust, etc.) and "Select preset" when none/multiple; reference in §11. (F)
 - **Adopt §12.4:** Implement suggested File Manager and editor additions (e.g. .gitignore dimmed/hide, context menu, pin tab, bracket matching, etc.). (F)

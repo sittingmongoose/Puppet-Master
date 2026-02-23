@@ -1,11 +1,11 @@
-# Puppet Master — GitHub API Auth and Flows
+# Puppet Master -- GitHub API Auth and Flows
 
 <!--
-PUPPET MASTER — PLAN DOC REWRITE HEADER
+PUPPET MASTER -- PLAN DOC REWRITE HEADER
 
 ABSOLUTE NAMING RULE:
-- Platform name is “Puppet Master” only.
-- If older naming exists, refer to it only as “legacy naming” (do not quote it).
+- Platform name is "Puppet Master" only.
+- If older naming exists, refer to it only as "legacy naming" (do not quote it).
 
 LOCKED DECISIONS (DO NOT CHANGE IN THIS DOC):
 - GitHub operations: GitHub API only; GitHub CLI is not used
@@ -45,7 +45,7 @@ ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:PatchPipeline,
 
 ## Non-goals
 - Using the GitHub CLI for any auth, repo, fork, or PR behavior. ContractRef: SchemaID:Spec_Lock.json#github_operations
-- Storing GitHub OAuth tokens in Puppet Master’s event store (`seglog`) or key/value stores (e.g., `redb`). ContractRef: PolicyRule:no_secrets_in_storage
+- Storing GitHub OAuth tokens in Puppet Master's event store (`seglog`) or key/value stores (e.g., `redb`). ContractRef: PolicyRule:no_secrets_in_storage
 - Defining implementation task plans, phase lists, or execution queues.
 - Defining a multi-provider Git hosting abstraction (GitHub only). ContractRef: SchemaID:Spec_Lock.json#github_operations
 
@@ -53,9 +53,9 @@ ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:PatchPipeline,
 - DRY/SSOT rules: `Plans/DRY_Rules.md`
 - Canonical contracts: `Plans/Contracts_V0.md`
 - Canonical terms: `Plans/Glossary.md`
-- Spec Lock (locked decisions): `Plans/Spec_Lock.json` — `github_operations`, `auth_model`
-- Architecture invariants: `Plans/Architecture_Invariants.md` — INV-002 (no secrets in storage), INV-010 (platform name compliance)
-- Progression gates: `Plans/Progression_Gates.md` — GATE-003 (invariants), GATE-009 (ContractRef enforcement)
+- Spec Lock (locked decisions): `Plans/Spec_Lock.json` -- `github_operations`, `auth_model`
+- Architecture invariants: `Plans/Architecture_Invariants.md` -- INV-002 (no secrets in storage), INV-010 (platform name compliance)
+- Progression gates: `Plans/Progression_Gates.md` -- GATE-003 (invariants), GATE-009 (ContractRef enforcement)
 - Autonomous decision policy: `Plans/Decision_Policy.md`
 - UI command catalog (canonical command IDs): `Plans/UI_Command_Catalog.md`
 - Storage compatibility note (EventEnvelopeV1 vs EventRecord): `Plans/storage-plan.md` §2.2
@@ -78,7 +78,7 @@ ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:PatchPipeline,
 ### Git operations (local)
 All repository content and transport operations are executed via the local `git` binary. ContractRef: Primitive:PatchPipeline
 
-**Current implementation (legacy integration note):** `puppet-master-rs/src/git/git_manager.rs` — `GitManager` (`run_git_cmd()`, `push()`, `pull()`, etc.). ContractRef: Primitive:PatchPipeline
+**Current implementation (legacy integration note):** `puppet-master-rs/src/git/git_manager.rs` -- `GitManager` (`run_git_cmd()`, `push()`, `pull()`, etc.). ContractRef: Primitive:PatchPipeline
 
 **Hard rules:**
 - No secrets (tokens) may appear in git remote URLs, git config, or any plaintext credential files. ContractRef: PolicyRule:no_secrets_in_storage
@@ -90,7 +90,7 @@ All repository content and transport operations are executed via the local `git`
 - Puppet Master must not rely on external GitHub CLI auth state for Git transport. ContractRef: SchemaID:Spec_Lock.json#github_operations
 
 ### GitHub operations (API)
-All hosting operations use GitHub’s HTTPS API with an OAuth access token. ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:Provider
+All hosting operations use GitHub's HTTPS API with an OAuth access token. ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:Provider
 
 **No GitHub CLI is permitted** for any GitHub auth/status/repo/fork/PR behavior. ContractRef: SchemaID:Spec_Lock.json#github_operations
 
@@ -106,7 +106,7 @@ ContractRef: SchemaID:Spec_Lock.json#github_operations
 ## GitHub OAuth device-code flow (default UX)
 
 ### Deterministic defaults
-- Default auth model is OAuth device-code flow for interactive “Connect GitHub”. ContractRef: SchemaID:Spec_Lock.json#auth_model, ContractName:Contracts_V0.md#AuthState
+- Default auth model is OAuth device-code flow for interactive "Connect GitHub". ContractRef: SchemaID:Spec_Lock.json#auth_model, ContractName:Contracts_V0.md#AuthState
 - Target host is GitHub.com (`github.com`). ContractRef: SchemaID:Spec_Lock.json#github_operations
 - Scope string is fixed: `repo read:user user:email read:org`. ContractRef: SchemaID:Spec_Lock.json#auth_model
 
@@ -127,15 +127,15 @@ ContractRef: SchemaID:Spec_Lock.json#auth_model
 
 ### Required configuration (contract) ContractRef: ConfigKey:github.client_id
 Puppet Master must have a registered GitHub OAuth App. ContractRef: ConfigKey:github.client_id, SchemaID:Spec_Lock.json#auth_model
-- **Client ID** (required): `ContractRef: ConfigKey:github.client_id` — must not be hard-coded.
+- **Client ID** (required): `ContractRef: ConfigKey:github.client_id` -- must not be hard-coded.
 - **No client secret** is used for device flow. ContractRef: SchemaID:Spec_Lock.json#auth_model
 
 ### UI commands (contract)
 This flow is initiated by a UI command; the UI must not perform auth logic directly. ContractRef: Primitive:UICommand, ContractName:Contracts_V0.md#7
 
 **Reserved UI command IDs required by this plan (must be added to `Plans/UI_Command_Catalog.md` before implementation):** ContractRef: Primitive:UICommand, Plans/UI_Command_Catalog.md
-- `UICommand:cmd.github.connect` — start device-code auth flow. Expected events: `auth.github.device_code.issued` then `auth.github.token.polling` stream; terminal: `auth.github.authenticated` or `auth.github.failed`. ContractRef: UICommand:cmd.github.connect, EventType:auth.github.device_code.issued, EventType:auth.github.token.polling, EventType:auth.github.authenticated, EventType:auth.github.failed
-- `UICommand:cmd.github.disconnect` — disconnect and delete token. Expected events: `auth.github.disconnected`. ContractRef: UICommand:cmd.github.disconnect, EventType:auth.github.disconnected
+- `UICommand:cmd.github.connect` -- start device-code auth flow. Expected events: `auth.github.device_code.issued` then `auth.github.token.polling` stream; terminal: `auth.github.authenticated` or `auth.github.failed`. ContractRef: UICommand:cmd.github.connect, EventType:auth.github.device_code.issued, EventType:auth.github.token.polling, EventType:auth.github.authenticated, EventType:auth.github.failed
+- `UICommand:cmd.github.disconnect` -- disconnect and delete token. Expected events: `auth.github.disconnected`. ContractRef: UICommand:cmd.github.disconnect, EventType:auth.github.disconnected
 
 > Note: Until those command IDs exist in the catalog, any implementation that uses ad-hoc commands is non-canonical. ContractRef: Primitive:UICommand
 
@@ -187,7 +187,7 @@ ContractRef: SchemaID:pm.event.v0, PolicyRule:redaction
 ---
 
 ## Device-flow polling semantics (deterministic)
-Polling behavior MUST follow GitHub’s documented device flow semantics. ContractRef: SchemaID:Spec_Lock.json#auth_model
+Polling behavior MUST follow GitHub's documented device flow semantics. ContractRef: SchemaID:Spec_Lock.json#auth_model
 
 **Polling algorithm (deterministic):**
 1) Request device code; record `issued_at = now()` and compute `expires_at = issued_at + expires_in` from GitHub response. ContractRef: EventType:auth.github.device_code.issued
@@ -365,16 +365,16 @@ ContractRef: EventType:auth.github.failed, SchemaID:pm.event.v0
 
 | Failure kind | Trigger condition | Title | Body | Actions |
 |---|---|---|---|---|
-| `DeviceCodeExpired` | device code expired (poll deadline elapsed) OR token endpoint returns `expired_token` OR `incorrect_device_code` | GitHub code expired | That sign-in code has expired. Click “Try again” to get a new code. | Try again, Cancel |
-| `UserDenied` | token endpoint returns `access_denied` | GitHub sign-in was cancelled | GitHub didn’t grant access. If you want to connect, start sign-in again. | Try again, Close |
+| `DeviceCodeExpired` | device code expired (poll deadline elapsed) OR token endpoint returns `expired_token` OR `incorrect_device_code` | GitHub code expired | That sign-in code has expired. Click "Try again" to get a new code. | Try again, Cancel |
+| `UserDenied` | token endpoint returns `access_denied` | GitHub sign-in was cancelled | GitHub didn't grant access. If you want to connect, start sign-in again. | Try again, Close |
 | `DeviceFlowDisabled` | token endpoint returns `device_flow_disabled` | GitHub sign-in is unavailable | Device sign-in is disabled for this GitHub OAuth App. Contact your admin or use a different app registration. | Close |
-| `MissingScopes` | `X-OAuth-Scopes` missing required scopes | GitHub needs additional permissions | Your GitHub token is missing: {missing_scopes}. Click “Reconnect” to grant them. | Reconnect, Disconnect (ContractRef: EventType:auth.github.failed) |
+| `MissingScopes` | `X-OAuth-Scopes` missing required scopes | GitHub needs additional permissions | Your GitHub token is missing: {missing_scopes}. Click "Reconnect" to grant them. | Reconnect, Disconnect (ContractRef: EventType:auth.github.failed) |
 | `TokenInvalidOrRevoked` | GitHub API returns 401 for authenticated requests | GitHub connection expired | Your GitHub token is no longer valid. Reconnect to continue. | Reconnect, Disconnect |
 | `RateLimitedPrimary` | `X-RateLimit-Remaining: 0` and reset is in the future | GitHub rate limit reached | GitHub is temporarily rate limiting requests. Try again after {reset_time}. | Retry, Dismiss |
 | `RateLimitedSecondary` | GitHub throttles (403/429) and/or provides `Retry-After` | GitHub is slowing requests | GitHub asked us to slow down. Wait a moment, then retry. | Retry, Dismiss |
-| `NetworkError` | DNS/TLS/connectivity errors | GitHub is unavailable | We couldn’t reach GitHub. Check your connection and try again. | Retry, Dismiss |
+| `NetworkError` | DNS/TLS/connectivity errors | GitHub is unavailable | We couldn't reach GitHub. Check your connection and try again. | Retry, Dismiss |
 | `GitHubOutage` | GitHub 5xx or sustained upstream failures | GitHub is unavailable | GitHub appears to be having an outage. Try again later. | Retry, Dismiss |
-| `CredentialStoreUnavailable` | OS credential store cannot be accessed | Can’t save GitHub credentials | Puppet Master can’t access your system credential store. You can continue for this session, but you’ll need to reconnect next time. | Continue for this session, Cancel |
+| `CredentialStoreUnavailable` | OS credential store cannot be accessed | Can't save GitHub credentials | Puppet Master can't access your system credential store. You can continue for this session, but you'll need to reconnect next time. | Continue for this session, Cancel |
 
 ---
 
@@ -403,8 +403,8 @@ ContractRef: SchemaID:evidence.schema.json, Plans/Progression_Gates.md#GATE-003,
 - `Plans/DRY_Rules.md`
 - `Plans/Contracts_V0.md`
 - `Plans/Glossary.md`
-- `Plans/Architecture_Invariants.md` — INV-002, INV-010
-- `Plans/Progression_Gates.md` — GATE-003, GATE-009
+- `Plans/Architecture_Invariants.md` -- INV-002, INV-010
+- `Plans/Progression_Gates.md` -- GATE-003, GATE-009
 - `Plans/Decision_Policy.md`
 - `Plans/UI_Command_Catalog.md`
 - `Plans/storage-plan.md` §2.2

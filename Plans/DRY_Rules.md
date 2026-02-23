@@ -1,11 +1,11 @@
 # DRY Rules (Canonical)
 
 <!--
-PUPPET MASTER — DRY / SSOT RULES
+PUPPET MASTER -- DRY / SSOT RULES
 
 ABSOLUTE NAMING RULE:
-- Platform name is “Puppet Master” only.
-- If older naming exists, refer to it only as “legacy naming” (do not quote it).
+- Platform name is "Puppet Master" only.
+- If older naming exists, refer to it only as "legacy naming" (do not quote it).
 -->
 
 ## 0. Scope
@@ -29,7 +29,7 @@ ContractRef: SchemaID:Spec_Lock.json, Primitive:Crosswalk, PolicyRule:Decision_P
 
 ---
 
-## 2. Don’t duplicate canonical contracts
+## 2. Don't duplicate canonical contracts
 Plans MUST reference canonical contracts rather than restating them.
 
 Examples:
@@ -41,7 +41,7 @@ ContractRef: ContractName:Contracts_V0.md
 
 ---
 
-## 3. “Index-only” guidance
+## 3. "Index-only" guidance
 A plan MAY include an index/list of IDs (event kinds, UI command IDs, tool IDs) but MUST NOT redefine schemas owned elsewhere.
 
 ContractRef: Primitive:DRYRules
@@ -49,8 +49,8 @@ ContractRef: Primitive:DRYRules
 ---
 
 ## 4. Forbidden patterns (drift accelerators)
-- “TBD”, “Open question”, “Ask the user later” in plan requirements.
-- Vague requirements like “robust”, “graceful”, “secure” without measurable behavior.
+- "TBD", "Open question", "Ask the user later" in plan requirements.
+- Vague requirements like "robust", "graceful", "secure" without measurable behavior.
 - Duplicating provider CLI details outside Provider SSOT.
 
 ContractRef: PolicyRule:Decision_Policy.md§2

@@ -1,4 +1,4 @@
-# FileSafe, Context Compilation & Token Efficiency — Implementation Plan
+# FileSafe, Context Compilation & Token Efficiency -- Implementation Plan
 
 **Date:** 2026-02-19  
 **Priority:** CRITICAL  
@@ -8,9 +8,9 @@
 
 **CRITICAL:** All code in this plan MUST follow DRY principles.
 
-- ✅ **ALWAYS** tag reusable functions: `// DRY:FN:<name> — Description`
-- ✅ **ALWAYS** tag reusable data structures: `// DRY:DATA:<name> — Description`
-- ✅ **ALWAYS** tag reusable helpers: `// DRY:HELPER:<name> — Description`
+- ✅ **ALWAYS** tag reusable functions: `// DRY:FN:<name> -- Description`
+- ✅ **ALWAYS** tag reusable data structures: `// DRY:DATA:<name> -- Description`
+- ✅ **ALWAYS** tag reusable helpers: `// DRY:HELPER:<name> -- Description`
 - ✅ **ALWAYS** use `platform_specs::` functions for platform data (never hardcode)
 - ✅ **ALWAYS** check `docs/gui-widget-catalog.md` before creating new UI widgets
 
@@ -29,26 +29,26 @@ Any UI/storage examples in this plan are illustrative; the guard behavior and co
 
 ## Executive Summary
 
-This plan covers **two pillars**: (1) **FileSafe** — guards that block destructive operations before execution — and (2) **context compilation and token efficiency** that reduce coordination overhead by compiling role-specific context and related optimizations.
+This plan covers **two pillars**: (1) **FileSafe** -- guards that block destructive operations before execution -- and (2) **context compilation and token efficiency** that reduce coordination overhead by compiling role-specific context and related optimizations.
 
-### Part A — FileSafe
+### Part A -- FileSafe
 
-1. **FileSafe: Command blocklist** — Blocks destructive CLI commands (e.g. `migrate:fresh`, `db:drop`, `TRUNCATE TABLE`, `git reset --hard`, Docker volume prune) before they run.
-2. **FileSafe: Write scope** — Restricts writes to files declared in the active plan (no writes outside plan scope).
-3. **FileSafe: Security filter** — Blocks access to sensitive files (`.env`, credentials, keys).
-4. **Prompt content checking** — Scans prompts for destructive commands before sending to the platform CLI.
-5. **Verification gate integration** — Allows legitimate destructive operations when tagged as verification-gate or interview operations.
+1. **FileSafe: Command blocklist** -- Blocks destructive CLI commands (e.g. `migrate:fresh`, `db:drop`, `TRUNCATE TABLE`, `git reset --hard`, Docker volume prune) before they run.
+2. **FileSafe: Write scope** -- Restricts writes to files declared in the active plan (no writes outside plan scope).
+3. **FileSafe: Security filter** -- Blocks access to sensitive files (`.env`, credentials, keys).
+4. **Prompt content checking** -- Scans prompts for destructive commands before sending to the platform CLI.
+5. **Verification gate integration** -- Allows legitimate destructive operations when tagged as verification-gate or interview operations.
 
 **Why critical:** Agents with shell access can accidentally run destructive commands, touch sensitive files, or write outside scope. FileSafe provides deterministic, platform-level protection regardless of agent behavior.
 
-### Part B — Context Compilation & Token Efficiency
+### Part B -- Context Compilation & Token Efficiency
 
-6. **Role-Specific Context Compiler** — Builds `.context-{role}.md` per agent role (Phase/Task/Subtask/Iteration) so each agent gets only the context it needs (e.g. phase goal, filtered requirements, conventions). Cuts coordination overhead by ~40–60% at scale.
-7. **Delta Context** — Adds a “Changed Files (Delta)” section with code slices from recently modified files so agents see what just changed.
-8. **Context Cache** — Caches the compiled context index so compilation is skipped when project files are unchanged.
-9. **Structured Handoff Schemas** — Typed JSON schemas for inter-agent messages (e.g. progress, blockers, QA results) for reliable parsing.
-10. **Compaction-Aware Re-Reads** — A deterministic marker indicates when plan/context re-read is needed, avoiding redundant full re-reads every task.
-11. **Skill Bundling** — Bundles skills referenced in the plan into the compiled context once per phase instead of per task.
+6. **Role-Specific Context Compiler** -- Builds `.context-{role}.md` per agent role (Phase/Task/Subtask/Iteration) so each agent gets only the context it needs (e.g. phase goal, filtered requirements, conventions). Cuts coordination overhead by ~40-60% at scale.
+7. **Delta Context** -- Adds a "Changed Files (Delta)" section with code slices from recently modified files so agents see what just changed.
+8. **Context Cache** -- Caches the compiled context index so compilation is skipped when project files are unchanged.
+9. **Structured Handoff Schemas** -- Typed JSON schemas for inter-agent messages (e.g. progress, blockers, QA results) for reliable parsing.
+10. **Compaction-Aware Re-Reads** -- A deterministic marker indicates when plan/context re-read is needed, avoiding redundant full re-reads every task.
+11. **Skill Bundling** -- Bundles skills referenced in the plan into the compiled context once per phase instead of per task.
 
 **Why critical:** Context compilation and these features reduce token use and improve reliability where coordination and context size matter most (large projects, many phases).
 
@@ -58,14 +58,14 @@ This plan covers **two pillars**: (1) **FileSafe** — guards that block destruc
 
 ## Table of Contents
 
-**Part A — FileSafe**  
-1. Architecture Overview · 2. Implementation Details (guards) · 3. Integration with Platform Runner · 4. Pattern File · 5. Configuration · 6. Event Logging · 7. Error Messages · 8. Testing · 9. Implementation Checklist · 10. Relationship to Other Plans · 10a. FileSafe and Assistant YOLO mode · 11. Additional FileSafe Features (Write scope, Security filter, Prompt checking, Verification gates) · 12. Gaps and Potential Issues · 13. Enhancements
+**Part A -- FileSafe**  
+1. Architecture Overview - 2. Implementation Details (guards) - 3. Integration with Platform Runner - 4. Pattern File - 5. Configuration - 6. Event Logging - 7. Error Messages - 8. Testing - 9. Implementation Checklist - 10. Relationship to Other Plans - 10a. FileSafe and Assistant YOLO mode - 11. Additional FileSafe Features (Write scope, Security filter, Prompt checking, Verification gates) - 12. Gaps and Potential Issues - 13. Enhancements
 
-**Part B — Context & Token Efficiency**  
-14. Context Compilation & Token Efficiency (14.1–14.7)
+**Part B -- Context & Token Efficiency**  
+14. Context Compilation & Token Efficiency (14.1-14.7)
 
 **Integration & References**  
-15. System Integration Analysis · 16. References · **17. Implementation Order and Dependencies**
+15. System Integration Analysis - 16. References - **17. Implementation Order and Dependencies**
 
 ---
 
@@ -794,11 +794,11 @@ pub async fn execute_command(
 
 The guard must work for all 5 platforms:
 
-- **Cursor:** `agent -p "..."` — check compiled prompt content
-- **Codex:** `codex exec "..."` — check compiled prompt content
-- **Claude Code:** `claude -p "..."` — check compiled prompt content
-- **Gemini:** `gemini -p "..."` — check compiled prompt content (with `@path` tokens)
-- **GitHub Copilot:** `copilot -p "..."` — check compiled prompt content (with `@path` tokens)
+- **Cursor:** `agent -p "..."` -- check compiled prompt content
+- **Codex:** `codex exec "..."` -- check compiled prompt content
+- **Claude Code:** `claude -p "..."` -- check compiled prompt content
+- **Gemini:** `gemini -p "..."` -- check compiled prompt content (with `@path` tokens)
+- **GitHub Copilot:** `copilot -p "..."` -- check compiled prompt content (with `@path` tokens)
 
 **Strategy:** 
 1. Check **compiled prompt** (after context compilation) at platform runner level
@@ -1214,7 +1214,7 @@ The guard complements cleanup policies by preventing destructive operations befo
 
 ### 10.5 newfeatures (Hooks and FileSafe)
 
-**Plans/newfeatures.md §9** (Hook system) defines a **user/plugin extension point**: events (e.g. PreToolUse), scripts that return continue/block/modify. Dangerous-command blocking is part of **FileSafe**: the Command blocklist and PreToolUse integration use the same blocklist and extension point. FileSafe is the **core pre-execution guard** in the runner; hooks can call into FileSafe (e.g. PreToolUse invokes FileSafe blocklist checks) or provide optional user-defined rules. Use one blocklist and one integration point; see newfeatures §17.4 “FileSafe first.”
+**Plans/newfeatures.md §9** (Hook system) defines a **user/plugin extension point**: events (e.g. PreToolUse), scripts that return continue/block/modify. Dangerous-command blocking is part of **FileSafe**: the Command blocklist and PreToolUse integration use the same blocklist and extension point. FileSafe is the **core pre-execution guard** in the runner; hooks can call into FileSafe (e.g. PreToolUse invokes FileSafe blocklist checks) or provide optional user-defined rules. Use one blocklist and one integration point; see newfeatures §17.4 "FileSafe first."
 
 ### 10.6 Tools.md (tool permissions and OpenCode alignment)
 
@@ -1233,7 +1233,7 @@ The guard complements cleanup policies by preventing destructive operations befo
 1. **Same FileSafe config for Assistant:** Assistant chat (and thus YOLO runs) must use the same FileSafe settings as the rest of the app (Command blocklist, Write scope, Security filter). No separate "Assistant-only" bypass unless explicitly configured.
 2. **Recommend FileSafe on when YOLO is on:** When the user enables YOLO for a chat, the GUI should recommend (or warn) that FileSafe remain enabled. Options: show a one-time hint ("FileSafe protects you when YOLO is on"), or a small indicator that FileSafe is active when YOLO is selected.
 3. **Configurable and visible:** FileSafe toggles must be easy to find and turn on/off (see §13.4 and §15.5). A user who turns on YOLO should be able to confirm FileSafe state without digging through multiple screens.
-4. **Optional: per-context override:** If product requirements later allow "relax FileSafe for this chat only" (e.g. power users), that must be an explicit, clearly labeled setting—not the default when YOLO is on.
+4. **Optional: per-context override:** If product requirements later allow "relax FileSafe for this chat only" (e.g. power users), that must be an explicit, clearly labeled setting--not the default when YOLO is on.
 
 **Summary:** YOLO mode and FileSafe are complementary: YOLO removes approval prompts; FileSafe enforces hard limits (destructive commands, write scope, sensitive files). FileSafe settings must be configurable in the GUI and easy to turn on or off, and when Assistant runs in YOLO mode, FileSafe should be the main line of defense.
 
@@ -1383,7 +1383,7 @@ impl SecurityFilter {
 
 **Sensitive patterns (default set):** Implement as a fixed list of regex patterns, compiled once in `SecurityFilter::new()`. Use case-insensitive path matching. Suggested default patterns (one per line, converted to regex; escape literal dots):
 
-- `\.env` (and common variants: `.env.local`, `.env.*`) — pattern: `\.env(\..*)?$` or `\.env`
+- `\.env` (and common variants: `.env.local`, `.env.*`) -- pattern: `\.env(\..*)?$` or `\.env`
 - `.*secret.*`, `.*key.*`, `.*credential.*` (path contains segment)
 - `\.(pem|key|p12|pfx)$` (key/cert files)
 - `id_rsa`, `id_ed25519`, `\.pub$` (SSH keys)
@@ -1699,7 +1699,7 @@ impl BashGuard {
 
 Resolve these before or during implementation; cross-reference from §15.12 Integration Checklist.
 
-**ExecutionRequest — tags vs env_vars:** Use one convention and document it. Recommended: keep **env_vars** as canonical. Document exact keys: `PUPPET_MASTER_OPERATION_TYPE` (values e.g. `verification_gate`, `interview_planning`), `PUPPET_MASTER_ALLOWED_FILES` (JSON array of path strings). If `tags: Vec<String>` is added later, define field name and when orchestrator sets tags vs env vars.
+**ExecutionRequest -- tags vs env_vars:** Use one convention and document it. Recommended: keep **env_vars** as canonical. Document exact keys: `PUPPET_MASTER_OPERATION_TYPE` (values e.g. `verification_gate`, `interview_planning`), `PUPPET_MASTER_ALLOWED_FILES` (JSON array of path strings). If `tags: Vec<String>` is added later, define field name and when orchestrator sets tags vs env vars.
 
 **get_allowed_files_for_current_subtask:** Define owner module (e.g. `core/orchestrator.rs` or `state/`), signature (e.g. `fn get_allowed_files_for_current_subtask(tier_state: &TierState, plan_path: Option<&Path>) -> Option<Vec<PathBuf>>`), and data source (prd.json subtask payload, plan file section, or both). Orchestrator calls it when building each `ExecutionRequest` and passes result via `PUPPET_MASTER_ALLOWED_FILES` or `request.allowed_files`.
 
@@ -1707,9 +1707,9 @@ Resolve these before or during implementation; cross-reference from §15.12 Inte
 
 **SecurityFilter allow_during_interview:** `SecurityFilter` struct must hold `allow_during_interview: bool` set at construction from `SecurityFilterConfig`. Expose via `SecurityFilter::from_config(config)` or builder so runner can read it without holding config separately.
 
-**FileGuard strict_mode:** When `strict_mode == true`: on violation return `Err(...)` and block. When `strict_mode == false` (warn-only): on violation log warning and emit FileSafeEvent, then return `Ok(())` and do not block. Warn-only is “log and allow,” not in-chat approval (that is a separate Assistant flow).
+**FileGuard strict_mode:** When `strict_mode == true`: on violation return `Err(...)` and block. When `strict_mode == false` (warn-only): on violation log warning and emit FileSafeEvent, then return `Ok(())` and do not block. Warn-only is "log and allow," not in-chat approval (that is a separate Assistant flow).
 
-**Edge cases:** (1) **Empty allowed_files:** Document policy: e.g. “allow nothing” (block all writes) or “allow working_directory only”; prefer one explicit choice. (2) **Pattern file missing:** Guard disables (empty patterns), log warning, do not fail startup; optional Doctor check. (3) **Approved command substring:** `commands_match` uses prefix; document that approved entries should avoid short substrings (e.g. prefer `php artisan migrate` over `migrate`); optional GUI validation. (4) **Multi-line/piped in prompt:** Document whether each line is checked independently or continued/piped lines are concatenated; add tests for multi-line and piped destructive commands.
+**Edge cases:** (1) **Empty allowed_files:** Document policy: e.g. "allow nothing" (block all writes) or "allow working_directory only"; prefer one explicit choice. (2) **Pattern file missing:** Guard disables (empty patterns), log warning, do not fail startup; optional Doctor check. (3) **Approved command substring:** `commands_match` uses prefix; document that approved entries should avoid short substrings (e.g. prefer `php artisan migrate` over `migrate`); optional GUI validation. (4) **Multi-line/piped in prompt:** Document whether each line is checked independently or continued/piped lines are concatenated; add tests for multi-line and piped destructive commands.
 
 ---
 
@@ -1760,10 +1760,10 @@ FileSafe settings must be **configurable in the GUI** and **easy to turn on or o
 **Required:**
 - **Single entry point:** One FileSafe section or tab in Config. User can open it and see all FileSafe toggles at a glance.
 - **Granular controls:** Separate on/off per feature so the user can enable only what they need:
-  - **Command blocklist** — "Block destructive commands" (on/off). When off, destructive CLI commands are not blocked.
-  - **Write scope** — "Restrict writes to plan" (on/off). When off, writes are not restricted to plan-declared files.
-  - **Security filter** — "Block sensitive files" (on/off). When off, access to `.env`/credentials is not blocked.
-  Each feature can be toggled independently; optional sub-options (e.g. strict mode for Write scope, allow-during-interview for Security filter) stay under that feature’s subsection.
+  - **Command blocklist** -- "Block destructive commands" (on/off). When off, destructive CLI commands are not blocked.
+  - **Write scope** -- "Restrict writes to plan" (on/off). When off, writes are not restricted to plan-declared files.
+  - **Security filter** -- "Block sensitive files" (on/off). When off, access to `.env`/credentials is not blocked.
+  Each feature can be toggled independently; optional sub-options (e.g. strict mode for Write scope, allow-during-interview for Security filter) stay under that feature's subsection.
 - **Override:** "Allow destructive commands" (with prominent warning) for Command blocklist.
 - **Optional:** Pattern path override, "Allow sensitive files during interview" for Security filter.
 - **Optional:** Pattern management (view/edit), event log viewer (browse blocked commands).
@@ -1783,7 +1783,7 @@ FileSafe settings must be **configurable in the GUI** and **easy to turn on or o
 
 **Problem:** Every agent currently receives the same context files regardless of tier or role. Phase planning loads full REQUIREMENTS; task execution loads STATE and full plans; verification loads full protocol docs. That wastes tokens and dilutes focus.
 
-**Solution:** A **context compiler** produces one compiled context file per role (Phase, Task, Subtask, Iteration). Each file contains only what that role needs. Filtering is deterministic (pattern-based on known file formats), not LLM-based — zero token cost and reliable.
+**Solution:** A **context compiler** produces one compiled context file per role (Phase, Task, Subtask, Iteration). Each file contains only what that role needs. Filtering is deterministic (pattern-based on known file formats), not LLM-based -- zero token cost and reliable.
 
 **Module:** `src/context/` (or `src/prompt/context_compiler.rs`).
 
@@ -1837,7 +1837,7 @@ Implement role-specific context compiler and wire into platform runners.
 - Marker-file approach for compaction detection
 ```
 
-**Token impact:** Replaces multiple full-file reads with one short file per spawn. Typical savings: ~1.4k–2.8k tokens per Phase spawn; ~0.5k–1.6k per Task/Iteration (e.g. skipping STATE, filtering requirements). Scale-dependent: larger projects see larger absolute savings.
+**Token impact:** Replaces multiple full-file reads with one short file per spawn. Typical savings: ~1.4k-2.8k tokens per Phase spawn; ~0.5k-1.6k per Task/Iteration (e.g. skipping STATE, filtering requirements). Scale-dependent: larger projects see larger absolute savings.
 
 ---
 
@@ -1847,8 +1847,8 @@ Implement role-specific context compiler and wire into platform runners.
 
 **Behavior:**
 
-- **Input:** Git diff since last phase (or since last commit / tag — configurable). Optionally restrict to certain dirs (e.g. `src/`).
-- **Content:** For each changed file: path, optional short code slices (e.g. first/last N lines or hunks), and a brief summary (e.g. "modified", "added"). Total size capped (e.g. ~225–375 tokens per compiled context).
+- **Input:** Git diff since last phase (or since last commit / tag -- configurable). Optionally restrict to certain dirs (e.g. `src/`).
+- **Content:** For each changed file: path, optional short code slices (e.g. first/last N lines or hunks), and a brief summary (e.g. "modified", "added"). Total size capped (e.g. ~225-375 tokens per compiled context).
 - **Output:** Appended to the compiled `.context-{role}.md` when `context.delta_context` is true (e.g. only for Task/Iteration roles if desired).
 
 **Implementation sketch:**
@@ -1910,10 +1910,10 @@ Implement role-specific context compiler and wire into platform runners.
 **Behavior:**
 
 - **Marker file:** A deterministic marker file (e.g. `.puppet-master/.compaction-marker`) with a timestamp. Written only when a "compaction" or context-reset event occurs (e.g. session compaction, or explicit "context was trimmed" signal from the platform).
-- **Protocol:** Before spawning a task, check for the marker. If absent, assume plan/context is still valid from a previous load — skip re-read. If present, re-read plan (and any other context that might have been trimmed), then clear or update the marker so the next task does not re-read unnecessarily.
+- **Protocol:** Before spawning a task, check for the marker. If absent, assume plan/context is still valid from a previous load -- skip re-read. If present, re-read plan (and any other context that might have been trimmed), then clear or update the marker so the next task does not re-read unnecessarily.
 - **Conservative rule:** On any doubt (e.g. marker present, or read failure), do the re-read. Prefer redundant reads over missing updates.
 
-**Saving:** Typically 1–2 full plan re-reads per phase (~500–1,600 tokens per plan depending on plan size).
+**Saving:** Typically 1-2 full plan re-reads per phase (~500-1,600 tokens per plan depending on plan size).
 
 **Integration:** Orchestrator or platform runner consults the marker when building `ExecutionRequest.context_files` (or when deciding whether to include plan path again). Lifecycle: clear marker on session start; set marker when compaction is detected or signaled.
 
@@ -2288,9 +2288,9 @@ impl FileGuard {
 **1. FileSafe collapsible card (Advanced tab)**
 
 - **Three independent toggles** (product labels; internal keys remain `bash_guard` / `file_guard` / `security_filter`):
-  - **"Block destructive commands"** (on/off) — Command blocklist; when off, destructive CLI commands are not blocked.
-  - **"Restrict writes to plan"** (on/off) — Write scope; when off, writes are not restricted to plan-declared files.
-  - **"Block sensitive files"** (on/off) — Security filter; when off, access to `.env`/credentials is not blocked.
+  - **"Block destructive commands"** (on/off) -- Command blocklist; when off, destructive CLI commands are not blocked.
+  - **"Restrict writes to plan"** (on/off) -- Write scope; when off, writes are not restricted to plan-declared files.
+  - **"Block sensitive files"** (on/off) -- Security filter; when off, access to `.env`/credentials is not blocked.
 - **Override:** "Allow destructive commands" toggle with **prominent warning styling** (e.g. danger/warning variant per widget catalog).
 - **Approved commands:** Scrollable list; per-row **Remove** button; optional **"Add command manually"**; persisted in `filesafe.approvedCommands` (e.g. `puppet-master.yaml`).
 - **Optional:** Custom pattern path, "Allow sensitive files during interview" (Security filter), pattern management (view/edit), **Event log viewer** (browse recent blocked commands; link to FileSafe event log).
@@ -2300,11 +2300,11 @@ impl FileGuard {
 
 **2. Assistant Chat and YOLO (FinalGUISpec §7.16)**
 
-- **YOLO + FileSafe:** When YOLO is enabled and FileSafe guards are active, show a **persistent warning chip** in the input toolbar: **"[!] YOLO active — FileSafe guards still apply."**
+- **YOLO + FileSafe:** When YOLO is enabled and FileSafe guards are active, show a **persistent warning chip** in the input toolbar: **"[!] YOLO active -- FileSafe guards still apply."**
 - **In-chat approval when blocked:** When FileSafe blocks a command during YOLO (or when a blocked command is shown in chat), display an **inline card** in the chat stream:
   - **Style:** Orange left border; command text in monospace; guard name that triggered (e.g. "Command blocklist").
   - **Actions:** **"Approve once"** (runs the command this time only) and **"Approve & add to list"** (adds to `filesafe.approvedCommands` in Settings > Advanced).
-  - **Timeout:** Card auto-dismisses after **60 seconds** with message "Timed out — command skipped."
+  - **Timeout:** Card auto-dismisses after **60 seconds** with message "Timed out -- command skipped."
   - **Logging:** Blocked commands are logged to the FileSafe event log; accessible from Settings > Advanced (event log viewer or link).
 - **Terminal (FinalGUISpec §7.16):** When a command is blocked by FileSafe, terminal output uses **RED** with prefix **"[BLOCKED] Blocked by FileSafe"**.
 
@@ -2625,7 +2625,7 @@ Resolve **§12.6 Implementation-Ready Clarifications** before or during implemen
 
 Use this section to derive a phased implementation plan. Dependencies are stated so an agent can order tasks and avoid gaps.
 
-**Phase 1 — Core guards (no GUI, no Assistant)**  
+**Phase 1 -- Core guards (no GUI, no Assistant)**  
 1. Create `src/filesafe/` module (mod, bash_guard, destructive_patterns, file_guard, security_filter).  
 2. Implement pattern loading (§2.3), bundled + project-local resolution (§2.2).  
 3. Implement `BashGuard` (new, disabled, check_command, **commands_match** §2.2, approved_commands from config).  
@@ -2641,25 +2641,25 @@ Use this section to derive a phased implementation plan. Dependencies are stated
 13. Pattern file: create `config/destructive-commands.txt` (§4); verify regexes.  
 14. Unit tests: pattern match, commands_match, check_prompt extraction, FileGuard allowed/blocked, SecurityFilter, disabled/override behavior.
 
-**Phase 2 — Config wiring and GUI**  
+**Phase 2 -- Config wiring and GUI**  
 15. Wire **GuiConfig::filesafe** → **PuppetMasterConfig::filesafe** at orchestrator start (Option B, WorktreeGitImprovement).  
 16. Pass FileSafe config (and approved_commands) into BaseRunner construction.  
 17. **Advanced tab:** Add **FileSafe Guards** collapsible card (§15.5, FinalGUISpec §7.4): three toggles, override with warning, approved commands list (scrollable, remove, optional add), optional event log link. Use existing widgets and help_tooltip keys.  
 18. Message enum and update handlers for all FileSafe toggles and list actions.  
 19. Persist approved_commands; ensure runtime blocklist checks whitelist from config.
 
-**Phase 3 — Assistant Chat and YOLO**  
-20. When YOLO is on and FileSafe enabled: show **warning chip** "YOLO active — FileSafe guards still apply" (§15.5, FinalGUISpec §7.16).  
+**Phase 3 -- Assistant Chat and YOLO**  
+20. When YOLO is on and FileSafe enabled: show **warning chip** "YOLO active -- FileSafe guards still apply" (§15.5, FinalGUISpec §7.16).  
 21. **In-chat approval UI:** On block, show inline card (orange border, command in mono, guard name, "Approve once" / "Approve & add to list"), 60s timeout, log to event log.  
 22. Terminal: on block, output RED with "[BLOCKED] Blocked by FileSafe".  
 23. Optional: Dashboard FileSafe status card with link to Settings > Advanced.
 
-**Phase 4 — Context compilation (Part B)**  
+**Phase 4 -- Context compilation (Part B)**  
 24. Implement context compiler (§14), delta context, cache, handoff schemas, compaction marker, skill bundling; wire to platform runner and config. (Can be a separate implementation plan from Part A.)
 
 **Risks and mitigations:**  
-- **Gap — plan metadata:** Orchestrator must set allowed files on each ExecutionRequest for write scope; implement **get_allowed_files_for_current_subtask** and pass via env or request field (§15.9 Gap 2).  
-- **Gap — worktree paths:** Normalize paths relative to `working_directory` and handle symlinks (§15.9 Gap 4).  
+- **Gap -- plan metadata:** Orchestrator must set allowed files on each ExecutionRequest for write scope; implement **get_allowed_files_for_current_subtask** and pass via env or request field (§15.9 Gap 2).  
+- **Gap -- worktree paths:** Normalize paths relative to `working_directory` and handle symlinks (§15.9 Gap 4).  
 - **False positives:** Log all blocks; allow override and approved list; tune patterns from feedback (§12.2).
 
 ---

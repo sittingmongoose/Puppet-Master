@@ -1,11 +1,11 @@
 # UI Command Catalog (Canonical)
 
 <!--
-PUPPET MASTER — UI COMMAND SSOT
+PUPPET MASTER -- UI COMMAND SSOT
 
 ABSOLUTE NAMING RULE:
-- Platform name is “Puppet Master” only.
-- If older naming exists, refer to it only as “legacy naming” (do not quote it).
+- Platform name is "Puppet Master" only.
+- If older naming exists, refer to it only as "legacy naming" (do not quote it).
 -->
 
 ## 0. Scope
@@ -27,8 +27,8 @@ ContractRef: Primitive:UICommand
 ## 2. Canonical command IDs
 
 ### 2.1 GitHub auth (GitHub HTTPS API only)
-- `cmd.github.connect` — start GitHub OAuth device-code flow.
-- `cmd.github.disconnect` — disconnect and delete token.
+- `cmd.github.connect` -- start GitHub OAuth device-code flow.
+- `cmd.github.disconnect` -- disconnect and delete token.
 
 ContractRef: UICommand:cmd.github.connect, UICommand:cmd.github.disconnect
 

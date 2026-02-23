@@ -1,13 +1,13 @@
 # Decision Policy (Canonical)
 
 <!--
-PUPPET MASTER — DETERMINISTIC DECISION POLICY
+PUPPET MASTER -- DETERMINISTIC DECISION POLICY
 
-Goal: remove “ask later” ambiguity by defining deterministic defaults.
+Goal: remove "ask later" ambiguity by defining deterministic defaults.
 
 ABSOLUTE NAMING RULE:
-- Platform name is “Puppet Master” only.
-- If older naming exists, refer to it only as “legacy naming” (do not quote it).
+- Platform name is "Puppet Master" only.
+- If older naming exists, refer to it only as "legacy naming" (do not quote it).
 -->
 
 ## 0. Scope
@@ -63,7 +63,7 @@ ContractRef: PolicyRule:Decision_Policy.md§2
 
 ---
 
-## 4. “No human in the loop” rule
+## 4. "No human in the loop" rule
 Plans MUST NOT depend on humans making decisions mid-run.
 If a plan describes optionality, it MUST declare a deterministic default and cite this policy.
 

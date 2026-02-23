@@ -1,8 +1,8 @@
-# Orchestrator Subagent Integration — Implementation Plan
+# Orchestrator Subagent Integration -- Implementation Plan
 
 ## Plan Document Status
 
-**This is a PLAN DOCUMENT ONLY** — No code changes have been made. This document contains:
+**This is a PLAN DOCUMENT ONLY** -- No code changes have been made. This document contains:
 - Dynamic subagent selection strategy for each tier level
 - Language/technology detection and matching
 - Implementation architecture
@@ -19,7 +19,7 @@ This plan remains authoritative for tier policy (Phase/Task/Subtask/Iteration), 
 
 - Platform-specific runner details should converge on **Providers** that emit a normalized streaming **event model**
 - Tool gating/permissions should be centralized in the tool policy engine; orchestrator policy should *consume* normalized events/tools, not re-implement per-platform parsing
-- Start/end verification, “built but not wired” checks, and tier boundary semantics should be represented as explicit events for replayability
+- Start/end verification, "built but not wired" checks, and tier boundary semantics should be represented as explicit events for replayability
 
 
 ### Persistence and event emission (rewrite)
@@ -35,15 +35,15 @@ The project uses **two plan documents** that divide scope by execution context:
 | Plan | Scope | Tier levels |
 |------|--------|-------------|
 | **orchestrator-subagent-integration.md** (this document) | Main run loop: PRD-driven execution of Phase → Task → Subtask → Iteration. Subagent selection, plan mode, config wiring, and start/end verification for the **orchestrator** run. | Phase, Task, Subtask, Iteration |
-| **interview-subagent-integration.md** | Interview flow: multi-phase interview (Scope & Goals, Architecture, UX, Data, Security, Deployment, Performance, Testing). Subagent persona assignments **per interview phase**, prompt integration, research/validation, document generation. | Interview phases (1–8 and cross-phase) |
+| **interview-subagent-integration.md** | Interview flow: multi-phase interview (Scope & Goals, Architecture, UX, Data, Security, Deployment, Performance, Testing). Subagent persona assignments **per interview phase**, prompt integration, research/validation, document generation. | Interview phases (1-8 and cross-phase) |
 
 **Overlap and consistency:** Both plans reference subagent names, platform invocation, and config (e.g. tier config, plan mode). The **orchestrator** plan is the single source of truth for: tier-level subagent strategy, config-wiring validation at Phase/Task/Subtask/Iteration, and start/end verification (wiring + quality). The **interview** plan is the source of truth for: interview-phase subagent assignments, interview-specific config (e.g. `InterviewOrchestratorConfig`), and interview testing. When implementing, resolve any conflict by tier/context: orchestrator run vs interview run.
 
-**Application and project rules:** **Plans/agent-rules-context.md** defines **application-level rules** (Puppet Master; e.g. “Always use Context7 MCP”) and **project-level rules** (target project; e.g. “Always use DRY Method”) that are fed into **every** agent. The orchestrator must include the shared rules pipeline output when building iteration prompts (see that plan for the single pipeline and injection point).
+**Application and project rules:** **Plans/agent-rules-context.md** defines **application-level rules** (Puppet Master; e.g. "Always use Context7 MCP") and **project-level rules** (target project; e.g. "Always use DRY Method") that are fed into **every** agent. The orchestrator must include the shared rules pipeline output when building iteration prompts (see that plan for the single pipeline and injection point).
 
-**Cited web search:** **Web search with citations** (inline citations + Sources list) is shared by the **Assistant**, **Interview**, and **Orchestrator**; the same run config and MCP/tool wiring apply. See **Plans/newtools.md** §8 (cited web search, [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited)–style) and **Plans/assistant-chat-design.md** §7.
+**Cited web search:** **Web search with citations** (inline citations + Sources list) is shared by the **Assistant**, **Interview**, and **Orchestrator**; the same run config and MCP/tool wiring apply. See **Plans/newtools.md** §8 (cited web search, [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited)-style) and **Plans/assistant-chat-design.md** §7.
 
-**Tool permissions:** **Plans/Tools.md** defines the central tool registry and permission model (allow/deny/ask, granular rules, [OpenCode Permissions](https://opencode.ai/docs/permissions/)). Run config snapshot includes tool permissions; in headless orchestrator runs, “ask” maps to deny or HITL. Tier/subagent config may override permissions per agent. See Tools.md §2.5 and §8.2–§8.3.
+**Tool permissions:** **Plans/Tools.md** defines the central tool registry and permission model (allow/deny/ask, granular rules, [OpenCode Permissions](https://opencode.ai/docs/permissions/)). Run config snapshot includes tool permissions; in headless orchestrator runs, "ask" maps to deny or HITL. Tier/subagent config may override permissions per agent. See Tools.md §2.5 and §8.2-§8.3.
 
 ### Respecting PRD/plan: subagent personas and parallelization
 
@@ -182,9 +182,9 @@ When LSP is available, the orchestrator can **bias subagent selection** using cu
 
 - **When:** When selecting a subagent for the **next subtask** (or task), optionally query LSP diagnostics for **files in scope** (see "Files in scope" below). If any file has diagnostics (e.g. errors) from a language server X, **prefer** the subagent that matches that language (e.g. rust-analyzer → `rust-engineer`, pyright → `python-pro`, eslint/typescript → `typescript-pro` or `javascript-pro`).
 - **Files in scope:** One of (configurable; align with LSP gate scope in LSPSupport §17.1):
-  - **Changed in last iteration** — Files modified in the most recent iteration (recommended default for consistency with LSP gate).
-  - **Open in editor** — Files currently open in the run/context.
-  - **Task's file list** — If the task/subtask has an explicit list of files (e.g. from PRD or plan), use that list.
+  - **Changed in last iteration** -- Files modified in the most recent iteration (recommended default for consistency with LSP gate).
+  - **Open in editor** -- Files currently open in the run/context.
+  - **Task's file list** -- If the task/subtask has an explicit list of files (e.g. from PRD or plan), use that list.
 - **Integration point:** In the same place that performs `select_for_tier` (e.g. `SubagentSelector::select_for_subtask` / `select_for_task`): after building tier context, optionally call LSP client `get_diagnostics_for_paths(scope_paths)`. From the returned diagnostics, derive language(s) from `source` (e.g. rust-analyzer → Rust) or from file extension → server id mapping (see LSPSupport §3.2). Add to `TierContext` or `ProjectContext` a bias: e.g. `prefer_subagents: ["rust-engineer"]` when Rust errors are present, and use it when ranking/selecting subagents.
 - **Fallback:** When LSP is disabled or diagnostics unavailable, use existing selection logic only (language detection from file presence, domain, error patterns). No change to behavior when LSP is off.
 
@@ -748,7 +748,7 @@ impl Orchestrator {
 - **Subagent execution failure:** If subagent execution fails, log error and continue with next subagent (or fail tier if critical)
 - **Coordination update failure:** If coordination update fails, log warning and continue (coordination updates are best-effort)
     
-    // DRY:FN:build_tier_context — Build tier context for subagent selection
+    // DRY:FN:build_tier_context -- Build tier context for subagent selection
     fn build_tier_context(
         &self,
         tier_node: &TierNode,
@@ -896,7 +896,7 @@ subagentConfig:
   - **Gemini:** Run `gemini -p "You are the code-reviewer agent. Reply with only: OK" --output-format json --approval-mode yolo` (or equivalent from platform_specs). Assert exit code 0 and non-empty, parseable JSON (or expected key).
   - **Copilot:** Run `copilot -p "/agent code-reviewer Reply with only: OK" --allow-all-tools` (or equivalent). Assert exit code 0 and non-empty stdout.
 - **Artifacts:** Optionally capture stdout/stderr to `.puppet-master/evidence/cli-smoke-<platform>.log` for debugging; do not assert on exact text, only on success and shape.
-- **Documentation:** In the plan and in code comments, document that these tests are optional/manual in CI and list required env vars (e.g. `RUN_CURSOR_CLI_SMOKE=1`, `RUN_CODEX_CLI_SMOKE=1`, …) and that auth must be configured for the corresponding platform.
+- **Documentation:** In the plan and in code comments, document that these tests are optional/manual in CI and list required env vars (e.g. `RUN_CURSOR_CLI_SMOKE=1`, `RUN_CODEX_CLI_SMOKE=1`, ...) and that auth must be configured for the corresponding platform.
 
 **Test location and naming:**
 
@@ -1103,7 +1103,7 @@ Plan mode is implemented per tier (phase, task, subtask, iteration) and flows fr
 
 ### Plan Mode & Platform CLI Updates (Last ~2 Months)
 
-The following summarizes recent CLI releases (Dec 2025 – Feb 2026) that affect plan mode, subagents, hooks, plugins, and related behavior. Use this to keep `platform_specs`, runners, and AGENTS.md aligned with current behavior.
+The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect plan mode, subagents, hooks, plugins, and related behavior. Use this to keep `platform_specs`, runners, and AGENTS.md aligned with current behavior.
 
 **Cursor (agent / cursor-agent)**  
 - **Jan 16, 2026:** Plan mode and Ask mode in CLI: `/plan` or `--mode=plan`, `/ask` or `--mode=ask`; cloud handoff with `&`; one-click MCP auth; word-level diffs.  
@@ -1120,7 +1120,7 @@ The following summarizes recent CLI releases (Dec 2025 – Feb 2026) that affect
 - **Impact:** No change to plan-mode mapping. Subagent/MCP integration for Codex is relevant for orchestrator subagent invocation.
 
 **Claude Code**  
-- **v2.1.41–v2.1.45 (Feb 2026):** CLI auth commands, Windows ARM64, prompt cache and startup improvements; v2.1.45: Sonnet 4.6, `spinnerTipsOverride`, SDK rate limit types, `enabledPlugins`/`extraKnownMarketplaces` from `--add-dir`, permission destination persistence, plugin command availability fix.  
+- **v2.1.41-v2.1.45 (Feb 2026):** CLI auth commands, Windows ARM64, prompt cache and startup improvements; v2.1.45: Sonnet 4.6, `spinnerTipsOverride`, SDK rate limit types, `enabledPlugins`/`extraKnownMarketplaces` from `--add-dir`, permission destination persistence, plugin command availability fix.  
 - **Plan mode:** `--permission-mode plan` (unchanged).  
 - **Subagents:** `.claude/agents/` markdown definitions; built-in Explore/Plan/General-purpose; SDK subagent support.  
 - **Hooks:** SessionStart, UserPromptSubmit, PreToolUse, PermissionRequest, PostToolUse, SubagentStart/SubagentStop, etc.; config via `/hooks` or `~/.claude/settings.json` / project settings.  
@@ -1128,15 +1128,15 @@ The following summarizes recent CLI releases (Dec 2025 – Feb 2026) that affect
 - **Impact:** Plan mode and subagent/hook/plugin docs are still accurate; v2.1.45 plugin and `--add-dir` behavior may matter for project-specific plugins.
 
 **Gemini CLI**  
-- **v0.22–v0.28 (Dec 2025 – Feb 2026):** Extensions (Conductor, Endor Labs), Colab headless use, Agent Skills (built-in skills, `/agents refresh`, `/skills`), policy engine (modes like `plan`, granular shell allowlisting), hooks visibility, default folder trust.  
-- **v0.24–v0.26:** Agent skills by default, generalist agent, skill-creator/pr-creator skills, rewind/introspect.  
+- **v0.22-v0.28 (Dec 2025 - Feb 2026):** Extensions (Conductor, Endor Labs), Colab headless use, Agent Skills (built-in skills, `/agents refresh`, `/skills`), policy engine (modes like `plan`, granular shell allowlisting), hooks visibility, default folder trust.  
+- **v0.24-v0.26:** Agent skills by default, generalist agent, skill-creator/pr-creator skills, rewind/introspect.  
 - **v0.28 (Feb 3):** Auth/consent, custom themes, Positron IDE, `/prompt-suggest`.  
 - **Plan mode:** Experimental; enable with `experimental.plan: true` in settings; `--approval-mode=plan` or `general.defaultApprovalMode: "plan"`; tool restrictions (read-only + write only in plans dir); policies can allow e.g. `run_shell_command` for `git status`/`git diff` or research subagents in plan mode.  
 - **Subagents:** `experimental.enableAgents: true`; built-in codebase_investigator, cli_help, generalist; custom agents in `~/.gemini/agents/*.md` or `.gemini/agents/*.md`.  
 - **Impact:** Our use of `--approval-mode plan` is correct. Document that `experimental.plan: true` (and optionally `enableAgents`) may be required; policy engine and research subagents in plan mode are relevant for advanced use.
 
 **GitHub Copilot CLI**  
-- **Jan 14–21, 2026:** Plan mode in interactive UI (Shift+Tab); advanced reasoning models; GPT-5.2-Codex; inline steering; background delegation `&`; `/review`; context auto-compaction; automation flags (`--silent`, `--share`, `--available-tools`, `--excluded-tools`).  
+- **Jan 14-21, 2026:** Plan mode in interactive UI (Shift+Tab); advanced reasoning models; GPT-5.2-Codex; inline steering; background delegation `&`; `/review`; context auto-compaction; automation flags (`--silent`, `--share`, `--available-tools`, `--excluded-tools`).  
 - **Plan mode:** Interactive only (Shift+Tab); no dedicated `--plan` flag for headless `-p` usage. Programmatic use remains `-p` with existing flags; our "omit `--allow-all-paths`/`--allow-all-urls` when plan_mode" remains the way to get more restrictive behavior in headless.  
 - **SDK:** Plan mode and related APIs available in SDK for custom integrations.  
 - **Impact:** No change to our headless plan-mode mapping; document that native plan mode is interactive; if Copilot adds a headless plan flag or SDK plan option, switch to it in runner and platform_specs.
@@ -1147,48 +1147,48 @@ The following summarizes recent CLI releases (Dec 2025 – Feb 2026) that affect
 
 **Gaps vs "use plan mode for every request":**
 
-1. **Default is off** — All tiers default to `plan_mode: false` in `default_config` and in YAML, so users must enable it per tier.
-2. **No global override** — There is no single “use plan mode for all tiers” or “prefer plan mode by default” setting; only per-tier toggles in Config and Wizard.
-3. **No one-click “all tiers”** — Enabling plan mode for every tier requires toggling four tier cards.
-4. **Subagent invocations** — When subagent integration is added, `ExecutionRequest` built for subagent runs must receive the same `plan_mode` as the tier (so plan mode is applied to every request, including subagent calls).
-5. **Gemini** — `--approval-mode plan` can require `experimental.plan: true` in settings; we do not currently validate or document this at runtime.
-6. **Copilot** — If the CLI gains a native plan flag (e.g. `--plan` or plan mode in SDK), we should prefer it over “omit allow-all” and document it in `platform_specs` and AGENTS.md.
+1. **Default is off** -- All tiers default to `plan_mode: false` in `default_config` and in YAML, so users must enable it per tier.
+2. **No global override** -- There is no single "use plan mode for all tiers" or "prefer plan mode by default" setting; only per-tier toggles in Config and Wizard.
+3. **No one-click "all tiers"** -- Enabling plan mode for every tier requires toggling four tier cards.
+4. **Subagent invocations** -- When subagent integration is added, `ExecutionRequest` built for subagent runs must receive the same `plan_mode` as the tier (so plan mode is applied to every request, including subagent calls).
+5. **Gemini** -- `--approval-mode plan` can require `experimental.plan: true` in settings; we do not currently validate or document this at runtime.
+6. **Copilot** -- If the CLI gains a native plan flag (e.g. `--plan` or plan mode in SDK), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
 
 ### Recommendations
 
 **1. Default plan mode to true for all tiers**
 
 - In `default_config.rs`, set `plan_mode: true` for `phase`, `task`, `subtask`, and `iteration`.
-- In `config_override.rs` and any YAML defaults, use `plan_mode: true` unless we explicitly want a “fast/loose” default.
+- In `config_override.rs` and any YAML defaults, use `plan_mode: true` unless we explicitly want a "fast/loose" default.
 - Rationale: You prefer plan mode for every request for better results; making it the default matches that and reduces the need to turn it on in four places.
 
-**2. Global “Use plan mode for all tiers” (in scope — see “GUI and Backend Scope” below)**
+**2. Global "Use plan mode for all tiers" (in scope -- see "GUI and Backend Scope" below)**
 
-- Add a single GUI control (e.g. in Config, above or beside tier cards): “Use plan mode for all tiers” that:
+- Add a single GUI control (e.g. in Config, above or beside tier cards): "Use plan mode for all tiers" that:
   - When turned on: sets `plan_mode: true` for phase, task, subtask, and iteration.
   - When turned off: sets `plan_mode: false` for all (or restores last per-tier values if we store them).
-- Optionally persist a “prefer plan mode” default so new tiers or new configs start with plan mode on; the global toggle can apply that default.
+- Optionally persist a "prefer plan mode" default so new tiers or new configs start with plan mode on; the global toggle can apply that default.
 
-**3. One-click “Enable plan mode for all tiers” (in scope)**
+**3. One-click "Enable plan mode for all tiers" (in scope)**
 
-- In Config (and optionally Wizard), add a button or link: “Enable plan mode for all tiers” that sets all four tier `plan_mode` to `true` in one action (single message or batch update).
-- Complements the global toggle and makes it easy to align with “plan mode for every request” without editing each card.
+- In Config (and optionally Wizard), add a button or link: "Enable plan mode for all tiers" that sets all four tier `plan_mode` to `true` in one action (single message or batch update).
+- Complements the global toggle and makes it easy to align with "plan mode for every request" without editing each card.
 
 **4. Ensure plan mode flows into subagent invocations**
 
-- When building `ExecutionRequest` (or equivalent) for subagent runs (e.g. in `execute_tier_with_subagents` or the platform adapter), pass through the tier’s `plan_mode` (from `TierConfig` or `IterationContext`) so that:
-  - Every orchestrator-driven request (including subagent calls) respects the tier’s plan mode setting.
+- When building `ExecutionRequest` (or equivalent) for subagent runs (e.g. in `execute_tier_with_subagents` or the platform adapter), pass through the tier's `plan_mode` (from `TierConfig` or `IterationContext`) so that:
+  - Every orchestrator-driven request (including subagent calls) respects the tier's plan mode setting.
 - In the subagent integration plan and code, explicitly document that `plan_mode` is taken from the tier and applied to the request used for the subagent.
 
 **5. Platform-specific robustness (in scope)**
 
 - **Gemini:** When `plan_mode` is true and platform is Gemini, document in GUI tooltip and add a Doctor check that reads `~/.gemini/settings.json` and warns if `experimental.plan` is not set.
 - **Copilot:** When a native plan flag exists, add it to `platform_specs` and the Copilot runner (e.g. `--plan` or equivalent) and use it when `plan_mode` is true, instead of or in addition to omitting `--allow-all-paths` / `--allow-all-urls`.
-- **Codex:** Current “read-only sandbox” behavior is a reasonable stand-in for plan mode; if Codex adds an explicit plan/read-only flag, prefer that and document in AGENTS.md.
+- **Codex:** Current "read-only sandbox" behavior is a reasonable stand-in for plan mode; if Codex adds an explicit plan/read-only flag, prefer that and document in AGENTS.md.
 
 **6. Tooltip and discoverability (in scope)**
 
-- Update the `tier.plan_mode` tooltip to state that plan mode is recommended for all tiers for best results (e.g. “Recommended: enable for all tiers for more reliable, step-by-step behavior”).
+- Update the `tier.plan_mode` tooltip to state that plan mode is recommended for all tiers for best results (e.g. "Recommended: enable for all tiers for more reliable, step-by-step behavior").
 - In Wizard, consider defaulting the plan mode toggles to true when creating a new run so new users get the preferred behavior without searching for the option.
 
 **7. GUI gaps summary (cross-plan)**
@@ -1196,29 +1196,29 @@ The following summarizes recent CLI releases (Dec 2025 – Feb 2026) that affect
 - **Config:** Plan mode and subagent UI live in Config (Tiers tab, optional global toggle, Subagents section). **MiscPlan** adds cleanup/evidence under Config → Advanced (§7.5); **Worktree** adds Branching tab controls. Ensure a single Save persists the whole GuiConfig (including plan mode, subagents, cleanup, branching) and that Option B run-config build includes all of these so the run sees current UI state.
 - **Unwired / implementation status:** For a consolidated list of unwired features, missing GUI controls, and implementation status (interview config, run config Option B, cleanup, Doctor), see **MiscPlan §9.1.18**.
 - **Platform CLI capabilities (hooks, skills, plugins, extensions):** This plan documents them in **"Platform-Specific Capabilities & Extensions"** below. We pass subagent names and plan mode via **prompt/CLI args**; we do not require Cursor plugins or Claude hooks for core orchestration. **MiscPlan §7.6** summarizes how cleanup/prepare are implemented in Puppet Master and how we might optionally leverage or document platform hooks/skills. When changing subagent invocation, keep platform_specs and AGENTS.md aligned with CLI release notes.
-- **Plans/newfeatures.md:** For **orchestration prompt** injection (§1: session-level “assess → decompose → act → verify” via `--append-system-prompt`), **background/async agents** (§2: queue, git branch per run, output dir, GUI panel), and **hook system** (§9: event hooks as extension point at tier/iteration boundaries), see newfeatures; those features extend this plan without replacing tier or subagent structure.
+- **Plans/newfeatures.md:** For **orchestration prompt** injection (§1: session-level "assess → decompose → act → verify" via `--append-system-prompt`), **background/async agents** (§2: queue, git branch per run, output dir, GUI panel), and **hook system** (§9: event hooks as extension point at tier/iteration boundaries), see newfeatures; those features extend this plan without replacing tier or subagent structure.
 
 ### Implementation checklist
 
-**Plan mode — backend**
+**Plan mode -- backend**
 - [ ] Change default `plan_mode` to `true` for all tiers in `default_config.rs`, `config_override.rs`, and GUI defaults.
 - [ ] Add `use_plan_mode_all_tiers` (and optional `last_per_tier_plan_mode`) to persisted config; apply in tier config load/sync so all tiers become true/false when global is toggled.
 - [ ] Ensure subagent/invocation path receives tier `plan_mode` and passes it into `ExecutionRequest` (document in subagent plan and in code).
 
-**Plan mode — frontend (Config)**
-- [ ] Add global “Use plan mode for all tiers” toggle in Config (above tier cards); message and handler; persist; when global on, tier plan_mode toggles disabled and show true.
-- [ ] Add “Enable plan mode for all tiers” one-click button in Config; message and handler; persist.
+**Plan mode -- frontend (Config)**
+- [ ] Add global "Use plan mode for all tiers" toggle in Config (above tier cards); message and handler; persist; when global on, tier plan_mode toggles disabled and show true.
+- [ ] Add "Enable plan mode for all tiers" one-click button in Config; message and handler; persist.
 - [ ] Update `tier.plan_mode` tooltip in `widgets/tooltips.rs` to recommend enabling for all tiers; add Gemini plan-mode hint on tier card when platform is Gemini and plan mode on.
 
-**Plan mode — frontend (Wizard)**
-- [ ] Default plan mode to true for new runs in Wizard; add “Enable plan mode for all tiers” in Wizard when tier plan-mode toggles exist.
+**Plan mode -- frontend (Wizard)**
+- [ ] Default plan mode to true for new runs in Wizard; add "Enable plan mode for all tiers" in Wizard when tier plan-mode toggles exist.
 
-**Subagent — backend**
+**Subagent -- backend**
 - [ ] Add subagent config struct and load/save from `config.yaml` (or app config); orchestrator uses `enable_tier_subagents`, `tier_overrides`, `disabled_subagents`, `required_subagents`.
 
-**Subagent — frontend (Config)**
-- [ ] Add “Subagents” section on Config: enable toggle, tier overrides (per-tier list or multi-select), disabled/required lists; messages and handlers; persist to same config as backend.
-- [ ] Add **Subagent personas / info setup:** preload list from project `.claude/agents`; user can add their own and delete any (including preloaded); optional AI/batch trim for smaller footprint; list with name + description; "Edit" per subagent to set custom description/instruction (persist to `SubagentGuiConfig.persona_overrides` — overrides come only from this UI); prompt builder / runner injects persona (override if present, else preloaded content) when invoking that subagent (see Gap §11).
+**Subagent -- frontend (Config)**
+- [ ] Add "Subagents" section on Config: enable toggle, tier overrides (per-tier list or multi-select), disabled/required lists; messages and handlers; persist to same config as backend.
+- [ ] Add **Subagent personas / info setup:** preload list from project `.claude/agents`; user can add their own and delete any (including preloaded); optional AI/batch trim for smaller footprint; list with name + description; "Edit" per subagent to set custom description/instruction (persist to `SubagentGuiConfig.persona_overrides` -- overrides come only from this UI); prompt builder / runner injects persona (override if present, else preloaded content) when invoking that subagent (see Gap §11).
 
 **Doctor**
 - [ ] Add Gemini + plan mode check in Doctor: read `~/.gemini/settings.json`, warn if `experimental.plan` missing when any tier has Gemini and plan_mode true.
@@ -1228,11 +1228,11 @@ The following summarizes recent CLI releases (Dec 2025 – Feb 2026) that affect
 - [ ] When Copilot (or Codex) gains a native plan flag, add it to `platform_specs` and the runner and update AGENTS.md.
 - [ ] **Fully test plan mode in the CLIs:** Add plan mode CLI verification tests (run each platform CLI with plan mode enabled; assert exit success and correct flags); env-gated like `platform_cli_smoke` (e.g. `RUN_PLAN_MODE_CLI_TESTS=1`). See "3. Plan Mode CLI Verification" in this plan.
 - [ ] Unit tests for global plan-mode toggle and one-click; subagent config load/apply tests.
-- [ ] **Resolve gaps:** Before or during implementation, resolve each item in **"Gaps and Clarifications"** (persistence location for plan-mode global, subagent in GuiConfig, Doctor config source, canonical subagent list, tier-overrides shape, orchestrator/subagent code path, Message/handlers, TierId type, **interview config wiring — Gap §9**, **platform-specific parsers — Gap §10**, **subagent persona registry and injection — Gap §11**).
+- [ ] **Resolve gaps:** Before or during implementation, resolve each item in **"Gaps and Clarifications"** (persistence location for plan-mode global, subagent in GuiConfig, Doctor config source, canonical subagent list, tier-overrides shape, orchestrator/subagent code path, Message/handlers, TierId type, **interview config wiring -- Gap §9**, **platform-specific parsers -- Gap §10**, **subagent persona registry and injection -- Gap §11**).
 - [ ] **Mitigate potential issues:** Review **"Potential Issues"** and address defaults, validation, platform adapters, caching, and persistence so the feature is robust in production.
 - [ ] **DRY method and widget catalog:** Check `docs/gui-widget-catalog.md` before adding UI; use existing widgets; tag new reusable items with `DRY:WIDGET:`, `DRY:FN:`, or `DRY:DATA:`; run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` after widget changes.
 - [ ] **Interview config wiring:** Wire interview settings per **"Interviewer Enhancements and Config Wiring"**: add `min_questions_per_phase` and `max_questions_per_phase` (Option for unlimited) to `InterviewOrchestratorConfig`, set from `gui_config.interview` in `app.rs`, use in PhaseManager and phase-complete logic and prompts; add GUI controls (Min / Max with Unlimited). Wire `require_architecture_confirmation` and `vision_provider` into `InterviewOrchestratorConfig` and use in interview flow (architecture gate; vision platform when image flows exist).
-- [ ] **Config-wiring validation at each tier:** Implement `validate_config_wiring_for_tier` (or equivalent) and call it at **Phase start, Task start, Subtask start, Iteration start** in the main orchestrator (and at phase/sub-tier start in the interview orchestrator). Fail fast when required config is missing; warn when a GUI/file field is not present in execution config. See **"Avoiding Built but Not Wired"** and **Implementation Notes — Config-wiring validation**.
+- [ ] **Config-wiring validation at each tier:** Implement `validate_config_wiring_for_tier` (or equivalent) and call it at **Phase start, Task start, Subtask start, Iteration start** in the main orchestrator (and at phase/sub-tier start in the interview orchestrator). Fail fast when required config is missing; warn when a GUI/file field is not present in execution config. See **"Avoiding Built but Not Wired"** and **Implementation Notes -- Config-wiring validation**.
 - [ ] **AGENTS.md wiring checklist:** Add to AGENTS.md (e.g. under Pre-Completion Verification Checklist or DO): for any new execution-affecting config, follow the three-step wiring checklist (add to execution config, set at construction from GUI/file, use in runtime); link to this plan or REQUIREMENTS.md.
 - [ ] **Start and end verification:** Implement start-of-phase/task/subtask verification (config-wiring + wiring/readiness: GUI? backend? steps make sense? gaps?) and end-of-phase/task/subtask verification (wiring re-check + acceptance gate + quality verification / code review). See **"Start and End Verification at Phase, Task, and Subtask"**; resolve gaps there (quality definition per tier, readiness checklist source of truth, interview-phase mirror).
 - [ ] **Lifecycle hooks:** Implement BeforeTier/AfterTier hooks (track active subagent, inject context, prune stale state, validate handoff format). Leverage platform-native hooks where available (Cursor, Claude, Gemini); use orchestrator-level middleware for all platforms. Leverage Codex SDK and Copilot SDK for coordination when using SDK-based execution. See **"Lifecycle and Quality Features"**.
@@ -1251,44 +1251,44 @@ This keeps plan mode as the preferred behavior for every request while preservin
 
 All previously "optional" or "later" plan-mode and subagent GUI/backend items are **in scope now**. The following specifies frontend and backend so they work end-to-end.
 
-### 1. Plan Mode — Backend
+### 1. Plan Mode -- Backend
 
 - **Defaults:** In `default_config.rs`, set `plan_mode: true` for phase, task, subtask, iteration. In `config_override.rs` (and any YAML defaults), use `plan_mode: true` unless explicitly overridden. In `gui_config.rs` default, set `plan_mode: true` for any tier defaults used by the GUI.
-- **Global “use plan mode for all tiers”:** Add to persisted config (e.g. `GuiConfig` or app settings that save to `.puppet-master/settings.json` or equivalent): `use_plan_mode_all_tiers: bool`. Optionally: `last_per_tier_plan_mode: Option<HashMap<TierId, bool>>` to restore when turning the global off. When `use_plan_mode_all_tiers == true`, any load or sync of tier config forces all four tiers’ `plan_mode` to `true` (optionally store previous per-tier values before overwriting). When toggled off, set all tiers to `false` or restore from `last_per_tier_plan_mode`. Prefer write-through so tier configs and saved YAML stay in sync.
+- **Global "use plan mode for all tiers":** Add to persisted config (e.g. `GuiConfig` or app settings that save to `.puppet-master/settings.json` or equivalent): `use_plan_mode_all_tiers: bool`. Optionally: `last_per_tier_plan_mode: Option<HashMap<TierId, bool>>` to restore when turning the global off. When `use_plan_mode_all_tiers == true`, any load or sync of tier config forces all four tiers' `plan_mode` to `true` (optionally store previous per-tier values before overwriting). When toggled off, set all tiers to `false` or restore from `last_per_tier_plan_mode`. Prefer write-through so tier configs and saved YAML stay in sync.
 - **Subagent invocations:** When building `ExecutionRequest` for subagent runs (e.g. in `execute_tier_with_subagents` or the platform adapter), set `request.plan_mode = tier_config.plan_mode` (from `TierConfig` or `IterationContext`). Document in plan and code.
-- **Gemini:** In Doctor, add a check: if any tier uses Gemini and `plan_mode == true`, warn that `experimental.plan: true` may be required in `~/.gemini/settings.json`. Optionally probe the file and only warn if the setting is missing. In Config, when platform is Gemini and plan mode is on, show a short tooltip or help: “Gemini plan mode may require `experimental.plan: true` in ~/.gemini/settings.json.”
+- **Gemini:** In Doctor, add a check: if any tier uses Gemini and `plan_mode == true`, warn that `experimental.plan: true` may be required in `~/.gemini/settings.json`. Optionally probe the file and only warn if the setting is missing. In Config, when platform is Gemini and plan mode is on, show a short tooltip or help: "Gemini plan mode may require `experimental.plan: true` in ~/.gemini/settings.json."
 
-### 2. Plan Mode — Frontend (Config)
+### 2. Plan Mode -- Frontend (Config)
 
 - **DRY:** Use existing widgets from `docs/gui-widget-catalog.md` (e.g. toggler, styled_button); tag any new reusable widget with `// DRY:WIDGET:`.
-- **Global toggle:** In Config, above the tier cards, add one toggle: “Use plan mode for all tiers”. Message e.g. `Message::ConfigUsePlanModeAllTiersToggled(bool)`. Handler: if `true`, set all four tier configs’ `plan_mode` to `true` and persist `use_plan_mode_all_tiers = true`; if `false`, set all to `false` (or restore from `last_per_tier_plan_mode`) and persist. When global is on, tier plan_mode toggles are disabled and show true; when global is off, tier toggles are editable.
-- **One-click button:** Next to or under the global toggle, add button “Enable plan mode for all tiers”. Message e.g. `Message::ConfigEnablePlanModeAllTiers`. Handler: set phase, task, subtask, iteration `plan_mode` to `true` and set `use_plan_mode_all_tiers = true`; persist.
-- **Tooltip:** In `widgets/tooltips.rs`, update `tier.plan_mode` to: “When enabled, the AI creates a detailed plan before writing code. Recommended: enable for all tiers for more reliable, step-by-step behavior. Optional for simple iterations.”
+- **Global toggle:** In Config, above the tier cards, add one toggle: "Use plan mode for all tiers". Message e.g. `Message::ConfigUsePlanModeAllTiersToggled(bool)`. Handler: if `true`, set all four tier configs' `plan_mode` to `true` and persist `use_plan_mode_all_tiers = true`; if `false`, set all to `false` (or restore from `last_per_tier_plan_mode`) and persist. When global is on, tier plan_mode toggles are disabled and show true; when global is off, tier toggles are editable.
+- **One-click button:** Next to or under the global toggle, add button "Enable plan mode for all tiers". Message e.g. `Message::ConfigEnablePlanModeAllTiers`. Handler: set phase, task, subtask, iteration `plan_mode` to `true` and set `use_plan_mode_all_tiers = true`; persist.
+- **Tooltip:** In `widgets/tooltips.rs`, update `tier.plan_mode` to: "When enabled, the AI creates a detailed plan before writing code. Recommended: enable for all tiers for more reliable, step-by-step behavior. Optional for simple iterations."
 - **Persistence:** Ensure `use_plan_mode_all_tiers` (and optional `last_per_tier_plan_mode`) are saved/loaded with the rest of GUI config.
 
-### 3. Plan Mode — Frontend (Wizard)
+### 3. Plan Mode -- Frontend (Wizard)
 
 - **Default for new runs:** When the Wizard builds initial tier config for a new run, set `plan_mode: true` for all tiers (from `default_config` or explicitly in wizard init). Wizard tier/plan-mode toggles should reflect this.
-- **One-click:** If the Wizard has tier-level plan mode toggles, add “Enable plan mode for all tiers” (same semantics as Config) so users can align all tiers in one action.
+- **One-click:** If the Wizard has tier-level plan mode toggles, add "Enable plan mode for all tiers" (same semantics as Config) so users can align all tiers in one action.
 
-### 4. Subagent — Backend
+### 4. Subagent -- Backend
 
 - **Config model:** Add (or extend) a struct for subagent config used at runtime (e.g. in `config/` or `types/config.rs`): `enable_tier_subagents: bool`, `tier_overrides: TierSubagentOverrides` (e.g. map tier → list of subagent names), `disabled_subagents: Vec<String>`, `required_subagents: Vec<String>` (optional). Load from `.puppet-master/config.yaml` under `subagentConfig`; if missing, use defaults: `enable_tier_subagents: true`, empty overrides, empty disabled/required.
-- **Orchestrator:** When selecting subagents for a tier, if `enable_tier_subagents` is false, skip subagent invocation (or use a single “general” path). If true, run selection logic then apply overrides: for that tier, if `tier_overrides` has an entry, use it (or merge/filter with selected list). Filter out any in `disabled_subagents`; optionally require any in `required_subagents`.
+- **Orchestrator:** When selecting subagents for a tier, if `enable_tier_subagents` is false, skip subagent invocation (or use a single "general" path). If true, run selection logic then apply overrides: for that tier, if `tier_overrides` has an entry, use it (or merge/filter with selected list). Filter out any in `disabled_subagents`; optionally require any in `required_subagents`.
 - **Persistence:** When the GUI changes subagent settings, write back to config (YAML or same store as rest of app config); single save path that includes subagent config.
 
-### 5. Subagent — Frontend (Config)
+### 5. Subagent -- Frontend (Config)
 
 - **DRY:** Check `docs/gui-widget-catalog.md` before adding controls; use existing toggler, styled_button, layout helpers; tag new reusable widgets/helpers with `DRY:WIDGET:` or `DRY:FN:`; run `scripts/generate-widget-catalog.sh` after changes.
-- **Section:** Add a “Subagents” section on the Config page (below tier cards or in a collapsible block). Controls: (1) **Enable tier subagents:** one toggle bound to `subagentConfig.enableTierSubagents`. Message e.g. `Message::ConfigSubagentEnableTierSubagentsToggled(bool)`. (2) **Tier overrides:** For each tier (phase/task/subtask/iteration), a text field or list editor for override subagent names (comma-separated or multi-select from a fixed list of known subagent names). (3) **Disabled subagents:** one list (comma-separated or tag input) for `disabledSubagents`. (4) **Required subagents:** same for `requiredSubagents`. Messages: e.g. `ConfigSubagentTierOverrideChanged(tier, list)`, `ConfigSubagentDisabledListChanged(Vec<String>)`, `ConfigSubagentRequiredListChanged(Vec<String>)`. Handler: update in-memory config and persist; backend reads from same persisted config.
-- **Subagent personas / info setup:** Provide a **place to setup and view subagent personas/info**. (1) **Preload:** Load initial persona list from the project’s `.claude/agents` directory (e.g. `puppet-master-rs` or repo root `.claude/agents`); each agent file (e.g. `rust-engineer.md`) supplies name and description/purpose. (2) **User control:** Users can **add their own** personas and **delete any** (including preloaded ones). (3) **Smaller footprint:** Support an optional pass (e.g. AI or batch job) to **trim** persona content to a smaller token footprint while preserving intent. (4) **Persona overrides — single source:** The only place “overrides” come from is **user edits in the Personas UI**, saved to the same app config as the rest of Config: `SubagentGuiConfig.persona_overrides` (key = subagent name, value = optional custom description and/or instruction snippet). At runtime, for a given subagent name: if the user has saved an override for that name, use it; otherwise use the content from the preloaded/trimmed agent file. No second “source” of personas — the list is preloaded + user-added (user can delete any); the *content* for a name is either from the agent file or from the user’s saved override in config. UI: dedicated “Subagent personas” tab or subsection (Config or Setup); list showing name + description; “Edit” to set custom description/instruction (persisted to `persona_overrides`); “Add” / “Delete” for list management.
-- **Discovery:** Subagent names in the override UI come from a constant list (e.g. from this plan’s persona list: project-manager, architect-reviewer, product-manager, rust-engineer, python-pro, code-reviewer, test-automator, …) or from a future subagent registry; document so UI and backend share the same names.
+- **Section:** Add a "Subagents" section on the Config page (below tier cards or in a collapsible block). Controls: (1) **Enable tier subagents:** one toggle bound to `subagentConfig.enableTierSubagents`. Message e.g. `Message::ConfigSubagentEnableTierSubagentsToggled(bool)`. (2) **Tier overrides:** For each tier (phase/task/subtask/iteration), a text field or list editor for override subagent names (comma-separated or multi-select from a fixed list of known subagent names). (3) **Disabled subagents:** one list (comma-separated or tag input) for `disabledSubagents`. (4) **Required subagents:** same for `requiredSubagents`. Messages: e.g. `ConfigSubagentTierOverrideChanged(tier, list)`, `ConfigSubagentDisabledListChanged(Vec<String>)`, `ConfigSubagentRequiredListChanged(Vec<String>)`. Handler: update in-memory config and persist; backend reads from same persisted config.
+- **Subagent personas / info setup:** Provide a **place to setup and view subagent personas/info**. (1) **Preload:** Load initial persona list from the project's `.claude/agents` directory (e.g. `puppet-master-rs` or repo root `.claude/agents`); each agent file (e.g. `rust-engineer.md`) supplies name and description/purpose. (2) **User control:** Users can **add their own** personas and **delete any** (including preloaded ones). (3) **Smaller footprint:** Support an optional pass (e.g. AI or batch job) to **trim** persona content to a smaller token footprint while preserving intent. (4) **Persona overrides -- single source:** The only place "overrides" come from is **user edits in the Personas UI**, saved to the same app config as the rest of Config: `SubagentGuiConfig.persona_overrides` (key = subagent name, value = optional custom description and/or instruction snippet). At runtime, for a given subagent name: if the user has saved an override for that name, use it; otherwise use the content from the preloaded/trimmed agent file. No second "source" of personas -- the list is preloaded + user-added (user can delete any); the *content* for a name is either from the agent file or from the user's saved override in config. UI: dedicated "Subagent personas" tab or subsection (Config or Setup); list showing name + description; "Edit" to set custom description/instruction (persisted to `persona_overrides`); "Add" / "Delete" for list management.
+- **Discovery:** Subagent names in the override UI come from a constant list (e.g. from this plan's persona list: project-manager, architect-reviewer, product-manager, rust-engineer, python-pro, code-reviewer, test-automator, ...) or from a future subagent registry; document so UI and backend share the same names.
 
-### 6. Doctor — Gemini Plan Mode Check
+### 6. Doctor -- Gemini Plan Mode Check
 
-- **Check:** In `doctor/` (new check or inside existing config check): if any tier has platform Gemini and `plan_mode == true`, check `~/.gemini/settings.json` for `experimental.plan: true` (or equivalent path); if missing, add Doctor warning: “Gemini plan mode is enabled for a tier but experimental.plan may not be set in ~/.gemini/settings.json.” Prefer reading the file and only warning when plan mode is on and setting is missing.
+- **Check:** In `doctor/` (new check or inside existing config check): if any tier has platform Gemini and `plan_mode == true`, check `~/.gemini/settings.json` for `experimental.plan: true` (or equivalent path); if missing, add Doctor warning: "Gemini plan mode is enabled for a tier but experimental.plan may not be set in ~/.gemini/settings.json." Prefer reading the file and only warning when plan mode is on and setting is missing.
 
-### 7. Implementation Checklist (GUI & Backend — Add/Expand)
+### 7. Implementation Checklist (GUI & Backend -- Add/Expand)
 
 See the updated **Implementation checklist** below; it includes all of the above as concrete tasks.
 
@@ -1300,27 +1300,27 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 
 ### 1. Where to persist `use_plan_mode_all_tiers`
 
-- **Gap:** The plan says add to “GuiConfig or app settings that save to `.puppet-master/settings.json`”.
+- **Gap:** The plan says add to "GuiConfig or app settings that save to `.puppet-master/settings.json`".
 - **Clarify:** Choose one: (a) Add `use_plan_mode_all_tiers` (and optional `last_per_tier_plan_mode`) to **GuiConfig** and persist in the same YAML as tiers (same file/save path as Config), or (b) persist in **settings.json** (e.g. `.puppet-master/settings.json`) and have Config load/save it from there. The app currently has both: `gui_config` save/load to a config path (e.g. pm-config.yaml) and settings.json for other state. Recommend (a) so plan-mode global state lives with tier config in one place.
 
 ### 2. Subagent config in GuiConfig
 
-- **Gap:** Plan says load subagent config from `.puppet-master/config.yaml` under `subagentConfig`, and “single save path that includes subagent config,” but **GuiConfig** (in `config/gui_config.rs`) has no `subagentConfig` field.
-- **Clarify:** Add a top-level field to **GuiConfig**, e.g. `subagent: SubagentGuiConfig`, with `enable_tier_subagents`, `tier_overrides`, `disabled_subagents`, `required_subagents`. Serialize as `subagentConfig` in YAML (or `subagent` with serde rename) so load/save use the same file as the rest of Config. Ensure default in GuiConfig matches plan defaults (enable_tier_subagents: true, empty overrides/lists). **Persona overrides:** For the "Subagent personas / info setup" feature, add `persona_overrides: HashMap<String, PersonaOverride>` to `SubagentGuiConfig`. **Persona overrides come from exactly one place:** the user’s edits in the Subagent Personas UI; when the user clicks Save, those edits are written to the same config file as the rest of Config (e.g. `subagentConfig.personaOverrides` in YAML). Key = subagent name, value = optional custom description and/or instruction snippet. At runtime: if an override exists for that name, use it; else use content from the preloaded agent (e.g. from `.claude/agents` or trimmed copy). Orchestrator and interview both read the same config.
+- **Gap:** Plan says load subagent config from `.puppet-master/config.yaml` under `subagentConfig`, and "single save path that includes subagent config," but **GuiConfig** (in `config/gui_config.rs`) has no `subagentConfig` field.
+- **Clarify:** Add a top-level field to **GuiConfig**, e.g. `subagent: SubagentGuiConfig`, with `enable_tier_subagents`, `tier_overrides`, `disabled_subagents`, `required_subagents`. Serialize as `subagentConfig` in YAML (or `subagent` with serde rename) so load/save use the same file as the rest of Config. Ensure default in GuiConfig matches plan defaults (enable_tier_subagents: true, empty overrides/lists). **Persona overrides:** For the "Subagent personas / info setup" feature, add `persona_overrides: HashMap<String, PersonaOverride>` to `SubagentGuiConfig`. **Persona overrides come from exactly one place:** the user's edits in the Subagent Personas UI; when the user clicks Save, those edits are written to the same config file as the rest of Config (e.g. `subagentConfig.personaOverrides` in YAML). Key = subagent name, value = optional custom description and/or instruction snippet. At runtime: if an override exists for that name, use it; else use content from the preloaded agent (e.g. from `.claude/agents` or trimmed copy). Orchestrator and interview both read the same config.
 
 ### 3. Doctor Gemini plan-mode check: source of tier config
 
-- **Gap:** The check must know “any tier has platform Gemini and plan_mode == true.” Doctor checks currently have `async fn run(&self) -> CheckResult` with no parameters.
-- **Clarify:** The Gemini plan-mode check should **discover and load the project config** inside `run()`: use `config_discovery::discover_config_path(None)` then `gui_config::load_config(path)` (or the same loader the Config page uses). If the file is not GuiConfig-shaped, fall back to “skip check” or “warn: could not read tier config.” This keeps the DoctorCheck trait unchanged and uses the same config file as the app.
+- **Gap:** The check must know "any tier has platform Gemini and plan_mode == true." Doctor checks currently have `async fn run(&self) -> CheckResult` with no parameters.
+- **Clarify:** The Gemini plan-mode check should **discover and load the project config** inside `run()`: use `config_discovery::discover_config_path(None)` then `gui_config::load_config(path)` (or the same loader the Config page uses). If the file is not GuiConfig-shaped, fall back to "skip check" or "warn: could not read tier config." This keeps the DoctorCheck trait unchanged and uses the same config file as the app.
 
 ### 4. Canonical list of subagent names
 
-- **Gap:** The plan scatters subagent names across Tier-Level Subagent Strategy (project-manager, rust-engineer, code-reviewer, …). The GUI and backend need a **single shared list** for validation and multi-select.
-- **Clarify:** Add a **“Known subagent names”** section or table in this plan (or a constant in code, e.g. in `platform_specs` or a new `subagent_registry` module) listing all allowed names: phase (project-manager, architect-reviewer, product-manager), task (rust-engineer, python-pro, …, backend-developer, …), subtask (code-reviewer, test-automator, …), iteration (debugger, qa-expert, …). Use this for UI multi-select and for validating override/disabled/required lists.
+- **Gap:** The plan scatters subagent names across Tier-Level Subagent Strategy (project-manager, rust-engineer, code-reviewer, ...). The GUI and backend need a **single shared list** for validation and multi-select.
+- **Clarify:** Add a **"Known subagent names"** section or table in this plan (or a constant in code, e.g. in `platform_specs` or a new `subagent_registry` module) listing all allowed names: phase (project-manager, architect-reviewer, product-manager), task (rust-engineer, python-pro, ..., backend-developer, ...), subtask (code-reviewer, test-automator, ...), iteration (debugger, qa-expert, ...). Use this for UI multi-select and for validating override/disabled/required lists.
 
 **Known subagent names (canonical list for UI and validation):**
 
-**DRY:DATA:subagent_registry** — Single source of truth for all subagent names. This list must be implemented as a constant or module (`src/core/subagent_registry.rs`) and used for:
+**DRY:DATA:subagent_registry** -- Single source of truth for all subagent names. This list must be implemented as a constant or module (`src/core/subagent_registry.rs`) and used for:
 - UI multi-select/autocomplete
 - Validation of override/disabled/required lists
 - Language/framework → subagent mapping
@@ -1485,18 +1485,18 @@ Use the union of all names for override/disabled/required lists; optionally rest
 
 ### 5. Tier overrides: one list per tier vs contextual keys
 
-- **Gap:** YAML shows `tierOverrides.phase.default`, `.phase.architecture`, `.phase.product`, `.task.rust`, `.task.python`, etc. The GUI section says “for each tier (phase/task/subtask/iteration), a text field or list editor for override subagent names.”
-- **Clarify:** Decide (a) **Simple:** one list per tier (phase, task, subtask, iteration) so `tier_overrides` is e.g. `HashMap<TierName, Vec<String>>` and YAML is `phase: [project-manager]`, `task: [rust-engineer]`, or (b) **Full:** keep contextual keys (phase.default, phase.architecture, task.rust, …) and add UI for them (e.g. phase: “default” / “architecture” / “product” with a list each). For first implementation, (a) is enough; document that contextual overrides can be added later if needed.
+- **Gap:** YAML shows `tierOverrides.phase.default`, `.phase.architecture`, `.phase.product`, `.task.rust`, `.task.python`, etc. The GUI section says "for each tier (phase/task/subtask/iteration), a text field or list editor for override subagent names."
+- **Clarify:** Decide (a) **Simple:** one list per tier (phase, task, subtask, iteration) so `tier_overrides` is e.g. `HashMap<TierName, Vec<String>>` and YAML is `phase: [project-manager]`, `task: [rust-engineer]`, or (b) **Full:** keep contextual keys (phase.default, phase.architecture, task.rust, ...) and add UI for them (e.g. phase: "default" / "architecture" / "product" with a list each). For first implementation, (a) is enough; document that contextual overrides can be added later if needed.
 
 ### 6. Orchestrator and subagent code not yet present
 
-- **Gap:** The plan references `execute_tier_with_subagents`, `build_subagent_invocation`, `execute_with_subagent`, and `SubagentSelector`. These do not exist in the codebase yet; they are specified in the plan’s “Integration with Orchestrator” and Phase 3.
-- **Clarify:** Phase 3 (and any subagent execution path) must: (1) Read `enable_tier_subagents` from config; if false, skip subagent invocation (or use a single non-subagent path). (2) When building the list of subagents for a tier, apply `tier_overrides` (replace or merge with selected list), then filter by `disabled_subagents` and ensure `required_subagents` are included. (3) When building `ExecutionRequest` for each subagent run, set `request.plan_mode = tier_config.plan_mode`. Ensure the checklist item “Ensure subagent/invocation path receives tier plan_mode” is done in that code path.
+- **Gap:** The plan references `execute_tier_with_subagents`, `build_subagent_invocation`, `execute_with_subagent`, and `SubagentSelector`. These do not exist in the codebase yet; they are specified in the plan's "Integration with Orchestrator" and Phase 3.
+- **Clarify:** Phase 3 (and any subagent execution path) must: (1) Read `enable_tier_subagents` from config; if false, skip subagent invocation (or use a single non-subagent path). (2) When building the list of subagents for a tier, apply `tier_overrides` (replace or merge with selected list), then filter by `disabled_subagents` and ensure `required_subagents` are included. (3) When building `ExecutionRequest` for each subagent run, set `request.plan_mode = tier_config.plan_mode`. Ensure the checklist item "Ensure subagent/invocation path receives tier plan_mode" is done in that code path.
 
 ### 7. Message enum and app.rs handlers
 
-- **Gap:** The plan names messages (e.g. `ConfigUsePlanModeAllTiersToggled`, `ConfigEnablePlanModeAllTiers`, `ConfigSubagentEnableTierSubagentsToggled`, …) but does not list all new `Message` variants or where each is handled in `app.rs`.
-- **Clarify:** During implementation, add every new variant to the `Message` enum and a corresponding branch in `App::update`. Document in the plan or in code: “Plan mode global: ConfigUsePlanModeAllTiersToggled, ConfigEnablePlanModeAllTiers; Subagent: ConfigSubagentEnableTierSubagentsToggled, ConfigSubagentTierOverrideChanged, ConfigSubagentDisabledListChanged, ConfigSubagentRequiredListChanged.”
+- **Gap:** The plan names messages (e.g. `ConfigUsePlanModeAllTiersToggled`, `ConfigEnablePlanModeAllTiers`, `ConfigSubagentEnableTierSubagentsToggled`, ...) but does not list all new `Message` variants or where each is handled in `app.rs`.
+- **Clarify:** During implementation, add every new variant to the `Message` enum and a corresponding branch in `App::update`. Document in the plan or in code: "Plan mode global: ConfigUsePlanModeAllTiersToggled, ConfigEnablePlanModeAllTiers; Subagent: ConfigSubagentEnableTierSubagentsToggled, ConfigSubagentTierOverrideChanged, ConfigSubagentDisabledListChanged, ConfigSubagentRequiredListChanged."
 
 ### 8. Tier id type for `last_per_tier_plan_mode`
 
@@ -1516,7 +1516,7 @@ Use the union of all names for override/disabled/required lists; optionally rest
 ### 11. Subagent persona info: preload, overrides (config only), and injection
 
 - **Gap:** The "Subagent personas / info setup" (Section 5) requires (a) initial persona list and content, (b) user overrides persisted somewhere, and (c) persona text injected when a subagent is invoked. The plan now specifies preloading from `.claude/agents`, user add/delete, and optional AI trim; `SubagentGuiConfig` (Gap §2) holds `persona_overrides`; the injection point must be explicit.
-- **Clarify:** (1) **Preload and list:** Load personas from the project’s `.claude/agents` (e.g. repo root or `puppet-master-rs`); each `.md` file gives name and content. User can add custom personas and delete any (including preloaded). Optionally run an AI/batch trim step to produce smaller-footprint descriptions. (2) **Persona overrides — single source:** Overrides come **only** from the user’s edits in the Personas UI; we persist them to `SubagentGuiConfig.persona_overrides` in the same config file as the rest of Config. No other “source” of overrides. At runtime: for a given subagent name, if `persona_overrides.get(name)` is present, use it; else use the content from the preloaded/trimmed agent. (3) **Injection:** When building the prompt or CLI args for a subagent run, resolve persona text (override if present, else preloaded content) and prepend or append to the system prompt or first user message. Document the injection point so orchestrator and interview use the same logic. (4) **Interview:** Interview uses **multiple** personas **dynamically** by phase and tech stack (phase_subagents, research/validation subagents, etc.). For whichever subagent(s) are selected for that phase/context, resolve that subagent’s persona content (override from config if present, else preloaded); inject into the phase prompt. Persona_overrides do not change *which* subagents the interview uses — they only supply the custom description/instruction for those selected subagents.
+- **Clarify:** (1) **Preload and list:** Load personas from the project's `.claude/agents` (e.g. repo root or `puppet-master-rs`); each `.md` file gives name and content. User can add custom personas and delete any (including preloaded). Optionally run an AI/batch trim step to produce smaller-footprint descriptions. (2) **Persona overrides -- single source:** Overrides come **only** from the user's edits in the Personas UI; we persist them to `SubagentGuiConfig.persona_overrides` in the same config file as the rest of Config. No other "source" of overrides. At runtime: for a given subagent name, if `persona_overrides.get(name)` is present, use it; else use the content from the preloaded/trimmed agent. (3) **Injection:** When building the prompt or CLI args for a subagent run, resolve persona text (override if present, else preloaded content) and prepend or append to the system prompt or first user message. Document the injection point so orchestrator and interview use the same logic. (4) **Interview:** Interview uses **multiple** personas **dynamically** by phase and tech stack (phase_subagents, research/validation subagents, etc.). For whichever subagent(s) are selected for that phase/context, resolve that subagent's persona content (override from config if present, else preloaded); inject into the phase prompt. Persona_overrides do not change *which* subagents the interview uses -- they only supply the custom description/instruction for those selected subagents.
 
 ---
 
@@ -1526,21 +1526,21 @@ Use the union of all names for override/disabled/required lists; optionally rest
 
 ### DRY Requirements
 
-1. **Platform Data — ALWAYS use platform_specs:**
+1. **Platform Data -- ALWAYS use platform_specs:**
    - ❌ **NEVER** hardcode platform CLI commands, binary names, models, auth, or capabilities
    - ✅ **ALWAYS** use `platform_specs::` functions (e.g., `platform_specs::cli_binary_names()`, `platform_specs::get_subagent_invocation_format()`, `platform_specs::supports_effort()`)
    - ✅ **ALWAYS** use `platform_specs::discover_platform_capabilities()` instead of platform match statements
 
-2. **Subagent Names — ALWAYS use subagent_registry:**
+2. **Subagent Names -- ALWAYS use subagent_registry:**
    - ❌ **NEVER** hardcode subagent names in match statements or mappings
    - ✅ **ALWAYS** use `subagent_registry::` functions (e.g., `subagent_registry::get_subagent_for_language()`, `subagent_registry::is_valid_subagent_name()`)
    - ✅ **ALWAYS** reference `DRY:DATA:subagent_registry` as the single source of truth
 
 3. **Tag All Reusable Items:**
-   - ✅ Tag reusable functions: `// DRY:FN:<name> — Description`
-   - ✅ Tag reusable data structures: `// DRY:DATA:<name> — Description`
-   - ✅ Tag reusable widgets: `// DRY:WIDGET:<name> — Description`
-   - ✅ Tag reusable helpers: `// DRY:HELPER:<name> — Description`
+   - ✅ Tag reusable functions: `// DRY:FN:<name> -- Description`
+   - ✅ Tag reusable data structures: `// DRY:DATA:<name> -- Description`
+   - ✅ Tag reusable widgets: `// DRY:WIDGET:<name> -- Description`
+   - ✅ Tag reusable helpers: `// DRY:HELPER:<name> -- Description`
 
 4. **Widget Reuse:**
    - ✅ **ALWAYS** check `docs/gui-widget-catalog.md` before creating new UI
@@ -1570,12 +1570,12 @@ The codebase follows the **DRY method** (reuse-first) and uses a **widget catalo
 
 - **Tag all new reusable items** so agents and developers can find them via `grep -r "DRY:" puppet-master-rs/src/`.
 - **Conventions (from AGENTS.md):**
-  - `// DRY:WIDGET:<name>` — Reusable UI widget (see `src/widgets/`).
-  - `// DRY:DATA:<name>` — Single source of truth data (e.g. subagent name list, config struct).
-  - `// DRY:FN:<name>` — Reusable helper or query function.
-  - `// DRY:HELPER:<name>` — Shared utility.
-- **What to tag in this plan’s scope:** New widgets or helpers used by Config/Wizard/Doctor (e.g. a subagent multi-select helper, or a “plan mode global” row widget if factored out). New data sources (e.g. canonical subagent list constant or module) as `DRY:DATA:`. New message handlers or config helpers as `DRY:FN:` where appropriate.
-- **Bespoke UI:** If you must implement something that doesn’t use an existing widget, add an inline rationale: `// UI-DRY-EXCEPTION: <reason>`.
+  - `// DRY:WIDGET:<name>` -- Reusable UI widget (see `src/widgets/`).
+  - `// DRY:DATA:<name>` -- Single source of truth data (e.g. subagent name list, config struct).
+  - `// DRY:FN:<name>` -- Reusable helper or query function.
+  - `// DRY:HELPER:<name>` -- Shared utility.
+- **What to tag in this plan's scope:** New widgets or helpers used by Config/Wizard/Doctor (e.g. a subagent multi-select helper, or a "plan mode global" row widget if factored out). New data sources (e.g. canonical subagent list constant or module) as `DRY:DATA:`. New message handlers or config helpers as `DRY:FN:` where appropriate.
+- **Bespoke UI:** If you must implement something that doesn't use an existing widget, add an inline rationale: `// UI-DRY-EXCEPTION: <reason>`.
 
 ### After widget or catalog changes
 
@@ -1594,8 +1594,8 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 
 ### 1. Default for `use_plan_mode_all_tiers` and existing configs
 
-- **Issue:** If we default `use_plan_mode_all_tiers` to `true`, the first time an existing project loads (with no such key), we might force all tiers to plan mode and overwrite user’s previous per-tier choices.
-- **Mitigation:** Default `use_plan_mode_all_tiers` to `false` so existing configs are unchanged. Only users who turn the global toggle on get “all tiers plan mode.” Optionally, when the key is missing, do not force tier values on load.
+- **Issue:** If we default `use_plan_mode_all_tiers` to `true`, the first time an existing project loads (with no such key), we might force all tiers to plan mode and overwrite user's previous per-tier choices.
+- **Mitigation:** Default `use_plan_mode_all_tiers` to `false` so existing configs are unchanged. Only users who turn the global toggle on get "all tiers plan mode." Optionally, when the key is missing, do not force tier values on load.
 
 ### 2. Invalid subagent names in overrides
 
@@ -1605,42 +1605,42 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 ### 3. Gemini settings path and format
 
 - **Issue:** `~/.gemini/settings.json` must be resolved (home dir on all platforms). JSON might be missing, malformed, or use a different structure; the `experimental.plan` key might be nested (e.g. `experimental.plan` or under another key).
-- **Mitigation:** (1) **Path:** Use the same path resolution as the rest of the app (e.g. `platforms::path_utils::expand_home` or `dirs::home_dir()` + join) so `~/.gemini/settings.json` works on all platforms. (2) **Key:** Confirm in Gemini CLI docs; typically `experimental.plan` (boolean) or nested under `experimental`. Parse JSON and check that key; if missing or false, emit the warning. (3) **Errors:** On missing file or parse error, Doctor check should warn “could not read Gemini settings” and not assume plan is disabled.
+- **Mitigation:** (1) **Path:** Use the same path resolution as the rest of the app (e.g. `platforms::path_utils::expand_home` or `dirs::home_dir()` + join) so `~/.gemini/settings.json` works on all platforms. (2) **Key:** Confirm in Gemini CLI docs; typically `experimental.plan` (boolean) or nested under `experimental`. Parse JSON and check that key; if missing or false, emit the warning. (3) **Errors:** On missing file or parse error, Doctor check should warn "could not read Gemini settings" and not assume plan is disabled.
 
 ### 4. Doctor check when config is not GuiConfig
 
 - **Issue:** Some projects may use a different config format (e.g. legacy or alternate YAML shape). `gui_config::load_config` might fail or return a partial struct.
-- **Mitigation:** In the Gemini plan-mode check, if load fails or tiers are missing, skip the check or emit a neutral warning (“could not load tier config; ensure config file is valid”) so Doctor doesn’t fail hard.
+- **Mitigation:** In the Gemini plan-mode check, if load fails or tiers are missing, skip the check or emit a neutral warning ("could not load tier config; ensure config file is valid") so Doctor doesn't fail hard.
 
 ### 5. Wizard vs Config and global plan mode
 
-- **Issue:** Wizard has its own `wizard_tier_configs`; if we default plan mode to true there, we must ensure that when the user finishes the wizard and a run is created, we don’t overwrite or ignore the global `use_plan_mode_all_tiers` from Config (or vice versa).
-- **Mitigation:** **Decision:** When the user completes the Wizard and creates a run, use Wizard tier config as the source of truth for that run (platform, model, plan_mode per tier). When Wizard persists to the config file (e.g. on Save or Apply), merge with existing Config: apply “global plan mode on ⇒ set all tier plan_mode true” and write subagent config from Config if present, so the saved file stays consistent. Wizard UI does not need the global plan-mode toggle; per-tier plan mode toggles (and optional “Enable plan mode for all tiers” button) are enough.
+- **Issue:** Wizard has its own `wizard_tier_configs`; if we default plan mode to true there, we must ensure that when the user finishes the wizard and a run is created, we don't overwrite or ignore the global `use_plan_mode_all_tiers` from Config (or vice versa).
+- **Mitigation:** **Decision:** When the user completes the Wizard and creates a run, use Wizard tier config as the source of truth for that run (platform, model, plan_mode per tier). When Wizard persists to the config file (e.g. on Save or Apply), merge with existing Config: apply "global plan mode on ⇒ set all tier plan_mode true" and write subagent config from Config if present, so the saved file stays consistent. Wizard UI does not need the global plan-mode toggle; per-tier plan mode toggles (and optional "Enable plan mode for all tiers" button) are enough.
 
 ### 6. Tier overrides are per tier type, not per node
 
-- **Issue:** Overrides are keyed by tier type (phase, task, subtask, iteration). All parallel subtasks share the same “subtask” override list, so we can’t say “Subtask A: rust-engineer, Subtask B: react-specialist” via overrides.
+- **Issue:** Overrides are keyed by tier type (phase, task, subtask, iteration). All parallel subtasks share the same "subtask" override list, so we can't say "Subtask A: rust-engineer, Subtask B: react-specialist" via overrides.
 - **Mitigation:** Accept for v1 that overrides are per tier type. Document that per-node overrides (or context-aware overrides) are out of scope for the first version. Dynamic selection (language/framework) still differentiates parallel subtasks when overrides are not set.
 
 ### 7. Subagent personas and non-Cursor platforms
 
-- **Issue:** Plan describes “Cursor subagent personas.” Codex, Claude, Gemini, Copilot may not recognize the same names or syntax (e.g. `/code-reviewer` vs prompt preamble).
-- **Mitigation:** In platform runners, when building the prompt or args for a subagent, use platform_specs or a small adapter (e.g. `subagent_prompt_prefix(platform, subagent_name) -> String`) so that: Cursor => `/subagent_name ` + user prompt; Codex/Claude/Gemini/Copilot => “As <subagent_name>, ” + user prompt in system or first message, or omit if platform has no convention. Document in AGENTS.md which platforms support which subagent semantics. Implement the adapter so adding a new platform is a single match arm or config entry.
+- **Issue:** Plan describes "Cursor subagent personas." Codex, Claude, Gemini, Copilot may not recognize the same names or syntax (e.g. `/code-reviewer` vs prompt preamble).
+- **Mitigation:** In platform runners, when building the prompt or args for a subagent, use platform_specs or a small adapter (e.g. `subagent_prompt_prefix(platform, subagent_name) -> String`) so that: Cursor => `/subagent_name ` + user prompt; Codex/Claude/Gemini/Copilot => "As <subagent_name>, " + user prompt in system or first message, or omit if platform has no convention. Document in AGENTS.md which platforms support which subagent semantics. Implement the adapter so adding a new platform is a single match arm or config entry.
 
 ### 8. Caching of project context / language detection
 
 - **Issue:** Subagent selection runs language/framework detection (e.g. filesystem reads). If run on every tier or every iteration, it could be slow or redundant.
-- **Mitigation:** Cache detection per workspace path (cache key: canonical workspace path). Invalidate when the config is reloaded or the workspace path for the run changes. Expose a single entry point (e.g. `get_project_context(workspace) -> Result<ProjectContext>`) that returns cached value if valid. Phase 1/2 implement this; the orchestrator calls that entry point instead of running detection on every tier. Consider a TTL or “cache for the duration of the run” so long sessions don’t hold stale data if the user edits the repo.
+- **Mitigation:** Cache detection per workspace path (cache key: canonical workspace path). Invalidate when the config is reloaded or the workspace path for the run changes. Expose a single entry point (e.g. `get_project_context(workspace) -> Result<ProjectContext>`) that returns cached value if valid. Phase 1/2 implement this; the orchestrator calls that entry point instead of running detection on every tier. Consider a TTL or "cache for the duration of the run" so long sessions don't hold stale data if the user edits the repo.
 
 ### 9. Required vs disabled subagents conflict
 
-- **Issue:** User could add the same name to both “required” and “disabled.” Backend behavior could be ambiguous.
+- **Issue:** User could add the same name to both "required" and "disabled." Backend behavior could be ambiguous.
 - **Mitigation:** **Rule: required wins.** When building the final subagent list: (1) Start from selected list or override list. (2) Add all names in `required_subagents`. (3) Remove any name in `disabled_subagents` unless it is in `required_subagents`. Document this in code and in the Config UI tooltip. In the UI, optionally grey out or hide in the disabled list any name that appears in required.
 
 ### 10. Meaning of empty override list
 
-- **Issue:** If `tier_overrides.phase = []`, does that mean “no subagents for phase” or “no override; use auto-selected list”?
-- **Mitigation:** **Rule: missing or empty override = use auto-selection.** Only a non-empty override list for a tier replaces the selector output. To force no subagents for a tier, the user sets `enable_tier_subagents` false (global) or we add a per-tier “use no subagents” option in a later version. **Implement:** In the orchestrator, if `tier_overrides.get(tier)` is `None` or `Some([])`, use the list from `SubagentSelector::select_for_tier`; otherwise use the override list. Document in code and in the Config tooltip for tier overrides.
+- **Issue:** If `tier_overrides.phase = []`, does that mean "no subagents for phase" or "no override; use auto-selected list"?
+- **Mitigation:** **Rule: missing or empty override = use auto-selection.** Only a non-empty override list for a tier replaces the selector output. To force no subagents for a tier, the user sets `enable_tier_subagents` false (global) or we add a per-tier "use no subagents" option in a later version. **Implement:** In the orchestrator, if `tier_overrides.get(tier)` is `None` or `Some([])`, use the list from `SubagentSelector::select_for_tier`; otherwise use the override list. Document in code and in the Config tooltip for tier overrides.
 
 ### 11. Persistence and dirty state
 
@@ -1660,7 +1660,7 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 ### 14. Subagent persona overrides (token budget and scope)
 
 - **Issue:** Custom instruction snippets in persona overrides could be long; injecting them into every subagent prompt may consume token budget or conflict with platform limits.
-- **Mitigation:** (1) Persona overrides apply to any subagent name that exists in the current list (preloaded from `.claude/agents` or user-added). Keys in `persona_overrides` are names the user has edited in the Personas UI; no separate “second source” — overrides come only from config (user’s saved edits). (2) Optionally cap length of `custom_instruction` / `custom_description` in UI and config (e.g. 500–1000 chars) and document that persona text is prepended to the prompt so users are aware of token impact. (3) Use the same resolution (override if present, else preloaded content) in both orchestrator and interview.
+- **Mitigation:** (1) Persona overrides apply to any subagent name that exists in the current list (preloaded from `.claude/agents` or user-added). Keys in `persona_overrides` are names the user has edited in the Personas UI; no separate "second source" -- overrides come only from config (user's saved edits). (2) Optionally cap length of `custom_instruction` / `custom_description` in UI and config (e.g. 500-1000 chars) and document that persona text is prepended to the prompt so users are aware of token impact. (3) Use the same resolution (override if present, else preloaded content) in both orchestrator and interview.
 
 ---
 
@@ -1672,7 +1672,7 @@ This section addresses **interview-specific** config that is built in the GUI an
 
 The Config tab (Interview tab) and `InterviewGuiConfig` / `PuppetMasterConfig.interview` (`InterviewConfig`) define several settings. The **interview orchestrator** is built with `InterviewOrchestratorConfig` in `app.rs` (from `gui_config.interview`). Only a subset of GUI/config fields are passed into `InterviewOrchestratorConfig` and used in `interview/` (orchestrator, phase_manager, prompt_templates, completion_validator).
 
-**Audit result — interview settings:**
+**Audit result -- interview settings:**
 
 | Field | In GUI / InterviewConfig | In InterviewOrchestratorConfig | Used in interview/ | Status |
 |-------|--------------------------|--------------------------------|-------------------|--------|
@@ -1696,7 +1696,7 @@ So three interview settings are currently **built but not wired**. Users who cha
    - **Max questions per phase** with an **Unlimited** option (e.g. `max_questions_per_phase: Option<u32>`; `None` = unlimited).
 
 2. **Dynamic behavior:** The interview agent may signal phase completion (e.g. `<<<PM_PHASE_COMPLETE>>>`). The orchestrator should:
-   - **Accept** phase complete only when the current phase’s question count is **≥** `min_questions_per_phase`.
+   - **Accept** phase complete only when the current phase's question count is **≥** `min_questions_per_phase`.
    - If `max_questions_per_phase` is `Some(n)`, **reject** or defer phase complete if count **>** n (or treat as soft cap and accept when agent signals complete and count ≤ n).
    - If `max_questions_per_phase` is `None` (unlimited), no upper bound check.
 
@@ -1706,12 +1706,12 @@ So three interview settings are currently **built but not wired**. Users who cha
    - **Construction:** In `app.rs`, when building `InterviewOrchestratorConfig` from `gui_config.interview`, set `min_questions_per_phase` and `max_questions_per_phase` from `gui_config.interview`.
    - **Phase manager:** Pass these into phase definitions or into `PhaseManager` (e.g. in `default_phases()` / `add_dynamic_phase()`), so each phase has min/max available.
    - **Orchestrator logic:** In `process_ai_turn` (or equivalent), when `parsed.is_phase_complete`, compute current phase question count; if count < min, reject (e.g. send back "Ask at least N questions"); if max is `Some(m)` and count > m, either reject or accept depending on product rule; otherwise accept.
-   - **Prompts:** In `prompt_templates.rs` (or equivalent), inject the configured min (and max if set) into the instructions, e.g. "Ask at least {min} questions…" and "Do not exceed {max} questions…" when max is set.
+   - **Prompts:** In `prompt_templates.rs` (or equivalent), inject the configured min (and max if set) into the instructions, e.g. "Ask at least {min} questions..." and "Do not exceed {max} questions..." when max is set.
    - **GUI:** Interview tab: replace single max control with Min (number input) and Max (number input + "Unlimited" option). Use existing DRY widgets and tooltips.
    - **Docs:** AGENTS.md or interview doc: document min/max and Unlimited; tooltips in Config.
    - **Tests:** Unit tests for min/max logic (accept/reject at boundaries); integration test that builds config from `gui_config` and runs one phase; env-gated smoke if needed.
 
-### Other unwired interview settings — resolution
+### Other unwired interview settings -- resolution
 
 - **`require_architecture_confirmation`**  
   **Intended behavior:** Before leaving certain phases (e.g. architecture/tech stack), the interview requires explicit user or agent confirmation of architecture/tech choices.  
@@ -1731,7 +1731,7 @@ The **main orchestrator** (run loop) gets config via `ConfigManager::discover()`
 
 To prevent users from hitting settings that exist in the UI and requirements but never affect execution, this plan adopts **two complementary approaches**: (A) **process and explicit wiring steps**, and (B) **tier-level config-wiring validation** at Phase, Task, Subtask, and Iteration.
 
-### Approach A: Process — explicit wiring steps and checklist
+### Approach A: Process -- explicit wiring steps and checklist
 
 **Rule:** For every new config or feature that **affects execution** (interview limits, tier plan_mode, subagent toggles, etc.), the implementation **must** include explicit wiring steps. This applies to both the orchestrator/subagent work and to other flows (e.g. interview, start-chain, Doctor).
 
@@ -1751,7 +1751,7 @@ To prevent users from hitting settings that exist in the UI and requirements but
 
 ### Approach B: Tier-level config-wiring validation (Phase / Task / Subtask / Iteration)
 
-**Rule:** The orchestrator (or a shared validation layer) runs a **config-wiring check at each tier boundary** — when entering a Phase, when entering a Task, when entering a Subtask, and when entering an Iteration. The check verifies that the config that **should** affect execution at that tier is **present and actually used** (e.g. tier config exists, plan_mode is read from config, interview limits are present in interview config when in interview flow). This catches "built but not wired" even when the checklist is missed.
+**Rule:** The orchestrator (or a shared validation layer) runs a **config-wiring check at each tier boundary** -- when entering a Phase, when entering a Task, when entering a Subtask, and when entering an Iteration. The check verifies that the config that **should** affect execution at that tier is **present and actually used** (e.g. tier config exists, plan_mode is read from config, interview limits are present in interview config when in interview flow). This catches "built but not wired" even when the checklist is missed.
 
 **Rationale for "at each tier":** A single run-start check can miss tier-specific wiring (e.g. task-tier plan_mode not applied for a task). Checking at Phase, Task, Subtask, and Iteration ensures that the config in effect for that tier is the one the code path uses, and that no tier is accidentally running with defaults or stale values.
 
@@ -1778,7 +1778,7 @@ To prevent users from hitting settings that exist in the UI and requirements but
 - **Fail-fast vs warn:** **Recommendation:** Fail fast (return error, log, and surface to user) when a **required** execution-affecting field is missing from the execution config (e.g. tier config for that tier is absent). **Warn** (log and optionally toast) when a field exists in GUI/file config but is not present in the execution config (classic "built but not wired"). This keeps runs from proceeding with wrong config while highlighting wiring gaps without blocking if the product chooses to allow default behavior for optional fields.
 - **Tests:** Add unit tests that build config from `gui_config` (or from a minimal `PuppetMasterConfig`), then call the validator for each tier type; assert that when a known execution-affecting field is missing from the execution config, the validator fails or warns as specified. Integration test: start a run (or interview) and trigger one phase and one task; assert validation ran (e.g. via log or a test double).
 
-**Summary table — where validation runs:**
+**Summary table -- where validation runs:**
 
 | Tier      | When                    | What is checked                                                                 |
 |-----------|-------------------------|----------------------------------------------------------------------------------|
@@ -1802,7 +1802,7 @@ Beyond config-wiring validation (which runs at **start** of each tier), this sec
 
 When the orchestrator **enters** a Phase, Task, or Subtask, run the following **before** building execution context or spawning the agent:
 
-1. **Config-wiring check (existing):** Run `validate_config_wiring_for_tier` (or equivalent) for this tier — tier config present, plan_mode/subagent/interview fields wired. See **Approach B** above.
+1. **Config-wiring check (existing):** Run `validate_config_wiring_for_tier` (or equivalent) for this tier -- tier config present, plan_mode/subagent/interview fields wired. See **Approach B** above.
 2. **Wiring and readiness checklist (new):**
    - **Does the GUI need to be updated?** For any execution-affecting setting that this tier uses: is there a corresponding control or display in the Config (or Wizard) so the user can see and change it? If a new setting was added to the backend and is used at this tier, the GUI should expose it (or document why it is internal-only).
    - **Does the backend need to be updated?** For any control or config field that the user can set in the GUI: is it read and applied in the execution path for this tier? If the GUI has a setting that should affect this tier but the backend does not use it, treat as "built but not wired" and fail or warn per policy.
@@ -2082,7 +2082,7 @@ When the orchestrator **completes** a Phase, Task, or Subtask (e.g. all iteratio
 
 1. **Wiring check again (did we wire what we built?):** Re-run the same wiring/readiness questions as at start, but in "completion" context: for the work just done at this tier, are all new or touched config/settings properly wired (GUI ↔ backend ↔ execution)? This catches cases where work during the tier introduced a new setting or UI that was not yet connected.
 2. **Acceptance criteria (existing):** Run the existing verification gate (e.g. criteria from PRD, command/file/regex checks). This remains the "did we meet the spec?" check.
-3. **Quality verification (new):** Beyond acceptance criteria, **review the code (or artifacts) produced at this tier** to ensure the work was done well — not just "does it pass the gate?" but "is it maintainable, correct, and aligned with project standards?" Both of the following are **required** (no human review; agent-driven only):
+3. **Quality verification (new):** Beyond acceptance criteria, **review the code (or artifacts) produced at this tier** to ensure the work was done well -- not just "does it pass the gate?" but "is it maintainable, correct, and aligned with project standards?" Both of the following are **required** (no human review; agent-driven only):
    - **Structured code review by reviewer subagent (required, not optional):** Run a dedicated reviewer subagent (e.g. `code-reviewer`) at end-of-phase/task/subtask. It inspects the diff or artifacts and outputs pass/fail + feedback. There is no path that skips this. Do **not** use human review.
    - **Quality criteria in the gate (required as well):** Extend the verification gate for this tier to include automated quality items (e.g. "no new clippy warnings," "new code has tests," "no TODOs without tickets"). Linters, formatters, test coverage delta, and security scanners run on changed files for this tier and fail or warn if below threshold.
 
@@ -2433,17 +2433,17 @@ fn get_quality_criteria_for_tier(tier_type: TierType) -> Result<Vec<QualityCrite
 - **Reviewer subagent failure:** If reviewer subagent fails, return `VerificationStatus::Fail` with Critical finding (reviewer is required)
 - **Quality gate failure:** If quality gate fails, return appropriate status based on severity (Critical → Fail, Major/Minor → Warning)
 
-### Summary table — start vs end, what runs when
+### Summary table -- start vs end, what runs when
 
 | Boundary | When | Config-wiring | Wiring/readiness (GUI? backend? steps? gaps?) | Acceptance criteria | Quality verification |
 |----------|------|----------------|-----------------------------------------------|--------------------|------------------------|
-| **Start Phase** | Enter phase | Yes | Yes | — | — |
-| **Start Task** | Enter task | Yes | Yes | — | — |
-| **Start Subtask** | Enter subtask | Yes | Yes | — | — |
-| **Start Iteration** | Enter iteration | Yes | (optional; can defer to tier) | — | — |
-| **End Phase** | Phase complete | — | Yes (re-check) | Yes (gate) | Yes (code/artifact review) |
-| **End Task** | Task complete | — | Yes (re-check) | Yes (gate) | Yes (code/artifact review) |
-| **End Subtask** | Subtask complete | — | Yes (re-check) | Yes (gate) | Yes (code/artifact review) |
+| **Start Phase** | Enter phase | Yes | Yes | -- | -- |
+| **Start Task** | Enter task | Yes | Yes | -- | -- |
+| **Start Subtask** | Enter subtask | Yes | Yes | -- | -- |
+| **Start Iteration** | Enter iteration | Yes | (optional; can defer to tier) | -- | -- |
+| **End Phase** | Phase complete | -- | Yes (re-check) | Yes (gate) | Yes (code/artifact review) |
+| **End Task** | Task complete | -- | Yes (re-check) | Yes (gate) | Yes (code/artifact review) |
+| **End Subtask** | Subtask complete | -- | Yes (re-check) | Yes (gate) | Yes (code/artifact review) |
 
 ### Gaps and potential issues in start/end verification
 
@@ -2452,7 +2452,7 @@ fn get_quality_criteria_for_tier(tier_type: TierType) -> Result<Vec<QualityCrite
 - **Definition of "quality" per tier:** The plan does not yet define a single canonical "quality checklist" (e.g. clippy, tests, coverage, code-review checklist). Implementers should add a small spec or table: for Phase/Task/Subtask, what quality checks run at end? (e.g. Phase: doc quality; Task: design doc; Subtask: code + tests + linter.)
 - **Who runs quality review in agent-driven runs:** The reviewer subagent runs in **all three** situations: (1) **always** at end-of-tier, (2) **on retry** when the tier is retried after failure, and (3) **when quality gate fails** (re-run reviewer as part of the feedback loop). There is no scenario that skips the reviewer; it is required for every completion or retry.
 - **Readiness checklist source of truth:** The questions "Does GUI need to be updated? Does backend need to be updated?" require a mapping from "execution-affecting settings" to "GUI controls" and "backend usage." That mapping could live in code (e.g. a static list per tier), in the plan, or in a small config. Without it, the readiness step is heuristic or manual.
-- **Interview flow:** The interview orchestrator has its own phases (Scope, Architecture, UX, …). Start/end verification for **interview phases** should mirror this (start: wiring + readiness; end: wiring re-check + acceptance + quality for interview artifacts). The interview plan (`interview-subagent-integration.md`) should reference this section and define interview-phase-specific quality criteria (e.g. document completeness, requirement clarity).
+- **Interview flow:** The interview orchestrator has its own phases (Scope, Architecture, UX, ...). Start/end verification for **interview phases** should mirror this (start: wiring + readiness; end: wiring re-check + acceptance + quality for interview artifacts). The interview plan (`interview-subagent-integration.md`) should reference this section and define interview-phase-specific quality criteria (e.g. document completeness, requirement clarity).
 
 **Potential issues:**
 
@@ -3118,11 +3118,11 @@ impl Orchestrator {
 }
 
 impl OutputParser for CodexOutputParser {
-    // DRY:FN:parse_subagent_output_codex — Parse Codex subagent output
-    // DRY REQUIREMENT: Output format detection MUST use platform_specs — DO NOT hardcode "JSONL" or output format
+    // DRY:FN:parse_subagent_output_codex -- Parse Codex subagent output
+    // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "JSONL" or output format
     fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
-        // DRY: Use platform_specs to determine expected output format — DO NOT hardcode "Codex outputs JSONL"
-        // Codex outputs JSONL (one JSON object per line) — format from platform_specs
+        // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Codex outputs JSONL"
+        // Codex outputs JSONL (one JSON object per line) -- format from platform_specs
         let mut task_report = String::new();
         let mut downstream_context = None;
         let mut findings = Vec::new();
@@ -3170,11 +3170,11 @@ impl OutputParser for CodexOutputParser {
 }
 
 impl OutputParser for ClaudeOutputParser {
-    // DRY:FN:parse_subagent_output_claude — Parse Claude Code subagent output
-    // DRY REQUIREMENT: Output format detection MUST use platform_specs — DO NOT hardcode "--output-format json"
+    // DRY:FN:parse_subagent_output_claude -- Parse Claude Code subagent output
+    // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "--output-format json"
     fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
-        // DRY: Use platform_specs to determine expected output format — DO NOT hardcode "Claude outputs JSON"
-        // Claude outputs JSON with --output-format json — format from platform_specs
+        // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Claude outputs JSON"
+        // Claude outputs JSON with --output-format json -- format from platform_specs
         let json: serde_json::Value = serde_json::from_str(stdout)?;
         
         // Claude wraps output in "result" -> "content" or direct fields
@@ -3217,11 +3217,11 @@ impl OutputParser for ClaudeOutputParser {
 }
 
 impl OutputParser for GeminiOutputParser {
-    // DRY:FN:parse_subagent_output_gemini — Parse Gemini subagent output
-    // DRY REQUIREMENT: Output format detection MUST use platform_specs — DO NOT hardcode "--output-format json"
+    // DRY:FN:parse_subagent_output_gemini -- Parse Gemini subagent output
+    // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "--output-format json"
     fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
-        // DRY: Use platform_specs to determine expected output format — DO NOT hardcode "Gemini outputs JSON"
-        // Gemini outputs JSON with --output-format json — format from platform_specs
+        // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Gemini outputs JSON"
+        // Gemini outputs JSON with --output-format json -- format from platform_specs
         let json: serde_json::Value = serde_json::from_str(stdout)?;
         
         // Gemini wraps in "candidates" -> [0] -> "content" -> "parts" -> [0] -> "text"
@@ -3247,11 +3247,11 @@ impl OutputParser for GeminiOutputParser {
 }
 
 impl OutputParser for CopilotOutputParser {
-    // DRY:FN:parse_subagent_output_copilot — Parse Copilot subagent output
-    // DRY REQUIREMENT: Output format detection MUST use platform_specs — DO NOT hardcode "Copilot outputs text"
+    // DRY:FN:parse_subagent_output_copilot -- Parse Copilot subagent output
+    // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "Copilot outputs text"
     fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
-        // DRY: Use platform_specs to determine expected output format — DO NOT hardcode "Copilot outputs text"
-        // Copilot outputs text (no JSON) — format from platform_specs
+        // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Copilot outputs text"
+        // Copilot outputs text (no JSON) -- format from platform_specs
         // Extract structured sections via regex/pattern matching
         
         let combined = format!("{stdout}\n{stderr}");
@@ -3353,10 +3353,10 @@ impl OutputParser for CursorOutputParser {
 
 **Severity levels:**
 
-- **Critical:** Security vulnerabilities, data loss risks, breaking changes — **block completion**.
-- **Major:** Performance issues, maintainability problems, test failures — **block completion**.
-- **Minor:** Code style, minor optimizations, suggestions — **log and proceed**.
-- **Info:** Documentation, comments, non-blocking recommendations — **log and proceed**.
+- **Critical:** Security vulnerabilities, data loss risks, breaking changes -- **block completion**.
+- **Major:** Performance issues, maintainability problems, test failures -- **block completion**.
+- **Minor:** Code style, minor optimizations, suggestions -- **log and proceed**.
+- **Info:** Documentation, comments, non-blocking recommendations -- **log and proceed**.
 
 **Remediation loop implementation:**
 
@@ -3536,7 +3536,7 @@ match remediation_result {
 }
 ```
 
-**Platform-specific implementation:** Works identically across all platforms — remediation loop is orchestrator-level logic, not platform-specific. All platforms receive remediation prompts and re-run subagents the same way. The executor and reviewer subagents are re-run using the same platform/model as the original tier execution.
+**Platform-specific implementation:** Works identically across all platforms -- remediation loop is orchestrator-level logic, not platform-specific. All platforms receive remediation prompts and re-run subagents the same way. The executor and reviewer subagents are re-run using the same platform/model as the original tier execution.
 
 **Integration with existing quality verification:** This extends the existing "required reviewer subagent" requirement. The reviewer must output structured findings with severity; the orchestrator enforces the remediation loop. The remediation loop runs **after** the gate passes but **before** tier completion, ensuring Critical/Major issues are addressed before advancing.
 
@@ -3776,7 +3776,7 @@ impl MemoryManager {
 
 **When to load:** At run start, before Phase 1 begins. Call `memory_manager.load_all_for_prompt()` and inject into Phase 1 context. Also use for subagent selection (e.g., "project uses Rust" → prefer `rust-engineer`; "established TDD pattern" → include `test-automator`).
 
-**Platform-specific implementation:** Platform-agnostic — memory persistence is orchestrator-level. All platforms benefit from loaded context injected into prompts. Memory files are stored in `.puppet-master/memory/` as JSON files, readable by all platforms.
+**Platform-specific implementation:** Platform-agnostic -- memory persistence is orchestrator-level. All platforms benefit from loaded context injected into prompts. Memory files are stored in `.puppet-master/memory/` as JSON files, readable by all platforms.
 
 ### 5. Active Agent Tracking
 
@@ -3799,7 +3799,7 @@ impl MemoryManager {
 - **Audit trails:** "Which subagents ran in this run? See active-subagents.json."
 - **GUI display:** Show active subagent in tier status UI.
 
-**Platform-specific implementation:** Platform-agnostic — tracking is orchestrator-level. All platforms benefit from the same tracking mechanism.
+**Platform-specific implementation:** Platform-agnostic -- tracking is orchestrator-level. All platforms benefit from the same tracking mechanism.
 
 ### 6. Safe Error Handling (Guaranteed Structured Output)
 
@@ -3829,7 +3829,7 @@ where
 - **Verification functions:** Return `Result<(), VerificationError>` with structured error types.
 - **Subagent output parsing:** On parse failure, return `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` (partial output) rather than crashing.
 
-**Platform-specific implementation:** Platform-agnostic — safe error handling is Rust-level. All platforms benefit from the same wrappers.
+**Platform-specific implementation:** Platform-agnostic -- safe error handling is Rust-level. All platforms benefit from the same wrappers.
 
 ### 7. Lazy Lifecycle (State Created on First Write)
 
@@ -3839,7 +3839,7 @@ where
 
 - **BeforeTier hook:** On first tier start, create `.puppet-master/verification/<session-id>/` if it doesn't exist.
 - **State files:** Create on first write (e.g., `active-subagents.json`, `handoff-reports.json`).
-- **No setup command:** Users don't need to run "puppet-master setup" — state is created automatically.
+- **No setup command:** Users don't need to run "puppet-master setup" -- state is created automatically.
 
 **Stale pruning:**
 
@@ -3847,7 +3847,7 @@ where
 - **Pruning logic:** Check modification time of state files; delete if older than threshold.
 - **No teardown command:** Cleanup happens automatically during normal operation.
 
-**Platform-specific implementation:** Platform-agnostic — lazy lifecycle is orchestrator-level file system management. All platforms benefit from the same behavior.
+**Platform-specific implementation:** Platform-agnostic -- lazy lifecycle is orchestrator-level file system management. All platforms benefit from the same behavior.
 
 ### 8. Structured Handoff Contract Enforcement at Runtime
 
@@ -3889,7 +3889,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 
 - **BeforeTier hook** runs **before** `verify_tier_start` (tracks active subagent, injects context, prunes state).
 - **AfterTier hook** runs **after** `verify_tier_end` (validates handoff format, tracks completion, safe error handling).
-- **Remediation loop** extends the existing "required reviewer subagent" — reviewer outputs structured findings; orchestrator enforces remediation.
+- **Remediation loop** extends the existing "required reviewer subagent" -- reviewer outputs structured findings; orchestrator enforces remediation.
 - **Cross-session memory** enhances Phase 1 context (loads prior decisions before planning).
 - **Active agent tracking** enhances logging and debugging (shows which subagent ran at each tier).
 
@@ -4105,16 +4105,16 @@ Short notes so implementers know where to put code and what the orchestrator alr
 ### Phase 4: Error Pattern Detection
 
 - **Where:** In the orchestrator or in a small helper that parses iteration output (e.g. stderr/stdout). Update `TierContext.has_errors` or `error_patterns` from the result of the last iteration so the next selection can add debugger/security-auditor etc.
-- **What:** Define how to detect “compilation error,” “test failure,” “security issue” (e.g. regex on stderr or exit codes). Keep it simple for v1 (e.g. non-zero exit + keyword in stderr).
+- **What:** Define how to detect "compilation error," "test failure," "security issue" (e.g. regex on stderr or exit codes). Keep it simple for v1 (e.g. non-zero exit + keyword in stderr).
 
 ### SubagentManager
 
-- The plan references `SubagentManager` “from interview plan.” If that module exists, use it for whatever it provides (e.g. loading agent definitions from disk). If it does not exist, implement only what Phase 3 needs: subagent selection and invocation via the existing runner; no separate “manager” is strictly required for v1.
+- The plan references `SubagentManager` "from interview plan." If that module exists, use it for whatever it provides (e.g. loading agent definitions from disk). If it does not exist, implement only what Phase 3 needs: subagent selection and invocation via the existing runner; no separate "manager" is strictly required for v1.
 
 ### Config-wiring validation (Phase / Task / Subtask / Iteration)
 
 - **Where:** New module e.g. `src/core/config_wiring.rs` or `src/verification/config_wiring.rs` (or split: `config_wiring/orchestrator.rs` and `config_wiring/interview.rs`). The main orchestrator calls the validator from `src/core/orchestrator.rs` at each tier boundary; the interview orchestrator calls an interview-specific validator from `src/interview/orchestrator.rs` at phase (and any sub-tier) start.
-- **What:** Implement `validate_config_wiring_for_tier(tier_type, config_snapshot, context) -> Result<(), WiringError>` (or equivalent) that checks: for **Phase** — phase tier config present, plan_mode/orchestrator flags applied, interview config fields present when in interview run; for **Task** — task tier config present, subagent config present and applied; for **Subtask** — subtask tier config present, subagent list from config; for **Iteration** — iteration tier config present, request built from tier config. Fail fast when required config is missing; warn when a GUI/file field is not present in execution config. See **"Avoiding Built but Not Wired"** in this plan for the full table and fail vs warn policy.
+- **What:** Implement `validate_config_wiring_for_tier(tier_type, config_snapshot, context) -> Result<(), WiringError>` (or equivalent) that checks: for **Phase** -- phase tier config present, plan_mode/orchestrator flags applied, interview config fields present when in interview run; for **Task** -- task tier config present, subagent config present and applied; for **Subtask** -- subtask tier config present, subagent list from config; for **Iteration** -- iteration tier config present, request built from tier config. Fail fast when required config is missing; warn when a GUI/file field is not present in execution config. See **"Avoiding Built but Not Wired"** in this plan for the full table and fail vs warn policy.
 - **When called:** Immediately before the orchestrator builds execution context or spawns the agent for that tier (i.e. at Phase start, Task start, Subtask start, Iteration start). Do not skip validation for "fast path" or tests unless explicitly gated (e.g. env var to disable for a specific test).
 
 ### Start and end verification (wiring + readiness + quality)
@@ -4127,7 +4127,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 ### Agent coordination
 
 - **Where:** New module `src/core/agent_coordination.rs` for file-based coordination (cross-platform); extend `src/platforms/codex.rs` and `src/platforms/copilot.rs` (or SDK bridge) for SDK-based coordination (same-platform only).
-- **What:** (1) **File-based coordination (cross-platform):** Implement `AgentCoordinator` that manages `active-agents.json` state file. Register agents before execution (including platform field), update status during execution (files being edited, current operation), unregister after execution. Get coordination context for prompt injection. **This enables cross-platform coordination** — Codex agents can see Claude agents' status, and vice versa. All platforms read/write to the same JSON file. (2) **SDK-based coordination (Codex/Copilot, same-platform only):** Extend Codex runner to create shared threads for parallel subtasks **when all agents are Codex**; extend Copilot runner to create shared sessions for parallel subtasks **when all agents are Copilot**. All agents in the same dependency level use the same thread/session. Thread/session state provides coordination context. **Note:** SDK coordination only works within the same platform (Codex↔Codex, Copilot↔Copilot), not across platforms. (3) **Prompt injection:** Inject coordination context into each agent's prompt (active agents with platform info, files being modified, warnings about conflicts). Include platform identifier so agents know which platform other agents are using. (4) **Status updates:** Extract file operations from agent output (parse file paths, use platform hooks, use SDK callbacks) and update coordination state periodically. (5) **Conflict prevention:** Check coordination state before execution to detect file conflicts; warn agents or delay execution if conflicts detected. Works across platforms via file-based coordination.
+- **What:** (1) **File-based coordination (cross-platform):** Implement `AgentCoordinator` that manages `active-agents.json` state file. Register agents before execution (including platform field), update status during execution (files being edited, current operation), unregister after execution. Get coordination context for prompt injection. **This enables cross-platform coordination** -- Codex agents can see Claude agents' status, and vice versa. All platforms read/write to the same JSON file. (2) **SDK-based coordination (Codex/Copilot, same-platform only):** Extend Codex runner to create shared threads for parallel subtasks **when all agents are Codex**; extend Copilot runner to create shared sessions for parallel subtasks **when all agents are Copilot**. All agents in the same dependency level use the same thread/session. Thread/session state provides coordination context. **Note:** SDK coordination only works within the same platform (Codex↔Codex, Copilot↔Copilot), not across platforms. (3) **Prompt injection:** Inject coordination context into each agent's prompt (active agents with platform info, files being modified, warnings about conflicts). Include platform identifier so agents know which platform other agents are using. (4) **Status updates:** Extract file operations from agent output (parse file paths, use platform hooks, use SDK callbacks) and update coordination state periodically. (5) **Conflict prevention:** Check coordination state before execution to detect file conflicts; warn agents or delay execution if conflicts detected. Works across platforms via file-based coordination.
 - **When called:** Register agent before tier execution (include platform from tier_config); update status during execution (periodically or on file operations); unregister after execution. For SDK coordination, create shared thread/session at dependency level start **only if all agents in that level use the same platform**; otherwise use file-based coordination. See **"Agent Coordination and Communication"** for full details and cross-platform examples.
 
 ### Lifecycle hooks and quality features
@@ -4138,7 +4138,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 
 ### Considerations #6 (Subagent availability / files)
 
-- “Check if subagent files exist before selection” is optional for v1. Cursor and other platforms may resolve subagent names internally (e.g. built-in or workspace config). If we later support custom agent files (e.g. under `.cursor/agents/` or similar), add a check then; for now, treat the canonical list as valid and let the platform CLI fail if a name is unsupported.
+- "Check if subagent files exist before selection" is optional for v1. Cursor and other platforms may resolve subagent names internally (e.g. built-in or workspace config). If we later support custom agent files (e.g. under `.cursor/agents/` or similar), add a check then; for now, treat the canonical list as valid and let the platform CLI fail if a name is unsupported.
 
 ---
 
@@ -4286,7 +4286,7 @@ When multiple agents/subagents run concurrently (parallel subtasks, different ti
 
 **Coordination mechanisms:**
 
-1. **Shared state files (existing):** All agents read `progress.txt`, `AGENTS.md`, `prd.json` — these provide **asynchronous** coordination (agents see what others have done, not what they're doing now).
+1. **Shared state files (existing):** All agents read `progress.txt`, `AGENTS.md`, `prd.json` -- these provide **asynchronous** coordination (agents see what others have done, not what they're doing now).
 
 2. **Real-time coordination state (new, cross-platform):** Add `.puppet-master/state/active-agents.json` that tracks:
    - Which agents/subagents are currently active (including platform: "codex", "claude", "cursor", "gemini", "copilot")
@@ -4295,7 +4295,7 @@ When multiple agents/subagents run concurrently (parallel subtasks, different ti
    - Platform identifier (so agents know which platform other agents are using)
    - Timestamp of last update
    
-   **This file-based coordination works across ALL platforms** — a Codex agent can see what a Claude agent is doing, and vice versa. All platforms read/write to the same JSON file.
+   **This file-based coordination works across ALL platforms** -- a Codex agent can see what a Claude agent is doing, and vice versa. All platforms read/write to the same JSON file.
 
 3. **Platform-specific coordination (SDK-based, same-platform only):**
    - **Codex SDK:** Use thread-based coordination (`codexClient.startThread()`, thread sharing, thread state). Codex SDK supports thread coordination where multiple **Codex agents** can share thread context and see each other's progress. **Note:** This only works between Codex agents, not across platforms.
@@ -4669,9 +4669,9 @@ await sharedSession.run({
 
 **Benefits:**
 
-- **Reduced conflicts:** Agents know what files others are editing, avoiding simultaneous modifications. Coordination context warns agents: "rust-engineer is editing src/api.rs — avoid this file."
-- **Better context:** Agents understand what others are working on, reducing confusion when seeing changes. Agent sees: "test-automator is running tests — these test failures are expected."
-- **Efficient collaboration:** Agents can reference shared decisions and avoid duplicate work. Agent sees: "architect-reviewer established pattern X — use this pattern."
+- **Reduced conflicts:** Agents know what files others are editing, avoiding simultaneous modifications. Coordination context warns agents: "rust-engineer is editing src/api.rs -- avoid this file."
+- **Better context:** Agents understand what others are working on, reducing confusion when seeing changes. Agent sees: "test-automator is running tests -- these test failures are expected."
+- **Efficient collaboration:** Agents can reference shared decisions and avoid duplicate work. Agent sees: "architect-reviewer established pattern X -- use this pattern."
 - **No "freaking out":** Agents see coordination context explaining why code is changing, who is changing it, and what they're doing. Reduces false alarms and confusion.
 - **Platform-native:** Codex and Copilot SDKs provide built-in coordination mechanisms (shared threads/sessions) that Puppet Master can leverage.
 
@@ -4837,7 +4837,7 @@ export class CopilotSessionCoordinator {
 
 **Two modes of operation:**
 
-1. **User-initiated Crews (platform-specific) — Future: Assistant feature:**
+1. **User-initiated Crews (platform-specific) -- Future: Assistant feature:**
    - **Status:** Not yet implemented. Will be enabled when the "Assistant" feature is added.
    - User will invoke crew via command/prompt: "use a crew", "create a crew", "crew", "crews"
    - Crew will use the **currently selected platform** (from tier config or GUI selection)
@@ -4846,7 +4846,7 @@ export class CopilotSessionCoordinator {
    - **Rationale:** User needs control over which platform to use (subscription limits, preferences, capabilities)
    - **Note:** Platform selection logic will be defined when Assistant feature is designed (see Gap #37)
 
-2. **Orchestrator-initiated Crews (platform-specific per tier, cross-platform coordination via message board) — Current implementation:**
+2. **Orchestrator-initiated Crews (platform-specific per tier, cross-platform coordination via message board) -- Current implementation:**
    - Orchestrator automatically creates crews for each tier that needs subagents
    - **Respects tier-level platform configuration:**
      - Task level with platform = Codex → Crew uses Codex subagents
@@ -6314,8 +6314,8 @@ impl OrchestratorInsights {
 - **Message spam:** Limit message rate per agent (max 10 messages/minute)
 - **Large message board:** Archive old messages, limit message history
 - **File locking:** Use same locking mechanism as coordination state
-- **Message parsing:** Agents may not always format messages correctly — provide clear instructions in prompts
-- **Orphaned messages:** Messages from crashed agents — mark as resolved after agent unregisters
+- **Message parsing:** Agents may not always format messages correctly -- provide clear instructions in prompts
+- **Orphaned messages:** Messages from crashed agents -- mark as resolved after agent unregisters
 
 **Next steps:**
 
@@ -6330,7 +6330,7 @@ impl OrchestratorInsights {
 
 **Gap #28: File locking and concurrent writes**
 
-**Issue:** Multiple agents may write to `active-agents.json` simultaneously, causing race conditions, file corruption, or lost updates. The current implementation reads the entire file, modifies it, and writes it back — this is not atomic.
+**Issue:** Multiple agents may write to `active-agents.json` simultaneously, causing race conditions, file corruption, or lost updates. The current implementation reads the entire file, modifies it, and writes it back -- this is not atomic.
 
 **Mitigation:**
 - **File locking:** Use advisory file locks (e.g., `flock` on Unix, `File::lock` in Rust) to ensure exclusive access during writes. Implement retry logic with exponential backoff if lock acquisition fails.

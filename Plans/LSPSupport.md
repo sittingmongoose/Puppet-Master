@@ -1,13 +1,13 @@
-# LSP Support — Plan (Rewrite)
+# LSP Support -- Plan (Rewrite)
 
 **Date:** 2026-02-22  
-**Status:** Plan — **LSP is MVP**  
-**Scope:** LSP (Language Server Protocol) is **in scope for the desktop MVP**. Desktop client integration, server management, **full LSP integration in the Chat Window** (diagnostics in context, @ file/symbol with LSP, code blocks with hover/Go to definition), and **additional enhancements** (Find references, Rename symbol, Format document, optional LSP diagnostics gate, Chat "Fix all"/"Rename"/"Where is this used?", etc.) — see §9.1.  
+**Status:** Plan -- **LSP is MVP**  
+**Scope:** LSP (Language Server Protocol) is **in scope for the desktop MVP**. Desktop client integration, server management, **full LSP integration in the Chat Window** (diagnostics in context, @ file/symbol with LSP, code blocks with hover/Go to definition), and **additional enhancements** (Find references, Rename symbol, Format document, optional LSP diagnostics gate, Chat "Fix all"/"Rename"/"Where is this used?", etc.) -- see §9.1.  
 **Cross-references:** Plans/FileManager.md (§6, §10, §12.1.4), Plans/assistant-chat-design.md (§9, §9.1 LSP in Chat), Plans/00-plans-index.md, Plans/FinalGUISpec.md (§7.20 Bottom Panel, §7.16 Chat, §8.1 StatusBar), Plans/feature-list.md (§4 Verification gates), OpenCode (anomalyco/opencode) LSP implementation. **LSP gate, evidence, subagent selection (implementation spec):** §17.
 
-**Implementation plan summary (top-level guide for agents):** (1) **Prerequisites:** Rust LSP client crate (lsp-types + stdio client), config schema (OpenCode-aligned). (2) **Phase 1 — Core LSP:** Server registry (§3.2 + slint-lsp), document sync (didOpen/didChange/didClose/didSave, debounce), diagnostics → editor + Problems panel (FinalGUISpec §7.20), hover, completion, status bar (§8.1). (3) **Phase 2 — Editor:** Go to definition, code actions, code lens, signature help, inlay hints, semantic highlighting; then Find references (References panel, Shift+F12), Rename symbol (F2), Format document/selection (Shift+Alt+F); breadcrumbs/Go to symbol (documentSymbol); timeouts, per-server enable/disable, Settings > LSP (§7.4.2). (4) **Phase 3 — Chat LSP (§5.1):** Diagnostics in Assistant/Interview context; @ symbol with LSP workspace/symbol; code-block hover and click-to-definition; Problems link from Chat (§7.16). (5) **Phase 4 — Optional (§9.1):** LSP diagnostics gate and LSP snapshot in evidence (optional; feature-list §4); subagent selection from LSP; Chat "Fix all"/Rename/"Where is this used?"/Format; promote lsp tool (Tools.md). **Single checklist:** Appendix: Implementation plan checklist (this document).
+**Implementation plan summary (top-level guide for agents):** (1) **Prerequisites:** Rust LSP client crate (lsp-types + stdio client), config schema (OpenCode-aligned). (2) **Phase 1 -- Core LSP:** Server registry (§3.2 + slint-lsp), document sync (didOpen/didChange/didClose/didSave, debounce), diagnostics → editor + Problems panel (FinalGUISpec §7.20), hover, completion, status bar (§8.1). (3) **Phase 2 -- Editor:** Go to definition, code actions, code lens, signature help, inlay hints, semantic highlighting; then Find references (References panel, Shift+F12), Rename symbol (F2), Format document/selection (Shift+Alt+F); breadcrumbs/Go to symbol (documentSymbol); timeouts, per-server enable/disable, Settings > LSP (§7.4.2). (4) **Phase 3 -- Chat LSP (§5.1):** Diagnostics in Assistant/Interview context; @ symbol with LSP workspace/symbol; code-block hover and click-to-definition; Problems link from Chat (§7.16). (5) **Phase 4 -- Optional (§9.1):** LSP diagnostics gate and LSP snapshot in evidence (optional; feature-list §4); subagent selection from LSP; Chat "Fix all"/Rename/"Where is this used?"/Format; promote lsp tool (Tools.md). **Single checklist:** Appendix: Implementation plan checklist (this document).
 
-**For implementation guide:** The **Appendix: Implementation plan checklist** is the single ordered checklist for implementers (Prerequisites, Phase 1–4). §§13–16 and §12 provide GUI requirements, technical implementation detail, phased build order, and open decisions.
+**For implementation guide:** The **Appendix: Implementation plan checklist** is the single ordered checklist for implementers (Prerequisites, Phase 1-4). §§13-16 and §12 provide GUI requirements, technical implementation detail, phased build order, and open decisions.
 
 ---
 
@@ -25,7 +25,7 @@ LSP support will provide (all MVP):
 - **Code lens:** Inline actionable links above symbols (`textDocument/codeLens`).
 - **Signature help:** Function signature and parameter hint in calls (`textDocument/signatureHelp`).
 - **Request timeout and cancellation:** Configurable timeouts; LSP cancellation for in-flight requests when user navigates or edits.
-- **LSP status in UI:** Status bar or indicator (e.g. "Rust (rust-analyzer)", "Initializing…", "Ready", "Error: …").
+- **LSP status in UI:** Status bar or indicator (e.g. "Rust (rust-analyzer)", "Initializing...", "Ready", "Error: ...").
 - **Per-server enable/disable:** User can disable a server globally or per project (OpenCode-style `lsp.<id>.disabled` / `lsp: false`).
 - **Fallback when LSP unavailable:** Heuristic symbol search and no diagnostics when no server available; optional one-time or dismissible hint to install the server.
 - **Diagnostics for LLM/Assistant (OpenCode-style):** Feed current LSP diagnostics (errors/warnings) into Assistant/Interview context so the agent sees linter/type errors and can suggest fixes.
@@ -40,17 +40,17 @@ For each feature below: **inputs** (what the client sends or user does), **outpu
 | **Hover** | (URI, position), optional timeout | Tooltip (markdown or plain) | Tooltip at cursor | Timeout → show "Timed out", discard; stale (version changed) → discard; no server → no tooltip | `lsp.hoverTimeoutMs` | No hover; syntax-only if any |
 | **Autocomplete** | (URI, position, trigger), optional timeout | Inline completion list | List shows; select applies | Timeout → hide list, discard; stale → discard; no server → no LSP completions | `lsp.completionTimeoutMs` | Heuristic or no completion |
 | **Navigation** (go-to-def, outline, breadcrumbs) | (URI, position) or document; server capability | Jump to location or symbol list | Correct location/list | Timeout → show "Timed out", discard; no result → show "No definition"; no server → heuristic/outline | `lsp.workspaceSymbolTimeoutMs` (for workspace/symbol) | Heuristic symbol search, regex outline (§12.1.4) |
-| **Inlay hints** | Document sync + visible range (optional) | Inline decorations (no buffer change) | Hints rendered | Timeout → skip or show cached; no server → no inlay hints | — | No inlay hints |
-| **Semantic highlighting** | Document sync; server supports semanticTokens | Token types for coloring | More accurate colors | Not supported → fall back to syntax-only; no server → syntax-only | — | Syntax-only highlighting |
-| **Code actions** | Range + diagnostics; user invokes | Context menu / lightbulb; apply edit | Edit applied via FileSafe | Timeout → hide actions; apply failure → show error, do not change buffer; no server → no code actions | — | No code actions |
-| **Code lens** | Document open/change | Inline links above symbols | Click invokes (e.g. run test) | Timeout → hide lens; no server → no code lens | — | No code lens |
-| **Signature help** | (URI, position) in call | Popup with signature + param highlight | Popup visible | Timeout → hide; stale → discard; no server → no signature help | — | No signature help |
-| **Request timeout/cancellation** | Per-request timeout; cancel on navigate/edit | — | Stale work abandoned | Timeout → treat as failure for that request (show "Timed out" or discard) | `lsp.*TimeoutMs` (§14.4) | N/A (client-side) |
-| **LSP status in UI** | Server state (Initializing/Ready/Error/None) | Status bar text or indicator | e.g. "Rust (rust-analyzer): Ready" | No server: show nothing (omit) | — | Show nothing (omit) |
-| **Per-server enable/disable** | Config: disabled flag | Server not spawned when disabled | LSP off for that server | — | `lsp.<id>.disabled`, `lsp: false` | Same as "no server" for that language |
-| **Diagnostics for LLM/Assistant** | Current diagnostics for relevant files | Text/summary in Assistant/Interview context | Agent sees errors/warnings | No server → omit diagnostics from context | — | Omit from context; optional hint to install |
+| **Inlay hints** | Document sync + visible range (optional) | Inline decorations (no buffer change) | Hints rendered | Timeout → skip or show cached; no server → no inlay hints | -- | No inlay hints |
+| **Semantic highlighting** | Document sync; server supports semanticTokens | Token types for coloring | More accurate colors | Not supported → fall back to syntax-only; no server → syntax-only | -- | Syntax-only highlighting |
+| **Code actions** | Range + diagnostics; user invokes | Context menu / lightbulb; apply edit | Edit applied via FileSafe | Timeout → hide actions; apply failure → show error, do not change buffer; no server → no code actions | -- | No code actions |
+| **Code lens** | Document open/change | Inline links above symbols | Click invokes (e.g. run test) | Timeout → hide lens; no server → no code lens | -- | No code lens |
+| **Signature help** | (URI, position) in call | Popup with signature + param highlight | Popup visible | Timeout → hide; stale → discard; no server → no signature help | -- | No signature help |
+| **Request timeout/cancellation** | Per-request timeout; cancel on navigate/edit | -- | Stale work abandoned | Timeout → treat as failure for that request (show "Timed out" or discard) | `lsp.*TimeoutMs` (§14.4) | N/A (client-side) |
+| **LSP status in UI** | Server state (Initializing/Ready/Error/None) | Status bar text or indicator | e.g. "Rust (rust-analyzer): Ready" | No server: show nothing (omit) | -- | Show nothing (omit) |
+| **Per-server enable/disable** | Config: disabled flag | Server not spawned when disabled | LSP off for that server | -- | `lsp.<id>.disabled`, `lsp: false` | Same as "no server" for that language |
+| **Diagnostics for LLM/Assistant** | Current diagnostics for relevant files | Text/summary in Assistant/Interview context | Agent sees errors/warnings | No server → omit diagnostics from context | -- | Omit from context; optional hint to install |
 
-This plan is the single place for LSP design and implementation notes. **LSP is MVP** — implement with the desktop editor and Chat Window from the start (FileManager.md, assistant-chat-design.md).
+This plan is the single place for LSP design and implementation notes. **LSP is MVP** -- implement with the desktop editor and Chat Window from the start (FileManager.md, assistant-chat-design.md).
 
 ---
 
@@ -74,12 +74,12 @@ Capabilities are negotiated at **initialize**: client and server declare what th
 
 We are aligning with OpenCode-style architecture where useful; their LSP approach is a good reference.
 
-**Official documentation:** [LSP Servers \| OpenCode](https://opencode.ai/docs/lsp/) — canonical reference for built-in servers, config, and behavior.
+**Official documentation:** [LSP Servers \| OpenCode](https://opencode.ai/docs/lsp/) -- canonical reference for built-in servers, config, and behavior.
 
 ### 3.1 Summary from opencode.ai/docs/lsp/
 
 - **Stated purpose:** OpenCode integrates LSP so the **LLM can interact with the codebase**; it uses **diagnostics** to provide feedback to the LLM.
-- **Built-in servers:** 30+ languages; see **§3.2** for the full table (server id, extensions, requirements). Each server is enabled when a file’s extension matches and the requirement is met.
+- **Built-in servers:** 30+ languages; see **§3.2** for the full table (server id, extensions, requirements). Each server is enabled when a file's extension matches and the requirement is met.
 - **How it works:** When OpenCode opens a file, it (1) starts the appropriate LSP server if not already running, (2) checks the file extension against all enabled LSP servers. Servers are automatically enabled when an extension is detected and requirements are met.
 - **Config:** `lsp` section in opencode config. Schema: `https://opencode.ai/config.json`. Per-server properties: `disabled` (boolean), `command` (string[]), `extensions` (string[]), `env` (object), `initialization` (object). Set `lsp: false` to disable all; set `OPENCODE_DISABLE_LSP_DOWNLOAD=true` to disable automatic LSP server downloads.
 - **Custom servers:** Add entries with `command` (e.g. `["custom-lsp-server", "--stdio"]`) and `extensions`.
@@ -126,7 +126,7 @@ We support the same set of built-in LSP servers as [OpenCode](https://opencode.a
 | yaml-ls | .yaml, .yml | Auto-installs Red Hat yaml-language-server |
 | zls | .zig, .zon | zig command available |
 
-Servers are enabled when a file’s extension matches and the requirement is met. Root discovery and spawn logic per server (e.g. Cargo.toml for Rust, package.json for eslint/TypeScript) are in OpenCode’s server.ts; we align with that. See §3.3 for reinforced ESLint (JS/TS), §3.3.1 for Slint LSP, §3.4 for implementation notes, §3.5 for the root discovery table, and §3.6 for extension conflict rules.
+Servers are enabled when a file's extension matches and the requirement is met. Root discovery and spawn logic per server (e.g. Cargo.toml for Rust, package.json for eslint/TypeScript) are in OpenCode's server.ts; we align with that. See §3.3 for reinforced ESLint (JS/TS), §3.3.1 for Slint LSP, §3.4 for implementation notes, §3.5 for the root discovery table, and §3.6 for extension conflict rules.
 
 ### 3.5 Root discovery (per-server rules)
 
@@ -173,8 +173,8 @@ Some file extensions are served by **multiple** LSP servers (e.g. `.ts`/`.tsx` b
 
 **ESLint** is the primary lint and diagnostics LSP for **ECMAScript/JavaScript** (and commonly used with TypeScript, Vue, etc.) when users build programs with Puppet Master. We explicitly support and reinforce ESLint so that JS/TS projects get first-class linting and quick fixes in the editor and in Assistant/Interview context.
 
-- **Upstream:** [eslint/eslint](https://github.com/eslint/eslint). **ESLint v10** (v10.0.0 / v10.0.1) is the current major line; it uses **flat config only** (`.eslintrc` removed). Config file: `eslint.config.js` or `eslint.config.mjs` / `eslint.config.ts`; lookup starts from the file’s directory (monorepo-friendly). Node.js: ^20.19.0, ^22.13.0, or >=24.
-- **LSP:** OpenCode’s built-in **eslint** server uses the project’s `eslint` dependency and runs the VS Code ESLint server (or equivalent) over stdio. Extensions: `.ts`, `.tsx`, `.js`, `.jsx`, `.mjs`, `.cjs`, `.mts`, `.cts`, `.vue`. Requirement: `eslint` dependency in project.
+- **Upstream:** [eslint/eslint](https://github.com/eslint/eslint). **ESLint v10** (v10.0.0 / v10.0.1) is the current major line; it uses **flat config only** (`.eslintrc` removed). Config file: `eslint.config.js` or `eslint.config.mjs` / `eslint.config.ts`; lookup starts from the file's directory (monorepo-friendly). Node.js: ^20.19.0, ^22.13.0, or >=24.
+- **LSP:** OpenCode's built-in **eslint** server uses the project's `eslint` dependency and runs the VS Code ESLint server (or equivalent) over stdio. Extensions: `.ts`, `.tsx`, `.js`, `.jsx`, `.mjs`, `.cjs`, `.mts`, `.cts`, `.vue`. Requirement: `eslint` dependency in project.
 - **For our implementation:** When adding LSP, include **eslint** in the server registry for JS/TS projects. Root discovery: nearest directory containing `package.json` (or `eslint.config.js` / `eslint.config.mjs` / `eslint.config.ts` for v10). Prefer ESLint v10 flat config when present (`eslint.config.*`); do not rely on legacy `.eslintrc*`. Diagnostics from ESLint feed the Problems panel and LLM/Assistant context (§1, §5).
 - **Preset alignment:** The JavaScript/TypeScript preset (FileManager §11) should list ESLint as an expected tool and, when LSP is added, enable the eslint LSP server for that preset. See FileManager.md §11 and preset detection (e.g. `package.json` + `eslint` dep or `eslint.config.*`).
 
@@ -182,19 +182,19 @@ Some file extensions are served by **multiple** LSP servers (e.g. `.ts`/`.tsx` b
 
 Our GUI is **Rust + Slint** (FinalGUISpec); we include **slint-lsp** so that editing `.slint` files in the in-app editor gets diagnostics, completion, goto definition, and live-preview support.
 
-- **Crate:** [slint-lsp](https://crates.io/crates/slint-lsp) (latest stable 1.15.1). LSP implementation for [Slint](https://slint.dev). Binary: `slint-lsp` (or `slint-lsp.exe` on Windows). Communicates via **stdio** (stdin/stdout); no special command-line arguments — editors spawn the binary and use LSP over stdio.
+- **Crate:** [slint-lsp](https://crates.io/crates/slint-lsp) (latest stable 1.15.1). LSP implementation for [Slint](https://slint.dev). Binary: `slint-lsp` (or `slint-lsp.exe` on Windows). Communicates via **stdio** (stdin/stdout); no special command-line arguments -- editors spawn the binary and use LSP over stdio.
 - **Features:** Diagnostics, code completion, goto definition, **live-preview**. Code formatting is part of the LSP (see [Slint tooling docs](https://snapshots.slint.dev/master/docs/guide/tooling/manual-setup/#slint-lsp)).
 - **Install:** `cargo install slint-lsp`, or use pre-built binaries from [Slint GitHub releases](https://github.com/slint-ui/slint/releases). Requirement: `slint-lsp` command available on PATH.
 - **Extensions:** `.slint` (Slint UI markup).
-- **Root discovery:** For `.slint` files, root can be the file’s directory or nearest project root (e.g. directory containing `Cargo.toml` if Slint is used in a Rust project). Many .slint files work with workspace root or file directory.
+- **Root discovery:** For `.slint` files, root can be the file's directory or nearest project root (e.g. directory containing `Cargo.toml` if Slint is used in a Rust project). Many .slint files work with workspace root or file directory.
 - **For our implementation:** Include **slint-lsp** in the server registry with id `slint-lsp`, extensions `[".slint"]`, and spawn `slint-lsp` (no args). When the user opens a `.slint` file in the File Editor, the LSP client starts slint-lsp for that root and provides diagnostics, hover, completion, and goto definition in the editor; live-preview can be wired separately if the LSP supports it. Settings > LSP: slint-lsp appears in the built-in list and can be toggled or configured (env, initialization) like other servers.
 
 ### 3.4 Implementation (server.ts)
 
-- **Code:** `packages/opencode/src/lsp/server.ts` — server registry, root discovery, spawn logic for each built-in (including **eslint** for JS/TS).
+- **Code:** `packages/opencode/src/lsp/server.ts` -- server registry, root discovery, spawn logic for each built-in (including **eslint** for JS/TS).
 - **Server model:** One LSP server **process** per **(language, project root)**. Root is discovered per file (e.g. "nearest directory containing Cargo.toml" for Rust).
 - **Info shape:** `id`, `extensions[]`, `root(file) -> root path`, `spawn(root) -> Handle | undefined`. **Handle:** `process` (child process) + optional `initialization` (options sent in LSP `initialize`).
-- **Root discovery:** **NearestRoot(includePatterns, excludePatterns)** — walk up from the file's directory until a target file is found. Exclude patterns avoid wrong server (e.g. Deno vs Node). Some servers use a fixed root (e.g. instance directory).
+- **Root discovery:** **NearestRoot(includePatterns, excludePatterns)** -- walk up from the file's directory until a target file is found. Exclude patterns avoid wrong server (e.g. Deno vs Node). Some servers use a fixed root (e.g. instance directory).
 - **Lifecycle:** On file open, extension is matched to enabled servers; if a server is needed and not yet running for that root, it is **spawned** (stdio). Initialize handshake and optional `initializationOptions` complete the setup.
 
 **Takeaways for us:**
@@ -210,11 +210,11 @@ Our GUI is **Rust + Slint** (FinalGUISpec); we include **slint-lsp** so that edi
 
 Our rewrite is Rust/Iced. We only need an **LSP client** in the app.
 
-- **Protocol types:** [lsp-types](https://docs.rs/lsp-types/) — LSP 3.x types (requests, notifications, capabilities, DocumentUri, Range, Diagnostic, etc.). Use for all LSP data structures.
+- **Protocol types:** [lsp-types](https://docs.rs/lsp-types/) -- LSP 3.x types (requests, notifications, capabilities, DocumentUri, Range, Diagnostic, etc.). Use for all LSP data structures.
 - **Client implementation:** One of:
-  - [lsp-client](https://docs.rs/lsp-client/) — async, uses jsonrpsee + lsp-types.
-  - [async_lsp_client](https://docs.rs/async_lsp_client/) — async, lifecycle (initialize, shutdown, exit), document sync, hover, completion, goto definition.
-  - [lsp-client-rs](https://github.com/sudarshan-reddy/lsp-client-rs) — TCP/Unix socket + async; used with gopls in examples.
+  - [lsp-client](https://docs.rs/lsp-client/) -- async, uses jsonrpsee + lsp-types.
+  - [async_lsp_client](https://docs.rs/async_lsp_client/) -- async, lifecycle (initialize, shutdown, exit), document sync, hover, completion, goto definition.
+  - [lsp-client-rs](https://github.com/sudarshan-reddy/lsp-client-rs) -- TCP/Unix socket + async; used with gopls in examples.
 - **Server implementation (optional):** If we ever implement our own LSP server (e.g. for a custom language), [tower-lsp](https://docs.rs/tower-lsp/) / [tower-lsp-server](https://lib.rs/crates/tower-lsp-server) (community fork, active).
 
 Recommendation: use **lsp-types** plus one async LSP **client** crate that supports stdio (spawn process, stdin/stdout). Evaluate `lsp-client` and `async_lsp_client` for lifecycle, document sync, and the few methods we need (diagnostics, hover, completion, goto definition).
@@ -223,7 +223,7 @@ Recommendation: use **lsp-types** plus one async LSP **client** crate that suppo
 
 ## 5. Integration with Our Editor (FileManager / Rewrite)
 
-- **Editor:** FileManager plan defines the in-app editor (tabs, buffers, save, syntax highlighting). **LSP is MVP** — integrate from the start. See also **§5.1 LSP in the Chat Window** for Chat-specific integration.
+- **Editor:** FileManager plan defines the in-app editor (tabs, buffers, save, syntax highlighting). **LSP is MVP** -- integrate from the start. See also **§5.1 LSP in the Chat Window** for Chat-specific integration.
 - **Integration (editor + Chat):**
   - **Document sync:** On open/change/close (and save when configured) of a buffer, send the corresponding LSP notifications. **Decision:** Send `didSave` on buffer save by default; config key `lsp.didSave` (bool, default true). for the document URI. Use the same 1-based line/column and encoding as in FileManager. Prefer **incremental sync** in client capabilities when the server supports it (sends only changed ranges in `didChange`); otherwise full sync. Track document version for each buffer and include it in sync messages.
   - **Diagnostics:** Subscribe to `textDocument/publishDiagnostics`; map `Diagnostic` to editor underlines and gutter markers; optionally a "Problems" panel (as in FinalGUISpec placeholder).
@@ -237,7 +237,7 @@ Recommendation: use **lsp-types** plus one async LSP **client** crate that suppo
   - **Code lens:** Request `textDocument/codeLens`; render actionable links above symbols; support invoke.
   - **Signature help:** Request `textDocument/signatureHelp` when cursor is in a call; show signature and parameter hint.
   - **Request timeout and cancellation:** Apply configurable timeouts per request type; send LSP cancellation when user navigates or edits to avoid stale results.
-  - **LSP status in UI:** Show current server and state (e.g. "Rust (rust-analyzer)", "Initializing…", "Ready", "Error: …") in status bar or dedicated indicator.
+  - **LSP status in UI:** Show current server and state (e.g. "Rust (rust-analyzer)", "Initializing...", "Ready", "Error: ...") in status bar or dedicated indicator.
   - **Per-server enable/disable:** Honor config to disable a server globally or per project (`lsp.<id>.disabled`, `lsp: false`).
   - **Fallback when LSP unavailable:** When no server is available for a language, keep heuristic symbol search and no diagnostics. **Install hint:** Dismissible banner once per (project, server_id) per session with message "Install \<server\> for diagnostics" and link to Settings > LSP (FinalGUISpec §7.4.2).
   - **Diagnostics for LLM/Assistant:** Include current LSP diagnostics for relevant files in context fed to Assistant/Interview (assistant-chat-design §9.1 LSP support in Chat (MVP), tool context).
@@ -268,7 +268,7 @@ The Chat Window must **fully take advantage of LSP** so the user and the Assista
 | **Problems panel from Chat** | One-click to Problems | Chat **footer** strip offers a **link** (label: "N problems" when count > 0, "Problems" when zero), placed **right of context usage** (FinalGUISpec §7.16). Click opens the **Problems** tab (FinalGUISpec §7.20) filtered to the current project (or to files in context). **Filter definition:** Show diagnostics for all open files in the current project; when context has @'d files, optionally restrict to those files plus open. Implementer defines "current project" from app state (e.g. active project root or workspace folder). Empty/error states and accessibility: see FinalGUISpec §7.16. |
 | **Inline diagnostics for @'d files** | Optional hint in chat | When the user has **@'d** one or more files, optionally show a **compact hint** (e.g. "2 errors in @'d files") with a click-through to the Problems panel or to the first error location in the editor. **Default: off.** Config key `chat.show_at_diagnostics_hint` (bool, default false). |
 
-**Chat LSP — inputs, outputs, success/failure, edge cases, fallback:**
+**Chat LSP -- inputs, outputs, success/failure, edge cases, fallback:**
 
 - **Diagnostics in Assistant context:** *Inputs:* current LSP diagnostics for project or @'d/recent files. *Outputs:* summary in Assistant/Interview prompt (file, line, message, severity, source). *Success:* agent sees errors/warnings. *Failure:* no server → omit from context; timeout → use last known or omit. *Edge case:* token limit → cap to 10 files, 50 diagnostics (§5.1); truncate with "... and N more". **Fallback when LSP unavailable:** Omit diagnostics from context; optional hint to install server.
 - **@ symbol (LSP-aware):** *Inputs:* user query in @ picker; workspace/symbol (and optionally documentSymbol). *Outputs:* symbol list (path, line, kind). *Success:* user can add symbol to context. *Failure:* timeout → show "Timed out" or empty list; no server → use text/index search. **Fallback when LSP unavailable:** Text-based or indexed symbol search (FileManager §12.1.4).
@@ -289,8 +289,8 @@ The Chat Window must **fully take advantage of LSP** so the user and the Assista
 ## 6. Scope and Phasing
 
 - **In scope for LSP MVP (this plan):** All features in §1, §5, and **§5.1 (LSP in the Chat Window)**, including: diagnostics, hover, completion, navigation (definition, references, symbol outline), inlay hints, semantic highlighting, code actions, code lens, signature help, request timeout/cancellation, LSP status in UI, per-server enable/disable, fallback when LSP unavailable (heuristic + optional install hint), **diagnostics in Assistant/Interview context**, **@ symbol with LSP workspace/symbol**, **code blocks in chat with hover and go-to-definition**, **Problems link from Chat**, and optional **inline diagnostics hint for @'d files**. Design and research for client-only integration: protocol usage, OpenCode-style server registry and lifecycle, Rust crates, and how it plugs into the File Manager and Chat.
-- **Out of scope here:** Full editor implementation details (tabs, buffers, presets) — those stay in FileManager.md; this doc only covers LSP-specific bits.
-- **Phasing:** **LSP is MVP** — implement with the desktop editor and Chat from the start. Use LSP when available; fallback to text-based/heuristic navigation and optional project index (FileManager §12.1.4) when LSP is disabled or unavailable.
+- **Out of scope here:** Full editor implementation details (tabs, buffers, presets) -- those stay in FileManager.md; this doc only covers LSP-specific bits.
+- **Phasing:** **LSP is MVP** -- implement with the desktop editor and Chat from the start. Use LSP when available; fallback to text-based/heuristic navigation and optional project index (FileManager §12.1.4) when LSP is disabled or unavailable.
 
 ---
 
@@ -299,7 +299,7 @@ The Chat Window must **fully take advantage of LSP** so the user and the Assista
 - **Document sync mode:** LSP supports **full sync** (entire document on each change) and **incremental sync** (only changed ranges). We should declare incremental in client capabilities when the server supports it to reduce payload and server work. Incremental requires the client to track version and send correct `contentChanges`; if we miss a change, server state can drift (some servers request full re-sync on version mismatch). **Implementation:** Use **incremental sync** when the server advertises `textDocumentSync.change = Incremental`; otherwise use full sync. Client tracks `DocumentState.version` per buffer and sends `contentChanges` in `didChange`; when the server requests full re-sync (e.g. version mismatch or explicit request), send full content in a single `didChange` and continue from that version. See §14.2 (DocumentState), §14.3 (message flow).
 - **Debouncing didChange:** Sending every keystroke can flood the server. **Decision:** Debounce `textDocument/didChange` (default **100 ms** after last edit); configurable in Settings. **Implementation:** On buffer edit, start or reset a debounce timer; when the timer fires, send one `didChange` with all changes since last send (or incremental range edits). No send on close without a pending change. See §14.4 (config), §16 (open points).
 - **Multi-root workspace:** When the user has multiple project roots (e.g. monorepo or several folders), LSP initialize sends `workspaceFolders`. Sending a huge list can slow startup and increase memory; some clients only send roots that have open files. **Decision:** Send **only roots that have at least one open document**, capped at **10** roots (§14.6). **Implementation:** At initialize, build `workspaceFolders` from the set of roots of currently open documents; cap at 10 (e.g. by recency of last open). When the user opens a file in a new root, spawn (or attach) server for that root; no need to re-initialize existing servers. Dynamically added roots get a server when a file from that root is opened. **Reference:** [emacs-lsp/lsp-mode #3246](https://github.com/emacs-lsp/lsp-mode/issues/3246), [golang/go #75270](https://go.dev/issue/75270) (gopls multi-workspace).
-- **Timeout and cancellation:** The LSP spec does not define timeouts; **the client is responsible** for timing out long-running requests and deciding acceptable latency (e.g. hover vs. workspace/symbol). **Decision:** Implement request timeouts (e.g. 5–10 s for hover/completion, longer for workspace symbol); config keys in §14.4. **Implementation:** Before sending a request, register a timeout (per config); on timeout, treat the request as failed (show "Timed out", discard response), and send LSP `$/cancelRequest` with the request id so the server can stop work. On user navigate or edit, cancel in-flight requests for the previous location (send cancel, discard response when it arrives). **Reference:** [language-server-protocol #1916](https://github.com/microsoft/language-server-protocol/issues/1916).
+- **Timeout and cancellation:** The LSP spec does not define timeouts; **the client is responsible** for timing out long-running requests and deciding acceptable latency (e.g. hover vs. workspace/symbol). **Decision:** Implement request timeouts (e.g. 5-10 s for hover/completion, longer for workspace symbol); config keys in §14.4. **Implementation:** Before sending a request, register a timeout (per config); on timeout, treat the request as failed (show "Timed out", discard response), and send LSP `$/cancelRequest` with the request id so the server can stop work. On user navigate or edit, cancel in-flight requests for the previous location (send cancel, discard response when it arrives). **Reference:** [language-server-protocol #1916](https://github.com/microsoft/language-server-protocol/issues/1916).
 - **Stale responses:** Responses can be invalidated by user edits before they are received (e.g. go-to-definition returns a location that no longer exists). **Decision:** On receiving a response, compare the response's document version (and optionally request id) to the current `DocumentState.version` for that URI. If the version increased since the request was sent, **discard** the response and do **not** re-request automatically (user can retry). For hover/completion/signatureHelp/definition/references, discard only; re-request only when the user explicitly repeats the action. **Implementation:** See §14.3 (Stale response policy). **Reference:** [LSP stale response / versioning](https://github.com/microsoft/language-server-protocol/issues/584).
 - **Security:** The LSP specification does not define sandboxing or process isolation. Language servers run as child processes (or over TCP) and typically have full access to project files and often the ability to run tools. **Decision (unchanged):** We rely on host OS and our spawn environment (cwd, env) for isolation. **Implementation:** Spawn servers with cwd set to project root and env limited to app-provided plus user-configured `lsp.servers.<id>.env`; do not pass full host env by default. No network or filesystem sandbox in MVP. For high-security scenarios, consider running LSP servers in a restricted environment (e.g. limited filesystem access, no network) if we ever support that; **out of scope for initial implementation.**
 
@@ -312,7 +312,7 @@ Each mitigation is **actionable**: who does what, and when.
 | Issue | Mitigation (who, what, when) |
 |-------|------------------------------|
 | **Server crash or exit** | **Client (LSP layer):** On process exit or broken pipe (e.g. when writing to stdin fails), (1) mark that server's state as Error, (2) clear all diagnostics for documents owned by that server (DiagnosticsCache), (3) notify UI to refresh Problems panel and gutter. **UI:** Show "Error" in status bar for that server; offer "Restart language server" button (or auto-restart with exponential backoff, e.g. 1s, 2s, 4s, cap 30s). **Logging:** Log exit code and stderr tail for debugging. |
-| **Server slow or unresponsive** | **Client:** Apply request timeouts (§14.4); on timeout, discard response and show "Timed out". Send LSP cancel on user navigate/edit. **UI:** While a request is in flight and no response yet, show "Waiting for language server…" in status bar; never block UI thread on LSP. **Optional (client):** After N timeouts for a server in a session, throttle or disable heavy features (e.g. workspace symbol) for that server until next restart. |
+| **Server slow or unresponsive** | **Client:** Apply request timeouts (§14.4); on timeout, discard response and show "Timed out". Send LSP cancel on user navigate/edit. **UI:** While a request is in flight and no response yet, show "Waiting for language server..." in status bar; never block UI thread on LSP. **Optional (client):** After N timeouts for a server in a session, throttle or disable heavy features (e.g. workspace symbol) for that server until next restart. |
 | **Many open documents** | **Client:** Limit documents pushed to each server (e.g. only currently open tabs, or N most recent per root). **Editor/FileManager:** When a buffer is evicted (FileManager §12.2.1), **client** sends `didClose` for that URI so the server can free memory. **Config:** Optional cap (e.g. max 50 open docs per server) in Settings. |
 | **Large workspace at init** | **Client:** At initialize, send only roots that have at least one open document, capped at 10 (§7, §14.6). **When:** During `initialize` request; do not send thousands of paths. |
 | **didChange flood** | **Client:** Debounce `didChange` (default 100 ms after last edit; §7, §14.4). When server supports incremental sync, send only `contentChanges`; otherwise full content. **When:** On every buffer edit, start/reset debounce timer; on timer fire, send one `didChange`. |
@@ -327,7 +327,7 @@ All of the following are **MVP** (in scope when LSP is phased in). They are spec
 
 | Feature | LSP / behavior |
 |--------|-----------------|
-| Inlay hints | `textDocument/inlayHint` — parameter names, type hints; render as inline decorations |
+| Inlay hints | `textDocument/inlayHint` -- parameter names, type hints; render as inline decorations |
 | Semantic highlighting | `textDocument/semanticTokens` when supported; fall back to syntax-only |
 | Code actions | `textDocument/codeAction`; show in context menu/lightbulb; apply via `workspace/applyEdit` (FileSafe) |
 | Code lens | `textDocument/codeLens`; render and invoke actionable links above symbols |
@@ -352,7 +352,7 @@ With LSP as MVP, the following enhancements become possible. Each is marked **Re
 | **Find references** | **Recommended** | `textDocument/references` | Find references command (e.g. Shift+F12): show all usages of the symbol under cursor in a **References** panel or inline list; click to open file at location. Complements Go to definition. |
 | **Rename symbol** | **Recommended** | `textDocument/rename`, `textDocument/prepareRename` | Rename symbol (e.g. F2): rename variable/function/type across the workspace. Show preview; apply via `workspace/applyEdit` (through FileSafe). |
 | **Format document / selection** | **Recommended** | `textDocument/formatting`, `textDocument/rangeFormatting` | Format document / Format selection (e.g. Shift+Alt+F): one-click format; apply via workspace/applyEdit. |
-| **Go to type definition** | Optional | `textDocument/typeDefinition` | For types/interfaces: "Go to type definition" (e.g. Ctrl+K Ctrl+T) opens the type’s definition. |
+| **Go to type definition** | Optional | `textDocument/typeDefinition` | For types/interfaces: "Go to type definition" (e.g. Ctrl+K Ctrl+T) opens the type's definition. |
 | **Go to implementation(s)** | Optional | `textDocument/implementation` | For interfaces/abstract members: "Go to implementation(s)" shows implementors; open in editor. |
 | **Document links** | Optional | `textDocument/documentLink` | Clickable **imports/includes** in the editor (e.g. `use crate::foo` or `import './bar'`); click opens the target file. |
 | **Call hierarchy** (LSP 3.17) | Optional | `textDocument/prepareCallHierarchy`, `callHierarchy/incomingCalls`, `callHierarchy/outgoingCalls` | "Call hierarchy" view: incoming and outgoing calls for the symbol under cursor; useful for impact analysis. |
@@ -382,7 +382,7 @@ With LSP as MVP, the following enhancements become possible. Each is marked **Re
 
 | Enhancement | Status | LSP usage | Behavior |
 |-------------|--------|-----------|----------|
-| **"Structure of this file"** | Optional | `textDocument/documentSymbol` | When the Interview (or user) asks "What’s the structure of this file?", use LSP `documentSymbol` to return an outline (symbols with name, kind, range) so the agent or user sees functions, classes, modules without parsing manually. |
+| **"Structure of this file"** | Optional | `textDocument/documentSymbol` | When the Interview (or user) asks "What's the structure of this file?", use LSP `documentSymbol` to return an outline (symbols with name, kind, range) so the agent or user sees functions, classes, modules without parsing manually. |
 | **Diagnostics in interview context** | **Recommended** | Same as Assistant | When the interview analyzes a codebase (e.g. Architecture phase), **include a summary of current LSP diagnostics** for opened or @'d files so the interviewer can note existing issues or tech debt. |
 
 #### Agent-facing LSP tool (Tools.md)
@@ -404,14 +404,14 @@ With LSP as MVP, the following enhancements become possible. Each is marked **Re
 
 ## 10. Transport alternatives and bridge pattern
 
-Most LSP servers use **stdio** (spawn process, stdin/stdout = JSON-RPC). Some use **TCP** (e.g. Godot’s GDScript LSP on port 6005). Tools like OpenCode and Cursor typically expect stdio only, so TCP-only servers don’t work without a bridge.
+Most LSP servers use **stdio** (spawn process, stdin/stdout = JSON-RPC). Some use **TCP** (e.g. Godot's GDScript LSP on port 6005). Tools like OpenCode and Cursor typically expect stdio only, so TCP-only servers don't work without a bridge.
 
 ### 10.1 Godot LSP bridge (reference)
 
-- **Context:** [Reddit: Made a Godot LSP bridge because it wasn’t working with OpenCode](https://www.reddit.com/r/godot/comments/1qumbhq/made_a_godot_lsp_bridge_because_it_wasnt_working/) — Godot uses TCP; OpenCode expects stdio; connection kept failing.
-- **Project:** [godot-lsp-stdio-bridge](https://github.com/code-xhyun/godot-lsp-stdio-bridge) — stdio-to-TCP bridge so AI coding tools (OpenCode, Claude Code, Cursor) can use Godot’s GDScript LSP. Run with `npx godot-lsp-stdio-bridge`; configure as the LSP “command” for `.gd` / `.gdshader`.
-- **Features:** Binary-safe buffers (no data loss on large files); auto port discovery (6005, 6007, 6008); auto reconnection when Godot restarts; Windows URI normalization (`C:\path` → `/C:/path`); notification buffering until initialize response (handles Godot’s non-standard ordering); memory limits (10 MB buffer, 1000 message queue); graceful shutdown. Zero dependencies (Node.js).
-- **Takeaway for us:** If we support a **custom command** per server (like OpenCode’s `lsp.<id>.command`), users can plug in **bridge processes** for TCP (or other) servers. We only speak stdio to the child process; the bridge translates to/from TCP. No need to implement TCP in our client for MVP; document that “use a bridge” is the supported pattern for TCP-only servers.
+- **Context:** [Reddit: Made a Godot LSP bridge because it wasn't working with OpenCode](https://www.reddit.com/r/godot/comments/1qumbhq/made_a_godot_lsp_bridge_because_it_wasnt_working/) -- Godot uses TCP; OpenCode expects stdio; connection kept failing.
+- **Project:** [godot-lsp-stdio-bridge](https://github.com/code-xhyun/godot-lsp-stdio-bridge) -- stdio-to-TCP bridge so AI coding tools (OpenCode, Claude Code, Cursor) can use Godot's GDScript LSP. Run with `npx godot-lsp-stdio-bridge`; configure as the LSP "command" for `.gd` / `.gdshader`.
+- **Features:** Binary-safe buffers (no data loss on large files); auto port discovery (6005, 6007, 6008); auto reconnection when Godot restarts; Windows URI normalization (`C:\path` → `/C:/path`); notification buffering until initialize response (handles Godot's non-standard ordering); memory limits (10 MB buffer, 1000 message queue); graceful shutdown. Zero dependencies (Node.js).
+- **Takeaway for us:** If we support a **custom command** per server (like OpenCode's `lsp.<id>.command`), users can plug in **bridge processes** for TCP (or other) servers. We only speak stdio to the child process; the bridge translates to/from TCP. No need to implement TCP in our client for MVP; document that "use a bridge" is the supported pattern for TCP-only servers.
 
 ### 10.2 Our stance
 
@@ -423,17 +423,17 @@ Most LSP servers use **stdio** (spawn process, stdin/stdout = JSON-RPC). Some us
 ## 11. References
 
 - [LSP Specification (3.17)](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/)
-- [OpenCode LSP docs](https://opencode.ai/docs/lsp/) — official; built-in servers, config, how it works
-- [OpenCode server.ts](https://github.com/anomalyco/opencode/blob/dev/packages/opencode/src/lsp/server.ts) — server registry, root discovery, spawn, 30+ languages
+- [OpenCode LSP docs](https://opencode.ai/docs/lsp/) -- official; built-in servers, config, how it works
+- [OpenCode server.ts](https://github.com/anomalyco/opencode/blob/dev/packages/opencode/src/lsp/server.ts) -- server registry, root discovery, spawn, 30+ languages
 - [lsp-types](https://docs.rs/lsp-types/), [lsp-client](https://docs.rs/lsp-client/), [async_lsp_client](https://docs.rs/async_lsp_client/)
 - [LSP timeout responsibility (client)](https://github.com/microsoft/language-server-protocol/issues/1916)
 - [LSP stale response / versioning](https://github.com/microsoft/language-server-protocol/issues/584)
-- [Godot LSP bridge (Reddit)](https://www.reddit.com/r/godot/comments/1qumbhq/made_a_godot_lsp_bridge_because_it_wasnt_working/) — TCP vs stdio; bridge pattern for OpenCode/Cursor/Claude Code
-- [godot-lsp-stdio-bridge](https://github.com/code-xhyun/godot-lsp-stdio-bridge) — stdio↔TCP bridge, port discovery, reconnection, binary-safe buffers
-- [ESLint](https://github.com/eslint/eslint) — ECMAScript/JavaScript (and TS) linter; v10.0.x flat config only; LSP via vscode-eslint/server or project eslint dep. See §3.3.
-- [ESLint v10 migration](https://eslint.org/docs/latest/use/migrate-to-10.0.0) — flat config, Node requirements.
-- [slint-lsp](https://crates.io/crates/slint-lsp) — LSP server for Slint (.slint); stdio; diagnostics, completion, goto definition, live-preview. See §3.3.1.
-- [Slint tooling (slint-lsp, fmt)](https://snapshots.slint.dev/master/docs/guide/tooling/manual-setup/#slint-lsp) — setup, config, formatting.
+- [Godot LSP bridge (Reddit)](https://www.reddit.com/r/godot/comments/1qumbhq/made_a_godot_lsp_bridge_because_it_wasnt_working/) -- TCP vs stdio; bridge pattern for OpenCode/Cursor/Claude Code
+- [godot-lsp-stdio-bridge](https://github.com/code-xhyun/godot-lsp-stdio-bridge) -- stdio↔TCP bridge, port discovery, reconnection, binary-safe buffers
+- [ESLint](https://github.com/eslint/eslint) -- ECMAScript/JavaScript (and TS) linter; v10.0.x flat config only; LSP via vscode-eslint/server or project eslint dep. See §3.3.
+- [ESLint v10 migration](https://eslint.org/docs/latest/use/migrate-to-10.0.0) -- flat config, Node requirements.
+- [slint-lsp](https://crates.io/crates/slint-lsp) -- LSP server for Slint (.slint); stdio; diagnostics, completion, goto definition, live-preview. See §3.3.1.
+- [Slint tooling (slint-lsp, fmt)](https://snapshots.slint.dev/master/docs/guide/tooling/manual-setup/#slint-lsp) -- setup, config, formatting.
 - Plans/FileManager.md (§6 out of scope, §10 editor enhancements, §11 presets, §12.1.4 symbol search without LSP, §12.2.7 symbol index staleness)
 - Plans/FinalGUISpec.md (placeholder for linter/build errors when LSP added)
 
@@ -445,7 +445,7 @@ Most LSP servers use **stdio** (spawn process, stdin/stdout = JSON-RPC). Some us
 
 Recommended ordering so an implementer can build incrementally with clear dependencies. **Dependencies:** each phase assumes the previous phase is done; within a phase, items are ordered by dependency where applicable.
 
-- **Phase 1 — Core LSP (must ship first):**
+- **Phase 1 -- Core LSP (must ship first):**
   - **Prerequisites:** Rust LSP client crate (lsp-types + stdio-capable client), config schema (OpenCode-aligned; §14.4).
   - **Client + registry:** Server registry (id, extensions, root finder, spawn); config (disabled, command, env, initialization). Include all built-in servers §3.2 + slint-lsp (§3.3.1); reinforce eslint (§3.3). *Depends on: Prerequisites.*
   - **Document sync:** didOpen / didChange (debounced, incremental when supported) / didClose / didSave; version tracking (§7, §14.2, §14.3). *Depends on: Client + registry.*
@@ -456,7 +456,7 @@ Recommended ordering so an implementer can build incrementally with clear depend
   - **Fallback when LSP unavailable:** Heuristic symbol search, no diagnostics; optional install hint (FileManager §12.1.4). *Depends on: Editor/FileManager.*
   - **Phase 1 outcome:** User can open files, see diagnostics in editor and Problems panel, get hover and completion; status bar shows LSP state; fallback when no server.
 
-- **Phase 2 — Editor navigation + Chat LSP:**
+- **Phase 2 -- Editor navigation + Chat LSP:**
   - **Navigation (editor):** documentSymbol (outline, breadcrumbs, Go to symbol), textDocument/definition; then **textDocument/references** (Find references → References panel), **textDocument/rename** (Rename with FileSafe), **textDocument/formatting** (Format document/selection). *Depends on: Phase 1.*
   - **Inlay hints, semantic highlighting, code actions, code lens, signature help** in editor. *Depends on: Phase 1.*
   - **Request timeout and cancellation; per-server enable/disable; Settings > LSP** (§7.4.2); server lifecycle (restart on crash, backoff); bridge pattern. *Depends on: Phase 1.*
@@ -464,7 +464,7 @@ Recommended ordering so an implementer can build incrementally with clear depend
   - **Diagnostics for LLM/Assistant** in context. *Depends on: Phase 1 diagnostics.*
   - **Phase 2 outcome:** Full editor LSP (definition, references, rename, format, code actions, code lens, signature help, inlay hints); Chat has LSP-aware @ symbol, code-block hover/definition, Problems link; Settings > LSP and fallbacks in place.
 
-- **Phase 3 — Additional enhancements (§9.1):**
+- **Phase 3 -- Additional enhancements (§9.1):**
   - **Recommended (high value):** Find references, Rename symbol, Format document (if not already in Phase 2); LSP diagnostics verification gate (optional); LSP snapshot in evidence (optional); Chat "Fix all" / "Rename" / "Where is this used?" / "Format file"; promote lsp tool (Tools.md).
   - **Optional (as capacity allows):** Go to type definition, Go to implementation, document links, call hierarchy, folding range, selection range, document highlight; Interview "structure of file" (documentSymbol); subagent selection from LSP; code lens "Run test" / "N references" click → References panel.
   - **Phase 3 outcome:** Optional verification gates, evidence snapshots, and Chat/Interview/agent-facing enhancements implemented per §9.1 acceptance criteria.
@@ -506,7 +506,7 @@ Where each LSP feature appears in the UI. FinalGUISpec and FileManager are autho
 |-------------|-------------|----------------|-------|
 | **Diagnostics (list)** | Bottom panel → **Problems** tab | FinalGUISpec §7.20 | Table: file, line, message, severity, source. Click → open file at location. Filter by severity. Empty: "No problems detected" when LSP active with zero diagnostics; "Open a file to see diagnostics" when no LSP server is running. |
 | **Diagnostics (inline)** | Editor: underlines + **gutter markers** (left of line numbers) | FileManager §10 (editor enhancements) | Severity colors: error (red), warning (amber), info (blue). Gutter: icon or dot per line with diagnostic. |
-| **LSP status** | **Status bar** (bottom strip) | FinalGUISpec §3.2, §7.18, §8.1 StatusBar | Show server name + state: e.g. "rust-analyzer: Ready", "Initializing…", "Error: …". When no server: show nothing (no "no LSP" indicator). |
+| **LSP status** | **Status bar** (bottom strip) | FinalGUISpec §3.2, §7.18, §8.1 StatusBar | Show server name + state: e.g. "rust-analyzer: Ready", "Initializing...", "Error: ...". When no server: show nothing (no "no LSP" indicator). |
 | **Hover** | **Tooltip** at cursor (or slightly offset) | Editor UX | Rich content: markdown when server provides it; else plain text. Themed; max width to avoid overflow. |
 | **Completion** | **Inline list** below cursor (or above if near bottom) | Editor UX | List of items (label, detail, kind icon); select with arrow keys + Enter; optional resolve on select. Trigger: typing, or explicit (e.g. Ctrl+Space). |
 | **Signature help** | **Popup** near cursor (e.g. below line) | Editor UX | Current signature + parameter highlight; optional previous/next overload. Dismiss on cursor move or Escape. |
@@ -516,7 +516,7 @@ Where each LSP feature appears in the UI. FinalGUISpec and FileManager are autho
 | **Breadcrumbs** | Above or below editor (path-style: file > symbol > block) | FileManager §10.1 | When LSP available, use `documentSymbol` for outline; else heuristic (§10.1). |
 | **Go to symbol** | Command palette / quick open (e.g. Ctrl+Shift+O) + dropdown | FileManager §10.2 | List from LSP `documentSymbol` when available; else regex outline (§12.1.4). |
 | **Install hint (fallback)** | **Toast** or **dismissible banner** in editor area | Optional | One-time or per-session: "Install rust-analyzer for full support" with link to docs or Settings. |
-| **LSP server error / crash** | Status bar; optional Restart action | FinalGUISpec §7.18, §8.1; LSPSupport §8 | Status bar shows "Error: …" for current editor context. Offer "Restart language server" (status bar context menu or Problems panel when diagnostics cleared). Do not block UI. |
+| **LSP server error / crash** | Status bar; optional Restart action | FinalGUISpec §7.18, §8.1; LSPSupport §8 | Status bar shows "Error: ..." for current editor context. Offer "Restart language server" (status bar context menu or Problems panel when diagnostics cleared). Do not block UI. |
 | **Problems link (Chat)** | Chat footer, right of context usage | FinalGUISpec §7.16, §7.20 | Label "N problems" when count > 0, "Problems" when 0. Placement: immediately right of context usage (context circle / "42k/128k"). Opens Problems tab filtered to project; when no project: "Select a project to see diagnostics". |
 | **Editor LSP shortcuts** | Editor, context menu | FinalGUISpec §7.18 | F12 = Go to definition; Shift+F12 = Find references; F2 = Rename; Ctrl+Space = completion; Ctrl+. = code actions; Ctrl+Shift+O = Go to symbol. Discoverable in Settings > Shortcuts. |
 | **LSP configuration** | **Settings > LSP** tab | FinalGUISpec §7.4.2 | Full GUI control: see below. |
@@ -537,10 +537,10 @@ Where each LSP feature appears in the UI. FinalGUISpec and FileManager are autho
 
 **Config surface (Settings > LSP):** The GUI **must** expose all of the following in **Settings > LSP** (FinalGUISpec §7.4.2):
 
-- **Disable automatic LSP server downloads** — Global toggle (default: off). When on, the app does not auto-download or auto-install any LSP server. Servers already on PATH or already installed are still used.
-- **Built-in servers** — List of all built-in servers (§3.2). Each server has an **Enable** toggle; **all are on by default**. User can turn any server off individually. Per server, user can **configure**: **Environment variables** (key-value), **Initialization options** (key-value or JSON sent in LSP `initialize`).
-- **Custom LSP servers** — Add / edit / remove custom servers. Each custom entry: **Name** (id), **Command** (array of strings), **Extensions** (comma-separated or list), and optionally **Environment variables** and **Initialization options**. **Edit** and **Remove** per row. Same schema as OpenCode (`command`, `extensions`, `env`, `initialization`).
-- **Code lens** — Toggle to show/hide code lens in the editor (default: on). FinalGUISpec §7.18.
+- **Disable automatic LSP server downloads** -- Global toggle (default: off). When on, the app does not auto-download or auto-install any LSP server. Servers already on PATH or already installed are still used.
+- **Built-in servers** -- List of all built-in servers (§3.2). Each server has an **Enable** toggle; **all are on by default**. User can turn any server off individually. Per server, user can **configure**: **Environment variables** (key-value), **Initialization options** (key-value or JSON sent in LSP `initialize`).
+- **Custom LSP servers** -- Add / edit / remove custom servers. Each custom entry: **Name** (id), **Command** (array of strings), **Extensions** (comma-separated or list), and optionally **Environment variables** and **Initialization options**. **Edit** and **Remove** per row. Same schema as OpenCode (`command`, `extensions`, `env`, `initialization`).
+- **Code lens** -- Toggle to show/hide code lens in the editor (default: on). FinalGUISpec §7.18.
 - **Custom LSP server validation:** When adding or editing a custom server: (1) **Command** must be non-empty (at least one string; trim whitespace). If empty, show inline error "Command is required" and disable Save/Apply. (2) **Extensions** must be non-empty (at least one extension). If empty, show "At least one file extension is required" and disable Save/Apply. (3) **Name** (id) must be unique among custom servers; if duplicate, show "Name already used" and disable Save/Apply. Saving or applying with invalid fields is not allowed.
 - **Initialization options (JSON):** When the user edits **Initialization options** as JSON (built-in or custom servers), validate on blur or on Save. If invalid JSON: show inline error (e.g. "Invalid JSON: unexpected token at line N"), do **not** persist the value, block Save and focus the field. Do not send invalid JSON to the LSP server (use last known valid value or empty object). FinalGUISpec §7.4.2.
 
@@ -553,10 +553,10 @@ Settings are persisted in app config (redb); optional project-level overrides. S
 ### 14.1 Module and crate layout
 
 - **Decision:** LSP client and server registry live in the **same crate as the editor** (e.g. `puppet-master-rs/src/`) in a dedicated **submodule `src/lsp/`** containing:
-  - `client.rs` — LSP client wrapper (stdio transport, lifecycle, request/response).
-  - `registry.rs` — Server registry (id, extensions, root finder, spawn); reads config.
-  - `session.rs` or `server_handle.rs` — Per-(server_id, root) process handle and state.
-  - `document.rs` or `sync.rs` — Document version tracking and didOpen/didChange/didClose/didSave.
+  - `client.rs` -- LSP client wrapper (stdio transport, lifecycle, request/response).
+  - `registry.rs` -- Server registry (id, extensions, root finder, spawn); reads config.
+  - `session.rs` or `server_handle.rs` -- Per-(server_id, root) process handle and state.
+  - `document.rs` or `sync.rs` -- Document version tracking and didOpen/didChange/didClose/didSave.
 - **Dependencies:** `lsp-types`, chosen LSP client crate (e.g. `lsp-client` or `async_lsp_client`), `tokio` for async. No need for tower-lsp unless implementing a server.
 
 ### 14.2 Core data structures (conceptual)
@@ -582,7 +582,7 @@ Settings are persisted in app config (redb); optional project-level overrides. S
 
 **Restart backoff:**
 
-- **Policy:** Exponential backoff: 1 s → 2 s → 4 s → 8 s → … up to **max 60 s**. After a successful request (e.g. first successful response after init), reset backoff to 1 s for the next restart. On user-initiated "Restart language server", reset backoff and attempt restart immediately (no delay).
+- **Policy:** Exponential backoff: 1 s → 2 s → 4 s → 8 s → ... up to **max 60 s**. After a successful request (e.g. first successful response after init), reset backoff to 1 s for the next restart. On user-initiated "Restart language server", reset backoff and attempt restart immediately (no delay).
 - **Implementation:** Store per (server_id, root): `restart_attempt_count` or `next_retry_delay`; on crash/error, schedule restart after `min(next_retry_delay, 60_000)` ms; on success after init, set `next_retry_delay = 1000`; on explicit Restart, set delay to 0 and restart now.
 
 ### 14.3 Message flow
@@ -601,7 +601,7 @@ All LSP I/O on **async task** (tokio); results sent to **main thread** (e.g. via
 
 - **Keys:** `lsp.enabled` (bool, default true), `lsp.servers.<id>.disabled` (bool), `lsp.servers.<id>.command` (string array), `lsp.servers.<id>.extensions` (string array), `lsp.servers.<id>.env` (object), `lsp.servers.<id>.initialization` (object). **Decision:** Config namespace is `lsp.servers.<id>.*`; support legacy alias `lsp.<id>.disabled` (read/write maps to `lsp.servers.<id>.disabled`). Align with OpenCode schema for compatibility.
 - **Storage:** App-level in **redb** (or existing config YAML) under a key like `config.lsp`. Project-level override: optional file in project root (e.g. `.puppet-master/lsp.json`) or key under project id in redb.
-- **Debounce / timeouts:** Store in Settings → Editor or Developer: `lsp.didChangeDebounceMs` (default **100**, range 50–500), `lsp.hoverTimeoutMs` (default **5000**), `lsp.completionTimeoutMs` (default **5000**), `lsp.workspaceSymbolTimeoutMs` (default **10000**), `lsp.hoverDelayMs` (default **300**, range 100–1000, delay before sending hover request). All timeouts user-configurable. Document in implementation guide.
+- **Debounce / timeouts:** Store in Settings → Editor or Developer: `lsp.didChangeDebounceMs` (default **100**, range 50-500), `lsp.hoverTimeoutMs` (default **5000**), `lsp.completionTimeoutMs` (default **5000**), `lsp.workspaceSymbolTimeoutMs` (default **10000**), `lsp.hoverDelayMs` (default **300**, range 100-1000, delay before sending hover request). All timeouts user-configurable. Document in implementation guide.
 
 ### 14.5 Trigger and refresh behavior
 
@@ -627,19 +627,19 @@ Code blocks in Chat messages (§5.1) that are not backed by a project file use *
 
 ### 14.8 Registry contract (ServerSpec)
 
-The server registry is the single source of truth for which LSP servers exist and how they are started. Each entry is a **server spec** with the following contract (Rust-friendly types below are conceptual; implement using your crate’s `PathBuf`, `Result`, and process handle type).
+The server registry is the single source of truth for which LSP servers exist and how they are started. Each entry is a **server spec** with the following contract (Rust-friendly types below are conceptual; implement using your crate's `PathBuf`, `Result`, and process handle type).
 
 **ServerSpec (conceptual):**
 
-- **id:** `String` — Unique server identifier (e.g. `"rust"`, `"eslint"`, `"slint-lsp"`). Used in config as `lsp.servers.<id>.*` and as the process key with root.
-- **extensions:** `Vec<String>` — File extensions this server handles (e.g. `[".rs"]`, `[".ts", ".tsx"]`). Used to match an opened file to a server (see §3.6 for primary vs supplementary).
-- **root_finder:** `fn(file_path: &Path) -> Option<PathBuf>` — Given the **currently opened file path** (absolute), returns the project root for this server, or `None` if no root is found (server will not be started for that file). Implementation: take the parent directory of `file_path`, then walk upward until a directory matching the rule for this server id (§3.5) is found; return `Some(dir)` or, when the table specifies “else file’s directory”, return the file’s directory when no marker is found.
-- **spawn:** `fn(root: &Path, config: &LspServerConfig) -> Result<ProcessHandle, SpawnError>` — Starts the LSP server process with **cwd = root** and config overrides (command, env, initialization). Returns a handle to the process (stdio used for JSON-RPC). Called **lazily**: only when the first document open for that **(id, root)** occurs (see below).
-- **init_options:** `Option<Value>` — Optional JSON object sent in the LSP `initialize` request as `initializationOptions`. May be overridden by config `lsp.servers.<id>.initialization`.
+- **id:** `String` -- Unique server identifier (e.g. `"rust"`, `"eslint"`, `"slint-lsp"`). Used in config as `lsp.servers.<id>.*` and as the process key with root.
+- **extensions:** `Vec<String>` -- File extensions this server handles (e.g. `[".rs"]`, `[".ts", ".tsx"]`). Used to match an opened file to a server (see §3.6 for primary vs supplementary).
+- **root_finder:** `fn(file_path: &Path) -> Option<PathBuf>` -- Given the **currently opened file path** (absolute), returns the project root for this server, or `None` if no root is found (server will not be started for that file). Implementation: take the parent directory of `file_path`, then walk upward until a directory matching the rule for this server id (§3.5) is found; return `Some(dir)` or, when the table specifies "else file's directory", return the file's directory when no marker is found.
+- **spawn:** `fn(root: &Path, config: &LspServerConfig) -> Result<ProcessHandle, SpawnError>` -- Starts the LSP server process with **cwd = root** and config overrides (command, env, initialization). Returns a handle to the process (stdio used for JSON-RPC). Called **lazily**: only when the first document open for that **(id, root)** occurs (see below).
+- **init_options:** `Option<Value>` -- Optional JSON object sent in the LSP `initialize` request as `initializationOptions`. May be overridden by config `lsp.servers.<id>.initialization`.
 
-**When root_finder is invoked:** On every **document open** (user opens a file in the editor), the client gets the file path, then for each server whose **extensions** match the file’s extension, the client calls that server’s **root_finder(file_path)**. If it returns `Some(root)`, the client considers that server a candidate for this file (subject to §3.6 primary/supplementary).
+**When root_finder is invoked:** On every **document open** (user opens a file in the editor), the client gets the file path, then for each server whose **extensions** match the file's extension, the client calls that server's **root_finder(file_path)**. If it returns `Some(root)`, the client considers that server a candidate for this file (subject to §3.6 primary/supplementary).
 
-**When spawn is called:** **Lazy, per (id, root).** When the client needs an LSP process for a given **(server_id, root)** (e.g. to send `didOpen` for a file that resolved to that root), it looks up whether a process for **(server_id, root)** already exists. If not, it calls **spawn(root, config)** once, stores the resulting `ProcessHandle` keyed by **(server_id, root)**, and uses that process for all documents under that root for that server. If spawn fails, the client does not retry for that (id, root) until the user retries (e.g. “Restart language server”) or the config changes.
+**When spawn is called:** **Lazy, per (id, root).** When the client needs an LSP process for a given **(server_id, root)** (e.g. to send `didOpen` for a file that resolved to that root), it looks up whether a process for **(server_id, root)** already exists. If not, it calls **spawn(root, config)** once, stores the resulting `ProcessHandle` keyed by **(server_id, root)**, and uses that process for all documents under that root for that server. If spawn fails, the client does not retry for that (id, root) until the user retries (e.g. "Restart language server") or the config changes.
 
 **Summary for implementer:** (1) Registry is a list of ServerSpec (id, extensions, root_finder, spawn, optional init_options). (2) On file open: path → extensions → for each matching server, root_finder(path) → Option<root>; then apply §3.6 to pick primary and supplementary servers. (3) For each (id, root) that must run: if no process exists, spawn(root, config) and store handle; then send initialize and didOpen. (4) One process per (server_id, root); reuse for all documents under that root for that server.
 
@@ -669,7 +669,7 @@ Order for an agent to build a step-by-step implementation guide. Each phase has 
 The following should be decided at implementation time and documented in the implementation guide:
 
 - **Exact timeout values** (hover, completion, workspace symbol) and whether they are user-configurable in Settings.
-- **Debounce default** for didChange (100 ms recommended; range 50–200 ms).
+- **Debounce default** for didChange (100 ms recommended; range 50-200 ms).
 - **workspaceFolders cap** (10 recommended) and policy when cap exceeded (e.g. LRU by last open).
 - **Settings > LSP** is a dedicated tab under Settings (FinalGUISpec §7.4.2); no further location decision needed.
 - **Project-level LSP config:** File path and format (e.g. `.puppet-master/lsp.json`) and merge rules with app-level config.
@@ -683,7 +683,7 @@ The following should be decided at implementation time and documented in the imp
 
 Use this as the **single, implementation-ready checklist** an agent can follow. Cross-references: §5.1 = LSP in the Chat Window; §9.1 = Additional enhancements (optional/recommended). FinalGUISpec §7.16 = Chat, §7.20 = Bottom Panel (Problems), §7.4.2 = Settings > LSP; FileManager §10.10, §12.1.4.
 
-**Acceptance (done when):** Each Phase 1–4 item is done when: (1) **Prerequisites:** App builds with lsp-types + chosen client crate; config schema and keys exist in storage. (2) **Phase 1:** Opening a file with a matching server spawns the server; diagnostics appear in Problems tab and gutter; hover and completion work with timeout/stale discard; status bar shows server state. (3) **Phase 2:** Go to definition, Find references, Rename, Format work; code actions apply via FileSafe; code lens invokes; Settings > LSP lists all servers and custom entries with validation. (4) **Phase 3:** Assistant/Interview context includes diagnostic summary (capped 10 files, 50 diagnostics); @ symbol includes LSP workspace/symbol; code blocks in Chat support hover and click-to-definition; Problems link in Chat footer opens Problems tab. (5) **Phase 4:** Optional gate, evidence snapshot, subagent bias, and Chat/Interview enhancements implemented per §9.1 or explicitly deferred and documented.
+**Acceptance (done when):** Each Phase 1-4 item is done when: (1) **Prerequisites:** App builds with lsp-types + chosen client crate; config schema and keys exist in storage. (2) **Phase 1:** Opening a file with a matching server spawns the server; diagnostics appear in Problems tab and gutter; hover and completion work with timeout/stale discard; status bar shows server state. (3) **Phase 2:** Go to definition, Find references, Rename, Format work; code actions apply via FileSafe; code lens invokes; Settings > LSP lists all servers and custom entries with validation. (4) **Phase 3:** Assistant/Interview context includes diagnostic summary (capped 10 files, 50 diagnostics); @ symbol includes LSP workspace/symbol; code blocks in Chat support hover and click-to-definition; Problems link in Chat footer opens Problems tab. (5) **Phase 4:** Optional gate, evidence snapshot, subagent bias, and Chat/Interview enhancements implemented per §9.1 or explicitly deferred and documented.
 
 ### Prerequisites
 
@@ -698,7 +698,7 @@ Use this as the **single, implementation-ready checklist** an agent can follow. 
 - [ ] Subscribe to textDocument/publishDiagnostics; map to editor underlines and gutter markers; add Problems panel in bottom panel (FinalGUISpec §7.20): table with file, line, message, severity, source; click opens file at line.
 - [ ] Implement textDocument/hover; show tooltip at cursor (timeout and cancel on navigate/edit).
 - [ ] Implement textDocument/completion on trigger; render inline list; apply on select; optional completionItem/resolve.
-- [ ] Show LSP status in status bar (e.g. "rust-analyzer: Ready", "Initializing…", "Error: …"). FinalGUISpec §8.1 StatusBar.
+- [ ] Show LSP status in status bar (e.g. "rust-analyzer: Ready", "Initializing...", "Error: ..."). FinalGUISpec §8.1 StatusBar.
 
 ### Phase 2: Editor (navigation and editing)
 
@@ -746,12 +746,12 @@ This section defines the **contract, config, failure handling, evidence schema, 
 - **When it runs:** After each **iteration** completes (before promoting to next tier). Optionally configurable to run at **subtask** boundary only, **task** boundary only, or **phase** boundary only; default: run at **subtask** boundary (after last iteration of the subtask, before promotion to task).
 - **Tier boundaries:** Configurable per tier: phase, task, subtask. At least one of these must be enabled for the gate to run; when the orchestrator reaches that boundary (e.g. "subtask passed"), the LSP gate runs as one of the criteria before the tier is marked passed.
 - **Scope:** What files are checked. One of:
-  - **`changed`** — Only files that were modified in the last iteration (or in the current subtask). Requires tracking changed paths (e.g. from git diff or execution engine "files touched").
-  - **`open`** — Only files currently open in the editor (or in the run context). Requires LSP client to know "open" set for the run.
-  - **`project`** — All project files that have an LSP server (bounded: e.g. under project root, or only files with open documents). Default: **`changed`** to keep checks fast and relevant.
+  - **`changed`** -- Only files that were modified in the last iteration (or in the current subtask). Requires tracking changed paths (e.g. from git diff or execution engine "files touched").
+  - **`open`** -- Only files currently open in the editor (or in the run context). Requires LSP client to know "open" set for the run.
+  - **`project`** -- All project files that have an LSP server (bounded: e.g. under project root, or only files with open documents). Default: **`changed`** to keep checks fast and relevant.
 - **"No LSP errors" meaning:** Configurable severity threshold:
-  - **`error`** — Gate passes if there are **no diagnostics with severity Error** in scope. Warnings and Info are ignored.
-  - **`error_and_warning`** — Gate passes if there are **no diagnostics with severity Error or Warning** in scope. Info is ignored.
+  - **`error`** -- Gate passes if there are **no diagnostics with severity Error** in scope. Warnings and Info are ignored.
+  - **`error_and_warning`** -- Gate passes if there are **no diagnostics with severity Error or Warning** in scope. Info is ignored.
   - Default: **`error`**.
 
 #### Config
@@ -825,13 +825,13 @@ Store one JSON file per snapshot (e.g. one per gate run). Each entry in the snap
 }
 ```
 
-- **path** — Relative to project root or absolute; same as LSP URI normalized to path.
-- **line** — 0-based or 1-based per LSP spec (LSP uses 0-based); **Decision:** Store and display 1-based in evidence and UI; convert to 0-based only at the LSP protocol boundary.
-- **character** — Offset in line (0-based).
-- **severity** — "Error" | "Warning" | "Info" | "Hint".
-- **message** — Diagnostic message.
-- **source** — Optional; server name (e.g. rust-analyzer).
-- **code** — Optional; diagnostic code if provided by server.
+- **path** -- Relative to project root or absolute; same as LSP URI normalized to path.
+- **line** -- 0-based or 1-based per LSP spec (LSP uses 0-based); **Decision:** Store and display 1-based in evidence and UI; convert to 0-based only at the LSP protocol boundary.
+- **character** -- Offset in line (0-based).
+- **severity** -- "Error" | "Warning" | "Info" | "Hint".
+- **message** -- Diagnostic message.
+- **source** -- Optional; server name (e.g. rust-analyzer).
+- **code** -- Optional; diagnostic code if provided by server.
 
 #### File format and location
 
@@ -853,9 +853,9 @@ Store one JSON file per snapshot (e.g. one per gate run). Each entry in the snap
 
 - **Where in the flow:** When the orchestrator is about to **select a subagent for the next subtask** (or task), it can optionally query LSP diagnostics for **files in scope** for that subtask/task. **Decision:** Default **off**. Config key `orchestrator.lsp_subagent_bias` (bool, default false). When true, call `get_diagnostics_for_paths` and apply bias toward matching-language subagent. If any file has diagnostics (e.g. errors) from a language server X, **prefer** the subagent that matches language X (e.g. rust-analyzer → rust-engineer, pyright → python-pro).
 - **"Files in scope" definition:** One of (configurable or fixed):
-  - **Changed in last iteration** — Files modified in the most recent iteration (same as LSP gate scope "changed" for consistency).
-  - **Open in editor** — Files currently open in the run/context.
-  - **Task's file list** — If the task/subtask has an explicit list of files (e.g. from PRD or plan), use that list.
+  - **Changed in last iteration** -- Files modified in the most recent iteration (same as LSP gate scope "changed" for consistency).
+  - **Open in editor** -- Files currently open in the run/context.
+  - **Task's file list** -- If the task/subtask has an explicit list of files (e.g. from PRD or plan), use that list.
   - Default: **changed in last iteration** for consistency with LSP gate.
 - **Documentation:** This behavior is specified in **Plans/orchestrator-subagent-integration.md** (Subagent selection from LSP) and summarized here. Implement in the same place that performs `select_for_tier`: after building tier context, optionally call LSP client `get_diagnostics_for_paths(scope_paths)`; from the returned diagnostics, derive language(s) from `source` or from file extension → server id mapping; then bias subagent selection toward matching language (e.g. add to ProjectContext or TierContext: "prefer_subagents": ["rust-engineer"] when Rust errors present).
 

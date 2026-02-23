@@ -1,15 +1,15 @@
 # Crosswalk (Canonical)
 
 <!--
-PUPPET MASTER — CANONICAL CROSSWALK
+PUPPET MASTER -- CANONICAL CROSSWALK
 
 Purpose:
 - Define *ownership boundaries* for core primitives so plan documents do not drift into duplicating each other.
 - Keep it DRY: other plans reference these sections rather than redefining boundaries.
 
 ABSOLUTE NAMING RULE:
-- Platform name is “Puppet Master” only.
-- If older naming exists, refer to it only as “legacy naming” (do not quote it).
+- Platform name is "Puppet Master" only.
+- If older naming exists, refer to it only as "legacy naming" (do not quote it).
 -->
 
 ## 0. Scope
@@ -35,12 +35,12 @@ ContractRef: PolicyRule:Decision_Policy.md§2, SchemaID:Spec_Lock.json
 ## 2. Primitive index (definitions are DRY)
 This file uses primitive names as **routing labels** only; detailed schemas belong to their SSOT documents.
 
-- `Primitive:Provider` — provider CLIs and their normalized streams (see `Plans/CLI_Bridged_Providers.md`).
-- `Primitive:Tool` — host tools invoked by Puppet Master (see `Plans/Tools.md`).
-- `Primitive:UICommand` — stable UI command IDs (see `Plans/Contracts_V0.md#UICommand` and `Plans/UI_Command_Catalog.md`).
-- `Primitive:SessionStore` — persistent store boundaries (see `Plans/storage-plan.md`).
-- `Primitive:PatchPipeline` — Git + PR workflows (see `Plans/WorktreeGitImprovement.md` and `Plans/GitHub_API_Auth_and_Flows.md`).
-- `ContractName:Contracts_V0.md#AuthState` — auth state + events.
+- `Primitive:Provider` -- provider CLIs and their normalized streams (see `Plans/CLI_Bridged_Providers.md`).
+- `Primitive:Tool` -- host tools invoked by Puppet Master (see `Plans/Tools.md`).
+- `Primitive:UICommand` -- stable UI command IDs (see `Plans/Contracts_V0.md#UICommand` and `Plans/UI_Command_Catalog.md`).
+- `Primitive:SessionStore` -- persistent store boundaries (see `Plans/storage-plan.md`).
+- `Primitive:PatchPipeline` -- Git + PR workflows (see `Plans/WorktreeGitImprovement.md` and `Plans/GitHub_API_Auth_and_Flows.md`).
+- `ContractName:Contracts_V0.md#AuthState` -- auth state + events.
 
 ContractRef: ContractName:Contracts_V0.md, SchemaID:Spec_Lock.json
 

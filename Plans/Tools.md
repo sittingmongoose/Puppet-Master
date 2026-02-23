@@ -1,6 +1,6 @@
-# Adding Tool Support — Research & Plan
+# Adding Tool Support -- Research & Plan
 
-**Scope:** This document lives in `Plans/` only. It is the **canonical plan for tool support**: built-in tools, custom tools, **MCP** (integration with the registry and permission model), and the permission model (allow/deny/ask), aligned with [OpenCode’s Tools model](https://opencode.ai/docs/tools/). Per-platform MCP config paths, GUI MCP settings (Context7, cited web search), and framework-specific testing tools are detailed in **Plans/newtools.md** and AGENTS.md; this doc defines the tool set, permissions, and how MCP fits in.
+**Scope:** This document lives in `Plans/` only. It is the **canonical plan for tool support**: built-in tools, custom tools, **MCP** (integration with the registry and permission model), and the permission model (allow/deny/ask), aligned with [OpenCode's Tools model](https://opencode.ai/docs/tools/). Per-platform MCP config paths, GUI MCP settings (Context7, cited web search), and framework-specific testing tools are detailed in **Plans/newtools.md** and AGENTS.md; this doc defines the tool set, permissions, and how MCP fits in.
 
 ---
 
@@ -8,10 +8,10 @@
 
 **Goal:** Define and configure the **tools** an LLM can use during runs (Assistant, Interview, Orchestrator). Tools let the agent perform actions in the codebase and environment. This doc is canonical for:
 
-- **Built-in tools** — A standard set of tools (bash, edit, read, grep, webfetch, websearch, etc.) with clear semantics, limits, and a unified permission model.
-- **Custom tools** — User- or project-defined tools (config-defined functions the LLM can call), including schema and how they plug into the registry.
-- **MCP** — MCP tools are **in scope**: they are first-class tools in the central registry; same permission model (including wildcards); naming and precedence with built-in/custom. MCP server config, GUI (Context7, cited web search), and per-platform config paths are specified in **newtools.md**; here we define how MCP-discovered tools integrate with the registry and policy.
-- **Permission model** — Per-tool (or wildcard) control: **allow**, **deny**, or **ask** (require approval before running); defaults, precedence, granular rules (pattern-based), and interaction with FileSafe.
+- **Built-in tools** -- A standard set of tools (bash, edit, read, grep, webfetch, websearch, etc.) with clear semantics, limits, and a unified permission model.
+- **Custom tools** -- User- or project-defined tools (config-defined functions the LLM can call), including schema and how they plug into the registry.
+- **MCP** -- MCP tools are **in scope**: they are first-class tools in the central registry; same permission model (including wildcards); naming and precedence with built-in/custom. MCP server config, GUI (Context7, cited web search), and per-platform config paths are specified in **newtools.md**; here we define how MCP-discovered tools integrate with the registry and policy.
+- **Permission model** -- Per-tool (or wildcard) control: **allow**, **deny**, or **ask** (require approval before running); defaults, precedence, granular rules (pattern-based), and interaction with FileSafe.
 
 **Secondary references:** Framework-specific testing tools (Playwright, headless runners) and their catalog are in **newtools.md** (GUI tool catalog). FileSafe (command blocklist, write scope, sensitive files) is in **FileSafe.md** and must align with the central tool policy. Permission semantics and granular rules align with [OpenCode Permissions](https://opencode.ai/docs/permissions/); cross-plan alignment with FileSafe, FileManager, assistant-chat-design, orchestrator, and interview is in §2.5 and §10.
 
@@ -19,13 +19,13 @@
 
 The GUI must expose tool support in two places (see **Plans/FinalGUISpec.md**):
 
-- **Settings > Advanced > MCP Configuration** — Already specified: per-platform MCP toggles, MCP server list, Context7 API key, web search provider. MCP-discovered tools then feed into the central registry and permission model (§5).
+- **Settings > Advanced > MCP Configuration** -- Already specified: per-platform MCP toggles, MCP server list, Context7 API key, web search provider. MCP-discovered tools then feed into the central registry and permission model (§5).
 
-- **Settings > Advanced > Tool permissions** — **Required:** Per-tool (and optional wildcard) allow/deny/ask; **presets are in scope for MVP** (Read-only, Plan mode, Full) per §10.4 — user may choose not to apply a preset, but the preset feature must be implemented; list of built-in + MCP-discovered tools with permission dropdown per row. Bound to the same config that the run uses for the central tool registry. Spec: FinalGUISpec §7.4.1, §7.8 (Usage view).
+- **Settings > Advanced > Tool permissions** -- **Required:** Per-tool (and optional wildcard) allow/deny/ask; **presets are in scope for MVP** (Read-only, Plan mode, Full) per §10.4 -- user may choose not to apply a preset, but the preset feature must be implemented; list of built-in + MCP-discovered tools with permission dropdown per row. Bound to the same config that the run uses for the central tool registry. Spec: FinalGUISpec §7.4.1, §7.8 (Usage view).
 
 **Usage page:** Tool usage widget is specified in FinalGUISpec §7.8 (Usage view): tool name, invocation count, latency p50/p95, error rate; data from seglog rollups via analytics scan. See §9.2 enhancement list for context.
 
-**Optional (enhancements):** Tool description in run summary or Config (“which tools are available and their permission for this run”). See §9.2.
+**Optional (enhancements):** Tool description in run summary or Config ("which tools are available and their permission for this run"). See §9.2.
 
 ---
 
@@ -35,9 +35,9 @@ By default, tools can be **enabled** without per-call approval. Behavior is cont
 
 ### 2.1 Values and semantics
 
-- **allow** — Tool may run without prompting. Use for read-only or low-risk tools (read, grep, glob, list) or when the user has opted into full automation (e.g. YOLO mode).
-- **deny** — Tool is disabled for the run. The agent cannot invoke it; attempts are blocked and optionally logged.
-- **ask** — User must approve each use, or “approve for session” (per assistant-chat-design). Applies to bash, edit, webfetch, websearch, and any MCP/custom tool where approval is desired.
+- **allow** -- Tool may run without prompting. Use for read-only or low-risk tools (read, grep, glob, list) or when the user has opted into full automation (e.g. YOLO mode).
+- **deny** -- Tool is disabled for the run. The agent cannot invoke it; attempts are blocked and optionally logged.
+- **ask** -- User must approve each use, or "approve for session" (per assistant-chat-design). Applies to bash, edit, webfetch, websearch, and any MCP/custom tool where approval is desired.
 
 ### 2.2 Config and precedence
 
@@ -56,27 +56,27 @@ Example:
 }
 ```
 
-- **Wildcards:** e.g. `mymcp_*` applies one permission to all tools from an MCP server or namespace. Enables “ask for all tools from server X” without listing each tool.
+- **Wildcards:** e.g. `mymcp_*` applies one permission to all tools from an MCP server or namespace. Enables "ask for all tools from server X" without listing each tool.
 - **Precedence:** **deny** overrides allow/ask when multiple rules match (e.g. `edit: deny` and `*: allow` → edit is denied). Resolution order: §10.3.
-- **Default:** If a tool has no explicit permission, use the default policy table (§10.2). Pattern matching: `*` = zero or more chars, `?` = one char ([OpenCode Permissions — Wildcards](https://opencode.ai/docs/permissions/#wildcards)). With granular rules (object syntax), last matching rule wins ([OpenCode Permissions](https://opencode.ai/docs/permissions/)).
+- **Default:** If a tool has no explicit permission, use the default policy table (§10.2). Pattern matching: `*` = zero or more chars, `?` = one char ([OpenCode Permissions -- Wildcards](https://opencode.ai/docs/permissions/#wildcards)). With granular rules (object syntax), last matching rule wins ([OpenCode Permissions](https://opencode.ai/docs/permissions/)).
 
 ### 2.3 Session vs run; subagents
 
-- **Session (Assistant):** “Approve for session” can persist allow for that chat session only; do not persist across restarts (per assistant-chat-design).
+- **Session (Assistant):** "Approve for session" can persist allow for that chat session only; do not persist across restarts (per assistant-chat-design).
 - **Run (Orchestrator/Interview):** Permissions are fixed from run config at start; no interactive ask unless HITL is enabled at tier boundaries (human-in-the-loop.md).
 - **Subagents:** todowrite and todoread default to **deny** for subagent runs to avoid conflicting task state. Run config may override via e.g. `subagent_tool_overrides: { "todowrite": "allow", "todoread": "allow" }` (exact key and schema in implementation plan; document in orchestrator-subagent-integration.md). All other tools use the same default table (§10.2) unless run config specifies otherwise.
 
 ### 2.4 Interaction with FileSafe
 
-FileSafe (command blocklist, write scope, sensitive files) runs **in addition to** tool permissions. A tool may be **allowed** by permission but still **blocked** by FileSafe (e.g. bash allowed, but command `rm -rf /` blocked). Tool permission = “may the agent call this tool?”; FileSafe = “may this specific invocation proceed?”. See **FileSafe.md**; ensure policy engine applies both layers.
+FileSafe (command blocklist, write scope, sensitive files) runs **in addition to** tool permissions. A tool may be **allowed** by permission but still **blocked** by FileSafe (e.g. bash allowed, but command `rm -rf /` blocked). Tool permission = "may the agent call this tool?"; FileSafe = "may this specific invocation proceed?". See **FileSafe.md**; ensure policy engine applies both layers.
 
 ### 2.5 OpenCode Permissions alignment and cross-plan references
 
 Permission semantics and optional **granular rules** align with [OpenCode Permissions](https://opencode.ai/docs/permissions/). Summary and cross-plan ties:
 
-**Granular rules (object syntax):** Per-tool, permission can be an **object** with pattern-based rules ([OpenCode — Granular Rules](https://opencode.ai/docs/permissions/#granular-rules-object-syntax)): **bash** — command pattern (`"git *": "allow"`, `"rm *": "deny"`); **edit** — file path; **read**, **glob**, **grep**, **list** — path/pattern; **webfetch** — URL. **Last matching rule wins.** FileSafe-style: bash blocklist ≈ bash deny patterns, write scope ≈ edit path allowlist, sensitive files ≈ read path deny.
+**Granular rules (object syntax):** Per-tool, permission can be an **object** with pattern-based rules ([OpenCode -- Granular Rules](https://opencode.ai/docs/permissions/#granular-rules-object-syntax)): **bash** -- command pattern (`"git *": "allow"`, `"rm *": "deny"`); **edit** -- file path; **read**, **glob**, **grep**, **list** -- path/pattern; **webfetch** -- URL. **Last matching rule wins.** FileSafe-style: bash blocklist ≈ bash deny patterns, write scope ≈ edit path allowlist, sensitive files ≈ read path deny.
 
-**Special permissions:** **external_directory** — paths outside project cwd; default ask; `~`/`$HOME` expansion ([OpenCode — External Directories](https://opencode.ai/docs/permissions/#external-directories)). **doom_loop** — same tool 3× identical input; default ask. **Defaults:** read allows except `.env` denied (`*.env`, `*.env.*`; `*.env.example` allowed) ([OpenCode — Defaults](https://opencode.ai/docs/permissions/#defaults)). **What “Ask” does:** once, always, reject ([OpenCode](https://opencode.ai/docs/permissions/#what-ask-does)); our “approve for session” ≈ always. **Per-agent overrides:** [OpenCode — Agents](https://opencode.ai/docs/permissions/#agents); relevant for orchestrator/interview tier config.
+**Special permissions:** **external_directory** -- paths outside project cwd; default ask; `~`/`$HOME` expansion ([OpenCode -- External Directories](https://opencode.ai/docs/permissions/#external-directories)). **doom_loop** -- same tool 3× identical input; default ask. **Defaults:** read allows except `.env` denied (`*.env`, `*.env.*`; `*.env.example` allowed) ([OpenCode -- Defaults](https://opencode.ai/docs/permissions/#defaults)). **What "Ask" does:** once, always, reject ([OpenCode](https://opencode.ai/docs/permissions/#what-ask-does)); our "approve for session" ≈ always. **Per-agent overrides:** [OpenCode -- Agents](https://opencode.ai/docs/permissions/#agents); relevant for orchestrator/interview tier config.
 
 | Plan | Relation to tool permissions |
 |------|------------------------------|
@@ -90,7 +90,7 @@ Permission semantics and optional **granular rules** align with [OpenCode Permis
 
 ## 3. Built-in tools (target set)
 
-The following built-in tools are the **target set** for the central tool registry. Semantics align with [OpenCode’s built-in tools](https://opencode.ai/docs/tools/#built-in). Mapping to each platform’s native tools (Read/Edit/Bash, etc.) is a Provider/runner concern; the registry holds canonical names and the policy layer applies regardless of provider.
+The following built-in tools are the **target set** for the central tool registry. Semantics align with [OpenCode's built-in tools](https://opencode.ai/docs/tools/#built-in). Mapping to each platform's native tools (Read/Edit/Bash, etc.) is a Provider/runner concern; the registry holds canonical names and the policy layer applies regardless of provider.
 
 ### 3.1 Tool table
 
@@ -117,12 +117,12 @@ The following built-in tools are the **target set** for the central tool registr
 
 ### 3.2 Edit group and ignore patterns
 
-- **Edit group:** `edit`, `write`, `patch`, and `multiedit` share one **edit** permission so that “allow file changes” is a single knob ([OpenCode](https://opencode.ai/docs/tools/): “The edit permission covers all file modifications (edit, write, patch, multiedit)”).
-- **Ignore patterns:** grep, glob, list respect `.gitignore` by default. A project **`.ignore`** file can explicitly allow paths (e.g. `!node_modules/`) for search/list. See [OpenCode — Ignore patterns](https://opencode.ai/docs/tools/#ignore-patterns).
+- **Edit group:** `edit`, `write`, `patch`, and `multiedit` share one **edit** permission so that "allow file changes" is a single knob ([OpenCode](https://opencode.ai/docs/tools/): "The edit permission covers all file modifications (edit, write, patch, multiedit)").
+- **Ignore patterns:** grep, glob, list respect `.gitignore` by default. A project **`.ignore`** file can explicitly allow paths (e.g. `!node_modules/`) for search/list. See [OpenCode -- Ignore patterns](https://opencode.ai/docs/tools/#ignore-patterns).
 
 ### 3.3 Platform mapping (registry → CLI)
 
-Providers map canonical tool names to platform-native equivalents (e.g. `edit` → Claude “Edit”, Cursor edit tool, etc.). The registry and permission engine use **canonical names only**; platform_specs or runner code holds the mapping so that adding a new provider does not require changing permission config.
+Providers map canonical tool names to platform-native equivalents (e.g. `edit` → Claude "Edit", Cursor edit tool, etc.). The registry and permission engine use **canonical names only**; platform_specs or runner code holds the mapping so that adding a new provider does not require changing permission config.
 
 ### 3.4 LSP and built-in tools (MVP)
 
@@ -136,7 +136,7 @@ With **LSP MVP** (Plans/LSPSupport.md), the following tools are **enhanced or ne
 
 **Implementation note:** The lsp tool should be implemented to call the same LSP client used by the editor and Chat (diagnostics, hover, definition, references, rename). Permission for `lsp` follows the same allow/deny/ask model; default allow (or ask for `lsp.rename`).
 
-#### 3.4.1 LSP tool (MVP) — parameters, permission, rename approval
+#### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval
 
 **Tool name:** `lsp`. No feature flag (e.g. no `OPENCODE_EXPERIMENTAL_LSP_TOOL`); the tool is available when the LSP client is enabled for the project.
 
@@ -149,7 +149,7 @@ With **LSP MVP** (Plans/LSPSupport.md), the following tools are **enhanced or ne
 | `position` | object | yes for definition, hover, references | `{ "line": number (0-based), "character": number (0-based) }`. |
 | `newName` | string | yes for rename | New symbol name when `operation` is `"rename"`. |
 
-**LSP methods:** `textDocument/references`, `textDocument/definition`, `textDocument/hover`; for rename: call `textDocument/prepareRename` first when supported — if it fails or is unsupported, do not call `textDocument/rename` (return structured error to agent); otherwise `textDocument/rename`.
+**LSP methods:** `textDocument/references`, `textDocument/definition`, `textDocument/hover`; for rename: call `textDocument/prepareRename` first when supported -- if it fails or is unsupported, do not call `textDocument/rename` (return structured error to agent); otherwise `textDocument/rename`.
 
 **Permission:** Read-only operations (`references`, `definition`, `hover`) use permission key `lsp`; default **allow**. The **rename** operation applies workspace edits; require **user approval** before applying (see below).
 
@@ -181,12 +181,12 @@ Canonical input/output shapes align with [OpenCode built-in tools](https://openc
 | **multiedit** | `edits: Array<{ path, old_string, new_string }>` | `results: Array<{ path, updated }>` | Same as edit per item; first failure fails batch | Max edits per call (e.g. 50); same file size cap as edit |
 | **webfetch** | `url: string` | `content: string`, `status?: number` | URL not in allowlist / in denylist (FileSafe), timeout, HTTP error | Timeout (e.g. 30s); response size cap (e.g. 1 MiB); document domains in audit |
 | **websearch** | `query: string` | `results: Array<{ title, url, snippet }>` | Provider disabled or unavailable, rate limit, permission denied | Result limit (e.g. 10); optional query rate limit |
-| **question** | `header?: string`, `text: string`, `options?: string[]` | `answer: string` | HITL unavailable (headless) → return “HITL unavailable” or default | N/A (blocking until user responds or timeout) |
+| **question** | `header?: string`, `text: string`, `options?: string[]` | `answer: string` | HITL unavailable (headless) → return "HITL unavailable" or default | N/A (blocking until user responds or timeout) |
 | **skill** | `path_or_name: string` | `content: string`, `name: string` | Path outside allowed roots, file not found, permission denied | Size cap (e.g. 64 KiB); path under allowed roots only |
 | **todowrite** | `todos: Array<{ id?, content, status? }>` | `ack: boolean` | Subagent default deny; permission denied | Single todo list per run/session |
-| **todoread** | — | `todos: Array<{ id, content, status }>` | Subagent default deny; permission denied | N/A |
-| **lsp** | `operation: "references"\|"definition"\|"hover"\|"rename"`, `path: string`, `position: { line, character }`, `newName?` (rename only) | references/definition: `locations: Array<{ path, range }>`; hover: `contents: string`; rename: `pending_approval` + edits or `rejected` | LSP unavailable, no server for language, timeout, invalid path/position, server crash mid-call | Timeout per request (e.g. 10s); return “LSP unavailable” or “LSP server error” on disconnect/crash |
-| **task** | `subagent_type: string`, `prompt: string`, … | `result: object` (subagent output) | Tool denied, subagent type unknown (not in canonical 41), launch failure | Per run config (max concurrent subagents etc.); validate subagent_type with subagent_registry (§3.6) |
+| **todoread** | -- | `todos: Array<{ id, content, status }>` | Subagent default deny; permission denied | N/A |
+| **lsp** | `operation: "references"\|"definition"\|"hover"\|"rename"`, `path: string`, `position: { line, character }`, `newName?` (rename only) | references/definition: `locations: Array<{ path, range }>`; hover: `contents: string`; rename: `pending_approval` + edits or `rejected` | LSP unavailable, no server for language, timeout, invalid path/position, server crash mid-call | Timeout per request (e.g. 10s); return "LSP unavailable" or "LSP server error" on disconnect/crash |
+| **task** | `subagent_type: string`, `prompt: string`, ... | `result: object` (subagent output) | Tool denied, subagent type unknown (not in canonical 41), launch failure | Per run config (max concurrent subagents etc.); validate subagent_type with subagent_registry (§3.6) |
 | **codesearch** | `query: string`, `path?: string` | `results: Array<{ path, line, snippet }>` or symbol results when LSP available | Permission denied, search backend unavailable | Result limit (e.g. 100); timeout (e.g. 15s) |
 
 **LSP sub-operations:** For `lsp`, `operation` determines the LSP method and return shape: `references` → `textDocument/references`; `definition` → `textDocument/definition`; `hover` → `textDocument/hover`; `rename` → `textDocument/prepareRename` + `textDocument/rename`, result pending user approval (§3.4.1). When the LSP server crashes or disconnects mid-call, return a structured error (e.g. `{ "error": "lsp_unavailable", "message": "LSP server closed or timed out" }`) so the agent can retry or fall back.
@@ -195,8 +195,8 @@ Canonical input/output shapes align with [OpenCode built-in tools](https://openc
 
 The **task** tool launches a subagent by type. The **subagent_type** parameter must be one of the **canonical 41 subagents** documented in the Plans folder:
 
-- **Plans/orchestrator-subagent-integration.md §4** — Known subagent names (DRY:DATA:subagent_registry): Phase (3), Task language (9), Task domain (8), Task framework (4), Subtask (8), Iteration (2), Cross-phase/Interview (7, including `explore`) = **41 total**. Used for orchestrator tier selection, GUI validation, and task-tool validation.
-- **Plans/interview-subagent-integration.md** — Phase assignments (e.g. Scope & Goals → product-manager, Architecture → architect-reviewer, Product/UX → ux-researcher); cross-phase roles (technical-writer, knowledge-synthesizer, context-manager, etc.).
+- **Plans/orchestrator-subagent-integration.md §4** -- Known subagent names (DRY:DATA:subagent_registry): Phase (3), Task language (9), Task domain (8), Task framework (4), Subtask (8), Iteration (2), Cross-phase/Interview (7, including `explore`) = **41 total**. Used for orchestrator tier selection, GUI validation, and task-tool validation.
+- **Plans/interview-subagent-integration.md** -- Phase assignments (e.g. Scope & Goals → product-manager, Architecture → architect-reviewer, Product/UX → ux-researcher); cross-phase roles (technical-writer, knowledge-synthesizer, context-manager, etc.).
 
 **Implementation:** The central registry (e.g. `subagent_registry::is_valid_subagent_name(subagent_type)`) must be the single source of truth. When the **task** tool is invoked, validate `subagent_type` against the registry; if invalid, return a structured error (e.g. "Subagent type 'X' not in canonical list; see Plans/orchestrator-subagent-integration.md §4"). Persona content (SKILL.md) lives in `.github/agents/` and `.claude/agents/` (41 files); the runner loads the matching persona for the requested type.
 
@@ -225,7 +225,7 @@ The central tool registry should support:
 - **FileSafe:** Custom tools that read/write files or run shell commands are subject to the same FileSafe guards (write scope, sensitive paths, command blocklist) where the invocation can be classified (e.g. if the tool forwards to bash or edit, apply FileSafe).
 - **Naming:** Prefer a prefix or namespace (e.g. `custom_*`, `myproject_*`) so permission wildcards and analytics can group them.
 
-See [OpenCode — Custom tools](https://opencode.ai/docs/tools/#custom-tools) for reference.
+See [OpenCode -- Custom tools](https://opencode.ai/docs/tools/#custom-tools) for reference.
 
 ---
 
@@ -235,7 +235,7 @@ MCP is **in scope** for this document: MCP-discovered tools are first-class entr
 
 ### 5.1 Registry and policy
 
-- **Discovery:** When a run starts, the runner (or Provider) discovers MCP tools from the platform’s MCP config (injected from GUI/config per newtools §8). Each MCP tool is **registered** in the central registry with a stable name (e.g. server name + tool name, or a normalized id).
+- **Discovery:** When a run starts, the runner (or Provider) discovers MCP tools from the platform's MCP config (injected from GUI/config per newtools §8). Each MCP tool is **registered** in the central registry with a stable name (e.g. server name + tool name, or a normalized id).
 - **Permission model:** MCP tools use the same allow/deny/ask. Wildcards apply: e.g. `context7_*: allow`, `websearch_cited: ask`. Deny takes precedence.
 - **Normalization:** MCP tool invocations and results are normalized into the same event model as built-in tools (seglog), so analytics (latency, error rate) and dashboard rollups include MCP tools.
 
@@ -253,7 +253,7 @@ MCP is **in scope** for this document: MCP-discovered tools are first-class entr
 
 ## 6. Ways to add tools (implementation angles)
 
-| Mechanism | What it adds | Where it’s configured | Notes |
+| Mechanism | What it adds | Where it's configured | Notes |
 |-----------|--------------|------------------------|-------|
 | **MCP server** | New tools/resources/prompts from one server | Per-platform MCP config (see §7) | Single MCP server can expose many tools. Context7, cited web search, GUI automation; see newtools.md. |
 | **Platform CLI flags** | Allow/deny built-in tools (shell, write, MCP by name) | Run config / runner args | Copilot: `--allow-tool` / `--deny-tool`. Claude: `--allowedTools`. Gemini: `--approval-mode`. |
@@ -264,7 +264,7 @@ MCP is **in scope** for this document: MCP-discovered tools are first-class entr
 Implementations should:
 
 - Use **platform_specs** (and future central registry) as single source of truth; avoid hardcoding platform tool/MCP details.
-- Inject MCP config (and optional API keys) into each platform’s config at run time so all five platforms can use the same MCP servers when enabled.
+- Inject MCP config (and optional API keys) into each platform's config at run time so all five platforms can use the same MCP servers when enabled.
 - Align with **storage-plan.md**: tool-related events in seglog, rollups in redb, and any search index in Tantivy.
 
 ---
@@ -313,11 +313,11 @@ Tool events feed analytics and the Usage tool widget. Align with **storage-plan.
 
 The runner (or a dedicated module) derives platform-specific CLI flags from the **canonical** permission set so the platform only sees tools we allow. Example mapping (implement in platform_specs or runner):
 
-- **Claude:** `--allowedTools "Read,Edit,Bash"` → build list from registry “allow” + “ask” (ask still requires approval at runtime); if edit is deny, omit Edit.
+- **Claude:** `--allowedTools "Read,Edit,Bash"` → build list from registry "allow" + "ask" (ask still requires approval at runtime); if edit is deny, omit Edit.
 - **Copilot:** `--allow-tool 'shell(git)'` etc., or `--allow-all-tools` when policy is permissive; `--deny-tool` for denied tools. Build allow/deny lists from registry.
 - **Gemini:** `--approval-mode yolo` when all tools are allow; `auto_edit` or more restrictive when some are ask/deny.
 
-**Single source of truth:** Registry + policy (from config) → derive flags per platform; no hardcoding in runner. Document the derivation rules in platform_specs or a single “tool policy → CLI args” function.
+**Single source of truth:** Registry + policy (from config) → derive flags per platform; no hardcoding in runner. Document the derivation rules in platform_specs or a single "tool policy → CLI args" function.
 
 ### 8.4 Redb keys for tool rollups (Usage widget)
 
@@ -329,7 +329,7 @@ Analytics scan writes rollups for the Usage page (FinalGUISpec §7.8). For the *
 
 ### 8.5 YOLO and tool permissions
 
-When the user enables **YOLO** (Assistant), treat all tools as **allow** for that session for the purpose of prompting (no “ask” prompts). **FileSafe** still applies: destructive commands and write-scope/sensitive-file guards are still enforced. So: YOLO = “don’t ask for tool approval”; it does **not** disable FileSafe.
+When the user enables **YOLO** (Assistant), treat all tools as **allow** for that session for the purpose of prompting (no "ask" prompts). **FileSafe** still applies: destructive commands and write-scope/sensitive-file guards are still enforced. So: YOLO = "don't ask for tool approval"; it does **not** disable FileSafe.
 
 ### 8.6 MCP tool name format and wildcard rule
 
@@ -338,7 +338,7 @@ When the user enables **YOLO** (Assistant), treat all tools as **allow** for tha
 
 ### 8.7 MCP server unavailable
 
-If an MCP server is enabled in config but fails to start or connect at run start, either (a) **hide** its tools from the registry for that run (agent doesn’t see them), or (b) **register** them as “unavailable” and return a clear error if the agent tries to call one. Prefer (a) to avoid failed tool calls; document in Doctor so the user sees “Context7 unavailable (connection failed).”
+If an MCP server is enabled in config but fails to start or connect at run start, either (a) **hide** its tools from the registry for that run (agent doesn't see them), or (b) **register** them as "unavailable" and return a clear error if the agent tries to call one. Prefer (a) to avoid failed tool calls; document in Doctor so the user sees "Context7 unavailable (connection failed)."
 
 ---
 
@@ -352,16 +352,16 @@ If an MCP server is enabled in config but fails to start or connect at run start
 | **MCP tool names unstable** | MCP servers can change tool names or add/remove tools between runs. | Namespace by server; wildcard permissions; Doctor or pre-run check to list discovered MCP tools. |
 | **Permission default ambiguity** | New or unknown tools (e.g. new MCP server) may have no explicit permission. | Default table (§10.2): "Any unknown tool" → **ask**. Resolution (§10.3) step 3: unknown falls through to step 7. Implement default table as code. |
 | **Custom tool sandboxing** | Custom tools run arbitrary code; weak sandbox can allow escape or abuse. | MVP: subprocess with timeout (e.g. 60s) and output size cap (e.g. 1 MiB) per §4.3. Document in implementation plan. |
-| **Ask vs HITL in orchestrator** | Orchestrator runs are often headless; “ask” has no UI. | For orchestrator: map “ask” to deny, or to a pending-approval state (HITL) if enabled; document in human-in-the-loop.md. |
-| **Edit permission vs write scope** | User allows “edit” but FileSafe write scope restricts to plan files. Agent may try to edit out-of-scope file. | Clear error message: “Edit allowed but file not in write scope.” Ensure FileSafe and tool policy share same vocabulary in UI. |
-| **Tool latency in seglog** | High volume of tool events can grow seglog quickly. | **Recommended for MVP:** retention — keep last 90 days then prune; analytics scan only needs rollups. Alternatives: compaction (merge into rollups, drop raw after N days) or sampling; document chosen strategy in storage-plan.md. |
+| **Ask vs HITL in orchestrator** | Orchestrator runs are often headless; "ask" has no UI. | For orchestrator: map "ask" to deny, or to a pending-approval state (HITL) if enabled; document in human-in-the-loop.md. |
+| **Edit permission vs write scope** | User allows "edit" but FileSafe write scope restricts to plan files. Agent may try to edit out-of-scope file. | Clear error message: "Edit allowed but file not in write scope." Ensure FileSafe and tool policy share same vocabulary in UI. |
+| **Tool latency in seglog** | High volume of tool events can grow seglog quickly. | **Recommended for MVP:** retention -- keep last 90 days then prune; analytics scan only needs rollups. Alternatives: compaction (merge into rollups, drop raw after N days) or sampling; document chosen strategy in storage-plan.md. |
 | **Subagent tool defaults** | todowrite/todoread disabled for subagents can confuse agents that expect task lists. | Document in agent-facing docs (AGENTS.md or generated context). Override via run config (e.g. `subagent_tool_overrides: { "todowrite": "allow" }`); schema and location in implementation plan and orchestrator-subagent-integration.md. |
-| **LSP tool when no server** | lsp tool is MVP when LSP is MVP; when no LSP server is available for the language, lsp returns no results or “LSP unavailable.” | lsp adapter returns structured error per §3.5; Doctor reports LSP server status. Plans/LSPSupport.md §9.1. |
-| **webfetch / websearch abuse** | Agent could request excessive or sensitive URLs/queries. | FileSafe URL allowlist/denylist; optional query rate limit; don’t log full query/URL in plaintext (newtools §8.2.1). |
+| **LSP tool when no server** | lsp tool is MVP when LSP is MVP; when no LSP server is available for the language, lsp returns no results or "LSP unavailable." | lsp adapter returns structured error per §3.5; Doctor reports LSP server status. Plans/LSPSupport.md §9.1. |
+| **webfetch / websearch abuse** | Agent could request excessive or sensitive URLs/queries. | FileSafe URL allowlist/denylist; optional query rate limit; don't log full query/URL in plaintext (newtools §8.2.1). |
 | **Config key for tool permissions** | Where exactly in redb/GuiConfig tool_permissions lives. | **tool_permissions** in same config blob as rest of Settings; persisted as part of `config:v1` in redb (§8.1, §8.0). Single key only. |
 | **Permission change mid-run** | User changes Settings while a run is active. | Run uses immutable snapshot at start; no change until next run (FinalGUISpec §9.7; §8.1). |
-| **MCP server down** | Context7 (or other server) enabled but fails to start. | Hide that server’s tools for the run or mark unavailable; Doctor shows “Context7 unavailable” (§8.7). |
-| **Tool usage widget empty** | New install or no tool events yet. | Show “No tool data yet — run a task to see tool usage” and short explanation; don’t leave blank. |
+| **MCP server down** | Context7 (or other server) enabled but fails to start. | Hide that server's tools for the run or mark unavailable; Doctor shows "Context7 unavailable" (§8.7). |
+| **Tool usage widget empty** | New install or no tool events yet. | Show "No tool data yet -- run a task to see tool usage" and short explanation; don't leave blank. |
 | **All five platforms in MCP GUI** | FinalGUISpec listed only Cursor, Claude, Gemini for MCP toggles. | Ensure **Codex** and **Copilot** are included in Settings > Advanced > MCP Configuration (all five platforms). |
 | **Policy application point** | Where in the stack we enforce allow/deny/ask. | In Provider/runner when processing tool call from platform stream; before executing or forwarding (§8.2). |
 | **LSP server crash mid-call** | LSP server crashes or disconnects while handling lsp.references / definition / hover / rename. | lsp adapter returns `{ "error": "lsp_unavailable", "message": "LSP server closed or timed out" }` (§3.5); enforce request timeout (e.g. 10s). |
@@ -374,12 +374,12 @@ The following are **optional** improvements. MVP is defined by §3 built-in tool
 |------------|-------------|-------------------|
 | **Per-tool rate limits** | Limit invocations per tool per run/session (e.g. max 100 grep calls). | Reduces runaway tool use; configurable per tool or global. |
 | **Tool usage dashboard** | Dashboard widget: most-used tools, latency p50/p95, error rate by tool (from seglog rollups). | storage-plan + usage-feature; already implied by analytics scan. |
-| **Permission presets** | Presets: “Read-only” (deny edit, bash, webfetch, websearch), “Plan mode” (allow read/grep/glob/list only), “Full” (allow all with ask for bash/edit). | Simplifies config; maps to assistant modes (Ask, Plan, Agent). |
-| **Custom tool templates** | Project or org templates for common custom tools (e.g. “run tests”, “deploy staging”) with schema and default permission. | Encourages reuse; catalog in docs or GUI. |
+| **Permission presets** | Presets: "Read-only" (deny edit, bash, webfetch, websearch), "Plan mode" (allow read/grep/glob/list only), "Full" (allow all with ask for bash/edit). | Simplifies config; maps to assistant modes (Ask, Plan, Agent). |
+| **Custom tool templates** | Project or org templates for common custom tools (e.g. "run tests", "deploy staging") with schema and default permission. | Encourages reuse; catalog in docs or GUI. |
 | **MCP tool allowlist** | Option to allow only specific MCP tools by name (e.g. only `context7_query_docs`) even if server is enabled. | Finer control than server-level enable; complements wildcards. |
-| **Audit log for denied/ask** | Explicit audit event when a tool is denied or when user declines an “ask”. | Helps compliance and debugging; store in seglog with tool name, reason, timestamp. |
+| **Audit log for denied/ask** | Explicit audit event when a tool is denied or when user declines an "ask". | Helps compliance and debugging; store in seglog with tool name, reason, timestamp. |
 | **Tool description in UI** | In Config or run summary, show which tools are available and their permission (allow/deny/ask) for the current run. | Transparency; can be generated from registry + run config. |
-| **Bash command allowlist** | Beyond FileSafe blocklist: allowlist of permitted commands (e.g. `npm test`, `cargo build`) when bash is “allow”. | Stricter than blocklist-only; optional; align with FileSafe. |
+| **Bash command allowlist** | Beyond FileSafe blocklist: allowlist of permitted commands (e.g. `npm test`, `cargo build`) when bash is "allow". | Stricter than blocklist-only; optional; align with FileSafe. |
 
 ---
 
@@ -460,20 +460,20 @@ Document this table in the central registry or policy module so all callers use 
 
 Use this order when deciding allow/deny/ask for a single tool invocation. Steps are deterministic; run them in order and return as soon as a step yields a result.
 
-1. **YOLO override (Assistant only):** If session is YOLO, return **allow** (no prompt). **FileSafe still applies after permission:** the runner must then run FileSafe checks before executing (bash blocklist, write scope, sensitive paths). So: permission = allow; then if FileSafe blocks, do not execute and return a “Blocked by FileSafe” result to the agent; do not emit `tool.denied` for FileSafe blocks (emit only for permission deny or user-declined ask).
-2. **Session “approve for session” cache (Assistant only):** If this tool (or matching pattern) was approved for session, return **allow**.
-3. **Unknown tool name:** If `tool_name` is empty or not in the known set (built-in names §3.1, or discovered MCP/custom names for this run), skip to step 7 and use default **“Any unknown tool”** (ask).
+1. **YOLO override (Assistant only):** If session is YOLO, return **allow** (no prompt). **FileSafe still applies after permission:** the runner must then run FileSafe checks before executing (bash blocklist, write scope, sensitive paths). So: permission = allow; then if FileSafe blocks, do not execute and return a "Blocked by FileSafe" result to the agent; do not emit `tool.denied` for FileSafe blocks (emit only for permission deny or user-declined ask).
+2. **Session "approve for session" cache (Assistant only):** If this tool (or matching pattern) was approved for session, return **allow**.
+3. **Unknown tool name:** If `tool_name` is empty or not in the known set (built-in names §3.1, or discovered MCP/custom names for this run), skip to step 7 and use default **"Any unknown tool"** (ask).
 4. **Exact tool name:** If `tool_permissions[tool_name]` exists and is a string (`"allow"` | `"deny"` | `"ask"`), use it and stop.
 5. **Wildcard rules:** If not found by exact name, evaluate wildcard rules. MVP: only **prefix** wildcards (key ends with `*`). For each key that ends with `*`, let prefix = key with `*` removed; if `tool_name` starts with prefix, that rule matches. Use **longest matching prefix** (e.g. `mymcp_*` and `mymcp_foo_*` both match `mymcp_foo_bar` → use `mymcp_foo_*` if present). If multiple wildcards match with the same length, **deny** overrides allow/ask; else allow overrides ask. Invalid wildcards (e.g. `*only`, key that is just `*`) are skipped (do not match).
 6. **Granular rules (if present):** If `tool_permissions[tool_name]` is an object, get **invocation context** (e.g. for bash: command string; for edit/read: path; for webfetch: URL). Evaluate pattern keys in **defined/iteration order**; **last matching pattern** wins. If **no pattern matches** the invocation context, fall through to step 7 (default for this tool name).
-7. **Default:** Use the default from §10.2 for this tool (or “Any unknown tool” if tool was unknown). For subagent runs, apply subagent overrides (todowrite/todoread → deny unless run config overrides).
-8. **Special guards:** If tool is `read` and invocation path matches sensitive pattern (e.g. `.env`, `*.env`, or FileSafe-configured sensitive list), return **deny** regardless of permission (align with FileSafe security filter). Apply after steps 1–7.
+7. **Default:** Use the default from §10.2 for this tool (or "Any unknown tool" if tool was unknown). For subagent runs, apply subagent overrides (todowrite/todoread → deny unless run config overrides).
+8. **Special guards:** If tool is `read` and invocation path matches sensitive pattern (e.g. `.env`, `*.env`, or FileSafe-configured sensitive list), return **deny** regardless of permission (align with FileSafe security filter). Apply after steps 1-7.
 
 Result: **allow** | **deny** | **ask**. After result: if **deny**, emit `tool.denied` and do not execute. If **ask**, surface to UI; on user decline, emit `tool.denied` and do not execute. If **allow** (or ask approved), run FileSafe check if applicable; if FileSafe blocks, do not execute and return block reason to agent; then if actually executed, emit `tool.invoked` on completion.
 
 ### 10.4 Presets → config mapping
 
-So the GUI “Apply preset” button can write a concrete `tool_permissions` object:
+So the GUI "Apply preset" button can write a concrete `tool_permissions` object:
 
 | Preset | Effect on tool_permissions |
 |--------|----------------------------|
@@ -485,20 +485,20 @@ Store as the same `tool_permissions` object; presets are just a shortcut to set 
 
 ### 10.5 GUI ↔ config serialization
 
-- **Save:** Per-tool list (tool name + dropdown Allow/Deny/Ask) → object `{ tool_name: "allow"|"deny"|"ask", ... }`. Wildcard rules (e.g. “Add rule: `context7_*` = Ask”) → add key `context7_*` to same object. Preset button overwrites or merges (document: overwrite is simpler for MVP).
-- **Load:** Read `tool_permissions`; for each key, if it’s a string, show in per-tool list (or in wildcard list if key contains `*`). If it’s an object (granular), show in “Advanced” or “Granular rules” UI if that exists; otherwise treat as “custom” and show tool name with badge “Custom rules.”
+- **Save:** Per-tool list (tool name + dropdown Allow/Deny/Ask) → object `{ tool_name: "allow"|"deny"|"ask", ... }`. Wildcard rules (e.g. "Add rule: `context7_*` = Ask") → add key `context7_*` to same object. Preset button overwrites or merges (document: overwrite is simpler for MVP).
+- **Load:** Read `tool_permissions`; for each key, if it's a string, show in per-tool list (or in wildcard list if key contains `*`). If it's an object (granular), show in "Advanced" or "Granular rules" UI if that exists; otherwise treat as "custom" and show tool name with badge "Custom rules."
 - **MVP:** Simple form only (no granular object in GUI); advanced users can edit config or YAML. Full granular editing in GUI is an enhancement.
 
 ### 10.6 FileSafe integration order and API
 
-- **Order:** (1) **Tool permission** (allow/deny/ask) — if deny, stop and return “Tool disabled.” (2) If **ask**, surface to user; on approve, continue. (3) **FileSafe** — for bash: command blocklist; for edit/write: write scope; for read: sensitive-file filter. If FileSafe blocks, return “Blocked by FileSafe: &lt;reason&gt;” and do not execute.
+- **Order:** (1) **Tool permission** (allow/deny/ask) -- if deny, stop and return "Tool disabled." (2) If **ask**, surface to user; on approve, continue. (3) **FileSafe** -- for bash: command blocklist; for edit/write: write scope; for read: sensitive-file filter. If FileSafe blocks, return "Blocked by FileSafe: &lt;reason&gt;" and do not execute.
 - **Single API (recommended):** `policy.may_execute_tool(tool_name, invocation_context) -> Result<Allow | Deny(reason) | Ask, Error>`. Internally: resolve permission (allow/deny/ask); if allow (or ask and approved), then run FileSafe check; return Allow only if both pass. Runner calls this once per tool call before executing or forwarding.
 - **FileSafe contract:** FileSafe exposes e.g. `check_bash_command(cmd)`, `check_write_path(path)`, `check_read_path(path)`. Policy engine calls these after permission resolves to allow (or ask-approved).
 
 ### 10.7 Ask UI contract
 
-- **Assistant (interactive):** When policy returns **ask**, the runner must **not** execute the tool. It must surface a **pending approval** to the UI (e.g. event on a channel, or callback with `{ tool_name, invocation_summary, options: once | always }`). UI shows approval dialog (e.g. “Allow `bash: git status`?” with buttons Once / For session / Deny). On “Once” or “For session,” runner proceeds with this invocation (and optionally caches “for session” for that tool/pattern). On “Deny,” return error to agent and optionally emit `tool.denied`.
-- **Orchestrator / Interview (headless):** When policy returns **ask**, no UI is available. **Map ask → deny** (recommended), or to **pending-HITL** if HITL is enabled at that tier (human-in-the-loop.md): pause run and surface “Approval required” to Dashboard; when user approves, resume. Document chosen behavior in human-in-the-loop.md and in the implementation plan.
+- **Assistant (interactive):** When policy returns **ask**, the runner must **not** execute the tool. It must surface a **pending approval** to the UI (e.g. event on a channel, or callback with `{ tool_name, invocation_summary, options: once | always }`). UI shows approval dialog (e.g. "Allow `bash: git status`?" with buttons Once / For session / Deny). On "Once" or "For session," runner proceeds with this invocation (and optionally caches "for session" for that tool/pattern). On "Deny," return error to agent and optionally emit `tool.denied`.
+- **Orchestrator / Interview (headless):** When policy returns **ask**, no UI is available. **Map ask → deny** (recommended), or to **pending-HITL** if HITL is enabled at that tier (human-in-the-loop.md): pause run and surface "Approval required" to Dashboard; when user approves, resume. Document chosen behavior in human-in-the-loop.md and in the implementation plan.
 
 ### 10.8 Registry → CLI derivation (per platform)
 
@@ -528,7 +528,7 @@ No hardcoded tool names in runner; all names come from registry + policy.
 | **FileSafe.md** | Safe-edit and path/URL guards; runs in addition to tool permissions; map to central tool policy and patch/apply/verify pipeline. |
 | **usage-feature.md** | Tool usage and cost can be reflected in usage rollups (from seglog/analytics). |
 | **LSPSupport.md** | LSP MVP; lsp tool promoted (§3.4, §3.5); diagnostics in context; §9.1. |
-| **human-in-the-loop.md** | “Ask” permission and tier-boundary approval; orchestrator ask vs HITL behavior. |
+| **human-in-the-loop.md** | "Ask" permission and tier-boundary approval; orchestrator ask vs HITL behavior. |
 
 ---
 
@@ -536,36 +536,36 @@ No hardcoded tool names in runner; all names come from registry + policy.
 
 Use this list in order to derive a step-by-step implementation plan. Dependencies flow top to bottom.
 
-1. **Config schema** — Add `tool_permissions` to app config (GuiConfig / redb `config:v1`) per §10.1; validate keys (built-in, MCP/custom, prefix wildcards only).
-2. **Default policy table as code** — Implement §10.2 as single source of truth; subagent overrides (todowrite/todoread deny for subagent runs).
-3. **Resolution function** — Implement §10.3 in order: YOLO → session cache → unknown → exact → wildcard (longest prefix) → granular → default → special guards; deterministic.
-4. **FileSafe and YOLO order** — After allow (or ask approved), run FileSafe before executing; do not emit `tool.denied` for FileSafe blocks (§10.6).
-5. **Per-tool adapters** — Input/output, errors, limits per §3.5; LSP tool with timeout and crash/disconnect handling (§3.5).
-6. **Event emission** — `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0.
-7. **GUI Tool permissions** — Settings > Advanced > Tool permissions (FinalGUISpec §7.4.1); presets per §10.4; load/save `tool_permissions` (§10.5).
-8. **Usage widget and rollups** — Analytics scan → redb `rollups` / `tool_usage.{window}` (§8.4); Usage view §7.8; empty state message.
-9. **Central registry and policy engine** — Registry + policy; single API e.g. `policy.may_execute_tool` (§10.6).
-10. **Registry → CLI derivation** — Single function per platform (§8.3, §10.8).
-11. **MCP integration** — Discovery, namespacing, hide if server fails (§8.7); all five platforms in GUI.
-12. **Ask UI and headless** — Assistant: Once / For session / Deny; headless: ask → deny or HITL (§10.7).
-13. **LSP tool promotion** — MVP when LSP is MVP (Plans/LSPSupport.md §9.1); no feature flag; rename requires approval.
-14. **Doctor and docs** — MCP/LSP checks; document default table and resolution.
-15. **Subagent tool overrides** — Document `subagent_tool_overrides` schema (e.g. `{ "todowrite": "allow" }`) and config location in orchestrator-subagent-integration.md so run config can override todowrite/todoread for subagent runs.
+1. **Config schema** -- Add `tool_permissions` to app config (GuiConfig / redb `config:v1`) per §10.1; validate keys (built-in, MCP/custom, prefix wildcards only).
+2. **Default policy table as code** -- Implement §10.2 as single source of truth; subagent overrides (todowrite/todoread deny for subagent runs).
+3. **Resolution function** -- Implement §10.3 in order: YOLO → session cache → unknown → exact → wildcard (longest prefix) → granular → default → special guards; deterministic.
+4. **FileSafe and YOLO order** -- After allow (or ask approved), run FileSafe before executing; do not emit `tool.denied` for FileSafe blocks (§10.6).
+5. **Per-tool adapters** -- Input/output, errors, limits per §3.5; LSP tool with timeout and crash/disconnect handling (§3.5).
+6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0.
+7. **GUI Tool permissions** -- Settings > Advanced > Tool permissions (FinalGUISpec §7.4.1); presets per §10.4; load/save `tool_permissions` (§10.5).
+8. **Usage widget and rollups** -- Analytics scan → redb `rollups` / `tool_usage.{window}` (§8.4); Usage view §7.8; empty state message.
+9. **Central registry and policy engine** -- Registry + policy; single API e.g. `policy.may_execute_tool` (§10.6).
+10. **Registry → CLI derivation** -- Single function per platform (§8.3, §10.8).
+11. **MCP integration** -- Discovery, namespacing, hide if server fails (§8.7); all five platforms in GUI.
+12. **Ask UI and headless** -- Assistant: Once / For session / Deny; headless: ask → deny or HITL (§10.7).
+13. **LSP tool promotion** -- MVP when LSP is MVP (Plans/LSPSupport.md §9.1); no feature flag; rename requires approval.
+14. **Doctor and docs** -- MCP/LSP checks; document default table and resolution.
+15. **Subagent tool overrides** -- Document `subagent_tool_overrides` schema (e.g. `{ "todowrite": "allow" }`) and config location in orchestrator-subagent-integration.md so run config can override todowrite/todoread for subagent runs.
 
 
 ---
 
 ## 13. References
 
-- [OpenCode — Tools](https://opencode.ai/docs/tools/) — Built-in tools, permission model (allow/deny/ask), custom tools, MCP servers, ignore patterns (primary reference for §2–§4).
-- [OpenCode — Permissions](https://opencode.ai/docs/permissions/) — Granular rules (object syntax), external_directory, doom_loop, defaults (.env for read), “What Ask Does” (once/always/reject), per-agent overrides; cross-plan alignment §2.5.
-- [Model Context Protocol — Specification (latest)](https://modelcontextprotocol.io/specification/latest) — MCP spec; MCP config and GUI covered in newtools.md.
-- AGENTS.md — Platform CLI commands, MCP/config notes, DRY (platform_specs, widget catalog).
-- REQUIREMENTS.md — Platform tool flags, MCP probe, verification adapters, tooling rules.
-- Plans/newtools.md — GUI testing tools, **MCP support and GUI settings**, per-platform MCP table, cited web search.
-- Plans/rewrite-tie-in-memo.md — Central tool registry, policy engine, event model, storage.
-- Plans/storage-plan.md — seglog, redb, Tantivy, analytics scan, rollups.
-- Plans/00-plans-index.md — Plan map and rewrite tie-in.
+- [OpenCode -- Tools](https://opencode.ai/docs/tools/) -- Built-in tools, permission model (allow/deny/ask), custom tools, MCP servers, ignore patterns (primary reference for §2-§4).
+- [OpenCode -- Permissions](https://opencode.ai/docs/permissions/) -- Granular rules (object syntax), external_directory, doom_loop, defaults (.env for read), "What Ask Does" (once/always/reject), per-agent overrides; cross-plan alignment §2.5.
+- [Model Context Protocol -- Specification (latest)](https://modelcontextprotocol.io/specification/latest) -- MCP spec; MCP config and GUI covered in newtools.md.
+- AGENTS.md -- Platform CLI commands, MCP/config notes, DRY (platform_specs, widget catalog).
+- REQUIREMENTS.md -- Platform tool flags, MCP probe, verification adapters, tooling rules.
+- Plans/newtools.md -- GUI testing tools, **MCP support and GUI settings**, per-platform MCP table, cited web search.
+- Plans/rewrite-tie-in-memo.md -- Central tool registry, policy engine, event model, storage.
+- Plans/storage-plan.md -- seglog, redb, Tantivy, analytics scan, rollups.
+- Plans/00-plans-index.md -- Plan map and rewrite tie-in.
 
 ---
 

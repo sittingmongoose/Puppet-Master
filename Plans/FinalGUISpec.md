@@ -1,4 +1,4 @@
-# Puppet Master GUI Specification — Slint Rewrite
+# Puppet Master GUI Specification -- Slint Rewrite
 
 **Date:** 2026-02-22
 **Status:** Authoritative specification for AI agent implementation
@@ -256,7 +256,7 @@ At the top of the primary content area, a breadcrumb strip (20px) shows `Group >
 
 ### 4.4 Keyboard Shortcuts
 
-**Tier 1 — Essential (learn day one):**
+**Tier 1 -- Essential (learn day one):**
 
 | Shortcut | Action |
 |----------|--------|
@@ -266,7 +266,7 @@ At the top of the primary content area, a breadcrumb strip (20px) shows `Group >
 | `Ctrl+Shift+E` | Toggle File Manager |
 | `Escape` | Close palette / panel / stop agent |
 
-**Tier 2 — Productive (learn in first week):**
+**Tier 2 -- Productive (learn in first week):**
 
 | Shortcut | Action |
 |----------|--------|
@@ -351,7 +351,7 @@ When a floating panel window is dragged near the main window edge:
 - Proximity threshold: 25px from the main window edge
 - Visual cue: 2px accent strip (`Theme.accent-blue`) on the target edge
 - On drop: panel docks to that side; floating window closes
-- Snap animation: instant (no easing — retro hard-edge aesthetic)
+- Snap animation: instant (no easing -- retro hard-edge aesthetic)
 
 ### 5.5 Slint Multi-Window Implementation
 
@@ -359,7 +359,7 @@ When a floating panel window is dragged near the main window edge:
 - When docked: component placed inside main window layout hierarchy
 - When floating: new Slint `Window` created; panel component placed inside it
 - **Shared data:** All panel data (chat messages, file tree) lives in Rust (e.g., `Arc<RwLock<...>>`). Exposed to Slint via properties/Models (e.g., `VecModel`). Both docked and floating instances bind to the same Rust-backed properties via `Rc<VecModel<T>>` and Slint's `ModelNotify` for automatic propagation
-- **Scalar properties** (orchestrator status, current phase, theme mode): Sync via `invoke_from_event_loop` from background threads — NOT via polling timers
+- **Scalar properties** (orchestrator status, current phase, theme mode): Sync via `invoke_from_event_loop` from background threads -- NOT via polling timers
 
 ### 5.6 Discoverability
 
@@ -380,7 +380,7 @@ Panel dock state (docked side and width, or floating position/size) persisted in
 
 **Snap zone conflicts:** If two floating panels are both within 25px of the same edge, the one closer to the edge wins. If equidistant, the most recently moved panel snaps first.
 
-**Focus management:** When a floating panel window closes (user clicks X or presses Escape), focus returns to the main window. Tab key does NOT cross window boundaries — each window has its own focus chain.
+**Focus management:** When a floating panel window closes (user clicks X or presses Escape), focus returns to the main window. Tab key does NOT cross window boundaries -- each window has its own focus chain.
 
 **Zero-width prevention:** Minimum panel width is 240px. If a resize drag would reduce below this, clamp at 240px. Bottom panel minimum height is 80px (collapse to 24px header via collapse button only, not via resize drag).
 
@@ -431,7 +431,7 @@ Panel dock state (docked side and width, or floating position/size) persisted in
 
 ### 6.3 Retro Effects Implementation
 
-**Pixel grid and paper texture:** Generated as tiled images from Rust at startup using `SharedPixelBuffer`. Applied via `Image` elements with appropriate tiling. Do NOT use `RenderingNotifier` — use `SharedPixelBuffer` as it is backend-agnostic and simpler.
+**Pixel grid and paper texture:** Generated as tiled images from Rust at startup using `SharedPixelBuffer`. Applied via `Image` elements with appropriate tiling. Do NOT use `RenderingNotifier` -- use `SharedPixelBuffer` as it is backend-agnostic and simpler.
 
 **Important:** `ImageFit.repeat` may not exist in Slint 1.15.1. If unavailable, tile the image manually using a `GridLayout` or `Flickable` with repeated `Image` elements, or generate a single large tile that covers the viewport.
 
@@ -613,9 +613,9 @@ The Dashboard is the operational hub. It uses a rearrangeable card grid.
 **Controls:** START, PAUSE, RESUME, STOP, RESET buttons with visual state feedback (see §10.1 Button Feedback). Retry/Replan/Reopen per-item buttons. Kill process button (if running).
 
 **Calls to Action (CtA) cards:** CtA cards have accent-left-border (4px), elevated surface background, and a prominent action button. Types:
-- **HITL approval:** "Phase X complete — approval required" with evidence summary, "Approve & Continue" (primary) and "Reject" (secondary) buttons. Badge on activity bar when active.
+- **HITL approval:** "Phase X complete -- approval required" with evidence summary, "Approve & Continue" (primary) and "Reject" (secondary) buttons. Badge on activity bar when active.
 - **Run interrupted:** "Previous run was interrupted" with "Resume from checkpoint" and "Start fresh" buttons.
-- **Rate limit:** "Platform X rate limited — resets in 2h 15m" with "Switch platform" button.
+- **Rate limit:** "Platform X rate limited -- resets in 2h 15m" with "Switch platform" button.
 - **Warning:** Orange-border card for non-blocking issues (stale data, missing config).
 Multiple CtAs stack vertically in priority order (HITL > interrupted > rate limit > warnings).
 
@@ -700,13 +700,13 @@ This is a **heavily redesigned** unified settings page that merges four previous
 |-----|---------|--------|
 | **General** | Log level, auto-scroll, show timestamps, minimize to tray, start on boot, retention days, intensive logging, interaction mode (expert/eli5), UI scale (0.75-1.5), app-level ELI5 toggle (longer/simpler tooltips), max editor tabs (LRU cap, default 20), run-complete notification toggle, max concurrent runs per thread (default 10), **sound effects** toggle (default off; see §10.13), max terminal instances (default 12, range 4-20), max browser tabs (default 8, range 2-12), hot-reload debounce (default 500ms, range 100-5000ms), **theme management** section (theme selector dropdown, "Open themes folder", "Create new theme", "Import theme", "Export theme" -- see §6.6) | Old "Settings" view + newfeatures.md |
 | **Tiers** | Phase/task/subtask tier configuration; per-tier: platform (**dropdown**), model (**dropdown**), reasoning_effort, plan_mode, ask_mode, output_format | Old "Config" Tiers tab |
-| **Branching** | **Enable Git** toggle (bound to `orchestrator.enable_git`; tooltip: "Enable git branch creation, commits, and PR creation during runs"); **Auto PR** toggle (bound to `branching.auto_pr`); **Branch strategy** dropdown: MainOnly / Feature / Release (bound to `branching.strategy`); **Use worktrees** toggle; **Parallel execution** toggle (note: "Parallel subtasks use separate git worktrees"); **Granularity** dropdown or label mapped to BranchStrategy (per_phase / per_task / per_subtask); Git info display (user, email, remote, branch — resolved for active project, not CWD) | Old "Config" Branching tab |
+| **Branching** | **Enable Git** toggle (bound to `orchestrator.enable_git`; tooltip: "Enable git branch creation, commits, and PR creation during runs"); **Auto PR** toggle (bound to `branching.auto_pr`); **Branch strategy** dropdown: MainOnly / Feature / Release (bound to `branching.strategy`); **Use worktrees** toggle; **Parallel execution** toggle (note: "Parallel subtasks use separate git worktrees"); **Granularity** dropdown or label mapped to BranchStrategy (per_phase / per_task / per_subtask); Git info display (user, email, remote, branch -- resolved for active project, not CWD) | Old "Config" Branching tab |
 | **Verification** | Verification checks, screenshot toggles | Old "Config" Verification tab |
 | **Memory** | Multi-level memory with progress/agents/PRD file paths | Old "Config" Memory tab |
 | **Budgets** | Per-platform token budgets | Old "Config" Budgets tab |
-| **Advanced** | **FileSafe Guards** (collapsible card): three independent toggles — "Block destructive commands" (on/off), "Restrict writes to plan" (on/off), "Block sensitive files" (on/off); approved commands list (scrollable, per-row remove, optional manual add); override toggle with warning styling. **MCP Configuration** (collapsible card): per-platform MCP toggles for **all five platforms** (Cursor, Codex, Claude Code, Gemini, Copilot), MCP server list (add/edit/remove servers with name/command/args/env fields), "Test connection" button per server, Context7 API key input (password-style), web search provider selection and API key. **Tool permissions** (collapsible card, see §7.4.1): per-tool or wildcard allow/deny/ask; optional presets (Read-only, Plan mode, Full); list built-in + MCP-discovered tools with permission dropdown per row; bound to central tool registry per Plans/Tools.md. **Other:** Experimental features, sub-agent toggles, cleanup config (clean untracked before run, clean ignored files, clear agent-output dir, evidence retention days) | Old "Config" Advanced tab + newtools.md + FileSafe.md + Tools.md + MiscPlan.md |
+| **Advanced** | **FileSafe Guards** (collapsible card): three independent toggles -- "Block destructive commands" (on/off), "Restrict writes to plan" (on/off), "Block sensitive files" (on/off); approved commands list (scrollable, per-row remove, optional manual add); override toggle with warning styling. **MCP Configuration** (collapsible card): per-platform MCP toggles for **all five platforms** (Cursor, Codex, Claude Code, Gemini, Copilot), MCP server list (add/edit/remove servers with name/command/args/env fields), "Test connection" button per server, Context7 API key input (password-style), web search provider selection and API key. **Tool permissions** (collapsible card, see §7.4.1): per-tool or wildcard allow/deny/ask; optional presets (Read-only, Plan mode, Full); list built-in + MCP-discovered tools with permission dropdown per row; bound to central tool registry per Plans/Tools.md. **Other:** Experimental features, sub-agent toggles, cleanup config (clean untracked before run, clean ignored files, clear agent-output dir, evidence retention days) | Old "Config" Advanced tab + newtools.md + FileSafe.md + Tools.md + MiscPlan.md |
 | **LSP** | **Language Server Protocol (MVP)** (see §7.4.2): LSP is required for desktop release. Global "Disable automatic LSP server downloads" toggle; built-in servers list with per-server enable/disable (all on by default); per-server env vars and initialization options; custom LSP servers (add/edit/remove: command, extensions, env, initialization). Stored in app config (redb); project overrides optional. | Plans/LSPSupport.md |
-| **Interview** | Interview-specific config; enable_phase_subagents, enable_research_subagents, enable_validation_subagents, enable_document_subagents; **Multi-Pass Review:** toggle on/off (default off), number of review passes (1–5 dropdown, default 2), max review subagents (1–10, default 3), show warning label when enabled ("Increases cost and time"); min/max questions (spinners), architecture confirmation toggle, vision provider dropdown | Old "Config" Interview tab + interview-subagent-integration.md |
+| **Interview** | Interview-specific config; enable_phase_subagents, enable_research_subagents, enable_validation_subagents, enable_document_subagents; **Multi-Pass Review:** toggle on/off (default off), number of review passes (1-5 dropdown, default 2), max review subagents (1-10, default 3), show warning label when enabled ("Increases cost and time"); min/max questions (spinners), architecture confirmation toggle, vision provider dropdown | Old "Config" Interview tab + interview-subagent-integration.md |
 | **Authentication** | Per-platform auth status (6 platforms: Cursor, Codex, Claude, Gemini, Copilot, GitHub); login/logout buttons; auth method indicators; auth URLs (selectable/copyable); Git info (user, email, remote, branch); CLI setup; GitHub auth | Old "Login" view |
 | **Health** | System health checks with platform filtering; check categories (CLI Tools, Git, Runtimes, Browser Tools, Capabilities, Project Setup); check status (PASS/FAIL/WARN/SKIP); fix suggestions with dry-run; auto-install buttons; platform version display (CLI version per detected platform); **Worktree management:** worktree list (path, branch, status, age columns), "Recover orphaned worktrees" button, worktree status indicators (active/stale/orphaned); **Storage & Cleanup:** DB size, cache size, evidence log count; evidence retention days input; "Clean workspace now" button (confirm modal with preview of files to delete per MiscPlan.md); storage maintenance actions | Old "Doctor" view + WorktreeGitImprovement.md + MiscPlan.md |
 | **Rules & Commands** | Application rules (list or text area, editable); project rules (when project selected, reads/writes `.puppet-master/project-rules.md`); custom slash commands editor (application-wide and project-wide, name/description/action) | From agent-rules-context.md + feature-list.md |
@@ -723,11 +723,11 @@ This is a **heavily redesigned** unified settings page that merges four previous
 
 **§7.4.2 LSP (LSP tab):** LSP support is **MVP** (required for desktop release), not optional. Per Plans/LSPSupport.md, the GUI must expose full LSP configuration so users can control automatic downloads, enable/disable servers, set env and initialization options, and add custom servers. Provide **Settings > LSP** with:
 
-- **Disable automatic LSP server downloads** — Global toggle (default: off). When on, the app does not auto-download or auto-install any LSP server (equivalent to `OPENCODE_DISABLE_LSP_DOWNLOAD=true`). Servers already on PATH or already installed are still used.
-- **Built-in LSP servers** — A list of all built-in servers (see Plans/LSPSupport.md §3.2: astro, bash, clangd, csharp, clojure-lsp, dart, deno, elixir-ls, eslint, fsharp, gleam, gopls, hls, jdtls, julials, kotlin-ls, lua-ls, nixd, ocaml-lsp, oxlint, php intelephense, prisma, pyright, ruby-lsp, rust, slint-lsp, sourcekit-lsp, svelte, terraform, tinymist, typescript, vue, yaml-ls, zls). Each row shows: **server name** (and extensions hint), **Enable** toggle (default: **on** for all). User can turn any server off individually. Expanding a row (or opening "Configure") shows:
-  - **Environment variables** — Key-value list (e.g. `RUST_LOG` = `debug`). Optional; sent when starting that server.
-  - **Initialization options** — Key-value or JSON object; server-specific options sent in the LSP `initialize` request (e.g. TypeScript preferences). Optional.
-- **Custom LSP servers** — Section "Custom LSP servers" with **Add** button. Each custom entry has: **Name** (id), **Command** (array of strings, e.g. `["npx", "godot-lsp-stdio-bridge"]` or `["custom-lsp-server", "--stdio"]`), **Extensions** (comma-separated or list, e.g. `.gd`, `.gdshader`), and optionally **Environment variables** and **Initialization options** (same as built-in). Edit and Remove per row. Custom servers are in addition to built-in; same config schema (command, extensions, env, initialization) as OpenCode.
+- **Disable automatic LSP server downloads** -- Global toggle (default: off). When on, the app does not auto-download or auto-install any LSP server (equivalent to `OPENCODE_DISABLE_LSP_DOWNLOAD=true`). Servers already on PATH or already installed are still used.
+- **Built-in LSP servers** -- A list of all built-in servers (see Plans/LSPSupport.md §3.2: astro, bash, clangd, csharp, clojure-lsp, dart, deno, elixir-ls, eslint, fsharp, gleam, gopls, hls, jdtls, julials, kotlin-ls, lua-ls, nixd, ocaml-lsp, oxlint, php intelephense, prisma, pyright, ruby-lsp, rust, slint-lsp, sourcekit-lsp, svelte, terraform, tinymist, typescript, vue, yaml-ls, zls). Each row shows: **server name** (and extensions hint), **Enable** toggle (default: **on** for all). User can turn any server off individually. Expanding a row (or opening "Configure") shows:
+  - **Environment variables** -- Key-value list (e.g. `RUST_LOG` = `debug`). Optional; sent when starting that server.
+  - **Initialization options** -- Key-value or JSON object; server-specific options sent in the LSP `initialize` request (e.g. TypeScript preferences). Optional.
+- **Custom LSP servers** -- Section "Custom LSP servers" with **Add** button. Each custom entry has: **Name** (id), **Command** (array of strings, e.g. `["npx", "godot-lsp-stdio-bridge"]` or `["custom-lsp-server", "--stdio"]`), **Extensions** (comma-separated or list, e.g. `.gd`, `.gdshader`), and optionally **Environment variables** and **Initialization options** (same as built-in). Edit and Remove per row. Custom servers are in addition to built-in; same config schema (command, extensions, env, initialization) as OpenCode.
 
 **Custom LSP server validation:** When adding or editing a custom server, enforce: (1) **Command** must be non-empty (at least one string; trim whitespace). If empty, show inline error "Command is required" and disable Save/Apply. (2) **Extensions** must be non-empty (at least one extension, e.g. `.gd`). If empty, show inline error "At least one file extension is required" and disable Save/Apply. (3) **Name** (id) must be unique among custom servers; if duplicate, show "Name already used" and disable Save/Apply. Saving or applying with invalid fields is not allowed; user must correct before persisting.
 
@@ -994,7 +994,7 @@ Platform installation status checks. Shows detected platforms and versions. Auto
 - **BrainStorm:** Multi-model collaborative mode. Multiple subagents with shared context discuss and research before producing a unified plan. Subagents can communicate with each other before merging results. On "Execute," chat switches to Agent mode (single agent or crew executes the plan).
 - **Crew:** Invokes a crew (multiple coordinated agents) with a Plan. Crew members work together on the plan. "Execute with crew" button after plan approval. Crew can work from existing or new plan; plan format is consumable by both single agents and crews.
 
-**Teach capability:** The assistant can explain how Puppet Master works using built-in documentation (REQUIREMENTS.md, ARCHITECTURE.md, AGENTS.md, GUI_SPEC.md, platform CLI sections). Invoked via chat (e.g., "How does [X] work?") or `/teach` command. No separate UI — runs within any chat mode.
+**Teach capability:** The assistant can explain how Puppet Master works using built-in documentation (REQUIREMENTS.md, ARCHITECTURE.md, AGENTS.md, GUI_SPEC.md, platform CLI sections). Invoked via chat (e.g., "How does [X] work?") or `/teach` command. No separate UI -- runs within any chat mode.
 
 **Thread selector:** Dropdown with current thread name and status dot (green=idle, blue=running, orange=queued). Click opens floating thread list overlay (max 300px wide) over message area with search, archive toggle, and [+] new thread. No permanent thread sidebar (panel too narrow).
 
@@ -1007,7 +1007,7 @@ Platform installation status checks. Shows detected platforms and versions. Auto
 - **Rewind:** Restore thread to a specific message (right-click message → "Rewind to here"); all messages after that point are soft-deleted (recoverable via "Show removed")
 - **Share/Export:** Right-click thread → Export; bundles thread as JSON (messages, plan, metadata); secrets are stripped automatically
 - **Run-complete notification:** When a run completes in a background thread, that thread's tab shows an accent dot badge; optional toast notification ("Thread 'Project X' completed"). Notification behavior configurable in Settings/General (on/off)
-- **Max concurrent runs:** Default 10 per thread; configurable in Settings/General. When limit reached, new runs are queued with a message "Run queued — N runs active"
+- **Max concurrent runs:** Default 10 per thread; configurable in Settings/General. When limit reached, new runs are queued with a message "Run queued -- N runs active"
 
 **Chat history search:** Search icon in thread list header opens a search bar that queries across all threads (human and assistant messages) via Tantivy index. Results show thread name, matching message preview, and timestamp. Click navigates to that message in its thread.
 
@@ -1036,7 +1036,7 @@ The active mode shows as a subtle label next to the SEND button ("Steer" or "Que
 
 **Input area:** Multi-line, auto-grows from 1 line (48px) to max 5 lines (120px). SEND button (accent background). Below-input row: `@` mention (opens file picker overlay with fuzzy search, showing files, symbols, and headings as you type), attach button (opens file dialog for files and images; paste and drag-drop also supported). Slash command detection: `/` shows autocomplete popup (see §7.16.2). **ELI5 toggle:** Small toggle in input toolbar; when on, assistant uses simpler explanations in this thread only (does not affect generated documents). **YOLO/Regular toggle:** Permission mode selector; YOLO auto-approves all tool calls, Regular prompts for approval once or per-session. Per-session; does not persist across restarts. **YOLO + FileSafe interaction:** When YOLO is enabled and FileSafe guards are active, show a persistent warning chip in the input toolbar: "[!] YOLO active -- FileSafe guards still apply." When FileSafe blocks a command during YOLO mode, show inline approval card in the chat stream (see below).
 
-**FileSafe in-chat approval UI:** When a command is blocked by FileSafe, display an inline card in the chat stream: orange left border, command text in monospace, guard name that triggered, and two buttons: "Approve once" (runs the command this time only) and "Approve & add to list" (adds to approved commands in Settings > Advanced). The card auto-dismisses after 60 seconds with a "Timed out — command skipped" message. Blocked commands are also logged to the FileSafe event log accessible from Settings > Advanced.
+**FileSafe in-chat approval UI:** When a command is blocked by FileSafe, display an inline card in the chat stream: orange left border, command text in monospace, guard name that triggered, and two buttons: "Approve once" (runs the command this time only) and "Approve & add to list" (adds to approved commands in Settings > Advanced). The card auto-dismisses after 60 seconds with a "Timed out -- command skipped" message. Blocked commands are also logged to the FileSafe event log accessible from Settings > Advanced.
 
 **Footer strip (20px):** Contains the following controls left-to-right:
 
@@ -1056,15 +1056,15 @@ The active mode shows as a subtle label next to the SEND button ("Steer" or "Que
 - **Footer strip (left-to-right order):** Platform selector → Model selector → Reasoning/effort selector (when supported) → Context usage → **Problems link**. The Problems link is the rightmost LSP-related control in the footer.
 - **Problems link:** Label text: **"N problems"** when count > 0 (e.g. "3 problems"), or **"Problems"** when count is 0. Placement: immediately to the right of the context usage indicator (context circle / "42k/128k"). Click target: opens the **Problems** tab of the Bottom Panel (§7.20), filtered to the **current project** (or to files in current chat context if project is set). When no project is set, the link opens Problems with no filter (or shows "Select a project to see problems" in the panel).
 - **@ symbol:** Lives in the input area (below-input row: @ mention button). When opened, the overlay shows files and (when LSP available) symbols. No separate header control for LSP in Chat.
-- **Code-block LSP:** Hover and go-to-definition apply in the **message area** (message stream); no dedicated control — interaction is on the code block content itself.
+- **Code-block LSP:** Hover and go-to-definition apply in the **message area** (message stream); no dedicated control -- interaction is on the code block content itself.
 
 **Chat LSP empty and zero states:**
 - **Diagnostics empty:** When LSP is active but there are zero diagnostics, the Problems link shows **"Problems"** (no number); clicking opens Problems panel with empty state **"No problems detected"** (§7.20).
-- **@ symbol — no symbols:** When the user opens @ and selects "symbols" (or the symbol category) and LSP returns no results, show **"No symbols"** (or "No symbols in project") in the symbol list. Do not show an error; treat as empty result.
-- **Code block — unknown or unsupported language:** When a code block in a message has an unknown language tag or no LSP server for that language, do **not** show hover or go-to-definition; do **not** show an error. Render the block as plain code only.
+- **@ symbol -- no symbols:** When the user opens @ and selects "symbols" (or the symbol category) and LSP returns no results, show **"No symbols"** (or "No symbols in project") in the symbol list. Do not show an error; treat as empty result.
+- **Code block -- unknown or unsupported language:** When a code block in a message has an unknown language tag or no LSP server for that language, do **not** show hover or go-to-definition; do **not** show an error. Render the block as plain code only.
 
 **Chat LSP error states:**
-- **LSP server error:** If the LSP server for the project reports an error or crashes, do not block Chat. @ symbol falls back to text-based symbol search (FileManager §12.1.4). Code-block hover/definition in chat is unavailable for that language; no modal error — optional toast or status: "Language server unavailable for symbols."
+- **LSP server error:** If the LSP server for the project reports an error or crashes, do not block Chat. @ symbol falls back to text-based symbol search (FileManager §12.1.4). Code-block hover/definition in chat is unavailable for that language; no modal error -- optional toast or status: "Language server unavailable for symbols."
 - **Timeout resolving symbol (e.g. workspace/symbol):** If the LSP request times out while resolving symbols for @ or for a code block, show a brief inline message (e.g. "Symbol search timed out") and fall back to text-based symbol search for @; for code blocks, show no hover/definition for that request. Do not block the UI.
 - **Project not set:** When no project is selected, **disable** LSP-dependent behavior for Chat: @ symbol shows **files only** (no symbol category, or symbol category disabled with tooltip **"Select a project to use symbol search"**). Code-block hover and go-to-definition in chat are disabled (no error; hover/click do nothing or show tooltip **"Open a project for language features"**). Problems link remains clickable; opens Problems panel with empty state **"Select a project to see diagnostics"** or equivalent.
 
@@ -1320,7 +1320,7 @@ All widgets read from `Theme.*` globals rather than hardcoded colors. Each widge
 | **BudgetDonut** | Donut chart for usage | used, total, label, color |
 | **UsageChart** | Bar chart for usage data | data points (VecModel), labels |
 | **ActivityBar** | Vertical icon nav | items (VecModel), active-index, onSelect, reorderable |
-| **StatusBar** | Bottom status strip | mode, platform, model, context-usage, status. When LSP is active (Plans/LSPSupport.md), **status** includes LSP server name and state (e.g. "rust-analyzer: Ready" or "Initializing…" / "Error: …") for the current editor context. |
+| **StatusBar** | Bottom status strip | mode, platform, model, context-usage, status. When LSP is active (Plans/LSPSupport.md), **status** includes LSP server name and state (e.g. "rust-analyzer: Ready" or "Initializing..." / "Error: ...") for the current editor context. |
 | **Breadcrumb** | Navigation breadcrumb | items (VecModel), onNavigate |
 | **CommandPalette** | Fuzzy search overlay | commands (VecModel), filter, onSelect |
 | **PixelGridOverlay** | Pixel grid effect | opacity, spacing, color |
@@ -1350,7 +1350,7 @@ Every `StyledButton` must support the following visual states:
 All toggles that reflect server/backend state (e.g., Login/Logout buttons) must:
 1. Update immediately when the backend state changes (via `invoke_from_event_loop`)
 2. Show a loading state during the transition (e.g., "Logging in..." spinner)
-3. Never show stale state — if an auth check is in progress, show a spinner, not the old state
+3. Never show stale state -- if an auth check is in progress, show a spinner, not the old state
 4. Use Slint's reactive property system: backend writes to a shared property, UI automatically reflects
 
 ---
@@ -1380,7 +1380,7 @@ Backend (Rust)                              UI (Slint)
 ### 9.3 Slint-to-Rust Data Flow
 
 - **Callbacks:** Slint components define callbacks (e.g., `callback send-message(string)`, `callback navigate(int)`). Rust registers handlers via `.on_<callback_name>()`
-- Callbacks are thin — Rust performs logic, updates state, then updates Slint properties
+- Callbacks are thin -- Rust performs logic, updates state, then updates Slint properties
 
 ### 9.4 Thread-Safe Updates
 
@@ -1396,7 +1396,7 @@ tokio::spawn(async move {
 });
 ```
 
-**Critical:** Do NOT use timer-based polling (e.g., 50ms or 100ms timers) to sync state. Use event-driven updates via channels + `invoke_from_event_loop`. The current Iced implementation uses 50ms polling via crossbeam channels — this must NOT be replicated.
+**Critical:** Do NOT use timer-based polling (e.g., 50ms or 100ms timers) to sync state. Use event-driven updates via channels + `invoke_from_event_loop`. The current Iced implementation uses 50ms polling via crossbeam channels -- this must NOT be replicated.
 
 ### 9.5 Event Channel Architecture
 
@@ -1419,7 +1419,7 @@ All events flow through typed Rust channels. The receiving end calls `invoke_fro
 
 **Re-pack on model switch:** When the user changes the model mid-thread (especially to one with a smaller context window), context is automatically re-packed: last N turns retained in full, older turns summarized, and the total is trimmed to fit within the new model's context limit (sourced from `platform_specs`).
 
-**Truncation handling:** When context approaches the model's limit, a warning appears in the chat footer ("Context 95% — consider compacting"). If context exceeds the limit, automatic truncation removes the oldest non-essential turns (preserving system instructions and plan state) and shows a toast: "Context truncated — oldest messages removed."
+**Truncation handling:** When context approaches the model's limit, a warning appears in the chat footer ("Context 95% -- consider compacting"). If context exceeds the limit, automatic truncation removes the oldest non-essential turns (preserving system instructions and plan state) and shows a toast: "Context truncated -- oldest messages removed."
 
 ### 9.7 Config Wiring Architecture
 
@@ -1430,7 +1430,7 @@ The GUI Settings page is the editing surface; the orchestrator reads configurati
 3. **Run reads config:** When a run starts, the orchestrator reads `config:v1` from redb, producing an immutable `RunConfig` snapshot. Mid-run config changes do NOT affect the active run.
 4. **Reset/defaults:** Each Settings tab has a "Reset to defaults" button (confirm modal). Individual settings have a hover reset icon that resets that single field.
 
-**Config migration:** When the app version introduces new config fields, the loader applies defaults for missing fields and logs a toast: "Settings updated for v{version} — N new options available."
+**Config migration:** When the app version introduces new config fields, the loader applies defaults for missing fields and logs a toast: "Settings updated for v{version} -- N new options available."
 
 ---
 
@@ -1442,7 +1442,7 @@ See §8.2 for full button state specification. Summary:
 - Every button that triggers an async operation must show a loading spinner
 - Button is disabled during loading to prevent double-clicks
 - Brief success/error visual feedback on completion (500ms)
-- Never leave a button in loading state indefinitely — implement timeouts (default 30s)
+- Never leave a button in loading state indefinitely -- implement timeouts (default 30s)
 
 **Specific button feedback requirements:**
 
@@ -1482,7 +1482,7 @@ See §8.2 for full button state specification. Summary:
 - Dark overlay behind modal (50% opacity)
 - Focus trapped within modal when open
 - Escape key closes modal
-- Used sparingly — prefer inline feedback over modals
+- Used sparingly -- prefer inline feedback over modals
 
 ### 10.5 Empty States
 
@@ -1490,20 +1490,20 @@ Every view must have a meaningful empty state:
 - Brief explanation of what the view shows
 - Action to populate it (e.g., "Run your first orchestration to see evidence here" with a button)
 - Relevant icon consistent with active theme
-- No blank pages — always communicate what the user can do
+- No blank pages -- always communicate what the user can do
 
 **Specific empty states:**
 
 | View/Area | Empty State Message | Action |
 |-----------|-------------------|--------|
 | Dashboard (no project) | "Select or create a project to get started" | "New Project" button |
-| Chat (empty thread) | "Start a conversation — ask questions, plan tasks, or run commands" | Focus composer input |
+| Chat (empty thread) | "Start a conversation -- ask questions, plan tasks, or run commands" | Focus composer input |
 | Chat (no threads) | "No chat threads yet" | "New Thread" button |
 | File Manager (no project) | "Open a project to browse files" | "Select Project" button |
 | File Editor (no files open) | "Open a file from the File Manager or click a file path in chat" | None (informational) |
 | Usage (no data) | "Usage data will appear after your first run" | None (informational) |
 | Evidence (no evidence) | "Evidence logs will appear after orchestration runs" | "Start a run" link |
-| Queue (empty) | "No messages queued — the assistant will process messages as they arrive" | None |
+| Queue (empty) | "No messages queued -- the assistant will process messages as they arrive" | None |
 | Terminal (no output) | Blinking cursor on empty dark background | None |
 | Agent Activity (idle) | "No active agents -- start a run to see agent activity here" | None |
 | Browser (no page) | "No page loaded -- enter a URL or click a link from the chat" | Show bookmarks if any |
@@ -1519,9 +1519,9 @@ Every view must have a meaningful empty state:
 - Error cards on Dashboard for orchestrator errors (red border, clear message, retry button)
 - Error pages for unrecoverable states (with "Return to Dashboard" button)
 - **Auth token expiry:** When a platform auth token expires mid-run, show inline error in chat/terminal ("[!] Claude Code auth expired -- please re-authenticate") with a "Re-authenticate" button that opens the Authentication tab. Do not silently fail.
-- **Network disconnection:** If the app detects network loss during a chat or run, show a persistent banner at the top of the primary content area: "Network disconnected — reconnecting..." with a spinner. Auto-dismiss on reconnection with brief "Reconnected" toast.
+- **Network disconnection:** If the app detects network loss during a chat or run, show a persistent banner at the top of the primary content area: "Network disconnected -- reconnecting..." with a spinner. Auto-dismiss on reconnection with brief "Reconnected" toast.
 - **File operation failures:** When a file save, rename, or delete fails, show a toast with the specific error ("Permission denied: /path/to/file") and a "Retry" button.
-- **Large file timeout:** If a file takes >5 seconds to load, show a progress spinner with "Loading large file..." and a "Cancel" button. If it exceeds 15 seconds, show a timeout error with "File too large — opened in read-only truncated mode."
+- **Large file timeout:** If a file takes >5 seconds to load, show a progress spinner with "Loading large file..." and a "Cancel" button. If it exceeds 15 seconds, show a timeout error with "File too large -- opened in read-only truncated mode."
 
 ### 10.7 Onboarding and First-Run Experience
 
@@ -1532,9 +1532,9 @@ Every view must have a meaningful empty state:
 - No bottom panel
 
 **Three-step interactive tour (non-blocking, one-time):**
-1. "This is your Dashboard" — highlights primary content
-2. "This is the Chat" — highlights side panel
-3. "Use the sidebar to navigate" — highlights activity bar, mentions Ctrl+K
+1. "This is your Dashboard" -- highlights primary content
+2. "This is the Chat" -- highlights side panel
+3. "Use the sidebar to navigate" -- highlights activity bar, mentions Ctrl+K
 
 Each step has "Next" and "Skip tour." Completion persisted; tour never repeats.
 
@@ -1545,7 +1545,7 @@ Each step has "Next" and "Skip tour." Completion persisted; tour never repeats.
 ### 10.8 HITL Approval UI
 
 When the orchestrator pauses for HITL approval:
-- Dashboard shows a CtA card: "Phase X complete — approval required"
+- Dashboard shows a CtA card: "Phase X complete -- approval required"
 - Card shows completion status, evidence summary
 - "Approve & Continue" button (primary/accent)
 - "Reject" or "Cancel" button (secondary)
@@ -1589,7 +1589,7 @@ All animations use Slint's built-in `animate` directive with consistent timing:
 
 **Indeterminate progress bar:** Sliding highlight animation (1.5s loop, linear). Used when total is unknown (e.g., agent thinking, web search). Same height as determinate.
 
-**Stalled state:** If a progress bar hasn't updated in 30 seconds, change color to `Theme.warning-amber` and show a subtle pulse animation. Tooltip: "Progress stalled — last update 45s ago."
+**Stalled state:** If a progress bar hasn't updated in 30 seconds, change color to `Theme.warning-amber` and show a subtle pulse animation. Tooltip: "Progress stalled -- last update 45s ago."
 
 **Context gauge (chat):** Circular progress (16px diameter) showing context window usage. Color transitions: blue (0-75%), amber (75-90%), red (90-100%). Hover tooltip shows exact token count and percentage.
 

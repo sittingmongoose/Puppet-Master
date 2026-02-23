@@ -1,8 +1,8 @@
-# Interview Feature Subagent Integration — Implementation Plan
+# Interview Feature Subagent Integration -- Implementation Plan
 
 ## Plan Document Status
 
-**This is a PLAN DOCUMENT ONLY** — No code changes have been made. This document contains:
+**This is a PLAN DOCUMENT ONLY** -- No code changes have been made. This document contains:
 - Subagent persona assignments for each interview phase
 - Integration architecture and design
 - Code changes required
@@ -11,7 +11,7 @@
 
 ## Rewrite alignment (2026-02-21)
 
-This plan’s interview-phase semantics remain authoritative. Implementation should target the rewrite described in `Plans/rewrite-tie-in-memo.md`:
+This plan's interview-phase semantics remain authoritative. Implementation should target the rewrite described in `Plans/rewrite-tie-in-memo.md`:
 
 - Platform runners should converge on **Providers** that emit a normalized streaming event model
 - Interview research/validation/doc generation outputs should be stored as **artifacts/events** (seglog → projections)
@@ -29,7 +29,7 @@ This plan integrates Cursor subagent personas into the interview orchestrator to
 
 ## Relationship to Orchestrator Plan
 
-This document covers the **interview flow** (multi-phase interview: Scope, Architecture, UX, Data, Security, Deployment, Performance, Testing). The **orchestrator plan** (`Plans/orchestrator-subagent-integration.md`) covers the **main run loop** (Phase → Task → Subtask → Iteration execution) and defines shared concerns: config-wiring validation, start/end verification at phase/task/subtask, and quality verification. For interview-specific start/end verification (e.g. at each interview phase boundary), mirror the orchestrator plan’s **"Start and End Verification at Phase, Task, and Subtask"** and define interview-phase quality criteria (e.g. document completeness, requirement clarity). Subagent names and platform invocation should stay consistent across both plans. **Subagent personas:** The orchestrator plan defines a place to setup subagent personas/info (preload from `.claude/agents`, user add/delete, optional AI trim; overrides from config only — user edits in Personas UI). Interview uses **multiple** personas **dynamically** by phase and tech stack (phase_subagents, research/validation subagents, etc.). For whichever subagent(s) are selected for a given phase/context, resolve that subagent’s persona content (override from `SubagentGuiConfig.persona_overrides` if present, else preloaded content) and inject into the phase prompt (orchestrator plan §5 and Gap §11). **Application and project rules:** When building any interview prompt that goes to an agent, include the shared rules pipeline output from **Plans/agent-rules-context.md** (application rules always; project rules when the interview has a target project). **Tool permissions:** **Plans/Tools.md** defines the central tool registry and permission model; the same run config and permission snapshot apply to interview runs (see Tools.md §2.5 cross-plan table). **Plans/newfeatures.md:** For interview **recovery** (§4: restore interview phase and in-progress answers after crash), **restore points / rollback** (§8: roll back to a given phase), and **skills** (§6: phase-specific context injection by trigger), see newfeatures; those features extend the interview without replacing phase or subagent structure.
+This document covers the **interview flow** (multi-phase interview: Scope, Architecture, UX, Data, Security, Deployment, Performance, Testing). The **orchestrator plan** (`Plans/orchestrator-subagent-integration.md`) covers the **main run loop** (Phase → Task → Subtask → Iteration execution) and defines shared concerns: config-wiring validation, start/end verification at phase/task/subtask, and quality verification. For interview-specific start/end verification (e.g. at each interview phase boundary), mirror the orchestrator plan's **"Start and End Verification at Phase, Task, and Subtask"** and define interview-phase quality criteria (e.g. document completeness, requirement clarity). Subagent names and platform invocation should stay consistent across both plans. **Subagent personas:** The orchestrator plan defines a place to setup subagent personas/info (preload from `.claude/agents`, user add/delete, optional AI trim; overrides from config only -- user edits in Personas UI). Interview uses **multiple** personas **dynamically** by phase and tech stack (phase_subagents, research/validation subagents, etc.). For whichever subagent(s) are selected for a given phase/context, resolve that subagent's persona content (override from `SubagentGuiConfig.persona_overrides` if present, else preloaded content) and inject into the phase prompt (orchestrator plan §5 and Gap §11). **Application and project rules:** When building any interview prompt that goes to an agent, include the shared rules pipeline output from **Plans/agent-rules-context.md** (application rules always; project rules when the interview has a target project). **Tool permissions:** **Plans/Tools.md** defines the central tool registry and permission model; the same run config and permission snapshot apply to interview runs (see Tools.md §2.5 cross-plan table). **Plans/newfeatures.md:** For interview **recovery** (§4: restore interview phase and in-progress answers after crash), **restore points / rollback** (§8: roll back to a given phase), and **skills** (§6: phase-specific context injection by trigger), see newfeatures; those features extend the interview without replacing phase or subagent structure.
 
 ## Subagent Phase Assignments
 
@@ -118,16 +118,16 @@ This document covers the **interview flow** (multi-phase interview: Scope, Archi
 ### Cross-Phase Subagents
 
 **Document Generation:**
-- `technical-writer` — Generate phase documents, AGENTS.md, requirements
-- `knowledge-synthesizer` — Cross-phase analysis, technology matrix generation
+- `technical-writer` -- Generate phase documents, AGENTS.md, requirements
+- `knowledge-synthesizer` -- Cross-phase analysis, technology matrix generation
 
 **Answer Validation:**
-- `debugger` — Validate technical feasibility of answers
-- `code-reviewer` — Validate technical decisions and architecture choices
+- `debugger` -- Validate technical feasibility of answers
+- `code-reviewer` -- Validate technical decisions and architecture choices
 
 **Research Operations:**
-- `ux-researcher` — Web research via Browser MCP (when configured). **Cited web search:** Interview (and Assistant, Orchestrator) use **cited web search** (inline citations + Sources list) from a single shared implementation; see **Plans/newtools.md** §8 (cited web search, [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited)–style) and **Plans/assistant-chat-design.md** §7.
-- `context-manager` — Manage interview state and context across phases
+- `ux-researcher` -- Web research via Browser MCP (when configured). **Cited web search:** Interview (and Assistant, Orchestrator) use **cited web search** (inline citations + Sources list) from a single shared implementation; see **Plans/newtools.md** §8 (cited web search, [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited)-style) and **Plans/assistant-chat-design.md** §7.
+- `context-manager` -- Manage interview state and context across phases
 
 ## Integration Architecture
 
@@ -805,21 +805,21 @@ When the interview generates **AGENTS.md** for the **target project** (at comple
   - "Pin all production dependencies to exact versions; no 'latest'."
   - "Use Rust 1.75+ (or the pinned edition/version from Architecture)."
   - Any other technology/version/convention that the interview captured (framework major version, linter/formatter version, etc.).
-  - **Source:** Architecture phase decisions and Q&A; optionally the **technology matrix** (`TechnologyExtractor`) to get structured (name, version) entries. For well-known stacks (Python+Pydantic, React, Rust, etc.), the generator can add **convention templates** (e.g. "Use Pydantic v2") when that tech is detected, so agents get consistent "always use X version" guidance even if the interview didn’t spell it out word-for-word.
+  - **Source:** Architecture phase decisions and Q&A; optionally the **technology matrix** (`TechnologyExtractor`) to get structured (name, version) entries. For well-known stacks (Python+Pydantic, React, Rust, etc.), the generator can add **convention templates** (e.g. "Use Pydantic v2") when that tech is detected, so agents get consistent "always use X version" guidance even if the interview didn't spell it out word-for-word.
   - Place this section near the top (e.g. after Overview, before or as part of Architecture Notes) so agents see it early.
 
 - **Section: "DRY Method (Reuse-First)"** (or equivalent), containing:
-  - **Before writing new code:** Check existing modules, docs, and (if the project uses tagging) grep for `DRY:` (or the project’s chosen tag) in the area you’re working. Prefer reusing existing functions, components, or config over adding new ones.
+  - **Before writing new code:** Check existing modules, docs, and (if the project uses tagging) grep for `DRY:` (or the project's chosen tag) in the area you're working. Prefer reusing existing functions, components, or config over adding new ones.
   - **Single source of truth:** Do not duplicate constants, config, or spec data; centralize and reference (e.g. one config module, one place for API/base URLs, one place for schema).
   - **Tag reusable items:** When adding something that is intended for reuse, tag it so future agents can find it (e.g. `// DRY:FN:name` for functions, `// DRY:HELPER:name` for utilities, or language-appropriate convention; for a TypeScript project, JSDoc or a short comment; for Python, docstring or comment). The exact tag format can be stack-agnostic or tailored in the generator.
-  - **Optional:** A short "Where to look" for this project (e.g. "Check `src/lib/` and `docs/` for existing helpers; grep for `DRY:` in the crate/module you’re editing"). If the interview has identified a catalog or index (e.g. a docs folder, a README section), reference it here.
+  - **Optional:** A short "Where to look" for this project (e.g. "Check `src/lib/` and `docs/` for existing helpers; grep for `DRY:` in the crate/module you're editing"). If the interview has identified a catalog or index (e.g. a docs folder, a README section), reference it here.
 
 **Implementation:**
 
 - **Technology & version constraints:** In `agents_md_generator.rs`, add a dedicated section (e.g. "## Technology & version constraints" or "## Stack conventions") that:
   - Derives from Architecture phase: format decisions and Q&A that mention versions, frameworks, or "use X" into bullet rules (e.g. "Always use React 18", "Pin all production dependencies to exact versions").
   - Optionally use **`technology_matrix::TechnologyExtractor`** (or equivalent) to get structured `(name, version)` entries from completed phases and render them as "Always use &lt;name&gt; &lt;version&gt;" (or "Use &lt;name&gt; &lt;version&gt; or later" where appropriate).
-  - **Convention templates:** When the interview has identified a well-known stack, inject standard convention lines so agents get consistent guidance even if the interview didn’t phrase them exactly (e.g. if Python + Pydantic or "data validation" → "Use Pydantic v2 (e.g. pydantic>=2.5.0); use Pydantic type hints; ensure code is thoroughly documented"; if React → "Use React 18+ (or the pinned version from Architecture)"; if Rust → "Use the Rust edition and version pinned in Architecture"). Keep templates in a small table or match in the generator (keyed by detected language/framework from Architecture phase or feature_detector).
+  - **Convention templates:** When the interview has identified a well-known stack, inject standard convention lines so agents get consistent guidance even if the interview didn't phrase them exactly (e.g. if Python + Pydantic or "data validation" → "Use Pydantic v2 (e.g. pydantic>=2.5.0); use Pydantic type hints; ensure code is thoroughly documented"; if React → "Use React 18+ (or the pinned version from Architecture)"; if Rust → "Use the Rust edition and version pinned in Architecture"). Keep templates in a small table or match in the generator (keyed by detected language/framework from Architecture phase or feature_detector).
 - In the same module, add the **DRY Method** block of markdown. DRY content can be a **static template** (stack-agnostic) or **parameterized** by project type (e.g. Rust vs TypeScript vs Python) if the interview has detected or chosen a stack, so that tagging examples and "where to look" match the project.
 - Place **Technology & version constraints** near the top (after Overview, before or as part of Architecture Notes); place **DRY Method** after Overview/Architecture and before or after Codebase Patterns so it is visible and part of the standard agent read.
 - The interview writes AGENTS.md to **base_dir** (project root) when `generate_initial_agents_md` is true, which matches STATE_FILES (AGENTS.md at project root). Ensure that config is enabled when the goal is to seed the project with AGENTS.md including these sections (default is currently `false` in the default config).
@@ -832,8 +832,8 @@ When the interview generates **AGENTS.md** for the **target project** (at comple
 - **Projects created without the full interview:** If a project is created via the wizard only (no interview) or is an existing repo with no interview run, there will be no generated AGENTS.md and thus no DRY section. Room for improvement: (1) document that DRY-seeded AGENTS.md is only for interview-completed projects, or (2) have the wizard or start-chain add a minimal AGENTS.md with a DRY section when creating a new project, so projects still get reuse-first guidelines even without the full interview.
 - **Overwrite vs. merge:** When the interview runs and `generate_initial_agents_md` is true, `write_agents_md` overwrites any existing AGENTS.md at project root. If the user had previously added custom content, it is lost. For a first-time interview this is fine; for a re-run or "regenerate docs" flow, consider a merge policy (e.g. preserve user-added sections, or prompt before overwrite). Mark as optional/future unless product requires it.
 - **Catalog for target project:** The target project will not have a widget catalog or platform_specs. The DRY section can still say "check existing modules and grep for DRY: (or this project's tag) before adding new code." Optionally add: "As the project grows, maintain a short index (e.g. docs/reusable.md or a README section) listing reusable modules and where they live; check it before adding new code."
-- **Technology & version constraints — convention templates:** The generator will include a small set of well-known convention templates (e.g. Pydantic v2, React 18, Rust edition) keyed by detected stack. Keep the list maintainable: document in code or in this plan which stacks get which template lines; add new templates when a technology is commonly requested (e.g. "always use TypeScript strict mode"). Avoid duplicating the same rule from both interview decisions and a template; prefer interview-sourced content when present, and use templates to fill in only when the interview implies the stack but didn’t spell out the exact line.
-- **Technology & version constraints — preserve when updating:** Add a line inside the generated "Technology & version constraints" section: "When updating AGENTS.md with learnings, keep this section; do not remove it." (Same idea as the DRY section preserve rule.)
+- **Technology & version constraints -- convention templates:** The generator will include a small set of well-known convention templates (e.g. Pydantic v2, React 18, Rust edition) keyed by detected stack. Keep the list maintainable: document in code or in this plan which stacks get which template lines; add new templates when a technology is commonly requested (e.g. "always use TypeScript strict mode"). Avoid duplicating the same rule from both interview decisions and a template; prefer interview-sourced content when present, and use templates to fill in only when the interview implies the stack but didn't spell out the exact line.
+- **Technology & version constraints -- preserve when updating:** Add a line inside the generated "Technology & version constraints" section: "When updating AGENTS.md with learnings, keep this section; do not remove it." (Same idea as the DRY section preserve rule.)
 - **Stack detection for convention templates:** The plan says "when the interview has identified a well-known stack" but does not specify how. Options: (1) derive from Architecture phase Q&A text (e.g. keyword/language detection: "React", "Pydantic", "Rust"); (2) add a structured "detected_stack" or "primary_language" field to interview state populated at Architecture phase completion; (3) use feature_detector or technology_matrix categories. Decide and document so the generator has a single, clear input for template selection.
 - **Wiring TechnologyExtractor into generate_agents_md:** The plan says "optionally use technology_matrix::TechnologyExtractor". Currently `generate_agents_md(project_name, completed_phases, feature_description)` does not take extracted tech entries. Either: (1) have `write_agents_md` (or the caller) call `TechnologyExtractor::extract(completed_phases)` and pass the result into `generate_agents_md` as an optional parameter, or (2) call the extractor inside `generate_agents_md` from `completed_phases`. Document the chosen wiring so "Technology & version constraints" can render structured (name, version) lines from the matrix when available.
 - **Section placement:** "Technology & version constraints" is specified as "near the top (e.g. after Overview, before or as part of Architecture Notes)". For implementers: prefer **its own section** (e.g. "## Technology & version constraints") immediately after Overview and before "## Architecture Notes", so agents see version rules before detailed architecture text; avoid burying it as a subsection if the goal is visibility.
@@ -842,45 +842,45 @@ When the interview generates **AGENTS.md** for the **target project** (at comple
 
 AGENTS.md is loaded into agent context; long files consume context budget and encourage skimming, so important rules get missed. Apply the following so generated AGENTS.md stays short and high-signal.
 
-- **Critical-first:** Put the most important rules in a **short "Critical" or "TL;DR" block at the very top** (e.g. 5–10 bullets): Technology & version constraints in 3–5 bullets, DRY in 3–5 bullets, top DO/DON'T. Even if the rest is skimmed, the first screen is seen.
-- **Size budget:** Prefer a **cap** on generated AGENTS.md (e.g. **~150–200 lines** or a token budget). Prioritize: Critical block → Technology & version constraints (short bullets) → DRY (short) → minimal DO/DON'T (top 5–7 each) → one short "Where to look". Trim or move the rest.
+- **Critical-first:** Put the most important rules in a **short "Critical" or "TL;DR" block at the very top** (e.g. 5-10 bullets): Technology & version constraints in 3-5 bullets, DRY in 3-5 bullets, top DO/DON'T. Even if the rest is skimmed, the first screen is seen.
+- **Size budget:** Prefer a **cap** on generated AGENTS.md (e.g. **~150-200 lines** or a token budget). Prioritize: Critical block → Technology & version constraints (short bullets) → DRY (short) → minimal DO/DON'T (top 5-7 each) → one short "Where to look". Trim or move the rest.
 - **Linked docs over long prose:** Move **long reference** out of AGENTS.md into separate generated files and link from AGENTS.md. For example: put full "Architecture Notes" and "Codebase Patterns" in `docs/architecture.md` and `docs/codebase-patterns.md` (generated by the interview if needed), and in AGENTS.md keep only a one-line "Architecture: see docs/architecture.md" and "Patterns: see docs/codebase-patterns.md". Agents load a minimal AGENTS.md by default and can open other docs when the task needs them.
 - **Two-tier structure (optional):** Section 1 = **Critical (must-read):** Technology & version constraints + DRY + top DO/DON'T in a fixed short block (≤1 screen). Section 2 = **Reference:** Pointers to `docs/architecture.md`, `docs/guidelines.md`, etc. Implement in the generator by emitting a short AGENTS.md and optionally writing linked docs in `docs/` from the same interview output.
-- **Preserve minimality when updating:** Add a line in the generated AGENTS.md: "When updating this file with learnings, keep the Critical and Technology & version constraints sections; do not add long prose—prefer adding links to docs/."
+- **Preserve minimality when updating:** Add a line in the generated AGENTS.md: "When updating this file with learnings, keep the Critical and Technology & version constraints sections; do not add long prose--prefer adding links to docs/."
 - **Linked docs implementation:** If the generator emits a two-tier structure with pointers to `docs/architecture.md`, `docs/codebase-patterns.md`, etc., it must **write those files** from the same interview output (e.g. from completed_phases) so the links resolve. Document in the generator or plan: when generating minimal AGENTS.md, optionally write `docs/architecture.md` and `docs/codebase-patterns.md` (or a single `docs/project-context.md`) and link from AGENTS.md; ensure `docs/` exists in the target project (create if needed).
 
 **Cross-reference:** MiscPlan (Plans/MiscPlan.md) describes target-project DRY as interview-seeded and points here for implementation; MiscPlan also states that generated AGENTS.md should be kept minimal.
 
 ### 5.2 Documentation and plans for AI execution (wiring and completeness)
 
-All **documentation and plans** produced by the interview (PRD, AGENTS.md, requirements, phase plans, roadmap, test strategy, etc.) must be written with the understanding that an **AI agent** will execute them, not a human. This reduces unwired features, partially complete components, and “built but not wired” outcomes.
+All **documentation and plans** produced by the interview (PRD, AGENTS.md, requirements, phase plans, roadmap, test strategy, etc.) must be written with the understanding that an **AI agent** will execute them, not a human. This reduces unwired features, partially complete components, and "built but not wired" outcomes.
 
 **Requirements for generated content and prompts:**
 
-1. **Audience: AI executor.** Every generated document and plan must assume the reader/executor is an AI agent. Instructions must be **unambiguous**, **actionable**, and **explicit** (e.g. “wire X to Y”, “ensure config key Z is passed to the run config at start”). Avoid prose that only a human would infer.
+1. **Audience: AI executor.** Every generated document and plan must assume the reader/executor is an AI agent. Instructions must be **unambiguous**, **actionable**, and **explicit** (e.g. "wire X to Y", "ensure config key Z is passed to the run config at start"). Avoid prose that only a human would infer.
 
 2. **Wire everything together.** Explicitly call out:
-   - **Config wiring:** Any setting or feature that has a GUI control or config key must state that it must be **wired** into the config shape used at runtime (e.g. Option B: run config built from GUI at run start). Generated AGENTS.md or PRD should remind agents: “Ensure all config and GUI settings are wired so the run sees them; avoid building features that are never passed to the backend.”
-   - **Component integration:** Tasks that add modules, views, or components must include a step or acceptance criterion that the new code is **integrated** (e.g. declared in parent `mod.rs`, registered in routes, or wired in the GUI). No “add a widget” without “ensure the widget is used in view X.”
+   - **Config wiring:** Any setting or feature that has a GUI control or config key must state that it must be **wired** into the config shape used at runtime (e.g. Option B: run config built from GUI at run start). Generated AGENTS.md or PRD should remind agents: "Ensure all config and GUI settings are wired so the run sees them; avoid building features that are never passed to the backend."
+   - **Component integration:** Tasks that add modules, views, or components must include a step or acceptance criterion that the new code is **integrated** (e.g. declared in parent `mod.rs`, registered in routes, or wired in the GUI). No "add a widget" without "ensure the widget is used in view X."
 
 3. **No partially complete components.** Generated tasks and acceptance criteria must enforce **completeness**:
    - Components must be **fully implemented** (no stubs or TODOs that are left as final state).
    - Every public API or UI surface that is added must be **reachable and wired** (e.g. new tab is visible and bound to config; new command is invokable).
-   - Add to DO/DON'T or Critical block in generated AGENTS.md: “Do not leave components partially complete; wire every new piece to the rest of the system and to the GUI/config where applicable.”
+   - Add to DO/DON'T or Critical block in generated AGENTS.md: "Do not leave components partially complete; wire every new piece to the rest of the system and to the GUI/config where applicable."
 
 4. **Subagent persona recommendations.** Generated plans and documents (PRD, phase plans, roadmap, test strategy, etc.) must include **which subagent personas to use** at the appropriate granularity (e.g. per task, per subtask, or per phase). Use subagent names from **subagent_registry** (e.g. `product-manager`, `architect-reviewer`, `rust-engineer`, `security-auditor`, `test-automator`) so the executor (orchestrator or Assistant) knows which specialist(s) to invoke. The PRD schema already supports recommendations (e.g. `crew_recommendation` with `subagents` on subtasks); phase plans and other generated docs must also carry subagent recommendations where applicable (e.g. primary and optional secondary subagents per phase or per task). This ensures every generated plan is **executable** with the right personas.
 
 5. **Parallelism.** Generated plans must indicate **what can be done in parallel**. Include structure so the executor can run independent work in parallel: e.g. per task or subtask, **dependencies** (`depends_on` / `can_run_after`) or **parallel groups** (items in the same group can run in parallel). The interview output (PRD, roadmap, or plan markdown) should make it explicit which tasks/subtasks are independent and which must run in sequence, so the orchestrator or execution layer can schedule parallel execution where safe. Document the chosen schema (e.g. `depends_on: [task_ids]`, or `parallel_group: "A"` for items that can run together) in the PRD/plan generator and in STATE_FILES or this plan.
 
 6. **Where to inject.** Apply these requirements in:
-   - **Prompt templates** for phase completion and document generation (so the interviewing agent is instructed to produce AI-executor–oriented, wire-explicit, complete output).
+   - **Prompt templates** for phase completion and document generation (so the interviewing agent is instructed to produce AI-executor-oriented, wire-explicit, complete output).
    - **PRD and plan generators** (so generated tasks and acceptance criteria include wiring, completeness, **subagent persona recommendations**, and **parallelism**).
-   - **AGENTS.md generator** (§5.1): add a short “AI executor” or “Wiring & completeness” bullet block in the Critical section (e.g. “Plans and docs are for AI execution; wire everything; no partially complete components”).
+   - **AGENTS.md generator** (§5.1): add a short "AI executor" or "Wiring & completeness" bullet block in the Critical section (e.g. "Plans and docs are for AI execution; wire everything; no partially complete components").
 
 
-**Reinforce in all generated plans and AGENTS.md:** (1) **DRY Method** — check existing code and docs before adding new; reuse first; tag reusable items; single source of truth. (2) **Everything wired** — config and **GUI** must be wired (every new screen, control, or action reachable and connected). (3) **No unfinished components or features** unless explicitly scheduled in a later step; the plan must reference that step and the later step must complete the work. (4) **No dead code** — require that unused code is removed and that new code is only added when used and wired. Add these to DO/DON'T or Critical block in generated AGENTS.md. The generator MUST emit these four points in the DO/DON'T or Critical block of generated AGENTS.md and in plan acceptance criteria; there is no exception for partial or minimal output.
+**Reinforce in all generated plans and AGENTS.md:** (1) **DRY Method** -- check existing code and docs before adding new; reuse first; tag reusable items; single source of truth. (2) **Everything wired** -- config and **GUI** must be wired (every new screen, control, or action reachable and connected). (3) **No unfinished components or features** unless explicitly scheduled in a later step; the plan must reference that step and the later step must complete the work. (4) **No dead code** -- require that unused code is removed and that new code is only added when used and wired. Add these to DO/DON'T or Critical block in generated AGENTS.md. The generator MUST emit these four points in the DO/DON'T or Critical block of generated AGENTS.md and in plan acceptance criteria; there is no exception for partial or minimal output.
 
-**Cross-reference:** Plans/assistant-chat-design.md §14 points here for the full specification. Orchestrator plan “Avoiding Built but Not Wired” and config-wiring (e.g. Option B) are the runtime side; the interview is responsible for generating instructions that lead to wired, complete implementations. The **orchestrator** must **respect** subagent personas and parallelization from the PRD (orchestrator-subagent-integration.md "Respecting PRD/plan: subagent personas and parallelization").
+**Cross-reference:** Plans/assistant-chat-design.md §14 points here for the full specification. Orchestrator plan "Avoiding Built but Not Wired" and config-wiring (e.g. Option B) are the runtime side; the interview is responsible for generating instructions that lead to wired, complete implementations. The **orchestrator** must **respect** subagent personas and parallelization from the PRD (orchestrator-subagent-integration.md "Respecting PRD/plan: subagent personas and parallelization").
 
 ### 5.3 DRY method when implementing interview code (Puppet Master codebase)
 
@@ -899,7 +899,7 @@ After all interview documents are created (phase documents, AGENTS.md, PRD, etc.
 
 - **Multi-Pass Review:** On/off.
 - **Number of reviews:** How many subagents look at **each** document. Default **3**, max **10**. So with 3, each document gets reviewed by 3 subagents (across rounds); with 10, each document gets reviewed by 10 subagents.
-- **Max subagents spawn:** Maximum number of review subagents in flight at once. Default **9**, max **20**. **UI warning:** Display a warning next to this control: e.g. “This will go through token usage quickly.”
+- **Max subagents spawn:** Maximum number of review subagents in flight at once. Default **9**, max **20**. **UI warning:** Display a warning next to this control: e.g. "This will go through token usage quickly."
 - **Use different models / model-platform list:** Same as Requirements Doc Builder (§5.6 in chain-wizard-flexibility.md): default to different models per subagent; user can configure models (cross-platform allowed). **Model/platform list validation:** Min 1, max 20. When "use different models" and list has fewer entries than needed, cycle round-robin and show UI notice: "Fewer models than review slots; some models will be reused."
 - **Review agent model/platform (interview):** Configurable; default = primary interview platform/model. Can be set from same model list as subagents or a separate "Review agent" control; persist in interview run config.
 
@@ -907,15 +907,15 @@ After all interview documents are created (phase documents, AGENTS.md, PRD, etc.
 
 - Total review tasks = (number of documents) × (number of reviews). Example: 20 documents, 5 reviews → 100 tasks.
 - We maintain a pool of up to **max subagents** in flight. When a subagent finishes reviewing a document, it hands its report to the review agent, then is **killed** (terminated) so context is freed. A new subagent is spawned for the next task (next document or next review slot for a document) until all tasks are done. **Subagent spawn failure:** If a subagent fails to spawn (model unavailable, auth error, binary not found): **retry** up to 2 times with the same model; if still failing, **fallback** to the next model in the user-configured list (round-robin). If all configured models fail for that task, **skip** that task, log, and continue. If more than 25% of tasks are skipped due to spawn failure, mark run as **failed** and surface "Too many review subagents failed to start; check models and auth."
-- Example: 20 documents, number of reviews = 5, max spawn = 20 → 5 full “rounds”; in each round we assign 20 subagents to 20 documents (one subagent per doc). After 5 rounds, each document has been reviewed by 5 subagents.
+- Example: 20 documents, number of reviews = 5, max spawn = 20 → 5 full "rounds"; in each round we assign 20 subagents to 20 documents (one subagent per doc). After 5 rounds, each document has been reviewed by 5 subagents.
 - Example: 5 documents, 3 reviews, max spawn = 10 → 15 tasks. We spawn 10 subagents; whenever one finishes and hands off its report, we kill it and spawn a new one for the next task until all 15 are done.
 
 **Batching and cross-document awareness:**
 
-- Documents are long; one subagent should not hold multiple full documents in context. Each subagent is assigned **one document** per task (and optionally a **short index/summary of the other documents**) so it can say “X might be missing here — check Architecture doc” without loading every doc.
+- Documents are long; one subagent should not hold multiple full documents in context. Each subagent is assigned **one document** per task (and optionally a **short index/summary of the other documents**) so it can say "X might be missing here -- check Architecture doc" without loading every doc.
 - For **fork / PR / enhance** (existing code): review subagents may need to see **codebase context** (e.g. from codebase_scanner: key paths, module list, tech stack) so they can check feasibility and unwired components against the code.
 - **Index/summary:** Produced by the **review agent** (or a single dedicated "index" step run once before per-doc reviews). Format: markdown or structured list: document id, path, one-line summary, optional section headings. Max size: e.g. 2K tokens or 500 lines (document in implementation). Attached to each per-doc review prompt so subagents can reference other docs without loading full text.
-- **Token overflow:** Before sending a document (or whole-set synthesis) to a subagent, check size against platform context limit. If over limit: **truncate** with a clear boundary (e.g. first N tokens plus "[… truncated …]" and line count) and attach a note "Document truncated for context; focus on the provided portion." Do not chunk into multiple calls for one review task. If truncation would leave under 20% of context for response, **skip** that task and log; after run, surface in findings report that the doc was too long to review fully.
+- **Token overflow:** Before sending a document (or whole-set synthesis) to a subagent, check size against platform context limit. If over limit: **truncate** with a clear boundary (e.g. first N tokens plus "[... truncated ...]" and line count) and attach a note "Document truncated for context; focus on the provided portion." Do not chunk into multiple calls for one review task. If truncation would leave under 20% of context for response, **skip** that task and log; after run, surface in findings report that the doc was too long to review fully.
 
 **Review criteria (what subagents look for):**
 
@@ -926,7 +926,7 @@ After all interview documents are created (phase documents, AGENTS.md, PRD, etc.
 
 **Whole-document-set pass last:**
 
-- After all per-document reviews are done, run the configured **number of reviews** again as **whole-set** passes: reviewers see the full document set (or a synthesis) and check that everything works together, no contradictions, wiring is consistent. Same number of rounds as “number of reviews”; each round can use up to max subagents. This is done **last**. **Synthesis:** When the full document set exceeds context, the **review agent** produces a **synthesis** (one document: summaries per doc plus cross-doc wiring and dependency list). Max synthesis size: e.g. 50% of platform context limit (document in implementation). Whole-set reviewers receive this synthesis instead of raw docs. **Single document:** When document count is 1, treat as one whole-set round only: that single doc is reviewed N times (N = number of reviews) by the worker pool; then the review agent runs once for the whole set. No separate per-doc vs whole-set phases.
+- After all per-document reviews are done, run the configured **number of reviews** again as **whole-set** passes: reviewers see the full document set (or a synthesis) and check that everything works together, no contradictions, wiring is consistent. Same number of rounds as "number of reviews"; each round can use up to max subagents. This is done **last**. **Synthesis:** When the full document set exceeds context, the **review agent** produces a **synthesis** (one document: summaries per doc plus cross-doc wiring and dependency list). Max synthesis size: e.g. 50% of platform context limit (document in implementation). Whole-set reviewers receive this synthesis instead of raw docs. **Single document:** When document count is 1, treat as one whole-set round only: that single doc is reviewed N times (N = number of reviews) by the worker pool; then the review agent runs once for the whole set. No separate per-doc vs whole-set phases.
 
 **Review agent behavior (option C):**
 
@@ -934,7 +934,7 @@ After all interview documents are created (phase documents, AGENTS.md, PRD, etc.
 
 **Dependencies:** Same Multi-Pass Review pattern as Requirements Doc Builder (review agent + N subagents; not the Crew feature); platform_specs; codebase_scanner for existing-code intents. Cross-reference **Plans/chain-wizard-flexibility.md §5.6** for shared settings and model selection.
 
-**GUI and visibility:** See “Agent activity and progress visibility” under GUI gaps below. Show the process **in the interviewer chat** (we are already there). User must see review subagents working and progress (documents in progress, remaining). **Pause, cancel, resume** are supported options; recovery state for “in progress” so user can resume or start over. **Cancel:** On cancel, **stop spawning** new subagents immediately. **Do not kill** in-flight subagents; let them complete and discard their reports. Then set state to cancelled and surface "Review cancelled; no changes applied." If the review agent is already producing, cancel after it finishes the current revision; then discard and set cancelled. **Recovery state (interview Multi-Pass):** Persist: run phase (per_doc | whole_set), list of completed task ids (e.g. doc_id + review_index), partial reports received (or path to temp store), max subagents in flight, number of reviews, and (if in producing) review agent input state. On resume, rebuild worker queue excluding completed task ids; resume review agent from last state if applicable. On start over, clear this state and re-run from the beginning.
+**GUI and visibility:** See "Agent activity and progress visibility" under GUI gaps below. Show the process **in the interviewer chat** (we are already there). User must see review subagents working and progress (documents in progress, remaining). **Pause, cancel, resume** are supported options; recovery state for "in progress" so user can resume or start over. **Cancel:** On cancel, **stop spawning** new subagents immediately. **Do not kill** in-flight subagents; let them complete and discard their reports. Then set state to cancelled and surface "Review cancelled; no changes applied." If the review agent is already producing, cancel after it finishes the current revision; then discard and set cancelled. **Recovery state (interview Multi-Pass):** Persist: run phase (per_doc | whole_set), list of completed task ids (e.g. doc_id + review_index), partial reports received (or path to temp store), max subagents in flight, number of reviews, and (if in producing) review agent input state. On resume, rebuild worker queue excluding completed task ids; resume review agent from last state if applicable. On start over, clear this state and re-run from the beginning.
 
 ## DRY Method Compliance
 
@@ -942,21 +942,21 @@ After all interview documents are created (phase documents, AGENTS.md, PRD, etc.
 
 ### DRY Requirements
 
-1. **Platform Data — ALWAYS use platform_specs:**
+1. **Platform Data -- ALWAYS use platform_specs:**
    - ❌ **NEVER** hardcode platform CLI commands, binary names, models, auth, or capabilities
    - ✅ **ALWAYS** use `platform_specs::` functions (e.g., `platform_specs::cli_binary_names()`, `platform_specs::get_subagent_invocation_format()`, `platform_specs::get_agents_directory_name()`)
    - ✅ **ALWAYS** use `platform_specs::discover_platform_capabilities()` instead of platform match statements
 
-2. **Subagent Names — ALWAYS use subagent_registry:**
+2. **Subagent Names -- ALWAYS use subagent_registry:**
    - ❌ **NEVER** hardcode subagent names in match statements or mappings
    - ✅ **ALWAYS** use `subagent_registry::` functions (e.g., `subagent_registry::get_subagent_for_language()`, `subagent_registry::is_valid_subagent_name()`)
    - ✅ **ALWAYS** reference `DRY:DATA:subagent_registry` from orchestrator plan as the single source of truth
 
 3. **Tag All Reusable Items:**
-   - ✅ Tag reusable functions: `// DRY:FN:<name> — Description`
-   - ✅ Tag reusable data structures: `// DRY:DATA:<name> — Description`
-   - ✅ Tag reusable widgets: `// DRY:WIDGET:<name> — Description`
-   - ✅ Tag reusable helpers: `// DRY:HELPER:<name> — Description`
+   - ✅ Tag reusable functions: `// DRY:FN:<name> -- Description`
+   - ✅ Tag reusable data structures: `// DRY:DATA:<name> -- Description`
+   - ✅ Tag reusable widgets: `// DRY:WIDGET:<name> -- Description`
+   - ✅ Tag reusable helpers: `// DRY:HELPER:<name> -- Description`
 
 4. **Widget Reuse:**
    - ✅ **ALWAYS** check `docs/gui-widget-catalog.md` before creating new UI
@@ -978,22 +978,22 @@ After all interview documents are created (phase documents, AGENTS.md, PRD, etc.
 1. Add `SubagentConfig` struct
    - **DRY REQUIREMENT:** Tag with `// DRY:DATA:SubagentConfig` if reusable
 2. Extend `InterviewOrchestratorConfig`
-   - **DRY REQUIREMENT:** Use `subagent_registry::` functions for any subagent name validation — DO NOT hardcode subagent names
+   - **DRY REQUIREMENT:** Use `subagent_registry::` functions for any subagent name validation -- DO NOT hardcode subagent names
 3. Add subagent configuration to GUI
-   - **DRY REQUIREMENT:** Check `docs/gui-widget-catalog.md` FIRST — use existing widgets (`toggler`, `styled_button`, `selectable_label`, `themed_panel`)
-   - **DRY REQUIREMENT:** Subagent name lists MUST come from `subagent_registry::all_subagent_names()` or `subagent_registry::get_subagents_for_tier()` — DO NOT hardcode names
+   - **DRY REQUIREMENT:** Check `docs/gui-widget-catalog.md` FIRST -- use existing widgets (`toggler`, `styled_button`, `selectable_label`, `themed_panel`)
+   - **DRY REQUIREMENT:** Subagent name lists MUST come from `subagent_registry::all_subagent_names()` or `subagent_registry::get_subagents_for_tier()` -- DO NOT hardcode names
    - **DRY REQUIREMENT:** Tag any new reusable widgets with `// DRY:WIDGET:<name>`
    - **DRY REQUIREMENT:** Run `scripts/generate-widget-catalog.sh` after widget changes
 4. Create subagent mapping utilities
-   - **DRY REQUIREMENT:** MUST use `subagent_registry::get_subagent_for_language()` and `subagent_registry::get_subagent_for_framework()` — DO NOT create duplicate mapping logic
+   - **DRY REQUIREMENT:** MUST use `subagent_registry::get_subagent_for_language()` and `subagent_registry::get_subagent_for_framework()` -- DO NOT create duplicate mapping logic
    - **DRY REQUIREMENT:** Tag reusable functions with `// DRY:FN:<name>`
 5. **DRY (Puppet Master code):** When adding interview UI or helpers, follow DRY per §5.3 (widget catalog, platform_specs, tagging; run catalog scripts after widget changes)
 
 ### Phase 2: Prompt Integration
 1. Modify `prompt_templates.rs` to include subagent instructions
-   - **DRY REQUIREMENT:** Use `platform_specs::get_subagent_invocation_format()` when building platform-specific invocation syntax — DO NOT hardcode formats
+   - **DRY REQUIREMENT:** Use `platform_specs::get_subagent_invocation_format()` when building platform-specific invocation syntax -- DO NOT hardcode formats
 2. Add subagent invocation syntax to prompts
-   - **DRY REQUIREMENT:** Use `SubagentInvoker::invoke_subagent()` which uses `platform_specs` — DO NOT duplicate platform-specific logic
+   - **DRY REQUIREMENT:** Use `SubagentInvoker::invoke_subagent()` which uses `platform_specs` -- DO NOT duplicate platform-specific logic
 3. Update prompt generation to pass subagent config
    - **DRY REQUIREMENT:** Validate subagent names using `subagent_registry::is_valid_subagent_name()` before including in prompts
 
@@ -1011,9 +1011,9 @@ After all interview documents are created (phase documents, AGENTS.md, PRD, etc.
 1. Enhance `DocumentWriter` to use technical-writer subagent
 2. Use knowledge-synthesizer for technology matrix
 3. Use qa-expert and test-automator for test strategy
-4. **AGENTS.md — Technology & version constraints:** Add a "Technology & version constraints" (or "Stack conventions") section to generated AGENTS.md per §5.1, derived from Architecture phase and optionally technology_matrix; include convention templates for well-known stacks (e.g. Pydantic v2, React 18) when detected.
+4. **AGENTS.md -- Technology & version constraints:** Add a "Technology & version constraints" (or "Stack conventions") section to generated AGENTS.md per §5.1, derived from Architecture phase and optionally technology_matrix; include convention templates for well-known stacks (e.g. Pydantic v2, React 18) when detected.
 5. **AGENTS.md DRY section:** Add a DRY Method (reuse-first) section to generated AGENTS.md per §5.1 so target-project agents follow reuse-first and tag reusable items.
-6. **AGENTS.md minimality:** Implement critical-first block, size budget (~150–200 lines), and optional linked docs (e.g. docs/architecture.md) per §5.1 "Keep generated AGENTS.md minimal"; add "When updating, keep Critical and Technology & version constraints; prefer links to docs/" in generated file.
+6. **AGENTS.md minimality:** Implement critical-first block, size budget (~150-200 lines), and optional linked docs (e.g. docs/architecture.md) per §5.1 "Keep generated AGENTS.md minimal"; add "When updating, keep Critical and Technology & version constraints; prefer links to docs/" in generated file.
 7. **PRD crew recommendations:** Extend PRD generator to analyze task complexity and suggest crews for tasks/subtasks that would benefit from multiple subagents. Add `crew_recommendation` field to PRD JSON schema. Include crew recommendations in generated PRD and plan markdown.
 8. **Document generation crews:** Use crews for document generation (e.g., technical-writer + knowledge-synthesizer + qa-expert crew) to coordinate document creation and ensure consistency.
 
@@ -2297,10 +2297,10 @@ impl ActiveSubagentTracker {
 
 **Severity levels:**
 
-- **Critical:** Security vulnerabilities, breaking architecture decisions, incompatible tech choices — **block phase completion**.
-- **Major:** Performance issues, maintainability problems, missing requirements — **block phase completion**.
-- **Minor:** Code style, minor optimizations, suggestions — **log and proceed**.
-- **Info:** Documentation, comments, non-blocking recommendations — **log and proceed**.
+- **Critical:** Security vulnerabilities, breaking architecture decisions, incompatible tech choices -- **block phase completion**.
+- **Major:** Performance issues, maintainability problems, missing requirements -- **block phase completion**.
+- **Minor:** Code style, minor optimizations, suggestions -- **log and proceed**.
+- **Info:** Documentation, comments, non-blocking recommendations -- **log and proceed**.
 
 **Remediation loop:**
 
@@ -2355,33 +2355,33 @@ The Config view has an **Interview** tab (tab index 6) bound to `InterviewGuiCon
 
 During **interview document creation** (phase documents, AGENTS.md, PRD, etc.) and during **Multi-Pass Review** (§5.4), the user should **see the agents working** (like in Assistant chat), not just a spinner.
 
-**Where to show it — two places (redundant):**
+**Where to show it -- two places (redundant):**
 
 - We are already in the **interviewer chat** window when document creation or Multi-Pass Review runs.
-  1. **In the interviewer chat:** Stream agent output (e.g. “Writing Scope document…”, “Reviewing document 3 of 15…”, subagent activity) into the chat so the user sees it there.
-  2. **Agent activity pane on the same page:** Also show the same (or equivalent) activity in an **agent activity pane** on the Interview page, redundant with the chat. That’s acceptable because the user isn’t using the pane for anything else during that flow. So the Interview view shows the process in **both** the chat and the pane.
+  1. **In the interviewer chat:** Stream agent output (e.g. "Writing Scope document...", "Reviewing document 3 of 15...", subagent activity) into the chat so the user sees it there.
+  2. **Agent activity pane on the same page:** Also show the same (or equivalent) activity in an **agent activity pane** on the Interview page, redundant with the chat. That's acceptable because the user isn't using the pane for anything else during that flow. So the Interview view shows the process in **both** the chat and the pane.
 
 **Progress indicator:**
 
 - **Progress bar or status strip** (on the same page) showing **which documents are in progress** and **how many remain**.
-- **Document creation:** E.g. “Writing phase 4 document — 5 of 8 remaining” or “Writing AGENTS.md…”
-- **Multi-Pass Review:** E.g. “Reviewing document 7 of 15 — 9 subagents active” or “Whole-set review pass 2 of 3.”
+- **Document creation:** E.g. "Writing phase 4 document -- 5 of 8 remaining" or "Writing AGENTS.md..."
+- **Multi-Pass Review:** E.g. "Reviewing document 7 of 15 -- 9 subagents active" or "Whole-set review pass 2 of 3."
 
 **Pause, cancel, resume:**
 
-- Provide **pause**, **cancel**, and **resume** as user options during document creation and during Multi-Pass Review. Pause suspends the run; cancel stops and does not apply changes; resume continues from where paused. **Recovery** (newfeatures §4) should persist “in progress” state so after cancel or crash the user sees “run was interrupted” and can resume or start over.
+- Provide **pause**, **cancel**, and **resume** as user options during document creation and during Multi-Pass Review. Pause suspends the run; cancel stops and does not apply changes; resume continues from where paused. **Recovery** (newfeatures §4) should persist "in progress" state so after cancel or crash the user sees "run was interrupted" and can resume or start over.
 
-**Agent activity pane — same placement rule everywhere:**
+**Agent activity pane -- same placement rule everywhere:**
 
-- The agent activity pane sits **on the same page where the action is triggered**. That includes the **Interview** page: show the pane there too (redundant with the chat, as above). For **Requirements Doc Builder** and **Multi-Pass Review** when triggered from the wizard/requirements step, the pane is on that page (chain-wizard §3.5). So the pane appears in **two places** — requirements/wizard page and Interview page — and in Interview we show it in both the chat and the pane. Placement can be revisited later (e.g. drawer, modal) if needed.
+- The agent activity pane sits **on the same page where the action is triggered**. That includes the **Interview** page: show the pane there too (redundant with the chat, as above). For **Requirements Doc Builder** and **Multi-Pass Review** when triggered from the wizard/requirements step, the pane is on that page (chain-wizard §3.5). So the pane appears in **two places** -- requirements/wizard page and Interview page -- and in Interview we show it in both the chat and the pane. Placement can be revisited later (e.g. drawer, modal) if needed.
 
 **Implementation:** Feed CLI/streaming events from document generation and Multi-Pass Review into (1) the interviewer chat when in Interview, and (2) the agent activity pane on the same page (Interview page or wizard/requirements page where triggered). In Interview, chat and pane are redundant. Progress state (current document, remaining count, subagents active) comes from the orchestrator or review coordinator and drives the progress UI. Align with chain-wizard §3.5 and assistant-chat-design for streaming/events.
 
 **Primary surface on Interview page:** When on the Interview page, the **interviewer chat** is the primary surface for streaming agent output during document creation and Multi-Pass Review. The **agent activity pane** on the same page shows the same stream (synchronized from the same event source). If the pane is collapsed or hidden, chat still shows full stream.
 
-**Progress indicator format:** Use a **status strip** (single line) above or below the pane: left = current step text (e.g. "Writing phase 4 document — 5 of 8 remaining"); right = optional determinate progress bar (e.g. 5/8) when total is known. When total is unknown, show indeterminate progress bar. Stale rule: same as chain-wizard §3.5 (30s then "Progress stalled — last update 30s ago").
+**Progress indicator format:** Use a **status strip** (single line) above or below the pane: left = current step text (e.g. "Writing phase 4 document -- 5 of 8 remaining"); right = optional determinate progress bar (e.g. 5/8) when total is known. When total is unknown, show indeterminate progress bar. Stale rule: same as chain-wizard §3.5 (30s then "Progress stalled -- last update 30s ago").
 
-**Pause/cancel/resume and feedback:** Same as chain-wizard §3.5: control row (Pause | Resume | Cancel), Cancel confirmation modal, toasts for "Run cancelled…", "Resuming…", "Run resumed." States: idle, generating, reviewing, paused, cancelling, cancelled, interrupted, complete, error.
+**Pause/cancel/resume and feedback:** Same as chain-wizard §3.5: control row (Pause | Resume | Cancel), Cancel confirmation modal, toasts for "Run cancelled...", "Resuming...", "Run resumed." States: idle, generating, reviewing, paused, cancelling, cancelled, interrupted, complete, error.
 
 **Already in GUI (gui_config.rs)**
 
@@ -2395,7 +2395,7 @@ During **interview document creation** (phase documents, AGENTS.md, PRD, etc.) a
 | **max_questions_per_phase** | Present; single number | Add **"Unlimited"** option (e.g. checkbox or special value 0 = unlimited) so users can allow unbounded questions per phase; wire to orchestrator (phase stops when min met and either max reached or unlimited). |
 | **Wiring to InterviewOrchestratorConfig** | Several GUI fields are not passed to the interview orchestrator at runtime | Per orchestrator plan Gaps: add `min_questions_per_phase`, `max_questions_per_phase` (with unlimited), `require_architecture_confirmation`, `vision_provider` to `InterviewOrchestratorConfig`; set from `gui_config.interview` in `app.rs` when starting the interview; use in phase_manager and prompt/research flows. |
 | **generate_initial_agents_md** | In GUI; default in code is `true` | Ensure default and tooltip reflect §5.1: when true, generated AGENTS.md includes DRY and Technology & version constraints. Tooltip: "Generate AGENTS.md at project root with DRY method and technology/version rules from the interview." |
-| **Multi-Pass Review (§5.4)** | Not in GUI | Add: on/off, number of reviews (default 3, max 10), max subagents spawn (default 9, max 20) **with warning** “This will go through token usage quickly,” use different models (y/n), model/platform list. Wire into interview run config. |
+| **Multi-Pass Review (§5.4)** | Not in GUI | Add: on/off, number of reviews (default 3, max 10), max subagents spawn (default 9, max 20) **with warning** "This will go through token usage quickly," use different models (y/n), model/platform list. Wire into interview run config. |
 | **Agent activity view and progress** | Not in GUI | **(1) Pane:** Add an **agent activity pane** on the Interview view and on the wizard/requirements page when Builder or Multi-Pass Review is triggered there. Pane: read-only, chat-like, min height 120px, max 500 lines, monospace; same event source as interviewer chat when on Interview page (redundant display). **(2) Progress:** Add a **status strip** with current step text and optional determinate/indeterminate progress bar; canonical states: idle, generating, reviewing, paused, cancelling, cancelled, interrupted, complete, error. **(3) Controls:** Pause | Resume | Cancel in one row; Cancel with confirmation modal; toasts for cancel/resume. **(4) Recovery:** Persist run checkpoint (run_type, run_id, step_index, document_index, etc.) per chain-wizard §3.5; on restore show "Run was interrupted" with "Resume from checkpoint" / "Start over." **(5) Settings (optional):** In Interview tab, add "Show agent activity pane by default" (default true) and persist pane visible/collapsed and split ratio in redb per project. |
 
 **Config and storage for Multi-Pass Review and Agent activity**
@@ -2411,7 +2411,7 @@ During **interview document creation** (phase documents, AGENTS.md, PRD, etc.) a
 **Cross-reference**
 
 - MiscPlan §7.5: Cleanup/evidence UI lives in Config → Advanced; Interview tab is separate. No overlap.
-- Orchestrator plan Gaps: "Interviewer Enhancements and Config Wiring" — same wiring requirement for interview config.
+- Orchestrator plan Gaps: "Interviewer Enhancements and Config Wiring" -- same wiring requirement for interview config.
 
 **Unwired interview config (implementation status)**
 

@@ -1,4 +1,4 @@
-# RWM Puppet Master
+# Puppet Master
 
 A Rust/Iced desktop orchestrator that coordinates multiple AI coding CLI platforms using the Ralph Wiggum Method.
 
@@ -6,19 +6,19 @@ A Rust/Iced desktop orchestrator that coordinates multiple AI coding CLI platfor
 
 ## What is this?
 
-Puppet Master orchestrates 5 AI CLI platforms (Cursor, Codex, Claude Code, Gemini, GitHub Copilot) through a four-tier hierarchical workflow: **Phase → Task → Subtask → Iteration**. It spawns fresh CLI processes for each iteration, uses file-based memory (`progress.txt`, `AGENTS.md`, `prd.json`), and enforces verification gates between tiers. No API keys needed — uses subscription-based CLI auth only.
+Puppet Master orchestrates 5 AI CLI platforms (Cursor, Codex, Claude Code, Gemini, GitHub Copilot) through a four-tier hierarchical workflow: **Phase → Task → Subtask → Iteration**. It spawns fresh CLI processes for each iteration, uses file-based memory (`progress.txt`, `AGENTS.md`, `prd.json`), and enforces verification gates between tiers. No API keys needed -- uses subscription-based CLI auth only.
 
 ## Key Features
 
-- **5-platform CLI orchestration** — Cursor, Codex, Claude Code, Gemini, GitHub Copilot
-- **Four-tier hierarchical workflow** — Phase → Task → Subtask → Iteration
-- **Native Rust/Iced desktop GUI** — fast, cross-platform UI
-- **Fresh process isolation** per iteration — deterministic and reproducible
+- **5-platform CLI orchestration** -- Cursor, Codex, Claude Code, Gemini, GitHub Copilot
+- **Four-tier hierarchical workflow** -- Phase → Task → Subtask → Iteration
+- **Native Rust/Iced desktop GUI** -- fast, cross-platform UI
+- **Fresh process isolation** per iteration -- deterministic and reproducible
 - **Automated verification gates** between tiers
-- **File-based memory layers** — `progress.txt`, `AGENTS.md`, `prd.json`
+- **File-based memory layers** -- `progress.txt`, `AGENTS.md`, `prd.json`
 - **DRY code tagging system** for agent discoverability (`DRY:WIDGET`, `DRY:FN`, etc.)
-- **Platform capability auto-detection** — models, auth, effort/reasoning support
-- **Cross-platform installers** — Windows (NSIS), macOS (.app), Linux (.deb)
+- **Platform capability auto-detection** -- models, auth, effort/reasoning support
+- **Cross-platform installers** -- Windows (NSIS), macOS (.app), Linux (.deb)
 
 ## Quick Start
 
@@ -84,4 +84,4 @@ Installer CI is defined in [`.github/workflows/build-installers.yml`](.github/wo
 
 ## For AI Agents
 
-Start by reading **[`AGENTS.md`](AGENTS.md)** — it contains all conventions, patterns, and rules for this project.
+Start by reading **[`AGENTS.md`](AGENTS.md)** -- it contains all conventions, patterns, and rules for this project.

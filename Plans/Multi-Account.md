@@ -1,6 +1,6 @@
 # Multi-Account Specification
 
-**Status:** Single spec for implementation — another agent may derive an implementation plan from this document.  
+**Status:** Single spec for implementation -- another agent may derive an implementation plan from this document.  
 **Cross-references:** Plans/rewrite-tie-in-memo.md, Plans/storage-plan.md, Plans/usage-feature.md, AGENTS.md (Usage Tracking, Platform CLI Commands, Gemini auth exception).
 
 ---
@@ -69,7 +69,7 @@
 
 ### 3.5 Current Puppet Master context
 
-- **Stack:** Rust/Iced; 5 platforms; CLI-only (no in-process OAuth store). **PlatformConfig** per platform — one identity per platform; no accounts[] or activeAccountId yet. **platform_specs.rs** is single source of truth for CLI/auth — no multi-account data today.
+- **Stack:** Rust/Iced; 5 platforms; CLI-only (no in-process OAuth store). **PlatformConfig** per platform -- one identity per platform; no accounts[] or activeAccountId yet. **platform_specs.rs** is single source of truth for CLI/auth -- no multi-account data today.
 - **Future:** When native auth for Codex, Copilot, Gemini lands, use OpenCode PR #11832 store + rotating-fetch + per-request context as the blueprint for in-process tokens and HTTP.
 
 ---
@@ -84,7 +84,7 @@
 - **AccountEntry:** At least:
   - `id`: stable id (e.g. ULID or UUID)
   - `name`: display name (e.g. email or label)
-  - `config_dir`: path or key for the platform’s config-dir env (e.g. `CLAUDE_CONFIG_DIR`)
+  - `config_dir`: path or key for the platform's config-dir env (e.g. `CLAUDE_CONFIG_DIR`)
   - Optional: `rate_limit`: `{ cooldown_until: u64, reset_at: Option<u64> }`
   - Optional: cached usage (`session_percent`, `weekly_percent`, `fetched_at`) for pick-best
 
@@ -126,11 +126,11 @@ flowchart LR
 
 ## 5. Auto-rotation
 
-- **Trigger:** Rate limit detected (PTY regex for Claude; HTTP 429 or CLI/body “rate limit” for Codex/Gemini/Copilot).
+- **Trigger:** Rate limit detected (PTY regex for Claude; HTTP 429 or CLI/body "rate limit" for Codex/Gemini/Copilot).
 - **Actions:**  
   - Mark current account in **cooldown** (and optional `reset_at` from `Retry-After` or parsed message).  
   - Persist to redb (or JSON store).  
-  - **Next run:** Resolve account via pick-best (excluding cooldown) or “next in order”; spawn CLI with that account’s config/env.  
+  - **Next run:** Resolve account via pick-best (excluding cooldown) or "next in order"; spawn CLI with that account's config/env.  
   - **Optional (Claude):** Session migration + resume on next account (copy session files, spawn with `--resume <id> "Continue."`).
 - **Within same logical request (native auth / HTTP):** Wrapper (rotating-fetch style): on 429/401/403 apply cooldown, move failed account to back of order, notify (e.g. event or toast), retry with next account; configurable cooldowns, retries, max attempts.
 - **Exhaustion:** If all accounts are in cooldown or above utilization threshold (e.g. ≥99%), optionally sleep until earliest reset (cap duration, e.g. 6h) then re-query usage and pick-best again.
@@ -142,7 +142,7 @@ flowchart LR
 
 | Provider | Config / identity | Usage API | Rate-limit detection | Notes |
 |----------|-------------------|-----------|----------------------|--------|
-| **Claude Code** | One config dir per account; env `CLAUDE_CONFIG_DIR`. | Anthropic `GET .../api/oauth/usage` (5h/7d). | PTY output regex (e.g. "Limit reached · resets ..."). | Optional: session migrate + resume on next account (claude-nonstop pattern). |
+| **Claude Code** | One config dir per account; env `CLAUDE_CONFIG_DIR`. | Anthropic `GET .../api/oauth/usage` (5h/7d). | PTY output regex (e.g. "Limit reached - resets ..."). | Optional: session migrate + resume on next account (claude-nonstop pattern). |
 | **Codex** | Config dir or env if CLI; when native auth: in-process tokens. | `https://chatgpt.com/backend-api/wham/usage`. | HTTP 429 or CLI/body "rate limit"; persist reset time. | 429 → mark rate-limited, get next account, retry. |
 | **Gemini** | Per-account credentials; API key allowed per rewrite-tie-in. | Cloud Quotas API (`cloudquotas.googleapis.com`); env above; 5h/7d from quota limits. | Message: "Your quota will reset after 8h44m7s." (AGENTS.md). | |
 | **Copilot** | Multiple GitHub OAuth tokens or orgs. | GitHub REST `/orgs/{org}/copilot/metrics`; env `GITHUB_TOKEN`/`GH_TOKEN`. | HTTP or error parsing. | |
@@ -153,7 +153,7 @@ flowchart LR
 ## 7. Runner / executor contract
 
 - **Before starting a run:** Resolve which account to use: **active** account, or **pick-best** by usage (lowest utilization, excluding cooldown) when the platform exposes a usage API.
-- **Spawn CLI:** Pass the chosen account’s config dir or env. No change to “fresh process per iteration” — only the env/config passed to that process changes.
+- **Spawn CLI:** Pass the chosen account's config dir or env. No change to "fresh process per iteration" -- only the env/config passed to that process changes.
 - **On rate-limit:** See **§5 Auto-rotation**: mark cooldown, persist; next run uses another account (or optional session migrate for Claude only).
 
 ---
@@ -168,18 +168,18 @@ flowchart LR
 
 ## 9. GUI requirements (UX only)
 
-All of the following are **UX requirements**; no commitment to Iced or Slint — implementation will use the future UI stack.
+All of the following are **UX requirements**; no commitment to Iced or Slint -- implementation will use the future UI stack.
 
 ### 9.1 Setup
 
-- **Add account:** Per platform, trigger platform login with a new config dir or profile (e.g. “Add account” runs login flow, creates new profile/registry entry).
+- **Add account:** Per platform, trigger platform login with a new config dir or profile (e.g. "Add account" runs login flow, creates new profile/registry entry).
 - **Remove account:** Remove an account from the registry for that platform (with confirmation if it is the active one).
 
 ### 9.2 Config view
 
 - **List accounts** per platform with: name/label, active indicator, optional 5h/7d usage bars, cooldown/rate-limit status.
-- **Set active:** “Set active” or “Use for next run” so the next run uses that account (or pick-best still applies if auto-rotation is on).
-- **Optional:** Reorder accounts (affects “next in order” when not using pick-best).
+- **Set active:** "Set active" or "Use for next run" so the next run uses that account (or pick-best still applies if auto-rotation is on).
+- **Optional:** Reorder accounts (affects "next in order" when not using pick-best).
 
 ### 9.3 Usage view
 
@@ -194,17 +194,17 @@ All of the following are **UX requirements**; no commitment to Iced or Slint —
 
 ### 9.5 Notifications
 
-- **Failover / rotation:** When auto-rotation switches account (rate limit or auth failure), show a brief notification (e.g. toast or banner): e.g. “Rate limited. Switched to &lt;account&gt;” so the user knows why a run continued with a different identity.
+- **Failover / rotation:** When auto-rotation switches account (rate limit or auth failure), show a brief notification (e.g. toast or banner): e.g. "Rate limited. Switched to &lt;account&gt;" so the user knows why a run continued with a different identity.
 
 ---
 
-## 10. Phase 2 (native auth) — when available
+## 10. Phase 2 (native auth) -- when available
 
 When the new auth system for Codex, Copilot, Gemini (and optionally Claude) lands (in-process tokens, HTTP calls):
 
 - **In-process token store:** OpenCode PR #11832 shape in Rust: `providers[platform_id]` with `active`, `order`, `records` (per-account tokens + health). File lock for writes; best-effort for health updates.
 - **Rotating fetch:** Wrap HTTP calls: get candidates (active first, then order), filter by cooldown; on 429/401/403 apply cooldown, moveToBack, notify, retry with next account.
-- **Current account:** Request-scoped “current account” via explicit context struct or thread-local (no AsyncLocalStorage in Rust).
+- **Current account:** Request-scoped "current account" via explicit context struct or thread-local (no AsyncLocalStorage in Rust).
 
 ---
 

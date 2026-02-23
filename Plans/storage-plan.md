@@ -2,7 +2,7 @@
 
 **Date:** 2026-02-20  
 **Status:** Implementation checklist + detailed design  
-**Cross-references:** Plans/rewrite-tie-in-memo.md, Plans/assistant-chat-design.md (§10–§11, §24), Plans/usage-feature.md, Plans/FileManager.md (§2.9), Plans/Tools.md (§8.0, §8.4 — tool events and rollups), AGENTS.md. **Validation:** Plans/storage-solution-research.md (2026-02-22) assesses this stack against docs and industry practice; SQLite remains off the table.
+**Cross-references:** Plans/rewrite-tie-in-memo.md, Plans/assistant-chat-design.md (§10-§11, §24), Plans/usage-feature.md, Plans/FileManager.md (§2.9), Plans/Tools.md (§8.0, §8.4 -- tool events and rollups), AGENTS.md. **Validation:** Plans/storage-solution-research.md (2026-02-22) assesses this stack against docs and industry practice; SQLite remains off the table.
 
 ---
 
@@ -30,7 +30,7 @@ Storage for the rewrite follows a multi-store design: **seglog** as the canonica
 | Term | Meaning |
 |------|--------|
 | **seglog** | Single append-only event log (file or segment files). Every run, message, tool use, and usage event is appended here. Canonical source of truth; replay and projections are derived from it. |
-| **redb** | Embedded key-value store (Rust `redb` crate). Durable; used for settings, session/thread metadata, checkpoints, editor state, and analytics rollups. Not the source of truth for event history — that is seglog. |
+| **redb** | Embedded key-value store (Rust `redb` crate). Durable; used for settings, session/thread metadata, checkpoints, editor state, and analytics rollups. Not the source of truth for event history -- that is seglog. |
 | **Tantivy** | Full-text search engine (Rust). Indices are built by projectors from seglog (e.g. chat messages, docs, log summaries). Queries serve human and agent search. |
 | **Projector** | A process or pipeline that **reads** seglog (tail or full) and **writes** derived state: e.g. seglog → JSONL mirror, seglog → Tantivy index, seglog → redb checkpoints/snapshots. Projectors are **deterministic**: same seglog input ⇒ same output. |
 | **Analytics scan** | A job that scans seglog (or the JSONL mirror) over a time range and computes **aggregates** (e.g. 5h/7d usage, tool latency percentiles, error rates). Results are written to redb for fast dashboard/Usage reads. |
@@ -185,7 +185,7 @@ Schema per index: define fields (text, keyword, date) and build documents from e
 
 **Scan range:** Last N hours (e.g. 24h for 5h/7d rollups) or since last scan checkpoint. Read from seglog (or JSONL mirror) in order; filter by event type (`usage.event`, `run.completed`, `tool.invoked`).
 
-**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md §8.4): aggregate `tool.invoked` by `tool_name` over the window — count, p50/p95 ms, error_count (using optional `success`/`error` on payload).
+**Compute:** For 5h/7d: aggregate `usage.event` by platform, sum tokens (or request count) in sliding 5h and 7d windows. For tool latency: collect `tool.invoked` latencies, compute percentiles (p50, p95). For error rates: count run failures / total runs in window. For **tool usage** (Usage tool widget, Plans/Tools.md §8.4): aggregate `tool.invoked` by `tool_name` over the window -- count, p50/p95 ms, error_count (using optional `success`/`error` on payload).
 
 **Write:** Store results in redb under `rollups` namespace (e.g. `usage_5h.{platform}`, `usage_7d.{platform}`, `tool_latency.{window}`, **`tool_usage.{window}`**). Usage view and tool usage widget read from these keys; no direct seglog read for dashboard.
 
@@ -219,8 +219,8 @@ Chat persistence and search are implemented on top of this storage stack; the ch
 |------------------|------------------------|
 | **Thread list + per-thread metadata** (§11) | **redb** `sessions`: `thread.{thread_id}`, `thread_list.{project_id}`. |
 | **Full thread content** (messages, thought streams, code blocks, plan/todo, queue state) (§11) | Canonical: **seglog** (`chat.message` and related events). Projectors can materialize thread state or slices into redb for fast load; full history replayable from seglog. |
-| **Chat history search — human** (§10) | **Tantivy** chat index; UI search queries Tantivy. |
-| **Chat history search — agent** (§10) | Same Tantivy index or API over it; context pipeline or MCP/tool queries the index. |
+| **Chat history search -- human** (§10) | **Tantivy** chat index; UI search queries Tantivy. |
+| **Chat history search -- agent** (§10) | Same Tantivy index or API over it; context pipeline or MCP/tool queries the index. |
 | **Resume / rewind** (§11) | **redb** `checkpoints`: `thread_checkpoint.{thread_id}`; replay or slice from seglog as needed. |
 | **Virtualization / load older** (§24) | UI fetches slices; backend pages from redb projections or seglog-derived views. |
 | **Context usage / rate limits** (§12) | **redb** rollups (analytics scan) for dashboard and chat header. |
@@ -252,7 +252,7 @@ Chat persistence and search are implemented on top of this storage stack; the ch
 | **seglog corruption or partial write** | Append-only with flush; if we detect truncation, stop reading at last complete line. Optional: checksum per record or segment. Recovery: restore from backup or discard tail; projectors resume from last good checkpoint. |
 | **redb corruption** | redb is durable; use backups (e.g. copy `state.redb` periodically). If corruption, restore from backup; seglog is source of truth so we can rebuild redb state from seglog if we have projectors that re-materialize state. |
 | **Projector falls behind** | Tail reader keeps up with writer; if projector is slow (e.g. Tantivy commit), buffer events in memory and process in batches; checkpoint only after commit. If seglog grows faster than projector, consider backpressure or multiple segments. |
-| **Analytics scan blocks UI** | Run scan in background thread/task; never block main thread. Use a "last rollup" timestamp in redb; UI shows last computed rollup and optionally "Updating…" while scan runs. |
+| **Analytics scan blocks UI** | Run scan in background thread/task; never block main thread. Use a "last rollup" timestamp in redb; UI shows last computed rollup and optionally "Updating..." while scan runs. |
 | **Disk full** | seglog writer and redb writes can fail; handle I/O errors: show user-facing error, stop appending, and optionally retry. Retention policy (§2.2) limits seglog size; redb size is bounded by state (not unbounded event history). |
 | **Migration failure** | Migrations run on open; if one fails, log and leave DB at previous version; do not open DB in inconsistent state. Provide a "reset storage" or "recover from seglog" path for power users. |
 | **Multiple app instances** | Single writer for seglog (one process). If we ever support multiple processes (e.g. CLI + GUI), use a lock file or single writer process; document in §2.2. |
@@ -289,27 +289,27 @@ Chat persistence and search are implemented on top of this storage stack; the ch
 
 ### 8.1 Phased implementation order
 
-- **Phase 1 — seglog foundation**  
+- **Phase 1 -- seglog foundation**  
   Build first: app data root resolution, directory creation (`storage/seglog`, `storage/redb`, `storage/jsonl`, `storage/tantivy`), and seglog writer only (envelope format, seq, flush, optional rotation by size/day). No projectors, no redb.  
   **Exit criterion:** We can append events and read them back (by tailing or reading the segment file).
 
-- **Phase 2 — redb and schema**  
+- **Phase 2 -- redb and schema**  
   Build: redb open under app data root, schema (namespaces/tables per §2.3: settings, sessions, runs, checkpoints, editor, rollups, review_rules), key patterns, and a migrations runner (version in meta, run migrations on open).  
   **Exit criterion:** We can read/write settings and checkpoints (e.g. put/get in `settings` and `checkpoints` namespaces).
 
-- **Phase 3 — projector: seglog → JSONL mirror**  
+- **Phase 3 -- projector: seglog → JSONL mirror**  
   Build: single projector that tails seglog from a checkpoint, appends to the JSONL mirror (same envelope format), and persists its checkpoint in redb (`checkpoints` namespace).  
   **Exit criterion:** Tail seglog, write mirror, resume from checkpoint after restart (no duplicate mirror lines, checkpoint advances).
 
-- **Phase 4 — projector: seglog → Tantivy (chat index)**  
+- **Phase 4 -- projector: seglog → Tantivy (chat index)**  
   Build: projector (or second projector) that reads seglog from checkpoint, indexes `chat.message` (and optionally `chat.thread_created`) into a Tantivy chat index (fields: thread_id, content, role, ts, message_id), and persists its checkpoint in redb.  
   **Exit criterion:** Events are indexed and search returns results (e.g. by content or thread_id).
 
-- **Phase 5 — analytics scan and rollups**  
+- **Phase 5 -- analytics scan and rollups**  
   Build: analytics scan job (periodic or on-demand) that scans seglog (or JSONL mirror) over a time range, computes 5h/7d usage rollups, tool latency, and tool_usage (per-tool count, p50/p95, error_count per Plans/Tools.md §8.4), writes to redb `rollups` namespace, and stores a scan checkpoint.  
   **Exit criterion:** 5h/7d and tool rollups are written to redb and the UI (or a test reader) can read them.
 
-- **Phase 6 — wire chat, editor, and Usage**  
+- **Phase 6 -- wire chat, editor, and Usage**  
   Build: wire chat persistence (thread list and thread content to seglog; read from redb + seglog/snapshots per assistant-chat-design), editor state to redb `editor` namespace (FileManager.md §2.9), Usage/dashboard reading rollups from redb and triggering analytics scan (usage-feature.md); emit `usage.event` with `thread_id` and `run.completed` with optional usage snapshot.  
   **Exit criterion:** Full flow works: create thread, send message, events in seglog; projectors update mirror and index; Usage view shows rollups; editor state persists.
 
@@ -323,7 +323,7 @@ Chat persistence and search are implemented on top of this storage stack; the ch
 - **Event type schemas** (minimal set for writer) before or with Phase 1; full set before Phase 3/4/5.
 - **rollups namespace** before analytics scan writes (Phase 2 defines it; Phase 5 uses it).
 - **Tantivy chat index** before chat search UX (Phase 4 before Phase 6 chat wiring).
-- **Chat/editor/Usage wiring** after Phase 1–5 storage primitives exist.
+- **Chat/editor/Usage wiring** after Phase 1-5 storage primitives exist.
 
 ### 8.3 Startup and shutdown
 
