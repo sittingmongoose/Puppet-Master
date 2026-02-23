@@ -48,7 +48,7 @@ This document exists to avoid losing features when writing rewrite implementatio
 
 **Chat history search.** Human search across chats/history (UI). Agent search via tool/MCP or index in context pipeline for prior messages/sessions.
 
-**Threads and chat management.** Multiple threads in one chat UI. New thread (plus). Thread state (Working/Completed). Rename, archive, delete (with confirm). Resume and rewind (restore to message). Session share (bundle, no secrets). Copy message (selectable/Copy action). Run-complete notification (other thread) with setting to disable. Max concurrent runs per thread (default 10). Plan panel per thread. Persistence: thread list, messages, queue, plan/todo.
+**Threads and chat management.** Multiple threads in one chat UI. New thread (plus). Thread state (Working/Completed). Rename, archive, delete (with confirm). Resume and rewind (restore to message). Session share (bundle, no secrets). Copy message (selectable/Copy action). Run-complete notification (other thread) with setting to disable. Max concurrent runs per thread (default 10); per-platform concurrency caps also apply (see FinalGUISpec §7.4.7). Plan panel per thread. Persistence: thread list, messages, queue, plan/todo.
 
 **Context usage display.** Streaming when platform supports. Tokens, context window, rate limits in header/strip/status. Rate limit hit: clear message and option to switch platform/model.
 

@@ -371,6 +371,7 @@ The findings block is shown before final approval and links to the same artifact
   - **Files explored / files changed:** Can be a single collapsed "N files read" / "N files changed" with expand to list.
   User can expand any section to see full content; persistence (§11) stores everything so the full record is always available.
 - **Revert last agent edit:** The user can **revert the last agent edit** (or "Revert file X") from the thread -- tied to activity transparency and Git/restore points (Plans/newfeatures.md §8, §15.3) so the user can undo agent file changes without leaving the chat.
+- **Agent-requested rollback:** Agents can **request** a rollback (e.g. "revert my last edit" or "restore to previous point") via a designated tool call exposed in the agent's tool set. The tool is request-only — the app does not perform the restore immediately. Instead, the app shows a **user confirmation step** (optionally showing affected files, conflict status, and diff). After the user confirms, the app performs the restore (writes snapshot content back, updates app/chat state per §8 rollback flow), then sends a **refresh notification** to the editor and chat so they reload affected buffers and state. This uses the same restore pipeline as user-initiated "revert last agent edit." **Tiered scope:** narrow (last turn) or broader (specific restore point); broader requests require user confirmation and may be limited to same-session or last N points. See Plans/newfeatures.md §8 for store location (redb, not filesystem), read-only agent constraint (tool registry), tiered undo, and conflict handling (§23.4). **Relationship to rewind (§11):** "Rewind" is user-initiated message-level restore; agent-requested rollback uses the same restore-point infrastructure but is agent-initiated with a mandatory user confirmation gate.
 
 ---
 
@@ -632,7 +633,7 @@ All of the following are **MVP requirements** and are already reflected in the m
 19. **Delete thread** -- §11: delete permanently with confirmation.
 20. **Copy message** -- §11: selectable content and/or Copy action.
 21. **Run-complete notification** -- §11: notify when run completes in another thread; **setting** to turn off.
-22. **Concurrent threads** -- §11: setting, **default 10** max concurrent runs.
+22. **Concurrent threads** -- §11: setting, **default 10** max concurrent runs. Per-platform concurrency caps also apply (see `Plans/FinalGUISpec.md` §7.4.7); the more restrictive limit wins.
 23. **Custom vs built-in commands** -- §5: no conflicting names; UI explains why if user tries.
 24. **Plan panel scope** -- §11: plan panel **per thread**. **Accessibility** is **not MVP**.
 25. **Error and failure UX** -- §4: clear error state, Retry/Cancel, queue unchanged unless user retries; suggest switch platform/model when appropriate.

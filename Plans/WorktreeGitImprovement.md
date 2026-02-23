@@ -280,6 +280,9 @@ The plan is **ready to implement** with the following in mind:
 - `enable_parallel_execution` ← `gui_config.advanced.execution.enable_parallel`
 - `enable_git` (if exposed in GUI) ← corresponding GUI field
 - `branching.base_branch`, `branching.auto_pr` (and optionally strategy, granularity, naming_pattern) from GUI branching tab into the config the orchestrator uses.
+- `concurrency.global.per_provider` from GUI settings (global per-provider caps).
+- `concurrency.overrides.orchestrator.per_provider` from GUI settings (Orchestrator-context per-provider overrides).
+- Resolve effective Orchestrator per-provider caps at run start (`override` if set, else `global`) and pass those effective caps into the orchestrator scheduler/run config.
 
 ---
 
@@ -295,7 +298,7 @@ The plan is **ready to implement** with the following in mind:
 
 ### Phase 1: Config wiring (blocker)
 
-- [ ] Implement Option B config wiring (Section 5): when starting a run, build orchestrator config from current `gui_config` (and optional file merge). Ensure "Enable parallel execution" and branching/base_branch/auto_pr (and any other Git/worktree-relevant flags) are taken from `gui_config` so the run sees latest UI state without requiring Save first.
+- [ ] Implement Option B config wiring (Section 5): when starting a run, build orchestrator config from current `gui_config` (and optional file merge). Ensure "Enable parallel execution", branching/base_branch/auto_pr, and concurrency caps (`concurrency.global.per_provider` + `concurrency.overrides.orchestrator.per_provider` with effective cap resolution at run start) are taken from `gui_config` so the run sees latest UI state without requiring Save first.
 - [ ] When starting a run from the Dashboard, pass `current_project.path` as config hint so the backend uses `ConfigManager::discover_with_hint(hint)` and worktree recovery uses the selected project (Section 7.3).
 - [ ] Verify with a run: toggle "Enable parallel execution", save, start run → worktrees are created when applicable.
 

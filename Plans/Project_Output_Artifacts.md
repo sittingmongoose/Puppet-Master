@@ -65,6 +65,8 @@ All artifacts below are required unless explicitly marked optional:
 
 Staging inputs may exist under `.puppet-master/requirements/*`, but canonical user-project outputs must be under `.puppet-master/project/*`.
 
+**Execution limits are not plan artifacts:** Max concurrent execution limits (per-platform concurrency caps) are NOT part of the plan graph or node contracts. They are an execution/config concern applied by the executor from app settings (see `Plans/FinalGUISpec.md` §7.4.7). The plan graph defines only dependency and parallelism structure (`depends_on`, `parallel_group`, `blockers`/`unblocks`).
+
 ## Contract layers (Platform vs Project)
 
 This feature defines two distinct contract layers:

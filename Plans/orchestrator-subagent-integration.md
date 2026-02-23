@@ -5473,7 +5473,7 @@ impl AgentCommunicator {
 **Mitigation:**
 - **Crew size limits:** Maximum 10 subagents per crew (configurable). If user requests more, split into multiple crews or reject with suggestion.
 - **Platform quota checking:** Before creating crew, check platform quota. If insufficient, either (1) wait for quota, (2) use fallback platform, or (3) reject with error.
-- **Concurrent crew limits:** Maximum 5 active crews per platform (configurable). Queue additional crews or reject.
+- **Concurrent crew limits:** Maximum 5 active crews per platform (configurable). Queue additional crews or reject. Note: this is separate from per-platform agent caps (see "Parallel Execution Configuration" below and `Plans/FinalGUISpec.md` §7.4.7). A crew spawn must satisfy both the crew cap and the per-platform agent cap.
 - **Resource monitoring:** Track platform usage per crew. Alert if crew approaches quota limits.
 
 **GUI requirements:**
@@ -7093,6 +7093,19 @@ pub struct Conflict {
 
 ### Parallel Execution Configuration
 
+**Concurrency caps rationale:** Per-platform concurrency limits exist for two reasons:
+
+1. **Provider rate limits:** Each platform (Cursor, Codex, Claude Code, Gemini, Copilot) enforces rate limits on concurrent requests. Exceeding them causes throttling, errors, or temporary bans.
+2. **Dev-machine load:** Agent processes consume CPU, disk I/O, and memory on the machine hosting the project folder. Running too many concurrent processes degrades the user's development environment.
+
+**Source of caps:** The orchestrator uses the **effective per-provider cap** from config (global default + Orchestrator-context override if set), NOT a value from the plan graph. The plan graph defines only dependency and parallel-group structure (`depends_on`, `parallel_group`); max concurrent is an execution/config concern. See `Plans/FinalGUISpec.md` §7.4.7 for the full settings model (global + per-context overrides).
+
+**Crew limits vs agent limits:** These are separate concepts:
+- **Per-platform agent cap** (below): limits individual concurrent agent/subagent processes per platform. This is what hits rate limits and machine load.
+- **Crew cap** (`max_concurrent_crews_per_platform` in Gap #40): limits concurrent crew groups per platform. A crew is a logical group of subagents working together.
+
+Both limits apply: a crew spawn must not exceed either the crew cap or the per-platform agent cap.
+
 ```yaml
 # .puppet-master/config.yaml (additions)
 
@@ -7109,7 +7122,12 @@ orchestrator:
     # Allow different subagents to run in parallel
     allowParallelSubagents: true
     
-    # Maximum concurrent subagent invocations per platform
+    # Per-platform agent caps are now sourced from the global concurrency
+    # config (concurrency.global.per_provider) with optional Orchestrator-
+    # context override (concurrency.overrides.orchestrator.per_provider).
+    # See Plans/FinalGUISpec.md §7.4.7 for the settings model.
+    # Effective cap = orchestrator override if set, else global default.
+    # Legacy key kept for reference; implementation reads from unified config:
     maxConcurrentPerPlatform:
       cursor: 3
       codex: 2

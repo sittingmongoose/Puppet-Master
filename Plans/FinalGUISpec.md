@@ -698,15 +698,15 @@ This is a **heavily redesigned** unified settings page that merges four previous
 
 | Tab | Content | Source |
 |-----|---------|--------|
-| **General** | Log level, auto-scroll, show timestamps, minimize to tray, start on boot, retention days, intensive logging, **Interaction Mode (Expert/ELI5)** (app-level copy selector; default ELI5/ON), UI scale (0.75-1.5), max editor tabs (LRU cap, default 20), run-complete notification toggle, max concurrent runs per thread (default 10), **sound effects** toggle (default off; see §10.13), max terminal instances (default 12, range 4-20), max browser tabs (default 8, range 2-12), hot-reload debounce (default 500ms, range 100-5000ms), **theme management** section (theme selector dropdown, "Open themes folder", "Create new theme", "Import theme", "Export theme" -- see §6.6) | Old "Settings" view + newfeatures.md |
+| **General** | Log level, auto-scroll, show timestamps, minimize to tray, start on boot, retention days, intensive logging, **Interaction Mode (Expert/ELI5)** (app-level copy selector; default ELI5/ON), UI scale (0.75-1.5), max editor tabs (LRU cap, default 20), run-complete notification toggle, max concurrent runs per thread (default 10), **sound effects** toggle (default off; see §10.13), max terminal instances (default 12, range 4-20), max browser tabs (default 8, range 2-12), hot-reload debounce (default 500ms, range 100-5000ms), **theme management** section (theme selector dropdown, "Open themes folder", "Create new theme", "Import theme", "Export theme" -- see §6.6), **Per-platform concurrency limits** (see §7.4.7) | Old "Settings" view + newfeatures.md |
 | **Tiers** | Phase/task/subtask tier configuration; per-tier: platform (**dropdown**), model (**dropdown**), reasoning_effort, plan_mode, ask_mode, output_format | Old "Config" Tiers tab |
-| **Branching** | **Enable Git** toggle (bound to `orchestrator.enable_git`; tooltip: "Enable git branch creation, commits, and PR creation during runs"); **Auto PR** toggle (bound to `branching.auto_pr`); **Branch strategy** dropdown: MainOnly / Feature / Release (bound to `branching.strategy`); **Use worktrees** toggle; **Parallel execution** toggle (note: "Parallel subtasks use separate git worktrees"); **Granularity** dropdown or label mapped to BranchStrategy (per_phase / per_task / per_subtask); Git info display (user, email, remote, branch -- resolved for active project, not CWD) | Old "Config" Branching tab |
+| **Branching** | **Enable Git** toggle (bound to `orchestrator.enable_git`; tooltip: "Enable git branch creation, commits, and PR creation during runs"); **Auto PR** toggle (bound to `branching.auto_pr`); **Branch strategy** dropdown: MainOnly / Feature / Release (bound to `branching.strategy`); **Use worktrees** toggle; **Parallel execution** toggle (note: "Parallel subtasks use separate git worktrees"); **Granularity** dropdown or label mapped to BranchStrategy (per_phase / per_task / per_subtask); Git info display (user, email, remote, branch -- resolved for active project, not CWD); **Orchestrator concurrency overrides** (collapsible, per-platform, see §7.4.7) | Old "Config" Branching tab |
 | **Verification** | Verification checks, screenshot toggles | Old "Config" Verification tab |
 | **Memory** | Multi-level memory with progress/agents/PRD file paths | Old "Config" Memory tab |
 | **Budgets** | Per-platform token budgets | Old "Config" Budgets tab |
 | **Advanced** | **FileSafe Guards** (collapsible card): three independent toggles -- "Block destructive commands" (on/off), "Restrict writes to plan" (on/off), "Block sensitive files" (on/off); approved commands list (scrollable, per-row remove, optional manual add); override toggle with warning styling. **MCP Configuration** (collapsible card): per-platform MCP toggles for **all five platforms** (Cursor, Codex, Claude Code, Gemini, Copilot), MCP server list (add/edit/remove servers with name/command/args/env fields), "Test connection" button per server, Context7 API key input (password-style), web search provider selection and API key. **Tool permissions** (collapsible card, see §7.4.1): per-tool or wildcard allow/deny/ask; optional presets (Read-only, Plan mode, Full); list built-in + MCP-discovered tools with permission dropdown per row; bound to central tool registry per Plans/Tools.md. **Other:** Experimental features, sub-agent toggles, cleanup config (clean untracked before run, clean ignored files, clear agent-output dir, evidence retention days) | Old "Config" Advanced tab + newtools.md + FileSafe.md + Tools.md + MiscPlan.md |
 | **LSP** | **Language Server Protocol (MVP)** (see §7.4.2): LSP is required for desktop release. Global "Disable automatic LSP server downloads" toggle; built-in servers list with per-server enable/disable (all on by default); per-server env vars and initialization options; custom LSP servers (add/edit/remove: command, extensions, env, initialization). Stored in app config (redb); project overrides optional. | Plans/LSPSupport.md |
-| **Interview** | Interview-specific config; enable_phase_subagents, enable_research_subagents, enable_validation_subagents, enable_document_subagents; **Multi-Pass Review:** toggle on/off (default off), number of review passes (1-5 dropdown, default 2), max review subagents (1-10, default 3), show warning label when enabled ("Increases cost and time"); min/max questions (spinners), architecture confirmation toggle, vision provider dropdown | Old "Config" Interview tab + interview-subagent-integration.md |
+| **Interview** | Interview-specific config; enable_phase_subagents, enable_research_subagents, enable_validation_subagents, enable_document_subagents; **Multi-Pass Review:** toggle on/off (default off), number of review passes (1-5 dropdown, default 2), max review subagents (1-10, default 3), show warning label when enabled ("Increases cost and time"); min/max questions (spinners), architecture confirmation toggle, vision provider dropdown; **Interview concurrency overrides** (collapsible, per-platform, see §7.4.7) | Old "Config" Interview tab + interview-subagent-integration.md |
 | **Authentication** | Per-platform auth status (6 platforms: Cursor, Codex, Claude, Gemini, Copilot, GitHub); login/logout buttons; auth method indicators; auth URLs (selectable/copyable); Git info (user, email, remote, branch); CLI setup; GitHub auth | Old "Login" view |
 | **Health** | System health checks with platform filtering; check categories (CLI Tools, Git, Runtimes, Browser Tools, Capabilities, Project Setup); check status (PASS/FAIL/WARN/SKIP); fix suggestions with dry-run; auto-install buttons; platform version display (CLI version per detected platform); **Worktree management:** worktree list (path, branch, status, age columns), "Recover orphaned worktrees" button, worktree status indicators (active/stale/orphaned); **Storage & Cleanup:** DB size, cache size, evidence log count; evidence retention days input; "Clean workspace now" button (confirm modal with preview of files to delete per MiscPlan.md); storage maintenance actions | Old "Doctor" view + WorktreeGitImprovement.md + MiscPlan.md |
 | **Rules & Commands** | Application rules (list or text area, editable); project rules (when project selected, reads/writes `.puppet-master/project-rules.md`); custom slash commands editor (application-wide and project-wide, name/description/action) | From agent-rules-context.md + feature-list.md |
@@ -838,6 +838,66 @@ All LSP settings are persisted in app config (redb or equivalent). Optional: pro
 - **Breakpoint settings:** Global preferences: break on uncaught exceptions (toggle, default on), break on caught exceptions (toggle, default off), max breakpoints per file (default 50).
 - **Auto-detect adapters:** "Scan for adapters" button checks PATH and common install locations for known debug adapter binaries. Found adapters are auto-configured. Scan results shown in a modal: "[checkmark] codelldb found at /usr/local/bin/codelldb" / "[x] debugpy not found -- install with pip install debugpy".
 - **Integration:** Debug adapter settings feed into the Bottom Panel Debug tab (§7.20). Project-level `.puppet-master/launch.json` overrides these defaults per Plans/FileManager.md.
+
+**§7.4.7 Per-Platform Concurrency Limits (Global + Per-Context Overrides):**
+
+Per-platform concurrency limits control the maximum number of concurrent agent/subagent processes spawned per platform (provider). These limits exist for two reasons:
+
+1. **Provider rate limits:** Each platform (Cursor, Codex, Claude Code, Gemini, Copilot) enforces rate limits on concurrent requests. Exceeding them causes throttling, errors, or temporary bans.
+2. **Dev-machine load:** Agent processes consume CPU, disk I/O, and memory on the machine hosting the project. Too many concurrent processes degrade the user's development environment.
+
+**Global defaults (Settings > General > Per-platform concurrency limits):**
+
+A collapsible card titled "Per-Platform Concurrency Limits" with a per-platform row for each of the 5 platforms. Each row: platform name + icon, spinner (range 1-10). Defaults: Cursor: 3, Codex: 2, Claude Code: 3, Gemini: 2, Copilot: 2. These defaults apply to all execution contexts unless overridden.
+
+Tooltip (Expert): "Maximum concurrent agent processes per platform. Limits apply across all execution contexts (Chat, Interview, Orchestrator) unless overridden per context. Prevents provider rate-limit errors and reduces local machine load (CPU, disk I/O)."
+
+Tooltip (ELI5): "How many tasks can run at the same time on each AI platform. Lower numbers are safer — they prevent rate-limit errors and keep your computer responsive."
+
+**Per-context overrides:**
+
+Three execution contexts can override the global per-platform caps: **Chat**, **Interview** (includes Multi-Pass Review), and **Orchestrator**. Overrides are placed in each context's settings tab:
+
+- **Chat:** Settings > General, below "max concurrent runs per thread." Collapsible "Chat concurrency overrides" card (collapsed by default). Same per-platform row layout. When not overridden, each row shows "Using global: N" in muted text. When overridden, shows the override value and an "(override)" badge. Clear button per row resets to global.
+- **Interview:** Settings > Interview, below the Multi-Pass Review section. Collapsible "Interview concurrency overrides" card (collapsed by default). Same layout. Note: "max review subagents" (existing, 1-10) is a separate concern — it limits how many reviewer subagents participate in a single Multi-Pass Review run, not per-platform concurrency.
+- **Orchestrator:** Settings > Branching, below "Parallel execution" toggle. Collapsible "Orchestrator concurrency overrides" card (collapsed by default). Same layout.
+
+**Effective cap:** For a given context and platform, the effective cap = that context's override if set, else the global default. All executors (Chat runner, Interview phase manager, Orchestrator scheduler) must respect the effective cap when spawning agents/subagents.
+
+**Interaction with "max concurrent runs per thread":** The per-thread cap (Settings > General, default 10) limits total concurrent runs in a single chat thread regardless of platform. The per-platform cap limits how many of those runs can use a specific platform. Both limits apply simultaneously; the more restrictive limit wins for any given spawn decision.
+
+**Persistence:** Stored in the same config store as other settings (redb in rewrite, gui_config/YAML pre-rewrite). Option B run config (per WorktreeGitImprovement.md §5.2) must include the effective per-platform caps for the run.
+
+**Config shape:**
+
+```yaml
+concurrency:
+  global:
+    per_provider:
+      cursor: 3
+      codex: 2
+      claude: 3
+      gemini: 2
+      copilot: 2
+  overrides:
+    chat:
+      per_provider: {}       # empty = use global for all
+    interview:
+      per_provider: {}
+    orchestrator:
+      per_provider: {}
+```
+
+When an override is set (e.g. `overrides.orchestrator.per_provider.claude: 5`), that value is used for that context+platform. When absent, the global value applies.
+
+**Plan graph independence:** Max concurrent limits are NOT part of the user-project plan graph (`.puppet-master/project/plan_graph/`). The plan graph defines only dependency structure (`depends_on`, `parallel_group`, `blockers`/`unblocks`). Concurrency limits are an execution/config concern: the executor loads the plan graph, respects its parallelism structure, and applies the effective per-platform caps from config.
+
+| copy_id | Surface | Expert variant | ELI5 variant | Status |
+|---|---|---|---|---|
+| `tooltip.concurrency.global` | Settings/General concurrency card | Required | Required | Required in Slint rewrite |
+| `tooltip.concurrency.chat_override` | Settings/General chat override card | Required | Required | Required in Slint rewrite |
+| `tooltip.concurrency.interview_override` | Settings/Interview override card | Required | Required | Required in Slint rewrite |
+| `tooltip.concurrency.orchestrator_override` | Settings/Branching override card | Required | Required | Required in Slint rewrite |
 
 ### 7.5 Wizard
 
@@ -1087,7 +1147,7 @@ Platform installation status checks. Shows detected platforms and versions. Auto
 - **Rewind:** Restore thread to a specific message (right-click message → "Rewind to here"); all messages after that point are soft-deleted (recoverable via "Show removed")
 - **Share/Export:** Right-click thread → Export; bundles thread as JSON (messages, plan, metadata); secrets are stripped automatically
 - **Run-complete notification:** When a run completes in a background thread, that thread's tab shows an accent dot badge; optional toast notification ("Thread 'Project X' completed"). Notification behavior configurable in Settings/General (on/off)
-- **Max concurrent runs:** Default 10 per thread; configurable in Settings/General. When limit reached, new runs are queued with a message "Run queued -- N runs active"
+- **Max concurrent runs:** Default 10 per thread; configurable in Settings/General. When limit reached, new runs are queued with a message "Run queued -- N runs active". Note: per-platform concurrency limits (§7.4.7) also apply — the more restrictive limit wins for any given spawn decision
 
 **Chat history search:** Search icon in thread list header opens a search bar that queries across all threads (human and assistant messages) via Tantivy index. Results show thread name, matching message preview, and timestamp. Click navigates to that message in its thread.
 
