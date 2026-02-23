@@ -1,5 +1,9 @@
 # Assistant & Chat UI -- Design Plan
 
+## Change Summary
+
+- 2026-02-23: Added Interview chat UX cross-reference to Contract Layer outputs and required `.puppet-master/project/*` artifact pack so interview completion is maximally AI-executable and verifiable (SSOT: `Plans/Project_Output_Artifacts.md`, `Plans/chain-wizard-flexibility.md` §5.7/§11).
+
 **Date:** 2026-02-20  
 **Status:** Plan document only  
 **Cross-references:** Plans/FileManager.md (File Manager, IDE-style editor, click-to-open), Plans/storage-plan.md (seglog/redb/Tantivy, chat persistence and search), Plans/interview-subagent-integration.md, Plans/orchestrator-subagent-integration.md, AGENTS.md (DRY Method)
@@ -430,6 +434,7 @@ When the chat is in **Interview** mode (interview flow):
   - **Several suggested options** (e.g. buttons or selectable chips).  
   - A **"Something else"** control that reveals a **text bar** where the user can type a freeform response.  
 - This keeps navigation quick for common answers while allowing any custom answer.
+- **Contract Layer outputs (completion surface):** When the interview completes (or when a phase boundary produces artifacts), the Interview surface must provide a read-only **Outputs** card/pane listing the canonical user-project artifact set under `.puppet-master/project/` (requirements, Project Contract Pack with `contracts/index.json`, `plan.md`, sharded `plan_graph/`, `acceptance_manifest.json`, and validator status). Each entry must be click-to-open via the File Manager/editor surface (Plans/FileManager.md). Authoritative artifact contract: `Plans/Project_Output_Artifacts.md` (do not duplicate schemas here).
 
 ---
 

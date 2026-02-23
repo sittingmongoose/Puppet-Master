@@ -1,5 +1,17 @@
 # Chain Wizard & Interview Flexibility -- Intent-Based Workflows
 
+## Change Summary
+
+- 2026-02-23: Added Contract Layer handoff section near Requirements Doc Builder/Interview describing Platform vs Project contracts, contract seeds, contract unification, and DRY contract-ID references (SSOT: `Plans/Project_Output_Artifacts.md`).
+- 2026-02-23: Updated Requirements Doc Builder and its Multi-Pass Review to generate and review Contract Layer seed content (assumptions, constraints, glossary, non-functional budgets) alongside `requirements.md`.
+- 2026-02-23: Updated Adaptive Interview Phases to require per-phase contract fragments plus a deterministic Contract Unification Pass at interview completion to produce the Project Contract Pack, sharded plan graph, and acceptance manifest.
+- 2026-02-23: Added explicit dry-run validator acceptance requirements for contract-ref resolvability and acceptance-manifest coverage (SSOT: `Plans/Project_Output_Artifacts.md` Validation Rules).
+- 2026-02-23: Added user-project artifact contract section requiring `.puppet-master/project/...` outputs, sharded plan graph defaults, and mandatory `plan.md`.
+- 2026-02-23: Updated requirements semantics so `.puppet-master/requirements/*` remains staging while canonical downstream requirements are promoted to `.puppet-master/project/requirements.md`.
+- 2026-02-23: Added relationship-table cross-reference to `Plans/Project_Output_Artifacts.md` and expanded implementation checklist with shard/index/node/seglog determinism requirements.
+- 2026-02-23: Replaced prohibited platform alias text with Puppet Master naming.
+- 2026-02-23: Updated artifact list and node shard contract to include `contracts/index.json`, optional `glossary.md`, execution evidence outputs, and `tool_policy_mode` + stable `ProjectContract:*` references (per `Plans/Project_Output_Artifacts.md`).
+
 ## Plan Document Status
 
 **This is a PLAN DOCUMENT ONLY** -- No code changes have been made. This document contains:
@@ -22,6 +34,7 @@ This plan's workflow semantics remain authoritative. Implementation should targe
 ## SSOT references (DRY)
 - Locked decisions: `Plans/Spec_Lock.json` (GitHub API-only; GitHub CLI forbidden)
 - Canonical contracts: `Plans/Contracts_V0.md`
+- Ownership boundaries (primitives): `Plans/Crosswalk.md`
 - DRY + ContractRef rule: `Plans/DRY_Rules.md`
 - Canonical terms: `Plans/Glossary.md`
 - Deterministic defaults: `Plans/Decision_Policy.md`
@@ -345,6 +358,8 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 - **Exact storage paths:**
   - **Uploaded files (one per upload):** `.puppet-master/requirements/uploaded/<sanitized_filename>`. `<sanitized_filename>`: take the original filename, remove or replace characters that are invalid or unsafe for the filesystem (e.g. path separators, control chars). Prefer a convention that keeps names unique (e.g. prepend index or hash if duplicate names). Example: `my-spec.md` → `my-spec.md`; `my spec (1).md` → `my_spec_1.md` or similar.
   - **Requirements Doc Builder output:** `.puppet-master/requirements/requirements-builder.md`.
+  - **Contract Layer seed pack (Builder output; staging only):** `.puppet-master/requirements/contract-seeds.md`. This is an input to the interview’s contract unification pass (§6.6) and MUST NOT be treated as the canonical project contract pack (which lives under `.puppet-master/project/contracts/`; SSOT: `Plans/Project_Output_Artifacts.md`).
+    ContractRef: ContractName:Plans/Project_Output_Artifacts.md
   - **Merged staging result (always written when merge runs):** `.puppet-master/requirements/canonical-requirements.md`.
   - **Canonical user-project requirements (always written before Interview/start-chain execution):** `.puppet-master/project/requirements.md`.
 - All paths are relative to the **project root** (where `.puppet-master/` lives). Implementation must create `.puppet-master/requirements/` and `.puppet-master/requirements/uploaded/` as needed.
@@ -371,7 +386,10 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 2. App opens (or focuses) the **Assistant** chat, with **context** set: current project path (if any), selected **intent**, and optional system hint: "User is building a requirements document for the Interview; when complete, produce the document and hand off."
 3. User converses; Assistant may ask clarifying questions, suggest structure, or draft sections.
 4. When the user (or Assistant) considers the doc ready, user triggers **"Done -- hand off to Interview"** (or equivalent: e.g. "Generate requirements doc" button or slash command).
-5. Assistant **produces** the requirements document (e.g. markdown). App **writes** it to `.puppet-master/requirements/` (e.g. `requirements-builder.md`) and then promotes canonical requirements to `.puppet-master/project/requirements.md` for the flow.
+5. Assistant **produces** the requirements document (e.g. markdown) **and** a staged **Contract Layer Seed Pack** (assumptions, constraints, glossary, non-functional budgets) used by the interview’s contract unification step (§6.6). App **writes**:
+   - requirements doc to `.puppet-master/requirements/requirements-builder.md`
+   - contract seeds to `.puppet-master/requirements/contract-seeds.md`
+   - then promotes canonical requirements to `.puppet-master/project/requirements.md` for the flow
 6. App **returns** the user to the wizard at the **requirements step** (or the next step) with the doc **pre-loaded** (no re-upload). Optionally show a short confirmation: "Requirements doc generated; continue to Interview?"
 7. User continues; **Interview** runs with that doc (and any other merged uploads, if we allow Builder + uploads in the same run).
 
@@ -380,6 +398,7 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 - **Output format:** Markdown recommended; structure (sections) must follow the **Builder output template** below so Interview and PRD generator get consistent input.
 - **Single vs. multiple:** For MVP, Builder produces **one** doc per handoff. If we later allow "Builder + uploads," merge order and precedence (Builder last vs. first) to be defined.
 - **Persistence:** Handoff state (path to generated doc, "source = Builder") stored in app state and in `.puppet-master/` if we need recovery.
+- **Contract Layer seed pack:** Builder also emits `.puppet-master/requirements/contract-seeds.md` as a structured seed input for the Contract Layer (§5.7, §6.6). This file is **not** the canonical project contract pack; canonical contracts live under `.puppet-master/project/contracts/` and are referenced by stable `ProjectContract:*` IDs (SSOT: `Plans/Project_Output_Artifacts.md`).
 
 **Builder output template (required):** The Assistant/Builder must emit a single Markdown document with the following **required top-level sections** (headings). Implementations may validate and warn if sections are missing.
 
@@ -392,6 +411,17 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 | **Non-goals** | What we are not trying to achieve (optional but recommended). |
 
 Additional sections (e.g. **Risks**, **Dependencies**, **Constraints**) are allowed. The PRD generator and Interview assume at least the five above; add a validation step that warns when any required section is missing.
+
+**Contract seed pack template (required when Builder is used):**
+
+The Assistant/Builder must also emit a **single** Markdown document at `.puppet-master/requirements/contract-seeds.md` with the following **required top-level sections** (headings). Implementations may validate and warn if sections are missing.
+
+| Section heading | Purpose |
+|-----------------|--------|
+| **Assumptions** | Initial assumptions that materially affect design/execution (explicitly stated so they can be validated or overridden). |
+| **Constraints** | Hard constraints (versions, platforms, compliance, budgets, forbidden deps) that must be enforced downstream. |
+| **Glossary** | Canonical terms and naming decisions for the target project (feeds optional `.puppet-master/project/glossary.md`). |
+| **Non-functional budgets** | Explicit budgets (latency, memory, cost, availability) that will become executable acceptance checks. |
 
 ### 5.4 Dependencies
 
@@ -409,6 +439,8 @@ Additional sections (e.g. **Risks**, **Dependencies**, **Constraints**) are allo
 
 When the Requirements Doc Builder produces a document, an optional **Multi-Pass Review** runs before handoff to the Interview. A **review agent** spawns N **review subagents** (each can use a different model/platform) to check the document for gaps, problems, missing information, and consistency. The review agent then decides what to do with the feedback.
 
+This review covers the requirements document **and** the staged Contract Layer seed pack (`.puppet-master/requirements/contract-seeds.md`) as a single bundle, so the Interview’s Contract Layer does not start from inconsistent assumptions/constraints/glossary.
+
 **When it runs:** After the Assistant produces the requirements document and before it is set as canonical input for the Interview.
 
 **Settings (early in the flow -- same page as requirements step or wizard):**
@@ -423,11 +455,14 @@ When the Requirements Doc Builder produces a document, an optional **Multi-Pass 
 **Flow:**
 
 1. Requirements doc is produced by the Assistant. **Empty or minimal doc:** Before starting Multi-Pass Review, check Builder output size (e.g. character or token count). If below a minimum (e.g. &lt; 100 characters or empty), **skip** Multi-Pass Review, set the Builder output as canonical, and show a brief notice: "Document too short for review; using as-is." Minimum threshold to be defined in implementation (document in config or constants).
-2. Review agent spawns N subagents (N = number of reviews). **Single document:** There is always exactly one document from the Builder. N subagents each review that same doc; no per-document batching. Whole-set pass does not apply (single doc = whole set). Each subagent receives the doc (and, for delta/feature intents, optional codebase context from codebase_scanner).
+2. Review agent spawns N subagents (N = number of reviews). **Single document:** There is always exactly one requirements document from the Builder. N subagents each review that same doc; no per-document batching. Whole-set pass does not apply (single doc = whole set). Each subagent receives:
+   - the requirements doc, and
+   - `contract-seeds.md` (when present), and
+   - (for delta/feature intents) optional codebase context from codebase_scanner
 3. Subagents look for: gaps, problems, missing information, unscoped items. Depth is lighter than the Interview -- the Interview will flesh details out.
 4. Each subagent reports findings back to the review agent, then is terminated (no long-lived context).
-5. Review agent **produces a revised requirements document** incorporating or responding to the feedback.
-6. **User approves** the revised document (option **b**). **Approval UI:** Surface the revised doc and a short summary of changes. Offer three actions: **Accept** (set as canonical requirements and continue to Interview), **Reject** (discard revised doc; keep original Builder output as canonical; user can continue to Interview or re-run Builder), **Edit** (open editor on revised doc; on save, treat as revised doc and re-show Accept/Reject/Edit). No per-section approval for requirements doc; single decision per run.
+5. Review agent **produces a revised requirements document** (and, when present, a revised `contract-seeds.md`) incorporating or responding to the feedback.
+6. **User approves** the revised output bundle (option **b**). **Approval UI:** Surface the revised requirements doc + revised contract seeds and a short summary of changes. Offer three actions: **Accept** (set revised artifacts as canonical inputs and continue to Interview), **Reject** (discard revisions; keep original Builder outputs as canonical; user can continue to Interview or re-run Builder), **Edit** (open editor for revised artifacts; on save, re-show Accept/Reject/Edit). No per-section approval; single decision per run.
 
 **Run state:** Persist and expose for UI/recovery: `pending` → `spawning` → `reviewing` (with progress: pass/round and subagents active) → `producing` (review agent writing revised doc) → `awaiting_approval` → `complete` | `cancelled` | `failed`. On failure, set `failed` and store error reason; on cancel, set `cancelled`. Recovery snapshot (newfeatures §4) must include this state and progress so "run was interrupted" and optional resume are accurate.
 
@@ -442,6 +477,54 @@ When the Requirements Doc Builder produces a document, an optional **Multi-Pass 
 - **All subagent spawns fail:** Mark run as `failed`; surface "Could not start review subagents (check model/platform and auth)." Option "Use original document" as above.
 
 **GUI and visibility:** See §3.5 (agent activity view and progress indicator) so the user sees the review agent and subagents working during Multi-Pass Review. **Pause, cancel, resume** are supported options (§3.5).
+
+### 5.7 Contract Layer (Requirements → Contracts → Plan → Execution)
+
+This flow must insert an explicit **Contract Layer** between requirements and plans so large, parallel agent execution stays deterministic and DRY:
+
+`requirements.md` → `Project Contract Pack` → `plan.md` + `plan_graph/*` → execution
+
+**Purpose (why the Contract Layer exists):**
+
+- Requirements text is human-oriented and often ambiguous; a contract layer converts key statements into **stable, citable IDs**.
+- When many agents work in parallel, contract IDs prevent drift: plan nodes reference `ProjectContract:*` IDs instead of copying prose.
+
+**Two types of contracts (do not mix them):**
+
+1. **Platform contracts (Puppet Master SSOT):** Canonical event model, tool schemas/policy semantics, provider capability interface, patch pipeline contracts, session storage envelopes, UI command contracts. These live in SSOT docs such as:
+   - `Plans/Contracts_V0.md` (event envelopes, UICommand, auth)
+   - `Plans/Tools.md` (tool registry + permission semantics)
+   - `Plans/CLI_Bridged_Providers.md` (provider normalized streams)
+   - `Plans/Crosswalk.md` (ownership boundaries)
+   - `Plans/DRY_Rules.md` (ContractRef enforcement)
+
+2. **Project contracts (generated per user project):** The **Project Contract Pack** under `.puppet-master/project/contracts/`, indexed by required `contracts/index.json`, and referenced by stable `ProjectContract:*` IDs (SSOT: `Plans/Project_Output_Artifacts.md`).
+
+**Where the Contract Layer artifacts live (filesystem materialization):**
+
+- The required user-project artifact set is materialized under `.puppet-master/project/` (see §11 for the full list; SSOT: `Plans/Project_Output_Artifacts.md`).
+- The Requirements Doc Builder seed file `.puppet-master/requirements/contract-seeds.md` is a **staging input** used by the interview’s contract unification step (§6.6). It is not part of the canonical `.puppet-master/project/` artifact set.
+
+**Storage and referencing semantics (canonical):**
+
+- **Canonical source of truth is seglog**: artifacts are persisted as full-content artifact events (chunked deterministically when needed) with `sha256` integrity. Filesystem copies are materializations/cache and must be regenerable from seglog.
+- redb projections and Tantivy indexing must make these artifacts discoverable by logical path, artifact type, contract IDs, and content search.
+
+**DRY rule (critical):**
+
+- Execution nodes must reference project contracts via `contract_refs: ["ProjectContract:..."]` (resolvable via `contracts/index.json`) and must not embed contract content inline.
+- If plan.md repeats explanatory text for readability, it must include a pointer like `Canonical source: ProjectContract:<...>` so the canonical contract is unambiguous.
+
+**Acceptance criteria (testable; no manual checks):**
+
+A dry-run validator must be able to parse the `.puppet-master/project/` artifact set and verify (SSOT: `Plans/Project_Output_Artifacts.md` Validation Rules):
+
+- Every node shard contains `contract_refs` and references at least one resolvable `ProjectContract:*` ID (via `contracts/index.json`).
+- Every node shard `acceptance[].check_id` is present in `acceptance_manifest.json`.
+- Evidence outputs are defined and point to `.puppet-master/project/evidence/<node_id>.json` (schema `pm.evidence.schema.v1`).
+- Orchestrator can execute in headless mode from `.puppet-master/project/` artifacts alone; when HITL blocks some nodes, the scheduler continues other non-blocked work where dependencies allow.
+
+ContractRef: SchemaID:contracts_index.schema.json, SchemaID:acceptance_manifest.schema.json, SchemaID:project_plan_graph_index.schema.json, SchemaID:project_plan_node.schema.json, SchemaID:evidence.schema.json, ContractName:Contracts_V0.md#EventRecord
 
 ---
 
@@ -510,6 +593,55 @@ Use rule-based default (do not re-invoke selector):
 
 - **Determinism:** Phase selection is AI-driven; two runs with same intent might get different phase sets. Consider caching by (intent, requirements_hash) or making selection rule-based with optional AI override.
 - **User override:** Should the user be able to "force full interview" or "skip phase X"? If so, add a simple override in GUI (e.g. "Run all phases" checkbox or phase checklist).
+
+### 6.6 Contract fragments + Contract Unification Pass (Project Contract Pack)
+
+Adaptive interview phases are responsible not only for collecting answers, but for producing the **project contract layer** required for autonomous execution (§5.7; SSOT: `Plans/Project_Output_Artifacts.md`).
+
+#### 6.6.1 Per-phase contract fragments (incremental)
+
+Each interview phase contributes **contract fragments** (structured, citable statements) that are later unified into the Project Contract Pack:
+
+- **Scope & Goals:** scope boundaries, success metrics, out-of-scope constraints (feeds contract seeds and acceptance checks).
+- **Architecture & Technology:** module boundaries, external interfaces, build/run commands, version pins (feeds API/module/command contracts).
+- **Product / UX:** user journeys, UI invariants, role/permission surface, accessibility requirements (feeds interface and acceptance contracts).
+- **Data & Persistence:** schemas, migrations, consistency rules, indexing/search expectations (feeds data-model and integration contracts).
+- **Security & Secrets:** authn/authz model, threat controls, secret handling, error taxonomy constraints (feeds security + error taxonomy contracts).
+- **Deployment & Environments:** environment matrix, CI/CD commands, configuration keys, rollout constraints (feeds command + integration contracts).
+- **Performance & Reliability:** budgets (latency/memory), availability targets, observability requirements (feeds NFR budgets and acceptance checks).
+- **Testing & Verification:** acceptance checks, how to run tests/commands, required evidence outputs (feeds `acceptance_manifest.json` + node acceptance arrays).
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:contracts_index.schema.json, SchemaID:acceptance_manifest.schema.json
+
+#### 6.6.2 Contract Unification Pass (deterministic, end-of-interview)
+
+At interview completion, a single deterministic **Contract Unification Pass** must run to:
+
+1. Deduplicate overlapping fragments across phases (single canonical statement per contract).
+2. Assign stable `ProjectContract:*` IDs (namespaced, deterministic; see `Plans/Project_Output_Artifacts.md` "Project contract IDs (stable)").
+3. Materialize the canonical Project Contract Pack under `.puppet-master/project/contracts/` and emit required `contracts/index.json`.
+4. Generate the sharded plan graph under `.puppet-master/project/plan_graph/` where every node shard references at least one `ProjectContract:*` in `contract_refs`.
+5. Generate `.puppet-master/project/acceptance_manifest.json` such that every node shard `acceptance[].check_id` is covered.
+6. Generate/update `.puppet-master/project/plan.md` as the human-readable view, referencing contract IDs instead of duplicating contract prose (DRY).
+
+Large-output handling:
+
+- Contract pack may be chunked across multiple files under `contracts/`; `contracts/index.json` remains the single canonical index for resolvability.
+- Seglog artifact persistence must support deterministic chunking of large artifacts with `sha256` integrity events (see `Plans/Project_Output_Artifacts.md` "Seglog Canonical Persistence Contract").
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:contracts_index.schema.json, SchemaID:project_plan_graph_index.schema.json, SchemaID:project_plan_node.schema.json, SchemaID:acceptance_manifest.schema.json
+
+#### 6.6.3 Validation (dry-run, before execution)
+
+After the Contract Unification Pass, a dry-run validator must validate the resulting `.puppet-master/project/` artifact set before execution begins (SSOT: `Plans/Project_Output_Artifacts.md` Validation Rules).
+
+This validator is the enforcement point for:
+
+- `ProjectContract:*` resolvability via `contracts/index.json`
+- `acceptance[].check_id` coverage via `acceptance_manifest.json`
+- shard schema validity and deterministic node ID rules
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md
 
 ---
 
@@ -735,6 +867,9 @@ Before implementation, an implementation agent must complete or have clear specs
 34. **Human-readable view:** Keep `.puppet-master/project/plan.md` mandatory; include entrypoints, execution-order hints, acceptance summary, and contract-pack references.
 35. **Canonical seglog persistence:** Persist all required artifacts as full-content seglog artifact events (chunked with `chunk_index`/`chunk_count` when needed) and a final integrity event with canonical `sha256`.
 36. **Filesystem materialization contract:** Treat filesystem files as materializations/cache that are reproducible from seglog.
+37. **Contract seed pack (Builder):** When Requirements Doc Builder is used, write `.puppet-master/requirements/contract-seeds.md` and include it in Multi-Pass Review (§5.6). Treat it as staging input and reconcile it during the Contract Unification Pass (§6.6); do not treat it as the canonical Project Contract Pack.
+38. **Contract Unification Pass:** Implement the deterministic unification step (§6.6) that materializes `.puppet-master/project/contracts/` + `contracts/index.json`, generates the sharded plan graph and acceptance manifest, and ensures every node shard references at least one resolvable `ProjectContract:*`.
+39. **Dry-run validator:** Run the dry-run validator defined by `Plans/Project_Output_Artifacts.md` Validation Rules before execution begins; surface failures as gating errors (no manual verification).
 
 ---
 
@@ -765,11 +900,3 @@ Rules for this flow:
 - Filesystem copies are materializations/cache and must be regenerable from seglog.
 
 The authoritative contract for schemas, deterministic node IDs, validation pointers, and seglog persistence is `Plans/Project_Output_Artifacts.md`.
-
-## Change Summary
-
-- 2026-02-23: Added user-project artifact contract section requiring `.puppet-master/project/...` outputs, sharded plan graph defaults, and mandatory `plan.md`.
-- 2026-02-23: Updated requirements semantics so `.puppet-master/requirements/*` remains staging while canonical downstream requirements are promoted to `.puppet-master/project/requirements.md`.
-- 2026-02-23: Added relationship-table cross-reference to `Plans/Project_Output_Artifacts.md` and expanded implementation checklist with shard/index/node/seglog determinism requirements.
-- 2026-02-23: Replaced prohibited platform alias text with Puppet Master naming.
-- 2026-02-23: Updated artifact list and node shard contract to include `contracts/index.json`, optional `glossary.md`, execution evidence outputs, and `tool_policy_mode` + stable `ProjectContract:*` references (per `Plans/Project_Output_Artifacts.md`).

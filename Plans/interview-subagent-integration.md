@@ -1,5 +1,9 @@
 # Interview Feature Subagent Integration -- Implementation Plan
 
+## Change Summary
+
+- 2026-02-23: Added a cross-plan alignment section making the Interview phase manager responsible for (1) intent-driven adaptive phase selection (phase plan) and (2) producing Contract Layer outputs via contract fragments + a deterministic Contract Unification Pass (SSOT: `Plans/chain-wizard-flexibility.md` §6 and `Plans/Project_Output_Artifacts.md`).
+
 ## Plan Document Status
 
 **This is a PLAN DOCUMENT ONLY** -- No code changes have been made. This document contains:
@@ -128,6 +132,37 @@ This document covers the **interview flow** (multi-phase interview: Scope, Archi
 **Research Operations:**
 - `ux-researcher` -- Web research via Browser MCP (when configured). **Cited web search:** Interview (and Assistant, Orchestrator) use **cited web search** (inline citations + Sources list) from a single shared implementation; see **Plans/newtools.md** §8 (cited web search, [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited)-style) and **Plans/assistant-chat-design.md** §7.
 - `context-manager` -- Manage interview state and context across phases
+
+## Adaptive Interview Phases + Contract Layer Outputs (Cross-Plan Alignment)
+
+The interview flow is responsible for producing **AI-executable, DRY, testable** outputs for downstream orchestration. This requires two additional responsibilities beyond Q&A collection:
+
+1. **Adaptive phase selection** (intent + context → phase plan) so interviews scale appropriately with the user’s intent.
+2. **Contract Layer output generation** so plans and execution nodes reference stable contract IDs rather than duplicating prose.
+
+### 1) Adaptive phase selection (phase plan)
+
+The Interview phase manager must support adaptive phase selection exactly as specified in `Plans/chain-wizard-flexibility.md` §6 (Phase Selector Contract, depth semantics, persistence, resume rules, and user override controls).
+
+**DRY rule:** This plan does not restate the phase selector contract; it references chain-wizard SSOT for the structured input/output and fallback behavior.
+
+### 2) Contract Layer output generation (fragments → unification)
+
+The Interviewer/Wizard must produce the canonical user-project artifact set under `.puppet-master/project/` (requirements, Project Contract Pack, `plan.md`, sharded `plan_graph/`, `acceptance_manifest.json`, etc.). The authoritative contract for these artifacts and schemas is `Plans/Project_Output_Artifacts.md`.
+
+Implementation responsibilities (conceptual):
+
+- **Per-phase contract fragments:** Each interview phase contributes contract fragments (interfaces, schemas, constraints, budgets, test contracts). These fragments are inputs to unification; they are not the canonical contract pack.
+- **Contract Unification Pass:** At interview completion, run a deterministic unification step that dedupes fragments, assigns stable `ProjectContract:*` IDs, and materializes:
+  - `.puppet-master/project/contracts/` + required `contracts/index.json`
+  - `.puppet-master/project/plan_graph/index.json` + `nodes/<node_id>.json`
+  - `.puppet-master/project/acceptance_manifest.json`
+  - `.puppet-master/project/plan.md`
+  - optional `.puppet-master/project/glossary.md`
+- **Builder contract seeds:** When Requirements Doc Builder is used (chain-wizard §5), `.puppet-master/requirements/contract-seeds.md` is a staging input to the unification pass and must be reconciled with phase-derived fragments.
+- **Validation gate:** Before execution begins, run the dry-run validator specified by `Plans/Project_Output_Artifacts.md` Validation Rules (resolvable `ProjectContract:*` refs, acceptance-manifest coverage, shard schema validity, deterministic node IDs).
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/chain-wizard-flexibility.md, Primitive:SessionStore
 
 ## Integration Architecture
 
@@ -3013,3 +3048,4 @@ For user-project outputs, deterministic decisions are recorded at `.puppet-maste
 - 2026-02-23: Added execution-critical shard-node field requirements and deterministic node ID constraints.
 - 2026-02-23: Added explicit auto-decisions output path `.puppet-master/project/auto_decisions.jsonl` and SSOT link to `Plans/Project_Output_Artifacts.md`.
 - 2026-02-23: Updated user-project artifact set to include `contracts/index.json`, optional `glossary.md`, execution evidence outputs, and node `tool_policy_mode` + stable `ProjectContract:*` references (per `Plans/Project_Output_Artifacts.md`).
+- 2026-02-23: Added cross-plan alignment section requiring adaptive phase selection and Contract Layer generation via contract fragments + deterministic Contract Unification Pass (referencing chain-wizard + Project_Output_Artifacts SSOT).
