@@ -25,6 +25,8 @@ Other plans MUST reference these contracts rather than redefining them.
 
 ## 1. Events (persisted)
 
+<a id="1.1"></a>
+<a id="EventRecord"></a>
 ### 1.1 EventRecord — canonical persisted envelope (schema: `pm.event.v0`)
 **Definition:** `EventRecord` is the canonical event envelope persisted to seglog (and mirrored to JSONL and projections).
 
@@ -54,6 +56,7 @@ Other plans MUST reference these contracts rather than redefining them.
 
 ---
 
+<a id="EventEnvelopeV1"></a>
 ### 1.2 EventEnvelopeV1 — minimal compatibility envelope
 `EventEnvelopeV1` is the minimal event envelope used by some plans as an intermediate format.
 
@@ -116,6 +119,7 @@ Emitted when policy blocks (deny) or the user declines an ask.
 
 ## 4. Auth contracts
 
+<a id="AuthState"></a>
 ### 4.1 AuthState
 Represents the canonical authentication status for a single provider (e.g., GitHub API auth).
 
@@ -133,12 +137,14 @@ Rules:
 - `state` is one of: `unauthenticated` | `pending` | `authenticated` | `failed`.
 - Secrets (tokens) MUST NOT be stored in `AuthState` when persisted; secrets live only in the OS credential store.
 
+<a id="AuthPolicy"></a>
 ### 4.2 AuthPolicy
 Defines deterministic defaults for auth method selection per provider.
 
 Rules:
 - For GitHub, default interactive auth MUST be OAuth device-code flow (see `Plans/GitHub_API_Auth_and_Flows.md`).
 
+<a id="AuthEvent"></a>
 ### 4.3 AuthEvent
 Auth flows MUST emit persisted events using `EventRecord` (§1.1), with stable `type` strings owned by the provider’s plan.
 
@@ -151,6 +157,8 @@ Example (GitHub):
 
 ---
 
+<a id="7"></a>
+<a id="UICommand"></a>
 ## 7. UICommand
 UI actions that trigger non-trivial logic MUST be expressed as UI commands with stable IDs.
 
