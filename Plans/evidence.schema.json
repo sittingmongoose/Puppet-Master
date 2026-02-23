@@ -1,15 +1,39 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "pm.evidence.schema.v0",
+  "$id": "pm.evidence.schema.v1",
   "title": "Puppet Master Evidence Bundle",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_id", "evidence_id", "summary", "checks"],
+  "required": [
+    "schema_id",
+    "evidence_id",
+    "created_at_utc",
+    "node",
+    "summary",
+    "commands_run",
+    "tool_calls",
+    "events",
+    "files_changed",
+    "contract_refs_satisfied",
+    "reproducibility",
+    "artifacts",
+    "checks"
+  ],
   "properties": {
-    "schema_id": {"type": "string", "const": "pm.evidence.schema.v0"},
-    "evidence_id": {"type": "string"},
-    "summary": {"type": "string"},
-    "created_at": {"type": "string"},
+    "schema_id": {"type": "string", "const": "pm.evidence.schema.v1"},
+    "evidence_id": {"type": "string", "minLength": 1},
+    "created_at_utc": {"type": "string", "minLength": 1},
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_id"],
+      "properties": {
+        "node_id": {"type": "string", "minLength": 1},
+        "graph_id": {"type": "string"},
+        "graph_scope": {"type": "string"}
+      }
+    },
+    "summary": {"type": "string", "minLength": 1},
     "commands_run": {
       "type": "array",
       "items": {
@@ -22,6 +46,73 @@
           "stdout_excerpt": {"type": "string"},
           "stderr_excerpt": {"type": "string"}
         }
+      }
+    },
+    "tool_calls": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["tool_id", "count"],
+        "properties": {
+          "tool_id": {"type": "string", "minLength": 1},
+          "count": {"type": "integer", "minimum": 0},
+          "denied_count": {"type": "integer", "minimum": 0},
+          "error_count": {"type": "integer", "minimum": 0},
+          "note": {"type": "string"}
+        }
+      }
+    },
+    "events": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_refs"],
+      "properties": {
+        "event_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["source", "ref"],
+            "properties": {
+              "source": {"type": "string", "enum": ["seglog", "jsonl", "other"]},
+              "ref": {"type": "string", "minLength": 1},
+              "note": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "files_changed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "change_type"],
+        "properties": {
+          "path": {"type": "string", "minLength": 1},
+          "change_type": {
+            "type": "string",
+            "enum": ["added", "modified", "deleted", "renamed"]
+          },
+          "additions": {"type": "integer", "minimum": 0},
+          "deletions": {"type": "integer", "minimum": 0},
+          "note": {"type": "string"}
+        }
+      }
+    },
+    "contract_refs_satisfied": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "reproducibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["snapshot_ref"],
+      "properties": {
+        "snapshot_ref": {"type": "string", "minLength": 1},
+        "note": {"type": "string"}
       }
     },
     "artifacts": {

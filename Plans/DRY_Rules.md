@@ -44,12 +44,12 @@ ContractRef: ContractName:Contracts_V0.md
 ## 3. "Index-only" guidance
 A plan MAY include an index/list of IDs (event kinds, UI command IDs, tool IDs) but MUST NOT redefine schemas owned elsewhere.
 
-ContractRef: Primitive:DRYRules
+ContractRef: Primitive:DRYRules, PolicyRule:Decision_Policy.md§2
 
 ---
 
 ## 4. Forbidden patterns (drift accelerators)
-- "TBD", "Open question", "Ask the user later" in plan requirements.
+- `TBD`, `Open question`, `ask later` in plan requirements.
 - Vague requirements like "robust", "graceful", "secure" without measurable behavior.
 - Duplicating provider CLI details outside Provider SSOT.
 
@@ -60,7 +60,7 @@ ContractRef: PolicyRule:Decision_Policy.md§2
 ## 5. MUST/SHALL/REQUIRED implies ContractRef
 Any statement using **MUST / SHALL / REQUIRED / NEVER** MUST include at least one `ContractRef:` line.
 
-ContractRef: Primitive:DRYRules
+ContractRef: Primitive:DRYRules, PolicyRule:Decision_Policy.md§2
 
 ---
 
@@ -90,13 +90,15 @@ ContractRef: Primitive:DRYRules
 Operational requirement detection (deterministic):
 - Any line containing: `MUST`, `MUST NOT`, `SHALL`, `REQUIRED`, `NEVER`.
 
+ContractRef: ContractName:Plans/Progression_Gates.md#GATE-009
+
 ContractRef format:
 ```text
 ... requirement text ...
 ContractRef: <ref1>, <ref2>, ...
 ```
 
-ContractRef: Gate:GATE-009
+ContractRef: Gate:GATE-009, ContractName:Plans/Progression_Gates.md#GATE-009
 
 ---
 

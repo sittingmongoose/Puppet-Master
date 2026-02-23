@@ -21,6 +21,8 @@ This document defines the canonical contracts for:
 
 Other plans MUST reference these contracts rather than redefining them.
 
+ContractRef: ContractName:Plans/Contracts_V0.md
+
 ---
 
 ## 1. Events (persisted)
@@ -52,7 +54,11 @@ Other plans MUST reference these contracts rather than redefining them.
 - `thread_id` (string, required): stable correlation for a user-visible chat thread / session.
 - `payload` (object, required): event-specific payload.
 
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:Spec_Lock.json#schema_versions.event_record
+
 **Compatibility:** Readers MAY accept `EventEnvelopeV1` during transition; writers MUST emit `EventRecord` for persisted seglog. (See §1.2.)
+
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, PolicyRule:Decision_Policy.md§1
 
 ---
 
@@ -73,6 +79,8 @@ Rules:
 - Writers SHOULD include `run_id` and `thread_id` whenever available, but `EventEnvelopeV1` does not require them.
 - Readers MUST tolerate both envelopes; projectors SHOULD upgrade in-memory to `EventRecord` form.
 
+ContractRef: ContractName:Plans/Contracts_V0.md#EventEnvelopeV1, PolicyRule:Decision_Policy.md§2
+
 ---
 
 ## 2. Provider normalized stream (non-persisted contract)
@@ -84,6 +92,8 @@ Providers emit a normalized stream for live UI consumption. Persistent storage r
 
 ## 3. Tool events (persisted)
 Tool activity MUST be represented in the persisted event stream using the following `type` values.
+
+ContractRef: EventType:tool.invoked, EventType:tool.denied, ContractName:Plans/Contracts_V0.md
 
 ### 3.1 `tool.invoked`
 Emitted when a tool call is allowed and execution completes.
@@ -137,12 +147,16 @@ Rules:
 - `state` is one of: `unauthenticated` | `pending` | `authenticated` | `failed`.
 - Secrets (tokens) MUST NOT be stored in `AuthState` when persisted; secrets live only in the OS credential store.
 
+ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
+
 <a id="AuthPolicy"></a>
 ### 4.2 AuthPolicy
 Defines deterministic defaults for auth method selection per provider.
 
 Rules:
 - For GitHub, default interactive auth MUST be OAuth device-code flow (see `Plans/GitHub_API_Auth_and_Flows.md`).
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, SchemaID:Spec_Lock.json#locked_decisions.auth_model
 
 <a id="AuthEvent"></a>
 ### 4.3 AuthEvent
@@ -155,12 +169,16 @@ Example (GitHub):
 - `auth.github.failed`
 - `auth.github.disconnected`
 
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Contracts_V0.md#EventRecord
+
 ---
 
 <a id="7"></a>
 <a id="UICommand"></a>
 ## 7. UICommand
 UI actions that trigger non-trivial logic MUST be expressed as UI commands with stable IDs.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md#UICommand
 
 ### 7.1 UICommand envelope
 ```json
@@ -177,6 +195,8 @@ Rules:
 - `command_id` MUST be a stable string ID (e.g., `cmd.github.connect`, `cmd.lsp.goto_definition`).
 - The UI MUST dispatch commands; it MUST NOT implement business logic directly.
 - Implementations MUST record command dispatch as events (event type is implementation-defined, but MUST be persisted in seglog using `EventRecord`).
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md#EventRecord
 
 ---
 

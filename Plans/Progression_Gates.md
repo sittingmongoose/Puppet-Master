@@ -15,6 +15,53 @@ ContractRef: Primitive:Gate
 
 ---
 
+## 1. Verifier role (AI-only; deterministic)
+The Verifier is an AI role that runs these gates and returns a binary PASS/FAIL result.
+
+**Hard rules:**
+- The Verifier MUST run gates exactly as written here (no discretionary skipping).  
+  ContractRef: Primitive:Gate
+- The Verifier MUST block progression when any gate fails.  
+  ContractRef: Primitive:Gate
+- The Verifier MUST NOT require a human to read logs or approve decisions; it relies only on machine-checkable artifacts (schemas, evidence bundles, deterministic lints).  
+  ContractRef: PolicyRule:Decision_Policy.md§4
+
+**Execution contract (recommended):**
+- Implement a repo-local verifier command that can be invoked headlessly, e.g. `python3 scripts/pm-plans-verify.py run-gates`.  
+  ContractRef: SchemaID:plan_graph.schema.json
+
+---
+
+<a id="GATE-001"></a>
+## GATE-001 -- Schema validation (anti-drift core)
+**Pass condition:** All schema-validated artifacts parse as JSON and validate against their schemas:
+- `Plans/plan_graph.json` vs `Plans/plan_graph.schema.json`
+- Evidence bundles (`evidence.json`) vs `Plans/evidence.schema.json`
+- Change budgets (embedded) vs `Plans/change_budget.schema.json`
+- Auto decisions (JSONL rows) vs `Plans/auto_decisions.schema.json`
+
+Required evidence:
+- Evidence bundle conforming to `Plans/evidence.schema.json` with a `checks[]` entry for each schema validation.  
+  ContractRef: SchemaID:evidence.schema.json
+
+ContractRef: SchemaID:plan_graph.schema.json, SchemaID:evidence.schema.json, SchemaID:change_budget.schema.json, SchemaID:auto_decisions.schema.json
+
+---
+
+<a id="GATE-002"></a>
+## GATE-002 -- Spec Lock integrity
+**Pass condition:**
+- `Plans/Spec_Lock.json` pins schema versions and locked decisions, and
+- every `canonical_ssot_hashes.files[*].sha256` matches the current file contents for the listed SSOT files.
+
+Required evidence:
+- Evidence bundle entry that includes a Spec Lock hash verification report (must be empty / no mismatches).  
+  ContractRef: SchemaID:evidence.schema.json
+
+ContractRef: SchemaID:Spec_Lock.json, PolicyRule:Decision_Policy.md#spec-lock-update-protocol
+
+---
+
 <a id="GATE-003"></a>
 ## GATE-003 -- Architecture invariants
 **Pass condition:** All referenced invariants hold for the change under test.
@@ -31,6 +78,32 @@ ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invari
 
 ---
 
+<a id="GATE-004"></a>
+## GATE-004 -- Forbidden deps + drift phrases
+**Pass condition:**
+- No build-governing doc introduces forbidden dependencies from Spec Lock, and
+- no drift phrases exist in build-governing docs: `TBD`, `Open Questions`, `ask later`.
+
+ContractRef: SchemaID:Spec_Lock.json#forbidden_deps, ContractName:Plans/DRY_Rules.md#4
+
+---
+
+<a id="GATE-005"></a>
+## GATE-005 -- Evidence required for completion
+**Pass condition:** A node cannot be marked complete unless its evidence bundle exists and validates.
+
+ContractRef: SchemaID:evidence.schema.json, SchemaID:plan_graph.schema.json
+
+---
+
+<a id="GATE-006"></a>
+## GATE-006 -- Change budget enforcement
+**Pass condition:** The actual change stays within the node’s declared change budget (max files, LOC delta, allowed/forbidden paths/files).
+
+ContractRef: SchemaID:change_budget.schema.json, SchemaID:plan_graph.schema.json
+
+---
+
 <a id="GATE-009"></a>
 ## GATE-009 -- ContractRef coverage
 **Pass condition:** Every operational requirement line contains at least one `ContractRef:`.
@@ -41,7 +114,7 @@ Deterministic detection:
 Required evidence:
 - A report listing all operational lines missing `ContractRef:` (must be empty).
 
-ContractRef: Plans/DRY_Rules.md#7, Plans/DRY_Rules.md#9
+ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/DRY_Rules.md#9
 
 ---
 

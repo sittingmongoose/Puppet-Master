@@ -2905,3 +2905,111 @@ pub struct PlatformSubagentSettings {
 3. Test platform failover with subagent support
 4. Measure performance impact of subagent invocations
 
+
+## User-Project Output Contract (Sharded Graph Default)
+
+For user projects, Interviewer/Wizard outputs must target `.puppet-master/project/` and not rely on any user-project `Plans/` directory.
+
+Required artifact set:
+
+- `.puppet-master/project/requirements.md`
+- `.puppet-master/project/contracts/`
+- `.puppet-master/project/contracts/index.json`
+- `.puppet-master/project/plan.md`
+- `.puppet-master/project/glossary.md` (optional, recommended)
+- `.puppet-master/project/plan_graph/index.json`
+- `.puppet-master/project/plan_graph/nodes/<node_id>.json`
+- `.puppet-master/project/plan_graph/edges.json` (optional)
+- `.puppet-master/project/acceptance_manifest.json`
+- `.puppet-master/project/auto_decisions.jsonl`
+- `.puppet-master/project/evidence/<node_id>.json` (produced during execution; schema `pm.evidence.schema.v1`)
+
+Canonical rules:
+
+- Sharded plan graph is the default output (index + node shards).
+- `plan.md` remains mandatory as the human-readable summary for operators.
+- Contract pack uses stable `ProjectContract:*` IDs resolved via `contracts/index.json`; every node must reference at least one project contract ID.
+- All artifacts above must be persisted canonically in seglog as full-content artifact events.
+
+### Contract Layer Crosswalk (User Project)
+
+| Concern | Contract |
+|---|---|
+| Canonical requirements | `.puppet-master/project/requirements.md` |
+| Contract pack | `.puppet-master/project/contracts/` + `contracts/index.json` |
+| Human plan summary | `.puppet-master/project/plan.md` |
+| Project glossary (optional) | `.puppet-master/project/glossary.md` |
+| Machine plan graph | `.puppet-master/project/plan_graph/index.json` + `nodes/<node_id>.json` (+ optional `edges.json`) |
+| Acceptance index | `.puppet-master/project/acceptance_manifest.json` |
+| Deterministic decision stream | `.puppet-master/project/auto_decisions.jsonl` |
+| Execution evidence (per node) | `.puppet-master/project/evidence/<node_id>.json` |
+
+Authoritative schema and persistence contract: `Plans/Project_Output_Artifacts.md`.
+
+### Event Model Update: `interview.artifact.generated`
+
+`interview.artifact.generated` must cover each required artifact type under `.puppet-master/project/...`.
+
+Required payload fields:
+
+- `run_id`
+- `artifact_type`
+- `logical_path`
+- `content_type`
+- `content` (full content or chunk payload)
+- `sha256`
+- `chunk_index` (required for chunked payloads)
+- `chunk_count` (required for chunked payloads)
+- `integrity_finalized` (true on final integrity event)
+
+Allowed `artifact_type` values for user-project planning output:
+
+- `requirements`
+- `contracts_pack`
+- `plan_human`
+- `plan_graph_index`
+- `plan_graph_node`
+- `plan_graph_edges`
+- `acceptance_manifest`
+- `auto_decisions`
+- `glossary` (optional)
+
+Large payload handling:
+
+- Emit deterministic chunk sequence events.
+- Emit final integrity event with canonical `sha256` for reconstructed content.
+
+### Execution-Critical Node Shard Fields
+
+Execution-critical requirements apply to each node shard file at `.puppet-master/project/plan_graph/nodes/<node_id>.json`.
+
+Required fields:
+
+- `node_id`
+- `objective`
+- `contract_refs`
+- `acceptance`
+- `evidence_required`
+- `allowed_tools`
+- `tool_policy_mode`
+- `policy_mode`
+- `change_budget`
+- `blockers`
+- `unblocks`
+
+Determinism rules:
+
+- Node IDs are stable/deterministic and non-random.
+- In-file `node_id` must match `<node_id>` in filename exactly.
+
+### Auto-Decisions Output Path
+
+For user-project outputs, deterministic decisions are recorded at `.puppet-master/project/auto_decisions.jsonl`.
+
+## Change Summary
+
+- 2026-02-23: Added user-project artifact contract requiring `.puppet-master/project/...` outputs and sharded plan graph default.
+- 2026-02-23: Added `interview.artifact.generated` payload contract for full-content/chunked seglog artifact persistence.
+- 2026-02-23: Added execution-critical shard-node field requirements and deterministic node ID constraints.
+- 2026-02-23: Added explicit auto-decisions output path `.puppet-master/project/auto_decisions.jsonl` and SSOT link to `Plans/Project_Output_Artifacts.md`.
+- 2026-02-23: Updated user-project artifact set to include `contracts/index.json`, optional `glossary.md`, execution evidence outputs, and node `tool_policy_mode` + stable `ProjectContract:*` references (per `Plans/Project_Output_Artifacts.md`).

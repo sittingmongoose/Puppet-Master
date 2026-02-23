@@ -1,9 +1,155 @@
 {
-  "schema_id": "pm.plan_graph.schema.v0",
+  "schema_id": "pm.plan_graph.schema.v1",
+  "graph_scope": "puppet-master-repo-build",
+  "graph_id": "EXAMPLE.pm_repo_build_graph",
+  "entrypoints": ["EXAMPLE.spec-lock-harden"],
   "nodes": [
-    {"id": "contracts", "path": "Plans/Contracts_V0.md"},
-    {"id": "spec-lock", "path": "Plans/Spec_Lock.json"},
-    {"id": "crosswalk", "path": "Plans/Crosswalk.md", "depends_on": ["spec-lock"]},
-    {"id": "dry", "path": "Plans/DRY_Rules.md", "depends_on": ["spec-lock", "crosswalk"]}
+    {
+      "node_id": "EXAMPLE.spec-lock-harden",
+      "objective": "Harden Spec Lockfile and Decision Policy for anti-drift",
+      "contract_refs": [
+        "SchemaID:Spec_Lock.json",
+        "PolicyRule:Decision_Policy.md#spec-lock-update-protocol"
+      ],
+      "inputs": [
+        {"kind": "file", "ref": "Plans/Spec_Lock.json"},
+        {"kind": "file", "ref": "Plans/Decision_Policy.md"}
+      ],
+      "outputs": [
+        {"kind": "file", "ref": "Plans/Spec_Lock.json"},
+        {"kind": "file", "ref": "Plans/Decision_Policy.md"}
+      ],
+      "acceptance": [
+        {
+          "check_id": "plans.verify.spec_lock",
+          "commands": [
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+              "expect_exit_code": 0
+            }
+          ],
+          "expected_events": ["tool.invoked"]
+        }
+      ],
+      "allowed_tools": ["bash", "read", "edit"],
+      "policy_mode": "workspace-write",
+      "change_budget": {
+        "schema_id": "pm.change_budget.schema.v1",
+        "allowed_paths": ["Plans/**"],
+        "forbidden_paths": ["puppet-master-rs/**"],
+        "forbidden_files": ["AGENTS.md"],
+        "max_files_changed": 5,
+        "max_lines_added": 250,
+        "max_lines_deleted": 150,
+        "max_total_loc_delta": 300,
+        "notes": "EXAMPLE"
+      },
+      "evidence_required": {
+        "schema_id": "pm.evidence.schema.v1",
+        "path": "Plans/.evidence/EXAMPLE.spec-lock-harden/evidence.json"
+      },
+      "blockers": [],
+      "unblocks": ["EXAMPLE.plan-graph-upgrade"],
+      "example": true
+    },
+    {
+      "node_id": "EXAMPLE.plan-graph-upgrade",
+      "objective": "Upgrade self-build plan_graph schema + template and validate",
+      "contract_refs": [
+        "SchemaID:Spec_Lock.json#schema_versions.plan_graph",
+        "SchemaID:plan_graph.schema.json",
+        "SchemaID:evidence.schema.json",
+        "SchemaID:change_budget.schema.json"
+      ],
+      "inputs": [
+        {"kind": "file", "ref": "Plans/plan_graph.schema.json"},
+        {"kind": "file", "ref": "Plans/plan_graph.json"}
+      ],
+      "outputs": [
+        {"kind": "file", "ref": "Plans/plan_graph.schema.json"},
+        {"kind": "file", "ref": "Plans/plan_graph.json"}
+      ],
+      "acceptance": [
+        {
+          "check_id": "plans.verify.plan_graph_schema",
+          "commands": [
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+              "expect_exit_code": 0
+            }
+          ],
+          "expected_events": ["tool.invoked"]
+        }
+      ],
+      "allowed_tools": ["bash", "read", "edit"],
+      "policy_mode": "workspace-write",
+      "change_budget": {
+        "schema_id": "pm.change_budget.schema.v1",
+        "allowed_paths": ["Plans/**"],
+        "forbidden_paths": ["puppet-master-rs/**"],
+        "forbidden_files": ["AGENTS.md"],
+        "max_files_changed": 6,
+        "max_lines_added": 400,
+        "max_lines_deleted": 200,
+        "max_total_loc_delta": 450,
+        "notes": "EXAMPLE"
+      },
+      "evidence_required": {
+        "schema_id": "pm.evidence.schema.v1",
+        "path": "Plans/.evidence/EXAMPLE.plan-graph-upgrade/evidence.json"
+      },
+      "blockers": ["EXAMPLE.spec-lock-harden"],
+      "unblocks": ["EXAMPLE.gates-and-verifier"],
+      "example": true
+    },
+    {
+      "node_id": "EXAMPLE.gates-and-verifier",
+      "objective": "Define progression gates and the Verifier role; run gates autonomously",
+      "contract_refs": [
+        "Gate:GATE-001",
+        "Gate:GATE-003",
+        "Gate:GATE-009"
+      ],
+      "inputs": [
+        {"kind": "file", "ref": "Plans/Progression_Gates.md"},
+        {"kind": "file", "ref": "Plans/Architecture_Invariants.md"}
+      ],
+      "outputs": [
+        {"kind": "file", "ref": "Plans/Progression_Gates.md"},
+        {"kind": "file", "ref": "Plans/Architecture_Invariants.md"}
+      ],
+      "acceptance": [
+        {
+          "check_id": "plans.verify.gates",
+          "commands": [
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+              "expect_exit_code": 0
+            }
+          ],
+          "expected_events": ["tool.invoked"]
+        }
+      ],
+      "allowed_tools": ["bash", "read", "edit"],
+      "policy_mode": "workspace-write",
+      "change_budget": {
+        "schema_id": "pm.change_budget.schema.v1",
+        "allowed_paths": ["Plans/**"],
+        "forbidden_paths": ["puppet-master-rs/**"],
+        "forbidden_files": ["AGENTS.md"],
+        "max_files_changed": 8,
+        "max_lines_added": 600,
+        "max_lines_deleted": 250,
+        "max_total_loc_delta": 700,
+        "notes": "EXAMPLE"
+      },
+      "evidence_required": {
+        "schema_id": "pm.evidence.schema.v1",
+        "path": "Plans/.evidence/EXAMPLE.gates-and-verifier/evidence.json"
+      },
+      "blockers": ["EXAMPLE.plan-graph-upgrade"],
+      "unblocks": [],
+      "example": true
+    }
   ]
 }

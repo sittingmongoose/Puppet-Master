@@ -20,7 +20,10 @@ HITL semantics are part of the deterministic agent-loop core described in `Plans
 
 **Human-in-the-Loop (HITL) mode** lets the user require explicit human approval at selected tier boundaries. The orchestrator completes all work within the current tier (phase, task, or subtask), then **pauses at the boundary** until the human reviews and approves before proceeding to the next phase, task, or subtask. HITL is a **setting**: it can be enabled independently at phase level, task level, and subtask level. All HITL toggles are **off by default**.
 
-**Use cases:** Multi-phase work requiring stakeholder validation, review gates, compliance checkpoints.
+**Critical autonomy rule:** HITL is an optional product UX feature. It MUST NOT be required for correctness, verification, or progression gates; autonomous runs proceed deterministically without any human approvals.  
+ContractRef: PolicyRule:Decision_Policy.md§4, Gate:GATE-001
+
+**Use cases:** Optional tier-boundary pauses for stakeholders (when explicitly enabled by the user).
 
 ## Relationship to Other Plans
 

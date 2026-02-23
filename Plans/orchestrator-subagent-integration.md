@@ -57,6 +57,49 @@ The **orchestrator must respect** two kinds of information that the interview (o
 
 **Schedule building: order of operations.** (1) Build a dependency graph from `depends_on` at the tier level(s) the orchestrator schedules (e.g. subtasks). Use item ids; support phase, task, and subtask ids as in STATE_FILES. Missing `depends_on` or empty array = no incoming edges. (2) Topological sort the graph; items with no unsatisfied dependencies form the next runnable set. (3) Within the runnable set, group items that share the same non-empty `parallel_group`; items in the same group may run in parallel. (4) Execute batches in topological order: run each batch (possibly multiple items in parallel) before advancing to items that depend on them.
 
+### Respecting PRD/plan: sharded plan graph consumption (user projects)
+
+For user projects, canonical planning artifacts must be read from `.puppet-master/project/`:
+
+- `.puppet-master/project/requirements.md`
+- `.puppet-master/project/plan_graph/index.json`
+- `.puppet-master/project/plan_graph/nodes/<node_id>.json`
+- `.puppet-master/project/plan_graph/edges.json` (optional)
+- `.puppet-master/project/plan.md` (human-readable summary for operators)
+- `.puppet-master/project/contracts/`
+- `.puppet-master/project/contracts/index.json`
+- `.puppet-master/project/acceptance_manifest.json`
+- `.puppet-master/project/auto_decisions.jsonl`
+- `.puppet-master/project/glossary.md` (optional, recommended)
+- `.puppet-master/project/evidence/<node_id>.json` (produced during execution; schema `pm.evidence.schema.v1`)
+
+Load order and validation behavior:
+
+1. Load `plan_graph/index.json` first and validate `schema_version`, `graph_id`, `nodes`, `entrypoints`, and `validation`.
+2. Load each node shard from `index.nodes[].path`; verify node hash against `index.nodes[].sha256`; verify filename `node_id` matches in-file `node_id`.
+3. Load `plan_graph/edges.json` only when present; if absent, derive edges from shard-level blockers/dependency metadata.
+4. Load and validate `validation.targets` pointers:
+   - `.puppet-master/project/contracts/index.json` must validate (`pm.project_contracts_index.schema.v1`) and every `ProjectContract:*` referenced by node shards must resolve via this index.
+   - `.puppet-master/project/acceptance_manifest.json` must validate (`pm.acceptance_manifest.schema.v1`) and cover every node shard `acceptance[].check_id`.
+5. Validate node execution policy fields (`allowed_tools`, `tool_policy_mode`, `policy_mode`) are present and legal per `Plans/Project_Output_Artifacts.md` before scheduling.
+6. If any required shard/index validation fails, halt scheduling and return a planning-artifact integrity error (no silent fallback to monolithic graph files).
+
+Scheduling inputs must be sourced from shard/index metadata:
+
+- `depends_on` (when present in shard metadata or edge materialization)
+- `blockers` / `unblocks` from node shards
+- `parallel_group` metadata when available in shard/index scheduling extensions
+
+Execution policy notes:
+
+- Sharded graph consumption is the default path for user projects.
+- `plan.md` is a human-readable summary view, but scheduler decisions come from the validated sharded graph.
+- All planning artifacts are canonical in seglog via full-content artifact events (chunked when needed with deterministic ordering and final `sha256` integrity events). Filesystem copies under `.puppet-master/project/` are reproducible materializations.
+- **HITL + non-blocked continuation:** If a node enters a pending-approval state (e.g. due to `tool_policy_mode: "ask"`), the scheduler MUST continue executing other runnable, non-blocked nodes where dependencies allow.
+- **Evidence bundles:** On node completion, the orchestrator MUST write an evidence bundle at `.puppet-master/project/evidence/<node_id>.json` (schema `pm.evidence.schema.v1`) and persist it canonically to seglog; a node MUST NOT be marked complete without valid evidence.
+- **Deterministic ambiguity handling:** When ambiguity occurs during execution, resolve deterministically per `Plans/Decision_Policy.md` and append a machine-consumable record to `.puppet-master/project/auto_decisions.jsonl` (schema `pm.auto_decisions.schema.v1`).
+- Authoritative artifact and schema contract: `Plans/Project_Output_Artifacts.md`.
+
 **Cross-reference:** STATE_FILES.md §3.3 (canonical PRD schema); **Plans/interview-subagent-integration.md** §5.2 and Crew-Aware Plan Generation.
 
 ## Tier-Level Subagent Strategy
@@ -4869,9 +4912,11 @@ export class CopilotSessionCoordinator {
 
 // In orchestrator (via Assistant), detect crew invocation
 if prompt.contains("crew") || prompt.contains("crews") || prompt.contains("use a crew") || prompt.contains("create a crew") {
-    // Get current platform from tier config or GUI selection
-    // Platform selection logic TBD when Assistant feature is designed
-    let platform = self.get_current_platform(); // e.g., Platform::Copilot
+    // Deterministic platform selection (no prompting):
+    // 1) tier config platform (when in a tier context)
+    // 2) Assistant thread/platform selection (when present)
+    // 3) fallback: cursor
+    let platform = self.resolve_platform_for_crew()?; // e.g., Platform::Cursor
     
     // Parse crew request (extract task, subagents needed)
     let crew_request = parse_crew_request(&prompt)?;
@@ -4887,7 +4932,7 @@ if prompt.contains("crew") || prompt.contains("crews") || prompt.contains("use a
 **Platform selection for user-initiated crews (Future consideration):**
 
 - **Source:** Current tier config platform, or GUI platform selection if in GUI mode
-- **Fallback:** If no platform selected, prompt user to choose platform
+- **Fallback:** If no platform selected, use deterministic default platform (cursor)
 - **Validation:** Ensure platform supports subagents (all 5 platforms support subagents via coordination)
 - **Note:** Exact implementation will be defined when Assistant feature is designed (see Gap #37)
 
@@ -5270,7 +5315,7 @@ fn detect_crew_invocation(prompt: &str) -> Option<CrewRequest> {
 - **What:** Implement `Crew` struct, crew creation (orchestrator-initiated only for now), crew execution, crew communication, GUI components for crew visibility
 - **When:** 
   - **Current:** Orchestrator creates crew for tier → use platform from tier config (`tier_config_for(tier_type, tier_id).platform`)
-  - **Future (Assistant feature):** User invokes crew → create platform-specific crew using current platform selection (platform selection logic TBD)
+  - **Future (Assistant feature):** User invokes crew → create platform-specific crew using deterministic platform selection (no prompting; fallback = cursor)
   - Cross-platform coordination happens automatically via shared message board (`agent-messages.json`)
 
 **GUI implementation requirements:**
@@ -5298,18 +5343,11 @@ When orchestrator creates a crew for a tier, it must:
 
 **Current state:** With the current system, users cannot directly invoke crews. Only orchestrator-initiated crews are supported (crews created automatically for tiers that need subagents).
 
-**Future consideration (Assistant feature):** When the Assistant feature is implemented, users will be able to invoke crews directly. At that time, platform selection logic will need to be defined:
+**Future consideration (Assistant feature):** Deterministic platform selection for user-initiated crews (resolved):
+- **Priority order:** (1) current tier config platform (if in tier context), (2) Assistant thread/platform selection (if available), (3) fallback = cursor.
+- **Optional override:** users may specify a platform explicitly in the crew command, but the system MUST have a deterministic default even when no override is provided.
 
-**Potential issues when Assistant feature is added:**
-- "Current platform selection" is ambiguous. What if user is in GUI mode but hasn't selected a platform? What if user is in CLI mode with no tier context? What if multiple tiers are active with different platforms?
-
-**Potential mitigation (to be refined when Assistant feature is designed):**
-- **Priority order:** (1) Current tier config platform (if executing a tier), (2) GUI platform selection (if in GUI mode), (3) Default platform from config, (4) Prompt user to choose
-- **Explicit platform override:** Allow user to specify platform in crew command: "use a crew with Copilot to implement authentication"
-- **Context awareness:** If user is in a specific tier context, use that tier's platform; otherwise use global default
-- **Validation:** Ensure platform is valid and supports subagents before creating crew
-
-**Note:** This gap should be revisited when the Assistant feature is designed and fleshed out. The exact platform selection logic will depend on how Assistant integrates with the existing system.
+ContractRef: PolicyRule:Decision_Policy.md§2
 
 **Gap #38: Crew lifecycle management and cleanup (GUI updates required)**
 
@@ -7739,13 +7777,13 @@ impl SubagentInvoker {
 6. **Test Integration**: Verify platform capabilities work with subagent system
 
 
-## Ralph Loop Pattern Integration
+## Autonomous QA Loop Pattern Integration
 
 ### Overview
 
-The [Ralph Wiggum Loop pattern](https://gist.github.com/gsemet/1ef024fc426cfc75f946302033a69812) provides a proven orchestrator pattern for autonomous task execution with quality gates. While designed for VS Code Copilot, its concepts can enhance our orchestrator subagent integration.
+The [autonomous QA loop pattern](https://gist.github.com/gsemet/1ef024fc426cfc75f946302033a69812) provides a proven orchestrator pattern for autonomous task execution with quality gates. While designed for VS Code Copilot, its concepts can enhance our orchestrator subagent integration.
 
-### Key Concepts from Ralph Loop
+### Key Concepts from Autonomous QA Loop
 
 1. **Orchestrator/Subagent Separation**: Orchestrator manages loop, subagents implement tasks
 2. **Three-Tier QA System**: Preflight → Task Inspector → Phase Inspector
@@ -7760,7 +7798,7 @@ The [Ralph Wiggum Loop pattern](https://gist.github.com/gsemet/1ef024fc426cfc75f
 #### 1. Enhanced Progress Tracking
 
 **Current State**: Orchestrator tracks tier state in state machines
-**Enhancement**: Add visual progress tracking similar to Ralph Loop
+**Enhancement**: Add visual progress tracking similar to an autonomous QA loop
 
 ```rust
 // src/core/progress_tracker.rs (new)
@@ -8000,7 +8038,7 @@ impl Orchestrator {
 ### Updated Orchestrator Loop
 
 ```rust
-// Enhanced orchestrator loop with Ralph Loop patterns
+// Enhanced orchestrator loop with autonomous QA loop patterns
 
 async fn run_enhanced_loop(&self) -> Result<()> {
     loop {
@@ -8083,7 +8121,7 @@ async fn run_enhanced_loop(&self) -> Result<()> {
 }
 ```
 
-### Benefits of Ralph Loop Integration
+### Benefits of Autonomous QA Loop Integration
 
 1. **Better Quality Assurance**: Three-tier QA catches issues at multiple levels
 2. **Clear Progress Visibility**: Visual status symbols make progress obvious
@@ -8106,8 +8144,8 @@ async fn run_enhanced_loop(&self) -> Result<()> {
 # .puppet-master/config.yaml (additions)
 
 orchestrator:
-  # Ralph Loop enhancements
-  enableRalphLoopPatterns: true
+  # Autonomous QA loop enhancements
+  enableAutonomousQaLoopPatterns: true
   
   # Three-tier QA system
   qaSystem:
@@ -8127,3 +8165,11 @@ orchestrator:
     conventionalFormat: true
 ```
 
+## Change Summary
+
+- 2026-02-23: Added default user-project sharded plan-graph consumption contract under `.puppet-master/project/` with explicit load order (`index.json` -> node shards -> optional `edges.json`).
+- 2026-02-23: Added scheduler input rules sourced from shard/index metadata (`depends_on`, `blockers`, `unblocks`, `parallel_group`) and explicit validation/fail-fast behavior.
+- 2026-02-23: Added canonical planning-artifact coordination references for `.puppet-master/project/plan_graph/index.json` and `.puppet-master/project/plan.md`.
+- 2026-02-23: Added seglog canonical persistence statement (full-content events, deterministic chunking, integrity hash).
+- 2026-02-23: Replaced prohibited prior platform alias text with Puppet Master naming in this document.
+- 2026-02-23: Expanded sharded plan-graph consumption to validate `contracts/index.json` + `acceptance_manifest.json` schemas, enforce resolvable `ProjectContract:*` refs, validate node `tool_policy_mode`, and require evidence bundle output + non-blocked continuation when approvals are pending.

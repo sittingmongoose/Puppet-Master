@@ -3,7 +3,7 @@
 <!--
 PUPPET MASTER -- DETERMINISTIC DECISION POLICY
 
-Goal: remove "ask later" ambiguity by defining deterministic defaults.
+Goal: remove deferred-decision ambiguity by defining deterministic defaults.
 
 ABSOLUTE NAMING RULE:
 - Platform name is "Puppet Master" only.
@@ -43,9 +43,10 @@ When multiple valid choices exist and higher-precedence sources do not decide:
 
 4) **Prefer bounded retries**.
    - Retries MUST have explicit limits and backoff.
+   ContractRef: PolicyRule:Decision_Policy.md§2
 
 5) **Prefer stable IDs over inferred labels**.
-   - UI commands use `cmd.*` IDs; event types use stable `type` strings.
+    - UI commands use `cmd.*` IDs; event types use stable `type` strings.
 
 6) **Prefer redaction**.
    - If data might be a secret, treat it as a secret and do not persist it.
@@ -68,3 +69,33 @@ Plans MUST NOT depend on humans making decisions mid-run.
 If a plan describes optionality, it MUST declare a deterministic default and cite this policy.
 
 ContractRef: PolicyRule:Decision_Policy.md§2
+
+---
+
+<a id="spec-lock-update-protocol"></a>
+## 5. SpecLock Update Protocol (autonomous; no human readers)
+
+**Rule:** `Plans/Spec_Lock.json` is a lockfile; agents MUST only update it via this protocol and MUST proceed deterministically (no “ask a human”, no decision logs).  
+ContractRef: SchemaID:Spec_Lock.json, PolicyRule:Decision_Policy.md§2
+
+### 5.1 When Spec Lock updates are allowed
+Spec Lock updates are allowed only when at least one locked invariant/decision must change to satisfy a higher-level requirement (e.g., a new official toolkit version, a required auth scope change).  
+ContractRef: SchemaID:Spec_Lock.json
+
+### 5.2 Required steps (deterministic)
+When an update is required, agents MUST:
+1. Update `Plans/Spec_Lock.json` fields (no partial updates).  
+   ContractRef: SchemaID:Spec_Lock.json, PolicyRule:Decision_Policy.md#spec-lock-update-protocol
+2. Recompute and update `canonical_ssot_hashes[*].sha256` for every SSOT file listed in Spec Lock.  
+   ContractRef: SchemaID:Spec_Lock.json#canonical_ssot_hashes
+3. Append one JSONL row to `Plans/auto_decisions.jsonl` describing the change and its deterministic rationale.  
+   ContractRef: SchemaID:auto_decisions.schema.json, PolicyRule:Decision_Policy.md#spec-lock-update-protocol
+4. Produce an evidence bundle for the update (schema-valid) and run the verifier gates.  
+   ContractRef: SchemaID:evidence.schema.json, Gate:GATE-001, PolicyRule:Decision_Policy.md#spec-lock-update-protocol
+
+### 5.3 Prohibited update behaviors
+Agents MUST NOT:
+- add `TBD` / `Open Questions` / `ask later` language as part of a Spec Lock update  
+  ContractRef: ContractName:Plans/DRY_Rules.md#4
+- leave hashes stale after changing SSOT docs  
+  ContractRef: SchemaID:Spec_Lock.json#canonical_ssot_hashes

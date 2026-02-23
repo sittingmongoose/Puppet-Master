@@ -1,15 +1,27 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "pm.change_budget.schema.v0",
+  "$id": "pm.change_budget.schema.v1",
   "title": "Puppet Master Change Budget",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_id"],
+  "required": [
+    "schema_id",
+    "allowed_paths",
+    "forbidden_paths",
+    "forbidden_files",
+    "max_files_changed",
+    "max_lines_added",
+    "max_lines_deleted"
+  ],
   "properties": {
-    "schema_id": {"type": "string", "const": "pm.change_budget.schema.v0"},
+    "schema_id": {"type": "string", "const": "pm.change_budget.schema.v1"},
+    "allowed_paths": {"type": "array", "items": {"type": "string"}},
+    "forbidden_paths": {"type": "array", "items": {"type": "string"}},
+    "forbidden_files": {"type": "array", "items": {"type": "string"}},
     "max_files_changed": {"type": "integer", "minimum": 0},
     "max_lines_added": {"type": "integer", "minimum": 0},
     "max_lines_deleted": {"type": "integer", "minimum": 0},
+    "max_total_loc_delta": {"type": "integer", "minimum": 0},
     "notes": {"type": "string"}
   }
 }

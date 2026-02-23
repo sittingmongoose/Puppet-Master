@@ -81,7 +81,7 @@ Rules:
 - Provider-specific discovery/auth/model logic MUST live in Provider-owned modules and contracts.
 - Plans may reference provider behavior, but MUST NOT hardcode provider CLI details outside Provider SSOT.
 
-ContractRef: Primitive:Provider
+ContractRef: Primitive:Provider, ContractName:Plans/CLI_Bridged_Providers.md
 
 ---
 

@@ -1,26 +1,135 @@
 {
-  "schema_id": "pm.spec_lock.v0",
+  "schema_id": "pm.spec_lock.v1",
   "platform_name": "Puppet Master",
-  "github_operations": {
-    "host": "github.com",
-    "api_base_url": "https://api.github.com",
-    "api_only": true,
-    "forbid_github_cli": true
+  "locked_decisions": {
+    "runtime": {
+      "language": "rust",
+      "end_to_end": true
+    },
+    "ui": {
+      "toolkit": "slint",
+      "toolkit_version": "1.15.1",
+      "preserve_visual_identity": true,
+      "layout_may_change": true,
+      "legacy_toolkit": "iced"
+    },
+    "storage": {
+      "event_log": "seglog",
+      "kv_store": "redb",
+      "search_index": "tantivy",
+      "forbid_sqlite": true
+    },
+    "providers": {
+      "unified_deterministic_agent_loop": true,
+      "provider_facade": {
+        "cursor": {
+          "single_facade": true,
+          "supported_transports": ["stream-json", "acp"]
+        },
+        "claude_code": {
+          "supported_transports": ["stream-json"]
+        }
+      }
+    },
+    "github_operations": {
+      "host": "github.com",
+      "api_base_url": "https://api.github.com",
+      "api_only": true,
+      "forbid_github_cli": true
+    },
+    "auth_model": {
+      "github_default": "oauth_device_code",
+      "device_flow_scope": "repo read:user user:email read:org",
+      "device_flow_no_client_secret": true
+    },
+    "testing_and_verification": {
+      "fully_autonomous": true,
+      "no_human_approval_required": true,
+      "evidence_required_for_completion": true
+    }
   },
-  "auth_model": {
-    "github_default": "oauth_device_code",
-    "device_flow_scope": "repo read:user user:email read:org",
-    "device_flow_no_client_secret": true
+  "forbidden_deps": {
+    "items": [
+      {"kind": "storage_engine", "id": "sqlite"},
+      {"kind": "hosting_integration", "id": "github_cli"}
+    ]
   },
-  "ui": {
-    "toolkit": "slint",
-    "toolkit_version": "1.15.1",
-    "legacy_toolkit": "iced"
+  "schema_versions": {
+    "event_record": "pm.event.v0",
+    "spec_lock": "pm.spec_lock.v1",
+    "plan_graph": "pm.plan_graph.schema.v1",
+    "evidence": "pm.evidence.schema.v1",
+    "change_budget": "pm.change_budget.schema.v1",
+    "auto_decisions": "pm.auto_decisions.schema.v1"
   },
-  "storage": {
-    "event_log": "seglog",
-    "kv_store": "redb",
-    "search_index": "tantivy",
-    "forbid_sqlite": true
+  "canonical_ssot_hashes": {
+    "hash_alg": "sha256",
+    "files": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "sha256": "5fee01a55857ce52d926908fb3a3f1101745a8b7fc4eb226c570aa9f6046b326"
+      },
+      {
+        "path": "Plans/Crosswalk.md",
+        "sha256": "aa21f1df9e1b0129800d582d50d7156ce98c1a9e812717420f762e5c45ce2ef7"
+      },
+      {
+        "path": "Plans/DRY_Rules.md",
+        "sha256": "eb2a81d5ee3a1b18fd1efa1623366ce2dce06e0efcab358c33629108527a118e"
+      },
+      {
+        "path": "Plans/Glossary.md",
+        "sha256": "077920a04b9247b31a93db742517ba3b0b6b83cec92e9a834f57aa7ef47b3b84"
+      },
+      {
+        "path": "Plans/Decision_Policy.md",
+        "sha256": "c42e3a3428155c7d61d26eaf36b823dba92152c874d7050b536934de90d182c2"
+      },
+      {
+        "path": "Plans/GitHub_API_Auth_and_Flows.md",
+        "sha256": "adf7fda98a57a4baf24fe7f80ed5bc573abee83bec126ae51cf81e40691efbd9"
+      },
+      {
+        "path": "Plans/Architecture_Invariants.md",
+        "sha256": "574ebfb4468f9a12ac81fb5c6edcd02f12eb54ac01b557f09ef7b74481865eb0"
+      },
+      {
+        "path": "Plans/Progression_Gates.md",
+        "sha256": "e6145bd73ef64abae83870ade4ddd574fe2bfc9b107c47ee82f8007ace2fb140"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "sha256": "62d098bffd46192f8e58761053e3e6b37f1bb7bcd9e2263302aea5c05afbbaa3"
+      },
+      {
+        "path": "Plans/plan_graph.schema.json",
+        "sha256": "447d8ccb1dc312d4aae5566e28809b115eadc5a925e09690b0e8edb9785f7e42"
+      },
+      {
+        "path": "Plans/plan_graph.json",
+        "sha256": "029eade6e78ae3b0479b8ba19128e7bc1ce7ab9c93f3f1a85f702c751dbbb643"
+      },
+      {
+        "path": "Plans/evidence.schema.json",
+        "sha256": "005b3a2270676f036ec1a78d1c47787e9b7cfdfb7b844f106a37275a24e1368e"
+      },
+      {
+        "path": "Plans/change_budget.schema.json",
+        "sha256": "277c72ce79ba09f8b78a3b8811043572c6cf143414da0f1a3362361ac42874d3"
+      },
+      {
+        "path": "Plans/auto_decisions.schema.json",
+        "sha256": "9f4f78462e5124ae145642f87b90631b2d2c0aa0797fc34a5390947b1ea6284e"
+      },
+      {
+        "path": "scripts/pm-plans-verify.py",
+        "sha256": "547a41934deffd3842da7b163c1254ae305a71562f33dce89ba62e34ec01e8c9"
+      }
+    ]
+  },
+  "spec_lock_update_protocol": {
+    "canonical_doc": "Plans/Decision_Policy.md#spec-lock-update-protocol",
+    "requires_auto_decision": true,
+    "requires_evidence_bundle": true
   }
 }

@@ -19,6 +19,17 @@ This plan's workflow semantics remain authoritative. Implementation should targe
 - "Canonical requirements" artifacts should be treated as first-class **artifacts** in the event stream and projection layer
 - UI implementation details should be re-expressed in Slint (not Iced) without changing user-visible flow
 
+## SSOT references (DRY)
+- Locked decisions: `Plans/Spec_Lock.json` (GitHub API-only; GitHub CLI forbidden)
+- Canonical contracts: `Plans/Contracts_V0.md`
+- DRY + ContractRef rule: `Plans/DRY_Rules.md`
+- Canonical terms: `Plans/Glossary.md`
+- Deterministic defaults: `Plans/Decision_Policy.md`
+- GitHub auth + API flows: `Plans/GitHub_API_Auth_and_Flows.md`
+- User-project output artifacts: `Plans/Project_Output_Artifacts.md` (under `.puppet-master/project/*`)
+
+ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, PolicyRule:Decision_Policy.md§1
+
 ## Executive Summary
 
 The current Chain wizard and Interview flow assume a single path: **start a new project** (with an optional "existing project" toggle). That does not support users who want to **fork and evolve** a repo, **enhance/rewrite/add** to an existing project that is new to Puppet Master, or **contribute a feature and open a Pull Request**. This plan defines **intent-based workflows** so the wizard, Interview, and execution path adapt to what the user is trying to do. It also expands the requirements step (multiple uploads, Requirements Doc Builder via Assistant), makes the Interview phase set **adaptive** (AI decides what to cut or double down on), and strengthens Project setup and GitHub integration (create repo, offer to create fork or let the user do it, and guide PR start/finish for first-time contributors).
@@ -34,10 +45,10 @@ The current Chain wizard and Interview flow assume a single path: **start a new 
 - **§8:** Relationship to other plans.
 - **§9:** Gaps and potential problems (each with a concrete **Resolution**).
 - **§10:** Implementation Readiness Checklist (concrete items for an implementation plan).
+- **§11:** User-project output artifacts (sharded graph by default).
+- **Change Summary:** Update record for sharded user-project output contracts.
 
 **DRY:** Reuse `platform_specs`, `docs/gui-widget-catalog.md`, rules pipeline (agent-rules-context.md), git/worktree (WorktreeGitImprovement.md, MiscPlan), subagent registry (orchestrator/interview plans), and Assistant/Interview UI patterns (assistant-chat-design.md, interview-subagent-integration.md).
-
----
 
 ## Table of Contents
 
@@ -51,6 +62,8 @@ The current Chain wizard and Interview flow assume a single path: **start a new 
 8. [Relationship to Other Plans](#8-relationship-to-other-plans)
 9. [Gaps and Potential Problems](#9-gaps-and-potential-problems)
 10. [Implementation Readiness Checklist](#10-implementation-readiness-checklist)
+11. [User-Project Output Artifacts (Sharded by Default)](#11-user-project-output-artifacts-sharded-by-default)
+12. [Change Summary](#change-summary)
 
 ---
 
@@ -69,7 +82,7 @@ The wizard and Interview must support **four distinct intents**. Each intent cha
 ### 1.2 Fork & Evolve
 
 - **User goal:** Fork an existing repo and evolve it (add features, change direction, maintain a derivative). Not "start new" and not "continue the same project"--it's a **derivative**.
-- **Entry:** User selects "Fork & evolve." We need **upstream repo** (URL or `owner/repo`). We **offer to create the fork** for the user (via GitHub/host API or `gh repo fork`), or the user can create the fork themselves and point us at the fork path or URL.
+- **Entry:** User selects "Fork & evolve." We need **upstream repo** (URL or `owner/repo`). We **offer to create the fork** for the user (via GitHub HTTPS API; see `Plans/GitHub_API_Auth_and_Flows.md`), or the user can create the fork themselves and point us at the fork path or URL.
 - **Requirements:** User provides requirements that describe **what to add or change** in the fork (delta). Can be upload(s) and/or Requirements Doc Builder framed as "what are we changing/adding?"
 - **Interview:** Interview is framed as **delta/evolution**: "What are you adding or changing in this fork?" Phase set can be reduced (e.g. skip or shorten Deployment if no infra change) or deepened (e.g. Architecture if major refactor). AI decides.
 - **Outcome:** Fork (created by us or user), PRD/plan as **delta** over upstream, then execution on the fork.
@@ -153,7 +166,7 @@ pub struct ChainWizardState {
     // --- Fork & evolve / Contribute (PR) ---
     /// Upstream repo: URL or "owner/repo".
     pub upstream_url: Option<String>,
-    /// If true, app created the fork via gh repo fork (or API); else user provided fork.
+    /// If true, app created the fork via GitHub HTTPS API; else user provided fork.
     pub fork_created_by_app: bool,
     /// Clone URL or path of the fork after creation or user input.
     pub fork_url_or_path: Option<String>,
@@ -221,7 +234,7 @@ pub struct ChainWizardState {
 
 **Invariants:**
 
-- `canonical_requirements_path` is set only after at least one of: uploads (merged) or Builder output (or both merged). It always points to `.puppet-master/requirements/canonical-requirements.md` when merge has been run (see §4).
+- `canonical_requirements_path` is set only after at least one of: uploads (merged) or Builder output (or both merged). For user-project execution, it points to `.puppet-master/project/requirements.md` after canonical promotion from staging (see §4 and §11).
 - For Contribute (PR), `branch_name` is set when the user (or app) creates the feature branch; all work for that flow happens on that branch in the **main clone** (no tier worktrees -- see §7).
 
 ---
@@ -253,9 +266,9 @@ pub struct ChainWizardState {
   - **Project path** (new directory or existing path).
   - **Intent-specific fields:**
     - **New project:** Optional "Create GitHub repo" with **repo name** (required if creating) and any other fields needed to **actually create** the repo (visibility, description, .gitignore template, license, default branch). See §7.1.
-    - **Fork & evolve / Contribute (PR):** **Upstream repo** (URL or `owner/repo`). Then: **"Create fork for me"** (we create the fork via API/CLI) or **"I'll create the fork myself"** (user supplies fork path or clone URL after they fork). See §7.2.
+    - **Fork & evolve / Contribute (PR):** **Upstream repo** (URL or `owner/repo`). Then: **"Create fork for me"** (we create the fork via GitHub HTTPS API; no CLI) or **"I'll create the fork myself"** (user supplies fork path or clone URL after they fork). See §7.2.
   - **Existing GitHub repo (link only):** If the user already has a repo (e.g. created elsewhere or fork already exists), allow "Use existing repo" with URL or path.
-- **GitHub create-repo:** The GUI must "punch in" the repo name and all fields required by the GitHub create-repo API (or `gh repo create`) so we can create the repo without a second manual step. See §7.1.
+- **GitHub create-repo:** The GUI must "punch in" the repo name and all fields required by the GitHub create-repo API so we can create the repo without a second manual step. See §7.1.
 
 ### 3.4 Navigation and Recovery
 
@@ -317,13 +330,13 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 
 1. **User uploads multiple files ONLY (no Builder):** Merge order = **list order** in the UI. Produce one canonical doc by **concatenating** file contents in that order, with a separator between each: `\n\n--- Requirements doc N ---\n\n` where N is 1-based index (e.g. first file gets "Requirements doc 1", second "Requirements doc 2"). No AI merge; no conflict resolution. If the user wants a different order, they reorder in the UI and we re-run the merge.
 
-2. **User uses Requirements Doc Builder ONLY (no uploads):** Canonical input = **`.puppet-master/requirements/requirements-builder.md`**. No concatenation step; Interview and start chain read that path as the single canonical requirements doc.
+2. **User uses Requirements Doc Builder ONLY (no uploads):** Builder output is staged at **`.puppet-master/requirements/requirements-builder.md`**. Canonical promotion then writes **`.puppet-master/project/requirements.md`**. Interview and start chain read only `.puppet-master/project/requirements.md`.
 
-3. **User has BOTH uploads and Builder:** **Uploads first** (in list order): concatenate all uploaded files with separator `\n\n--- Requirements doc N ---\n\n` (N = 1..upload count). **Then** append the Builder output with separator `\n\n--- Requirements Doc Builder ---\n\n`. Write the result to `.puppet-master/requirements/canonical-requirements.md` and set `canonical_requirements_path` to that path.
+3. **User has BOTH uploads and Builder:** **Uploads first** (in list order): concatenate all uploaded files with separator `\n\n--- Requirements doc N ---\n\n` (N = 1..upload count). **Then** append the Builder output with separator `\n\n--- Requirements Doc Builder ---\n\n`. Write the merged staging result to `.puppet-master/requirements/canonical-requirements.md`, then promote canonical user-project requirements to `.puppet-master/project/requirements.md`, and set `canonical_requirements_path` to `.puppet-master/project/requirements.md`.
 
-**Conflicting content:** There is no "conflicting content" merge. Merge is **always** concatenation in the order above. We do not run AI or rule-based conflict resolution. If the user wants a different order or to drop a doc, they reorder or remove files in the UI and the app regenerates `canonical-requirements.md`.
+**Conflicting content:** There is no "conflicting content" merge. Merge is **always** concatenation in the order above. We do not run AI or rule-based conflict resolution. If the user wants a different order or to drop a doc, they reorder or remove files in the UI and the app regenerates `canonical-requirements.md` and then re-promotes `.puppet-master/project/requirements.md`.
 
-**Single source:** Interview and start chain read only from `canonical_requirements_path` (always `.puppet-master/requirements/canonical-requirements.md` after merge). Canonical artifact reference (or content hash) may be stored in redb for the current flow/session so the Interview and start chain read from the same canonical artifact as the event stream.
+**Single source:** Interview and start chain read only from `canonical_requirements_path` (always `.puppet-master/project/requirements.md` after promotion). Canonical artifact reference (or content hash) may be stored in redb for the current flow/session so the Interview and start chain read from the same canonical artifact as the event stream.
 
 ### 4.3 Storage
 
@@ -332,9 +345,10 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 - **Exact storage paths:**
   - **Uploaded files (one per upload):** `.puppet-master/requirements/uploaded/<sanitized_filename>`. `<sanitized_filename>`: take the original filename, remove or replace characters that are invalid or unsafe for the filesystem (e.g. path separators, control chars). Prefer a convention that keeps names unique (e.g. prepend index or hash if duplicate names). Example: `my-spec.md` → `my-spec.md`; `my spec (1).md` → `my_spec_1.md` or similar.
   - **Requirements Doc Builder output:** `.puppet-master/requirements/requirements-builder.md`.
-  - **Merged canonical result (always written when merge runs):** `.puppet-master/requirements/canonical-requirements.md`.
+  - **Merged staging result (always written when merge runs):** `.puppet-master/requirements/canonical-requirements.md`.
+  - **Canonical user-project requirements (always written before Interview/start-chain execution):** `.puppet-master/project/requirements.md`.
 - All paths are relative to the **project root** (where `.puppet-master/` lives). Implementation must create `.puppet-master/requirements/` and `.puppet-master/requirements/uploaded/` as needed.
-- **Builder output:** When the Requirements Doc Builder produces a doc, write it to `requirements-builder.md`; merge step (when uploads + Builder) writes the concatenated result to `canonical-requirements.md` and set it as the canonical input for the next step.
+- **Builder output:** When the Requirements Doc Builder produces a doc, write it to `requirements-builder.md`; merge step (when uploads + Builder) writes the concatenated staging result to `canonical-requirements.md`; canonical promotion then writes `.puppet-master/project/requirements.md` as the next-step input.
 
 ### 4.4 Gaps and Edge Cases
 
@@ -357,7 +371,7 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 2. App opens (or focuses) the **Assistant** chat, with **context** set: current project path (if any), selected **intent**, and optional system hint: "User is building a requirements document for the Interview; when complete, produce the document and hand off."
 3. User converses; Assistant may ask clarifying questions, suggest structure, or draft sections.
 4. When the user (or Assistant) considers the doc ready, user triggers **"Done -- hand off to Interview"** (or equivalent: e.g. "Generate requirements doc" button or slash command).
-5. Assistant **produces** the requirements document (e.g. markdown). App **writes** it to `.puppet-master/requirements/` (e.g. `requirements-builder.md`) and sets it as the **canonical requirements** for the flow.
+5. Assistant **produces** the requirements document (e.g. markdown). App **writes** it to `.puppet-master/requirements/` (e.g. `requirements-builder.md`) and then promotes canonical requirements to `.puppet-master/project/requirements.md` for the flow.
 6. App **returns** the user to the wizard at the **requirements step** (or the next step) with the doc **pre-loaded** (no re-upload). Optionally show a short confirmation: "Requirements doc generated; continue to Interview?"
 7. User continues; **Interview** runs with that doc (and any other merged uploads, if we allow Builder + uploads in the same run).
 
@@ -508,31 +522,23 @@ Use rule-based default (do not re-invoke selector):
   - **Repository name** (required when "Create GitHub repo" is checked). Pre-fill from project name when possible; user can edit.
   - **Visibility:** Public / Private (and any org-level options if applicable).
   - **Description:** Optional.
-  - **Other fields** required by the create-repo API or `gh repo create`: e.g. .gitignore template, license, default branch name. Document the exact list per integration (GitHub API vs `gh` CLI).
-- **Exact fields for `gh repo create` (GitHub CLI):** When "Create GitHub repo" is checked, the GUI must collect and pass the following. All are passed to `gh repo create` (or equivalent API) so the repo is created in one step.
+  - **Other fields (optional):** .gitignore template, license, default branch name (when supported by the GitHub API contract used).
+- **Action:** On "Create," call GitHub HTTPS API create-repo flow (no GitHub CLI) per `Plans/GitHub_API_Auth_and_Flows.md`; then set the remote (e.g. `origin`) and optionally push an initial commit so the project is ready.
 
-  | Field | Required | Values / notes |
-  |-------|----------|----------------|
-  | **name** | Yes (if creating repo) | Repository name; pre-fill from project name when possible. |
-  | **visibility** | Yes | `public` or `private`. |
-  | **description** | No | Short description string. |
-  | **gitignore** | No | Template name (e.g. `Node`, `Rust`, `Python`). Use `gh repo create --help` / template list for allowed values. |
-  | **license** | No | License identifier (e.g. `mit`, `apache-2.0`, `gpl-3.0`). |
-  | **default branch** | No | Branch name for initial commit (e.g. `main`). Default if omitted: `main`. |
-
-  **CLI example:** `gh repo create <name> --public|--private [--description "..."] [--gitignore <template>] [--license <id>] [--source .]` (Exact flags may vary by `gh` version; implementation must use the current `gh repo create` contract and pass the above fields.)
-- **Action:** On "Create," call `gh repo create` (or GitHub API) with these values; set the remote (e.g. `origin`) and optionally push initial commit so the project is ready. Use existing GitHub auth (Doctor/Setup; `gh auth status` or token).
+ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, ContractName:Plans/GitHub_API_Auth_and_Flows.md
 
 ### 7.2 Fork: Offer to Create or User Does It
 
 - **Requirement:** For intents **Fork & evolve** and **Contribute (PR)**, we **offer** to create the fork for the user, but **allow the user to create the fork themselves**.
 - **Offer to create:**
   - User supplies **upstream repo** (URL or `owner/repo`).
-  - Button or link: **"Create fork for me."** We call **`gh repo fork <upstream>`** where `<upstream>` is the upstream repo (URL or `owner/repo`). Do **not** pass an org flag for MVP; the fork is created in the **authenticated user's account**. ("Fork to organization" is **future**: allow choosing an organization as fork destination when we support it.)
-  - After creation, we have the fork clone URL (e.g. from `gh repo view` or fork API). We **clone** the fork to the chosen project path, set that as the working project, and optionally set `upstream` remote to the original repo. Set `fork_created_by_app: true` and store `fork_url_or_path` in wizard state.
+  - Button or link: **"Create fork for me."** We call the GitHub HTTPS API fork/create flow (no GitHub CLI). Fork destination defaults to the authenticated user's account; org forks are future scope.
+  - After creation, we resolve the fork clone URL via GitHub API, **clone** the fork to the chosen project path, set that as the working project, and optionally set `upstream` remote to the original repo. Set `fork_created_by_app: true` and store `fork_url_or_path` in wizard state.
 - **User does it themselves:**
-  - Option: **"I'll create the fork myself."** We show brief instructions (e.g. "Fork the repo on GitHub, then paste your fork URL or clone path below") and a field for **fork URL** or **local path** after they clone. We use that as the working project and do **not** call `gh repo fork`. Set `fork_created_by_app: false`. Validate path/URL is a valid git repo; optionally check for `upstream` or `origin` pointing to the expected repo.
+  - Option: **"I'll create the fork myself."** We show brief instructions (e.g. "Fork the repo on GitHub, then paste your fork URL or clone path below") and a field for **fork URL** or **local path** after they clone. We use that as the working project and do **not** call any fork/create API. Set `fork_created_by_app: false`. Validate path/URL is a valid git repo; optionally check for `upstream` or `origin` pointing to the expected repo.
 - **Validation:** If user chose "Create fork for me," verify fork exists and we have clone URL before proceeding. If "I'll do it myself," verify the path or URL is a valid git repo and optionally that it has an `upstream` or origin pointing to the expected repo.
+
+ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, ContractName:Plans/GitHub_API_Auth_and_Flows.md
 
 ### 7.3 PR Flow: Start (Fork, Clone, Branch)
 
@@ -549,24 +555,28 @@ Use rule-based default (do not re-invoke selector):
 - **Goal:** After the orchestrator (or user) has made changes, we **offer** to commit, push the branch to the fork, and open the Pull Request. User can also do these steps themselves.
 - **Steps we offer:**
   1. **Commit** -- Gather changed files (or use a suggested list from last run). User provides **commit message** (or we suggest one from task/phase). Run `git add` and `git commit`.
-  2. **Push** -- Push the current branch to the fork (`origin` or user's fork remote). Handle auth (e.g. `gh auth` or token); surface push errors (e.g. permission, network).
-  3. **Open PR** -- Create the Pull Request: **from** current branch on the fork **to** default branch of **upstream**. Do **not** assume upstream default branch is `main` or `master`. Before opening the PR, **always** run: `gh repo view <upstream> --json defaultBranchRef -q .defaultBranchRef.name` and use the returned branch name as the **target** of the PR (e.g. `gh pr create --base <that_name>`). User can edit **title** and **body** (or we prefill from commit message and/or task summary). Use `gh pr create` or GitHub API. Link to the new PR in the UI.
+  2. **Push** -- Push the current branch to the fork (`origin` or user's fork remote). Auth must be sourced from SSH or OS credential store at runtime; do not embed tokens in remotes or logs. Surface push errors (permission/network).
+  3. **Open PR** -- Create the Pull Request via GitHub HTTPS API: **from** current branch on the fork **to** the default branch of **upstream**. Do **not** assume upstream default branch is `main` or `master`; fetch `default_branch` via GitHub API before creating the PR. Link to the new PR in the UI.
 - **User does it themselves:** Option "I'll commit and open the PR myself" with short instructions (commit, push, open PR on GitHub) and optional link to GitHub "Compare & pull request" for their branch.
 - **Help for first-time contributors:** Optional in-app blurb or link: "What's a PR? You work on a branch of your fork; we push it and open a request for the upstream repo to merge your changes."
+
+ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, ContractName:Plans/GitHub_API_Auth_and_Flows.md, PolicyRule:no_secrets_in_storage
 
 ### 7.5 Integration with WorktreeGitImprovement and MiscPlan
 
 - **Branch naming:** Reuse sanitization and strategy from WorktreeGitImprovement.md (branch naming, no invalid refs).
-- **PR creation:** Existing `PrManager` and `gh` usage (MiscPlan §3.6: no secrets in PR body; use tier metadata, file lists, acceptance criteria). For "Contribute (PR)" finish flow, we may use a **different** PR body template (e.g. "Feature: ..." and link to requirements or task). Document which template is used when.
-- **Git auth:** Fork creation, push, and PR creation all require GitHub auth; use existing Doctor/Setup checks and `gh auth status`. Do not store tokens in code; use env or system auth.
+- **PR creation:** PR creation uses the GitHub HTTPS API per `Plans/GitHub_API_Auth_and_Flows.md` (no GitHub CLI). For "Contribute (PR)" finish flow, we may use a different PR body template (e.g. "Feature: ..." + acceptance summary) but must sanitize secrets.
+- **GitHub auth:** Fork creation and PR creation require GitHub OAuth token in OS credential store; do not store tokens in seglog/redb/Tantivy or logs.
 
 **Required GitHub auth scopes (MVP):** **repo** (full) -- required for create repo, fork, push branch, open PR. **read:org** -- optional for MVP; required only if we add "Fork to organization." Document these in Doctor/Setup and in user-facing docs. On permission errors (e.g. 403), show: "Permission denied: ensure your GitHub token has the **repo** scope (and **read:org** if using organization fork)." with a link to token/settings.
 
+ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, ContractName:Plans/GitHub_API_Auth_and_Flows.md, PolicyRule:no_secrets_in_storage
+
 ### 7.6 Gaps and Risks
 
-- **Non-GitHub hosts:** Fork/PR flow is specified for **GitHub** only (e.g. `gh repo create`, `gh repo fork`, `gh pr create`). **Future:** GitLab (e.g. `glab` CLI) and Bitbucket (e.g. `bb` CLI) will be stubbed with the same UX (create repo, fork, MR/PR); implementation will use the appropriate CLI/API per host. No implementation for non-GitHub in MVP.
-- **Org vs. user fork:** **MVP = user fork only.** We use `gh repo fork <upstream>` with no org flag; fork is created in the authenticated user's account. **"Fork to organization"** is a future option; when added, document the flag or API (e.g. `--org`) and required scopes.
-- **Rate limits:** Creating repo/fork and opening PR use GitHub API/CLI; respect rate limits and surface "too many requests" (or equivalent) to the user.
+- **Non-GitHub hosts:** Fork/PR flow is specified for **GitHub** only. **Future:** GitLab and Bitbucket can be stubbed with the same UX (create repo, fork, MR/PR); implementation uses the appropriate host HTTPS API (no CLI) per host. No implementation for non-GitHub in MVP.
+- **Org vs. user fork:** **MVP = user fork only.** Fork is created in the authenticated user's account via GitHub API. **"Fork to organization"** is a future option; when added, document the GitHub API fields and required scopes.
+- **Rate limits:** Creating repo/fork and opening PR use GitHub API; respect rate limits and surface "too many requests" (or equivalent) to the user.
 
 ---
 
@@ -579,9 +589,10 @@ Use rule-based default (do not re-invoke selector):
 | **Plans/assistant-chat-design.md** | Requirements Doc Builder **is** the Assistant chat with a specific handoff contract. Add subsection or reference: "Requirements Doc Builder: generate requirements and hand off to Chain/Interview." |
 | **Plans/interview-subagent-integration.md** | Adaptive phases (§6) extend the interview: add "Phase selection and depth by intent and context." Subagents and phase assignments unchanged; only which phases run and depth. |
 | **Plans/orchestrator-subagent-integration.md** | Config and tier config apply to runs started from any intent. No change to tier/subtask execution; only how we **enter** the flow (intent, requirements, project setup). |
+| **Plans/Project_Output_Artifacts.md** | Single source of truth for required user-project artifacts under `.puppet-master/project/` (requirements, contracts, `plan.md`, sharded `plan_graph/`, acceptance manifest, and `auto_decisions.jsonl`) and canonical seglog persistence contract. |
 | **Plans/agent-rules-context.md** | Application and project rules apply to Assistant (Builder), Interview, and orchestrator. Same rules pipeline for all. |
 | **Plans/WorktreeGitImprovement.md** | Branch naming, PR creation, worktree lifecycle. Fork creation and "PR start/finish" are **additional** GUI and flow steps; reuse branch/PR tooling where possible. |
-| **Plans/MiscPlan.md** | Git ignore, no secrets in PR body, cleanup allowlist. `.puppet-master/requirements/` and any new paths under `.puppet-master/` must be allowlisted. |
+| **Plans/MiscPlan.md** | Git ignore, no secrets in PR body, cleanup allowlist. `.puppet-master/requirements/` (staging) and `.puppet-master/project/` (canonical outputs) must be allowlisted. |
 | **Plans/usage-feature.md** | No direct change; usage tracking applies to Builder, Interview, and orchestrator runs as today. |
 | **Plans/newtools.md** | MCP and tools apply to Assistant and Interview; Builder can use same tool set. |
 
@@ -625,10 +636,10 @@ Use rule-based default (do not re-invoke selector):
 ### 9.4 GitHub and Fork/PR
 
 - **Auth scope:** Fork creation and PR creation may require different scopes (e.g. `repo`, `workflow`). Document required scopes and surface "Permission denied" clearly.
-  **Resolution:** Document required GitHub scopes (e.g. `repo` for fork/create/PR; add to Doctor/Setup or docs). On API/CLI permission errors, show user-facing message: "Permission denied: ensure GitHub token has repo (and workflow if needed) scope" with link to token settings.
+  **Resolution:** Document required GitHub scopes (e.g. `repo` for fork/create/PR; add to Doctor/Setup or docs). On API permission errors, show user-facing message: "Permission denied: ensure GitHub token has repo (and workflow if needed) scope" with link to token settings.
 
-- **Upstream default branch:** We assume upstream default branch is `main` or `master`; we should detect it (e.g. `gh repo view --json defaultBranchRef`) when opening the PR so we target the correct branch.
-  **Resolution:** Before opening PR, call `gh repo view <upstream> --json defaultBranchRef` (or equivalent); use returned branch name as PR target. Do not hardcode `main` or `master`.
+- **Upstream default branch:** We assume upstream default branch is `main` or `master`; we should detect it (GitHub API: `GET /repos/{owner}/{repo}` → `default_branch`) when opening the PR so we target the correct branch.
+  **Resolution:** Before opening PR, call GitHub API `GET /repos/{owner}/{repo}` and use the returned `default_branch` as PR target. Do not hardcode `main` or `master`.
 
 - **Conflict with WorktreeGitImprovement:** Orchestrator may create worktrees and branches for tiers; "Contribute (PR)" uses a single feature branch. Ensure we don't create a worktree that clashes with the user's feature branch.
   **Resolution:** Contribute (PR) flow uses the main clone's feature branch for user work. Tier/worktree orchestration (if any) uses separate worktrees or branches; document that PR branch is the user-facing branch and is not replaced by orchestrator worktrees. Implementation: PR branch is the checked-out branch in the single clone; worktrees for subtasks (if used) are distinct and do not replace the PR branch ref.
@@ -671,7 +682,7 @@ Use rule-based default (do not re-invoke selector):
   **Resolution:** See §6.3 and §9.3 (rule-based by intent, no re-invoke).
 
 - Document **GitHub auth scopes** and **upstream default branch** detection.
-  **Resolution:** See §9.4 (scopes in docs/Doctor; detect default branch via `gh repo view`).
+  **Resolution:** See §9.4 (scopes in docs/Doctor; detect default branch via GitHub API `GET /repos/{owner}/{repo}`).
 
 - Add **intent** and **wizard_step** to recovery snapshot.
   **Resolution:** See §9.1 (recovery schema includes intent and wizard_step).
@@ -704,10 +715,10 @@ Before implementation, an implementation agent must complete or have clear specs
 14. **Builder handoff:** Ensure project_path and intent are passed to Interview and not overwritten by empty/default.
 15. **Builder output template:** Define required sections (Scope, Goals, Out of scope, Acceptance criteria, Non-goals); add validation warning if missing.
 16. **Cancel Builder:** "Cancel and return to requirements" (no save); optional idle timeout with "Return to requirements without saving?" prompt.
-17. **GitHub create repo:** Add GUI fields and **gh repo create** (or API) call with repo name, visibility, description, .gitignore template, license, default branch per §7.1.
-18. **Fork:** "Create fork for me" (gh repo fork or Fork API) and "I'll create the fork myself" path/URL input; validate fork exists or path is valid repo.
+17. **GitHub create repo:** Add GUI fields and GitHub API create-repo call with repo name, visibility, description, .gitignore template, license, default branch per §7.1.
+18. **Fork:** "Create fork for me" (GitHub API fork endpoint) and "I'll create the fork myself" path/URL input; validate fork exists or path is valid repo.
 19. **PR start:** Fork → clone → create feature branch; branch name input or suggest from requirements slug.
-20. **PR finish:** Commit, push branch, open PR (gh pr create or API); detect upstream default branch via `gh repo view --json defaultBranchRef`; prefill title/body from task; link to PR in UI.
+20. **PR finish:** Commit, push branch, open PR via GitHub API; detect upstream default branch via GitHub API (`GET /repos/{owner}/{repo}` → `default_branch`); prefill title/body from task; link to PR in UI.
 21. **GitHub auth:** Document required scopes; surface "Permission denied" with token-scope message and link.
 22. **Contribute (PR) vs worktrees:** Document and implement so PR branch is main clone's feature branch; orchestrator worktrees (if any) do not replace it.
 23. **Agent activity view:** One shared non-interactive streaming component; use on requirements page (Builder, Multi-Pass Review) and Interview page (document creation, Multi-Pass Review).
@@ -716,8 +727,49 @@ Before implementation, an implementation agent must complete or have clear specs
 26. **i18n:** New strings in central module/resource file keyed by id.
 27. **No secrets:** Sanitize requirements doc, Builder output, and PR body; checklist item for implementation.
 28. **Document:** Fork/PR we only clone and create branch; no execution of upstream code.
+29. **Required user-project artifacts:** Emit the canonical artifact set under `.puppet-master/project/`: `requirements.md`, `contracts/` (including `contracts/index.json`), `plan.md`, optional `glossary.md`, sharded `plan_graph/` (`index.json` + `nodes/<node_id>.json`, optional `edges.json`), `acceptance_manifest.json`, `auto_decisions.jsonl`. During execution, evidence bundles are written under `.puppet-master/project/evidence/<node_id>.json`.
+30. **Sharded plan graph by default:** Generate `plan_graph/index.json` plus one node shard per node under `plan_graph/nodes/`; avoid monolithic `plan_graph.json` for user-project outputs.
+31. **`index.json` contract:** Include `schema_version`, `graph_id`, `nodes`, `entrypoints`, `validation`; each node entry includes `node_id`, `path`, `sha256`, optional `subgraph`.
+32. **Node shard contract:** Each `nodes/<node_id>.json` includes `node_id`, `objective`, `contract_refs` (must include ≥1 `ProjectContract:*`), `acceptance`, `evidence_required`, `allowed_tools`, `tool_policy_mode`, `policy_mode`, `change_budget`, `blockers`, `unblocks`.
+33. **Deterministic IDs:** Node IDs must be stable and deterministic from phase/task/subtask/iteration lineage (with deterministic hashing fallback). No randomness.
+34. **Human-readable view:** Keep `.puppet-master/project/plan.md` mandatory; include entrypoints, execution-order hints, acceptance summary, and contract-pack references.
+35. **Canonical seglog persistence:** Persist all required artifacts as full-content seglog artifact events (chunked with `chunk_index`/`chunk_count` when needed) and a final integrity event with canonical `sha256`.
+36. **Filesystem materialization contract:** Treat filesystem files as materializations/cache that are reproducible from seglog.
 
 ---
 
+## 11. User-Project Output Artifacts (Sharded by Default)
 
-*This document is part of the RWM Puppet Master plan set. Update it as the design evolves or implementation reveals new gaps.*
+Interviewer/Wizard outputs for user projects must materialize and persist the following canonical artifacts under `.puppet-master/project/`:
+
+- `.puppet-master/project/requirements.md`
+- `.puppet-master/project/contracts/`
+- `.puppet-master/project/contracts/index.json`
+- `.puppet-master/project/plan.md`
+- `.puppet-master/project/glossary.md` (optional, recommended)
+- `.puppet-master/project/plan_graph/index.json`
+- `.puppet-master/project/plan_graph/nodes/<node_id>.json`
+- `.puppet-master/project/plan_graph/edges.json` (optional)
+- `.puppet-master/project/acceptance_manifest.json`
+- `.puppet-master/project/auto_decisions.jsonl`
+- `.puppet-master/project/evidence/<node_id>.json` (produced during execution; schema `pm.evidence.schema.v1`)
+
+Rules for this flow:
+
+- Uploads and builder output remain staging inputs under `.puppet-master/requirements/*`.
+- Before Interview/start-chain execution, canonical promotion must write `.puppet-master/project/requirements.md`.
+- Plan graph output for user projects is sharded by default (`index.json` + node shard files), not a single monolithic JSON graph file.
+- `plan.md` remains mandatory as the human-readable view (entrypoints, execution-order hints, acceptance summary, contract-pack references).
+- Contract pack uses stable `ProjectContract:*` IDs (resolved via `contracts/index.json`); every node must reference at least one project contract ID.
+- All artifacts above are canonical in seglog as full-content artifact events (deterministic chunking for large payloads, integrity event with canonical `sha256`).
+- Filesystem copies are materializations/cache and must be regenerable from seglog.
+
+The authoritative contract for schemas, deterministic node IDs, validation pointers, and seglog persistence is `Plans/Project_Output_Artifacts.md`.
+
+## Change Summary
+
+- 2026-02-23: Added user-project artifact contract section requiring `.puppet-master/project/...` outputs, sharded plan graph defaults, and mandatory `plan.md`.
+- 2026-02-23: Updated requirements semantics so `.puppet-master/requirements/*` remains staging while canonical downstream requirements are promoted to `.puppet-master/project/requirements.md`.
+- 2026-02-23: Added relationship-table cross-reference to `Plans/Project_Output_Artifacts.md` and expanded implementation checklist with shard/index/node/seglog determinism requirements.
+- 2026-02-23: Replaced prohibited platform alias text with Puppet Master naming.
+- 2026-02-23: Updated artifact list and node shard contract to include `contracts/index.json`, optional `glossary.md`, execution evidence outputs, and `tool_policy_mode` + stable `ProjectContract:*` references (per `Plans/Project_Output_Artifacts.md`).

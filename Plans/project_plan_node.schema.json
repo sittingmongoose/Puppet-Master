@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.project-plan-node.v1",
+  "title": "Puppet Master Project Plan Node (Shard)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "node_id",
+    "objective",
+    "contract_refs",
+    "acceptance",
+    "evidence_required",
+    "allowed_tools",
+    "tool_policy_mode",
+    "policy_mode",
+    "change_budget",
+    "blockers",
+    "unblocks"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "node_id": {"type": "string", "minLength": 1},
+    "objective": {"type": "string", "minLength": 1},
+    "contract_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "contains": {"type": "string", "pattern": "^ProjectContract:"}
+    },
+    "acceptance": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/acceptance_check"}
+    },
+    "evidence_required": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "path"],
+      "properties": {
+        "schema_id": {"type": "string", "const": "pm.evidence.schema.v1"},
+        "path": {"type": "string", "minLength": 1}
+      }
+    },
+    "allowed_tools": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "tool_policy_mode": {
+      "type": "string",
+      "enum": ["auto", "ask", "deny"]
+    },
+    "policy_mode": {
+      "type": "string",
+      "enum": ["read-only", "workspace-write", "danger-full-access"]
+    },
+    "change_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "allowed_paths",
+        "forbidden_paths",
+        "forbidden_files",
+        "max_files_changed",
+        "max_lines_added",
+        "max_lines_deleted"
+      ],
+      "properties": {
+        "schema_id": {"type": "string", "const": "pm.change_budget.schema.v1"},
+        "allowed_paths": {"type": "array", "items": {"type": "string"}},
+        "forbidden_paths": {"type": "array", "items": {"type": "string"}},
+        "forbidden_files": {"type": "array", "items": {"type": "string"}},
+        "max_files_changed": {"type": "integer", "minimum": 0},
+        "max_lines_added": {"type": "integer", "minimum": 0},
+        "max_lines_deleted": {"type": "integer", "minimum": 0},
+        "max_total_loc_delta": {"type": "integer", "minimum": 0},
+        "notes": {"type": "string"}
+      }
+    },
+    "blockers": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "unblocks": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "depends_on": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "parallel_group": {"type": "string"}
+  },
+  "$defs": {
+    "command_spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cmd", "expect_exit_code"],
+      "properties": {
+        "cmd": {"type": "string", "minLength": 1},
+        "cwd": {"type": "string"},
+        "expect_exit_code": {"type": "integer"},
+        "timeout_ms": {"type": "integer", "minimum": 0},
+        "expect_stdout_contains": {"type": "array", "items": {"type": "string"}},
+        "expect_stderr_contains": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "acceptance_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["check_id", "commands"],
+      "properties": {
+        "check_id": {"type": "string", "minLength": 1},
+        "description": {"type": "string"},
+        "commands": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/command_spec"}
+        },
+        "expected_events": {"type": "array", "items": {"type": "string"}},
+        "contract_refs": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    }
+  }
+}
+

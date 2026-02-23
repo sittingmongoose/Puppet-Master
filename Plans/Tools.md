@@ -2,6 +2,14 @@
 
 **Scope:** This document lives in `Plans/` only. It is the **canonical plan for tool support**: built-in tools, custom tools, **MCP** (integration with the registry and permission model), and the permission model (allow/deny/ask), aligned with [OpenCode's Tools model](https://opencode.ai/docs/tools/). Per-platform MCP config paths, GUI MCP settings (Context7, cited web search), and framework-specific testing tools are detailed in **Plans/newtools.md** and AGENTS.md; this doc defines the tool set, permissions, and how MCP fits in.
 
+## SSOT references (DRY)
+- Locked decisions: `Plans/Spec_Lock.json`
+- Canonical contracts (events/tools/UI commands): `Plans/Contracts_V0.md`
+- DRY + ContractRef rule: `Plans/DRY_Rules.md`
+- Canonical terms: `Plans/Glossary.md`
+- Deterministic ambiguity handling: `Plans/Decision_Policy.md` + `Plans/auto_decisions.jsonl`
+- Evidence + verifier gates: `Plans/evidence.schema.json`, `Plans/Progression_Gates.md`
+
 ---
 
 ## 1. Purpose and scope

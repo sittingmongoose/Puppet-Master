@@ -1429,8 +1429,8 @@ pub fn append_prompt_attachments(
 | **Cursor** | `""` (empty) | File paths appended as text | `"\n\nReference attachments:\n- /path/to/file.rs"` |
 | **Gemini** | `"@"` | `@path` tokens (CLI interprets as attachments) | `"\n\nReference attachments:\n- @/path/to/file.rs"` |
 | **Copilot** | `"@"` | `@path` tokens | `"\n\nReference attachments:\n- @/path/to/file.rs"` |
-| **Codex** | TBD | May use `--add-dir` flags instead | N/A |
-| **Claude** | TBD | May use `--append-system-prompt-file` | N/A |
+| **Codex** | `""` (empty) | File paths appended as text (do not rely on `--add-dir` for prompt attachment semantics) | `"\n\nReference attachments:\n- /path/to/file.rs"` |
+| **Claude** | `""` (empty) | File paths appended as text (use `--append-system-prompt-file` only as an implementation detail when needed) | `"\n\nReference attachments:\n- /path/to/file.rs"` |
 
 **FileSafe integration point:**
 

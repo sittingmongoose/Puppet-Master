@@ -1,27 +1,22 @@
-# Decision Log (Canonical)
+# Decision Log (DEPRECATED — do not use)
 
 <!--
-PUPPET MASTER -- DECISION LOG
+PUPPET MASTER -- DECISION LOG (DEPRECATED)
 
-Purpose: record deterministic decisions (with rationale + references) so they do not drift.
+This file is retained only for legacy context. It is NOT a canonical input to autonomous execution.
 -->
 
-## 0. Format
-Each entry MUST include:
-- `DecisionID` -- stable ID
-- `Decision` -- one-sentence statement
-- `Rationale` -- short explanation
-- `ContractRef` -- citations to Spec Lock / Crosswalk / Contracts / etc.
+## 0. Canonical replacement (machine-consumable)
 
-ContractRef: PolicyRule:Decision_Policy.md§2
+**Rule:** Puppet Master decisions are recorded as newline-delimited JSON in:
+- `Plans/auto_decisions.jsonl` (rows validate against `Plans/auto_decisions.schema.json`)
 
----
+Deterministic decision-making rules live in:
+- `Plans/Decision_Policy.md`
 
-## 1. Decisions
+ContractRef: SchemaID:auto_decisions.schema.json, PolicyRule:Decision_Policy.md
 
-### DEC-0001 -- GitHub operations are API-only
-Decision: GitHub hosting/auth/repo/fork/PR operations use GitHub HTTPS API only; GitHub CLI is forbidden.
+## 1. No new entries
 
-Rationale: Removes dependency on external CLI auth state and enforces a single integration surface.
-
-ContractRef: SchemaID:Spec_Lock.json#github_operations
+Agents MUST NOT add new entries to this file.  
+ContractRef: PolicyRule:Decision_Policy.md#spec-lock-update-protocol

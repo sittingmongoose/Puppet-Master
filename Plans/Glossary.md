@@ -41,7 +41,7 @@ ContractRef: ContractName:Contracts_V0.md#UICommand
 - **Crosswalk** -- `Plans/Crosswalk.md`; ownership boundaries for primitives.
 - **Progression gates** -- `Plans/Progression_Gates.md`; deterministic verification requirements.
 
-ContractRef: SchemaID:Spec_Lock.json, Gate:GATE-003, Gate:GATE-009
+ContractRef: SchemaID:Spec_Lock.json, Gate:GATE-003, Gate:GATE-009, PolicyRule:Decision_Policy.md§1
 
 ---
 

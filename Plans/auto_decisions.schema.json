@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.auto_decisions.schema.v1",
+  "title": "Puppet Master Auto Decisions (JSONL row)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "decision_id",
+    "timestamp_utc",
+    "scope",
+    "inputs_hash",
+    "decision",
+    "rationale",
+    "applied_to",
+    "contract_refs"
+  ],
+  "properties": {
+    "schema_id": {
+      "type": "string",
+      "const": "pm.auto_decisions.schema.v1"
+    },
+    "decision_id": {
+      "type": "string",
+      "minLength": 3
+    },
+    "timestamp_utc": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "inputs_hash": {
+      "type": "string",
+      "minLength": 8
+    },
+    "decision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "applied_to": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "contract_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "example": {
+      "type": "boolean"
+    }
+  }
+}
+

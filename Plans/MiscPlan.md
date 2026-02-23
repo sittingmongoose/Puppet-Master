@@ -155,7 +155,7 @@ Puppet Master must **respect .gitignore** in all git operations and **never expo
 - **Logs:** Do not log token values, API keys, private key contents, or the contents of credential files. `git-actions.log` currently logs action name and details (e.g. commit message). If commit messages ever come from untrusted input or could contain secrets, consider redacting or not logging the message body; at minimum, never log env vars (e.g. `GH_TOKEN`, `GITHUB_TOKEN`) or file paths that point to credential files with their contents.
 - **Evidence:** Evidence artifacts (test logs, screenshots, gate reports) must not contain API keys, tokens, or key contents. When capturing command output or writing evidence, strip or redact known secret patterns (e.g. token=..., Authorization: Bearer ...) if that output is ever written to disk or sent elsewhere.
 - **Prompts and PR body:** When building prompts for agents or PR title/body for GitHub, do not include environment variables, token values, or file contents that could be secrets. Use placeholders or omit; let the platform CLI use env/auth instead.
-- **GitHub (gh CLI):** The app uses `gh` for PR creation; authentication is via `gh auth login` or `GH_TOKEN`/`GITHUB_TOKEN` in the environment. We do not pass tokens in our code. Ensure no code path builds a PR body or title from user input that could contain a token; keep PR content to tier metadata, file lists, and acceptance criteria only.
+- **GitHub (API-only):** The app uses the GitHub HTTPS API for PR creation (no GitHub CLI). Authentication is OAuth device-code by default; tokens live only in the OS credential store at runtime (never in seglog/redb/Tantivy, logs, or evidence). Ensure no code path builds a PR body or title from untrusted input that could contain a secret; keep PR content to tier metadata, file lists, and acceptance criteria only. Canonical: `Plans/GitHub_API_Auth_and_Flows.md`.
 
 **Summary**
 
@@ -1115,7 +1115,7 @@ This section ties the Misc Plan to **Plans/WorktreeGitImprovement.md**, **Plans/
 
 ### 10.1 WorktreeGitImprovement.md
 
-**What the Worktree plan does:** Config wiring (Option B: build run config from GUI at run start), worktree create/merge/cleanup (of worktree *directories*), active_worktrees repopulation, git/gh binary resolution, Branching tab GUI, Doctor worktrees check.
+**What the Worktree plan does:** Config wiring (Option B: build run config from GUI at run start), worktree create/merge/cleanup (of worktree *directories*), active_worktrees repopulation, git binary resolution, GitHub API PR creation wiring (no GitHub CLI), Branching tab GUI, Doctor worktrees check.
 
 **Dependencies (MiscPlan depends on Worktree):**
 
