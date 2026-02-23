@@ -29,20 +29,20 @@ ContractRef: PolicyRule:Decision_Policy.md§4, Gate:GATE-001
 
 | Plan | Relevance to HITL |
 |------|-------------------|
-| **Plans/orchestrator-subagent-integration.md** | Defines the main run loop (Phase → Task → Subtask → Iteration), tier boundaries, and **Start and End Verification at Phase, Task, and Subtask**. HITL does not redefine tiers; it adds a **pause-for-approval** step at the **end** of a tier, after end verification and before advancing. Tier semantics are the single source of truth in the orchestrator plan. |
+| **Plans/orchestrator-subagent-integration.md** | Defines the main run loop (Phase → Task → Subtask → Iteration), tier boundaries, and **Start and End Verification at Phase, Task, and Subtask**. HITL does not redefine tiers; it adds a **pause-for-approval** step at the **end** of a tier, after end verification and before advancing. Tier semantics are the single source of truth in Plans/orchestrator-subagent-integration.md. |
 | **Plans/interview-subagent-integration.md** | Interview flow has its own phases (Scope, Architecture, UX, etc.). HITL in this plan applies to the **orchestrator** tiers (Phase/Task/Subtask). Interview-phase-level HITL (pause after each interview phase for approval) is out of scope here but could mirror this design if added later. |
 | **Plans/assistant-chat-design.md** | Defines **Dashboard warnings and Calls to Action (CtA)** and that they are **addressable via the chat Assistant**. HITL prompts are one type of CtA: when paused for approval, the Dashboard shows a CtA; the user can respond via the Assistant or a direct Dashboard control. See §16 there. |
-| **Plans/newfeatures.md §20** | Summary and orchestrator integration: HITL is a **setting** only; tier semantics stay in the orchestrator plan; newfeatures defers full HITL spec to this document. |
+| **Plans/newfeatures.md §20** | Summary and orchestrator integration: HITL is a **setting** only; tier semantics stay in Plans/orchestrator-subagent-integration.md; newfeatures defers full HITL spec to this document. |
 
 ## Tier Boundaries (DRY)
 
-Tier boundaries are **not** redefined in this plan. They are defined in the orchestrator plan:
+Tier boundaries are **not** redefined in this plan. They are defined in Plans/orchestrator-subagent-integration.md:
 
 - **Phase boundary:** After all tasks (and their subtasks/iterations) in the current phase are complete; before starting the next phase.
 - **Task boundary:** After all subtasks (and their iterations) in the current task are complete; before starting the next task.
 - **Subtask boundary:** After all iterations in the current subtask are complete; before starting the next subtask.
 
-HITL only specifies **where** to pause (at these boundaries) and **what** the human must do (review and explicitly approve). The **definition** of "phase," "task," and "subtask" remains in the orchestrator plan and code.
+HITL only specifies **where** to pause (at these boundaries) and **what** the human must do (review and explicitly approve). The **definition** of "phase," "task," and "subtask" remains in Plans/orchestrator-subagent-integration.md and implementation code.
 
 ## Settings Model
 
@@ -56,7 +56,9 @@ HITL only specifies **where** to pause (at these boundaries) and **what** the hu
 
 - Each toggle is **independent**: e.g. phase-only, or task+subtask, or all three.
 - **Off by default:** No HITL pause unless the user explicitly enables one or more levels.
+ContractRef: PolicyRule:Decision_Policy.md§4
 - **Single source of truth:** These three settings live in one place in config (e.g. orchestrator or app config); GUI and run loop both read from that config. No duplicated semantics (DRY).
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 ### GUI: Primary Place to Turn On and Configure HITL
 
@@ -73,7 +75,7 @@ HITL is a **setting in the GUI**. The user turns HITL on and configures **which 
 
 ### Run-Loop Integration (Conceptual)
 
-1. Orchestrator runs as today: Phase → Task → Subtask → Iteration, with start/end verification at phase, task, and subtask per the orchestrator plan.
+1. Orchestrator runs as today: Phase → Task → Subtask → Iteration, with start/end verification at phase, task, and subtask per Plans/orchestrator-subagent-integration.md.
 2. When a **phase** is completed (end verification done):
    - If **HITL at phase** is ON → **pause**. Show completion state and "Approve & continue" (or equivalent). On approval → advance to next phase. On reject/cancel → remain paused (behavior for "reject" can be defined at implementation: e.g. stay on same phase, or mark phase as needs-review).
 3. When a **task** is completed (end verification done):
@@ -82,6 +84,7 @@ HITL is a **setting in the GUI**. The user turns HITL on and configures **which 
    - If **HITL at subtask** is ON → **pause**. Same idea: human reviews, approves or rejects; on approval → next subtask.
 
 Pause points are **only** at tier boundaries (after a full phase/task/subtask is done), not mid-tier. Within a tier, the system runs to completion before any HITL gate.
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md
 
 ### What the Human Sees and Does
 
@@ -92,6 +95,7 @@ Pause points are **only** at tier boundaries (after a full phase/task/subtask is
 ### Dashboard: Warnings and Calls to Action (CtA)
 
 When the orchestrator is paused for HITL, the **Dashboard** must surface this as a **warning or Call to Action (CtA)** so the user is prompted to interact.
+ContractRef: ContractName:Plans/assistant-chat-design.md
 
 - **Dashboard role:** The Dashboard shows **warnings** and **Calls to Action** that need or benefit from user attention. HITL approval is one such CtA: e.g. "Phase X complete -- approval required to continue" or "Task Y done -- approve to proceed."
 - **Addressable via Assistant:** These CtAs (including HITL prompts) can be **answered or addressed by the chat Assistant**. The user may:
@@ -101,13 +105,14 @@ When the orchestrator is paused for HITL, the **Dashboard** must surface this as
 
 ### Relation to Existing Pause
 
-The orchestrator plan mentions a **pause gate** (e.g. `PAUSE.md` or equivalent) that halts the run until the file is removed or the user resumes. HITL is **separate**: it is a tier-boundary approval gate driven by settings, not by a global pause file. The two can coexist: e.g. global pause can still apply; HITL adds additional, tier-specific approval points when enabled.
+The Plans/orchestrator-subagent-integration.md mentions a **pause gate** (e.g. `PAUSE.md` or equivalent) that halts the run until the file is removed or the user resumes. HITL is **separate**: it is a tier-boundary approval gate driven by settings, not by a global pause file. The two can coexist: e.g. global pause can still apply; HITL adds additional, tier-specific approval points when enabled.
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md
 
 ## DRY Summary
 
-- **Tier definitions and boundaries:** Use orchestrator plan only; do not duplicate in this plan or in code.
+- **Tier definitions and boundaries:** Use Plans/orchestrator-subagent-integration.md only; do not duplicate in this plan or in code.
 - **HITL settings:** One config schema and one set of three booleans; GUI and orchestrator both read from that single source.
-- **Verification order:** HITL runs **after** end verification at that tier (orchestrator plan "Start and End Verification at Phase, Task, and Subtask"); no new verification concept, only a pause-and-approve step.
+- **Verification order:** HITL runs **after** end verification at that tier (Plans/orchestrator-subagent-integration.md "Start and End Verification at Phase, Task, and Subtask"); no new verification concept, only a pause-and-approve step.
 
 ## Implementation Hooks (Planning Only)
 
@@ -117,13 +122,20 @@ When implementing:
 2. **GUI settings:** Provide HITL as a setting in the GUI: user turns HITL on and configures which tiers (phase / task / subtask) it is enabled for. Persist to config; orchestrator reads from config.
 3. **Orchestrator run loop:** After "end verification" for a given tier (phase/task/subtask), if the corresponding HITL toggle is ON, transition to a "waiting for approval" state and do not advance until the user approves.
 4. **Dashboard CtAs:** When paused for HITL, add a warning or Call to Action on the Dashboard that prompts the user to interact (e.g. "Phase complete -- approval required"). This CtA is addressable via the Assistant (see assistant-chat-design.md) or via a direct Dashboard control ("Approve & continue").
-5. **Persistence:** If the app is closed while paused for HITL, on restore the run should still be in "waiting for approval" so the user can approve or cancel after reopening (align with any existing recovery/snapshot plan, e.g. newfeatures.md §4). **Seglog:** Emit a HITL event when the run pauses for approval and when the user approves/rejects (event type, tier, timestamp, outcome). This makes approval history replayable and auditable. **redb:** Persist **checkpoint/approval state** in redb (e.g. run or session table or a dedicated HITL state): current run id, tier at which pause occurred, status = awaiting_approval | approved | rejected, and optional timestamp. On restore, read this state so the UI shows 'waiting for approval' and the user can approve or cancel. Align with storage-plan.md (checkpoints in redb).
+5. **Persistence:** If the app is closed while paused for HITL, on restore the run should still be in "waiting for approval" so the user can approve or cancel after reopening (align with Plans/newfeatures.md §4 recovery/snapshot requirements).
+ContractRef: ContractName:Plans/newfeatures.md, ContractName:Plans/storage-plan.md
+
+**Seglog:** Emit a HITL event when the run pauses for approval and when the user approves/rejects (event type, tier, timestamp, outcome). This makes approval history replayable and auditable.
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord
+
+**redb:** Persist **checkpoint/approval state** in redb (e.g. run or session table or a dedicated HITL state): current run id, tier at which pause occurred, status = awaiting_approval | approved | rejected, and optional timestamp. On restore, read this state so the UI shows 'waiting for approval' and the user can approve or cancel. Align with Plans/storage-plan.md checkpoints in redb.
+ContractRef: ContractName:Plans/storage-plan.md
 
 ## Optional: Interview Flow
 
 This plan does not define HITL for the **interview** flow (Scope, Architecture, UX, etc.). If interview-phase-level HITL is added later, it should:
 - Reuse the same **concept** (pause at boundary, human approves, then continue).
-- Use a separate setting (e.g. "HITL at interview phase") and interview-phase boundaries from the interview plan, so orchestrator tiers and interview phases remain separate and DRY.
+- Use a separate setting (e.g. "HITL at interview phase") and interview-phase boundaries from Plans/interview-subagent-integration.md, so orchestrator tiers and interview phases remain separate and DRY.
 
 ---
 

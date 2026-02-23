@@ -81,7 +81,7 @@ This plan adds:
 
 1. **Discovery:** During the interview (especially Architecture and Testing phases), detect GUI stack and search a **single source of truth** for framework-specific tools (existing tools, docs, hot reload, headless options).
 2. **User choice:** Present options to the user (use existing tools, plan to build custom tool, or both).
-3. **Plans and test strategy:** Write into the generated plans/PRD and test strategy: get existing tools (if chosen), and/or plan to build the custom tool; then integrate tool usage into testing instructions so agents use them during execution.
+3. **Plan and test strategy:** Write into the generated plans/PRD and test strategy: get existing tools (if chosen), and/or plan to build the custom tool; then integrate tool usage into testing instructions so agents use them during execution.
 
 Result: **More thorough and deeper testing** across web and non-web projects, with agents using the right tools per framework and a consistent path for custom headless + debug logging when needed.
 
@@ -112,11 +112,16 @@ This plan extends the **interview** and **test strategy**; it does not replace t
 
 ## 4. Goals
 
-- **Discover existing tools:** Interviewer consults a single source of truth (e.g. a catalog or module) mapping GUI frameworks to existing tools (official or community: hot reload, web preview, headless runners, test harnesses).
-- **Offer options to the user:** Present: use existing tools only, plan/build custom headless tool only, or both. User choice is stored and drives what gets written into plans and test strategy.
-- **Custom headless tool option:** When chosen, plans include: build (or adopt) a project-specific tool that supports headless GUI navigation and emits a **full debug log** after runs so agents can verify behavior and debug failures.
-- **Integrate into testing:** Selected tools (existing and/or custom) are reflected in test strategy (e.g. test-strategy.md, test-strategy.json) and in PRD/plan language so **agents use the tools** during iterations for smoke and deeper GUI tests.
-- **DRY:** One place for framework→tool data; reuse existing interview phase flow, test strategy generator, and prompt/context loading.
+- **Discover existing tools:** Interviewer consults a single source of truth (e.g. a catalog or module) mapping GUI frameworks to existing tools (official or community: hot reload, web preview, headless runners, test harnesses).  
+  ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+- **Offer options to the user:** Present: use existing tools only, plan/build custom headless tool only, or both. User choice is stored and drives what gets written into execution plans and test strategy.  
+  ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-5-document-generation
+- **Custom headless tool option:** When chosen, execution plans MUST include: build (or adopt) a project-specific tool that supports headless GUI navigation and emits a **full debug log** after runs so agents can verify behavior and debug failures.  
+  ContractRef: SchemaID:evidence.schema.json, ContractName:AGENTS.md#automation
+- **Integrate into testing:** Selected tools (existing and/or custom) MUST be reflected in test strategy (e.g. test-strategy.md, test-strategy.json) and in PRD/execution plan language so **agents use the tools** during iterations for smoke and deeper GUI tests.  
+  ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-5-document-generation, ContractName:Plans/orchestrator-subagent-integration.md#test-strategy-loading
+- **DRY:** One place for framework→tool data; reuse existing interview phase flow, test strategy generator, and prompt/context loading.  
+  ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/interview-subagent-integration.md#dry-compliance
 
 ---
 
@@ -127,7 +132,8 @@ This plan extends the **interview** and **test strategy**; it does not replace t
   1. During or after Architecture (and optionally UX), derive **GUI type** and **framework** (e.g. web, Iced, Dioxus, Qt, Flutter, Tauri, Electron).
   2. **Lookup** framework in a **single source of truth** (see §6) to get: existing tools (with names, install/setup, capabilities), and whether a custom headless tool is typically needed.
   3. In Testing phase (or a dedicated "GUI testing tools" step), **present options** to the user: existing tools, custom headless tool plan, or both.
-  4. **Persist** user choices in interview state and config (e.g. "use_playwright", "use_framework_tools", "plan_custom_headless_tool", "selected_framework_tools").
+  4. **Persist** user choices in interview state and config (e.g. "use_playwright", "use_framework_tools", "plan_custom_headless_tool", "selected_framework_tools").  
+     ContractRef: ContractName:Plans/interview-subagent-integration.md#config-wiring, ContractName:Plans/orchestrator-subagent-integration.md#config-wiring
   5. On interview completion, **write into plans/PRD and test strategy:**
      - Tasks to **obtain/set up** existing tools when selected.
      - Tasks to **plan or build** the custom headless tool when selected (with requirement: headless navigation + full debug log after test runs).
@@ -141,7 +147,8 @@ This plan extends the **interview** and **test strategy**; it does not replace t
 
 Introduce a **single source of truth** for "GUI framework → available tools" so the interviewer (and any future automation) does not hardcode or duplicate this data.
 
-- **Location (suggested):** `puppet-master-rs/src/interview/gui_tool_catalog.rs` (or `automation/gui_tool_catalog.rs` if shared with headless runner). Tag as `// DRY:DATA:GuiToolCatalog`.
+- **Location (required):** `puppet-master-rs/src/interview/gui_tool_catalog.rs` per §12.5 "Catalog location". Tag as `// DRY:DATA:GuiToolCatalog`.  
+  ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
 - **Content:** A catalog (e.g. struct + const data or table) that for each supported framework (or "web" for Playwright) provides:
   - **Framework ID** (e.g. `web`, `iced`, `dioxus`, `qt`, `flutter`, `tauri`, `electron`).
   - **Display name** and optional **detection hints** (e.g. Cargo.toml crate name, package.json deps).
@@ -160,24 +167,30 @@ Introduce a **single source of truth** for "GUI framework → available tools" s
 | tauri     | WebDriver + front-end; Tauri test utils | Optional |
 | electron  | Playwright (Electron support), Spectron legacy | No when Playwright used |
 
-Catalog should be **extensible** (add new frameworks/tools without changing interviewer flow logic). Use **DRY:FN** helpers for "lookup by framework", "list tools for framework", "should suggest custom headless for framework".
+Catalog MUST be **extensible** (add new frameworks/tools without changing interviewer flow logic). Implementation MUST provide **DRY:FN** helpers for "lookup by framework", "list tools for framework", "should suggest custom headless for framework".  
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
 
 ### 6.2 Research as input only (no research-only outcome)
 
-Research (Context7 MCP, web search) may be used to **inform** the catalog or the build plan, but must **not** be presented as a standalone research-only outcome. Options:
+Research (Context7 MCP, web search) may be used to **inform** the catalog or the build plan, but MUST NOT be presented as a standalone research-only outcome. Options:
 
 - **Catalog population:** When the catalog has no or sparse data for a framework, research can **add or extend catalog entries** so the catalog remains the single source of truth and future runs see the data. The user is shown **catalog-backed options** (including newly added entries), not a separate research-only result.
 - **Build plan input:** When the user chooses plan/build custom headless GUI tool for an unknown or sparse-catalog framework, research can **inform the design** of that tool. The deliverable is always the **plan to build the full-featured tool** (see §9); research only feeds that plan.
 
-Do **not** offer a research-only mode where the interview concludes with only researched links and no concrete tool choice or build plan. For unknown frameworks, the user still gets: catalog options (if research populated the catalog) and/or the option to plan/build the full-featured custom headless tool, with research used only to improve that plan.
+Implementation MUST NOT offer a research-only mode where the interview concludes with only researched links and no concrete tool choice or build plan. For unknown frameworks, the user still gets: catalog options (if research populated the catalog) and/or the option to plan/build the full-featured custom headless tool, with research used only to improve that plan.  
+ContractRef: PolicyRule:Decision_Policy.md§4
 
 ### 6.3 MCP and tool invocation
 
-Some **existing tools** in the catalog (or used during research) rely on **MCP** (Model Context Protocol), e.g. Context7 for documentation lookup, Browser MCP for web testing. For selected tools to be callable when agents run:
+Some **existing tools** in the catalog (or used during research) rely on **MCP** (Model Context Protocol), e.g. Context7 for documentation lookup, Browser MCP for web testing. For selected tools to be callable when agents run:  
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#platform-capability-manager
 
-- **All platforms:** MCP must be supported and configurable for **all five platforms** (Cursor, Codex, Claude Code, Gemini, GitHub Copilot). Each platform has its own MCP config location and semantics (e.g. Cursor: `.cursor/mcp.json`, project or user; Claude: `~/.claude.json` or project `.mcp.json`; Codex: MCP server mode; etc.). The plan must ensure that when the user selects a catalog tool that uses MCP, we can **set up and verify** that the tool is available and callable for the tier's platform.
-- **Setup and verification:** Provide a way to configure MCP servers (including API keys where required) and to verify that tools are callable (e.g. Doctor check or pre-run check). Document or implement how MCP config (including Context7 API key and enable/disable state) is passed into the runner or agent environment so that platform CLIs see the correct MCP servers when executing.
-- **Catalog metadata:** In the GUI tool catalog (§6.1), tag tools that require MCP so the UI can show requirements (e.g. "Requires Context7 MCP" or "Requires Browser MCP"). When such a tool is selected, the run config or prompt builder should ensure the corresponding MCP settings are enabled and configured.
+- **All platforms:** MCP MUST be supported and configurable for **all five platforms** (Cursor, Codex, Claude Code, Gemini, GitHub Copilot). Each platform has its own MCP config location and semantics (see §8.2 table). Implementation MUST ensure that when the user selects a catalog tool that uses MCP, Puppet Master can **set up and verify** that the tool is available and callable for the tier's platform.  
+  ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#platform-capability-manager, Gate:GATE-005
+- **Setup and verification:** Implementation MUST provide a way to configure MCP servers (including API keys where required) and to verify that tools are callable (e.g. Doctor check or pre-run check per §11 checklist item **Doctor (MCP)**). Implementation MUST document or implement how MCP config (including Context7 API key and enable/disable state) is passed into the runner or agent environment so that platform CLIs see the correct MCP servers when executing.  
+  ContractRef: ContractName:Plans/MiscPlan.md#doctor, SchemaID:evidence.schema.json, Gate:GATE-005
+- **Catalog metadata:** In the GUI tool catalog (§6.1), implementation MUST tag tools that require MCP (via `requires_mcp: bool` and `mcp_servers: Vec<String>` fields per §12.6.2 structured handoff) so the UI can show requirements (e.g. "Requires Context7 MCP" or "Requires Browser MCP"). When such a tool is selected, the run config or prompt builder MUST ensure the corresponding MCP settings are enabled and configured.  
+  ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/orchestrator-subagent-integration.md#platform-capability-manager
 
 ---
 
@@ -196,7 +209,7 @@ Some **existing tools** in the catalog (or used during research) rely on **MCP**
   2. **Build options:**
      - **Playwright** (when "web" is in detected frameworks): keep current "Generate Playwright requirements" behavior; present as one option.
      - **Framework tools:** For each detected non-web framework, list existing tools from the catalog; allow user to select which to use (e.g. "Dioxus devtools", "Iced headless runner if present").
-     - **Custom headless tool:** Checkbox or option: "Plan/build a custom headless GUI tool for this project (headless navigation + full debug log for agent smoke tests)". Default can come from catalog ("custom headless default" per framework).
+     - **Custom headless tool:** Checkbox or option: "plan/build a custom headless GUI tool for the target project (headless navigation + full debug log for agent smoke tests)". Default can come from catalog ("custom headless default" per framework).
   3. **Persist** choices in interview config/state (e.g. `generate_playwright_requirements`, `selected_framework_tools: Vec<FrameworkToolChoice>`, `plan_custom_headless_tool: bool`). Ensure these are wired into `InterviewOrchestratorConfig` and used at completion when generating test strategy and plans (§10).
 
 ### 7.3 UI for tool selection
@@ -204,8 +217,9 @@ Some **existing tools** in the catalog (or used during research) rely on **MCP**
 - Reuse existing widgets per **DRY** (`docs/gui-widget-catalog.md`, `src/widgets/`). Use toggles, checkboxes, or multi-select for:
   - Playwright (existing).
   - Per-framework list of existing tools (select one or more).
-  - "Plan/build custom headless GUI tool" toggle.
-- Tooltips or short help: explain that existing tools come from the catalog; custom tool is full-featured (headless runner, action catalog, full evidence) like this project's. No new one-off UI patterns; tag new reusable widgets with `// DRY:WIDGET:...`. Follow existing accessibility and widget patterns (selectable labels, keyboard navigation, screen reader considerations per `docs/gui-widget-catalog.md`).
+  - "plan/build custom headless GUI tool" toggle.
+- Tooltips or short help: explain that existing tools come from the catalog; custom tool is full-featured (headless runner, action catalog, full evidence) like Puppet Master's automation. No new one-off UI patterns; tag new reusable widgets with `// DRY:WIDGET:...`. Follow existing accessibility and widget patterns (selectable labels, keyboard navigation, screen reader considerations per `docs/gui-widget-catalog.md`).  
+  ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, ContractName:docs/gui-widget-catalog.md
 
 ---
 
@@ -334,23 +348,27 @@ Puppet Master today invokes **platform CLIs** (e.g. `agent -p "..."`, `claude -p
 
 When the user chooses **"plan/build custom headless GUI tool"**:
 
-### 9.1 Requirement: full-featured (like this project)
+### 9.1 Requirement: full-featured (like Puppet Master's automation)
 
-The custom headless GUI tool must be **fully featured**, not minimal. Use **this project's** automation as the reference (Puppet Master's `src/automation/`: headless runner, action catalog, evidence layout). The tool must provide:
+The custom headless GUI tool must be **fully featured**, not minimal. Use **Puppet Master's** automation as the reference (`src/automation/`: headless runner, action catalog, evidence layout). The tool must provide:
 
 - **Headless execution:** Runs without display (CI-friendly); uses software rendering or framework-specific headless mode (e.g. Iced tiny-skia, or framework's own headless API).
-- **Action catalog:** A defined set of actions or scenarios so that smoke and regression flows can be scripted and repeated. Not a one-off script -- a reusable catalog the agent can extend and run.
-- **Full evidence output:** After each run, the tool must produce the **same depth of debug information** as Puppet Master's GUI automation: **Timeline** (e.g. `timeline.jsonl`), **Summary** (e.g. `summary.md`), **Artifacts** (screenshots or state dumps per step). **Consistent paths:** Evidence under a standard location (e.g. `.puppet-master/evidence/gui-automation/...`). Optional: **ephemeral workspace clone** as in this project's headless runner.
+- **Action catalog:** A defined set of actions or scenarios so that smoke and regression flows can be scripted and repeated. Not a one-off script -- a reusable catalog the agent can extend and run.  
+  ContractRef: ContractName:AGENTS.md#automation-action-catalog
+- **Full evidence output:** After each run, the tool MUST produce the **same depth of debug information** as Puppet Master's GUI automation: **Timeline** (e.g. `timeline.jsonl`), **Summary** (e.g. `summary.md`), **Artifacts** (screenshots or state dumps per step). **Consistent paths:** Evidence under a standard location (e.g. `.puppet-master/evidence/gui-automation/...`). Optional: **ephemeral workspace clone** as in Puppet Master's headless runner.  
+  ContractRef: SchemaID:evidence.schema.json, Gate:GATE-005, ContractName:AGENTS.md#automation-evidence
 
 ### 9.2 What gets written into plans
 
 - **If get existing tool** (e.g. Iced headless runner already in repo that meets §9.1): Plan steps to **ensure the tool is available** (install/setup), document how to run it and where evidence is written, and reference it in test strategy.
-- **If build custom:** Plan steps to **design and implement** a **full-featured** project-specific automation that meets §9.1 (headless runner, action catalog, full evidence: timeline, summary, artifacts). Prefer adopting or wrapping an existing runner (e.g. Iced headless_runner) when the project uses that stack. No minimal smoke harness -- the deliverable is a tool that matches the capability and evidence depth of this project's automation.
+- **If build custom:** Plan steps to **design and implement** a **full-featured** project-specific automation that meets §9.1 (headless runner, action catalog, full evidence: timeline, summary, artifacts). Prefer adopting or wrapping an existing runner (e.g. Iced headless_runner) when the project uses that stack. No minimal smoke harness -- the deliverable is a tool that matches the capability and evidence depth of Puppet Master's automation.  
+  ContractRef: SchemaID:evidence.schema.json, ContractName:AGENTS.md#automation
 - **If both:** Plan to use existing tools where they fit, and add or extend the custom tool for full coverage and evidence.
 
-### 9.3 Reuse of existing automation (this project)
+### 9.3 Reuse of existing automation (Puppet Master reference implementation)
 
-Puppet Master's **headless runner** and **action catalog** in `src/automation/` (AGENTS.md) are the **reference implementation**. For **Iced projects**, the plan should reference reusing or porting that pattern. For other frameworks, the plan describes building or adopting a system that meets the **same contract**: action catalog, timeline + summary + artifacts, standard evidence paths.
+Puppet Master's **headless runner** and **action catalog** in `src/automation/` (AGENTS.md) are the **reference implementation**. For **Iced projects**, the plan should reference reusing or porting that pattern. For other frameworks, the plan describes building or adopting a system that meets the **same contract**: action catalog, timeline + summary + artifacts, standard evidence paths.  
+ContractRef: ContractName:AGENTS.md#automation, SchemaID:evidence.schema.json
 
 ---
 
@@ -366,14 +384,17 @@ Puppet Master's **headless runner** and **action catalog** in `src/automation/` 
 
 ### 10.2 PRD / execution plans
 
-- **Tasks in the PRD (or plan):**
+- **Tasks in the PRD (or execution plan):**
   - "Obtain/set up &lt;existing tool&gt;" when the user selected that tool.
-  - "Plan and implement custom headless GUI tool (headless navigation + full debug log)" when the user selected custom tool.
-- **Acceptance criteria** for testing tiers should reference: run Playwright (if web), run selected framework tools, run custom headless tool and check debug log. Prompt builder already loads test strategy; ensure new instructions and paths are included in context so **agents use the tools** during iterations.
+  - "Plan and implement custom headless GUI tool (headless navigation + full debug log)" when the user selected custom tool.  
+  ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-5-document-generation, SchemaID:evidence.schema.json
+- **Acceptance criteria** for testing tiers MUST reference: run Playwright (if web), run selected framework tools, run custom headless tool and check debug log. Prompt builder already loads test strategy; implementation MUST ensure new instructions and paths are included in context so **agents use the tools** during iterations.  
+  ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#test-strategy-loading, SchemaID:evidence.schema.json
 
 ### 10.3 Prompt and context
 
-- **Prompt builder** already includes test strategy (§5.2 in interview plan, `load_interview_outputs`). Ensure new content (framework tools, custom headless, debug log path) is present in the excerpt so agents see when and how to use each tool and where to find the debug log.
+- **Prompt builder** already includes test strategy (§5.2 in interview plan, `load_interview_outputs`). Implementation MUST ensure new content (framework tools, custom headless, debug log path) is present in the excerpt so agents see when and how to use each tool and where to find the debug log.  
+  ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#test-strategy-loading, ContractName:Plans/interview-subagent-integration.md#dry-compliance
 
 ---
 
@@ -408,7 +429,8 @@ Puppet Master's **headless runner** and **action catalog** in `src/automation/` 
 
 ### 12.2 Custom tool scope
 
-- Building a custom headless GUI tool is a substantial task. The plan frames it as **full-featured** from the start (headless runner, action catalog, full evidence: timeline, summary, artifacts), using this project's automation as the reference. Prefer adopting or wrapping an existing runner (e.g. Iced headless_runner) when the project uses that stack; for other frameworks, the plan describes building or adopting an analogous **full-featured** system with the same contract. Do not frame the deliverable as a minimal smoke harness -- the goal is a tool that matches the capability and evidence depth of this project's automation.
+- Building a custom headless GUI tool is a substantial task. The plan frames it as **full-featured** from the start (headless runner, action catalog, full evidence: timeline, summary, artifacts), using Puppet Master's automation as the reference. Prefer adopting or wrapping an existing runner (e.g. Iced headless_runner from Puppet Master) when the project uses that stack; for other frameworks, the plan describes building or adopting an analogous **full-featured** system with the same contract. Do not frame the deliverable as a minimal smoke harness -- the goal is a tool that matches the capability and evidence depth of Puppet Master's automation.  
+ContractRef: ContractName:AGENTS.md#automation, SchemaID:evidence.schema.json
 
 ### 12.3 DRY and AGENTS.md
 
@@ -419,8 +441,10 @@ Puppet Master's **headless runner** and **action catalog** in `src/automation/` 
 
 ### 12.4 Consistency with other plans
 
-- **Interview plan** (`Plans/interview-subagent-integration.md`): Testing phase already uses qa-expert and test-automator; add "tool discovery and selection" as part of that phase; config wiring for new options follows "Interviewer Enhancements and Config Wiring" in orchestrator plan.
-- **Orchestrator plan** (`Plans/orchestrator-subagent-integration.md`): Test strategy is already loaded and merged into tier criteria; ensure new tool instructions and debug log paths are part of that merged context.
+- **Interview plan** (`Plans/interview-subagent-integration.md`): Testing phase already uses qa-expert and test-automator; add "tool discovery and selection" as part of that phase; config wiring for new options follows "Interviewer Enhancements and Config Wiring" in orchestrator plan.  
+  ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-8-testing, ContractName:Plans/orchestrator-subagent-integration.md#config-wiring
+- **Orchestrator plan** (`Plans/orchestrator-subagent-integration.md`): Test strategy is already loaded and merged into tier criteria; ensure new tool instructions and debug log paths are part of that merged context.  
+  ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#test-strategy-loading
 
 ### 12.5 Gaps, issues, and improvements (implementation notes)
 
@@ -428,89 +452,110 @@ The following gaps, ambiguities, and improvements should be resolved during impl
 
 **GUI stack detection vs existing modules**
 
-- The plan says "Use existing feature_detector / technology_matrix if available." In the codebase, `feature_detector` detects **features** (e.g. auth, API, payment) from interview text, not GUI frameworks. `technology_matrix` extracts technology entries (Language, Framework, etc.) from Architecture phase decisions and Q&A. GUI framework detection (web, iced, dioxus, etc.) is **not** currently provided. Either add a dedicated **GUI framework detection** step (e.g. scan Architecture/UX output and/or project files using catalog detection hints) or extend `TechnologyExtractor` with GUI-framework patterns and derive `detected_gui_frameworks` from that. Document the chosen approach.
+- The plan says "Use existing feature_detector / technology_matrix if available." In the codebase, `feature_detector` detects **features** (e.g. auth, API, payment) from interview text, not GUI frameworks. `technology_matrix` extracts technology entries (Language, Framework, etc.) from Architecture phase decisions and Q&A. GUI framework detection (web, iced, dioxus, etc.) is **not** currently provided. Implementation MUST add a dedicated **GUI framework detection** step: scan Architecture/UX output and/or project files using catalog detection hints (§6.1), OR extend `TechnologyExtractor` with GUI-framework patterns and derive `detected_gui_frameworks` from the technology matrix. The chosen approach MUST be documented in implementation evidence.  
+  ContractRef: SchemaID:evidence.schema.json, Gate:GATE-005, PolicyRule:Decision_Policy.md§2
 
 **Where do "get existing tools" and "plan/build custom tool" tasks live?**
 
-- The plan says "Tasks in the PRD" for obtaining tools and building the custom headless tool. The PRD is produced by the **start_chain** (from requirements), not directly by the interview. Define **where** these tasks are injected: (1) as acceptance criteria or new subtasks in the Testing phase when the PRD is generated (or a post-interview step that amends the PRD), (2) as content in the requirements document the interview writes so the PRD generator includes them, or (3) as a separate plan file (e.g. `.puppet-master/interview/gui-testing-plan.md`) that the orchestrator or agents read. Without this, implementers may leave the tasks unwired.
+- The plan says "Tasks in the PRD" for obtaining tools and building the custom headless tool. The PRD is produced by the **start_chain** (from requirements), not directly by the interview. Implementation MUST inject these tasks via one of: (1) acceptance criteria or new subtasks in the Testing phase when the PRD is generated (preferred: amend PRD generator to read `selected_framework_tools` and `plan_custom_headless_tool` from interview config and emit corresponding tasks), (2) as content in the requirements document the interview writes so the PRD generator includes them (fallback if PRD generator cannot read interview config), or (3) as a separate execution plan file (e.g. `.puppet-master/interview/gui-testing-plan.md`) that the orchestrator or agents MUST read (only if PRD cannot be amended). The chosen approach MUST be documented in implementation evidence and MUST NOT leave tasks unwired.  
+  ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-5-document-generation, SchemaID:evidence.schema.json, Gate:GATE-005, PolicyRule:Decision_Policy.md§4
 
 **Interview state and config persistence**
 
-- `InterviewState` (in `interview/state.rs`) has no `detected_gui_frameworks` field. `InterviewGuiConfig` / `InterviewOrchestratorConfig` do not yet have the new fields. Add `detected_gui_frameworks` to state and the new toggles/lists to GUI config, YAML config, and `InterviewOrchestratorConfig`; wire them in `app.rs` and in the interview completion path so test strategy and PRD/plan generation read them.
+- `InterviewState` (in `interview/state.rs`) has no `detected_gui_frameworks` field. `InterviewGuiConfig` / `InterviewOrchestratorConfig` do not yet have the new fields. Implementation MUST add `detected_gui_frameworks: Vec<String>` to `InterviewState`, add `selected_framework_tools: Vec<FrameworkToolChoice>` and `plan_custom_headless_tool: bool` to `InterviewGuiConfig` and `InterviewOrchestratorConfig`; wire them in `app.rs` (set from GUI config when building run config) and in the interview completion path (read when generating test strategy and PRD/execution plans).  
+  ContractRef: ContractName:Plans/interview-subagent-integration.md#config-wiring, ContractName:Plans/orchestrator-subagent-integration.md#config-wiring, SchemaID:evidence.schema.json, Gate:GATE-005
 
 **Test strategy JSON schema and backward compatibility**
 
-- The consumer of test-strategy.json is `TierTree::load_test_strategy` in `core/tier_node.rs`. Prefer extending the existing schema: use `test_type` values `headless_gui` and `framework_tool`, and put tool-specific instructions in `criterion` and `verification_command`. If structured tool metadata is needed, add optional fields to `TestItem` and to the loader; document backward compatibility.
+- The consumer of test-strategy.json is `TierTree::load_test_strategy` in `core/tier_node.rs`. Implementation MUST extend the existing schema: use `test_type` values `headless_gui` and `framework_tool`, and put tool-specific instructions in `criterion` and `verification_command`. If structured tool metadata is needed, add optional fields to `TestItem` and to the loader. Backward compatibility is REQUIRED: the loader MUST tolerate missing `headless_gui`/`framework_tool` items and optional tool metadata in existing test-strategy.json files (no migration of old files required; new fields are additive only).  
+  ContractRef: SchemaID:evidence.schema.json, Gate:GATE-001, PolicyRule:Decision_Policy.md§2
 
 **Verification command for custom headless tool**
 
-- Test items have a literal `verification_command`. For "run headless tool" the exact command is project-specific. Either emit a **placeholder** command plus a clear criterion (e.g. "Run the project's headless GUI tool per test-strategy.md; check evidence at `.puppet-master/evidence/gui-automation/...`") or define a **convention** (e.g. script name or binary) and document it so the generator can emit a stable command. Prefer placeholder for flexibility unless the project adopts a standard name.
+- Test items have a literal `verification_command`. For "run headless tool" the exact command is project-specific. The test strategy generator MUST emit a **deterministic convention-based command** when the project follows the documented naming convention (e.g. `cargo run --bin headless_runner` for Rust projects with a `headless_runner` binary; `npm run test:headless` when `package.json` defines it), OR mark the item as **EXAMPLE-only** with an explicit criterion-based instruction (e.g. criterion: "Run the project's headless GUI tool per test-strategy.md; verify evidence exists at `.puppet-master/evidence/gui-automation/timeline.jsonl`", verification_command: "# EXAMPLE: cargo run --bin custom_headless_tool -- --scenario=smoke"). The EXAMPLE marker signals to agents that the command is not executable as-is and must be adapted per project structure.  
+  ContractRef: SchemaID:evidence.schema.json, Gate:GATE-005, PolicyRule:Decision_Policy.md§4
 
 **Catalog: static vs runtime-mutable**
 
-- If the catalog is **static** (e.g. Rust const data), research cannot mutate it at runtime; it can only produce suggestions for maintainers. Decide whether the catalog is (A) static only, with research suggesting new entries for human curation, or (B) runtime-mutable (e.g. JSON under `.puppet-master/`). If (B), document format, precedence, and allowlist so it is not cleaned by prepare/cleanup.
+- If the catalog is **static** (e.g. Rust const data), research cannot mutate it at runtime; it can only produce suggestions for maintainers. Implementation MUST choose: (A) static-only catalog with research producing suggestions for human curation (preferred per PolicyRule:Decision_Policy.md§2: simplest safe default), OR (B) runtime-mutable catalog (e.g. JSON under `.puppet-master/`) if dynamic extension is required. If (B) is chosen, implementation MUST document format, precedence (static entries override runtime), and add catalog file path to STATE_FILES.md and cleanup allowlist so it is not removed by prepare/cleanup.  
+  ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:STATE_FILES.md, ContractName:Plans/MiscPlan.md#cleanup
 
 **Catalog location**
 
-- Recommend **interview** for the catalog so automation stays focused on running tests and the interview owns "what tools to offer." If automation later needs to branch by framework, it can depend on interview or a shared config layer.
+- Catalog MUST live in **interview** module (`src/interview/gui_tool_catalog.rs`) per PolicyRule:Decision_Policy.md§2 (no scope expansion). Automation stays focused on running tests; interview owns "what tools to offer." If automation later needs to branch by framework, it MUST depend on interview or a shared config layer (no duplication).  
+  ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
 
 **Evidence path and STATE_FILES**
 
-- Document the standard path `.puppet-master/evidence/gui-automation/...` in STATE_FILES.md (or AGENTS.md) when implementing so the target project's agents and the prompt builder have a single reference.
+- Implementation MUST document the standard evidence path `.puppet-master/evidence/gui-automation/` in STATE_FILES.md when implementing so the target project's agents and the prompt builder have a single reference. The path MUST be added to the cleanup allowlist so evidence is never removed by prepare/cleanup.  
+  ContractRef: ContractName:STATE_FILES.md, ContractName:Plans/MiscPlan.md#cleanup, SchemaID:evidence.schema.json
 
 **Doctor check**
 
-- Add a Doctor check that verifies the headless tool exists and runs when `plan_custom_headless_tool` was true (in scope for this plan; see checklist item **Doctor** in §11).
+- Implementation MUST add a Doctor check that verifies the headless tool exists and runs when `plan_custom_headless_tool` was true (in scope for this plan; see checklist item **Doctor** in §11). The check MUST be conditional: run only when the project planned a custom headless tool (see "Doctor check input" for detection contract).  
+  ContractRef: ContractName:Plans/MiscPlan.md#doctor, SchemaID:evidence.schema.json, Gate:GATE-005
 
 **YAML and config field names**
 
-- Use consistent names for new interview fields in GUI and YAML and ensure they are serialized in the same config shape used by Option B run-config build.
+- Implementation MUST use consistent names for new interview fields in GUI config, YAML config, and `InterviewOrchestratorConfig`: `detected_gui_frameworks`, `selected_framework_tools`, `plan_custom_headless_tool`. These MUST be serialized in the same config shape used by Option B run-config build so GUI, YAML, and runtime see identical values.  
+  ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#config-wiring, ContractName:Plans/WorktreeGitImprovement.md#option-b-run-config
 
 ### 12.6 Additional gaps, issues, and improvements
 
 **Doctor check input (how Doctor knows "plan_custom_headless_tool" was true)**
 
-- Doctor runs with `CheckRegistry` and receives working directory and selected platforms; it has no direct access to `gui_config.interview` or interview state. To run the headless-tool check only when the project planned a custom headless tool, Doctor must infer from disk: e.g. (1) read `test-strategy.json` and treat presence of a `headless_gui` or custom-headless test type (or a dedicated metadata flag) as the trigger, (2) have the interview write a small flag or config under `.puppet-master/` (e.g. `.puppet-master/interview/gui-testing-plan.json` with `plan_custom_headless_tool: true`), or (3) scan test-strategy.md for a "custom headless GUI tool" section. Define the contract so the Doctor check is conditional and does not run when the project never chose the custom headless option.
+- Doctor runs with `CheckRegistry` and receives working directory and selected platforms; it has no direct access to `gui_config.interview` or interview state. Implementation MUST define a deterministic contract for detecting when the project planned a custom headless tool. Preferred approach per PolicyRule:Decision_Policy.md§2 (simplest safe default): have the interview write a small flag file under `.puppet-master/interview/gui-testing-config.json` with `{ "plan_custom_headless_tool": true, ... }` when the user chooses that option; Doctor reads this file and runs the headless-tool check only when the flag is true. Fallback: read `test-strategy.json` and treat presence of a `test_type: "headless_gui"` item as the trigger. The chosen approach MUST be documented in implementation evidence.  
+  ContractRef: ContractName:Plans/MiscPlan.md#doctor, ContractName:STATE_FILES.md, SchemaID:evidence.schema.json, PolicyRule:Decision_Policy.md§2
 
 **Test strategy schema duplication**
 
-- Test strategy JSON is defined in two places: `interview/test_strategy_generator.rs` (`TestItem`, `TestStrategyJson`) and `core/tier_node.rs` (private `TestStrategyItem`, `TestStrategyJson`). The loader in `tier_node` only uses `source_phase_id` and `criterion` today. When adding `headless_gui` / `framework_tool` test types or optional tool metadata, either (1) add fields to both schemas and keep them in sync, or (2) consolidate to a single shared type (e.g. in `types` or re-export from `interview`) and have `tier_node` use it. Document the choice to avoid drift.
+- Test strategy JSON is defined in two places: `interview/test_strategy_generator.rs` (`TestItem`, `TestStrategyJson`) and `core/tier_node.rs` (private `TestStrategyItem`, `TestStrategyJson`). The loader in `tier_node` only uses `source_phase_id` and `criterion` today. When adding `headless_gui` / `framework_tool` test types or optional tool metadata, implementation MUST either (1) add fields to both schemas and keep them in sync (acceptable short-term; document sync requirement in code comments), OR (2) consolidate to a single shared type (preferred long-term: define in `src/types/` or re-export from `interview`) and have `tier_node` use it. The chosen approach MUST be documented in implementation evidence to prevent drift.  
+  ContractRef: SchemaID:evidence.schema.json, Gate:GATE-001, PolicyRule:Decision_Policy.md§2
 
 **MCP config injection timing and cwd**
 
-- Platform CLIs are spawned with a working directory (project or worktree). MCP config must be present in that cwd (or in the user's home) before the CLI starts. If Puppet Master "injects" by writing project-level files (e.g. `.cursor/mcp.json`, `.mcp.json`), it must write into the **run directory** (the cwd passed to the platform runner), which may be a worktree. Document whether injection happens once at run-config build time (project root) or at spawn time (actual cwd), and how worktrees are handled so MCP is visible to the agent.
+- Platform CLIs are spawned with a working directory (project or worktree). MCP config MUST be present in that cwd (or in the user's home) before the CLI starts. Implementation MUST document: (1) whether injection happens once at run-config build time (project root) OR at spawn time (actual cwd used by platform runner), AND (2) how worktrees are handled so MCP config is visible to the agent when running in a worktree. Preferred per PolicyRule:Decision_Policy.md§2 and Plans/WorktreeGitImprovement.md: inject at spawn time into the actual run directory (cwd) so worktree runs get correct MCP config; OR write to user-level config (`~/.cursor/mcp.json`, `~/.claude.json`, etc.) and let platform CLI discover it (avoids per-worktree injection).  
+  ContractRef: ContractName:Plans/WorktreeGitImprovement.md, PolicyRule:Decision_Policy.md§2, SchemaID:evidence.schema.json
 
 **Context7 API key storage and security**
 
-- The plan says persist API key in config and "consider storing it in a user-level or secure store if the project is shared." Implementation should decide: (1) project-only (simple but risky if repo is shared), (2) user-level override (e.g. env var or `~/.puppet-master/mcp-secrets` not in repo), or (3) both with clear precedence. If user-level exists, document it in AGENTS.md and ensure Option B run-config can read it without committing secrets.
+- The plan says persist API key in config and "consider storing it in a user-level or secure store if the project is shared." Implementation MUST choose per PolicyRule:Decision_Policy.md§2 and Invariant:INV-002 (secrets MUST NOT be committed): (1) user-level only (e.g. env var `CONTEXT7_API_KEY` or `~/.puppet-master/mcp-secrets` not in repo; preferred for shared projects), OR (2) project-level with clear `.gitignore` and warnings (acceptable for single-user projects), OR (3) both with clear precedence (env var or user-level overrides project-level). Implementation MUST document the chosen approach in AGENTS.md and ensure Option B run-config reads the API key from the chosen location without committing secrets. Implementation MUST add Context7 API key path (if file-based) to `.gitignore` and document in STATE_FILES.md.  
+  ContractRef: Invariant:INV-002, PolicyRule:Decision_Policy.md§2, ContractName:AGENTS.md, ContractName:STATE_FILES.md
 
 **Catalog detection hints and Iced**
 
-- The catalog table suggests "detection hints (e.g. Cargo.toml crate name, package.json deps)." For Iced, the in-repo headless runner lives in `src/automation/` and is not a crate name; detection may need to scan for `headless_runner` or automation modules, or for a known path. Define detection rules per framework so the interviewer reliably sets `detected_gui_frameworks` and does not miss Iced when the project uses this repo's pattern.
+- The catalog table suggests "detection hints (e.g. Cargo.toml crate name, package.json deps)." For Iced, Puppet Master's in-repo headless runner lives in `src/automation/` and is not a crate name; detection may need to scan for `headless_runner` or automation modules, or for a known path. Implementation MUST define detection rules per framework in the catalog so the interviewer reliably sets `detected_gui_frameworks`. For Iced, preferred detection: check `Cargo.toml` for `iced` dependency OR scan for `src/automation/headless_runner` or `src/automation/action_catalog.rs` (Puppet Master's pattern). The detection rules MUST be documented in the catalog module and MUST NOT miss Iced when the project uses Puppet Master's automation pattern.  
+  ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, ContractName:AGENTS.md#automation, PolicyRule:Decision_Policy.md§2
 
 **Playwright vs "web" and test strategy generator**
 
-- Today `write_test_strategy` is gated by `generate_playwright_requirements` in the orchestrator; `TestStrategyConfig` has `include_playwright` but no `include_framework_tools` or `plan_custom_headless_tool`. Extending test strategy for newtools requires (1) passing the new interview flags into the completion path so `write_test_strategy` (or equivalent) receives `selected_framework_tools` and `plan_custom_headless_tool`, and (2) extending `TestStrategyConfig` and the generator so markdown and JSON include framework tools and custom headless sections/items. The orchestrator's `InterviewOrchestratorConfig` does not yet have these fields; add them and wire from `gui_config.interview` in `app.rs` (see §2 table).
+- Today `write_test_strategy` is gated by `generate_playwright_requirements` in the orchestrator; `TestStrategyConfig` has `include_playwright` but no `include_framework_tools` or `plan_custom_headless_tool`. Extending test strategy for newtools requires: (1) pass the new interview flags (`selected_framework_tools`, `plan_custom_headless_tool`) into the completion path so `write_test_strategy` (or equivalent) receives them, AND (2) extend `TestStrategyConfig` and the generator so markdown and JSON include framework tools and custom headless sections/items. Implementation MUST add these fields to `InterviewOrchestratorConfig` and wire from `gui_config.interview` in `app.rs` (see §2 table, same three-step checklist as other interview config).  
+  ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-5-document-generation, ContractName:Plans/orchestrator-subagent-integration.md#config-wiring, SchemaID:evidence.schema.json, Gate:GATE-005
 
 **Verification command and headless tool binary name**
 
-- The plan suggests a placeholder verification command or a convention. If the project's custom headless tool is a binary (e.g. `cargo run --bin headless_runner` or a script), the test strategy could reference that convention so the generator emits a stable command when the convention is followed. Document the convention (e.g. in AGENTS.md or STATE_FILES) so both the generator and agents agree.
+- The plan specifies (§12.5 "Verification command for custom headless tool") that the test strategy generator MUST emit a deterministic convention-based command when the project follows the documented naming convention, OR mark the item as EXAMPLE-only. Implementation MUST document the convention (e.g. `cargo run --bin headless_runner` for Rust projects; `npm run test:headless` for Node projects) in AGENTS.md or STATE_FILES.md so both the generator and agents agree. When the convention is followed, the generator emits the stable command; when it is not, the generator emits an EXAMPLE marker plus a criterion-based instruction.  
+  ContractRef: ContractName:AGENTS.md, ContractName:STATE_FILES.md, SchemaID:evidence.schema.json, PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§4
 
 **Version compatibility and platform churn**
 
-- §8.2 notes that platforms change rapidly. Consider adding a Doctor check or a small "platform config" report that records the CLI version per platform (e.g. `agent --version`, `codex --version`) when Doctor runs, so support and debugging can correlate behavior with specific versions. **In scope:** implement per checklist item **Doctor (platform versions)** in §11.
+- §8.2 notes that platforms change rapidly. Implementation MUST add a Doctor check or a small "platform config" report that records the CLI version per platform (e.g. `agent --version`, `codex --version`) when Doctor runs, so support and debugging can correlate behavior with specific versions. **In scope:** implement per checklist item **Doctor (platform versions)** in §11.  
+  ContractRef: ContractName:Plans/MiscPlan.md#doctor, SchemaID:evidence.schema.json, Gate:GATE-005
 
 **Backward compatibility for existing projects**
 
-- Existing projects with test-strategy.md / test-strategy.json generated before newtools should continue to work: the loader in `tier_node` and the prompt builder should tolerate missing `headless_gui` / `framework_tool` items and optional tool metadata. No migration of old files is required; new fields are additive.
+- Existing projects with test-strategy.md / test-strategy.json generated before newtools MUST continue to work: the loader in `tier_node` and the prompt builder MUST tolerate missing `headless_gui` / `framework_tool` items and optional tool metadata. No migration of old files is required; new fields are additive only. Implementation MUST verify backward compatibility via test cases or manual verification with a pre-newtools test-strategy.json file.  
+  ContractRef: SchemaID:evidence.schema.json, Gate:GATE-001, PolicyRule:Decision_Policy.md§2
 
 **MCP Doctor check (in scope)**
 
-- Add a dedicated Doctor check that verifies configured MCP servers (e.g. Context7) are reachable or can list tools, per selected platform; complements the headless-tool check. See checklist item **Doctor (MCP)** in §11.
+- Implementation MUST add a dedicated Doctor check that verifies configured MCP servers (e.g. Context7) are reachable or can list tools, per selected platform; complements the headless-tool check. See checklist item **Doctor (MCP)** in §11.  
+  ContractRef: ContractName:Plans/MiscPlan.md#doctor, SchemaID:evidence.schema.json, Gate:GATE-005
 
 **Catalog version or last-updated (in scope)**
 
-- If the catalog is static, add a version or last-updated timestamp so agents or docs can reference "catalog as of date X" when debugging tool availability. See checklist item **Catalog version** in §11.
+- If the catalog is static, implementation MUST add a version or last-updated timestamp (e.g. `CATALOG_VERSION` const or `last_updated` field) so agents or docs can reference "catalog as of date X" when debugging tool availability. See checklist item **Catalog version** in §11.  
+  ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, SchemaID:evidence.schema.json
 
 ---
 

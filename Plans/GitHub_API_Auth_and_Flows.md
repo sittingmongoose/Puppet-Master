@@ -46,7 +46,7 @@ ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:PatchPipeline,
 ## Non-goals
 - Using the GitHub CLI for any auth, repo, fork, or PR behavior. ContractRef: SchemaID:Spec_Lock.json#github_operations
 - Storing GitHub OAuth tokens in Puppet Master's event store (`seglog`) or key/value stores (e.g., `redb`). ContractRef: PolicyRule:no_secrets_in_storage
-- Defining implementation task plans, phase lists, or execution queues.
+- Defining implementation task plans, phase lists, or execution queues. ContractRef: Plans/Progression_Gates.md
 - Defining a multi-provider Git hosting abstraction (GitHub only). ContractRef: SchemaID:Spec_Lock.json#github_operations
 
 ## SSOT references (DRY)

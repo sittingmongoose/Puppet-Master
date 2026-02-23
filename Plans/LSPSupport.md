@@ -51,6 +51,11 @@ For each feature below: **inputs** (what the client sends or user does), **outpu
 | **Per-server enable/disable** | Config: disabled flag | Server not spawned when disabled | LSP off for that server | -- | `lsp.<id>.disabled`, `lsp: false` | Same as "no server" for that language |
 | **Diagnostics for LLM/Assistant** | Current diagnostics for relevant files | Text/summary in Assistant/Interview context | Agent sees errors/warnings | No server → omit diagnostics from context | -- | Omit from context; optional hint to install |
 
+ContractRef: ContractName:Plans/LSPSupport.md
+- Feature behavior and fallback: Plans/LSPSupport.md §1.1 (this table), §5 (Integration), §8 (mitigations)
+- Chat LSP requirements: Plans/LSPSupport.md §5.1
+- GUI surface: Plans/FinalGUISpec.md §7.16 (Chat), §7.20 (Problems), §7.4.2 (Settings > LSP), §8.1 (StatusBar)
+
 This plan is the single place for LSP design and implementation notes. **LSP is MVP** -- implement with the desktop editor and Chat Window from the start (FileManager.md, assistant-chat-design.md).
 
 ---
@@ -170,6 +175,8 @@ Some file extensions are served by **multiple** LSP servers (e.g. `.ts`/`.tsx` b
 
 4. **Summary for implementer:** For each opened file, (1) resolve root per §3.5 for each server that matches the file's extension; (2) choose **one** primary server by the rules above; (3) attach **all** matching supplementary servers for diagnostics only; (4) spawn one process per (server_id, root) and route requests accordingly (primary: full LSP; supplementary: only publishDiagnostics and optionally codeAction for their diagnostics).
 
+ContractRef: ContractName:Plans/LSPSupport.md
+
 ### 3.3 ESLint and ECMAScript/JavaScript (reinforced)
 
 **ESLint** is the primary lint and diagnostics LSP for **ECMAScript/JavaScript** (and commonly used with TypeScript, Vue, etc.) when users build programs with Puppet Master. We explicitly support and reinforce ESLint so that JS/TS projects get first-class linting and quick fixes in the editor and in Assistant/Interview context.
@@ -243,6 +250,8 @@ Recommendation: use **lsp-types** plus one async LSP **client** crate that suppo
   - **Fallback when LSP unavailable:** When no server is available for a language, keep heuristic symbol search and no diagnostics. **Install hint:** Dismissible banner once per (project, server_id) per session with message "Install \<server\> for diagnostics" and link to Settings > LSP (FinalGUISpec §7.4.2).
   - **Diagnostics for LLM/Assistant:** Include current LSP diagnostics for relevant files in context fed to Assistant/Interview (assistant-chat-design §9.1 LSP support in Chat (MVP), tool context).
 
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md
+
 **Editor feature behavior (inputs, outputs, edge cases, fallback):**
 
 - **Document sync:** *Inputs:* buffer open/change/close (and optionally save); URI, version, content or contentChanges. *Outputs:* server has up-to-date view. *Success:* server acknowledges; *failure:* server crash → clear diagnostics for that server, offer Restart; transport error → log, mark server Error. *Config:* `lsp.didChangeDebounceMs`. *Fallback when LSP unavailable:* no sync; no diagnostics.
@@ -276,6 +285,8 @@ The Chat Window must **fully take advantage of LSP** so the user and the Assista
 - **Code blocks (hover + go-to-definition):** *Inputs:* code block language, symbol position; virtual or real URI. *Outputs:* tooltip on hover; open definition on click. *Success:* hover shows type/docs; click opens file at definition. *Failure:* timeout → show "Timed out", discard; no server → no hover/definition; virtual doc not supported → no LSP for that block. **Fallback when LSP unavailable:** No hover/definition in code blocks.
 - **Problems link from Chat:** *Inputs:* current diagnostics count for project/context. *Outputs:* link/badge "N problems" opening Problems panel. *Success:* panel opens filtered. *Failure:* no server → show "0 problems" or hide badge; server crash → clear count, offer Restart. **Fallback when LSP unavailable:** Hide badge or show "0 problems"; link still opens panel (empty or message "Open a file to see diagnostics.").
 - **Inline diagnostics for @'d files (optional):** *Inputs:* @'d file URIs, their diagnostics. *Outputs:* compact hint "K errors in @'d files" with click-through. *Success:* user sees hint and can jump to Problems or first error. *Failure:* no server → do not show hint. **Fallback when LSP unavailable:** Do not show hint.
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
 
 **Fallback when LSP unavailable:** When no LSP server is active for the project or language, @ symbol falls back to text-based or indexed symbol search (FileManager §12.1.4); code blocks in chat have no hover/definition; diagnostics in context are omitted. Optional one-time or dismissible hint to enable/install the LSP server.
 
@@ -319,6 +330,8 @@ Each mitigation is **actionable**: who does what, and when.
 | **didChange flood** | **Client:** Debounce `didChange` (default 100 ms after last edit; §7, §14.4). When server supports incremental sync, send only `contentChanges`; otherwise full content. **When:** On every buffer edit, start/reset debounce timer; on timer fire, send one `didChange`. |
 | **Symbol index staleness (without LSP)** | **FileManager:** §12.2.7 covers invalidation for heuristic index. **When LSP present:** Diagnostics and symbols come from server. **When LSP disabled or unavailable:** Keep regex/heuristic symbol path (FileManager §12.1.4); optional install hint. **Client:** No action for index; fallback is editor/FileManager responsibility. |
 | **TCP-only servers (e.g. Godot)** | **User:** Configures a **command** (e.g. `npx godot-lsp-stdio-bridge`) that speaks stdio to the app and TCP to the real server. **Client:** Spawn that command as the LSP server process; no change to client transport (stdio only). **Docs:** Document bridge pattern in user-facing docs; see §10. |
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md
 
 ---
 
@@ -400,6 +413,8 @@ With LSP as MVP, the following enhancements become possible. Each is marked **Re
 | **"N references" click → References panel** | Optional | `textDocument/codeLens` + `textDocument/references` | When a code lens shows "3 references", **click** opens the References panel (or inline list) with results from `textDocument/references`. |
 
 **Summary:** Implement **Find references**, **Rename symbol**, and **Format document** in the editor and (where applicable) from Chat as high-value next steps. Add **LSP diagnostics gate** and **LSP snapshot in evidence** as **optional** verification enhancements (Plans/feature-list.md §4 Verification gates). Use **documentSymbol** for Interview "structure of file" and **references/rename** for the agent lsp tool when promoted. Other items (type definition, implementation, document links, call hierarchy, folding range, selection range, document highlight) are natural editor UX improvements once the LSP client supports them.
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/feature-list.md, ContractName:Plans/Tools.md
 
 ---
 
@@ -545,6 +560,8 @@ Where each LSP feature appears in the UI. FinalGUISpec and FileManager are autho
 - **Custom LSP server validation:** When adding or editing a custom server: (1) **Command** must be non-empty (at least one string; trim whitespace). If empty, show inline error "Command is required" and disable Save/Apply. (2) **Extensions** must be non-empty (at least one extension). If empty, show "At least one file extension is required" and disable Save/Apply. (3) **Name** (id) must be unique among custom servers; if duplicate, show "Name already used" and disable Save/Apply. Saving or applying with invalid fields is not allowed.
 - **Initialization options (JSON):** When the user edits **Initialization options** as JSON (built-in or custom servers), validate on blur or on Save. If invalid JSON: show inline error (e.g. "Invalid JSON: unexpected token at line N"), do **not** persist the value, block Save and focus the field. Do not send invalid JSON to the LSP server (use last known valid value or empty object). FinalGUISpec §7.4.2.
 
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md
+
 Settings are persisted in app config (redb); optional project-level overrides. See FinalGUISpec §7.4.2 for full UX detail.
 
 ---
@@ -598,6 +615,8 @@ All LSP I/O on **async task** (tokio); results sent to **main thread** (e.g. via
 
 **Stale response policy:** When a response arrives for a document-scoped request (hover, completion, definition, references, signatureHelp), the client must check whether the document version has changed since the request was sent. Store the document version (from `DocumentState.version` for that URI) at request time; when the response is received, compare to the current `DocumentState.version`. If the current version is **greater** than the version at request time, **discard** the response (do not show tooltip, do not apply completion, do not navigate). Optionally match by request id so only the correct response is discarded. **Do not** automatically re-request; the user can repeat the action (e.g. hover again, trigger completion again) to get a fresh result. For workspace-level requests (e.g. workspace/symbol), version check is per relevant document or omit if no single document applies.
 
+ContractRef: ContractName:Plans/LSPSupport.md
+
 ### 14.4 Config schema and storage
 
 - **Keys:** `lsp.enabled` (bool, default true), `lsp.servers.<id>.disabled` (bool), `lsp.servers.<id>.command` (string array), `lsp.servers.<id>.extensions` (string array), `lsp.servers.<id>.env` (object), `lsp.servers.<id>.initialization` (object). **Decision:** Config namespace is `lsp.servers.<id>.*`; support legacy alias `lsp.<id>.disabled` (read/write maps to `lsp.servers.<id>.disabled`). Align with OpenCode schema for compatibility.
@@ -626,6 +645,8 @@ Code blocks in Chat messages (§5.1) that are not backed by a project file use *
 - **Lifecycle:** Send `textDocument/didOpen` when the virtual document is "opened" (e.g. when the user first hovers or requests definition in that block). Send `textDocument/didClose` when the block is no longer needed: when the user scrolls away from that message, when the message is collapsed, or when the Chat view is closed; or after T seconds idle (e.g. 300 s) if implementing eviction by timeout. Optionally retain a bounded set of recently used virtual docs (e.g. last 5) to avoid repeated didOpen/didClose on quick hover. Do not send `didChange` for virtual docs (blocks are immutable); if the user edits the message and the block content changes, treat as a new block (new opaque_id) and close the old virtual doc.
 - **Contract for implementer:** (1) Virtual URI never points to disk; (2) one virtual doc per code block instance (same block in UI = same opaque_id); (3) didOpen is sent when the block needs LSP (hover/definition); (4) didClose is sent when the block is evicted or the view is closed; (5) hover/definition requests for that block use the virtual URI and the same (server_id, root) as for that language.
 
+ContractRef: ContractName:Plans/LSPSupport.md
+
 ### 14.8 Registry contract (ServerSpec)
 
 The server registry is the single source of truth for which LSP servers exist and how they are started. Each entry is a **server spec** with the following contract (Rust-friendly types below are conceptual; implement using your crate's `PathBuf`, `Result`, and process handle type).
@@ -643,6 +664,8 @@ The server registry is the single source of truth for which LSP servers exist an
 **When spawn is called:** **Lazy, per (id, root).** When the client needs an LSP process for a given **(server_id, root)** (e.g. to send `didOpen` for a file that resolved to that root), it looks up whether a process for **(server_id, root)** already exists. If not, it calls **spawn(root, config)** once, stores the resulting `ProcessHandle` keyed by **(server_id, root)**, and uses that process for all documents under that root for that server. If spawn fails, the client does not retry for that (id, root) until the user retries (e.g. "Restart language server") or the config changes.
 
 **Summary for implementer:** (1) Registry is a list of ServerSpec (id, extensions, root_finder, spawn, optional init_options). (2) On file open: path → extensions → for each matching server, root_finder(path) → Option<root>; then apply §3.6 to pick primary and supplementary servers. (3) For each (id, root) that must run: if no process exists, spawn(root, config) and store handle; then send initialize and didOpen. (4) One process per (server_id, root); reuse for all documents under that root for that server.
+
+ContractRef: ContractName:Plans/LSPSupport.md
 
 ---
 
@@ -808,6 +831,8 @@ This section defines the **contract, config, failure handling, evidence schema, 
 - **Criterion injection:** When building gate criteria for a tier (e.g. in `build_gate_criteria` or where acceptance criteria are converted to criteria), if `lsp_gate.enabled` is true and the current tier boundary (phase/task/subtask) is in `lsp_gate.tier_boundaries`, add a criterion with `verification_method: "lsp"` (or `"lsp_gate"`) and pass scope/block_on (in criterion params or from shared config). No change to criterion type enum beyond adding this method.
 - **GateReport / evidence:** Use the **existing** evidence pipeline: `VerifierResult` carries `evidence` (e.g. path to snapshot file or artifact id); the gate runner aggregates per-criterion results into `GateReport`; EvidenceStore (if present) persists artifacts per existing rules. No new GateReport field required; LSP snapshot is stored as an artifact referenced by the LSP criterion's result.
 
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/feature-list.md
+
 ### 17.2 LSP snapshot in evidence
 
 #### Schema (per diagnostic entry)
@@ -850,6 +875,8 @@ Store one JSON file per snapshot (e.g. one per gate run). Each entry in the snap
 
 - **Gate runner** (via LspGateVerifier). The verifier is invoked by the gate runner when a criterion with `verification_method: "lsp"` is evaluated. The verifier (1) gets diagnostics from LSP client for scope, (2) writes snapshot JSON to `.puppet-master/evidence/lsp-snapshots/`, (3) attaches evidence to VerifierResult (path to snapshot file), (4) returns passed/failed. EvidenceStore (if wired) can also persist the path; GateReport criteria already carry per-criterion evidence from VerifierResult.
 
+ContractRef: ContractName:Plans/LSPSupport.md
+
 ### 17.3 Subagent selection from LSP
 
 - **Where in the flow:** When the orchestrator is about to **select a subagent for the next subtask** (or task), it can optionally query LSP diagnostics for **files in scope** for that subtask/task. **Decision:** Default **off**. Config key `orchestrator.lsp_subagent_bias` (bool, default false). When true, call `get_diagnostics_for_paths` and apply bias toward matching-language subagent. If any file has diagnostics (e.g. errors) from a language server X, **prefer** the subagent that matches language X (e.g. rust-analyzer → rust-engineer, pyright → python-pro).
@@ -860,6 +887,8 @@ Store one JSON file per snapshot (e.g. one per gate run). Each entry in the snap
   - Default: **changed in last iteration** for consistency with LSP gate.
 - **Documentation:** This behavior is specified in **Plans/orchestrator-subagent-integration.md** (Subagent selection from LSP) and summarized here. Implement in the same place that performs `select_for_tier`: after building tier context, optionally call LSP client `get_diagnostics_for_paths(scope_paths)`; from the returned diagnostics, derive language(s) from `source` or from file extension → server id mapping; then bias subagent selection toward matching language (e.g. add to ProjectContext or TierContext: "prefer_subagents": ["rust-engineer"] when Rust errors present).
 
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/orchestrator-subagent-integration.md
+
 ### 17.4 Failure modes (LSP gate and diagnostics)
 
 | Failure | Behavior | Evidence / reporting |
@@ -869,5 +898,7 @@ Store one JSON file per snapshot (e.g. one per gate run). Each entry in the snap
 | **No server for language** | For some files in scope there is no LSP server (e.g. unknown extension). Those files contribute **no diagnostics** (empty list). Gate passes for that file; only files with a server are checked. No special failure. |
 | **Server crash or disconnected** | Same as "LSP client not ready": skip or pass per config; do not fail the entire gate unless config says "fail when LSP unavailable". |
 | **Empty scope (changed/open/project)** | If scope resolves to zero files (e.g. no files changed), gate **passes** (nothing to check). |
+
+ContractRef: ContractName:Plans/LSPSupport.md
 
 Implement these in `LspGateVerifier` and in the LSP client's `get_diagnostics_for_paths` (timeout, not-ready check).

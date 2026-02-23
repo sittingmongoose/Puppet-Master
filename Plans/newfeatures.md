@@ -4,7 +4,7 @@
 
 **This is a PLAN DOCUMENT ONLY** -- No code changes have been made. This document contains:
 - Feature concepts and design patterns drawn from industry practice
-- How each concept could enhance RWM Puppet Master
+- How each concept could enhance Puppet Master
 - Implementation architecture and integration points
 - Phasing and dependencies
 - **Gaps and potential issues** in §23; **DRY and single sources** in §17.7
@@ -33,6 +33,8 @@ This plan captures a set of feature and architecture ideas that align with Puppe
 - **§23:** Gaps and potential issues (architecture clarity, usage/ledger alignment, recovery/sync versioning, error handling, testing, accessibility).
 
 **DRY:** All features must reuse single sources of truth: `platform_specs`, `docs/gui-widget-catalog.md`, the rules pipeline (agent-rules-context.md), usage state files (usage-feature.md), git/worktree/cleanup (MiscPlan, WorktreeGitImprovement), subagent registry, and MCP config (newtools §8). See §17.7.
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+
 
 ---
 
@@ -60,8 +62,9 @@ We already have a four-tier hierarchy (Phase → Task → Subtask → Iteration)
 
 ### 1.3 Implementation Directions
 
-- **Single source of orchestration text:** One canonical prompt (or a few variants: "minimal", "full", "interview") maintained in the repo, referenced by the execution engine when building the CLI invocation.
-- **Composition with rules pipeline:** When building the iteration or system prompt, inject content in this order: (1) **Application + project rules** from the single rules pipeline (**Plans/agent-rules-context.md**); (2) **Orchestration text** (assess → decompose → act → verify). Do not duplicate rule content in the orchestration prompt.
+- **Single source of orchestration text:** One canonical prompt (or a few variants: "minimal", "full", "interview") required to be maintained in the repo, referenced by the execution engine when building the CLI invocation.
+- **Composition with rules pipeline:** When building the iteration or system prompt, inject content in this order: (1) **Application + project rules** from the single rules pipeline (**Plans/agent-rules-context.md**); (2) **Orchestration text** (assess → decompose → act → verify). never duplicate rule content in the orchestration prompt.
+
 - **Platform compatibility:** Use only mechanisms each platform supports (e.g. `--append-system-prompt` where available; for others, prepend to the prompt or inject via a temp file). Keep this in `platform_specs` or a dedicated "orchestration" module. **Fallback when no append-system-prompt:** Prepend the combined block (rules + orchestration) to the user prompt, or use `--append-system-prompt-file` with a temp file if the platform supports file but not inline.
 - **Configurable:** Settings (e.g. in GUI config) to enable/disable or choose "minimal" vs "full" orchestration so we can A/B test or reduce token use when not needed.
 - **No new tiers:** This is about improving behavior *within* an iteration, not adding Phase/Task/Subtask/Iteration levels.
@@ -396,8 +399,10 @@ We already spawn fresh CLI processes per iteration; this is about reinforcing **
 ### 13.3 Implementation Directions
 
 - **Audit:** Review all places we read subprocess output (runners, headless, any future stream consumer). Introduce a shared "bounded buffer" type (e.g. `BoundedLines` or `BoundedStringBuffer`) and use it everywhere.
-- **Constants:** Define `MAX_STREAM_BUFFER_BYTES` and `MAX_STREAM_LINES` in **one place** (e.g. `platforms/runner` or a dedicated `limits` module, e.g. `src/limits.rs`); use them in all runners, parsers, and headless. Single source so we never drift.
-- **Docs:** In AGENTS.md or architecture docs, state that the orchestrator never embeds the CLI in-process and that all output is consumed through bounded buffers. Add a short "Resource limits" section.
+- **Constants:** Define `MAX_STREAM_BUFFER_BYTES` and `MAX_STREAM_LINES` in **one place** (e.g. `platforms/runner` or a dedicated `limits` module, e.g. `src/limits.rs`); use them in all runners, parsers, and headless. Single source required; drift should never occur.
+
+- **Docs:** In AGENTS.md or architecture docs, state that the orchestrator never embeds the CLI in-process and that all output must be consumed through bounded buffers. Add a short "Resource limits" section.
+
 
 ---
 
@@ -419,7 +424,8 @@ Structured state that benefits from querying and indexing (sessions/runs, messag
 - **Schema:** Start small: e.g. `runs` (id, project_path, platform, model, started_at, ended_at, outcome, evidence_path), `restore_points` (id, run_id, created_at, file_snapshots_json), `usage_snapshots` (id, platform, 5h_used, 7d_used, recorded_at). Add tables as features (analytics, interview) need them. These live in **redb**; analytics aggregates (e.g. 5h/7d, tool latency, error rates) are produced by **analytics scan jobs** over seglog and stored as rollups in redb for the dashboard.
 - **Rust:** Use **redb** for durable KV; one module (e.g. `db` or `persistence`) that opens the redb database, runs **migrations** (schema version tracked), and exposes functions to insert/query. Database path: e.g. under app data dir.
 - **Migrations:** Versioned schema migrations applied on startup when stored schema version is less than the app's; keep migrations additive.
-- **Required:** Per rewrite-tie-in-memo, structured storage (seglog/redb/Tantivy or equivalent) is part of the architecture, not optional; queryable history, analytics, and recovery metadata are produced from this layer.
+- **required:** Per rewrite-tie-in-memo, structured storage (seglog/redb/Tantivy or equivalent) is required as part of the architecture, not optional; queryable history, analytics, and recovery metadata must be produced from this layer.
+
 
 ---
 
@@ -564,7 +570,8 @@ Dangerous-command blocking is part of **FileSafe** (Plans/FileSafe.md): Command 
 - **Embedded terminal:** If the app embeds a terminal, use a crate that provides a PTY and a terminal widget (e.g. for Iced, a terminal widget if available, or a minimal shell view). Set `cwd` to the project path when spawning the shell. Keep one terminal instance per project or one global; document in the plan. Security: same process-isolation and sandbox considerations as the rest of the app; terminal runs in the user's environment.
 - **External terminal:** If opening an external app, resolve the user's preferred terminal (config or platform default: e.g. `$TERM`, or a list of known terminals per OS) and launch it with the working directory set (e.g. `gnome-terminal --working-directory=<path>`, `cmd /c start cmd /k cd /d <path>`, or platform-specific equivalent). Use existing path from app state; no new "project" concept.
 - **UI:** A "Terminal" or "Open terminal" entry in the main menu, Dashboard, or project context menu (e.g. right-click project → "Open terminal here"). Use existing widgets for menus and buttons; check `docs/gui-widget-catalog.md`.
-- **DRY:** Single "open terminal at path" helper (or two: embedded vs external); call from whichever UI surfaces expose (menu, dashboard, context menu). Project path comes from app state (single source of truth).
+- **DRY:** Single "open terminal at path" helper (or two: embedded vs external); call from whichever UI surfaces expose (menu, dashboard, context menu). Project path must come from app state (single source of truth).
+
 
 **Panes (full IDE-style):** Terminal (one or more tabs, cwd = project path; optional external terminal). **Problems:** diagnostics from build/linters/LSP; click to file:line. **Output:** channels for Build, Hot Reload, Tests; used by §15.16. **Debug Console:** REPL for debug session; DAP later. **Ports:** ports in use; optional Tilt/Skaffold. **Implementation:** Panel (bottom/side) with tab bar; shared project path; resize/collapse. Reuse widgets; add panel/tab components if needed. (Supersedes earlier "terminal only" scope).
 
@@ -589,7 +596,8 @@ Dangerous-command blocking is part of **FileSafe** (Plans/FileSafe.md): Command 
 6. **API hooks:** VS Code extension APIs if extending Cursor/VS Code; LSP or custom protocol for custom Rust IDE so agents can request "start dev server" / "run tests."
 
 **Implementation steps:**
-1. **Project scanners/detectors:** Scan project root for `Cargo.toml`, `package.json`, `pubspec.yaml`, Expo config; return project type and suggested dev command (`cargo watch -x run`, `npm run dev`, `expo start`, etc.). Single source; used by one-click launch and Assistant.
+1. **Project scanners/detectors:** Scan project root for `Cargo.toml`, `package.json`, `pubspec.yaml`, Expo config; return project type and suggested dev command (`cargo watch -x run`, `npm run dev`, `expo start`, etc.). Single source required; used by one-click launch and Assistant.
+
 2. **Integrate watchers:** Spawn correct process with `cwd` = project path; stream stdout/stderr to Output (and optionally Terminal); track PID for shutdown.
 3. **UI:** Toolbar/menu "Hot Reload Dev Mode" / "Start Dev Server"; status bar "Hot Reload: Active" or "Dev server: running". Use existing widgets.
 4. **Error handling:** Parse build output for errors → Problems pane; auto-rebuild where watcher supports it; on crash offer Restart and log to Output.
@@ -617,7 +625,8 @@ Dangerous-command blocking is part of **FileSafe** (Plans/FileSafe.md): Command 
 **UI:** Layout and styling are up to the app. Requirements: per-event **toggle** (on/off) and **sound selection** (dropdown or list of available sounds). Optionally a short description per event. Use existing widgets per `docs/gui-widget-catalog.md` where they fit.
 
 **Implementation:**
-- **Sound catalog:** Combined list of **built-in** sounds (bundled or from app sounds dir) and **user-loaded** sounds. Each entry: id, display name, source path or bundle ref. Format: WAV/OGG/MP3 or platform-supported; play via system sound or a small audio crate (e.g. rodio). DRY: one catalog, used by selection UI and by playback.
+- **Sound catalog:** Combined list of **built-in** sounds (bundled or from app sounds dir) and **user-loaded** sounds. Each entry: id, display name, source path or bundle ref. Format: WAV/OGG/MP3 or platform-supported; play via system sound or a small audio crate (e.g. rodio). DRY required: one catalog must be used by both selection UI and playback.
+
 - **User-loaded sounds:** User can **load their own sound files** (e.g. "Add sound" or file picker). Accepted formats: WAV, OGG, MP3 (or subset). Store user-added files in a known dir (e.g. app data `sounds/` or `.puppet-master/sounds/`); catalog includes them by path or by copied filename. Selection UI (dropdown/list) shows both built-in and user-loaded; user can remove or rename user-loaded entries if desired. Config stores selection by stable id (built-in id or path/filename for user sounds).
 - **Config:** Persist per-event enabled (bool) and selected sound id/path in app config. Load/save with rest of Settings; wire via same Option B as other config.
 - **Playback:** When an event occurs, check config for that event; if enabled, play the selected sound. Single "play_sound(sound_id_or_path)" helper; no duplicate playback logic per event.
@@ -632,7 +641,8 @@ Dangerous-command blocking is part of **FileSafe** (Plans/FileSafe.md): Command 
 **Reference: OpenCode Desktop.** [OpenCode](https://github.com/anomalyco/opencode) (anomalyco/opencode) recently released a Desktop app (Tauri shell loading a Solid.js web app from `packages/app`). Their project switcher is implemented as follows (from code exploration of `packages/app` and `packages/desktop`):
 
 - **Project bar / sidebar:** A collapsible sidebar shows a list of **projects** (each project = workspace directory). When collapsed, it becomes a narrow **bar** of project tiles (icons/names); the user can hover to expand or click a tile to switch. See `packages/app/src/pages/layout.tsx` and `packages/app/src/pages/layout/sidebar-project.tsx`.
-- **Single source of truth for "current project":** The **route/URL** encodes the active project: `/:dir/session/:id` where `dir` is the project directory path base64-encoded. So `params.dir` (from the router) is the single source of truth; all UI and data are derived from it (e.g. `currentDir() = decode64(params.dir)`).
+- **Single source of truth for "current project":** The **route/URL** encodes the active project: `/:dir/session/:id` where `dir` is the project directory path base64-encoded. So `params.dir` (from the router) should be the single source of truth; all UI and data must be derived from it (e.g. `currentDir() = decode64(params.dir)`).
+
 - **What swaps when switching:** (1) **Navigation:** `navigateToProject(directory)` updates the route (e.g. `navigate(\`/${base64Encode(root)}/session/${lastSessionId}\`)`). (2) **Per-project state:** Sync and session data are keyed by directory via `globalSync.child(directory)` -- so when the route changes, every component that reads `currentDir()` or `params.dir` gets the new project's data from the same global store. (3) **Persisted project list:** "Open" projects are kept in `layout.projects` (from `context/layout`); `layout.projects.list()`, `.open(directory)`, `.close(directory)`; this list is persisted so the sidebar shows the same set across restarts. (4) **Last session per project:** `lastProjectSession[root]` stores the last session id (and directory) per project root so switching back opens the same session. (5) **Workspace order/names:** Optional workspace (e.g. git worktree) order and display names are stored per project in the layout store.
 - **Context/layout:** `LayoutProvider` (in `packages/app/src/context/layout.tsx`) holds sidebar open/close state, panel widths, and per-project workspace toggles; the **project list** itself is maintained by a combination of persisted layout and server "recent projects" (e.g. `server.projects.last()`). So "context and settings" that swap are: everything that is **keyed by project path** (directory) -- sessions, file tree, terminal cwd, project-specific config). Global UI state (sidebar width, theme) stays; project-scoped state is selected by current project path.
 - **Desktop shell:** The desktop package (`packages/desktop`) is a Tauri app that loads the app bundle and provides platform APIs (file picker, storage, deep links). Project switching is entirely in the web app; no Tauri-specific logic for "switch project" -- it's just navigation + reactive state keyed by directory.
@@ -643,10 +653,12 @@ Dangerous-command blocking is part of **FileSafe** (Plans/FileSafe.md): Command 
 
 - **Project list:** Maintain an "open" or "recent" project list (e.g. from config, recovery, or a scanned list). Persist it so the bar shows the same set across restarts. Allow "Open project..." (folder picker) to add and "Close" to remove.
 - **Project bar or sidebar:** A visible **bar** or **sidebar** that lists these projects (by name or path). User can click one to switch. Optionally: collapsible to a narrow bar (icons or short names only); expand on hover or click. Reuse existing widgets; see `docs/gui-widget-catalog.md`.
-- **Single source of truth:** Treat **current project path** as the single source of truth in app state (e.g. `App::current_project_path: Option<PathBuf>`). All views (Dashboard, Config, Wizard, Orchestrator, Interview, Terminal) read this; when it changes, they re-load or re-key their data (sessions, config, cwd) from the new path. No second "selected project" state.
+- **Single source of truth:** Treat **current project path** as the single source of truth in app state (e.g. `App::current_project_path: Option<PathBuf>`). All views (Dashboard, Config, Wizard, Orchestrator, Interview, Terminal) must read this; when it changes, they should re-load or re-key their data (sessions, config, cwd) from the new path. never maintain a second "selected project" state.
+
 - **What swaps on switch:** (1) Set `current_project_path` to the selected project. (2) Load that project's config (e.g. `.puppet-master/config.yaml` in that path, or from a global store keyed by path). (3) Update any project-scoped state: orchestrator state, interview state, recovery snapshot reference, terminal cwd, evidence/log paths. (4) Optionally persist "last session" or "last view" per project so switching back restores the same view/session. (5) Re-run config discovery for the new path so Doctor, tier config, and run config reflect the new project.
 - **Persistence:** Persist the list of open/recent projects (and optionally last session or last view per project) in app config or recovery so the project bar and "where I was" survive restarts.
-- **DRY:** Reuse existing "current project" / project path usage everywhere; the project bar only updates that one field and triggers a re-load of project-scoped data.
+- **DRY:** must reuse existing "current project" / project path usage everywhere; the project bar should only update that one field and triggers a re-load of project-scoped data.
+
 
 **References:** OpenCode repo: [github.com/anomalyco/opencode](https://github.com/anomalyco/opencode) -- `packages/desktop` (Tauri shell), `packages/app` (Solid.js app), `packages/app/src/pages/layout.tsx` (main layout and project/sidebar logic), `packages/app/src/pages/layout/sidebar-project.tsx` (project tiles and switcher), `packages/app/src/context/layout.tsx` (layout and project list state). OpenCode Desktop is BETA; their project ID is derived from repo root (issue #5638: multiple worktrees from same repo can collide); we can use full path or a stable id per project to avoid that.
 
@@ -838,8 +850,8 @@ The following maps **existing plans** and **current code** to the features in th
 | **GUI / testing** | **newtools.md:** GUI tool discovery (gui_tool_catalog), Playwright + framework tools + custom headless, interview flow for tool choice, MCP in GUI. | §15.7 MCP (config + passthrough). MCP in newfeatures is consistent with newtools; ensure one place for MCP config and Doctor/wiring. |
 | **Cleanup / artifacts** | **MiscPlan:** Cleanup policy, allowlist, `src/cleanup/`, runner contract, agent-output dir, evidence retention and pruning, Cleanup UX. | §2 Background agents: output to `.puppet-master/agent-output/{run-id}/`. Align with MiscPlan's agent-output and evidence policy; cleanup allowlist must include that dir or exclude it by policy. |
 | **Config wiring** | **WorktreeGitImprovement.md:** Option B (build run config from GUI at run start). **Orchestrator/Interview plans:** Config must be wired (add to config type, set from gui_config, use at runtime). | All newfeatures that need config (hooks, plugins, compaction, recovery) must follow the same wiring pattern (e.g. Option B) so the orchestrator and interview actually see the settings. |
-| **HITL (human approval at tier boundaries)** | **Plans/human-in-the-loop.md:** Pause after phase/task/subtask completion for human approval; three independent toggles, off by default. **Orchestrator plan:** Tier boundaries and "Start and End Verification at Phase, Task, and Subtask" define where HITL gates run (after end verification, before advance). | §20 Human-in-the-Loop. HITL is a **setting** only; tier semantics stay in the orchestrator plan (DRY). |
-| **Application & project rules** | **Plans/agent-rules-context.md:** Application-level rules (e.g. "Always use Context7 MCP") fed to every agent everywhere; project-level rules (e.g. "Always use DRY Method") fed to every agent working on that project. Single rules pipeline; orchestrator, interview, and Assistant all use it. | N/A (fully specified in agent-rules-context.md). |
+| **HITL (human approval at tier boundaries)** | **Plans/human-in-the-loop.md:** Pause after phase/task/subtask completion for human approval; three independent toggles, off by default. **Orchestrator plan:** Tier boundaries and "Start and End Verification at Phase, Task, and Subtask" define where HITL gates run (after end verification, before advance). | §20 Human-in-the-Loop. HITL is a **setting** only; tier semantics must stay in the orchestrator plan (DRY required). |
+| **Application & project rules** | **Plans/agent-rules-context.md:** Application-level rules (e.g. "Always use Context7 MCP") must be fed to every agent everywhere; project-level rules (e.g. "Always use DRY Method") must be fed to every agent working on that project. Single rules pipeline required; orchestrator, interview, and Assistant should all use it. | N/A (fully specified in agent-rules-context.md). |
 | **Updating Puppet Master** | No existing plan; app update (version visibility, update discovery, upgrade path, config compatibility) is specified in this plan only. | §21 Updating Puppet Master. |
 | **Cross-device sync** | No existing plan. Manual export/import plus sync to BYOS (Bring Your Own Storage). Multiple storage options and custom config; support NAS, network storage, server (SMB, NFS, SFTP, WebDAV, or mounted path). Same payload for export and BYOS; no central cloud account. | §22 Cross-Device Sync. |
 | **IDE terminal, panes, hot reload** | No existing plan. Full IDE-style terminal + Problems, Output, Debug Console, Ports (§15.14); hot reload / live reload / fast iteration with project detection, one-click dev mode, Assistant-callable live tools (§15.15). **assistant-chat-design.md §17:** Assistant can call up live testing tools; spec in newfeatures §15.16. | §15.15, §15.16. |
@@ -858,7 +870,8 @@ The following maps **existing plans** and **current code** to the features in th
 - **Restore points (§8):** Snapshot after each iteration or message (file list + content); rollback = restore files + truncate state. Useful for interview (roll back phase) and orchestrator (roll back iteration). Conflict check via mtime/hash; optional branching. Can use existing evidence/state paths.
 - **Session/crash recovery (§4):** Timer snapshot (state struct) to disk; on startup offer restore. Fits our single-process model; no need for a separate recovery server.
 - **Compaction (§10):** If we add stream or token counting, compaction (monitor usage %, send compact prompt, replace history) can sit on top of FileSafe's context compiler and compaction-aware re-reads. FileSafe already has "compaction marker" and context cache; newfeatures compaction is **conversation** compaction (summarize messages), which is complementary.
-- **Plugin/skills (§6) and one-click install (§15.14):** Single plugin dir, manifest, registries (command, agent, hook, skill). Resolve at runtime. One-click = catalog + copy + refresh. Fits DRY and gui_tool_catalog pattern (newtools); consider a single "catalog" pattern for both tools and plugins.
+- **Plugin/skills (§6) and one-click install (§15.14):** Single plugin dir, manifest, registries (command, agent, hook, skill) required. Resolve at runtime. One-click = catalog + copy + refresh. must fit DRY and gui_tool_catalog pattern (newtools); consider a single "catalog" pattern for both tools and plugins.
+
 - **Background agents (§2):** Queue manager + git branch per run + output dir. Reuse `src/git/` and WorktreeGitImprovement behavior; add queue and "run on branch" semantics. Merge conflict detection via existing git/worktree logic.
 - **Keyboard and command palette (§11):** Shortcut registry and Ctrl/Cmd+P modal. Improves UX without changing execution model.
 - **Stream event viz, timers, thinking (§12, §15.5, §15.6):** Only relevant **if** we add streaming or stream-json parsing. Today we don't stream; if we do, use normalized stream (§5) and bounded buffers, then add UI for events and timers. Defer until we have a stream pipeline.
@@ -868,7 +881,8 @@ The following maps **existing plans** and **current code** to the features in th
 - **Single process:** We don't need a middle Node server or WebSocket. Rust spawns the CLI, reads stdout, and updates state. For streaming we'd add an in-Rust parser and optional live UI updates, not a separate process. Lower complexity and no port/process management.
 - **FileSafe first:** We already plan deterministic, pre-execution guards (database, file, security, prompt). Dangerous-command blocking is part of FileSafe (one blocklist, one integration point in runner).
 - **Context compilation (FileSafe Part B):** We already plan role-specific context, delta context, and compaction-aware re-reads. Newfeatures' compaction (summarize conversation) is a **different** layer (message/session compaction vs. context compilation). Keep both; they address different problems.
-- **Subagent registry and config:** Orchestrator and interview plans define the single source of truth for subagent names and config. Newfeatures' "agents" (e.g. architect, implementer) should map to **subagent names** from those plans and platform_specs, not introduce a parallel agent taxonomy.
+- **Subagent registry and config:** Orchestrator and interview plans define the single source of truth for subagent names and config. Newfeatures' "agents" (e.g. architect, implementer) must map to **subagent names** from those plans and platform_specs; never introduce a parallel agent taxonomy.
+
 - **Usage and plan detection:** We already have usage_tracker, rate_limiter, quota_manager, and plan detection from error messages. Newfeatures' "5h/7d always visible" and analytics are **UI and aggregation** on top of that; no need to reimplement tracking.
 - **Worktree and cleanup:** WorktreeGitImprovement and MiscPlan define worktree lifecycle and cleanup policy. Background agents' "git branch per run" should use the same git/worktree modules and respect cleanup allowlists and evidence retention.
 
@@ -896,17 +910,18 @@ The following maps **existing plans** and **current code** to the features in th
 
 ### 17.7 DRY and Single Source of Truth
 
-All new features must reuse these single sources; do not duplicate data or logic:
+All new features must reuse these single sources; duplication of data or logic is never permitted:
 
 | Source | Used for |
 |--------|----------|
-| **platform_specs** | All platform CLI data (binary names, flags, models, auth, capabilities). |
-| **docs/gui-widget-catalog.md** and **src/widgets/** | UI components; check before creating new widgets. |
-| **Rules pipeline** (agent-rules-context.md) | Application + project rules injected into every agent; orchestration prompt is composed *after* rules. |
-| **Usage state and usage-feature.md** | 5h/7d, ledger, analytics; usage-feature.md is the single source for Usage scope and gaps. |
-| **MiscPlan, WorktreeGitImprovement** | Cleanup, worktree, agent-output dir, config (Option B). |
-| **Subagent registry** (orchestrator/interview plans) | Subagent names and config; plugin "agents" map to subagent names. |
-| **MCP config** (newtools §8 + §15.7) | One place for MCP server list and per-platform wiring. |
+| **platform_specs** | All platform CLI data (binary names, flags, models, auth, capabilities). should be the only source. |
+| **docs/gui-widget-catalog.md** and **src/widgets/** | UI components; must check before creating new widgets. |
+| **Rules pipeline** (agent-rules-context.md) | Application + project rules injected into every agent; orchestration prompt must be composed *after* rules. |
+| **Usage state and usage-feature.md** | 5h/7d, ledger, analytics; usage-feature.md should be the single source for Usage scope and gaps. |
+| **MiscPlan, WorktreeGitImprovement** | Cleanup, worktree, agent-output dir, config (Option B). required reference. |
+| **Subagent registry** (orchestrator/interview plans) | Subagent names and config; plugin "agents" must map to subagent names. |
+| **MCP config** (newtools §8 + §15.7) | required single place for MCP server list and per-platform wiring. |
+
 
 ---
 
@@ -994,7 +1009,8 @@ The middle server (or backend) reads line-by-line, parses JSON, and forwards or 
 
 **Queue:** A **queue manager** (e.g. in Rust) holds a fixed-capacity job queue (e.g. max 4 concurrent). Each job is "run agent X with prompt Y." When a slot is free, the manager spawns the same CLI path used for the main flow (same binary, same stream-json contract) but with a distinct working dir or session id. The manager tracks each run's PID, status (queued / running / completed / failed / cancelled), and output path. Optionally persist queue state to disk so it survives app restart.
 
-**Git isolation:** Before starting a background run: (1) If working tree is dirty, run `git stash` (or equivalent). (2) Create a branch from current HEAD, e.g. `async-{role}-{id}`. (3) Spawn the CLI with `--working-dir` pointing at the repo (or a worktree checked out to that branch). (4) CLI runs and commits (or not) on that branch. When the run finishes, the app can offer: diff (e.g. `git diff main..branch`), merge (e.g. `git merge --no-commit --no-ff` to detect conflicts first), or delete branch. **Conflict detection:** Run a dry-run merge (e.g. `git merge --no-commit --no-ff` then abort); if exit code or output indicates conflicts, surface in UI and block auto-merge.
+**Git isolation:** Before starting a background run: (1) If working tree is dirty, must run `git stash` (or equivalent). (2) required to create a branch from current HEAD, e.g. `async-{role}-{id}`. (3) should spawn the CLI with `--working-dir` pointing at the repo (or a worktree checked out to that branch). (4) CLI runs and commits (or not) on that branch. When the run finishes, the app can offer: diff (e.g. `git diff main..branch`), merge (e.g. `git merge --no-commit --no-ff` to detect conflicts first), or delete branch. **Conflict detection:** must run a dry-run merge (e.g. `git merge --no-commit --no-ff` then abort); if exit code or output indicates conflicts, surface in UI and never auto-merge.
+
 
 **Output isolation:** Each run writes stdout/stderr and any artifacts to a dedicated directory (e.g. `.puppet-master/agent-output/{run-id}/`). The main session's stream and state are separate; the UI shows background runs in a separate panel and does not mix their output with the main conversation.
 
@@ -1120,7 +1136,7 @@ The middle server (or backend) reads line-by-line, parses JSON, and forwards or 
 | **Stream format** (§19.3) | Newline-delimited JSON with `type` and type-specific fields; same schema for all providers via shim. |
 | **Hooks / FileSafe** (§19.6) | Event enum; run scripts with JSON in/out and timeout; dangerous-command blocking via FileSafe blocklist. |
 | **One-click install** (§19.7) | Catalog + install routine that copies files and refreshes registries; no code required from user. |
-| **Background agents** (§19.8) | Queue manager with fixed concurrency; git branch per run (stash, create branch, run CLI, diff/merge); output dir per run; conflict detection via dry-run merge. |
+| **Background agents** (§19.8) | Queue manager with fixed concurrency required; git branch per run required (stash, create branch, run CLI, diff/merge); output dir per run required; conflict detection must use dry-run merge. |
 | **Crash recovery** (§19.9) | Timer writes snapshot (state struct) to disk; on startup check for recent snapshot and offer restore; optional panic hook; cleanup old snapshots. |
 | **Plugins / skills** (§19.10) | Scan plugin dir, parse manifests, build registries (command, agent, hook, skill); resolve at runtime; commands/agents = markdown, hooks = scripts, skills = JSON. |
 | **Analytics** (§19.11) | Data from redb rollups or scan of run/evidence metadata; aggregate by project, model, date; query on view open or filter change; export = serialize to CSV/JSON. |
@@ -1154,7 +1170,8 @@ The middle server (or backend) reads line-by-line, parses JSON, and forwards or 
 **Relevance:** Without an update story, users rely on ad-hoc methods (re-download, `cargo install`, package manager) and may miss security or feature releases. A minimal in-app story (version shown, optional "Check for updates" / release notes link) improves trust and upgrade rates.
 
 **Scope (planning only):**
-- **Version visibility:** Show application version in the UI (e.g. About dialog, Settings footer, or Help). Single source of truth (e.g. from Cargo.toml or build-time env) so it's consistent everywhere.
+- **Version visibility:** Show application version in the UI (e.g. About dialog, Settings footer, or Help). Single source of truth required (e.g. from Cargo.toml or build-time env) so it should be consistent everywhere.
+
 - **Update discovery:** Optionally check for a newer version (e.g. against a stable URL or GitHub Releases) and show a non-intrusive notice (e.g. "Puppet Master X.Y.Z is available") with a link to release notes or download. No auto-download or auto-install in this plan; user initiates the upgrade.
 - **Upgrade path:** Document or link to how to upgrade per distribution: e.g. re-run installer, `cargo install --force`, or system package manager (`apt`, `brew`, etc.). If we ship a package (deb, rpm, AppImage), document update procedure for that package.
 - **Config and state across versions:** When the app version changes, config and state files (e.g. `.puppet-master/config.yaml`, GUI state) may need compatibility handling. Prefer backward compatibility (new version reads old config); if a breaking config change is required, document migration or provide a one-time migration step. Do not delete or overwrite user config on upgrade without explicit user action or a clear migration path.
@@ -1163,7 +1180,8 @@ The middle server (or backend) reads line-by-line, parses JSON, and forwards or 
 - **Version:** Read version at build time (e.g. `env!("CARGO_PKG_VERSION")`) and expose it in one place; About/Settings read from there.
 - **Check for updates:** Optional background or on-demand request to a well-known URL (or GitHub Releases API); compare with current version; if newer, show a small banner or Settings message with "What's new" link. Respect user preference (e.g. "Check for updates" off, or only on manual "Check now").
 - **Docs:** README or docs section "Updating Puppet Master" that describes upgrade per install method (cargo, package, installer). Link from in-app "New version available" message when shown.
-- **DRY:** Single version constant or module; no hardcoded version strings in multiple views.
+- **DRY:** Single version constant or module required; hardcoded version strings in multiple views never permitted.
+
 
 **Non-goals for this section:** Auto-update (download and replace binary without user confirmation), in-app package management for plugins (that's §6 / §15.14). This section is only about **the application's own** update story.
 
@@ -1211,7 +1229,8 @@ The middle server (or backend) reads line-by-line, parses JSON, and forwards or 
 
 ## 23. Gaps and Potential Issues
 
-This section consolidates **gaps** (missing or underspecified areas) and **potential issues** (risks or ambiguities) so implementers can address them. Keep DRY in mind: resolve gaps by referencing or extending single sources (usage-feature.md, FileSafe, agent-rules-context, etc.) rather than duplicating.
+This section consolidates **gaps** (missing or underspecified areas) and **potential issues** (risks or ambiguities) so implementers can address them. DRY required: resolve gaps by referencing or extending single sources (usage-feature.md, FileSafe, agent-rules-context, etc.); duplication is never permitted.
+
 
 ### 23.1 Architecture Clarity
 

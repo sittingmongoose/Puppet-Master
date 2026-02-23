@@ -128,6 +128,8 @@ The project follows the **DRY Method** (AGENTS.md): reusable code is tagged, and
 - **No duplication:** Runners implement the runner contract by **delegating** to the shared cleanup module (e.g. `crate::cleanup::prepare_working_directory(path).await`). The trait can provide default implementations that call the shared module so no runner duplicates logic.
 - **Widget catalog:** If any new UI is added (e.g. "Clean workspace" button, cleanup config toggles), check the widget catalog first and use existing widgets; run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` after changes.
 
+ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
+
 **Module placement (see §4.7):** New module `src/cleanup/` with the single implementation; allowlist and git-clean helper live there. Declare `pub mod cleanup` in the parent (e.g. `src/lib.rs` or the crate root that declares `mod git`).
 
 ### 3.6 Gitignore and security (no secrets to GitHub)
@@ -162,6 +164,8 @@ Puppet Master must **respect .gitignore** in all git operations and **never expo
 - Use only `git add -A` (or explicit paths that are not sensitive); never `git add -f` for paths that could be secrets.
 - Extend the cleanup allowlist with `.gitignore` and sensitive patterns; implement in the same DRY:DATA source as other excludes.
 - Do not log, commit, or include in evidence or PR content: tokens, keys, or credential file contents.
+
+ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
 
 ---
 
@@ -214,6 +218,8 @@ All code paths that invoke `runner.execute()` (or equivalent) should use prepare
 - **Option B (wrapper):** Introduce a single helper (e.g. `run_with_cleanup(runner, request) -> Result<ExecutionResult>`) that does: prepare(work_dir) → execute(request) → cleanup(work_dir), and use it from the orchestrator, execution_engine, interview, start_chain, and (optionally) execute_ai_turn. All call sites then go through the wrapper and get consistent behavior; config (e.g. "skip cleanup for interview") can be applied inside the wrapper.
 
 **Recommendation:** Use **Option B** so prepare/cleanup semantics live in one place and call sites (orchestrator, interviewer, start chain, conversation) are updated to call the wrapper instead of `runner.execute()` directly. The wrapper can read config to skip prepare/cleanup when desired (e.g. for one-off conversation from an arbitrary CWD).
+
+ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
 
 ### 4.7 DRY: Module layout, naming, and tagging
 
@@ -460,8 +466,8 @@ Platform CLIs (Cursor, Codex, Claude Code, Gemini, Copilot) support **hooks**, *
 
 **Current stance**
 
-- **Prepare and cleanup:** We implement prepare_working_directory and cleanup_after_execution **inside Puppet Master** and invoke them via `run_with_cleanup` before/after each `runner.execute()`. We do **not** rely on platform-specific hooks or scripts to perform workspace cleanup, so behavior is consistent across all five platforms and does not require the user to install or configure per-platform hooks.
-- **Subagents and plan mode:** Subagent names and plan-mode flags are passed in the **prompt or CLI args** (per platform_specs and runners). We do not require Cursor plugins or Claude hooks to define subagents; the orchestrator and interview plans define how we invoke each platform.
+- **Prepare and cleanup:** Puppet Master implements prepare_working_directory and cleanup_after_execution **internally** and invokes them via `run_with_cleanup` before/after each `runner.execute()`. Puppet Master does **not** rely on platform-specific hooks or scripts to perform workspace cleanup, so behavior is consistent across all five platforms and does not require the user to install or configure per-platform hooks.
+- **Subagents and plan mode:** Subagent names and plan-mode flags are passed in the **prompt or CLI args** (per platform_specs and runners). Puppet Master does not require Cursor plugins or Claude hooks to define subagents; the orchestrator and interview plans define how Puppet Master invokes each platform.
 
 **Ways we might leverage CLI capabilities (optional / future)**
 
@@ -472,7 +478,7 @@ Platform CLIs (Cursor, Codex, Claude Code, Gemini, Copilot) support **hooks**, *
 
 **Summary**
 
-- Implement prepare/cleanup in Puppet Master; do not depend on platform hooks or plugins for that.
+- Puppet Master implements prepare/cleanup internally; does not depend on platform hooks or plugins for workspace cleanup.
 - Optionally document or provide a skill/README that tells agents to use `.puppet-master/agent-output/` and to avoid leaving untracked files.
 - For full platform capabilities (hooks, plugins, skills, subagent definitions), see **Plans/orchestrator-subagent-integration.md** "Platform-Specific Capabilities & Extensions"; keep platform_specs and AGENTS.md aligned with CLI release notes.
 
@@ -513,7 +519,7 @@ A dedicated **GUI screen** is required to allow users to **change and customize 
 - User can open **Config → Shortcuts** (or Config → Advanced → Shortcuts) and see a list of all actions and their current bindings.
 - User can change a binding via "Change" or double-click; after recording a new key combo, binding updates and persists; if the key is already bound to another action, show error (see §7.11) and do not save.
 - User can reset one action to default or reset all to defaults; persisted overrides are updated and key map is rebuilt.
-- Shortcut list reflects the same key map used by the app (composer, prompt fields); changes take effect immediately after save.
+- Shortcut list reflects the same key map used by Puppet Master (composer, prompt fields); changes take effect immediately after save.
 
 **Data flow:**
 
@@ -571,6 +577,8 @@ A **GUI screen** is required to let users **manage Agent Skills**: discover, lis
 - List reflects discovery path order and deduplication (first-wins); source (project vs global) is visible; selectable labels allow copy of name/path.
 - Invalid frontmatter, missing SKILL.md, or permission/config write failure surface as clear errors (toast or inline) without corrupting state.
 
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
+
 **UI location:**
 
 - **Tab/section:** Config → Advanced → "Skills", or Config → dedicated "Skills" tab. All Skills features (list, add, edit, remove, permissions, bulk permission, sort/filter, preview, validate all) live in this same tab/section.
@@ -620,9 +628,11 @@ Backend components required so the Desktop Shortcuts GUI (§7.7) and in-app key 
 
 **Acceptance criteria (backend):**
 
-- `ShortcutAction` and `KeyBinding` types exist; `default_shortcuts()` returns the single source of truth; `build_key_map(defaults, overrides)` merges and returns a KeyMap used by the app.
+- `ShortcutAction` and `KeyBinding` types exist; `default_shortcuts()` returns the single source of truth; `build_key_map(defaults, overrides)` merges and returns a KeyMap used by Puppet Master.
 - GuiConfig has a `shortcuts` (or `keyboard_shortcuts`) field; only overrides are stored; load/save use the same config path as the rest of GuiConfig.
 - On app startup: load GuiConfig; on failure or invalid shortcuts section, fall back to empty overrides and show toast (§7.11); then build key map and install into key event handling.
+
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
 
 **Data flow (config field names, when key map is rebuilt):**
 
@@ -669,6 +679,8 @@ Backend components required so the Agent Skills GUI (§7.8) and skill-aware flow
 **Integration with runners and prompts:**
 
 - When building iteration context or prompt for a platform that supports skills (see platform_specs and orchestrator plan), include allowed skill names and paths (or the loaded content) so the CLI/SDK can load them (e.g. via `skill` tool or equivalent). Backend exposes: `list_skills_for_agent(project_root, permissions) -> Vec<SkillInfo>` that returns only allowed skills with their paths (and optionally loaded content). Tag **DRY:FN:list_skills_for_agent**.
+
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
 
 **Discovery and platform_specs:**
 
@@ -809,7 +821,7 @@ Required. Use existing widgets; tag new helpers with DRY.
 
 **Implementation plan readiness**
 
-- **Ready:** The spec (§7.7-§7.10) plus this subsection (§7.11) and checklists (§8.8, §8.9) are **sufficient for an implementer to produce a detailed implementation plan**. All open decisions above are resolved or scoped (with "defer" or "v1 preference" where needed).
+- **Ready:** The spec (§7.7-§7.10) plus this subsection (§7.11) and checklists (§8.8, §8.9) are **sufficient for an implementer to produce a detailed implementation plan** for Puppet Master. All open decisions above are resolved or scoped (with "defer" or "v1 preference" where needed).
 
 **Implementation plan checklist** (for implementer before drafting the implementation plan)
 
@@ -983,6 +995,8 @@ The following gaps or issues should be resolved during implementation or explici
 - `git clean -fd -e <pattern>` can exclude paths by pattern; multiple `-e` flags are allowed. The plan says "exclude list so `.puppet-master/` and allowlisted paths are never touched" but does not specify exact patterns (e.g. `-e '.puppet-master'`, `-e 'progress.txt'`, `-e 'AGENTS.md'`). Git's `-e` is a pattern (e.g. ignore pattern), not necessarily a path.
 - **Recommendation:** Implement the single helper **DRY:FN:run_git_clean_with_excludes** (§4.7) that builds the command from the allowlist (DRY:DATA). Document the exact patterns there (or in `CLEANUP_EXCLUDE_PATTERNS`); test that excluded paths are never removed.
 
+ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
+
 ### 9.1.7 Evidence retention: definition of "run"
 
 - Section 6 uses **evidence.retain_last_runs** without defining what counts as a "run" (per iteration, per subtask, per task, global). Without a clear definition, pruning may remove evidence that is still relevant for the current tier or for reporting.
@@ -1018,6 +1032,8 @@ The following gaps or issues should be resolved during implementation or explici
 - **Current plan:** §4.3 says cleanup_after_execution "Run workspace cleanup in work_dir per policy (e.g. git clean -fd)". The call flow is: **run_with_cleanup** does prepare → execute → **cleanup** (immediately after the runner returns). The **orchestrator** then runs **commit_tier_progress** (add_all, commit) only after the iteration result is processed. So cleanup runs **before** the commit.
 - **Problem:** If cleanup_after_execution runs `git clean -fd`, it would remove **all untracked files** in the workspace, including **new files the agent just created** (e.g. new source files, docs). Those files would be deleted before the orchestrator can stage and commit them. Result: loss of iteration output.
 - **Fix:** **Do not run broad "git clean -fd" (untracked files) in cleanup_after_execution.** In that step, only: (1) kill/terminate process if still running, (2) clean **runner temp files** (e.g. context copy temp files). **Full workspace untracked cleanup** (git clean -fd with excludes) should run only in **prepare_working_directory** (before the run), so we remove the *previous* run's cruft, not the current run's output. Optionally in cleanup_after_execution we can remove only **known build-artifact dirs** (e.g. `target/`) if config says so, but never untracked source or docs. Document this in §4.2 and §4.3 and in the implementation.
+
+ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
 
 ### 9.1.14 Interview and orchestrator plan output locations
 
@@ -1201,6 +1217,8 @@ The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines **C
 
 **Implementation:** Extend `src/cleanup/workspace.rs` to create cleanup crews, coordinate cleanup operations, and disband crews after cleanup completes.
 
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
+
 **Integration with cleanup module:**
 
 In `src/cleanup/workspace.rs`, extend cleanup operations:
@@ -1342,6 +1360,8 @@ The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines lif
 - **Load cross-session memory:** Load prior cleanup patterns (e.g., which dirs were cleaned, which were preserved) from `.puppet-master/memory/` and inject into cleanup context.
 - **Validate workspace state:** Check workspace is valid (git repo, permissions) before cleanup.
 
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
+
 **AfterCleanup hook responsibilities:**
 
 - **Validate cleanup result:** Check that cleanup succeeded (e.g., files removed, allowlisted paths preserved).
@@ -1480,6 +1500,8 @@ pub struct CleanupResult {
    - If max retries reached, escalate to user or skip problematic files.
 5. If Critical: escalate to user immediately.
 6. If Minor/Info: log and proceed.
+
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
 
 **Integration:** Extend cleanup module to use remediation loop pattern from orchestrator plan. Wrap cleanup operations in remediation-aware handlers that detect recoverable errors and apply fixes.
 
