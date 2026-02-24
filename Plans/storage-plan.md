@@ -348,7 +348,15 @@ Chat persistence and search are implemented on top of this storage stack; the ch
 - **Seglog:** If `storage/seglog/` is empty, writer creates the first segment on first append; projectors reading checkpoint "none" start from offset 0 and see no events until the first append.
 - **redb:** On first open, if no `schema_version` (or missing `meta` namespace), run initial migration that creates all namespaces and sets `schema_version` to 1. redb is created on first open if the file does not exist (standard redb behavior).
 - **Projectors:** When checkpoint is missing, treat as "start from beginning of seglog" (first segment, offset 0); when seglog is empty, no work.
-- **Analytics scan:** When scan checkpoint is missing, first run scans from a defined point (e.g. last 24h of seglog or from seq 0); document the choice in implementation.
+**Analytics Scan When Checkpoint Missing (Resolved):**
+
+When the analytics scan checkpoint is missing (first run or after reset):
+- Scan from **seq 0** (beginning of seglog).
+- Rationale: ensures no data is missed. The seglog is append-only, so a full scan is safe and idempotent.
+- For large seglogs, the scan is paginated: process **1000 events per batch**, yielding between batches to avoid blocking the event loop.
+- After the scan completes, write the checkpoint to redb (`analytics:scan_checkpoint` → last processed seq).
+- Subsequent runs resume from the checkpoint.
+- Config: `analytics.scan_batch_size`, default `1000`.
 
 ### 8.5 Testing strategy
 

@@ -97,7 +97,10 @@ Run **multiple agent runs in parallel** (e.g. up to N concurrent) with:
 - **Output directory:** e.g. `.puppet-master/agent-output/{run-id}/` for logs and any artifacts; link from queue item so UI can "View output".
 - **GUI:** A small panel or view (e.g. "Background runs") listing queued and running jobs, with cancel and "view diff" / "merge" actions. Could live in dashboard or a dedicated view.
 - **Platform abstraction:** Reuse existing platform runners; the queue only decides *when* to call the same spawn path we use for the main flow.
-- **Main-flow vs background-flow interaction:** Define behavior when the user starts a **main** orchestrator or interview run while a **background** run is active on the same project: e.g. (a) block main run until background completes or is cancelled, (b) allow both with a warning that files may conflict, or (c) queue main run. Document the chosen policy; align with queue manager and git isolation. See §23.4 for restore/rollback interaction with background agents.
+- **Main run vs background run on same project (Resolved):**
+  - **Allow both with warning:** When the user starts a main run while a background run is active on the same project, show: "A background run is active. Starting a main run may cause file conflicts. [Proceed] [Cancel]."
+  - If the user proceeds: both runs execute. If a file conflict is detected (same file modified by both), the main run pauses and surfaces a CtA: "File conflict: [filename] was modified by both runs. [Keep main's version] [Keep background's version] [Diff]."
+  - Conflict detection uses content hash (SHA-256) comparison at write time.
 - **Queue state persistence:** If queue state survives app restart, define format and path (e.g. `.puppet-master/queue/state.json` or redb) and how to recover PIDs (e.g. treat as failed if process no longer exists).
 - **Git and cleanup:** Reuse **WorktreeGitImprovement.md** (branch create/merge/cleanup) and **MiscPlan** (cleanup allowlist, `run_with_cleanup`). Ensure `.puppet-master/agent-output/{run-id}/` is in cleanup allowlist or explicitly excluded by policy; branch naming (e.g. `async-{role}-{id}`) should follow WorktreeGitImprovement branch sanitization.
 
@@ -306,7 +309,14 @@ Events could include: before sending user message, before tool use, after tool u
 ### 9.3 Implementation Directions
 
 - **Event enum:** Define a fixed set of events (e.g. `UserMessageSubmit`, `PreToolUse`, `PostToolUse`, `ContextWarning`, `CompactionTrigger`, `SessionStart`, `SessionEnd`, `Error`). Document payload per event.
-- **Hook runner (Rust):** When an event fires, load hook list for that event (from config + plugins), run each hook (script or inline). Scripts can be shell, or we accept a small JSON in/out protocol (stdin: payload, stdout: `{"action":"continue"|"block"|"modify", "payload":...}`). **Timeout:** Default e.g. 5s per hook; make timeout configurable (per hook or global) so slow scripts do not block indefinitely; on timeout, treat as continue (or configurable: continue vs block).
+- **Hook runner (Rust):** When an event fires, load hook list for that event (from config + plugins), run each hook (script or inline). Scripts can be shell, or we accept a small JSON in/out protocol (stdin: payload, stdout: `{"action":"continue"|"block"|"modify", "payload":...}`).
+
+**Hook Timeout (Resolved):**
+- Default timeout: **5 seconds** per hook invocation.
+- Config: `hooks.timeout_ms`, default `5000`. Per-hook override: `hooks.{hook_name}.timeout_ms`.
+- On timeout: **continue** (hook invocation is skipped, warning logged as `hook.timeout` seglog event).
+- Configurable behavior: `hooks.on_timeout` — `"continue"` (default) or `"block"` (halt execution until hook responds or is manually dismissed).
+- Rationale: hooks are advisory; they should not block the critical path by default. Users who need blocking hooks can opt in.
 - **Dangerous-command blocking:** Dangerous-command blocking is part of FileSafe (Plans/FileSafe.md): FileSafe already blocks destructive commands in `BaseRunner::execute_command()` and exposes a Command blocklist. PreToolUse hooks can call into FileSafe's blocklist so we have one extension point (FileSafe for core, hooks for optional/user rules). See §17.3-17.4.
 - **Wiring:** In the execution path (e.g. in runner or orchestrator), call the hook runner at the right points. Start with 2-3 events (e.g. `UserMessageSubmit`, `PreToolUse`) and add more as needed.
 - **Config:** Hooks listed in config (or in plugin manifests); GUI settings page to add/remove/reorder hooks per event.
@@ -385,7 +395,7 @@ During a run, the UI shows **live stream events** in a compact form (e.g. a row 
 
 - **Dependency on §5:** Stream event visualization and thinking display apply **only when** we have a normalized stream (§5) and in-Rust stream parsing; defer until we have that pipeline. See §17.5.
 - **Event types:** Align with normalized stream: e.g. `read`, `edit`, `bash`, `tool_call`, `tool_result`, `thinking`, `message`. Each has an icon and optional short label.
-- **UI component:** A horizontal strip or list of recent events (e.g. last 10-20), with icons; maybe a sliding window (e.g. last 5 seconds) so the strip doesn't grow unbounded. Place it near the run status (e.g. in dashboard or run detail view). **Accessibility:** Provide alternative text or a short summary for the event strip (e.g. "Last activity: Bash, Read, Thinking") so screen reader users get the same information; see §23.11.
+- **UI component:** Event strip: last **15 events** displayed. No sliding time window (event count is simpler and more predictable). Config: `ui.event_strip.max_events`, default `15`. Place it near the run status (e.g. in dashboard or run detail view). **Accessibility:** Provide alternative text or a short summary for the event strip (e.g. "Last activity: Bash, Read, Thinking") so screen reader users get the same information; see §23.11.
 - **Thinking/reasoning:** If the normalized stream has `thinking_delta` or `reasoning` events, append to a buffer and display in a read-only area (e.g. collapsible "Thinking" section below the main log). Sanitize and limit length (e.g. last 4k chars) to avoid UI lag.
 - **Platform support:** Document which platforms stream events and which expose thinking; for others, show "Running..." or only final result. No fake events.
 
@@ -435,7 +445,7 @@ Structured state that benefits from querying and indexing (sessions/runs, messag
 - **Schema:** Start small: e.g. `runs` (id, project_path, platform, model, started_at, ended_at, outcome, evidence_path), `restore_points` (id, run_id, created_at, file_snapshots_json), `usage_snapshots` (id, platform, 5h_used, 7d_used, recorded_at). Add tables as features (analytics, interview) need them. These live in **redb**; analytics aggregates (e.g. 5h/7d, tool latency, error rates) are produced by **analytics scan jobs** over seglog and stored as rollups in redb for the dashboard.
 - **Rust:** Use **redb** for durable KV; one module (e.g. `db` or `persistence`) that opens the redb database, runs **migrations** (schema version tracked), and exposes functions to insert/query. Database path: e.g. under app data dir.
 - **Migrations:** Versioned schema migrations applied on startup when stored schema version is less than the app's; keep migrations additive.
-- **required:** Per rewrite-tie-in-memo, structured storage (seglog/redb/Tantivy or equivalent) is required as part of the architecture, not optional; queryable history, analytics, and recovery metadata must be produced from this layer.
+- **required:** Per rewrite-tie-in-memo, structured storage (seglog + redb + Tantivy) is required as part of the architecture, not optional; queryable history, analytics, and recovery metadata must be produced from this layer.
 
 
 ---
@@ -526,7 +536,7 @@ Dangerous-command blocking is part of **FileSafe** (Plans/FileSafe.md): Command 
 
 **Relevance:** Extends persistent rate limit (§3) and stream visualization (§12); requires protocol normalization (§5) to have `usage` or token events in the stream.
 
-**Implementation:** In the stream consumer, on `usage` or token-delta event, update in-memory session stats and emit a UI message (e.g. "UsageUpdated"). GUI: the usage widget (header or run view) subscribes and redraws. Throttle updates (e.g. max once per 500 ms) to avoid UI thrash. Document which platforms send mid-stream usage; others show final-only.
+**Implementation:** In the stream consumer, on `usage` or token-delta event, update in-memory session stats and emit a UI message (e.g. "UsageUpdated"). GUI: the usage widget (header or run view) subscribes and redraws. Usage updates throttled to **max once per 500ms**. Config: `ui.usage.throttle_ms`, default `500`. Document which platforms send mid-stream usage; others show final-only.
 
 ---
 
@@ -578,7 +588,15 @@ Dangerous-command blocking is part of **FileSafe** (Plans/FileSafe.md): Command 
 
 **Implementation:**
 - **Project path:** Use the same "current project" / workspace path the app already uses (from project selection, orchestrator run, or interview). If no project is selected, disable the action or open in a sensible default (e.g. app data dir or prompt to select a project).
-- **Embedded terminal:** If the app embeds a terminal, use a crate that provides a PTY and a terminal widget (e.g. for Iced, a terminal widget if available, or a minimal shell view). Set `cwd` to the project path when spawning the shell. Keep one terminal instance per project or one global; document in the plan. Security: same process-isolation and sandbox considerations as the rest of the app; terminal runs in the user's environment.
+- **Embedded terminal:** If the app embeds a terminal, use a crate that provides a PTY and a terminal widget (e.g. for Iced, a terminal widget if available, or a minimal shell view). Set `cwd` to the project path when spawning the shell.
+
+**Terminal Instance Policy (Resolved):**
+- **One terminal instance per project.** When the active project changes, the terminal's cwd switches to the new project's root.
+- A **global terminal** is also available via the command palette (`/terminal-global`) — its cwd is the Puppet Master data directory.
+- Output channels (Build, Hot Reload, Tests) are separate tabs within the project terminal, not separate terminal instances.
+- Config: `terminal.scope` — `"project"` (default) or `"global"` (single terminal for all projects, cwd is last active project).
+
+Security: same process-isolation and sandbox considerations as the rest of the app; terminal runs in the user's environment.
 - **External terminal:** If opening an external app, resolve the user's preferred terminal (config or platform default: e.g. `$TERM`, or a list of known terminals per OS) and launch it with the working directory set (e.g. `gnome-terminal --working-directory=<path>`, `cmd /c start cmd /k cd /d <path>`, or platform-specific equivalent). Use existing path from app state; no new "project" concept.
 - **UI:** A "Terminal" or "Open terminal" entry in the main menu, Dashboard, or project context menu (e.g. right-click project → "Open terminal here"). Use existing widgets for menus and buttons; check `docs/gui-widget-catalog.md`.
 - **DRY:** Single "open terminal at path" helper (or two: embedded vs external); call from whichever UI surfaces expose (menu, dashboard, context menu). Project path must come from app state (single source of truth).
@@ -658,7 +676,7 @@ Dangerous-command blocking is part of **FileSafe** (Plans/FileSafe.md): Command 
 - **Context/layout:** `LayoutProvider` (in `packages/app/src/context/layout.tsx`) holds sidebar open/close state, panel widths, and per-project workspace toggles; the **project list** itself is maintained by a combination of persisted layout and server "recent projects" (e.g. `server.projects.last()`). So "context and settings" that swap are: everything that is **keyed by project path** (directory) -- sessions, file tree, terminal cwd, project-specific config). Global UI state (sidebar width, theme) stays; project-scoped state is selected by current project path.
 - **Desktop shell:** The desktop package (`packages/desktop`) is a Tauri app that loads the app bundle and provides platform APIs (file picker, storage, deep links). Project switching is entirely in the web app; no Tauri-specific logic for "switch project" -- it's just navigation + reactive state keyed by directory.
 
-**Relevance for Puppet Master:** We already have a "current project" in app state (Dashboard, orchestrator, interview, terminal all use a project path). Adding a **project bar** (or equivalent) that lists recent/open projects and sets the current project on click would give the same "instant switch" feel; all views that depend on the current project path would then show the new project's context. Config can be **per-project** (e.g. `.puppet-master/config.yaml` per project directory) or **global with project overrides**; either way, switching the active project must cause the app to load that project's config and state.
+**Relevance for Puppet Master:** We already have a "current project" in app state (Dashboard, orchestrator, interview, terminal all use a project path). Adding a **project bar** (left sidebar, collapsed strip) that lists recent/open projects and sets the current project on click would give the same "instant switch" feel; all views that depend on the current project path would then show the new project's context. Config can be **per-project** (e.g. `.puppet-master/config.yaml` per project directory) or **global with project overrides**; either way, switching the active project must cause the app to load that project's config and state.
 
 **Implementation (Puppet Master):**
 
@@ -677,11 +695,17 @@ Dangerous-command blocking is part of **FileSafe** (Plans/FileSafe.md): Command 
 
 **Database / structured storage (§14, rewrite):** With file-based state, all paths under each project's `.puppet-master/`. With seglog + redb + Tantivy (rewrite-tie-in-memo): **project_path is a first-class key** in events and projections; runs, restore points, usage rollups are per-project or keyed by project_path. Switching project = change `current_project_path`; all reads for "current" data use the new path; no migration of data. Analytics "by project" already groups by project_path.
 
-**GUI (expanded):** **Placement:** Left sidebar (collapsible to narrow bar), top bar, or title/status dropdown; choose one as default. **Collapsible:** Persist sidebar open/close in layout config (global). **Per tile:** Name (basename or display name), optional icon; click = switch; context menu: Rename, Close. **"Open project...":** Folder picker; canonicalize path; deduplicate if already in list. **Empty state:** "No project open" + prominent "Open project...". **Keyboard:** Optional shortcut (e.g. Cmd/Ctrl+O) or project switcher in command palette (§11); optional Cmd+1-9 for first 9 projects (OpenCode issue #9600). **Accessibility (§23.11):** Keyboard-navigable; screen reader labels ("Project: &lt;name&gt;, switch to project"). **Stable identity:** Use canonical path so same directory via symlink/casing is one project; document Windows vs Unix.
+**GUI (expanded):** **Project Bar Placement (Resolved):** **Left sidebar**, collapsible to a narrow icon bar: Expanded width: **240px**. Collapsed width: **48px** (icons only). Default: expanded on desktop (window width ≥ 1200px), collapsed when window width < 1200px. User can manually toggle collapse/expand (persisted in redb `ui.project_bar.collapsed`). Project list sorted by last-accessed (most recent first). Active project highlighted. Running projects show an activity indicator (spinner icon). **Per tile:** Name (basename or display name), optional icon; click = switch; context menu: Rename, Close. **"Open project...":** Folder picker; canonicalize path; deduplicate if already in list. **Empty state:** "No project open" + prominent "Open project...". **Keyboard:** Optional shortcut (e.g. Cmd/Ctrl+O) or project switcher in command palette (§11); optional Cmd+1-9 for first 9 projects (OpenCode issue #9600). **Accessibility (§23.11):** Keyboard-navigable; screen reader labels ("Project: &lt;name&gt;, switch to project"). **Stable identity:** Use canonical path so same directory via symlink/casing is one project; document Windows vs Unix.
 
-**Gaps (to resolve in implementation):** (1) **Where is the project list stored?** App config vs dedicated file vs recovery payload; document so recovery, sync (§22), and project bar use the same place. (2) **Project path no longer exists:** Detect on switch/startup; skip or remove from list; offer "Remove" or "Locate...". (3) **Same path twice (symlinks/casing):** Canonicalize; deduplicate on add and load. (4) **In-flight run when switching:** Allow switch (run continues in background; show in "Background runs" or when user switches back to that project), block, or prompt; align with §2 and §4. (5) **Max list size and eviction:** Define cap (e.g. 30), LRU vs FIFO; document in config. (6) **Interaction with multi-tab (§15.10):** Project bar global (switch = change active tab's context) vs per-tab project; decide when implementing tabs.
+**Gaps (to resolve in implementation):** (1) **Where is the project list stored?** App config vs dedicated file vs recovery payload; document so recovery, sync (§22), and project bar use the same place. (2) **Project path no longer exists:** Detect on switch/startup; skip or remove from list; offer "Remove" or "Locate...". (3) **Same path twice (symlinks/casing):** Canonicalize; deduplicate on add and load. (4) **In-flight run when switching project (Resolved):**
+When the user switches projects while a run is active on the current project:
+- **Prompt:** "A run is active on [Project X]. Switch anyway? The run will continue in the background."
+- If confirmed: switch to new project. The previous run continues in background. Its status is visible in the project bar (activity indicator on the project icon).
+- If declined: stay on current project.
+- The user can return to the original project at any time to see the run's progress.
+- Config: none (always prompt). (5) **Max list size and eviction:** Define cap (e.g. 30), LRU vs FIFO; document in config. (6) **Interaction with multi-tab (§15.10):** Project bar global (switch = change active tab's context) vs per-tab project; decide when implementing tabs.
 
-**Potential problems:** (1) **Config load failure for new project:** Switch with defaults, show error and stay, or switch + banner "Config missing; using defaults"; document. (2) **Dirty state (unsent input)** in previous project: Discard, persist to "last view per project," or prompt; align with recovery snapshot. (3) **Performance with many projects:** Lazy-load config/state on switch; bar only needs names for display. (4) **Sync (§22):** Project list in payload; paths may differ across devices (Windows vs Mac); document machine-specific or re-bind paths on import.
+**Potential problems:** (1) **Config load failure for new project:** Switch with defaults, show error and stay, or switch + banner "Config missing; using defaults"; document. (2) **Dirty State When Switching Project (Resolved):** **Persist to last view per project.** When the user switches away from a project with unsent text in the input field: the unsent text is saved to redb (`project:{id}:last_input`). On return to that project, the input field is restored with the unsent text. No discard prompt, no modal. Seamless context switching. If the project is removed from the project list, its persisted input is also removed. (3) **Performance with many projects:** Lazy-load config/state on switch; bar only needs names for display. (4) **Sync (§22):** Project list in payload; paths may differ across devices (Windows vs Mac); document machine-specific or re-bind paths on import.
 
 ---
 
@@ -719,9 +743,10 @@ Two mechanisms:
 
 Aim: **token-efficient**, **agent-useful** summary of the clicked element. Raw `outerHTML` can be huge; prefer a structured, bounded payload.
 
-- **Required fields:** `tagName`, `id` (or null), `className` (string), `textContent` or `innerText` (truncated to e.g. 500 chars), `role`, `ariaLabel` (from `getAttribute('aria-label')` or `aria-label`), `rect` (`getBoundingClientRect()`: `x`, `y`, `width`, `height`), `parentPath` (short CSS-like path, e.g. `div#main > section > button.submit`, max depth 5-7).
-- **Optional but useful:** `outerHTML` **truncated** (e.g. first 2000 chars + "..." if longer), `href` for anchors, `name` for form controls, `type` for inputs, `disabled`, `visible` (e.g. offsetParent check or intersection with viewport). **Omit** large blobs (e.g. full subtree HTML) by default; offer "Include full HTML" in settings or as a second action if needed.
-- **Token budget:** Cap total JSON size (e.g. 4 KB or ~1k tokens) so a single click doesn't dominate context. If over cap, truncate `textContent` and `outerHTML` first, then shorten `parentPath`.
+- **Required fields:** `tagName`, `id` (or null), `className` (string), `textContent` or `innerText` (truncated to **500 characters**), `role`, `ariaLabel` (from `getAttribute('aria-label')` or `aria-label`), `rect` (`getBoundingClientRect()`: `x`, `y`, `width`, `height`), `parentPath` (short CSS-like path, e.g. `div#main > section > button.submit`, max depth **6 levels**).
+- **Optional but useful:** `outerHTML` **truncated** (first **2000 characters** + "..." if longer), `href` for anchors, `name` for form controls, `type` for inputs, `disabled`, `visible` (e.g. offsetParent check or intersection with viewport). **Omit** large blobs (e.g. full subtree HTML) by default; offer "Include full HTML" in settings or as a second action if needed.
+- **Token budget:** Cap total JSON size at **4 KB**. If over cap, truncate `textContent` and `outerHTML` first, then shorten `parentPath`.
+Config keys: `browser.element_context.text_content_chars` (500), `browser.element_context.outer_html_chars` (2000), `browser.element_context.parent_path_depth` (6), `browser.element_context.total_cap_bytes` (4096).
 - **Reference:** "Element to LLM"-style formats (e.g. layout-aware, accessibility-tree-style) can improve agent reasoning; we can adopt a compact JSON shape inspired by that and extend later (e.g. add `childrenSummary` or `siblingContext`).
 
 **5. Rust handler and Assistant integration**
@@ -758,13 +783,13 @@ Aim: **token-efficient**, **agent-useful** summary of the clicked element. Raw `
 | `role`        | string | --         | ARIA role |
 | `ariaLabel`   | string \| null | 200 chars | Accessible name |
 | `rect`        | `{ x, y, width, height }` | -- | Position/size |
-| `parentPath`  | string | depth 5-7 | DOM path |
+| `parentPath`  | string | depth **6** | DOM path |
 | `outerHTML`   | string | 2000 chars | Optional HTML |
 | `href`        | string \| null | 500 chars | For links |
 | `name`, `type`, `disabled` | as needed | -- | Form controls |
 | `visible`     | boolean | --         | Rough visibility |
 
-Encode as JSON; total payload cap (e.g. 4 KB) with truncation as above.
+Encode as JSON; total payload cap **4 KB** (Config: `browser.element_context.total_cap_bytes`, default `4096`) with truncation as above.
 
 ---
 
@@ -772,8 +797,20 @@ Encode as JSON; total payload cap (e.g. 4 KB) with truncation as above.
 
 - **Arbitrary URL loading:** The WebView loads user-chosen URLs. Treat all page content as **untrusted**. Do not expose sensitive host APIs to the page; the only "back channel" is our custom protocol or IPC, and we only accept **element context** payloads (validate shape and size).
 - **Validate and sanitize:** Before passing captured JSON to the Assistant, validate structure and cap sizes. Avoid re-rendering raw page HTML in the chat without sanitization if we ever show it in a rich view (e.g. use plain text or a safe subset).
-- **Navigation and schemes:** Consider blocking or warning for `file://`, `blob:`, or sensitive schemes if they could leak local data. Per WebView2/OWASP guidance: restrict loaded content to HTTPS where possible; optional **allowlist** of "trusted webapp" origins and warn when loading non-allowlisted URLs.
-- **Abuse:** A malicious page could repeatedly POST to `puppet-master://element-context`. Mitigate: **rate-limit** (e.g. max N captures per minute); optional "Confirm before sending to chat" for first capture per page; and only accept POST when capture mode is on (modifier or toggle), so random scripts can't trigger sends without user action.
+- **Navigation and schemes:**
+
+**Browser Navigation Scheme Policy (Resolved):**
+- **Blocked schemes:** `file://`, `blob://`, `data:` (with executable MIME types). Navigation to these schemes is silently blocked with a console warning.
+- **Warning schemes:** Non-HTTPS schemes (e.g., `ftp://`, `ws://`). Show a one-time warning: "Navigating to non-secure URL. [Proceed] [Cancel]."
+- **Allowed by default:** All `https://` origins. No allowlist needed for HTTPS.
+- **Optional allowlist:** `browser.allowed_origins` (array of origin strings). If set, only listed origins are allowed without warning. Non-listed HTTPS origins still work but show no warning (HTTPS is always safe to navigate).
+- Config: `browser.blocked_schemes` (default `["file", "blob"]`), `browser.allowed_origins` (default: empty = all HTTPS allowed).
+- **Abuse:** A malicious page could repeatedly POST to `puppet-master://element-context`. Mitigate: browser capture rate-limit: max **10 captures per minute** (Config: `browser.capture_rate_limit_per_min`, default `10`); optional "Confirm before sending to chat" for first capture per page; and only accept POST when capture mode is on (modifier or toggle), so random scripts can't trigger sends without user action.
+
+**Browser/Assistant Boundary (Resolved):**
+- The built-in browser is **read-only for agents**: navigate, screenshot, extract DOM context. Agents CANNOT click, type, or interact with browser content.
+- **User click-to-context** is the only interaction bridge: user clicks an element → context is captured and attached to the next agent prompt.
+- Security: same-origin policy enforced. No cross-origin data access by agents. Agent-initiated navigation is limited to the current project's preview URLs.
 
 ---
 
@@ -1020,7 +1057,7 @@ The middle server (or backend) reads line-by-line, parses JSON, and forwards or 
 
 **Queue:** A **queue manager** (e.g. in Rust) holds a fixed-capacity job queue (e.g. max 4 concurrent). Each job is "run agent X with prompt Y." When a slot is free, the manager spawns the same CLI path used for the main flow (same binary, same stream-json contract) but with a distinct working dir or session id. The manager tracks each run's PID, status (queued / running / completed / failed / cancelled), and output path. Optionally persist queue state to disk so it survives app restart.
 
-**Git isolation:** Before starting a background run: (1) If working tree is dirty, must run `git stash` (or equivalent). (2) required to create a branch from current HEAD, e.g. `async-{role}-{id}`. (3) should spawn the CLI with `--working-dir` pointing at the repo (or a worktree checked out to that branch). (4) CLI runs and commits (or not) on that branch. When the run finishes, the app can offer: diff (e.g. `git diff main..branch`), merge (e.g. `git merge --no-commit --no-ff` to detect conflicts first), or delete branch. **Conflict detection:** must run a dry-run merge (e.g. `git merge --no-commit --no-ff` then abort); if exit code or output indicates conflicts, surface in UI and never auto-merge.
+**Git isolation:** Before starting a background run: (1) If working tree is dirty, run `git stash`. (2) Create a branch from current HEAD, e.g. `async-{role}-{id}`. (3) Spawn the CLI with `--working-dir` pointing at the repo or an explicit worktree checked out to that branch. (4) CLI runs and commits on that branch when applicable. When the run finishes, the app can offer: diff (`git diff main..branch`), merge (`git merge --no-commit --no-ff` to detect conflicts first), or delete branch. **Conflict detection:** run a dry-run merge (`git merge --no-commit --no-ff` then abort); if exit code or output indicates conflicts, surface in UI and never auto-merge.
 
 
 **Output isolation:** Each run writes stdout/stderr and any artifacts to a dedicated directory (e.g. `.puppet-master/agent-output/{run-id}/`). The main session's stream and state are separate; the UI shows background runs in a separate panel and does not mix their output with the main conversation.
@@ -1077,7 +1114,7 @@ The middle server (or backend) reads line-by-line, parses JSON, and forwards or 
 
 **Event types:** From the normalized stream (§19.3), each event has a `type` (e.g. `text`, `tool_use`, `tool_result`, `thinking`, `usage`). Map these to a small set of display types: e.g. read, edit, bash, tool_call, tool_result, thinking, message. Each has an icon and optional short label.
 
-**Event strip:** A horizontal strip (or short list) that shows the **last N** events (e.g. 10-20) or events in a **sliding time window** (e.g. last 5 seconds). When a new event arrives, append it (and drop the oldest if over the cap). Render each as a small icon (and optional tooltip). Place the strip near the run status (e.g. in dashboard or run detail view) so the user sees "what's happening" at a glance.
+**Event strip:** A horizontal strip (or short list) that shows the **last 15 events**. No sliding time window (event count is simpler and more predictable). Config: `ui.event_strip.max_events`, default `15`. When a new event arrives, append it (and drop the oldest if over the cap). Render each as a small icon (and optional tooltip). Place the strip near the run status (e.g. in dashboard or run detail view) so the user sees "what's happening" at a glance.
 
 **Thinking display:** If the stream emits `thinking` or `thinking_delta` events with a `thought` (or similar) field, append the text to a buffer. Display the buffer in a dedicated pane or collapsible section (e.g. "Thinking" below the main log). Limit display length (e.g. last 4k characters) to avoid UI lag. Sanitize content if needed (e.g. escape HTML). **Thinking toggle:** A setting (e.g. `ui.show_thinking_stream`) controls whether the thinking pane is visible and updated; when off, still consume the events (for protocol correctness) but don't render them, or show only a "Thinking..." placeholder.
 
@@ -1183,7 +1220,14 @@ The middle server (or backend) reads line-by-line, parses JSON, and forwards or 
 **Scope (planning only):**
 - **Version visibility:** Show application version in the UI (e.g. About dialog, Settings footer, or Help). Single source of truth required (e.g. from Cargo.toml or build-time env) so it should be consistent everywhere.
 
-- **Update discovery:** Optionally check for a newer version (e.g. against a stable URL or GitHub Releases) and show a non-intrusive notice (e.g. "Puppet Master X.Y.Z is available") with a link to release notes or download. No auto-download or auto-install in this plan; user initiates the upgrade.
+- **Update discovery:**
+
+**Update Discovery (Resolved):**
+- **Check source:** GitHub Releases API for the Puppet Master repository.
+- **URL:** `https://api.github.com/repos/{owner}/{repo}/releases/latest` (owner/repo configurable via `app.update.github_repo`).
+- **Frequency:** Once per app launch. Result cached in redb (`app.update.last_check`) for **24 hours**. No background polling.
+- **Behavior:** If a newer version is found, show a non-blocking notification: "Puppet Master [version] is available. [View release notes] [Dismiss]." No auto-download, no auto-install.
+- **Opt-out:** `app.update.check_enabled`, default `true`. Set to `false` to disable update checks entirely.
 - **Upgrade path:** Document or link to how to upgrade per distribution: e.g. re-run installer, `cargo install --force`, or system package manager (`apt`, `brew`, etc.). If we ship a package (deb, rpm, AppImage), document update procedure for that package.
 - **Config and state across versions:** When the app version changes, config and state files (e.g. `.puppet-master/config.yaml`, GUI state) may need compatibility handling. Prefer backward compatibility (new version reads old config); if a breaking config change is required, document migration or provide a one-time migration step. Do not delete or overwrite user config on upgrade without explicit user action or a clear migration path.
 
@@ -1261,18 +1305,45 @@ This section consolidates **gaps** (missing or underspecified areas) and **poten
 
 ### 23.4 Restore Points and Background Agents
 
-- **Conflict detection:** When rolling back to a restore point, we check for conflicts (file changed outside the app). Specify whether we use **mtime**, **content hash**, or both (e.g. hash if available, else mtime), and what to do when a conflict is found (warn and skip, warn and overwrite, or prompt). Document in §8 implementation directions.
-- **Interaction with background agents:** If a background run is active on the same project, clarify whether restore/rollback is disabled, queued, or allowed (with a warning that the background run may have modified files). Align with queue manager and git isolation (§2).
-- **Main-flow vs background-flow (§2):** When the user starts a **main** run (orchestrator or interview) while a **background** run is active on the same project, define policy: block main until background completes, allow both with warning, or queue main. Document in §2 implementation directions.
+- **Restore/rollback conflict detection (Resolved):**
+  - **Method:** Content hash (SHA-256 of file contents). Rationale: mtime is unreliable across filesystems and editors; content hash is deterministic.
+  - **On conflict** (file has been modified since checkpoint):
+    - Show per-file prompt: "File [X] has been modified since this checkpoint. [Overwrite with checkpoint] [Skip this file] [Show diff]"
+    - Default action (if user dismisses or bulk-applies): **Skip** (non-destructive).
+    - Bulk actions available: "Overwrite all" / "Skip all" for large restore sets.
+  - Config: `restore.conflict_method` (default `"content_hash"`; future option: `"mtime_and_hash"`).
+- **Restore with background agent active (Resolved):**
+  - **Warn and require confirmation:** When a restore/rollback is attempted while a background run is active on the same project, show: "A background run is active on this project. Restoring files may conflict with in-progress changes. [Pause background run and restore] [Restore anyway] [Cancel]."
+    - **Pause and restore:** sends cancellation signal to background agent, waits for graceful stop (5s timeout), then restores.
+    - **Restore anyway:** proceeds with restore. Background agent's next file write triggers conflict detection (per §23.4 conflict policy above).
+    - **Cancel:** no action taken.
+- **Main run vs background run on same project (Resolved):** See §2 implementation directions (resolved inline there).
 
 ### 23.5 Hooks and FileSafe
 
-- **Timeout:** Hook timeout (e.g. 5s) should be **configurable** (per hook or global) so slow scripts do not block indefinitely; document default and max. On timeout, define behavior (continue vs block) and make it configurable where reasonable.
+**Hook Timeout (Resolved):**
+- Default timeout: **5 seconds** per hook invocation.
+- Config: `hooks.timeout_ms`, default `5000`. Per-hook override: `hooks.{hook_name}.timeout_ms`.
+- On timeout: **continue** (hook invocation is skipped, warning logged as `hook.timeout` seglog event).
+- Configurable behavior: `hooks.on_timeout` — `"continue"` (default) or `"block"` (halt execution until hook responds or is manually dismissed).
+- Rationale: hooks are advisory; they should not block the critical path by default. Users who need blocking hooks can opt in.
 - **Dangerous-command blocking:** Part of FileSafe (§15.1); one blocklist and one integration point in runner; see §9.3 and §17.3-17.4.
 
 ### 23.6 Compaction and Token Source
 
-- **Token source:** Document which platforms expose **exact** token counts in-stream vs final-only. Prefer stream usage events when available; fallback to heuristic (e.g. 4 chars per token). FileSafe Part B handles *context compilation*; this compaction is *conversation* compaction; both apply (see §10.4, §17.3-17.4).
+**Token Source Per Provider (Resolved):**
+
+| Provider | Token Source | Type | Notes |
+|----------|-------------|------|-------|
+| Claude | `usage` field in stream-json events | Exact (input + output tokens) | Available per-turn in streaming mode |
+| Codex | `usage` field in final JSONL event | Exact (input + output tokens) | Available after turn completes |
+| Cursor | `usage` field in stream-json events | Exact (input + output tokens) | Same format as Claude |
+| Gemini | `usageMetadata` in final response | Exact (prompt + candidates tokens) | Available after turn completes |
+| Copilot | **Heuristic** | Estimated (4 chars ≈ 1 token) | Text-only output; no token counts exposed by Provider |
+
+- **Preference:** Use exact stream usage events when available (Claude, Cursor). Use final-response exact counts for Codex and Gemini. Use heuristic only for Copilot.
+- **Heuristic formula:** `estimated_tokens = ceil(char_count / 4)`. This is a rough approximation; actual tokenization varies by model.
+- **SSOT:** This table is the canonical reference. Usage tracking code must check `platform_specs::token_source(provider)` to determine which method to use.
 
 ### 23.7 Database and Projections
 

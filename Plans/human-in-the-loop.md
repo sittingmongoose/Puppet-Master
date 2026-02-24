@@ -68,7 +68,7 @@ HITL is a **setting in the GUI**. The user turns HITL on and configures **which 
 - **Controls:** At least:
   - A way to **enable HITL** (master toggle or implicit when any tier is on).
   - **Per-tier toggles:** "Pause for human approval at phase completion," "... at task completion," "... at subtask completion." Each can be turned on or off independently.
-- **Persistence:** Selections are written to the same config the orchestrator uses (e.g. `hitl: { phase: bool, task: bool, subtask: bool }` or equivalent); GUI reads and writes that config. Use existing widget patterns per `docs/gui-widget-catalog.md` where applicable.
+- **Persistence:** Selections are written to the same config the orchestrator uses (`hitl: { phase: bool, task: bool, subtask: bool }` in redb `config:gui.hitl`); GUI reads and writes that config. Use existing widget patterns per `docs/gui-widget-catalog.md` where applicable.
 - **Config (backend):** One structured block in the same config that holds tier/orchestrator settings. Exact key names and location to be decided at implementation time; GUI is the primary interface for changing them.
 
 ## Behavior
@@ -77,7 +77,18 @@ HITL is a **setting in the GUI**. The user turns HITL on and configures **which 
 
 1. Orchestrator runs as today: Phase → Task → Subtask → Iteration, with start/end verification at phase, task, and subtask per Plans/orchestrator-subagent-integration.md.
 2. When a **phase** is completed (end verification done):
-   - If **HITL at phase** is ON → **pause**. Show completion state and "Approve & continue" (or equivalent). On approval → advance to next phase. On reject/cancel → remain paused (behavior for "reject" can be defined at implementation: e.g. stay on same phase, or mark phase as needs-review).
+   - If **HITL at phase** is ON → **pause**. Show completion state and approval controls (see button labels below). On approval → advance to next phase.
+
+     **HITL Button Labels (Resolved):**
+     - **Primary action:** "Approve" (when next tier is not yet ready) or "Approve & Continue" (when next tier is ready to start immediately).
+     - **Reject action:** "Reject" — marks tier as `needs_review`, surfaces CtA.
+     - **Cancel action:** "Cancel Run" — aborts the entire orchestration run.
+     - **Skip action:** "Skip" — available in the reject CtA, advances past the current tier.
+     - Button order (left to right): [Approve / Approve & Continue] [Reject] [Cancel Run].
+
+     **On reject:** The run remains paused. The tier is marked as `needs_review` in the seglog. A Call-to-Action (CtA) appears in the Assistant chat: "Phase [X] was rejected — [Re-run] [Skip Phase] [Abort Run]." The user must choose an action to proceed. Re-run re-executes the same tier from the beginning. Skip Phase advances to the next tier. Abort Run stops the entire orchestration run.
+
+     **On cancel:** The current run is aborted. The tier is marked as `cancelled` in the seglog. All active subagents for this run receive a cancellation signal. The orchestrator returns to IDLE state. A seglog event `hitl.cancelled` is emitted with the tier context.
 3. When a **task** is completed (end verification done):
    - If **HITL at task** is ON → **pause**. Same idea: human reviews, approves or rejects; on approval → next task.
 4. When a **subtask** is completed (end verification done):
@@ -89,8 +100,8 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md
 ### What the Human Sees and Does
 
 - **At pause:** The UI should present that the current tier (phase/task/subtask) is complete and that approval is required to continue. The user can review progress, logs, artifacts, or evidence as needed.
-- **Approve:** Explicit action (e.g. "Approve & continue") that clears the pause and allows the orchestrator to advance to the next tier.
-- **Reject / Cancel:** Optional; exact semantics (e.g. retry same tier, mark for review, or abort run) can be specified at implementation time. This plan only requires that "approve" is the single mandatory action to proceed.
+- **Approve:** "Approve" or "Approve & Continue" button (see button labels in §2 above) clears the pause and allows the orchestrator to advance to the next tier.
+- **Reject / Cancel:** "Reject" marks tier as `needs_review`, surfaces CtA with three options (Re-run, Skip, Abort). "Cancel Run" aborts run, emits `hitl.cancelled` event, returns to IDLE. See §2 for full specification.
 
 ### Dashboard: Warnings and Calls to Action (CtA)
 
@@ -105,7 +116,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md
 
 ### Relation to Existing Pause
 
-The Plans/orchestrator-subagent-integration.md mentions a **pause gate** (e.g. `PAUSE.md` or equivalent) that halts the run until the file is removed or the user resumes. HITL is **separate**: it is a tier-boundary approval gate driven by settings, not by a global pause file. The two can coexist: e.g. global pause can still apply; HITL adds additional, tier-specific approval points when enabled.
+The Plans/orchestrator-subagent-integration.md mentions a **pause gate** (`PAUSE.md` file) that halts the run until the file is removed or the user resumes. HITL is **separate**: it is a tier-boundary approval gate driven by settings, not by a global pause file. The two can coexist: global pause can still apply; HITL adds additional, tier-specific approval points when enabled.
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md
 
 ## DRY Summary

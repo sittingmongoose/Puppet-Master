@@ -99,3 +99,20 @@ Agents MUST NOT:
   ContractRef: ContractName:Plans/DRY_Rules.md#4
 - leave hashes stale after changing SSOT docs  
   ContractRef: SchemaID:Spec_Lock.json#canonical_ssot_hashes
+
+---
+
+### PolicyRule: no_secrets_in_storage
+
+**Scope:** All persistent stores (seglog, redb, Tantivy indexes).
+
+**Rule:** Persistent stores MUST NOT contain secrets (tokens, passwords, API keys, OAuth refresh tokens). Tokens live only in the OS credential store (platform keyring). Violations are P0 bugs requiring immediate remediation.
+
+**Rationale:** Secrets in persistent stores risk exfiltration via backup, log export, or crash dump. The OS credential store provides encrypted, access-controlled storage.
+
+**Cross-references:**
+- Architecture_Invariants.md#INV-002
+- Crosswalk.md §3.5 (SessionStore rules)
+- Crosswalk.md §3.6 (AuthState rules: "Tokens MUST NOT be persisted in AuthState")
+
+ContractRef: PolicyRule:no_secrets_in_storage, Plans/Architecture_Invariants.md#INV-002

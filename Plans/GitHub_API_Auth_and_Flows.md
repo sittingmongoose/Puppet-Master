@@ -130,6 +130,15 @@ Puppet Master must have a registered GitHub OAuth App. ContractRef: ConfigKey:gi
 - **Client ID** (required): `ContractRef: ConfigKey:github.client_id` -- must not be hard-coded.
 - **No client secret** is used for device flow. ContractRef: SchemaID:Spec_Lock.json#auth_model
 
+### ConfigKey: github.api_version
+
+**Default:** `"2022-11-28"`
+**Storage:** redb `config:github.api_version`
+**Purpose:** The GitHub REST API version header (`X-GitHub-Api-Version`) sent with all API requests.
+**Override:** Set via environment variable `GITHUB_API_VERSION` or in `.puppet-master/config.json` under `github.api_version`.
+
+ContractRef: ConfigKey:github.api_version, ToolID:GitHubApiTool
+
 ### UI commands (contract)
 This flow is initiated by a UI command; the UI must not perform auth logic directly. ContractRef: Primitive:UICommand, ContractName:Contracts_V0.md#7
 

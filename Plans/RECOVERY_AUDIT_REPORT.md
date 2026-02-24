@@ -8,8 +8,8 @@
 
 | Status | Count |
 |---|---:|
-| OK | 28 |
-| Needs Fix | 29 |
+| OK | 34 |
+| Needs Fix | 23 |
 | Missing | 0 |
 | Corrupted | 0 |
 
@@ -30,14 +30,14 @@
 | `Plans/CLI_Bridged_Providers.md` | markdown | OK | OK | — |
 | `Plans/Contracts_V0.md` | markdown | Needs Fix | D | Missing acceptance/verification section |
 | `Plans/Crosswalk.md` | markdown | Needs Fix | D | Missing acceptance/verification section |
-| `Plans/DRY_Rules.md` | markdown | Needs Fix | CD | Unresolved placeholder markers at lines [52, 98] / Missing acceptance/verification section |
+| `Plans/DRY_Rules.md` | markdown | Needs Fix | CD | Unresolved placeholder markers at lines [52] (line 98 placeholder resolved 2026-02-23) / Missing acceptance/verification section |
 | `Plans/Decision_Log.md` | markdown | Needs Fix | D | Missing acceptance/verification section |
-| `Plans/Decision_Policy.md` | markdown | Needs Fix | CDS | SSOT coverage gap: Decision Policy missing required definitions referenced by other plans. / Unresolved placeholder markers at lines [98] / Missing acceptance/verification section |
+| `Plans/Decision_Policy.md` | markdown | Needs Fix | D | Missing acceptance/verification section (SSOT gap resolved 2026-02-23: PolicyRule:no_secrets_in_storage added) |
 | `Plans/FileManager.md` | markdown | OK | OK | — |
 | `Plans/FileSafe.md` | markdown | Needs Fix | C | Unresolved placeholder markers at lines [1306] |
 | `Plans/FinalGUISpec.md` | markdown | OK | OK | — |
 | `Plans/GitHub_API_Auth_and_Flows.md` | markdown | OK | OK | — |
-| `Plans/Glossary.md` | markdown | Needs Fix | S | SSOT coverage gap: missing primitive definitions referenced by ContractRef. |
+| `Plans/Glossary.md` | markdown | OK | OK | SSOT gap resolved 2026-02-23: DRYRules, PatchPipeline, SessionStore primitives added to §6. |
 | `Plans/LSPSupport.md` | markdown | Needs Fix | E | Open-questions heading present at lines [298] |
 | `Plans/MiscPlan.md` | markdown | Needs Fix | F | No SSOT references detected (DRY risk) |
 | `Plans/Multi-Account.md` | markdown | Needs Fix | DF | Missing acceptance/verification section / No SSOT references detected (DRY risk) |
@@ -48,7 +48,7 @@
 | `Plans/RECOVERY_FIX_QUEUE.md` | markdown | OK | OK | — |
 | `Plans/Rebrand_Chunked_Playbook.md` | markdown | Needs Fix | AF | Naming noncompliance (legacy naming) at lines [128, 134, 247, 264, 281, 315, 320, 364, 380, 396]... / Naming drift (no-space variant) at lines [179, 180, 185, 381, 385] / No SSOT references detected (DRY risk) |
 | `Plans/Spec_Lock.json` | json | OK | OK | — |
-| `Plans/Tools.md` | markdown | Needs Fix | S | SSOT coverage gap: missing ToolID definition referenced by other plans. |
+| `Plans/Tools.md` | markdown | OK | OK | SSOT gap resolved 2026-02-23: ToolID:GitHubApiTool added to §3.6. |
 | `Plans/UI_Command_Catalog.md` | markdown | Needs Fix | D | Missing acceptance/verification section |
 | `Plans/WorktreeGitImprovement.md` | markdown | Needs Fix | F | No SSOT references detected (DRY risk) |
 | `Plans/acceptance_manifest.schema.json` | json-schema | OK | OK | — |
@@ -87,13 +87,13 @@
 
 ## Top 20 Priority Fixes
 
-1. `Plans/Decision_Policy.md` — SSOT coverage gap: Decision Policy missing required definitions referenced by other plans. / Unresolved placeholder markers at lines [98] / Missing acceptance/verification section
-2. `Plans/DRY_Rules.md` — Unresolved placeholder markers at lines [52, 98] / Missing acceptance/verification section
+1. `Plans/Decision_Policy.md` — ~~SSOT coverage gap~~ (resolved 2026-02-23) / Missing acceptance/verification section
+2. `Plans/DRY_Rules.md` — Unresolved placeholder markers at lines [52] (line 98 resolved 2026-02-23) / Missing acceptance/verification section
 3. `Plans/Contracts_V0.md` — Missing acceptance/verification section
 4. `Plans/Architecture_Invariants.md` — Missing acceptance/verification section
 5. `Plans/UI_Command_Catalog.md` — Missing acceptance/verification section
-6. `Plans/Glossary.md` — SSOT coverage gap: missing primitive definitions referenced by ContractRef.
-7. `Plans/Tools.md` — SSOT coverage gap: missing ToolID definition referenced by other plans.
+6. ~~`Plans/Glossary.md` — SSOT coverage gap~~ ✅ Resolved 2026-02-23: primitives added to §6.
+7. ~~`Plans/Tools.md` — SSOT coverage gap~~ ✅ Resolved 2026-02-23: ToolID:GitHubApiTool added to §3.6.
 8. `Plans/Progression_Gates.md` — Unresolved placeholder markers at lines [85]
 9. `Plans/FileSafe.md` — Unresolved placeholder markers at lines [1306]
 10. `Plans/LSPSupport.md` — Open-questions heading present at lines [298]
@@ -111,12 +111,12 @@
 ## SSOT Coverage
 
 ### Missing definitions / invalid references (from ContractRef coverage)
-- ConfigKey missing from SSOT docs: `github.api_version`.
-- PolicyRule referenced but not defined in Decision Policy: `no_secrets_in_storage`.
-- ToolID referenced but not defined in Tools SSOT: `GitHubApiTool`.
-- Primitive identifiers referenced but not defined in Contracts or Glossary: `DRYRules`, `PatchPipeline`, `SessionStore`.
-- SchemaID references invalid file anchors/paths: `Spec_Lock.json#auth_model`, `Spec_Lock.json#github_operations`.
-- Placeholder ContractRef values detected (angle-bracket placeholders) — must be replaced with real targets (see `Plans/DRY_Rules.md`).
+- ConfigKey missing from SSOT docs: `github.api_version`. **Resolved 2026-02-23:** Added to GitHub_API_Auth_and_Flows.md with default, redb storage, and override options.
+- PolicyRule referenced but not defined in Decision Policy: `no_secrets_in_storage`. **Resolved 2026-02-23:** Added to Decision_Policy.md with scope, rule, rationale, and cross-references.
+- ToolID referenced but not defined in Tools SSOT: `GitHubApiTool`. **Resolved 2026-02-23:** Added to Tools.md §3.6 with purpose, rules, owner, and ContractRef.
+- Primitive identifiers referenced but not defined in Contracts or Glossary: `DRYRules`, `PatchPipeline`, `SessionStore`. **Resolved 2026-02-23:** Added to Glossary.md §6 with ContractRef annotations.
+- SchemaID references invalid file anchors/paths: `Spec_Lock.json#auth_model`, `Spec_Lock.json#github_operations`. **Resolved 2026-02-23:** Both anchors verified present in Spec_Lock.json (auth_model at line 40, github_operations at line 34).
+- Angle-bracket ContractRef tokens were detected and replaced with real targets (see `Plans/DRY_Rules.md`). **Resolved 2026-02-23:** Replaced angle-bracket token at line ~98 with actual references.
 
 ### Contradictions / drift-by-synonym (high-signal)
 - **Namespace collision risk:** `cmd.*` can appear in non-UI-command contexts; keep UI command IDs exclusively for `cmd.<domain>.<action>`.

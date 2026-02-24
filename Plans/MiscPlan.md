@@ -205,7 +205,7 @@ ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:P
 
 ### 4.6 Call sites: Orchestrator, Interview, Start chain, and Conversation
 
-All code paths that invoke `runner.execute()` (or equivalent) should use prepare and cleanup so agent-left-behind artifacts are managed consistently. The following call sites **must** (or **should**) be updated.
+All code paths that invoke `runner.execute()` should use prepare and cleanup so agent-left-behind artifacts are managed consistently. The following call sites must be updated unless explicitly marked optional.
 
 | Call site | Location | Working dir source | Update required |
 |-----------|----------|--------------------|-----------------|
@@ -216,7 +216,7 @@ All code paths that invoke `runner.execute()` (or equivalent) should use prepare
 
 **Implementation options**
 
-- **Option A (per call site):** At each call site, call `runner.prepare_working_directory(&request.working_directory).await?` (or equivalent) before `execute`, and `runner.cleanup_after_execution(&request.working_directory).await` after `execute` returns. Ensures every path is explicit but duplicates the prepare/execute/cleanup pattern.
+- **Option A (per call site):** At each call site, call `runner.prepare_working_directory(&request.working_directory).await?` before `execute`, and `runner.cleanup_after_execution(&request.working_directory).await` after `execute` returns. Ensures every path is explicit but duplicates the prepare/execute/cleanup pattern.
 - **Option B (wrapper):** Introduce a single helper (e.g. `run_with_cleanup(runner, request) -> Result<ExecutionResult>`) that does: prepare(work_dir) → execute(request) → cleanup(work_dir), and use it from the orchestrator, execution_engine, interview, start_chain, and (optionally) execute_ai_turn. All call sites then go through the wrapper and get consistent behavior; config (e.g. "skip cleanup for interview") can be applied inside the wrapper.
 
 **Recommendation:** Use **Option B** so prepare/cleanup semantics live in one place and call sites (orchestrator, interviewer, start chain, conversation) are updated to call the wrapper instead of `runner.execute()` directly. The wrapper can read config to skip prepare/cleanup when desired (e.g. for one-off conversation from an arbitrary CWD).
@@ -1138,7 +1138,7 @@ This section ties the Misc Plan to **Plans/WorktreeGitImprovement.md**, **Plans/
 **Dependencies (MiscPlan depends on Worktree):**
 
 - **Config wiring (Phase 1):** Cleanup config (cleanup.untracked, cleanup.ignored, cleanup.clear_agent_output, etc.) must live in the **same** config shape that the run receives. When implementing MiscPlan §7 (Cleanup UX & Config), add cleanup fields to that schema and ensure they are populated from the GUI (or file) the same way as other run settings. If Option B is not yet implemented, cleanup toggles in the GUI would not affect the run; implement Option B first or in parallel so cleanup config is wired.
-- **Git binary resolution (Phase 3):** The Worktree plan introduces a shared helper for resolving the `git` executable (e.g. `path_utils::resolve_git_executable()` or equivalent) used by both GitManager and Doctor. **MiscPlan's cleanup module** must use that same helper when running `git clean` (in `run_git_clean_with_excludes`). Do not use `Command::new("git")` alone; resolve the binary so cleanup works in environments where git is only in app-local or custom paths. See Worktree §3.1, §7.5.
+- **Git binary resolution (Phase 3):** The Worktree plan introduces a shared helper for resolving the `git` executable: `path_utils::resolve_git_executable()`, used by both GitManager and Doctor. **MiscPlan's cleanup module** must use that same helper when running `git clean` (in `run_git_clean_with_excludes`). Do not use `Command::new("git")` alone; resolve the binary so cleanup works in environments where git is only in app-local or custom paths. See Worktree §3.1, §7.5.
 - **Worktree list for "Clean workspace" (optional):** If implementing "Clean workspace now" for **all active worktrees** (§7.2), the list of worktrees must come from the same place as the orchestrator (e.g. `worktree_manager.list_worktrees()` and/or `active_worktrees`). Worktree plan §2.2 and §7.6 describe repopulation of active_worktrees; if that is not done, "clean all worktrees" may only clean the main workspace. Prefer implementing after or with Worktree Phase 2 so worktree list is reliable.
 
 **Distinction:** Worktree plan's "cleanup" is **removing the worktree directory** after merge (`cleanup_subtask_worktree`, `remove_worktree`). MiscPlan's cleanup is **removing untracked/ignored files *inside* ** the workspace or worktree. Both apply: after an iteration, run MiscPlan's cleanup_after_execution in that worktree; when the subtask is done and merged, run Worktree's remove_worktree. No conflict.

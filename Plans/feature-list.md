@@ -20,7 +20,8 @@ This document exists to avoid losing features when writing rewrite implementatio
 
 **Core reliability.** Tools are governed by a central policy engine (permissions, validation, normalized tool results). Edits go through an explicit patch/apply/verify/rollback pipeline (worktrees, branches, sandboxes). Plans/ is the authoritative requirements source for orchestration, safe-edit, subagents, worktree/git, and tooling.
 
-**Provider and CLI.** Claude Code CLI as Provider (stream-json, print mode, optional partials; Claude Code Hooks for tools/telemetry). Cursor Agent CLI as Provider (--print --output-format stream-json, internal parsing into unified event model). Cursor is not ACP-native; adapter layer if needed. Gemini auth: API key default in UI; explicit exception to "subscription only"; OAuth optional.
+**Provider and CLI.** Claude Code CLI as Provider (stream-json, print mode, optional partials; Claude Code Hooks for tools/telemetry). Cursor Agent CLI as Provider (--print --output-format stream-json, internal parsing into unified event model). **Cursor / ACP (Resolved — Not Needed for MVP):**
+Cursor CLI is not ACP-native (confirmed by Cursor staff, January 2026). Cursor supports MCPs, which Puppet Master already uses. An ACP adapter layer is **not needed for MVP**. If Cursor adds ACP support in the future, an adapter can be added as a non-breaking enhancement. Priority: P4 (future/optional). Gemini auth: API key default in UI; explicit exception to "subscription only"; OAuth optional.
 
 ---
 
@@ -152,7 +153,15 @@ This document exists to avoid losing features when writing rewrite implementatio
 
 **FileSafe and Assistant YOLO mode.** When YOLO is on, there is no human approval step before tool execution. FileSafe is the primary protection layer for Assistant in YOLO mode. FileSafe settings must be configurable and easy to turn on or off.
 
-**FileSafe Part B -- Context compilation and token efficiency.** Role-specific context compiler: compile_context(phase_id, role, plan_path, working_directory) → .context-{role}.md per role (Phase, Task, Subtask, Iteration). Delta context: "Changed Files (Delta)" from git diff since last phase/commit. Context cache: cache key = paths + mtimes/hashes; skip compile when valid; invalidate on change. Structured handoff schemas: typed JSON for inter-agent messages (phase_progress, task_blocker, etc.). Compaction-aware re-reads: marker file; if absent skip full plan re-read; set on compaction; clear on session start. Skill bundling: parse plan frontmatter skills_used; resolve skill paths; append "Skills Reference" to Task/Iteration context once per phase. Config: context.compiler_enabled, delta_context, context_cache, skill_bundling. Integration: call compiler in platform runner before building prompt; graceful degradation on failure.
+**FileSafe Part B -- Context compilation and token efficiency.** Role-specific context compiler: compile_context(phase_id, role, plan_path, working_directory) → .context-{role}.md per role (Phase, Task, Subtask, Iteration). Delta context: "Changed Files (Delta)" from git diff since last phase/commit. Context cache: cache key = paths + mtimes/hashes; skip compile when valid; invalidate on change. Structured handoff schemas: typed JSON for inter-agent messages (phase_progress, task_blocker, etc.). Compaction-aware re-reads: marker file; if absent skip full plan re-read; set on compaction; clear on session start. Skill bundling: parse plan frontmatter skills_used; resolve skill paths; append "Skills Reference" to Task/Iteration context once per phase. Config: context.compiler_enabled, delta_context, context_cache, skill_bundling. Integration: call compiler in platform runner before building prompt.
+
+**Context Compiler Graceful Degradation (Resolved):**
+On context compiler failure:
+1. **Use stale context** if available (cached result less than 5 minutes old from redb `context:compiled:{project_id}`).
+2. If no stale context: **skip context compilation** and proceed with the raw file list (file paths only, no semantic context).
+3. Log warning: `context.compiler.degraded` seglog event with failure reason.
+4. Never prompt the user for context compiler failures — they are transient infrastructure issues.
+5. Config: `context.compiler.stale_cache_ttl_s`, default `300` (5 minutes).
 
 **Hook system.** Events: UserMessageSubmit, PreToolUse, PostToolUse, ContextWarning, CompactionTrigger, SessionStart, SessionEnd, Error. Continue, block, or modify. Hook runner with timeout (e.g. 5s per hook; configurable). PreToolUse hooks can call into FileSafe (Command blocklist) for dangerous-command blocking; one extension point. Config and GUI for hooks per event.
 

@@ -390,7 +390,7 @@ With LSP as MVP, the following enhancements become possible. Each is marked **Re
 
 | Enhancement | Status | Usage | Behavior |
 |-------------|--------|--------|----------|
-| **LSP diagnostics verification gate** | Optional | `textDocument/publishDiagnostics` (existing) | **Optional** verification criterion at tier boundaries (e.g. end-of-subtask): "No LSP errors in changed/open files" (or "No errors; warnings allowed"). Configurable per tier (e.g. Verification tab: "LSP: block on errors"). If the project has LSP errors in scope, gate fails and the orchestrator can retry or escalate. |
+| **LSP diagnostics verification gate** | Optional | `textDocument/publishDiagnostics` (existing) | **Optional** verification criterion at tier boundaries (e.g. end-of-subtask): "No LSP errors in `changed_files` or `open` scope files" (or "No errors; warnings allowed"). Configurable per tier (e.g. Verification tab: "LSP: block on errors"). If the project has LSP errors in scope, gate fails and the orchestrator can retry or escalate. |
 | **LSP diagnostics in evidence** | Optional | Snapshot of diagnostics | When collecting evidence for a run, **attach an LSP diagnostics snapshot** (file, line, severity, message, source) for the project or changed files before/after the iteration. Stored with gate reports under `.puppet-master/evidence/` for audit and "what broke" analysis. |
 | **Subagent selection from LSP** | Optional | Diagnostics + language | When selecting a subagent for a task, if **files in scope have LSP errors** for a given language (e.g. Rust), **prefer** the subagent that matches that language (e.g. rust-engineer) so the right specialist addresses the errors. |
 
@@ -772,9 +772,9 @@ This section defines the **contract, config, failure handling, evidence schema, 
 - **When it runs:** After each **iteration** completes (before promoting to next tier). Optionally configurable to run at **subtask** boundary only, **task** boundary only, or **phase** boundary only; default: run at **subtask** boundary (after last iteration of the subtask, before promotion to task).
 - **Tier boundaries:** Configurable per tier: phase, task, subtask. At least one of these must be enabled for the gate to run; when the orchestrator reaches that boundary (e.g. "subtask passed"), the LSP gate runs as one of the criteria before the tier is marked passed.
 - **Scope:** What files are checked. One of:
-  - **`changed`** -- Only files that were modified in the last iteration (or in the current subtask). Requires tracking changed paths (e.g. from git diff or execution engine "files touched").
+  - **`changed_files`** -- Only files that were modified in the last iteration (or in the current subtask). Requires tracking changed paths (e.g. from git diff or execution engine "files touched").
   - **`open`** -- Only files currently open in the editor (or in the run context). Requires LSP client to know "open" set for the run.
-  - **`project`** -- All project files that have an LSP server (bounded: e.g. under project root, or only files with open documents). Default: **`changed`** to keep checks fast and relevant.
+  - **`project`** -- All project files that have an LSP server (bounded: e.g. under project root, or only files with open documents). Default: **`changed_files`** to keep checks fast and relevant.
 - **"No LSP errors" meaning:** Configurable severity threshold:
   - **`error`** -- Gate passes if there are **no diagnostics with severity Error** in scope. Warnings and Info are ignored.
   - **`error_and_warning`** -- Gate passes if there are **no diagnostics with severity Error or Warning** in scope. Info is ignored.
@@ -783,27 +783,39 @@ This section defines the **contract, config, failure handling, evidence schema, 
 #### Config
 
 - **Where:** Verification tab (Settings or Config → Verification). Can be **global** (one setting for all tiers) or **per-tier** (override per phase/task/subtask). Recommendation: global `lsp_gate` with optional per-tier override in tier config.
-- **Schema (config key e.g. `verification.lsp_gate` or `lsp_gate`):**
+- **Schema (config key `verification.lsp_gate` in redb):**
+
+**LSP Gate Default Values (Resolved):**
+- `enabled`: **false** (opt-in per project)
+- `scope`: **"changed_files"** (only check files modified in this tier)
+- `block_on`: **"errors"** (errors block, warnings do not)
+- `tier_boundaries`: **["phase"]** (check at phase boundaries only by default)
+- `timeout_seconds`: **10** (LSP query timeout)
+- `when_unavailable`: **"skip"** (if LSP server is not running, skip the gate — do not fail)
+
+Config key: `verification.lsp_gate` in redb. All values are overridable per project via `.puppet-master/config.json`.
 
 ```json
 {
   "lsp_gate": {
-    "enabled": true,
-    "scope": "changed",
-    "block_on": "error",
-    "tier_boundaries": ["subtask"],
-    "timeout_seconds": 15
+    "enabled": false,
+    "scope": "changed_files",
+    "block_on": "errors",
+    "tier_boundaries": ["phase"],
+    "timeout_seconds": 10,
+    "when_unavailable": "skip"
   }
 }
 ```
 
 | Field | Type | Values | Default |
 |-------|------|--------|--------|
-| `enabled` | bool | true, false | false |
-| `scope` | string | `"changed"` \| `"open"` \| `"project"` | `"changed"` |
-| `block_on` | string | `"error"` \| `"error_and_warning"` | `"error"` |
-| `tier_boundaries` | string[] | `["phase"]`, `["task"]`, `["subtask"]`, or combination | `["subtask"]` |
-| `timeout_seconds` | number | positive integer | 15 |
+| `enabled` | bool | true, false | **false** |
+| `scope` | string | `"changed_files"` \| `"open"` \| `"project"` | **`"changed_files"`** |
+| `block_on` | string | `"errors"` \| `"errors_and_warnings"` | **`"errors"`** |
+| `tier_boundaries` | string[] | `["phase"]`, `["task"]`, `["subtask"]`, or combination | **`["phase"]`** |
+| `timeout_seconds` | number | positive integer | **10** |
+| `when_unavailable` | string | `"skip"` \| `"fail"` | **`"skip"`** |
 
 - **GUI:** Verification tab: "LSP diagnostics gate" subsection: Enable checkbox; Scope dropdown (Changed files / Open files / Whole project); Block on (Errors only / Errors and warnings); Tier boundaries (checkboxes: Phase, Task, Subtask); Timeout (seconds). Persist in same config blob as `VerificationConfig` (e.g. extend `VerificationConfig` or nested `lsp_gate`).
 
@@ -865,7 +877,7 @@ Store one JSON file per snapshot (e.g. one per gate run). Each entry in the snap
 
 - **Directory:** `.puppet-master/evidence/lsp-snapshots/`.
 - **Filename:** `lsp-snapshot-{gate_id}-{timestamp}.json` or `lsp-snapshot-{tier_id}-{session_id}.json` so it is unique and tied to the gate run.
-- **Content:** Single JSON object: `{ "captured_at": "ISO8601", "scope": "changed"|"open"|"project", "project_root": "...", "diagnostics": [ {...}, ... ] }`.
+- **Content:** Single JSON object: `{ "captured_at": "ISO8601", "scope": "changed_files"|"open"|"project", "project_root": "...", "diagnostics": [ {...}, ... ] }`.
 
 #### When captured
 
@@ -883,7 +895,7 @@ ContractRef: ContractName:Plans/LSPSupport.md
 
 - **Where in the flow:** When the orchestrator is about to **select a subagent for the next subtask** (or task), it can optionally query LSP diagnostics for **files in scope** for that subtask/task. **Decision:** Default **off**. Config key `orchestrator.lsp_subagent_bias` (bool, default false). When true, call `get_diagnostics_for_paths` and apply bias toward matching-language subagent. If any file has diagnostics (e.g. errors) from a language server X, **prefer** the subagent that matches language X (e.g. rust-analyzer → rust-engineer, pyright → python-pro).
 - **"Files in scope" definition:** One of (configurable or fixed):
-  - **Changed in last iteration** -- Files modified in the most recent iteration (same as LSP gate scope "changed" for consistency).
+  - **Changed in last iteration** -- Files modified in the most recent iteration (same as LSP gate scope `"changed_files"` for consistency).
   - **Open in editor** -- Files currently open in the run/context.
   - **Task's file list** -- If the task/subtask has an explicit list of files (e.g. from PRD or plan), use that list.
   - Default: **changed in last iteration** for consistency with LSP gate.
@@ -899,7 +911,7 @@ ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/orchestrator-s
 | **Timeout when querying diagnostics** | LspGateVerifier uses a timeout (e.g. `timeout_seconds` from config). On timeout: **fail** the criterion with `actual: "LSP diagnostics query timed out"`. Attach partial snapshot if any diagnostics were collected before timeout. |
 | **No server for language** | For some files in scope there is no LSP server (e.g. unknown extension). Those files contribute **no diagnostics** (empty list). Gate passes for that file; only files with a server are checked. No special failure. |
 | **Server crash or disconnected** | Same as "LSP client not ready": skip or pass per config; do not fail the entire gate unless config says "fail when LSP unavailable". |
-| **Empty scope (changed/open/project)** | If scope resolves to zero files (e.g. no files changed), gate **passes** (nothing to check). |
+| **Empty scope (changed_files/open/project)** | If scope resolves to zero files (e.g. no files changed), gate **passes** (nothing to check). |
 
 ContractRef: ContractName:Plans/LSPSupport.md
 

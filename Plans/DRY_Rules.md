@@ -95,7 +95,7 @@ ContractRef: ContractName:Plans/Progression_Gates.md#GATE-009
 ContractRef format:
 ```text
 ... requirement text ...
-ContractRef: <ref1>, <ref2>, ...
+ContractRef: Primitive:DRYRules, ContractName:Plans/Contracts_V0.md
 ```
 
 ContractRef: Gate:GATE-009, ContractName:Plans/Progression_Gates.md#GATE-009

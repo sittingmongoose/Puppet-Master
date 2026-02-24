@@ -383,10 +383,25 @@ This section captures underspecified items, risks, and concrete details so the p
 
 ### 7.1 Config format and schema mismatch
 
-- **GuiConfig** (Config page) uses `branching.granularity: String` with values `"single"`, `"per_phase"`, `"per_task"`. **PuppetMasterConfig** (orchestrator) uses `branching.granularity: Granularity` enum (`Phase`, `Task`, `Subtask`, `Iteration`, `None`). There is no 1:1 mapping: GUI has no "per_subtask" or "per_iteration", and "single" could map to `None`.
-- **PuppetMasterConfig** also has `branching.push_policy`, `branching.merge_policy`; GuiConfig does not expose these.
-- **Branch strategy:** PuppetMasterConfig's `BranchingConfig` does not currently have a `strategy` or `branch_strategy` field. `GitConfig` in `types/git.rs` has `branch_strategy: BranchStrategy`, but that struct is not the same as `BranchingConfig`. So adding "branch strategy from config" requires adding a field (e.g. `strategy: BranchStrategy` or `branch_strategy: String`) to the config the orchestrator loads, and a serialization format (e.g. `"main-only"` | `"feature"` | `"release"`).
-- **Implementation:** For Option A (single canonical format), define one file format (e.g. PuppetMasterConfig-shaped YAML). The Config page must then either (1) load/save that format and map to/from GuiConfig for the UI, or (2) use a shared struct that has both GUI and backend fields. Document the mapping from GUI granularity strings to `Granularity` enum (e.g. single → None, per_phase → Phase, per_task → Task).
+**Config Format Mismatch Resolution (Resolved — Migrate to Single Canonical Format):**
+
+GuiConfig and PuppetMasterConfig MUST use the same enum for `branching.granularity`:
+
+```rust
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub enum BranchGranularity {
+    None,      // Single branch (GUI label: "Single branch")
+    Phase,     // Per-phase branches (GUI label: "Per phase")
+    Task,      // Per-task branches (GUI label: "Per task")
+    Subtask,   // Per-subtask branches (GUI label: "Per subtask")
+    Iteration, // Per-iteration branches (GUI label: "Per iteration")
+}
+```
+
+- GUI displays human-readable labels; stores the enum variant in redb.
+- No string-based `branching.granularity` in GuiConfig. Eliminate the string type.
+- Migration: on first load, map legacy strings to enum variants ("single" → None, "per_phase" → Phase, "per_task" → Task). Log `config.migrated` seglog event.
+- Unmapped fields (`push_policy`, `merge_policy`): expose in GUI Settings → Git section. Default: `push_policy: "after_phase"`, `merge_policy: "squash"`.
 
 ### 7.2 Doctor: project path context
 
@@ -397,7 +412,7 @@ This section captures underspecified items, risks, and concrete details so the p
 ### 7.3 Backend run does not use current project
 
 - **Current behavior:** `spawn_orchestrator_backend` calls `ConfigManager::discover()` with **no hint**. The wizard and start-chain use `ConfigManager::discover_with_hint(config_hint)` with `current_project.path`. So the **orchestrator run** (Dashboard "Run") never receives the current project path; it uses whatever `discover_config_path(None)` finds.
-- **Implication:** For "recovery when project is known" and "Doctor use project path," if the user selects a project in the UI but the run is started from the same app, the run still uses discover-with-no-hint. To make "current project" meaningful for the run, the run command must pass a hint (e.g. extend start message with `config_hint: Option<PathBuf>`). **Call site to change:** In `spawn_orchestrator_backend` (or equivalent in app.rs), replace `ConfigManager::discover()` with `ConfigManager::discover_with_hint(config_hint)`; pass `current_project.path` from Dashboard when starting a run. The plan should explicitly call out: "When starting a run from the Dashboard, pass `current_project.path` as config hint so the run and recovery use the selected project."
+- **Implication:** For "recovery when project is known" and "Doctor use project path," if the user selects a project in the UI but the run is started from the same app, the run still uses discover-with-no-hint. To make "current project" meaningful for the run, the run command must pass a hint (e.g. extend start message with `config_hint: Option<PathBuf>`). **Call site to change:** In `app.rs::spawn_orchestrator_backend`, replace `ConfigManager::discover()` with `ConfigManager::discover_with_hint(config_hint)`; pass `current_project.path` from Dashboard when starting a run. The plan should explicitly call out: "When starting a run from the Dashboard, pass `current_project.path` as config hint so the run and recovery use the selected project."
 
 ### 7.4 Merge conflicts: persisting "conflict worktrees"
 
@@ -438,7 +453,7 @@ All gaps from audit are closed with the following decisions. Implementers should
 
 **Git (Section 3):** (1) **Git binary:** Add `path_utils::resolve_git_executable() -> Option<PathBuf>` (same logic as `find_tool_executable("git")`); GitManager and GitInstalledCheck both use it; tag `// DRY:FN:resolve_git_executable`. If resolver returns None, GitManager fails the operation; Doctor fails the check. (2) **GitHub PRs:** PR creation uses GitHub HTTPS API only (no GitHub CLI) per `Plans/GitHub_API_Auth_and_Flows.md`. (3) **naming_pattern:** Hide in GUI and document Reserved for future use in initial release; do not wire to branch naming. (4) **git-actions.log:** Move to `.puppet-master/logs/git-actions.log`; add to .gitignore as runtime-only per STATE_FILES.
 
-**Config (Section 5):** (1) **Backend call site:** In `spawn_orchestrator_backend` (or equivalent in app.rs), replace `ConfigManager::discover()` with `ConfigManager::discover_with_hint(config_hint)`; pass `current_project.path` from Dashboard/start-run flow (e.g. extend start message with optional hint). (2) **Minimum wired fields:** enable_parallel_execution, enable_git, base_branch, auto_pr; strategy required for Phase 4 GUI; granularity/naming_pattern optional/hidden per 7.7 and 3.7.
+**Config (Section 5):** (1) **Backend call site:** In `app.rs::spawn_orchestrator_backend`, replace `ConfigManager::discover()` with `ConfigManager::discover_with_hint(config_hint)`; pass `current_project.path` from Dashboard/start-run flow (e.g. extend start message with optional hint). (2) **Minimum wired fields:** enable_parallel_execution, enable_git, base_branch, auto_pr; strategy required for Phase 4 GUI; granularity/naming_pattern optional/hidden per 7.7 and 3.7.
 
 **Doctor API:** Extend Doctor so the app can pass an optional project hint (e.g. `run_all(hint: Option<&Path>)`); GitRepoCheck, GitConfiguredCheck, and worktrees check use hint when present.
 
@@ -751,14 +766,20 @@ impl WorktreeManager {
             
             self.crew_manager.post_to_crew(crew_id, merge_coordination_message).await?;
             
-            // Wait for merge order (or timeout after 5 seconds)
+            // **Merge-Order Coordination Timeout (Resolved):**
+            // - Timeout: **5 seconds** for crew merge-order responses.
+            // - On timeout: **proceed with default order** (alphabetical by worktree name).
+            //   Log warning `merge.coordination.timeout` seglog event.
+            // - Do NOT block. Merge coordination is best-effort optimization; alphabetical
+            //   order is deterministic and safe.
+            // - Config: `git.merge_coordination_timeout_s`, default `5`.
             let responses = self.crew_manager.wait_for_responses(
                 crew_id,
                 MessageType::Decision,
                 chrono::Duration::seconds(5),
             ).await?;
             
-            // Determine merge order from crew responses
+            // Determine merge order from crew responses (fallback: alphabetical by worktree name)
             let merge_order = self.determine_merge_order_from_responses(&responses)?;
             
             // Wait for turn if not first in merge order

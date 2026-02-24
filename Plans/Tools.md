@@ -208,6 +208,21 @@ The **task** tool launches a subagent by type. The **subagent_type** parameter m
 
 **Implementation:** The central registry (e.g. `subagent_registry::is_valid_subagent_name(subagent_type)`) must be the single source of truth. When the **task** tool is invoked, validate `subagent_type` against the registry; if invalid, return a structured error (e.g. "Subagent type 'X' not in canonical list; see Plans/orchestrator-subagent-integration.md §4"). Persona content (SKILL.md) lives in `.github/agents/` and `.claude/agents/` (41 files); the runner loads the matching persona for the requested type.
 
+### GitHubApiTool
+
+**ToolID:** `GitHubApiTool`
+
+**Purpose:** The sole permitted interface for GitHub HTTPS API calls. All GitHub operations (repository, fork, PR, issue, status) MUST route through this tool.
+
+**Rules:**
+- GitHub CLI (`gh`) is forbidden for auth/status/repo/fork/PR operations (see Spec_Lock.json#github_operations).
+- Auth flows are owned by Plans/GitHub_API_Auth_and_Flows.md.
+- API version: configurable via `github.api_version` (default: `"2022-11-28"`).
+
+**Owner:** Crosswalk.md §3.1 (Tooling domain).
+
+ContractRef: ToolID:GitHubApiTool, SchemaID:Spec_Lock.json#github_operations, Primitive:Tool
+
 ---
 
 ## 4. Custom tools

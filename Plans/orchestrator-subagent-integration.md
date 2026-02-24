@@ -25,8 +25,22 @@ This plan remains authoritative for tier policy (Phase/Task/Subtask/Iteration), 
 ### Persistence and event emission (rewrite)
 
 - **Seglog:** Emit to the canonical seglog stream: tier start/end, iteration start/end, verification results, subagent invocation boundaries, and any event that must be replayable. Use the unified event model; do not add one-off log files for run history.
-- **redb:** Persist in redb (per storage-plan.md schema): orchestrator **run** metadata (run id, PRD ref, status, timestamps); **session** identity and linkage to run; **checkpoints** at phase/task/subtask boundaries for resume and recovery. Config used by the run (tier config, plan mode, etc.) may be projected from redb settings or built at run start per Option B; document which.
+- **redb:** Persist in redb (per storage-plan.md schema): orchestrator **run** metadata (run id, PRD ref, status, timestamps); **session** identity and linkage to run; **checkpoints** at phase/task/subtask boundaries for resume and recovery. Config used by the run is built at run start per Option B (see config-wiring below).
 - Implementation: run/session/checkpoint writes and seglog appends should be called from the same orchestrator boundaries (e.g. after verification, on tier advance) so state and event stream stay consistent.
+
+### Config Wiring — Option B: Build at Run Start (Resolved, Canonical Definition) {#config-wiring}
+
+At run start, the orchestrator builds the full execution config by merging three sources in this precedence order (later overrides earlier):
+1. **GUI config defaults** (from redb `config:gui.*`): platform, model, effort, plan_mode defaults.
+2. **Interview output config** (from interview artifacts): subagent assignments, phase config, research settings, technology-specific overrides.
+3. **Per-tier overrides** (from PRD/plan tasks): any task-level overrides for platform, model, or effort.
+
+Merge rules:
+- Scalar values: last writer wins (per precedence).
+- Arrays (e.g., `subagents`): concatenate and deduplicate.
+- Objects: deep merge (per-key override).
+
+The merged config is validated by `validate_config_wiring_for_tier()` before execution begins.
 
 ## Relationship Between the Two Plans
 
@@ -51,7 +65,7 @@ The project uses **two plan documents** that divide scope by execution context:
 
 The **orchestrator must respect** two kinds of information that the interview (or other plan author) writes into the PRD/plans: **subagent persona recommendations** and **parallelization**.
 
-1. **Subagent persona recommendations.** When the PRD (or loaded plan) contains **subagent recommendations** for a task or subtask (e.g. `crew_recommendation.subagents` or equivalent per interview-subagent-integration §5.2 and Crew-Aware Plan Generation), the orchestrator **must use those personas** when executing that tier. Use the recommended subagent set as the source for which subagents to invoke; only fall back to dynamic selection (e.g. `select_for_tier`) when the PRD/plan does not specify recommendations for that item. Config overrides (disabled/required/override lists) can still apply on top of PRD recommendations. This ensures that interview-generated plans are executed with the intended specialists.
+1. **Subagent persona recommendations.** When the PRD (or loaded plan) contains **subagent recommendations** for a task or subtask in `crew_recommendation.subagents` (interview-subagent-integration §5.2 and Crew-Aware Plan Generation), the orchestrator **must use those personas** when executing that tier. Use the recommended subagent set as the source for which subagents to invoke; only fall back to dynamic selection (e.g. `select_for_tier`) when the PRD/plan does not specify recommendations for that item. Config overrides (disabled/required/override lists) can still apply on top of PRD recommendations. This ensures that interview-generated plans are executed with the intended specialists.
 
 2. **Parallelization.** When the PRD/plan contains **parallelism** information (e.g. `depends_on` and `parallel_group` per STATE_FILES.md §3.3 and interview-subagent-integration §5.2), the orchestrator **must respect it** when building the execution schedule. Build a dependency graph from `depends_on`; run tasks/subtasks that have no unsatisfied dependencies, and run items in the same `parallel_group` **in parallel** where the execution engine supports it. Do not run items in parallel when the plan says they depend on another; do run independent items in parallel when the plan allows it. See **Schedule building: order of operations** below.
 
@@ -1201,18 +1215,18 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 
 ### Recommendations
 
-**1. Default plan mode to true for all tiers**
+**1. Keep migration-safe default off for all tiers**
 
-- In `default_config.rs`, set `plan_mode: true` for `phase`, `task`, `subtask`, and `iteration`.
-- In `config_override.rs` and any YAML defaults, use `plan_mode: true` unless we explicitly want a "fast/loose" default.
-- Rationale: You prefer plan mode for every request for better results; making it the default matches that and reduces the need to turn it on in four places.
+- In `default_config.rs`, set `plan_mode: false` for `phase`, `task`, `subtask`, and `iteration`.
+- In `config_override.rs` and YAML defaults, use `plan_mode: false`.
+- Rationale: Existing projects should not be forced into plan mode on first load. Users can still enable plan mode quickly via global toggle or one-click action.
 
 **2. Global "Use plan mode for all tiers" (in scope -- see "GUI and Backend Scope" below)**
 
 - Add a single GUI control (e.g. in Config, above or beside tier cards): "Use plan mode for all tiers" that:
   - When turned on: sets `plan_mode: true` for phase, task, subtask, and iteration.
   - When turned off: sets `plan_mode: false` for all (or restores last per-tier values if we store them).
-- Optionally persist a "prefer plan mode" default so new tiers or new configs start with plan mode on; the global toggle can apply that default.
+- Optionally persist a "prefer plan mode" user preference only after explicit opt-in, so new tiers/configs remain migration-safe by default.
 
 **3. One-click "Enable plan mode for all tiers" (in scope)**
 
@@ -1234,11 +1248,11 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 **6. Tooltip and discoverability (in scope)**
 
 - Update the `tier.plan_mode` tooltip to state that plan mode is recommended for all tiers for best results (e.g. "Recommended: enable for all tiers for more reliable, step-by-step behavior").
-- In Wizard, consider defaulting the plan mode toggles to true when creating a new run so new users get the preferred behavior without searching for the option.
+- In Wizard, keep default plan mode toggles at false and provide a visible one-click "Enable plan mode for all tiers" action for opt-in behavior.
 
 **7. GUI gaps summary (cross-plan)**
 
-- **Config:** Plan mode and subagent UI live in Config (Tiers tab, optional global toggle, Subagents section). **MiscPlan** adds cleanup/evidence under Config → Advanced (§7.5); **Worktree** adds Branching tab controls. Ensure a single Save persists the whole GuiConfig (including plan mode, subagents, cleanup, branching) and that Option B run-config build includes all of these so the run sees current UI state.
+- **Config:** Plan mode and subagent UI live in Config (Tiers tab, optional global toggle, Subagents section). **MiscPlan** adds cleanup/evidence under Config → Advanced (§7.5); **Worktree** adds Branching tab controls. Ensure a single Save persists the whole GuiConfig (including plan mode, subagents, cleanup, branching) and that the Option B run-config build (see §config-wiring above) includes all of these so the run sees current UI state.
 - **Unwired / implementation status:** For a consolidated list of unwired features, missing GUI controls, and implementation status (interview config, run config Option B, cleanup, Doctor), see **MiscPlan §9.1.18**.
 - **Platform CLI capabilities (hooks, skills, plugins, extensions):** This plan documents them in **"Platform-Specific Capabilities & Extensions"** below. We pass subagent names and plan mode via **prompt/CLI args**; we do not require Cursor plugins or Claude hooks for core orchestration. **MiscPlan §7.6** summarizes how cleanup/prepare are implemented in Puppet Master and how we might optionally leverage or document platform hooks/skills. When changing subagent invocation, keep platform_specs and AGENTS.md aligned with CLI release notes.
 - **Plans/newfeatures.md:** For **orchestration prompt** injection (§1: session-level "assess → decompose → act → verify" via `--append-system-prompt`), **background/async agents** (§2: queue, git branch per run, output dir, GUI panel), and **hook system** (§9: event hooks as extension point at tier/iteration boundaries), see newfeatures; those features extend this plan without replacing tier or subagent structure.
@@ -1246,7 +1260,7 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 ### Implementation checklist
 
 **Plan mode -- backend**
-- [ ] Change default `plan_mode` to `true` for all tiers in `default_config.rs`, `config_override.rs`, and GUI defaults.
+- [ ] Keep default `plan_mode` as `false` for all tiers in `default_config.rs`, `config_override.rs`, and GUI defaults.
 - [ ] Add `use_plan_mode_all_tiers` (and optional `last_per_tier_plan_mode`) to persisted config; apply in tier config load/sync so all tiers become true/false when global is toggled.
 - [ ] Ensure subagent/invocation path receives tier `plan_mode` and passes it into `ExecutionRequest` (document in subagent plan and in code).
 
@@ -1256,7 +1270,7 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 - [ ] Update `tier.plan_mode` tooltip in `widgets/tooltips.rs` to recommend enabling for all tiers; add Gemini plan-mode hint on tier card when platform is Gemini and plan mode on.
 
 **Plan mode -- frontend (Wizard)**
-- [ ] Default plan mode to true for new runs in Wizard; add "Enable plan mode for all tiers" in Wizard when tier plan-mode toggles exist.
+- [ ] Default plan mode to false for new runs in Wizard; add "Enable plan mode for all tiers" in Wizard when tier plan-mode toggles exist.
 
 **Subagent -- backend**
 - [ ] Add subagent config struct and load/save from `config.yaml` (or app config); orchestrator uses `enable_tier_subagents`, `tier_overrides`, `disabled_subagents`, `required_subagents`.
@@ -1277,7 +1291,23 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 - [ ] **Mitigate potential issues:** Review **"Potential Issues"** and address defaults, validation, platform adapters, caching, and persistence so the feature is robust in production.
 - [ ] **DRY method and widget catalog:** Check `docs/gui-widget-catalog.md` before adding UI; use existing widgets; tag new reusable items with `DRY:WIDGET:`, `DRY:FN:`, or `DRY:DATA:`; run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` after widget changes.
 - [ ] **Interview config wiring:** Wire interview settings per **"Interviewer Enhancements and Config Wiring"**: add `min_questions_per_phase` and `max_questions_per_phase` (Option for unlimited) to `InterviewOrchestratorConfig`, set from `gui_config.interview` in `app.rs`, use in PhaseManager and phase-complete logic and prompts; add GUI controls (Min / Max with Unlimited). Wire `require_architecture_confirmation` and `vision_provider` into `InterviewOrchestratorConfig` and use in interview flow (architecture gate; vision platform when image flows exist).
-- [ ] **Config-wiring validation at each tier:** Implement `validate_config_wiring_for_tier` (or equivalent) and call it at **Phase start, Task start, Subtask start, Iteration start** in the main orchestrator (and at phase/sub-tier start in the interview orchestrator). Fail fast when required config is missing; warn when a GUI/file field is not present in execution config. See **"Avoiding Built but Not Wired"** and **Implementation Notes -- Config-wiring validation**.
+- [ ] **Config-wiring validation at each tier:** Implement `validate_config_wiring_for_tier` (or equivalent) and call it at **Phase start, Task start, Subtask start, Iteration start** in the main orchestrator (and at phase/sub-tier start in the interview orchestrator). See **"Avoiding Built but Not Wired"** and **Implementation Notes -- Config-wiring validation**.
+
+**Config-Wiring Validation: Required vs Optional Fields (Resolved):**
+
+| Field | Category | On Missing |
+|-------|----------|------------|
+| `platform` | Required | **Fail** — cannot execute without a Provider |
+| `model` | Required | **Fail** — cannot execute without a model |
+| `working_directory` | Required | **Fail** — cannot execute without a target directory |
+| `effort` | Optional | **Warn** — use Provider default |
+| `plan_mode` | Optional | **Warn** — use global default (`false`) |
+| `subagents` | Optional | **Warn** — use tier-level default assignment |
+| `custom_hooks` | Optional | **Warn** — no hooks applied |
+| `max_turns` | Optional | **Warn** — use Provider default (unlimited) |
+| `timeout` | Optional | **Warn** — no timeout |
+
+Validation runs at tier start via `validate_config_wiring_for_tier()`. Required field failures emit `config.validation.failed` seglog event and halt. Optional field warnings emit `config.validation.warning` and proceed with defaults.
 - [ ] **AGENTS.md wiring checklist:** Add to AGENTS.md (e.g. under Pre-Completion Verification Checklist or DO): for any new execution-affecting config, follow the three-step wiring checklist (add to execution config, set at construction from GUI/file, use in runtime); link to this plan or REQUIREMENTS.md.
 - [ ] **Start and end verification:** Implement start-of-phase/task/subtask verification (config-wiring + wiring/readiness: GUI? backend? steps make sense? gaps?) and end-of-phase/task/subtask verification (wiring re-check + acceptance gate + quality verification / code review). See **"Start and End Verification at Phase, Task, and Subtask"**; resolve gaps there (quality definition per tier, readiness checklist source of truth, interview-phase mirror).
 - [ ] **Lifecycle hooks:** Implement BeforeTier/AfterTier hooks (track active subagent, inject context, prune stale state, validate handoff format). Leverage platform-native hooks where available (Cursor, Claude, Gemini); use orchestrator-level middleware for all platforms. Leverage Codex SDK and Copilot SDK for coordination when using SDK-based execution. See **"Lifecycle and Quality Features"**.
@@ -1288,7 +1318,7 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 - [ ] **Safe error handling:** Wrap hooks and verification functions in `safe_hook_main()` that guarantees structured output (JSON or Result) even on failure. Hooks must never crash the session.
 - [ ] **Lazy lifecycle:** Create verification state directories on first write (no setup command); prune stale state (>2 hours) in BeforeTier hook (no teardown command).
 
-This keeps plan mode as the preferred behavior for every request while preserving the ability to turn it off per tier or globally when needed.
+This keeps plan mode easy to enable for every request while preserving migration-safe defaults and per-tier control.
 
 ---
 
@@ -1298,8 +1328,8 @@ All previously "optional" or "later" plan-mode and subagent GUI/backend items ar
 
 ### 1. Plan Mode -- Backend
 
-- **Defaults:** In `default_config.rs`, set `plan_mode: true` for phase, task, subtask, iteration. In `config_override.rs` (and any YAML defaults), use `plan_mode: true` unless explicitly overridden. In `gui_config.rs` default, set `plan_mode: true` for any tier defaults used by the GUI.
-- **Global "use plan mode for all tiers":** Add to persisted config (e.g. `GuiConfig` or app settings that save to `.puppet-master/settings.json` or equivalent): `use_plan_mode_all_tiers: bool`. Optionally: `last_per_tier_plan_mode: Option<HashMap<TierId, bool>>` to restore when turning the global off. When `use_plan_mode_all_tiers == true`, any load or sync of tier config forces all four tiers' `plan_mode` to `true` (optionally store previous per-tier values before overwriting). When toggled off, set all tiers to `false` or restore from `last_per_tier_plan_mode`. Prefer write-through so tier configs and saved YAML stay in sync.
+- **Defaults:** In `default_config.rs`, set `plan_mode: false` for phase, task, subtask, iteration. In `config_override.rs` and YAML defaults, use `plan_mode: false` unless explicitly overridden. In `gui_config.rs`, keep tier defaults at `false` for migration-safe behavior.
+- **Global "use plan mode for all tiers":** Add `use_plan_mode_all_tiers: bool` to `GuiConfig` (canonical storage; no separate `settings.json` key). Optionally add `last_per_tier_plan_mode: Option<HashMap<String, bool>>` to restore per-tier values when turning the global toggle off. When `use_plan_mode_all_tiers == true`, load/sync forces all four tier `plan_mode` values to `true`. When toggled off, restore `last_per_tier_plan_mode` or set all to `false`. Use write-through so tier configs and saved YAML stay in sync.
 - **Subagent invocations:** When building `ExecutionRequest` for subagent runs (e.g. in `execute_tier_with_subagents` or the platform adapter), set `request.plan_mode = tier_config.plan_mode` (from `TierConfig` or `IterationContext`). Document in plan and code.
 - **Gemini:** In Doctor, add a check: if any tier uses Gemini and `plan_mode == true`, warn that `experimental.plan: true` may be required in `~/.gemini/settings.json`. Optionally probe the file and only warn if the setting is missing. In Config, when platform is Gemini and plan mode is on, show a short tooltip or help: "Gemini plan mode may require `experimental.plan: true` in ~/.gemini/settings.json."
 
@@ -1313,7 +1343,7 @@ All previously "optional" or "later" plan-mode and subagent GUI/backend items ar
 
 ### 3. Plan Mode -- Frontend (Wizard)
 
-- **Default for new runs:** When the Wizard builds initial tier config for a new run, set `plan_mode: true` for all tiers (from `default_config` or explicitly in wizard init). Wizard tier/plan-mode toggles should reflect this.
+- **Default for new runs:** When the Wizard builds initial tier config for a new run, set `plan_mode: false` for all tiers (from `default_config` or explicitly in wizard init). Wizard tier/plan-mode toggles should reflect this.
 - **One-click:** If the Wizard has tier-level plan mode toggles, add "Enable plan mode for all tiers" (same semantics as Config) so users can align all tiers in one action.
 
 ### 4. Subagent -- Backend
@@ -1346,7 +1376,15 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 ### 1. Where to persist `use_plan_mode_all_tiers`
 
 - **Gap:** The plan says add to "GuiConfig or app settings that save to `.puppet-master/settings.json`".
-- **Clarify:** Choose one: (a) Add `use_plan_mode_all_tiers` (and optional `last_per_tier_plan_mode`) to **GuiConfig** and persist in the same YAML as tiers (same file/save path as Config), or (b) persist in **settings.json** (e.g. `.puppet-master/settings.json`) and have Config load/save it from there. The app currently has both: `gui_config` save/load to a config path (e.g. pm-config.yaml) and settings.json for other state. Recommend (a) so plan-mode global state lives with tier config in one place.
+- **Clarify:**
+
+**Plan Mode Global State (Resolved — Option A: GuiConfig):**
+- Add `use_plan_mode_all_tiers: bool` to `GuiConfig`.
+- Default: `false` (migration-safe; users opt in).
+- Persisted in redb (`config:gui.use_plan_mode_all_tiers`).
+- SSOT: this field in GuiConfig. `settings.json` is NOT used for this setting.
+- GUI: toggle in Settings → Orchestration → "Use plan mode for all tiers" checkbox.
+- Per-tier overrides still available (stored separately in tier config).
 
 ### 2. Subagent config in GuiConfig
 
@@ -1558,6 +1596,20 @@ Use the union of all names for override/disabled/required lists; optionally rest
 - **Gap:** Structured handoff validation (`validate_subagent_output`) needs platform-specific parsers: JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot. The plan does not yet specify parser implementation details or fallback behavior when parsing fails.
 - **Clarify:** (1) **JSON parsers:** For Cursor/Claude/Gemini, use `serde_json` to parse `--output-format json` output into `SubagentOutput`. Handle missing fields gracefully (e.g., `downstream_context: None` if field absent). (2) **JSONL parser:** For Codex, parse `--json` or `--experimental-json` JSONL stream; aggregate events into single `SubagentOutput` (last event wins for fields, accumulate findings). (3) **Text parser:** For Copilot, use regex or pattern matching to extract "Task Report:", "Downstream Context:", "Findings:" sections from text output. If sections missing, treat as malformed and retry. (4) **Fallback:** If parsing fails after retry, create partial `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` and mark tier as "complete with warnings" rather than failing the run.
 
+**Subagent Output Parser Fallback (Resolved):**
+
+Platform-specific parsers handle output from each Provider:
+- **Cursor/Claude/Gemini:** JSON parser (stream-json NDJSON events)
+- **Codex:** JSONL parser (newline-delimited JSON events)
+- **Copilot:** Text parser (plain text output, regex-based signal extraction)
+
+When a platform-specific parser fails:
+1. **Log:** Record parse error in seglog (`parser.error` event) with the first 500 characters of raw output for diagnostics.
+2. **Generic fallback:** Attempt generic text extraction — scan for completion signals (`<ralph>COMPLETE</ralph>`, `<ralph>GUTTER</ralph>`), error patterns (stack traces, "error:", "fatal:"), and file modification markers.
+3. **If generic succeeds:** Use extracted data; flag the turn as `parser_fallback_used` in seglog metadata.
+4. **If generic also fails:** Treat as a Provider error. Retry once with the same Provider. If retry also fails, surface error to user: "Could not parse output from [Provider]. [Retry] [Skip] [View raw output]."
+5. **Never silently drop output.** All raw output is preserved in the seglog event regardless of parse success.
+
 ### 11. Subagent persona info: preload, overrides (config only), and injection
 
 - **Gap:** The "Subagent personas / info setup" (Section 5) requires (a) initial persona list and content, (b) user overrides persisted somewhere, and (c) persona text injected when a subagent is invoked. The plan now specifies preloading from `.claude/agents`, user add/delete, and optional AI trim; `SubagentGuiConfig` (Gap §2) holds `persona_overrides`; the injection point must be explicit.
@@ -1645,7 +1697,20 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 ### 2. Invalid subagent names in overrides
 
 - **Issue:** User can type or paste invalid names in tier overrides or disabled/required lists. Orchestrator or platform CLI may then receive unknown names and fail or misbehave.
-- **Mitigation:** Validate against the canonical subagent list (see Gaps §4). In UI: prefer multi-select or autocomplete from allowed names; on save or apply, warn or reject invalid entries. In backend: filter unknown names or fail fast with a clear error.
+**Subagent Name Validation (Resolved):**
+
+**In UI (GUI config):**
+- Use **autocomplete/multi-select** populated from the canonical subagent name registry. Invalid names cannot be entered.
+- If a name is typed that doesn't match any registered subagent, show inline error: "Unknown subagent: [name]. Check spelling or register the subagent first."
+
+**On save/apply:**
+- **Reject** invalid entries with a clear error message. Do not save config with invalid subagent names.
+
+**In backend (execution):**
+- **Fail fast** with a clear error: "Unknown subagent '[name]' in tier config. Available: [list]." Do not silently filter.
+- Emit `config.validation.failed` seglog event.
+
+**Canonical subagent name registry:** Maintained in `platform_specs` or a dedicated `subagent_registry` module. Names are stable strings (kebab-case, e.g., `architect-reviewer`, `security-auditor`).
 
 ### 3. Gemini settings path and format
 
@@ -1659,7 +1724,7 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 
 ### 5. Wizard vs Config and global plan mode
 
-- **Issue:** Wizard has its own `wizard_tier_configs`; if we default plan mode to true there, we must ensure that when the user finishes the wizard and a run is created, we don't overwrite or ignore the global `use_plan_mode_all_tiers` from Config (or vice versa).
+- **Issue:** Wizard has its own `wizard_tier_configs`; even with default plan mode set to false, we must ensure that when the user finishes the wizard and a run is created, we don't overwrite or ignore the global `use_plan_mode_all_tiers` from Config (or vice versa).
 - **Mitigation:** **Decision:** When the user completes the Wizard and creates a run, use Wizard tier config as the source of truth for that run (platform, model, plan_mode per tier). When Wizard persists to the config file (e.g. on Save or Apply), merge with existing Config: apply "global plan mode on ⇒ set all tier plan_mode true" and write subagent config from Config if present, so the saved file stays consistent. Wizard UI does not need the global plan-mode toggle; per-tier plan mode toggles (and optional "Enable plan mode for all tiers" button) are enough.
 
 ### 6. Tier overrides are per tier type, not per node
@@ -1742,8 +1807,17 @@ So three interview settings are currently **built but not wired**. Users who cha
 
 2. **Dynamic behavior:** The interview agent may signal phase completion (e.g. `<<<PM_PHASE_COMPLETE>>>`). The orchestrator should:
    - **Accept** phase complete only when the current phase's question count is **≥** `min_questions_per_phase`.
-   - If `max_questions_per_phase` is `Some(n)`, **reject** or defer phase complete if count **>** n (or treat as soft cap and accept when agent signals complete and count ≤ n).
    - If `max_questions_per_phase` is `None` (unlimited), no upper bound check.
+
+**Max Questions Per Phase — Soft Cap (Resolved):**
+When `max_questions_per_phase` is configured:
+- **Soft cap with grace:** Accept phase completion when the agent signals complete and question count ≤ `max + 1` (one grace question for wrap-up).
+- **Force-complete:** If question count exceeds `max + 1` without the agent signaling complete, force-complete the phase:
+  - Emit a `phase.force_completed` seglog event with `reason: "max_questions_exceeded"`.
+  - Use the answers collected so far as the phase output.
+  - Log a warning: "Phase [X] force-completed after [N] questions (max: [max])."
+- **No reject:** Never reject a phase that has already collected valid answers. The cap prevents runaway agent loops, not data loss.
+- Config: `interview.phases.{phase_name}.max_questions` (per-phase), `interview.max_questions_per_phase` (global default).
 
 3. **Wiring (full path):**
    - **Types:** Add to `InterviewGuiConfig` and `InterviewConfig`: `min_questions_per_phase: u32`, `max_questions_per_phase: Option<u32>` (and remove or repurpose the old single `max_questions_per_phase`).
@@ -2129,7 +2203,22 @@ When the orchestrator **completes** a Phase, Task, or Subtask (e.g. all iteratio
 2. **Acceptance criteria (existing):** Run the existing verification gate (e.g. criteria from PRD, command/file/regex checks). This remains the "did we meet the spec?" check.
 3. **Quality verification (new):** Beyond acceptance criteria, **review the code (or artifacts) produced at this tier** to ensure the work was done well -- not just "does it pass the gate?" but "is it maintainable, correct, and aligned with project standards?" Both of the following are **required** (no human review; agent-driven only):
    - **Structured code review by reviewer subagent (required, not optional):** Run a dedicated reviewer subagent (e.g. `code-reviewer`) at end-of-phase/task/subtask. It inspects the diff or artifacts and outputs pass/fail + feedback. There is no path that skips this. Do **not** use human review.
-   - **Quality criteria in the gate (required as well):** Extend the verification gate for this tier to include automated quality items (e.g. "no new clippy warnings," "new code has tests," "no TODOs without tickets"). Linters, formatters, test coverage delta, and security scanners run on changed files for this tier and fail or warn if below threshold.
+   - **Quality criteria in the gate (required as well):** Extend the verification gate for this tier to include automated quality items (e.g. "no new clippy warnings," "new code has tests," "no TODOs without tickets").
+
+**Quality Gate: Fail vs Warn Rules (Resolved):**
+
+| Check | Severity | Action |
+|-------|----------|--------|
+| Linter errors (error-level) | Critical | **Fail** — block tier completion |
+| Linter warnings (warn-level) | Advisory | **Warn** — log, do not block |
+| Formatter violations | Advisory | **Warn** — log, do not block |
+| Test failures | Critical | **Fail** — block tier completion |
+| Test coverage delta < 0% | Advisory | **Warn** — log, do not block |
+| Build errors | Critical | **Fail** — block tier completion |
+| Type check errors | Critical | **Fail** — block tier completion |
+
+Threshold source: per-project `.puppet-master/quality.json` (if exists). If file is missing, use built-in defaults (no coverage threshold, linter/test/build errors fail, everything else warns).
+Config: `quality.gate.{check_name}.action` — override per check (`"fail"` or `"warn"`).
 
 **BeforeTierEnd verification responsibilities:**
 
@@ -2502,7 +2591,15 @@ fn get_quality_criteria_for_tier(tier_type: TierType) -> Result<Vec<QualityCrite
 **Potential issues:**
 
 - **Quality over performance:** Quality of verification is paramount. Do not prioritize speed or "cheap" checks over completeness and correctness. Run full wiring, readiness, acceptance, and quality checks (including reviewer subagent and gate criteria) at start and end of each tier. Scope quality checks to changed files or this tier's artifacts to stay practical, but do not skip or weaken verification for performance reasons.
-- **Unrelated failures and who addresses them:** Automated quality checks (linters, coverage) can fail for reasons unrelated to this tier's work (e.g. pre-existing tech debt). **The parent-tier orchestrator** is responsible for addressing these: when a Subtask fails due to an unrelated issue, the Task-level orchestrator decides (retry, assign a different subagent such as a tech-debt fixer, escalate to Phase level). When a Task fails, the Phase-level orchestrator decides. When a Phase fails, the top-level orchestrator escalates to the user. Unrelated failures must be addressed by someone; they cannot be silently bypassed. Tier-scoped checks (e.g. "no new warnings in this subtask's files") reduce unrelated failures but do not eliminate them; the parent-tier escalation flow handles what remains.
+- **Unrelated failures and who addresses them:**
+
+**Unrelated Failures Escalation (Resolved):**
+When a phase/tier fails with issues outside its task scope:
+1. **Automatic retry:** Parent-tier orchestrator retries the failed tier once (same config).
+2. **If retry also fails:** Surface a **CtA in Assistant chat** (not a modal): "Phase [X] failed with issues outside task scope. [Review details] [Skip phase] [Retry] [Abort run]."
+3. **P0 exceptions:** If the failure involves potential data loss (e.g., corrupted worktree), show a **modal dialog** instead: "Critical: [description]. This may affect your project files. [Review immediately] [Abort run]."
+4. Never silently bypass unrelated failures.
+5. "Who addresses": the **user** decides (via CtA options). The orchestrator does not attempt to fix unrelated issues autonomously.
 - **Feedback loop:** When end verification fails (acceptance or quality), the agent or user needs clear feedback (what failed, which file/criterion, suggested fix). Integrate with the existing "incomplete task + feedback" flow (e.g. prepend feedback to task file, re-run iteration) so rework is guided.
 - **Consistency with existing gates:** The codebase may already have verification gates between tiers. Start/end verification should **complement** them: start = before work; end = after work (gate + quality). Ensure we do not duplicate gate logic; the "acceptance criteria" at end can call the existing gate.
 
@@ -4159,7 +4256,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 ### Config-wiring validation (Phase / Task / Subtask / Iteration)
 
 - **Where:** New module e.g. `src/core/config_wiring.rs` or `src/verification/config_wiring.rs` (or split: `config_wiring/orchestrator.rs` and `config_wiring/interview.rs`). The main orchestrator calls the validator from `src/core/orchestrator.rs` at each tier boundary; the interview orchestrator calls an interview-specific validator from `src/interview/orchestrator.rs` at phase (and any sub-tier) start.
-- **What:** Implement `validate_config_wiring_for_tier(tier_type, config_snapshot, context) -> Result<(), WiringError>` (or equivalent) that checks: for **Phase** -- phase tier config present, plan_mode/orchestrator flags applied, interview config fields present when in interview run; for **Task** -- task tier config present, subagent config present and applied; for **Subtask** -- subtask tier config present, subagent list from config; for **Iteration** -- iteration tier config present, request built from tier config. Fail fast when required config is missing; warn when a GUI/file field is not present in execution config. See **"Avoiding Built but Not Wired"** in this plan for the full table and fail vs warn policy.
+- **What:** Implement `validate_config_wiring_for_tier(tier_type, config_snapshot, context) -> Result<(), WiringError>` (or equivalent) that checks: for **Phase** -- phase tier config present, plan_mode/orchestrator flags applied, interview config fields present when in interview run; for **Task** -- task tier config present, subagent config present and applied; for **Subtask** -- subtask tier config present, subagent list from config; for **Iteration** -- iteration tier config present, request built from tier config. See the **"Config-Wiring Validation: Required vs Optional Fields (Resolved)"** table in the Build Queue checklist above for the fail vs warn policy per field.
 - **When called:** Immediately before the orchestrator builds execution context or spawns the agent for that tier (i.e. at Phase start, Task start, Subtask start, Iteration start). Do not skip validation for "fast path" or tests unless explicitly gated (e.g. env var to disable for a specific test).
 
 ### Start and end verification (wiring + readiness + quality)

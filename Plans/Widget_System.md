@@ -341,6 +341,9 @@ The existing `dashboard_layout:v1` redb key (Plans/FinalGUISpec.md section 15.1)
 2. Future reads use `widget_layout:v1:dashboard` only.
 3. If both keys exist, `widget_layout:v1:dashboard` takes precedence.
 
+**Widget Layout Key Precedence (SSOT):**
+`widget_layout:v1:{page}` takes precedence over any legacy `dashboard_layout:v1` keys. On first load after migration, legacy keys are converted to the new format and the legacy key is deleted. This section is the single source of truth for widget layout key precedence. Cross-reference from FinalGUISpec.md and Crosswalk.md §3.12.
+
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md#15.1
 
 ---

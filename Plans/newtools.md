@@ -210,7 +210,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#platform-ca
      - **Playwright** (when "web" is in detected frameworks): keep current "Generate Playwright requirements" behavior; present as one option.
      - **Framework tools:** For each detected non-web framework, list existing tools from the catalog; allow user to select which to use (e.g. "Dioxus devtools", "Iced headless runner if present").
      - **Custom headless tool:** Checkbox or option: "plan/build a custom headless GUI tool for the target project (headless navigation + full debug log for agent smoke tests)". Default can come from catalog ("custom headless default" per framework).
-  3. **Persist** choices in interview config/state (e.g. `generate_playwright_requirements`, `selected_framework_tools: Vec<FrameworkToolChoice>`, `plan_custom_headless_tool: bool`). Ensure these are wired into `InterviewOrchestratorConfig` and used at completion when generating test strategy and plans (§10).
+  3. **Persist** choices in interview config/state (e.g. `generate_playwright_requirements`, `selected_framework_tools: Vec<FrameworkToolChoice>`, `plan_custom_headless_tool: bool`). Ensure these are wired into `InterviewOrchestratorConfig` and used at completion when generating test strategy and plans (§10). At interview completion, write the Doctor-readable projection into project config: `tools.custom_headless` is written when `plan_custom_headless_tool == true` and removed when `plan_custom_headless_tool == false`.
 
 ### 7.3 UI for tool selection
 
@@ -477,7 +477,16 @@ The following gaps, ambiguities, and improvements should be resolved during impl
 
 **Catalog: static vs runtime-mutable**
 
-- If the catalog is **static** (e.g. Rust const data), research cannot mutate it at runtime; it can only produce suggestions for maintainers. Implementation MUST choose: (A) static-only catalog with research producing suggestions for human curation (preferred per PolicyRule:Decision_Policy.md§2: simplest safe default), OR (B) runtime-mutable catalog (e.g. JSON under `.puppet-master/`) if dynamic extension is required. If (B) is chosen, implementation MUST document format, precedence (static entries override runtime), and add catalog file path to STATE_FILES.md and cleanup allowlist so it is not removed by prepare/cleanup.  
+- If the catalog is **static** (e.g. Rust const data), research cannot mutate it at runtime; it can only produce suggestions for maintainers. Implementation MUST choose: (A) static-only catalog with research producing suggestions for human curation (preferred per PolicyRule:Decision_Policy.md§2: simplest safe default), OR (B) runtime-mutable catalog (e.g. JSON under `.puppet-master/`) if dynamic extension is required.
+
+**Static vs Runtime Tool Catalog Precedence (Resolved):**
+When a tool ID exists in both the static catalog and runtime discovery:
+- **Static definition wins.** Rationale: static entries are intentional overrides or customizations; runtime discovery is best-effort.
+- Static catalog format: JSON in `.puppet-master/tools.json`, array of tool objects with `tool_id`, `name`, `description`, `permissions`.
+- Runtime-discovered tools are merged into the active catalog only if their `tool_id` is not already present in the static catalog.
+- Document in tool registry implementation: "Static catalog entries take precedence over runtime-discovered tools."
+
+If (B) is chosen, implementation MUST add catalog file path to STATE_FILES.md and cleanup allowlist so it is not removed by prepare/cleanup.  
   ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:STATE_FILES.md, ContractName:Plans/MiscPlan.md#cleanup
 
 **Catalog location**
@@ -504,12 +513,38 @@ The following gaps, ambiguities, and improvements should be resolved during impl
 
 **Doctor check input (how Doctor knows "plan_custom_headless_tool" was true)**
 
-- Doctor runs with `CheckRegistry` and receives working directory and selected platforms; it has no direct access to `gui_config.interview` or interview state. Implementation MUST define a deterministic contract for detecting when the project planned a custom headless tool. Preferred approach per PolicyRule:Decision_Policy.md§2 (simplest safe default): have the interview write a small flag file under `.puppet-master/interview/gui-testing-config.json` with `{ "plan_custom_headless_tool": true, ... }` when the user chooses that option; Doctor reads this file and runs the headless-tool check only when the flag is true. Fallback: read `test-strategy.json` and treat presence of a `test_type: "headless_gui"` item as the trigger. The chosen approach MUST be documented in implementation evidence.  
+- Doctor runs with `CheckRegistry` and receives working directory and selected platforms; it has no direct access to `gui_config.interview` or interview state.
+
+**Custom Headless Tool Detection Contract (Resolved):**
+
+Detection is deterministic and has explicit ownership:
+1. **Writer (interview completion path):** After Testing phase choices are finalized, the interview completion pipeline writes `.puppet-master/config.json`:
+   - If `plan_custom_headless_tool == true`, write `tools.custom_headless` as either a string path or object `{ "path": "...", "args": [...] }`.
+   - If `plan_custom_headless_tool == false`, remove `tools.custom_headless`.
+2. **Reader (Doctor):** Doctor checks for `tools.custom_headless` key in the project's `.puppet-master/config.json`.
+3. If key exists:
+   - Value must be a string (path to executable) or an object `{ "path": "...", "args": [...] }`.
+   - Validate: file exists and is executable (`fs::metadata` + permission check).
+   - If valid: register the tool in the tool registry with ToolID `CustomHeadlessTool`.
+   - If invalid (file missing, not executable): log warning `tool.custom_headless.invalid`, skip registration, continue.
+4. If key does not exist: skip (not an error). Emit `tool.custom_headless.skipped` seglog event on first Doctor run.
+5. **Evidence:** Doctor check emits a seglog event (`doctor.custom_headless.checked`) recording the detection outcome. This event serves as the implementation evidence.
+
   ContractRef: ContractName:Plans/MiscPlan.md#doctor, ContractName:STATE_FILES.md, SchemaID:evidence.schema.json, PolicyRule:Decision_Policy.md§2
 
 **Test strategy schema duplication**
 
-- Test strategy JSON is defined in two places: `interview/test_strategy_generator.rs` (`TestItem`, `TestStrategyJson`) and `core/tier_node.rs` (private `TestStrategyItem`, `TestStrategyJson`). The loader in `tier_node` only uses `source_phase_id` and `criterion` today. When adding `headless_gui` / `framework_tool` test types or optional tool metadata, implementation MUST either (1) add fields to both schemas and keep them in sync (acceptable short-term; document sync requirement in code comments), OR (2) consolidate to a single shared type (preferred long-term: define in `src/types/` or re-export from `interview`) and have `tier_node` use it. The chosen approach MUST be documented in implementation evidence to prevent drift.  
+**Test Strategy JSON Schema (Resolved):**
+
+**Decision: Consolidate to a single shared type** (`TestStrategyConfig`).
+
+- One Rust struct `TestStrategyConfig` serves as both interview output and orchestrator input.
+- Schema defined once in `Plans/evidence.schema.json` under `#/definitions/TestStrategyConfig`.
+- Interview phase writes `TestStrategyConfig` as part of its output artifacts.
+- Orchestrator reads the same `TestStrategyConfig` from interview artifacts.
+- No sync requirement — single type eliminates divergence risk.
+- Fields: `framework` (string), `coverage_target` (optional float 0.0–1.0), `test_patterns` (array of globs), `commands` (object with `run`, `watch`, `coverage` strings).
+
   ContractRef: SchemaID:evidence.schema.json, Gate:GATE-001, PolicyRule:Decision_Policy.md§2
 
 **MCP config injection timing and cwd**
@@ -519,7 +554,17 @@ The following gaps, ambiguities, and improvements should be resolved during impl
 
 **Context7 API key storage and security**
 
-- The plan says persist API key in config and "consider storing it in a user-level or secure store if the project is shared." Implementation MUST choose per PolicyRule:Decision_Policy.md§2 and Invariant:INV-002 (secrets MUST NOT be committed): (1) user-level only (e.g. env var `CONTEXT7_API_KEY` or `~/.puppet-master/mcp-secrets` not in repo; preferred for shared projects), OR (2) project-level with clear `.gitignore` and warnings (acceptable for single-user projects), OR (3) both with clear precedence (env var or user-level overrides project-level). Implementation MUST document the chosen approach in AGENTS.md and ensure Option B run-config reads the API key from the chosen location without committing secrets. Implementation MUST add Context7 API key path (if file-based) to `.gitignore` and document in STATE_FILES.md.  
+- The plan says persist API key in config and "consider storing it in a user-level or secure store if the project is shared." Implementation MUST choose per PolicyRule:Decision_Policy.md§2 and Invariant:INV-002 (secrets MUST NOT be committed):
+
+**API Key Storage Precedence (Resolved):**
+When multiple sources provide the same API key, precedence (highest wins):
+1. **Environment variable** (e.g., `GEMINI_API_KEY`) — always wins.
+2. **User-level redb config** (`config:user.api_keys.{provider}`) — per-user override.
+3. **Project-level config** (`.puppet-master/config.json` → `api_keys.{provider}`) — project-specific.
+
+Document in STATE_FILES.md under "API Key Resolution."
+
+Implementation MUST document the chosen approach in AGENTS.md and ensure Option B run-config reads the API key from the chosen location without committing secrets. Implementation MUST add Context7 API key path (if file-based) to `.gitignore` and document in STATE_FILES.md.  
   ContractRef: Invariant:INV-002, PolicyRule:Decision_Policy.md§2, ContractName:AGENTS.md, ContractName:STATE_FILES.md
 
 **Catalog detection hints and Iced**
@@ -529,7 +574,7 @@ The following gaps, ambiguities, and improvements should be resolved during impl
 
 **Playwright vs "web" and test strategy generator**
 
-- Today `write_test_strategy` is gated by `generate_playwright_requirements` in the orchestrator; `TestStrategyConfig` has `include_playwright` but no `include_framework_tools` or `plan_custom_headless_tool`. Extending test strategy for newtools requires: (1) pass the new interview flags (`selected_framework_tools`, `plan_custom_headless_tool`) into the completion path so `write_test_strategy` (or equivalent) receives them, AND (2) extend `TestStrategyConfig` and the generator so markdown and JSON include framework tools and custom headless sections/items. Implementation MUST add these fields to `InterviewOrchestratorConfig` and wire from `gui_config.interview` in `app.rs` (see §2 table, same three-step checklist as other interview config).  
+- Today `write_test_strategy` is gated by `generate_playwright_requirements` in the orchestrator; `TestStrategyConfig` has `include_playwright` but no `include_framework_tools` or `plan_custom_headless_tool`. Extending test strategy for newtools requires: (1) pass the new interview flags (`selected_framework_tools`, `plan_custom_headless_tool`) into the completion path so `write_test_strategy` receives them, AND (2) extend `TestStrategyConfig` and the generator so markdown and JSON include framework tools and custom headless sections/items. Implementation MUST add these fields to `InterviewOrchestratorConfig` and wire from `gui_config.interview` in `app.rs` (see §2 table, same three-step checklist as other interview config).  
   ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-5-document-generation, ContractName:Plans/orchestrator-subagent-integration.md#config-wiring, SchemaID:evidence.schema.json, Gate:GATE-005
 
 **Verification command and headless tool binary name**

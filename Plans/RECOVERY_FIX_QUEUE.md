@@ -2,18 +2,45 @@
 
 Audit basis commit: `91dca72`
 
+## 2026-02-24 Normative-Only Sweep (Implemented)
+
+### Scope executed
+
+- Full `Plans/` scan with deterministic cleanup only for normative requirements.
+- Priority fixes applied first:
+  - `orchestrator-subagent-integration.md`: reconciled `use_plan_mode_all_tiers` default to `false` (migration-safe) and removed contradictory defaults.
+  - `newtools.md`: defined explicit Interview writer -> Doctor reader contract for `plan_custom_headless_tool` via `tools.custom_headless`.
+  - `LSPSupport.md`: normalized `lsp_gate.scope` enum to `changed_files | open | project` across prose, config defaults, and evidence payload examples.
+  - `RECOVERY_AUDIT_REPORT.md`: removed stale Decision_Policy placeholder warning.
+
+### Pass/Fail matrix (deterministic checks)
+
+| Category | Check | Result |
+|---|---|---|
+| Contradiction check | `use_plan_mode_all_tiers` default consistent and migration-safe in orchestrator spec | **PASS** |
+| Enum consistency | `lsp_gate.scope` tokens match in defaults, schema table, prose, and evidence examples | **PASS** |
+| Persistence wiring | `plan_custom_headless_tool` writer/reader ownership and timing explicitly documented | **PASS** |
+| Normative ambiguity | `MUST/required` lines contain no unresolved illustrative-marker wording in normative requirements | **PASS** |
+| ContractRef hygiene | No unresolved ContractRef anchor placeholders remain | **PASS** |
+| Recovery truthfulness | Decision_Policy stale placeholder warning removed from recovery audit | **PASS** |
+
+### Baseline inventory note
+
+- Ambiguity marker inventory after this sweep: `123` total hits in `Plans/` (mostly explanatory/reference prose).
+- Normative ambiguity check is clean (`0` hits) under the enforcement regex used above.
+
 ## `Plans/Decision_Policy.md`
 
-- Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
-- Estimated scope: **Medium**
-- Why: SSOT coverage gap: canonical definitions missing/invalid for references used by other plans.
-- Why: Contains unresolved placeholder markers (must be resolved).
+- Recommended action: **Run Review Prompt 2**
+- Estimated scope: **Small**
+- Why: Missing acceptance/verification section (not gateable / not AI-executable).
+- Why: SSOT coverage gap already resolved (PolicyRule `no_secrets_in_storage` added).
 
 ## `Plans/DRY_Rules.md`
 
 - Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
 - Estimated scope: **Medium**
-- Why: Contains unresolved placeholder markers (must be resolved).
+- Why: Contains unresolved placeholder markers (needs resolution).
 - Why: Missing acceptance/verification section (not gateable / not AI-executable).
 
 ## `Plans/Contracts_V0.md`
@@ -36,27 +63,28 @@ Audit basis commit: `91dca72`
 
 ## `Plans/Glossary.md`
 
-- Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
-- Estimated scope: **Medium**
-- Why: SSOT coverage gap: canonical definitions missing/invalid for references used by other plans.
+- Recommended action: **Resolved by spec update**
+- Estimated scope: **Closed**
+- Why: Added missing primitives `DRYRules`, `PatchPipeline`, and `SessionStore`.
+- Why: SSOT references now resolve for previously missing primitive identifiers.
 
 ## `Plans/Tools.md`
 
-- Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
-- Estimated scope: **Medium**
-- Why: SSOT coverage gap: canonical definitions missing/invalid for references used by other plans.
+- Recommended action: **Resolved by spec update**
+- Estimated scope: **Closed**
+- Why: Added ToolID definition for `GitHubApiTool` with canonical rules and ContractRef references.
 
 ## `Plans/Progression_Gates.md`
 
 - Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
 - Estimated scope: **Medium**
-- Why: Contains unresolved placeholder markers (must be resolved).
+- Why: Contains unresolved placeholder markers (needs resolution).
 
 ## `Plans/FileSafe.md`
 
 - Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
 - Estimated scope: **Medium**
-- Why: Contains unresolved placeholder markers (must be resolved).
+- Why: Contains unresolved placeholder markers (needs resolution).
 
 ## `Plans/LSPSupport.md`
 

@@ -781,7 +781,7 @@ All LSP settings are persisted in app config (redb or equivalent). Optional: pro
 **Critical form control requirements:**
 - **Model selection MUST use dropdowns** populated from dynamic model discovery, NOT text entry boxes
 - **Platform selection MUST use dropdowns** listing available platforms
-- All configuration that accepts one of N choices must use `ComboBox` or equivalent dropdown, not free-text `TextInput`
+- All configuration that accepts one of N choices must use `ComboBox` (dropdown), not free-text `TextInput`.
 - Save/discard controls per tab or global
 
 **§7.4.3 Catalog (Catalog tab):** Browse and install community content from a curated catalog. The catalog provides one-click installation for commands, agents, hooks, skills, themes, and MCP server configurations.

@@ -160,6 +160,29 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#25-context-enhancements
 
 ---
 
+### 2.7 Chat slash commands (reserved)
+These IDs are required by `Plans/assistant-chat-design.md` section 5.
+
+| Command ID | Slash command | Args schema (keys only) | Expected events | Affected surfaces |
+|---|---|---|---|---|
+| `cmd.chat.new` | `/new` | `{}` | `chat.thread.created` | Assistant chat |
+| `cmd.chat.model` | `/model` | `{ model_id }` | no persisted domain event (session model state update) | Assistant chat |
+| `cmd.chat.effort` | `/effort` | `{ level }` | no persisted domain event (session effort state update) | Assistant chat |
+| `cmd.chat.mode` | `/mode` | `{ mode }` | no persisted domain event (session mode state update) | Assistant chat |
+| `cmd.chat.export` | `/export` | `{ format? }` | `chat.thread.exported` | Assistant chat |
+| `cmd.chat.clear` | `/clear` | `{ thread_id }` | `chat.thread.cleared` | Assistant chat |
+| `cmd.chat.help` | `/help` | `{}` | no persisted domain event (UI display update) | Assistant chat |
+| `cmd.chat.settings` | `/settings` | `{}` | no persisted domain event (navigation update) | Settings panel |
+| `cmd.chat.doctor` | `/doctor` | `{}` | `doctor.run.started` | Doctor page |
+| `cmd.chat.cancel` | `/cancel` | `{ thread_id? }` | `run.cancelled` | Assistant chat |
+| `cmd.chat.stop` | `/stop` | `{ thread_id? }` | no persisted domain event (stream stop) | Assistant chat |
+
+User-defined custom commands MUST NOT use any reserved command name listed above. Custom commands are prefixed with `/x-` by convention.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#5, ContractName:Plans/Contracts_V0.md#UICommand
+
+---
+
 ## References
 - `Plans/Contracts_V0.md#UICommand`
 - `Plans/GitHub_API_Auth_and_Flows.md`

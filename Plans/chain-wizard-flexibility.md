@@ -379,9 +379,16 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 ### 5.1 Concept
 
 - **Requirements Doc Builder** is a button in the requirements step that opens Builder chat on the requirements/wizard page.
-- The first Assistant message is exactly: `What are you trying to do?`
 - The Builder is a conversation-first flow. No questionnaire appears before the first user response.
 - The Builder output remains a staged artifact until the flow reaches final approval and handoff.
+
+**Opening Prompt (Resolved):**
+The Assistant MUST initiate the interview/requirements flow with an opening question. The exact phrasing depends on context:
+- **New project (no existing requirements):** "What are you building?"
+- **Existing project (has requirements/codebase):** "What are you adding or changing?"
+- **Fork/contribute (detected from project setup):** "What are you adding or changing in this fork?"
+
+The Assistant does NOT wait for the user to speak first. This opening question is the first message in the interview thread. After the user responds, the scope probe phase begins (see §6.2).
 
 ### 5.2 Flow
 
@@ -391,7 +398,7 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 
 **Conversation phase (required):**
 1. User clicks `Requirements Doc Builder` in the requirements step.
-2. Builder chat opens and sends: `What are you trying to do?`
+2. Builder chat opens and sends the context-appropriate opening question (see §5.1 Opening Prompt).
 3. User and Assistant converse. Assistant may ask clarifying questions, suggest structure, and draft sections.
 4. Assistant may suggest generation when either condition is true:
    - It determines there is enough information, or
@@ -525,7 +532,7 @@ This review covers the requirements document **and** the staged Contract Layer s
 
 **Flow:**
 
-1. Requirements doc is produced by the Assistant. **Empty or minimal doc:** Before starting Multi-Pass Review, check Builder output size (e.g. character or token count). If below a minimum (e.g. &lt; 100 characters or empty), **skip** Multi-Pass Review, set the Builder output as canonical, and show a brief notice: "Document too short for review; using as-is." Minimum threshold to be defined in implementation (document in config or constants).
+1. Requirements doc is produced by the Assistant. **Empty or minimal doc:** Before starting Multi-Pass Review, check Builder output size (e.g. character or token count). Minimum document size to trigger Multi-Pass review: **100 characters**. Documents shorter than 100 characters (or empty/whitespace-only) skip Multi-Pass and proceed directly. Config: `interview.multi_pass.min_doc_chars`, default `100`. Show a brief notice: "Document too short for review; using as-is."
 2. Review agent spawns N subagents (N = number of reviews). **Single document:** There is always exactly one requirements document from the Builder. N subagents each review that same doc; no per-document batching. Whole-set pass does not apply (single doc = whole set). Each subagent receives:
    - the requirements doc, and
    - `contract-seeds.md` (when present), and
@@ -633,8 +640,23 @@ ContractRef: SchemaID:contracts_index.schema.json, SchemaID:acceptance_manifest.
   - **Optional:** Project context (languages, frameworks) from codebase_scanner when it's an existing project.
 - **Output:** A **phase plan** for this run: which phase IDs to include, optional **depth** or **weight** per phase (e.g. "Architecture: deep," "Deployment: skip"), and optionally reorder.
 - **Implementation:** Extend the **phase manager** (interview-subagent-integration.md) to support:
-  - A **pre-interview step** (or first phase) that asks 1-2 scope questions and/or reads the requirements summary, then calls a **phase selector** (or the same agent with a structured prompt) that returns the phase plan.
-  - The rest of the interview runs only the selected phases, with depth hints (e.g. "ask 2-3 questions" vs "full phase") where applicable.
+  - A **pre-interview step** (phase 0) that runs a mandatory scope probe, then calls a **phase selector** that returns the phase plan.
+  - The rest of the interview runs only the selected phases, with depth enforcement per phase.
+
+**Pre-Interview Scope Probe (Resolved):**
+Phase 0 is a mandatory scope probe that runs before the adaptive phase selector:
+- **Max 2 questions:** (1) Opening question (see above), (2) "Any constraints, preferences, or specific technologies you want to use?"
+- After receiving answers to both (or after the user signals readiness), the phase selector is called with the scope context.
+- Trigger: always runs as phase 0. Not skippable.
+- Config: `interview.scope_probe.max_questions`, default `2`.
+
+**Depth Hints (Resolved):**
+Depth is enforced as a **soft cap** based on question count (not token budget):
+- **Short:** max 2 questions, no research tool calls. If the agent signals phase-complete at count ≤ 2, accept.
+- **Full:** all questions in the phase template, plus research tool calls when needed. No artificial cap.
+- **Skip:** phase is not run at all.
+- **Enforcement:** If the agent has asked `max` questions and has not signaled phase-complete, send a "Please wrap up this phase" instruction. If the agent asks one more question (grace: `max + 1`), force-complete the phase with a `phase.force_completed` seglog event.
+- Config per phase: `interview.phases.{phase_name}.depth` (default `"full"`), `interview.phases.{phase_name}.max_questions` (default: phase-template-defined).
 
 ### 6.3 Phase Selector Contract
 
@@ -846,8 +868,15 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, Contrac
 
 ### 9.3 Interview and Phases
 
-- **Phase selector failure:** If the phase selector (AI or rule) fails or returns empty, fallback to "all phases" or "minimal safe set" (e.g. Scope + one technical phase) and log.
-  **Resolution:** Use rule-based fallback per §6.3: by intent, NewProject/ForkEvolve/EnhanceRewriteAdd → all phases Full; ContributePR → scope_goals (Short), testing (Short). Log selector failure and applied fallback. Do not re-invoke selector.
+- **Phase selector failure:**
+
+**Phase Selector Failure Fallback (Resolved):**
+If the AI phase selector returns an empty set or fails to respond:
+1. Fallback to **Scope + Architecture** (minimal safe set). Rationale: these two phases capture the essential "what" and "how" needed for any project.
+2. Log the failure as a `phase_selector.fallback` seglog event with the original error.
+3. Surface a warning in the interview UI: "Phase selection used fallback (Scope + Architecture). You can manually add phases if needed."
+4. Never fallback to "all phases" (too expensive and slow for simple projects).
+5. If the fallback phases also fail to execute, surface an error to the user and halt the interview.
 
 - **Depth semantics:** "Short" vs "full" depth must be defined per phase (e.g. "short = 1-2 questions") so the Interview agent has clear instructions.
   **Resolution:** Full = all questions for phase, research if configured. Short = max 2 questions for that phase, no research. Skip = do not run phase. Document in phase manager and interviewer prompt; enforce cap in phase runner (e.g. question count or token budget for Short).
