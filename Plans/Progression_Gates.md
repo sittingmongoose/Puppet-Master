@@ -30,6 +30,16 @@ The Verifier is an AI role that runs these gates and returns a binary PASS/FAIL 
 - Implement a repo-local verifier command that can be invoked headlessly, e.g. `python3 scripts/pm-plans-verify.py run-gates`.  
   ContractRef: SchemaID:plan_graph.schema.json
 
+**Current script-enforceable coverage (`run-gates`):**
+- `GATE-001` schema validation (plan graph + node change budgets + auto decisions)
+- `GATE-002` Spec Lock integrity (SSOT hash verification)
+- `GATE-004` drift phrase lint (`TBD`, `Open Questions`, `ask later`)
+- `GATE-005` non-example node evidence existence + schema validation
+- `GATE-006` non-example node change-budget declaration checks
+- `GATE-009` ContractRef coverage lint
+
+ContractRef: Gate:GATE-001, Gate:GATE-002, Gate:GATE-004, Gate:GATE-005, Gate:GATE-006, Gate:GATE-009
+
 ---
 
 <a id="GATE-001"></a>
@@ -74,6 +84,8 @@ Required evidence:
 - Evidence bundle conforming to `Plans/evidence.schema.json`.
 - A grep/audit summary showing no token-like strings persisted (implementation-specific).
 
+**Script enforcement status:** Not currently enforced by `run-gates`; this gate is validated by dedicated invariant checks in implementation-specific verifiers.
+
 ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invariants.md#INV-010, SchemaID:evidence.schema.json
 
 ---
@@ -84,6 +96,8 @@ ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invari
 - No build-governing doc introduces forbidden dependencies from Spec Lock, and
 - no drift phrases exist in build-governing docs: `TBD`, `Open Questions`, `ask later`.
 
+**Script enforcement status:** `run-gates` currently enforces the drift-phrase half of this gate.
+
 ContractRef: SchemaID:Spec_Lock.json#forbidden_deps, ContractName:Plans/DRY_Rules.md#4
 
 ---
@@ -92,6 +106,8 @@ ContractRef: SchemaID:Spec_Lock.json#forbidden_deps, ContractName:Plans/DRY_Rule
 ## GATE-005 -- Evidence required for completion
 **Pass condition:** A node cannot be marked complete unless its evidence bundle exists and validates.
 
+**Script enforcement status:** `run-gates` enforces this gate for non-example nodes in `Plans/plan_graph.json`.
+
 ContractRef: SchemaID:evidence.schema.json, SchemaID:plan_graph.schema.json
 
 ---
@@ -99,6 +115,8 @@ ContractRef: SchemaID:evidence.schema.json, SchemaID:plan_graph.schema.json
 <a id="GATE-006"></a>
 ## GATE-006 -- Change budget enforcement
 **Pass condition:** The actual change stays within the node’s declared change budget (max files, LOC delta, allowed/forbidden paths/files).
+
+**Script enforcement status:** `run-gates` enforces non-example node change-budget declaration completeness and schema validity (including bounded change fields).
 
 ContractRef: SchemaID:change_budget.schema.json, SchemaID:plan_graph.schema.json
 

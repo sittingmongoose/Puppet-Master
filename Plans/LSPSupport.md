@@ -308,7 +308,7 @@ ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/assistant-chat
 
 ---
 
-## 7. Gaps and open questions (resolved where decided)
+## 7. Resolved design decisions and implementation constraints
 
 - **Document sync mode:** LSP supports **full sync** (entire document on each change) and **incremental sync** (only changed ranges). We should declare incremental in client capabilities when the server supports it to reduce payload and server work. Incremental requires the client to track version and send correct `contentChanges`; if we miss a change, server state can drift (some servers request full re-sync on version mismatch). **Implementation:** Use **incremental sync** when the server advertises `textDocumentSync.change = Incremental`; otherwise use full sync. Client tracks `DocumentState.version` per buffer and sends `contentChanges` in `didChange`; when the server requests full re-sync (e.g. version mismatch or explicit request), send full content in a single `didChange` and continue from that version. See §14.2 (DocumentState), §14.3 (message flow).
 - **Debouncing didChange:** Sending every keystroke can flood the server. **Decision:** Debounce `textDocument/didChange` (default **100 ms** after last edit); configurable in Settings. **Implementation:** On buffer edit, start or reset a debounce timer; when the timer fires, send one `didChange` with all changes since last send (or incremental range edits). No send on close without a pending change. See §14.4 (config), §16 (open points).

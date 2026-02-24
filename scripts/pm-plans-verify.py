@@ -137,6 +137,175 @@ def validate_plan_graph() -> list[Finding]:
     return findings
 
 
+def _load_plan_graph_nodes() -> tuple[Path, list[object]]:
+    graph_path = PLANS_DIR / "plan_graph.json"
+    graph = _load_json(graph_path)
+    if not isinstance(graph, dict):
+        return graph_path, []
+    nodes = graph.get("nodes", [])
+    if not isinstance(nodes, list):
+        return graph_path, []
+    return graph_path, nodes
+
+
+def validate_non_example_node_artifacts() -> list[Finding]:
+    findings: list[Finding] = []
+    graph_path, nodes = _load_plan_graph_nodes()
+    change_budget_schema_path = PLANS_DIR / "change_budget.schema.json"
+    change_budget_schema = _load_json(change_budget_schema_path)
+    cbv = _validator(change_budget_schema)
+
+    for idx, node in enumerate(nodes):
+        if not isinstance(node, dict):
+            continue
+        node_id = str(node.get("node_id", f"nodes[{idx}]"))
+        is_example = bool(node.get("example", False)) or node_id.startswith("EXAMPLE.")
+        if is_example:
+            continue
+
+        # GATE-006: enforce non-example change-budget declaration quality.
+        change_budget = node.get("change_budget")
+        if not isinstance(change_budget, dict):
+            findings.append(
+                Finding(
+                    kind="change_budget",
+                    location=f"{graph_path.relative_to(REPO_ROOT)}:{node_id}",
+                    message="non-example node missing change_budget object",
+                )
+            )
+        else:
+            for err in cbv.iter_errors(change_budget):
+                findings.append(
+                    Finding(
+                        kind="change_budget",
+                        location=f"{graph_path.relative_to(REPO_ROOT)}:{node_id}",
+                        message=f"change_budget schema error at {list(err.absolute_path)}: {err.message}",
+                    )
+                )
+
+            allowed_paths = change_budget.get("allowed_paths")
+            if not isinstance(allowed_paths, list) or len(allowed_paths) == 0:
+                findings.append(
+                    Finding(
+                        kind="change_budget",
+                        location=f"{graph_path.relative_to(REPO_ROOT)}:{node_id}",
+                        message="change_budget.allowed_paths must contain at least one path",
+                    )
+                )
+
+            if "max_total_loc_delta" not in change_budget:
+                findings.append(
+                    Finding(
+                        kind="change_budget",
+                        location=f"{graph_path.relative_to(REPO_ROOT)}:{node_id}",
+                        message="change_budget.max_total_loc_delta is required for non-example nodes",
+                    )
+                )
+
+        # GATE-005: enforce non-example evidence bundle existence + schema validity.
+        evidence_required = node.get("evidence_required")
+        if not isinstance(evidence_required, dict):
+            findings.append(
+                Finding(
+                    kind="evidence",
+                    location=f"{graph_path.relative_to(REPO_ROOT)}:{node_id}",
+                    message="non-example node missing evidence_required object",
+                )
+            )
+            continue
+
+        evidence_path = evidence_required.get("path")
+        if not isinstance(evidence_path, str) or not evidence_path.strip():
+            findings.append(
+                Finding(
+                    kind="evidence",
+                    location=f"{graph_path.relative_to(REPO_ROOT)}:{node_id}",
+                    message="non-example node evidence_required.path is missing",
+                )
+            )
+            continue
+
+        evidence_findings = validate_evidence_bundle(Path(evidence_path))
+        if evidence_findings:
+            for ef in evidence_findings:
+                findings.append(
+                    Finding(
+                        kind="evidence",
+                        location=f"{graph_path.relative_to(REPO_ROOT)}:{node_id}",
+                        message=f"evidence validation failed: {ef.location} {ef.message}",
+                    )
+                )
+            continue
+
+        resolved_evidence_path = Path(evidence_path)
+        if not resolved_evidence_path.is_absolute():
+            resolved_evidence_path = REPO_ROOT / resolved_evidence_path
+
+        try:
+            evidence_obj = _load_json(resolved_evidence_path)
+        except Exception as e:
+            findings.append(
+                Finding(
+                    kind="evidence",
+                    location=f"{graph_path.relative_to(REPO_ROOT)}:{node_id}",
+                    message=f"failed to load evidence after schema pass: {e}",
+                )
+            )
+            continue
+
+        if not isinstance(evidence_obj, dict):
+            findings.append(
+                Finding(
+                    kind="evidence",
+                    location=f"{graph_path.relative_to(REPO_ROOT)}:{node_id}",
+                    message="evidence bundle is not a JSON object",
+                )
+            )
+            continue
+
+        node_obj = evidence_obj.get("node")
+        if not isinstance(node_obj, dict):
+            findings.append(
+                Finding(
+                    kind="evidence",
+                    location=f"{graph_path.relative_to(REPO_ROOT)}:{node_id}",
+                    message="evidence.node object is missing",
+                )
+            )
+        else:
+            evidence_node_id = node_obj.get("node_id")
+            if evidence_node_id != node_id:
+                findings.append(
+                    Finding(
+                        kind="evidence",
+                        location=f"{graph_path.relative_to(REPO_ROOT)}:{node_id}",
+                        message=f"evidence.node.node_id mismatch (expected {node_id}, got {evidence_node_id})",
+                    )
+                )
+
+        checks = evidence_obj.get("checks")
+        if not isinstance(checks, list) or len(checks) == 0:
+            findings.append(
+                Finding(
+                    kind="evidence",
+                    location=f"{graph_path.relative_to(REPO_ROOT)}:{node_id}",
+                    message="evidence.checks must contain at least one check entry",
+                )
+            )
+        else:
+            has_pass = any(isinstance(check, dict) and check.get("result") == "PASS" for check in checks)
+            if not has_pass:
+                findings.append(
+                    Finding(
+                        kind="evidence",
+                        location=f"{graph_path.relative_to(REPO_ROOT)}:{node_id}",
+                        message="evidence.checks must include at least one PASS result",
+                    )
+                )
+
+    return findings
+
+
 def validate_auto_decisions() -> list[Finding]:
     findings: list[Finding] = []
     schema_path = PLANS_DIR / "auto_decisions.schema.json"
@@ -409,6 +578,7 @@ def main() -> int:
     sub.add_parser("verify-spec-lock", help="Verify Spec Lock canonical SSOT sha256 list")
     sub.add_parser("lint-banned-phrases", help="Fail on banned drift phrases in canonical SSOT docs")
     sub.add_parser("lint-contractrefs", help="Fail on operational requirements missing ContractRef blocks")
+    sub.add_parser("validate-node-artifacts", help="Validate non-example node evidence and change-budget declarations")
     sub.add_parser("run-gates", help="Run all gates that are currently script-enforceable")
 
     args = parser.parse_args()
@@ -425,6 +595,8 @@ def main() -> int:
         findings = lint_banned_phrases()
     elif args.cmd == "lint-contractrefs":
         findings = lint_contractrefs()
+    elif args.cmd == "validate-node-artifacts":
+        findings = validate_non_example_node_artifacts()
     elif args.cmd == "run-gates":
         findings = []
         findings.extend(validate_plan_graph())
@@ -432,6 +604,7 @@ def main() -> int:
         findings.extend(verify_spec_lock_hashes())
         findings.extend(lint_banned_phrases())
         findings.extend(lint_contractrefs())
+        findings.extend(validate_non_example_node_artifacts())
     else:
         parser.error("unknown command")
         return 2

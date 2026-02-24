@@ -73,45 +73,65 @@ The **orchestrator must respect** two kinds of information that the interview (o
 
 **Schedule building: order of operations.** (1) Build a dependency graph from `depends_on` at the tier level(s) the orchestrator schedules (e.g. subtasks). Use item ids; support phase, task, and subtask ids as in STATE_FILES. Missing `depends_on` or empty array = no incoming edges. (2) Topological sort the graph; items with no unsatisfied dependencies form the next runnable set. (3) Within the runnable set, group items that share the same non-empty `parallel_group`; items in the same group may run in parallel. (4) Execute batches in topological order: run each batch (possibly multiple items in parallel) before advancing to items that depend on them.
 
-### Respecting PRD/plan: sharded plan graph consumption (user projects)
+### Respecting PRD/plan: plan graph consumption (user projects)
 
-For user projects, canonical planning artifacts must be read from `.puppet-master/project/`:
+For user projects, the orchestrator MUST be able to execute headless from `.puppet-master/project/plan_graph.json` **alone**. Other artifacts under `.puppet-master/project/` are optional/derived materializations unless explicitly required by refs in `plan_graph.json` (and if required, the orchestrator must be able to deterministically materialize them from `plan_graph.json`).
 
-- `.puppet-master/project/requirements.md`
-- `.puppet-master/project/plan_graph/index.json`
-- `.puppet-master/project/plan_graph/nodes/<node_id>.json`
-- `.puppet-master/project/plan_graph/edges.json` (optional)
-- `.puppet-master/project/plan.md` (human-readable summary for operators)
-- `.puppet-master/project/contracts/`
-- `.puppet-master/project/contracts/index.json`
-- `.puppet-master/project/acceptance_manifest.json`
-- `.puppet-master/project/auto_decisions.jsonl`
+Constraints:
+- **No user-project `Plans/` assumptions:** Do not require or read `Plans/` from the target project; Puppet Master `Plans/` are internal references only.
+- **No schema copying:** Validate artifacts against internal schemas, but do NOT embed/copy internal schema definitions into user-project artifacts (only `schema_version` / hash metadata as required).
+
+Canonical planning artifacts (inputs + derived views) must live under `.puppet-master/project/`:
+
+- `.puppet-master/project/plan_graph.json` (**required**; single-file headless execution input / source of truth)
+- `.puppet-master/project/requirements.md` (optional; human-readable constraints / derived view)
+- `.puppet-master/project/plan_graph/index.json` (optional; sharded materialization derived from `plan_graph.json`)
+- `.puppet-master/project/plan_graph/nodes/<node_id>.json` (optional; sharded materialization)
+- `.puppet-master/project/plan_graph/edges.json` (optional; derived/materialized)
+- `.puppet-master/project/plan.md` (optional; human-readable summary for operators)
+- `.puppet-master/project/contracts/` (Project Contract Pack; may be derived/materialized)
+- `.puppet-master/project/contracts/index.json` (Project Contract Pack index; may be derived/materialized)
+- `.puppet-master/project/acceptance_manifest.json` (acceptance registry; may be derived/materialized)
+- `.puppet-master/project/auto_decisions.jsonl` (produced during execution)
 - `.puppet-master/project/glossary.md` (optional, recommended)
 - `.puppet-master/project/evidence/<node_id>.json` (produced during execution; schema `pm.evidence.schema.v1`)
 
 Load order and validation behavior:
 
-1. Load `plan_graph/index.json` first and validate `schema_version`, `graph_id`, `nodes`, `entrypoints`, and `validation`.
-2. Load each node shard from `index.nodes[].path`; verify node hash against `index.nodes[].sha256`; verify filename `node_id` matches in-file `node_id`.
-3. Load `plan_graph/edges.json` only when present; if absent, derive edges from shard-level blockers/dependency metadata.
-4. Load and validate `validation.targets` pointers:
-   - `.puppet-master/project/contracts/index.json` must validate (`pm.project_contracts_index.schema.v1`) and every `ProjectContract:*` referenced by node shards must resolve via this index.
-   - `.puppet-master/project/acceptance_manifest.json` must validate (`pm.acceptance_manifest.schema.v1`) and cover every node shard `acceptance[].check_id`.
+1. Load `plan_graph.json` first (when present) and validate graph-level invariants (e.g. `schema_version`, `graph_id`, unique node IDs, dependency references).
+2. If sharded plan-graph materializations exist (`plan_graph/index.json` + shards), validate integrity (hashes + IDs) and consistency with `plan_graph.json` when both are present. The orchestrator may load either representation for performance, but MUST NOT require sharded files to execute.
+3. If only sharded files exist (legacy), load/validate them and materialize `plan_graph.json` deterministically for future headless runs.
+4. Load and validate `validation.targets` (present or materialized from `plan_graph.json`):
+   - **Project Contract Pack:** `.puppet-master/project/contracts/index.json` must validate (`pm.project_contracts_index.schema.v1`) and every `ProjectContract:*` referenced by any node MUST resolve via this index.
+   - **Acceptance registry:** `.puppet-master/project/acceptance_manifest.json` must validate (`pm.acceptance_manifest.schema.v1`) and cover every node acceptance ref (e.g. `acceptance[].check_id`). Validate that every acceptance check is **automatable** (no human-only criteria).
 5. Validate node execution policy fields (`allowed_tools`, `tool_policy_mode`, `policy_mode`) are present and legal per `Plans/Project_Output_Artifacts.md` before scheduling.
-6. If any required shard/index validation fails, halt scheduling and return a planning-artifact integrity error (no silent fallback to monolithic graph files).
+6. If any required validation fails, halt scheduling and return a planning-artifact integrity error (no silent fallback between representations, and no skipping contract/acceptance validation).
 
-Scheduling inputs must be sourced from shard/index metadata:
+Scheduling inputs must be sourced from the validated plan graph (monolith or shard/index metadata):
 
-- `depends_on` (when present in shard metadata or edge materialization)
-- `blockers` / `unblocks` from node shards
-- `parallel_group` metadata when available in shard/index scheduling extensions
+- `depends_on` (from node metadata or edge materialization)
+- `blockers` / `unblocks` from node definitions
+- `parallel_group` metadata when available
+
+Node states (scheduler-level; persisted per node):
+- `runnable`: dependencies satisfied; not `complete`; not `blocked`; not `waiting_approval`
+- `running`: currently executing
+- `waiting_approval`: paused for HITL approval (mid-node and/or tier boundary); record an approval request and required action
+- `blocked`: cannot proceed until a condition is met (e.g. missing contract/acceptance resolution, denied approval, or rework required); record `block_reason`
+- `complete`: acceptance passed + evidence bundle written/validated
+
+Scheduling rule ("continue other work when approvals pending"):
+- The scheduler MUST continue executing other `runnable` nodes while any node is `waiting_approval` and/or `blocked`.
+- A `waiting_approval`/`blocked` node only blocks its dependents via the dependency graph; it MUST NOT block unrelated runnable nodes.
+- A run pauses only when the runnable set is empty and at least one node is `waiting_approval` (HITL needed) or `blocked` (intervention/replan needed).
 
 Execution policy notes:
 
-- Sharded graph consumption is the default path for user projects.
-- `plan.md` is a human-readable summary view, but scheduler decisions come from the validated sharded graph.
+- **Headless-first:** `plan_graph.json` is sufficient for execution; sharded plan-graph files are optional derived/materialized views for large graphs or tooling.
+- `plan.md` is a human-readable summary view, but scheduler decisions come from the validated graph (not `plan.md`).
 - All planning artifacts are canonical in seglog via full-content artifact events (chunked when needed with deterministic ordering and final `sha256` integrity events). Filesystem copies under `.puppet-master/project/` are reproducible materializations.
-- **HITL + non-blocked continuation:** If a node enters a pending-approval state (e.g. due to `tool_policy_mode: "ask"`), the scheduler MUST continue executing other runnable, non-blocked nodes where dependencies allow.
+- **HITL + non-blocked continuation:** If a node enters `waiting_approval` (e.g. due to `tool_policy_mode: "ask"` or explicit boundary approvals), the scheduler MUST continue executing other runnable nodes where dependencies allow.
+- **Automatable acceptance criteria:** Every node MUST have automatable acceptance criteria; record results in the node's evidence bundle and do not mark a node complete if acceptance fails.
 - **Evidence bundles:** On node completion, the orchestrator MUST write an evidence bundle at `.puppet-master/project/evidence/<node_id>.json` (schema `pm.evidence.schema.v1`) and persist it canonically to seglog; a node MUST NOT be marked complete without valid evidence.
 - **Deterministic ambiguity handling:** When ambiguity occurs during execution, resolve deterministically per `Plans/Decision_Policy.md` and append a machine-consumable record to `.puppet-master/project/auto_decisions.jsonl` (schema `pm.auto_decisions.schema.v1`).
 - Authoritative artifact and schema contract: `Plans/Project_Output_Artifacts.md`.
@@ -8290,3 +8310,4 @@ orchestrator:
 - 2026-02-23: Added seglog canonical persistence statement (full-content events, deterministic chunking, integrity hash).
 - 2026-02-23: Replaced prohibited prior platform alias text with Puppet Master naming in this document.
 - 2026-02-23: Expanded sharded plan-graph consumption to validate `contracts/index.json` + `acceptance_manifest.json` schemas, enforce resolvable `ProjectContract:*` refs, validate node `tool_policy_mode`, and require evidence bundle output + non-blocked continuation when approvals are pending.
+- 2026-02-24: Clarified headless-first execution from `.puppet-master/project/plan_graph.json` alone (other artifacts optional/derived), added explicit node state model + "continue other work when approvals pending" scheduling rule, and strengthened contract/acceptance/evidence requirements.

@@ -75,7 +75,7 @@ ContractRef: PolicyRule:Decision_Policy.md§2
 <a id="spec-lock-update-protocol"></a>
 ## 5. SpecLock Update Protocol (autonomous; no human readers)
 
-**Rule:** `Plans/Spec_Lock.json` is a lockfile; agents MUST only update it via this protocol and MUST proceed deterministically (no “ask a human”, no decision logs).  
+**Rule:** `Plans/Spec_Lock.json` is a lockfile; agents MUST only update it via this protocol and MUST proceed deterministically (no interactive human-decision pauses, no decision logs).  
 ContractRef: SchemaID:Spec_Lock.json, PolicyRule:Decision_Policy.md§2
 
 ### 5.1 When Spec Lock updates are allowed

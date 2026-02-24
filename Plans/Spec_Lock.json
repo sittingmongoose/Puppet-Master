@@ -24,10 +24,15 @@
       "provider_facade": {
         "cursor": {
           "single_facade": true,
-          "supported_transports": ["stream-json", "acp"]
+          "supported_transports": [
+            "stream-json",
+            "acp"
+          ]
         },
         "claude_code": {
-          "supported_transports": ["stream-json"]
+          "supported_transports": [
+            "stream-json"
+          ]
         }
       }
     },
@@ -50,12 +55,20 @@
   },
   "forbidden_deps": {
     "items": [
-      {"kind": "storage_engine", "id": "sqlite"},
-      {"kind": "hosting_integration", "id": "github_cli"}
+      {
+        "kind": "storage_engine",
+        "id": "sqlite"
+      },
+      {
+        "kind": "hosting_integration",
+        "id": "github_cli"
+      }
     ]
   },
   "schema_versions": {
     "event_record": "pm.event.v0",
+    "tool_contract": "pm.contracts.tools.v0",
+    "policy_rule": "pm.policy.rule.v1",
     "spec_lock": "pm.spec_lock.v1",
     "plan_graph": "pm.plan_graph.schema.v1",
     "evidence": "pm.evidence.schema.v1",
@@ -75,19 +88,19 @@
       },
       {
         "path": "Plans/DRY_Rules.md",
-        "sha256": "eb2a81d5ee3a1b18fd1efa1623366ce2dce06e0efcab358c33629108527a118e"
+        "sha256": "a8c5a1233cfa03f6eb1b0874372e6eab3ec715813a4a038da00ab113d3962ff3"
       },
       {
         "path": "Plans/Glossary.md",
-        "sha256": "077920a04b9247b31a93db742517ba3b0b6b83cec92e9a834f57aa7ef47b3b84"
+        "sha256": "ee2342e03ed0804f918d5544f466b3b80bc1f34c96e57567f7af21d0f6ac09bc"
       },
       {
         "path": "Plans/Decision_Policy.md",
-        "sha256": "c42e3a3428155c7d61d26eaf36b823dba92152c874d7050b536934de90d182c2"
+        "sha256": "d93baffddb7c16278038b4e9f003cdfc136d65a622885ff6cd94bc6b62a06832"
       },
       {
         "path": "Plans/GitHub_API_Auth_and_Flows.md",
-        "sha256": "43d9a1f20c7bfc07049e48c4257052d0e8880b04e72be0cf9ba41fbc2dd01acc"
+        "sha256": "b43b68a67e34664a4d925f7e3d1801aabff55627145a6b744c825f4a1806a435"
       },
       {
         "path": "Plans/Architecture_Invariants.md",
@@ -95,11 +108,11 @@
       },
       {
         "path": "Plans/Progression_Gates.md",
-        "sha256": "e6145bd73ef64abae83870ade4ddd574fe2bfc9b107c47ee82f8007ace2fb140"
+        "sha256": "398dc7071da83e8b0f4075fcff1c432d335e04ba24d3844bd11612052ecc3f08"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
-        "sha256": "07f6f9f3178023cfa70e434c41a19a219a269a611520332c339d140d0b64d168"
+        "sha256": "68a1fe529e733e80224b5297f5454186105dfef8901a393aed104a31c3ebc4ab"
       },
       {
         "path": "Plans/plan_graph.schema.json",
@@ -123,7 +136,7 @@
       },
       {
         "path": "scripts/pm-plans-verify.py",
-        "sha256": "547a41934deffd3842da7b163c1254ae305a71562f33dce89ba62e34ec01e8c9"
+        "sha256": "f2f357b8c7b046159d51034494bfa726144ea9dcba6456bef265c024f7deee0a"
       }
     ]
   },

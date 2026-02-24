@@ -2,6 +2,7 @@
 
 ## Change Summary
 
+- 2026-02-24: Updated the user-project Contract Layer outputs to require portable `.puppet-master/project/plan_graph.json` (canonical headless input) while keeping sharded `plan_graph/` as an optional cache for large graphs (SSOT: `Plans/Project_Output_Artifacts.md`, `Plans/orchestrator-subagent-integration.md`).
 - 2026-02-23: Added a cross-plan alignment section making the Interview phase manager responsible for (1) intent-driven adaptive phase selection (phase plan) and (2) producing Contract Layer outputs via contract fragments + a deterministic Contract Unification Pass (SSOT: `Plans/chain-wizard-flexibility.md` §6 and `Plans/Project_Output_Artifacts.md`).
 
 ## Plan Document Status
@@ -154,19 +155,20 @@ The Interview phase manager must support adaptive phase selection exactly as spe
 
 ### 2) Contract Layer output generation (fragments → unification)
 
-The Interviewer/Wizard must produce the canonical user-project artifact set under `.puppet-master/project/` (requirements, Project Contract Pack, `plan.md`, sharded `plan_graph/`, `acceptance_manifest.json`, etc.). The authoritative contract for these artifacts and schemas is `Plans/Project_Output_Artifacts.md`.
+The Interviewer/Wizard must produce the canonical user-project artifact set under `.puppet-master/project/` (requirements, Project Contract Pack, `plan.md`, `plan_graph.json` (+ optional sharded `plan_graph/` cache), `acceptance_manifest.json`, etc.). The authoritative contract for these artifacts and schemas is `Plans/Project_Output_Artifacts.md`.
 
 Implementation responsibilities (conceptual):
 
 - **Per-phase contract fragments:** Each interview phase contributes contract fragments (interfaces, schemas, constraints, budgets, test contracts). These fragments are inputs to unification; they are not the canonical contract pack.
 - **Contract Unification Pass:** At interview completion, run a deterministic unification step that dedupes fragments, assigns stable `ProjectContract:*` IDs, and materializes:
-  - `.puppet-master/project/contracts/` + required `contracts/index.json`
-  - `.puppet-master/project/plan_graph/index.json` + `nodes/<node_id>.json`
-  - `.puppet-master/project/acceptance_manifest.json`
-  - `.puppet-master/project/plan.md`
-  - optional `.puppet-master/project/glossary.md`
+   - `.puppet-master/project/contracts/` + required `contracts/index.json`
+   - `.puppet-master/project/plan_graph.json` (canonical; portable headless execution input)
+   - optional `.puppet-master/project/plan_graph/index.json` + `nodes/<node_id>.json` (sharded cache for large graphs)
+   - `.puppet-master/project/acceptance_manifest.json`
+   - `.puppet-master/project/plan.md`
+   - optional `.puppet-master/project/glossary.md`
 - **Builder contract seeds:** When Requirements Doc Builder is used (chain-wizard §5), `.puppet-master/requirements/contract-seeds.md` is a staging input to the unification pass and must be reconciled with phase-derived fragments.
-- **Validation gate:** Before execution begins, run the dry-run validator specified by `Plans/Project_Output_Artifacts.md` Validation Rules (resolvable `ProjectContract:*` refs, acceptance-manifest coverage, shard schema validity, deterministic node IDs).
+- **Validation gate:** Before execution begins, run the dry-run validator specified by `Plans/Project_Output_Artifacts.md` Validation Rules (resolvable `ProjectContract:*` refs, acceptance-manifest coverage, `plan_graph.json` validity (and shard-cache validity if present), deterministic node IDs).
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/chain-wizard-flexibility.md, Primitive:SessionStore
 
@@ -3077,7 +3079,7 @@ pub struct PlatformSubagentSettings {
 4. Measure performance impact of subagent invocations
 
 
-## User-Project Output Contract (Sharded Graph Default)
+## User-Project Output Contract (Portable plan_graph.json + optional sharded cache)
 
 For user projects, Interviewer/Wizard outputs must target `.puppet-master/project/` and not rely on any user-project `Plans/` directory.
 
@@ -3088,16 +3090,18 @@ Required artifact set:
 - `.puppet-master/project/contracts/index.json`
 - `.puppet-master/project/plan.md`
 - `.puppet-master/project/glossary.md` (optional, recommended)
-- `.puppet-master/project/plan_graph/index.json`
-- `.puppet-master/project/plan_graph/nodes/<node_id>.json`
-- `.puppet-master/project/plan_graph/edges.json` (optional)
+- `.puppet-master/project/plan_graph.json`
+- `.puppet-master/project/plan_graph/index.json` (optional sharded cache)
+- `.puppet-master/project/plan_graph/nodes/<node_id>.json` (optional sharded cache)
+- `.puppet-master/project/plan_graph/edges.json` (optional sharded cache)
 - `.puppet-master/project/acceptance_manifest.json`
 - `.puppet-master/project/auto_decisions.jsonl`
 - `.puppet-master/project/evidence/<node_id>.json` (produced during execution; schema `pm.evidence.schema.v1`)
 
 Canonical rules:
 
-- Sharded plan graph is the default output (index + node shards).
+- Plan graph output MUST include `.puppet-master/project/plan_graph.json` as the canonical portable execution entrypoint.
+- Puppet Master may also materialize a sharded cache under `.puppet-master/project/plan_graph/` for large graphs or tooling.
 - `plan.md` remains mandatory as the human-readable summary for operators.
 - Contract pack uses stable `ProjectContract:*` IDs resolved via `contracts/index.json`; every node must reference at least one project contract ID.
 - All artifacts above must be persisted canonically in seglog as full-content artifact events.
@@ -3110,7 +3114,7 @@ Canonical rules:
 | Contract pack | `.puppet-master/project/contracts/` + `contracts/index.json` |
 | Human plan summary | `.puppet-master/project/plan.md` |
 | Project glossary (optional) | `.puppet-master/project/glossary.md` |
-| Machine plan graph | `.puppet-master/project/plan_graph/index.json` + `nodes/<node_id>.json` (+ optional `edges.json`) |
+| Machine plan graph | `.puppet-master/project/plan_graph.json` (+ optional sharded cache under `plan_graph/`) |
 | Acceptance index | `.puppet-master/project/acceptance_manifest.json` |
 | Deterministic decision stream | `.puppet-master/project/auto_decisions.jsonl` |
 | Execution evidence (per node) | `.puppet-master/project/evidence/<node_id>.json` |
