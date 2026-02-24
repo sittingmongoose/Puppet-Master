@@ -180,8 +180,12 @@ The Interviewer/Wizard must produce the canonical user-project artifact set unde
 7. `ui/wiring_matrix.json` (conditional: GUI projects only; interactive element → command → handler mapping)
 8. `ui/ui_command_catalog.json` (conditional: GUI projects only; stable `UICommandID` registry)
 
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, Primitive:Seglog
+
 **Optional derived export (non-canonical):**
 - `plan_graph.json` (monolithic wrapper export). If emitted, it MUST be consistent with the sharded graph.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph.v1
 
 Implementation responsibilities (conceptual):
 
@@ -196,6 +200,8 @@ Implementation responsibilities (conceptual):
 - **UI wiring artifacts (GUI projects):** When the interview detects the user project has a GUI (`has_gui = true` from Architecture or Product/UX phases), the Contract Unification Pass also generates `.puppet-master/project/ui/wiring_matrix.json` and `.puppet-master/project/ui/ui_command_catalog.json` from the Product/UX phase wiring fragments. The validation gate must verify schema conformance and "no unbound UI actions" (every interactive element has a bound command and handler).
 - **Builder contract seeds:** When Requirements Doc Builder is used (chain-wizard §5), `.puppet-master/requirements/contract-seeds.md` is a staging input to the unification pass and must be reconciled with phase-derived fragments.
 - **Validation gate:** Before execution begins, run the dry-run validator specified by `Plans/Project_Output_Artifacts.md` Validation Rules (resolvable `ProjectContract:*` refs, acceptance-manifest coverage, `plan_graph/index.json` + node-shard validity, deterministic node IDs, and—if `plan_graph.json` is emitted—byte/semantic consistency with the shards).
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1
 
 #### Plan graph sharding (sharded-by-default; minimal rules)
 
@@ -988,6 +994,8 @@ Use `depends_on: Vec<TaskId>` on each task in the PRD/plan:
    - Acceptance criteria for UI nodes MUST include: (a) wiring matrix entry exists for every new interactive element, (b) no unbound UI actions (every element has a bound `UICommandID` and a resolved handler), (c) `ui/wiring_matrix.json` validates against the wiring matrix schema.
    - Generated AGENTS.md for the target project MUST include a "UI Wiring" rule in the Critical block: "Every interactive UI element must have a wiring matrix entry; no unbound actions allowed. Check `ui/wiring_matrix.json` before adding new interactive elements."
 
+ContractRef: Invariant:INV-011, Invariant:INV-012, ContractName:Plans/UI_Wiring_Rules.md
+
 7. **Where to inject.** Apply these requirements in:
    - **Prompt templates** for phase completion and document generation (so the interviewing agent is instructed to produce AI-executor-oriented, wire-explicit, complete output).
    - **PRD and plan generators** (so generated tasks and acceptance criteria include wiring, completeness, **subagent persona recommendations**, and **parallelism**).
@@ -995,6 +1003,8 @@ Use `depends_on: Vec<TaskId>` on each task in the PRD/plan:
 
 
 **Reinforce in all generated plans and AGENTS.md:** (1) **DRY Method** -- check existing code and docs before adding new; reuse first; tag reusable items; single source of truth. (2) **Everything wired** -- config and **GUI** must be wired (every new screen, control, or action reachable and connected). (3) **No unfinished components or features** unless explicitly scheduled in a later step; the plan must reference that step and the later step must complete the work. (4) **No dead code** -- require that unused code is removed and that new code is only added when used and wired. Add these to DO/DON'T or Critical block in generated AGENTS.md. The generator MUST emit these four points in the DO/DON'T or Critical block of generated AGENTS.md and in plan acceptance criteria; there is no exception for partial or minimal output.
+
+ContractRef: ContractName:Plans/DRY_Rules.md#7, Gate:GATE-009
 
 **Cross-reference:** Plans/assistant-chat-design.md §14 points here for the full specification. Orchestrator plan "Avoiding Built but Not Wired" and config-wiring (orchestrator-subagent-integration.md §config-wiring: Option B — build at run start, merge order: GUI defaults < interview output < per-tier overrides) are the runtime side; the interview is responsible for generating instructions that lead to wired, complete implementations.
 
@@ -1103,6 +1113,8 @@ Interview-tab bounds for these controls are sourced from `Plans/FinalGUISpec.md`
 
 **CRITICAL:** All code in this plan MUST follow DRY principles.
 
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+
 ### DRY Requirements
 
 1. **Platform Data -- ALWAYS use platform_specs:**
@@ -1110,10 +1122,14 @@ Interview-tab bounds for these controls are sourced from `Plans/FinalGUISpec.md`
    - ✅ **ALWAYS** use `platform_specs::` functions (e.g., `platform_specs::cli_binary_names()`, `platform_specs::get_subagent_invocation_format()`, `platform_specs::get_agents_directory_name()`)
    - ✅ **ALWAYS** use `platform_specs::discover_platform_capabilities()` instead of platform match statements
 
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+
 2. **Subagent Names -- ALWAYS use subagent_registry:**
    - ❌ **NEVER** hardcode subagent names in match statements or mappings
    - ✅ **ALWAYS** use `subagent_registry::` functions (e.g., `subagent_registry::get_subagent_for_language()`, `subagent_registry::is_valid_subagent_name()`)
    - ✅ **ALWAYS** reference `DRY:DATA:subagent_registry` from orchestrator plan as the single source of truth
+
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 3. **Tag All Reusable Items:**
    - ✅ Tag reusable functions: `// DRY:FN:<name> -- Description`
@@ -1151,6 +1167,8 @@ Interview-tab bounds for these controls are sourced from `Plans/FinalGUISpec.md`
    - **DRY REQUIREMENT:** MUST use `subagent_registry::get_subagent_for_language()` and `subagent_registry::get_subagent_for_framework()` -- DO NOT create duplicate mapping logic
    - **DRY REQUIREMENT:** Tag reusable functions with `// DRY:FN:<name>`
 5. **DRY (Puppet Master code):** When adding interview UI or helpers, follow DRY per §5.3 (widget catalog, platform_specs, tagging; run catalog scripts after widget changes)
+
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 ### Phase 2: Prompt Integration
 1. Modify `prompt_templates.rs` to include subagent instructions
@@ -2741,6 +2759,8 @@ impl SubagentManager {
 }
 ```
 
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+
 #### 2. Integration into Interview Orchestrator
 Add subagent file management to orchestrator initialization:
 
@@ -3016,6 +3036,8 @@ pub enum CopilotInvocationType {
 }
 ```
 
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+
 ## Updated Configuration
 
 Add platform-specific invocation settings:
@@ -3142,6 +3164,8 @@ Required artifact set:
 - `.puppet-master/project/auto_decisions.jsonl`
 - `.puppet-master/project/evidence/<node_id>.json` (produced during execution; schema `pm.evidence.schema.v1`)
 
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1
+
 Canonical rules:
 
 - Plan graph output MUST include the canonical sharded entrypoint `.puppet-master/project/plan_graph/index.json` plus referenced node shards under `.puppet-master/project/plan_graph/nodes/`.
@@ -3149,6 +3173,8 @@ Canonical rules:
 - `plan.md` remains mandatory as the human-readable summary for operators.
 - Contract pack uses stable `ProjectContract:*` IDs resolved via `contracts/index.json`; every node must reference at least one project contract ID.
 - All artifacts above must be persisted canonically in seglog as full-content artifact events.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1
 
 ### Contract Layer Crosswalk (User Project)
 

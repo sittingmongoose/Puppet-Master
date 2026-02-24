@@ -77,10 +77,14 @@ The **orchestrator must respect** two kinds of information that the interview (o
 
 For user projects created by Puppet Master, the orchestrator MUST consume a **SHARDED** plan graph by default and MUST be able to execute headless from the sharded plan graph representation **alone** (no `Plans/` folder assumptions, and no reliance on any single monolithic `plan_graph.json` file).
 
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1
+
 Constraints:
 - **No user-project `Plans/` assumptions:** Do not require or read `Plans/` from the target project; Puppet Master `Plans/` are internal references only.
 - **No schema copying:** Validate artifacts against internal schemas, but do NOT embed/copy internal schema definitions into user-project artifacts (only `schema_version` / hash metadata as required).
 - **Canonical persistence:** All required user-project planning artifacts MUST be written under `.puppet-master/project/...` and MUST be persisted canonically in **seglog**. Filesystem copies are reproducible materializations of the seglog canonical content.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, Primitive:Seglog
 
 Canonical planning artifacts (inputs + derived views) must live under `.puppet-master/project/`:
 
@@ -107,9 +111,13 @@ Canonical planning artifacts (inputs + derived views) must live under `.puppet-m
   - Produce a canonical JSON representation of the node *excluding* volatile/derived fields (timestamps, evidence, run-state, shard hashes).
   - Compute `sha256("pm.plan_graph.node.v1:" + canonical_json_bytes)` and use the full hex digest as `node_id` (or a fixed-length prefix if the system standardizes one; if prefixing, prefix length MUST be constant across all nodes in a graph).
 
+ContractRef: Invariant:INV-005, ContractName:Plans/Project_Output_Artifacts.md
+
 **Required `index.json` fields (minimum)**
 
 `plan_graph/index.json` MUST validate against the canonical schema and requirements in:
+
+ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md
 
 - `Plans/Project_Output_Artifacts.md` §7.1
 - `Plans/project_plan_graph_index.schema.json` (`pm.project-plan-graph-index.v1`)
@@ -127,9 +135,13 @@ At minimum it includes:
 - Optional:
   - `edges` pointer/path when `plan_graph/edges.json` exists (exact field name per schema; do not invent ad-hoc shapes here)
 
+ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md
+
 **Required node shard fields (minimum)**
 
 Node shards MUST validate against:
+
+ContractRef: SchemaID:pm.project-plan-node.v1, ContractName:Plans/Project_Output_Artifacts.md
 
 - `Plans/Project_Output_Artifacts.md` §7.2
 - `Plans/project_plan_node.schema.json` (`pm.project-plan-node.v1`)
@@ -149,6 +161,8 @@ At minimum, each node shard includes the required fields (see SSOT for exact fie
 - `unblocks`
 
 For scheduling, the orchestrator also consumes dependency structure from the node definition (for example optional `depends_on` / `parallel_group` when present), and from `blockers`/`unblocks` semantics as defined by the schema/SSOT.
+
+ContractRef: SchemaID:pm.project-plan-node.v1, ContractName:Plans/Project_Output_Artifacts.md
 
 #### Load order and validation behavior (user projects)
 
@@ -182,11 +196,15 @@ For scheduling, the orchestrator also consumes dependency structure from the nod
    - If any required UI wiring validation fails, treat as a planning-artifact integrity error (same severity as contract/acceptance validation failures).
 8. If any required validation fails, halt scheduling and return a planning-artifact integrity error (no silent fallback, and no skipping contract/acceptance validation).
 
+ContractRef: Gate:GATE-001, Gate:GATE-010, ContractName:Plans/UI_Wiring_Rules.md
+
 Scheduling inputs must be sourced from the validated plan graph (monolith or shard/index metadata):
 
 - `depends_on` (from node shards; if `edges.json` exists, it MUST match)
 - `blockers` / `unblocks` from node definitions
 - `parallel_group` metadata when available
+
+ContractRef: Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md
 
 Node states (scheduler-level; persisted per node):
 - `runnable`: dependencies satisfied; not `complete`; not `blocked`; not `waiting_approval`
@@ -200,6 +218,8 @@ Scheduling rule ("continue other work when approvals pending"):
 - A `waiting_approval`/`blocked` node only blocks its dependents via the dependency graph; it MUST NOT block unrelated runnable nodes.
 - A run pauses only when the runnable set is empty and at least one node is `waiting_approval` (HITL needed) or `blocked` (intervention/replan needed).
 
+ContractRef: PolicyRule:Decision_Policy.md§2, Gate:GATE-005, ContractName:Plans/Executor_Protocol.md
+
 Execution policy notes:
 
 - **Sharded-first (default):** The sharded plan graph (`plan_graph/index.json` + node shards) is the canonical on-disk representation for user projects and is sufficient for headless execution. Any monolithic `plan_graph.json` is optional/legacy.
@@ -210,6 +230,8 @@ Execution policy notes:
 - **Evidence bundles:** On node completion, the orchestrator MUST write an evidence bundle at `.puppet-master/project/evidence/<node_id>.json` (schema `pm.evidence.schema.v1`) and persist it canonically to seglog; a node MUST NOT be marked complete without valid evidence.
 - **Deterministic ambiguity handling:** When ambiguity occurs during execution, resolve deterministically per `Plans/Decision_Policy.md` and append a machine-consumable record to `.puppet-master/project/auto_decisions.jsonl` (schema `pm.auto_decisions.schema.v1`).
 - Authoritative artifact and schema contract: `Plans/Project_Output_Artifacts.md`.
+
+ContractRef: PolicyRule:Decision_Policy.md§2, Gate:GATE-005, ContractName:Plans/Executor_Protocol.md
 
 **Cross-reference:** STATE_FILES.md §3.3 (canonical PRD schema); **Plans/interview-subagent-integration.md** §5.2 and Crew-Aware Plan Generation.
 
@@ -607,6 +629,8 @@ impl SubagentSelector {
 }
 ```
 
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+
 ### Tier Context
 
 ```rust
@@ -895,6 +919,8 @@ impl Orchestrator {
     }
 ```
 
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+
 **Error handling:**
 
 - **Subagent selection failure:** If subagent selection fails, log warning and fall back to default subagent or skip subagents
@@ -1040,6 +1066,8 @@ subagentConfig:
 
 **Environment gating:** Tests require the corresponding CLI to be installed and (where applicable) authenticated. They MUST be gated so they do not fail CI when CLIs or auth are missing.
 
+ContractRef: PolicyRule:Decision_Policy.md§2
+
 **Implementation:**
 
 - **Gate:** Only run platform CLI smoke tests when the appropriate env var is set and the CLI binary is on `PATH` (and optionally when a "CI has auth" flag is set). If not set or binary missing, skip with a clear "skipped: Cursor CLI not available" style message.
@@ -1166,6 +1194,8 @@ async fn cursor_subagent_invocation() {
             "Expected subagent or echo in output: {}", stdout);
 }
 ```
+
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 **Summary table:**
 
@@ -1658,6 +1688,8 @@ pub mod subagent_registry {
 }
 ```
 
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+
 Use the union of all names for override/disabled/required lists; optionally restrict multi-select by tier in the UI.
 
 
@@ -1727,6 +1759,8 @@ When a platform-specific parser fails:
    - ❌ **NEVER** hardcode subagent names in match statements or mappings
    - ✅ **ALWAYS** use `subagent_registry::` functions (e.g., `subagent_registry::get_subagent_for_language()`, `subagent_registry::is_valid_subagent_name()`)
    - ✅ **ALWAYS** reference `DRY:DATA:subagent_registry` as the single source of truth
+
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 3. **Tag All Reusable Items:**
    - ✅ Tag reusable functions: `// DRY:FN:<name> -- Description`
@@ -2658,6 +2692,8 @@ fn get_quality_criteria_for_tier(tier_type: TierType) -> Result<Vec<QualityCrite
 }
 ```
 
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, Gate:GATE-005
+
 **Error handling:**
 
 - **Artifact collection failure:** If artifacts cannot be collected, return `VerificationStatus::Warning` with Info finding
@@ -3543,6 +3579,8 @@ impl OutputParser for CopilotOutputParser {
 }
 ```
 
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+
 **Validation function:**
 
 ```rust
@@ -3746,6 +3784,8 @@ pub enum RemediationResult {
     Escalate(Vec<Finding>), // Escalate to parent-tier orchestrator
 }
 ```
+
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 **Integration with orchestrator:**
 
@@ -4457,6 +4497,8 @@ async fn execute_subtasks_parallel(&self, subtask_ids: &[String]) -> Result<Vec<
     }
 }
 ```
+
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 ### Context Flow Through Dependency Chains
 
@@ -6493,6 +6535,8 @@ impl AgentCommunicator {
 }
 ```
 
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+
 **Integration with agent execution:**
 
 Agents can post messages during execution:
@@ -7961,6 +8005,8 @@ impl SubagentInvoker {
 }
 ```
 
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+
 ## Benefits of Platform Capabilities
 
 1. **Rich Context**: Hooks can inject project-specific context into subagents
@@ -8335,6 +8381,8 @@ async fn run_enhanced_loop(&self) -> Result<()> {
     Ok(())
 }
 ```
+
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 ### Benefits of Autonomous QA Loop Integration
 
