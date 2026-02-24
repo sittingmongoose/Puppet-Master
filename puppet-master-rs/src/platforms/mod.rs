@@ -38,7 +38,6 @@ pub mod quota_manager;
 pub mod rate_limiter;
 pub mod registry;
 pub mod runner;
-pub mod sdk_bridge;
 pub mod usage_tracker;
 
 // Re-exports

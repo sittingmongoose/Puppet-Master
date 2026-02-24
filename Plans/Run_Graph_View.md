@@ -257,7 +257,7 @@ Shows where this node maps to the human-readable plan (plan.md):
 | "Open plan at section" | Action button | Navigate to plan view or open plan artifact in File Editor, scrolled to the relevant section |
 | "Copy plan reference" | Action button | Copy breadcrumb + anchor to clipboard |
 
-Data source: plan_mapping fields are populated by loading the plan artifact (`.puppet-master/project/plan.md` or `plan_graph/nodes/<node_id>.json`) and extracting the relevant section based on the node's position in the plan hierarchy.
+Data source: plan_mapping fields are populated from canonical project artifacts defined in `Plans/Project_Output_Artifacts.md` (canonical graph entrypoint `.puppet-master/project/plan_graph/index.json`, referenced `plan_graph/nodes/<node_id>.json`, and human-readable `.puppet-master/project/plan.md`) and extracted by node hierarchy position.
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md
 

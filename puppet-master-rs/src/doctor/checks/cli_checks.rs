@@ -1,6 +1,5 @@
 //! CLI availability checks
 
-use crate::doctor::InstallationManager;
 use crate::types::{CheckCategory, CheckResult, DoctorCheck, FixResult, Platform};
 use async_trait::async_trait;
 use chrono::Utc;
@@ -60,37 +59,21 @@ impl CliCheck {
             passed: false,
             message: format!("{} not found or not functional", self.name),
             details: Some(details),
-            can_fix: true,
+            can_fix: false,
             timestamp: Utc::now(),
         }
     }
 
-    // DRY:FN:cli_fix -- Common fix implementation using platform_specs install commands
+    // DRY:FN:cli_fix -- Manual guidance for platform CLI checks
     async fn fix_cli(&self, dry_run: bool) -> Option<FixResult> {
+        let guidance = format!(
+            "Automatic {} installation has been removed. Install it manually and authenticate before retrying detection.",
+            self.name
+        );
         if dry_run {
-            let os = if cfg!(target_os = "windows") {
-                "windows"
-            } else if cfg!(target_os = "macos") {
-                "macos"
-            } else {
-                "linux"
-            };
-            let methods = crate::platforms::platform_specs::install_methods_for(self.platform, os);
-            let cmd = methods
-                .first()
-                .map(|m| format!("Would run: {}", m.command))
-                .unwrap_or_else(|| format!("No install method for {} on {}", self.name, os));
-            return Some(FixResult::success(cmd));
+            return Some(FixResult::success(guidance));
         }
-        let manager = InstallationManager::new();
-        match manager.execute_install(self.platform) {
-            Ok(result) => Some(if result.success {
-                FixResult::success(result.message)
-            } else {
-                FixResult::failure(result.message)
-            }),
-            Err(e) => Some(FixResult::failure(format!("Install failed: {}", e))),
-        }
+        Some(FixResult::failure(guidance))
     }
 }
 
@@ -141,7 +124,7 @@ impl DoctorCheck for CursorCheck {
         self.0.fix_cli(dry_run).await
     }
     fn has_fix(&self) -> bool {
-        true
+        false
     }
 }
 
@@ -174,7 +157,7 @@ impl DoctorCheck for CodexCheck {
         self.0.fix_cli(dry_run).await
     }
     fn has_fix(&self) -> bool {
-        true
+        false
     }
 }
 
@@ -207,7 +190,7 @@ impl DoctorCheck for ClaudeCheck {
         self.0.fix_cli(dry_run).await
     }
     fn has_fix(&self) -> bool {
-        true
+        false
     }
 }
 
@@ -240,7 +223,7 @@ impl DoctorCheck for GeminiCheck {
         self.0.fix_cli(dry_run).await
     }
     fn has_fix(&self) -> bool {
-        true
+        false
     }
 }
 
@@ -273,6 +256,6 @@ impl DoctorCheck for CopilotCheck {
         self.0.fix_cli(dry_run).await
     }
     fn has_fix(&self) -> bool {
-        true
+        false
     }
 }

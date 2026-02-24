@@ -89,13 +89,7 @@ impl CheckRegistry {
         self.register(Arc::new(usage_check::UsageCheck::new()));
         self.register(Arc::new(secrets_check::SecretsCheck::new()));
         self.register(Arc::new(runtime_check::RuntimeCheck::new()));
-        self.register(Arc::new(sdk_checks::NodeRuntimeCheck::new()));
-        self.register(Arc::new(sdk_checks::PlatformSdkCheck::new(
-            crate::types::Platform::Codex,
-        )));
-        self.register(Arc::new(sdk_checks::PlatformSdkCheck::new(
-            crate::types::Platform::Copilot,
-        )));
+        self.register(Arc::new(playwright_check::NodeRuntimeCheck::new()));
 
         // Additional checks
         self.register(Arc::new(playwright_check::PlaywrightCheck::new()));

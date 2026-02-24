@@ -11,7 +11,7 @@
 use crate::core::state_machine::OrchestratorEvent;
 use crate::interview::failover::is_quota_error;
 use crate::platforms::{
-    get_runner, platform_specs, quota_manager::global_quota_manager, sdk_bridge::SdkBridge,
+    get_runner, platform_specs, quota_manager::global_quota_manager,
 };
 use crate::types::*;
 use anyhow::{Result, anyhow};
@@ -112,7 +112,7 @@ impl ExecutionEngine {
             let request = self.build_execution_request(context, platform);
 
             // Execute the request
-            match self.execute_with_sdk_fallback(&*runner, &request).await {
+            match runner.execute(&request).await {
                 Ok(result) => {
                     if result.success {
                         let output = result.output.unwrap_or_default();
@@ -192,7 +192,6 @@ impl ExecutionEngine {
             context.working_dir.clone(),
         )
         .with_plan_mode(context.plan_mode)
-        .with_sdk(platform_specs::has_sdk(platform))
         .with_session_id(context.session_id.clone());
 
         if let Some(timeout_ms) = context.timeout_ms {
@@ -222,80 +221,6 @@ impl ExecutionEngine {
         }
 
         request
-    }
-
-    // DRY:FN:execute_with_sdk_fallback — Try SDK execution first when enabled, then fall back to CLI runner
-    async fn execute_with_sdk_fallback(
-        &self,
-        runner: &dyn crate::platforms::PlatformRunner,
-        request: &ExecutionRequest,
-    ) -> Result<ExecutionResult> {
-        if request.use_sdk && platform_specs::has_sdk(request.platform) {
-            if let Some(result) = self.try_execute_with_sdk(request).await {
-                return Ok(result);
-            }
-            log::info!(
-                "Falling back to CLI runner for {} after SDK attempt",
-                request.platform
-            );
-        }
-
-        runner.execute(request).await
-    }
-
-    /// Try SDK execution and return `Some(result)` on success, `None` to trigger CLI fallback.
-    async fn try_execute_with_sdk(&self, request: &ExecutionRequest) -> Option<ExecutionResult> {
-        let Some(bridge) = SdkBridge::new() else {
-            log::info!(
-                "SDK bridge unavailable for {} (Node.js not found)",
-                request.platform
-            );
-            return None;
-        };
-
-        if !bridge.is_sdk_installed(request.platform).await {
-            log::info!(
-                "SDK package not installed for {}. Falling back to CLI",
-                request.platform
-            );
-            return None;
-        }
-
-        let sdk_result = match bridge
-            .execute_prompt(
-                request.platform,
-                &request.prompt,
-                &request.model,
-                &request.working_directory,
-                request.plan_mode,
-                request.reasoning_effort.as_deref(),
-            )
-            .await
-        {
-            Ok(result) => result,
-            Err(e) => {
-                log::warn!(
-                    "SDK execution failed for {}: {}. Falling back to CLI",
-                    request.platform,
-                    e
-                );
-                return None;
-            }
-        };
-
-        if !sdk_result.success {
-            log::warn!(
-                "SDK execution returned failure for {}: {}",
-                request.platform,
-                sdk_result.output
-            );
-            return None;
-        }
-
-        let mut result = ExecutionResult::success().with_output(sdk_result.output.clone());
-        result.exit_code = Some(sdk_result.exit_code);
-        result.session_id = request.session_id.clone();
-        Some(result)
     }
 
     /// Parse completion signal from output text
@@ -487,18 +412,6 @@ mod tests {
 
         assert!(request.plan_mode);
         assert_eq!(request.reasoning_effort.as_deref(), Some("high"));
-    }
-
-    #[test]
-    fn test_build_execution_request_sets_sdk_by_platform_capability() {
-        let engine = create_test_engine();
-        let context = test_context(Platform::Codex);
-
-        let codex_request = engine.build_execution_request(&context, Platform::Codex);
-        let claude_request = engine.build_execution_request(&context, Platform::Claude);
-
-        assert!(codex_request.use_sdk);
-        assert!(!claude_request.use_sdk);
     }
 
     fn create_test_engine() -> ExecutionEngine {

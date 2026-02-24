@@ -226,7 +226,7 @@ grep -r "DRY:FN" puppet-master-rs/src/      # Functions
 **Before writing new code, ALWAYS check:**
 1. `docs/gui-widget-catalog.md` -- Full widget + data source catalog
 2. `puppet-master-rs/src/widgets/` -- Shared UI widgets
-3. `puppet-master-rs/src/platforms/platform_specs.rs` -- Single source of truth for ALL platform CLI data (binary names, install paths, auth, models, effort, images, headless, experimental, subagents, SDKs)
+3. `puppet-master-rs/src/platforms/platform_specs.rs` -- Single source of truth for ALL platform CLI data (binary names, install paths, auth, models, effort, images, headless, experimental, subagents)
 4. Grep for `DRY:` tags in the area you're working
 
 **Key DRY data sources (non-widget):**

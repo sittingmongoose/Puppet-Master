@@ -212,9 +212,6 @@ impl CapabilityCache {
         if platform_specs::supports_subagents(platform) {
             features.push("subagents".to_string());
         }
-        if platform_specs::has_sdk(platform) {
-            features.push("sdk".to_string());
-        }
         if platform_specs::reasoning_is_model_based(platform) {
             features.push("reasoning_model_based".to_string());
         }

@@ -5,7 +5,6 @@ pub mod config_checks;
 pub mod git_checks;
 pub mod project_checks;
 pub mod runtime_check;
-pub mod sdk_checks;
 pub mod secrets_check;
 pub mod usage_check;
 

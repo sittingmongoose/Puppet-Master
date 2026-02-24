@@ -12,13 +12,14 @@ Purpose:
 
 ABSOLUTE NAMING RULE:
 - Platform name is "Puppet Master" only.
-- If older naming exists, refer to it only as "legacy naming" (do not quote it).
+- Use "Puppet Master" naming consistently throughout this document.
 -->
 
 ## 0. Scope
 This document defines the canonical contracts for:
 - Persisted event envelopes (`EventRecord`, schema `pm.event.v0`)
 - A minimal compatibility envelope (`EventEnvelopeV1`) used by early-phase writers/readers
+- Provider normalized stream (CLI-bridged, server-bridged, and direct-provider transports)
 - UI commands (`UICommand`)
 - Auth state + events (`AuthState`, `AuthPolicy`, `AuthEvent`)
 
@@ -91,6 +92,40 @@ Providers emit a normalized stream for live UI consumption. Persistent storage r
 
 **Normative:** See `Plans/CLI_Bridged_Providers.md` for the full schema (event envelope + event types). This contracts file only asserts the boundary: normalized provider stream events are transport-facing, while seglog events are persistence-facing.
 
+**Provider architecture constraints (normative):**
+- All providers (CLI-bridged, server-bridged, and direct-provider) MUST conform to the unified Provider facade/trait contract with capability flags and tool-policy inputs defined at the Provider boundary.
+- UI and orchestrator consumers MUST NOT special-case provider transport or provider brand beyond provider configuration fields (enablement, connection/auth inputs, model selection).
+- Provider-originated events and tool-call lifecycle signals MUST be normalized into the canonical provider event stream contract before reaching consumers or persistence mapping.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Tools.md
+
+---
+
+### 2.1 Provider transport taxonomy
+
+Providers may use one of these transport classes. The normalized stream contract (§2) applies identically regardless of class:
+- **CLI-bridged:** local CLI subprocess transport (`stream-json`/ACP). Cursor and Claude Code are CLI-bridged only.
+- **Server-bridged:** HTTP REST + SSE to a local server process. OpenCode is server-bridged.
+- **Direct-provider:** direct provider endpoint calls with provider-native auth. Codex, Copilot, and Gemini follow this class.
+
+Canonical enum contract for implementation:
+```text
+ProviderTransport = CliBridge | DirectApi | ServerBridge
+```
+
+Mapping:
+- `CliBridge` → CLI-bridged
+- `DirectApi` → direct-provider
+- `ServerBridge` → server-bridged
+
+**Transport-specific notes:**
+- Server-bridged providers communicate via HTTP REST endpoints and SSE event streams (e.g., OpenCode; see `Plans/Provider_OpenCode.md`).
+- CLI-bridged providers communicate via CLI event outputs and adapter parsing (`Plans/CLI_Bridged_Providers.md`).
+- Direct-provider integrations may use provider HTTP/gRPC endpoints directly, but they MUST still emit the same normalized event types (`text_delta`, `tool_use`, `tool_result`, `usage`, `done`, etc.).
+- Consumers MUST NOT branch on transport class. All provider output is consumed through the unified normalized stream.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/CLI_Bridged_Providers.md
+
 ---
 
 ## 3. Tool events (persisted)
@@ -140,14 +175,14 @@ Represents the canonical authentication status for a single provider (e.g., GitH
 ```json
 {
   "provider": "github",
-  "state": "authenticated",
+  "state": "LoggedIn",
   "account_label": "github.com/octocat",
   "updated_at": "2026-02-23T00:00:00Z"
 }
 ```
 
 Rules:
-- `state` is one of: `unauthenticated` | `pending` | `authenticated` | `failed`.
+- `state` uses the canonical auth lifecycle set (`AuthJobState`): `LoggedOut` | `LoggingIn` | `LoggedIn` | `LoggingOut` | `AuthExpired` | `AuthFailed`.
 - Secrets (tokens) MUST NOT be stored in `AuthState` when persisted; secrets live only in the OS credential store.
 
 ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
@@ -156,7 +191,17 @@ ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_I
 ### 4.2 AuthPolicy
 Defines deterministic defaults for auth method selection per provider.
 
+Canonical enum contract for implementation:
+```text
+ProviderAuthMethod = OAuthBrowser | OAuthDeviceCode | ApiKey | GoogleCredentials | CliInteractive
+```
+
 Rules:
+- Cursor and Claude Code use `CliInteractive` (CLI-bridged only).
+- Codex supports `OAuthBrowser`, `OAuthDeviceCode`, and `ApiKey` for direct-provider auth/calls.
+- GitHub Copilot uses `OAuthDeviceCode` for direct-provider auth/calls.
+- Gemini uses direct-provider auth/calls with `OAuthBrowser` and `ApiKey`; `GoogleCredentials` is supported for Google credential-based execution.
+- OpenCode uses server credentials for server access plus provider-native auth managed by OpenCode.
 - For GitHub, default interactive auth MUST be OAuth device-code flow (see `Plans/GitHub_API_Auth_and_Flows.md`).
 
 ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, SchemaID:Spec_Lock.json#locked_decisions.auth_model
@@ -173,6 +218,25 @@ Example (GitHub):
 - `auth.github.disconnected`
 
 ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Contracts_V0.md#EventRecord
+
+---
+
+### 4.4 Setup/Health lifecycle contracts
+
+Canonical enum contracts for implementation:
+```text
+InstallableComponent = CursorCli | ClaudeCli | Playwright
+InstallJobState = NotInstalled | Installing | Installed | Uninstalling | Failed
+AuthJobState = LoggedOut | LoggingIn | LoggedIn | LoggingOut | AuthExpired | AuthFailed
+AuthRealm = github_api | copilot_github
+```
+
+Rules:
+- `InstallableComponent` applies to Setup/Health install controls only.
+- `InstallJobState` and `AuthJobState` are real-time UI/backend states and MUST be streamed deterministically.
+- `AuthRealm` values MUST be isolated: tokens/state for `github_api` and `copilot_github` are separate and MUST NOT be cross-consumed.
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md
 
 ---
 
@@ -236,3 +300,4 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md, SchemaID:Wiring_Matrix.schem
 - `Plans/GitHub_API_Auth_and_Flows.md` (GitHub auth event types and flows)
 - `Plans/UI_Wiring_Rules.md` (wiring rules and verification strategy)
 - `Plans/Wiring_Matrix.schema.json` (WiringEntry schema)
+- `Plans/Provider_OpenCode.md` (OpenCode server-bridged provider integration)

@@ -160,9 +160,12 @@ fn doctor_tiers_and_setup_controls_work() {
     assert!(app.doctor_selected_platforms.contains(&Platform::Codex));
 
     let _ = app.update(Message::InstallAllMissing);
-    assert!(app.doctor_fixing.contains("codex-cli"));
-    assert!(!app.doctor_fixing.contains("cursor-cli"));
-    assert!(!app.doctor_fixing.contains("github-cli"));
+    assert!(app.doctor_fixing.is_empty());
+    assert!(app.toasts.iter().any(|toast| {
+        toast
+            .message
+            .contains("Automatic platform CLI installation has been removed")
+    }));
 
     // Tiers controls
     app.tier_tree = vec![TierDisplayNode {

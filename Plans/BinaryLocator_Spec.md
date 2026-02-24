@@ -56,7 +56,7 @@ Required fields:
 
 Optional fields:
 - `workspace_root`: absolute path; used **only** for workspace-scoped caching keys (must not expand filesystem probing scope). (ContractRef: Primitive:Provider)
-- `override_path`: user-provided path string; see Override semantics below. (ContractRef: ConfigKey:advanced_config.cli_paths)
+- `override_path`: user-provided path string sourced from Setup/Health **manual path** controls for Cursor/Claude; see Override semantics below. (ContractRef: ConfigKey:advanced_config.cli_paths)
 - `env_path`: effective PATH string used for PATH lookup. (ContractRef: Primitive:Provider)
 
 #### Output (conceptual)
@@ -105,6 +105,8 @@ Goal: honor explicit user selection and fail fast with actionable errors if the 
 
 Rules:
 - If `override_path` is `None`/empty, skip this layer. (ContractRef: ConfigKey:advanced_config.cli_paths)
+- `override_path` input is valid only for Cursor Agent and Claude Code rows exposed in Setup/Health UI; other tools must not emit this field. (ContractRef: ConfigKey:advanced_config.cli_paths)
+- Setup/Health manual-path UX contract is: `Use manual path` checkbox + native file picker. If the checkbox is off, callers MUST pass `override_path = None`. (ContractRef: ConfigKey:advanced_config.cli_paths)
 - `override_path` normalization MUST be deterministic. (ContractRef: Primitive:Provider)
   - Expand `~` (home) on Unix-like systems. (ContractRef: Primitive:Provider)
   - Expand `%VAR%` / `$Env:VAR`-style tokens on Windows if present. (ContractRef: Primitive:Provider)
@@ -138,6 +140,7 @@ Rules:
 - Expand `~` where applicable. (ContractRef: Primitive:Provider)
 - De-duplicate by normalized absolute path string; first occurrence wins. (ContractRef: Primitive:Provider)
 - Probe each candidate path with existence + validation. (ContractRef: Primitive:Provider)
+- Candidate paths MUST be limited to official/default footprints and explicit user override path; legacy/pre-rewrite binary locations MUST NOT be included. (ContractRef: Primitive:Provider)
 - If none succeed, proceed to `Launchers`. (ContractRef: Primitive:Provider)
 
 Legacy anchors (read-only):
@@ -153,16 +156,16 @@ Rules:
 - This layer MUST be restricted to explicit deterministic rules; no broad filesystem crawling is permitted. (ContractRef: Primitive:Provider)
 
 #### Cursor Agent versioned bundle resolution (required)
-When `provider_cli == Cursor Agent`, BinaryLocator MUST probe the versions subtree deterministically. (ContractRef: Primitive:Provider)
+When `provider_cli == Cursor Agent`, BinaryLocator MUST be able to probe the versions subtree deterministically. (ContractRef: Primitive:Provider)
 
 Candidate roots (by OS):
-- Unix: `~/.local/share/cursor-agent/versions/` (ContractRef: Primitive:Provider)
-- Windows: `%LOCALAPPDATA%\cursor-agent\versions\` (ContractRef: Primitive:Provider)
+- Unix / WSL: `~/.local/share/cursor-agent/versions/` (ContractRef: Primitive:Provider)
+- Windows Native: `%LOCALAPPDATA%\\cursor-agent\\versions\\` (ContractRef: Primitive:Provider)
 
 Selection rule (deterministic):
 - Enumerate immediate child directory names under the versions directory and select the lexicographically greatest name using byte-order string comparison. (ContractRef: Primitive:Provider)
 - Treat directory names as opaque strings (no semantic version parsing). (ContractRef: Primitive:Provider)
-- Probe `.../<chosen>/cursor-agent` (Unix) or `...\<chosen>\cursor-agent.cmd` (Windows), then validate. (ContractRef: Primitive:Provider)
+- Probe `.../<chosen>/cursor-agent` (Unix/WSL) or `...\\<chosen>\\cursor-agent.exe` (Windows Native), then validate. (ContractRef: Primitive:Provider)
 
 Legacy anchor: `puppet-master-rs/src/install/script_installer.rs` (Cursor shim notes).
 
@@ -247,6 +250,9 @@ BinaryLocator MUST return stable error codes suitable for UI rendering, logs, an
 
 ### UI mapping (DRY)
 - UI copy, buttons, and view behavior MUST be specified in the canonical UI SSOT (`Plans/FinalGUISpec.md` + typed commands in `crates/ui_commands/`), using these stable error codes and the `trace` output as inputs. (ContractRef: Invariant:INV-003)
+- Setup + Health/Doctor map BinaryLocator results for Cursor/Claude as follows: `Found` → Installed, `NotFound` → Not Installed, `FoundButInvalid` → Failed (show `BinaryErrorCode` + trace details). (ContractRef: Invariant:INV-003)
+- Manual path controls are Cursor/Claude only: a `Use manual path` checkbox gates a native file picker value that is passed as `override_path`; toggling off clears `override_path` and reverts to normal probe layers. (ContractRef: ConfigKey:advanced_config.cli_paths)
+- Playwright installation state is out of scope for BinaryLocator and must be driven by Browser Tools health checks, not Provider CLI lookup. (ContractRef: Primitive:Provider)
 
 ---
 
@@ -264,7 +270,8 @@ Expected result includes probe layer and a representative resolved path pattern.
 | macOS | Cursor Agent | User-local shim (`~/.local/bin/agent`) (SSOT: `Plans/BinaryLocator_Spec.md` Probe layer: CommonLocations) | Exclude `~/.local/bin` from PATH | CommonLocations | `~/.local/bin/agent` |
 | macOS | Cursor Agent | Homebrew shim (`/opt/homebrew/bin/agent`) (SSOT: `Plans/BinaryLocator_Spec.md` Probe layer: PATH) | Include `/opt/homebrew/bin` in PATH | PATH | `/opt/homebrew/bin/agent` |
 | Linux | Cursor Agent | System shim (`/usr/local/bin/agent`) (SSOT: `Plans/BinaryLocator_Spec.md` Probe layer: PATH) | Include `/usr/local/bin` in PATH | PATH | `/usr/local/bin/agent` |
-| Windows | Cursor Agent | Local app shim (`%LOCALAPPDATA%\cursor-agent\agent.cmd`) (SSOT: `Plans/BinaryLocator_Spec.md` Probe layer: CommonLocations) | Exclude `%LOCALAPPDATA%\cursor-agent` from PATH | CommonLocations | `%LOCALAPPDATA%\cursor-agent\agent.cmd` |
+| Windows (Native) | Cursor Agent | User-local shim (`%LOCALAPPDATA%\\cursor-agent\\agent.exe`) (SSOT: `Plans/FinalGUISpec.md` Cursor install (Windows Native)) | Exclude `%LOCALAPPDATA%\\cursor-agent` from PATH | CommonLocations | `%LOCALAPPDATA%\\cursor-agent\\agent.exe` |
+| Windows (WSL) | Cursor Agent | User-local shim in WSL (`~/.local/bin/agent`) (SSOT: `Plans/FinalGUISpec.md` Cursor Windows policy) | Exclude `~/.local/bin` (inside WSL) from PATH | CommonLocations | `~/.local/bin/agent` |
 | macOS | Claude Code | Homebrew shim (`/opt/homebrew/bin/claude`) (SSOT: `Plans/BinaryLocator_Spec.md` Probe layer: PATH) | Include `/opt/homebrew/bin` in PATH | PATH | `/opt/homebrew/bin/claude` |
 | Linux | Claude Code | User-local shim (`~/.local/bin/claude`) (SSOT: `Plans/BinaryLocator_Spec.md` Probe layer: CommonLocations) | Exclude `~/.local/bin` from PATH | CommonLocations | `~/.local/bin/claude` |
 | Windows | Claude Code | npm shim (`%APPDATA%\\npm\\claude.cmd`) (SSOT: `Plans/BinaryLocator_Spec.md` Probe layer: PATH) | Include `%APPDATA%\\npm` in PATH | PATH | `%APPDATA%\\npm\\claude.cmd` |
@@ -279,6 +286,8 @@ Expected result includes probe layer and a representative resolved path pattern.
 6. Force rescan: `force_rescan=true` bypasses caches and updates results even if a cached value is still valid. (ContractRef: Primitive:Provider)
 7. Windows launcher support: `.cmd`/`.bat` candidates are validated as executable launchers. (ContractRef: Primitive:Provider)
 8. Cursor versions subtree: when only the versions bundle exists, the Launchers layer resolves and validates the latest lexicographic entry. (ContractRef: Primitive:Provider)
+9. Manual-path UX contract: only Cursor/Claude expose manual-path controls; unchecked state emits no `override_path`; checked state emits exactly the file-picker path. (ContractRef: ConfigKey:advanced_config.cli_paths)
+10. UI state mapping determinism: identical `BinaryLocateResult` values always map to the same Setup/Health install-state label (`Installed`, `Not Installed`, `Failed`). (ContractRef: Invariant:INV-003)
 
 ---
 

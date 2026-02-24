@@ -417,6 +417,170 @@ impl DoctorCheck for PlaywrightCheck {
     }
 }
 
+// DRY:DATA:NodeRuntimeCheck
+/// Checks whether Node.js and npm are available.
+pub struct NodeRuntimeCheck;
+
+impl NodeRuntimeCheck {
+    // DRY:FN:new
+    pub fn new() -> Self {
+        Self
+    }
+}
+
+impl Default for NodeRuntimeCheck {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+// DRY:FN:find_node_executable -- Resolve node/npm via PATH + known fallback dirs.
+fn find_node_executable(name: &str) -> Option<std::path::PathBuf> {
+    crate::platforms::path_utils::resolve_executable(name)
+}
+
+// DRY:FN:node_install_plan -- OS-specific Node.js install plan.
+fn node_install_plan() -> (String, String) {
+    #[cfg(target_os = "windows")]
+    {
+        return (
+            "Install Node.js LTS via winget".to_string(),
+            "winget install --id OpenJS.NodeJS.LTS -e --accept-source-agreements --accept-package-agreements"
+                .to_string(),
+        );
+    }
+
+    #[cfg(target_os = "macos")]
+    {
+        return (
+            "Install Node.js via Homebrew".to_string(),
+            "brew install node".to_string(),
+        );
+    }
+
+    #[cfg(target_os = "linux")]
+    {
+        return (
+            "Install Node.js LTS via nvm".to_string(),
+            r#"export NVM_DIR="$HOME/.nvm"
+if [ ! -s "$NVM_DIR/nvm.sh" ]; then
+  curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+fi
+. "$NVM_DIR/nvm.sh"
+nvm install --lts
+nvm alias default 'lts/*'"#
+                .to_string(),
+        );
+    }
+
+    #[cfg(not(any(target_os = "windows", target_os = "macos", target_os = "linux")))]
+    {
+        ("Unsupported operating system".to_string(), String::new())
+    }
+}
+
+#[async_trait]
+impl DoctorCheck for NodeRuntimeCheck {
+    fn name(&self) -> &str {
+        "node-runtime"
+    }
+
+    fn category(&self) -> CheckCategory {
+        CheckCategory::Environment
+    }
+
+    fn description(&self) -> &str {
+        "Check Node.js and npm are installed (required for Playwright)"
+    }
+
+    async fn run(&self) -> CheckResult {
+        let Some(node_path) = find_node_executable("node") else {
+            return CheckResult {
+                passed: false,
+                message: "Node.js not found".to_string(),
+                details: Some(
+                    "Node.js is required for Playwright checks.".to_string(),
+                ),
+                can_fix: true,
+                timestamp: Utc::now(),
+            };
+        };
+
+        let Some(npm_path) = find_node_executable("npm") else {
+            return CheckResult {
+                passed: false,
+                message: "npm not found".to_string(),
+                details: Some(format!(
+                    "Node found at {}, but npm is missing.",
+                    node_path.display()
+                )),
+                can_fix: true,
+                timestamp: Utc::now(),
+            };
+        };
+
+        let node_version = tokio::process::Command::new(&node_path).arg("--version").output().await;
+        let npm_version = tokio::process::Command::new(&npm_path)
+            .env(
+                "PATH",
+                crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
+            )
+            .arg("--version")
+            .output()
+            .await;
+
+        match (node_version, npm_version) {
+            (Ok(node), Ok(npm)) if node.status.success() && npm.status.success() => {
+                let node_v = String::from_utf8_lossy(&node.stdout).trim().to_string();
+                let npm_v = String::from_utf8_lossy(&npm.stdout).trim().to_string();
+                CheckResult {
+                    passed: true,
+                    message: format!("Node runtime available ({node_v}, npm {npm_v})"),
+                    details: Some(format!(
+                        "node: {}, npm: {}",
+                        node_path.display(),
+                        npm_path.display()
+                    )),
+                    can_fix: false,
+                    timestamp: Utc::now(),
+                }
+            }
+            _ => CheckResult {
+                passed: false,
+                message: "Node.js/npm found but version checks failed".to_string(),
+                details: Some("Run 'node --version' and 'npm --version' manually.".to_string()),
+                can_fix: true,
+                timestamp: Utc::now(),
+            },
+        }
+    }
+
+    async fn fix(&self, dry_run: bool) -> Option<FixResult> {
+        if dry_run {
+            let (summary, command) = node_install_plan();
+            return Some(
+                FixResult::success(format!("Would install Node.js runtime: {summary}"))
+                    .with_step(format!("Would run: {command}")),
+            );
+        }
+
+        let outcome = crate::install::install_coordinator::install_node().await;
+        let mut result = if outcome.success {
+            FixResult::success("Node.js installed successfully.")
+        } else {
+            FixResult::failure(outcome.message)
+        };
+        for line in &outcome.log_lines {
+            result = result.with_step(line.clone());
+        }
+        Some(result)
+    }
+
+    fn has_fix(&self) -> bool {
+        true
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

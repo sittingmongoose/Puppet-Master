@@ -17,8 +17,8 @@
 //! // Install GitHub CLI to app-local bin/
 //! let outcome = install_coordinator::install_gh_cli().await;
 //!
-//! // Install a platform CLI (Gemini, Codex, Copilot, Claude, Cursor)
-//! let outcome = install_coordinator::install_platform(Platform::Gemini).await;
+//! // Platform CLI install automation has been removed.
+//! // install_coordinator::install_platform(...) now returns a guidance failure.
 //! ```
 
 pub mod app_paths;

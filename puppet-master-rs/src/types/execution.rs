@@ -61,9 +61,6 @@ pub struct ExecutionRequest {
     #[serde(default)]
     pub env_vars: std::collections::HashMap<String, String>,
 
-    /// Use SDK-based execution instead of CLI spawning (for Copilot/Codex).
-    #[serde(default)]
-    pub use_sdk: bool,
 }
 
 fn default_true() -> bool {
@@ -93,7 +90,6 @@ impl ExecutionRequest {
             platform,
             context_files: Vec::new(),
             env_vars: std::collections::HashMap::new(),
-            use_sdk: false,
         }
     }
 
@@ -153,12 +149,6 @@ impl ExecutionRequest {
         self
     }
 
-    // DRY:FN:with_sdk
-    /// Enable SDK-based execution.
-    pub fn with_sdk(mut self, enabled: bool) -> Self {
-        self.use_sdk = enabled;
-        self
-    }
 }
 
 // DRY:DATA:ExecutionResult
@@ -816,29 +806,4 @@ mod tests {
         assert!(!info.is_timed_out());
     }
 
-    #[test]
-    fn test_execution_request_with_sdk() {
-        let req = ExecutionRequest::new(
-            Platform::Copilot,
-            "gpt-4",
-            "Test SDK prompt",
-            PathBuf::from("/tmp"),
-        )
-        .with_sdk(true);
-
-        assert_eq!(req.platform, Platform::Copilot);
-        assert!(req.use_sdk);
-    }
-
-    #[test]
-    fn test_execution_request_default_no_sdk() {
-        let req = ExecutionRequest::new(
-            Platform::Codex,
-            "gpt-4",
-            "Test prompt",
-            PathBuf::from("/tmp"),
-        );
-
-        assert!(!req.use_sdk);
-    }
 }

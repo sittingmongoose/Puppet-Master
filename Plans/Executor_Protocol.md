@@ -10,6 +10,8 @@ It applies to:
 - Self-build plan graph artifacts in `Plans/plan_graph.json`
 - User-project sharded plan graph artifacts under `.puppet-master/project/plan_graph/`
 
+For user projects, canonical entrypoint and derived-export policy are defined in `Plans/Project_Output_Artifacts.md` (`.puppet-master/project/plan_graph/index.json` canonical; monolithic export is optional/non-canonical).
+
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Progression_Gates.md
 
 ---

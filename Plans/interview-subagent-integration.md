@@ -6,7 +6,7 @@
 ## Change Summary
 
 - 2026-02-24: Added UI wiring artifacts (`ui/wiring_matrix.json`, `ui/ui_command_catalog.json`) to interview outputs for GUI projects; updated Phase 3 (Product/UX) subagent responsibilities, §5.2 wiring/completeness requirements, and Contract Layer outputs. SSOT: `Plans/UI_Wiring_Rules.md`, `Plans/Wiring_Matrix.schema.json`.
-- 2026-02-24: Updated the user-project Contract Layer outputs so the Interviewer/Wizard emits a **sharded plan graph** under `.puppet-master/project/plan_graph/` **by default** (canonical; persisted canonically in seglog). `plan_graph.json` becomes an optional derived export only. (SSOT: `Plans/Project_Output_Artifacts.md`, `Plans/orchestrator-subagent-integration.md`.)
+- 2026-02-24: Updated the user-project Contract Layer outputs so the Interviewer/Wizard emits a **sharded-only plan graph** under `.puppet-master/project/plan_graph/` (canonical; persisted canonically in seglog). `plan_graph/exports/plan_graph.monolithic.json` is an optional derived export only. (SSOT: `Plans/Project_Output_Artifacts.md`, `Plans/orchestrator-subagent-integration.md`.)
 - 2026-02-23: Added a cross-plan alignment section making the Interview phase manager responsible for (1) intent-driven adaptive phase selection (phase plan) and (2) producing Contract Layer outputs via contract fragments + a deterministic Contract Unification Pass (SSOT: `Plans/chain-wizard-flexibility.md` §6 and `Plans/Project_Output_Artifacts.md`).
 
 ## Plan Document Status
@@ -167,55 +167,25 @@ The Interview phase manager must support adaptive phase selection exactly as spe
 
 ### 2) Contract Layer output generation (fragments → unification)
 
-The Interviewer/Wizard must produce the canonical user-project artifact set under `.puppet-master/project/`. These artifacts are **persisted canonically in seglog**; the filesystem under `.puppet-master/project/**` is a regenerable projection/export. **Do not assume user projects have a `Plans/` folder** (any `Plans/*` references here are Puppet Master internal only). The authoritative contract for these artifacts and schemas is `Plans/Project_Output_Artifacts.md`.
-
-**Required outputs (staged in the user workspace under `.puppet-master/project/` and persisted canonically in seglog):**
-
-1. `requirements.md`
-2. `contracts/` (Project Contract Pack; MUST include `contracts/index.json`)
-3. `plan.md`
-4. `plan_graph/` (sharded plan graph; canonical)
-   - `plan_graph/index.json` (required)
-   - `plan_graph/nodes/<node_id>.json` (required; 1+)
-   - `plan_graph/edges.json` (optional)
-5. `acceptance_manifest.json`
-6. `auto_decisions.jsonl`
-7. `ui/wiring_matrix.json` (conditional: GUI projects only; interactive element → command → handler mapping)
-8. `ui/ui_command_catalog.json` (conditional: GUI projects only; stable `UICommandID` registry)
+The Interviewer/Wizard must produce canonical user-project artifacts under `.puppet-master/project/`, persisted canonically in seglog. **Do not assume user projects have a `Plans/` folder** (any `Plans/*` references here are Puppet Master internal only). The authoritative artifact/schema contract is `Plans/Project_Output_Artifacts.md`, and this file's canonical in-plan reference is §`User-Project Output Contract (Sharded plan_graph/ canonical)`.
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, Primitive:Seglog
-
-**Optional derived export (non-canonical):**
-- `plan_graph.json` (monolithic wrapper export). If emitted, it MUST be consistent with the sharded graph.
-
-ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph.v1
 
 Implementation responsibilities (conceptual):
 
 - **Per-phase contract fragments:** Each interview phase contributes contract fragments (interfaces, schemas, constraints, budgets, test contracts). These fragments are inputs to unification; they are not the canonical contract pack.
-- **Contract Unification Pass:** At interview completion, run a deterministic unification step that dedupes fragments, assigns stable `ProjectContract:*` IDs, and materializes:
-   - `.puppet-master/project/contracts/` + required `contracts/index.json`
-   - `.puppet-master/project/plan_graph/` (canonical sharded graph: `index.json` + `nodes/<node_id>.json` + optional `edges.json`)
-   - optional `.puppet-master/project/plan_graph.json` (derived export only; MUST match shards if present)
-   - `.puppet-master/project/acceptance_manifest.json`
-   - `.puppet-master/project/plan.md`
-   - optional `.puppet-master/project/glossary.md`
+- **Contract Unification Pass:** At interview completion, run a deterministic unification step that dedupes fragments, assigns stable `ProjectContract:*` IDs, and materializes SSOT-defined canonical artifacts under `.puppet-master/project/` (contracts/index, `plan.md`, canonical sharded `plan_graph/`, acceptance manifest, execution-time decisions/evidence, optional glossary).
 - **UI wiring artifacts (GUI projects):** When the interview detects the user project has a GUI (`has_gui = true` from Architecture or Product/UX phases), the Contract Unification Pass also generates `.puppet-master/project/ui/wiring_matrix.json` and `.puppet-master/project/ui/ui_command_catalog.json` from the Product/UX phase wiring fragments. The validation gate must verify schema conformance and "no unbound UI actions" (every interactive element has a bound command and handler).
 - **Builder contract seeds:** When Requirements Doc Builder is used (chain-wizard §5), `.puppet-master/requirements/contract-seeds.md` is a staging input to the unification pass and must be reconciled with phase-derived fragments.
-- **Validation gate:** Before execution begins, run the dry-run validator specified by `Plans/Project_Output_Artifacts.md` Validation Rules (resolvable `ProjectContract:*` refs, acceptance-manifest coverage, `plan_graph/index.json` + node-shard validity, deterministic node IDs, and—if `plan_graph.json` is emitted—byte/semantic consistency with the shards).
+- **Validation gate:** Before execution begins, run the dry-run validator specified by `Plans/Project_Output_Artifacts.md` Validation Rules (including contract resolvability, acceptance-manifest coverage, canonical sharded graph validity, deterministic node IDs, and derived-export consistency when present).
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1
 
-#### Plan graph sharding (sharded-by-default; minimal rules)
+#### Plan graph sharding (sharded-only; minimal rules)
 
-- **Deterministic node IDs (required):** `node_id` MUST be deterministic from the node’s semantic content so reruns produce stable IDs. At minimum:
-  - Canonicalize the node object by sorting object keys and sorting any string arrays; sort `acceptance[]` by `check_id`.
-  - Compute `sha256(canonical_json_bytes)` and set `node_id = "PN-" + <first 16 hex chars of sha256>`.
-  - The in-file `node_id` MUST exactly match `<node_id>` in the filename `nodes/<node_id>.json`.
-- **Node shard required fields:** Each `plan_graph/nodes/<node_id>.json` MUST include (see `Plans/project_plan_node.schema.json` for the full schema):  
-  `node_id`, `objective`, `contract_refs`, `acceptance`, `evidence_required`, `allowed_tools`, `tool_policy_mode`, `policy_mode`, `change_budget`, `blockers`, `unblocks`.
-- **Index required fields:** `plan_graph/index.json` MUST include (see `Plans/project_plan_graph_index.schema.json`):  
-  `schema_version`, `graph_id`, `nodes[]` (each: `node_id`, `path`, `sha256`), `entrypoints[]`, and `validation` with `index_schema_id`, `node_schema_id`, and `targets` (`acceptance_manifest`, `contracts_index`).
+- Canonical entrypoint is `.puppet-master/project/plan_graph/index.json` with referenced node shards under `.puppet-master/project/plan_graph/nodes/<node_id>.json` (optional `edges.json`).
+- `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` is optional derived export only (non-canonical).
+- Deterministic node-ID rules, required fields, schema versions, and validator behavior are defined in `Plans/Project_Output_Artifacts.md` and in this file's §`User-Project Output Contract (Sharded plan_graph/ canonical)`.
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/chain-wizard-flexibility.md, Primitive:SessionStore
 
@@ -3154,15 +3124,11 @@ For user projects, Interviewer/Wizard outputs must target `.puppet-master/projec
 Required artifact set:
 
 - `.puppet-master/project/requirements.md`
-- `.puppet-master/project/contracts/`
-- `.puppet-master/project/contracts/index.json`
+- `.puppet-master/project/contracts/` (includes required `contracts/index.json`)
 - `.puppet-master/project/plan.md`
 - `.puppet-master/project/glossary.md` (optional, recommended)
-- `.puppet-master/project/plan_graph/` (canonical sharded graph)
-  - `.puppet-master/project/plan_graph/index.json` (entrypoint + validation pointers)
-  - `.puppet-master/project/plan_graph/nodes/<node_id>.json` (one node per file)
-  - `.puppet-master/project/plan_graph/edges.json` (optional explicit edges; must be consistent)
-- `.puppet-master/project/plan_graph.json` (optional derived export only; MUST match shards if present)
+- `.puppet-master/project/plan_graph/` (canonical sharded graph: required `index.json` + `nodes/<node_id>.json`; optional `edges.json`)
+- `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` (optional derived export only; MUST match shards if present)
 - `.puppet-master/project/acceptance_manifest.json`
 - `.puppet-master/project/auto_decisions.jsonl`
 - `.puppet-master/project/evidence/<node_id>.json` (produced during execution; schema `pm.evidence.schema.v1`)
@@ -3171,11 +3137,12 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project
 
 Canonical rules:
 
-- Plan graph output MUST include the canonical sharded entrypoint `.puppet-master/project/plan_graph/index.json` plus referenced node shards under `.puppet-master/project/plan_graph/nodes/`.
-- `.puppet-master/project/plan_graph.json` is optional and non-canonical; if materialized, it MUST be consistent with the sharded graph.
+- Plan graph output MUST include the canonical sharded entrypoint `.puppet-master/project/plan_graph/index.json` plus referenced node shards under `.puppet-master/project/plan_graph/nodes/`; this is the only canonical execution input.
+- `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` is optional and non-canonical; if materialized, it MUST be consistent with the sharded graph.
 - `plan.md` remains mandatory as the human-readable summary for operators.
 - Contract pack uses stable `ProjectContract:*` IDs resolved via `contracts/index.json`; every node must reference at least one project contract ID.
 - All artifacts above must be persisted canonically in seglog as full-content artifact events.
+- Field-level schema requirements, deterministic node-ID rules, and validation pointers are defined in `Plans/Project_Output_Artifacts.md` (SSOT).
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1
 
@@ -3187,7 +3154,7 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project
 | Contract pack | `.puppet-master/project/contracts/` + `contracts/index.json` |
 | Human plan summary | `.puppet-master/project/plan.md` |
 | Project glossary (optional) | `.puppet-master/project/glossary.md` |
-| Machine plan graph | `.puppet-master/project/plan_graph/index.json` + `plan_graph/nodes/<node_id>.json` (optional `plan_graph/edges.json`; optional derived export `plan_graph.json`) |
+| Machine plan graph | `.puppet-master/project/plan_graph/index.json` + `plan_graph/nodes/<node_id>.json` (optional `plan_graph/edges.json`; optional derived export `plan_graph/exports/plan_graph.monolithic.json`) |
 | Acceptance index | `.puppet-master/project/acceptance_manifest.json` |
 | Deterministic decision stream | `.puppet-master/project/auto_decisions.jsonl` |
 | Execution evidence (per node) | `.puppet-master/project/evidence/<node_id>.json` |
@@ -3227,36 +3194,13 @@ Large payload handling:
 - Emit deterministic chunk sequence events.
 - Emit final integrity event with canonical `sha256` for reconstructed content.
 
-### Execution-Critical Node Shard Fields
+### Execution-Critical Validation References
 
-Execution-critical requirements apply to each node shard file at `.puppet-master/project/plan_graph/nodes/<node_id>.json`.
-
-Required fields:
-
-- `node_id`
-- `objective`
-- `contract_refs`
-- `acceptance`
-- `evidence_required`
-- `allowed_tools`
-- `tool_policy_mode`
-- `policy_mode`
-- `change_budget`
-- `blockers`
-- `unblocks`
-
-Determinism rules:
-
-- Node IDs are stable/deterministic and non-random.
-- In-file `node_id` must match `<node_id>` in filename exactly.
-
-### Auto-Decisions Output Path
-
-For user-project outputs, deterministic decisions are recorded at `.puppet-master/project/auto_decisions.jsonl`.
+Execution-critical node requirements (required fields, determinism, evidence, and policy constraints) and deterministic decision logging (`.puppet-master/project/auto_decisions.jsonl`) are defined by `Plans/Project_Output_Artifacts.md` and enforced via the dry-run validator.
 
 ## Change Summary
 
-- 2026-02-23: Added user-project artifact contract requiring `.puppet-master/project/...` outputs and sharded plan graph default.
+- 2026-02-23: Added user-project artifact contract requiring `.puppet-master/project/...` outputs and canonical sharded plan graph handling.
 - 2026-02-23: Added `interview.artifact.generated` payload contract for full-content/chunked seglog artifact persistence.
 - 2026-02-23: Added execution-critical shard-node field requirements and deterministic node ID constraints.
 - 2026-02-23: Added explicit auto-decisions output path `.puppet-master/project/auto_decisions.jsonl` and SSOT link to `Plans/Project_Output_Artifacts.md`.

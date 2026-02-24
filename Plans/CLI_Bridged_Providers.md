@@ -4,7 +4,7 @@
 
 
 ## Purpose
-Define the **Provider facade** used by Puppet Master to run **local, CLI-bridged AI providers** (initially **Cursor** and **Claude Code**) with a single, uniform contract for:
+Define the **Provider facade** used by Puppet Master to run **bridged providers** (CLI-bridged and server-bridged) with a single, uniform contract for:
 
 - **Structured request envelopes** (deterministic, replayable runs)
 - **Normalized streaming events** (one consumer; no UI special-casing)
@@ -12,6 +12,13 @@ Define the **Provider facade** used by Puppet Master to run **local, CLI-bridged
 - **Authentication / UX-state detection** (logged out, expired/invalid, rate limit, outage)
 
 This document is architecture/contract focused. It defines *what must be true* at the Provider boundary.
+
+## Provider routing policy (locked)
+- **Cursor + Claude Code:** CLI-bridged only.
+- **OpenCode:** server-bridged (HTTP REST + SSE).
+- **Codex + Copilot + Gemini:** direct-provider auth/calls (OAuth/device/API key as applicable); these are outside this document's bridged transport mechanics.
+
+ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, ContractName:Plans/Contracts_V0.md
 
 ---
 
@@ -57,9 +64,29 @@ Canonical terminology is defined in `Plans/Glossary.md`. This section adds only 
 ContractRef: ContractName:Plans/Glossary.md, PolicyRule:Decision_Policy.md§1
 
 - **Provider facade:** A single logical interface that accepts a request envelope and produces a normalized stream plus a terminal outcome.
-- **Transport:** The concrete mechanism used to communicate with a Provider implementation (e.g., spawn a CLI and parse `stream-json`; or speak ACP). Transport must be invisible to consumers.
+- **Transport:** The concrete mechanism used to communicate with a Provider implementation (CLI subprocess, ACP, HTTP/SSE, or direct provider endpoint calls). Transport must be invisible to consumers.
+- **CLI-bridged transport:** Spawn a local CLI process and normalize emitted events (`stream-json` plus optional hooks/transcript reconciliation).
+- **Server-bridged transport:** Use HTTP REST + SSE against a local server process (OpenCode).
+- **Direct-provider transport:** Call provider endpoints directly (no local CLI bridge in the request path).
 - **Run:** One provider invocation, correlated by `run_id`.
+- **Auth method taxonomy:** See `ProviderAuthMethod` in `Plans/Contracts_V0.md` (SSOT). OpenCode server-level credentials are stored in the OS credential store and used only for the OpenCode server connection.
 - **Observation sources:** Inputs the Reconciler may use to build the normalized stream (stdout JSONL, stderr text, optional hooks, optional transcript).
+
+---
+
+## Direct-provider companion requirements
+
+This document primarily defines bridged transports. For decision completeness, direct-provider integrations MUST follow this companion matrix:
+
+| Provider | Transport class | Required auth paths | Notes |
+|---|---|---|---|
+| Codex | `DirectApi` | browser OAuth, headless device-code, API key | No SDK install flow in Puppet Master |
+| GitHub Copilot | `DirectApi` | GitHub device flow (`/login/device/code` + `/login/oauth/access_token`) | Polling + auth state updates required |
+| Gemini/Google | `DirectApi` | OAuth, API key, Google credential-based mode | Not a CLI subprocess path for auth/runtime |
+
+Direct-provider integrations MUST emit the same normalized provider stream schema as bridged transports.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/newtools.md, ContractName:Plans/Architecture_Invariants.md#INV-009
 
 ---
 
@@ -76,7 +103,7 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, ContractName:Pl
    - A **terminal outcome** represented by exactly one terminal `done` event.
 
 **Integration requirement:**
-- Callers MUST NOT branch on transport type (stream-json vs ACP). They only consume the normalized provider stream.
+- Callers MUST NOT branch on transport type (stream-json, ACP, or HTTP). They only consume the normalized provider stream.
 ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-009, SchemaID:Spec_Lock.json#locked_decisions.providers, Gate:GATE-009
 
 ### Deterministic defaults (autonomous)
@@ -95,7 +122,7 @@ ContractRef: PolicyRule:Decision_Policy.md§4, SchemaID:Spec_Lock.json#locked_de
 ## Structured request envelope
 
 ### Why an envelope (vs. raw prompt)
-The existing execution request in code is the baseline (`puppet-master-rs/src/types/execution.rs`), but CLI-bridged Providers require additional reproducibility-critical fields:
+The existing execution request in code is the baseline (`puppet-master-rs/src/types/execution.rs`), but bridged providers require additional reproducibility-critical fields:
 
 - Stable correlation IDs (run/thread/tool)
 - Explicit tool policy snapshot (by tool IDs, not schemas)
@@ -110,9 +137,9 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, PolicyRule:Deci
 |---|---:|---|
 | `run_id` | ✅ | Stable run correlation ID (caller-provided). |
 | `thread_id` | ✅ | Stable thread correlation ID for persistence/seglog linkage (see `Plans/storage-plan.md`). |
-| `platform` | ✅ | Platform selector (Cursor or Claude Code). |
-| `transport` | ✅ | `stream-json` or `acp`. |
-| `model_id` | ✅ | Model identifier passed through to the underlying CLI (SSOT for model/fallback rules: `platform_specs.rs`). |
+| `platform` | ✅ | Platform selector for bridged providers covered here (Cursor, Claude Code, OpenCode). |
+| `transport` | ✅ | `stream-json`, `acp`, or `http`. |
+| `model_id` | ✅ | Model identifier passed through to the underlying transport runtime (CLI args for Cursor/Claude; HTTP body fields for OpenCode). |
 | `mode` | ✅ | `plan` or `execute` (high-level). |
 | `working_directory` | ✅ | CWD/primary workspace directory. |
 | `workspace_roots` | ✅ | Ordered list of roots the provider is allowed to reference. |
@@ -301,6 +328,43 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-001, Gate:GATE-00
 
 ---
 
+## OpenCode provider
+
+### Transport: HTTP (server-bridged)
+OpenCode is a server-bridged provider backend: Puppet Master communicates via HTTP REST requests and SSE event streams with a locally-running OpenCode server, rather than spawning a CLI subprocess.
+
+### HTTP transport requirements
+- Puppet Master MUST connect to the OpenCode server at the configured `host:port` (default `127.0.0.1:4096`).
+- Health checks MUST use `GET /global/health` before each run.
+- Model discovery MUST use `GET /provider` (no hardcoded fallback models).
+- OpenCode server docs endpoint `/doc` SHOULD be used for local diagnostics/manual verification.
+
+### Connection method contract (OpenCode)
+- **Direct server (default):** connect to configured server URL/port and run via HTTP/SSE.
+- **CLI launcher/discovery fallback (optional):** use `opencode` path (or PATH lookup) only to launch/discover local server, then continue with HTTP/SSE transport.
+- Consumers MUST NOT branch on direct-server vs launcher fallback; both paths emit the same normalized provider stream.
+
+### Session lifecycle → run lifecycle
+Each Puppet Master run maps to one OpenCode session:
+1. **Create session:** `POST /session` → returns session `id`.
+2. **Send prompt:** `POST /session/:id/message` (sync) or `POST /session/:id/prompt_async` + `GET /event` SSE (async).
+3. **Receive response:** Parse response parts into normalized events.
+4. **Delete session:** `DELETE /session/:id` after run completes.
+
+Process isolation policy: each iteration creates a new session and deletes it after completion (no session reuse).
+
+> Full integration details: `Plans/Provider_OpenCode.md`
+
+### Acceptance criteria (OpenCode-specific)
+1. When the OpenCode server is reachable, Puppet Master can create a session, prompt, receive normalized events, and delete the session through the unified Provider facade.
+2. OpenCode runs produce the same normalized event types (`text_delta`, `tool_use`, `tool_result`, `usage`, `done`) as CLI-bridged provider runs — consumers do not branch on transport.
+3. Health/version/auth failures map to canonical states and diagnostics: not installed, server unreachable, auth required/expired, and version mismatch.
+4. OpenCode provider auth/sign-in actions use OpenCode auth surfaces (`/provider/auth` + callback endpoints) while preserving the same provider-agnostic UI command flow.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Architecture_Invariants.md#INV-009, Gate:GATE-009
+
+---
+
 ## Tool-call correlation + reconciliation
 
 ### Correlation requirements (normative)
@@ -342,16 +406,19 @@ ContractRef: ContractName:Plans/newfeatures.md, ContractName:Plans/Architecture_
 ## Login/auth UX detection state machine
 
 ### State model (normative)
-Providers MUST expose an auth/availability state machine for local CLIs. This is not UI logic; it is a normalized signal for consumers.
+Bridged providers MUST expose an auth/availability state machine. This is not UI logic; it is a normalized signal for consumers.
 ContractRef: ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/Architecture_Invariants.md#INV-002, Gate:GATE-009
 
-**States (minimum set):**
-- `unknown` (initial)
-- `authenticated`
-- `logged_out`
-- `expired_or_invalid`
-- `rate_limited`
-- `provider_outage_or_network`
+**Auth lifecycle states (canonical):**
+- `LoggedOut`
+- `LoggingIn`
+- `LoggedIn`
+- `LoggingOut`
+- `AuthExpired`
+- `AuthFailed`
+
+**Non-auth signals (do not extend the auth state enum):**
+- Rate limiting and provider/network outages MUST be surfaced via `diagnostic(...)` events and/or terminal `done.stop_reason` (e.g. `rate_limited`, `provider_outage_or_network`).
 
 ### Detection signals (normative)
 Providers MUST use a layered approach:
@@ -364,15 +431,19 @@ ContractRef: PolicyRule:Decision_Policy.md§2, Gate:GATE-009
     - Use the existing error categorization baseline over stderr + emitted error payloads to classify rate limit vs auth vs outage.
 
 3. **Exit-code + known CLI UX strings**
-    - If the CLI exits non-zero and output contains known "login required" signals, treat as `logged_out`.
-    - If output indicates token expired / refresh needed, treat as `expired_or_invalid`.
+    - If the CLI exits non-zero and output contains known "login required" signals, treat as `LoggedOut`.
+    - If output indicates token expired / refresh needed, treat as `AuthExpired`.
+
+4. **HTTP status + health endpoints (server-bridged)**
+   - OpenCode: `GET /global/health` with HTTP 401 MUST map to `LoggedOut`.
+   - OpenCode: connection refused/timeout/unhealthy responses MUST emit `diagnostic(category="provider_outage_or_network")` and MUST NOT redefine the auth lifecycle state set.
 
 ### Transition rules (minimum)
-- `unknown` → `authenticated` if preflight says authenticated.
-- `unknown` → `logged_out` if preflight says not authenticated.
-- Any state → `rate_limited` if in-run classification is rate limit.
-- Any state → `provider_outage_or_network` if in-run classification is network/outage.
-- `authenticated` → `expired_or_invalid` if auth failure occurs during run.
+- Initial (no cached state) → `LoggedOut` until proven otherwise.
+- Any state → `LoggedIn` if preflight says authenticated.
+- Any state → `LoggedOut` if preflight says not authenticated / login required.
+- `LoggedIn` → `AuthExpired` if auth failure occurs during run.
+- `LoggingIn` / `LoggingOut` are used only while an explicit login/logout action is in progress.
 
 **Output requirement**
 - Auth state changes MUST be emitted as `auth_state` events.
@@ -405,6 +476,13 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/
 3. Provider ingests hook payloads as observations.
 4. Provider parses transcript JSONL as observations (token usage + tool calls).
 5. Reconciler produces one normalized event stream.
+
+### OpenCode HTTP/SSE run
+1. Provider runs `GET /global/health` preflight against configured OpenCode server.
+2. Provider creates a session (`POST /session`) mapped to `run_id`.
+3. Provider sends prompt (`POST /session/:id/message` or `POST /session/:id/prompt_async` + `GET /event` SSE).
+4. Provider maps OpenCode parts/events into normalized provider events.
+5. Provider deletes the session (`DELETE /session/:id`) and emits terminal `done`.
 
 ---
 
@@ -472,3 +550,4 @@ Acceptance criteria are written to be testable by an agent/verifier that can run
 - `puppet-master-rs/src/platforms/auth_status.rs`
 - `puppet-master-rs/src/platforms/output_parser.rs`
 - `puppet-master-rs/src/platforms/runner.rs`
+- `Plans/Provider_OpenCode.md`

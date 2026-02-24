@@ -1,6 +1,7 @@
 # Orchestrator Subagent Integration -- Implementation Plan
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+> **Integration policy note (2026-02-24):** Runtime integration follows the ProviderTransport taxonomy (SSOT: `Plans/Contracts_V0.md`): Cursor/Claude Code = `CliBridge`, Codex/Copilot/Gemini = `DirectApi`, OpenCode = `ServerBridge`. Any Codex/Copilot SDK references in this file are historical context only and are not implementation targets.
 
 
 ## Plan Document Status
@@ -78,7 +79,7 @@ The **orchestrator must respect** two kinds of information that the interview (o
 
 ### Respecting PRD/plan: plan graph consumption (user projects)
 
-For user projects created by Puppet Master, the orchestrator MUST consume a **SHARDED** plan graph by default and MUST be able to execute headless from the sharded plan graph representation **alone** (no `Plans/` folder assumptions, and no reliance on any single monolithic `plan_graph.json` file).
+For user projects created by Puppet Master, the orchestrator MUST consume a **SHARDED-ONLY** plan graph and MUST be able to execute headless from the sharded plan graph representation **alone** (no `Plans/` folder assumptions, and no reliance on any monolithic derived export file).
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1
 
@@ -89,83 +90,27 @@ Constraints:
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, Primitive:Seglog
 
-Canonical planning artifacts (inputs + derived views) must live under `.puppet-master/project/`:
+Canonical planning artifact paths and field-level contracts are defined in the SSOT:
 
-- `.puppet-master/project/requirements.md` (**required**; human-readable requirements/constraints for operators and review)
-- `.puppet-master/project/contracts/` (**required**; Project Contract Pack directory)
-- `.puppet-master/project/contracts/index.json` (**required**; Project Contract Pack index; schema `pm.project_contracts_index.schema.v1`)
-- `.puppet-master/project/plan.md` (**required**; human-readable plan summary for operators)
-- `.puppet-master/project/plan_graph/index.json` (**required**; canonical plan graph index; sharded graph entrypoint)
-- `.puppet-master/project/plan_graph/nodes/<node_id>.json` (**required**; canonical node shards)
-- `.puppet-master/project/plan_graph/edges.json` (optional; supplemental edge materialization for fast loading; must be consistent with node `depends_on`)
-- `.puppet-master/project/acceptance_manifest.json` (**required**; acceptance registry; schema `pm.acceptance_manifest.schema.v1`)
-- `.puppet-master/project/auto_decisions.jsonl` (**required**; machine decision log; produced during execution; schema `pm.auto_decisions.schema.v1`)
-- `.puppet-master/project/glossary.md` (optional, recommended)
-- `.puppet-master/project/evidence/<node_id>.json` (produced during execution; schema `pm.evidence.schema.v1`)
-- `.puppet-master/project/ui/wiring_matrix.json` (conditional: GUI projects only; maps interactive UI elements to commands, handlers, events, and acceptance checks; schema adapted from `Plans/Wiring_Matrix.schema.json`)
-- `.puppet-master/project/ui/ui_command_catalog.json` (conditional: GUI projects only; stable `UICommandID` registry for the user project; rules per `Plans/UI_Wiring_Rules.md`)
-
-#### Sharding rules (required for consumption)
-
-**Deterministic node IDs**
-- Every node shard filename MUST be `<node_id>.json` and the shard content MUST include the same `node_id`.
-- `node_id` MUST be deterministic and stable across runs for the same logical node definition.
-- **Recommended algorithm (normative enough to implement):**
-  - Produce a canonical JSON representation of the node *excluding* volatile/derived fields (timestamps, evidence, run-state, shard hashes).
-  - Compute `sha256("pm.plan_graph.node.v1:" + canonical_json_bytes)` and use the full hex digest as `node_id` (or a fixed-length prefix if the system standardizes one; if prefixing, prefix length MUST be constant across all nodes in a graph).
-
-ContractRef: Invariant:INV-005, ContractName:Plans/Project_Output_Artifacts.md
-
-**Required `index.json` fields (minimum)**
-
-`plan_graph/index.json` MUST validate against the canonical schema and requirements in:
-
-ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md
-
-- `Plans/Project_Output_Artifacts.md` §7.1
+- `Plans/Project_Output_Artifacts.md`
 - `Plans/project_plan_graph_index.schema.json` (`pm.project-plan-graph-index.v1`)
-
-At minimum it includes:
-
-- `schema_version` (string)
-- `nodes[]` (array) where each entry includes, at minimum:
-  - `path` (string; MUST be `nodes/<node_id>.json`)
-  - `sha256` (string; SHA-256 of the node shard file bytes, hex)
-- `entrypoints` (array of node IDs; MUST reference existing node IDs)
-- `validation.targets` (object) including pointers sufficient to validate the graph in isolation, including at minimum:
-  - `contracts_index` (recommended relative path: `../contracts/index.json`)
-  - `acceptance_manifest` (recommended relative path: `../acceptance_manifest.json`)
-- Optional:
-  - `edges` pointer/path when `plan_graph/edges.json` exists (exact field name per schema; do not invent ad-hoc shapes here)
-
-ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md
-
-**Required node shard fields (minimum)**
-
-Node shards MUST validate against:
-
-ContractRef: SchemaID:pm.project-plan-node.v1, ContractName:Plans/Project_Output_Artifacts.md
-
-- `Plans/Project_Output_Artifacts.md` §7.2
 - `Plans/project_plan_node.schema.json` (`pm.project-plan-node.v1`)
+- `Plans/contracts_index.schema.json` (`pm.project_contracts_index.schema.v1`)
+- `Plans/acceptance_manifest.schema.json` (`pm.acceptance_manifest.schema.v1`)
 
-At minimum, each node shard includes the required fields (see SSOT for exact field names), including:
+This document intentionally keeps only orchestrator-specific consumption behavior. For execution, the orchestrator MUST treat the following as required inputs:
 
-- `node_id`
-- `objective`
-- `contract_refs`
-- `acceptance`
-- `evidence_required`
-- `allowed_tools`
-- `tool_policy_mode`
-- `policy_mode`
-- `change_budget`
-- `blockers`
-- `unblocks`
+- `.puppet-master/project/plan_graph/index.json`
+- referenced `.puppet-master/project/plan_graph/nodes/<node_id>.json` shards
+- `.puppet-master/project/contracts/index.json`
+- `.puppet-master/project/acceptance_manifest.json`
 
-For scheduling, the orchestrator also consumes dependency structure from the node definition (for example optional `depends_on` / `parallel_group` when present), and from `blockers`/`unblocks` semantics as defined by the schema/SSOT.
+Optional supplemental artifacts:
 
-ContractRef: SchemaID:pm.project-plan-node.v1, ContractName:Plans/Project_Output_Artifacts.md
+- `.puppet-master/project/plan_graph/edges.json` (supplemental consistency view)
+- `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` (derived export only; non-canonical and never required)
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1, SchemaID:pm.project-plan-node.v1
 
 #### Load order and validation behavior (user projects)
 
@@ -182,10 +127,10 @@ ContractRef: SchemaID:pm.project-plan-node.v1, ContractName:Plans/Project_Output
 3. If `.puppet-master/project/plan_graph/edges.json` exists:
    - load it as a supplemental view and validate it is **consistent** with node-level `depends_on` (no extra edges, no missing edges)
    - if inconsistent, treat as an integrity error (do not silently choose one representation over the other)
-4. If a legacy monolithic `.puppet-master/project/plan_graph.json` exists:
-   - treat it as **optional** / **legacy** input
-   - the orchestrator MAY materialize/refresh shards deterministically, but MUST prefer the sharded representation for scheduling and execution
-   - the orchestrator MUST NOT require `plan_graph.json` to exist for headless execution
+4. If a derived export `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` exists:
+   - treat it as **optional** / **derived** (non-canonical) reference artifact
+   - the orchestrator MAY compare it for consistency, but MUST NOT use it as the scheduling/readiness source
+   - the orchestrator MUST NOT require `plan_graph/exports/plan_graph.monolithic.json` to exist for headless execution
 5. Load and validate required validation targets:
    - **Project Contract Pack:** `.puppet-master/project/contracts/index.json` must validate (`pm.project_contracts_index.schema.v1`) and every `ProjectContract:*` referenced by any node MUST resolve via this index.
    - **Acceptance registry:** `.puppet-master/project/acceptance_manifest.json` must validate (`pm.acceptance_manifest.schema.v1`) and cover every node acceptance ref (e.g. `acceptance[].check_id`). Validate that every acceptance check is **automatable** (no human-only criteria).
@@ -201,7 +146,7 @@ ContractRef: SchemaID:pm.project-plan-node.v1, ContractName:Plans/Project_Output
 
 ContractRef: Gate:GATE-001, Gate:GATE-010, ContractName:Plans/UI_Wiring_Rules.md
 
-Scheduling inputs must be sourced from the validated plan graph (monolith or shard/index metadata):
+Scheduling inputs must be sourced only from the validated canonical sharded plan graph (`plan_graph/index.json` + referenced node shards):
 
 - `depends_on` (from node shards; if `edges.json` exists, it MUST match)
 - `blockers` / `unblocks` from node definitions
@@ -225,7 +170,7 @@ ContractRef: PolicyRule:Decision_Policy.md§2, Gate:GATE-005, ContractName:Plans
 
 Execution policy notes:
 
-- **Sharded-first (default):** The sharded plan graph (`plan_graph/index.json` + node shards) is the canonical on-disk representation for user projects and is sufficient for headless execution. Any monolithic `plan_graph.json` is optional/legacy.
+- **Sharded-only (canonical):** The sharded plan graph (`plan_graph/index.json` + node shards) is the canonical on-disk representation for user projects and is sufficient for headless execution. Any derived export (`plan_graph/exports/plan_graph.monolithic.json`) is optional and non-canonical.
 - `plan.md` is a human-readable summary view, but scheduler decisions come from the validated graph (not `plan.md`).
 - All planning artifacts are canonical in seglog via full-content artifact events (chunked when needed with deterministic ordering and final `sha256` integrity events). Filesystem copies under `.puppet-master/project/` are reproducible materializations.
 - **HITL + non-blocked continuation:** If a node enters `waiting_approval` (e.g. due to `tool_policy_mode: "ask"` or explicit boundary approvals), the scheduler MUST continue executing other runnable nodes where dependencies allow.
@@ -1056,7 +1001,7 @@ subagentConfig:
 - [ ] Verify subagent selection accuracy
 - [ ] Refine selection logic based on results
 - [ ] **Platform CLI verification (smoke tests)**: Run real CLIs per platform with minimal subagent-style prompts; assert exit success and non-empty/expected output; environment-gated or manual where CI has no CLI/auth.
-- [ ] **Subagent-invocation integration tests**: Build and execute the actual orchestrator command (or SDK call) per platform for a given tier + subagent; verify invocation path and run completion.
+- [ ] **Subagent-invocation integration tests**: Build and execute the actual orchestrator CLI command per platform for a given tier + subagent; verify invocation path and run completion.
 - [ ] **Plan mode CLI verification**: Run real CLIs per platform with plan mode enabled (e.g. `--mode=plan`, `--permission-mode plan`); assert exit success and that plan-mode flags are applied and honored; environment-gated like other CLI tests.
 
 ## Platform CLI Verification & Subagent Invocation Testing
@@ -1121,19 +1066,19 @@ Other platforms follow the same pattern: check env gate, find binary (from `plat
 
 ### 2. Subagent-Invocation Integration Tests
 
-**Purpose:** Verify that the **exact** command line (or SDK call) the orchestrator would use for a given tier and subagent is built correctly and that executing it completes without unexpected failure. This catches regressions in argument construction, subagent naming, and platform-specific flags.
+**Purpose:** Verify that the **exact** command line the orchestrator would use for a given tier and subagent is built correctly and that executing it completes without unexpected failure. This catches regressions in argument construction, subagent naming, and platform-specific flags.
 
-**Scope:** At least one integration test per platform that (1) builds the invocation (command + args + env or SDK request) as the orchestrator would, (2) runs it against the real CLI (or a script that mimics it), and (3) asserts that the run completes successfully and, where possible, that the invocation path (e.g. subagent name in the prompt) is correct.
+**Scope:** At least one integration test per platform that (1) builds the invocation (command + args + env) as the orchestrator would, (2) runs it against the real CLI (or a script that mimics it), and (3) asserts that the run completes successfully and, where possible, that the invocation path (e.g. subagent name in the prompt) is correct.
 
 **Implementation:**
 
-- **Orchestrator invocation builder:** Use the same code path the orchestrator uses to build the CLI command or SDK call (e.g. a function that takes `platform`, `tier_type`, `subagent_name`, `prompt`, `model` and returns `Command` or `CopilotRequest`). Do not duplicate logic in tests.
+- **Orchestrator invocation builder:** Use the same code path the orchestrator uses to build the CLI command (e.g. a function that takes `platform`, `tier_type`, `subagent_name`, `prompt`, `model` and returns `Command`). Do not duplicate logic in tests.
 - **Per-platform integration test:**
   - Build the invocation for a fixed scenario (e.g. tier = Task, subagent = `code-reviewer`, minimal prompt).
   - Execute it (real CLI or, if documented, a script that echoes the command and returns success for CI without auth).
   - Assert: process success; optionally that stdout/stderr contain the subagent name or expected token; and that no "unknown subagent" or "invalid flag" style errors appear in stderr.
 - **Environment gating:** Same as smoke tests: skip when CLI is not available or auth is not configured; use env vars (e.g. `RUN_SUBAGENT_INVOCATION_TESTS=1`) and optional `#[ignore]` so CI without CLIs still passes.
-- **Artifacts:** Log the exact command or SDK request and, if possible, a short excerpt of stdout/stderr to `.puppet-master/evidence/subagent-invocation-<platform>.log` for debugging.
+- **Artifacts:** Log the exact command and, if possible, a short excerpt of stdout/stderr to `.puppet-master/evidence/subagent-invocation-<platform>.log` for debugging.
 
 **Test location and naming:**
 
@@ -1307,9 +1252,9 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 - **Impact:** No change to plan-mode mapping. Subagent/MCP integration for Codex is relevant for orchestrator subagent invocation.
 
 **Claude Code**  
-- **v2.1.41-v2.1.45 (Feb 2026):** CLI auth commands, Windows ARM64, prompt cache and startup improvements; v2.1.45: Sonnet 4.6, `spinnerTipsOverride`, SDK rate limit types, `enabledPlugins`/`extraKnownMarketplaces` from `--add-dir`, permission destination persistence, plugin command availability fix.  
+- **v2.1.41-v2.1.45 (Feb 2026):** CLI auth commands, Windows ARM64, prompt cache and startup improvements; v2.1.45: Sonnet 4.6, `spinnerTipsOverride`, rate-limit telemetry type updates, `enabledPlugins`/`extraKnownMarketplaces` from `--add-dir`, permission destination persistence, plugin command availability fix.  
 - **Plan mode:** `--permission-mode plan` (unchanged).  
-- **Subagents:** `.claude/agents/` markdown definitions; built-in Explore/Plan/General-purpose; SDK subagent support.  
+- **Subagents:** `.claude/agents/` markdown definitions; built-in Explore/Plan/General-purpose; CLI/runtime subagent support.  
 - **Hooks:** SessionStart, UserPromptSubmit, PreToolUse, PermissionRequest, PostToolUse, SubagentStart/SubagentStop, etc.; config via `/hooks` or `~/.claude/settings.json` / project settings.  
 - **Plugins:** `.claude-plugin/plugin.json`; skills namespaced as `/plugin-name:skill-name`.  
 - **Impact:** Plan mode and subagent/hook/plugin docs are still accurate; v2.1.45 plugin and `--add-dir` behavior may matter for project-specific plugins.
@@ -1325,12 +1270,12 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 **GitHub Copilot CLI**  
 - **Jan 14-21, 2026:** Plan mode in interactive UI (Shift+Tab); advanced reasoning models; GPT-5.2-Codex; inline steering; background delegation `&`; `/review`; context auto-compaction; automation flags (`--silent`, `--share`, `--available-tools`, `--excluded-tools`).  
 - **Plan mode:** Interactive only (Shift+Tab); no dedicated `--plan` flag for headless `-p` usage. Programmatic use remains `-p` with existing flags; our "omit `--allow-all-paths`/`--allow-all-urls` when plan_mode" remains the way to get more restrictive behavior in headless.  
-- **SDK:** Plan mode and related APIs available in SDK for custom integrations.  
-- **Impact:** No change to our headless plan-mode mapping; document that native plan mode is interactive; if Copilot adds a headless plan flag or SDK plan option, switch to it in runner and platform_specs.
+- **Provider bridge:** Plan mode remains interactive in Copilot UI; headless runs continue through CLI-bridged restrictive flags.
+- **Impact:** No change to our headless plan-mode mapping; document that native plan mode is interactive; if Copilot adds a headless plan flag, switch to it in runner and platform_specs.
 
 **Summary for this plan**  
 - Plan mode: Cursor, Claude, Gemini implementations are up to date; Codex (read-only sandbox) and Copilot (restrictive flags) unchanged.  
-- Subagents/hooks/plugins: All five platforms have had relevant changes (Cursor plugins/async subagents; Codex MCP; Claude plugins/hooks; Gemini skills/policies/subagents; Copilot SDK). Keep platform-capabilities and subagent-integration sections in sync with release notes and official docs.
+- Subagents/hooks/plugins: All five platforms have had relevant changes (Cursor plugins/async subagents; Codex MCP; Claude plugins/hooks; Gemini skills/policies/subagents; Copilot provider/CLI behavior). Keep platform-capabilities and subagent-integration sections in sync with release notes and official docs.
 
 **Gaps vs "use plan mode for every request":**
 
@@ -1339,7 +1284,7 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 3. **No one-click "all tiers"** -- Enabling plan mode for every tier requires toggling four tier cards.
 4. **Subagent invocations** -- When subagent integration is added, `ExecutionRequest` built for subagent runs must receive the same `plan_mode` as the tier (so plan mode is applied to every request, including subagent calls).
 5. **Gemini** -- `--approval-mode plan` can require `experimental.plan: true` in settings; we do not currently validate or document this at runtime.
-6. **Copilot** -- If the CLI gains a native plan flag (e.g. `--plan` or plan mode in SDK), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
+6. **Copilot** -- If the CLI gains a native headless plan flag (e.g. `--plan`), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
 
 ### Recommendations
 
@@ -1438,7 +1383,7 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 Validation runs at tier start via `validate_config_wiring_for_tier()`. Required field failures emit `config.validation.failed` seglog event and halt. Optional field warnings emit `config.validation.warning` and proceed with defaults.
 - [ ] **AGENTS.md wiring checklist:** Add to AGENTS.md (e.g. under Pre-Completion Verification Checklist or DO): for any new execution-affecting config, follow the three-step wiring checklist (add to execution config, set at construction from GUI/file, use in runtime); link to this plan or REQUIREMENTS.md.
 - [ ] **Start and end verification:** Implement start-of-phase/task/subtask verification (config-wiring + wiring/readiness: GUI? backend? steps make sense? gaps?) and end-of-phase/task/subtask verification (wiring re-check + acceptance gate + quality verification / code review). See **"Start and End Verification at Phase, Task, and Subtask"**; resolve gaps there (quality definition per tier, readiness checklist source of truth, interview-phase mirror).
-- [ ] **Lifecycle hooks:** Implement BeforeTier/AfterTier hooks (track active subagent, inject context, prune stale state, validate handoff format). Leverage platform-native hooks where available (Cursor, Claude, Gemini); use orchestrator-level middleware for all platforms. Leverage Codex SDK and Copilot SDK for coordination when using SDK-based execution. See **"Lifecycle and Quality Features"**.
+- [ ] **Lifecycle hooks:** Implement BeforeTier/AfterTier hooks (track active subagent, inject context, prune stale state, validate handoff format). Leverage platform-native hooks where available (Cursor, Claude, Gemini); use orchestrator-level middleware for all platforms. Use file-based coordination for Codex/Copilot. See **"Lifecycle and Quality Features"**.
 - [ ] **Structured handoff validation:** Implement `validate_subagent_output()` with platform-specific parsers (JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot). Enforce `SubagentOutput` format (task_report, downstream_context, findings). Retry on malformed output; fail-safe after retry.
 - [ ] **Remediation loop:** Implement remediation loop for Critical/Major findings. Parse findings from reviewer subagent; block completion on Critical/Major; re-run executor + reviewer until resolved or max retries; escalate to parent-tier on max retries. Minor/Info findings log and proceed.
 - [ ] **Cross-session memory:** Implement `save_memory()` and `load_memory()` for architectural decisions, patterns, tech choices, pitfalls. Persist at Phase completion; load at run start; inject into Phase 1 context. Use for subagent selection (e.g., "project uses Rust" → prefer rust-engineer).
@@ -2753,10 +2698,10 @@ This section defines lifecycle hooks, structured handoff contracts, remediation 
 **Platform-specific hook registration:**
 
 - **Cursor:** Register hooks in `.cursor/hooks.json` or `~/.cursor/hooks.json` for native hooks (`SubagentStart`, `SubagentStop`, `beforeSubmitPrompt`, `afterAgentResponse`). Also implement orchestrator-level hooks in Rust that wrap platform calls. **Note:** CLI subagents have reported issues (Feb 2026); use orchestrator-level hooks as primary, native hooks as enhancement when CLI subagents are fixed.
-- **Codex:** Use SDK lifecycle callbacks (`onSessionStart`, `onTurnComplete`, thread coordination) or MCP server hooks if available. **Leverage Codex SDK** (`@openai/codex-sdk`) for thread-based coordination and shared state. Implement orchestrator-level hooks as primary middleware (Codex SDK may not expose all lifecycle events).
+- **Codex:** Use CLI lifecycle outputs and orchestrator-managed hooks/middleware. Implement orchestrator-level hooks as primary middleware.
 - **Claude Code:** Register hooks in `.claude/settings.json` for native hooks (`SubagentStart`, `SubagentStop`, `PreToolUse`, `PostToolUse`, `SessionStart`, `SessionEnd`). Also implement orchestrator-level hooks. Native hooks can block operations (exit code 2) or inject context.
 - **Gemini:** Register hooks in `~/.gemini/settings.json` or extension config for native hooks (`BeforeAgent`, `AfterAgent`, `BeforeModel`, `AfterModel`, `BeforeTool`, `AfterTool`). Implement orchestrator-level hooks as fallback. Gemini hooks communicate via JSON stdin/stdout.
-- **Copilot:** Use SDK callbacks (`onAgentStart`, `onAgentComplete`, session coordination) if available. **Leverage Copilot SDK** (`@github/copilot-sdk`) for session-based coordination and shared state. Implement orchestrator-level hooks as primary (Copilot has limited native hooks; rely on orchestrator middleware).
+- **Copilot:** Use CLI lifecycle outputs and orchestrator-managed hooks/middleware. Implement orchestrator-level hooks as primary.
 
 **Hook trait definition:**
 
@@ -4155,7 +4100,7 @@ where
 
 | Feature | Cursor | Codex | Claude | Gemini | Copilot | Implementation Level |
 |---------|--------|-------|--------|--------|---------|---------------------|
-| **BeforeTier/AfterTier hooks** | Native hooks + orchestrator | SDK callbacks + orchestrator | Native hooks + orchestrator | Native hooks + orchestrator | Orchestrator only | Orchestrator + platform hooks |
+| **BeforeTier/AfterTier hooks** | Native hooks + orchestrator | CLI/provider bridge hooks + orchestrator | Native hooks + orchestrator | Native hooks + orchestrator | Orchestrator only | Orchestrator + platform hooks |
 | **Handoff validation** | JSON parse | JSONL parse | JSON parse | JSON parse | Text parse | Platform-specific parser |
 | **Remediation loop** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
 | **Cross-session memory** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
@@ -4383,7 +4328,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 ### Phase 3: Orchestrator Integration
 
 - **Where:** `src/core/orchestrator.rs`. The orchestrator already has `tier_config_for(tier_type) -> &TierConfig` (platform, model, plan_mode, etc.); use it for subagent runs.
-- **What to add:** (1) Read `enable_tier_subagents` and subagent config from the same config source as tier config (e.g. from run config or GuiConfig). (2) When executing a tier, if subagents enabled: call `SubagentSelector::select_for_tier`, apply `tier_overrides` (replace if non-empty, else use selected list), filter `disabled_subagents`, add `required_subagents`. (3) **Register agent in coordination state** before execution (see "Agent Coordination and Communication"). (4) **Get coordination context** and inject into prompt (warns agent about active files/operations). (5) For each subagent name, build an `ExecutionRequest` (prompt with coordination context, model, **plan_mode from tier_config**, etc.) and run via the existing platform runner (same path as non-subagent iterations). **For Codex/Copilot SDK:** Use shared thread/session for coordination when using SDK-based execution. (6) **Update coordination state** during execution (files being edited, current operation). (7) **Unregister agent** after execution completes. (8) `build_subagent_invocation` and `execute_with_subagent` can be methods that take `tier_config` (for plan_mode and platform/model) and call the runner. Platform/model: use `tier_config_for(tier_node.tier_type).platform` and `.model` (no separate get_platform_for_tier needed if you use tier_config_for).
+- **What to add:** (1) Read `enable_tier_subagents` and subagent config from the same config source as tier config (e.g. from run config or GuiConfig). (2) When executing a tier, if subagents enabled: call `SubagentSelector::select_for_tier`, apply `tier_overrides` (replace if non-empty, else use selected list), filter `disabled_subagents`, add `required_subagents`. (3) **Register agent in coordination state** before execution (see "Agent Coordination and Communication"). (4) **Get coordination context** and inject into prompt (warns agent about active files/operations). (5) For each subagent name, build an `ExecutionRequest` (prompt with coordination context, model, **plan_mode from tier_config**, etc.) and run via the existing platform runner (same path as non-subagent iterations). (6) **Update coordination state** during execution (files being edited, current operation). (7) **Unregister agent** after execution completes. (8) `build_subagent_invocation` and `execute_with_subagent` can be methods that take `tier_config` (for plan_mode and platform/model) and call the runner. Platform/model: use `tier_config_for(tier_node.tier_type).platform` and `.model` (no separate get_platform_for_tier needed if you use tier_config_for).
 
 ### Phase 4: Error Pattern Detection
 
@@ -4409,14 +4354,14 @@ Short notes so implementers know where to put code and what the orchestrator alr
 
 ### Agent coordination
 
-- **Where:** New module `src/core/agent_coordination.rs` for file-based coordination (cross-platform); extend `src/platforms/codex.rs` and `src/platforms/copilot.rs` (or SDK bridge) for SDK-based coordination (same-platform only).
-- **What:** (1) **File-based coordination (cross-platform):** Implement `AgentCoordinator` that manages `active-agents.json` state file. Register agents before execution (including platform field), update status during execution (files being edited, current operation), unregister after execution. Get coordination context for prompt injection. **This enables cross-platform coordination** -- Codex agents can see Claude agents' status, and vice versa. All platforms read/write to the same JSON file. (2) **SDK-based coordination (Codex/Copilot, same-platform only):** Extend Codex runner to create shared threads for parallel subtasks **when all agents are Codex**; extend Copilot runner to create shared sessions for parallel subtasks **when all agents are Copilot**. All agents in the same dependency level use the same thread/session. Thread/session state provides coordination context. **Note:** SDK coordination only works within the same platform (Codex↔Codex, Copilot↔Copilot), not across platforms. (3) **Prompt injection:** Inject coordination context into each agent's prompt (active agents with platform info, files being modified, warnings about conflicts). Include platform identifier so agents know which platform other agents are using. (4) **Status updates:** Extract file operations from agent output (parse file paths, use platform hooks, use SDK callbacks) and update coordination state periodically. (5) **Conflict prevention:** Check coordination state before execution to detect file conflicts; warn agents or delay execution if conflicts detected. Works across platforms via file-based coordination.
-- **When called:** Register agent before tier execution (include platform from tier_config); update status during execution (periodically or on file operations); unregister after execution. For SDK coordination, create shared thread/session at dependency level start **only if all agents in that level use the same platform**; otherwise use file-based coordination. See **"Agent Coordination and Communication"** for full details and cross-platform examples.
+- **Where:** New module `src/core/agent_coordination.rs` for file-based coordination (cross-platform). Platform runners read/write the shared state and consume injected coordination context.
+- **What:** (1) **File-based coordination (cross-platform):** Implement `AgentCoordinator` that manages `active-agents.json` state file. Register agents before execution (including platform field), update status during execution (files being edited, current operation), unregister after execution. Get coordination context for prompt injection. **This enables cross-platform coordination** -- Codex agents can see Claude agents' status, and vice versa. All platforms read/write to the same JSON file. (2) **Prompt injection:** Inject coordination context into each agent's prompt (active agents with platform info, files being modified, warnings about conflicts). Include platform identifier so agents know which platform other agents are using. (3) **Status updates:** Extract file operations from agent output (parse file paths, use platform hooks/provider events) and update coordination state periodically. (4) **Conflict prevention:** Check coordination state before execution to detect file conflicts; warn agents or delay execution if conflicts detected. Works across platforms via file-based coordination.
+- **When called:** Register agent before tier execution (include platform from tier_config); update status during execution (periodically or on file operations); unregister after execution. Use file-based coordination for all platforms. See **"Agent Coordination and Communication"** for full details and cross-platform examples.
 
 ### Lifecycle hooks and quality features
 
 - **Where:** New module `src/core/hooks.rs` or `src/verification/hooks.rs` for hook system; `src/core/memory.rs` for cross-session persistence (`save_memory`, `load_memory`); extend `SubagentOutput` in `src/types/` for structured handoff format; remediation loop in orchestrator completion logic (`src/core/orchestrator.rs`).
-- **What:** (1) **BeforeTier/AfterTier hooks:** Implement hook traits, register hooks per tier type, call automatically at tier boundaries. For platforms with native hooks (Cursor, Claude, Gemini), register Puppet Master hooks that delegate where possible; for Codex/Copilot, use orchestrator-level middleware and **leverage SDK coordination** when using SDK-based execution. (2) **Structured handoff validation:** `validate_subagent_output()` with platform-specific parsers (JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot). (3) **Remediation loop:** Parse findings from reviewer subagent output; filter Critical/Major; block completion and re-run until resolved or max retries; escalate to parent-tier on max retries. (4) **Cross-session memory:** Save architectural decisions/patterns/tech choices at Phase completion; load at run start; inject into Phase 1 context. (5) **Active agent tracking:** `active_subagent: Option<String>` in `TierContext`; update in BeforeTier/AfterTier hooks; persist to `.puppet-master/state/active-subagents.json`. (6) **Safe error handling:** Wrap hooks and verification in `safe_hook_main()` that guarantees structured output even on failure. (7) **Lazy lifecycle:** Create verification state on first write; prune stale state (>2 hours) in BeforeTier hook. (8) **Contract enforcement:** AfterTier hook validates handoff format; retry on malformed output; fail-safe after retry.
+- **What:** (1) **BeforeTier/AfterTier hooks:** Implement hook traits, register hooks per tier type, call automatically at tier boundaries. For platforms with native hooks (Cursor, Claude, Gemini), register Puppet Master hooks that delegate where possible; for Codex/Copilot, use orchestrator-level middleware and file-based coordination. (2) **Structured handoff validation:** `validate_subagent_output()` with platform-specific parsers (JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot). (3) **Remediation loop:** Parse findings from reviewer subagent output; filter Critical/Major; block completion and re-run until resolved or max retries; escalate to parent-tier on max retries. (4) **Cross-session memory:** Save architectural decisions/patterns/tech choices at Phase completion; load at run start; inject into Phase 1 context. (5) **Active agent tracking:** `active_subagent: Option<String>` in `TierContext`; update in BeforeTier/AfterTier hooks; persist to `.puppet-master/state/active-subagents.json`. (6) **Safe error handling:** Wrap hooks and verification in `safe_hook_main()` that guarantees structured output even on failure. (7) **Lazy lifecycle:** Create verification state on first write; prune stale state (>2 hours) in BeforeTier hook. (8) **Contract enforcement:** AfterTier hook validates handoff format; retry on malformed output; fail-safe after retry.
 - **When called:** Hooks run automatically at tier boundaries (before `verify_tier_start`, after `verify_tier_end`). Memory persists at Phase completion; loads at run start. Remediation loop runs when Critical/Major findings detected. See **"Lifecycle and Quality Features"** for full details and platform-specific implementation notes.
 
 ### Considerations #6 (Subagent availability / files)
@@ -4582,9 +4527,11 @@ When multiple agents/subagents run concurrently (parallel subtasks, different ti
    
    **This file-based coordination works across ALL platforms** -- a Codex agent can see what a Claude agent is doing, and vice versa. All platforms read/write to the same JSON file.
 
-3. **Platform-specific coordination (SDK-based, same-platform only):**
-   - **Codex SDK:** Use thread-based coordination (`codexClient.startThread()`, thread sharing, thread state). Codex SDK supports thread coordination where multiple **Codex agents** can share thread context and see each other's progress. **Note:** This only works between Codex agents, not across platforms.
-   - **Copilot SDK:** Use session-based coordination (`createSession()`, session state sharing). Copilot SDK supports session coordination where multiple **Copilot agents** can share session context and coordinate operations. **Note:** This only works between Copilot agents, not across platforms.
+3. **Provider-bridge coordination (current):**
+
+   - No same-platform shared thread/session coordination path is active.
+   - Codex and Copilot follow the same file-based coordination contract as Cursor/Claude/Gemini.
+   - Cross-platform and same-platform coordination both use `active-agents.json` + prompt injection.
 
 4. **Cross-worktree awareness:** Even when agents run in separate worktrees, they can:
    - Read shared state files from main repo (progress.txt, prd.json)
@@ -4884,73 +4831,17 @@ let enhanced_prompt = if !coordination_context.is_empty() {
 coordinator.unregister_agent(&format!("{}-{}", subagent_name, tier_id)).await?;
 ```
 
-**Platform-specific coordination (Codex SDK and Copilot SDK):**
+**Provider coordination model (Codex/Copilot included):**
 
-**Codex SDK (`@openai/codex-sdk`):**
+- **Canonical mode:** File-based coordination (`active-agents.json`) for all platforms.
+- **Scope:** Works for same-platform and cross-platform crews using the same state schema.
+- **Runtime path:** Direct-provider invocation via direct provider calls (no local CLI bridge); no SDK threads/sessions.
+- **Prompt contract:** Every subagent receives coordination context built from shared state.
 
-- **Thread-based coordination:** Codex SDK uses threads (`codexClient.startThread()`) that can be shared across multiple agents. When using Codex SDK:
-  - Create a shared thread for related subtasks
-  - Multiple agents can read/write to the same thread
-  - Thread state provides coordination context
-  - Use `thread.run()` and `thread.runStreamed()` with shared thread ID
+**When to use coordination modes:**
 
-```typescript
-// Example: Codex SDK thread coordination
-const codexClient = new CodexClient({ apiKey: process.env.CODEX_API_KEY });
-
-// Create shared thread for parallel subtasks
-const sharedThread = await codexClient.startThread({
-  metadata: { tier_id: "1.1", subtasks: ["A", "B"] }
-});
-
-// Agent A uses shared thread
-await sharedThread.run({
-  prompt: "Implement API endpoint",
-  // Thread context includes Agent B's progress
-});
-
-// Agent B uses same shared thread
-await sharedThread.run({
-  prompt: "Add tests for API endpoint",
-  // Thread context includes Agent A's progress
-});
-```
-
-**Copilot SDK (`@github/copilot-sdk`):**
-
-- **Session-based coordination:** Copilot SDK uses sessions (`createSession()`) that can share state. When using Copilot SDK:
-  - Create a shared session for related subtasks
-  - Multiple agents can use the same session
-  - Session state provides coordination context
-  - Use `session.run()` with shared session ID
-
-```typescript
-// Example: Copilot SDK session coordination
-const copilotClient = new CopilotClient({ token: process.env.GITHUB_TOKEN });
-
-// Create shared session for parallel subtasks
-const sharedSession = await copilotClient.createSession({
-  mcpServers: { context7: { ... } },
-  metadata: { tier_id: "1.1", subtasks: ["A", "B"] }
-});
-
-// Agent A uses shared session
-await sharedSession.run({
-  prompt: "Implement API endpoint",
-  // Session context includes Agent B's progress
-});
-
-// Agent B uses same shared session
-await sharedSession.run({
-  prompt: "Add tests for API endpoint",
-  // Session context includes Agent A's progress
-});
-```
-
-**When to use SDK coordination vs. file-based coordination:**
-
-- **SDK coordination (Codex/Copilot, same-platform only):** Use when running agents via SDK (programmatic control) **and all agents are on the same platform**. Provides **real-time coordination** through shared thread/session state. Codex agents can coordinate with other Codex agents via shared threads; Copilot agents can coordinate with other Copilot agents via shared sessions. **Note:** SDK coordination does NOT work across platforms (Codex agents cannot coordinate with Claude agents via SDK threads/sessions).
-- **File-based coordination (all platforms, cross-platform):** Use for CLI-based runs, when SDK coordination is not available, or **when coordinating agents across different platforms**. Provides **asynchronous coordination** through shared state files. All platforms (Codex, Claude, Cursor, Gemini, Copilot) read/write to the same `active-agents.json` file, enabling **cross-platform coordination**. A Codex agent can see what a Claude agent is doing, and vice versa. Agents read coordination state before starting work and update their status periodically.
+- **File-based coordination (canonical):** Always on for orchestrator-managed runs. All platforms (Codex, Claude, Cursor, Gemini, Copilot) read/write the same coordination file.
+- **Platform-native hooks (optional enrichments):** Use hook events where available to improve update fidelity, but keep the file-based state as the single source of coordination truth.
 
 **Benefits:**
 
@@ -4958,7 +4849,7 @@ await sharedSession.run({
 - **Better context:** Agents understand what others are working on, reducing confusion when seeing changes. Agent sees: "test-automator is running tests -- these test failures are expected."
 - **Efficient collaboration:** Agents can reference shared decisions and avoid duplicate work. Agent sees: "architect-reviewer established pattern X -- use this pattern."
 - **No "freaking out":** Agents see coordination context explaining why code is changing, who is changing it, and what they're doing. Reduces false alarms and confusion.
-- **Platform-native:** Codex and Copilot SDKs provide built-in coordination mechanisms (shared threads/sessions) that Puppet Master can leverage.
+- **Platform-neutral:** one coordination contract across providers keeps behavior deterministic and replayable.
 
 **Coordination state updates:**
 
@@ -4973,7 +4864,7 @@ await sharedSession.run({
 
 - **Parse agent output:** Use output parser to detect file paths mentioned in agent responses (e.g., "I'm editing src/api.rs" or file paths in diffs).
 - **Platform hooks:** For platforms with native hooks (Cursor, Claude, Gemini), use `PreToolUse`/`PostToolUse` hooks to detect file operations in real-time.
-- **SDK callbacks:** For Codex/Copilot SDK, use SDK callbacks to detect file operations (e.g., `onToolUse` callbacks).
+- **Provider event adapters:** For Codex/Copilot, use normalized CLI stream/tool events to detect file operations in real time.
 
 **Example coordination flow (cross-platform):**
 
@@ -4999,120 +4890,18 @@ await sharedSession.run({
    - Agent B (Claude Code) can now safely edit src/api.rs for tests
 ```
 
-**Key point:** File-based coordination enables **cross-platform communication**. A Codex agent and a Claude Code agent can coordinate with each other through the shared `active-agents.json` file, even though they're using different platforms and different SDKs/CLIs.
+**Key point:** File-based coordination enables **cross-platform communication**. A Codex agent and a Claude Code agent can coordinate through `active-agents.json` even when they run on different providers/CLIs.
 
-**SDK-specific coordination (Codex and Copilot):**
+**Provider-bridge runner integration (canonical):**
 
-**Codex SDK thread coordination:**
-
-```typescript
-// src/platforms/codex_sdk_coordinator.ts (if using TypeScript bridge)
-
-import { CodexClient } from '@openai/codex-sdk';
-
-export class CodexThreadCoordinator {
-    private client: CodexClient;
-    private sharedThreads: Map<string, string>; // tier_id -> thread_id
-    
-    async createSharedThread(tierId: string, subtaskIds: string[]): Promise<string> {
-        const thread = await this.client.startThread({
-            metadata: {
-                tier_id: tierId,
-                subtasks: subtaskIds,
-                coordination: true,
-            }
-        });
-        this.sharedThreads.set(tierId, thread.id);
-        return thread.id;
-    }
-    
-    async getThreadContext(threadId: string): Promise<string> {
-        // Get thread state (includes other agents' progress)
-        const thread = await this.client.getThread(threadId);
-        return this.formatCoordinationContext(thread);
-    }
-    
-    async runWithCoordination(
-        threadId: string,
-        agentId: string,
-        prompt: string
-    ): Promise<string> {
-        // Get coordination context from thread state
-        const context = await this.getThreadContext(threadId);
-        const enhancedPrompt = `${context}\n\n${prompt}`;
-        
-        // Run with shared thread (other agents see this run's progress)
-        const result = await this.client.resumeThread(threadId).run({
-            prompt: enhancedPrompt,
-        });
-        
-        return result.content;
-    }
-}
-```
-
-**Copilot SDK session coordination:**
-
-```typescript
-// src/platforms/copilot_sdk_coordinator.ts (if using TypeScript bridge)
-
-import { CopilotClient } from '@github/copilot-sdk';
-
-export class CopilotSessionCoordinator {
-    private client: CopilotClient;
-    private sharedSessions: Map<string, string>; // tier_id -> session_id
-    
-    async createSharedSession(tierId: string, subtaskIds: string[]): Promise<string> {
-        const session = await this.client.createSession({
-            mcpServers: {
-                context7: { /* ... */ }
-            },
-            metadata: {
-                tier_id: tierId,
-                subtasks: subtaskIds,
-                coordination: true,
-            }
-        });
-        this.sharedSessions.set(tierId, session.id);
-        return session.id;
-    }
-    
-    async getSessionContext(sessionId: string): Promise<string> {
-        // Get session state (includes other agents' progress)
-        const session = await this.client.getSession(sessionId);
-        return this.formatCoordinationContext(session);
-    }
-    
-    async runWithCoordination(
-        sessionId: string,
-        agentId: string,
-        prompt: string
-    ): Promise<string> {
-        // Get coordination context from session state
-        const context = await this.getSessionContext(sessionId);
-        const enhancedPrompt = `${context}\n\n${prompt}`;
-        
-        // Run with shared session (other agents see this run's progress)
-        const result = await this.client.getSession(sessionId).run({
-            prompt: enhancedPrompt,
-        });
-        
-        return result.content;
-    }
-}
-```
-
-**Integration with platform runners:**
-
-- **Codex runner:** When using Codex SDK, create shared thread for parallel subtasks. All agents in the same dependency level use the same thread. Thread state provides coordination context.
-- **Copilot runner:** When using Copilot SDK, create shared session for parallel subtasks. All agents in the same dependency level use the same session. Session state provides coordination context.
-- **CLI-based runners (Cursor, Claude, Gemini):** Use file-based coordination (`active-agents.json`) since CLI doesn't provide shared thread/session state.
+- **All platform runners (Cursor, Codex, Claude, Gemini, Copilot):** read/update file-based coordination state (`active-agents.json`) and consume the same prompt injection contract.
+- **No shared provider sessions/threads:** orchestrator keeps fresh-process isolation per iteration and uses files/events for coordination.
 
 **Implementation notes:**
 
-- **Where:** New module `src/core/agent_coordination.rs` for file-based coordination; extend `src/platforms/codex.rs` and `src/platforms/copilot.rs` (or SDK bridge) for SDK-based coordination.
-- **What:** Implement `AgentCoordinator` for file-based coordination; extend Codex/Copilot runners to use shared threads/sessions when SDK is available; inject coordination context into prompts.
-- **When:** Register agent before execution; update status during execution (periodically or on file operations); unregister after execution. For SDK coordination, create shared thread/session at dependency level start; all agents in that level use the same thread/session.
+- **Where:** New module `src/core/agent_coordination.rs` for file-based coordination; platform runners only read/write coordination state and consume injected context.
+- **What:** Implement `AgentCoordinator`, inject coordination context into prompts, and keep status updates provider-agnostic.
+- **When:** Register agent before execution; update status during execution (periodically or on file operations); unregister after execution.
 
 ### Puppet Master Crews (Teams/Fleets Alternative)
 
@@ -5422,8 +5211,8 @@ Subtask level (1.1.1):
   Crew: Copilot subagents (test-automator)
 
 Coordination:
-  - Codex crew members coordinate via Codex SDK threads (same platform)
-  - Copilot crew members coordinate via Copilot SDK sessions (same platform)
+  - Codex crew members coordinate via shared state files and provider event updates
+  - Copilot crew members coordinate via shared state files and provider event updates
   - Cross-platform coordination: Codex crew and Copilot crew communicate via shared message board (agent-messages.json)
   - Orchestrator monitors all crews and can see cross-platform communication
 ```
@@ -6844,7 +6633,7 @@ async fn load_state(&self) -> Result<AgentCoordinationState> {
 **Issue:** Extracting file operations from agent output is unreliable. Agents may mention files they don't edit, or edit files they don't mention. Platform hooks may not fire for all file operations.
 
 **Mitigation:**
-- **Multi-source extraction:** Combine multiple sources: (1) agent output parsing (regex for file paths), (2) platform hooks (`PreToolUse`/`PostToolUse`), (3) SDK callbacks (`onToolUse`), (4) git diff detection (compare worktree before/after).
+- **Multi-source extraction:** Combine multiple sources: (1) agent output parsing (regex for file paths), (2) platform hooks (`PreToolUse`/`PostToolUse`), (3) provider stream/tool events from CLI output adapters, (4) git diff detection (compare worktree before/after).
 - **Confidence scoring:** Assign confidence scores to file operations (high: platform hook detected, medium: agent mentioned, low: inferred from context). Only include high/medium confidence files in coordination state.
 - **Validation:** After agent completes, validate claimed files against actual git diff. If mismatch, log warning and update coordination state.
 - **Best-effort updates:** If file extraction fails, still register agent with empty `files_being_edited` list. Coordination context will still show agent is active, just without file details.
@@ -7091,14 +6880,14 @@ impl AgentCoordinator {
 }
 ```
 
-**Gap #35: SDK coordination fallback**
+**Gap #35: Coordination-event ingestion fallback**
 
-**Issue:** If SDK coordination fails (Codex SDK thread creation fails, Copilot SDK session creation fails), agents fall back to file-based coordination, but there's no automatic fallback mechanism.
+**Issue:** If provider event ingestion fails (e.g. adapter parse errors, stream interruption), coordination updates can degrade, and there is no explicit fallback policy.
 
 **Mitigation:**
-- **Fallback detection:** Detect SDK coordination failures (thread/session creation errors, timeout). Automatically fall back to file-based coordination.
-- **Hybrid coordination:** Use SDK coordination when available, but also update file-based coordination state as backup.
-- **Error handling:** Log SDK coordination failures but don't block execution. Continue with file-based coordination.
+- **Fallback detection:** Detect event-ingestion failures (parser error, stream timeout, malformed event). Automatically continue with file-based baseline updates.
+- **Baseline-first coordination:** Keep file-based coordination as the canonical path; event ingestion is an enrichment layer only.
+- **Error handling:** Log ingestion failures but do not block execution. Continue with baseline file-based coordination.
 
 **Gap #36: Coordination metrics and monitoring**
 
@@ -7460,454 +7249,54 @@ Level 2 (After Task 1):
 
 ### Overview
 
-Each platform supports various extensibility mechanisms (hooks, extensions, plugins, skills, SDKs) that can significantly enhance subagent integration. These capabilities are evolving rapidly and offer powerful ways to customize subagent behavior, add context, validate actions, and orchestrate multi-agent workflows.
+Runtime integration is provider-first; transport varies by ProviderTransport (CLI-bridged, direct-provider, server-bridged). Platform capability work in this plan is limited to:
+- native CLI features (flags, modes, output schemas)
+- platform hook systems
+- skills/plugins/extensions
+- MCP connectivity
 
-### Cursor: Skills, Plugins, Hooks, MCP Servers
+SDK orchestration is not an implementation target in this plan.
 
-**Skills** (`SKILL.md` files):
-- **Location**: `.cursor/skills/`, `~/.cursor/skills/`, `.claude/skills/`, `.codex/skills/`
-- **Use Case**: Package subagent-specific knowledge and workflows
-- **Integration**: Skills can be automatically invoked by agents when relevant
-- **Example**: Create a `rust-subagent-skill` that provides Rust-specific context
+### Capability Surface by Platform
 
-**Plugins** (Marketplace):
-- **Location**: `.cursor/plugins/` or installed via marketplace
-- **Components**: Skills, subagents, MCP servers, hooks, rules
-- **Use Case**: Package complete subagent configurations for distribution
-- **Integration**: Plugins can include subagent definitions and hooks to manage them
+**Cursor**
+- CLI modes (`--mode=plan|ask`), stream output, subagent/plugin/hook support where available.
+- MCP usage and tool discovery via CLI-compatible paths.
 
-**Hooks**:
-- **Events**: `SessionStart`, `PreToolUse`, `PostToolUse`, `SubagentStart`, `SubagentStop`
-- **Use Case**: Intercept subagent invocations, add context, validate actions
-- **Example**: Hook on `SubagentStart` to inject project-specific context
+**Codex**
+- `codex exec` is the runtime invocation path.
+- Optional `codex mcp-server` interop where it fits tool architecture.
+- Hook/config behavior through CLI/config files only.
 
-**MCP Servers**:
-- **Use Case**: Connect Cursor to external tools that subagents can use
-- **Integration**: Subagents can leverage MCP tools for specialized tasks
+**Claude Code**
+- `claude -p` and headless flags are the runtime invocation path.
+- Agent files (`.claude/agents`) and hooks are consumed through CLI/runtime behavior.
 
-**Implementation Example:**
-```rust
-// Create a Cursor skill for subagent context
-// .cursor/skills/rust-subagent-context/SKILL.md
----
-name: rust-subagent-context
-description: Provides Rust-specific context for rust-engineer subagent
----
+**Gemini**
+- `gemini -p` with approval/output modes is the runtime invocation path.
+- Extension/hook surfaces are used only where compatible with CLI automation.
 
-When the rust-engineer subagent is invoked:
-1. Load Cargo.toml and analyze dependencies
-2. Check for unsafe code patterns
-3. Review clippy configuration
-4. Provide ownership pattern guidance
-```
-
-### Codex: SDK, MCP Server Mode, Hooks, Skills
-
-**Agents SDK** (`@openai/codex-sdk`):
-- **Capability**: Programmatic orchestration of Codex sessions
-- **Use Case**: Build custom multi-agent workflows with subagents
-- **Integration**: Use SDK to invoke Codex with subagent configurations
-- **Example**: Orchestrate multiple Codex sessions as subagents
-
-**MCP Server Mode** (`codex mcp-server`):
-- **Tools**: `codex` (start session), `codex-reply` (continue session)
-- **Use Case**: Expose Codex as a tool that other agents can invoke
-- **Integration**: Puppet Master can invoke Codex subagents via MCP
-- **Benefits**: Deterministic, reviewable workflows with full traces
-
-**Hooks**:
-- **Location**: `~/.codex/config.toml` or project-level config
-- **Events**: Similar to Claude Code hooks
-- **Use Case**: Intercept subagent invocations, add validation
-
-**Skills**:
-- **Location**: `.codex/skills/`
-- **Use Case**: Package subagent-specific knowledge
-
-**Implementation Example:**
-```rust
-// Use Codex SDK for programmatic subagent orchestration
-use codex_sdk::CodexClient;
-
-async fn invoke_codex_subagent_via_sdk(
-    subagent_name: &str,
-    task: &str,
-) -> Result<String> {
-    let client = CodexClient::new()?;
-    
-    // Configure Codex session with subagent context
-    let session = client.create_session(CodexConfig {
-        prompt: format!("Use {} subagent to: {}", subagent_name, task),
-        model: Some("gpt-5".to_string()),
-        sandbox: Some("workspace-write".to_string()),
-        approval_policy: Some("never".to_string()),
-        // ... other config
-    }).await?;
-    
-    Ok(session.thread_id)
-}
-
-// Or use Codex as MCP server
-// codex mcp-server exposes 'codex' and 'codex-reply' tools
-```
-
-### Claude Code: Plugins, Agents, Hooks, Agent SDK
-
-**Plugins**:
-- **Components**: Skills, agents (subagents), hooks, MCP servers, commands
-- **Location**: `.claude-plugin/plugin.json` + component directories
-- **Use Case**: Package complete subagent configurations
-- **Distribution**: Via marketplaces or GitHub repos
-- **Integration**: Plugins can define custom subagents and hooks to manage them
-
-**Agents** (Subagents):
-- **Location**: `.claude/agents/*.md` with YAML frontmatter
-- **Capabilities**: Custom prompts, tools, models, hooks
-- **Use Case**: Define specialized subagents for specific tasks
-- **Integration**: Automatically invoked when task matches description
-
-**Hooks**:
-- **Events**: `SubagentStart`, `SubagentStop`, `PreToolUse`, `PostToolUse`, `TaskCompleted`
-- **Types**: Command, prompt, agent hooks
-- **Use Case**: Intercept subagent lifecycle, add context, validate actions
-- **Integration**: Hooks can inject context into subagents or block actions
-
-**Agent SDK** (TypeScript/Python):
-- **Capability**: Programmatic agent orchestration
-- **Use Case**: Build custom multi-agent workflows
-- **Integration**: Use SDK to programmatically invoke subagents
-
-**Implementation Example:**
-```rust
-// Define a Claude Code subagent with hooks
-// .claude/agents/rust-engineer.md
----
-name: rust-engineer
-description: Expert Rust developer
-tools: Read, Write, Edit, Bash, Glob, Grep
-hooks:
-  PreToolUse:
-    - matcher: "Bash"
-      hooks:
-        - type: command
-          command: "$CLAUDE_PROJECT_DIR/.claude/hooks/rust-safety-check.sh"
----
-
-// Hook to validate Rust commands
-// .claude/hooks/rust-safety-check.sh
-#!/bin/bash
-COMMAND=$(jq -r '.tool_input.command' < /dev/stdin)
-
-if echo "$COMMAND" | grep -q 'unsafe'; then
-  jq -n '{
-    hookSpecificOutput: {
-      hookEventName: "PreToolUse",
-      permissionDecision: "ask",
-      permissionDecisionReason: "Unsafe Rust code detected - review required"
-    }
-  }'
-else
-  exit 0
-fi
-```
-
-### Gemini: Extensions, Hooks, MCP Servers, Skills
-
-**Extensions**:
-- **Components**: Prompts, MCP servers, custom commands, hooks, sub-agents, agent skills
-- **Installation**: `gemini extensions install <github-repo-url>`
-- **Use Case**: Package complete subagent configurations
-- **Distribution**: Via GitHub repositories
-- **Integration**: Extensions can define custom subagents and hooks
-
-**Hooks**:
-- **Events**: `SessionStart`, `BeforeAgent`, `BeforeTool`, `AfterTool`, `BeforeModel`, `AfterModel`
-- **Use Case**: Intercept subagent invocations, add context, validate actions
-- **Integration**: Hooks can filter tools, modify prompts, block actions
-
-**MCP Servers**:
-- **Transport**: HTTP, SSE, Stdio
-- **Use Case**: Connect Gemini to external tools for subagents
-- **Integration**: Subagents can use MCP tools
-
-**Skills**:
-- **Location**: Packaged in extensions
-- **Use Case**: Subagent-specific knowledge
-
-**Implementation Example:**
-```json
-// Gemini extension with subagent hooks
-// .gemini/extensions/rust-subagent/hooks.json
-{
-  "hooks": {
-    "BeforeTool": [
-      {
-        "matcher": "write_file|replace",
-        "hooks": [
-          {
-            "name": "rust-safety-check",
-            "type": "command",
-            "command": "$GEMINI_PROJECT_DIR/.gemini/hooks/rust-validate.sh",
-            "timeout": 5000
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-### GitHub Copilot: Skills, SDK, Extensions
-
-**Skills**:
-- **Location**: `.github/skills/` (project), `~/.copilot/skills/` (user)
-- **Format**: `SKILL.md` with YAML frontmatter
-- **Use Case**: Package subagent-specific knowledge
-- **Integration**: Skills modify Copilot's behavior for specialized tasks
-
-**SDK** (Node.js/TypeScript, Python, Go, .NET):
-- **Capability**: Programmatic Copilot agent integration
-- **Use Case**: Build custom workflows with Copilot subagents
-- **Integration**: Use SDK to invoke Copilot with subagent configurations
-
-**Extensions**:
-- **Location**: GitHub repositories
-- **Use Case**: Package skills and custom configurations
-- **Distribution**: Via GitHub
-
-**Implementation Example:**
-```rust
-// Use Copilot SDK for programmatic subagent invocation
-use copilot_sdk::CopilotClient;
-
-async fn invoke_copilot_subagent_via_sdk(
-    subagent_name: &str,
-    task: &str,
-) -> Result<String> {
-    let client = CopilotClient::new()?;
-    
-    // Invoke Copilot with subagent context
-    let response = client.execute(CopilotRequest {
-        prompt: format!("/agent {} {}", subagent_name, task),
-        allow_all_tools: true,
-        // ... other config
-    }).await?;
-    
-    Ok(response.content)
-}
-```
+**GitHub Copilot**
+- `copilot -p` (or `npx -y @github/copilot`) is the runtime invocation path.
+- Skills/extensions and CLI flags only; no SDK invocation path.
 
 ## Leveraging Platform Capabilities for Subagent Integration
 
 ### Strategy 1: Platform-Specific Subagent Packages
 
-Create platform-specific packages that define subagents and their configurations:
+Create platform-native packages (skills/plugins/extensions/agent files) that define subagent context and lifecycle hooks. Installation and discovery must route through `platform_specs` and provider-aware helpers.
 
-**Cursor Plugin:**
-```
-.cursor/plugins/rust-subagents/
-├── .cursor-plugin/
-│   └── plugin.json
-├── agents/
-│   └── rust-engineer.md
-└── hooks/
-    └── hooks.json  # Hooks to manage rust-engineer subagent
-```
+### Strategy 2: Hook-Based Lifecycle Management
 
-**Claude Code Plugin:**
-```
-.claude-plugin/
-└── plugin.json
-agents/
-└── rust-engineer.md
-hooks/
-└── hooks.json
-```
+Use platform hooks to enrich lifecycle events (context injection, validation, quality checks) while keeping orchestrator policy and verification gates as the enforcement authority.
 
-**Gemini Extension:**
-```
-.gemini/extensions/rust-subagents/
-├── agents/
-│   └── rust-engineer.md
-└── hooks/
-    └── hooks.json
-```
+### Strategy 3: MCP Server Integration
 
-### Strategy 2: Hooks for Subagent Lifecycle Management
+Use MCP for tool exposure and interoperability where supported. Tool permissions, evidence, and run policy remain centralized in orchestrator/runtime.
 
-Use hooks to intercept and enhance subagent behavior:
+### Strategy 4: CLI Invocation as Execution Truth
 
-**Common Hook Patterns:**
-
-1. **SubagentStart Hook**: Inject project context
-```json
-{
-  "hooks": {
-    "SubagentStart": [
-      {
-        "matcher": "rust-engineer",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/inject-rust-context.sh"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-2. **PreToolUse Hook**: Validate subagent actions
-```json
-{
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "agent",
-            "prompt": "Validate this Bash command for Rust project safety: $ARGUMENTS"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-3. **SubagentStop Hook**: Quality gates
-```json
-{
-  "hooks": {
-    "SubagentStop": [
-      {
-        "matcher": "rust-engineer",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/rust-quality-gate.sh"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-### Strategy 3: SDK-Based Orchestration
-
-Use platform SDKs for programmatic subagent control:
-
-**Codex SDK Multi-Agent Workflow:**
-```rust
-// Use Codex SDK to orchestrate multiple subagents
-use codex_sdk::CodexClient;
-
-pub struct CodexSubagentOrchestrator {
-    client: CodexClient,
-}
-
-impl CodexSubagentOrchestrator {
-    async fn execute_with_subagents(
-        &self,
-        subagents: Vec<String>,
-        task: &str,
-    ) -> Result<()> {
-        // Create multiple Codex sessions as subagents
-        let mut sessions = Vec::new();
-        
-        for subagent_name in subagents {
-            let session = self.client.create_session(CodexConfig {
-                prompt: format!("As {}, {}", subagent_name, task),
-                // ... config
-            }).await?;
-            sessions.push(session);
-        }
-        
-        // Wait for all subagents to complete
-        // Merge results
-        Ok(())
-    }
-}
-```
-
-**Copilot SDK Integration:**
-```rust
-// Use Copilot SDK for subagent invocation
-use copilot_sdk::CopilotClient;
-
-pub struct CopilotSubagentInvoker {
-    client: CopilotClient,
-}
-
-impl CopilotSubagentInvoker {
-    async fn invoke_fleet(
-        &self,
-        task: &str,
-    ) -> Result<String> {
-        self.client.execute(CopilotRequest {
-            prompt: format!("/fleet {}", task),
-            allow_all_tools: true,
-        }).await
-    }
-    
-    async fn invoke_subagent(
-        &self,
-        subagent_name: &str,
-        task: &str,
-    ) -> Result<String> {
-        self.client.execute(CopilotRequest {
-            prompt: format!("/agent {} {}", subagent_name, task),
-            allow_all_tools: true,
-        }).await
-    }
-}
-```
-
-### Strategy 4: MCP Server Integration
-
-Use MCP servers to expose subagent capabilities:
-
-**Codex as MCP Server:**
-```rust
-// Run Codex as MCP server, then invoke via MCP tools
-// This enables deterministic, traceable workflows
-
-pub async fn invoke_codex_via_mcp(
-    mcp_client: &McpClient,
-    subagent_name: &str,
-    task: &str,
-) -> Result<String> {
-    let result = mcp_client.call_tool("codex", json!({
-        "prompt": format!("As {}, {}", subagent_name, task),
-        "sandbox": "workspace-write",
-        "approval-policy": "never",
-    })).await?;
-    
-    Ok(result.get("threadId").unwrap().as_str().unwrap().to_string())
-}
-```
-
-### Strategy 5: Skills for Subagent Context
-
-Create skills that provide subagent-specific knowledge:
-
-**Rust Subagent Skill:**
-```markdown
----
-name: rust-subagent-context
-description: Provides Rust-specific context for rust-engineer subagent
----
-
-When rust-engineer subagent is active:
-1. Load Cargo.toml and analyze dependencies
-2. Check for unsafe code usage
-3. Review clippy configuration
-4. Provide ownership pattern guidance
-5. Check for common Rust pitfalls
-```
+All subagent work executes through provider CLI commands. Determinism comes from explicit args/env plus normalized event parsing from CLI output.
 
 ## Updated Implementation Architecture
 
@@ -7920,48 +7309,14 @@ pub struct PlatformCapabilityManager {
     cursor_skills: Vec<SkillInfo>,
     claude_plugins: Vec<PluginInfo>,
     gemini_extensions: Vec<ExtensionInfo>,
-    codex_sdk: Option<CodexSdkClient>,
-    copilot_sdk: Option<CopilotSdkClient>,
+    codex_mcp_available: bool,
+    copilot_skills_available: bool,
 }
 
 impl PlatformCapabilityManager {
     // DRY:FN:discover_capabilities — Discover platform-specific capabilities using platform_specs
-    /// Discover platform-specific capabilities
     pub fn discover_capabilities(&self, platform: Platform) -> Result<Capabilities> {
-        // Use platform_specs to get capability discovery function (DRY:DATA:platform_specs)
         platform_specs::discover_platform_capabilities(platform)
-    }
-    
-    // DRY:FN:install_subagent_package — Install platform-specific subagent package
-    // DRY REQUIREMENT: MUST use platform_specs to determine install method — NEVER hardcode platform-specific install logic
-    /// Install platform-specific subagent package
-    pub fn install_subagent_package(
-        &self,
-        platform: Platform,
-        package: &SubagentPackage,
-    ) -> Result<()> {
-        // DRY: Use platform_specs to get install method — DO NOT use match platform statements
-        // Implementation note: If platform_specs doesn't have install_subagent_package() yet, it MUST be created
-        // and delegate to platform-specific install functions that use platform_specs for paths/commands
-        platform_specs::install_subagent_package(platform, package)
-    }
-    
-    // DRY:FN:configure_subagent_hooks — Configure hooks for subagent lifecycle
-    // DRY REQUIREMENT: MUST use platform_specs to determine hook configuration method — NEVER hardcode platform-specific hook logic
-    /// Configure hooks for subagent lifecycle
-    pub fn configure_subagent_hooks(
-        &self,
-        platform: Platform,
-        subagent_name: &str,
-        hooks: &SubagentHooks,
-    ) -> Result<()> {
-        // DRY REQUIREMENT: Validate subagent_name using subagent_registry::is_valid_subagent_name()
-        if !subagent_registry::is_valid_subagent_name(subagent_name) {
-            return Err(anyhow!("Invalid subagent name: {}", subagent_name));
-        }
-        // DRY: Use platform_specs to get hook configuration method — DO NOT use match platform statements
-        // Implementation note: If platform_specs doesn't have configure_subagent_hooks() yet, it MUST be created
-        platform_specs::configure_subagent_hooks(platform, subagent_name, hooks)
     }
 }
 ```
@@ -7973,8 +7328,6 @@ impl PlatformCapabilityManager {
 
 impl SubagentInvoker {
     // DRY:FN:invoke_with_capabilities — Invoke subagent using platform-specific capabilities
-    // DRY REQUIREMENT: MUST use platform_specs to determine invocation method — NEVER hardcode platform-specific invocation logic
-    /// Invoke subagent using platform-specific capabilities
     pub async fn invoke_with_capabilities(
         &self,
         platform: Platform,
@@ -7982,28 +7335,17 @@ impl SubagentInvoker {
         task: &str,
         capabilities: &PlatformCapabilities,
     ) -> Result<String> {
-        // DRY REQUIREMENT: Validate subagent_name using subagent_registry::is_valid_subagent_name()
         if !subagent_registry::is_valid_subagent_name(subagent_name) {
             return Err(anyhow!("Invalid subagent name: {}", subagent_name));
         }
-        // DRY: Use platform_specs to determine invocation method based on capabilities — DO NOT use match platform statements
-        // Implementation note: platform_specs should provide a function like:
-        // platform_specs::get_subagent_invocation_method(platform, capabilities) -> InvocationMethod
-        // which returns SDK, MCP, or CLI based on platform capabilities
-        let invocation_method = platform_specs::get_subagent_invocation_method(platform, capabilities)?;
+
+        let invocation_method =
+            platform_specs::get_subagent_invocation_method(platform, capabilities)?;
+
         match invocation_method {
-            InvocationMethod::Sdk => self.invoke_via_sdk(platform, subagent_name, task).await,
             InvocationMethod::Mcp => self.invoke_via_mcp(platform, subagent_name, task).await,
             InvocationMethod::Cli => self.invoke_via_cli(platform, subagent_name, task).await,
         }
-    }
-    
-    // DRY:FN:invoke_via_cli — Invoke subagent via CLI
-    // DRY REQUIREMENT: MUST use platform_specs::get_subagent_invocation_format() — NEVER hardcode CLI invocation formats
-    async fn invoke_via_cli(&self, platform: Platform, subagent_name: &str, task: &str) -> Result<String> {
-        // Use platform_specs for CLI invocation format
-        let invocation_format = platform_specs::get_subagent_invocation_format(platform)?;
-        // ... rest of implementation
     }
 }
 ```
@@ -8012,34 +7354,29 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 ## Benefits of Platform Capabilities
 
-1. **Rich Context**: Hooks can inject project-specific context into subagents
-2. **Validation**: Hooks can validate subagent actions before execution
-3. **Quality Gates**: Hooks can enforce quality standards before subagent completion
-4. **Programmatic Control**: SDKs enable deterministic, traceable workflows
-5. **Packaging**: Plugins/extensions make subagent configurations shareable
-6. **Lifecycle Management**: Hooks provide fine-grained control over subagent behavior
-7. **Tool Integration**: MCP servers enable subagents to use external tools
-8. **Knowledge Packaging**: Skills package domain-specific knowledge for subagents
+1. **Rich Context:** Hooks and skills inject domain context into subagents.
+2. **Validation:** Hook + orchestrator checks can reject unsafe actions.
+3. **Quality Gates:** Lifecycle hooks and gates enforce completion quality.
+4. **Deterministic Runtime:** Provider execution is explicit and replayable (transport-aware: CLI-bridged, direct-provider, or server-bridged per ProviderTransport taxonomy).
+5. **Packaging:** Plugins/extensions keep subagent assets reusable.
+6. **Tool Integration:** MCP extends tool access without changing orchestrator core.
 
 ## Implementation Considerations
 
-1. **Platform Detection**: Detect which capabilities are available for each platform
-2. **Fallback Strategy**: Always have CLI fallback if SDK/MCP unavailable
-3. **Capability Caching**: Cache capability detection to avoid repeated checks
-4. **Version Compatibility**: Check platform versions for capability support
-5. **Configuration Management**: Manage platform-specific configs (hooks, plugins, etc.)
-6. **Error Handling**: Gracefully handle missing capabilities
-7. **Documentation**: Document which capabilities are required/optional
+1. **Platform Detection:** Detect available capabilities per provider CLI/runtime.
+2. **Capability Caching:** Cache detection results to reduce startup overhead.
+3. **Version Compatibility:** Guard capability use by known version constraints.
+4. **Configuration Management:** Keep platform-specific config paths explicit.
+5. **Error Handling:** Capability misses degrade gracefully to base CLI flow.
+6. **Documentation:** Keep capability docs aligned with provider contracts.
 
 ## Next Steps
 
-1. **Research Latest Capabilities**: Continuously monitor platform release notes
-2. **Implement Capability Detection**: Detect available hooks, SDKs, plugins
-3. **Create Platform Packages**: Build platform-specific subagent packages
-4. **Integrate SDKs**: Use Codex SDK and Copilot SDK for programmatic control
-5. **Configure Hooks**: Set up hooks for subagent lifecycle management
-6. **Test Integration**: Verify platform capabilities work with subagent system
-
+1. **Track release notes:** Keep `platform_specs` and runner flags current.
+2. **Expand capability detection:** Add structured detection for hooks/skills/MCP support.
+3. **Package templates:** Provide reusable platform package templates.
+4. **Hook coverage:** Add hook-driven evidence points where useful.
+5. **Integration tests:** Verify capability-driven invocation remains deterministic.
 
 ## Autonomous QA Loop Pattern Integration
 
@@ -8433,7 +7770,7 @@ orchestrator:
 
 ## Change Summary
 
-- 2026-02-24: Updated **plan graph consumption (user projects)** so Puppet Master orchestrator consumes **SHARDED** plan graphs by default and executes headless from `.puppet-master/project/plan_graph/index.json` + `.puppet-master/project/plan_graph/nodes/<node_id>.json`.
-- 2026-02-24: Replaced any “required/canonical `.puppet-master/project/plan_graph.json`” assumption: monolithic `plan_graph.json` is now optional/legacy; the sharded representation is canonical.
+- 2026-02-24: Updated **plan graph consumption (user projects)** so Puppet Master orchestrator consumes **SHARDED-ONLY** plan graphs and executes headless from `.puppet-master/project/plan_graph/index.json` + `.puppet-master/project/plan_graph/nodes/<node_id>.json`.
+- 2026-02-24: Locked decision: no canonical `.puppet-master/project/plan_graph.json`; monolithic derived export (if materialized) lives at `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json`; the sharded representation is the sole canonical choice.
 - 2026-02-24: Made required user-project artifacts explicit under `.puppet-master/project/` (requirements.md, contracts/, plan.md, plan_graph shards, acceptance_manifest.json, auto_decisions.jsonl) and reaffirmed canonical persistence in seglog.
 - 2026-02-24: Added sharding/consumption rules (deterministic `node_id`, minimum required fields for `index.json` and node shards, and `edges.json` consistency validation).

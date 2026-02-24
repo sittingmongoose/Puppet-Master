@@ -334,12 +334,10 @@ pub fn get_default_model(platform: Platform) -> Option<&'static ModelInfo> {
 /// How a model list was obtained.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub enum ModelSource {
-    /// Freshly fetched from the platform CLI/SDK.
+    /// Freshly fetched from the platform CLI.
     Dynamic,
     /// Loaded from persistent disk cache.
     Cached,
-    /// Fetched via SDK bridge (Node.js SDK).
-    Sdk,
 }
 // DRY:DATA:CachedModelList
 
@@ -439,10 +437,6 @@ pub fn save_persistent_cache(cache: &HashMap<Platform, CachedModelList>) {
 
 /// Attempt to discover models from a platform CLI (blocking — call from async).
 pub fn refresh_models_blocking(platform: Platform) -> CachedModelList {
-    if platform_specs::has_sdk(platform) {
-        return refresh_models_with_sdk_fallback(platform);
-    }
-
     refresh_models_cli_blocking(platform)
 }
 
@@ -610,55 +604,6 @@ fn refresh_models_cli_blocking(platform: Platform) -> CachedModelList {
         }
     }
 }
-// DRY:FN:refresh_models_with_sdk_fallback
-
-/// DRY:FN:refresh_models_via_sdk — Attempt model discovery via Node.js SDK bridge.
-/// Falls back to CLI discovery if SDK is unavailable; returns empty list if neither works.
-pub fn refresh_models_with_sdk_fallback(platform: Platform) -> CachedModelList {
-    // Only try SDK for platforms that have one
-    if !platform_specs::has_sdk(platform) {
-        return refresh_models_cli_blocking(platform);
-    }
-
-    // Try SDK bridge (requires Node.js)
-    let Some(bridge) = super::sdk_bridge::SdkBridge::new() else {
-        log::info!(
-            "Node.js not available for {:?} SDK, trying CLI",
-            platform
-        );
-        return refresh_models_cli_blocking(platform);
-    };
-
-    // Run SDK listing in a new tokio runtime (we're in a blocking context)
-    let sdk_result = std::thread::spawn(move || {
-        let rt = tokio::runtime::Runtime::new().ok()?;
-        rt.block_on(bridge.list_models(platform)).ok()
-    })
-    .join()
-    .ok()
-    .flatten();
-
-    match sdk_result {
-        Some(models) if !models.is_empty() => {
-            let display_names = models.clone();
-            log::info!(
-                "SDK discovered {} model(s) for {:?}",
-                models.len(),
-                platform
-            );
-            CachedModelList {
-                models,
-                display_names,
-                last_refreshed: Some(chrono::Utc::now()),
-                source: ModelSource::Sdk,
-            }
-        }
-        _ => {
-            log::info!("SDK returned empty for {:?}, trying CLI", platform);
-            refresh_models_cli_blocking(platform)
-        }
-    }
-}
 // DRY:FN:build_model_map_from_specs
 
 /// Build an empty initial model map for all platforms.
@@ -791,31 +736,6 @@ mod tests {
 
         let default = get_default_model(Platform::Claude);
         assert!(default.is_none());
-    }
-
-    #[test]
-    fn test_refresh_with_sdk_fallback_non_sdk_platform() {
-        // Claude has no SDK and no CLI model discovery — returns empty list.
-        let result = refresh_models_with_sdk_fallback(Platform::Claude);
-        assert!(result.models.is_empty());
-        assert!(matches!(result.source, ModelSource::Dynamic));
-    }
-
-    #[test]
-    fn test_refresh_models_blocking_sdk_platform_returns_models() {
-        // SDK-capable platforms with no SDK/CLI available return empty list.
-        let result = refresh_models_blocking(Platform::Codex);
-        assert!(matches!(
-            result.source,
-            ModelSource::Sdk | ModelSource::Dynamic | ModelSource::Cached
-        ));
-    }
-
-    #[test]
-    fn test_model_source_sdk_variant() {
-        // Verify the Sdk variant exists and can be matched
-        let source = ModelSource::Sdk;
-        assert!(matches!(source, ModelSource::Sdk));
     }
 
     #[test]

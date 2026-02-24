@@ -148,7 +148,7 @@ This tab is composed of widgets from Plans/Widget_System.md. Users can add, remo
 
 | Col | Row | Widget ID | Size | What It Shows |
 |-----|-----|-----------|------|---------------|
-| 0 | 0 | `widget.orchestrator_status` | 2x1 | Current orchestrator state (Idle/Planning/Executing/Paused/Error/Complete) with run controls (start/pause/resume/stop) |
+| 0 | 0 | `widget.orchestrator_status` | 2x1 | Current orchestrator state (Idle/Planning/Executing/Paused/Error/Complete) with run controls (start/pause/resume/stop) plus Preview/Build actions and latest artifact/session summary |
 | 2 | 0 | `widget.current_task` | 2x1 | Active tier: title, objective, elapsed time, platform, model |
 | 0 | 1 | `widget.progress_bars` | 4x1 | Phase/task/subtask completion bars with counts |
 | 0 | 2 | `widget.cta_stack` | 2x2 | Calls to action: HITL approvals, run interrupted, rate limits, warnings |
@@ -160,6 +160,24 @@ This tab is composed of widgets from Plans/Widget_System.md. Users can add, remo
 All widgets in the Progress tab are also hostable on the Dashboard (Plans/Widget_System.md section 2). Users can add any Progress widget to the Dashboard via the add-widget flow.
 
 ContractRef: ContractName:Plans/Widget_System.md#6.3
+
+<a id="45-preview-build-actions"></a>
+### 4.5 Preview and Build actions in `widget.orchestrator_status`
+
+The orchestrator status widget is the canonical in-page control surface for run operations and developer feedback loops.
+
+- **Preview action**:
+  - Starts a visible or headless preview session depending on run config.
+  - Shows current preview state (`running`, `stopped`, `degraded`) and latest media timestamp.
+  - Exposes quick action to open the most recent preview artifact.
+- **Build action**:
+  - Runs project build profile selected in settings or inferred from stack.
+  - Displays latest build status and a compact artifact list (path + kind).
+  - Exposes quick action to open/copy artifact path.
+
+These controls are also hostable on Dashboard via the same widget portability contract.
+
+ContractRef: ContractName:Plans/newtools.md#146-preview-build-docker-and-actions-contracts, ContractName:Plans/FinalGUISpec.md#7.2, ContractName:Plans/Widget_System.md#6.3
 
 ---
 
@@ -474,6 +492,11 @@ ContractRef: ContractName:Plans/Widget_System.md#7, ContractName:Plans/storage-p
 | `cmd.orchestrator.retry_node` | `{ tier_id: string }` | Trigger retry for a tier |
 | `cmd.orchestrator.replan_node` | `{ tier_id: string }` | Trigger replanning for a tier |
 | `cmd.orchestrator.reopen_node` | `{ tier_id: string }` | Reopen a completed tier |
+| `cmd.orchestrator.preview_open` | `{ mode?: string, target?: string }` | Start preview session from orchestrator status controls |
+| `cmd.orchestrator.preview_stop` | `{ preview_session_id?: string }` | Stop active preview session |
+| `cmd.orchestrator.open_preview_artifact` | `{ artifact_id: string }` | Open latest preview artifact (media/log) |
+| `cmd.orchestrator.build_run` | `{ profile?: string, publish?: bool }` | Start build and report artifact outputs |
+| `cmd.orchestrator.open_build_artifact` | `{ artifact_path: string }` | Open or copy build artifact path |
 
 ContractRef: Primitive:UICommand (Plans/Contracts_V0.md#UICommand), ContractName:Plans/UI_Command_Catalog.md
 
@@ -506,8 +529,10 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#13
 10. **Completed prose**: completed tiers show readable summaries, not raw data; collapsible; reverse-chronological order.
 11. **Widget system**: add/remove/move/resize widgets on widget-based tabs; layouts persist across app restart.
 12. **Data sources**: all live status data points (section 12.1) are wired and updating.
-13. **Persistence**: active tab and per-tab layouts restored on page reload.
-14. **Accessibility**: all tabs and widgets reachable by keyboard; screen reader compatible.
+13. **Preview controls**: status widget `Preview` action starts/stops session and surfaces latest preview artifact link.
+14. **Build controls**: status widget `Build` action runs selected build profile and surfaces artifact outputs with open/copy actions.
+15. **Persistence**: active tab and per-tab layouts restored on page reload.
+16. **Accessibility**: all tabs and widgets reachable by keyboard; screen reader compatible.
 
 ---
 
@@ -517,6 +542,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#13
 | Document | What It Provides |
 |----------|-----------------|
 | Plans/Widget_System.md | Widget catalog, grid system, add-widget flow, layout persistence |
+| Plans/newtools.md | Preview/build/docker/actions execution contracts and evidence requirements |
 | Plans/Run_Graph_View.md | Full Node Graph Display specification (tab 3) |
 | Plans/orchestrator-subagent-integration.md | Tier hierarchy, event types, plan_graph, evidence, HITL |
 | Plans/FinalGUISpec.md | Master layout (section 3), navigation (section 4), views (section 7), theme (section 6), accessibility (section 13), persistence (section 15) |

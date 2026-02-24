@@ -10,7 +10,7 @@
 //! core/orchestrator, core/execution_engine.
 //!
 //! # DRY Tags (for agent discoverability)
-//! - DRY:DATA:PLATFORM_SPECS — All static platform CLI data (binary names, install paths, auth, models, effort, images, headless, experimental, subagent, SDK)
+//! - DRY:DATA:PLATFORM_SPECS — All static platform CLI data (binary names, install paths, auth, models, effort, images, headless, experimental, subagent)
 //! - DRY:FN:get_spec — Get the full spec for a single Platform
 //! - DRY:FN:supports_effort — Whether platform has effort/reasoning levels
 //! - DRY:FN:supports_images — Whether platform supports image/media (ALL 5 do)
@@ -20,7 +20,6 @@
 //! - DRY:FN:supports_subagents — Claude Teams, Copilot Fleets, Codex sub-agents
 //! - DRY:FN:subagent_env_vars — Get environment variables to enable subagents for a platform
 //! - DRY:FN:subagent_extra_args — Get extra CLI args to enable subagents for a platform
-//! - DRY:FN:has_sdk — Whether platform has a programmatic SDK
 //! - DRY:FN:fallback_model_ids — Fallback model IDs when dynamic discovery unavailable
 //! - DRY:FN:default_model_for — Default model for a platform
 //! - DRY:FN:cli_binary_names — CLI binary names to search for
@@ -54,8 +53,6 @@ pub struct PlatformSpec {
     pub experimental: Option<ExperimentalSpec>,
     /// Multi-agent / subagent capabilities (Claude Teams, Copilot Fleets, Codex sub-agents).
     pub subagent: Option<SubagentSpec>,
-    /// Programmatic SDK (Copilot SDK, Codex SDK).
-    pub sdk: Option<SdkSpec>,
     pub version_command: &'static str,
     pub update_command: Option<&'static str>,
     /// True for Cursor — reasoning is encoded in model names (e.g., `sonnet-4.5-thinking`).
@@ -84,14 +81,12 @@ pub struct AuthSpec {
     pub credentials_path: Option<&'static str>,
 }
 
-/// How to discover models dynamically from this platform's CLI/SDK.
+/// How to discover models dynamically from this platform's CLI.
 // DRY:DATA:ModelDiscoverySpec — Model discovery specification for a platform
 pub struct ModelDiscoverySpec {
     /// CLI binary to run for model listing (None = no CLI discovery).
     pub cli_command: Option<&'static str>,
     pub cli_args: &'static [&'static str],
-    /// Whether an SDK can be used for model listing.
-    pub sdk_available: bool,
     /// How long to cache model lists in minutes.
     pub cache_ttl_minutes: u32,
     pub note: &'static str,
@@ -107,19 +102,6 @@ pub struct SubagentSpec {
     /// Path to custom agent definitions.
     pub custom_agents_path: Option<&'static str>,
     pub is_experimental: bool,
-    pub note: &'static str,
-}
-
-/// Programmatic SDK for a platform.
-// DRY:DATA:SdkSpec — SDK specification for a platform
-pub struct SdkSpec {
-    pub package_name: &'static str,
-    pub package_manager: &'static str,
-    pub language: &'static str,
-    pub additional_languages: &'static [&'static str],
-    /// Communication protocol (e.g., "JSON-RPC", "JSONL stdin/stdout").
-    pub communication: &'static str,
-    pub status: &'static str,
     pub note: &'static str,
 }
 
@@ -250,7 +232,6 @@ static CLAUDE_SPEC: PlatformSpec = PlatformSpec {
     model_discovery: ModelDiscoverySpec {
         cli_command: None,
         cli_args: &[],
-        sdk_available: false,
         cache_ttl_minutes: 1440, // 24 hours — models are stable
         note: "Claude models are relatively stable; aliases opus/sonnet/haiku are preferred",
     },
@@ -307,7 +288,6 @@ static CLAUDE_SPEC: PlatformSpec = PlatformSpec {
         is_experimental: true,
         note: "Agent Teams: team lead + teammates with shared task list and messaging",
     }),
-    sdk: None,
     version_command: "--version",
     update_command: Some("update"),
     reasoning_is_model_based: false,
@@ -365,7 +345,6 @@ static CURSOR_SPEC: PlatformSpec = PlatformSpec {
     model_discovery: ModelDiscoverySpec {
         cli_command: Some("agent"),
         cli_args: &["models"],
-        sdk_available: false,
         cache_ttl_minutes: 60,
         note: "Models change frequently; use `agent models` or `--list-models`",
     },
@@ -396,7 +375,6 @@ static CURSOR_SPEC: PlatformSpec = PlatformSpec {
     working_dir_flag: Some("--add-dir"),
     experimental: None,
     subagent: None, // No documented multi-agent support
-    sdk: None,
     version_command: "--version",
     update_command: Some("update"),
     reasoning_is_model_based: true,
@@ -434,11 +412,10 @@ static CODEX_SPEC: PlatformSpec = PlatformSpec {
         credentials_path: None,
     },
     model_discovery: ModelDiscoverySpec {
-        cli_command: None, // Use SDK for discovery
+        cli_command: None,
         cli_args: &[],
-        sdk_available: true,
         cache_ttl_minutes: 60,
-        note: "Use Codex SDK for reliable model listing; CLI discovery limited",
+        note: "No CLI model list command; use fallback model IDs",
     },
     plan_mode: Some(PlanModeSpec {
         cli_flag: "--sandbox",
@@ -504,15 +481,6 @@ static CODEX_SPEC: PlatformSpec = PlatformSpec {
         is_experimental: false,
         note: "Sub-agents with connector capabilities; automatic for complex tasks",
     }),
-    sdk: Some(SdkSpec {
-        package_name: "@openai/codex-sdk",
-        package_manager: "npm",
-        language: "Node.js",
-        additional_languages: &[],
-        communication: "JSONL stdin/stdout",
-        status: "Stable",
-        note: "Thread-based API: new Codex(), startThread(), thread.run(prompt). Node.js 18+.",
-    }),
     version_command: "--version",
     update_command: None, // Auto-updates
     reasoning_is_model_based: false,
@@ -552,7 +520,6 @@ static GEMINI_SPEC: PlatformSpec = PlatformSpec {
     model_discovery: ModelDiscoverySpec {
         cli_command: None,
         cli_args: &[],
-        sdk_available: false,
         cache_ttl_minutes: 1440,
         note: "Gemini does not expose a model list command",
     },
@@ -590,7 +557,6 @@ static GEMINI_SPEC: PlatformSpec = PlatformSpec {
         cli_flag: None,
     }),
     subagent: None,
-    sdk: None,
     version_command: "--version",
     update_command: Some("update"),
     reasoning_is_model_based: false,
@@ -626,11 +592,10 @@ static COPILOT_SPEC: PlatformSpec = PlatformSpec {
         credentials_path: None,
     },
     model_discovery: ModelDiscoverySpec {
-        cli_command: None, // Use SDK for discovery
+        cli_command: None,
         cli_args: &[],
-        sdk_available: true,
         cache_ttl_minutes: 60,
-        note: "Use Copilot SDK for model listing; /model shows available models interactively",
+        note: "No CLI model list command; /model shows available models interactively",
     },
     plan_mode: Some(PlanModeSpec {
         cli_flag: "", // No headless plan flag
@@ -696,15 +661,6 @@ static COPILOT_SPEC: PlatformSpec = PlatformSpec {
         is_experimental: false,
         note: "Fleets for parallel multi-agent work (like Claude Teams); /delegate for single sub-tasks; custom agents from ~/.copilot/agents or .github/agents",
     }),
-    sdk: Some(SdkSpec {
-        package_name: "@github/copilot-sdk",
-        package_manager: "npm",
-        language: "Node.js",
-        additional_languages: &["Python", "Go", ".NET"],
-        communication: "JSON-RPC",
-        status: "Technical Preview",
-        note: "Can list models, define custom agents/skills/tools. Auth: GitHub OAuth, BYOK.",
-    }),
     version_command: "--version", // npm @github/copilot uses --version (not `copilot version`)
     update_command: Some("update"),
     reasoning_is_model_based: false,
@@ -761,12 +717,6 @@ pub fn supports_experimental(platform: Platform) -> bool {
 /// Whether this platform supports sub-agents / multi-agent execution.
 pub fn supports_subagents(platform: Platform) -> bool {
     get_spec(platform).subagent.is_some()
-}
-
-// DRY:FN:has_sdk — Whether platform has a programmatic SDK
-/// Whether this platform has a programmatic SDK.
-pub fn has_sdk(platform: Platform) -> bool {
-    get_spec(platform).sdk.is_some()
 }
 
 // DRY:FN:reasoning_is_model_based — Whether reasoning is encoded in model names
@@ -994,7 +944,7 @@ pub fn get_agents_directory_name(platform: Platform) -> &'static str {
 }
 
 // DRY:FN:discover_platform_capabilities — Discover platform capabilities dynamically
-/// Discover platform capabilities dynamically (hooks, SDKs, plugins, etc.).
+/// Discover platform capabilities dynamically (hooks, plugins, etc.).
 /// 
 /// This function delegates to platform-specific capability discovery.
 /// Returns a `Capabilities` struct with discovered features.
@@ -1004,9 +954,7 @@ pub fn get_agents_directory_name(platform: Platform) -> &'static str {
 pub fn discover_platform_capabilities(platform: Platform) -> Result<Capabilities, anyhow::Error> {
     let spec = get_spec(platform);
     Ok(Capabilities {
-        has_sdk: spec.sdk.is_some(),
         has_mcp_server: false, // TODO: Detect MCP server availability
-        has_agent_sdk: matches!(platform, Platform::Claude), // Claude has Agent SDK
         has_hooks: matches!(platform, Platform::Cursor | Platform::Claude | Platform::Gemini),
         has_plugins: matches!(platform, Platform::Cursor | Platform::Claude | Platform::Gemini),
         has_extensions: matches!(platform, Platform::Gemini),
@@ -1017,9 +965,7 @@ pub fn discover_platform_capabilities(platform: Platform) -> Result<Capabilities
 /// Platform capabilities discovered dynamically.
 #[derive(Debug, Clone)]
 pub struct Capabilities {
-    pub has_sdk: bool,
     pub has_mcp_server: bool,
-    pub has_agent_sdk: bool,
     pub has_hooks: bool,
     pub has_plugins: bool,
     pub has_extensions: bool,
@@ -1039,14 +985,14 @@ pub fn install_subagent_package(
     // - Cursor: Install plugin to .cursor/plugins/
     // - Claude: Install plugin to .claude-plugin/
     // - Gemini: Install extension via `gemini extensions install`
-    // - Codex/Copilot: Use SDK or built-in subagents
+    // - Codex/Copilot: Use CLI-native subagent capabilities
     match platform {
         Platform::Cursor | Platform::Claude | Platform::Gemini => {
             // Plugin/extension installation would go here
             Ok(())
         }
         Platform::Codex | Platform::Copilot => {
-            // SDK-based or built-in subagents
+            // Built-in subagents via CLI
             Ok(())
         }
     }
@@ -1072,14 +1018,14 @@ pub fn configure_subagent_hooks(
     // - Cursor: Write to .cursor/hooks.json
     // - Claude: Write to .claude/settings.json hooks section
     // - Gemini: Write to ~/.gemini/settings.json hooks section
-    // - Codex/Copilot: Use SDK callbacks or orchestrator-level hooks
+    // - Codex/Copilot: Use CLI-native hooks or orchestrator-level hooks
     match platform {
         Platform::Cursor | Platform::Claude | Platform::Gemini => {
             // Hook configuration would go here
             Ok(())
         }
         Platform::Codex | Platform::Copilot => {
-            // SDK callbacks or orchestrator-level hooks
+            // CLI-native hooks or orchestrator-level hooks
             Ok(())
         }
     }
@@ -1094,15 +1040,13 @@ pub struct SubagentHooks {
 // DRY:FN:get_subagent_invocation_method — Determine invocation method based on capabilities
 /// Determine the best invocation method for a subagent based on platform capabilities.
 /// 
-/// Returns the recommended invocation method (SDK, MCP, or CLI).
+/// Returns the recommended invocation method (MCP or CLI).
 pub fn get_subagent_invocation_method(
-    platform: Platform,
+    _platform: Platform,
     capabilities: &Capabilities,
 ) -> Result<InvocationMethod, anyhow::Error> {
-    // Priority: SDK > MCP > CLI
-    if capabilities.has_sdk && matches!(platform, Platform::Codex | Platform::Copilot) {
-        Ok(InvocationMethod::Sdk)
-    } else if capabilities.has_mcp_server {
+    // Priority: MCP > CLI (SDK removed — CLI-only invocation)
+    if capabilities.has_mcp_server {
         Ok(InvocationMethod::Mcp)
     } else {
         Ok(InvocationMethod::Cli)
@@ -1112,7 +1056,6 @@ pub fn get_subagent_invocation_method(
 /// Invocation method for subagents.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum InvocationMethod {
-    Sdk,
     Mcp,
     Cli,
 }
@@ -1181,15 +1124,6 @@ mod tests {
         assert!(supports_subagents(Platform::Codex));
         assert!(!supports_subagents(Platform::Cursor));
         assert!(!supports_subagents(Platform::Gemini));
-    }
-
-    #[test]
-    fn test_sdk_support() {
-        assert!(has_sdk(Platform::Copilot));
-        assert!(has_sdk(Platform::Codex));
-        assert!(!has_sdk(Platform::Claude));
-        assert!(!has_sdk(Platform::Cursor));
-        assert!(!has_sdk(Platform::Gemini));
     }
 
     #[test]

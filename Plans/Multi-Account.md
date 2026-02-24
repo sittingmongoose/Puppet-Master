@@ -173,14 +173,20 @@ flowchart LR
 
 All of the following are **UX requirements**; no commitment to Iced or Slint -- implementation will use the future UI stack.
 
-### 9.1 Setup
+### 9.1 Setup + Health/Doctor visibility
 
+- **Shared visibility contract:** Setup and Health/Doctor MUST show the same per-provider multi-account summary: active account, account count, cooldown/rate-limit status, and last auth freshness timestamp when available.
+- **Provider coverage:** Multi-account visibility in this spec applies to Cursor, Codex, Claude Code, Gemini, Copilot, and GitHub realm entries; OpenCode is excluded.
+  - **GitHub realm entries are explicit:** `github_api` and `copilot_github` (SSOT: `Plans/Contracts_V0.md` `AuthRealm`). They MUST be shown as separate entries and may represent different accounts.
+- **Real-time provider auth states:** Both surfaces use the same live auth state set: `LoggedOut`, `LoggingIn`, `LoggedIn`, `LoggingOut`, `AuthExpired`, `AuthFailed`.
+- **Tool readiness integration:** Setup and Health/Doctor expose install state rows for Cursor CLI, Claude CLI, and Playwright runtime with states `Not Installed`, `Installing`, `Installed`, `Uninstalling`, `Failed`.
+- **Manual path controls (Cursor/Claude only):** Cursor and Claude rows expose `Use manual path` checkbox + native file picker; Playwright row does not.
 - **Add account:** Per platform, trigger platform login with a new config dir or profile (e.g. "Add account" runs login flow, creates new profile/registry entry).
 - **Remove account:** Remove an account from the registry for that platform (with confirmation if it is the active one).
 
 ### 9.2 Config view
 
-- **List accounts** per platform with: name/label, active indicator, optional 5h/7d usage bars, cooldown/rate-limit status.
+- **List accounts** per platform with: name/label, active indicator, optional 5h/7d usage bars, cooldown/rate-limit status, and auth state chip.
 - **Set active:** "Set active" or "Use for next run" so the next run uses that account (or pick-best still applies if auto-rotation is on).
 - **Optional:** Reorder accounts (affects "next in order" when not using pick-best).
 
@@ -192,7 +198,7 @@ All of the following are **UX requirements**; no commitment to Iced or Slint -- 
 ### 9.4 In-session / status
 
 - **TUI footer warning** when approaching limit (e.g. >90% used) for the active account, where platform supports usage.
-- **Status / context:** Show which account is active for the current session or run; optional real-time usage for that account.
+- **Status / context:** Show which account is active for the current session or run, include provider auth state (`LoggedOut`, `LoggingIn`, `LoggedIn`, `LoggingOut`, `AuthExpired`, `AuthFailed`), and optional real-time usage for that account.
 - **Session context tab (or equivalent):** Show active account per session; allow switching active account from this context where applicable.
 
 ### 9.5 Notifications

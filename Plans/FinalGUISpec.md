@@ -560,6 +560,7 @@ border-radius = 4
 
 - **Retro themes:** Prioritize aesthetic over strict WCAG AA compliance for accent colors (e.g., ACID_LIME on dark backgrounds may not meet 4.5:1)
 - **Basic theme:** MUST meet WCAG 2.1 AA for all text and interactive elements (4.5:1 minimum contrast for normal text, 3:1 for large text). Basic accent colors are muted specifically to meet this requirement
+ContractRef: ContractName:Plans/FinalGUISpec.md#13, ContractName:Plans/DRY_Rules.md#7
 
 ---
 
@@ -598,7 +599,7 @@ border-radius = 4
 The Dashboard is the operational hub. It uses a rearrangeable card grid.
 
 **Widget cards:**
-- **Orchestrator Status:** Status badge (Running/Paused/Idle/Error) + controls (Start, Pause, Resume, Stop, Reset)
+- **Orchestrator Status:** Status badge (Running/Paused/Idle/Error) + controls (Start, Pause, Resume, Stop, Reset, Preview, Build) + latest preview/build summary
 - **Current Task:** Current tier, item name, platform, model
 - **Progress:** Phase/task/subtask progress bars (3 bars)
 - **Budgets:** Per-platform budget donut charts (used/total tokens, color-coded by usage %)
@@ -613,7 +614,13 @@ The Dashboard is the operational hub. It uses a rearrangeable card grid.
 - Drag a card to swap positions with another
 - Card order persisted in redb under `dashboard_layout:v1`
 
-**Controls:** START, PAUSE, RESUME, STOP, RESET buttons with visual state feedback (see §10.1 Button Feedback). Retry/Replan/Reopen per-item buttons. Kill process button (if running).
+**Controls:** START, PAUSE, RESUME, STOP, RESET, PREVIEW, BUILD buttons with visual state feedback (see §10.1 Button Feedback). Retry/Replan/Reopen per-item buttons. Kill process button (if running).
+
+**Preview/Build status strip:** The Orchestrator Status card includes a compact strip showing:
+- latest preview session (`running`/`stopped`/`degraded`) with "Open preview artifact" action
+- latest build result (`success`/`failed`) with artifact path summary and open/copy action
+
+ContractRef: ContractName:Plans/newtools.md#146-preview-build-docker-and-actions-contracts, ContractName:Plans/Orchestrator_Page.md#45-preview-build-actions
 
 **Calls to Action (CtA) cards:** CtA cards have accent-left-border (4px), elevated surface background, and a prominent action button. Types:
 - **HITL approval:** "Phase X complete -- approval required" with evidence summary, "Approve & Continue" (primary) and "Reject" (secondary) buttons. Badge on activity bar when active.
@@ -707,11 +714,11 @@ This is a **heavily redesigned** unified settings page that merges four previous
 | **Verification** | Verification checks, screenshot toggles | Old "Config" Verification tab |
 | **Memory** | Multi-level memory with progress/agents/PRD file paths | Old "Config" Memory tab |
 | **Budgets** | Per-platform token budgets | Old "Config" Budgets tab |
-| **Advanced** | **FileSafe Guards** (collapsible card): three independent toggles -- "Block destructive commands" (on/off), "Restrict writes to plan" (on/off), "Block sensitive files" (on/off); approved commands list (scrollable, per-row remove, optional manual add); override toggle with warning styling. **MCP Configuration** (collapsible card): per-platform MCP toggles for **all five platforms** (Cursor, Codex, Claude Code, Gemini, Copilot), MCP server list (add/edit/remove servers with name/command/args/env fields), "Test connection" button per server, Context7 API key input (password-style), web search provider selection and API key. **Tool permissions** (collapsible card, see §7.4.1): per-tool or wildcard allow/deny/ask; optional presets (Read-only, Plan mode, Full); list built-in + MCP-discovered tools with permission dropdown per row; bound to central tool registry per Plans/Tools.md. **Other:** Experimental features, sub-agent toggles, cleanup config (clean untracked before run, clean ignored files, clear agent-output dir, evidence retention days) | Old "Config" Advanced tab + newtools.md + FileSafe.md + Tools.md + MiscPlan.md |
+| **Advanced** | **FileSafe Guards** (collapsible card): three independent toggles -- "Block destructive commands" (on/off), "Restrict writes to plan" (on/off), "Block sensitive files" (on/off); approved commands list (scrollable, per-row remove, optional manual add); override toggle with warning styling. **MCP Configuration** (collapsible card): per-platform MCP toggles for **all five platforms** (Cursor, Codex, Claude Code, Gemini, Copilot), MCP server list (add/edit/remove servers with name/command/args/env fields), "Test connection" button per server, Context7 API key input (password-style), web search provider selection and API key. **Tool permissions** (collapsible card, see §7.4.1): per-tool or wildcard allow/deny/ask; optional presets (Read-only, Plan mode, Full); list built-in + MCP-discovered tools with permission dropdown per row; bound to central tool registry per Plans/Tools.md. **Containers & Registry** (collapsible card, see §7.4.8): Docker runtime/compose defaults, DockerHub namespace/repo/tag defaults, auth mode and push policy. **CI / GitHub Actions** (collapsible card, see §7.4.9): workflow template selection, trigger/matrix controls, required-secrets checklist, generate/preview/apply actions. **Other:** Experimental features, sub-agent toggles, cleanup config (clean untracked before run, clean ignored files, clear agent-output dir, evidence retention days) | Old "Config" Advanced tab + newtools.md + FileSafe.md + Tools.md + MiscPlan.md + GitHub_API_Auth_and_Flows.md |
 | **LSP** | **Language Server Protocol (MVP)** (see §7.4.2): LSP is required for desktop release. Global "Disable automatic LSP server downloads" toggle; built-in servers list with per-server enable/disable (all on by default); per-server env vars and initialization options; custom LSP servers (add/edit/remove: command, extensions, env, initialization). Stored in app config (redb); project overrides optional. | Plans/LSPSupport.md |
 | **Interview** | Interview-specific config; enable_phase_subagents, enable_research_subagents, enable_validation_subagents, enable_document_subagents; **Multi-Pass Review:** toggle on/off (default off), number of review passes (1-5 dropdown, default 2), max review subagents (1-10, default 3), show warning label when enabled ("Increases cost and time"); min/max questions (spinners), architecture confirmation toggle, vision provider dropdown; **Interview concurrency overrides** (collapsible, per-platform, see §7.4.7) | Old "Config" Interview tab + interview-subagent-integration.md |
-| **Authentication** | Per-platform auth status (6 platforms: Cursor, Codex, Claude, Gemini, Copilot, GitHub); login/logout buttons; auth method indicators; auth URLs (selectable/copyable); Git info (user, email, remote, branch); CLI setup; GitHub auth | Old "Login" view |
-| **Health** | System health checks with platform filtering; check categories (CLI Tools, Git, Runtimes, Browser Tools, Capabilities, Project Setup); check status (PASS/FAIL/WARN/SKIP); fix suggestions with dry-run; auto-install buttons; platform version display (CLI version per detected platform); **Worktree management:** worktree list (path, branch, status, age columns), "Recover orphaned worktrees" button, worktree status indicators (active/stale/orphaned); **Storage & Cleanup:** DB size, cache size, evidence log count; evidence retention days input; "Clean workspace now" button (confirm modal with preview of files to delete per MiscPlan.md); storage maintenance actions | Old "Doctor" view + WorktreeGitImprovement.md + MiscPlan.md |
+| **Authentication** | Per-provider auth status (Cursor, Codex, Claude, Gemini, Copilot, OpenCode, GitHub) with **real-time auth state** chips (`LoggedOut`, `LoggingIn`, `LoggedIn`, `LoggingOut`, `AuthExpired`, `AuthFailed`); login/logout/re-auth buttons; auth method indicators; auth URLs (selectable/copyable); Git info (user, email, remote, branch); **auth realm split:** show separate entries for `github_api` and `copilot_github` (SSOT: `Plans/Contracts_V0.md` `AuthRealm`); **multi-account visibility:** active account, account count, cooldown/rate-limit badge, and quick switch/manage entry | Old "Login" view |
+| **Health** | System health checks with platform filtering; check categories (CLI Tools, Git, Runtimes, Browser Tools, Capabilities, Project Setup); check status (PASS/FAIL/WARN/SKIP); fix suggestions with dry-run; **explicit Install/Uninstall actions** (no automatic install behavior) with **real-time install state** for Cursor CLI, Claude CLI, and Playwright browser runtime (`Not Installed`, `Installing`, `Installed`, `Uninstalling`, `Failed`); Codex/Copilot/Gemini rows show direct-provider auth/connectivity status (no install buttons); platform version display (CLI version per detected platform); **Cursor/Claude manual path override:** `Use manual path` checkbox + native file picker + validate action (Cursor/Claude only); **multi-account health visibility:** per-provider active account + account count + cooldown/auth freshness; **Worktree management:** worktree list (path, branch, status, age columns), "Recover orphaned worktrees" button, worktree status indicators (active/stale/orphaned); **Storage & Cleanup:** DB size, cache size, evidence log count; evidence retention days input; "Clean workspace now" button (confirm modal with preview of files to delete per MiscPlan.md); storage maintenance actions | Old "Doctor" view + WorktreeGitImprovement.md + MiscPlan.md |
 | **Rules & Commands** | Application rules (list or text area, editable); project rules (when project selected, reads/writes `.puppet-master/project-rules.md`); custom slash commands editor (application-wide and project-wide, name/description/action) | From agent-rules-context.md + feature-list.md |
 | **Shortcuts** | Full keyboard shortcut table (action name, current binding, default binding); search/filter by action name or key; per-row "Change" button (captures next key combination) and "Reset" button; "Reset all" button; export/import shortcuts (JSON). Data sourced from shortcut registry (single source of truth, DRY:DATA). | MiscPlan.md |
 | **Skills** | Discover and manage SKILL.md files (project-level from `.puppet-master/skills/` and global from `~/.puppet-master/skills/`). Table: skill name, description, source (project/global), permission (Allow/Deny/Ask dropdown per row). Actions: Add, Edit (opens in File Editor), Remove, "Refresh" (re-scan disk). Bulk permission by pattern (e.g., "Allow all doc-*"). Preview skill body on row expand. | MiscPlan.md |
@@ -767,7 +774,7 @@ Puppet Master uses two independent Expert/ELI5 controls:
 
 **§7.4.2 LSP (LSP tab):** LSP support is **MVP** (required for desktop release), not optional. Per Plans/LSPSupport.md, the GUI must expose full LSP configuration so users can control automatic downloads, enable/disable servers, set env and initialization options, and add custom servers. Provide **Settings > LSP** with:
 
-- **Disable automatic LSP server downloads** -- Global toggle (default: off). When on, the app does not auto-download or auto-install any LSP server (equivalent to `OPENCODE_DISABLE_LSP_DOWNLOAD=true`). Servers already on PATH or already installed are still used.
+- **Disable automatic LSP server downloads** -- Global toggle (default: off). When on, the app does not download or install any LSP server automatically (equivalent to `OPENCODE_DISABLE_LSP_DOWNLOAD=true`). Servers already on PATH or already installed are still used.
 - **Built-in LSP servers** -- A list of all built-in servers (see Plans/LSPSupport.md §3.2: astro, bash, clangd, csharp, clojure-lsp, dart, deno, elixir-ls, eslint, fsharp, gleam, gopls, hls, jdtls, julials, kotlin-ls, lua-ls, nixd, ocaml-lsp, oxlint, php intelephense, prisma, pyright, ruby-lsp, rust, slint-lsp, sourcekit-lsp, svelte, terraform, tinymist, typescript, vue, yaml-ls, zls). Each row shows: **server name** (and extensions hint), **Enable** toggle (default: **on** for all). User can turn any server off individually. Expanding a row (or opening "Configure") shows:
   - **Environment variables** -- Key-value list (e.g. `RUST_LOG` = `debug`). Optional; sent when starting that server.
   - **Initialization options** -- Key-value or JSON object; server-specific options sent in the LSP `initialize` request (e.g. TypeScript preferences). Optional.
@@ -786,6 +793,7 @@ All LSP settings are persisted in app config (redb or equivalent). Optional: pro
 - **Platform selection MUST use dropdowns** listing available platforms
 - All configuration that accepts one of N choices must use `ComboBox` (dropdown), not free-text `TextInput`.
 - Save/discard controls per tab or global
+ContractRef: ContractName:Plans/Contracts_V0.md#UICommand, ContractName:Plans/DRY_Rules.md#7
 
 **§7.4.3 Catalog (Catalog tab):** Browse and install community content from a curated catalog. The catalog provides one-click installation for commands, agents, hooks, skills, themes, and MCP server configurations.
 
@@ -902,13 +910,36 @@ When an override is set (e.g. `overrides.orchestrator.per_provider.claude: 5`), 
 | `tooltip.concurrency.interview_override` | Settings/Interview override card | Required | Required | Required in Slint rewrite |
 | `tooltip.concurrency.orchestrator_override` | Settings/Branching override card | Required | Required | Required in Slint rewrite |
 
+**§7.4.8 Containers & Registry (Advanced tab):**
+
+Add a collapsible **Containers & Registry** card in Settings > Advanced for local container runtime and registry publishing defaults.
+
+- **Runtime controls:** runtime selector (`docker` default), Docker binary path override, compose file/path defaults, compose project-name strategy.
+- **Registry defaults:** registry provider (`dockerhub` default), namespace/repository/tag defaults, push policy (`manual` default; optional `after_build`).
+- **Auth controls:** auth mode (`pat` default), login validation action, last validation timestamp.
+- **Preview/build integration:** settings are consumed by Preview and Build actions so container preview/build flows use consistent defaults.
+
+ContractRef: ContractName:Plans/newtools.md#147-docker-runtime--dockerhub-contract, ContractName:Plans/newtools.md#146-preview-build-docker-and-actions-contracts, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+
+**§7.4.9 CI / GitHub Actions (Advanced tab):**
+
+Add a collapsible **CI / GitHub Actions** card in Settings > Advanced for workflow generation and management.
+
+- **Template selector:** `docker-build-push`, `native-build-matrix`, `web-preview-and-test`, `mobile-ios-android`.
+- **Template options:** trigger controls, matrix/build profile fields, optional publish/scanning toggles.
+- **Secrets checklist:** deterministic list of required secrets for selected template and publish options.
+- **Workflow actions:** `Generate workflow`, `Preview YAML`, `Apply to .github/workflows`.
+- **Post-apply visibility:** generated workflows appear in a Settings list with edit/open actions.
+
+ContractRef: ContractName:Plans/newtools.md#148-github-actions-settings--generation-contract, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+
 ### 7.5 Wizard
 
 **Group:** Run | **Location:** Primary content
 
 Multi-step requirements wizard (10 steps: 0-9):
 - Step 0: Project Setup (new/existing, GitHub repo creation, intent selection: New project / Fork & evolve / Enhance / Contribute PR)
-- Step 1: Dependency Install (Node, GH CLI, platforms) -- NEW
+- Step 1: Dependency Install (platform CLIs and runtimes) -- NEW
 - Step 2: Quick Interview Config (reasoning level, agents.md)
 - Steps 3-8: PRD generation, tier configuration, tier planning
 - Step 9: Final review and initialization
@@ -1086,7 +1117,79 @@ Requirement coverage metrics by phase and category.
 
 **Group:** Run | **Location:** Primary content
 
-Platform installation status checks. Shows detected platforms and versions. Auto-install buttons for missing tools.
+Platform readiness view for Setup and first-run troubleshooting. Shows detected versions, resolved paths, and live transition states.
+
+- **Install/Uninstall state rows:** Cursor CLI, Claude CLI, and Playwright browser runtime use real-time states: `Not Installed` → `Installing` → `Installed` and `Installed` → `Uninstalling` → `Not Installed` (or `Failed` with error details).
+- **Explicit actions:** Each row has explicit install/uninstall actions (no automatic install behavior).
+  - **Windows (Cursor only):** show two install actions: `Install Native` and `Install WSL`.
+- **Manual path override (Cursor/Claude only):** `Use manual path` checkbox reveals a native file picker and path field; Save triggers immediate validation and state update (`Valid` / `Invalid` + reason).
+- **Provider auth + multi-account snapshot:** Compact per-provider auth state (`LoggedOut`, `LoggingIn`, `LoggedIn`, `LoggingOut`, `AuthExpired`, `AuthFailed`), active account label, and account count, with links to Settings > Authentication and Settings > Health.
+- **Command contract (normative):**
+  - Cursor install (Linux/macOS/WSL):
+    ```bash
+    curl https://cursor.com/install -fsS | bash
+    ```
+  - Cursor PATH setup (bash; Linux/macOS/WSL):
+    ```bash
+    echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+    source ~/.bashrc
+    ```
+  - Cursor PATH setup (zsh; Linux/macOS/WSL):
+    ```bash
+    echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+    source ~/.zshrc
+    ```
+  - Cursor install (Windows Native; PowerShell):
+    ```powershell
+    irm 'https://cursor.com/install?win32=true' | iex
+    ```
+  - Cursor verify:
+    ```bash
+    agent --version
+    ```
+  - Cursor uninstall (Linux/macOS/WSL):
+    ```bash
+    rm -f ~/.local/bin/agent ~/.local/bin/cursor-agent
+    rm -rf ~/.local/share/cursor-agent
+    ```
+  - Cursor PATH cleanup (bash/zsh; Linux/macOS/WSL):
+    ```bash
+    sed -i '/export PATH="$HOME\/.local\/bin:$PATH"/d' ~/.bashrc
+    sed -i '/export PATH="$HOME\/.local\/bin:$PATH"/d' ~/.zshrc
+    ```
+  - Cursor uninstall (Windows Native; PowerShell):
+    ```powershell
+    $agentPath = "$env:LOCALAPPDATA\cursor-agent"
+    $userPath = [Environment]::GetEnvironmentVariable("PATH", "User")
+    $userPath = ($userPath -split ';' | Where-Object { $_ -and ($_ -ne $agentPath) }) -join ';'
+    [Environment]::SetEnvironmentVariable("PATH", $userPath, "User")
+    $env:PATH = ($env:PATH -split ';' | Where-Object { $_ -and ($_ -ne $agentPath) }) -join ';'
+    if (Test-Path $agentPath) { Remove-Item -Recurse -Force $agentPath }
+    ```
+  - Cursor Windows policy: prefer Windows Native install/detect; also offer an explicit WSL path. Setup MUST show two actions: `Install Native` and `Install WSL`. If the user chooses `Install WSL` and WSL is not installed, surface actionable guidance.
+  - Claude install (Linux/macOS/WSL):
+    ```bash
+    curl -fsSL https://claude.ai/install.sh | bash
+    ```
+  - Claude install (Windows):
+    ```cmd
+    curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
+    ```
+  - Claude uninstall (Linux/macOS/WSL):
+    ```bash
+    rm -f ~/.local/bin/claude
+    rm -rf ~/.local/share/claude
+    ```
+  - Claude uninstall (Windows):
+    ```cmd
+    del "%USERPROFILE%\.local\bin\claude.exe"
+    rmdir /s /q "%USERPROFILE%\.local\share\claude"
+    ```
+  - Claude verify:
+    ```bash
+    claude --version
+    ```
+  - Playwright policy: install/uninstall remains app-local only.
 
 ### 7.16 Chat Panel (NEW)
 
@@ -1498,7 +1601,7 @@ All widgets read from `Theme.*` globals rather than hardcoded colors. Each widge
 | **StyledButton** | Primary/Secondary/Danger/Warning/Info/Ghost buttons | variant, label, icon, enabled, loading (spinner), onClick callback |
 | **StyledInput** | Themed text inputs | placeholder, value, variant (text/password/number), onChanged callback |
 | **ComboBox** | Dropdown selection | items (model), selected-index, onSelected callback. **Used for platform and model selection** |
-| **SelectableText** | Read-only selectable text | text, copyable, wrap mode |
+| **SelectableText** | Read-only selectable text — implemented as `TextInput { read-only: true }` (single-line) or `TextEdit { read-only: true }` (multi-line). Slint's `read-only` mode preserves native OS text selection and Ctrl+C copy; no custom clipboard glue required. | text, wrap-mode, font-size, color |
 | **StatusBadge** | Status dots and colored badges | status (running/paused/error/complete/idle), label, size |
 | **ProgressBar** | Animated progress bars | value (0.0-1.0), variant (phase/task/subtask), animated |
 | **Terminal** | Terminal output display | lines (VecModel), auto-scroll, max-lines, color-coding by line type |
@@ -1538,10 +1641,10 @@ Every `StyledButton` must support the following visual states:
 
 ### 8.3 Toggle State Synchronization
 
-All toggles that reflect server/backend state (e.g., Login/Logout buttons) must:
+All toggles and stateful controls that reflect server/backend state (e.g., Login/Logout, Install/Uninstall, manual-path enable) must:
 1. Update immediately when the backend state changes (via `invoke_from_event_loop`)
 2. Show a loading state during the transition (e.g., "Logging in..." spinner)
-3. Never show stale state -- if an auth check is in progress, show a spinner, not the old state
+3. Never show stale state -- if an auth/install/path validation check is in progress, show a spinner, not stale state
 4. Use Slint's reactive property system: backend writes to a shared property, UI automatically reflects
 
 ---
@@ -1640,6 +1743,8 @@ See §8.2 for full button state specification. Summary:
 | Button/Action | Loading State | Success Feedback | Error Feedback |
 |---------------|--------------|-----------------|----------------|
 | Login/Logout | Spinner replaces icon, "Authenticating..." | Badge flips to new auth state, green flash | Red flash, error toast with message |
+| Re-authenticate | Spinner + "Checking auth..." badge | Auth state updates to `LoggedIn` with refreshed timestamp | Auth state updates to `AuthExpired` or `AuthFailed`; retry action remains visible |
+| Install/Uninstall (Cursor/Claude/Playwright) | Row spinner + state chip `Installing` or `Uninstalling`; action buttons disabled | State chip flips to `Installed` or `Not Installed`; version/path refresh | State chip `Failed` + inline error + retry action |
 | Settings save | "Saving..." in header, checkmark on complete | "Saved" fades in header (2s) | Error toast |
 | File upload/attach | Progress bar in attachment area | Thumbnail/filename appears | Error toast with "Retry" |
 | Run start | Button transitions: "Start" → spinner → "Running" (disabled) | Status badge updates | Error card on dashboard |
@@ -1655,9 +1760,18 @@ See §8.2 for full button state specification. Summary:
 |---------|------------------|
 | Page navigation | Skeleton placeholder or spinner in content area |
 | Data fetch (projects, evidence, history) | Skeleton rows or spinner overlay |
-| Auth check | Spinner on auth status badge; "Checking..." text |
+| Auth check | Spinner on auth status badge; "LoggingIn..." or "LoggingOut..." text |
+| Install/uninstall operation | Spinner on install-state chip; row actions disabled until completion |
+| Manual path validation (Cursor/Claude) | "Validating path..." indicator with `Valid`/`Invalid` badge result |
+| Multi-account refresh | Spinner on account status chips; active account and cooldown badges refresh on completion |
 | Settings save | Button loading state + success toast |
 | Orchestrator start | Button loading state; status badge transitions to "Starting..." then "Running" |
+
+### 10.2.1 Canonical Real-Time State Sets
+
+- **Provider auth states:** `LoggedOut`, `LoggingIn`, `LoggedIn`, `LoggingOut`, `AuthExpired`, `AuthFailed`.
+- **Install states (Cursor CLI, Claude CLI, Playwright runtime):** `Not Installed`, `Installing`, `Installed`, `Uninstalling`, `Failed`.
+- **Manual path validation states (Cursor/Claude only):** `Unchecked`, `Validating`, `Valid`, `Invalid`.
 
 ### 10.3 Toast Notifications
 
@@ -1746,12 +1860,63 @@ When the orchestrator pauses for HITL approval:
 
 ### 10.9 Context Menus
 
-Slint does not have a built-in context menu component. Custom implementation required:
+Slint does not have a built-in context menu component, so the popup UI is a custom overlay. However, **clipboard operations are fully native** — Slint's `TextInput` and `TextEdit` handle Ctrl+C/V/X/A at the OS level with no custom key handlers required.
+
+**Popup UI (custom):**
 - Triggered on right-click via `TouchArea` with `pointer-event` callback
 - Positioned at mouse coordinates, adjusted to stay within window bounds
-- Items: Copy, Paste, Select All (for text contexts); Copy Path, Open in Editor, Add to Context (for file contexts)
 - Dismissed on click outside or Escape
 - Styled per theme (retro: hard shadow + sharp corners; basic: subtle border + 4px radius)
+
+**Clipboard items — call Slint built-in functions, no manual state management:**
+- **Copy** → calls `element.copy()` on the focused/targeted `TextInput` or `TextEdit`
+- **Paste** → calls `element.paste()`
+- **Select All** → calls `element.select-all()`
+- **Copy Path / Copy Value** (file-manager or read-only label contexts) → reads `element.text` property and writes to clipboard via `ClipboardHelper` Rust callback (only non-text-widget case requiring custom clipboard access)
+
+**What is NOT needed:**
+- No custom Ctrl+C/V/X/A keyboard event interceptors
+- No manual `clipboard::read()` / `clipboard::write()` for text widgets
+- No `read-only` workaround widgets (use `TextInput { read-only: true }` directly)
+
+<a id="10.9.1"></a>
+#### 10.9.1 Native Clipboard Contract (Normative)
+
+Text-entry widgets (`TextInput`, `TextEdit`) MUST use Slint-native clipboard and selection behavior for keyboard shortcuts and context-menu actions.
+ContractRef: ContractName:Plans/FinalGUISpec.md#10.9, SchemaID:Spec_Lock.json#locked_decisions.ui, PolicyRule:Decision_Policy.md§2
+
+Implementations MUST NOT route text-widget copy/paste/select-all behavior through custom Rust clipboard read/write handlers.
+ContractRef: ContractName:Plans/FinalGUISpec.md#10.9, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
+
+Implementations MUST NOT add custom key interception for Ctrl/Cmd+A/C/X/V on text widgets.
+ContractRef: ContractName:Plans/FinalGUISpec.md#10.9, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
+
+Non-text copy contexts (for example Copy Path / Copy Value) MAY use `ClipboardHelper`, but this exception MUST remain scoped to non-text widgets only.
+ContractRef: ContractName:Plans/FinalGUISpec.md#10.9, ContractName:Plans/FileManager.md, PolicyRule:Decision_Policy.md§2
+
+<a id="10.9.2"></a>
+#### 10.9.2 Clipboard Surface Coverage Matrix
+
+| Surface | Allowed implementation path | Disallowed glue | Required verification |
+|---------|-----------------------------|-----------------|-----------------------|
+| File Editor input | Slint `TextInput` / `TextEdit` native keyboard + context-menu clipboard actions | Manual clipboard read/write for text widgets; custom Ctrl/Cmd+A/C/X/V interceptors | Verify Ctrl/Cmd+A/C/X/V + Copy/Paste/Select All context actions behave natively |
+| Chat composer input | Slint text widget native clipboard behavior | Message-level clipboard rerouting for text input | Verify parity with File Editor shortcuts and context actions |
+| Terminal command input (if editable) | Slint editable text widget native clipboard behavior | Custom clipboard manager for text entry | Verify Ctrl/Cmd+A/C/X/V + context actions on terminal command input |
+| Terminal/log read-only output | Read-only Slint text widget selection/copy behavior (or equivalent read-only selectable surface) | Paste routed into read-only output; manual text-widget clipboard read/write | Verify selection and copy work; verify paste is not treated as editable insertion in read-only output |
+| Non-text copy contexts (path/value) | `ClipboardHelper` callback only for non-text targets | Reusing non-text helper as a general text-widget clipboard path | Verify copied value equals selected path/value source text |
+
+<a id="10.9.3"></a>
+#### 10.9.3 Legacy Glue Removal Checklist
+
+Migration readiness checklist for clipboard behavior:
+- [ ] Remove manual clipboard read/write handlers used for text widgets.
+- [ ] Remove custom Ctrl/Cmd clipboard key interceptors for text widgets.
+- [ ] Remove read-only text workaround glue where native Slint read-only text widgets cover the behavior.
+- [ ] Remove manual selection-state plumbing implemented only to support text-widget clipboard actions.
+- [ ] Keep `ClipboardHelper` usage scoped to non-text copy contexts (path/value).
+
+This checklist MUST be completed before closing clipboard migration tasks in the rebuild queue.
+ContractRef: ContractName:Plans/FinalGUISpec.md#10.9.1, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
 
 ### 10.10 Truncation with Expand
 
@@ -2189,6 +2354,35 @@ All 25 current Iced widgets map to Slint equivalents. Key differences:
 
 All current data types (AppTheme, Page, CurrentItem, ProgressState, OutputLine, BudgetDisplayInfo, DoctorCheckResult, etc.) remain in Rust. Only their Slint representations (via properties and models) change. The backend event system, orchestrator state, and persistence remain unchanged.
 
+<a id="16.4"></a>
+### 16.4 Clipboard Migration Gate
+
+Clipboard migration gate status is **PASS** only when all required criteria below are true.
+
+**Pass/Fail criteria (all REQUIRED):**
+- [ ] Native Copy/Paste/Select All behavior works in File Editor input, chat composer input, and terminal command input (if editable).
+- [ ] Read-only terminal/log output supports selection/copy and does not accept editable paste behavior.
+- [ ] No custom text-widget clipboard handler remains in the migration target.
+- [ ] Non-text copy exceptions remain explicitly scoped to `ClipboardHelper` path/value contexts only.
+- [ ] Rebuild branch passes type/build verification.
+ContractRef: ContractName:Plans/FinalGUISpec.md#10.9.1, ContractName:Plans/DRY_Rules.md#7, SchemaID:Spec_Lock.json#locked_decisions.ui
+
+**Verification command (build):**
+```bash
+cd puppet-master-rs
+cargo check
+```
+
+**Scenario checklist (manual or automated GUI harness):**
+
+| Scenario | Expected result |
+|----------|-----------------|
+| Editor clipboard shortcuts + context menu | Ctrl/Cmd+A/C/X/V and context Copy/Paste/Select All behave natively |
+| Chat composer clipboard shortcuts + context menu | Same behavior and parity as editor |
+| Terminal command input clipboard actions | Native clipboard behavior on editable command input |
+| Terminal/log read-only output copy/paste behavior | Selection/copy works; paste is not treated as editable insertion |
+| Non-text Copy Path/Copy Value | Clipboard receives exact path/value via `ClipboardHelper` only |
+
 ---
 
 ## 17. Risks and Mitigations
@@ -2198,7 +2392,7 @@ All current data types (AppTheme, Page, CurrentItem, ProgressState, OutputLine, 
 | **`ImageFit.repeat` may not exist in Slint 1.15.1** | Medium | Use `SharedPixelBuffer` to generate tiles at the viewport size; or manually tile via `GridLayout` with repeated `Image` elements. Test at build time; if unavailable, use fallback approach. |
 | **Multi-window lifecycle edge cases** | High | State machine in Rust manages window create/destroy. On floating window close -> dock or collapse; update layout state. Test: focus management between main and floating windows; data sync when floating window is open; re-dock after window was on disconnected monitor. |
 | **Limited screen reader support** | Medium | Keyboard navigation is comprehensive (§13.3). Set `accessible-role` and `accessible-label` where Slint supports them. Document limitations. Basic theme provides maximum readability. |
-| **No built-in context menu** | Low | Custom `ContextMenu` widget using `TouchArea` pointer events. Positioned at mouse coordinates. Styled per theme. |
+| **No built-in context menu** | Low | Custom `ContextMenu` widget using `TouchArea` pointer events. Positioned at mouse coordinates. Styled per theme. Clipboard operations (Copy/Paste/Select All) delegate to Slint's native `TextInput.copy()` / `.paste()` / `.select-all()` — no custom clipboard state management needed. |
 | **No built-in docking framework** | High | Custom `PanelRegistry` in Rust handles dock/undock state machine, snap detection, window lifecycle. This is the most complex custom component and should be implemented early. |
 | **Font family change requires restart** | Low | Detect font family change in settings. Show restart prompt. Pre-load fonts for all themes on startup so within-family switches (Dark <-> Light) are instant. |
 | **4-split terminal performance** | Medium | Virtualize visible lines only. Bounded ring buffers per pane (max 10k lines in memory); VecModel holds only the visible window (~500 lines) plus a small overscan buffer. On scroll, splice the VecModel from the ring buffer. Batch/throttle streaming updates (max 30fps). One PTY per pane. |
@@ -2272,6 +2466,7 @@ No features are deferred. All items in this specification are MVP scope.
 | `Plans/Tools.md` | Tool permissions in Advanced tab (§7.4.1), permission model (allow/deny/ask), presets, central tool registry; tool usage widget on Usage page (§7.8); tool approval dialog in Chat (§7.16) |
 | `Plans/LSPSupport.md` | LSP tab in Settings (§7.4.2), editor LSP features (§7.18: diagnostics, hover, completion, signature help, inlay hints, code actions, code lens, semantic highlighting, go-to-definition), **Chat Window LSP (§7.16: diagnostics in context, @ symbol with LSP, code-block hover/go-to-definition, Problems link)**, Problems tab (§7.20), status bar LSP indicator |
 | `Plans/rewrite-tie-in-memo.md` | Rewrite scope alignment; ensures GUI migration ties into broader rewrite plan |
+| `Plans/FinalGUISpec.md` (internal clipboard contract) | Clipboard migration requirements and verification map: SelectableText contract (§8.1), context-menu clipboard contract (§10.9, §10.9.1-§10.9.3), migration gate (§16.4) |
 
 ## Appendix B: Locked Decisions Summary
 

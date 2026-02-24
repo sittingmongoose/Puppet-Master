@@ -71,35 +71,29 @@ pub async fn install_playwright() -> InstallOutcome {
     crate::install::playwright_installer::install_playwright_app_local().await
 }
 
-// DRY:FN:install_platform — Install a platform CLI to the app-local bin directory
-/// Install the CLI for the given `platform` using the appropriate method:
-///
-/// - [`Platform::Claude`]  → script installer (curl | bash) → copy to `bin/claude`
-/// - [`Platform::Cursor`]  → script installer (curl | bash) → copy to `bin/agent`
-/// - [`Platform::Gemini`]  → npm prefix install
-/// - [`Platform::Codex`]   → npm prefix install
-/// - [`Platform::Copilot`] → npm prefix install (@github/copilot — coding agent)
+// DRY:FN:install_platform — Deprecated platform install entry point
+/// Automatic platform CLI installation has been removed.
+/// Returns a failure outcome with manual setup guidance.
 pub async fn install_platform(platform: Platform) -> InstallOutcome {
-    match platform {
-        Platform::Claude => crate::install::script_installer::install_claude_app_local().await,
-        Platform::Cursor => crate::install::script_installer::install_cursor_app_local().await,
-        Platform::Gemini => {
-            // Use the Gemini-specific installer: after npm install, overwrites the
-            // generic shim with one that also exports NPM_CONFIG_PREFIX so that
-            // Gemini's built-in auto-updater can find npm and install to the correct
-            // app-local directory.
-            crate::install::gemini_installer::install_gemini_app_local().await
+    let spec = crate::platforms::platform_specs::get_spec(platform);
+    let mut guidance = format!(
+        "Automatic {} installation has been removed. Install the provider CLI manually.",
+        spec.display_name
+    );
+
+    if let Some(cmd) = spec.auth.login_command {
+        if !spec.auth.login_args.is_empty() {
+            guidance.push_str(&format!(
+                " Then authenticate with: {} {}",
+                cmd,
+                spec.auth.login_args.join(" ")
+            ));
         }
-        Platform::Copilot | Platform::Codex => {
-            if let Some(pkg) = crate::install::npm_installer::npm_package_for_platform(platform) {
-                crate::install::npm_installer::npm_install_to_app_dir(&pkg).await
-            } else {
-                InstallOutcome::failure(format!(
-                    "No npm package configured for platform: {platform}"
-                ))
-            }
-        }
+    } else if spec.auth.uses_browser_auth {
+        guidance.push_str(" Then authenticate with the CLI's browser/device flow.");
     }
+
+    InstallOutcome::failure(guidance)
 }
 
 #[cfg(test)]

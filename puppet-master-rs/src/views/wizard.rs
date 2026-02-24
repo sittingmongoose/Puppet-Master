@@ -466,17 +466,17 @@ fn step0_project_setup<'a>(
     themed_panel(final_content, theme, scaled)
 }
 
-// DRY:FN:step1_install_dependencies — Dependency install wizard step
-/// Step 1 (new): Dependency Install
-/// Shows Node.js, GitHub CLI and platform CLI install status with INSTALL buttons.
+// DRY:FN:step1_install_dependencies — Dependency verification wizard step
+/// Step 1 (new): Dependency verification.
+/// Shows Node.js, GitHub CLI and platform CLI status for manual setup.
 /// NEXT is enabled once Node is confirmed present.
 fn step1_install_dependencies<'a>(
     node_ok: Option<bool>,
     gh_ok: Option<bool>,
-    platforms_selected: &'a std::collections::HashSet<crate::types::Platform>,
+    _platforms_selected: &'a std::collections::HashSet<crate::types::Platform>,
     platform_ok: &'a HashMap<crate::types::Platform, Option<bool>>,
-    install_log: &'a [String],
-    installing: Option<&'a str>,
+    _install_log: &'a [String],
+    _installing: Option<&'a str>,
     theme: &'a AppTheme,
     scaled: crate::theme::ScaledTokens,
 ) -> container::Container<'a, Message> {
@@ -494,21 +494,7 @@ fn step1_install_dependencies<'a>(
         selectable_label(theme, node_status_label, scaled),
         Space::new().width(Length::Fill),
         if node_ok != Some(true) {
-            styled_button(
-                theme,
-                if installing == Some("node") {
-                    "Installing…"
-                } else {
-                    "INSTALL"
-                },
-                ButtonVariant::Primary,
-                scaled,
-            )
-            .on_press_maybe(if installing.is_none() {
-                Some(Message::WizardInstallNode)
-            } else {
-                None
-            })
+            styled_button(theme, "Manual setup required", ButtonVariant::Secondary, scaled)
         } else {
             styled_button(theme, "Installed ✓", ButtonVariant::Secondary, scaled)
         },
@@ -528,21 +514,7 @@ fn step1_install_dependencies<'a>(
         selectable_label(theme, gh_status_label, scaled),
         Space::new().width(Length::Fill),
         if gh_ok != Some(true) {
-            styled_button(
-                theme,
-                if installing == Some("gh") {
-                    "Installing…"
-                } else {
-                    "INSTALL"
-                },
-                ButtonVariant::Primary,
-                scaled,
-            )
-            .on_press_maybe(if installing.is_none() {
-                Some(Message::WizardInstallGhCli)
-            } else {
-                None
-            })
+            styled_button(theme, "Manual setup required", ButtonVariant::Secondary, scaled)
         } else {
             styled_button(theme, "Installed ✓", ButtonVariant::Secondary, scaled)
         },
@@ -554,45 +526,21 @@ fn step1_install_dependencies<'a>(
     let platform_rows: Vec<iced::Element<'a, Message>> = crate::types::Platform::all()
         .iter()
         .map(|&platform| {
-            let selected = platforms_selected.contains(&platform);
             let status = platform_ok.get(&platform).copied().flatten();
-            let status_label = if status == Some(true) {
-                "Installed ✓"
-            } else if selected && status == Some(false) {
-                "Failed"
-            } else if selected {
-                "Selected"
-            } else {
-                ""
+            let status_label = match status {
+                Some(true) => "Installed ✓",
+                Some(false) => "Not found",
+                None => "Checking…",
             };
-            let platform_str = format!("{platform}");
-            let installing_this = installing == Some(platform_str.as_str());
             row![
-                toggler(selected)
-                    .on_toggle(move |_| Message::WizardToggleDepPlatform(platform))
-                    .spacing(tokens::spacing::SM),
                 selectable_label(theme, format!("{platform}").as_str(), scaled),
                 Space::new().width(Length::Fixed(tokens::spacing::SM)),
                 selectable_label(theme, status_label, scaled),
                 Space::new().width(Length::Fill),
-                if selected && status != Some(true) {
-                    styled_button(
-                        theme,
-                        if installing_this {
-                            "Installing…"
-                        } else {
-                            "INSTALL"
-                        },
-                        ButtonVariant::Primary,
-                        scaled,
-                    )
-                    .on_press_maybe(if installing.is_none() {
-                        Some(Message::WizardInstallPlatformCli(platform))
-                    } else {
-                        None
-                    })
+                if status == Some(true) {
+                    styled_button(theme, "Installed ✓", ButtonVariant::Secondary, scaled)
                 } else {
-                    styled_button(theme, "", ButtonVariant::Secondary, scaled)
+                    styled_button(theme, "Manual setup required", ButtonVariant::Secondary, scaled)
                 },
             ]
             .spacing(tokens::spacing::MD)
@@ -601,18 +549,11 @@ fn step1_install_dependencies<'a>(
         })
         .collect();
 
-    // Install log
-    let log_col: Vec<iced::Element<'a, Message>> = install_log
-        .iter()
-        .take(8) // show last 8 lines
-        .map(|line| selectable_label(theme, line.as_str(), scaled).into())
-        .collect();
-
     let mut step_content = column![
-        selectable_label(theme, "Step 1: Install Dependencies", scaled),
+        selectable_label(theme, "Step 1: Verify Dependencies", scaled),
         selectable_label(
             theme,
-            "Install required CLI tools into the app data directory.",
+            "Puppet Master no longer installs platform CLIs. Install and authenticate providers externally, then re-run detection.",
             scaled,
         ),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
@@ -620,7 +561,7 @@ fn step1_install_dependencies<'a>(
         node_row,
         gh_row,
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
-        selectable_label(theme, "Platform CLIs (optional — select and install):", scaled),
+        selectable_label(theme, "Platform CLIs:", scaled),
     ]
     .spacing(tokens::spacing::SM)
     .width(Length::Fill);
@@ -629,27 +570,18 @@ fn step1_install_dependencies<'a>(
         step_content = step_content.push(row_elem);
     }
 
-    if !log_col.is_empty() {
-        step_content = step_content
-            .push(Space::new().height(Length::Fixed(tokens::spacing::SM)))
-            .push(selectable_label(theme, "Install log:", scaled));
-        for line in log_col {
-            step_content = step_content.push(line);
-        }
-    }
-
     let nav_buttons = row![
         styled_button(theme, "← BACK", ButtonVariant::Secondary, scaled).on_press(Message::WizardPrevStep),
         Space::new().width(Length::Fill),
         if node_installed {
             styled_button(theme, "NEXT →", ButtonVariant::Primary, scaled).on_press(Message::WizardNextStep)
         } else {
-            styled_button(
-                theme,
-                "NEXT → (install Node first)",
-                ButtonVariant::Secondary,
-                scaled,
-            )
+                styled_button(
+                    theme,
+                    "NEXT → (set up Node first)",
+                    ButtonVariant::Secondary,
+                    scaled,
+                )
         },
     ]
     .spacing(tokens::spacing::MD);

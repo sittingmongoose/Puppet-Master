@@ -11,7 +11,7 @@ ABSOLUTE NAMING RULE:
 - If older naming exists, refer to it only as "legacy naming" (do not quote it).
 
 LOCKED DECISIONS (DO NOT CHANGE IN THIS DOC):
-- GitHub operations: GitHub API only; GitHub CLI is not used
+- GitHub operations: GitHub API provider only; no external auth-shell dependency
 - Default auth flow: OAuth device-code
 - No secrets in seglog/redb/Tantivy or logs; secrets live only in OS credential store
 
@@ -47,10 +47,24 @@ This document also defines the hard boundary between:
 ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:PatchPipeline, Primitive:Provider
 
 ## Non-goals
-- Using the GitHub CLI for any auth, repo, fork, or PR behavior. ContractRef: SchemaID:Spec_Lock.json#github_operations
+- Using any external auth-shell dependency for GitHub auth, repo, fork, or PR behavior. ContractRef: SchemaID:Spec_Lock.json#github_operations
 - Storing GitHub OAuth tokens in Puppet Master's event store (`seglog`) or key/value stores (e.g., `redb`). ContractRef: PolicyRule:no_secrets_in_storage
 - Defining implementation task plans, phase lists, or execution queues. ContractRef: Plans/Progression_Gates.md
 - Defining a multi-provider Git hosting abstraction (GitHub only). ContractRef: SchemaID:Spec_Lock.json#github_operations
+
+## Auth realm split (canonical)
+GitHub-related auth is split into two explicit realms:
+- `github_api` -- OAuth device-code auth used for GitHub REST operations (repo create, fork, PR, permission checks).
+- `copilot_github` -- GitHub auth state used by the Copilot provider path only; not valid for GitHub API repo/fork/PR flows.
+
+Hard boundary:
+- Tokens and auth metadata must be tracked separately per realm.
+- Setup/Login and Doctor inventories must report these realms as separate entries.
+- `github_api` tokens must never be consumed by Copilot provider execution, and `copilot_github` auth state must never be consumed for GitHub API operations.
+- Realms may use different GitHub accounts for the same user/project; UI and storage must preserve account identity per realm.
+- Multi-account handling must allow independent account lists/status for `github_api` and `copilot_github`.
+
+ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:Provider
 
 ## SSOT references (DRY)
 - DRY/SSOT rules: `Plans/DRY_Rules.md`
@@ -90,17 +104,17 @@ All repository content and transport operations are executed via the local `git`
 **Git transport authentication (deterministic, no-secret-leak):**
 - Default: use SSH remotes when available (no token required). ContractRef: PolicyRule:no_secrets_in_storage
 - If HTTPS is used, authentication must be sourced from the OS credential store at runtime (never embedded in remote URLs, never written to disk). ContractRef: PolicyRule:no_secrets_in_storage
-- Puppet Master must not rely on external GitHub CLI auth state for Git transport. ContractRef: SchemaID:Spec_Lock.json#github_operations
+- Puppet Master must not rely on external auth-shell state for Git transport. ContractRef: SchemaID:Spec_Lock.json#github_operations
 
 ### GitHub operations (API)
 All hosting operations use GitHub's HTTPS API with an OAuth access token. ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:Provider
 
-**No GitHub CLI is permitted** for any GitHub auth/status/repo/fork/PR behavior. ContractRef: SchemaID:Spec_Lock.json#github_operations
+**No external auth-shell dependency is permitted** for GitHub auth/status/repo/fork/PR behavior. ContractRef: SchemaID:Spec_Lock.json#github_operations
 
 **Current implementation (legacy integration; non-canonical):**
-- `puppet-master-rs/src/platforms/auth_actions.rs`: `spawn_login(AuthTarget::GitHub)` shells out to a GitHub CLI login.
-- `puppet-master-rs/src/platforms/auth_status.rs`: `check_github()` shells out to GitHub CLI commands.
-- `puppet-master-rs/src/app.rs`: wizard path shells out to GitHub CLI for repo creation.
+- `puppet-master-rs/src/platforms/auth_actions.rs`: `spawn_login(AuthTarget::GitHub)` still routes through a legacy external auth bridge.
+- `puppet-master-rs/src/platforms/auth_status.rs`: `check_github()` still routes through a legacy external auth-status bridge.
+- `puppet-master-rs/src/app.rs`: wizard path still routes through a legacy external repo-create bridge.
 
 ContractRef: SchemaID:Spec_Lock.json#github_operations
 
@@ -109,7 +123,7 @@ ContractRef: SchemaID:Spec_Lock.json#github_operations
 ## GitHub OAuth device-code flow (default UX)
 
 ### Deterministic defaults
-- Default auth model is OAuth device-code flow for interactive "Connect GitHub". ContractRef: SchemaID:Spec_Lock.json#auth_model, ContractName:Contracts_V0.md#AuthState
+- Default auth model is OAuth device-code flow for interactive "Connect GitHub" in realm `github_api`. ContractRef: SchemaID:Spec_Lock.json#auth_model, ContractName:Contracts_V0.md#AuthState
 - Target host is GitHub.com (`github.com`). ContractRef: SchemaID:Spec_Lock.json#github_operations
 - Scope string is fixed: `repo read:user user:email read:org`. ContractRef: SchemaID:Spec_Lock.json#auth_model
 
@@ -117,6 +131,7 @@ ContractRef: SchemaID:Spec_Lock.json#github_operations
 - `github_host = "github.com"`
 - `github_api_base_url = "https://api.github.com"`
 - `device_flow_scope = "repo read:user user:email read:org"`
+- `auth_realm = "github_api"`
 - Puppet Master attempts to open the system browser to `verification_uri` automatically; failure to open the browser must not fail the auth flow. ContractRef: SchemaID:Spec_Lock.json#auth_model
 
 ContractRef: SchemaID:Spec_Lock.json#github_operations, PolicyRule:Decision_Policy.md§2
@@ -150,6 +165,13 @@ This flow is initiated by a UI command; the UI must not perform auth logic direc
 - `UICommand:cmd.github.disconnect` -- disconnect and delete token. Expected events: `auth.github.disconnected`. ContractRef: UICommand:cmd.github.disconnect, EventType:auth.github.disconnected
 
 > Note: Until those command IDs exist in the catalog, any implementation that uses ad-hoc commands is non-canonical. ContractRef: Primitive:UICommand
+
+### Setup/Doctor inventory mapping (realm-aware)
+- Setup/Login surfaces two separate entries: `github_api` and `copilot_github`.
+- Doctor checks evaluate realm health independently (e.g. token present/valid for `github_api`, provider auth status for `copilot_github`).
+- Failures in one realm must not mask status in the other.
+
+ContractRef: Primitive:Provider, SchemaID:Spec_Lock.json#github_operations
 
 ### AuthState / AuthEvent binding
 Use the SSOT types from `Plans/Contracts_V0.md`.
@@ -226,12 +248,14 @@ Source: GitHub OAuth device flow docs (see References). ContractRef: PolicyRule:
 
 ### Credential store keying (canonical)
 - **Service:** `Puppet Master` (stable, not user-editable). ContractRef: PolicyRule:no_secrets_in_storage
-- **Account:** `github.com/<login>` (example: `github.com/octocat`). ContractRef: SchemaID:Spec_Lock.json#github_operations
+- **Account:** `github_api:github.com/<login>` (example: `github_api:github.com/octocat`). ContractRef: SchemaID:Spec_Lock.json#github_operations
 - **Secret payload:** JSON string containing:
   - `access_token`
   - `issued_at`
   - `granted_scopes` (array)
   - `token_fingerprint`
+
+`copilot_github` credential keying is defined by Copilot provider auth flows and remains separate from this keyspace.
 
 ContractRef: PolicyRule:no_secrets_in_storage
 
@@ -331,8 +355,14 @@ ContractRef: SchemaID:Spec_Lock.json#github_operations
 
 **Flow (canonical):**
 1) Delete token entry from OS credential store. ContractRef: PolicyRule:no_secrets_in_storage
-2) Emit `auth.github.disconnected` and transition to not-authenticated state. ContractRef: EventType:auth.github.disconnected
+2) Emit `auth.github.disconnected` and transition to `LoggedOut`. ContractRef: EventType:auth.github.disconnected
 3) Clear any cached GitHub identity display values.
+
+**Auth lifecycle binding (SSOT: `Plans/Contracts_V0.md` `AuthJobState`):**
+- Connect start → `LoggingIn`; success → `LoggedIn`
+- Disconnect → `LoggingOut` then `LoggedOut`
+- Token invalid/revoked → `AuthExpired`
+- Unrecoverable error → `AuthFailed`
 
 ContractRef: PolicyRule:redaction
 
@@ -397,16 +427,17 @@ ContractRef: EventType:auth.github.failed, SchemaID:pm.event.v0
 ContractRef: SchemaID:evidence.schema.json, Plans/Progression_Gates.md#GATE-003, Plans/Progression_Gates.md#GATE-009
 
 ### Auth and security
-1) **No GitHub CLI dependency:** no GitHub CLI subprocess invocation exists for GitHub auth/status, repo create, fork, or PR operations. ContractRef: SchemaID:Spec_Lock.json#github_operations
+1) **No external auth-shell dependency:** no external auth-shell subprocess invocation exists for GitHub auth/status, repo create, fork, or PR operations. ContractRef: SchemaID:Spec_Lock.json#github_operations
 2) **Device-code default UX:** `UICommand:cmd.github.connect` initiates device flow and surfaces `verification_uri` + `user_code` + expiry. ContractRef: UICommand:cmd.github.connect, EventType:auth.github.device_code.issued
 3) **Polling semantics:** polling deterministically handles `authorization_pending` and `slow_down` (interval +5s) and terminates with `DeviceCodeExpired` at expiry. ContractRef: EventType:auth.github.failed
 4) **Credential-store-only persistence:** tokens are persisted only in the OS credential store; they never appear in seglog events, redb projections, Tantivy indexes, logs, `.puppet-master/git-actions.log`, state files, or evidence bundles. ContractRef: PolicyRule:no_secrets_in_storage, Plans/Architecture_Invariants.md#INV-002
 5) **Scope verification:** granted scopes are verified via `X-OAuth-Scopes`, and missing scopes transition to `MissingScopes` with the specified UX copy. ContractRef: EventType:auth.github.failed
+6) **Realm split enforcement:** `github_api` and `copilot_github` auth realms are surfaced and validated independently; no token/state cross-use between realms. ContractRef: Primitive:Provider, SchemaID:Spec_Lock.json#github_operations
 
 ### Repo / fork / PR flows
-6) **Repo create via API:** wizard repo creation uses `POST /user/repos` with Git push via local git; no GitHub CLI usage. ContractRef: SchemaID:Spec_Lock.json#github_operations
-7) **Fork flow via API:** forks use `POST /forks`; remotes configured via local git. ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:PatchPipeline
-8) **PR create via API:** PRs use `POST /pulls` and do not require any GitHub CLI interaction. ContractRef: SchemaID:Spec_Lock.json#github_operations
+7) **Repo create via API:** wizard repo creation uses `POST /user/repos` with Git push via local git; no external auth-shell dependency. ContractRef: SchemaID:Spec_Lock.json#github_operations
+8) **Fork flow via API:** forks use `POST /forks`; remotes configured via local git. ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:PatchPipeline
+9) **PR create via API:** PRs use `POST /pulls` and do not require any external auth-shell interaction. ContractRef: SchemaID:Spec_Lock.json#github_operations
 
 ---
 

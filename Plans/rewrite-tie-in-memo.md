@@ -51,6 +51,7 @@ This project is moving to a single, deterministic "agent loop" architecture wher
 - **Storage:** any plan that proposes **SQLite** for run/session/history storage needs to be reframed as **event-sourced** storage with seglog/redb/Tantivy projections
 - **Provider abstraction:** platform-specific execution terminology in touched sections must use **Provider** + unified event model, especially for streaming output and tool gating
 - **Gemini auth:** existing "subscription-only / no API keys" guidance must explicitly allow a Gemini exception: "no API keys **except Gemini** (Gemini API key can represent subscription access)"
+- **Automation references:** any mention of Iced-era automation must be treated as a **migration reference pattern only**; rewrite deliverables target Slint runtime contracts and shared evidence schema
 
 
 ### Storage consistency
@@ -69,6 +70,7 @@ This project is moving to a single, deterministic "agent loop" architecture wher
   - Recast "usage ledger" as projections/rollups over the seglog stream, with indexes in Tantivy (search) and aggregates in redb
 - `Plans/newtools.md`
   - Align MCP/tool discovery and Doctor checks with the central tool registry/policy engine (no per-provider special casing)
+  - Carry Preview/Build/Docker/GitHub Actions contracts as Slint-target requirements and keep legacy Iced automation references migration-only
 
 ### Plans that are still conceptually valid (but should be reworded)
 - `Plans/FileSafe.md`

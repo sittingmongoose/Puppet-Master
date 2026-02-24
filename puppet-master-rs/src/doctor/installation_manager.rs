@@ -2,7 +2,7 @@
 //!
 //! Manages detection and installation guidance for CLI tools across platforms.
 //! Provides status checks, platform-specific installation instructions, and
-//! execution of official install commands.
+//! manual setup guidance for each platform.
 
 use crate::platforms::path_utils;
 use crate::platforms::platform_specs;
@@ -369,146 +369,26 @@ impl InstallationManager {
     }
 
     // DRY:FN:execute_install
-    /// Execute the official install command for a platform.
-    /// Spawns the install script/command; user may need to interact (e.g. confirm).
+    /// Automatic platform CLI installation has been removed.
+    /// Returns manual setup/authentication guidance instead.
     pub fn execute_install(&self, platform: Platform) -> Result<InstallResult> {
-        match platform {
-            Platform::Cursor => self.execute_cursor_install(),
-            Platform::Codex => self.execute_codex_install(),
-            Platform::Claude => self.execute_claude_install(),
-            Platform::Gemini => self.execute_gemini_install(),
-            Platform::Copilot => self.execute_copilot_install(),
-        }
-    }
+        let spec = platform_specs::get_spec(platform);
+        let mut guidance = format!(
+            "Automatic {} installation has been removed. Install the provider CLI manually.",
+            spec.display_name
+        );
 
-    fn execute_cursor_install(&self) -> Result<InstallResult> {
-        let rt = tokio::runtime::Handle::try_current()
-            .map(|h| {
-                tokio::task::block_in_place(|| {
-                    h.block_on(async {
-                        crate::install::install_coordinator::install_platform(
-                            crate::types::Platform::Cursor,
-                        )
-                        .await
-                    })
-                })
-            })
-            .unwrap_or_else(|_| {
-                tokio::runtime::Runtime::new().unwrap().block_on(
-                    crate::install::install_coordinator::install_platform(
-                        crate::types::Platform::Cursor,
-                    ),
-                )
-            });
-        if rt.success {
-            Ok(InstallResult::success(rt.message))
-        } else {
-            Ok(InstallResult::failure(rt.message))
+        if spec.auth.login_command.is_some() && !spec.auth.login_args.is_empty() {
+            guidance.push_str(&format!(
+                " Then authenticate with: {} {}",
+                spec.auth.login_command.unwrap_or_default(),
+                spec.auth.login_args.join(" ")
+            ));
+        } else if spec.auth.uses_browser_auth {
+            guidance.push_str(" Then authenticate with the CLI's browser/device flow.");
         }
-    }
 
-    fn execute_codex_install(&self) -> Result<InstallResult> {
-        let rt = tokio::runtime::Handle::try_current()
-            .map(|h| {
-                tokio::task::block_in_place(|| {
-                    h.block_on(async {
-                        crate::install::install_coordinator::install_platform(
-                            crate::types::Platform::Codex,
-                        )
-                        .await
-                    })
-                })
-            })
-            .unwrap_or_else(|_| {
-                tokio::runtime::Runtime::new().unwrap().block_on(
-                    crate::install::install_coordinator::install_platform(
-                        crate::types::Platform::Codex,
-                    ),
-                )
-            });
-        if rt.success {
-            Ok(InstallResult::success(rt.message))
-        } else {
-            Ok(InstallResult::failure(rt.message))
-        }
-    }
-
-    fn execute_claude_install(&self) -> Result<InstallResult> {
-        let rt = tokio::runtime::Handle::try_current()
-            .map(|h| {
-                tokio::task::block_in_place(|| {
-                    h.block_on(async {
-                        crate::install::install_coordinator::install_platform(
-                            crate::types::Platform::Claude,
-                        )
-                        .await
-                    })
-                })
-            })
-            .unwrap_or_else(|_| {
-                tokio::runtime::Runtime::new().unwrap().block_on(
-                    crate::install::install_coordinator::install_platform(
-                        crate::types::Platform::Claude,
-                    ),
-                )
-            });
-        if rt.success {
-            Ok(InstallResult::success(rt.message))
-        } else {
-            Ok(InstallResult::failure(rt.message))
-        }
-    }
-
-    fn execute_gemini_install(&self) -> Result<InstallResult> {
-        let rt = tokio::runtime::Handle::try_current()
-            .map(|h| {
-                tokio::task::block_in_place(|| {
-                    h.block_on(async {
-                        crate::install::install_coordinator::install_platform(
-                            crate::types::Platform::Gemini,
-                        )
-                        .await
-                    })
-                })
-            })
-            .unwrap_or_else(|_| {
-                tokio::runtime::Runtime::new().unwrap().block_on(
-                    crate::install::install_coordinator::install_platform(
-                        crate::types::Platform::Gemini,
-                    ),
-                )
-            });
-        if rt.success {
-            Ok(InstallResult::success(rt.message))
-        } else {
-            Ok(InstallResult::failure(rt.message))
-        }
-    }
-
-    fn execute_copilot_install(&self) -> Result<InstallResult> {
-        let rt = tokio::runtime::Handle::try_current()
-            .map(|h| {
-                tokio::task::block_in_place(|| {
-                    h.block_on(async {
-                        crate::install::install_coordinator::install_platform(
-                            crate::types::Platform::Copilot,
-                        )
-                        .await
-                    })
-                })
-            })
-            .unwrap_or_else(|_| {
-                tokio::runtime::Runtime::new().unwrap().block_on(
-                    crate::install::install_coordinator::install_platform(
-                        crate::types::Platform::Copilot,
-                    ),
-                )
-            });
-        if rt.success {
-            Ok(InstallResult::success(rt.message))
-        } else {
-            Ok(InstallResult::failure(rt.message))
-        }
+        Ok(InstallResult::failure(guidance))
     }
 
     // DRY:FN:get_installation_report

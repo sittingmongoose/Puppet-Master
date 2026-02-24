@@ -22,25 +22,30 @@ This plan remains authoritative for *what* tool discovery/testing support must e
 - **Tool latency and errors** from the unified event model are consumed by **analytics scan jobs** (scan seglog for tool latency distributions and error rates); rollups are stored in redb and exposed on the dashboard (e.g. tool performance and error-rate summaries).
 - UI wiring details should be re-expressed in Slint (not Iced) without changing feature semantics
 - Auth policy reminder: subscription-first; **Gemini API key is the explicit allowed exception** (subscription-backed)
+- For this task, deliverables are **Plans-folder documentation updates for the Slint rebuild**; no legacy Iced runtime wiring is required.
 
 ## DRY Method Compliance
 
 **CRITICAL:** All code in this plan MUST follow DRY principles.
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 ### DRY Requirements
 
 1. **Platform Data -- ALWAYS use platform_specs:**
    - ❌ **NEVER** hardcode platform CLI commands, binary names, models, auth, or capabilities
    - ✅ **ALWAYS** use `platform_specs::` functions (e.g., `platform_specs::cli_binary_names()`, `platform_specs::supports_effort()`)
+   ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 2. **Subagent Names -- ALWAYS use subagent_registry:**
    - ❌ **NEVER** hardcode subagent names in match statements or mappings
    - ✅ **ALWAYS** use `subagent_registry::` functions (e.g., `subagent_registry::is_valid_subagent_name()`)
    - ✅ **ALWAYS** reference `DRY:DATA:subagent_registry` from orchestrator plan as the single source of truth
+   ContractRef: Primitive:DRYRules, ContractName:Plans/orchestrator-subagent-integration.md
 
 3. **Tool/Framework Data -- Single Source of Truth:**
    - ✅ **ALWAYS** use `DRY:DATA:gui_tool_catalog` as the single source of truth for tool/framework data
    - ❌ **NEVER** hardcode tool names, installation paths, or framework-specific behavior
+   ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 4. **Tag All Reusable Items:**
    - ✅ Tag reusable functions: `// DRY:FN:<name> -- Description`
@@ -64,12 +69,20 @@ This plan remains authoritative for *what* tool discovery/testing support must e
 5. [Design Overview](#5-design-overview)
 6. [Framework & Tool Discovery (DRY)](#6-framework--tool-discovery-dry)
 7. [Interviewer Flow Changes](#7-interviewer-flow-changes)
-8. [MCP Support and GUI Settings](#8-mcp-support-and-gui-settings) (8.1 GUI, 8.2 per-platform + discovery table, 8.3 CLI vs SDK)
+8. [MCP Support and GUI Settings](#8-mcp-support-and-gui-settings) (8.1 GUI, 8.2 per-platform + discovery table, 8.3 provider transport/auth taxonomy)
 9. [Custom Headless GUI Tool](#9-custom-headless-gui-tool)
 10. [Integration with Test Strategy & Plans](#10-integration-with-test-strategy--plans)
 11. [Implementation Checklist](#11-implementation-checklist)
 12. [Gaps, Risks, and DRY Notes](#12-gaps-risks-and-dry-notes)
-13. [References](#13-references)
+13. [Evidence-in-Chat Contract and Flow](#13-evidence-in-chat-contract-and-flow-research-evidence-media-chat)
+14. [Live Visualization Execution Architecture](#14-live-visualization-execution-architecture-research-live-visualization)
+    - [14.5 Mobile Testing Stacks](#145-mobile-testing-stacks-research-mobile-testing-stacks)
+    - [14.6 Preview, Build, Docker, and Actions Contracts](#146-preview-build-docker-and-actions-contracts)
+    - [14.7 Docker runtime + DockerHub contract](#147-docker-runtime--dockerhub-contract)
+    - [14.8 GitHub Actions settings + generation contract](#148-github-actions-settings--generation-contract)
+    - [14.9 Automation migration contract](#149-automation-migration-contract-iced-era-tool-to-slint-era-tooling)
+    - [14.10 Doctor and preflight matrix](#1410-doctor-and-preflight-matrix)
+15. [References](#15-references)
 
 ---
 
@@ -335,15 +348,28 @@ Ensure MCP configuration and the Context7 API key (when enabled) are applied in 
 | **Orchestrator / Interview context** | In orchestrator or interview, the "user" is the system; search may be triggered by internal prompts. | Ensure activity transparency still shows "what was searched" in the run log or thread so audits and debugging are possible. |
 | **Key sprawl** | User must set API key(s) for search in addition to platform auth. | Reuse platform provider auth where possible (e.g. same OpenAI key for chat and search if supported); document clearly which keys are required for cited web search. |
 
-### 8.3 CLI vs SDK and MCP
+### 8.3 Provider transport/auth taxonomy and MCP
 
-Puppet Master today invokes **platform CLIs** (e.g. `agent -p "..."`, `claude -p "..."`, `codex exec`, `gemini -p "..."`, `copilot -p "..."`). MCP is configured per platform via the table above; the runner must write or point each CLI at the right project/user config (and Context7 API key when enabled).
+Puppet Master routes runs by **ProviderTransport** (SSOT: `Plans/Contracts_V0.md`):
+- **Cursor, Claude Code:** `CliBridge` (CLI-bridged; spawn local CLI)
+- **Codex, GitHub Copilot, Gemini:** `DirectApi` (direct-provider auth/calls; **no** Puppet Master CLI install/runtime flow)
+- **OpenCode:** `ServerBridge` (HTTP/SSE to local server)
 
-**Codex SDK** (`@openai/codex-sdk`): TypeScript; wraps the `codex` CLI (spawns it, JSONL over stdin/stdout). Thread-centric API: `startThread()`, `resumeThread(id)`, `thread.run()` / `thread.runStreamed()`. MCP is **not** configured in the SDK API; it is read from Codex TOML config. When using the SDK for programmatic Codex, ensure the CLI's config (e.g. `~/.codex/config.toml`) contains the desired MCP servers (e.g. Context7). Doctor or pre-run checks should verify MCP when tools depend on it.
+MCP is configured per provider via the table above.
 
-**GitHub Copilot SDK** (`@github/copilot-sdk`, Python/Go/.NET): Talks to Copilot CLI via JSON-RPC; can start the CLI or connect to `copilot --headless --port N`. Session-centric: `createSession({ mcpServers: { ... } })`. MCP (including Context7) can be passed **per session** in code; no need to touch `~/.copilot/mcp-config.json` or `.vscode/mcp.json` when using the SDK. For CLI-only runs, Puppet Master still injects config into those files or env.
+**Transport terminology and auth taxonomy (normative):**
 
-**When to use which:** Prefer **CLI invocation** for tier runs (same as today) so one code path works for all platforms. Use **SDKs** only where the orchestrator or interview explicitly needs programmatic control (e.g. subagent integration per orchestrator plan). When using an SDK, document how MCP/Context7 is applied (Codex: TOML; Copilot: session `mcpServers`).
+| Platform(s) | ProviderTransport | ProviderAuthMethod (examples; SSOT in `Plans/Contracts_V0.md`) | Contract rule |
+|---|---|---|---|
+| Cursor, Claude Code | `CliBridge` | `CliInteractive` | CLI-bridged only |
+| Codex | `DirectApi` | `OAuthBrowser` / `OAuthDeviceCode` / `ApiKey` | Direct-provider auth/calls |
+| GitHub Copilot | `DirectApi` | `OAuthDeviceCode` | Direct-provider auth/calls |
+| Gemini | `DirectApi` | `OAuthBrowser` / `ApiKey` / `GoogleCredentials` | Direct-provider auth/calls |
+| OpenCode | `ServerBridge` | (server credentials) + provider-native auth inside OpenCode | Server-bridged; do not label optional |
+
+**Policy:** Do not introduce SDK install/runtime flows in this plan. Use the transport/auth taxonomy above for provider routing and auth handling.
+
+**When to use which:** Prefer the unified provider contract for all tiers. If additional provider telemetry is needed, call official provider endpoints directly (usage/quota/account surfaces) while preserving normalized event output.
 
 ---
 
@@ -410,7 +436,7 @@ ContractRef: ContractName:AGENTS.md#automation, SchemaID:evidence.schema.json
 - [ ] **7.2** In Testing phase, call catalog (and optional research to populate catalog); build options (Playwright, framework tools, custom headless); persist user choices in interview config/state and wire into `InterviewOrchestratorConfig`.
 - [ ] **7.3** Add UI for tool selection using existing widgets; tag new widgets; run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` after changes.
 - [ ] **8.1** MCP settings in GUI: add Config → MCP (or Advanced → MCP); Context7 enabled by default, Context7 API key field, toggle to turn Context7 off; wire to GuiConfig and Option B run-config.
-- [ ] **8.2** Per-platform MCP: document or implement how each platform (Cursor, Codex, Claude Code, Gemini, Copilot) gets MCP config and Context7 API key so Context7 works for all five; see §8.2 discovery table and SDK integration (§8.3).
+- [ ] **8.2** Per-platform MCP: document or implement how each platform (Cursor, Codex, Claude Code, Gemini, Copilot) gets MCP config and Context7 API key so Context7 works for all five; see §8.2 discovery table and provider transport/auth taxonomy (§8.3).
 - [ ] **9** Document custom headless tool as **full-featured** (headless runner, action catalog, full evidence per §9.1); document how plans reference existing automation (e.g. Iced headless runner) vs building new.
 - [ ] **10.1** Extend test strategy generator and schema for framework tools and custom headless; add test types and verification commands as needed.
 - [ ] **10.2** Ensure PRD/plan generation includes tasks for get existing tools and plan/build custom tool when selected.
@@ -607,7 +633,7 @@ Implementation MUST document the chosen approach in AGENTS.md and ensure Option 
 
 ---
 
-## 12.5 Crews and Subagent Communication Enhancements for Tool Discovery
+## 12.7 Crews and Subagent Communication Enhancements for Tool Discovery
 
 The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines **Crews** (multi-agent communication system) and enhanced subagent communication. These features can enhance the **tool discovery and research flow** to enable better coordination between research subagents.
 
@@ -825,7 +851,7 @@ impl GuiToolCatalog {
 - **Review timeout:** If crew review times out, log warning and proceed with original entry (no review feedback applied)
 - **Review feedback parsing failure:** If review feedback cannot be parsed, log warning and proceed with original entry
 
-## 12.6 Lifecycle and Quality Enhancements for Tool Discovery
+## 12.8 Lifecycle and Quality Enhancements for Tool Discovery
 
 The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines lifecycle hooks, structured handoff validation, remediation loops, and cross-session memory. These features can enhance the **tool discovery and research flow** to improve reliability, quality, and continuity.
 
@@ -945,14 +971,493 @@ pub struct ToolCatalogEntry {
 
 **Cross-reference:** See orchestrator plan "Lifecycle and Quality Features" for full implementation details. See orchestrator plan "Puppet Master Crews" for how research crews can coordinate tool discovery operations.
 
-## 13. References
+## 13. Evidence-in-Chat Contract and Flow (research-evidence-media-chat)
+
+This addendum defines how automation evidence should be captured and surfaced directly in chat (inline images, playable recordings/links, and structured metadata for test runs).
+
+### 13.1 Evidence artifact contract (layout + schema + manifest)
+
+**Canonical run layout (per run):**
+
+```text
+.puppet-master/evidence/gui-automation/<run_id>/
+  manifest.json
+  timeline.jsonl
+  summary.md
+  checks.json
+  media/
+    screenshots/
+      step-001.png
+      step-002.png
+    recordings/
+      run.webm
+      run.mp4            # optional fallback transcode
+    traces/
+      trace.zip          # optional (framework/tool dependent)
+    state/
+      step-002-dom.html  # optional state dump
+```
+
+**Manifest contract (`manifest.json`):**
+- `run_id`, `scenario_id`, `started_at`, `ended_at`, `status`, `tool_name`, `tool_version`
+- `timeline_path`, `summary_path`, `checks_path`
+- `artifacts[]` list with stable IDs and media metadata:
+  - `artifact_id`, `kind` (`screenshot|recording|trace|state|log`), `relative_path`, `mime_type`, `sha256`, `size_bytes`
+  - optional render hints: `width`, `height`, `duration_ms`, `poster_path`
+  - optional linking: `step_id`, `test_id`, `timeline_seq`, `created_at`
+- `chat_cards[]` (pre-ranked "top evidence") for fast rendering in chat:
+  - `title`, `artifact_id`, `step_id`, `reason` (e.g., `assertion_failure`), `priority` (0-100)
+
+**Timeline linkage (`timeline.jsonl`):** each event SHOULD reference `artifact_ids[]` so timeline, summary, and media are joinable without path guessing.
+
+**Schema update:** extend `Plans/evidence.schema.json` with `evidence_runs[]` and `artifacts[].mime_type/kind/render` fields (backward-compatible additive changes only).
+
+### 13.2 Chat rendering behavior + fallback behavior
+
+**Preferred render order (per artifact):**
+1. **Inline image card** for `image/*` screenshots/photos (PNG/JPEG/WebP) using markdown image syntax and alt text.[C5][C6]
+2. **Inline video player** for `video/webm` or `video/mp4` when client supports it; include poster and controls.[C4]
+3. **Playable link fallback** when inline video fails: show signed/local file link + metadata (`duration`, `size`, `sha256`).
+4. **Download link fallback** for traces/zip/state dumps with short description.
+
+**Rendering rules:**
+- Always show a compact structured header before media:
+  - `Run`, `Scenario`, `Status`, `Failed step`, `Timestamp`, `Tool version`.
+- For failed tests, render **first failure screenshot + nearest recording segment** first.
+- Limit inline payload size; prefer path/resource references over base64 in normal chat.
+- If rendering fails, show deterministic fallback message:
+  - `Media preview unavailable. Open artifact: <relative_path> (mime=<mime>, sha256=<hash>).`
+
+**MCP-aware behavior:** if tool responses include MCP image/resource content, client can render directly from typed content (`type: image` or `type: resource`) with MIME-aware handling.[C3]
+
+### 13.3 Tool-call and evidence-capture flow during test execution
+
+**Flow (during automation):**
+1. `gui_run_scenario` starts run, creates run folder, initializes `manifest.json` + `timeline.jsonl`.
+2. For each action/step:
+   - append `step.started` event
+   - on checkpoint/failure, capture screenshot; append artifact + `step_id` linkage
+   - if recording enabled, keep rolling capture and finalize on run end
+   - append `step.passed|step.failed` with `artifact_ids[]`
+3. On completion:
+   - finalize recording (ensure context/runner close semantics for persisted video files).[C1]
+   - write `summary.md` and `checks.json`
+   - optionally write trace bundle (`trace.zip`) for failed/retried runs.[C2]
+   - finalize manifest status and "chat_cards" selections.
+4. Chat adapter reads only `manifest.json` first, then lazily loads referenced artifacts.
+
+**Interop note:** for Playwright-based capture, keep attachment metadata (`contentType`, file path) aligned with report attachments semantics so artifacts remain portable across reporters.[C7]
+
+### 13.4 Validation / Doctor checks for evidence usability
+
+Add **Doctor (Evidence Media)** checks:
+
+1. **Layout check:** required files exist (`manifest.json`, `timeline.jsonl`, `summary.md`) for latest run.
+2. **Manifest integrity:**
+   - every `artifacts[].relative_path` exists
+   - MIME is valid for extension
+   - `sha256` matches on disk
+   - `timeline` references resolve to declared `artifact_id`
+3. **Renderability check:**
+   - at least one `image/*` artifact for failed runs
+   - if recording enabled, at least one playable `video/webm|video/mp4` artifact or explicit `recording_disabled_reason`
+   - fallback link generation succeeds for non-inline artifacts
+4. **Chat-card quality gate:** at least one `chat_cards` entry for failure, with non-empty `reason`.
+5. **Output:** emit `doctor.evidence_media.checked` event with PASS/FAIL + actionable remediation.
+
+**Failure severity:**
+- Missing manifest/timeline: **FAIL (block release/testing gate)**
+- Missing media for failed run: **WARN** (unless policy requires mandatory video)
+- Hash mismatch or broken paths: **FAIL**
+
+---
+
+## 14. Live Visualization Execution Architecture (research-live-visualization)
+
+This section defines the deterministic architecture for **non-headless visual execution** so users can watch automation in real time across web, desktop, iOS, and Android while preserving the same evidence contract from §13.
+
+### 14.1 End-to-end flow: tool selection → launch → interaction → evidence capture → chat display
+
+**Unified orchestrator flow (all platforms):**
+1. **Select provider/tool profile** from interview + detected stack:
+   - `web.playwright.visible`
+   - `desktop.appium.windows` / `desktop.appium.mac2`
+   - `ios.appium.xcuitest.simulator` (optional `ios.xcode.preview`)
+   - `android.appium.uiautomator2.emulator`
+2. **Preflight checks** run (see §14.2). If any hard dependency fails, degrade per §14.3.
+3. **Launch visible target** and emit `live.session.started` with:
+   - `run_id`, `platform`, `provider`, `pid/session_id`, `display_target`, `artifact_root`
+4. **Execute interactions** through scenario/action catalog (same contract as headless; only backend driver differs).
+5. **Capture evidence in parallel** (timeline + screenshots + optional recording/trace) into `.puppet-master/evidence/gui-automation/<run_id>/`.
+6. **Stream progress to chat** with low-latency status cards:
+   - current step, pass/fail, latest thumbnail, "open live window/simulator/emulator" hints.
+7. **Finalize run** with `manifest.json`, `summary.md`, `checks.json`, then emit `live.session.completed`.
+8. **Render evidence in chat** using §13 media rules (inline image/video + deterministic fallback links).
+
+**Platform-specific launch contracts:**
+
+- **Web apps (local browser run/attach):**
+  - Primary: Playwright headed run (`npx playwright test --headed`) for visible browser execution.[LV1]
+  - Attach mode: connect to an existing local Chromium endpoint (CDP) when user wants to watch an already-open browser/profile.
+  - Evidence: Playwright screenshots/video/trace config mapped into §13 manifest fields.[LV1]
+
+- **Desktop apps (native launch + visible state capture):**
+  - Windows: Appium Windows Driver with `appium:app` (launch) or `appium:appTopLevelWindow` (attach existing window).[LV4]
+  - macOS: Appium `mac2` driver (`appium driver install mac2`) for native visible automation.[LV3]
+  - Evidence: `GET /screenshot` each checkpoint + optional recording pipeline when driver/plugin supports it.[LV3]
+
+- **iOS (Xcode previews and/or simulator runs):**
+  - Preview mode: Xcode previews for rapid visual iteration of UI states (non-automation viewing mode).[LV6]
+  - Automation mode: Appium XCUITest simulator session (`platformName=iOS`, `automationName=XCUITest`, `deviceName`, `platformVersion`).[LV5]
+  - Evidence: `mobile: startXCTestScreenRecording` / `stopXCTestScreenRecording` + screenshots; simulator cleanup semantics preserved.[LV5]
+
+- **Android (emulator-driven runs):**
+  - Launch emulator with deterministic AVD profile (`appium:avd`, launch/ready timeouts), then run UiAutomator2 session.[LV7]
+  - Optional direct emulator lifecycle via Android emulator CLI for boot/teardown control.[LV8]
+  - Evidence: screenshot + MediaProjection recording (`mobile: startMediaProjectionRecording` / stop) into run artifacts.[LV7]
+
+### 14.2 Runtime dependencies and environment checks
+
+Add Doctor preflight category: **`doctor.live_visualization`**.
+
+**Required checks (deterministic):**
+- **Common**
+  - Node/npm available (for JS-based providers and MCP servers).
+  - Writable evidence path `.puppet-master/evidence/gui-automation/`.
+  - Display availability check (`DISPLAY`/Wayland on Linux, desktop session on macOS/Windows) unless provider supports virtual displays.
+- **Web**
+  - Playwright installed and browser binaries present.
+  - Target dev server reachable (health URL or configured port).
+- **Desktop**
+  - Appium server reachable.
+  - Windows mode: WinAppDriver present/reachable.
+  - macOS mode: `appium driver list --installed` includes `mac2`.[LV3]
+- **iOS**
+  - Xcode CLI tools installed (`xcode-select -p`), simulator runtime exists.
+  - Appium XCUITest driver installed; WebDriverAgent build prerequisites pass.
+  - If preview mode selected, Xcode previews capability present in local toolchain.[LV6]
+- **Android**
+  - Android SDK + emulator + adb available.
+  - Requested AVD exists and boots within timeout.
+  - UiAutomator2 driver installed; device/emulator visible to adb.
+
+**Preflight output contract:** emit machine-readable failures:
+`{ code, severity, dependency, expected, observed, remediation }`.
+
+### 14.3 Coexistence with headless mode (default/CI fallback policy)
+
+Policy:
+- **Default local policy:** `visual_mode = auto`.
+  - Prefer visible mode when interactive desktop session is available.
+  - Fall back to headless if a required visual dependency is missing.
+- **CI default policy:** `visual_mode = headless` unless explicitly overridden.
+  - Rationale: deterministic CI stability and no hard display dependency.
+- **Manual override:**
+  - `visual_mode = forced_visible` → fail fast if visible prerequisites missing.
+  - `visual_mode = forced_headless` → skip all visible launch steps.
+
+**Required run metadata fields:**
+- `requested_visual_mode` (`auto|forced_visible|forced_headless`)
+- `effective_visual_mode` (`visible|headless`)
+- `fallback_reason` (nullable string enum, e.g., `missing_display`, `simulator_unavailable`, `emulator_boot_timeout`)
+
+### 14.4 Deterministic additions required in this plan file
+
+Implementation MUST add the following concrete schema/config entries:
+ContractRef: ContractName:Plans/interview-subagent-integration.md#config-wiring, ContractName:Plans/orchestrator-subagent-integration.md#config-wiring, ContractName:Plans/Contracts_V0.md#EventRecord
+
+1. **`InterviewGuiConfig` + `InterviewOrchestratorConfig` fields**
+   - `live_visualization_enabled: bool`
+   - `visual_mode: "auto" | "forced_visible" | "forced_headless"`
+   - `visual_targets: { web?: bool, desktop?: bool, ios?: "preview"|"simulator"|"both", android?: bool }`
+2. **`GuiToolCatalog` capability flags**
+   - `supports_visible_run`, `supports_attach_existing`, `supports_recording`, `requires_display_server`.
+3. **Test strategy schema extension (additive)**
+   - `test_type` include `visual_web`, `visual_desktop`, `visual_ios`, `visual_android`.
+   - optional `visual_launch_command`, `attach_command`, `evidence_capture_mode`.
+4. **Seglog events**
+   - `live.session.started`, `live.step.updated`, `live.artifact.created`, `live.session.completed`, `live.session.degraded`.
+5. **Doctor checks**
+   - `doctor.live_visualization` (platform dependency checks)
+   - `doctor.live_visualization.evidence` (media + manifest integrity reuse from §13)
+6. **Chat renderer contract**
+   - New card type `live_run_card` (status, current step, latest thumbnail, open-target action).
+   - Must resolve to artifact links using `manifest.json` IDs only (no raw path guessing).
+
+---
+
+## 14.5 Mobile Testing Stacks (research-mobile-testing-stacks)
+
+This section adds concrete, command-level defaults for iOS, Android, and Expo/React Native testing and preview workflows.
+
+### 14.5.1 Practical comparison matrix
+
+| Stack | Primary test frameworks | E2E/device testing | Live preview/emulator tooling | Artifact capture | Puppet Master integration strengths | Limits / caveats |
+|---|---|---|---|---|---|---|
+| **Swift / iOS** | XCTest (`XCTestCase`, assertions, `measure`) | XCUITest (native) + optional Appium XCUITest driver | SwiftUI `#Preview`, `@Previewable`, Xcode Canvas, iOS Simulator | XCTest attachments (project-side), simulator screenshots, Appium iOS screen recording | Best native signal quality; stable for app-internal assertions; easy simulator orchestration hooks | Needs macOS runners/Xcode; simulator orchestration is Apple-tooling specific |
+| **Kotlin / Android** | Jetpack Compose testing (`createComposeRule`, semantics matchers) + Espresso instrumentation | UIAutomator / AndroidX instrumentation, optional Appium UiAutomator2 | Android Emulator + ADB; Compose preview/testing sync behavior | ADB/device screenshots & recordings, framework logs, CI artifacts | Strong for both view-level and device-level Android validation; good headless CI path | Fragmented stack (Compose vs View system); emulator/device matrix still needed |
+| **Expo / React Native** | Jest/unit + framework-level integration tests | **Default:** Detox (gray-box, RN aware). **Fallbacks:** Maestro (flow-first) and Appium (cross-platform WebDriver) | Expo CLI (`expo start`, `expo run:ios`, `expo run:android`), simulator/emulator shortcuts (`i`/`a`) | Detox artifacts plugin (screenshots/video/logs), Maestro `takeScreenshot`, Appium screenshot/screen-record APIs | Highest reuse for RN teams; good dev-loop + CI parity; multiple E2E fallback choices | Detox setup can be strict; Expo managed/bare differences must be explicit in plans |
+
+### 14.5.2 Recommended path + fallback per stack
+
+1. **Swift/iOS**  
+   - **Default:** SwiftUI previews (`#Preview`, `@Previewable`) + XCTest/XCUITest on iOS Simulator.  
+   - **Fallback:** Appium XCUITest driver where cross-platform automation parity is required.
+
+2. **Kotlin/Android**  
+   - **Default:** Compose UI tests + Espresso for instrumentation + targeted UIAutomator flows for system-level interactions.  
+   - **Fallback:** Appium UiAutomator2 for teams standardizing on WebDriver tooling.
+
+3. **Expo/React Native**  
+   - **Default:** Expo CLI dev flow + Detox for E2E on simulator/emulator with artifacts enabled.  
+   - **Fallback:** Maestro for fast, declarative smoke flows; Appium for multi-platform automation parity.
+
+### 14.5.3 Concrete workflow snippets to include in generated plans
+
+#### A) Swift / iOS
+
+```bash
+# Preview/runtime iteration in Xcode (manual)
+# Use #Preview and @Previewable in SwiftUI view files, then iterate in Canvas.
+
+# Run unit/UI tests on simulator (CI or local)
+xcodebuild test \
+  -scheme MyApp \
+  -destination 'platform=iOS Simulator,name=iPhone 16'
+
+# Capture simulator screenshot artifact
+xcrun simctl io booted screenshot .puppet-master/evidence/ios/sim.png
+```
+
+#### B) Kotlin / Android
+
+```bash
+# Run local JVM tests
+./gradlew testDebugUnitTest
+
+# Run instrumentation tests (Compose/Espresso/UIAutomator)
+./gradlew connectedDebugAndroidTest
+
+# Capture emulator artifacts
+adb exec-out screencap -p > .puppet-master/evidence/android/screen.png
+adb shell screenrecord /sdcard/test.mp4
+adb pull /sdcard/test.mp4 .puppet-master/evidence/android/test.mp4
+```
+
+#### C) Expo / React Native
+
+```bash
+# Dev server + simulator/emulator loop
+npx expo start      # then press i (iOS sim) or a (Android emulator)
+
+# Native run commands (dev builds)
+npx expo run:ios
+npx expo run:android
+
+# Detox (default E2E)
+detox test -c ios.sim.debug
+detox test -c android.emu.debug
+```
+
+```json
+// detox.config.js artifact baseline
+{
+  "artifacts": {
+    "rootDir": ".puppet-master/evidence/detox",
+    "plugins": {
+      "screenshot": { "enabled": true, "shouldTakeAutomaticSnapshots": true },
+      "video": { "enabled": true },
+      "log": { "enabled": true }
+    }
+  }
+}
+```
+
+#### D) Fallback E2E snippets
+
+```bash
+# Maestro
+maestro test flows/smoke.yaml
+
+# Appium (driver-managed screenshots/recordings)
+# Use session APIs or executeScript mobile commands in test runtime.
+```
+
+## 14.6 Preview, Build, Docker, and Actions Contracts
+
+This section defines deterministic Slint-rebuild behavior for Preview/Build actions and their Docker/GitHub Actions integrations.
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md#7.2, ContractName:Plans/Project_Output_Artifacts.md
+
+### 14.6.1 Preview controls contract (Dashboard + Orchestrator)
+
+**Required UX surfaces:**
+- Dashboard Orchestrator Status card includes `PREVIEW`.
+- Orchestrator Progress tab `widget.orchestrator_status` includes `Preview`.
+
+**Deterministic behavior:**
+1. Resolve preview target from selected stack and `visual_targets` in run config.
+2. Launch one preview session per action press with generated `preview_session_id`.
+3. Emit session events and evidence (`manifest.json`, `timeline.jsonl`, screenshot/video when available).
+4. Show inline chat evidence card for latest preview state and media.
+5. If media cannot be rendered inline, show deterministic fallback with clickable artifact path.
+
+**Reserved UI command IDs (canonical):**
+- `cmd.orchestrator.preview_open`
+- `cmd.orchestrator.preview_stop`
+- `cmd.orchestrator.open_preview_artifact`
+
+ContractRef: UICommand:cmd.orchestrator.preview_open, UICommand:cmd.orchestrator.preview_stop, UICommand:cmd.orchestrator.open_preview_artifact, SchemaID:evidence.schema.json
+
+### 14.6.2 Build controls and artifact reporting contract
+
+**Required UX surfaces:**
+- Dashboard Orchestrator Status card includes `BUILD`.
+- Orchestrator Progress tab `widget.orchestrator_status` includes `Build`.
+
+**Deterministic behavior:**
+1. Build action resolves profile (`native`, `web`, `mobile`, `container`) from project stack + settings.
+2. Build runs produce a normalized `build_result` payload with:
+   - `build_id`
+   - `build_profile`
+   - `status`
+   - `artifacts[]` (`path`, `kind`, `sha256`, `size_bytes`)
+   - `logs_path`
+3. GUI shows latest artifact list and "open path / copy path" action.
+4. Chat shows concise build summary plus artifact links.
+
+**Canonical output-path examples to preserve in docs/UI copy:**
+- Linux installer outputs under `installer/linux/` (existing script contract).
+- Multi-platform installer helper reports concrete installer paths per platform.
+
+**Reserved UI command IDs (canonical):**
+- `cmd.orchestrator.build_run`
+- `cmd.orchestrator.open_build_artifact`
+
+ContractRef: UICommand:cmd.orchestrator.build_run, UICommand:cmd.orchestrator.open_build_artifact, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/UI_Command_Catalog.md
+
+### 14.7 Docker runtime + DockerHub contract
+
+**Local runtime flow (default):**
+1. Preflight checks: Docker engine reachable, compose file resolvable, required ports available.
+2. Launch path:
+   - `docker compose up -d` for service stacks
+   - `docker buildx build` for deterministic image build path
+3. Capture logs/health until preview or build completes.
+4. Teardown with `docker compose down` when session policy requires cleanup.
+
+**Settings contract (Slint Settings):**
+- `Containers & Registry` section includes:
+  - runtime selector (`docker` default)
+  - compose file/path defaults
+  - DockerHub namespace/repository/tag defaults
+  - auth mode (`pat` default)
+  - push policy (`manual` default; optional `after_build`)
+
+**DockerHub auth/push contract:**
+- Use PAT/token-based auth flow.
+- Never place tokens in project files or evidence logs.
+- Push results include digest and tag map in evidence and chat summary.
+
+**CI template defaults for container publish:**
+- `docker/login-action`
+- `docker/setup-qemu-action`
+- `docker/setup-buildx-action`
+- `docker/build-push-action`
+- optional `docker/scout-action`
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#7.4, PolicyRule:no_secrets_in_storage, SchemaID:evidence.schema.json, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+
+### 14.8 GitHub Actions settings + generation contract
+
+**Required Settings surface:**
+- `CI / GitHub Actions` section with:
+  - workflow templates
+  - trigger controls
+  - matrix/profile options
+  - required-secrets checklist
+  - workflow validation + preview action
+
+**Assistant generation flow:**
+1. Select template + options from settings.
+2. Render workflow preview in UI/editor.
+3. Validate YAML and required secrets references.
+4. Write `.github/workflows/<template-or-name>.yml` only after user approval.
+5. Reflect generated workflow in Settings UI list.
+
+**Template families required by this plan:**
+- `docker-build-push`
+- `native-build-matrix` (OS-native build artifact jobs)
+- `web-preview-and-test`
+- `mobile-ios-android`
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#7.4, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, Primitive:UICommand
+
+### 14.9 Automation migration contract (Iced-era tool to Slint-era tooling)
+
+The existing Iced automation implementation remains a reference pattern, while rewrite deliverables target Slint runtime semantics.
+
+**Required migration boundaries:**
+- Keep evidence schema compatibility (`manifest/timeline/media`) across automation backends.
+- Introduce backend abstraction so preview/build automation can run with Slint UI surfaces.
+- Keep headless and visible modes both supported in the new backend.
+- Preserve doctor/preflight checks for automation dependencies and media capture capability.
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FinalGUISpec.md#2, ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:evidence.schema.json
+
+### 14.10 Doctor and preflight matrix
+
+The Slint rebuild must expose deterministic readiness checks before Preview/Build/Docker/Actions flows execute.
+
+| Check ID | Scope | Required signal | Failure behavior |
+|---|---|---|---|
+| `doctor.preview.visual-runtime` | preview | Display/runtime dependency available for selected mode (`visible` vs `headless`) | Block preview start; show explicit missing dependency and fallback option |
+| `doctor.mobile.ios-simulator` | mobile iOS | Simulator toolchain reachable (`xcodebuild`, `simctl`) | Mark iOS preview/test path unavailable; suggest fallback target |
+| `doctor.mobile.android-emulator` | mobile Android | Emulator/ADB reachable | Mark Android preview/test path unavailable; suggest fallback target |
+| `doctor.docker.engine` | docker local | Docker daemon reachable and responsive | Block docker preview/build path; show remediation steps |
+| `doctor.docker.compose` | docker local | Compose config resolves and service graph validates | Block compose launch; show config error details |
+| `doctor.registry.auth` | docker publish | Registry auth validated for selected provider (`dockerhub` default) | Block publish; preserve local build results |
+| `doctor.actions.workflow-ready` | GitHub Actions | Workflow template validates and required secrets are declared | Block workflow apply; show missing/invalid fields |
+| `doctor.evidence.media` | evidence/chat | Manifest + media artifacts are readable and hash-valid | Keep run result, mark evidence degraded with explicit fallback message |
+
+ContractRef: ContractName:Plans/MiscPlan.md#doctor, ContractName:Plans/FinalGUISpec.md#74-settings-unified, ContractName:Plans/newtools.md#13-evidence-in-chat-contract-and-flow-research-evidence-media-chat, SchemaID:evidence.schema.json
+
+## 15. References
 
 - **AGENTS.md:** DRY Method, widget catalog, platform_specs, Pre-Completion Verification Checklist; headless rendering (tiny-skia), automation (headless runner, action catalog); Context7 MCP; platform CLI commands.
 - **Plans/interview-subagent-integration.md:** Interview phases (Testing & Verification), test strategy, `generate_playwright_requirements`, Phase 5 document generation, DRY for interview code (§5.2).
-- **Plans/orchestrator-subagent-integration.md:** Interview config wiring, test strategy loading in prompts; Codex SDK / Copilot SDK and platform capability manager (§Strategy 4, Subagent Invoker).
+- **Plans/orchestrator-subagent-integration.md:** Interview config wiring, test strategy loading in prompts; CLI-native subagent invocation and platform capability manager (§Strategy 4, Subagent Invoker).
 - **puppet-master-rs/src/interview/test_strategy_generator.rs:** TestStrategyConfig, TestItem, write_test_strategy, test-strategy.md / test-strategy.json.
 - **puppet-master-rs/src/core/prompt_builder.rs:** Load test strategy into iteration context.
 - **puppet-master-rs/src/automation/:** Headless runner, action catalog, evidence (timeline, summary).
 - **MCP / Context7:** Context7 API keys (https://context7.com/docs/howto/api-keys): Bearer token in `Authorization` header. Cursor CLI MCP (https://cursor.com/docs/cli/mcp); Claude Code MCP (https://code.claude.com/docs/en/mcp); Codex MCP (https://developers.openai.com/codex/mcp); Gemini/Copilot: config paths in §8.2 table.
-- **Codex SDK:** https://developers.openai.com/codex/sdk/; TypeScript README https://github.com/openai/codex/tree/main/sdk/typescript. Thread API; MCP via CLI config (TOML).
-- **GitHub Copilot SDK:** https://github.com/github/copilot-sdk/tree/main/docs (getting-started, mcp/overview, compatibility). Session `mcpServers`; `copilot --headless`; CLI vs SDK feature matrix in compatibility.md.
+- **[C1] Playwright video persistence and modes:** https://github.com/microsoft/playwright.dev/blob/main/nodejs/versioned_docs/version-stable/videos.mdx
+- **[C2] Playwright tracing + show-trace:** https://github.com/microsoft/playwright.dev/blob/main/nodejs/versioned_docs/version-stable/trace-viewer-intro.mdx
+- **[C3] MCP typed content (image/resource) and tool outputs:** https://modelcontextprotocol.io/specification/2025-11-25/server/tools
+- **[C4] HTML video with multi-source + fallback link:** https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/video/index.md
+- **[C5] CommonMark image syntax (`![alt](url)`):** https://spec.commonmark.org/0.31.2/index
+- **[C6] `img` alt/fallback behavior:** https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/img/index.md
+- **[C7] Playwright test attachments (`testInfo.attach`, contentType/path):** https://github.com/microsoft/playwright.dev/blob/main/nodejs/versioned_docs/version-stable/api/class-testinfo.mdx
+- **[LV1] Context7 MCP - Playwright docs (`--headed`, screenshots/videos/traces):** https://github.com/microsoft/playwright.dev/blob/main/nodejs/versioned_docs/version-stable/running-tests.mdx
+- **[LV2] Context7 MCP - Playwright BrowserType launch/headed API:** https://github.com/microsoft/playwright.dev/blob/main/nodejs/versioned_docs/version-stable/api/class-browsertype.mdx
+- **[LV3] Context7 MCP - Appium desktop setup (`appium setup desktop`, `mac2`, screenshot API):** https://github.com/appium/appium/blob/master/packages/appium/docs/en/reference/api/webdriver.md
+- **[LV4] Context7 MCP - Appium Windows driver (`app`, `appTopLevelWindow` attach):** https://github.com/appium/appium-windows-driver/blob/master/README.md
+- **[LV5] Context7 MCP - Appium XCUITest simulator capability sets + screen recording:** https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods
+- **[LV6] Apple Developer - Xcode previews:** https://developer.apple.com/documentation/xcode/previewing-your-apps-interface-in-xcode
+- **[LV7] Context7 MCP - Appium UiAutomator2 emulator capabilities + MediaProjection recording:** https://github.com/appium/appium-uiautomator2-driver/blob/master/README.md
+- **[LV8] Android Developers - emulator command line:** https://developer.android.com/studio/run/emulator-commandline
+- **[MOB1] Apple SwiftUI docs (`#Preview`, `@Previewable`, previews in Xcode):** https://developer.apple.com/documentation/SwiftUI/documentation/swiftui/preview%28_%3Abody%3A%29 ; https://developer.apple.com/documentation/swiftui/previewable%28%29 ; https://developer.apple.com/documentation/SwiftUI/documentation/swiftui/previews-in-xcode
+- **[MOB2] XCTest basics and CLI selection (Context7: swift-corelibs-xctest):** https://context7.com/swiftlang/swift-corelibs-xctest/llms.txt ; https://github.com/swiftlang/swift-corelibs-xctest/blob/main/README.md
+- **[MOB3] Appium XCUITest driver capabilities and WDA attach guidance:** https://appium.github.io/appium-xcuitest-driver/latest/reference/capabilities ; https://appium.github.io/appium-xcuitest-driver/latest/guides/attach-to-running-wda
+- **[MOB4] Jetpack Compose testing (synchronization, semantics, APIs):** https://developer.android.com/develop/ui/compose/testing/synchronization ; https://developer.android.com/develop/ui/compose/testing/common-patterns ; https://developer.android.com/develop/ui/compose/testing/apis
+- **[MOB5] Android testing samples (Espresso + UiAutomator):** https://github.com/android/testing-samples/blob/main/README.md
+- **[MOB6] Expo dev/build workflows (`expo start`, `expo run:*`):** https://docs.expo.dev/develop/development-builds/use-development-builds ; https://docs.expo.dev/develop/development-builds/expo-go-to-dev-build ; https://docs.expo.dev/bare/using-expo-cli
+- **[MOB7] Detox artifacts and simulator/emulator run configs:** https://github.com/wix/detox/blob/master/docs/config/artifacts.mdx ; https://github.com/wix/detox/blob/master/docs/guide/developing-while-writing-tests.md
+- **[MOB8] Maestro cloud/CI + flow screenshot capture:** https://github.com/mobile-dev-inc/maestro-docs/blob/main/cli/cloud.md ; https://context7.com/mobile-dev-inc/maestro-docs/llms.txt
+- **[MOB9] Appium screenshot/screen-record APIs and mobile execute commands:** https://github.com/appium/appium/blob/master/packages/appium/docs/zh/guides/migrating-2-to-3.md ; https://context7.com/appium/appium/llms.txt
+- **[DOCKER1] Docker Build and Push Action (`build-push-action`):** https://github.com/docker/build-push-action
+- **[DOCKER2] Docker Login Action (`login-action`):** https://github.com/docker/login-action
+- **[DOCKER3] Docker Setup Buildx Action (`setup-buildx-action`):** https://github.com/docker/setup-buildx-action
+- **[DOCKER4] Docker Scout Action (`scout-action`):** https://github.com/docker/scout-action
+- **[DOCKER5] Docker CLI reference:** https://docs.docker.com/reference/cli/docker/
+- **[DOCKER6] Docker VS Code extension (reference patterns only):** https://github.com/docker/vscode-extension

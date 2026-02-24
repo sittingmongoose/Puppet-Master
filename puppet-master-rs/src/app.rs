@@ -3659,77 +3659,12 @@ impl App {
             }
 
             Message::InstallAllMissing => {
-                let selected_platforms = self.doctor_selected_platforms.clone();
-                let using_platform_selection = !selected_platforms.is_empty();
-
-                // Collect failed checks that have fixes available and match install scope
-                let fixable_checks: Vec<String> = self
-                    .doctor_results
-                    .iter()
-                    .filter(|r| {
-                        !r.passed
-                            && r.fix_available
-                            && crate::doctor::check_targeting::should_include_in_bulk_install(
-                                &r.name,
-                                &selected_platforms,
-                            )
-                    })
-                    .map(|r| r.name.clone())
-                    .collect();
-
-                if fixable_checks.is_empty() {
-                    self.add_toast(
-                        ToastType::Info,
-                        if using_platform_selection {
-                            "No failed checks with fixes available for selected platforms"
-                                .to_string()
-                        } else {
-                            "No failed checks with fixes available".to_string()
-                        },
-                    );
-                    return Task::none();
-                }
-
                 self.add_toast(
                     ToastType::Info,
-                    if using_platform_selection {
-                        format!(
-                            "Installing {} selected missing dependencies...",
-                            fixable_checks.len()
-                        )
-                    } else {
-                        format!(
-                            "Installing {} missing dependencies...",
-                            fixable_checks.len()
-                        )
-                    },
+                    "Automatic platform CLI installation has been removed. Use each platform's manual setup and authentication flow."
+                        .to_string(),
                 );
-
-                // Mark all as fixing
-                for check in &fixable_checks {
-                    self.doctor_fixing.insert(check.clone());
-                }
-
-                // Create tasks to fix each check sequentially
-                let tasks: Vec<Task<Message>> = fixable_checks
-                    .into_iter()
-                    .map(|check_name| {
-                        Task::perform(
-                            async move {
-                                let registry = crate::doctor::CheckRegistry::default();
-                                let result = registry.fix_check(&check_name, false).await;
-                                (check_name, result)
-                            },
-                            |(name, res)| {
-                                let fix_result = res.ok().and_then(|o| o.and_then(|(_, f)| f));
-                                Message::FixCheckComplete(name, fix_result)
-                            },
-                        )
-                    })
-                    .collect();
-
-                // Run all fix tasks
-                Task::batch(tasks)
+                Task::none()
             }
 
             Message::InstallPlaywright => {
@@ -3763,8 +3698,8 @@ impl App {
             }
 
             Message::WizardCheckDependencies => {
-                // Probe node, gh, and selected platform CLIs
-                Task::batch([
+                // Probe node, gh, and all platform CLIs.
+                let mut tasks = vec![
                     Task::perform(
                         async { crate::install::node_installer::node_meets_minimum() },
                         |ok| Message::WizardDepCheckDone("node".to_string(), ok),
@@ -3776,25 +3711,39 @@ impl App {
                         },
                         |ok| Message::WizardDepCheckDone("gh".to_string(), ok),
                     ),
-                ])
+                ];
+
+                for platform in crate::types::Platform::all() {
+                    let platform_copy = *platform;
+                    let platform_name = format!("{}", platform_copy);
+                    tasks.push(Task::perform(
+                        async move {
+                            use crate::platforms::platform_detector::PlatformDetector;
+                            PlatformDetector::detect_platform(platform_copy).await.is_some()
+                        },
+                        move |ok| Message::WizardDepCheckDone(platform_name.clone(), ok),
+                    ));
+                }
+
+                Task::batch(tasks)
             }
 
             Message::WizardInstallNode => {
-                self.wizard_dep_installing = Some("node".to_string());
-                self.wizard_dep_install_log.clear();
-                Task::perform(
-                    crate::install::install_coordinator::install_node(),
-                    |outcome| Message::WizardDepInstallDone("node".to_string(), outcome.success),
-                )
+                self.add_toast(
+                    ToastType::Info,
+                    "Automatic Node.js installation has been removed. Install Node.js manually, then run dependency detection."
+                        .to_string(),
+                );
+                Task::none()
             }
 
             Message::WizardInstallGhCli => {
-                self.wizard_dep_installing = Some("gh".to_string());
-                self.wizard_dep_install_log.clear();
-                Task::perform(
-                    crate::install::install_coordinator::install_gh_cli(),
-                    |outcome| Message::WizardDepInstallDone("gh".to_string(), outcome.success),
-                )
+                self.add_toast(
+                    ToastType::Info,
+                    "Automatic GitHub CLI installation has been removed. Install GitHub CLI manually, then run dependency detection."
+                        .to_string(),
+                );
+                Task::none()
             }
 
             Message::WizardToggleDepPlatform(platform) => {
@@ -3807,13 +3756,15 @@ impl App {
             }
 
             Message::WizardInstallPlatformCli(platform) => {
-                let name = format!("{}", platform);
-                self.wizard_dep_installing = Some(name.clone());
-                self.wizard_dep_install_log.clear();
-                Task::perform(
-                    crate::install::install_coordinator::install_platform(platform),
-                    move |outcome| Message::WizardDepInstallDone(name.clone(), outcome.success),
-                )
+                let display_name = crate::platforms::platform_specs::display_name_for(platform);
+                self.add_toast(
+                    ToastType::Info,
+                    format!(
+                        "Automatic {} installation has been removed. Install the CLI manually, authenticate, then re-run detection.",
+                        display_name
+                    ),
+                );
+                Task::none()
             }
 
             Message::WizardDepInstallDone(name, success) => {
@@ -5783,24 +5734,15 @@ impl App {
             }
 
             Message::SetupInstall(platform) => {
-                self.setup_installing = Some(platform);
-                let platform_copy = platform;
-                Task::perform(
-                    async move {
-                        let manager = crate::doctor::InstallationManager::new();
-                        match manager.execute_install(platform_copy) {
-                            Ok(r) => {
-                                if r.success {
-                                    Ok(())
-                                } else {
-                                    Err(r.message)
-                                }
-                            }
-                            Err(e) => Err(e.to_string()),
-                        }
-                    },
-                    move |res| Message::SetupInstallComplete(platform_copy, res),
-                )
+                let display_name = crate::platforms::platform_specs::display_name_for(platform);
+                self.add_toast(
+                    ToastType::Info,
+                    format!(
+                        "In-app installation for {} has been removed. Follow manual setup instructions, then run detection.",
+                        display_name
+                    ),
+                );
+                Task::none()
             }
 
             Message::SetupInstallComplete(platform, res) => {

@@ -9,7 +9,7 @@ This document is the **canonical single source of truth (SSOT)** for the user-pr
 
 It also defines:
 - **seglog canonical persistence** for these artifacts (filesystem is staging/export/cache only)
-- **DRY, contract-referenced plan graph** requirements (**sharded plan graph by default**; machine-runnable, headless) with an **optional, non-canonical** monolithic export for convenience.
+- **DRY, contract-referenced plan graph** requirements (**sharded-only plan graph**; machine-runnable, headless) with an **optional, non-canonical** derived export for convenience.
 
 > **Do not duplicate:** This file is the SSOT for artifact paths and sharding rules; other docs should link here instead of repeating them.
 
@@ -41,8 +41,8 @@ These are the **required artifacts** (staging paths in the user workspace) and *
    - optional `edges.json`
 5) `.puppet-master/project/acceptance_manifest.json`  
 6) `.puppet-master/project/auto_decisions.jsonl`  
-7) Optional (non-canonical convenience export):
-   - `.puppet-master/project/plan_graph.json` (monolithic export; NOT required; NOT canonical)
+7) Optional (non-canonical derived export):
+   - `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` (monolithic export; NOT required; NOT canonical)
 8) Optional (GUI):
     - `.puppet-master/project/ui/wiring_matrix.json`
     - `.puppet-master/project/ui/ui_command_catalog.json`
@@ -61,7 +61,8 @@ These are the **required artifacts** (staging paths in the user workspace) and *
     nodes/
       <node_id>.json
     edges.json               # optional
-  plan_graph.json            # optional monolithic export (non-canonical)
+    exports/
+      plan_graph.monolithic.json  # optional derived export (non-canonical)
   acceptance_manifest.json
   auto_decisions.jsonl
   ui/                        # optional (GUI)
@@ -80,8 +81,8 @@ This document uses the exact terminology/field names of the canonical schemas un
   - node `contract_refs`, `evidence_required`, `allowed_tools`, `tool_policy_mode`, `policy_mode`, `change_budget`,
     `blockers`, `unblocks`, `status`, `evidence_pointer`, `verifier_result`, `decision_refs`, `spec_lock_requirements`
     (and optional `depends_on`, `parallel_group`)
-- `pm.project-plan-graph.v1` (optional monolithic export)
-  - `plan_graph.json` is a monolithic wrapper over the same node object fields as `pm.project-plan-node.v1` (inlined nodes), plus graph-level `graph_id`, `entrypoints`, and `validation.targets`.
+- `pm.project-plan-graph.v1` (optional derived monolithic export)
+  - `plan_graph/exports/plan_graph.monolithic.json` is a monolithic wrapper over the same node object fields as `pm.project-plan-node.v1` (inlined nodes), plus graph-level `graph_id`, `entrypoints`, and `validation.targets`.
 - `Plans/contracts_index.schema.json` (`pm.project_contracts_index.schema.v1`)
 - `Plans/acceptance_manifest.schema.json` (`pm.acceptance_manifest.schema.v1`)
 - `Plans/auto_decisions.schema.json` (`pm.auto_decisions.schema.v1`)
@@ -160,9 +161,9 @@ ContractRef: SchemaID:pm.auto_decisions.schema.v1, PolicyRule:Decision_Policy.md
 - Optional HITL approvals are supported (mid-tier and/or boundary nodes) but are not required:
   - use node `tool_policy_mode: "ask"` (schema: `pm.project-plan-node.v1`) to mark approval boundaries.
 
-## 7. Plan graph requirements (**sharded canonical** + optional monolith export)
+## 7. Plan graph requirements (**sharded-only canonical** + optional derived export)
 
-Puppet Master MUST produce user-project plans as a **sharded plan graph** by default under:
+Puppet Master MUST produce user-project plans as a **sharded-only plan graph** under:
 
 ContractRef: SchemaID:pm.project-plan-graph-index.v1
 
@@ -171,6 +172,20 @@ ContractRef: SchemaID:pm.project-plan-graph-index.v1
 ContractRef: SchemaID:pm.project-plan-graph-index.v1
 
 The sharded graph is the **canonical** headless execution input. `plan.md` remains the required human-readable view.
+
+### Policy: Sharded-only plan graph entrypoint (locked decision)
+
+- The canonical user-project plan graph entrypoint is **always** `.puppet-master/project/plan_graph/index.json`.
+- Node files live at `.puppet-master/project/plan_graph/nodes/<node_id>.json`.
+- An optional edges file may live at `.puppet-master/project/plan_graph/edges.json`.
+- **There is NO canonical `.puppet-master/project/plan_graph.json`.**
+- If a monolithic export is materialized, it MUST be:
+  - labeled as a derived/export artifact (not canonical),
+  - placed at `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json`,
+  - validated only as a consistency check against the sharded graph (never as the canonical input for orchestration or validation).
+- This is a **locked decision**; no open questions remain.
+
+ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md
 
 ### 7.0 Node ID determinism (normative; applies to all sharded graphs)
 
@@ -246,11 +261,11 @@ If present, `.puppet-master/project/plan_graph/edges.json` MUST be consistent wi
 
 ContractRef: Gate:GATE-001
 
-### 7.4 Optional export: `plan_graph.json` (non-canonical monolith)
+### 7.4 Optional derived export: `plan_graph/exports/plan_graph.monolithic.json` (non-canonical)
 
 Puppet Master MAY export a monolithic graph for convenience:
 
-- Path: `.puppet-master/project/plan_graph.json`
+- Path: `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json`
 - Schema: `pm.project-plan-graph.v1` (portable monolithic graph)
 
 If present:
@@ -298,7 +313,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, Primitive:Seglog
 - `plan_graph_index` → `.puppet-master/project/plan_graph/index.json`
 - `plan_graph_node` → `.puppet-master/project/plan_graph/nodes/<node_id>.json`
 - `plan_graph_edges` → `.puppet-master/project/plan_graph/edges.json` (optional)
-- `plan_graph_monolith` → `.puppet-master/project/plan_graph.json` (optional; non-canonical export)
+- `plan_graph_monolith` → `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` (optional; non-canonical derived export)
 - `acceptance_manifest` → `.puppet-master/project/acceptance_manifest.json`
 - `auto_decisions` → `.puppet-master/project/auto_decisions.jsonl`
 - `ui_wiring_matrix` → `.puppet-master/project/ui/wiring_matrix.json` (optional GUI)
@@ -332,14 +347,14 @@ ContractRef: Gate:GATE-001, Gate:GATE-005, Gate:GATE-009
 
 ContractRef: Gate:GATE-001, Gate:GATE-005, Gate:GATE-009
 
-7) **Optional monolithic export consistency (if present)**
-   - `.puppet-master/project/plan_graph.json` validates (`pm.project-plan-graph.v1`)
+7) **Optional derived export consistency (if present)**
+   - `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` validates (`pm.project-plan-graph.v1`)
    - it is consistent with the canonical sharded graph (same node IDs, same node fields, same `entrypoints`)
 
 ## Change Summary
 
-- 2026-02-24: Made the **sharded** plan graph under `.puppet-master/project/plan_graph/` the **canonical default** output (`index.json` + `nodes/<node_id>.json`), with stable/deterministic node IDs.
-- 2026-02-24: Marked `.puppet-master/project/plan_graph.json` as an **optional, non-canonical** monolithic export (may be generated, but must not be required).
+- 2026-02-24: Locked decision: user-project plan graph is **sharded-only**; canonical entrypoint is `.puppet-master/project/plan_graph/index.json`; monolithic export (if materialized) lives at `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json`.
+- 2026-02-24: Marked `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` as an **optional, non-canonical** derived export (may be generated, but must not be required; path was previously `.puppet-master/project/plan_graph.json`).
 - 2026-02-24: Replaced this document to be the canonical SSOT for user-project **Project Plan Package** outputs under `.puppet-master/project/**`.
 - 2026-02-24: Defined seglog canonical persistence as the source of truth (filesystem is staging/export/cache only) with required artifact-event fields.
 - 2026-02-24: Tightened DRY rules: node shards reference `ProjectContract:*`; acceptance manifest references node IDs + contract refs; repeated prose must point to contract pack canon.

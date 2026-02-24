@@ -29,7 +29,7 @@ pub struct PlatformStatus {
 pub fn view<'a>(
     platform_statuses: &'a [PlatformStatus],
     is_checking: bool,
-    setup_installing: Option<Platform>,
+    _setup_installing: Option<Platform>,
     login_in_progress: &'a HashMap<AuthTarget, AuthActionKind>,
     platform_auth_status: &'a HashMap<String, AuthStatus>,
     doctor_results: &'a [crate::app::DoctorCheckResult],
@@ -102,30 +102,13 @@ pub fn view<'a>(
 
         // Node.js prerequisite
         if let Some(check) = node_check {
-            let is_installing = doctor_fixing.contains("node-runtime");
-            let install_btn = if check.passed {
-                None
-            } else if is_installing {
-                Some(styled_button(
-                    theme,
-                    "Installing...",
-                    ButtonVariant::Primary,
-                    scaled,
-                ))
-            } else {
-                Some(
-                    styled_button(theme, "Install", ButtonVariant::Primary, scaled)
-                        .on_press(Message::WizardInstallNode),
-                )
-            };
-
             let status_text = if check.passed {
                 check.message.clone()
             } else {
-                "Not installed".to_string()
+                "Not installed (manual setup required)".to_string()
             };
 
-            let mut node_row = row![
+            let node_row = row![
                 container(selectable_label(
                     theme,
                     if check.passed { "✓" } else { "✗" },
@@ -152,43 +135,27 @@ pub fn view<'a>(
                 selectable_label(theme, "Node.js", scaled),
                 Space::new().width(Length::Fill),
                 selectable_label(theme, &status_text, scaled),
+                if check.passed {
+                    selectable_label(theme, "Ready", scaled)
+                } else {
+                    selectable_label(theme, "Set up manually", scaled)
+                },
             ]
             .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center);
-
-            if let Some(btn) = install_btn {
-                node_row = node_row.push(btn);
-            }
 
             prereq_col = prereq_col.push(node_row);
         }
 
         // GitHub CLI prerequisite
         if let Some(check) = gh_check {
-            let is_installing = doctor_fixing.contains("github-cli");
-            let install_btn = if check.passed {
-                None
-            } else if is_installing {
-                Some(styled_button(
-                    theme,
-                    "Installing...",
-                    ButtonVariant::Primary,
-                    scaled,
-                ))
-            } else {
-                Some(
-                    styled_button(theme, "Install", ButtonVariant::Primary, scaled)
-                        .on_press(Message::WizardInstallGhCli),
-                )
-            };
-
             let status_text = if check.passed {
                 check.message.clone()
             } else {
-                "Not installed".to_string()
+                "Not installed (manual setup required)".to_string()
             };
 
-            let mut gh_row = row![
+            let gh_row = row![
                 container(selectable_label(
                     theme,
                     if check.passed { "✓" } else { "✗" },
@@ -215,13 +182,14 @@ pub fn view<'a>(
                 selectable_label(theme, "GitHub CLI", scaled),
                 Space::new().width(Length::Fill),
                 selectable_label(theme, &status_text, scaled),
+                if check.passed {
+                    selectable_label(theme, "Ready", scaled)
+                } else {
+                    selectable_label(theme, "Set up manually", scaled)
+                },
             ]
             .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center);
-
-            if let Some(btn) = install_btn {
-                gh_row = gh_row.push(btn);
-            }
 
             prereq_col = prereq_col.push(gh_row);
         }
@@ -256,7 +224,6 @@ pub fn view<'a>(
             };
 
             let is_installed = matches!(&platform_status.status, InstallationStatus::Installed(_));
-            let is_installing = setup_installing == Some(platform_status.platform);
             let auth_target = AuthTarget::Platform(platform_status.platform);
             let auth_action = login_in_progress.get(&auth_target).copied();
 
@@ -277,12 +244,8 @@ pub fn view<'a>(
                     Message::RefreshAuthStatus,
                     scaled,
                 )
-            } else if is_installing {
-                styled_button(theme, "Installing...", ButtonVariant::Primary, scaled).into()
             } else {
-                styled_button(theme, "Install", ButtonVariant::Primary, scaled)
-                    .on_press(Message::SetupInstall(platform_status.platform))
-                    .into()
+                selectable_label(theme, "Set up manually", scaled).into()
             };
 
             // Row 1: badge + platform name (avoids squeezing status text)

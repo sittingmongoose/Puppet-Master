@@ -4,7 +4,6 @@
 //! platform filtering, summary statistics, and fix suggestions.
 
 use crate::app::{ContextMenuTarget, Message, SelectableField};
-use crate::doctor::check_targeting;
 use crate::platforms::platform_specs;
 use crate::theme::{AppTheme, colors, styles, tokens};
 use crate::types::Platform;
@@ -261,17 +260,8 @@ fn doctor_platform_selector_label(selected_platforms: &[Platform]) -> String {
     }
 }
 
-// DRY:FN:doctor_install_button_label
-fn doctor_install_button_label(selected_platforms: &[Platform], check_count: usize) -> String {
-    if selected_platforms.is_empty() {
-        format!("INSTALL ALL MISSING ({})", check_count)
-    } else {
-        format!("INSTALL SELECTED MISSING ({})", check_count)
-    }
-}
-
 fn view_header<'a>(
-    results: &'a [DoctorCheckResult],
+    _results: &'a [DoctorCheckResult],
     running: bool,
     _fixing: &'a HashSet<String>,
     selected_platforms: &'a [Platform],
@@ -279,15 +269,6 @@ fn view_header<'a>(
     size: crate::widgets::responsive::LayoutSize,
     scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
-    let failed_fixable_count = results
-        .iter()
-        .filter(|r| {
-            !r.passed
-                && r.fix_available
-                && check_targeting::should_include_in_bulk_install(&r.name, selected_platforms)
-        })
-        .count();
-
     let mut actions = row![]
         .spacing(tokens::spacing::SM)
         .align_y(Alignment::Center);
@@ -302,15 +283,6 @@ fn view_header<'a>(
         )
         .on_press(Message::ToggleDoctorPlatformSelector),
     );
-
-    // INSTALL button (all or selected, depending on platform selection)
-    if failed_fixable_count > 0 {
-        let install_label = doctor_install_button_label(selected_platforms, failed_fixable_count);
-        actions = actions.push(
-            styled_button(theme, &install_label, ButtonVariant::Info, scaled)
-                .on_press(Message::InstallAllMissing),
-        );
-    }
 
     // RUN ALL CHECKS button
     if running {
@@ -345,7 +317,7 @@ fn view_platform_selector<'a>(
 
     grid = grid.push(
         selectable_label(theme,
-            "Only platform-specific checks/install actions follow selection. Global environment checks still run.",
+            "Only platform-specific checks follow selection. Global environment checks still run.",
             scaled,
         ),
     );
@@ -523,9 +495,9 @@ fn view_summary<'a>(
     // Help text if failures exist
     if failed > 0 {
         let help_text_str = if selected_platforms.is_empty() {
-            "Use INSTALL ALL MISSING above to install dependencies. Start a new project (or run setup/start-chain) to generate project state files."
+            "Review each failed check for manual setup guidance. Start a new project (or run setup/start-chain) to generate project state files."
         } else {
-            "Use INSTALL SELECTED MISSING above to install dependencies only for selected platforms."
+            "Review failed checks for selected platforms and follow manual setup guidance."
         };
         content = content.push(selectable_label(theme, help_text_str, scaled));
     }

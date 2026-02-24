@@ -5,8 +5,10 @@
 
 ## Change Summary
 
+- 2026-02-24: Clarified OpenCode GUI contract coverage: provider enable/disable, connection method selection (direct server URL/port or CLI launcher/discovery fallback path), OpenCode auth/sign-in actions, and provider-contract model selection.
+- 2026-02-24: Added OpenCode as a server-bridged provider in provider selection UX; referenced Plans/Provider_OpenCode.md.
 - 2026-02-24: Added conditional UI wiring artifacts (`ui/wiring_matrix.json`, `ui/ui_command_catalog.json`) to the Project Contract Pack when the user project includes a GUI; updated per-phase contract fragments (§6.6.1 Product/UX), Contract Unification Pass (§6.6.2), validation (§6.6.3), and user-project output artifacts (§11). Schema: `Plans/Wiring_Matrix.schema.json`, rules: `Plans/UI_Wiring_Rules.md`.
-- 2026-02-24: Updated user-project **Project Contract Pack + executable artifacts** under `.puppet-master/project/**` to make the plan graph **sharded-by-default and canonical** (`.puppet-master/project/plan_graph/`); removed any requirement that `.puppet-master/project/plan_graph.json` is required/canonical; explicitly no user-project `Plans/` assumption.
+- 2026-02-24: Updated user-project **Project Contract Pack + executable artifacts** under `.puppet-master/project/**` to make the plan graph **sharded-only and canonical** (`.puppet-master/project/plan_graph/`); removed any requirement that `.puppet-master/project/plan_graph.json` is required/canonical; monolithic export path (if materialized) is now `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json`; explicitly no user-project `Plans/` assumption.
 - 2026-02-23: Added Contract Layer handoff section near Requirements Doc Builder/Interview describing Platform vs Project contracts, contract seeds, contract unification, and DRY contract-ID references (SSOT: `Plans/Project_Output_Artifacts.md`).
 - 2026-02-23: Updated Requirements Doc Builder and its Multi-Pass Review to generate and review Contract Layer seed content (assumptions, constraints, glossary, non-functional budgets) alongside `requirements.md`.
 - 2026-02-23: Updated Adaptive Interview Phases to require per-phase contract fragments plus a deterministic Contract Unification Pass at interview completion to produce the Project Contract Pack, sharded plan graph, and acceptance manifest.
@@ -37,7 +39,7 @@ This plan's workflow semantics remain authoritative. Implementation should targe
 - UI implementation details should be re-expressed in Slint (not Iced) without changing user-visible flow
 
 ## SSOT references (DRY)
-- Locked decisions: `Plans/Spec_Lock.json` (GitHub API-only; GitHub CLI forbidden)
+- Locked decisions: `Plans/Spec_Lock.json` (GitHub HTTPS API-only operations)
 - Canonical contracts: `Plans/Contracts_V0.md`
 - Ownership boundaries (primitives): `Plans/Crosswalk.md`
 - DRY + ContractRef rule: `Plans/DRY_Rules.md`
@@ -45,6 +47,7 @@ This plan's workflow semantics remain authoritative. Implementation should targe
 - Deterministic defaults: `Plans/Decision_Policy.md`
 - GitHub auth + API flows: `Plans/GitHub_API_Auth_and_Flows.md`
 - User-project output artifacts: `Plans/Project_Output_Artifacts.md` (under `.puppet-master/project/*`)
+- OpenCode provider integration: `Plans/Provider_OpenCode.md`
 
 ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, PolicyRule:Decision_Policy.md§1
 
@@ -63,7 +66,7 @@ The current Chain wizard and Interview flow assume a single path: **start a new 
 - **§8:** Relationship to other plans.
 - **§9:** Gaps and potential problems (each with a concrete **Resolution**).
 - **§10:** Implementation Readiness Checklist (concrete items for an implementation plan).
-- **§11:** User-project output artifacts (sharded graph by default).
+- **§11:** User-project output artifacts (sharded-only canonical graph).
 - **Change Summary:** Update record for sharded user-project output contracts.
 
 **DRY:** Reuse `platform_specs`, `docs/gui-widget-catalog.md`, rules pipeline (agent-rules-context.md), git/worktree (WorktreeGitImprovement.md, MiscPlan), subagent registry (orchestrator/interview plans), and Assistant/Interview UI patterns (assistant-chat-design.md, interview-subagent-integration.md).
@@ -80,7 +83,7 @@ The current Chain wizard and Interview flow assume a single path: **start a new 
 8. [Relationship to Other Plans](#8-relationship-to-other-plans)
 9. [Gaps and Potential Problems](#9-gaps-and-potential-problems)
 10. [Implementation Readiness Checklist](#10-implementation-readiness-checklist)
-11. [User-Project Output Artifacts (Sharded by Default)](#11-user-project-output-artifacts-sharded-by-default)
+11. [User-Project Output Artifacts (Sharded-Only)](#11-user-project-output-artifacts-sharded-only)
 12. [Change Summary](#change-summary)
 
 ---
@@ -268,6 +271,20 @@ pub struct ChainWizardState {
   - **Enhance/rewrite/add** -- You have an existing project (new to Puppet Master); we'll scope changes and plan.
   - **Contribute (PR)** -- You want to add a feature or fix and open a Pull Request; we'll guide fork, branch, and PR.
 - **Persistence:** Selected intent is stored in wizard/app state and passed to Interview and start chain. If the user goes back and changes intent, downstream state (e.g. requirements, interview phase) may need to be invalidated or confirmed.
+- **OpenCode provider:** OpenCode is a first-class provider in tier configuration. Availability is controlled by the Settings enable toggle (see `Plans/Provider_OpenCode.md`). No wizard flow changes are required.
+
+### 3.1.1 OpenCode Provider Settings Surface (GUI contract)
+
+OpenCode is a **first-class provider backend** configured in Settings, not a wizard-specific special case.
+
+- **Enable/disable:** Settings MUST expose a single OpenCode enable toggle.
+- **Connection method selection:** Settings MUST expose OpenCode connection method:
+  - **Direct server**: user supplies server host/port (or URL equivalent).
+  - **CLI launcher/discovery fallback**: user-configurable `opencode` path used only for local launch/discovery fallback, not for primary HTTP runtime transport.
+- **Auth/sign-in options:** Settings MUST expose server auth inputs and sign-in actions for OpenCode provider auth flows (see `Plans/Provider_OpenCode.md`).
+- **Model selection:** Tier model pickers MUST source OpenCode models through the shared Provider model contract (no OpenCode-only picker behavior).
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/CLI_Bridged_Providers.md
 
 ### 3.2 Requirements Step Redesign
 
@@ -284,9 +301,12 @@ pub struct ChainWizardState {
   - **Project path** (new directory or existing path).
   - **Intent-specific fields:**
     - **New project:** Optional "Create GitHub repo" with **repo name** (required if creating) and any other fields needed to **actually create** the repo (visibility, description, .gitignore template, license, default branch). See §7.1.
-    - **Fork & evolve / Contribute (PR):** **Upstream repo** (URL or `owner/repo`). Then: **"Create fork for me"** (we create the fork via GitHub HTTPS API; no CLI) or **"I'll create the fork myself"** (user supplies fork path or clone URL after they fork). See §7.2.
+    - **Fork & evolve / Contribute (PR):** **Upstream repo** (URL or `owner/repo`). Then: **"Create fork for me"** (we create the fork via GitHub HTTPS API) or **"I'll create the fork myself"** (user supplies fork path or clone URL after they fork). See §7.2.
   - **Existing GitHub repo (link only):** If the user already has a repo (e.g. created elsewhere or fork already exists), allow "Use existing repo" with URL or path.
 - **GitHub create-repo:** The GUI must "punch in" the repo name and all fields required by the GitHub create-repo API so we can create the repo without a second manual step. See §7.1.
+- **Provider readiness strip (Setup):** Show real-time provider auth status (`LoggedOut`, `LoggingIn`, `LoggedIn`, `LoggingOut`, `AuthExpired`, `AuthFailed`) and multi-account summary (active account + account count) for configured providers, with direct links to Authentication and Health/Doctor.
+- **Tool readiness strip (Setup):** Show Cursor CLI, Claude CLI, and Playwright runtime install state (`Not Installed`, `Installing`, `Installed`, `Uninstalling`, `Failed`) with explicit Install/Uninstall actions. Codex/Copilot/Gemini are direct-provider integrations and do not show install buttons in this strip. Cursor/Claude rows include `Use manual path` checkbox + file picker; no manual path controls for Playwright.
+- **Command contract source:** Setup actions for Cursor/Claude install/uninstall/PATH/verify MUST follow `Plans/FinalGUISpec.md` §7.15 command contract verbatim.
 
 ### 3.4 Navigation and Recovery
 
@@ -737,13 +757,14 @@ At interview completion, a single deterministic **Contract Unification Pass** mu
 
 1. Deduplicate overlapping fragments across phases (single canonical statement per contract).
 2. Assign stable `ProjectContract:*` IDs (namespaced, deterministic; see `Plans/Project_Output_Artifacts.md` "Project contract IDs (stable)").
-3. Materialize the canonical Project Contract Pack under `.puppet-master/project/contracts/` and emit required `contracts/index.json`.
-4. Generate `.puppet-master/project/plan_graph/` (canonical sharded execution graph) where every plan node references at least one `ProjectContract:*` in `contract_refs`.
-   - Required: `plan_graph/index.json` + `plan_graph/nodes/<node_id>.json` (and optional `plan_graph/edges.json`).
-   - Optional (non-canonical export): `.puppet-master/project/plan_graph.json` may be materialized as a convenience/compatibility artifact, but validators and orchestrator MUST treat `plan_graph/` as canonical.
-5. Generate `.puppet-master/project/acceptance_manifest.json` such that every plan node `acceptance[].check_id` is covered.
-6. Generate/update `.puppet-master/project/plan.md` as the human-readable view, referencing contract IDs instead of duplicating contract prose (DRY).
-7. **When the user project includes a GUI:** Generate UI wiring artifacts under `.puppet-master/project/ui/`:
+3. Materialize required user-project artifacts under `.puppet-master/project/` exactly per `Plans/Project_Output_Artifacts.md`:
+   - `contracts/` + required `contracts/index.json`
+   - canonical sharded `plan_graph/` (`index.json` + `nodes/<node_id>.json`; optional `edges.json`)
+   - `acceptance_manifest.json`
+   - `plan.md` (human-readable view, contract-ID referenced)
+4. Ensure every plan node includes at least one resolvable `ProjectContract:*` in `contract_refs`.
+5. Optional derived export handling: `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` may be materialized for convenience only; it is non-canonical and validators/orchestrator MUST use sharded `plan_graph/` as the execution source of truth.
+6. **When the user project includes a GUI:** Generate UI wiring artifacts under `.puppet-master/project/ui/`:
    - `ui/wiring_matrix.json` — maps every interactive UI element to its `UICommandID`, handler, expected events, acceptance checks, and evidence requirements. MUST validate against a project-local adaptation of `Plans/Wiring_Matrix.schema.json` (same schema shape; `handler_location` and `ui_location` reflect user-project module paths, not Puppet Master internals).
    - `ui/ui_command_catalog.json` — stable registry of all `UICommandID` values for the user project, with descriptions and handler references.
    - Plan graph nodes that involve UI work (creating screens, adding interactive elements, wiring handlers) MUST include `contract_refs` entries pointing to the relevant wiring matrix entries and/or command catalog IDs.
@@ -758,15 +779,13 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:contracts_
 
 #### 6.6.3 Validation (dry-run, before execution)
 
-After the Contract Unification Pass, a dry-run validator must validate the resulting `.puppet-master/project/` artifact set before execution begins (SSOT: `Plans/Project_Output_Artifacts.md` Validation Rules).
+After the Contract Unification Pass, run the dry-run validator defined by `Plans/Project_Output_Artifacts.md` before execution begins.
 
-This validator is the enforcement point for:
+Validation here is intentionally DRY:
 
-- `ProjectContract:*` resolvability via `contracts/index.json`
-- `acceptance[].check_id` coverage via `acceptance_manifest.json`
-- `plan_graph/` sharded schema validity (`index.json` + node shards, optional `edges.json`) and deterministic node ID rules
-  - If `.puppet-master/project/plan_graph.json` is materialized, it is validated as a derived export only; it is not canonical.
-- **UI wiring completeness (when `has_gui` is true):** Every interactive UI element in the wiring matrix has a bound `UICommandID` and a resolved handler (no unbound UI actions). Every `UICommandID` in the command catalog has at least one wiring matrix entry. `ui/wiring_matrix.json` validates against the wiring matrix schema. Plan nodes with UI scope reference at least one wiring matrix entry or command catalog ID in `contract_refs`.
+- enforce SSOT checks for artifact presence, schema validity, deterministic node IDs, `ProjectContract:*` resolvability, and acceptance-manifest coverage
+- if `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` is materialized, validate it only as a derived consistency export (never canonical)
+- enforce **UI wiring completeness** when `has_gui` is true (no unbound actions; catalog↔matrix coverage; UI-scope nodes carry wiring-related `contract_refs`)
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md
 
@@ -782,7 +801,7 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md
   - **Visibility:** Public / Private (and any org-level options if applicable).
   - **Description:** Optional.
   - **Other fields (optional):** .gitignore template, license, default branch name (when supported by the GitHub API contract used).
-- **Action:** On "Create," call GitHub HTTPS API create-repo flow (no GitHub CLI) per `Plans/GitHub_API_Auth_and_Flows.md`; then set the remote (e.g. `origin`) and optionally push an initial commit so the project is ready.
+- **Action:** On "Create," call GitHub HTTPS API create-repo flow per `Plans/GitHub_API_Auth_and_Flows.md`; then set the remote (e.g. `origin`) and optionally push an initial commit so the project is ready.
 
 ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, ContractName:Plans/GitHub_API_Auth_and_Flows.md
 
@@ -791,7 +810,7 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, Contrac
 - **Requirement:** For intents **Fork & evolve** and **Contribute (PR)**, we **offer** to create the fork for the user, but **allow the user to create the fork themselves**.
 - **Offer to create:**
   - User supplies **upstream repo** (URL or `owner/repo`).
-  - Button or link: **"Create fork for me."** We call the GitHub HTTPS API fork/create flow (no GitHub CLI). Fork destination defaults to the authenticated user's account; org forks are future scope.
+  - Button or link: **"Create fork for me."** We call the GitHub HTTPS API fork/create flow. Fork destination defaults to the authenticated user's account; org forks are future scope.
   - After creation, we resolve the fork clone URL via GitHub API, **clone** the fork to the chosen project path, set that as the working project, and optionally set `upstream` remote to the original repo. Set `fork_created_by_app: true` and store `fork_url_or_path` in wizard state.
 - **User does it themselves:**
   - Option: **"I'll create the fork myself."** We show brief instructions (e.g. "Fork the repo on GitHub, then paste your fork URL or clone path below") and a field for **fork URL** or **local path** after they clone. We use that as the working project and do **not** call any fork/create API. Set `fork_created_by_app: false`. Validate path/URL is a valid git repo; optionally check for `upstream` or `origin` pointing to the expected repo.
@@ -824,7 +843,7 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, Contrac
 ### 7.5 Integration with WorktreeGitImprovement and MiscPlan
 
 - **Branch naming:** Reuse sanitization and strategy from WorktreeGitImprovement.md (branch naming, no invalid refs).
-- **PR creation:** PR creation uses the GitHub HTTPS API per `Plans/GitHub_API_Auth_and_Flows.md` (no GitHub CLI). For "Contribute (PR)" finish flow, we may use a different PR body template (e.g. "Feature: ..." + acceptance summary) but must sanitize secrets.
+- **PR creation:** PR creation uses the GitHub HTTPS API per `Plans/GitHub_API_Auth_and_Flows.md`. For "Contribute (PR)" finish flow, we may use a different PR body template (e.g. "Feature: ..." + acceptance summary) but must sanitize secrets.
 - **GitHub auth:** Fork creation and PR creation require GitHub OAuth token in OS credential store; do not store tokens in seglog/redb/Tantivy or logs.
 
 **Required GitHub auth scopes (MVP):** **repo** (full) -- required for create repo, fork, push branch, open PR. **read:org** -- optional for MVP; required only if we add "Fork to organization." Document these in Doctor/Setup and in user-facing docs. On permission errors (e.g. 403), show: "Permission denied: ensure your GitHub token has the **repo** scope (and **read:org** if using organization fork)." with a link to token/settings.
@@ -833,7 +852,7 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, Contrac
 
 ### 7.6 Gaps and Risks
 
-- **Non-GitHub hosts:** Fork/PR flow is specified for **GitHub** only. **Future:** GitLab and Bitbucket can be stubbed with the same UX (create repo, fork, MR/PR); implementation uses the appropriate host HTTPS API (no CLI) per host. No implementation for non-GitHub in MVP.
+- **Non-GitHub hosts:** Fork/PR flow is specified for **GitHub** only. **Future:** GitLab and Bitbucket can be stubbed with the same UX (create repo, fork, MR/PR); implementation uses the appropriate host HTTPS API per host. No implementation for non-GitHub in MVP.
 - **Org vs. user fork:** **MVP = user fork only.** Fork is created in the authenticated user's account via GitHub API. **"Fork to organization"** is a future option; when added, document the GitHub API fields and required scopes.
 - **Rate limits:** Creating repo/fork and opening PR use GitHub API; respect rate limits and surface "too many requests" (or equivalent) to the user.
 
@@ -853,6 +872,7 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, Contrac
 | **Plans/WorktreeGitImprovement.md** | Branch naming, PR creation, worktree lifecycle. Fork creation and "PR start/finish" are **additional** GUI and flow steps; reuse branch/PR tooling where possible. |
 | **Plans/MiscPlan.md** | Git ignore, no secrets in PR body, cleanup allowlist. `.puppet-master/requirements/` (staging) and `.puppet-master/project/` (canonical outputs) must be allowlisted. |
 | **Plans/usage-feature.md** | No direct change; usage tracking applies to Builder, Interview, and orchestrator runs as today. |
+| **Plans/Provider_OpenCode.md** | OpenCode appears as a first-class provider in tier config. No wizard flow changes; provider selection is managed in Settings. |
 | **Plans/newtools.md** | MCP and tools apply to Assistant and Interview; Builder can use same tool set. |
 
 ---
@@ -993,17 +1013,17 @@ Before implementation, an implementation agent must complete or have clear specs
 26. **i18n:** New strings in central module/resource file keyed by id.
 27. **No secrets:** Sanitize requirements doc, Builder output, and PR body; checklist item for implementation.
 28. **Document:** Fork/PR we only clone and create branch; no execution of upstream code.
-29. **Required user-project artifacts:** Emit the canonical artifact set under `.puppet-master/project/`: `requirements.md`, `contracts/` (Project Contract Pack; includes `contracts/index.json` and may be chunked across multiple files if large), `plan.md`, `plan_graph/` (see below), `acceptance_manifest.json`, plus execution-time `auto_decisions.jsonl` and per-node evidence bundles under `.puppet-master/project/evidence/`. Optional (recommended): `.puppet-master/project/glossary.md`.
-30. **Plan graph materialization (sharded-by-default):** Always emit `.puppet-master/project/plan_graph/` as the canonical execution graph entrypoint: `index.json` + `nodes/<node_id>.json` (optional `edges.json`). Puppet Master may also materialize `.puppet-master/project/plan_graph.json` as a non-canonical export.
-31. **Plan-graph `index.json` contract (required):** Include `schema_version`, `nodes`, `entrypoints`, `validation`; each node entry includes `node_id`, `path`, `sha256`, optional `subgraph`.
-32. **Node shard contract (required):** Each `nodes/<node_id>.json` includes required fields: `objective`, `contract_refs` (must include ≥1 `ProjectContract:*`), `acceptance`, `evidence_required`, `allowed_tools`, `policy_mode` (or `tool_policy_mode`), `change_budget`, `blockers`, `unblocks`.
-33. **Deterministic IDs:** Node IDs must be stable and deterministic from phase/task/subtask/iteration lineage (with deterministic hashing fallback). No randomness.
-34. **Human-readable view:** Keep `.puppet-master/project/plan.md` mandatory; include entrypoints, execution-order hints, acceptance summary, and contract-pack references.
-35. **Canonical seglog persistence:** Persist all required artifacts as full-content seglog artifact events (chunked with `chunk_index`/`chunk_count` when needed) and a final integrity event with canonical `sha256`.
-36. **Filesystem materialization contract:** Treat filesystem files as materializations/cache that are reproducible from seglog.
+29. **Required user-project artifacts:** Emit the canonical `.puppet-master/project/` artifact set exactly as specified in `Plans/Project_Output_Artifacts.md` (no local schema/path restatement).
+30. **Plan graph materialization (sharded-only):** Treat `.puppet-master/project/plan_graph/index.json` + referenced `nodes/<node_id>.json` shards (optional `edges.json`) as the only canonical execution graph; `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` is optional derived export only.
+31. **Schema + field contracts:** Enforce `pm.project-plan-graph-index.v1` and `pm.project-plan-node.v1` requirements via SSOT/schema validation (do not duplicate field lists in this plan).
+32. **Deterministic integrity:** Enforce SSOT deterministic node-ID + shard-hash integrity rules; no randomness and no nondeterministic ordering.
+33. **Human-readable view:** Keep `.puppet-master/project/plan.md` mandatory as the operator-facing summary.
+34. **Contract/acceptance coverage:** Enforce resolvable `ProjectContract:*` references and acceptance-manifest coverage via the dry-run validator.
+35. **Canonical seglog persistence:** Persist required artifacts as full-content artifact events with deterministic chunking and final integrity hash, per SSOT.
+36. **Filesystem materialization contract:** Treat filesystem files as reproducible projections of canonical seglog content.
 37. **Contract seed pack (Builder):** When Requirements Doc Builder is used, write `.puppet-master/requirements/contract-seeds.md` and include it in Multi-Pass Review (§5.6). Treat it as staging input and reconcile it during the Contract Unification Pass (§6.6); do not treat it as the canonical Project Contract Pack.
-38. **Contract Unification Pass:** Implement the deterministic unification step (§6.6) that materializes `.puppet-master/project/contracts/` + `contracts/index.json`, generates the canonical sharded `plan_graph/` (and optional non-canonical `plan_graph.json` export) plus `acceptance_manifest.json`, and ensures every plan node references at least one resolvable `ProjectContract:*`.
-39. **Dry-run validator:** Run the dry-run validator defined by `Plans/Project_Output_Artifacts.md` Validation Rules before execution begins; surface failures as gating errors (no manual verification).
+38. **Contract Unification Pass:** Implement the deterministic unification step (§6.6) to materialize SSOT-defined canonical artifacts and ensure every plan node references at least one resolvable `ProjectContract:*`.
+39. **Dry-run validator:** Run the SSOT-defined validator rules before execution begins; surface failures as gating errors (no manual verification).
 40. **Builder opener:** Ensure first Builder Assistant message is exactly `What are you trying to do?`.
 41. **Turn counter + 6-turn suggestion:** Implement completed-turn semantics (Assistant message + user response) and suggest generation when `completed_turns >= 6` or earlier if enough info exists; suggestion does not auto-generate.
 42. **Checklist dual state:** Implement `builder_checklist_state.v1` and `builder_conversation_state.v1` and keep them synchronized.
@@ -1016,81 +1036,27 @@ Before implementation, an implementation agent must complete or have clear specs
 
 ---
 
-## 11. User-Project Output Artifacts (Sharded by Default)
+## 11. User-Project Output Artifacts (Sharded-Only)
 
-Interviewer/Wizard outputs for user projects must materialize and persist the following canonical artifacts under `.puppet-master/project/` (and persist them canonically in seglog; filesystem is a materialization/cache):
+Interviewer/Wizard outputs for user projects MUST follow the canonical artifact, sharding, and persistence contract in `Plans/Project_Output_Artifacts.md`.
 
-**Required (portable; do not assume user projects have `Plans/`):**
+This section is intentionally flow-specific and does not restate SSOT schema fields.
 
-- `.puppet-master/project/requirements.md`
-- `.puppet-master/project/contracts/` (Project Contract Pack; includes `contracts/index.json`; chunk/shard if large)
-- `.puppet-master/project/plan.md`
-- `.puppet-master/project/plan_graph/` with `index.json`, `nodes/<node_id>.json`, optional `edges.json`
-- `.puppet-master/project/acceptance_manifest.json`
-- `.puppet-master/project/glossary.md` (optional, recommended)
-- `.puppet-master/project/ui/wiring_matrix.json` (conditional: GUI projects only; maps interactive UI elements to commands, handlers, events, and acceptance checks; schema adapted from `Plans/Wiring_Matrix.schema.json`)
-- `.puppet-master/project/ui/ui_command_catalog.json` (conditional: GUI projects only; stable registry of `UICommandID` values for the user project)
-
-**Execution-time (required for determinism and verification):**
-
-- `.puppet-master/project/auto_decisions.jsonl` (deterministic ambiguity defaults; append-only)
-- `.puppet-master/project/evidence/<node_id>.json` (per-node evidence bundle; schema `pm.evidence.schema.v1`)
-
-**Optional derived export (non-canonical):**
-
-- `.puppet-master/project/plan_graph.json` (optional convenience export; canonical graph is always `plan_graph/`)
-
-Rules for this flow:
+Flow-specific requirements:
 
 - Uploads and builder output remain staging inputs under `.puppet-master/requirements/*`.
-- Before Interview/start-chain execution, canonical promotion must write `.puppet-master/project/requirements.md`.
-- Plan graph output MUST be canonical under `.puppet-master/project/plan_graph/` (`index.json` + `nodes/<node_id>.json`, optional `edges.json`). `.puppet-master/project/plan_graph.json` may be materialized as a derived export, but it is not required or canonical.
-- `plan.md` remains mandatory as the human-readable view (entrypoints, execution-order hints, acceptance summary, contract-pack references).
-- Contract pack uses stable `ProjectContract:*` IDs (resolved via `contracts/index.json`); every node must reference at least one project contract ID.
-- Platform Contracts (internal SSOT) are referenced by name/ID only; do not copy internal `Plans/` schemas/docs into the user project.
-- All artifacts above are canonical in seglog as full-content artifact events (deterministic chunking for large payloads, integrity event with canonical `sha256`).
-- Filesystem copies are materializations/cache and must be regenerable from seglog.
+- Before Interview/start-chain execution, canonical promotion MUST write `.puppet-master/project/requirements.md`.
+- Contract Unification Pass MUST materialize canonical outputs under `.puppet-master/project/` exactly per SSOT (contracts/index, `plan.md`, sharded `plan_graph/`, acceptance manifest, execution-time decisions/evidence, optional glossary).
+- Canonical execution graph is sharded-only: `.puppet-master/project/plan_graph/index.json` + referenced `nodes/<node_id>.json` shards (optional `edges.json`).
+- `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` is optional derived export only (non-canonical; never required).
+- When `has_gui` is true, generate `.puppet-master/project/ui/wiring_matrix.json` and `.puppet-master/project/ui/ui_command_catalog.json`, and ensure UI-scope nodes carry wiring-related `contract_refs`.
+- Persist planning artifacts canonically in seglog; filesystem copies are regenerable projections.
 
-The authoritative contract for schemas, deterministic node IDs, validation pointers, and seglog persistence is `Plans/Project_Output_Artifacts.md`.
+### 11.1 Plan-Graph Handling (Flow-Specific)
 
-### 11.1 `plan_graph/` requirements (executable sharded graph; canonical)
-
-The plan graph is an **executable** spec, not a prose outline. At minimum:
-
-**Sharding + determinism (required):**
-
-- **Deterministic node IDs:** `node_id` MUST be stable and deterministic (no randomness). If hashing is used, it MUST be deterministic from stable inputs and collision-safe.
-- **Canonical layout:** The canonical graph lives under `.puppet-master/project/plan_graph/`:
-  - `index.json` (required)
-  - `nodes/<node_id>.json` (required; one per node)
-  - `edges.json` (optional)
-
-**`index.json` required fields (minimum):**
-
-- `schema_version`
-- `nodes` (list; each entry includes at least `node_id`, `path`, `sha256`)
-- `entrypoints`
-- `validation` (validation pointers the validator can follow)
-
-**Node shard required fields (minimum):**
-
-- `objective`
-- `contract_refs`
-- `acceptance`
-- `evidence_required`
-- `allowed_tools`
-- `policy_mode` (or `tool_policy_mode`)
-- `change_budget`
-- `blockers`
-- `unblocks`
-
-**Execution semantics (required):**
-
-- **Contract references:** Every node shard includes `contract_refs` and references **≥ 1** resolvable `ProjectContract:*` ID (validator must enforce resolvability via `contracts/index.json`).
-- **Executable acceptance:** Every node shard includes `acceptance[]` with `check_id` values that resolve to **executable** checks in `acceptance_manifest.json` (commands, tests, static checks, or deterministic validators; no manual-only checks).
-- **Tool policy:** Every node shard declares allowed tools and a tool-policy mode (`auto | ask | deny`) that the orchestrator can enforce deterministically.
-- **Change budgets:** Every node shard declares a `change_budget` (scope limits like max files/LOC, allowed directories, risk level, time/turn caps) that gating/validators enforce.
-- **Evidence requirements:** Every node shard declares `evidence_required` and the evidence bundle schema/path requirements; the orchestrator must emit the per-node evidence bundle during execution.
+- Validators and orchestrator MUST use only the canonical sharded graph for scheduling/execution inputs.
+- Field-level schema requirements, deterministic node-ID rules, contract/acceptance coverage, and evidence requirements are defined in `Plans/Project_Output_Artifacts.md` and enforced by the dry-run validator.
+- If `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` is materialized, validate it only as a consistency export; never treat it as canonical input.
 
 ### 11.2 Autonomy + HITL (deterministic ambiguity handling)
 

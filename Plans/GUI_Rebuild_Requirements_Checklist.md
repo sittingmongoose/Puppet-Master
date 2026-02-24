@@ -26,6 +26,10 @@ This checklist is the single auditable summary that verifies the 2026-02-23 GUI 
 | Orchestrator page: single page with 6 tabs | `Plans/Orchestrator_Page.md` sections 2 and 3 | PASS | Tabs are Progress, Tiers, Node Graph Display, Evidence, History, Ledger. |
 | Node Graph Display: Airflow-style DAG spec with contract + presets + 8-section detail panel + HITL controls | `Plans/Run_Graph_View.md` sections 2, 6, 7, 9, 16, 17 | PASS | Includes 5 layout presets, C1-C8 detail sections, HITL actions, data model contract, and acceptance criteria. |
 | Summary verification coverage + image references | `Plans/Run_Graph_View.md` references section; `Concepts/dag_run_graph.png`; `Concepts/dag_run_graph1.png` | PASS | Reference images are present and linked by the run-graph specification. |
+| Preview + Build controls on operational surfaces | `Plans/FinalGUISpec.md` §7.2; `Plans/Orchestrator_Page.md` §4.5; `Plans/newtools.md` §14.6 | PASS | Dashboard and orchestrator status surfaces define Preview/Build actions with artifact/session summaries. |
+| Docker runtime + DockerHub settings contract | `Plans/FinalGUISpec.md` §7.4.8; `Plans/newtools.md` §14.7 | PASS | Advanced settings specify containers/registry defaults, auth mode, and publish policy. |
+| GitHub Actions generation settings contract | `Plans/FinalGUISpec.md` §7.4.9; `Plans/newtools.md` §14.8; `Plans/UI_Command_Catalog.md` §2.5 | PASS | Advanced settings specify workflow templates, secrets checklist, preview/apply flow, and command IDs. |
+| Automation migration (legacy Iced reference -> Slint runtime target) | `Plans/newtools.md` §14.9; `Plans/rewrite-tie-in-memo.md` | PASS | Migration boundary is explicit: keep evidence/tooling contracts while targeting Slint runtime semantics. |
 
 ## Command Catalog Coverage Check
 
@@ -34,6 +38,11 @@ The following command groups introduced by the 2026-02-23 docs are now listed in
 - `cmd.widget.*`
 - `cmd.graph.*`
 - `cmd.orchestrator.*`
+- `cmd.orchestrator.preview_open`
+- `cmd.orchestrator.preview_stop`
+- `cmd.orchestrator.open_preview_artifact`
+- `cmd.orchestrator.build_run`
+- `cmd.orchestrator.open_build_artifact`
 - `cmd.chat.compact_context`
 - `cmd.chat.open_usage_popout`
 - `cmd.chat.close_usage_popout`

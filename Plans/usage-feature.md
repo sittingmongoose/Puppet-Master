@@ -145,13 +145,13 @@ Chat threads must expose **per-thread usage** in the same way as the OpenCode de
 | **`.puppet-master/state/active-subagents.json`** (orchestrator plan) | Which subagent ran at which tier: `tier_id`, `active_subagent`, `timestamp`. | Enriches Usage: "which subagent used what" -- e.g. show usage by subagent or "rust-engineer: 500 tokens at ST-001-001-001". Optional for v1. |
 | **`.puppet-master/state/active-agents.json`** (orchestrator plan) | Real-time coordination: which agents are active, platform, files, status. | Can support "who is running now" in Usage or dashboard; less about historical totals. |
 
-**Implication:** The Usage view can be **state-file-first**: read `usage.jsonl` (and optionally `summary.json`, active-subagents), aggregate by time window (5h, 7d) and by platform/tier, and show 5h/7d, ledger, and basic analytics without calling Claude Admin API or Copilot metrics. Platform APIs and SDKs then **augment** (e.g. official limits, plan label, reset countdown, per-request tokens) where available.
+**Implication:** The Usage view can be **state-file-first**: read `usage.jsonl` (and optionally `summary.json`, active-subagents), aggregate by time window (5h, 7d) and by platform/tier, and show 5h/7d, ledger, and basic analytics without calling Claude Admin API or Copilot metrics. Platform APIs and CLI output parsing then **augment** (e.g. official limits, plan label, reset countdown, per-request tokens) where available.
 
 ---
 
-## Per-platform usage data (API / SDK)
+## Per-platform usage data (API / CLI)
 
-Beyond state-file aggregation, each platform can augment Usage with API or SDK data. AGENTS.md currently summarizes usage sources; this section fleshes out what we can use to augment the Usage feature.
+Beyond state-file aggregation, each platform can augment Usage with API or CLI data. AGENTS.md currently summarizes usage sources; this section fleshes out what we can use to augment the Usage feature.
 
 ### Cursor -- API (usage/account only; not for model invocation)
 
@@ -161,17 +161,17 @@ Beyond state-file aggregation, each platform can augment Usage with API or SDK d
 - **What we can get:** Usage, limits, or plan info where the API exposes it. **Deterministic default:** Cursor API augmentation is **disabled** until a Spec Lock update pins the endpoint contract; local aggregation from `usage.jsonl` remains the primary source of truth for 5h/7d and ledger.
 - **Usage feature:** When implemented, call the Cursor API only for usage/limits/account data (with rate limiting and fallback to local aggregation); show Cursor usage and limits in the Usage view. If the API does not expose 5h/7d, keep local aggregation from `usage.jsonl` as primary and use the API for any extra fields (e.g. plan, feature flags).
 
-### Codex -- SDK
+### Codex -- CLI + provider data
 
-- **Availability:** **Codex SDK** (`@openai/codex-sdk`, TypeScript): wraps the `codex` CLI; thread-centric API (`startThread()`, `resumeThread(id)`, `thread.run()` / `thread.runStreamed()`). When we run Codex via the SDK (e.g. for programmatic or headless runs), we can get **a lot** from it.
-- **What we can get:** Thread/session lifecycle events (start, completion, failure); streamed output (JSONL) often includes **usage/token** fields in completion or result events. SDK callbacks (e.g. `onTurnComplete`, `onSessionStart`) and response payloads may expose token counts, request/response usage, or cost. Exact fields to be confirmed from [Codex SDK docs](https://developers.openai.com/codex/sdk/) (e.g. `usage`, `input_tokens`, `output_tokens` in thread or run responses).
-- **Usage feature:** When using Codex SDK: (1) persist per-request token/usage from SDK responses into `usage.jsonl` so we have accurate counts; (2) if the SDK or Codex backend exposes quota/limits (e.g. 5h remaining), surface that in the Usage view. CLI-only runs continue to rely on error parsing (5h message limit) and local aggregation.
+- **Availability:** Run Codex via `codex exec ...` after OAuth/device-code auth (`codex login` / `codex login --device-auth`) or `CODEX_API_KEY` in headless contexts.
+- **What we can get:** Structured CLI output (`--json` / JSONL), run metadata, and error parsing (including 5-hour window reset hints). Optional provider-side usage/quota endpoints can augment plan/limit display when available.
+- **Usage feature:** Persist per-run usage metadata parsed from CLI events into `usage.jsonl`, and enrich with provider quota/reset data where supported. No SDK integration path.
 
-### Copilot -- SDK
+### Copilot -- CLI + REST metrics
 
-- **Availability:** **GitHub Copilot SDK** (`@github/copilot-sdk`, multi-language): talks to Copilot CLI (e.g. `copilot --headless --port N`); session-centric (`createSession()`, session lifecycle). We can get **a lot** from the SDK when we use it.
-- **What we can get:** Session lifecycle (start, end, cancel); session-scoped MCP and config. SDK or CLI may expose **usage**, **token counts**, or **request limits** per session or per org (exact APIs to be confirmed from [Copilot SDK docs](https://github.com/github/copilot-sdk)). GitHub REST API (`/orgs/{org}/copilot/metrics`) already documented in AGENTS.md for org-level metrics and plan inference.
-- **Usage feature:** When using Copilot SDK: (1) record per-session or per-request usage from SDK/CLI responses into `usage.jsonl`; (2) optionally call GitHub Copilot metrics API (with `GITHUB_TOKEN`/`GH_TOKEN`) for org-level usage and show in Usage view. Combine SDK-level detail with REST API for a full picture.
+- **Availability:** Run Copilot through the CLI after GitHub OAuth/device auth (`/login`) or token auth (`GITHUB_TOKEN` / `GH_TOKEN`).
+- **What we can get:** CLI run outputs plus GitHub REST metrics (`/orgs/{org}/copilot/metrics`) for org-level usage and limits.
+- **Usage feature:** Record per-run usage from CLI output into `usage.jsonl`, and augment with GitHub metrics API data when tokens are configured. No SDK integration path.
 
 ### Claude Code -- Admin API (existing)
 
@@ -190,17 +190,17 @@ Beyond state-file aggregation, each platform can augment Usage with API or SDK d
 | Platform   | Primary augmentation              | Auth / env                    | Notes                                                                 |
 |-----------|------------------------------------|-------------------------------|-----------------------------------------------------------------------|
 | **Cursor**| API (usage/limits/account only; not for model invocation) | `CURSOR_API_KEY` / app auth  | OAuth + CLI for running models; Cursor API augmentation is disabled until Spec Lock pins an endpoint contract. |
-| **Codex** | SDK (thread/session + usage)      | CLI login / `CODEX_API_KEY`   | Per-request tokens and optional quota from SDK/stream when using SDK.|
-| **Copilot**| SDK (session) + REST metrics API  | `GITHUB_TOKEN` / `GH_TOKEN`  | Per-session from SDK; org-level from `/orgs/{org}/copilot/metrics`.   |
+| **Codex** | CLI stream + provider data         | CLI login / `CODEX_API_KEY`   | Per-run usage from CLI JSON/JSONL + optional provider quota data.      |
+| **Copilot**| CLI + REST metrics API            | `GITHUB_TOKEN` / `GH_TOKEN`  | Per-run usage from CLI; org-level from `/orgs/{org}/copilot/metrics`.  |
 | **Claude**| Admin API + stream-json usage     | `ANTHROPIC_API_KEY`          | Org usage + plan; per-run tokens from stream.                          |
 | **Gemini**| Cloud Quotas API + error parsing  | `GOOGLE_CLOUD_PROJECT`, creds| Quota/usage from API; reset time from errors; do not rely on a CLI account/usage subcommand. |
 
-**Implementation order:** State-file aggregation first (works for all platforms). Then add augmentation per platform: Claude (Admin API + stream) and error parsing (Codex, Gemini) are already documented; next wire Cursor API, Codex SDK usage, Copilot SDK + metrics API, and Gemini Cloud Quotas (and any CLI usage when confirmed).
+**Implementation order:** State-file aggregation first (works for all platforms). Then add augmentation per platform: Claude (Admin API + stream) and error parsing (Codex, Gemini) are already documented; next wire Cursor API, Codex CLI usage enrichment, Copilot CLI + metrics API, and Gemini Cloud Quotas (and any CLI usage when confirmed).
 
 ## Data and Backend (conceptual)
 
 - **Data layer:** Reuse and extend existing usage/plan-detection logic. Expose a clear "current usage" contract (per platform) that the GUI can poll or subscribe to (e.g. 5h used/limit, 7d used/limit, plan label). **Primary input:** aggregate from `usage.jsonl` (and optional `summary.json`); secondary: platform APIs where configured.
-- **Sources:** Prefer **state JSON/JSONL first** (usage.jsonl, summary.json, active-subagents.json); then **per-platform API/SDK** (see "Per-platform usage data (API / SDK)"): Cursor API (usage/account only -- we do not use it for model invocation; OAuth + CLI for that), Codex SDK (thread/session + usage from responses), Copilot SDK + GitHub Copilot metrics API, Claude Admin API + stream-json usage, Gemini Cloud Quotas API + error parsing. Document which platforms support live vs after-run stats. AGENTS.md "Cursor | No API available" refers to model invocation; Cursor has a separate API for usage/limits that we may use to augment the Usage view.
+- **Sources:** Prefer **state JSON/JSONL first** (usage.jsonl, summary.json, active-subagents.json); then **per-platform API/CLI** (see "Per-platform usage data (API / CLI)"): Cursor API (usage/account only -- we do not use it for model invocation; OAuth + CLI for that), Codex CLI stream + provider data, Copilot CLI + GitHub Copilot metrics API, Claude Admin API + stream-json usage, Gemini Cloud Quotas API + error parsing. Document which platforms support live vs after-run stats. AGENTS.md "Cursor | No API available" refers to model invocation; Cursor has a separate API for usage/limits that we may use to augment the Usage view.
 - **Persistence:** Current `usage.jsonl` (and any future redb) remains the source for event-level data; aggregated 5h/7d may be derived or cached from the same data or from platform APIs.
 
 ## GUI Placement Options
@@ -480,7 +480,7 @@ The plan does not mandate A/B/C; the product can choose one and document it. Con
 | 2026-02-21 | Fleshed out: Gaps (5h/7d not in GUI, no live APIs in GUI path, Ledger vs usage_tracker split, quota only from errors, alert threshold, analytics, interview/orchestrator policy); Potential problems (API secrets, rate limits, two tracker types, platform semantics, file size, stale data, multi-project); Enhancements (time-window selector, reset countdown, per-tier usage, export, header compact, Doctor integration, cost column, alerts history). |
 | 2026-02-21 | Data sources: added "Data Sources: State Files (JSON/JSONL)" -- usage.jsonl is primary source for Ledger and 5h/7d aggregation; summary.json (STATE_FILES §5.3) and active-subagents.json can enrich. State-file-first approach so we get most Usage info from existing JSON/JSONL without platform APIs. |
 | 2026-02-21 | Fleshed out Gaps, Potential Problems, Enhancements: each gap has Current state / Desired / Acceptance; each problem has Risk / Impact / Mitigation; each enhancement has Benefit / Notes / Phase. |
-| 2026-02-21 | Per-platform usage data: added section on Cursor API (augment with usage/limits; CURSOR_API_KEY); Codex SDK (thread/session + usage/tokens from SDK responses); Copilot SDK (session + metrics API); Claude Admin API + stream-json (existing); Gemini (Cloud Quotas API + error parsing; CLI account/usage subcommand not required). Summary table and implementation order. |
+| 2026-02-21 | Per-platform usage data: added section on Cursor API (augment with usage/limits; CURSOR_API_KEY); Codex CLI stream/provider data; Copilot CLI + metrics API; Claude Admin API + stream-json (existing); Gemini (Cloud Quotas API + error parsing; CLI account/usage subcommand not required). Summary table and implementation order. |
 | 2026-02-21 | Clarified Cursor API: usage/account/limits only -- we do not use it for model invocation; model engagement stays OAuth + CLI. AGENTS.md "No API available" refers to model invocation; Cursor has a separate API for augmenting the Usage view. |
 | 2026-02-22 | Added "Storage dependency (implementation)": Usage depends on seglog + redb + projectors + analytics scan; embedded implementation checklist from storage-plan.md; clarified state-file-first fallback until stack exists; cross-referenced storage-plan.md and storage-solution-research.md in Relationship to Existing Docs. |
 | 2026-02-23 | Added widget-composed page layout addendum (sections below): Usage page is fully widget-composed with grid-based resizing, per-widget config, Multi-Account widget as first-class catalog entry, and Dashboard reuse via add-widget flow. |
