@@ -2,7 +2,8 @@
 
 ## Change Summary
 
-- 2026-02-24: Updated the user-project Contract Layer outputs to require portable `.puppet-master/project/plan_graph.json` (canonical headless input) while keeping sharded `plan_graph/` as an optional cache for large graphs (SSOT: `Plans/Project_Output_Artifacts.md`, `Plans/orchestrator-subagent-integration.md`).
+- 2026-02-24: Added UI wiring artifacts (`ui/wiring_matrix.json`, `ui/ui_command_catalog.json`) to interview outputs for GUI projects; updated Phase 3 (Product/UX) subagent responsibilities, §5.2 wiring/completeness requirements, and Contract Layer outputs. SSOT: `Plans/UI_Wiring_Rules.md`, `Plans/Wiring_Matrix.schema.json`.
+- 2026-02-24: Updated the user-project Contract Layer outputs so the Interviewer/Wizard emits a **sharded plan graph** under `.puppet-master/project/plan_graph/` **by default** (canonical; persisted canonically in seglog). `plan_graph.json` becomes an optional derived export only. (SSOT: `Plans/Project_Output_Artifacts.md`, `Plans/orchestrator-subagent-integration.md`.)
 - 2026-02-23: Added a cross-plan alignment section making the Interview phase manager responsible for (1) intent-driven adaptive phase selection (phase plan) and (2) producing Contract Layer outputs via contract fragments + a deterministic Contract Unification Pass (SSOT: `Plans/chain-wizard-flexibility.md` §6 and `Plans/Project_Output_Artifacts.md`).
 
 ## Plan Document Status
@@ -67,6 +68,14 @@ This document covers the **interview flow** (multi-phase interview: Scope, Archi
   - Generate questions about user workflows, accessibility, edge cases
   - Research UX patterns and best practices
   - Validate UX decisions against user research methodologies
+  - **When user project includes a GUI:** Inventory interactive UI elements, assign preliminary `UICommandID` values, and map elements to intended handlers — producing UI wiring fragments that feed the Contract Unification Pass (see `Plans/chain-wizard-flexibility.md` §6.6.2)
+
+**Secondary Subagent (GUI projects):** `frontend-developer`
+- **Purpose:** UI architecture, component design, wiring feasibility
+- **Use Cases:**
+  - Validate UI element → command → handler mappings for technical feasibility
+  - Review wiring matrix fragments for completeness (no unbound interactive elements)
+  - Advise on component structure that supports the wiring matrix pattern (one element, one command)
 
 ### Phase 4: Data & Persistence
 **Primary Subagent:** `database-administrator`
@@ -155,20 +164,49 @@ The Interview phase manager must support adaptive phase selection exactly as spe
 
 ### 2) Contract Layer output generation (fragments → unification)
 
-The Interviewer/Wizard must produce the canonical user-project artifact set under `.puppet-master/project/` (requirements, Project Contract Pack, `plan.md`, `plan_graph.json` (+ optional sharded `plan_graph/` cache), `acceptance_manifest.json`, etc.). The authoritative contract for these artifacts and schemas is `Plans/Project_Output_Artifacts.md`.
+The Interviewer/Wizard must produce the canonical user-project artifact set under `.puppet-master/project/`. These artifacts are **persisted canonically in seglog**; the filesystem under `.puppet-master/project/**` is a regenerable projection/export. **Do not assume user projects have a `Plans/` folder** (any `Plans/*` references here are Puppet Master internal only). The authoritative contract for these artifacts and schemas is `Plans/Project_Output_Artifacts.md`.
+
+**Required outputs (staged in the user workspace under `.puppet-master/project/` and persisted canonically in seglog):**
+
+1. `requirements.md`
+2. `contracts/` (Project Contract Pack; MUST include `contracts/index.json`)
+3. `plan.md`
+4. `plan_graph/` (sharded plan graph; canonical)
+   - `plan_graph/index.json` (required)
+   - `plan_graph/nodes/<node_id>.json` (required; 1+)
+   - `plan_graph/edges.json` (optional)
+5. `acceptance_manifest.json`
+6. `auto_decisions.jsonl`
+7. `ui/wiring_matrix.json` (conditional: GUI projects only; interactive element → command → handler mapping)
+8. `ui/ui_command_catalog.json` (conditional: GUI projects only; stable `UICommandID` registry)
+
+**Optional derived export (non-canonical):**
+- `plan_graph.json` (monolithic wrapper export). If emitted, it MUST be consistent with the sharded graph.
 
 Implementation responsibilities (conceptual):
 
 - **Per-phase contract fragments:** Each interview phase contributes contract fragments (interfaces, schemas, constraints, budgets, test contracts). These fragments are inputs to unification; they are not the canonical contract pack.
 - **Contract Unification Pass:** At interview completion, run a deterministic unification step that dedupes fragments, assigns stable `ProjectContract:*` IDs, and materializes:
    - `.puppet-master/project/contracts/` + required `contracts/index.json`
-   - `.puppet-master/project/plan_graph.json` (canonical; portable headless execution input)
-   - optional `.puppet-master/project/plan_graph/index.json` + `nodes/<node_id>.json` (sharded cache for large graphs)
+   - `.puppet-master/project/plan_graph/` (canonical sharded graph: `index.json` + `nodes/<node_id>.json` + optional `edges.json`)
+   - optional `.puppet-master/project/plan_graph.json` (derived export only; MUST match shards if present)
    - `.puppet-master/project/acceptance_manifest.json`
    - `.puppet-master/project/plan.md`
    - optional `.puppet-master/project/glossary.md`
+- **UI wiring artifacts (GUI projects):** When the interview detects the user project has a GUI (`has_gui = true` from Architecture or Product/UX phases), the Contract Unification Pass also generates `.puppet-master/project/ui/wiring_matrix.json` and `.puppet-master/project/ui/ui_command_catalog.json` from the Product/UX phase wiring fragments. The validation gate must verify schema conformance and "no unbound UI actions" (every interactive element has a bound command and handler).
 - **Builder contract seeds:** When Requirements Doc Builder is used (chain-wizard §5), `.puppet-master/requirements/contract-seeds.md` is a staging input to the unification pass and must be reconciled with phase-derived fragments.
-- **Validation gate:** Before execution begins, run the dry-run validator specified by `Plans/Project_Output_Artifacts.md` Validation Rules (resolvable `ProjectContract:*` refs, acceptance-manifest coverage, `plan_graph.json` validity (and shard-cache validity if present), deterministic node IDs).
+- **Validation gate:** Before execution begins, run the dry-run validator specified by `Plans/Project_Output_Artifacts.md` Validation Rules (resolvable `ProjectContract:*` refs, acceptance-manifest coverage, `plan_graph/index.json` + node-shard validity, deterministic node IDs, and—if `plan_graph.json` is emitted—byte/semantic consistency with the shards).
+
+#### Plan graph sharding (sharded-by-default; minimal rules)
+
+- **Deterministic node IDs (required):** `node_id` MUST be deterministic from the node’s semantic content so reruns produce stable IDs. At minimum:
+  - Canonicalize the node object by sorting object keys and sorting any string arrays; sort `acceptance[]` by `check_id`.
+  - Compute `sha256(canonical_json_bytes)` and set `node_id = "PN-" + <first 16 hex chars of sha256>`.
+  - The in-file `node_id` MUST exactly match `<node_id>` in the filename `nodes/<node_id>.json`.
+- **Node shard required fields:** Each `plan_graph/nodes/<node_id>.json` MUST include (see `Plans/project_plan_node.schema.json` for the full schema):  
+  `node_id`, `objective`, `contract_refs`, `acceptance`, `evidence_required`, `allowed_tools`, `tool_policy_mode`, `policy_mode`, `change_budget`, `blockers`, `unblocks`.
+- **Index required fields:** `plan_graph/index.json` MUST include (see `Plans/project_plan_graph_index.schema.json`):  
+  `schema_version`, `graph_id`, `nodes[]` (each: `node_id`, `path`, `sha256`), `entrypoints[]`, and `validation` with `index_schema_id`, `node_schema_id`, and `targets` (`acceptance_manifest`, `contracts_index`).
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/chain-wizard-flexibility.md, Primitive:SessionStore
 
@@ -945,7 +983,12 @@ Use `depends_on: Vec<TaskId>` on each task in the PRD/plan:
   ```
 - SSOT: this schema definition. Cross-reference from STATE_FILES.md.
 
-6. **Where to inject.** Apply these requirements in:
+6. **UI wiring traceability (GUI projects).** When the user project includes a GUI (detected during Architecture or Product/UX interview phases):
+   - Every plan node that creates, modifies, or wires interactive UI elements MUST include `contract_refs` entries pointing to the relevant `ui/wiring_matrix.json` entries and/or `ui/ui_command_catalog.json` command IDs.
+   - Acceptance criteria for UI nodes MUST include: (a) wiring matrix entry exists for every new interactive element, (b) no unbound UI actions (every element has a bound `UICommandID` and a resolved handler), (c) `ui/wiring_matrix.json` validates against the wiring matrix schema.
+   - Generated AGENTS.md for the target project MUST include a "UI Wiring" rule in the Critical block: "Every interactive UI element must have a wiring matrix entry; no unbound actions allowed. Check `ui/wiring_matrix.json` before adding new interactive elements."
+
+7. **Where to inject.** Apply these requirements in:
    - **Prompt templates** for phase completion and document generation (so the interviewing agent is instructed to produce AI-executor-oriented, wire-explicit, complete output).
    - **PRD and plan generators** (so generated tasks and acceptance criteria include wiring, completeness, **subagent persona recommendations**, and **parallelism**).
    - **AGENTS.md generator** (§5.1): add a short "AI executor" or "Wiring & completeness" bullet block in the Critical section (e.g. "Plans and docs are for AI execution; wire everything; no partially complete components").
@@ -3079,7 +3122,7 @@ pub struct PlatformSubagentSettings {
 4. Measure performance impact of subagent invocations
 
 
-## User-Project Output Contract (Portable plan_graph.json + optional sharded cache)
+## User-Project Output Contract (Sharded plan_graph/ canonical)
 
 For user projects, Interviewer/Wizard outputs must target `.puppet-master/project/` and not rely on any user-project `Plans/` directory.
 
@@ -3090,18 +3133,19 @@ Required artifact set:
 - `.puppet-master/project/contracts/index.json`
 - `.puppet-master/project/plan.md`
 - `.puppet-master/project/glossary.md` (optional, recommended)
-- `.puppet-master/project/plan_graph.json`
-- `.puppet-master/project/plan_graph/index.json` (optional sharded cache)
-- `.puppet-master/project/plan_graph/nodes/<node_id>.json` (optional sharded cache)
-- `.puppet-master/project/plan_graph/edges.json` (optional sharded cache)
+- `.puppet-master/project/plan_graph/` (canonical sharded graph)
+  - `.puppet-master/project/plan_graph/index.json` (entrypoint + validation pointers)
+  - `.puppet-master/project/plan_graph/nodes/<node_id>.json` (one node per file)
+  - `.puppet-master/project/plan_graph/edges.json` (optional explicit edges; must be consistent)
+- `.puppet-master/project/plan_graph.json` (optional derived export only; MUST match shards if present)
 - `.puppet-master/project/acceptance_manifest.json`
 - `.puppet-master/project/auto_decisions.jsonl`
 - `.puppet-master/project/evidence/<node_id>.json` (produced during execution; schema `pm.evidence.schema.v1`)
 
 Canonical rules:
 
-- Plan graph output MUST include `.puppet-master/project/plan_graph.json` as the canonical portable execution entrypoint.
-- Puppet Master may also materialize a sharded cache under `.puppet-master/project/plan_graph/` for large graphs or tooling.
+- Plan graph output MUST include the canonical sharded entrypoint `.puppet-master/project/plan_graph/index.json` plus referenced node shards under `.puppet-master/project/plan_graph/nodes/`.
+- `.puppet-master/project/plan_graph.json` is optional and non-canonical; if materialized, it MUST be consistent with the sharded graph.
 - `plan.md` remains mandatory as the human-readable summary for operators.
 - Contract pack uses stable `ProjectContract:*` IDs resolved via `contracts/index.json`; every node must reference at least one project contract ID.
 - All artifacts above must be persisted canonically in seglog as full-content artifact events.
@@ -3114,7 +3158,7 @@ Canonical rules:
 | Contract pack | `.puppet-master/project/contracts/` + `contracts/index.json` |
 | Human plan summary | `.puppet-master/project/plan.md` |
 | Project glossary (optional) | `.puppet-master/project/glossary.md` |
-| Machine plan graph | `.puppet-master/project/plan_graph.json` (+ optional sharded cache under `plan_graph/`) |
+| Machine plan graph | `.puppet-master/project/plan_graph/index.json` + `plan_graph/nodes/<node_id>.json` (optional `plan_graph/edges.json`; optional derived export `plan_graph.json`) |
 | Acceptance index | `.puppet-master/project/acceptance_manifest.json` |
 | Deterministic decision stream | `.puppet-master/project/auto_decisions.jsonl` |
 | Execution evidence (per node) | `.puppet-master/project/evidence/<node_id>.json` |

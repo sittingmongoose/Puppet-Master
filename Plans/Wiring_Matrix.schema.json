@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.wiring_matrix.v0",
+  "title": "Puppet Master Wiring Matrix",
+  "description": "Defines the wiring between Puppet Master UI elements, command dispatchers, handlers, and expected domain events. Each entry maps a UI element to its command, handler, expected events, and acceptance criteria.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_id",
+    "generated_at",
+    "entries"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "https://json-schema.org/draft/2020-12/schema",
+      "description": "JSON Schema draft URL for self-referencing validation."
+    },
+    "schema_id": {
+      "type": "string",
+      "const": "pm.wiring_matrix.v0",
+      "description": "Schema identifier for this Puppet Master wiring matrix document."
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp indicating when this wiring matrix was generated."
+    },
+    "entries": {
+      "type": "object",
+      "minProperties": 0,
+      "description": "Map of wiring entries keyed by ui_element_id. Object keys enforce uniqueness for interactive element IDs.",
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9_]*)*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/WiringEntry"
+      }
+    }
+  },
+  "$defs": {
+    "WiringEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A single wiring entry mapping a Puppet Master UI element to its command, handler, expected events, and acceptance checks.",
+      "required": [
+        "ui_element_id",
+        "ui_location",
+        "ui_command_id",
+        "handler_location",
+        "expected_event_types",
+        "acceptance_checks",
+        "evidence_required"
+      ],
+      "properties": {
+        "ui_element_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9_]*)*$",
+          "description": "Stable identifier for the UI element (e.g., \"btn.github.connect\", \"menu.lsp.goto_def\"). Lowercase, dot-separated. Must match the containing entries key."
+        },
+        "ui_location": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Panel or screen where the element lives (e.g., \"Settings > GitHub/Auth\", \"File Editor toolbar\", \"Orchestrator > Node Graph Display\")."
+        },
+        "ui_command_id": {
+          "type": "string",
+          "pattern": "^cmd\\.[a-z][a-z0-9]*(\\.[a-z][a-z0-9_]*)*$",
+          "description": "The UICommand ID dispatched by this element. Must start with \"cmd.\" and be lowercase dot-separated."
+        },
+        "handler_location": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Module path and/or function identifier for the handler (e.g., \"src/handlers/github_auth::handle_connect\", \"core::widget_layout::add_widget\")."
+        },
+        "expected_event_types": {
+          "type": "array",
+          "description": "List of event type strings emitted by the handler. May be empty for UI-only commands that declare no persisted domain event. Each entry should match an EventRecord type string.",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "acceptance_checks": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Testable assertions that verify this wiring entry works. Each string is a human-readable check description.",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "evidence_required": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Description of what evidence must exist to prove this wiring works (e.g., \"Test exercising cmd.github.connect dispatch returns expected events\", \"Screenshot or headless render showing button exists\")."
+        },
+        "example": {
+          "type": "boolean",
+          "description": "Optional marker for template/example-only rows. Example rows do not satisfy production coverage gates."
+        }
+      }
+    }
+  }
+}

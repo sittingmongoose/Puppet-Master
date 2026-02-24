@@ -104,6 +104,22 @@ ContractRef: Primitive:Glossary
 
 ---
 
+<a id="INV-011"></a>
+## INV-011 -- UI command dispatch only (Rule 1)
+**Rule:** The UI layer MUST dispatch only typed `UICommand` envelopes to trigger non-trivial behavior. The UI MUST NOT call backend services, storage, domain logic, or provider integrations directly. All user-initiated interactions flow through the UI Command Dispatcher boundary.
+
+ContractRef: Primitive:UICommand, ContractName:Plans/UI_Wiring_Rules.md#section-1, ContractName:Plans/Contracts_V0.md#UICommand, ContractName:Plans/UI_Command_Catalog.md
+
+---
+
+<a id="INV-012"></a>
+## INV-012 -- Wiring matrix coverage (Rule 2)
+**Rule:** Every interactive UI element MUST map to exactly one `UICommandID`. The mapping MUST be recorded in the wiring matrix (validated by `Plans/Wiring_Matrix.schema.json`). Every `UICommandID` listed in `Plans/UI_Command_Catalog.md` MUST have a registered handler. No interactive element may exist without a wiring matrix entry; no catalog command may lack a handler.
+
+ContractRef: Primitive:UICommand, ContractName:Plans/UI_Wiring_Rules.md#section-2, SchemaID:Wiring_Matrix.schema.json, Gate:GATE-010
+
+---
+
 ## Contract-driven code generation (lightweight; DRY)
 To avoid duplicated shapes for tools/events/policy:
 - JSON Schemas under `Plans/*.schema.json` are the canonical source for validation and (optionally) code generation.  
@@ -123,5 +139,9 @@ Invariants are validated by progression gate `GATE-003`.
   ContractRef: Invariant:INV-008
 - Enforce `INV-010` naming compliance in `Plans/` (platform name only).  
   ContractRef: Invariant:INV-010
+- Enforce `INV-011` by verifying no UI code directly calls backend/storage/provider modules (static analysis or import-graph check).  
+  ContractRef: Invariant:INV-011
+- Enforce `INV-012` by validating wiring matrix coverage: every UICommandID in the catalog has a handler entry, and every interactive element has a wiring entry.  
+  ContractRef: Invariant:INV-012, Gate:GATE-010
 
 ContractRef: Gate:GATE-003

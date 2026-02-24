@@ -136,7 +136,29 @@ ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/DRY_Rules.md#
 
 ---
 
+<a id="GATE-010"></a>
+## GATE-010 -- Wiring matrix validation
+**Pass condition:** The UI wiring matrix is complete, valid, and testable:
+1. `Plans/Wiring_Matrix.schema.json` parses as valid JSON Schema.
+2. All wiring matrix artifacts validate against `Plans/Wiring_Matrix.schema.json`.
+3. Every wiring entry key is a unique `ui_element_id`, and each row's `ui_element_id` value matches its containing key.
+4. Every `UICommandID` in `Plans/UI_Command_Catalog.md` has at least one wiring matrix entry.
+5. Every wiring matrix entry's `handler_location` resolves to an existing module/function in the codebase.
+6. Every wiring matrix entry with non-empty `expected_event_types` has a corresponding test that exercises command dispatch and verifies the declared events are emitted.
+7. No dead commands: UICommandIDs referenced in code but absent from the catalog are flagged.
+
+Required evidence:
+- Evidence bundle conforming to `Plans/evidence.schema.json` with `checks[]` entries for schema validation, coverage, handler resolution, and event emission tests.
+
+**Script enforcement status:** Not yet enforced by `run-gates`; targeted for inclusion after wiring matrix is populated with non-example entries.
+
+ContractRef: SchemaID:Wiring_Matrix.schema.json, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/UI_Command_Catalog.md, Invariant:INV-011, Invariant:INV-012
+
+---
+
 ## References
 - `Plans/DRY_Rules.md`
 - `Plans/Architecture_Invariants.md`
 - `Plans/evidence.schema.json`
+- `Plans/UI_Wiring_Rules.md`
+- `Plans/Wiring_Matrix.schema.json`

@@ -198,6 +198,32 @@ Rules:
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md#EventRecord
 
+<a id="WiringEntry"></a>
+### 7.2 WiringEntry -- wiring matrix row contract
+**Definition:** `WiringEntry` is the canonical shape of a wiring matrix row that binds a UI element to a UICommand handler with expected events and acceptance checks.
+
+**Required fields:**
+```json
+{
+  "ui_element_id": "btn.github.connect",
+  "ui_location": "Settings > GitHub/Auth",
+  "ui_command_id": "cmd.github.connect",
+  "handler_location": "handlers::github_auth::connect",
+  "expected_event_types": ["auth.github.device_code.issued", "auth.github.authenticated"],
+  "acceptance_checks": ["Handler registered in dispatcher", "Dispatch emits expected events"],
+  "evidence_required": "Test exercising cmd.github.connect dispatch returns expected events"
+}
+```
+
+Rules:
+- `ui_command_id` MUST reference a stable ID from `Plans/UI_Command_Catalog.md`.
+- `expected_event_types` MUST match the command's declared expected events in the catalog.
+- `acceptance_checks` MUST contain at least one testable assertion.
+- In machine-readable matrix artifacts, each row is stored under `entries.<ui_element_id>` and the row's `ui_element_id` value MUST match that key.
+- Full schema: `Plans/Wiring_Matrix.schema.json`.
+
+ContractRef: ContractName:Plans/UI_Wiring_Rules.md, SchemaID:Wiring_Matrix.schema.json, ContractName:Plans/UI_Command_Catalog.md, Invariant:INV-011, Invariant:INV-012
+
 ---
 
 ## References
@@ -205,3 +231,5 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contra
 - `Plans/Tools.md` (tool permission semantics + payload definitions)
 - `Plans/CLI_Bridged_Providers.md` (normalized provider stream schema)
 - `Plans/GitHub_API_Auth_and_Flows.md` (GitHub auth event types and flows)
+- `Plans/UI_Wiring_Rules.md` (wiring rules and verification strategy)
+- `Plans/Wiring_Matrix.schema.json` (WiringEntry schema)

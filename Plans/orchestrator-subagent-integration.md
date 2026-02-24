@@ -75,41 +75,116 @@ The **orchestrator must respect** two kinds of information that the interview (o
 
 ### Respecting PRD/plan: plan graph consumption (user projects)
 
-For user projects, the orchestrator MUST be able to execute headless from `.puppet-master/project/plan_graph.json` **alone**. Other artifacts under `.puppet-master/project/` are optional/derived materializations unless explicitly required by refs in `plan_graph.json` (and if required, the orchestrator must be able to deterministically materialize them from `plan_graph.json`).
+For user projects created by Puppet Master, the orchestrator MUST consume a **SHARDED** plan graph by default and MUST be able to execute headless from the sharded plan graph representation **alone** (no `Plans/` folder assumptions, and no reliance on any single monolithic `plan_graph.json` file).
 
 Constraints:
 - **No user-project `Plans/` assumptions:** Do not require or read `Plans/` from the target project; Puppet Master `Plans/` are internal references only.
 - **No schema copying:** Validate artifacts against internal schemas, but do NOT embed/copy internal schema definitions into user-project artifacts (only `schema_version` / hash metadata as required).
+- **Canonical persistence:** All required user-project planning artifacts MUST be written under `.puppet-master/project/...` and MUST be persisted canonically in **seglog**. Filesystem copies are reproducible materializations of the seglog canonical content.
 
 Canonical planning artifacts (inputs + derived views) must live under `.puppet-master/project/`:
 
-- `.puppet-master/project/plan_graph.json` (**required**; single-file headless execution input / source of truth)
-- `.puppet-master/project/requirements.md` (optional; human-readable constraints / derived view)
-- `.puppet-master/project/plan_graph/index.json` (optional; sharded materialization derived from `plan_graph.json`)
-- `.puppet-master/project/plan_graph/nodes/<node_id>.json` (optional; sharded materialization)
-- `.puppet-master/project/plan_graph/edges.json` (optional; derived/materialized)
-- `.puppet-master/project/plan.md` (optional; human-readable summary for operators)
-- `.puppet-master/project/contracts/` (Project Contract Pack; may be derived/materialized)
-- `.puppet-master/project/contracts/index.json` (Project Contract Pack index; may be derived/materialized)
-- `.puppet-master/project/acceptance_manifest.json` (acceptance registry; may be derived/materialized)
-- `.puppet-master/project/auto_decisions.jsonl` (produced during execution)
+- `.puppet-master/project/requirements.md` (**required**; human-readable requirements/constraints for operators and review)
+- `.puppet-master/project/contracts/` (**required**; Project Contract Pack directory)
+- `.puppet-master/project/contracts/index.json` (**required**; Project Contract Pack index; schema `pm.project_contracts_index.schema.v1`)
+- `.puppet-master/project/plan.md` (**required**; human-readable plan summary for operators)
+- `.puppet-master/project/plan_graph/index.json` (**required**; canonical plan graph index; sharded graph entrypoint)
+- `.puppet-master/project/plan_graph/nodes/<node_id>.json` (**required**; canonical node shards)
+- `.puppet-master/project/plan_graph/edges.json` (optional; supplemental edge materialization for fast loading; must be consistent with node `depends_on`)
+- `.puppet-master/project/acceptance_manifest.json` (**required**; acceptance registry; schema `pm.acceptance_manifest.schema.v1`)
+- `.puppet-master/project/auto_decisions.jsonl` (**required**; machine decision log; produced during execution; schema `pm.auto_decisions.schema.v1`)
 - `.puppet-master/project/glossary.md` (optional, recommended)
 - `.puppet-master/project/evidence/<node_id>.json` (produced during execution; schema `pm.evidence.schema.v1`)
+- `.puppet-master/project/ui/wiring_matrix.json` (conditional: GUI projects only; maps interactive UI elements to commands, handlers, events, and acceptance checks; schema adapted from `Plans/Wiring_Matrix.schema.json`)
+- `.puppet-master/project/ui/ui_command_catalog.json` (conditional: GUI projects only; stable `UICommandID` registry for the user project; rules per `Plans/UI_Wiring_Rules.md`)
 
-Load order and validation behavior:
+#### Sharding rules (required for consumption)
 
-1. Load `plan_graph.json` first (when present) and validate graph-level invariants (e.g. `schema_version`, `graph_id`, unique node IDs, dependency references).
-2. If sharded plan-graph materializations exist (`plan_graph/index.json` + shards), validate integrity (hashes + IDs) and consistency with `plan_graph.json` when both are present. The orchestrator may load either representation for performance, but MUST NOT require sharded files to execute.
-3. If only sharded files exist (legacy), load/validate them and materialize `plan_graph.json` deterministically for future headless runs.
-4. Load and validate `validation.targets` (present or materialized from `plan_graph.json`):
+**Deterministic node IDs**
+- Every node shard filename MUST be `<node_id>.json` and the shard content MUST include the same `node_id`.
+- `node_id` MUST be deterministic and stable across runs for the same logical node definition.
+- **Recommended algorithm (normative enough to implement):**
+  - Produce a canonical JSON representation of the node *excluding* volatile/derived fields (timestamps, evidence, run-state, shard hashes).
+  - Compute `sha256("pm.plan_graph.node.v1:" + canonical_json_bytes)` and use the full hex digest as `node_id` (or a fixed-length prefix if the system standardizes one; if prefixing, prefix length MUST be constant across all nodes in a graph).
+
+**Required `index.json` fields (minimum)**
+
+`plan_graph/index.json` MUST validate against the canonical schema and requirements in:
+
+- `Plans/Project_Output_Artifacts.md` §7.1
+- `Plans/project_plan_graph_index.schema.json` (`pm.project-plan-graph-index.v1`)
+
+At minimum it includes:
+
+- `schema_version` (string)
+- `nodes[]` (array) where each entry includes, at minimum:
+  - `path` (string; MUST be `nodes/<node_id>.json`)
+  - `sha256` (string; SHA-256 of the node shard file bytes, hex)
+- `entrypoints` (array of node IDs; MUST reference existing node IDs)
+- `validation.targets` (object) including pointers sufficient to validate the graph in isolation, including at minimum:
+  - `contracts_index` (recommended relative path: `../contracts/index.json`)
+  - `acceptance_manifest` (recommended relative path: `../acceptance_manifest.json`)
+- Optional:
+  - `edges` pointer/path when `plan_graph/edges.json` exists (exact field name per schema; do not invent ad-hoc shapes here)
+
+**Required node shard fields (minimum)**
+
+Node shards MUST validate against:
+
+- `Plans/Project_Output_Artifacts.md` §7.2
+- `Plans/project_plan_node.schema.json` (`pm.project-plan-node.v1`)
+
+At minimum, each node shard includes the required fields (see SSOT for exact field names), including:
+
+- `node_id`
+- `objective`
+- `contract_refs`
+- `acceptance`
+- `evidence_required`
+- `allowed_tools`
+- `tool_policy_mode`
+- `policy_mode`
+- `change_budget`
+- `blockers`
+- `unblocks`
+
+For scheduling, the orchestrator also consumes dependency structure from the node definition (for example optional `depends_on` / `parallel_group` when present), and from `blockers`/`unblocks` semantics as defined by the schema/SSOT.
+
+#### Load order and validation behavior (user projects)
+
+1. Load `.puppet-master/project/plan_graph/index.json` first and validate graph-level invariants:
+   - `schema_version` present
+   - `nodes[]` present and non-empty
+   - every `nodes[].path` matches `nodes/<node_id>.json`
+   - every `nodes[].sha256` present
+   - `entrypoints` present and every entrypoint node ID resolves to an existing node shard (by ID derived from `nodes[].path`)
+   - `validation.targets` present and includes pointers to required validation targets (contracts index + acceptance manifest)
+2. Load each `.puppet-master/project/plan_graph/nodes/<node_id>.json` shard referenced by the index, validate required fields, and validate integrity:
+   - shard `node_id` matches filename (`<node_id>.json`)
+   - shard bytes hash to the corresponding `nodes[].sha256`
+3. If `.puppet-master/project/plan_graph/edges.json` exists:
+   - load it as a supplemental view and validate it is **consistent** with node-level `depends_on` (no extra edges, no missing edges)
+   - if inconsistent, treat as an integrity error (do not silently choose one representation over the other)
+4. If a legacy monolithic `.puppet-master/project/plan_graph.json` exists:
+   - treat it as **optional** / **legacy** input
+   - the orchestrator MAY materialize/refresh shards deterministically, but MUST prefer the sharded representation for scheduling and execution
+   - the orchestrator MUST NOT require `plan_graph.json` to exist for headless execution
+5. Load and validate required validation targets:
    - **Project Contract Pack:** `.puppet-master/project/contracts/index.json` must validate (`pm.project_contracts_index.schema.v1`) and every `ProjectContract:*` referenced by any node MUST resolve via this index.
    - **Acceptance registry:** `.puppet-master/project/acceptance_manifest.json` must validate (`pm.acceptance_manifest.schema.v1`) and cover every node acceptance ref (e.g. `acceptance[].check_id`). Validate that every acceptance check is **automatable** (no human-only criteria).
-5. Validate node execution policy fields (`allowed_tools`, `tool_policy_mode`, `policy_mode`) are present and legal per `Plans/Project_Output_Artifacts.md` before scheduling.
-6. If any required validation fails, halt scheduling and return a planning-artifact integrity error (no silent fallback between representations, and no skipping contract/acceptance validation).
+6. Validate node execution policy fields (`allowed_tools`, `tool_policy_mode`, `policy_mode`) are present and legal per `Plans/Project_Output_Artifacts.md` before scheduling.
+7. **UI wiring validation (conditional; when `.puppet-master/project/ui/` exists):**
+   - Validate `ui/wiring_matrix.json` against the wiring matrix schema (adapted from `Plans/Wiring_Matrix.schema.json`): all required fields present (`ui_element_id`, `ui_location`, `ui_command_id`, `handler_location`, `expected_event_types`, `acceptance_checks`, `evidence_required`).
+   - Validate `ui/ui_command_catalog.json`: every `UICommandID` has a description and handler reference.
+   - **Coverage check:** Every `UICommandID` in the command catalog has at least one wiring matrix entry. Every wiring matrix entry's `ui_command_id` exists in the command catalog.
+   - **No unbound UI actions:** Every interactive UI element in the wiring matrix has a bound `UICommandID` and a non-empty `handler_location` (no placeholder or empty handler references).
+   - **Plan node cross-reference:** Every plan node whose `objective` or scope involves UI work (creating/modifying interactive elements) MUST include at least one `contract_refs` entry pointing to a wiring matrix entry or command catalog ID. Flag nodes with UI scope but no wiring reference as a validation warning.
+   - If any required UI wiring validation fails, treat as a planning-artifact integrity error (same severity as contract/acceptance validation failures).
+8. If any required validation fails, halt scheduling and return a planning-artifact integrity error (no silent fallback, and no skipping contract/acceptance validation).
 
 Scheduling inputs must be sourced from the validated plan graph (monolith or shard/index metadata):
 
-- `depends_on` (from node metadata or edge materialization)
+- `depends_on` (from node shards; if `edges.json` exists, it MUST match)
 - `blockers` / `unblocks` from node definitions
 - `parallel_group` metadata when available
 
@@ -127,7 +202,7 @@ Scheduling rule ("continue other work when approvals pending"):
 
 Execution policy notes:
 
-- **Headless-first:** `plan_graph.json` is sufficient for execution; sharded plan-graph files are optional derived/materialized views for large graphs or tooling.
+- **Sharded-first (default):** The sharded plan graph (`plan_graph/index.json` + node shards) is the canonical on-disk representation for user projects and is sufficient for headless execution. Any monolithic `plan_graph.json` is optional/legacy.
 - `plan.md` is a human-readable summary view, but scheduler decisions come from the validated graph (not `plan.md`).
 - All planning artifacts are canonical in seglog via full-content artifact events (chunked when needed with deterministic ordering and final `sha256` integrity events). Filesystem copies under `.puppet-master/project/` are reproducible materializations.
 - **HITL + non-blocked continuation:** If a node enters `waiting_approval` (e.g. due to `tool_policy_mode: "ask"` or explicit boundary approvals), the scheduler MUST continue executing other runnable nodes where dependencies allow.
@@ -1888,6 +1963,8 @@ To prevent users from hitting settings that exist in the UI and requirements but
 
 **Who does it:** Implementers and reviewers. Code review should verify that new settings that appear in the Config UI or config file have a corresponding execution-config field and usage in the right module (interview, core/orchestrator, etc.).
 
+**UI wiring enforcement (GUI projects):** For user projects that include a GUI, the wiring matrix (`.puppet-master/project/ui/wiring_matrix.json`) and command catalog (`.puppet-master/project/ui/ui_command_catalog.json`) serve as the mechanical enforcement of "built but not wired" for the UI layer. Every interactive element must appear in the wiring matrix with a bound command and handler; orphan elements and orphan commands are both validation failures. This complements the config-wiring validation (Approach B) by extending "no unwired features" to the UI surface of the user project. The orchestrator's tier-boundary validation (§Start and End Verification) includes a UI wiring check for nodes with UI scope.
+
 ### Approach B: Tier-level config-wiring validation (Phase / Task / Subtask / Iteration)
 
 **Rule:** The orchestrator (or a shared validation layer) runs a **config-wiring check at each tier boundary** -- when entering a Phase, when entering a Task, when entering a Subtask, and when entering an Iteration. The check verifies that the config that **should** affect execution at that tier is **present and actually used** (e.g. tier config exists, plan_mode is read from config, interview limits are present in interview config when in interview flow). This catches "built but not wired" even when the checklist is missed.
@@ -1947,6 +2024,7 @@ When the orchestrator **enters** a Phase, Task, or Subtask, run the following **
    - **Does the backend need to be updated?** For any control or config field that the user can set in the GUI: is it read and applied in the execution path for this tier? If the GUI has a setting that should affect this tier but the backend does not use it, treat as "built but not wired" and fail or warn per policy.
    - **Do these steps make sense?** For this tier, is the sequence of operations (load config → select subagents → build request → run) consistent with the plan and with the config schema? For example: if subagents are enabled for this tier, is the subagent list actually derived from config and not hardcoded?
    - **Gaps or potential issues:** Are there known gaps (e.g. missing persistence, missing validation, platform-specific limitations) that could affect this tier? Optionally run a lightweight "gap check" (e.g. list of known gaps per tier type) and log or warn so operators see them.
+   - **UI wiring check (GUI projects):** If `.puppet-master/project/ui/` exists and the current tier node's scope involves UI work, verify that the node's `contract_refs` include at least one wiring matrix entry or command catalog ID. At end-of-tier, re-run the "no unbound UI actions" check against the current state of `ui/wiring_matrix.json` to ensure new interactive elements added during execution are wired.
 
 **BeforeTierStart verification responsibilities:**
 
@@ -8304,10 +8382,7 @@ orchestrator:
 
 ## Change Summary
 
-- 2026-02-23: Added default user-project sharded plan-graph consumption contract under `.puppet-master/project/` with explicit load order (`index.json` -> node shards -> optional `edges.json`).
-- 2026-02-23: Added scheduler input rules sourced from shard/index metadata (`depends_on`, `blockers`, `unblocks`, `parallel_group`) and explicit validation/fail-fast behavior.
-- 2026-02-23: Added canonical planning-artifact coordination references for `.puppet-master/project/plan_graph/index.json` and `.puppet-master/project/plan.md`.
-- 2026-02-23: Added seglog canonical persistence statement (full-content events, deterministic chunking, integrity hash).
-- 2026-02-23: Replaced prohibited prior platform alias text with Puppet Master naming in this document.
-- 2026-02-23: Expanded sharded plan-graph consumption to validate `contracts/index.json` + `acceptance_manifest.json` schemas, enforce resolvable `ProjectContract:*` refs, validate node `tool_policy_mode`, and require evidence bundle output + non-blocked continuation when approvals are pending.
-- 2026-02-24: Clarified headless-first execution from `.puppet-master/project/plan_graph.json` alone (other artifacts optional/derived), added explicit node state model + "continue other work when approvals pending" scheduling rule, and strengthened contract/acceptance/evidence requirements.
+- 2026-02-24: Updated **plan graph consumption (user projects)** so Puppet Master orchestrator consumes **SHARDED** plan graphs by default and executes headless from `.puppet-master/project/plan_graph/index.json` + `.puppet-master/project/plan_graph/nodes/<node_id>.json`.
+- 2026-02-24: Replaced any “required/canonical `.puppet-master/project/plan_graph.json`” assumption: monolithic `plan_graph.json` is now optional/legacy; the sharded representation is canonical.
+- 2026-02-24: Made required user-project artifacts explicit under `.puppet-master/project/` (requirements.md, contracts/, plan.md, plan_graph shards, acceptance_manifest.json, auto_decisions.jsonl) and reaffirmed canonical persistence in seglog.
+- 2026-02-24: Added sharding/consumption rules (deterministic `node_id`, minimum required fields for `index.json` and node shards, and `edges.json` consistency validation).

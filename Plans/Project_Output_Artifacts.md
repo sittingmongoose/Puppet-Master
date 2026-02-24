@@ -6,7 +6,7 @@ This document is the **canonical single source of truth (SSOT)** for the user-pr
 
 It also defines:
 - **seglog canonical persistence** for these artifacts (filesystem is staging/export/cache only)
-- **DRY, contract-referenced plan graph** requirements (portable `plan_graph.json` + optional sharded cache; machine-runnable, headless)
+- **DRY, contract-referenced plan graph** requirements (**sharded plan graph by default**; machine-runnable, headless) with an **optional, non-canonical** monolithic export for convenience.
 
 > **Do not duplicate:** This file is the SSOT for artifact paths and sharding rules; other docs should link here instead of repeating them.
 
@@ -30,14 +30,15 @@ These are the **required artifacts** (staging paths in the user workspace) and *
 1) `.puppet-master/project/requirements.md`  
 2) `.puppet-master/project/contracts/` (Project Contract Pack)  
 3) `.puppet-master/project/plan.md`  
-4) `.puppet-master/project/plan_graph.json` (canonical; portable headless execution input)  
-   - Optional sharded cache under `.puppet-master/project/plan_graph/`:
-     - `index.json`
-     - `nodes/<node_id>.json`
-     - optional `edges.json`
+4) `.puppet-master/project/plan_graph/` (**canonical; sharded plan graph**) containing:
+   - `index.json` (entrypoints, subgraph listing, schema version, validation pointers)
+   - `nodes/<node_id>.json` (one node per file)
+   - optional `edges.json`
 5) `.puppet-master/project/acceptance_manifest.json`  
 6) `.puppet-master/project/auto_decisions.jsonl`  
-7) Optional (GUI):
+7) Optional (non-canonical convenience export):
+   - `.puppet-master/project/plan_graph.json` (monolithic export; NOT required; NOT canonical)
+8) Optional (GUI):
     - `.puppet-master/project/ui/wiring_matrix.json`
     - `.puppet-master/project/ui/ui_command_catalog.json`
 
@@ -50,12 +51,12 @@ These are the **required artifacts** (staging paths in the user workspace) and *
     index.json
     ... contract files (pack members) ...
   plan.md
-  plan_graph.json
-  plan_graph/                # optional sharded cache
+  plan_graph/                # canonical sharded plan graph
     index.json
     nodes/
       <node_id>.json
     edges.json               # optional
+  plan_graph.json            # optional monolithic export (non-canonical)
   acceptance_manifest.json
   auto_decisions.jsonl
   ui/                        # optional (GUI)
@@ -67,14 +68,14 @@ These are the **required artifacts** (staging paths in the user workspace) and *
 
 This document uses the exact terminology/field names of the canonical schemas under `Plans/`:
 
-- `pm.project-plan-graph.v1` (portable monolithic graph)
-  - `plan_graph.json` is a monolithic wrapper over the same node object fields as `pm.project-plan-node.v1` (inlined nodes), plus graph-level `graph_id`, `entrypoints`, and `validation.targets`.
 - `Plans/project_plan_graph_index.schema.json` (`pm.project-plan-graph-index.v1`)
   - index `nodes[].path`, `nodes[].sha256`
-  - `validation.targets`
+  - index `schema_version`, `entrypoints`, `validation.targets`
 - `Plans/project_plan_node.schema.json` (`pm.project-plan-node.v1`)
   - node `contract_refs`, `evidence_required`, `allowed_tools`, `tool_policy_mode`, `policy_mode`, `change_budget`,
     `blockers`, `unblocks` (and optional `depends_on`, `parallel_group`)
+- `pm.project-plan-graph.v1` (optional monolithic export)
+  - `plan_graph.json` is a monolithic wrapper over the same node object fields as `pm.project-plan-node.v1` (inlined nodes), plus graph-level `graph_id`, `entrypoints`, and `validation.targets`.
 - `Plans/contracts_index.schema.json` (`pm.project_contracts_index.schema.v1`)
 - `Plans/acceptance_manifest.schema.json` (`pm.acceptance_manifest.schema.v1`)
 - `Plans/auto_decisions.schema.json` (`pm.auto_decisions.schema.v1`)
@@ -138,37 +139,38 @@ DRY rule (normative): node shard `contract_refs` and acceptance check `contract_
 - Optional HITL approvals are supported (mid-tier and/or boundary nodes) but are not required:
   - use node `tool_policy_mode: "ask"` (schema: `pm.project-plan-node.v1`) to mark approval boundaries.
 
-## 7. Plan graph requirements (portable + optional shard cache)
+## 7. Plan graph requirements (**sharded canonical** + optional monolith export)
 
-### 7.0 `plan_graph.json` (required; canonical entrypoint)
+Puppet Master MUST produce user-project plans as a **sharded plan graph** by default under:
 
-- Path: `.puppet-master/project/plan_graph.json`
-- Schema: `pm.project-plan-graph.v1` (portable monolithic graph)
+`.puppet-master/project/plan_graph/`
 
-Normative requirements:
+The sharded graph is the **canonical** headless execution input. `plan.md` remains the required human-readable view.
 
-- Graph MUST be executable headless (no reliance on GUI-only artifacts).
-- Every node MUST include `contract_refs` with at least one resolvable `ProjectContract:*` (DRY; see §5.1).
-- Every node MUST include automatable `acceptance[]` criteria (no manual-only checks).
-- Every node MUST declare `allowed_tools`, `tool_policy_mode`, `policy_mode`, and `change_budget` to bound autonomy and blast radius.
-- Every node MUST declare `evidence_required` (reserved output path) so evidence production is enforceable.
+### 7.0 Node ID determinism (normative; applies to all sharded graphs)
 
-If the optional sharded cache is present, it MUST be consistent with `plan_graph.json` (same node IDs, same contract refs, and consistent acceptance/evidence requirements).
+- Node IDs MUST be **stable and deterministic** across runs given the same inputs.
+  - MUST NOT depend on timestamps, randomness, session IDs, or nondeterministic ordering.
+  - MUST be reproducible from a canonical representation of the node intent (so shard filenames are stable).
 
-### 7.1 `plan_graph/index.json` (optional shard cache; recommended for large graphs)
+### 7.1 `plan_graph/index.json` (required; canonical entrypoint)
 
 - Path: `.puppet-master/project/plan_graph/index.json`
 - Schema: `Plans/project_plan_graph_index.schema.json` (`pm.project-plan-graph-index.v1`)
 
-Normative sharding rules:
+Normative requirements:
 
-- `nodes[].path` MUST be the shard-relative path: `nodes/<node_id>.json`
-- `nodes[].sha256` MUST be the SHA-256 of the referenced shard file bytes (hex)
-- `validation.targets` MUST include:
-  - `acceptance_manifest` (recommended: `../acceptance_manifest.json`)
-  - `contracts_index` (recommended: `../contracts/index.json`)
+- The graph MUST be executable headless (no reliance on GUI-only artifacts).
+- `schema_version` MUST be present and MUST match the schema’s expected version for `pm.project-plan-graph-index.v1`.
+- `nodes[]` MUST list every node shard and MUST include at minimum:
+  - `path` as the shard-relative path: `nodes/<node_id>.json`
+  - `sha256` as the SHA-256 of the referenced shard file bytes (hex)
+- `entrypoints` MUST be present and MUST reference existing node IDs.
+- `validation.targets` MUST include validation pointers sufficient to validate the graph in isolation, including at minimum:
+  - `acceptance_manifest` (recommended relative path: `../acceptance_manifest.json`)
+  - `contracts_index` (recommended relative path: `../contracts/index.json`)
 
-### 7.2 `plan_graph/nodes/<node_id>.json` (optional shard cache; required per node if shard cache is present)
+### 7.2 `plan_graph/nodes/<node_id>.json` (required; one node per file)
 
 - Path: `.puppet-master/project/plan_graph/nodes/<node_id>.json`
 - Schema: `Plans/project_plan_node.schema.json` (`pm.project-plan-node.v1`)
@@ -177,9 +179,24 @@ Required fields include (see schema for full detail):
 `node_id`, `objective`, `contract_refs`, `acceptance`, `evidence_required`, `allowed_tools`, `tool_policy_mode`,
 `policy_mode`, `change_budget`, `blockers`, `unblocks`.
 
+Node completeness rules (normative; sharding requirement):
+
+- Each node file MUST contain, at minimum:
+  - `objective`
+  - `contract_refs`
+  - `acceptance`
+  - `evidence_required`
+  - `allowed_tools` and policy declaration (`policy_mode` and/or `tool_policy_mode` per schema)
+  - `change_budget`
+  - `blockers` and `unblocks`
+
 Integrity rules:
 
 - In-file `node_id` MUST exactly match `<node_id>` in the filename.
+- Every node MUST include `contract_refs` with at least one resolvable `ProjectContract:*` (DRY; see §5.1).
+- Every node MUST include automatable `acceptance[]` criteria (no manual-only checks).
+- Every node MUST declare `allowed_tools`, `tool_policy_mode`, `policy_mode`, and `change_budget` to bound autonomy and blast radius.
+- Every node MUST declare `evidence_required` (reserved output path) so evidence production is enforceable.
 - `evidence_required.path` is a **reserved logical output path** for execution evidence (not part of the Project Plan Package’s initial output);
   it MUST be consistent between the node shard and the acceptance manifest for that node.
 
@@ -187,6 +204,18 @@ Integrity rules:
 
 If present, `.puppet-master/project/plan_graph/edges.json` MUST be consistent with dependency semantics expressed in node shards
 (`blockers`, `unblocks`, and optional `depends_on`).
+
+### 7.4 Optional export: `plan_graph.json` (non-canonical monolith)
+
+Puppet Master MAY export a monolithic graph for convenience:
+
+- Path: `.puppet-master/project/plan_graph.json`
+- Schema: `pm.project-plan-graph.v1` (portable monolithic graph)
+
+If present:
+
+- It MUST be a faithful, lossless projection of the canonical shard set (same node IDs, same node fields, same `entrypoints`).
+- It is **NOT** the canonical plan representation and MUST NOT be required for validation or orchestration.
 
 ## 8. Seglog canonical persistence contract (artifact events)
 
@@ -219,10 +248,10 @@ Field semantics (normative):
 - `requirements` → `.puppet-master/project/requirements.md`
 - `contracts_pack` → `.puppet-master/project/contracts/**` (including required `contracts/index.json`)
 - `plan_human` → `.puppet-master/project/plan.md`
-- `plan_graph` → `.puppet-master/project/plan_graph.json`
 - `plan_graph_index` → `.puppet-master/project/plan_graph/index.json`
 - `plan_graph_node` → `.puppet-master/project/plan_graph/nodes/<node_id>.json`
 - `plan_graph_edges` → `.puppet-master/project/plan_graph/edges.json` (optional)
+- `plan_graph_monolith` → `.puppet-master/project/plan_graph.json` (optional; non-canonical export)
 - `acceptance_manifest` → `.puppet-master/project/acceptance_manifest.json`
 - `auto_decisions` → `.puppet-master/project/auto_decisions.jsonl`
 - `ui_wiring_matrix` → `.puppet-master/project/ui/wiring_matrix.json` (optional GUI)
@@ -232,12 +261,12 @@ Field semantics (normative):
 
 A validator MUST be able to verify, at minimum:
 
-1) **Portable graph validity (headless input)**
-   - `.puppet-master/project/plan_graph.json` validates (`pm.project-plan-graph.v1`) and is executable headless
+1) **Sharded graph validity (canonical headless input)**
+   - `.puppet-master/project/plan_graph/index.json` validates (`pm.project-plan-graph-index.v1`)
+   - all `nodes[].path` resolve to `plan_graph/nodes/<node_id>.json`
    - `entrypoints` refer to existing node IDs
-2) **Shard cache integrity (if present)**
-   - `plan_graph/index.json` validates and all `nodes[].path` resolve
-   - each `nodes[].sha256` matches the referenced shard bytes
+2) **Shard integrity**
+   - each `nodes[].sha256` matches the referenced node shard bytes
 3) **Contract reference validity (DRY)**
    - `.puppet-master/project/contracts/index.json` validates (`pm.project_contracts_index.schema.v1`)
    - every `ProjectContract:*` referenced by any node `contract_refs` resolves via `contracts/index.json`
@@ -248,14 +277,17 @@ A validator MUST be able to verify, at minimum:
 5) **Seglog hash matches**
    - seglog `content_hash` matches the SHA-256 of the materialized artifact bytes for each `logical_path`
    - plan graph shard hashes in `index.json` (`nodes[].sha256`) match the same materialized bytes
-6) **Headless orchestration from portable plan graph**
-   - orchestration can run headless from `plan_graph.json` alone
-   - if shard cache is present, orchestration may also run from `plan_graph/index.json` + referenced node shards alone
-     (no dependency on `plan.md` or GUI artifacts for ordering/policy enforcement)
+6) **Headless orchestration from sharded plan graph**
+   - orchestration can run headless from `plan_graph/index.json` + referenced node shards alone
+   - no dependency on `plan.md`, GUI artifacts, or optional monolithic exports for ordering/policy enforcement
+7) **Optional monolithic export consistency (if present)**
+   - `.puppet-master/project/plan_graph.json` validates (`pm.project-plan-graph.v1`)
+   - it is consistent with the canonical sharded graph (same node IDs, same node fields, same `entrypoints`)
 
 ## Change Summary
 
-- 2026-02-24: Added required portable `.puppet-master/project/plan_graph.json` as the canonical headless execution entrypoint; sharded `plan_graph/` remains an optional cache and must be consistent when present.
+- 2026-02-24: Made the **sharded** plan graph under `.puppet-master/project/plan_graph/` the **canonical default** output (`index.json` + `nodes/<node_id>.json`), with stable/deterministic node IDs.
+- 2026-02-24: Marked `.puppet-master/project/plan_graph.json` as an **optional, non-canonical** monolithic export (may be generated, but must not be required).
 - 2026-02-24: Replaced this document to be the canonical SSOT for user-project **Project Plan Package** outputs under `.puppet-master/project/**`.
 - 2026-02-24: Defined seglog canonical persistence as the source of truth (filesystem is staging/export/cache only) with required artifact-event fields.
 - 2026-02-24: Tightened DRY rules: node shards reference `ProjectContract:*`; acceptance manifest references node IDs + contract refs; repeated prose must point to contract pack canon.

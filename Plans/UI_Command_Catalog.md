@@ -35,6 +35,18 @@ Every command listed below MUST define:
 
 ContractRef: ContractName:Contracts_V0.md#UICommand, ContractName:Contracts_V0.md#EventRecord
 
+### 2.0.1 Acceptance hooks contract (wiring verification)
+Every command listed in this catalog MUST be verifiable through the wiring matrix (`Plans/Wiring_Matrix.md`, schema: `Plans/Wiring_Matrix.schema.json`). Specifically:
+
+1. **Handler registration**: The command MUST have a registered handler in the UI Command Dispatcher. The handler's module/function location MUST be recorded in the wiring matrix.
+2. **Event emission verification**: If the command declares expected events (non-empty `expected_event_types`), a test MUST exist that dispatches the command and asserts the expected events are emitted.
+3. **UI element binding**: At least one UI element MUST be bound to the command in the wiring matrix, with its `ui_location` matching an actual GUI surface.
+4. **Acceptance checks**: Each wiring matrix entry MUST include at least one testable `acceptance_checks` assertion.
+
+Commands that declare `no persisted domain event` are still subject to handler registration and UI element binding checks; they are exempt only from event emission tests.
+
+ContractRef: ContractName:Plans/UI_Wiring_Rules.md, SchemaID:Wiring_Matrix.schema.json, Gate:GATE-010, Invariant:INV-011, Invariant:INV-012
+
 ### 2.1 GitHub auth (GitHub HTTPS API only)
 
 #### `cmd.github.connect`
@@ -191,3 +203,6 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#5, ContractName:Plans/C
 - `Plans/Run_Graph_View.md`
 - `Plans/Orchestrator_Page.md`
 - `Plans/assistant-chat-design.md`
+- `Plans/UI_Wiring_Rules.md`
+- `Plans/Wiring_Matrix.schema.json`
+- `Plans/Wiring_Matrix.md`
