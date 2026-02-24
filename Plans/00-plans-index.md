@@ -13,8 +13,8 @@ To prevent agent drift while building Puppet Master autonomously, these are the 
 5. `Plans/Glossary.md` — canonical terms (platform naming, primitives)
 6. `Plans/Decision_Policy.md` — deterministic decision policy + SpecLock Update Protocol
 7. Machine-checkable schemas (doc-linked artifacts):
-   - `Plans/plan_graph.schema.json` + `Plans/plan_graph.json` (self-build plan graph)
-   - `Plans/project_plan_graph_index.schema.json` + `Plans/project_plan_node.schema.json` (user-project sharded plan graph)
+   - `Plans/plan_graph.schema.json` + `Plans/plan_graph.json` (self-build plan graph; required node execution metadata + deterministic `execution_ordering`)
+   - `Plans/project_plan_graph_index.schema.json` + `Plans/project_plan_node.schema.json` (user-project sharded plan graph; required node execution metadata + deterministic `execution_ordering`)
    - `Plans/contracts_index.schema.json` (user-project contract pack index)
    - `Plans/acceptance_manifest.schema.json` (user-project acceptance manifest)
    - `Plans/evidence.schema.json` (evidence bundle)
@@ -24,7 +24,8 @@ To prevent agent drift while building Puppet Master autonomously, these are the 
 8. `Plans/UI_Command_Catalog.md` — stable UI command IDs (layout may change; command IDs do not)
 9. `Plans/Architecture_Invariants.md` — architecture invariants (autonomous checks)
 10. `Plans/Progression_Gates.md` — deterministic PASS/FAIL gates + Verifier role
-11. Verifier command: `python3 scripts/pm-plans-verify.py run-gates`
+11. `Plans/Executor_Protocol.md` — deterministic next-ready selection + role boundaries + auto mark-done semantics
+12. Verifier command: `python3 scripts/pm-plans-verify.py run-gates`
 
 **Scope boundary (do not conflate):**
 - `Plans/plan_graph.*` is for **Puppet Master self-build** plan nodes.
@@ -67,6 +68,7 @@ See: `Plans/rewrite-tie-in-memo.md`.
 | `Run_Graph_View.md` | Node Graph Display (Airflow-style DAG view) | Canonical for the full-page graph visualization tab on the Orchestrator page. NOT a portable widget. Includes data model contract for Rust structs, 5 layout presets, 8-section detail panel, HITL controls, performance targets (500 nodes). |
 | `Orchestrator_Page.md` | Orchestrator single-page 6-tab structure | Canonical for tab layout (Progress / Tiers / Node Graph Display / Evidence / History / Ledger). Widget-based tabs reference Widget_System.md. Node Graph tab references Run_Graph_View.md. Terminal widgets, prose summaries, data source documentation. |
 | `GUI_Rebuild_Requirements_Checklist.md` | Auditable summary checklist for 2026-02-23 GUI rebuild handoff requirements | Single verification table confirming coverage for widget system, Usage page, chat context enhancements, Dashboard widget grid migration, Orchestrator 6-tab structure, and Node Graph image-backed spec. |
+| `Executor_Protocol.md` | Deterministic executor flow and lifecycle semantics | Canonical for Builder/Verifier/Executor roles, next-ready selection, and verifier-driven auto completion to `done`. |
 | `UI_Wiring_Rules.md` | UI wiring rules + verification | Canonical for Rule 1 (UI dispatches only typed UICommands) and Rule 2 (every UI element maps to one UICommandID). Defines UI Command Dispatcher boundary and Wiring Matrix verification concept. |
 | `Wiring_Matrix.md` | Wiring matrix template + examples | Template and 10 EXAMPLE rows for the wiring matrix. Real entries are JSON validated against Wiring_Matrix.schema.json. |
 

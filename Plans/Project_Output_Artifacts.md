@@ -70,10 +70,11 @@ This document uses the exact terminology/field names of the canonical schemas un
 
 - `Plans/project_plan_graph_index.schema.json` (`pm.project-plan-graph-index.v1`)
   - index `nodes[].path`, `nodes[].sha256`
-  - index `schema_version`, `entrypoints`, `validation.targets`
+  - index `schema_version`, `entrypoints`, `execution_ordering`, `validation.targets`
 - `Plans/project_plan_node.schema.json` (`pm.project-plan-node.v1`)
   - node `contract_refs`, `evidence_required`, `allowed_tools`, `tool_policy_mode`, `policy_mode`, `change_budget`,
-    `blockers`, `unblocks` (and optional `depends_on`, `parallel_group`)
+    `blockers`, `unblocks`, `status`, `evidence_pointer`, `verifier_result`, `decision_refs`, `spec_lock_requirements`
+    (and optional `depends_on`, `parallel_group`)
 - `pm.project-plan-graph.v1` (optional monolithic export)
   - `plan_graph.json` is a monolithic wrapper over the same node object fields as `pm.project-plan-node.v1` (inlined nodes), plus graph-level `graph_id`, `entrypoints`, and `validation.targets`.
 - `Plans/contracts_index.schema.json` (`pm.project_contracts_index.schema.v1`)
@@ -166,9 +167,12 @@ Normative requirements:
   - `path` as the shard-relative path: `nodes/<node_id>.json`
   - `sha256` as the SHA-256 of the referenced shard file bytes (hex)
 - `entrypoints` MUST be present and MUST reference existing node IDs.
+- `execution_ordering` MUST be present and MUST define deterministic readiness/selection/completion behavior.
+  - `execution_ordering.node_state_source` MUST be `plan_graph/nodes/<node_id>.json`.
 - `validation.targets` MUST include validation pointers sufficient to validate the graph in isolation, including at minimum:
   - `acceptance_manifest` (recommended relative path: `../acceptance_manifest.json`)
   - `contracts_index` (recommended relative path: `../contracts/index.json`)
+- Executor semantics for status transitions and auto-marking MUST follow `Plans/Executor_Protocol.md`.
 
 ### 7.2 `plan_graph/nodes/<node_id>.json` (required; one node per file)
 
@@ -177,7 +181,8 @@ Normative requirements:
 
 Required fields include (see schema for full detail):  
 `node_id`, `objective`, `contract_refs`, `acceptance`, `evidence_required`, `allowed_tools`, `tool_policy_mode`,
-`policy_mode`, `change_budget`, `blockers`, `unblocks`.
+`policy_mode`, `change_budget`, `blockers`, `unblocks`, `status`, `evidence_pointer`, `verifier_result`,
+`decision_refs`, `spec_lock_requirements`.
 
 Node completeness rules (normative; sharding requirement):
 
@@ -189,6 +194,8 @@ Node completeness rules (normative; sharding requirement):
   - `allowed_tools` and policy declaration (`policy_mode` and/or `tool_policy_mode` per schema)
   - `change_budget`
   - `blockers` and `unblocks`
+  - execution lifecycle fields: `status`, `evidence_pointer`, `verifier_result`
+  - deterministic decision and readiness fields: `decision_refs`, `spec_lock_requirements`
 
 Integrity rules:
 

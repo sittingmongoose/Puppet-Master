@@ -3,6 +3,12 @@
   "graph_scope": "puppet-master-repo-build",
   "graph_id": "EXAMPLE.pm_repo_build_graph",
   "entrypoints": ["EXAMPLE.spec-lock-harden"],
+  "execution_ordering": {
+    "ready_rule": "all_blockers_done_and_spec_lock_satisfied",
+    "selection_rule": "lexicographic_node_id",
+    "completion_rule": "verifier_evidence_then_auto_done",
+    "spec_lock_source": "Plans/Spec_Lock.json"
+  },
   "nodes": [
     {
       "node_id": "EXAMPLE.spec-lock-harden",
@@ -47,6 +53,23 @@
       "evidence_required": {
         "schema_id": "pm.evidence.schema.v1",
         "path": "Plans/.evidence/EXAMPLE.spec-lock-harden/evidence.json"
+      },
+      "status": "queued",
+      "evidence_pointer": {
+        "kind": "filesystem_path",
+        "ref": "Plans/.evidence/EXAMPLE.spec-lock-harden/evidence.json"
+      },
+      "verifier_result": {
+        "outcome": "pending"
+      },
+      "decision_refs": [],
+      "spec_lock_requirements": {
+        "schema_versions": {
+          "plan_graph": "pm.plan_graph.schema.v1",
+          "evidence": "pm.evidence.schema.v1",
+          "change_budget": "pm.change_budget.schema.v1",
+          "auto_decisions": "pm.auto_decisions.schema.v1"
+        }
       },
       "blockers": [],
       "unblocks": ["EXAMPLE.plan-graph-upgrade"],
@@ -98,6 +121,23 @@
         "schema_id": "pm.evidence.schema.v1",
         "path": "Plans/.evidence/EXAMPLE.plan-graph-upgrade/evidence.json"
       },
+      "status": "queued",
+      "evidence_pointer": {
+        "kind": "filesystem_path",
+        "ref": "Plans/.evidence/EXAMPLE.plan-graph-upgrade/evidence.json"
+      },
+      "verifier_result": {
+        "outcome": "pending"
+      },
+      "decision_refs": [],
+      "spec_lock_requirements": {
+        "schema_versions": {
+          "plan_graph": "pm.plan_graph.schema.v1",
+          "evidence": "pm.evidence.schema.v1",
+          "change_budget": "pm.change_budget.schema.v1",
+          "auto_decisions": "pm.auto_decisions.schema.v1"
+        }
+      },
       "blockers": ["EXAMPLE.spec-lock-harden"],
       "unblocks": ["EXAMPLE.gates-and-verifier"],
       "example": true
@@ -146,6 +186,23 @@
       "evidence_required": {
         "schema_id": "pm.evidence.schema.v1",
         "path": "Plans/.evidence/EXAMPLE.gates-and-verifier/evidence.json"
+      },
+      "status": "queued",
+      "evidence_pointer": {
+        "kind": "filesystem_path",
+        "ref": "Plans/.evidence/EXAMPLE.gates-and-verifier/evidence.json"
+      },
+      "verifier_result": {
+        "outcome": "pending"
+      },
+      "decision_refs": [],
+      "spec_lock_requirements": {
+        "schema_versions": {
+          "plan_graph": "pm.plan_graph.schema.v1",
+          "evidence": "pm.evidence.schema.v1",
+          "change_budget": "pm.change_budget.schema.v1",
+          "auto_decisions": "pm.auto_decisions.schema.v1"
+        }
       },
       "blockers": ["EXAMPLE.plan-graph-upgrade"],
       "unblocks": [],

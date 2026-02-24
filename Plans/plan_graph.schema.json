@@ -4,7 +4,14 @@
   "title": "Puppet Master Self-Build Plan Graph",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_id", "graph_scope", "graph_id", "entrypoints", "nodes"],
+  "required": [
+    "schema_id",
+    "graph_scope",
+    "graph_id",
+    "entrypoints",
+    "execution_ordering",
+    "nodes"
+  ],
   "properties": {
     "schema_id": {"type": "string", "const": "pm.plan_graph.schema.v1"},
     "graph_scope": {
@@ -12,9 +19,43 @@
       "const": "puppet-master-repo-build"
     },
     "graph_id": {"type": "string", "minLength": 1},
-    "entrypoints": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "entrypoints": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "execution_ordering": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ready_rule",
+        "selection_rule",
+        "completion_rule",
+        "spec_lock_source"
+      ],
+      "properties": {
+        "ready_rule": {
+          "type": "string",
+          "const": "all_blockers_done_and_spec_lock_satisfied"
+        },
+        "selection_rule": {
+          "type": "string",
+          "const": "lexicographic_node_id"
+        },
+        "completion_rule": {
+          "type": "string",
+          "const": "verifier_evidence_then_auto_done"
+        },
+        "spec_lock_source": {
+          "type": "string",
+          "const": "Plans/Spec_Lock.json"
+        }
+      }
+    },
     "nodes": {
       "type": "array",
+      "minItems": 1,
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -30,7 +71,12 @@
           "change_budget",
           "evidence_required",
           "blockers",
-          "unblocks"
+          "unblocks",
+          "status",
+          "evidence_pointer",
+          "verifier_result",
+          "decision_refs",
+          "spec_lock_requirements"
         ],
         "properties": {
           "node_id": {"type": "string", "minLength": 1},
@@ -102,10 +148,136 @@
               "path": {"type": "string", "minLength": 1}
             }
           },
-          "blockers": {"type": "array", "items": {"type": "string"}},
-          "unblocks": {"type": "array", "items": {"type": "string"}},
+          "blockers": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "unblocks": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "status": {
+            "type": "string",
+            "enum": ["queued", "in_progress", "verify_pending", "verified", "done", "failed"]
+          },
+          "evidence_pointer": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind", "ref"],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": ["filesystem_path", "seglog_ref"]
+              },
+              "ref": {"type": "string", "minLength": 1}
+            }
+          },
+          "verifier_result": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["outcome"],
+            "properties": {
+              "outcome": {
+                "type": "string",
+                "enum": ["pending", "pass", "fail"]
+              },
+              "timestamp_utc": {"type": "string", "format": "date-time"},
+              "message": {"type": "string"}
+            }
+          },
+          "decision_refs": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1},
+            "minItems": 0
+          },
+          "spec_lock_requirements": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["schema_versions"],
+            "properties": {
+              "schema_versions": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
           "example": {"type": "boolean"}
-        }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "status": {"enum": ["verified", "done"]}
+              },
+              "required": ["status"]
+            },
+            "then": {
+              "properties": {
+                "verifier_result": {
+                  "allOf": [
+                    {
+                      "required": ["outcome", "timestamp_utc"]
+                    },
+                    {
+                      "properties": {
+                        "outcome": {"const": "pass"}
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "status": {"const": "failed"}
+              },
+              "required": ["status"]
+            },
+            "then": {
+              "properties": {
+                "verifier_result": {
+                  "allOf": [
+                    {
+                      "required": ["outcome", "timestamp_utc"]
+                    },
+                    {
+                      "properties": {
+                        "outcome": {"const": "fail"}
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "status": {"enum": ["queued", "in_progress", "verify_pending"]}
+              },
+              "required": ["status"]
+            },
+            "then": {
+              "properties": {
+                "verifier_result": {
+                  "properties": {
+                    "outcome": {"const": "pending"}
+                  },
+                  "required": ["outcome"]
+                }
+              }
+            }
+          }
+        ]
       }
     }
   }

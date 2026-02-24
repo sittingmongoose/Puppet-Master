@@ -4,7 +4,14 @@
   "title": "Puppet Master Project Plan Graph Index",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "graph_id", "nodes", "entrypoints", "validation"],
+  "required": [
+    "schema_version",
+    "graph_id",
+    "nodes",
+    "entrypoints",
+    "execution_ordering",
+    "validation"
+  ],
   "properties": {
     "$schema": {"type": "string"},
     "schema_version": {"type": "string", "minLength": 1},
@@ -24,6 +31,7 @@
           "subgraph": {"type": "string"},
           "depends_on": {
             "type": "array",
+            "uniqueItems": true,
             "items": {"type": "string", "minLength": 1}
           }
         }
@@ -32,7 +40,41 @@
     "entrypoints": {
       "type": "array",
       "minItems": 1,
+      "uniqueItems": true,
       "items": {"type": "string", "minLength": 1}
+    },
+    "execution_ordering": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ready_rule",
+        "selection_rule",
+        "completion_rule",
+        "spec_lock_source",
+        "node_state_source"
+      ],
+      "properties": {
+        "ready_rule": {
+          "type": "string",
+          "const": "all_blockers_done_and_spec_lock_satisfied"
+        },
+        "selection_rule": {
+          "type": "string",
+          "const": "lexicographic_node_id"
+        },
+        "completion_rule": {
+          "type": "string",
+          "const": "verifier_evidence_then_auto_done"
+        },
+        "spec_lock_source": {
+          "type": "string",
+          "const": "Plans/Spec_Lock.json"
+        },
+        "node_state_source": {
+          "type": "string",
+          "const": "plan_graph/nodes/<node_id>.json"
+        }
+      }
     },
     "validation": {
       "type": "object",
@@ -54,4 +96,3 @@
     }
   }
 }
-
