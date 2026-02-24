@@ -1,5 +1,8 @@
 # Misc Plan -- Agent Artifacts, Cleanup & Related Improvements
 
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+
+
 ## Plan Document Status
 
 **This is a PLAN DOCUMENT ONLY** -- No code changes have been made. This document covers:
@@ -474,7 +477,7 @@ Platform CLIs (Cursor, Codex, Claude Code, Gemini, Copilot) support **hooks**, *
 **Ways we might leverage CLI capabilities (optional / future)**
 
 - **Pre-iteration hook (platform-side):** Some CLIs support a "before run" or "session start" hook. We could **document** an optional user-provided hook that runs `git clean -fd -e .puppet-master ...` in the project dir as a **backup** or for platforms we don't control (e.g. when the user runs the CLI manually). Not a replacement for our prepare_working_directory; document in AGENTS.md or user docs as "Optional: if you run the CLI outside Puppet Master, you can add a hook to clean the workspace."
-- **Skills for context:** Orchestrator and Interview plans already reference platform **skills** (e.g. `.cursor/skills/`, `.codex/skills/`) for subagent-specific context. We could add a **Puppet Master-authored skill** (e.g. "ralph-clean-workspace" or "puppet-master-context") that agents can load when running under Puppet Master, reminding them to write scratch files under `.puppet-master/agent-output/` and to avoid leaving untracked cruft. Implement as a SKILL.md in the project or in a shared location; no change to our cleanup code.
+- **Skills for context:** Orchestrator and Interview plans already reference platform **skills** (e.g. `.cursor/skills/`, `.codex/skills/`) for subagent-specific context. We could add a **Puppet Master-authored skill** (e.g. "puppet-master-clean-workspace" or "puppet-master-context") that agents can load when running under Puppet Master, reminding them to write scratch files under `.puppet-master/agent-output/` and to avoid leaving untracked cruft. Implement as a SKILL.md in the project or in a shared location; no change to our cleanup code.
 - **Plugins / extensions:** Cursor plugins and Claude/Gemini extensions can add MCP servers, subagents, and hooks. We do not **require** any plugin for core cleanup or orchestration. If a **project** wants to use a platform plugin (e.g. a custom subagent definition), that is project-specific; our runners stay CLI-arg and prompt based. Document in platform_specs or AGENTS.md which platforms support plugins and that we do not depend on them for prepare/cleanup.
 - **MCP:** We use MCP for Context7 and other tooling; platform CLIs can also connect to MCP servers. Cleanup and evidence are **not** exposed as MCP tools; they remain internal to Puppet Master. Future: optional MCP tool "clean_workspace" for external orchestration could call our run_git_clean_with_excludes, but that is out of scope for the current plan.
 
@@ -535,7 +538,7 @@ A dedicated **GUI screen** is required to allow users to **change and customize 
 
 **Implementation notes:**
 
-- Key handling in Iced (or the GUI stack in use) must route key events using the configured shortcuts, not hardcoded bindings. On load, load overrides from config and merge with defaults.
+- Key handling in the GUI layer (Slint) must route key events using the configured shortcuts, not hardcoded bindings. On load, load overrides from config and merge with defaults.
 - Accessibility: ensure shortcut list is keyboard-navigable and that the "record new shortcut" flow is clearly announced (e.g. "Press the new key combination").
 - If the app supports multiple platforms (e.g. macOS), display and store shortcuts in a platform-appropriate form (e.g. Cmd vs Ctrl); the table above uses Ctrl/Alt as the default (Linux/Windows); document or map for macOS (Cmd, Option) in the same DRY data source.
 
@@ -614,7 +617,7 @@ Backend components required so the Desktop Shortcuts GUI (§7.7) and in-app key 
 
 **Key map building:**
 
-- **build_key_map(defaults, overrides) -> KeyMap:** Merge defaults with overrides (overrides take precedence). Output a structure the GUI layer (Iced) can use to route key events to actions. Tag **DRY:FN:build_key_map**.
+- **build_key_map(defaults, overrides) -> KeyMap:** Merge defaults with overrides (overrides take precedence). Output a structure the GUI layer (Slint) can use to route key events to actions. Tag **DRY:FN:build_key_map**.
 - **Platform mapping:** If supporting macOS, map Ctrl -> Cmd and Alt -> Option when reading/writing config or displaying in GUI; do this in one place (same DRY data or a small platform module).
 
 **Persistence:**
@@ -710,7 +713,7 @@ This subsection closes open decisions and documents gaps so an **implementation 
 | Gap / risk | Resolution or decision |
 |------------|------------------------|
 | **Scope of shortcut handling** | Explicitly list all views/widgets that receive shortcut handling: composer (prompt field), chat input, interview text fields, config text inputs, wizard prompts, any other focusable text. Implementation plan should enumerate and wire key map in one central place (e.g. app-level key subscription) or per-widget; prefer central so behavior is consistent. |
-| **Iced key event wiring** | Key map must be consulted on every key event in focusable text areas. Iced: use a single key-event subscription or `on_key_press` at the appropriate level (window or focused widget). Document in implementation plan: where key events are captured and how KeyMap is applied (e.g. `if let Some(action) = key_map.get(event) { ... }`). |
+| **Slint key event wiring** | Key map must be consulted on every key event in focusable text areas. Slint: use a `FocusScope` (or window-level `key-pressed` handler) at the appropriate level (window or focused widget). Document in implementation plan: where key events are captured and how KeyMap is applied (e.g. `if let Some(action) = key_map.get(event) { ... }`). |
 | **"Record new shortcut" flow** | Specify: (1) focus capture so only the new key combo is recorded; (2) ignore the key that opened the dialog (e.g. don't record "Ctrl+K" if user opened via Ctrl+K); (3) Escape cancels without saving; (4) if user presses a key with no modifier, either reject with tooltip "Use a modifier (Ctrl/Alt/Cmd)" or allow (e.g. F-keys). Recommend: require at least one modifier for clarity. |
 | **KeyBinding serialization** | Config stores overrides; use a format that is cross-platform and stable (e.g. string `"Ctrl+A"` or structured `{ "modifiers": ["ctrl"], "key": "A" }`). Document in implementation plan; ensure backward compatibility if format changes later. |
 | **Conflict validation** | "No duplicate action binding" is required. "Warn on system shortcut" is optional: maintain a small allowlist of well-known system shortcuts (e.g. Ctrl+C, Ctrl+V) and warn when user binds an action to one; or skip for v1. |
@@ -829,7 +832,7 @@ Required. Use existing widgets; tag new helpers with DRY.
 
 - [ ] Read §7.7-§7.11.2 (Shortcuts and Skills spec, gaps, and enhancements) and §8.8-§8.10.2 (implementation checklist items for Shortcuts and Skills).
 - [ ] Resolve project path for Skills when no project is open: "Create skill" must offer global-only path (e.g. `~/.config/puppet-master/skills/<name>`); disable or hide project option when `project_root` is None (per §7.11 "Create skill when no project").
-- [ ] Define Iced key-event integration point: where key events are captured (window vs focused widget) and how KeyMap is applied; document in implementation plan (per §7.11 "Iced key event wiring").
+- [ ] Define Slint key-event integration point: where key events are captured (window vs focused widget, via `FocusScope` or window-level handler) and how KeyMap is applied; document in implementation plan (per §7.11 "Slint key event wiring").
 - [ ] Confirm platform_specs (or orchestrator plan) documents how each platform receives skill list (paths vs content; CLI env vs prompt injection); implementation plan references this per platform.
 
 **Dependencies**
@@ -1080,7 +1083,7 @@ The following reflects a sweep of the codebase and plans. Use it to avoid missin
 
 **Shortcuts and Skills (§7.7-§7.11)**
 
-- **Shortcuts:** No `ShortcutAction`/`KeyBinding` or `default_shortcuts`; no `build_key_map` or key-event wiring; no Shortcuts tab or config. Implement per §7.7, §7.9, §8.8; resolve gaps in §7.11 (record flow, Iced wiring, serialization).
+- **Shortcuts:** No `ShortcutAction`/`KeyBinding` or `default_shortcuts`; no `build_key_map` or key-event wiring; no Shortcuts tab or config. Implement per §7.7, §7.9, §8.8; resolve gaps in §7.11 (record flow, Slint wiring, serialization).
 - **Skills:** No `src/skills/`; no discovery, load_skill, or permissions; no Skills tab or config. Implement per §7.8, §7.10, §8.9; resolve gaps in §7.11 (deduplication rule, import semantics, no-project create, name-change on edit).
 
 **GUI changes required (summary)**
@@ -1116,13 +1119,13 @@ The following reflects a sweep of the codebase and plans. Use it to avoid missin
 
 **Known risks**
 
-- **Iced key API may vary:** Key event subscription and key-map application depend on Iced's key-event API (e.g. `on_key_press`, subscription level). API or behavior may differ by Iced version or platform; implementer should confirm the integration point and document it in the implementation plan.
+- **Slint key API:** Key event handling depends on Slint's key-event API (e.g. `FocusScope` `key-pressed` callback, `KeyEvent` struct). Behavior may differ by Slint version; implementer should confirm the integration point against Slint 1.15.1 docs and document it in the implementation plan.
 - **Skill discovery on Windows path case:** Discovery paths (e.g. `.puppet-master/skills`, `.opencode/skills`) may behave differently on Windows (case-insensitivity, path separators). First-wins deduplication by name should account for case-normalization if needed.
 - **platform_specs skill injection:** How each platform (Cursor, Codex, Claude, Gemini, Copilot) receives the skill list (env var, prompt injection, tool) must be defined in platform_specs or orchestrator plan; until then, Skills integration with runners is stubbed.
 
 **Before implementation plan**
 
-- Confirm Iced key-event API: where key events are captured (window vs focused widget) and how KeyMap is applied.
+- Confirm Slint key-event API (Slint 1.15.1): where key events are captured (window vs focused widget, via `FocusScope`) and how KeyMap is applied.
 - Confirm platform_specs (or equivalent) documents skill injection for each platform so the implementation plan can wire `list_skills_for_agent` per runner.
 
 ---

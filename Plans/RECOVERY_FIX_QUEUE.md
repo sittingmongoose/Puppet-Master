@@ -1,5 +1,8 @@
 # Recovery Fix Queue
 
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+
+
 Audit basis commit: `91dca72`
 
 ## 2026-02-24 Normative-Only Sweep (Implemented)

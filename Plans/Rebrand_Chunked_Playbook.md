@@ -1,5 +1,8 @@
 # Rebrand Chunked Playbook
 
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+
+
 Convert the canonical rebrand plan into small, agent-executable chunks with clear scope, success criteria, evidence format, and builder/verifier prompts.
 
 ---

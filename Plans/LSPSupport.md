@@ -1,5 +1,8 @@
 # LSP Support -- Plan (Rewrite)
 
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+
+
 **Date:** 2026-02-22  
 **Status:** Plan -- **LSP is MVP**  
 **Scope:** LSP (Language Server Protocol) is **in scope for the desktop MVP**. Desktop client integration, server management, **full LSP integration in the Chat Window** (diagnostics in context, @ file/symbol with LSP, code blocks with hover/Go to definition), and **additional enhancements** (Find references, Rename symbol, Format document, optional LSP diagnostics gate, Chat "Fix all"/"Rename"/"Where is this used?", etc.) -- see §9.1.  
@@ -218,7 +221,7 @@ Our GUI is **Rust + Slint** (FinalGUISpec); we include **slint-lsp** so that edi
 
 ## 4. Rust Stack (Client Side)
 
-Our rewrite is Rust/Iced. We only need an **LSP client** in the app.
+Our rewrite is Rust/Slint (1.15.1). We only need an **LSP client** in the app.
 
 - **Protocol types:** [lsp-types](https://docs.rs/lsp-types/) -- LSP 3.x types (requests, notifications, capabilities, DocumentUri, Range, Diagnostic, etc.). Use for all LSP data structures.
 - **Client implementation:** One of:
@@ -296,7 +299,7 @@ ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/assistant-chat
 
 **Server selection:** By file path → language (extension) → which server(s) handle that extension → project root for that file. Then one server process per (server id, root). Same idea as OpenCode's Info + root function. For **multi-root** (e.g. monorepo), consider sending only roots that have open files or a bounded set in `workspaceFolders` at initialize to avoid slow startup (see §7, §8).
 
-**Threading:** LSP is async (I/O). Run the client in an async runtime (e.g. tokio); keep UI (Iced) responsive (e.g. send results back to main thread for rendering). Avoid blocking the UI on LSP requests.
+**Threading:** LSP is async (I/O). Run the client in an async runtime (e.g. tokio); keep the GUI layer (Slint) responsive by sending results back to the Slint event loop (e.g. via `slint::invoke_from_event_loop` or a model binding update). Avoid blocking the UI thread on LSP requests.
 
 ---
 
@@ -613,7 +616,7 @@ Settings are persisted in app config (redb); optional project-level overrides. S
 4. **User hovers** → Editor sends (uri, position) → Client sends `textDocument/hover` (with timeout) → On response, check document version; if stale, discard → Show tooltip.
 5. **User triggers completion** → Client sends `textDocument/completion` with context → On response, filter/discard if stale → Show list; on select, apply and optionally `completionItem/resolve`.
 
-All LSP I/O on **async task** (tokio); results sent to **main thread** (e.g. via `iced::Command` or channel) for UI updates. Never block UI on LSP.
+All LSP I/O on **async task** (tokio); route UI updates to the Slint event loop (e.g. via `slint::invoke_from_event_loop` or `Weak::upgrade_in_event_loop`). Never block UI on LSP.
 
 **Stale response policy:** When a response arrives for a document-scoped request (hover, completion, definition, references, signatureHelp), the client must check whether the document version has changed since the request was sent. Store the document version (from `DocumentState.version` for that URI) at request time; when the response is received, compare to the current `DocumentState.version`. If the current version is **greater** than the version at request time, **discard** the response (do not show tooltip, do not apply completion, do not navigate). Optionally match by request id so only the correct response is discarded. **Do not** automatically re-request; the user can repeat the action (e.g. hover again, trigger completion again) to get a fresh result. For workspace-level requests (e.g. workspace/symbol), version check is per relevant document or omit if no single document applies.
 

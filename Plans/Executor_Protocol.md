@@ -1,5 +1,8 @@
 # Executor Protocol (Canonical)
 
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+
+
 ## 0. Purpose and scope
 This document defines deterministic execution ordering for `plan_graph` nodes and completion semantics for Builder, Verifier, and Executor roles.
 

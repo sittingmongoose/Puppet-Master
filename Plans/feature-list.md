@@ -1,5 +1,8 @@
 # Puppet Master Feature List (Reference)
 
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+
+
 This document exists to avoid losing features when writing rewrite implementation docs. Part 1 lists planned and new features from the Plans folder, organized by category and relation. Part 2 records what exists in the codebase today for reference. Plans define target behavior; implementation may change.
 
 ---
@@ -22,6 +25,12 @@ This document exists to avoid losing features when writing rewrite implementatio
 
 **Provider and CLI.** Claude Code CLI as Provider (stream-json, print mode, optional partials; Claude Code Hooks for tools/telemetry). Cursor Agent CLI as Provider (--print --output-format stream-json, internal parsing into unified event model). **Cursor / ACP (Resolved — Not Needed for MVP):**
 Cursor CLI is not ACP-native (confirmed by Cursor staff, January 2026). Cursor supports MCPs, which Puppet Master already uses. An ACP adapter layer is **not needed for MVP**. If Cursor adds ACP support in the future, an adapter can be added as a non-breaking enhancement. Priority: P4 (future/optional). Gemini auth: API key default in UI; explicit exception to "subscription only"; OAuth optional.
+
+**Contract-Locked PlanGraph System.** Canonical node-based plan graph and execution: user-project outputs under `.puppet-master/project/**` (sharded plan graph, Project Contract Pack, acceptance_manifest, auto_decisions; seglog canonical; optional UI wiring artifacts for GUI projects). Progression Gates (GATE-001–GATE-010): schema validation, Spec Lock integrity, drift phrases, evidence, wiring matrix validation; Verifier role; run-gates verifier (`python3 scripts/pm-plans-verify.py run-gates`). Executor Protocol: Builder/Verifier/Executor roles, deterministic next-ready selection and status lifecycle for plan_graph nodes; Spec Lock version checks.
+
+Contract layers: Platform vs Project contracts, ProjectContract:* refs in node shards; Spec_Lock.json pins schema versions and locked decisions. UI command layer: stable UICommand IDs (UI_Command_Catalog), Wiring Rules (dispatch only UICommands; one element, one command), Dispatcher boundary, Wiring Matrix (schema-validated). Architecture invariants INV-001–INV-012 (tool correlation, no secrets, UI SSOT/boundary, deterministic ordering, providers isolated, no stringly-typed IDs, GitHub API-only, Cursor transport invisible, naming, wiring coverage).
+
+Contracts V0 as SSOT for event envelope, UICommand, EventRecord, AuthState. Anti-drift: required SSOT reading order (Spec_Lock → Contracts_V0 → Crosswalk → DRY_Rules → Glossary → Decision_Policy → schemas → UI_Command_Catalog → Architecture_Invariants → Progression_Gates → Executor_Protocol → Verifier command). Scope: self-build plan graph (`Plans/plan_graph.*`) vs user-project (`.puppet-master/project/*`); do not conflate. Plans: Project_Output_Artifacts.md, Progression_Gates.md, Executor_Protocol.md, UI_Command_Catalog.md, UI_Wiring_Rules.md, Wiring_Matrix.md, Architecture_Invariants.md, Contracts_V0.md, Crosswalk.md, 00-plans-index.md.
 
 ---
 
@@ -174,6 +183,8 @@ On context compiler failure:
 **Persistent rate limit and usage visibility.** Always-visible 5h/7d in UI (dashboard, header, or Usage page). Plan type where available. Tier config/setup show usage when selecting platform. Background refresh. State-file-first (usage.jsonl, summary.json); platform APIs augment when configured. Align with usage-feature.md.
 
 **Usage feature (full scope).** Quota and plan visibility (primary); alerts and thresholds (e.g. 80% warning; rate limit hit → clear message, link to Usage); event ledger (platform, operation, tokens, cost, tier/session; filter and export); optional analytics (aggregate by time, platform, project, tier; cost when available; retention). Data sources: usage.jsonl (primary), summary.json (optional), active-subagents/active-agents for enrichment. Per-platform: Cursor API (usage/account only), Codex SDK, Copilot SDK + GitHub metrics, Claude Admin API + stream-json usage, Gemini Cloud Quotas + error parsing. GUI placement options: dedicated Usage page, or Dashboard + Ledger + quota widget, or compact usage in header + full Usage page. Success criteria: users see 5h/7d and plan without manual command; clear warning on limit; tier config shows current usage. Rewrite: usage as projections/rollups over seglog; durable KV in redb; fast search in Tantivy.
+
+**Multi-Account and Usage page.** Multi-account support: multiple identities per platform (all five), pick-best-by-usage, auto-rotation on rate limit, optional session migrate/resume for Claude; account registry and cooldowns in redb (Plans/Multi-Account.md). Dedicated Usage page is fully widget-composed (grid layout, add-widget flow); Multi-Account widget (`widget.multi_account`) is first-class on Usage and reusable on Dashboard (Plans/usage-feature.md, Plans/Widget_System.md).
 
 **Session and crash recovery.** Periodic snapshots (e.g. 5 min); auto-save (e.g. 30 s). Restore last layout, session, optional message checkpoints. Retention policy. Recovery struct serialization (app phase, project path, orchestrator state, interview phase, window geometry, timestamp). Panic hook (best-effort). Schema version in snapshot. Non-blocking I/O. Config keys. "Restore previous session?" dialog on launch.
 

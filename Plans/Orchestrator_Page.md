@@ -1,5 +1,8 @@
 # Orchestrator Page -- Single-Page 6-Tab Specification
 
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+
+
 <!--
 PUPPET MASTER -- ORCHESTRATOR PAGE SSOT
 

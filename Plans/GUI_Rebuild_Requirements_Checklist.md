@@ -1,5 +1,8 @@
 # GUI Rebuild Requirements Checklist (2026-02-23)
 
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+
+
 <!--
 PUPPET MASTER -- GUI REBUILD CHECKLIST
 

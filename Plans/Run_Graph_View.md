@@ -1,5 +1,8 @@
 # Run Graph View (Node Graph Display) -- Specification
 
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+
+
 <!--
 PUPPET MASTER -- RUN GRAPH VIEW SSOT
 
@@ -321,7 +324,7 @@ When the selected node has a pending HITL request (`hitl_pending == true`):
 |---------|----------|
 | Request description | Shows the HITL request message (from `UserInteractionRequired.message`) |
 | Policy mode | Displays current policy mode: "auto", "ask", or "deny" |
-| Escalation rationale | If escalated, shows why the system escalated to human review |
+| Escalation rationale | If escalated, shows why the system escalated to HITL approval |
 | **Approve** button | Green button; click approves the request. Updates node state immediately. |
 | **Deny** button | Red button; click denies the request. |
 | Rationale text field | Optional text input for the user to explain their decision |

@@ -1,5 +1,8 @@
 # CLI-Bridged Providers (Provider Facade)
 
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+
+
 ## Purpose
 Define the **Provider facade** used by Puppet Master to run **local, CLI-bridged AI providers** (initially **Cursor** and **Claude Code**) with a single, uniform contract for:
 
