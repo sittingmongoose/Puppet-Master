@@ -53,6 +53,9 @@ The **Assistant** is the third major surface alongside **Interview** and **Orche
    - [9.1 LSP support in Chat (MVP)](#91-lsp-support-in-chat-mvp)  
 10. [Chat History Search](#10-chat-history-search)  
 11. [Threads and chat management](#11-threads-and-chat-management)  
+   - [11.1 Thread State: `attention_required`](#111-thread-state-attention_required)  
+   - [11.2 System Message Type: `clarification_request`](#112-system-message-type-clarification_request)  
+   - [11.3 Thread State Lifecycle: `attention_required`](#113-thread-state-lifecycle-attention_required)  
 12. [Context usage display](#12-context-usage-display)  
 13. [Activity transparency: search, bash, and file activity](#13-activity-transparency-search-bash-and-file-activity)  
 14. [Subagents & Crew](#14-subagents--crew)  
@@ -384,7 +387,8 @@ Not included in MVP. Priority: **P3** (post-MVP polish). When implemented: show 
 - **Thread state indicators:** In the **thread list** (message thread history), each thread has an **indicator** showing:
   - **Working** -- this thread has an agent run in progress (e.g. spinner, "Working...", or status text).
   - **Completed** -- the last agent turn in this thread finished (e.g. checkmark or "Done").
-  So at a glance the user can see which threads are active and which are idle.
+  - **Attention Required** -- the thread is paused waiting for the user to answer clarification questions from the requirements quality reviewer (see §11.1). Shown as an amber ⚠ badge with a numeric count of unanswered questions.
+  So at a glance the user can see which threads are active, idle, or awaiting user attention.
 - **Rename threads:** The user can **rename** a thread (e.g. via context menu, inline edit, or thread settings). The chosen title is shown in the thread list and in any history/search.
 - **Archive threads:** The user can **archive** a thread. Archived threads are hidden from the default thread list but remain **searchable** (in chat history search) and recoverable (e.g. "View archived" or filter). Archiving keeps the list manageable without losing history.
 - **Resume and rewind:** The user can **resume** a thread from persisted state (restore context and continue) and **rewind** (or "Restore to here") to a given message -- i.e. branch/rollback using the same restore-point mechanism as Plans/newfeatures.md §8. Exposed via slash command or thread actions.
@@ -408,6 +412,108 @@ Not included in MVP. Priority: **P3** (post-MVP polish). When implemented: show 
   - **Usage per turn** -- tokens (input/output/reasoning/cache if available) and cost per assistant turn, so the **context circle** and **thread Usage tab** (§12, Plans/usage-feature.md §5) can show per-thread usage without rescanning. When seglog is in place, this can be derived from `usage.event` (with `thread_id`); until then, persist with the thread or in usage.jsonl keyed by thread/session id.
   Resume and rewind rely on this; see Plans/newfeatures.md for recovery and snapshot behavior. If the UI shows it in the thread, it must be persisted.
 - **Backup and sync to other devices:** Chat threads and messages (including **Interview** threads and messages) must be **included in the application's backup and sync-to-other-devices feature**. When the user exports, backs up, or syncs to another device (e.g. via manual export/import or BYOS per Plans/newfeatures.md §22), the payload must include all chat and interview thread data (thread list, full message content, and all persisted thread content listed above) so the user can restore or continue conversations on another machine. Same scope as the sync payload defined in newfeatures.md §22 (thread/history index and message blobs for Assistant and Interview).
+
+### 11.1 Thread State: `attention_required`
+
+**State definition:** A thread enters `attention_required` when the requirements quality reviewer generates `needs_user_clarification[]` entries that could not be auto-resolved. The wizard is paused; no further agent execution occurs until the user submits answers.
+
+#### Thread List Indicator (sidebar)
+
+When a thread is in `attention_required` state, its entry in the thread list shows:
+
+- An amber/warning-colored badge (⚠ or equivalent icon) to the left of the thread name.
+- A numeric count badge showing the number of unanswered clarification questions (e.g., "3 questions").
+- The thread entry is visually elevated -- moved to the top of its section, or rendered bold -- so it is immediately noticeable.
+- The badge clears when all questions are answered and the wizard returns to a non-`attention_required` state.
+
+#### Badge data model
+
+```json
+{
+  "thread_id": "<string>",
+  "state": "attention_required",
+  "unanswered_question_count": "<integer ≥ 1>",
+  "wizard_id": "<string>",
+  "wizard_step": "<string>",
+  "quality_report_path": "<string path to quality report file>"
+}
+```
+
+ContractRef: `SchemaID:pm.requirements_quality_report.schema.v1`, `ContractName:Plans/chain-wizard-flexibility.md#requirements-quality-escalation-semantics`
+
+### 11.2 System Message Type: `clarification_request`
+
+This message is automatically posted to the thread when the requirements quality reviewer generates `needs_user_clarification[]` entries that could not be auto-resolved.
+
+#### Message schema (within the thread message model)
+
+```json
+{
+  "type": "clarification_request",
+  "message_id": "<string>",
+  "timestamp_utc": "<ISO-8601 date-time>",
+  "wizard_id": "<string>",
+  "wizard_step": "<string>",
+  "quality_report_path": "<string path to quality report>",
+  "questions": [
+    {
+      "question_id": "<string>",
+      "question": "<specific, answerable, non-overlapping question>",
+      "context": "<background context for the user>",
+      "answer_format": "<free_text|single_choice|multi_choice|yes_no|identifier>",
+      "choices": ["<option1>", "<option2>"]
+    }
+  ],
+  "resume_url": "<deep-link to exact wizard step>",
+  "answered": false
+}
+```
+
+- `answered` transitions to `true` when all questions have received user responses.
+- When `answered` becomes `true`, the wizard re-runs Pass 1 + Pass 2 automatically.
+
+#### Visual rendering spec
+
+- Displayed as a distinct card/panel within the thread (not a regular chat bubble).
+- **Header:** ⚠ "Requirements Clarification Needed" in amber.
+- **Sub-header:** "Wizard: [wizard_step]" + "Resume →" link.
+- Each question rendered as a labeled form field matching `answer_format`:
+  - `free_text` → textarea
+  - `yes_no` → radio buttons (Yes / No)
+  - `single_choice` → radio button group using `choices[]`
+  - `multi_choice` → checkbox group using `choices[]`
+  - `identifier` → text input with validation
+- "Submit Answers" button at bottom; disabled until all questions have a value.
+- After submit: system posts a confirmation message and the card shows a "Submitted ✓" state.
+
+ContractRef: `SchemaID:pm.requirements_quality_report.schema.v1`, `ContractName:Plans/chain-wizard-flexibility.md#requirements-quality-escalation-semantics`, `ContractName:Plans/FinalGUISpec.md`
+
+### 11.3 Thread State Lifecycle: `attention_required`
+
+```
+[wizard running]
+    → quality reviewer runs
+    → needs_user_clarification[] non-empty
+    → state: attention_required
+    → clarification_request system message posted
+    → user views + answers questions
+    → "Submit Answers" clicked
+    → wizard re-runs Pass 1 + Pass 2
+    → [if PASS] state: active  (attention_required cleared, badge removed)
+    → [if FAIL again] state: attention_required  (new clarification_request posted, old one archived)
+```
+
+**State transitions:**
+
+| From | To | Trigger |
+|------|----|---------|
+| `active` | `attention_required` | Quality reviewer reports `needs_user_clarification[]` non-empty |
+| `attention_required` | `active` | User submits answers and Pass 1 + Pass 2 return PASS verdict |
+| `attention_required` | `attention_required` | User submits answers but Pass 1 + Pass 2 still return FAIL (new round of questions) |
+
+**Max clarification rounds:** **3**. After 3 consecutive rounds still failing, wizard state becomes `blocked` and a different escalation path is triggered -- outside the scope of this spec; see `Plans/chain-wizard-flexibility.md`.
+
+ContractRef: `ContractName:Plans/chain-wizard-flexibility.md#requirements-quality-escalation-semantics`
 
 ---
 

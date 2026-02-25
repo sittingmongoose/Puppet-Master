@@ -7,6 +7,7 @@
 
 - 2026-02-24: Added UI wiring artifacts (`ui/wiring_matrix.json`, `ui/ui_command_catalog.json`) to interview outputs for GUI projects; updated Phase 3 (Product/UX) subagent responsibilities, §5.2 wiring/completeness requirements, and Contract Layer outputs. SSOT: `Plans/UI_Wiring_Rules.md`, `Plans/Wiring_Matrix.schema.json`.
 - 2026-02-24: Updated the user-project Contract Layer outputs so the Interviewer/Wizard emits a **sharded-only plan graph** under `.puppet-master/project/plan_graph/` (canonical; persisted canonically in seglog). `plan_graph/exports/plan_graph.monolithic.json` is an optional derived export only. (SSOT: `Plans/Project_Output_Artifacts.md`, `Plans/orchestrator-subagent-integration.md`.)
+- 2026-02-24: Added `requirements-quality-reviewer` cross-phase subagent persona (Quality Review category in Cross-Phase Subagents); added §5.5 Requirements Quality Reviewer Trigger Rule with deterministic two-trigger invocation order, 2-iteration autofill loop cap, and Autofill-First Rule; added quality gate bullet to §2) Contract Layer output generation specifying how `verdict` from the quality report gates the Contract Unification Pass. ContractRef: `Plans/chain-wizard-flexibility.md`, `SchemaID:pm.requirements_quality_report.schema.v1`.
 - 2026-02-23: Added a cross-plan alignment section making the Interview phase manager responsible for (1) intent-driven adaptive phase selection (phase plan) and (2) producing Contract Layer outputs via contract fragments + a deterministic Contract Unification Pass (SSOT: `Plans/chain-wizard-flexibility.md` §6 and `Plans/Project_Output_Artifacts.md`).
 
 ## Plan Document Status
@@ -148,6 +149,11 @@ This document covers the **interview flow** (multi-phase interview: Scope, Archi
 - `debugger` -- Validate technical feasibility of answers
 - `code-reviewer` -- Validate technical decisions and architecture choices
 
+**Quality Review:**
+- `requirements-quality-reviewer` -- Cross-phase quality gate; validates requirements artifacts against the Requirements Completion Contract (`Plans/chain-wizard-flexibility.md`). Produces a `requirements_quality_report` artifact (`SchemaID:pm.requirements_quality_report.schema.v1`, file: `Plans/requirements_quality_report.schema.json`). May propose `auto_fixes_applied[]`; cannot directly edit requirements files — edits are applied via Pass 2 of the Three-Pass Canonical Validation Workflow (`Plans/chain-wizard-flexibility.md`). If `needs_user_clarification[]` is non-empty after autofill, signals `attention_required` to the orchestrator, which surfaces the clarification through the thread + Dashboard CtA system.
+
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md#requirements-quality-escalation-semantics, SchemaID:pm.requirements_quality_report.schema.v1
+
 **Research Operations:**
 - `ux-researcher` -- Web research via Browser MCP (when configured). **Cited web search:** Interview (and Assistant, Orchestrator) use **cited web search** (inline citations + Sources list) from a single shared implementation; see **Plans/newtools.md** §8 (cited web search, [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited)-style) and **Plans/assistant-chat-design.md** §7.
 - `context-manager` -- Manage interview state and context across phases
@@ -177,6 +183,10 @@ Implementation responsibilities (conceptual):
 - **Contract Unification Pass:** At interview completion, run a deterministic unification step that dedupes fragments, assigns stable `ProjectContract:*` IDs, and materializes SSOT-defined canonical artifacts under `.puppet-master/project/` (contracts/index, `plan.md`, canonical sharded `plan_graph/`, acceptance manifest, execution-time decisions/evidence, optional glossary).
 - **UI wiring artifacts (GUI projects):** When the interview detects the user project has a GUI (`has_gui = true` from Architecture or Product/UX phases), the Contract Unification Pass also generates `.puppet-master/project/ui/wiring_matrix.json` and `.puppet-master/project/ui/ui_command_catalog.json` from the Product/UX phase wiring fragments. The validation gate must verify schema conformance and "no unbound UI actions" (every interactive element has a bound command and handler).
 - **Builder contract seeds:** When Requirements Doc Builder is used (chain-wizard §5), `.puppet-master/requirements/contract-seeds.md` is a staging input to the unification pass and must be reconciled with phase-derived fragments.
+- **Quality gate (requirements-quality-reviewer):** Before the Contract Unification Pass reads the requirements artifact, the `requirements-quality-reviewer` MUST have run and produced a `requirements_quality_report` artifact (`SchemaID:pm.requirements_quality_report.schema.v1`). The Contract Unification Pass MUST check the `verdict` field: if `"FAIL"` the pass is blocked and the orchestrator transitions the wizard to `attention_required`; if `"PASS"` the pass proceeds, appending `auto_fixes_applied[]` entries to its change log as normative changes. The Contract Unification Pass MUST NOT re-review requirements quality — it only checks the `verdict` field.
+
+  ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/chain-wizard-flexibility.md
+
 - **Validation gate:** Before execution begins, run the dry-run validator specified by `Plans/Project_Output_Artifacts.md` Validation Rules (including contract resolvability, acceptance-manifest coverage, canonical sharded graph validity, deterministic node IDs, and derived-export consistency when present).
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1
@@ -1081,6 +1091,35 @@ Interview-tab bounds for these controls are sourced from `Plans/FinalGUISpec.md`
 - Persist in-progress review state for resume/start-over behavior.
 - Persist `awaiting_final_approval` state and restore directly to findings + final approval UI after restart.
 - Restore document pane selection and preview context for the same review run when possible.
+
+### 5.5 Requirements Quality Reviewer Trigger Rule
+
+The `requirements-quality-reviewer` MUST run deterministically at two trigger points (both are mandatory, independent triggers — not an "AND/OR" choice — both situations independently trigger the reviewer):
+
+1. **After `requirements-doc-builder` output:** immediately after the requirements document is produced, before any planning or implementation subagent sees it.
+2. **After `interview-doc-generator` output:** immediately after the interview-generated requirements doc is produced, before the Contract Unification Pass.
+
+**Run order in phase:**
+
+```
+requirements-doc-builder → requirements-quality-reviewer → [if FAIL: autofill loop → re-review] → contract-unification-pass
+interview-doc-generator  → requirements-quality-reviewer → [if FAIL: autofill loop → re-review] → contract-unification-pass
+```
+
+The autofill loop runs at most **2 iterations** before escalating to the user if blocking issues remain. This is a deterministic limit — no open-ended retries.
+
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md#requirements-quality-escalation-semantics, SchemaID:pm.requirements_quality_report.schema.v1
+
+#### Autofill-First Rule
+
+The system MUST attempt autofill before escalating to the user:
+
+- For every blocking issue where `auto_fixable == true`: autofill is applied in Pass 2, no user question generated.
+- For blocking issues where `auto_fixable == false`: a targeted question is added to `needs_user_clarification[]`.
+- The reviewer MUST NOT generate a user question for anything that can be deterministically resolved.
+- This rule directly supports the "no human in the loop" policy (see `Plans/Decision_Policy.md §4, §6`).
+
+ContractRef: PolicyRule:Decision_Policy.md§6, ContractName:Plans/chain-wizard-flexibility.md#requirements-completion-contract
 
 ## DRY Method Compliance {#dry-compliance}
 
@@ -3206,3 +3245,4 @@ Execution-critical node requirements (required fields, determinism, evidence, an
 - 2026-02-23: Added explicit auto-decisions output path `.puppet-master/project/auto_decisions.jsonl` and SSOT link to `Plans/Project_Output_Artifacts.md`.
 - 2026-02-23: Updated user-project artifact set to include `contracts/index.json`, optional `glossary.md`, execution evidence outputs, and node `tool_policy_mode` + stable `ProjectContract:*` references (per `Plans/Project_Output_Artifacts.md`).
 - 2026-02-23: Added cross-plan alignment section requiring adaptive phase selection and Contract Layer generation via contract fragments + deterministic Contract Unification Pass (referencing chain-wizard + Project_Output_Artifacts SSOT).
+- 2026-02-24: Added `requirements-quality-reviewer` cross-phase subagent persona (Quality Review category in Cross-Phase Subagents); added §5.5 Requirements Quality Reviewer Trigger Rule with deterministic two-trigger invocation order, 2-iteration autofill loop cap, and Autofill-First Rule; added quality gate bullet to §2) Contract Layer output generation. ContractRef: `Plans/chain-wizard-flexibility.md`, `SchemaID:pm.requirements_quality_report.schema.v1`.

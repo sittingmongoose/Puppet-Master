@@ -627,7 +627,45 @@ ContractRef: ContractName:Plans/newtools.md#146-preview-build-docker-and-actions
 - **Run interrupted:** "Previous run was interrupted" with "Resume from checkpoint" and "Start fresh" buttons.
 - **Rate limit:** "Platform X rate limited -- resets in 2h 15m" with "Switch platform" button.
 - **Warning:** Orange-border card for non-blocking issues (stale data, missing config).
-Multiple CtAs stack vertically in priority order (HITL > interrupted > rate limit > warnings).
+- **Wizard attention required (`wizard_attention_required`):** Amber-border card when a Chain Wizard is blocked in `attention_required` state; see detailed spec below.
+Multiple CtAs stack vertically in priority order (HITL > wizard_attention_required > interrupted > rate limit > warnings).
+
+**`wizard_attention_required` CtA card spec:**
+
+*Card data model:*
+```json
+{
+  "card_type": "wizard_attention_required",
+  "card_id": "<string>",
+  "title": "Requirements Need Your Input",
+  "reason": "<human-readable summary, e.g., '3 questions about authentication scope'>",
+  "wizard_id": "<string>",
+  "wizard_step": "<string>",
+  "question_count": "<integer ≥ 1>",
+  "resume_url": "<deep-link: puppet-master://wizard/<wizard_id>/step/<wizard_step_id>/clarify>",
+  "thread_id": "<string>",
+  "created_at_utc": "<ISO-8601 date-time>",
+  "dismissed": false
+}
+```
+
+*Visual spec:*
+- Card background: amber/warning tint (matches system attention color)
+- Left border accent: amber (4px solid)
+- Header row: ⚠ icon + "Requirements Need Your Input" in bold
+- Body text: `reason` field (e.g., "3 questions need answers before this wizard can proceed")
+- Action buttons:
+  1. **"Resume Wizard"** (primary, filled) -- navigates to the exact wizard step via `resume_url`
+  2. **"View in Thread"** (secondary, outlined) -- opens the associated chat thread via `thread_id`
+- Dismiss: NOT manually dismissable by the user; auto-dismisses only when the wizard transitions out of `attention_required`
+
+*Placement:*
+- Dashboard renders an **"Action Required"** section at the **top of the card grid**, above all other sections (Recent Activity, widget rows, etc.), when one or more `wizard_attention_required` cards exist.
+- Section header: "Action Required" with an amber ⚠ badge showing the total count of cards in this section.
+- Multiple wizards in `attention_required` state each produce their own card; all shown in this section, stacked vertically.
+- When no `wizard_attention_required` cards exist, the "Action Required" section is **hidden entirely** (not rendered as an empty section).
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/chain-wizard-flexibility.md#requirements-quality-escalation-semantics, ContractName:Plans/assistant-chat-design.md
 
 **HITL-to-Chat handoff:** When an HITL approval CtA is shown, clicking "Approve & Continue" or "Reject" can optionally spawn a new Chat thread named after the approval prompt (e.g., "Phase 2 Approval"). This allows the user to discuss the approval decision with the assistant before confirming. The "Continue in Assistant" button on any orchestrator CtA injects the current run context into a new Chat thread for interactive follow-up.
 
@@ -1001,6 +1039,25 @@ No per-document approval and no extra approval modes.
 
 **Recovery:** Wizard state is persisted per-project in redb (`wizard_state:v1:{project_id}`) including intent, current step, form data, and run checkpoint (run_type, run_id, phase, step_index, document_index, total_documents, subagent_tasks_done, checkpoint_version). On app restart with incomplete wizard, show a CtA card on Dashboard: "Resume wizard for {project}?" with "Resume" and "Start over" buttons. If checkpoint is missing or invalid version, show "Start over" only. "Resume" restores to the last completed step with all form data intact.
 
+**Wizard state `attention_required` -- recovery flow:**
+
+When a user navigates away from the Chain Wizard while it is in `attention_required` state:
+
+1. The wizard state is written to redb as `attention_required` and persists across app restarts.
+2. The Dashboard shows a `wizard_attention_required` CtA card in the "Action Required" section at the top of the card grid (see §7.2 `wizard_attention_required` CtA card spec).
+3. The relevant chat thread shows a badge and a `clarification_request` system message with an inline question form.
+4. **Resuming from Dashboard card or thread:** Clicking "Resume Wizard" (on the Dashboard CtA card or on the thread) opens the wizard directly at the step identified in `wizard_step`, with the `clarification_request` message and its inline question form shown prominently.
+5. **After submission:** The wizard automatically re-runs Pass 1 + Pass 2.
+   - If the new quality report returns `verdict == "PASS"`: wizard transitions back to `active`; the CtA card is dismissed; the thread badge is cleared.
+   - If `verdict == "FAIL"` again: a new `clarification_request` is posted (the previous one is archived); the CtA card `reason` text is updated to reflect the new question count/summary.
+
+*Deep-link URL format:*
+`puppet-master://wizard/<wizard_id>/step/<wizard_step_id>/clarify`
+
+This URL is stored as `resume_url` on the `wizard_attention_required` CtA card and on the `clarification_request` thread message. The app registers this URL scheme and navigates to the correct view on activation.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#thread-attention-needed-state, ContractName:Plans/chain-wizard-flexibility.md#requirements-quality-escalation-semantics
+
 **Error handling:** Subagent crash/timeout: collect partial reports; if <50% complete, fail run and surface "Multi-Pass Review failed (too few reviews completed)"; otherwise continue with completed reports. Review agent fails: surface "Could not produce revised doc" with "Use original document" and "Retry" buttons. All subagent spawns fail: surface error with auth/model check suggestion.
 
 ### 7.6 Interview
@@ -1242,7 +1299,7 @@ Platform readiness view for Setup and first-run troubleshooting. Shows detected 
 
 **Teach capability:** The assistant can explain how Puppet Master works using built-in documentation (REQUIREMENTS.md, ARCHITECTURE.md, AGENTS.md, GUI_SPEC.md, platform CLI sections). Invoked via chat (e.g., "How does [X] work?") or `/teach` command. No separate UI -- runs within any chat mode.
 
-**Thread selector:** Dropdown with current thread name and status dot (green=idle, blue=running, orange=queued). Click opens floating thread list overlay (max 300px wide) over message area with search, archive toggle, and [+] new thread. No permanent thread sidebar (panel too narrow).
+**Thread selector:** Dropdown with current thread name and status dot (green=idle, blue=running, orange=queued, red=attention_required). Click opens floating thread list overlay (max 300px wide) over message area with search, archive toggle, and [+] new thread. No permanent thread sidebar (panel too narrow).
 
 **Thread management:**
 - **New thread:** [+] button creates a new thread; inherits current platform/model/mode or defaults
@@ -2508,7 +2565,7 @@ The Dashboard (section 7.2) is upgraded from a simple rearrangeable card grid (d
 **What stays the same from section 7.2:**
 - All existing Dashboard card types remain as default widgets.
 - The card visual style is preserved: paper texture on retro themes, drag handle (4px crosshatch pattern in top-left corner), elevated surface for CtA cards with accent-left-border.
-- CtA (Calls to Action) behavior: HITL approval, run interrupted, rate limit, and warning cards function identically.
+- CtA (Calls to Action) behavior: HITL approval, run interrupted, rate limit, warning, and `wizard_attention_required` cards function identically (see §7.2 for full specs).
 - Persistence location changes from `dashboard_layout:v1` to `widget_layout:v1:dashboard` (see section C.5 for migration).
 
 ContractRef: ContractName:Plans/Widget_System.md#3

@@ -10,7 +10,6 @@
 - **Replace with:** canonical new value from the token table below.
 - Paths are relative to repo root unless noted.
 - After each phase, run `cd puppet-master-rs && cargo check && cargo test` and fix any failures before proceeding.
-- `Reference/` is excluded from scope -- it is external reference material, not part of this project.
 
 ---
 
@@ -312,12 +311,9 @@ Replace legacy app name / legacy method name in `//!` and `///` with "Puppet Mas
 - `docs/PLATFORM_AUTH_OAUTH_CONFIRMATION.md`: Legacy naming → "Puppet Master".
 - `docs/PROCESS_CLEANUP_README.md` and `docs/PROCESS_CLEANUP_SYSTEM.md`: Legacy naming → "Puppet Master".
 
-### 6.4 Reference and .cursor
+### 6.4 .cursor
 
-- `Reference/BUILD_INSTALLER_FIXES.md`: Legacy identifiers → new names.
-- `Reference/APP_LAUNCHER_NO_TERMINAL_PROMPT.md`: Legacy desktop identifier → `com.puppetmaster.puppet-master.desktop`.
-- `Reference/TEST_SUMMARY_REPORT.md`: Legacy signals → `<pm>COMPLETE</pm>` / `<pm>GUTTER</pm>`.
-- `Reference/GUI_ISSUES_AND_FIXES.md`: Legacy naming and paths.
+
 - `.cursor/MCP-CLI-vs-EXTENSION-PATHS.md` and `.cursor/CLAUDE_EXTENSION_AND_MCP.md`: Legacy folder name → "Puppet Master" (or "project folder" generically).
 - `.cursor/commands/CHECK_STATUS.md`: Legacy signals/commit prefix and package/path references.
 

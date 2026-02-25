@@ -488,17 +488,17 @@ To reduce agent confusion, run these chunks early (even out of phase order): **r
 
 ---
 
-### rebrand-6d -- Reference and .cursor
+### rebrand-6d -- .cursor
 
 - **Scope:**
-  `Reference/BUILD_INSTALLER_FIXES.md`, `Reference/APP_LAUNCHER_NO_TERMINAL_PROMPT.md`, `Reference/TEST_SUMMARY_REPORT.md`, `Reference/GUI_ISSUES_AND_FIXES.md`, `.cursor/MCP-CLI-vs-EXTENSION-PATHS.md`, `.cursor/CLAUDE_EXTENSION_AND_MCP.md`, `.cursor/commands/CHECK_STATUS.md`
+  `.cursor/MCP-CLI-vs-EXTENSION-PATHS.md`, `.cursor/CLAUDE_EXTENSION_AND_MCP.md`, `.cursor/commands/CHECK_STATUS.md`
 - **Success criteria:**
-  - No legacy naming in the listed Reference and .cursor files.
+  - No legacy naming in the listed .cursor files.
   - "Puppet Master" and com.puppetmaster.puppet-master and `<pm>...` used. (Evidence grep limited to listed files only.)
 - **Evidence artifact:**
   Grep exit codes for listed files only; list of files changed.
 - **Builder prompt:**
-  Implement Reference and .cursor rebrand per Plans/rebrand.md Phase 6.4. Update the listed Reference and .cursor docs: identifiers and paths to com.puppetmaster.puppet-master and new names; signals to `<pm>...`; folder name to "Puppet Master" or generic "project folder". Use the token table; do not introduce legacy naming.
+  Implement .cursor rebrand per Plans/rebrand.md Phase 6.4. Update the listed Reference and .cursor docs: identifiers and paths to com.puppetmaster.puppet-master and new names; signals to `<pm>...`; folder name to "Puppet Master" or generic "project folder". Use the token table; do not introduce legacy naming.
 - **Verifier prompt:**
   Run the success criteria for chunk rebrand-6d on the listed files only. Record grep results and modified files to the chunk evidence artifact.
 

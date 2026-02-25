@@ -397,8 +397,7 @@
       ".cursor/commands/CHECK_STATUS.md"
     ],
     "acceptance_checks": [
-      "echo \"Manual review: confirm no legacy naming in the listed Reference and .cursor files\"",
-      "grep 'com.puppetmaster.puppet-master\\|Puppet Master' Reference/APP_LAUNCHER_NO_TERMINAL_PROMPT.md Reference/BUILD_INSTALLER_FIXES.md 2>/dev/null || true"
+      "echo \"Manual review: confirm no legacy naming in the listed  .cursor files\"",
     ],
     "evidence_required": ["grep exit codes for listed files only", "list of files changed"]
   },

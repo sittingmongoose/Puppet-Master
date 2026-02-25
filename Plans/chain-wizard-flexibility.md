@@ -89,7 +89,9 @@ The current Chain wizard and Interview flow assume a single path: **start a new 
 11. [User-Project Output Artifacts (Sharded-Only)](#11-user-project-output-artifacts-sharded-only)
 12. [Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)](#12-three-pass-canonical-validation-workflow-mandatory-invariant-sweep)
 13. [No-Wizard Project Management Flows](#13-no-wizard-project-management-flows)
-14. [Change Summary](#change-summary)
+14. [Requirements Completion Contract](#14-requirements-completion-contract)
+15. [Requirements Quality Escalation Semantics](#15-requirements-quality-escalation-semantics)
+16. [Change Summary](#change-summary)
 
 ---
 
@@ -1110,6 +1112,7 @@ All three passes run serially in sequence: Pass 1 → Pass 2 → Pass 3. Each pa
   - `verdict_reason`: human-readable reason
   - `changes_applied_summary`: list of artifact paths written
   - `diff_pointers`: empty for Pass 1 (this is generation, not correction)
+- A `requirements_quality_report` artifact (schema: `pm.requirements_quality_report.schema.v1`) stored at `.puppet-master/project/traceability/requirements_quality_report.json`: for each requirement, checks coverage against the Requirements Completion Contract (§14). The Pass 1 report is **read-only** — it identifies issues and classifies each as `auto_fixable: true/false`. No edits to requirements are made in Pass 1.
 
 **Verdict rules:**
 - `pass_verdict: "pass"` — all required artifacts were successfully generated.
@@ -1136,6 +1139,7 @@ All three passes run serially in sequence: Pass 1 → Pass 2 → Pass 3. Each pa
 2. Apply fix to the relevant artifact.
 3. Record fix in `changes_applied_summary` with a `diff_pointer` (artifact path + before/after summary).
 4. When no fix is possible (e.g., an inherent conflict requiring product-level decision), record an entry in `unresolved_findings[]`.
+5. Apply auto-fixes from the requirements quality report: for each issue in the `requirements_quality_report` where `auto_fixable == true`, apply the fix and record in `auto_fixes_applied[]`. Re-validate each fixed requirement after applying its autofix. Update the `requirements_quality_report` artifact in-place with the final post-fix state. If unresolved blocking issues remain after all autofixes, they are escalated via the semantics defined in §15 — Pass 2 does **not** escalate directly; it only updates the quality report artifact.
 
 **Produces:**
 - Updated artifact set with all resolvable fixes applied.
@@ -1145,6 +1149,7 @@ All three passes run serially in sequence: Pass 1 → Pass 2 → Pass 3. Each pa
   - `findings[]`: list of all gaps and contradictions detected
   - `changes_applied_summary`: list of fixes applied, each with `diff_pointer`
   - `unresolved_findings[]`: items where no fix could be applied
+  - `auto_fixes_applied[]`: list of requirement quality issues auto-fixed in this pass (each entry: `{ issue_id, criterion, fix_applied, diff_pointer }`)
   - `pass_verdict`: `"pass"` or `"fail"`
   - `verdict_reason`: human-readable reason (including unresolved findings when fail)
 
@@ -1277,3 +1282,160 @@ All three flows show a "Run Chain Wizard" button on their finish screen. Clickin
 This satisfies the requirement that no wizard step is mandatory for basic project setup. The wizard remains the recommended path for AI-assisted requirements gathering; it is not the only path.
 
 ContractRef: Plans/chain-wizard-flexibility.md §1 (intent-based workflows), Plans/GitHub_Integration.md §D
+
+---
+
+## 14. Requirements Completion Contract
+
+> **Compliance:** Normative and machine-checkable. Follows `Plans/Decision_Policy.md §6` for unknown resolution. Naming: "Puppet Master" only.
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/requirements_quality_report.schema.json, PolicyRule:Decision_Policy.md§6
+
+This section defines the minimum criteria every requirement MUST satisfy before it can leave the Chain Wizard/Interview phase. The Three-Pass Canonical Validation Workflow (§12) enforces these criteria automatically: Pass 1 identifies issues, Pass 2 auto-fixes where possible, and Pass 3 escalates any remaining blocking issues per §15.
+
+Each requirement MUST satisfy ALL of the following coverage criteria:
+
+---
+
+### C-1: Scenario Coverage
+
+- At minimum: **1 positive (happy-path) scenario** + **1 negative/failure scenario**
+- Scenarios must be in structured form: `{given, when, then}` or equivalent
+- Blocking issue type: `missing_scenarios`
+
+---
+
+### C-2: Boundary Declaration
+
+- Explicit **in-scope** statement (what the feature covers)
+- Explicit **out-of-scope** statement (what is explicitly excluded)
+- May not use "TBD", "later", or similar deferral language
+- Blocking issue type: `missing_boundary`
+
+---
+
+### C-3: Implementation Anchor
+
+At least one of:
+
+- A `ProjectContract:*` reference that pins the implementing spec
+- An explicit "research node required" annotation (which creates a blocking research node in the plan graph before implementation can start)
+
+Blocking issue type: `missing_anchor`
+
+---
+
+### C-4: Executable Verification
+
+- At least one acceptance check command path that will appear in the acceptance manifest
+- Format: `verify: <command-or-gate-id>` inline in the requirement, OR referenced via a named verification gate (`Gate:GATE-XXX`)
+- Blocking issue type: `missing_acceptance`
+
+---
+
+### C-5: Unknown Resolution
+
+All unknowns must become either:
+
+- **(a) A blocking research node** — creates a graph dependency; implementation cannot start until research resolves it
+- **(b) A deterministic auto-decision** — only when it is truly a choice between equally valid options, not missing user intent (see `Plans/Decision_Policy.md §6`)
+
+Open unknowns that do not fit (a) or (b) MUST become `needs_user_clarification[]` entries in the quality report.
+
+Blocking issue type: `missing_research` (for unresolved unknowns)
+
+---
+
+### 14.1 Quality Report Artifact
+
+The `requirements_quality_report` artifact produced during Pass 1 (§12) captures the per-requirement evaluation against C-1 through C-5. After Pass 2 autofixes, the report is updated in-place. Schema: `pm.requirements_quality_report.schema.v1` (`ContractName:Plans/requirements_quality_report.schema.json`).
+
+Key fields:
+
+| Field | Description |
+|---|---|
+| `verdict` | Overall report verdict: `PASS` \| `FAIL` |
+| `requirements_touched[]` | Requirement IDs inspected in this quality analysis pass |
+| `issues[]` | Detected issues (`issue_id`, `category`, `requirement_id`, `severity`, `auto_fixable`, etc.) |
+| `auto_fixes_applied[]` | Deterministic fixes applied in Pass 2 (each references `issue_id` and `requirement_id`) |
+| `needs_user_clarification[]` | Clarification questions that require user input (each references `issue_id` and `requirement_id`) |
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/requirements_quality_report.schema.json
+
+---
+
+## 15. Requirements Quality Escalation Semantics
+
+> **Compliance:** Follows §14 (Requirements Completion Contract) and §12 (Three-Pass Canonical Validation Workflow). Naming: "Puppet Master" only. All decisions deterministic.
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/chain-wizard-flexibility.md
+
+This section defines how blocking issues in the `requirements_quality_report` that are not resolved by Pass 2 autofixes are surfaced to the user. Pass 3 (§12) never edits product requirements; instead it reads the quality report and triggers the escalation path defined here.
+
+---
+
+### 15.1 Escalation Trigger
+
+Escalation fires when:
+
+- `needs_user_clarification[]` in the final (post-Pass-2) `requirements_quality_report` is **non-empty**
+
+No escalation fires if all blocking issues were resolved by Pass 2 autofixes.
+
+---
+
+### 15.2 Wizard State Transition
+
+When escalation fires:
+
+- Wizard state becomes: `attention_required`
+- The "Proceed" / "Start Run" button is disabled
+- A lock icon or warning badge appears on the wizard step that triggered the issue
+
+The wizard returns to its normal state only when all `needs_user_clarification[]` entries are answered and Pass 1 + Pass 2 re-run with the user's answers injected produce a quality report with `verdict: "PASS"` and `needs_user_clarification[]` empty.
+
+---
+
+### 15.3 UI Surfaces (Mandatory — Both Required)
+
+#### Surface 1: Thread Badge + In-Thread Clarification Message
+
+In the relevant chat thread (the thread for this chain/wizard instance), a system message is posted with:
+
+- `type: "clarification_request"`
+- `questions[]`: the full `needs_user_clarification[]` array from the quality report
+- `wizard_step`: the exact step name/ID that triggered the issue
+- `resume_url`: deep-link to resume the wizard at that step
+
+The thread list entry for this thread shows a badge (count of unanswered questions).
+
+#### Surface 2: Dashboard CtA Card
+
+A card appears on the Dashboard under a dedicated "Attention Required" section:
+
+| Card Field | Value |
+|---|---|
+| `title` | `"Requirements need your input"` |
+| `reason` | Human-readable summary of the blocking issues |
+| `wizard_id` | ID of the wizard instance |
+| `wizard_step` | Name/ID of the step that triggered escalation |
+| `question_count` | Count of unanswered questions |
+| `resume_url` | Deep-link to resume the wizard at the blocked step |
+
+Card actions:
+
+- **"Resume Wizard"** — deep-links to the wizard at the blocked step
+- **"View in Thread"** — opens the thread where the clarification_request message was posted
+
+The Dashboard card is dismissed automatically when all questions are answered and wizard state returns to non-`attention_required`.
+
+---
+
+### 15.4 Clarification Payload Storage
+
+- The `requirements_quality_report` artifact is stored at:
+  `.puppet-master/project/traceability/requirements_quality_report.json`
+- The wizard record (in the app database) gains a field `attention_required_report_path` pointing to the latest quality report file
+- When the user answers all clarification questions, the wizard is re-run through Pass 1 and Pass 2 with the answers injected; the canonical quality report file is regenerated at the same path and `attention_required_report_path` is updated to that canonical path
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/chain-wizard-flexibility.md, Plans/Project_Output_Artifacts.md

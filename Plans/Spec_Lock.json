@@ -73,46 +73,47 @@
     "plan_graph": "pm.plan_graph.schema.v1",
     "evidence": "pm.evidence.schema.v1",
     "change_budget": "pm.change_budget.schema.v1",
-    "auto_decisions": "pm.auto_decisions.schema.v1"
+    "auto_decisions": "pm.auto_decisions.schema.v1",
+    "requirements_coverage": "pm.requirements_coverage.schema.v1"
   },
   "canonical_ssot_hashes": {
     "hash_alg": "sha256",
     "files": [
       {
         "path": "Plans/Contracts_V0.md",
-        "sha256": "aa6b7f34ef7d8b4a03cc4ca97f06ad19ab9ab62ee95a1aec35332409ec0662be"
+        "sha256": "8d4994c94b87013c22f989f273a006698489c4174a32c0eed3d194e0c1b72c3f"
       },
       {
         "path": "Plans/Crosswalk.md",
-        "sha256": "74e51e52e5f6704deac5ff36ee79246f5ec6658a119bb1f898bd2e01c6258047"
+        "sha256": "950e061412521dac89ba8182dfa380b1d8976c29f82f8ad37c7168e5524c1868"
       },
       {
         "path": "Plans/DRY_Rules.md",
-        "sha256": "a8c5a1233cfa03f6eb1b0874372e6eab3ec715813a4a038da00ab113d3962ff3"
+        "sha256": "24e1c26cab36eb636f1cafecc06ff29bf995cef756c6f8938d3ab4afea68ac52"
       },
       {
         "path": "Plans/Glossary.md",
-        "sha256": "ee2342e03ed0804f918d5544f466b3b80bc1f34c96e57567f7af21d0f6ac09bc"
+        "sha256": "4fe7bc004afc286ff62264c79d9cdb5d883144c9521574dc0496e9d046cafe18"
       },
       {
         "path": "Plans/Decision_Policy.md",
-        "sha256": "d93baffddb7c16278038b4e9f003cdfc136d65a622885ff6cd94bc6b62a06832"
+        "sha256": "38b193f41b29f1bfcc916abedd05c143490c2ba2940d809d4c788f005a26cab3"
       },
       {
         "path": "Plans/GitHub_API_Auth_and_Flows.md",
-        "sha256": "b43b68a67e34664a4d925f7e3d1801aabff55627145a6b744c825f4a1806a435"
+        "sha256": "214449691157ea647b644b6cce2ac7fd8ecc6f9e2b602fe9c2f305c1f5a4b403"
       },
       {
         "path": "Plans/Architecture_Invariants.md",
-        "sha256": "0f6d7de28a8434c02406270f4f3712db2d960702361027591258f43e94a24bf8"
+        "sha256": "fd31da20c28e505947d8fbdcf94e50db47325f5c30b47e3d0bf26814316afe47"
       },
       {
         "path": "Plans/Progression_Gates.md",
-        "sha256": "048efaf2f0f3b368648cc0bcf4441b2cf3b5a8cc73d045d930e9a252c751c82a"
+        "sha256": "c453fbe77ca4ce3df537530450ff6cc3b314220a5279b66a896bde420c592747"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
-        "sha256": "e7c5fbdc233b2196277a1f9fdf95c4220a1d6095611e56621f34bbb42ebbff42"
+        "sha256": "9f1687c79ce38201ef0a45917a9a3f22be2fd495e2a853565efd7f76c257b8a8"
       },
       {
         "path": "Plans/plan_graph.schema.json",
@@ -136,11 +137,27 @@
       },
       {
         "path": "Plans/Executor_Protocol.md",
-        "sha256": "bf7da8c31796788a21c2b9abdb058661c9d78a4a7ef0ca3428123f4654019e7b"
+        "sha256": "ec23c3d942a45c51dbea54a6991af208f4ceb87cac66de62f43d98dac5cd50b8"
+      },
+      {
+        "path": "Plans/Project_Output_Artifacts.md",
+        "sha256": "02fd018496a21ac6aa801f5a4b3af147ba49ae38ce4647b571d01c025549895c"
+      },
+      {
+        "path": "Plans/project_plan_node.schema.json",
+        "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15"
+      },
+      {
+        "path": "Plans/requirements_coverage.schema.json",
+        "sha256": "d043a8d4bb238e479cb9f265fef3d3726c0dcc9c9782cde40fcb260a4e33251a"
       },
       {
         "path": "scripts/pm-plans-verify.py",
         "sha256": "f2f357b8c7b046159d51034494bfa726144ea9dcba6456bef265c024f7deee0a"
+      },
+      {
+        "path": "Plans/requirements_quality_report.schema.json",
+        "sha256": "5a1d9680e2678c921a3f8445249c13d0d418f0fa0ef66f767aff13c521605240"
       }
     ]
   },

@@ -1,0 +1,229 @@
+{
+  "$id": "pm.requirements_quality_report.schema.v1",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Puppet Master Requirements Quality Report",
+  "description": "Schema for the output of the Puppet Master requirements quality analysis pass. Captures verdict, detected issues, auto-applied fixes, and questions requiring user clarification. Verdict is PASS when no blocking issues remain after autofixes; FAIL when any blocking issue is unresolved (not covered by auto_fixes_applied and has a corresponding entry in needs_user_clarification).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "verdict",
+    "requirements_touched",
+    "generated_at_utc",
+    "issues",
+    "auto_fixes_applied",
+    "needs_user_clarification"
+  ],
+  "properties": {
+    "verdict": {
+      "description": "Overall quality verdict. PASS = no blocking issues remain after autofixes have been applied. FAIL = at least one blocking issue is unresolved (not in auto_fixes_applied; question surfaced in needs_user_clarification).",
+      "type": "string",
+      "enum": ["PASS", "FAIL"]
+    },
+    "requirements_touched": {
+      "description": "List of requirement IDs that were inspected during this quality analysis pass.",
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "string",
+        "description": "A single requirement ID string (e.g. \"REQ-001\")."
+      }
+    },
+    "generated_at_utc": {
+      "description": "ISO 8601 UTC timestamp at which this report was generated.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "issues": {
+      "description": "All issues detected across the inspected requirements. Blocking issues fail the verdict unless resolved via auto_fixes_applied.",
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/definitions/Issue"
+      }
+    },
+    "auto_fixes_applied": {
+      "description": "Fixes that were deterministically applied by the system without requiring user input. Each fix references an issue in issues[].",
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/definitions/AutoFix"
+      }
+    },
+    "needs_user_clarification": {
+      "description": "Questions surfaced to the user for issues that cannot be auto-fixed. Each question is specific, answerable, and non-overlapping with other questions in this list.",
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/definitions/ClarificationQuestion"
+      }
+    }
+  },
+  "definitions": {
+    "Issue": {
+      "title": "Issue",
+      "description": "A single quality issue detected on a requirement.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issue_id",
+        "category",
+        "requirement_id",
+        "description",
+        "severity",
+        "auto_fixable"
+      ],
+      "properties": {
+        "issue_id": {
+          "description": "Unique identifier for this issue within the report (e.g. \"ISS-001\").",
+          "type": "string"
+        },
+        "category": {
+          "description": "Classification of the issue type detected on the requirement.",
+          "type": "string",
+          "enum": [
+            "vagueness",
+            "missing_scenarios",
+            "missing_acceptance",
+            "missing_anchor",
+            "missing_boundary",
+            "missing_research",
+            "contradiction"
+          ]
+        },
+        "requirement_id": {
+          "description": "The ID of the requirement on which this issue was detected.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Human-readable explanation of what the issue is and why it matters.",
+          "type": "string"
+        },
+        "severity": {
+          "description": "Impact of this issue on the overall verdict. 'blocking' causes a FAIL verdict if unresolved; 'warning' is informational and does not affect the verdict.",
+          "type": "string",
+          "enum": ["blocking", "warning"]
+        },
+        "auto_fixable": {
+          "description": "Whether the system can resolve this issue deterministically without user input. If true, a corresponding entry will appear in auto_fixes_applied.",
+          "type": "boolean"
+        }
+      }
+    },
+    "AutoFix": {
+      "title": "AutoFix",
+      "description": "A fix that was deterministically applied by the system to resolve an issue without user input.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fix_id",
+        "issue_id",
+        "requirement_id",
+        "fix_type",
+        "before",
+        "after",
+        "rationale"
+      ],
+      "properties": {
+        "fix_id": {
+          "description": "Unique identifier for this fix within the report (e.g. \"FIX-001\").",
+          "type": "string"
+        },
+        "issue_id": {
+          "description": "References the issue_id in issues[] that this fix resolves.",
+          "type": "string"
+        },
+        "requirement_id": {
+          "description": "The ID of the requirement that was modified or augmented by this fix.",
+          "type": "string"
+        },
+        "fix_type": {
+          "description": "The kind of automated fix that was applied.",
+          "type": "string",
+          "enum": [
+            "scenario_generated",
+            "boundary_inferred",
+            "acceptance_command_generated",
+            "research_node_inserted",
+            "anchor_added"
+          ]
+        },
+        "before": {
+          "description": "The original text or field value before the fix was applied. Null or empty string if the fix adds content from nothing (e.g. inserting a new node).",
+          "type": ["string", "null"]
+        },
+        "after": {
+          "description": "The replacement or appended text after the fix was applied.",
+          "type": "string"
+        },
+        "rationale": {
+          "description": "Explanation of why this fix was safe to apply deterministically without user input.",
+          "type": "string"
+        }
+      }
+    },
+    "ClarificationQuestion": {
+      "title": "ClarificationQuestion",
+      "description": "A question surfaced to the user for an issue that cannot be auto-fixed and requires human judgment.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "question_id",
+        "issue_id",
+        "requirement_id",
+        "question",
+        "context",
+        "answer_format",
+        "choices"
+      ],
+      "properties": {
+        "question_id": {
+          "description": "Unique identifier for this question within the report (e.g. \"Q-001\").",
+          "type": "string"
+        },
+        "issue_id": {
+          "description": "References the issue_id in issues[] that this question is intended to resolve.",
+          "type": "string"
+        },
+        "requirement_id": {
+          "description": "The ID of the requirement this question pertains to.",
+          "type": "string"
+        },
+        "question": {
+          "description": "A specific, answerable, non-overlapping question for the user. Must be concrete enough that the user's answer can directly resolve the referenced issue.",
+          "type": "string"
+        },
+        "context": {
+          "description": "Background context to help the user understand why the question is being asked and what information is needed.",
+          "type": "string"
+        },
+        "answer_format": {
+          "description": "The expected format of the user's answer. Determines how the choices field is interpreted.",
+          "type": "string",
+          "enum": [
+            "free_text",
+            "single_choice",
+            "multi_choice",
+            "yes_no",
+            "identifier"
+          ]
+        },
+        "choices": {
+          "description": "Enumerated answer options. Required (non-null) when answer_format is 'single_choice' or 'multi_choice'. Must be null for all other answer_format values.",
+          "oneOf": [
+            {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "string",
+                "description": "A single selectable answer option."
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

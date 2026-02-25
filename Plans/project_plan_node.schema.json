@@ -148,7 +148,20 @@
       "uniqueItems": true,
       "items": {"type": "string", "minLength": 1}
     },
-    "parallel_group": {"type": "string"}
+    "parallel_group": {"type": "string"},
+    "requirement_refs": {
+      "type": "array",
+      "description": "Authoritative list of requirement IDs (from REQUIREMENTS.md) that this plan node implements. Each entry must be a valid FR-###, NFR-###, or REQ-### identifier.",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "anyOf": [
+          {"pattern": "^FR-[0-9]{3,}$"},
+          {"pattern": "^NFR-[0-9]{3,}$"},
+          {"pattern": "^REQ-[0-9]{3,}$"}
+        ]
+      }
+    }
   },
   "allOf": [
     {

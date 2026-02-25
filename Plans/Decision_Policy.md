@@ -119,3 +119,49 @@ Agents MUST NOT:
 - Crosswalk.md §3.6 (AuthState rules: "Tokens MUST NOT be persisted in AuthState")
 
 ContractRef: PolicyRule:no_secrets_in_storage, Plans/Architecture_Invariants.md#INV-002
+
+---
+
+<a id="6"></a>
+## 6. Ambiguity vs. Missing User Intent
+
+### 6.1 Ambiguity (multiple valid choices)
+
+**Definition:** The specification leaves open a technical or design choice where multiple options would equally satisfy user intent.
+
+**Resolution rule:** Apply a deterministic default from §2. Log to `Plans/auto_decisions.jsonl` with schema `pm.auto_decisions.schema.v1`. No user interaction required.
+
+**Examples:**
+- Choosing a buffer size
+- Picking a retry count
+- Selecting a color within a brand palette
+
+ContractRef: `PolicyRule:Decision_Policy.md§2`, `SchemaID:auto_decisions.schema.json`
+
+---
+
+### 6.2 Missing User Intent / Insufficient Specification
+
+**Definition:** The user has not expressed what they want — the system cannot infer intent because the choice materially affects product behavior or scope. This is NOT a technical implementation detail; it is a product decision only the user can make.
+
+**Resolution rule:** The system MUST generate a clarification question. It MUST NOT apply a deterministic default. The clarification question is captured in the requirements quality report (`Plans/requirements_quality_report.schema.json`, field `needs_user_clarification[]`).
+
+**Examples:**
+- "Should the wizard allow importing from a URL or only local files?"
+- "Should failed iterations retry automatically or pause for user review?"
+
+ContractRef: `SchemaID:pm.requirements_quality_report.schema.v1`, `PolicyRule:Decision_Policy.md§4`
+
+---
+
+### 6.3 Interaction with the "No Human in the Loop" Rule (§4)
+
+The §4 rule ("plans must not depend on humans making decisions mid-run") applies to **runtime execution** (orchestrator runs, agent iterations, verification gates).
+
+Clarification questions under §6.2 are generated **prior to execution**, during wizard/interview artifact generation. This does NOT violate §4.
+
+**Timing:** Clarification questions surface during Chain Wizard or Interview phase, before any orchestrator run begins.
+
+**Blocking rule:** If a clarification question cannot be resolved before an orchestrator run begins, the run MUST NOT start. The wizard state transitions to `attention_required` and blocks the "Start Run" action.
+
+ContractRef: `PolicyRule:Decision_Policy.md§4`, `ContractName:Plans/chain-wizard-flexibility.md`

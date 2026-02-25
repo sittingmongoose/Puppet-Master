@@ -121,7 +121,33 @@ ContractRef: Gate:GATE-009
 
 ---
 
+<a id="10"></a>
+## 10. Inline requirement tag convention (readability only)
+
+This convention is **readability-only and non-authoritative**. It provides a lightweight way to annotate requirement references inline in prose — it does NOT constitute traceability evidence.
+
+**Tag format:**
+- `Req:FR-001` — functional requirement reference
+- `Req:NFR-001` — non-functional requirement reference
+- `Req:REQ-001` — generic requirement reference
+
+Authoritative requirement coverage lives ONLY in:
+1. Node shard `requirement_refs` fields (schema: `pm.project-plan-node.v1`)
+2. Derived coverage JSON at `.puppet-master/project/traceability/requirements_coverage.json`
+
+ContractRef: SchemaID:pm.project-plan-node.v1, SchemaID:pm.requirements_coverage.schema.v1, Gate:GATE-011, ContractName:Plans/DRY_Rules.md#10
+
+Inline tags MUST NOT be used as the sole traceability mechanism.  
+ContractRef: SchemaID:pm.project-plan-node.v1, SchemaID:pm.requirements_coverage.schema.v1, Gate:GATE-011, ContractName:Plans/DRY_Rules.md#10
+
+If an inline tag and a node's `requirement_refs` conflict, `requirement_refs` MUST be treated as authoritative.  
+ContractRef: SchemaID:pm.project-plan-node.v1, Gate:GATE-011, ContractName:Plans/DRY_Rules.md#10
+
+---
+
 ## References
 - `Plans/Progression_Gates.md#GATE-009`
+- `Plans/Progression_Gates.md#GATE-011`
 - `Plans/Contracts_V0.md`
 - `Plans/Spec_Lock.json`
+- `Plans/requirements_coverage.schema.json`

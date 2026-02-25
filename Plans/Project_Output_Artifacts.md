@@ -26,7 +26,7 @@ It also defines:
   - It MUST be **regenerable** by replaying seglog artifact events.
   - A validator MUST be able to verify byte-identical reconstruction via hashes (see §9).
 
-ContractRef: SchemaID:pm.project-plan-graph-index.v1, Gate:GATE-001
+ContractRef: SchemaID:pm.project-plan-graph-index.v1, Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md
 
 ## 2. Required artifact set (SSOT) — Project Plan Package
 
@@ -46,6 +46,14 @@ These are the **required artifacts** (staging paths in the user workspace) and *
 8) Optional (GUI):
     - `.puppet-master/project/ui/wiring_matrix.json`
     - `.puppet-master/project/ui/ui_command_catalog.json`
+9) Required (derived verification outputs — non-canonical with respect to planning decisions; canonical with respect to verification outputs):
+    - `.puppet-master/project/traceability/requirements_quality_report.json` (machine-readable; schema: `pm.requirements_quality_report.schema.v1`)
+    - `.puppet-master/project/traceability/requirements_coverage.json` (machine-readable; schema: `pm.requirements_coverage.schema.v1`)
+    - `.puppet-master/project/traceability/requirements_coverage.md` (human-readable projection; MUST match JSON counts/IDs exactly)
+10) Optional (human convenience derived output; non-canonical):
+    - `.puppet-master/project/quickstart.md` (deterministic command quickstart; AI correctness and validator correctness MUST NOT depend on this file)
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, Gate:GATE-011, ContractName:Plans/Project_Output_Artifacts.md
 
 ### 2.1 Canonical staging tree
 
@@ -68,6 +76,11 @@ These are the **required artifacts** (staging paths in the user workspace) and *
   ui/                        # optional (GUI)
     wiring_matrix.json       # optional (GUI)
     ui_command_catalog.json  # optional (GUI)
+  traceability/                          # required derived verification outputs (see §11)
+    requirements_quality_report.json     # machine-readable (pm.requirements_quality_report.schema.v1)
+    requirements_coverage.json           # machine-readable (pm.requirements_coverage.schema.v1)
+    requirements_coverage.md             # human-readable projection (matches JSON counts/IDs)
+  quickstart.md                          # optional derived human convenience file (see §12; non-canonical)
 ```
 
 ## 3. Schema alignment (critical; do not rename fields)
@@ -86,6 +99,7 @@ This document uses the exact terminology/field names of the canonical schemas un
 - `Plans/contracts_index.schema.json` (`pm.project_contracts_index.schema.v1`)
 - `Plans/acceptance_manifest.schema.json` (`pm.acceptance_manifest.schema.v1`)
 - `Plans/auto_decisions.schema.json` (`pm.auto_decisions.schema.v1`)
+- `Plans/requirements_quality_report.schema.json` (`pm.requirements_quality_report.schema.v1`)
 
 The schemas are authoritative; this doc defines **paths, sharding, DRY requirements, and cross-file integrity rules**.
 
@@ -136,7 +150,7 @@ ContractRef: SchemaID:pm.project-plan-node.v1, ContractName:Plans/DRY_Rules.md#7
 - Acceptance manifest checks MUST cover node checks:
   - Every node shard `acceptance[].check_id` MUST appear under that same `node_id` in `acceptance_manifest.json`.
 
-ContractRef: SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-001
+ContractRef: SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md
 
 ### 5.3 Human plan may repeat summary, but must point to canonical contracts
 
@@ -165,7 +179,7 @@ ContractRef: SchemaID:pm.auto_decisions.schema.v1, PolicyRule:Decision_Policy.md
 
 Puppet Master MUST produce user-project plans as a **sharded-only plan graph** under:
 
-ContractRef: SchemaID:pm.project-plan-graph-index.v1
+ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md
 
 `.puppet-master/project/plan_graph/`
 
@@ -207,6 +221,7 @@ Normative requirements:
 - `nodes[]` MUST list every node shard and MUST include at minimum:
   - `path` as the shard-relative path: `nodes/<node_id>.json`
   - `sha256` as the SHA-256 of the referenced shard file bytes (hex)
+ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md
 - `entrypoints` MUST be present and MUST reference existing node IDs.
 - `execution_ordering` MUST be present and MUST define deterministic readiness/selection/completion behavior.
   - `execution_ordering.node_state_source` MUST be `plan_graph/nodes/<node_id>.json`.
@@ -239,6 +254,7 @@ Node completeness rules (normative; sharding requirement):
 - `blockers` and `unblocks`
 - execution lifecycle fields: `status`, `evidence_pointer`, `verifier_result`
 - deterministic decision and readiness fields: `decision_refs`, `spec_lock_requirements`
+ContractRef: SchemaID:pm.project-plan-node.v1, ContractName:Plans/Project_Output_Artifacts.md
 
 ContractRef: SchemaID:pm.project-plan-node.v1, Gate:GATE-001
 
@@ -252,14 +268,14 @@ Integrity rules:
 - `evidence_required.path` is a **reserved logical output path** for execution evidence (not part of the Project Plan Package’s initial output);
   it MUST be consistent between the node shard and the acceptance manifest for that node.
 
-ContractRef: SchemaID:pm.project-plan-node.v1, Gate:GATE-001
+ContractRef: SchemaID:pm.project-plan-node.v1, Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md
 
 ### 7.3 `plan_graph/edges.json` (optional)
 
 If present, `.puppet-master/project/plan_graph/edges.json` MUST be consistent with dependency semantics expressed in node shards
 (`blockers`, `unblocks`, and optional `depends_on`).
 
-ContractRef: Gate:GATE-001
+ContractRef: Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md
 
 ### 7.4 Optional derived export: `plan_graph/exports/plan_graph.monolithic.json` (non-canonical)
 
@@ -273,7 +289,7 @@ If present:
 - It MUST be a faithful, lossless projection of the canonical shard set (same node IDs, same node fields, same `entrypoints`).
 - It is **NOT** the canonical plan representation and MUST NOT be required for validation or orchestration.
 
-ContractRef: SchemaID:pm.project-plan-graph.v1
+ContractRef: SchemaID:pm.project-plan-graph.v1, ContractName:Plans/Project_Output_Artifacts.md
 
 ## 8. Seglog canonical persistence contract (artifact events)
 
@@ -319,12 +335,16 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, Primitive:Seglog
 - `ui_wiring_matrix` → `.puppet-master/project/ui/wiring_matrix.json` (optional GUI)
 - `ui_command_catalog` → `.puppet-master/project/ui/ui_command_catalog.json` (optional GUI)
 - `validation_pass_report` → `.puppet-master/project/validation/pass_<N>_report.json` (one per pass; N=1,2,3; stored only in seglog — see §10)
+- `requirements_quality_report` → `.puppet-master/project/traceability/requirements_quality_report.json` (derived verification output; see §11)
+- `requirements_coverage_json` → `.puppet-master/project/traceability/requirements_coverage.json` (derived verification output; see §11)
+- `requirements_coverage_md` → `.puppet-master/project/traceability/requirements_coverage.md` (derived verification output; see §11)
+- `quickstart_md` → `.puppet-master/project/quickstart.md` (optional derived human convenience output; see §12)
 
 ## 9. Acceptance criteria (validator requirements)
 
 A validator MUST be able to verify, at minimum:
 
-ContractRef: Gate:GATE-001, Gate:GATE-005, Gate:GATE-009
+ContractRef: Gate:GATE-001, Gate:GATE-005, Gate:GATE-009, ContractName:Plans/Project_Output_Artifacts.md
 
 1) **Sharded graph validity (canonical headless input)**
    - `.puppet-master/project/plan_graph/index.json` validates (`pm.project-plan-graph-index.v1`)
@@ -354,7 +374,7 @@ ContractRef: Gate:GATE-001, Gate:GATE-005, Gate:GATE-009
 
 8) **Validation sweep artifact completeness (see §10)**
    - Exactly three `validation_pass_report` events in seglog for each validation sweep run (pass_number 1, 2, 3 sharing the same `workflow_run_id`)
-   - Pass 3 report `changes_applied_summary` contains no write-protected artifact paths (no requirements.md, plan.md)
+   - Pass 3 report `changes_applied_summary` contains no write-protected artifact paths (no requirements.md, plan.md); derived outputs such as `quickstart.md` may be regenerated
    - All pass report `content_hash` values match the SHA-256 of their `content_bytes`
    - For each pass number `N`, report `provider` and `model` match resolved app settings keys `validation_sweep.passN.provider` and `validation_sweep.passN.model` from sweep start (`Plans/assistant-chat-design.md §26`)
    - Reports come from a deterministic, headless sweep with no human approval gates between Pass 1, Pass 2, and Pass 3 (`Plans/chain-wizard-flexibility.md §12`)
@@ -362,6 +382,24 @@ ContractRef: Gate:GATE-001, Gate:GATE-005, Gate:GATE-009
 9) **Post-pass artifact finality**
    - The canonical `.puppet-master/project/**` artifact tree validated by this document MUST represent the post-sweep artifact set (after Pass 2 and Pass 3 corrections for the associated `workflow_run_id`)
    - Validator hash checks apply to post-pass corrected bytes, not pre-sweep intermediates
+ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md
+
+10) **Traceability output integrity (see §11)**
+    - `.puppet-master/project/traceability/requirements_quality_report.json` validates against `Plans/requirements_quality_report.schema.json` (`pm.requirements_quality_report.schema.v1`)
+    - `.puppet-master/project/traceability/requirements_coverage.json` validates against `Plans/requirements_coverage.schema.json` (`pm.requirements_coverage.schema.v1`)
+    - `summary.total_requirements` == `len(requirements[])`
+    - `summary.covered` + `summary.partially_covered` + `summary.uncovered` == `summary.total_requirements`
+    - `len(uncovered_requirements[])` == `summary.uncovered`
+    - `len(orphaned_node_requirement_refs[])` == `summary.orphaned_refs`
+    - `len(uncovered_acceptance[])` == `summary.uncovered_acceptance_count`
+    - `requirements_coverage.md` requirement ID lists match `requirements_coverage.json` exactly
+11) **Quickstart integrity (if present — see §12)**
+    - `.puppet-master/project/quickstart.md` is derived convenience output only
+    - orchestration, planning, and validator correctness MUST NOT depend on `quickstart.md`
+    - each executable command line in `quickstart.md` MUST exist verbatim in `.puppet-master/project/acceptance_manifest.json` (`nodes[].checks[].commands[].cmd`)
+    - `quickstart.md` command count MUST be <= 20 and file size MUST be <= 16384 bytes
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011, ContractName:Plans/Project_Output_Artifacts.md
 
 ## 10. Validation Pass Report Artifacts
 
@@ -387,6 +425,7 @@ Additional required correlation fields:
 ### 10.2 Pass report JSON schema (normative)
 
 Each pass report JSON (the content of `content_bytes`) MUST include:
+ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md
 
 ```json
 {
@@ -431,6 +470,10 @@ Pass 3 (`canonical_systems`) MUST NOT create or modify the following artifacts:
 - `.puppet-master/project/plan.md`
 - Any artifact whose content is driven by user intent or product scope.
 
+Pass 3 MAY create or modify derived artifacts that are not planning-canonical. In particular, `.puppet-master/project/quickstart.md` is a derived convenience output and MAY be regenerated in Pass 3 as long as §12 determinism rules are satisfied.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md§12, ContractName:Plans/chain-wizard-flexibility.md§12
+
 If Pass 3 finds a violation that requires modifying a write-protected artifact, it MUST record the finding as an entry in `unresolved_findings[]` with `reason_unresolved: "protected_artifact"` and set `pass_verdict: "fail"`.
 
 This invariant is normative and MUST be enforced by the execution layer.
@@ -444,15 +487,183 @@ A validator MUST verify, at minimum:
 1. Exactly three `validation_pass_report` events exist in seglog for each validation sweep run, with `pass_number` = 1, 2, 3.
 2. All three share the same `workflow_run_id`.
 3. Each report's `content_hash` matches the SHA-256 of its `content_bytes`.
-4. Pass 3 `changes_applied_summary` contains no entries for write-protected artifacts (requirements.md, plan.md).
+4. Pass 3 `changes_applied_summary` contains no entries for write-protected artifacts (requirements.md, plan.md). Changes to derived outputs (for example `quickstart.md`) are allowed.
 5. If any `unresolved_findings` are non-empty, `pass_verdict` is `"fail"`.
 6. For each `pass_number = N`, report `provider` and `model` equal the resolved app settings keys `validation_sweep.passN.provider` and `validation_sweep.passN.model` at sweep start.
 7. The three reports are produced by one deterministic, headless sweep run with no human approval gates between passes (see `Plans/chain-wizard-flexibility.md §12.3` and §12.4).
 
 ContractRef: Gate:GATE-001, ContractName:Plans/chain-wizard-flexibility.md§12, ContractName:Plans/assistant-chat-design.md§26
 
+## 11. Traceability outputs
+
+This section defines the **normative generation rules and integrity requirements** for derived verification outputs under `.puppet-master/project/traceability/`. These files are:
+- **derived** (not planning inputs)
+- **non-canonical** with respect to planning decisions
+- **canonical** with respect to verification outputs (requirements quality + coverage reports)
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011
+
+### 11.1 `traceability/requirements_quality_report.json` (machine-readable)
+
+- Path: `.puppet-master/project/traceability/requirements_quality_report.json`
+- Schema: `Plans/requirements_quality_report.schema.json` (`pm.requirements_quality_report.schema.v1`)
+- This artifact is derived from requirements quality analysis and is verification-canonical (non-canonical for planning decisions).
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1
+
+### 11.2 `traceability/requirements_coverage.json` (machine-readable)
+
+- Path: `.puppet-master/project/traceability/requirements_coverage.json`
+- Schema: `Plans/requirements_coverage.schema.json` (`pm.requirements_coverage.schema.v1`)
+
+ContractRef: SchemaID:pm.requirements_coverage.schema.v1
+
+**Generation procedure (normative; executed in order):**
+
+#### Step 1 — Requirements source: `.puppet-master/project/requirements.md`
+
+- Requirement ID extraction rule: any line matching  
+  `^\s*[-*]?\s*(FR-[0-9]{3,}|NFR-[0-9]{3,}|REQ-[0-9]{3,})\b`  
+  OR a heading matching  
+  `^#+\s*(FR-[0-9]{3,}|NFR-[0-9]{3,}|REQ-[0-9]{3,})\b`
+- The **first capture group** is the requirement ID; the remainder of the line (trimmed) is the description.
+- The extracted ID set is the **authoritative set of known requirements** for this coverage run.
+- Each extracted requirement is recorded in `requirements[]` with initial `node_ids: []`, `acceptance_check_ids: []`, `coverage_status: "uncovered"`.
+
+ContractRef: SchemaID:pm.requirements_coverage.schema.v1
+
+#### Step 2 — Node `requirement_refs` source: `.puppet-master/project/plan_graph/nodes/*.json`
+
+- Each node shard (schema: `pm.project-plan-node.v1`) MAY contain an optional `requirement_refs: string[]` field.
+- For each `req_id` in a node's `requirement_refs`:
+  - If `req_id` appears in the requirements set from Step 1: add the node's `node_id` to that requirement's `node_ids[]`.
+  - If `req_id` does NOT appear in the requirements set: record it in `orphaned_node_requirement_refs[]` as  
+    `{ "req_id": "<req_id>", "node_id": "<node_id>", "reason": "req_id_not_in_requirements_md" }`.
+
+ContractRef: SchemaID:pm.project-plan-node.v1
+
+#### Step 3 — Acceptance mapping source: `.puppet-master/project/acceptance_manifest.json`
+
+- Schema: `pm.acceptance_manifest.schema.v1`.
+- For each acceptance check that contains a `req_id` field: if `req_id` exists in the Step 1 requirements set, add the check's ID to that requirement's `acceptance_check_ids[]`.
+- Checks with no `req_id` field are not included in coverage mapping (this is not an error).
+- Acceptance checks with a `req_id` that does not appear in the requirements set MUST be ignored for `uncovered_acceptance[]` computation (schema semantics for `uncovered_acceptance[]` are requirement-centric, not unknown-check-centric).
+
+ContractRef: SchemaID:pm.acceptance_manifest.schema.v1, ContractName:Plans/Project_Output_Artifacts.md
+
+#### Coverage status determination (normative)
+
+For each requirement in `requirements[]`:
+
+| Condition | `coverage_status` |
+|-----------|-------------------|
+| `len(node_ids) >= 1` AND `len(acceptance_check_ids) >= 1` | `"covered"` |
+| `len(node_ids) >= 1` AND `len(acceptance_check_ids) == 0` | `"partially_covered"` |
+| `len(node_ids) == 0` | `"uncovered"` |
+
+#### `uncovered_acceptance[]` population rule (normative; schema-aligned)
+
+After coverage statuses are computed, `uncovered_acceptance[]` MUST contain exactly the requirements where:
+- `len(node_ids) >= 1`
+- `len(acceptance_check_ids) == 0`
+
+ContractRef: SchemaID:pm.requirements_coverage.schema.v1, ContractName:Plans/Project_Output_Artifacts.md
+
+Each entry MUST be:
+`{ "req_id": "<req_id>", "node_ids": [ ... ], "reason": "no_acceptance_check_maps_to_this_requirement" }`.
+
+ContractRef: SchemaID:pm.requirements_coverage.schema.v1, ContractName:Plans/requirements_coverage.schema.json
+
+#### Summary block (normative)
+
+The `summary` object MUST be computed after all three steps:
+
+- `total_requirements`: `len(requirements[])`
+- `covered`: count of requirements with `coverage_status == "covered"`
+- `partially_covered`: count of requirements with `coverage_status == "partially_covered"`
+- `uncovered`: count of requirements with `coverage_status == "uncovered"`
+- `orphaned_refs`: `len(orphaned_node_requirement_refs[])`
+- `uncovered_acceptance_count`: `len(uncovered_acceptance[])`
+ContractRef: SchemaID:pm.requirements_coverage.schema.v1, ContractName:Plans/Project_Output_Artifacts.md
+
+### 11.3 `traceability/requirements_coverage.md` (human-readable)
+
+- Path: `.puppet-master/project/traceability/requirements_coverage.md`
+
+The Markdown file MUST:
+
+1. Be **regenerated deterministically from `requirements_coverage.json`** (not separately edited).
+2. **Match all counts and IDs** from `requirements_coverage.json` exactly.
+ContractRef: SchemaID:pm.requirements_coverage.schema.v1, ContractName:Plans/Project_Output_Artifacts.md
+3. Include, at minimum:
+   - A summary table with covered / partially covered / uncovered counts.
+   - A list or table of **covered** requirements (IDs + descriptions).
+   - A list or table of **partially covered** requirements (IDs + descriptions; note: planned but not acceptance-tested).
+   - A list or table of **uncovered** requirements (IDs + descriptions).
+   - A list of **orphaned node `requirement_refs`** (req_ids referenced by nodes but not present in requirements.md).
+   - A list of **uncovered acceptance requirements** (requirements with node coverage but no mapped acceptance checks).
+
+### 11.4 Integrity requirements (normative; verifier MUST enforce)
+
+The verifier MUST enforce all of the following checks deterministically:
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, ContractName:Plans/Project_Output_Artifacts.md
+
+1. `summary.total_requirements` == `len(requirements[])` — ContractRef: SchemaID:pm.requirements_coverage.schema.v1
+2. `summary.covered` + `summary.partially_covered` + `summary.uncovered` == `summary.total_requirements`
+3. `len(uncovered_requirements[])` == `summary.uncovered`
+4. `len(orphaned_node_requirement_refs[])` == `summary.orphaned_refs`
+5. `len(uncovered_acceptance[])` == `summary.uncovered_acceptance_count`
+6. Every `req_id` in `uncovered_requirements[]` appears in `requirements[]` with `coverage_status == "uncovered"`
+7. `requirements_coverage.md` requirement ID lists MUST match `requirements_coverage.json` exactly (verified by extracting IDs from the Markdown and comparing to the JSON) — ContractRef: SchemaID:pm.requirements_coverage.schema.v1
+8. `requirements_coverage.json` MUST validate against `Plans/requirements_coverage.schema.json` (`pm.requirements_coverage.schema.v1`) — ContractRef: SchemaID:pm.requirements_coverage.schema.v1, Gate:GATE-011
+9. `requirements_quality_report.json` MUST validate against `Plans/requirements_quality_report.schema.json` (`pm.requirements_quality_report.schema.v1`) — ContractRef: SchemaID:pm.requirements_quality_report.schema.v1
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011
+
+### 11.5 Seglog persistence (traceability outputs)
+
+Traceability outputs MUST be persisted to seglog as `artifact_type` values `requirements_quality_report`, `requirements_coverage_json`, and `requirements_coverage_md` (see §8.2) following the standard seglog field contract (§8.1). The filesystem files under `.puppet-master/project/traceability/` are regenerable from seglog.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, Primitive:Seglog
+
+## 12. Optional derived `quickstart.md` contract (human convenience only)
+
+- Path: `.puppet-master/project/quickstart.md`
+- Classification: derived convenience output; non-canonical for planning and orchestration.
+- AI correctness, planning correctness, and validator correctness MUST NOT depend on `quickstart.md`.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.acceptance_manifest.schema.v1
+
+### 12.1 Deterministic generation rules (normative)
+
+`quickstart.md` MUST be generated deterministically from `.puppet-master/project/acceptance_manifest.json` using the following rules:
+
+ContractRef: SchemaID:pm.acceptance_manifest.schema.v1, ContractName:Plans/Project_Output_Artifacts.md
+
+1. **Verbatim source of truth:** command text comes only from `nodes[].checks[].commands[].cmd`.
+2. **Allowed command set:** the allowed set is exactly the set of manifest `cmd` strings (no synthesis, normalization, aliasing, interpolation, or reformatting).
+3. **Verbatim membership:** every executable command line emitted in `quickstart.md` MUST exist verbatim in the acceptance manifest command set.
+4. **Deterministic ordering:** commands are emitted in manifest traversal order: `nodes[]` order, then `checks[]` order, then `commands[]` order.
+5. **Deterministic defaults:** `max_commands = 20`; `max_file_size_bytes = 16384`.
+6. **Deterministic truncation:** when command count or byte-size limits are reached, generation stops at the last fully included command and appends this exact note line:  
+   `... truncated; see .puppet-master/project/acceptance_manifest.json for complete checks`
+
+ContractRef: SchemaID:pm.acceptance_manifest.schema.v1, ContractName:Plans/Project_Output_Artifacts.md
+
+### 12.2 Validation rules (normative)
+
+If `quickstart.md` is present, validator checks MUST enforce:
+- file size <= `16384` bytes,
+- executable command count <= `20`,
+- each executable command appears verbatim in `.puppet-master/project/acceptance_manifest.json` (`nodes[].checks[].commands[].cmd`),
+- no command appears that is absent from the manifest command set.
+
+ContractRef: SchemaID:pm.acceptance_manifest.schema.v1, ContractName:Plans/Project_Output_Artifacts.md
+
 ## Change Summary
 
+- 2026-02-25: Added required derived verification contract for `.puppet-master/project/traceability/requirements_quality_report.json` (schema: `pm.requirements_quality_report.schema.v1`), added optional derived `.puppet-master/project/quickstart.md` contract, added deterministic quickstart generation/validation rules, aligned requirements coverage generation rules with `Plans/requirements_coverage.schema.json` (`orphaned_node_requirement_refs[].reason` sentinel and schema-aligned `uncovered_acceptance[]` semantics), updated validator acceptance checks, and clarified Pass 3 write-protection interaction (requirements/plan protected; quickstart may be regenerated as derived output).
+- 2026-07-24: Added §11 Traceability outputs (requirements_coverage.json + requirements_coverage.md under `.puppet-master/project/traceability/`); added item 9 in §2 required artifact set; added `traceability/` to §2.1 staging tree; added `requirements_coverage_json` and `requirements_coverage_md` `artifact_type` values to §8.2; added acceptance criterion item 10 in §9. ContractRefs: SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011.
 - 2026-02-25: Hardened validation sweep acceptance contracts: added provider/model-to-settings linkage (`validation_sweep.passN.*`), deterministic/headless sweep provenance requirement, post-pass artifact finality requirement, and fixed `unresolved_findings[]` naming in Pass 3 write-protection invariant.
 - 2026-02-25: Added validation_pass_report artifact_type to §8.2; added §10 Validation Pass Report Artifacts defining seglog-only pass report structure, JSON schema, Pass 3 write-protection invariant, and acceptance criteria. Updated §9 acceptance criteria with item 8 for validation sweep artifact completeness.
 - 2026-02-24: Locked decision: user-project plan graph is **sharded-only**; canonical entrypoint is `.puppet-master/project/plan_graph/index.json`; monolithic export (if materialized) lives at `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json`.

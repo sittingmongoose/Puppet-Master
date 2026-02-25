@@ -1,0 +1,240 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "ev-requirements-traceability-upgrade-2026-02-25",
+  "created_at_utc": "2026-02-25T18:46:56Z",
+  "node": {
+    "node_id": "requirements-traceability-upgrade",
+    "graph_id": "puppet-master-internal",
+    "graph_scope": "plans"
+  },
+  "summary": "Reconciled requirements traceability + requirements quality plan docs/schemas/gates, corrected cross-doc inconsistencies, refreshed Spec Lock hashes, and validated verifier/gate commands with passing results including evidence self-validation.",
+  "commands_run": [
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py lint-contractrefs",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py lint-banned-phrases",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-evidence Plans/evidence_requirements_traceability_upgrade_2026-02-25.json",
+      "exit_code": 0
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool_id": "file_edit",
+      "count": 9,
+      "note": "Plan/docs/schema lock/evidence updates under Plans/"
+    },
+    {
+      "tool_id": "run_terminal_cmd",
+      "count": 6,
+      "note": "Verifier commands and evidence validation"
+    }
+  ],
+  "events": {
+    "event_refs": [
+      {
+        "source": "other",
+        "ref": "session-870a4095-026e-4871-8e53-6e0ea046a37c",
+        "note": "Copilot CLI fleet reconciliation run"
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/project_plan_node.schema.json",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/requirements_coverage.schema.json",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/requirements_quality_report.schema.json",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/Project_Output_Artifacts.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/DRY_Rules.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/Progression_Gates.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/chain-wizard-flexibility.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/interview-subagent-integration.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/Decision_Policy.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/evidence_requirements_traceability_upgrade_2026-02-25.json",
+      "change_type": "added"
+    }
+  ],
+  "contract_refs_satisfied": [
+    "Gate:GATE-001",
+    "Gate:GATE-002",
+    "Gate:GATE-011",
+    "Gate:GATE-012",
+    "Gate:GATE-013",
+    "SchemaID:pm.requirements_coverage.schema.v1",
+    "SchemaID:pm.requirements_quality_report.schema.v1",
+    "SchemaID:pm.auto_decisions.schema.v1",
+    "PolicyRule:Decision_Policy.md#spec-lock-update-protocol"
+  ],
+  "reproducibility": {
+    "snapshot_ref": "git-worktree-main-2026-02-25",
+    "note": "Command outputs captured in /tmp/pm_*.out and reflected in commands_run."
+  },
+  "artifacts": [
+    {
+      "path": "Plans/project_plan_node.schema.json",
+      "sha256": "44d81122b0c688bb5a89a3106ceacaa475e124ef7bc58096298d02d4252d4f15"
+    },
+    {
+      "path": "Plans/requirements_coverage.schema.json",
+      "sha256": "d043a8d4bb238e479cb9f265fef3d3726c0dcc9c9782cde40fcb260a4e33251a"
+    },
+    {
+      "path": "Plans/requirements_quality_report.schema.json",
+      "sha256": "5a1d9680e2678c921a3f8445249c13d0d418f0fa0ef66f767aff13c521605240"
+    },
+    {
+      "path": "Plans/Project_Output_Artifacts.md",
+      "sha256": "02fd018496a21ac6aa801f5a4b3af147ba49ae38ce4647b571d01c025549895c"
+    },
+    {
+      "path": "Plans/DRY_Rules.md",
+      "sha256": "24e1c26cab36eb636f1cafecc06ff29bf995cef756c6f8938d3ab4afea68ac52"
+    },
+    {
+      "path": "Plans/Progression_Gates.md",
+      "sha256": "c453fbe77ca4ce3df537530450ff6cc3b314220a5279b66a896bde420c592747"
+    },
+    {
+      "path": "Plans/chain-wizard-flexibility.md",
+      "sha256": "f8ebac06774d74742d6737071e991d5fb4c2b6f16da7b9e798cfe929d9309510"
+    },
+    {
+      "path": "Plans/interview-subagent-integration.md",
+      "sha256": "7409548163fc22d671315be8744bee99d5dcd4bf91e64c0fdce15182368cd78c"
+    },
+    {
+      "path": "Plans/Decision_Policy.md",
+      "sha256": "38b193f41b29f1bfcc916abedd05c143490c2ba2940d809d4c788f005a26cab3"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "sha256": "77394914a0213b95c6b81f336db400b2984c1c2a6b11b2a3e68386fbf86e8176"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "sha256": "8e59c59b1b7d13400a7d334d421abdc91f8bdf10dd71e25f6532a469c16b668f"
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "sha256": "dfdbde26bd8afb7af04913af31578b3a6fb2b17dbb3c0639f23efa5eb53cee32"
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "sha256": "5a532d0efdec8edb47f99df350d97c154e2c3f486604a20f0042058334694c3f"
+    },
+    {
+      "path": "Plans/evidence_requirements_traceability_upgrade_2026-02-25.json",
+      "note": "This evidence bundle; self hash omitted to avoid recursive content hashing."
+    }
+  ],
+  "checks": [
+    {
+      "name": "verify-spec-lock",
+      "result": "PASS",
+      "details": "Exit code 0"
+    },
+    {
+      "name": "run-gates",
+      "result": "PASS",
+      "details": "Exit code 0"
+    },
+    {
+      "name": "lint-contractrefs",
+      "result": "PASS",
+      "details": "Exit code 0"
+    },
+    {
+      "name": "lint-banned-phrases",
+      "result": "PASS",
+      "details": "Exit code 0"
+    },
+    {
+      "name": "validate-auto-decisions",
+      "result": "PASS",
+      "details": "Exit code 0"
+    },
+    {
+      "name": "verify-spec-lock-hashes-current",
+      "result": "PASS",
+      "details": "Spec Lock canonical_ssot_hashes are synchronized with current canonical file bytes.",
+      "contract_refs": [
+        "Gate:GATE-002"
+      ]
+    },
+    {
+      "name": "run-gates-overall",
+      "result": "PASS",
+      "details": "Composite gate runner status for current plans verifier checks.",
+      "contract_refs": [
+        "Gate:GATE-001"
+      ]
+    },
+    {
+      "name": "validate-evidence",
+      "result": "PASS",
+      "details": "Exit code 0",
+      "contract_refs": [
+        "SchemaID:pm.evidence.schema.v1"
+      ]
+    }
+  ]
+}
