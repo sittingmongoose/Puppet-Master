@@ -34,8 +34,9 @@ ContractRef: Invariant:INV-010
 - **Tool** -- a host capability invoked by Puppet Master (filesystem, shell, network fetch, etc) under policy.
 - **UICommand** -- a stable command ID dispatched by the UI to trigger non-trivial logic.
 - **ContractRef** -- a citation that binds an operational requirement to a canonical contract, schema, policy, invariant, or primitive.
+- **Overseer** -- the AI foreman role inside the Orchestrator. Responsibilities (docs-only): (1) Determines readiness at tier boundaries (Phase/Task/Subtask/Iteration). (2) Selects the next unit of work (chunk/node) deterministically. (3) Spawns Builder subagents to implement work. (4) Runs deterministic verifier checks (scripts/tests/greps). (5) Performs semantic/subjective audits at the start/end of tiers: start-of-tier scans for gaps/undefined refs/drift (auto-fix if safe, else human-visible alert); end-of-tier convergence scan (if concerns, spawn 2 reviewer subagents; escalate only if reviewers agree). (6) Stops on FAIL and surfaces evidence and next action.
 
-ContractRef: ContractName:Contracts_V0.md#UICommand
+ContractRef: ContractName:Contracts_V0.md#UICommand, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 ---
 

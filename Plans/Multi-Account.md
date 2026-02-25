@@ -153,7 +153,7 @@ flowchart LR
 
 ---
 
-## 7. Runner / executor contract
+## 7. Runner / orchestration contract
 
 - **Before starting a run:** Resolve which account to use: **active** account, or **pick-best** by usage (lowest utilization, excluding cooldown) when the platform exposes a usage API.
 - **Spawn CLI:** Pass the chosen account's config dir or env. No change to "fresh process per iteration" -- only the env/config passed to that process changes.

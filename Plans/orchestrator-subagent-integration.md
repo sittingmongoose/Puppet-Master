@@ -632,6 +632,10 @@ pub enum SubtaskFocus {
 
 ## Integration with Orchestrator
 
+### Overseer (controlling role)
+
+The controlling AI role within the Orchestrator is the **Overseer**. Canonical definition and responsibilities are in **Plans/Glossary.md**.
+
 ### Orchestrator Modifications
 
 ```rust
@@ -1393,7 +1397,7 @@ Validation runs at tier start via `validate_config_wiring_for_tier()`. Required 
 - [ ] **Start and end verification:** Implement start-of-phase/task/subtask verification (config-wiring + wiring/readiness: GUI? backend? steps make sense? gaps?) and end-of-phase/task/subtask verification (wiring re-check + acceptance gate + quality verification / code review). See **"Start and End Verification at Phase, Task, and Subtask"**; resolve gaps there (quality definition per tier, readiness checklist source of truth, interview-phase mirror).
 - [ ] **Lifecycle hooks:** Implement BeforeTier/AfterTier hooks (track active subagent, inject context, prune stale state, validate handoff format). Leverage platform-native hooks where available (Cursor, Claude, Gemini); use orchestrator-level middleware for all platforms. Use file-based coordination for Codex/Copilot. See **"Lifecycle and Quality Features"**.
 - [ ] **Structured handoff validation:** Implement `validate_subagent_output()` with platform-specific parsers (JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot). Enforce `SubagentOutput` format (task_report, downstream_context, findings). Retry on malformed output; fail-safe after retry.
-- [ ] **Remediation loop:** Implement remediation loop for Critical/Major findings. Parse findings from reviewer subagent; block completion on Critical/Major; re-run executor + reviewer until resolved or max retries; escalate to parent-tier on max retries. Minor/Info findings log and proceed.
+- [ ] **Remediation loop:** Implement remediation loop for Critical/Major findings. Parse findings from reviewer subagent; block completion on Critical/Major; re-run overseer + reviewer until resolved or max retries; escalate to parent-tier on max retries. Minor/Info findings log and proceed.
 - [ ] **Cross-session memory:** Implement `save_memory()` and `load_memory()` for architectural decisions, patterns, tech choices, pitfalls. Persist at Phase completion; load at run start; inject into Phase 1 context. Use for subagent selection (e.g., "project uses Rust" → prefer rust-engineer).
 - [ ] **Active agent tracking:** Track `active_subagent: Option<String>` in `TierContext`; update in BeforeTier/AfterTier hooks; persist to `.puppet-master/state/active-subagents.json`; expose for logging, debugging, GUI display.
 - [ ] **Safe error handling:** Wrap hooks and verification functions in `safe_hook_main()` that guarantees structured output (JSON or Result) even on failure. Hooks must never crash the session.
@@ -3644,11 +3648,11 @@ impl RemediationLoop {
             // Build remediation prompt
             let remediation_prompt = self.build_remediation_prompt(&current_findings);
             
-            // DRY REQUIREMENT: Executor and reviewer subagent names MUST come from subagent_registry — NEVER hardcode names
-            // Re-run executor subagent with remediation prompt
-            // Implementation note: re_run_executor_with_prompt MUST use subagent_registry to get executor subagent name
-            let executor_result = self.orchestrator
-                .re_run_executor_with_prompt(tier_id, &remediation_prompt)
+            // DRY REQUIREMENT: Overseer and reviewer subagent names MUST come from subagent_registry — NEVER hardcode names
+            // Re-run overseer subagent with remediation prompt
+            // Implementation note: re_run_overseer_with_prompt MUST use subagent_registry to get overseer subagent name
+            let overseer_result = self.orchestrator
+                .re_run_overseer_with_prompt(tier_id, &remediation_prompt)
                 .await?;
             
             // DRY REQUIREMENT: Reviewer subagent name MUST come from subagent_registry::get_reviewer_subagent_for_tier()
@@ -3772,7 +3776,7 @@ match remediation_result {
 }
 ```
 
-**Platform-specific implementation:** Works identically across all platforms -- remediation loop is orchestrator-level logic, not platform-specific. All platforms receive remediation prompts and re-run subagents the same way. The executor and reviewer subagents are re-run using the same platform/model as the original tier execution.
+**Platform-specific implementation:** Works identically across all platforms -- remediation loop is orchestrator-level logic, not platform-specific. All platforms receive remediation prompts and re-run subagents the same way. The overseer and reviewer subagents are re-run using the same platform/model as the original tier execution.
 
 **Integration with existing quality verification:** This extends the existing "required reviewer subagent" requirement. The reviewer must output structured findings with severity; the orchestrator enforces the remediation loop. The remediation loop runs **after** the gate passes but **before** tier completion, ensuring Critical/Major issues are addressed before advancing.
 
@@ -4265,7 +4269,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 
 **Gap #25: Remediation loop subagent re-execution context**
 
-**Issue:** When remediation loop re-runs executor/reviewer subagents, do they get the same context (prompt, files, state) as original execution, or modified context (remediation prompt, updated files)?
+**Issue:** When remediation loop re-runs overseer/reviewer subagents, do they get the same context (prompt, files, state) as original execution, or modified context (remediation prompt, updated files)?
 
 **Mitigation:**
 - **Modified context:** Re-run with remediation prompt appended, but include original context (files, state) so subagent has full picture.
@@ -4385,7 +4389,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 The orchestrator already supports parallel execution of subtasks:
 
 1. **Dependency Analysis**: Uses `DependencyAnalyzer` with Kahn's topological sort to build execution levels
-2. **Parallel Executor**: Executes subtasks concurrently within dependency levels
+2. **Parallel Executor (`ParallelExecutor`)**: Executes subtasks concurrently within dependency levels
 3. **Worktree Isolation**: Each parallel subtask runs in its own git worktree
 4. **Dependency-Aware**: Respects `TierNode.dependencies` to determine execution order
 

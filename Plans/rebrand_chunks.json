@@ -386,20 +386,16 @@
   },
   {
     "chunk_id": "rebrand-6d",
-    "title": "Reference and .cursor",
+    "title": ".cursor",
     "allowed_paths": [
-      "Reference/BUILD_INSTALLER_FIXES.md",
-      "Reference/APP_LAUNCHER_NO_TERMINAL_PROMPT.md",
-      "Reference/TEST_SUMMARY_REPORT.md",
-      "Reference/GUI_ISSUES_AND_FIXES.md",
       ".cursor/MCP-CLI-vs-EXTENSION-PATHS.md",
       ".cursor/CLAUDE_EXTENSION_AND_MCP.md",
       ".cursor/commands/CHECK_STATUS.md"
     ],
     "acceptance_checks": [
-      "echo \"Manual review: confirm no legacy naming in the listed  .cursor files\"",
+      "python3 -c \"import sys; from pathlib import Path; r=Path('.'); fs=['.cursor/MCP-CLI-vs-EXTENSION-PATHS.md','.cursor/CLAUDE_EXTENSION_AND_MCP.md','.cursor/commands/CHECK_STATUS.md']; refpath='Ref'+'erence/'; legacy=['ra'+'lph:','<'+'ra'+'lph'+'>','</'+'ra'+'lph'+'>']; [print('MISSING:', f) or sys.exit(1) for f in fs if not (r/f).exists()]; [print('HAS refpath:', f) or sys.exit(1) for f in fs if refpath in (r/f).read_text(encoding='utf-8',errors='replace')]; [print('HAS legacy token:', f) or sys.exit(1) for f in fs if any(t in (r/f).read_text(encoding='utf-8',errors='replace') for t in legacy)]; [print('NO Puppet Master:', f) or sys.exit(1) for f in fs if 'Puppet Master' not in (r/f).read_text(encoding='utf-8',errors='replace')]; print('OK: .cursor chunk checks passed')\""
     ],
-    "evidence_required": ["grep exit codes for listed files only", "list of files changed"]
+    "evidence_required": ["Python acceptance check exit code and output", "list of files changed"]
   },
   {
     "chunk_id": "rebrand-6e",

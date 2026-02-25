@@ -41,7 +41,7 @@ Treat these as constants for the entire rebrand. Never invent a new variant mid-
 3. **Phase 3 -- User-facing strings and header** (window title, banner, welcome, tray, build display name, config/setup copy, module docs).
 4. **Phase 4 -- Package and installers** (Cargo.toml bundle, GitHub workflow, Linux nfpm/desktop/scripts, macOS build/Info.plist, Windows NSI, build/uninstall scripts).
 5. **Phase 5 -- Config YAML** (naming_pattern, namingPattern, workingDirectory if folder renamed later).
-6. **Phase 6 -- Docs and Plans** (AGENTS.md, README, REQUIREMENTS, .cursorrules, Plans/, conductor/, docs/, Reference/, .cursor/, WIDGETS_*, evidence/audit references).
+6. **Phase 6 -- Docs and Plans** (AGENTS.md, README, REQUIREMENTS, .cursorrules, Plans/, conductor/, docs/, .cursor/, WIDGETS_*, evidence/audit references).
 7. **Phase 7 -- Project folder rename** (rename repo root folder; then fix any remaining path references in config/evidence/audits).
 
 Do **not** rename the project folder until Phases 1-6 are complete and committed, so that paths in the plan and tools remain valid during the work.

@@ -493,14 +493,17 @@ To reduce agent confusion, run these chunks early (even out of phase order): **r
 - **Scope:**
   `.cursor/MCP-CLI-vs-EXTENSION-PATHS.md`, `.cursor/CLAUDE_EXTENSION_AND_MCP.md`, `.cursor/commands/CHECK_STATUS.md`
 - **Success criteria:**
-  - No legacy naming in the listed .cursor files.
-  - "Puppet Master" and com.puppetmaster.puppet-master and `<pm>...` used. (Evidence grep limited to listed files only.)
+  - (a) Each listed .cursor file exists.
+  - (b) None of those files contain the legacy reference path substring (the removed folder path).
+  - (c) None of those files contain known legacy signal/prefix tokens (enforced via explicit substring checks; the verifier source splits token literals only to avoid self-match in the command text).
+  - (d) Each of those files contains the string "Puppet Master" at least once.
+  - These checks are run via the Python acceptance check in `rebrand_chunks.json` (deterministic, executable).
 - **Evidence artifact:**
-  Grep exit codes for listed files only; list of files changed.
+  Python acceptance check exit code and output; list of files changed.
 - **Builder prompt:**
-  Implement .cursor rebrand per Plans/rebrand.md Phase 6.4. Update the listed Reference and .cursor docs: identifiers and paths to com.puppetmaster.puppet-master and new names; signals to `<pm>...`; folder name to "Puppet Master" or generic "project folder". Use the token table; do not introduce legacy naming.
+  Implement .cursor rebrand per Plans/rebrand.md Phase 6.4. Update the listed .cursor docs: identifiers and paths to com.puppetmaster.puppet-master and new names; signals to `<pm>...`; folder name to "Puppet Master" or generic "project folder". Use the token table; do not introduce legacy naming.
 - **Verifier prompt:**
-  Run the success criteria for chunk rebrand-6d on the listed files only. Record grep results and modified files to the chunk evidence artifact.
+  Run the success criteria for chunk rebrand-6d: execute the Python acceptance check from the chunk; record its exit code and output and the list of modified files to the chunk evidence artifact.
 
 ---
 

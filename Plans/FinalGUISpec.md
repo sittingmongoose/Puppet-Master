@@ -911,7 +911,7 @@ Three execution contexts can override the global per-platform caps: **Chat**, **
 - **Interview:** Settings > Interview, below the Multi-Pass Review section. Collapsible "Interview concurrency overrides" card (collapsed by default). Same layout. Note: "max review subagents" (existing, 1-10) is a separate concern — it limits how many reviewer subagents participate in a single Multi-Pass Review run, not per-platform concurrency.
 - **Orchestrator:** Settings > Branching, below "Parallel execution" toggle. Collapsible "Orchestrator concurrency overrides" card (collapsed by default). Same layout.
 
-**Effective cap:** For a given context and platform, the effective cap = that context's override if set, else the global default. All executors (Chat runner, Interview phase manager, Orchestrator scheduler) must respect the effective cap when spawning agents/subagents.
+**Effective cap:** For a given context and platform, the effective cap = that context's override if set, else the global default. All execution managers (Chat runner, Interview phase manager, Orchestrator scheduler) must respect the effective cap when spawning agents/subagents.
 
 **Interaction with "max concurrent runs per thread":** The per-thread cap (Settings > General, default 10) limits total concurrent runs in a single chat thread regardless of platform. The per-platform cap limits how many of those runs can use a specific platform. Both limits apply simultaneously; the more restrictive limit wins for any given spawn decision.
 
@@ -939,7 +939,7 @@ concurrency:
 
 When an override is set (e.g. `overrides.orchestrator.per_provider.claude: 5`), that value is used for that context+platform. When absent, the global value applies.
 
-**Plan graph independence:** Max concurrent limits are NOT part of the user-project plan graph (`.puppet-master/project/plan_graph/`). The plan graph defines only dependency structure (`depends_on`, `parallel_group`, `blockers`/`unblocks`). Concurrency limits are an execution/config concern: the executor loads the plan graph, respects its parallelism structure, and applies the effective per-platform caps from config.
+**Plan graph independence:** Max concurrent limits are NOT part of the user-project plan graph (`.puppet-master/project/plan_graph/`). The plan graph defines only dependency structure (`depends_on`, `parallel_group`, `blockers`/`unblocks`). Concurrency limits are an execution/config concern: the scheduler loads the plan graph, respects its parallelism structure, and applies the effective per-platform caps from config.
 
 | copy_id | Surface | Expert variant | ELI5 variant | Status |
 |---|---|---|---|---|

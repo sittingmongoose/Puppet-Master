@@ -941,7 +941,7 @@ All **documentation and plans** produced by the interview (PRD, AGENTS.md, requi
 
 **Requirements for generated content and prompts:**
 
-1. **Audience: AI executor.** Every generated document and plan must assume the reader/executor is an AI agent. Instructions must be **unambiguous**, **actionable**, and **explicit** (e.g. "wire X to Y", "ensure config key Z is passed to the run config at start"). Avoid prose that only a human would infer.
+1. **Audience: AI Overseer.** Every generated document and plan must assume the reader/Overseer is an AI agent. Instructions must be **unambiguous**, **actionable**, and **explicit** (e.g. "wire X to Y", "ensure config key Z is passed to the run config at start"). Avoid prose that only a human would infer.
 
 2. **Wire everything together.** Explicitly call out:
    - **Config wiring:** Any setting or feature that has a GUI control or config key must state that it must be **wired** into the config shape used at runtime. **Config Wiring:** See orchestrator-subagent-integration.md §config-wiring for the canonical definition of Option B (build at run start, merge order: GUI defaults < interview output < per-tier overrides). Generated AGENTS.md or PRD should remind agents: "Ensure all config and GUI settings are wired so the run sees them; avoid building features that are never passed to the backend."
@@ -952,7 +952,7 @@ All **documentation and plans** produced by the interview (PRD, AGENTS.md, requi
    - Every public API or UI surface that is added must be **reachable and wired** (e.g. new tab is visible and bound to config; new command is invokable).
    - Add to DO/DON'T or Critical block in generated AGENTS.md: "Do not leave components partially complete; wire every new piece to the rest of the system and to the GUI/config where applicable."
 
-4. **Subagent persona recommendations.** Generated plans and documents (PRD, phase plans, roadmap, test strategy, etc.) must include **which subagent personas to use** at the appropriate granularity (e.g. per task, per subtask, or per phase). Use subagent names from **subagent_registry** (e.g. `product-manager`, `architect-reviewer`, `rust-engineer`, `security-auditor`, `test-automator`) so the executor (orchestrator or Assistant) knows which specialist(s) to invoke. The PRD schema already supports recommendations (e.g. `crew_recommendation` with `subagents` on subtasks); phase plans and other generated docs must also carry subagent recommendations where applicable (e.g. primary and optional secondary subagents per phase or per task). This ensures every generated plan is **executable** with the right personas.
+4. **Subagent persona recommendations.** Generated plans and documents (PRD, phase plans, roadmap, test strategy, etc.) must include **which subagent personas to use** at the appropriate granularity (e.g. per task, per subtask, or per phase). Use subagent names from **subagent_registry** (e.g. `product-manager`, `architect-reviewer`, `rust-engineer`, `security-auditor`, `test-automator`) so the Overseer (orchestrator or Assistant) knows which specialist(s) to invoke. The PRD schema already supports recommendations (e.g. `crew_recommendation` with `subagents` on subtasks); phase plans and other generated docs must also carry subagent recommendations where applicable (e.g. primary and optional secondary subagents per phase or per task). This ensures every generated plan is **executable** with the right personas.
 
 5. **Parallelism.** Generated plans must indicate **what can be done in parallel**.
 
@@ -980,9 +980,9 @@ Use `depends_on: Vec<TaskId>` on each task in the PRD/plan:
 ContractRef: Invariant:INV-011, Invariant:INV-012, ContractName:Plans/UI_Wiring_Rules.md
 
 7. **Where to inject.** Apply these requirements in:
-   - **Prompt templates** for phase completion and document generation (so the interviewing agent is instructed to produce AI-executor-oriented, wire-explicit, complete output).
+   - **Prompt templates** for phase completion and document generation (so the interviewing agent is instructed to produce AI-Overseer-oriented, wire-explicit, complete output).
    - **PRD and plan generators** (so generated tasks and acceptance criteria include wiring, completeness, **subagent persona recommendations**, and **parallelism**).
-   - **AGENTS.md generator** (§5.1): add a short "AI executor" or "Wiring & completeness" bullet block in the Critical section (e.g. "Plans and docs are for AI execution; wire everything; no partially complete components").
+   - **AGENTS.md generator** (§5.1): add a short "AI Overseer" or "Wiring & completeness" bullet block in the Critical section (e.g. "Plans and docs are for AI execution; wire everything; no partially complete components").
 
 
 **Reinforce in all generated plans and AGENTS.md:** (1) **DRY Method** -- check existing code and docs before adding new; reuse first; tag reusable items; single source of truth. (2) **Everything wired** -- config and **GUI** must be wired (every new screen, control, or action reachable and connected). (3) **No unfinished components or features** unless explicitly scheduled in a later step; the plan must reference that step and the later step must complete the work. (4) **No dead code** -- require that unused code is removed and that new code is only added when used and wired. Add these to DO/DON'T or Critical block in generated AGENTS.md. The generator MUST emit these four points in the DO/DON'T or Critical block of generated AGENTS.md and in plan acceptance criteria; there is no exception for partial or minimal output.
@@ -1391,7 +1391,7 @@ if let Some(crew_id) = phase_crew {
 
 **What to include in generated plans:**
 - **Subagent persona recommendations:** Which subagent(s) to use per task, subtask, or phase (names from subagent_registry). PRD subtasks carry `crew_recommendation` with `subagents`; phase plans and other docs must carry subagent recommendations where applicable.
-- **Parallelism:** Which tasks/subtasks can run in parallel (e.g. `depends_on`, `can_run_after`, or `parallel_group`) so the executor can schedule parallel execution.
+- **Parallelism:** Which tasks/subtasks can run in parallel (e.g. `depends_on`, `can_run_after`, or `parallel_group`) so the Overseer can schedule parallel execution.
 - **Crew recommendations:** Suggest crews for complex tasks/subtasks when multiple subagents work together.
 - **Crew templates:** Reference crew templates (e.g., "Use 'Full Stack Crew' for this phase")
 - **Crew metadata:** Add crew hints to PRD tasks/subtasks
@@ -2521,7 +2521,7 @@ impl ActiveSubagentTracker {
    - If max retries reached, escalate to next phase with warnings or pause for user intervention.
 5. If only Minor/Info findings: log, mark phase complete, proceed.
 
-**Integration:** Extend `validate_answer_with_subagent()` in interview orchestrator to parse structured findings and enforce remediation loop. Use the same `RemediationLoop` implementation from orchestrator plan (`src/core/remediation.rs`), adapted for interview context (re-prompt user instead of re-running executor subagent).
+**Integration:** Extend `validate_answer_with_subagent()` in interview orchestrator to parse structured findings and enforce remediation loop. Use the same `RemediationLoop` implementation from orchestrator plan (`src/core/remediation.rs`), adapted for interview context (re-prompt user instead of re-running Overseer subagent).
 
 ### 6. Safe Error Handling for Interview Hooks
 

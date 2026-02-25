@@ -52,7 +52,7 @@
 - **Summary:** Fixed two previously failing tests: archive-manager ENOENT and integration “should discover capabilities” (empty output).
 - **Changes:**
   - **archive-manager.test.ts:** Use unique temp dir per run via `mkdtemp(join(tmpdir(), 'archive-manager-'))` and set `testDir`, `archiveDir`, `testFile` in `beforeEach` so parallel/cleanup races no longer cause ENOENT on `.test-archive-manager/AGENTS.md`.
-  - **integration.test.ts:** CursorRunner runs an approval-flag `--help` probe before execute; the spawn mock consumes one queue item per spawn. Set `spawnOutputQueue = [dummyHelp, mockOutput]` so the first spawn (--help) gets dummy help and the second (execute) gets the output containing `<ralph>COMPLETE</ralph>`.
+  - **integration.test.ts:** CursorRunner runs an approval-flag `--help` probe before execute; the spawn mock consumes one queue item per spawn. Set `spawnOutputQueue = [dummyHelp, mockOutput]` so the first spawn (--help) gets dummy help and the second (execute) gets the output containing `<pm>COMPLETE</pm>`.
 - **Files changed:** `src/agents/archive-manager.test.ts`, `src/platforms/integration.test.ts`
 - **Cleanup:** `.test-cache` and `.test-quota` removed when done (none were present).
 
@@ -96,7 +96,7 @@
 
 ## CI
 
-- **Commit:** `6f3e4a2` – ralph: gui stream freeze fix, launcher, check status
+- **Commit:** `6f3e4a2` – pm: gui stream freeze fix, launcher, check status
 - **Pushed:** origin/main
 - **GitHub Action:** Build installers (run 39) – **PASSED** (status: completed, conclusion: success)
 

@@ -228,7 +228,7 @@ ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project
 - `validation.targets` MUST include validation pointers sufficient to validate the graph in isolation, including at minimum:
   - `acceptance_manifest` (recommended relative path: `../acceptance_manifest.json`)
   - `contracts_index` (recommended relative path: `../contracts/index.json`)
-- Executor semantics for status transitions and auto-marking MUST follow `Plans/Executor_Protocol.md`.
+- Overseer semantics for status transitions and auto-marking MUST follow `Plans/Executor_Protocol.md`.
 
 ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Executor_Protocol.md
 

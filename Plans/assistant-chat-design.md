@@ -64,7 +64,7 @@ The **Assistant** is the third major surface alongside **Interview** and **Orche
 16. [Interview Phase UX (Chat Surface)](#16-interview-phase-ux-chat-surface)  
 17. [Context & Truncation](#17-context--truncation)  
 18. [BrainStorm Mode](#18-brainstorm-mode)  
-19. [Documentation Audience (AI Executor)](#19-documentation-audience-ai-executor)  
+19. [Documentation Audience (AI Overseer)](#19-documentation-audience-ai-overseer)  
 20. [References](#20-references)  
 21. [Dashboard Warnings and Calls to Action](#21-dashboard-warnings-and-calls-to-action)  
 22. [Live Testing Tools and Hot Reload](#22-live-testing-tools-and-hot-reload)  
@@ -679,21 +679,21 @@ When the chat is in **Interview** mode (interview flow):
 
 ---
 
-## 19. Documentation Audience (AI Executor)
+## 19. Documentation Audience (AI Overseer)
 
 - All **documentation and plans** produced by the **Interview** (PRD, AGENTS.md, requirements, phase plans, etc.) must be written with the understanding that an **AI agent** will execute them, not a human.
 - **Implications:**
   - Instructions must be **unambiguous** and **wire-explicit**: every component, config key, and feature must be explicitly wired (e.g. "wire X to Y", "ensure Z is passed to the run config").
   - **DRY Method** must be enforced in generated content (single source of truth, no duplicated logic, tag reusable items). See Plans/interview-subagent-integration.md §5.1.
   - **No partially complete components:** Generated tasks and plans must call out **completeness**: ensure components are fully implemented and wired to the GUI/config/API as intended, and that nothing is "built but not wired" or left as a stub.
-- **Interview plan:** The detailed requirements for "AI as executor", "wire everything together", and "no incomplete components" are specified in **Plans/interview-subagent-integration.md** §5.2 (Documentation and plans for AI execution). The interview prompt templates and document generators must include these requirements so generated PRD and AGENTS.md reduce unwired or incomplete work.
+- **Interview plan:** The detailed requirements for "AI as Overseer", "wire everything together", and "no incomplete components" are specified in **Plans/interview-subagent-integration.md** §5.2 (Documentation and plans for AI execution). The interview prompt templates and document generators must include these requirements so generated PRD and AGENTS.md reduce unwired or incomplete work.
 
 ---
 
 ## 20. References
 
 - **AGENTS.md:** DRY Method, platform_specs, subagent_registry, Pre-Completion Verification Checklist.  
-- **Plans/interview-subagent-integration.md:** Interview phases, document generation, AGENTS.md/DRY for target projects, §5.2 AI-executor and wiring/completeness.  
+- **Plans/interview-subagent-integration.md:** Interview phases, document generation, AGENTS.md/DRY for target projects, §5.2 AI-Overseer and wiring/completeness.  
 - **Plans/orchestrator-subagent-integration.md:** Subagent selection, crews, execution engine, Plan/Crew execution.  
 - **Plans/human-in-the-loop.md:** HITL mode (phase/task/subtask approval gates), GUI settings, Dashboard CtAs.  
 - **Plans/agent-rules-context.md:** Application-level rules (Puppet Master) and project-level rules; fed into every agent (orchestrator, interview, Assistant). When building Assistant context, include the shared rules pipeline output (application + project when a project is selected).  

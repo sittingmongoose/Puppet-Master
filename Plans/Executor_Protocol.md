@@ -1,10 +1,10 @@
-# Executor Protocol (Canonical)
+# Overseer Protocol (Canonical)
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
 ## 0. Purpose and scope
-This document defines deterministic execution ordering for `plan_graph` nodes and completion semantics for Builder, Verifier, and Executor roles.
+This document defines deterministic execution ordering for `plan_graph` nodes and completion semantics for Builder, Verifier, and Overseer roles.
 
 It applies to:
 - Self-build plan graph artifacts in `Plans/plan_graph.json`
@@ -29,8 +29,8 @@ Verifier runs node acceptance checks, writes evidence at `evidence_pointer`, and
 
 ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/evidence.schema.json
 
-### 1.3 Executor
-Executor selects the next ready node, dispatches Builder/Verifier, and applies automatic completion status transitions after verification output is available.
+### 1.3 Overseer
+The **Overseer** (see Plans/Glossary.md) selects the next ready node, dispatches Builder/Verifier, and applies automatic completion status transitions after verification output is available.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, PolicyRule:Decision_Policy.md§2
 
@@ -38,11 +38,11 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, PolicyRule:Decision_Policy
 
 ## 2. Deterministic readiness
 
-Executor MUST read node execution state from the canonical node document:
+Overseer MUST read node execution state from the canonical node document:
 - Self-build graph: `Plans/plan_graph.json.nodes[]`
 - User-project sharded graph: `.puppet-master/project/plan_graph/nodes/<node_id>.json`
 
-Executor MUST NOT infer execution state from index metadata alone.
+Overseer MUST NOT infer execution state from index metadata alone.
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/project_plan_graph_index.schema.json
 
 A node is ready if and only if all conditions are true:
@@ -50,10 +50,10 @@ A node is ready if and only if all conditions are true:
 2. every node ID in `blockers[]` currently has `status == "done"`
 3. `spec_lock_requirements.schema_versions` exactly matches `Plans/Spec_Lock.json.schema_versions` for every referenced key
 
-If multiple nodes are ready simultaneously, Executor MUST choose the lexicographically smallest `node_id`.
+If multiple nodes are ready simultaneously, Overseer MUST choose the lexicographically smallest `node_id`.
 ContractRef: PolicyRule:Decision_Policy.md§3, ContractName:Plans/Spec_Lock.json
 
-If any referenced Spec Lock version key is missing or mismatched, Executor MUST treat that node as not ready.
+If any referenced Spec Lock version key is missing or mismatched, Overseer MUST treat that node as not ready.
 ContractRef: ContractName:Plans/Spec_Lock.json, ContractName:Plans/Executor_Protocol.md
 
 ---
@@ -68,7 +68,7 @@ Failure lifecycle:
 
 `done` and `failed` are terminal states for this protocol revision.
 
-Executor MUST enforce lifecycle ordering and reject out-of-order transitions.
+Overseer MUST enforce lifecycle ordering and reject out-of-order transitions.
 ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Executor_Protocol.md
 
 ---
@@ -77,16 +77,16 @@ ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Executor_Proto
 
 Verifier writes evidence to `evidence_pointer` and returns `verifier_result`.
 
-When `verifier_result.outcome == "pass"` and the evidence bundle exists and validates, Executor MUST first set node `status = "verified"`, then immediately transition to `status = "done"`.
+When `verifier_result.outcome == "pass"` and the evidence bundle exists and validates, Overseer MUST first set node `status = "verified"`, then immediately transition to `status = "done"`.
 ContractRef: ContractName:Plans/Progression_Gates.md#GATE-005, ContractName:Plans/evidence.schema.json
 
-The `verified` state is a schema-enforced transitional state (requiring `outcome == "pass"` and `timestamp_utc` per both `plan_graph.schema.json` and `project_plan_node.schema.json`); Executor SHALL NOT skip it.
+The `verified` state is a schema-enforced transitional state (requiring `outcome == "pass"` and `timestamp_utc` per both `plan_graph.schema.json` and `project_plan_node.schema.json`); Overseer SHALL NOT skip it.
 ContractRef: ContractName:Plans/plan_graph.schema.json, ContractName:Plans/project_plan_node.schema.json
 
 Manual mark-complete action MUST NOT be required for verified nodes.
 ContractRef: PolicyRule:Decision_Policy.md§4, ContractName:Plans/Executor_Protocol.md
 
-When `verifier_result.outcome == "fail"`, Executor sets node `status = "failed"`.
+When `verifier_result.outcome == "fail"`, Overseer sets node `status = "failed"`.
 ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/Executor_Protocol.md
 
 ---
@@ -108,7 +108,7 @@ ContractRef: ContractName:Plans/plan_graph.schema.json, ContractName:Plans/proje
 
 ---
 
-## 6. Executor dispatch algorithm (deterministic)
+## 6. Overseer dispatch algorithm (deterministic)
 
 1. Evaluate readiness predicate over all queued nodes.
 2. Select smallest lexical `node_id` among ready set.
@@ -117,5 +117,5 @@ ContractRef: ContractName:Plans/plan_graph.schema.json, ContractName:Plans/proje
 5. Apply auto-marking rule from Section 4 (`verified` → `done` on pass; `failed` on fail).
 6. Repeat until no ready nodes remain.
 
-Executor MUST produce deterministic ordering for identical graph state and Spec Lock inputs.
+Overseer MUST produce deterministic ordering for identical graph state and Spec Lock inputs.
 ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3

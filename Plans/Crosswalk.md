@@ -83,7 +83,7 @@ ContractRef: Primitive:UICommand, ContractName:Contracts_V0.md#UICommand
 ---
 
 ### 3.3 Provider
-**Owner:** Provider domain (Provider executors, capability probing, normalized stream).
+**Owner:** Provider domain (Provider runners, capability probing, normalized stream).
 
 Rules:
 - Provider-specific discovery/auth/model logic MUST live in Provider-owned modules and contracts.

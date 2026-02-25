@@ -74,6 +74,8 @@ The Orchestrator page is a **single top-level page** accessible from the Activit
 - **Plans/orchestrator-subagent-integration.md**: Defines the backend tier hierarchy, event types, and plan_graph semantics that drive all tabs.
 - **Plans/FinalGUISpec.md**: Master layout, theme system, and general UI patterns.
 
+Orchestration runs and tier checks are driven by the **Overseer** (see Plans/Glossary.md), the AI foreman role inside the Orchestrator.
+
 ContractRef: ContractName:Plans/FinalGUISpec.md#4, ContractName:Plans/Widget_System.md, ContractName:Plans/Run_Graph_View.md
 
 ---
