@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.gui_automation_manifest.schema.v1",
+  "title": "Puppet Master GUI Automation Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "run_id",
+    "scenario_id",
+    "started_at_utc",
+    "ended_at_utc",
+    "status",
+    "tool_name",
+    "tool_version",
+    "timeline_path",
+    "summary_path",
+    "checks_path",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_id": {"type": "string", "const": "pm.gui_automation_manifest.schema.v1"},
+    "run_id": {"type": "string", "minLength": 1},
+    "scenario_id": {"type": "string", "minLength": 1},
+    "started_at_utc": {"type": "string", "format": "date-time"},
+    "ended_at_utc": {"type": "string", "format": "date-time"},
+    "status": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "WARN", "SKIPPED"]
+    },
+    "tool_name": {"type": "string", "minLength": 1},
+    "tool_version": {"type": "string", "minLength": 1},
+    "timeline_path": {"type": "string", "minLength": 1},
+    "summary_path": {"type": "string", "minLength": 1},
+    "checks_path": {"type": "string", "minLength": 1},
+    "recording_disabled_reason": {"type": "string", "minLength": 1},
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "artifact_id",
+          "kind",
+          "relative_path",
+          "mime_type",
+          "sha256",
+          "size_bytes"
+        ],
+        "properties": {
+          "artifact_id": {"type": "string", "minLength": 1},
+          "kind": {
+            "type": "string",
+            "enum": ["screenshot", "recording", "trace", "state", "log", "other"]
+          },
+          "relative_path": {"type": "string", "minLength": 1},
+          "mime_type": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "size_bytes": {"type": "integer", "minimum": 0},
+          "width": {"type": "integer", "minimum": 0},
+          "height": {"type": "integer", "minimum": 0},
+          "duration_ms": {"type": "integer", "minimum": 0},
+          "poster_path": {"type": "string"},
+          "step_id": {"type": "string"},
+          "test_id": {"type": "string"},
+          "timeline_seq": {"type": "integer", "minimum": 0},
+          "created_at_utc": {"type": "string", "format": "date-time"}
+        }
+      }
+    },
+    "chat_cards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["title", "artifact_id", "reason", "priority"],
+        "properties": {
+          "title": {"type": "string", "minLength": 1},
+          "artifact_id": {"type": "string", "minLength": 1},
+          "step_id": {"type": "string"},
+          "reason": {"type": "string", "minLength": 1},
+          "priority": {"type": "integer", "minimum": 0, "maximum": 100}
+        }
+      }
+    }
+  }
+}

@@ -318,6 +318,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, Primitive:Seglog
 - `auto_decisions` → `.puppet-master/project/auto_decisions.jsonl`
 - `ui_wiring_matrix` → `.puppet-master/project/ui/wiring_matrix.json` (optional GUI)
 - `ui_command_catalog` → `.puppet-master/project/ui/ui_command_catalog.json` (optional GUI)
+- `validation_pass_report` → `.puppet-master/project/validation/pass_<N>_report.json` (one per pass; N=1,2,3; stored only in seglog — see §10)
 
 ## 9. Acceptance criteria (validator requirements)
 
@@ -351,8 +352,109 @@ ContractRef: Gate:GATE-001, Gate:GATE-005, Gate:GATE-009
    - `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` validates (`pm.project-plan-graph.v1`)
    - it is consistent with the canonical sharded graph (same node IDs, same node fields, same `entrypoints`)
 
+8) **Validation sweep artifact completeness (see §10)**
+   - Exactly three `validation_pass_report` events in seglog for each validation sweep run (pass_number 1, 2, 3 sharing the same `workflow_run_id`)
+   - Pass 3 report `changes_applied_summary` contains no write-protected artifact paths (no requirements.md, plan.md)
+   - All pass report `content_hash` values match the SHA-256 of their `content_bytes`
+   - For each pass number `N`, report `provider` and `model` match resolved app settings keys `validation_sweep.passN.provider` and `validation_sweep.passN.model` from sweep start (`Plans/assistant-chat-design.md §26`)
+   - Reports come from a deterministic, headless sweep with no human approval gates between Pass 1, Pass 2, and Pass 3 (`Plans/chain-wizard-flexibility.md §12`)
+
+9) **Post-pass artifact finality**
+   - The canonical `.puppet-master/project/**` artifact tree validated by this document MUST represent the post-sweep artifact set (after Pass 2 and Pass 3 corrections for the associated `workflow_run_id`)
+   - Validator hash checks apply to post-pass corrected bytes, not pre-sweep intermediates
+
+## 10. Validation Pass Report Artifacts
+
+This section defines the structure and persistence contract for **validation pass reports** emitted by the Three-Pass Canonical Validation Workflow (see `Plans/chain-wizard-flexibility.md §12`). Pass reports are **canonical in seglog only** (no required filesystem staging file; filesystem export is optional).
+
+### 10.1 Seglog persistence (pass reports)
+
+Each pass emits one `validation_pass_report` artifact event to seglog with:
+
+Required fields (all fields from §8.1, plus):
+
+- `artifact_type`: `"validation_pass_report"`
+- `logical_path`: `.puppet-master/project/validation/pass_<N>_report.json` (N = 1, 2, or 3)
+- `content_bytes`: JSON payload (base64-encoded) conforming to the pass report schema below
+- `content_hash`: SHA-256 of `content_bytes` (hex)
+
+Additional required correlation fields:
+
+- `pass_number`: integer (1, 2, or 3)
+- `pass_name`: string — `"document_creation"` | `"canonical_alignment"` | `"canonical_systems"`
+- `workflow_run_id`: stable identifier for the validation sweep run (links the three passes together)
+
+### 10.2 Pass report JSON schema (normative)
+
+Each pass report JSON (the content of `content_bytes`) MUST include:
+
+```json
+{
+  "pass_number": 1,
+  "pass_name": "document_creation",
+  "workflow_run_id": "<stable-run-id>",
+  "pass_verdict": "pass",
+  "verdict_reason": "All required artifacts generated successfully.",
+  "findings": [],
+  "changes_applied_summary": [
+    {
+      "artifact_path": ".puppet-master/project/requirements.md",
+      "action": "created",
+      "diff_pointer": null
+    }
+  ],
+  "diff_pointers": [],
+  "unresolved_findings": [],
+  "provider": "<provider-id>",
+  "model": "<model-id>",
+  "ts": "<ISO-8601 timestamp>"
+}
+```
+
+Field definitions:
+
+- `pass_verdict`: `"pass"` or `"fail"`.
+- `verdict_reason`: Human-readable explanation of the verdict.
+- `findings[]`: List of findings (gaps, contradictions, violations found). Each entry: `{ finding_id, description, severity, artifact_path, resolution_applied }`.
+- `changes_applied_summary[]`: List of artifacts changed. Each entry: `{ artifact_path, action: "created"|"modified"|"corrected", diff_pointer: null | "<description-of-change>" }`.
+- `diff_pointers[]`: Optional list of diff descriptions (artifact path + before/after summary for each corrected artifact). Pass 1 always has empty diff_pointers (generation, not correction).
+- `unresolved_findings[]`: Findings that could not be resolved. Each entry: `{ finding_id, description, reason_unresolved }`. Non-empty → `pass_verdict: "fail"`.
+- `provider`: The provider ID used for this pass (from app settings; see `Plans/assistant-chat-design.md §26`).
+- `model`: The model ID used for this pass.
+- `ts`: ISO-8601 timestamp of pass completion.
+
+### 10.3 Pass 3 write-protection invariant (normative)
+
+Pass 3 (`canonical_systems`) MUST NOT create or modify the following artifacts:
+
+- `.puppet-master/project/requirements.md`
+- `.puppet-master/project/plan.md`
+- Any artifact whose content is driven by user intent or product scope.
+
+If Pass 3 finds a violation that requires modifying a write-protected artifact, it MUST record the finding as an entry in `unresolved_findings[]` with `reason_unresolved: "protected_artifact"` and set `pass_verdict: "fail"`.
+
+This invariant is normative and MUST be enforced by the execution layer.
+
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md§12, Gate:GATE-001
+
+### 10.4 Acceptance criteria (pass report artifacts)
+
+A validator MUST verify, at minimum:
+
+1. Exactly three `validation_pass_report` events exist in seglog for each validation sweep run, with `pass_number` = 1, 2, 3.
+2. All three share the same `workflow_run_id`.
+3. Each report's `content_hash` matches the SHA-256 of its `content_bytes`.
+4. Pass 3 `changes_applied_summary` contains no entries for write-protected artifacts (requirements.md, plan.md).
+5. If any `unresolved_findings` are non-empty, `pass_verdict` is `"fail"`.
+6. For each `pass_number = N`, report `provider` and `model` equal the resolved app settings keys `validation_sweep.passN.provider` and `validation_sweep.passN.model` at sweep start.
+7. The three reports are produced by one deterministic, headless sweep run with no human approval gates between passes (see `Plans/chain-wizard-flexibility.md §12.3` and §12.4).
+
+ContractRef: Gate:GATE-001, ContractName:Plans/chain-wizard-flexibility.md§12, ContractName:Plans/assistant-chat-design.md§26
+
 ## Change Summary
 
+- 2026-02-25: Hardened validation sweep acceptance contracts: added provider/model-to-settings linkage (`validation_sweep.passN.*`), deterministic/headless sweep provenance requirement, post-pass artifact finality requirement, and fixed `unresolved_findings[]` naming in Pass 3 write-protection invariant.
+- 2026-02-25: Added validation_pass_report artifact_type to §8.2; added §10 Validation Pass Report Artifacts defining seglog-only pass report structure, JSON schema, Pass 3 write-protection invariant, and acceptance criteria. Updated §9 acceptance criteria with item 8 for validation sweep artifact completeness.
 - 2026-02-24: Locked decision: user-project plan graph is **sharded-only**; canonical entrypoint is `.puppet-master/project/plan_graph/index.json`; monolithic export (if materialized) lives at `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json`.
 - 2026-02-24: Marked `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` as an **optional, non-canonical** derived export (may be generated, but must not be required; path was previously `.puppet-master/project/plan_graph.json`).
 - 2026-02-24: Replaced this document to be the canonical SSOT for user-project **Project Plan Package** outputs under `.puppet-master/project/**`.

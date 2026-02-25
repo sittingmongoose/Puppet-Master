@@ -46,6 +46,14 @@ Merge rules:
 
 The merged config is validated by `validate_config_wiring_for_tier()` before execution begins.
 
+### Test Strategy Loading {#test-strategy-loading}
+
+- Orchestrator loads `.puppet-master/interview/test-strategy.json` if present.
+- Merges `items[].criterion` into tier acceptance criteria and injects relevant excerpts into prompt context.
+- Missing/invalid file is WARN-only (no crash); continue execution with PRD/plan criteria only.
+
+ContractRef: SchemaID:pm.test_strategy.schema.v1, PolicyRule:Decision_Policy.md§2
+
 ## Relationship Between the Two Plans
 
 The project uses **two plan documents** that divide scope by execution context:

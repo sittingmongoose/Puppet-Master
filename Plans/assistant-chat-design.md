@@ -5,6 +5,10 @@
 
 ## Change Summary
 
+- 2026-02-25: Remediation alignment with `Plans/GitHub_Integration.md §B.3` — `/actions` and `/actions logs` outputs now require the same run/log summary fields and failure-state parity as the Actions panel.
+- 2026-02-25: Hardened §26 settings/report consistency: clarified that per-pass provider/model settings remain app-settings-only while resolved values are mirrored into `validation_pass_report` payload fields (`provider`, `model`) for auditability (see `Plans/Project_Output_Artifacts.md §10.2`); added acceptance criterion for settings-to-report parity.
+- 2026-02-25: Added §5.2 Git & GitHub Slash Commands and §23.X Git & GitHub parity note; cross-references Plans/GitHub_Integration.md.
+- 2026-02-25: Added §26 Per-Pass Validation Model/Provider Settings UX: settings group for per-pass (Pass 1/2/3) provider+model selection for the Three-Pass Canonical Validation Workflow (Plans/chain-wizard-flexibility.md §12). Stored in app settings (not project artifacts). Deterministic defaults via platform_specs. DRY: reuses chat platform+model dropdowns.
 - 2026-02-24: Aligned Interview/Assistant output surfacing with **canonical sharded plan graphs** under `.puppet-master/project/plan_graph/` (**index + node shards**). Outputs are **persisted canonically in seglog** and projected into `.puppet-master/project/...` for file-based review; `.puppet-master/project/plan.md` remains the human-readable plan view.
 - 2026-02-23: Added Interview chat UX cross-reference to Contract Layer outputs and required `.puppet-master/project/*` artifact pack so interview completion is maximally AI-executable and verifiable (SSOT: `Plans/Project_Output_Artifacts.md`, `Plans/chain-wizard-flexibility.md` §5.7/§11).
 
@@ -41,6 +45,7 @@ The **Assistant** is the third major surface alongside **Interview** and **Orche
 4. [Message submission (Steer vs Queue), queued editing, interrupt, and stop](#4-message-submission-steer-vs-queue-queued-editing-interrupt-and-stop)  
    - [4.1 Chat footer, queue UI, and files touched -- implementation detail](#41-chat-footer-queue-ui-and-files-touched--implementation-detail)  
 5. [Commands (slash commands and custom commands)](#5-commands-slash-commands-and-custom-commands)  
+   - [5.1 Git & GitHub Slash Commands](#51-git--github-slash-commands)  
 6. [Teach](#6-teach)  
 7. [Attachments, Web Search, and Extensibility](#7-attachments-web-search-and-extensibility)  
 8. [Plan Mode Depth & Rules](#8-plan-mode-depth--rules)  
@@ -62,6 +67,8 @@ The **Assistant** is the third major surface alongside **Interview** and **Orche
 22. [Live Testing Tools and Hot Reload](#22-live-testing-tools-and-hot-reload)  
 23. [Gaps, Competitive Comparison, and Enhancements](#23-gaps-competitive-comparison-and-enhancements)  
 24. [Chat thread performance, virtualization, and flicker avoidance](#24-chat-thread-performance-virtualization-and-flicker-avoidance)
+25. [Context Circle Enhancements (Addendum -- 2026-02-23)](#25-context-circle-enhancements-addendum----2026-02-23)
+26. [Per-Pass Validation Model/Provider Settings (Invariant Sweep)](#26-per-pass-validation-modelprovider-settings-invariant-sweep)
 
 ---
 
@@ -233,6 +240,40 @@ There are **two separate ELI5 toggles**; they are independent and must not be co
 User-defined custom commands MUST NOT use any reserved command name. Custom commands are prefixed with `/x-` by convention (e.g., `/x-deploy`).
 
 This list is the SSOT. The canonical machine-readable list is in Plans/UI_Command_Catalog.md.
+
+### 5.1 Git & GitHub Slash Commands
+
+Git and GitHub commands are available in chat when the active project is a git repository. All git operations executed via chat use the same code path as the Git panel (Plans/GitHub_Integration.md §A) — they are not separate implementations. ContractRef: Plans/GitHub_Integration.md, Plans/DRY_Rules.md
+
+**Git commands (slash commands):**
+
+| Command | Description | Error behavior |
+|---------|-------------|----------------|
+| `/git status` | Show current branch, staged/unstaged file count, sync state | Shows "(no repo)" if not a git repo |
+| `/git commit <message>` | Commit all staged changes with the given message | "Nothing staged" if no staged files |
+| `/git stage <file>` | Stage a specific file (or `.` for all) | "File not found" or "Already staged" |
+| `/git push` | Push current branch to tracking remote | Shows auth-expired or unreachable error |
+| `/git pull` | Pull with rebase (default) | Shows conflict file list on conflict |
+| `/git sync` | Pull then push (equivalent to Sync button) | Stops at first error, shows which step failed |
+| `/git branch <name>` | Create and switch to a new branch | "Invalid branch name" on bad chars |
+| `/git stash` | Stash all uncommitted changes | "Nothing to stash" if working tree clean |
+| `/git log [N]` | Show last N commits (default 10) in chat as a formatted list | — |
+
+**GitHub Actions commands:**
+
+| Command | Description | Error behavior |
+|---------|-------------|----------------|
+| `/actions` | List recent workflow runs for the current repo with status/log summary fields | "Not linked to GitHub" if no github_api auth |
+| `/actions run <workflow>` | Trigger a workflow_dispatch workflow by name | "Permission denied" (403) or "No workflow_dispatch trigger" |
+| `/actions logs <run-id>` | Fetch and show log tail (last 200 lines) plus status/log summary for the run | "Run not found" |
+
+- GitHub commands require `github_api` auth realm (ContractRef: Plans/GitHub_API_Auth_and_Flows.md §auth-realm-split)
+- If not authenticated, commands show inline device-code auth prompt
+- All command outputs are rendered as structured chat messages (not raw terminal output)
+- Command outputs include a "Open Git Panel" / "Open Actions Panel" deep-link button
+- `/actions` and `/actions logs` outputs MUST include the same summary fields defined by `Plans/GitHub_Integration.md §B.3`:
+  run status, run conclusion, run duration, failed job count, log truncation state, and last log timestamp.
+- `/actions` command failures MUST mirror `Plans/GitHub_Integration.md §B.3` failure-state semantics for auth/rate-limit/list/detail/log failures so chat and panel behavior stay consistent.
 
 ---
 
@@ -693,6 +734,10 @@ The following were the last open gaps; they are now specified in the main body. 
 
 **Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (§23.4). No remaining gaps; **accessibility** is explicitly not MVP.
 
+### 23.6 Git & GitHub parity
+
+**Git & GitHub parity:** Full specification in Plans/GitHub_Integration.md. The Git panel (§A), GitHub API integration (§B), SSH remote dev servers (§C), and no-wizard project flows (§D) bring Puppet Master to IDE-level git integration. Chat git commands (§5.1 above) allow driving git operations from the assistant without switching to the Git panel. ContractRef: Plans/GitHub_Integration.md.
+
 ---
 
 ## 24. Chat thread performance, virtualization, and flicker avoidance
@@ -855,3 +900,113 @@ ContractRef: Primitive:UICommand (Plans/Contracts_V0.md#UICommand), ContractName
 - Plans/FinalGUISpec.md section 5 (panel detaching / floating windows)
 - Plans/FinalGUISpec.md section 13 (accessibility)
 - Plans/Contracts_V0.md (UICommand contract)
+
+---
+
+## 26. Per-Pass Validation Model/Provider Settings (Invariant Sweep)
+
+> **Addendum — 2026-02-25**
+
+### 26.1 Context
+
+The Three-Pass Canonical Validation Workflow (see `Plans/chain-wizard-flexibility.md §12`) runs three sequential passes after every interview/wizard project-plan generation cycle. Each pass uses a designated AI provider and model to perform its specific analysis and correction duties. This section specifies the **settings UX** that exposes per-pass provider + model selection to the user.
+
+### 26.2 Settings Location
+
+Per-pass provider and model selections live in a dedicated **Validation Passes** settings group within the existing app Settings surface — not in the chat UI itself.
+
+**Navigation path:** Settings → Interview / Chain Wizard → Validation Passes
+
+This placement keeps validation configuration co-located with other interview/wizard settings and away from the chat session controls, which govern the interactive conversation only.
+
+### 26.3 Per-Pass Controls
+
+The **Validation Passes** settings group exposes one row of controls per pass.
+
+| Pass | Label | Default Provider | Default Model |
+|------|-------|-----------------|---------------|
+| Pass 1 | Document Creation | (primary configured platform) | (primary model for that platform) |
+| Pass 2 | Docs + Canonical Alignment | (primary configured platform) | (primary model for that platform) |
+| Pass 3 | Canonical Systems Only | (primary configured platform) | (primary model for that platform) |
+
+**Controls per pass:**
+
+- **Provider dropdown** — lists all enabled platforms (sourced from `platform_specs`; same data source as the chat platform dropdown). Label: "Provider".
+- **Model dropdown** — lists models for the selected provider (dynamically discovered, cached; same data source as the chat model dropdown). Label: "Model". Fallback: `platform_specs::fallback_model_ids(platform)`.
+
+> **Note:** No reasoning/effort control is shown in this settings group. Effort settings apply to the interactive chat session and do not govern these background validation passes.
+
+// DRY:WIDGET:validation-pass-provider-model-selector
+
+### 26.4 Default Resolution (Deterministic)
+
+Default provider and model values are resolved using the following deterministic priority chain:
+
+1. **Explicit stored value** — if `validation_sweep.passN.provider` / `validation_sweep.passN.model` is present in app settings, use it.
+2. **Primary chat platform + model** — if no per-pass value is stored, use the provider and model selected in the main chat settings (the user's primary platform).
+3. **First available platform + first fallback model** — if the primary chat platform/model is also unset, select the first platform returned by `platform_specs` and the first entry from `platform_specs::fallback_model_ids(platform)`.
+
+**Invariants:**
+- Given the same app settings state, the same provider and model are always selected (no randomness, no environment-dependent branching).
+- On first explicit save of per-pass settings, the resolved default is written to app settings so that subsequent reads are reproducible.
+
+### 26.5 Storage
+
+Per-pass selections are stored in **app settings** only. They are not stored in project artifacts, not emitted to seglog as project data, and not included in project exports.
+
+For auditability, each pass's resolved provider/model selection is mirrored into that pass's `validation_pass_report` payload fields (`provider`, `model`) in seglog (see `Plans/Project_Output_Artifacts.md §10.2`). This does not store the settings keys themselves as project artifacts.
+
+**Normative storage keys:**
+
+| Key | Purpose |
+|-----|---------|
+| `validation_sweep.pass1.provider` | Provider for Pass 1 (Document Creation) |
+| `validation_sweep.pass1.model` | Model for Pass 1 |
+| `validation_sweep.pass2.provider` | Provider for Pass 2 (Docs + Canonical Alignment) |
+| `validation_sweep.pass2.model` | Model for Pass 2 |
+| `validation_sweep.pass3.provider` | Provider for Pass 3 (Canonical Systems Only) |
+| `validation_sweep.pass3.model` | Model for Pass 3 |
+
+These keys are written to the same app settings store as all other GUI configuration values. See `Plans/chain-wizard-flexibility.md §3.1.1` for the OpenCode provider settings surface reference.
+
+### 26.6 UX Copy
+
+| Element | Copy |
+|---------|------|
+| Section header | "Validation Passes" |
+| Section description | "Puppet Master runs a three-pass canonical validation sweep after every project plan is generated. Choose which provider and model to use for each pass." |
+| Pass 1 description | "Document Creation — generates project artifacts (requirements, contracts, plan graph, acceptance manifest)." |
+| Pass 2 description | "Canonical Alignment — checks artifacts against project contracts and platform canonical references; finds and fixes gaps." |
+| Pass 3 description | "Canonical Systems Only — enforces DRY/SSOT, plan graph integrity, wiring matrix, and evidence alignment. Never modifies product requirements." |
+| Default indicator | Show "(Default)" next to the automatically resolved provider/model when no explicit selection has been saved for that pass. |
+
+### 26.7 DRY Rules
+
+- Provider and model lists **MUST** be sourced exclusively from `platform_specs` (same SSOT as §1.1 chat controls). No hardcoded provider names or model lists anywhere in this feature.
+- Reuse the same provider + model dropdown widgets as the §1.1 chat controls. Tag new reusable settings wrappers with: `// DRY:WIDGET:validation-pass-provider-model-selector`.
+
+ContractRef: PolicyRule:Plans/DRY_Rules.md, ContractName:Plans/Contracts_V0.md#platform_specs
+
+### 26.8 Acceptance Criteria
+
+| # | Criterion |
+|---|-----------|
+| 1 | Settings changes take effect on the **next** validation sweep run — not mid-sweep. A sweep in progress uses the provider/model that was active when it started. |
+| 2 | When a saved provider is no longer available (platform uninstalled or disabled), Puppet Master falls back to the deterministic default (§26.4) and displays a warning: *"Pass N provider [name] is unavailable; using default."* |
+| 3 | Per-pass settings are preserved across app restarts. |
+| 4 | All three pass selectors are independently configurable: Pass 1 may use a different provider and model than Pass 2 or Pass 3. |
+| 5 | The "(Default)" indicator (§26.6) is visible whenever no explicit selection has been saved for a given pass, and disappears once the user saves an explicit choice. |
+| 6 | Provider and model dropdowns for all three passes draw from the same `platform_specs` data source as the §1.1 chat controls — no divergence. |
+| 7 | For each pass `N`, emitted `validation_pass_report.provider` and `.model` values match resolved settings keys `validation_sweep.passN.provider` and `validation_sweep.passN.model` (see `Plans/Project_Output_Artifacts.md §10.2`). |
+
+### 26.9 References (Section 26)
+
+- `Plans/chain-wizard-flexibility.md §12` — Three-Pass Canonical Validation Workflow (primary specification)
+- `Plans/chain-wizard-flexibility.md §3.1.1` — OpenCode provider settings surface reference
+- `Plans/Project_Output_Artifacts.md §10.2` — validation pass report payload fields (`provider`, `model`)
+- `Plans/Decision_Policy.md §2` — deterministic default policy
+- `Plans/DRY_Rules.md` — DRY/SSOT rules
+- `Plans/Contracts_V0.md` — platform_specs contract
+- Section 1.1 of this document — chat platform + model controls (shared widget source)
+
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md§12, ContractName:Plans/Project_Output_Artifacts.md, PolicyRule:Decision_Policy.md§2

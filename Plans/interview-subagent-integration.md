@@ -124,7 +124,7 @@ This document covers the **interview flow** (multi-phase interview: Scope, Archi
   - Validate performance decisions
   - Review resource budgets and scalability plans
 
-### Phase 8: Testing & Verification
+### Phase 8: Testing & Verification {#phase-8-testing}
 **Primary Subagent:** `qa-expert`
 - **Purpose:** Test strategy, quality assurance, test planning
 - **Use Cases:**
@@ -1082,7 +1082,7 @@ Interview-tab bounds for these controls are sourced from `Plans/FinalGUISpec.md`
 - Persist `awaiting_final_approval` state and restore directly to findings + final approval UI after restart.
 - Restore document pane selection and preview context for the same review run when possible.
 
-## DRY Method Compliance
+## DRY Method Compliance {#dry-compliance}
 
 **CRITICAL:** All code in this plan MUST follow DRY principles.
 
@@ -1161,7 +1161,7 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 2. Integrate validation subagents (debugger, code-reviewer)
 3. Add validation results to interview state
 
-### Phase 5: Document Generation Integration
+### Phase 5: Document Generation Integration {#phase-5-document-generation}
 1. Enhance `DocumentWriter` to use technical-writer subagent
 2. Use knowledge-synthesizer for technology matrix
 3. Use qa-expert and test-automator for test strategy

@@ -3,6 +3,9 @@
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
+## Change Summary
+- 2026-02-25: Registered Plans/GitHub_Integration.md in plan map table.
+
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.
 
@@ -55,6 +58,7 @@ See: `Plans/rewrite-tie-in-memo.md`.
 | `interview-subagent-integration.md` | Interview phases + subagent use | Phase assignments use the same **41 subagents**; cross-phase (ux-researcher, knowledge-synthesizer, context-manager, explore, etc.). Mirrors orchestrator patterns at interview-phase boundaries. |
 | `assistant-chat-design.md` | Assistant/Chat UX and modes | Keep UX; anchor persistence/search to event stream projections |
 | `FinalGUISpec.md` | Slint GUI contract | Canonical UI source for **Interaction Mode (Expert/ELI5)** + **Chat ELI5** defaults/independence and the single dual-copy checklist (`§7.4.0`). |
+| `GitHub_Integration.md` | GitHub/Git IDE integration spec | Git panel (repo/branch/diff/operations), GitHub API (OAuth device-code, PRs, Actions), SSH remote dev servers, no-wizard project flows (Add Existing / New Local / New GitHub Repo). Cross-refs: Plans/GitHub_API_Auth_and_Flows.md, Plans/FileManager.md, Plans/chain-wizard-flexibility.md. |
 | `FileManager.md` | File Manager panel, IDE-style editor, @ mention, click-to-open | Canonical for file tree, editor (tabs, split panes, save, line numbers, syntax), image viewer, HTML preview + hot reload, same browser as §15.18, terminal/browser tabs (§9), editor enhancements MVP (§10), language/framework presets (§11). **LSP is MVP** (§10.10): diagnostics, hover, completion, navigation, inlay hints, code actions, code lens; implement with desktop editor from start. |
 | `LSPSupport.md` | LSP client support for rewrite | **LSP is MVP** -- in scope for desktop release. Canonical for LSP: diagnostics, hover, completion, navigation, inlay hints, code actions, code lens, Chat Window LSP (§5.1); OpenCode-style server registry/root discovery; Rust client crates (lsp-types, lsp-client/async_lsp_client). Implement with desktop editor and Chat from start. |
 | `storage-plan.md` | seglog, redb, Tantivy, projectors, analytics scan | Implementation checklist; chat persistence/search map to this stack; analytics scan rollups in redb feed dashboard/usage (usage-feature.md, feature-list). |

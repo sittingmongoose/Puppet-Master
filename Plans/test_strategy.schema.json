@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.test_strategy.schema.v1",
+  "title": "Puppet Master Test Strategy (Interview Output)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["project", "generatedAt", "coverageLevel", "items"],
+  "properties": {
+    "schema_id": {"type": "string", "const": "pm.test_strategy.schema.v1"},
+    "project": {"type": "string", "minLength": 1},
+    "generatedAt": {"type": "string", "format": "date-time"},
+    "coverageLevel": {
+      "type": "string",
+      "enum": ["Basic", "Standard", "Comprehensive"]
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "sourcePhaseId",
+          "criterion",
+          "testType",
+          "testFile",
+          "testName",
+          "verificationCommand"
+        ],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "sourcePhaseId": {"type": "string", "minLength": 1},
+          "criterion": {"type": "string", "minLength": 1},
+          "testType": {"type": "string", "minLength": 1},
+          "testFile": {"type": "string", "minLength": 1},
+          "testName": {"type": "string", "minLength": 1},
+          "verificationCommand": {"type": "string", "minLength": 1},
+          "frameworkId": {"type": "string"},
+          "toolId": {"type": "string"},
+          "evidencePath": {"type": "string"},
+          "exampleOnly": {"type": "boolean"}
+        }
+      }
+    }
+  }
+}

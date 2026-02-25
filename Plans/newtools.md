@@ -149,7 +149,7 @@ This plan extends the **interview** and **test strategy**; it does not replace t
   2. **Lookup** framework in a **single source of truth** (see §6) to get: existing tools (with names, install/setup, capabilities), and whether a custom headless tool is typically needed.
   3. In Testing phase (or a dedicated "GUI testing tools" step), **present options** to the user: existing tools, custom headless tool plan, or both.
   4. **Persist** user choices in interview state and config (e.g. "use_playwright", "use_framework_tools", "plan_custom_headless_tool", "selected_framework_tools").  
-     ContractRef: ContractName:Plans/interview-subagent-integration.md#config-wiring, ContractName:Plans/orchestrator-subagent-integration.md#config-wiring
+     ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#config-wiring
   5. On interview completion, **write into plans/PRD and test strategy:**
      - Tasks to **obtain/set up** existing tools when selected.
      - Tasks to **plan or build** the custom headless tool when selected (with requirement: headless navigation + full debug log after test runs).
@@ -165,6 +165,13 @@ Introduce a **single source of truth** for "GUI framework → available tools" s
 
 - **Location (required):** `puppet-master-rs/src/interview/gui_tool_catalog.rs` per §12.5 "Catalog location". Tag as `// DRY:DATA:GuiToolCatalog`.  
   ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
+- **Runtime‑mutable `GuiToolCatalog` (Resolved):**
+  - `GuiToolCatalog` is composed of:
+    1. **Base catalog** shipped with Puppet Master (curated defaults; DRY:DATA in code).
+    2. **User overlay catalog** persisted in app settings (**non‑secret**; redb settings store) and editable via UI; export/import as JSON.
+  - Merge precedence: **overlay wins** by stable IDs (`framework_id`, `tool_id`).
+  - Research-populated entries are written to the **overlay** (never to the base catalog).
+  ContractRef: Primitive:DRYRules, PolicyRule:Decision_Policy.md§2, PolicyRule:no_secrets_in_storage
 - **Content:** A catalog (e.g. struct + const data or table) that for each supported framework (or "web" for Playwright) provides:
   - **Framework ID** (e.g. `web`, `iced`, `dioxus`, `qt`, `flutter`, `tauri`, `electron`).
   - **Display name** and optional **detection hints** (e.g. Cargo.toml crate name, package.json deps).
@@ -189,8 +196,9 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:D
 ### 6.2 Research as input only (no research-only outcome)
 
 Research (Context7 MCP, web search) may be used to **inform** the catalog or the build plan, but MUST NOT be presented as a standalone research-only outcome. Options:
+ContractRef: PolicyRule:Decision_Policy.md§4, Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
-- **Catalog population:** When the catalog has no or sparse data for a framework, research can **add or extend catalog entries** so the catalog remains the single source of truth and future runs see the data. The user is shown **catalog-backed options** (including newly added entries), not a separate research-only result.
+- **Catalog population:** When the base+overlay `GuiToolCatalog` has no or sparse data for a framework, research can **add or extend overlay entries** (validated) so the catalog remains the single source of truth and future runs see the data. The user is shown **catalog-backed options** (including newly added entries), not a separate research-only result.
 - **Build plan input:** When the user chooses plan/build custom headless GUI tool for an unknown or sparse-catalog framework, research can **inform the design** of that tool. The deliverable is always the **plan to build the full-featured tool** (see §9); research only feeds that plan.
 
 Implementation MUST NOT offer a research-only mode where the interview concludes with only researched links and no concrete tool choice or build plan. For unknown frameworks, the user still gets: catalog options (if research populated the catalog) and/or the option to plan/build the full-featured custom headless tool, with research used only to improve that plan.  
@@ -201,7 +209,7 @@ ContractRef: PolicyRule:Decision_Policy.md§4
 Some **existing tools** in the catalog (or used during research) rely on **MCP** (Model Context Protocol), e.g. Context7 for documentation lookup, Browser MCP for web testing. For selected tools to be callable when agents run:  
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#platform-capability-manager
 
-- **All platforms:** MCP MUST be supported and configurable for **all five platforms** (Cursor, Codex, Claude Code, Gemini, GitHub Copilot). Each platform has its own MCP config location and semantics (see §8.2 table). Implementation MUST ensure that when the user selects a catalog tool that uses MCP, Puppet Master can **set up and verify** that the tool is available and callable for the tier's platform.  
+- **All platforms:** MCP-backed tools MUST be supported and configurable for **all five platforms** (Cursor, Codex, Claude Code, Gemini, GitHub Copilot). Canonical MCP configuration lives in Puppet Master; per-platform files are **derived adapters only** where a platform requires them (see §8.2). Implementation MUST ensure that when the user selects a catalog tool that uses MCP, Puppet Master can **set up and verify** that the tool is available and callable for the tier's platform.  
   ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#platform-capability-manager, Gate:GATE-005
 - **Setup and verification:** Implementation MUST provide a way to configure MCP servers (including API keys where required) and to verify that tools are callable (e.g. Doctor check or pre-run check per §11 checklist item **Doctor (MCP)**). Implementation MUST document or implement how MCP config (including Context7 API key and enable/disable state) is passed into the runner or agent environment so that platform CLIs see the correct MCP servers when executing.  
   ContractRef: ContractName:Plans/MiscPlan.md#doctor, SchemaID:evidence.schema.json, Gate:GATE-005
@@ -247,9 +255,19 @@ Add **MCP settings** to the Config view so users can enable and configure MCP se
 
 **Context7 (default on, API key, toggle off):**
 
-- **Context7** is **enabled by default** so documentation lookup and research can use it without extra setup.
-- Provide a **Context7 API key** field: a dedicated input (e.g. password-style or masked) where the user can store the Context7 API key. Persist it in config (e.g. `mcp.context7.api_key` or `mcp.context7.apiKey`); document that this value should not be committed to version control and consider storing it in a user-level or secure store if the project is shared.
-- Provide a **toggle to turn Context7 off** so users can disable Context7 MCP when not needed. When off, the API key may still be stored but Context7 is not passed to the platform CLI or not included in MCP server list for the run.
+- **Context7 (enabled by default; secret stored securely):**
+  - Context7 enablement is stored as **non-secret** config: `mcp.context7.enabled: bool` (default `true`).
+  - The **API key value** MUST be stored **only** in the OS credential store (masked input in UI; never written to YAML/redb/seglog/evidence/state files).
+  - UI actions:
+    - `Save key` → write to credential store SecretId `pm.secret.mcp.context7.api_key`
+    - `Clear key` → delete that SecretId
+    - UI shows status only: `Key stored` / `Missing` (never display the key).
+  - Resolution precedence (highest wins):
+    1. Env var `CONTEXT7_API_KEY`
+    2. Credential store SecretId `pm.secret.mcp.context7.api_key`
+  - If Context7 is enabled but key is missing, Doctor reports **WARN** and Context7 tools are omitted from the active tool set for that run.
+  - **Contract:** Secrets MUST NOT be persisted anywhere except OS credential store.
+  ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
 
 **Other MCP servers:**
 
@@ -257,28 +275,37 @@ Add **MCP settings** to the Config view so users can enable and configure MCP se
 
 **Wiring:**
 
-- Add `McpGuiConfig` (or `mcp` block) to `GuiConfig` with fields such as `context7_enabled: bool` (default `true`), `context7_api_key: Option<String>`. When building the run config (Option B), include MCP settings so that interview and orchestrator runs pass the correct MCP config (and Context7 API key when set) to the platform runner. Platform-specific MCP config files (e.g. `.cursor/mcp.json`, `.mcp.json`) may be generated or updated from these GUI values when the run starts, or the runner may receive env vars / args that point the CLI at the right MCP config.
+- Add `McpGuiConfig` (or `mcp` block) to `GuiConfig` with **non-secret** fields such as `context7_enabled: bool` (default `true`) and per-server enablement/preferences only. Secret values (API keys/tokens) are resolved at run start from env/credential store and injected **in-memory** into the MCP client/server process environment; they MUST NOT be written to YAML/redb/seglog/evidence/state files. If a platform requires per-project/per-user MCP config files, they are generated as **derived adapters** (no secrets in files) at run start.
+  ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, PolicyRule:Decision_Policy.md§2
 
 ### 8.2 MCP and all platforms
 
-Ensure MCP configuration and the Context7 API key (when enabled) are applied in a way that works for **all five platforms**. Document per-platform behavior: which config file or env var each CLI reads, and how Puppet Master can inject or update that config so agents can call MCP tools (including Context7) regardless of which platform is selected for the tier.
+Ensure MCP configuration is applied in a way that works for **all five platforms**.
 
-**MCP config locations (discovery snapshot; platforms change rapidly -- re-verify at implementation time):**
+**MCP responsibility by ProviderTransport (Resolved):**
+- **Canonical configuration lives in Puppet Master** (Settings → Advanced → MCP Configuration; central tool registry + policy engine).
+- **DirectApi providers (Codex/Copilot/Gemini):** MCP tools are registered and executed by Puppet Master’s tool registry (no provider-side MCP config files).
+- **CliBridge providers (Cursor/Claude Code):** if the CLI requires MCP config files, Puppet Master generates **derived adapter config** in the run CWD that points to Puppet Master–managed MCP bridge endpoints (no secrets in files).
+- Doctor verifies availability per provider and surfaces clear “available/unavailable” signals.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md, PolicyRule:Decision_Policy.md§2
 
-| Platform     | Project / workspace config       | User config                | Format |
-|-------------|-----------------------------------|----------------------------|--------|
-| Cursor      | `.cursor/mcp.json`                | `~/.cursor/mcp.json`       | JSON   |
-| Claude Code | `.mcp.json` (cwd)                 | `~/.claude.json`           | JSON   |
-| Codex       | `.codex/config.toml`              | `~/.codex/config.toml`     | TOML   |
-| Gemini      | `.gemini/settings.json`           | `~/.gemini/settings.json`  | JSON   |
-| Copilot     | `.copilot/mcp-config.json`, `.vscode/mcp.json` (workspace, v0.0.410+) | `~/.copilot/mcp-config.json` | JSON   |
+**Per-platform MCP adapter locations (discovery snapshot; platforms change rapidly -- re-verify at implementation time):**
 
-**Context7:** API key is sent as `Authorization: Bearer <key>`; store in config (e.g. `mcp.context7.api_key`), do not commit; inject into MCP client headers when generating platform config. Platforms ship frequent CLI updates; prefer discovering config at runtime or documenting and verifying in Doctor.
+| Platform     | ProviderTransport | Project / workspace config | User config          | Format |
+|-------------|-------------------|----------------------------|----------------------|--------|
+| Cursor      | `CliBridge`       | `.cursor/mcp.json`         | `~/.cursor/mcp.json` | JSON   |
+| Claude Code | `CliBridge`       | `.mcp.json` (cwd)          | `~/.claude.json`     | JSON   |
+| Codex       | `DirectApi`       | N/A (central MCP registry) | N/A                  | N/A    |
+| Gemini      | `DirectApi`       | N/A (central MCP registry) | N/A                  | N/A    |
+| Copilot     | `DirectApi`       | N/A (central MCP registry) | N/A                  | N/A    |
+
+**Context7:** Key is resolved via env/credential store and injected **in-memory** into the MCP client/server process environment; it MUST NOT appear in config files (including derived adapter files).  
+ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage
 
 **Cited web search (shared by Assistant, Interview, Orchestrator):** See **§8.2.1** for full detail; summary here:
 
 - Web search used by the **Assistant** (chat), **Interview**, and **Orchestrator** must be **cited**: inline citations and a **Sources:** list (URLs and titles). Single shared implementation; run config and MCP/tool wiring (this section) expose it to the platform CLI for the active tier.
-- When the agent performs a web search, the thread or run output must **show what was searched** (query and, where appropriate, a short summary) per Plans/assistant-chat-design.md §13 (activity transparency).
+- When the agent performs a web search, the Session or run output must **show what was searched** (query and, where appropriate, a short summary) per Plans/assistant-chat-design.md §13 (activity transparency).
 
 #### 8.2.1 Cited web search -- detailed specification
 
@@ -298,35 +325,48 @@ Ensure MCP configuration and the Context7 API key (when enabled) are applied in 
 
 **Architecture options**
 
-- **Option A -- MCP server:** Run or wrap a cited-web-search service as an MCP server; register it in each platform's MCP config (see table in §8.2) alongside Context7. The agent invokes a tool (e.g. `websearch_cited`) provided by that server. **Pro:** Same mechanism as Context7; works with any platform that supports MCP. **Con:** Another server to start, configure, and keep in sync with platform config; per-platform MCP config format differs (JSON vs TOML).
-- **Option B -- Bundled / custom tool:** Implement cited web search inside Puppet Master (or as a Rust/TS module the runner invokes) and expose it to the platform via whatever "custom tool" mechanism each CLI supports (if any). **Pro:** Single codebase; no extra process. **Con:** Not all platforms expose a generic "add custom tool" API; may require MCP anyway for Cursor/Claude/Codex/Gemini/Copilot.
+- **Option A -- MCP server:** Run or wrap a cited-web-search service as an MCP server; register it in Puppet Master’s central MCP registry (and generate derived adapter config for `CliBridge` platforms per §8.2). The agent invokes a tool (e.g. `websearch_cited`) provided by that server. **Pro:** Same mechanism as Context7; one shared implementation across surfaces. **Con:** Another server to start/configure; `CliBridge` platforms require derived adapter config formats (JSON).
+- **Option B -- Bundled / custom tool:** Implement cited web search inside Puppet Master (as a built-in tool behind the central tool registry) and expose it uniformly through the Provider/tool boundary. **Pro:** Single codebase; no extra MCP server. **Con:** For `CliBridge` providers, the provider runtime may still require MCP or an equivalent tool-bridge mechanism to surface the tool to the CLI model runtime.
 - **Option C -- Platform-native only:** Rely on each platform's built-in web search (e.g. Claude's web_search tool, OpenAI Responses API) where available, and document "no cited search" or "fallback to uncited" for platforms without it. **Pro:** No new infra. **Con:** Inconsistent UX and capability across platforms; some platforms may not support cited output format; contradicts "single implementation" and "cited" requirement.
-- **Recommendation:** Prefer **Option A (MCP)** so one cited-web-search MCP server is the single implementation; Puppet Master's run config injects it into each platform's MCP list (same as Context7). If a platform does not support MCP or tool discovery, document the gap and provide a clear user message (e.g. "Cited web search not available for this platform in this run").
+- **Recommendation:** Prefer **Option A (MCP)** so one cited-web-search MCP server is the single implementation; Puppet Master registers it centrally and generates derived adapters for `CliBridge` providers. This matches OpenCode’s pattern: central runtime config starts/attaches MCP servers and exposes tools uniformly; Puppet Master mirrors this with a central MCP registry + tool policy. If a platform does not support the tool surface, document the gap and provide a clear user message (e.g. "Cited web search not available for this platform in this run").
 
 **Provider, auth, and model selection**
 
 - **Providers:** Support at least one of: Google (e.g. Gemini API), OpenAI (Responses API / web search), OpenRouter (routing to a model that supports web search). opencode-websearch-cited uses a **dedicated model per provider** for the "grounding" step (e.g. `gemini-2.5-flash`, `gpt-5.2`, `x-ai/grok-4.1-fast`). That model is **separate** from the chat/orchestrator model: the main agent sends a tool call, the web-search implementation calls the provider's search API with the chosen model, then returns cited text to the agent.
-- **Auth:** Each provider needs its own auth (API key or OAuth). Store in config (e.g. `websearch_cited.google_api_key`, `websearch_cited.openai_api_key`, or reuse existing provider auth if the CLI already has it). **Do not** hardcode keys; do not commit keys to the project. Prefer user-level or secure store for shared machines. Document which env vars or config keys each provider expects.
+- **Auth:** Provider API keys (Google/OpenAI/OpenRouter) are secrets:
+  - Resolution precedence: env var → OS credential store SecretId (per provider)
+  - Config stores only: enablement, provider order, model selection, timeouts (non-secret)
+  - Never persist key values to YAML/redb/seglog/evidence/state files
+  - SecretIds:
+    - `pm.secret.websearch.google.api_key`
+    - `pm.secret.websearch.openai.api_key`
+    - `pm.secret.websearch.openrouter.api_key`
+  ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage
 - **Model selection and fallback:** Define a **provider + model** preference order (e.g. try Google → OpenAI → OpenRouter). If the user has configured a preferred provider/model for web search (e.g. in Config → MCP / Tools), use that first. On failure (rate limit, auth error, timeout), fall back to the next provider if configured, or surface a clear error and suggest "Switch web search provider/model in Config" or "Check API key for &lt;provider&gt;". Avoid burning the user's chat/orchestrator model quota for search if a dedicated search model is available.
-- **Config surface:** Add GUI controls (e.g. under Config → MCP / Tools) to enable/disable cited web search, choose provider (and optionally model), and set API keys. Persist in the same GuiConfig/run-config pipeline as other MCP settings so Assistant, Interview, and Orchestrator all see the same config.
+- **Config surface:** Add GUI controls (e.g. under Config → MCP / Tools) to enable/disable cited web search, choose provider (and optionally model), and manage API keys via credential-store actions (`Save key`/`Clear key`, masked input; status only). Persist **non-secret** preferences in the same GuiConfig/run-config pipeline as other MCP settings so Assistant, Interview, and Orchestrator all see identical behavior.
+  ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, PolicyRule:Decision_Policy.md§2
 
 **Errors, rate limits, and timeouts**
 
 - **Rate limits:** Provider-specific. When the search API returns 429 or "quota exceeded", do not retry indefinitely. Surface a user-visible message (e.g. in chat or run log): "Web search rate limit reached. Try again later or switch provider/model in Config." Optionally suggest switching platform or model per Plans/assistant-chat-design.md §12 (rate limit handling).
-- **Auth failures:** If the configured API key is missing or rejected, fail the tool call with a clear message (e.g. "Web search unavailable: invalid or missing API key for &lt;provider&gt;. Check Config → MCP / Tools."). Do not fall back to another provider's key without user consent (privacy/cost).
+- **Auth failures:** If the configured API key is missing or rejected, fail the tool call with a clear message (e.g. "Web search unavailable: invalid or missing API key for &lt;provider&gt;. Check Config → MCP / Tools and credential store."). Do not fall back to another provider's key without user consent (privacy/cost).
 - **Timeouts:** Set a reasonable timeout for the search call (e.g. 30-60 s). On timeout, return a structured error to the agent and show the user "Web search timed out. You can retry or try a different query."
 - **No results / empty:** Define behavior when the provider returns zero results (e.g. return "No results found for this query" with no Sources list, or a short message so the agent can respond appropriately). Avoid leaving the user with no feedback.
 
 **Security and privacy**
 
 - **Query content:** Search queries may contain sensitive or PII. Do not log full query text in plaintext in shared or persistent logs (e.g. progress.txt, evidence logs) unless the user has opted in. Prefer logging only "Web search performed" and length or hash, or redact. Same for search results: avoid dumping full response bodies into public artifacts.
-- **API keys:** Never expose keys in UI labels, tool results, or error messages. Store and pass via config/env only; Doctor or pre-run checks can verify "key is set" without echoing the value.
+- **API keys:** Never expose keys in UI labels, tool results, or error messages. Resolve via env/credential store only; Doctor or pre-run checks can verify "key is set" without echoing the value.
+  ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage
 - **Outbound requests:** The search implementation issues outbound HTTP requests to third-party APIs. Document which domains are contacted (e.g. Google, OpenAI, OpenRouter) so security reviews and firewalls can allowlist. Consider a setting to disable web search entirely (e.g. in air-gapped or high-compliance environments).
 
 **Per-platform considerations**
 
-- **Cursor, Claude Code, Codex, Gemini, Copilot:** Each discovers MCP servers from its own config (see §8.2 table). The cited-web-search MCP server must be **injected** into that config when the user has enabled it, using the same injection path as Context7. Verify that each CLI actually **calls** the tool (some may filter tools by name or capability). If a platform does not support MCP or does not surface the tool to the model, document it and show "Cited web search not available" in Doctor or run setup.
-- **Headless / CI:** In non-interactive runs (e.g. orchestrator in CI), ensure the MCP server can run without a display and that auth uses env vars or config, not interactive login. Timeouts and rate limits are especially important in automated runs.
+- **`CliBridge` providers (Cursor, Claude Code):** Derived adapter config (per §8.2) must include the cited-web-search MCP server when enabled, using the same adapter path as Context7.
+- **`DirectApi` providers (Codex, Gemini, Copilot):** No provider-side MCP config files; Puppet Master’s tool registry exposes the cited-web-search tool directly for that run.
+- Verify tool availability per provider at run start (Doctor/preflight). If a provider does not surface the tool, show "Cited web search not available" in Doctor or run setup.  
+  ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/MiscPlan.md#doctor, Gate:GATE-005
+- **Headless / CI:** In non-interactive runs (e.g. orchestrator in CI), ensure the MCP server can run without a display and that auth uses env vars or credential store, not interactive login. Timeouts and rate limits are especially important in automated runs.
 
 **Related references (adapt or wire as needed)**
 
@@ -345,7 +385,7 @@ Ensure MCP configuration and the Context7 API key (when enabled) are applied in 
 | **Query injection / prompt leakage** | User or agent content in the query could be sent to a third-party API. | Sanitize or truncate query length; avoid sending full conversation context to the search provider unless intended. Document what is sent. |
 | **No results / low-quality results** | Some queries return nothing or irrelevant results; agent might still "answer" from prior context. | Require that when the tool returns no results, the agent is instructed (via tool result or system prompt) to say so and not invent sources. |
 | **Format fragmentation** | opencode-websearch-cited, opencode-websearch, and Google-AI-Search-Plugin output formats differ. | Define a **single** canonical format (inline [N] + Sources list) and normalize adapter output to it before returning to the agent so UI and prompts are consistent. |
-| **Orchestrator / Interview context** | In orchestrator or interview, the "user" is the system; search may be triggered by internal prompts. | Ensure activity transparency still shows "what was searched" in the run log or thread so audits and debugging are possible. |
+| **Orchestrator / Interview context** | In orchestrator or interview, the "user" is the system; search may be triggered by internal prompts. | Ensure activity transparency still shows "what was searched" in the run log or Session so audits and debugging are possible. |
 | **Key sprawl** | User must set API key(s) for search in addition to platform auth. | Reuse platform provider auth where possible (e.g. same OpenAI key for chat and search if supported); document clearly which keys are required for cited web search. |
 
 ### 8.3 Provider transport/auth taxonomy and MCP
@@ -355,7 +395,7 @@ Puppet Master routes runs by **ProviderTransport** (SSOT: `Plans/Contracts_V0.md
 - **Codex, GitHub Copilot, Gemini:** `DirectApi` (direct-provider auth/calls; **no** Puppet Master CLI install/runtime flow)
 - **OpenCode:** `ServerBridge` (HTTP/SSE to local server)
 
-MCP is configured per provider via the table above.
+MCP is configured centrally (Puppet Master registry); `CliBridge` providers use derived adapter config and `DirectApi` providers use the central tool registry directly.
 
 **Transport terminology and auth taxonomy (normative):**
 
@@ -405,9 +445,10 @@ ContractRef: ContractName:AGENTS.md#automation, SchemaID:evidence.schema.json
 
 ### 10.1 Test strategy (test-strategy.md, test-strategy.json)
 
-- **Extend** `TestStrategyConfig` (and any JSON schema) to include:
+- **Extend** test strategy outputs (`test-strategy.md` + `.puppet-master/interview/test-strategy.json`, schema `Plans/test_strategy.schema.json`) to include:
   - **Framework tools:** List of selected framework tool IDs and how they are used (e.g. "Run Dioxus devtools for live preview; use for manual smoke checks" or "Run Iced headless runner with action set X").
   - **Custom headless tool:** When selected, a dedicated section or items that state: "Use the project's headless GUI tool for smoke tests; read debug log at `<path>` after each run."
+  ContractRef: SchemaID:pm.test_strategy.schema.v1, PolicyRule:Decision_Policy.md§2
 - **Test types:** Add or reuse test types (e.g. `headless_gui`, `framework_tool`) in addition to `playwright`, so that verification commands and criteria can reference "run headless tool" or "run framework tool X".
 - **DRY:** Extend `test_strategy_generator` and `TestItem` (or equivalent) so that new options are generated from the **same** interview state (selected_framework_tools, plan_custom_headless_tool); no duplicate logic in views vs generator.
 
@@ -431,12 +472,12 @@ ContractRef: ContractName:AGENTS.md#automation, SchemaID:evidence.schema.json
 
 - [ ] **6.1** Add `gui_tool_catalog` module (or equivalent) as single source of truth; implement lookup by framework, list tools, "custom headless default" per framework; tag tools that require MCP. Tag `// DRY:DATA:GuiToolCatalog` and helpers `// DRY:FN:...`.
 - [ ] **6.2** Define research as input-only: catalog population and/or build-plan input; no research-only user outcome.
-- [ ] **6.3** MCP and tool invocation: ensure MCP is configurable and verifiable for all five platforms; document or implement how MCP config (including Context7 API key and enable/disable) is passed into the runner/agent; tag catalog tools that require MCP; wire MCP config into runner/agent so selected tools are callable.
+- [ ] **6.3** MCP and tool invocation: ensure MCP is configurable and verifiable for all five platforms; document or implement how MCP config (enablement) and secrets (env/credential store) are applied at run start; tag catalog tools that require MCP; wire MCP config into runner/agent so selected tools are callable.
 - [ ] **7.1** Add GUI stack detection (from Architecture/UX or feature_detector); store `detected_gui_frameworks` in interview state.
 - [ ] **7.2** In Testing phase, call catalog (and optional research to populate catalog); build options (Playwright, framework tools, custom headless); persist user choices in interview config/state and wire into `InterviewOrchestratorConfig`.
 - [ ] **7.3** Add UI for tool selection using existing widgets; tag new widgets; run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` after changes.
-- [ ] **8.1** MCP settings in GUI: add Config → MCP (or Advanced → MCP); Context7 enabled by default, Context7 API key field, toggle to turn Context7 off; wire to GuiConfig and Option B run-config.
-- [ ] **8.2** Per-platform MCP: document or implement how each platform (Cursor, Codex, Claude Code, Gemini, Copilot) gets MCP config and Context7 API key so Context7 works for all five; see §8.2 discovery table and provider transport/auth taxonomy (§8.3).
+- [ ] **8.1** MCP settings in GUI: add Config → MCP (or Advanced → MCP); Context7 enabled by default; manage key via OS credential store; toggle to turn Context7 off; wire to GuiConfig and Option B run-config.
+- [ ] **8.2** Per-platform MCP: implement central MCP registry + derived adapter config for `CliBridge` providers; `DirectApi` providers use the central tool registry (no provider-side MCP config files). Context7 key is resolved via env/credential store and injected in-memory. See §8.2 and provider transport/auth taxonomy (§8.3).
 - [ ] **9** Document custom headless tool as **full-featured** (headless runner, action catalog, full evidence per §9.1); document how plans reference existing automation (e.g. Iced headless runner) vs building new.
 - [ ] **10.1** Extend test strategy generator and schema for framework tools and custom headless; add test types and verification commands as needed.
 - [ ] **10.2** Ensure PRD/plan generation includes tasks for get existing tools and plan/build custom tool when selected.
@@ -444,7 +485,7 @@ ContractRef: ContractName:AGENTS.md#automation, SchemaID:evidence.schema.json
 - [ ] **Doctor** Add a Doctor check that verifies the headless tool exists and runs when `plan_custom_headless_tool` was true (in scope for this plan). Resolve how Doctor discovers that the project planned a custom headless tool (§12.6).
 - [ ] **Doctor (platform versions)** Add a Doctor check or small platform config report that records the CLI version per platform (e.g. `agent --version`, `codex --version`) when Doctor runs, so support and debugging can correlate behavior with specific versions.
 - [ ] **Doctor (MCP)** Add a Doctor check that verifies configured MCP servers (e.g. Context7) are reachable or can list tools, per selected platform; complements the headless-tool check.
-- [ ] **Catalog version** If the catalog is static, add a version or last-updated timestamp so agents or docs can reference "catalog as of date X" when debugging tool availability.
+- [ ] **Catalog version / last-updated** Expose base catalog version + overlay `last_updated` so agents or docs can reference "catalog as of date X" when debugging tool availability.
 - [ ] **DRY** All framework/tool data from catalog only; no hardcoded tool lists in views or prompts. Pre-completion: run AGENTS.md Pre-Completion Verification Checklist.
 - [ ] **Gaps §12.6** Address additional gaps before or during implementation: Doctor input, test strategy schema duplication, MCP injection timing/cwd, Context7 key storage, catalog detection hints (e.g. Iced), Playwright/test-strategy wiring, verification command convention.
 
@@ -492,31 +533,24 @@ The following gaps, ambiguities, and improvements should be resolved during impl
 **Interview state and config persistence**
 
 - `InterviewState` (in `interview/state.rs`) has no `detected_gui_frameworks` field. `InterviewGuiConfig` / `InterviewOrchestratorConfig` do not yet have the new fields. Implementation MUST add `detected_gui_frameworks: Vec<String>` to `InterviewState`, add `selected_framework_tools: Vec<FrameworkToolChoice>` and `plan_custom_headless_tool: bool` to `InterviewGuiConfig` and `InterviewOrchestratorConfig`; wire them in `app.rs` (set from GUI config when building run config) and in the interview completion path (read when generating test strategy and PRD/execution plans).  
-  ContractRef: ContractName:Plans/interview-subagent-integration.md#config-wiring, ContractName:Plans/orchestrator-subagent-integration.md#config-wiring, SchemaID:evidence.schema.json, Gate:GATE-005
+  ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#config-wiring, SchemaID:evidence.schema.json, Gate:GATE-005
 
 **Test strategy JSON schema and backward compatibility**
 
-- The consumer of test-strategy.json is `TierTree::load_test_strategy` in `core/tier_node.rs`. Implementation MUST extend the existing schema: use `test_type` values `headless_gui` and `framework_tool`, and put tool-specific instructions in `criterion` and `verification_command`. If structured tool metadata is needed, add optional fields to `TestItem` and to the loader. Backward compatibility is REQUIRED: the loader MUST tolerate missing `headless_gui`/`framework_tool` items and optional tool metadata in existing test-strategy.json files (no migration of old files required; new fields are additive only).  
-  ContractRef: SchemaID:evidence.schema.json, Gate:GATE-001, PolicyRule:Decision_Policy.md§2
+- The consumer of test-strategy.json is `TierTree::load_test_strategy` in `core/tier_node.rs` (schema: `Plans/test_strategy.schema.json`). Implementation MUST extend additively: allow new `testType` values (e.g. `headless_gui`, `framework_tool`) and, if structured tool metadata is needed, add optional fields to `TestItem` and to the loader. Backward compatibility is REQUIRED: the loader MUST tolerate missing `headless_gui`/`framework_tool` items and optional tool metadata in existing test-strategy.json files (no migration of old files required; new fields are additive only).  
+  ContractRef: SchemaID:pm.test_strategy.schema.v1, Gate:GATE-001, PolicyRule:Decision_Policy.md§2
 
 **Verification command for custom headless tool**
 
 - Test items have a literal `verification_command`. For "run headless tool" the exact command is project-specific. The test strategy generator MUST emit a **deterministic convention-based command** when the project follows the documented naming convention (e.g. `cargo run --bin headless_runner` for Rust projects with a `headless_runner` binary; `npm run test:headless` when `package.json` defines it), OR mark the item as **EXAMPLE-only** with an explicit criterion-based instruction (e.g. criterion: "Run the project's headless GUI tool per test-strategy.md; verify evidence exists at `.puppet-master/evidence/gui-automation/timeline.jsonl`", verification_command: "# EXAMPLE: cargo run --bin custom_headless_tool -- --scenario=smoke"). The EXAMPLE marker signals to agents that the command is not executable as-is and must be adapted per project structure.  
   ContractRef: SchemaID:evidence.schema.json, Gate:GATE-005, PolicyRule:Decision_Policy.md§4
 
-**Catalog: static vs runtime-mutable**
-
-- If the catalog is **static** (e.g. Rust const data), research cannot mutate it at runtime; it can only produce suggestions for maintainers. Implementation MUST choose: (A) static-only catalog with research producing suggestions for human curation (preferred per PolicyRule:Decision_Policy.md§2: simplest safe default), OR (B) runtime-mutable catalog (e.g. JSON under `.puppet-master/`) if dynamic extension is required.
-
-**Static vs Runtime Tool Catalog Precedence (Resolved):**
-When a tool ID exists in both the static catalog and runtime discovery:
-- **Static definition wins.** Rationale: static entries are intentional overrides or customizations; runtime discovery is best-effort.
-- Static catalog format: JSON in `.puppet-master/tools.json`, array of tool objects with `tool_id`, `name`, `description`, `permissions`.
-- Runtime-discovered tools are merged into the active catalog only if their `tool_id` is not already present in the static catalog.
-- Document in tool registry implementation: "Static catalog entries take precedence over runtime-discovered tools."
-
-If (B) is chosen, implementation MUST add catalog file path to STATE_FILES.md and cleanup allowlist so it is not removed by prepare/cleanup.  
-  ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:STATE_FILES.md, ContractName:Plans/MiscPlan.md#cleanup
+**GuiToolCatalog persistence (Resolved — runtime-mutable overlay):**
+- Base catalog is code-shipped defaults.
+- Overlay catalog is stored in app settings (non-secret) and is editable + import/exportable.
+- Overlay overrides base entries by stable IDs; overlay entries carry `source` + `last_updated`.
+- All catalog update operations must pass structured validation (no duplicates, stable IDs, required fields present).
+ContractRef: Primitive:DRYRules, Gate:GATE-009, PolicyRule:Decision_Policy.md§2
 
 **Catalog location**
 
@@ -563,38 +597,26 @@ Detection is deterministic and has explicit ownership:
 
 **Test strategy schema duplication**
 
-**Test Strategy JSON Schema (Resolved):**
-
-**Decision: Consolidate to a single shared type** (`TestStrategyConfig`).
-
-- One Rust struct `TestStrategyConfig` serves as both interview output and orchestrator input.
-- Schema defined once in `Plans/evidence.schema.json` under `#/definitions/TestStrategyConfig`.
-- Interview phase writes `TestStrategyConfig` as part of its output artifacts.
-- Orchestrator reads the same `TestStrategyConfig` from interview artifacts.
-- No sync requirement — single type eliminates divergence risk.
-- Fields: `framework` (string), `coverage_target` (optional float 0.0–1.0), `test_patterns` (array of globs), `commands` (object with `run`, `watch`, `coverage` strings).
-
-  ContractRef: SchemaID:evidence.schema.json, Gate:GATE-001, PolicyRule:Decision_Policy.md§2
+**Test strategy artifact schema (Resolved):**
+- The machine-readable artifact is `.puppet-master/interview/test-strategy.json` with top-level fields `project`, `generatedAt`, `coverageLevel`, `items[]`.
+- Canonical JSON Schema lives in `Plans/test_strategy.schema.json` (`SchemaID:pm.test_strategy.schema.v1`).
+- Interview writes it; Orchestrator reads it; newtools extends it additively (new `testType` values + optional tool metadata fields).
+  ContractRef: SchemaID:pm.test_strategy.schema.v1, Gate:GATE-001, PolicyRule:Decision_Policy.md§2
 
 **MCP config injection timing and cwd**
 
-- Platform CLIs are spawned with a working directory (project or worktree). MCP config MUST be present in that cwd (or in the user's home) before the CLI starts. Implementation MUST document: (1) whether injection happens once at run-config build time (project root) OR at spawn time (actual cwd used by platform runner), AND (2) how worktrees are handled so MCP config is visible to the agent when running in a worktree. Preferred per PolicyRule:Decision_Policy.md§2 and Plans/WorktreeGitImprovement.md: inject at spawn time into the actual run directory (cwd) so worktree runs get correct MCP config; OR write to user-level config (`~/.cursor/mcp.json`, `~/.claude.json`, etc.) and let platform CLI discover it (avoids per-worktree injection).  
+- `CliBridge` platform CLIs (Cursor/Claude Code) are spawned with a working directory (project or worktree). Derived MCP adapter config (no secrets) MUST be present in the actual spawn cwd (preferred) or a user-level location before the CLI starts. Implementation MUST document: (1) whether adapter generation happens once at run-config build time (project root) OR at spawn time (actual cwd used by platform runner), AND (2) how worktrees are handled so adapters are visible to the agent when running in a worktree. Preferred per PolicyRule:Decision_Policy.md§2 and Plans/WorktreeGitImprovement.md: generate adapters at spawn time into the actual run directory (cwd) so worktree runs get correct MCP config. `DirectApi` providers do not use provider-side MCP config files.  
   ContractRef: ContractName:Plans/WorktreeGitImprovement.md, PolicyRule:Decision_Policy.md§2, SchemaID:evidence.schema.json
 
-**Context7 API key storage and security**
-
-- The plan says persist API key in config and "consider storing it in a user-level or secure store if the project is shared." Implementation MUST choose per PolicyRule:Decision_Policy.md§2 and Invariant:INV-002 (secrets MUST NOT be committed):
-
-**API Key Storage Precedence (Resolved):**
-When multiple sources provide the same API key, precedence (highest wins):
-1. **Environment variable** (e.g., `GEMINI_API_KEY`) — always wins.
-2. **User-level redb config** (`config:user.api_keys.{provider}`) — per-user override.
-3. **Project-level config** (`.puppet-master/config.json` → `api_keys.{provider}`) — project-specific.
-
-Document in STATE_FILES.md under "API Key Resolution."
-
-Implementation MUST document the chosen approach in AGENTS.md and ensure Option B run-config reads the API key from the chosen location without committing secrets. Implementation MUST add Context7 API key path (if file-based) to `.gitignore` and document in STATE_FILES.md.  
-  ContractRef: Invariant:INV-002, PolicyRule:Decision_Policy.md§2, ContractName:AGENTS.md, ContractName:STATE_FILES.md
+**API Key Storage (Resolved — credential-store-only):**
+- Secrets (tokens/passwords/API keys) MUST NOT be written to:
+  - seglog, redb, Tantivy, YAML config, `.puppet-master/config.json`, logs, evidence bundles, or state files.
+- Allowed persistence: OS credential store only.
+- Resolution precedence:
+  1. Environment variables (CI/headless)
+  2. OS credential store SecretId (interactive desktop)
+- Config stores only non-secret enablement + preference fields; UI shows “Key stored/missing”, never the value.
+ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
 
 **Catalog detection hints and Iced**
 
@@ -628,7 +650,7 @@ Implementation MUST document the chosen approach in AGENTS.md and ensure Option 
 
 **Catalog version or last-updated (in scope)**
 
-- If the catalog is static, implementation MUST add a version or last-updated timestamp (e.g. `CATALOG_VERSION` const or `last_updated` field) so agents or docs can reference "catalog as of date X" when debugging tool availability. See checklist item **Catalog version** in §11.  
+- Implementation MUST provide a base catalog version and overlay last-updated metadata (e.g. `CATALOG_VERSION` const for the base + per-entry `last_updated` in overlay) so agents or docs can reference "catalog as of date X" when debugging tool availability. See checklist item **Catalog version / last-updated** in §11.  
   ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, SchemaID:evidence.schema.json
 
 ---
@@ -999,18 +1021,21 @@ This addendum defines how automation evidence should be captured and surfaced di
 ```
 
 **Manifest contract (`manifest.json`):**
-- `run_id`, `scenario_id`, `started_at`, `ended_at`, `status`, `tool_name`, `tool_version`
+- `schema_id`, `run_id`, `scenario_id`, `started_at_utc`, `ended_at_utc`, `status`, `tool_name`, `tool_version`
 - `timeline_path`, `summary_path`, `checks_path`
 - `artifacts[]` list with stable IDs and media metadata:
   - `artifact_id`, `kind` (`screenshot|recording|trace|state|log`), `relative_path`, `mime_type`, `sha256`, `size_bytes`
   - optional render hints: `width`, `height`, `duration_ms`, `poster_path`
-  - optional linking: `step_id`, `test_id`, `timeline_seq`, `created_at`
+  - optional linking: `step_id`, `test_id`, `timeline_seq`, `created_at_utc`
 - `chat_cards[]` (pre-ranked "top evidence") for fast rendering in chat:
   - `title`, `artifact_id`, `step_id`, `reason` (e.g., `assertion_failure`), `priority` (0-100)
 
 **Timeline linkage (`timeline.jsonl`):** each event SHOULD reference `artifact_ids[]` so timeline, summary, and media are joinable without path guessing.
 
-**Schema update:** extend `Plans/evidence.schema.json` with `evidence_runs[]` and `artifacts[].mime_type/kind/render` fields (backward-compatible additive changes only).
+**Schema contract (Resolved):**
+- `manifest.json` MUST validate against `Plans/gui_automation_manifest.schema.json` (`SchemaID:pm.gui_automation_manifest.schema.v1`).
+- `Plans/evidence.schema.json` remains the evidence bundle schema and is **not** extended by this plan.
+ContractRef: SchemaID:pm.gui_automation_manifest.schema.v1, SchemaID:evidence.schema.json, PolicyRule:Decision_Policy.md§2
 
 ### 13.2 Chat rendering behavior + fallback behavior
 
@@ -1164,7 +1189,7 @@ Policy:
 ### 14.4 Deterministic additions required in this plan file
 
 Implementation MUST add the following concrete schema/config entries:
-ContractRef: ContractName:Plans/interview-subagent-integration.md#config-wiring, ContractName:Plans/orchestrator-subagent-integration.md#config-wiring, ContractName:Plans/Contracts_V0.md#EventRecord
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#config-wiring, ContractName:Plans/Contracts_V0.md#EventRecord
 
 1. **`InterviewGuiConfig` + `InterviewOrchestratorConfig` fields**
    - `live_visualization_enabled: bool`
@@ -1430,7 +1455,7 @@ ContractRef: ContractName:Plans/MiscPlan.md#doctor, ContractName:Plans/FinalGUIS
 - **puppet-master-rs/src/interview/test_strategy_generator.rs:** TestStrategyConfig, TestItem, write_test_strategy, test-strategy.md / test-strategy.json.
 - **puppet-master-rs/src/core/prompt_builder.rs:** Load test strategy into iteration context.
 - **puppet-master-rs/src/automation/:** Headless runner, action catalog, evidence (timeline, summary).
-- **MCP / Context7:** Context7 API keys (https://context7.com/docs/howto/api-keys): Bearer token in `Authorization` header. Cursor CLI MCP (https://cursor.com/docs/cli/mcp); Claude Code MCP (https://code.claude.com/docs/en/mcp); Codex MCP (https://developers.openai.com/codex/mcp); Gemini/Copilot: config paths in §8.2 table.
+- **MCP / Context7:** Context7 API keys (https://context7.com/docs/howto/api-keys): Bearer token in `Authorization` header. Cursor CLI MCP (https://cursor.com/docs/cli/mcp); Claude Code MCP (https://code.claude.com/docs/en/mcp); Codex MCP (https://developers.openai.com/codex/mcp). Puppet Master owns MCP centrally per §8.2; `DirectApi` providers do not rely on provider-side MCP config files.
 - **[C1] Playwright video persistence and modes:** https://github.com/microsoft/playwright.dev/blob/main/nodejs/versioned_docs/version-stable/videos.mdx
 - **[C2] Playwright tracing + show-trace:** https://github.com/microsoft/playwright.dev/blob/main/nodejs/versioned_docs/version-stable/trace-viewer-intro.mdx
 - **[C3] MCP typed content (image/resource) and tool outputs:** https://modelcontextprotocol.io/specification/2025-11-25/server/tools

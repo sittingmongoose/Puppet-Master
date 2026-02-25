@@ -37,6 +37,10 @@ REWRITE METADATA:
   - Plans/Decision_Policy.md
 -->
 
+## Change Summary
+- 2026-02-25: Added scope-failure UI cross-reference so `MissingScopes` and related auth failures explicitly drive disabled-state behavior for PR/Issues/Actions surfaces in `Plans/GitHub_Integration.md §B`.
+- 2026-02-25: Added SSH Remote Dev Server auth context section; added device-code prominence note; cross-references Plans/GitHub_Integration.md §C.
+
 ## Purpose
 Define the canonical GitHub API authentication contract and GitHub API call flows Puppet Master relies on for repository, fork, and pull request workflows.
 
@@ -51,6 +55,8 @@ ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:PatchPipeline,
 - Storing GitHub OAuth tokens in Puppet Master's event store (`seglog`) or key/value stores (e.g., `redb`). ContractRef: PolicyRule:no_secrets_in_storage
 - Defining implementation task plans, phase lists, or execution queues. ContractRef: Plans/Progression_Gates.md
 - Defining a multi-provider Git hosting abstraction (GitHub only). ContractRef: SchemaID:Spec_Lock.json#github_operations
+
+> **Default auth flow:** OAuth device-code. This is the canonical default for all `github_api` realm operations. No PAT, no GitHub CLI dependency. ContractRef: PolicyRule:Decision_Policy.md§1
 
 ## Auth realm split (canonical)
 GitHub-related auth is split into two explicit realms:
@@ -293,6 +299,13 @@ If any scopes required by the active GitHub features are missing, Puppet Master 
 
 ContractRef: EventType:auth.github.failed
 
+UI consequence contract: when `MissingScopes` (or any auth failure that blocks GitHub
+feature access) is active, PR/Issues/Actions surfaces MUST follow the deterministic disabled
+state behavior defined in `Plans/GitHub_Integration.md §B` until re-authentication succeeds.
+During this disabled state, those panels MUST NOT start background GitHub data fetch loops.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md §B, EventType:auth.github.failed, PolicyRule:Decision_Policy.md§2
+
 ### Repo permission checks
 Before deciding between same-repo PR vs fork-based PR, Puppet Master checks push permissions:
 - `GET /repos/{owner}/{repo}` and evaluate permissions, OR
@@ -452,3 +465,24 @@ ContractRef: SchemaID:evidence.schema.json, Plans/Progression_Gates.md#GATE-003,
 - `Plans/UI_Command_Catalog.md`
 - `Plans/storage-plan.md` §2.2
 - GitHub OAuth device flow docs: https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#device-flow
+
+---
+
+## SSH Remote Dev Server — Auth Context
+
+When a Puppet Master project runs on an SSH remote dev server (see `Plans/GitHub_Integration.md §C`), GitHub API calls are made from the **local machine** (where Puppet Master UI runs), not from the remote server. This is the canonical split:
+
+| Operation | Where it runs | Auth used |
+|-----------|--------------|-----------|
+| `git push/pull/fetch` | Remote server (via SSH subprocess) | SSH key on remote (not `github_api` token) |
+| GitHub REST API calls (PRs, Issues, Actions) | Local machine | `github_api` OAuth token (OS credential store) |
+| File read/write | Remote server (via SFTP / SSH) | SSH key |
+| Provider CLI execution | Remote server (via SSH) | Provider's own auth on remote |
+
+**Hard rules:**
+- `github_api` OAuth tokens are never transferred to or stored on the remote server. ContractRef: Plans/Architecture_Invariants.md#INV-002
+- SSH git transport on the remote uses the remote machine's SSH keys (or HTTPS with credentials stored on the remote git credential helper — not Puppet Master's OS store). ContractRef: Plans/GitHub_API_Auth_and_Flows.md §canonical-boundary
+- Puppet Master UI never proxies `github_api` tokens through an SSH tunnel. ContractRef: PolicyRule:Decision_Policy.md§1
+- The `github_api` and `copilot_github` realm split (§auth-realm-split above) applies identically in SSH remote mode. ContractRef: Plans/GitHub_API_Auth_and_Flows.md §auth-realm-split
+
+ContractRef: Plans/GitHub_Integration.md §C, Plans/Architecture_Invariants.md#INV-002, Plans/DRY_Rules.md

@@ -5,6 +5,9 @@
 
 ## Change Summary
 
+- 2026-02-25: Hardened §12 cross-doc contract consistency with `Plans/Project_Output_Artifacts.md §10.2`: normalized pass report field names and enums (`pass_name`, `pass_verdict`, `verdict_reason`, `findings[]`, `unresolved_findings[]`), replaced legacy wording (`pass_report`, `verdict`, `violations[]`, singular `unresolved_finding`), and clarified provider/model-to-report linkage.
+- 2026-02-25: Added §13 No-Wizard Project Management Flows — three project entry points (Add Existing, Create New Local, Create New GitHub Repo) with "Run Chain Wizard later" affordance; full spec in Plans/GitHub_Integration.md §D.
+- 2026-02-25: Added §12 Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep): always-on, headless, post-Contract-Unification-Pass pipeline (Pass 1: Document Creation; Pass 2: Docs + Canonical Alignment; Pass 3: Canonical Systems Only). Separate from optional §5.6 Multi-Pass Review. Per-pass provider/model selection in GUI settings (Plans/assistant-chat-design.md §26). Pass reports stored in seglog (artifact_type: validation_pass_report). Pass 3 never edits product requirements. Added 7 items to §10 Implementation Readiness Checklist.
 - 2026-02-24: Clarified OpenCode GUI contract coverage: provider enable/disable, connection method selection (direct server URL/port or CLI launcher/discovery fallback path), OpenCode auth/sign-in actions, and provider-contract model selection.
 - 2026-02-24: Added OpenCode as a server-bridged provider in provider selection UX; referenced Plans/Provider_OpenCode.md.
 - 2026-02-24: Added conditional UI wiring artifacts (`ui/wiring_matrix.json`, `ui/ui_command_catalog.json`) to the Project Contract Pack when the user project includes a GUI; updated per-phase contract fragments (§6.6.1 Product/UX), Contract Unification Pass (§6.6.2), validation (§6.6.3), and user-project output artifacts (§11). Schema: `Plans/Wiring_Matrix.schema.json`, rules: `Plans/UI_Wiring_Rules.md`.
@@ -84,7 +87,9 @@ The current Chain wizard and Interview flow assume a single path: **start a new 
 9. [Gaps and Potential Problems](#9-gaps-and-potential-problems)
 10. [Implementation Readiness Checklist](#10-implementation-readiness-checklist)
 11. [User-Project Output Artifacts (Sharded-Only)](#11-user-project-output-artifacts-sharded-only)
-12. [Change Summary](#change-summary)
+12. [Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)](#12-three-pass-canonical-validation-workflow-mandatory-invariant-sweep)
+13. [No-Wizard Project Management Flows](#13-no-wizard-project-management-flows)
+14. [Change Summary](#change-summary)
 
 ---
 
@@ -1033,6 +1038,13 @@ Before implementation, an implementation agent must complete or have clear specs
 46. **Findings summary surfaces:** Show Multi-Pass findings summary in chat and in the wizard preview section before final approval.
 47. **Single final approval gate:** Capture one final decision (`accept | reject | edit`) per Multi-Pass run with `findings_summary_shown=true` precondition.
 48. **Document pane recovery:** Persist `document_pane_state.v1` and restorable `document_checkpoint.v1` so recovery restores selected document/view and approval stage.
+49. **Three-Pass Canonical Validation Workflow (§12):** Implement as a post-Contract-Unification-Pass pipeline that runs Pass 1 → Pass 2 → Pass 3 serially.
+50. **Pass 1 (Document Creation):** Verify all required `.puppet-master/project/` artifacts are generated and emit `validation_pass_report` (Pass 1) to seglog.
+51. **Pass 2 (Docs + Canonical Alignment):** Compare artifacts against Project Contract Pack and platform canonicals; apply fixes; emit `validation_pass_report` (Pass 2) with findings, changes, diff_pointers.
+52. **Pass 3 (Canonical Systems Only):** Enforce DRY/SSOT, plan graph integrity, wiring matrix, evidence/invariants, deterministic decisions; emit `validation_pass_report` (Pass 3); MUST NOT modify requirements.md or plan.md.
+53. **Per-pass provider/model:** Read per-pass provider+model from app settings (see assistant-chat-design.md §26); apply deterministic defaults when not configured.
+54. **Headless execution:** All three passes MUST run headless (no GUI, no user approval gates between passes).
+55. **Failure surfacing:** If Pass 1 fails, halt and surface failure; if Pass 2 or 3 fails, surface unresolved findings while still writing the corrected artifact set.
 
 ---
 
@@ -1062,3 +1074,206 @@ Flow-specific requirements:
 
 - **Deterministic defaults:** When ambiguity remains, apply deterministic defaults per Decision Policy and record each automatic decision to `.puppet-master/project/auto_decisions.jsonl` (and canonically in seglog) with `{node_id, decision_id, chosen, reason, contract_refs[]}`.
 - **HITL optional:** Nodes may require approvals (`tool_policy_mode = ask`) without blocking the entire run; if a node is waiting on approval, the scheduler continues other runnable nodes whose dependencies allow.
+
+---
+
+## 12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)
+
+> **Compliance:** Follows `Plans/DRY_Rules.md`, `Plans/Contracts_V0.md`, and `Plans/Decision_Policy.md`. Naming: "Puppet Master" only. All decisions deterministic; no open questions.
+
+ContractRef: Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/DRY_Rules.md, PolicyRule:Decision_Policy.md§2
+
+### 12.1 Context
+
+This section defines an **always-on mandatory invariant sweep** that runs immediately after the Contract Unification Pass (§6.6) produces the canonical project artifact pack. It is **separate** from the optional §5.6 Multi-Pass Review (which is user-facing and off by default). The invariant sweep **cannot be disabled** and always runs even when other review features are present or enabled.
+
+The three-pass pipeline enforces canonical system integrity, DRY/SSOT compliance, plan graph structural correctness, and deterministic decision logging — without requiring human intervention or a running GUI.
+
+### 12.2 Passes
+
+All three passes run serially in sequence: Pass 1 → Pass 2 → Pass 3. Each pass receives the artifact set as corrected by the previous pass.
+
+---
+
+#### Pass 1: Document Creation
+
+**Purpose:** Primary document generation — requirements, contracts pack (Project Contract Pack), plan_graph (sharded), and acceptance manifest.
+
+**Scope:** All required project artifacts under `.puppet-master/project/` per `Plans/Project_Output_Artifacts.md §2`.
+
+**Produces:**
+- The initial artifact set written to `.puppet-master/project/`.
+- A `validation_pass_report` artifact stored in seglog (`artifact_type: validation_pass_report`) containing (schema per `Plans/Project_Output_Artifacts.md §10.2`):
+  - `pass_number: 1`
+  - `pass_name: "document_creation"`
+  - `pass_verdict`: `"pass"` or `"fail"`
+  - `verdict_reason`: human-readable reason
+  - `changes_applied_summary`: list of artifact paths written
+  - `diff_pointers`: empty for Pass 1 (this is generation, not correction)
+
+**Verdict rules:**
+- `pass_verdict: "pass"` — all required artifacts were successfully generated.
+- `pass_verdict: "fail"` — one or more required artifacts could not be generated; reason recorded.
+
+---
+
+#### Pass 2: Documents + Canonical Alignment
+
+**Purpose:** Checks requirements and plan artifacts against the Project Contract Pack and Puppet Master's internal canonical system references. Finds gaps and contradictions, proposes fixes, and applies those fixes to the artifact set.
+
+**Scope:** The following artifacts are compared against the listed canonical references:
+
+| Artifact | Canonical References |
+|---|---|
+| `requirements.md` | `ProjectContract:*` references, `Plans/Contracts_V0.md` |
+| Contracts pack (`contracts/index.json` + entries) | `Plans/Contracts_V0.md`, `Plans/Architecture_Invariants.md` |
+| `plan_graph/` nodes | `Plans/DRY_Rules.md`, `Plans/Architecture_Invariants.md` |
+| `acceptance_manifest.json` | `Plans/Project_Output_Artifacts.md`, `Plans/Decision_Policy.md` |
+
+**Actions:** For each gap or contradiction found:
+
+1. Record in `findings[]`.
+2. Apply fix to the relevant artifact.
+3. Record fix in `changes_applied_summary` with a `diff_pointer` (artifact path + before/after summary).
+4. When no fix is possible (e.g., an inherent conflict requiring product-level decision), record an entry in `unresolved_findings[]`.
+
+**Produces:**
+- Updated artifact set with all resolvable fixes applied.
+- `validation_pass_report` (Pass 2) stored in seglog containing:
+  - `pass_number: 2`
+  - `pass_name: "canonical_alignment"`
+  - `findings[]`: list of all gaps and contradictions detected
+  - `changes_applied_summary`: list of fixes applied, each with `diff_pointer`
+  - `unresolved_findings[]`: items where no fix could be applied
+  - `pass_verdict`: `"pass"` or `"fail"`
+  - `verdict_reason`: human-readable reason (including unresolved findings when fail)
+
+---
+
+#### Pass 3: Canonical Systems Only (Strictest)
+
+**Purpose:** Focuses exclusively on canonical system integrity. **Never edits product requirements** (`requirements.md`, `plan.md`, or any user-intent-derived content). Only enforces structural and canonical invariants.
+
+**Scope (normative — strictly limited to):**
+
+- **DRY/SSOT compliance:** No platform data hardcoded outside `platform_specs`; no schema fields duplicated across artifacts.
+- **Plan graph integrity:** `node_id` determinism; shard hash correctness (sha256 in `index.json` matches node file bytes); entrypoints resolve; edge consistency; `execution_ordering` completeness.
+- **Wiring matrix (if GUI project):** `ui/wiring_matrix.json` and `ui/ui_command_catalog.json` present and internally consistent; every `UICommandID` referenced in plan nodes resolves in `ui_command_catalog.json`.
+- **Evidence/invariants alignment:** Every plan node's `evidence_required.path` is consistent between the node shard and the acceptance manifest; acceptance `check_id`s are present in the manifest.
+- **Deterministic decisions/autonomy compliance:** `auto_decisions.jsonl` entries conform to `Plans/auto_decisions.schema.json`; every ambiguity is logged; no human-required blocking decisions remain unresolved.
+
+**Actions:**
+
+- Flag pass-3 canonical violations as `findings[]` entries (for example, `finding_id` values prefixed with `pass_3_violation:`).
+- For structural violations that can be corrected **without touching product requirements** (e.g., a missing sha256 in `index.json`, a missing `UICommandID` entry in the catalog): apply the correction and record in `changes_applied_summary` with `diff_pointer`.
+- For violations that require human input or product-level decisions: record an entry in `unresolved_findings[]` and set `pass_verdict` to `"fail"`.
+
+**Produces:**
+- Final artifact set with all structural corrections applied.
+- `validation_pass_report` (Pass 3) stored in seglog containing:
+  - `pass_number: 3`
+  - `pass_name: "canonical_systems"`
+  - `findings[]`: list of all pass-3 canonical violations detected
+  - `changes_applied_summary`: list of structural corrections applied, each with `diff_pointer`
+  - `unresolved_findings[]`: violations requiring human or product-level resolution
+  - `pass_verdict`: `"pass"` or `"fail"`
+  - `verdict_reason`: human-readable reason
+
+> **Invariant (normative):** Pass 3 MUST NOT modify `requirements.md`, `plan.md`, or any artifact whose content is driven by user intent or product scope. It enforces structural and canonical invariants only.
+
+---
+
+### 12.3 Execution Model
+
+- All three passes run **deterministically without human intervention**.
+- Each pass runs **headless** — no GUI is required; no user approval gate exists between passes.
+- Passes run **serially** (Pass 1 → Pass 2 → Pass 3); each pass receives the artifact set as corrected by the previous pass.
+- Per-pass provider and model are configurable (see `Plans/assistant-chat-design.md §26`); defaults are deterministic and safe when not explicitly configured.
+- Each `validation_pass_report` MUST include `provider` and `model` values matching resolved app settings keys `validation_sweep.passN.provider` and `validation_sweep.passN.model` for the same pass (see `Plans/assistant-chat-design.md §26` and `Plans/Project_Output_Artifacts.md §10.2`).
+- The **final project artifacts** reflect all post-pass corrections applied by Passes 2 and 3.
+- **If Pass 1 fails:** Passes 2 and 3 do not run; the workflow surfaces the Pass 1 failure to the user.
+- **If Pass 2 or Pass 3 fails** (unresolved findings): The failure is surfaced to the user; however, the corrected artifact set (with all resolvable fixes already applied) is still written.
+
+### 12.4 Acceptance Criteria (normative)
+
+The following criteria are required for a conformant implementation of this workflow:
+
+- [ ] Passes run deterministically without human intervention.
+- [ ] Each pass can be executed headless (no GUI required; no approval gates between passes).
+- [ ] Pass 3 never edits `requirements.md`, `plan.md`, or user-intent-derived content; it only enforces canonical system integrity and flags failures.
+- [ ] Each pass emits a `validation_pass_report` artifact stored in seglog (`artifact_type: validation_pass_report`).
+- [ ] The final project artifacts reflect all corrections applied by Passes 2 and 3.
+- [ ] Per-pass provider + model selection is exposed in the GUI settings (see `Plans/assistant-chat-design.md §26`).
+
+### 12.5 SSOT References (DRY)
+
+| Concern | SSOT Reference |
+|---|---|
+| Artifact paths and artifact types | `Plans/Project_Output_Artifacts.md` |
+| Platform contracts | `Plans/Contracts_V0.md` |
+| Architecture invariants | `Plans/Architecture_Invariants.md` |
+| DRY rules | `Plans/DRY_Rules.md` |
+| Decision policy | `Plans/Decision_Policy.md` |
+| Per-pass provider/model settings GUI | `Plans/assistant-chat-design.md §26` |
+| Auto-decisions schema | `Plans/auto_decisions.schema.json` |
+| UI wiring rules and schema | `Plans/UI_Wiring_Rules.md`, `Plans/Wiring_Matrix.schema.json` |
+
+---
+
+## 13. No-Wizard Project Management Flows
+
+Full specification for these flows is in `Plans/GitHub_Integration.md §D`. This section provides the chain-wizard-flexibility cross-reference and entry-point wiring.
+
+ContractRef: Plans/GitHub_Integration.md §D, Plans/DRY_Rules.md, Plans/Decision_Policy.md
+
+### 13.1 Overview
+
+Three project management flows are available that do **not** require the Chain Wizard. Users can reach them from the File menu → "Project" or from the Dashboard. All three flows surface a "Run Chain Wizard later" affordance on their finish screen, pre-loading the wizard with the newly added/created project context.
+
+| Flow | Entry point | Git repo | GitHub API required |
+|------|------------|----------|-------------------|
+| Add Existing Project | File → Add Existing Project | Optional (auto-detected) | Optional (link only) |
+| Create New Local Project | File → New Project → Local Only | Optional (default: on) | No |
+| Create New GitHub Repo + Project | File → New Project → On GitHub | Created on GitHub | Yes (device-code) |
+
+### 13.2 Add Existing Project (no wizard)
+
+- Entry: File menu → "Add Existing Project" OR Dashboard → "Add Project"
+- User selects a local folder (native OS picker) OR picks an SSH remote + path
+- Puppet Master auto-detects: git repo presence, language/framework, suggested project name
+- Optional: "Link to GitHub" (device-code auth if needed)
+- Finish: project opens in File Manager + editor; "Run Chain Wizard later" button
+- Full spec: Plans/GitHub_Integration.md §D.1
+
+ContractRef: Plans/GitHub_Integration.md §D.1, Plans/GitHub_API_Auth_and_Flows.md
+
+### 13.3 Create New Local Project (no wizard)
+
+- Entry: File menu → "New Project" → "Local Only" OR Dashboard → "New Project"
+- Inputs: project name, parent folder, git-init toggle (default on), optional language/framework preset
+- Finish: project created and opened; "Run Chain Wizard later" button
+- Full spec: Plans/GitHub_Integration.md §D.2
+
+ContractRef: Plans/GitHub_Integration.md §D.2
+
+### 13.4 Create New GitHub Repo + Project (no wizard)
+
+- Entry: File menu → "New Project" → "On GitHub" OR Dashboard → "New Project" → "On GitHub"
+- Requires `github_api` auth (device-code launched inline if not yet authed)
+- Inputs: repo name, description, visibility (default Private), README/gitignore/license toggles, local clone path
+- Puppet Master creates GitHub repo via API and clones locally
+- Finish: project added and opened; "Run Chain Wizard later" button
+- Full spec: Plans/GitHub_Integration.md §D.3
+
+ContractRef: Plans/GitHub_Integration.md §D.3, Plans/GitHub_API_Auth_and_Flows.md
+
+### 13.5 "Run Chain Wizard Later" Affordance
+
+All three flows show a "Run Chain Wizard" button on their finish screen. Clicking it:
+- Navigates to the Chain Wizard / Interview flow
+- Pre-fills project context (name, path, language, GitHub remote if linked)
+- User can proceed through all wizard phases or skip any optional phase
+
+This satisfies the requirement that no wizard step is mandatory for basic project setup. The wizard remains the recommended path for AI-assisted requirements gathering; it is not the only path.
+
+ContractRef: Plans/chain-wizard-flexibility.md §1 (intent-based workflows), Plans/GitHub_Integration.md §D

@@ -290,7 +290,7 @@ MCP is **in scope** for this document: MCP-discovered tools are first-class entr
 Implementations should:
 
 - Use **platform_specs** (and future central registry) as single source of truth; avoid hardcoding platform tool/MCP details.
-- Inject MCP config (and optional API keys) into each platform's config at run time so all five platforms can use the same MCP servers when enabled.
+- Own MCP centrally (tool registry + policy engine); generate derived adapter config for `CliBridge` providers only where required. `DirectApi` providers use the central registry directly. Resolve secrets via env/credential store only (no secrets in config files).
 - Align with **storage-plan.md**: tool-related events in seglog, rollups in redb, and any search index in Tantivy.
 
 ---
@@ -303,12 +303,12 @@ Snapshot for implementation; re-verify with Doctor or platform docs at implement
 |-------------|-----------------------------------|----------------------------|--------|-------------------------|
 | Cursor      | `.cursor/mcp.json`                | `~/.cursor/mcp.json`       | JSON   | MCP via config; non-interactive via `-p`, `--output-format` |
 | Claude Code | `.mcp.json` (cwd)                 | `~/.claude.json`           | JSON   | `--allowedTools`, `--permission-mode`, `--max-turns` |
-| Codex       | `.codex/config.toml`              | `~/.codex/config.toml`     | TOML   | MCP in config; `codex mcp-server` for MCP server mode |
-| Gemini      | `.gemini/settings.json`           | `~/.gemini/settings.json`  | JSON   | `--approval-mode yolo` \| `auto_edit` \| `plan` |
-| Copilot     | `.copilot/mcp-config.json`, `.vscode/mcp.json` (workspace) | `~/.copilot/mcp-config.json` | JSON   | `--allow-all-tools`, `--allow-tool`, `--deny-tool` |
+| Codex       | N/A (DirectApi; central MCP registry) | N/A                  | N/A    | (provider/tool boundary) |
+| Gemini      | N/A (DirectApi; central MCP registry) | N/A                  | N/A    | (provider/tool boundary) |
+| Copilot     | N/A (DirectApi; central MCP registry) | N/A                  | N/A    | (provider/tool boundary) |
 
-- **Context7:** API key as `Authorization: Bearer <key>`; store in config (e.g. `mcp.context7.api_key`); do not commit; inject when generating platform MCP config.
-- **Cited web search:** Prefer one MCP server (e.g. `websearch_cited`) registered like Context7; same injection path for all platforms (newtools §8.2.1).
+- **Context7:** API key as `Authorization: Bearer <key>`; resolve via env/credential store and inject in-memory. Derived adapter config MUST contain no secrets.
+- **Cited web search:** Prefer one MCP server (e.g. `websearch_cited`) registered centrally like Context7; derived adapters for `CliBridge` providers only (newtools §8.2.1).
 
 ---
 
