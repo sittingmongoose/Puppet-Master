@@ -59,3 +59,46 @@ For each extracted item, emit a record with:
 - Every adopted/adapted item is mapped to a single Puppet Master SSOT doc section.
 - Temporary OpenCode clone is deleted after completion.
 - No Puppet Master locked decisions are overwritten by OpenCode-derived content.
+
+## 7. Contract mapping to Puppet Master SSOT (DRY)
+This section is the canonical mapping from OpenCode extraction categories to Puppet Master contract sections. Use these targets instead of duplicating definitions.
+
+| Extracted category | Puppet Master target (SSOT) | Contract section(s) |
+|---|---|---|
+| `tools` | `Plans/Tools.md` | §3 (built-in tool set), §3.5 (tool I/O semantics), §10 (policy defaults + resolution) |
+| `permissions` | `Plans/Tools.md` | §2 (allow/deny/ask), §2.5 (OpenCode permissions alignment), §10.2-§10.4 (defaults/presets/resolution) |
+| `provider_stream` | `Plans/Contracts_V0.md`, `Plans/CLI_Bridged_Providers.md`, `Plans/Provider_OpenCode.md` | `Contracts_V0` §2 (normalized provider stream boundary), `CLI_Bridged_Providers` §“Normalized provider stream schema (V0)”, `Provider_OpenCode` §6.3 (OpenCode→normalized mapping) |
+| `ui_commands` | `Plans/Contracts_V0.md`, `Plans/UI_Command_Catalog.md` | `Contracts_V0` §7 (`UICommand` envelope/rules), `UI_Command_Catalog` §2 (stable command IDs + expected events) |
+| `storage` | `Plans/Contracts_V0.md`, `Plans/storage-plan.md` | `Contracts_V0` §1 (`EventRecord`) and §3 (`tool.invoked`/`tool.denied`), `storage-plan` §2.2 (seglog envelope + event types) |
+
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Contracts_V0.md#UICommand, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Tools.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+## 8. Upstream notes worth capturing (DRY; file pointers + deltas)
+> Purpose: prevent downstream agents from “assuming Puppet Master == OpenCode” by recording **where** key upstream models live and the **few deltas** that commonly cause mis-mapping.
+
+### 8.1 Tools + ToolContext (upstream pointers)
+- Plugin tool contract (ToolContext + `ask()` shape): `packages/plugin/src/tool.ts`
+- Internal tool contract (structured `{title, metadata, output, attachments?}` + truncation wrapper): `packages/opencode/src/tool/tool.ts`
+- Tool loading/registry (custom tools from `{tool,tools}/*.{js,ts}` + plugin tools; model-gated tool availability): `packages/opencode/src/tool/registry.ts`
+- Tool lifecycle hooks (not Bus events): `Plugin.trigger("tool.execute.before"|"tool.execute.after")` in `packages/opencode/src/session/prompt.ts`
+
+### 8.2 Permissions model (allow/deny/ask, wildcard patterns, replies, errors)
+- Current ruleset-based permissions: `packages/opencode/src/permission/next.ts` + API surface `packages/opencode/src/server/routes/permission.ts`
+  - Replies are `once | always | reject`; `reject` can optionally carry a user correction message (`CorrectedError` vs `RejectedError`).
+  - Wildcard semantics (incl. special-case patterns ending in `" *"`): `packages/opencode/src/util/wildcard.ts`
+- Notable delta vs Puppet Master assumptions: OpenCode has *two* permission implementations (`packages/opencode/src/permission/index.ts` and `.../permission/next.ts`). Prefer `next.ts` when extracting current behavior.
+
+### 8.3 Provider abstraction + transform/error layers (providerID/modelID split)
+- Provider/model registry and loader logic (explicit `providerID` + `modelID` split): `packages/opencode/src/provider/provider.ts`
+- Provider message normalization / capability shims (toolCallId normalization, caching flags, modality filtering): `packages/opencode/src/provider/transform.ts`
+- Error parsing and retryability/overflow detection (stream + API-call): `packages/opencode/src/provider/error.ts`
+- Notable delta vs Puppet Master assumptions: a significant amount of “provider compatibility” lives in the transform layer (not in the core session stream), so don’t assume upstream tool/message parts map 1:1 to any single provider’s API.
+
+### 8.4 Session/message/part taxonomy (what “a message” means upstream)
+- Message schema (legacy/simple): `packages/opencode/src/session/message.ts` (parts: `text`, `reasoning`, `tool-invocation`, `file`, ...)
+- Message schema (current/persistent): `packages/opencode/src/session/message-v2.ts` (parts: `text|reasoning|file|tool|step-start|step-finish|snapshot|patch|subtask|retry|compaction|agent`)
+  - Tool part state machine: `pending|running|completed|error` (`ToolState*` in the same file).
+- Notable delta vs Puppet Master assumptions: upstream sometimes injects synthetic messages/parts to satisfy provider constraints (e.g., ensure every `tool_use` has a corresponding `tool_result`; see `packages/opencode/src/session/message-v2.ts` + `packages/opencode/src/session/prompt.ts`).
+
+### 8.5 Notable process docs (UI blocker/orchestrator pattern)
+- Session composer “blocker” orchestrator pattern (question/permission blocks prompt input): `specs/session-composer-refactor-plan.md` and `packages/app/src/pages/session/composer/*`
