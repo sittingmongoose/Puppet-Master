@@ -132,6 +132,8 @@ Rule: Assistant-only memory (`Plans/assistant-memory-subsystem.md`) is continuit
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract, ContractName:Plans/agent-rules-context.md
 
+UI note: The GUI places the Assistant-memory Gist Review panel adjacent to Memory controls and the Rules viewer/editor for visibility, without changing any rules logic (SSOT: `Plans/assistant-memory-subsystem.md` §7).
+
 Rule: The shared rules pipeline MUST output rules content only; Assistant memory injection is a separate Assistant-only stage and is excluded from orchestrator/interview/subagent prompt assembly.
 
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
