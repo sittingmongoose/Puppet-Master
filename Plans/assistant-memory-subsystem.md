@@ -352,6 +352,7 @@ The GUI must expose a **Gist Review** panel adjacent to (and visually consistent
 
 Required UI elements:
 - List of gists with filters: kind/status/tags/pinned/verification_state
+- Default review filter on panel open: `verification_state = Unverified`
 - Toggle: `assistant.memory.auto_save_unverified` (default `true`)
 - Actions per gist: `Verify`, `Edit`, `Pin/Unpin`, `Discard`
 - Half-life controls: per-gist half-life override and per-kind default editor
@@ -359,7 +360,10 @@ Required UI elements:
 - Maintenance actions: rebuild lexical index, rebuild semantic index, verification sweep, dedup sweep, monthly summarize/compress, prune/archive low-activation gists
 
 Rule: The Gist Review panel MUST surface verification_state prominently and MUST make “Verify” and “Discard” first-class actions.
-ContractRef: ConfigKey:assistant.memory.auto_save_unverified, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers
+ContractRef: ConfigKey:assistant.memory.auto_save_unverified, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, UICommand:cmd.chat.memory.verify, UICommand:cmd.chat.memory.discard
+
+Rule: On panel open, Gist Review MUST default to `verification_state = Unverified`; any non-default filter state MUST be the result of explicit user action.
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ConfigKey:assistant.memory.auto_save_unverified, ContractName:Plans/UI_Command_Catalog.md, UICommand:cmd.chat.memory.verify, UICommand:cmd.chat.memory.edit, UICommand:cmd.chat.memory.pin, UICommand:cmd.chat.memory.discard, UICommand:cmd.chat.memory.toggle_auto_save_unverified
 
 Rule: Capsule preview MUST report an estimated token count and MUST indicate when truncation occurred due to the configured cap.
 ContractRef: ConfigKey:assistant.memory.capsule_budget_tokens, ContractName:Plans/assistant-chat-design.md#17-context--truncation
@@ -492,6 +496,7 @@ ContractRef: ContractName:Plans/Decision_Policy.md§2, ContractName:Plans/assist
 13. **Project isolation:** Switching projects writes handoff to old project and loads capsule for new project without cross-project leakage.
 14. **Index rebuild equivalence:** Full rebuild of Tantivy and USearch indexes from `assistant_memory.redb` yields retrieval results equivalent (within deterministic tie-break rules) to incremental updates under the same data.
 15. **Rules separation:** Rules pipeline output remains unchanged when gists are added/edited; memory appears only in memory injection path.
+16. **Default review filter behavior:** Opening the Gist Review panel defaults to `verification_state = Unverified` until the user explicitly changes filters.
 
 Rule: A change is complete only when all acceptance criteria above are met and verified by deterministic checks.
 ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/assistant-memory-subsystem.md#10-acceptance-criteria
