@@ -1,4 +1,4 @@
-//! Core business logic modules for RWM Puppet Master orchestration
+//! Core business logic modules for Puppet Master orchestration
 //!
 //! This module contains the primary orchestration engine components:
 //! - State machines for orchestrator and tier management

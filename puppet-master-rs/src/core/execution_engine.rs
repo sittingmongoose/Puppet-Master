@@ -238,10 +238,10 @@ impl ExecutionEngine {
 
     /// Parse completion signal from output line
     fn parse_completion_signal(&self, line: &str) -> Option<CompletionSignal> {
-        if line.contains("<ralph>COMPLETE</ralph>") {
+        if line.contains("<pm>COMPLETE</pm>") {
             return Some(CompletionSignal::Complete);
         }
-        if line.contains("<ralph>GUTTER</ralph>") {
+        if line.contains("<pm>GUTTER</pm>") {
             return Some(CompletionSignal::Gutter);
         }
 

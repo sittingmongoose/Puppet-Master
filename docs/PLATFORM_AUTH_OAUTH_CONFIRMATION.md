@@ -1,7 +1,7 @@
 # Platform and GitHub Authentication: OAuth Confirmation
 
 **Date:** 2026-02-03  
-**Purpose:** Confirm that all coding platforms and GitHub used by RWM Puppet Master sign users in via OAuth (or OAuth-like browser/device flows) where interactive login is available.
+**Purpose:** Confirm that all coding platforms and GitHub used by Puppet Master sign users in via OAuth (or OAuth-like browser/device flows) where interactive login is available.
 
 ---
 

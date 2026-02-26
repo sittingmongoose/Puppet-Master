@@ -112,7 +112,7 @@ jobs:
           cd ../installer/windows
           makensis /DVERSION="${{ steps.version.outputs.version }}" /DTARGET_DIR="$targetDir" puppet-master.nsi
           New-Item -ItemType Directory -Force -Path ../../dist/installers/win32-x64 | Out-Null
-          Copy-Item "RWM-Puppet-Master-${{ steps.version.outputs.version }}-setup.exe" -Destination "../../dist/installers/win32-x64/"
+          Copy-Item "Puppet-Master-${{ steps.version.outputs.version }}-setup.exe" -Destination "../../dist/installers/win32-x64/"
 
       - name: Build installer (macOS)
         if: runner.os == 'macOS'
@@ -124,11 +124,11 @@ jobs:
           cd installer/macos
           ./build-dmg.sh "${{ steps.version.outputs.version }}"
           mkdir -p ../../dist/installers/darwin-arm64
-          cp "RWM-Puppet-Master-${{ steps.version.outputs.version }}.dmg" ../../dist/installers/darwin-arm64/
+          cp "Puppet-Master-${{ steps.version.outputs.version }}.dmg" ../../dist/installers/darwin-arm64/
 
           # Verify ad-hoc signing
           echo "Verifying DMG signature..."
-          codesign -dvv "RWM-Puppet-Master-${{ steps.version.outputs.version }}.dmg" || echo "Warning: DMG signature check failed"
+          codesign -dvv "Puppet-Master-${{ steps.version.outputs.version }}.dmg" || echo "Warning: DMG signature check failed"
 
       - name: Build installer (Linux)
         if: runner.os == 'Linux'
@@ -155,7 +155,7 @@ jobs:
           if (-not $installer) { throw "Installer not found" }
           Write-Host "Running installer: $($installer.FullName)"
           Start-Process -FilePath $installer.FullName -ArgumentList "/S" -Wait
-          $pm = Join-Path $Env:ProgramFiles "RWM Puppet Master\puppet-master.exe"
+          $pm = Join-Path $Env:ProgramFiles "Puppet Master\puppet-master.exe"
           if (-not (Test-Path $pm)) { throw "puppet-master not found at $pm" }
           & $pm --version
 

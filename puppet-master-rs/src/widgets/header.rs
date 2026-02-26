@@ -123,12 +123,8 @@ where
     let paper_color = theme.paper();
     let ink_color = theme.ink();
 
-    // Title - "RWM PUPPET MASTER" with thin underline (tight spacing so line sits close to text)
-    let title_text = text(if size.is_mobile() {
-        "RWM"
-    } else {
-        "RWM PUPPET MASTER"
-    })
+    // Title - "PUPPET MASTER" with thin underline (tight spacing so line sits close to text)
+    let title_text = text("PUPPET MASTER")
     .size(if size.is_mobile() { 20 } else { 26 })
     .font(FONT_DISPLAY_BOLD)
     .style(move |_theme: &iced::Theme| text::Style {

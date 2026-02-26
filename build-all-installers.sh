@@ -1,13 +1,13 @@
 #!/bin/bash
 # Quick Build Script for All Platform Installers
-# RWM Puppet Master - Rust-only Build System
+# Puppet Master - Rust-only Build System
 
 set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "$0")" && pwd)"
 VERSION=$(grep -m1 "^version" "${PROJECT_ROOT}/puppet-master-rs/Cargo.toml" | cut -d'"' -f2)
 
-echo "🚀 RWM Puppet Master Installer Build System"
+echo "🚀 Puppet Master Installer Build System"
 echo "Version: ${VERSION}"
 echo ""
 
@@ -99,7 +99,7 @@ echo ""
 echo "🎉 Build complete!"
 echo ""
 echo "Output locations:"
-echo "  Windows: installer/windows/RWM-Puppet-Master-${VERSION}-setup.exe"
-echo "  macOS:   installer/macos/RWM-Puppet-Master-${VERSION}.dmg"
+echo "  Windows: installer/windows/Puppet-Master-${VERSION}-setup.exe"
+echo "  macOS:   installer/macos/Puppet-Master-${VERSION}.dmg"
 echo "  Linux:   installer/linux/puppet-master_${VERSION}_amd64.deb"
 echo "           installer/linux/puppet-master-${VERSION}-1.x86_64.rpm"

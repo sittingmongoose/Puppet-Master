@@ -1,4 +1,4 @@
-//! System tray icon management for RWM Puppet Master.
+//! System tray icon management for Puppet Master.
 //!
 //! This module provides a persistent system tray icon with a context menu
 //! that allows users to interact with the application even when the main
@@ -144,7 +144,7 @@ impl TrayManager {
         let tray = TrayIconBuilder::new()
             .with_menu(Box::new(menu.clone()))
             .with_icon(icon)
-            .with_tooltip("RWM Puppet Master")
+            .with_tooltip("Puppet Master")
             .build()
             .context("Failed to build tray icon")?;
 

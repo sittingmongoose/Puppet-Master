@@ -1,6 +1,6 @@
 project:
   name: puppet-master-rs
-  workingDirectory: /home/sittingmongoose/Cursor/RWM Puppet Master/puppet-master-rs
+  workingDirectory: ./puppet-master-rs
   version: 1.0.0
 tiers:
   phase:
@@ -37,7 +37,7 @@ tiers:
     taskFailureStyle: continue_same_agent
 branching:
   baseBranch: main
-  namingPattern: rwm/{tier}/{id}
+  namingPattern: pm/{tier}/{id}
   granularity: per_phase
   autoPr: false
 verification:

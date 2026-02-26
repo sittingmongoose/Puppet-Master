@@ -31,7 +31,7 @@ for /f "delims=" %%d in ('dir /b /o-d "%LOCALAPPDATA%\cursor-agent\versions\*" 2
     "%LOCALAPPDATA%\cursor-agent\versions\%%d\cursor-agent.cmd" %*
     exit /b %ERRORLEVEL%
 )
-echo Error: Cursor agent not found. Please reinstall via RWM Puppet Master. 1>&2
+echo Error: Cursor agent not found. Please reinstall via Puppet Master. 1>&2
 exit /b 1
 "#;
         std::fs::write(&shim_path, content)
@@ -46,7 +46,7 @@ exit /b 1
 # Finds the latest installed cursor-agent version and delegates to it
 CURSOR_VER_DIR="$(ls -dt ~/.local/share/cursor-agent/versions/*/ 2>/dev/null | head -1)"
 if [ -z "$CURSOR_VER_DIR" ]; then
-    echo "Error: Cursor agent not found. Please reinstall via RWM Puppet Master." >&2
+    echo "Error: Cursor agent not found. Please reinstall via Puppet Master." >&2
     exit 1
 fi
 exec "${CURSOR_VER_DIR}cursor-agent" "$@"
@@ -400,7 +400,7 @@ mod tests {
     #[tokio::test]
     async fn find_installed_binary_returns_none_for_nonexistent() {
         let mut log = Vec::new();
-        let result = find_installed_binary(&["__rwm_nonexistent_binary_42__"], &mut log).await;
+        let result = find_installed_binary(&["__pm_nonexistent_binary_42__"], &mut log).await;
         assert!(result.is_none());
     }
 }

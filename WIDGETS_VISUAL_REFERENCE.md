@@ -1,4 +1,4 @@
-# RWM Puppet Master Widgets - Visual Reference
+# Puppet Master Widgets - Visual Reference
 
 ## Panel
 ```
@@ -122,12 +122,12 @@ Icons: ✓ (success), ✕ (error), ⚠ (warning), ℹ (info)
 ## Header / Navigation
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│ RWM  [Dashboard] [Projects] [Wizard] [Config] [Doctor] ...  [☾] ☀  │
+│ Puppet Master [Dashboard] [Projects] [Wizard] [Config] [Doctor] ... [☾] ☀ │
 │                                                                      │
 └─────────────────────────────────────────────────────────────────────┘
   ▒▒▒
 
-"RWM" logo: 28px bold, Electric Blue
+"Puppet Master" wordmark: 28px bold, Electric Blue
 Active page: Inverted (dark bg, light text)
 Inactive page: Normal (light bg, dark text)
 Theme toggle: Sun/Moon icon, Safety Orange
@@ -237,7 +237,7 @@ For depth variation:
 ## Complete Example Layout
 ```
 ┌───────────────────────────────────────────────────────────────────┐
-│ RWM  [Dashboard] [Projects] [Wizard] ...  [Select Project ▾]  ☾  │
+│ Puppet Master [Dashboard] [Projects] [Wizard] ... [Select Project ▾] ☾ │
 └───────────────────────────────────────────────────────────────────┘
   ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 

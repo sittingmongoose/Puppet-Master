@@ -142,7 +142,7 @@ These IDs are required by `Plans/Run_Graph_View.md`.
 | `cmd.graph.approve_hitl` | `{ node_id, rationale }` | run-state events emitted by orchestrator | Orchestrator > Node Graph Display |
 | `cmd.graph.deny_hitl` | `{ node_id, rationale }` | run-state events emitted by orchestrator | Orchestrator > Node Graph Display |
 
-ContractRef: ContractName:Plans/Run_Graph_View.md#16, ContractName:Plans/Contracts_V0.md#UICommand
+ContractRef: ContractName:Plans/Run_Graph_View.md#17, ContractName:Plans/Contracts_V0.md#UICommand
 
 ---
 

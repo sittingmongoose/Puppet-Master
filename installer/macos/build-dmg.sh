@@ -1,8 +1,8 @@
 #!/bin/bash
-# Build macOS DMG installer for RWM Puppet Master
+# Build macOS DMG installer for Puppet Master
 #
 # NOTE: This script creates an UNSIGNED DMG that will be blocked by Gatekeeper.
-# Users must bypass with: xattr -cr "RWM Puppet Master.app"
+# Users must bypass with: xattr -cr "Puppet Master.app"
 # For production, add code signing:
 #   codesign --deep --force --sign "Developer ID Application: Your Name" "${BUNDLE_DIR}"
 #   xcrun notarytool submit "${DMG_NAME}" --wait --apple-id "you@example.com" --team-id "TEAMID"
@@ -13,9 +13,9 @@ BASE_VERSION="${1:-0.1.1}"
 BUILD_ID="${PM_BUILD_ID:-$(date -u +%Y%m%d%H%M%S)}"
 BUILD_UTC="${PM_BUILD_UTC:-${BUILD_ID}}"
 VERSION="${BASE_VERSION}+b${BUILD_ID}"
-APP_NAME="RWM Puppet Master"
-BUNDLE_NAME="RWM Puppet Master.app"
-DMG_NAME="RWM-Puppet-Master-${VERSION}.dmg"
+APP_NAME="Puppet Master"
+BUNDLE_NAME="Puppet Master.app"
+DMG_NAME="Puppet-Master-${VERSION}.dmg"
 UNIVERSAL="${PM_MAC_UNIVERSAL:-1}"
 
 # Build the release binary (universal or arm64-only)
@@ -109,7 +109,7 @@ echo "Signing DMG..."
 codesign --force --sign - "${DMG_NAME}"
 
 # CI/workflow compatibility: also emit a stable filename without build metadata.
-COMPAT_DMG="RWM-Puppet-Master-${BASE_VERSION}.dmg"
+COMPAT_DMG="Puppet-Master-${BASE_VERSION}.dmg"
 if [ "${DMG_NAME}" != "${COMPAT_DMG}" ]; then
     cp "${DMG_NAME}" "${COMPAT_DMG}"
 fi

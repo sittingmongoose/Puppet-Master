@@ -101,7 +101,7 @@ pub async fn install_copilot_app_local() -> InstallOutcome {
 #[allow(dead_code)]
 async fn fetch_latest_release(log_lines: &mut Vec<String>) -> Result<serde_json::Value, String> {
     let client = reqwest::Client::builder()
-        .user_agent("rwm-puppet-master/1.0")
+        .user_agent("puppet-master/1.0")
         .build()
         .map_err(|e| format!("Failed to build HTTP client: {e}"))?;
 
@@ -183,7 +183,7 @@ fn current_asset_name() -> &'static str {
 #[allow(dead_code)]
 async fn download_bytes(url: &str, log_lines: &mut Vec<String>) -> Result<Vec<u8>, String> {
     let client = reqwest::Client::builder()
-        .user_agent("rwm-puppet-master/1.0")
+        .user_agent("puppet-master/1.0")
         .build()
         .map_err(|e| format!("HTTP client build error: {e}"))?;
 

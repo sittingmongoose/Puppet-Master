@@ -134,7 +134,7 @@
     ],
     "acceptance_checks": [
       "echo \"Manual review: confirm no legacy nonexistent-binary sentinel in the listed files\"",
-      "grep '__pm_nonexistent_binary_42__' puppet-master-rs/src/doctor/checks/sdk_checks.rs puppet-master-rs/src/platforms/path_utils.rs puppet-master-rs/src/install/script_installer.rs",
+      "grep '__pm_nonexistent_binary_42__' puppet-master-rs/src/platforms/path_utils.rs puppet-master-rs/src/install/script_installer.rs",
       "cd puppet-master-rs && cargo check && cargo test"
     ],
     "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]

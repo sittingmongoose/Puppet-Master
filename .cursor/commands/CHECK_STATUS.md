@@ -72,7 +72,7 @@
 - **Purpose:** Replicate GitHub Action “Build installers” via SSH to Linux, macOS, Windows (GitHub Action experiencing outage).
 - **Output:** [SSH_BUILD_2026-02-03.md](../../SSH_BUILD_2026-02-03.md)
 - **Results:**
-  - **Linux** (sittingmongoose@192.168.50.72): **PASS** – `dist/installers/linux-x64/rwm-puppet-master-0.1.0-linux-x64.deb`, `rwm-puppet-master-0.1.0-linux-x64.rpm`. Tauri deps installed via `SUDO_PASS_LINUX`; cleanup `.test-cache`/`.test-quota` in remote script.
+  - **Linux** (sittingmongoose@192.168.50.72): **PASS** – Linux installer artifacts created (.deb + .rpm). Tauri deps installed via `SUDO_PASS_LINUX`; cleanup `.test-cache`/`.test-quota` in remote script.
   - **Windows** (sitti@192.168.50.253): **PASS** (after fixes) – NSIS installer builds; Tauri binary and custom NSIS step succeed. Fixes: `tauri::Error::Setup` → `tauri::Error::Io` (SetupError not public); `scripts/build-installer.ts` quote `MAKENSIS_PATH` when path contains spaces. **2026-02-03:** Windows installer crash-after-Install fixed: better_sqlite3 embedded in main File (no CopyFiles from STAGE_DIR); wmic replaced with PowerShell; npm rebuild made non-fatal. See installerissues.md fix #19.
   - **macOS** (jaredsmacbookair@192.168.50.115): **FAIL** – `npm ci` fails with EACCES on `~/.npm/_cacache` (permission denied). Rust installed successfully; Node/npm in PATH. Host fix: fix npm cache dir permissions or run `npm cache clean --force` and ensure write access to `~/.npm`.
 - **Cleanup:** `.test-cache` and `.test-quota` removed in remote build scripts on each host; none present in workspace. After Windows installer fix (2026-02-03): confirmed removed when done (none present).
@@ -89,9 +89,9 @@
 ## VM uninstall (2026-02-01, run again)
 
 - **Linux VM** `sittingmongoose@192.168.50.72`: Puppet Master uninstalled without touching the project folder (same steps repeated on request).
-  - Removed **.deb package** `rwm-puppet-master` (system install under `/opt/puppet-master`, `/usr/bin/puppet-master`, `/usr/bin/puppet-master-gui`, systemd service, `/usr/share/applications/com.rwm.puppet-master.desktop`).
-  - Removed **dev desktop entry** `~/.local/share/applications/com.rwm.puppet-master-dev.desktop`.
-  - **Project folder** `/home/sittingmongoose/Cursor/RWM Puppet Master/` on the VM was **not modified**.
+  - Removed **.deb package** `puppet-master` (system install under `/opt/puppet-master`, `/usr/bin/puppet-master`, `/usr/bin/puppet-master-gui`, systemd service, and the app desktop entry).
+  - Removed **dev desktop entry** under `~/.local/share/applications/`.
+  - **Project folder** `<repo-root>/` on the VM was **not modified**.
 - **Check cleanup:** `.test-cache` and `.test-quota` removed when done (none were present).
 
 ## CI
@@ -106,7 +106,7 @@
    - `resolveTauriGuiBinary()` in `src/cli/commands/gui.ts` now looks for the Tauri binary in the project when there is no install root: `src-tauri/target/release/puppet-master` (Linux) or `puppet-master.exe` (Windows). Running `node dist/cli/index.js gui` from the repo will open the Tauri window when the binary exists.
 
 2. **Project launcher**
-   - Added `run-puppet-master-gui.sh` in the project root. Run `./run-puppet-master-gui.sh` to start the GUI (server + open browser or Tauri). Run `./run-puppet-master-gui.sh --install-desktop` to add “Puppet Master” to the application menu (uses `~/.local/share/applications/com.rwm.puppet-master-dev.desktop`).
+   - Added `run-puppet-master-gui.sh` in the project root. Run `./run-puppet-master-gui.sh` to start the GUI (server + open browser or Tauri). Run `./run-puppet-master-gui.sh --install-desktop` to add “Puppet Master” to the application menu (uses a desktop entry under `~/.local/share/applications/`).
 
 3. **Desktop entry**
    - Desktop entry installed so “Puppet Master” appears in the app menu and runs the project launcher (no system install required).

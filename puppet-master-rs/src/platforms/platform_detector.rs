@@ -611,7 +611,7 @@ mod tests {
     #[tokio::test]
     async fn test_copilot_custom_gh_path_not_treated_as_copilot() {
         let temp_file = std::env::temp_dir().join(format!(
-            "rwm-pm-test-gh-{}-{}",
+            "pm-test-gh-{}-{}",
             std::process::id(),
             chrono::Utc::now().timestamp_nanos_opt().unwrap_or_default()
         ));

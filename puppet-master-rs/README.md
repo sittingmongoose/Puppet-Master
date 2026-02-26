@@ -1,6 +1,6 @@
 # Puppet Master (Rust)
 
-Rust implementation of the RWM Puppet Master orchestrator with an Iced GUI.
+Rust implementation of the Puppet Master orchestrator with an Iced GUI.
 
 ## Building
 

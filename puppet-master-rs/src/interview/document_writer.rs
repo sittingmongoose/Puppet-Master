@@ -24,7 +24,7 @@ pub struct CompletedPhase {
     pub document_path: PathBuf,
 }
 
-/// Structured JSON output compatible with the Ralph loop.
+/// Structured JSON output compatible with the Puppet Master pipeline.
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 struct JsonOutput {
@@ -181,7 +181,7 @@ impl DocumentWriter {
     }
 
     // DRY:FN:write_json_output
-    /// Writes a structured JSON output file compatible with the Ralph loop.
+    /// Writes a structured JSON output file compatible with the Puppet Master pipeline.
     pub fn write_json_output(
         all_phases: &[CompletedPhase],
         project_name: &str,

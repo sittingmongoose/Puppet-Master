@@ -57,7 +57,7 @@ pub fn view<'a>(
         .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center);
     content = content.push(page_header(
-        "Welcome to RWM Puppet Master",
+        "Welcome to Puppet Master",
         theme,
         header_actions,
         size,

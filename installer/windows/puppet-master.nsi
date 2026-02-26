@@ -1,4 +1,4 @@
-; RWM Puppet Master Windows Installer
+; Puppet Master Windows Installer
 ; Installs to Program Files, creates shortcuts, adds to PATH, and registers in Add/Remove Programs
 !include "MUI2.nsh"
 !include "LogicLib.nsh"
@@ -11,27 +11,27 @@
 !define DISPLAY_VERSION "${VERSION}"
 !endif
 
-Name "RWM Puppet Master"
-OutFile "RWM-Puppet-Master-${VERSION}-setup.exe"
-InstallDir "$PROGRAMFILES64\RWM Puppet Master"
+Name "Puppet Master"
+OutFile "Puppet-Master-${VERSION}-setup.exe"
+InstallDir "$PROGRAMFILES64\Puppet Master"
 RequestExecutionLevel admin
 
 ; Version info
 VIProductVersion "${VERSION}.0"
-VIAddVersionKey "ProductName" "RWM Puppet Master"
-VIAddVersionKey "FileDescription" "RWM Puppet Master Installer"
+VIAddVersionKey "ProductName" "Puppet Master"
+VIAddVersionKey "FileDescription" "Puppet Master Installer"
 VIAddVersionKey "ProductVersion" "${DISPLAY_VERSION}"
-VIAddVersionKey "CompanyName" "RWM"
+VIAddVersionKey "CompanyName" "Puppet Master"
 
 ; MUI Settings (icon from shared installer assets)
 !define MUI_ICON "..\assets\puppet-master.ico"
 !define MUI_UNICON "..\assets\puppet-master.ico"
 
 ; Finish page options
-!define MUI_FINISHPAGE_TITLE "RWM Puppet Master Installation Complete!"
-!define MUI_FINISHPAGE_TEXT "RWM Puppet Master has been installed successfully.$\r$\n$\r$\nThe application is now available in your Start Menu and Desktop.$\r$\n$\r$\nNote: The installation directory has been added to your system PATH."
+!define MUI_FINISHPAGE_TITLE "Puppet Master Installation Complete!"
+!define MUI_FINISHPAGE_TEXT "Puppet Master has been installed successfully.$\r$\n$\r$\nThe application is now available in your Start Menu and Desktop.$\r$\n$\r$\nNote: The installation directory has been added to your system PATH."
 !define MUI_FINISHPAGE_RUN "$INSTDIR\puppet-master.exe"
-!define MUI_FINISHPAGE_RUN_TEXT "Launch RWM Puppet Master now"
+!define MUI_FINISHPAGE_RUN_TEXT "Launch Puppet Master now"
 
 ; Pages
 !insertmacro MUI_PAGE_WELCOME
@@ -62,24 +62,24 @@ Section "Install"
     ${EndIf}
     
     ; Create desktop shortcut
-    CreateShortcut "$DESKTOP\RWM Puppet Master.lnk" "$INSTDIR\puppet-master.exe" "" "$INSTDIR\puppet-master.exe" 0
+    CreateShortcut "$DESKTOP\Puppet Master.lnk" "$INSTDIR\puppet-master.exe" "" "$INSTDIR\puppet-master.exe" 0
     
     ; Create start menu folder and shortcuts
-    CreateDirectory "$SMPROGRAMS\RWM Puppet Master"
-    CreateShortcut "$SMPROGRAMS\RWM Puppet Master\RWM Puppet Master.lnk" "$INSTDIR\puppet-master.exe" "" "$INSTDIR\puppet-master.exe" 0
-    CreateShortcut "$SMPROGRAMS\RWM Puppet Master\Uninstall.lnk" "$INSTDIR\uninstall.exe"
+    CreateDirectory "$SMPROGRAMS\Puppet Master"
+    CreateShortcut "$SMPROGRAMS\Puppet Master\Puppet Master.lnk" "$INSTDIR\puppet-master.exe" "" "$INSTDIR\puppet-master.exe" 0
+    CreateShortcut "$SMPROGRAMS\Puppet Master\Uninstall.lnk" "$INSTDIR\uninstall.exe"
     
     ; Write uninstaller
     WriteUninstaller "$INSTDIR\uninstall.exe"
     
     ; Registry for Add/Remove Programs
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster" "DisplayName" "RWM Puppet Master"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster" "UninstallString" '"$INSTDIR\uninstall.exe"'
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster" "DisplayIcon" "$INSTDIR\puppet-master.exe"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster" "DisplayVersion" "${DISPLAY_VERSION}"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster" "Publisher" "RWM"
-    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster" "NoModify" 1
-    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster" "NoRepair" 1
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PuppetMaster" "DisplayName" "Puppet Master"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PuppetMaster" "UninstallString" '"$INSTDIR\uninstall.exe"'
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PuppetMaster" "DisplayIcon" "$INSTDIR\puppet-master.exe"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PuppetMaster" "DisplayVersion" "${DISPLAY_VERSION}"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PuppetMaster" "Publisher" "Puppet Master"
+    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PuppetMaster" "NoModify" 1
+    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PuppetMaster" "NoRepair" 1
     
     ; Add install directory to system PATH
     DetailPrint "Adding to system PATH..."
@@ -124,14 +124,14 @@ Section "Uninstall"
     Delete "$INSTDIR\uninstall.exe"
     
     ; Remove shortcuts
-    Delete "$DESKTOP\RWM Puppet Master.lnk"
-    RMDir /r "$SMPROGRAMS\RWM Puppet Master"
+    Delete "$DESKTOP\Puppet Master.lnk"
+    RMDir /r "$SMPROGRAMS\Puppet Master"
     
     ; Remove installation directory
     RMDir "$INSTDIR"
     
     ; Remove registry entries
-    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster"
+    DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\PuppetMaster"
     
     ; Note: Intentionally NOT removing from PATH to avoid breaking user scripts
     ; Users can manually remove from PATH if desired

@@ -1,4 +1,4 @@
-//! Verification subsystem for RWM Puppet Master
+//! Verification subsystem for Puppet Master
 //!
 //! This module provides verification capabilities including:
 //! - Gate execution and reporting

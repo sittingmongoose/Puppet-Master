@@ -1,4 +1,4 @@
-# RWM Puppet Master Installers
+# Puppet Master Installers
 
 This directory contains installer configuration and build scripts for all platforms.
 
@@ -48,7 +48,7 @@ cd ../installer/windows
 makensis /DVERSION=0.1.1 /DDISPLAY_VERSION=0.1.1+b20260216010101 puppet-master.nsi
 ```
 
-Output: `RWM-Puppet-Master-0.1.1-setup.exe` (Windows Add/Remove Programs shows `DisplayVersion`)
+Output: `Puppet-Master-0.1.1-setup.exe` (Windows Add/Remove Programs shows `DisplayVersion`)
 
 ### macOS DMG
 
@@ -57,7 +57,7 @@ cd installer/macos
 PM_BUILD_ID=20260216010101 PM_BUILD_UTC=20260216010101 ./build-dmg.sh 0.1.1
 ```
 
-Output: `RWM-Puppet-Master-0.1.1+b20260216010101.dmg` (Universal binary for Intel + Apple Silicon)
+Output: `Puppet-Master-0.1.1+b20260216010101.dmg` (Universal binary for Intel + Apple Silicon)
 
 ### Linux Packages
 
@@ -85,8 +85,8 @@ The Linux installer packages a release binary built from `puppet-master-rs` (gli
 ### Windows
 1. Download and run the `.exe` installer
 2. Follow the installation wizard
-3. The app will be installed to `C:\Program Files\RWM Puppet Master`
-4. Data and logs are stored in `%LOCALAPPDATA%\RWM Puppet Master` (user-writable location)
+3. The app will be installed to `C:\Program Files\Puppet Master`
+4. Data and logs are stored in `%LOCALAPPDATA%\Puppet Master` (user-writable location)
 5. Launch from Start Menu or Desktop shortcut
 6. Uninstall via Control Panel → Programs and Features
 
@@ -97,11 +97,11 @@ The Linux installer packages a release binary built from `puppet-master-rs` (gli
 **Security Notice**
 
 This app is **ad-hoc code signed** to prevent "damaged app" errors. On first launch, you'll see:
-- "RWM Puppet Master cannot be opened because the developer cannot be verified"
+- "Puppet Master cannot be opened because the developer cannot be verified"
 
 **To install:**
 1. Download and open the `.dmg` file
-2. Drag "RWM Puppet Master.app" to Applications folder
+2. Drag "Puppet Master.app" to Applications folder
 3. **First launch**: Right-click (or Control+click) on the app → Select "Open"
 4. Click "Open" in the security dialog
 5. Future launches: Double-click normally (no special steps needed)
@@ -146,9 +146,9 @@ dpkg-deb --contents installer/linux/puppet-master_0.1.1_amd64.deb
 
 ## Project Info
 
-- **Name:** RWM Puppet Master
+- **Name:** Puppet Master
 - **Versioning:** base SemVer from `Cargo.toml` + per-build metadata (`PM_BUILD_ID`, `PM_BUILD_UTC`, git SHA)
-- **Identifier:** com.rwm.puppet-master
+- **Identifier:** com.puppetmaster.puppet-master
 - **Description:** AI-assisted development orchestrator
 - **License:** MIT
 - **Rust Edition:** 2024

@@ -75,7 +75,7 @@ pub fn is_directory_writable(path: &Path) -> bool {
         .duration_since(std::time::UNIX_EPOCH)
         .map(|d| d.as_nanos())
         .unwrap_or(0);
-    let probe_path = path.join(format!(".rwm-write-probe-{}-{}", std::process::id(), nanos));
+    let probe_path = path.join(format!("pm-write-probe-{}-{}", std::process::id(), nanos));
 
     match std::fs::OpenOptions::new()
         .write(true)
@@ -114,7 +114,7 @@ pub fn resolve_writable_state_root(start: &Path) -> PathBuf {
         return derived;
     }
 
-    if let Some(project_dirs) = directories::ProjectDirs::from("com", "RWM", "Puppet Master") {
+    if let Some(project_dirs) = directories::ProjectDirs::from("com", "puppetmaster", "Puppet Master") {
         let app_data_root = project_dirs.data_local_dir().to_path_buf();
         if std::fs::create_dir_all(&app_data_root).is_ok() && is_directory_writable(&app_data_root)
         {

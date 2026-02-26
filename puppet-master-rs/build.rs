@@ -38,20 +38,20 @@ fn main() {
 
     let semver_with_build = compose_semver_with_metadata(&base_version, &metadata);
 
-    println!("cargo:rustc-env=RWM_BUILD_SEMVER={semver_with_build}");
-    println!("cargo:rustc-env=RWM_BUILD_GIT_SHA={git_sha}");
+    println!("cargo:rustc-env=PM_BUILD_SEMVER={semver_with_build}");
+    println!("cargo:rustc-env=PM_BUILD_GIT_SHA={git_sha}");
     println!(
-        "cargo:rustc-env=RWM_BUILD_GIT_DIRTY={}",
+        "cargo:rustc-env=PM_BUILD_GIT_DIRTY={}",
         if git_dirty { "true" } else { "false" }
     );
-    println!("cargo:rustc-env=RWM_BUILD_PROFILE={profile}");
-    println!("cargo:rustc-env=RWM_BUILD_TARGET={target}");
+    println!("cargo:rustc-env=PM_BUILD_PROFILE={profile}");
+    println!("cargo:rustc-env=PM_BUILD_TARGET={target}");
     println!(
-        "cargo:rustc-env=RWM_BUILD_ID={}",
+        "cargo:rustc-env=PM_BUILD_ID={}",
         sanitize_identifier(&build_id)
     );
     println!(
-        "cargo:rustc-env=RWM_BUILD_UTC={}",
+        "cargo:rustc-env=PM_BUILD_UTC={}",
         sanitize_identifier(&build_utc)
     );
 

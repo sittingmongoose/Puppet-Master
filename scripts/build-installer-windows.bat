@@ -40,7 +40,7 @@ makensis /DVERSION="%VERSION%" /DTARGET_DIR="%TARGET_DIR%" puppet-master.nsi
 if errorlevel 1 exit /b 1
 
 if not exist ..\..\dist\installers\win32-x64 mkdir ..\..\dist\installers\win32-x64
-copy /Y "RWM-Puppet-Master-%VERSION%-setup.exe" "..\..\dist\installers\win32-x64\" >nul
+copy /Y "Puppet-Master-%VERSION%-setup.exe" "..\..\dist\installers\win32-x64\" >nul
 
-echo [OK] Created dist\installers\win32-x64\RWM-Puppet-Master-%VERSION%-setup.exe
+echo [OK] Created dist\installers\win32-x64\Puppet-Master-%VERSION%-setup.exe
 endlocal

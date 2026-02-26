@@ -1,4 +1,4 @@
-//! Platform runner modules for RWM Puppet Master
+//! Platform runner modules for Puppet Master
 //!
 //! This module provides the infrastructure for executing tasks on various AI platforms,
 //! including Cursor, Codex, Claude Code, Gemini, and GitHub Copilot.

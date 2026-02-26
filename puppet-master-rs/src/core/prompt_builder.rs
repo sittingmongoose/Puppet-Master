@@ -72,7 +72,7 @@ impl PromptBuilder {
 
         // Header
         prompt.push_str(&format!(
-            "# RWM Puppet Master - Iteration {}\n\n",
+            "# Puppet Master - Iteration {}\n\n",
             iteration
         ));
 
@@ -151,8 +151,8 @@ impl PromptBuilder {
         prompt.push_str("1. Review the current task, acceptance criteria, and context above\n");
         prompt.push_str("2. Complete the work according to the requirements\n");
         prompt.push_str("3. Follow the agent guidelines and best practices\n");
-        prompt.push_str("4. When complete, signal completion with: `<ralph>COMPLETE</ralph>`\n");
-        prompt.push_str("5. If you are stuck/blocked, signal with: `<ralph>GUTTER</ralph>`\n");
+        prompt.push_str("4. When complete, signal completion with: `<pm>COMPLETE</pm>`\n");
+        prompt.push_str("5. If you are stuck/blocked, signal with: `<pm>GUTTER</pm>`\n");
         prompt.push_str("6. After significant work, provide learnings in this format:\n\n");
         prompt.push_str("```agents-update\n");
         prompt.push_str("PATTERN: <successful pattern discovered>\n");
@@ -199,7 +199,7 @@ impl PromptBuilder {
 
         prompt.push_str("## Instructions\n\n");
         prompt.push_str(
-            "Complete the task above and signal completion with: `<ralph>COMPLETE</ralph>`\n",
+            "Complete the task above and signal completion with: `<pm>COMPLETE</pm>`\n",
         );
 
         prompt
@@ -418,7 +418,7 @@ mod tests {
         assert!(prompt.contains("Test Task"));
         assert!(prompt.contains("This is a test task"));
         assert!(prompt.contains("Must pass tests"));
-        assert!(prompt.contains("<ralph>COMPLETE</ralph>"));
+        assert!(prompt.contains("<pm>COMPLETE</pm>"));
     }
 
     #[test]

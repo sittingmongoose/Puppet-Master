@@ -161,7 +161,7 @@ fn default_base_branch() -> String {
 }
 
 fn default_naming_pattern() -> String {
-    "rwm/{tier}/{id}".to_string()
+    "pm/{tier}/{id}".to_string()
 }
 
 fn default_granularity() -> String {

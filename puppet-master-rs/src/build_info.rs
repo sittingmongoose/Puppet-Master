@@ -3,7 +3,7 @@
 //! Provides a single access point for SemVer + build metadata emitted by `build.rs`.
 
 // DRY:DATA:build_info
-const APP_DISPLAY_NAME: &str = "RWM Puppet Master";
+const APP_DISPLAY_NAME: &str = "Puppet Master";
 const DEFAULT_GIT_SHA: &str = "nogit";
 const DEFAULT_PROFILE: &str = "unknown";
 const DEFAULT_TARGET: &str = "unknown-target";
@@ -12,37 +12,37 @@ const DEFAULT_BUILD_UTC: &str = "unknown";
 
 // DRY:FN:semver_with_build_metadata
 pub fn semver_with_build_metadata() -> &'static str {
-    option_env!("RWM_BUILD_SEMVER").unwrap_or(env!("CARGO_PKG_VERSION"))
+    option_env!("PM_BUILD_SEMVER").unwrap_or(env!("CARGO_PKG_VERSION"))
 }
 
 // DRY:FN:build_profile
 pub fn build_profile() -> &'static str {
-    option_env!("RWM_BUILD_PROFILE").unwrap_or(DEFAULT_PROFILE)
+    option_env!("PM_BUILD_PROFILE").unwrap_or(DEFAULT_PROFILE)
 }
 
 // DRY:FN:build_target
 pub fn build_target() -> &'static str {
-    option_env!("RWM_BUILD_TARGET").unwrap_or(DEFAULT_TARGET)
+    option_env!("PM_BUILD_TARGET").unwrap_or(DEFAULT_TARGET)
 }
 
 // DRY:FN:git_sha
 pub fn git_sha() -> &'static str {
-    option_env!("RWM_BUILD_GIT_SHA").unwrap_or(DEFAULT_GIT_SHA)
+    option_env!("PM_BUILD_GIT_SHA").unwrap_or(DEFAULT_GIT_SHA)
 }
 
 // DRY:FN:build_id
 pub fn build_id() -> &'static str {
-    option_env!("RWM_BUILD_ID").unwrap_or(DEFAULT_BUILD_ID)
+    option_env!("PM_BUILD_ID").unwrap_or(DEFAULT_BUILD_ID)
 }
 
 // DRY:FN:build_utc
 pub fn build_utc() -> &'static str {
-    option_env!("RWM_BUILD_UTC").unwrap_or(DEFAULT_BUILD_UTC)
+    option_env!("PM_BUILD_UTC").unwrap_or(DEFAULT_BUILD_UTC)
 }
 
 // DRY:FN:git_dirty
 pub fn git_dirty() -> bool {
-    matches!(option_env!("RWM_BUILD_GIT_DIRTY"), Some("true"))
+    matches!(option_env!("PM_BUILD_GIT_DIRTY"), Some("true"))
 }
 
 // DRY:FN:git_sha_short
@@ -137,13 +137,13 @@ mod tests {
     #[test]
     fn format_build_identity_includes_semver_and_details() {
         let identity = format_build_identity(
-            "RWM Puppet Master",
+            "Puppet Master",
             "0.1.1+gabc123.debug.x86_64-unknown-linux-gnu",
             "build 1700000000 @ 1700000000 | commit abc123def456 | debug | x86_64-unknown-linux-gnu",
         );
         assert_eq!(
             identity,
-            "RWM Puppet Master 0.1.1+gabc123.debug.x86_64-unknown-linux-gnu (build 1700000000 @ 1700000000 | commit abc123def456 | debug | x86_64-unknown-linux-gnu)"
+            "Puppet Master 0.1.1+gabc123.debug.x86_64-unknown-linux-gnu (build 1700000000 @ 1700000000 | commit abc123def456 | debug | x86_64-unknown-linux-gnu)"
         );
     }
 

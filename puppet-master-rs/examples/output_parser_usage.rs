@@ -216,7 +216,7 @@ async fn example_detect_platforms() {
 
 /// Example: Complete workflow - detect, auth, monitor, parse
 async fn example_complete_workflow() {
-    println!("RWM Puppet Master - Platform Integration Workflow");
+    println!("Puppet Master - Platform Integration Workflow");
     println!("==================================================\n");
 
     // Step 1: Detect installed platforms
@@ -246,7 +246,7 @@ async fn example_complete_workflow() {
         println!("Step 5: Executing on platform {}...", platform);
 
         // Simulate execution output
-        let stdout = "<ralph>COMPLETE</ralph>\nModified: src/main.rs";
+        let stdout = "<pm>COMPLETE</pm>\nModified: src/main.rs";
         let stderr = "";
 
         // Step 6: Parse output

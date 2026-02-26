@@ -1,4 +1,4 @@
-# RWM Puppet Master Icons
+# Puppet Master Icons
 
 This directory contains the application logo used for the system tray and for installed app icons on Linux, Windows, and macOS.
 

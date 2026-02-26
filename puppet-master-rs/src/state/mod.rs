@@ -1,7 +1,7 @@
 //! State management modules
 //!
 //! This module provides state persistence, session tracking, and data management
-//! for the RWM Puppet Master orchestrator.
+//! for the Puppet Master orchestrator.
 
 pub mod agents_archive;
 pub mod agents_gate_enforcer;

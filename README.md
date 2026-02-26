@@ -1,6 +1,6 @@
 # Puppet Master
 
-A Rust/Iced desktop orchestrator that coordinates multiple AI coding CLI platforms using the Ralph Wiggum Method.
+A Rust/Iced desktop orchestrator that coordinates multiple AI coding CLI platforms using a four-tier workflow system.
 
 ---
 

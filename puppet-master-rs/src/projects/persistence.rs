@@ -69,9 +69,9 @@ impl ProjectsPersistence {
     /// Create a new projects persistence manager
     ///
     /// Uses the app data directory structure:
-    /// - Windows: %LOCALAPPDATA%\RWM Puppet Master\.puppet-master\projects.json
-    /// - Linux: ~/.local/share/RWM Puppet Master/.puppet-master/projects.json (or current dir)
-    /// - macOS: ~/Library/Application Support/RWM Puppet Master/.puppet-master/projects.json
+    /// - Windows: %LOCALAPPDATA%\puppetmaster\Puppet Master\.puppet-master\projects.json
+    /// - Linux: ~/.local/share/puppetmaster/.puppet-master/projects.json (or current dir)
+    /// - macOS: ~/Library/Application Support/com.puppetmaster.Puppet Master/.puppet-master/projects.json
     pub fn new() -> Result<Self> {
         let storage_dir = Self::get_app_data_dir()?;
         let puppet_master_dir = storage_dir.join(".puppet-master");
@@ -88,11 +88,11 @@ impl ProjectsPersistence {
     /// Get the app data directory based on platform
     fn get_app_data_dir() -> Result<PathBuf> {
         if cfg!(windows) {
-            // Windows: Use %LOCALAPPDATA%\RWM Puppet Master
-            if let Some(proj_dirs) = directories::ProjectDirs::from("com", "RWM", "Puppet Master") {
+            // Windows: Use %LOCALAPPDATA%\puppetmaster\Puppet Master (ProjectDirs)
+            if let Some(proj_dirs) = directories::ProjectDirs::from("com", "puppetmaster", "Puppet Master") {
                 Ok(proj_dirs.data_local_dir().to_path_buf())
             } else if let Some(base_dirs) = directories::BaseDirs::new() {
-                Ok(base_dirs.data_local_dir().join("RWM Puppet Master"))
+                Ok(base_dirs.data_local_dir().join("Puppet Master"))
             } else {
                 anyhow::bail!("Failed to determine app data directory on Windows")
             }
@@ -101,11 +101,11 @@ impl ProjectsPersistence {
             if let Ok(exe_path) = std::env::current_exe() {
                 if exe_path.starts_with("/usr/bin") || exe_path.starts_with("/usr/local/bin") {
                     if let Some(proj_dirs) =
-                        directories::ProjectDirs::from("com", "RWM", "Puppet Master")
+                        directories::ProjectDirs::from("com", "puppetmaster", "Puppet Master")
                     {
                         return Ok(proj_dirs.data_local_dir().to_path_buf());
                     } else if let Some(base_dirs) = directories::BaseDirs::new() {
-                        return Ok(base_dirs.data_local_dir().join("RWM Puppet Master"));
+                        return Ok(base_dirs.data_local_dir().join("Puppet Master"));
                     }
                 }
             }
@@ -113,10 +113,10 @@ impl ProjectsPersistence {
             Ok(std::env::current_dir()?)
         } else if cfg!(target_os = "macos") {
             // macOS: Use Application Support directory
-            if let Some(proj_dirs) = directories::ProjectDirs::from("com", "RWM", "Puppet Master") {
+            if let Some(proj_dirs) = directories::ProjectDirs::from("com", "puppetmaster", "Puppet Master") {
                 Ok(proj_dirs.data_dir().to_path_buf())
             } else if let Some(base_dirs) = directories::BaseDirs::new() {
-                Ok(base_dirs.data_dir().join("RWM Puppet Master"))
+                Ok(base_dirs.data_dir().join("Puppet Master"))
             } else {
                 anyhow::bail!("Failed to determine app data directory on macOS")
             }

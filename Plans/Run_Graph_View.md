@@ -46,11 +46,12 @@ REFERENCE IMAGES:
 11. [Performance Requirements](#11-performance)
 12. [Real-Time Update Strategy](#12-update-strategy)
 13. [Theme Integration](#13-theme-integration)
-14. [Accessibility](#14-accessibility)
-15. [Persistence](#15-persistence)
-16. [UICommand IDs](#16-uicommand-ids)
-17. [Acceptance Criteria](#17-acceptance-criteria)
-18. [References](#18-references)
+14. [Slint Implementation Guide](#14-slint-implementation)
+15. [Accessibility](#15-accessibility)
+16. [Persistence](#16-persistence)
+17. [UICommand IDs](#17-uicommand-ids)
+18. [Acceptance Criteria](#18-acceptance-criteria)
+19. [References](#19-references)
 
 ---
 
@@ -153,8 +154,8 @@ Badges appear as small indicators on the node rectangle when the relevant data e
 |-------|-----------|---------|
 | Attempt count | `attempts > 1` | Small circle with number (e.g., "3") at top-right |
 | Duration | `elapsed_ms` available | "1m 23s" text below status |
-| HITL waiting | `hitl_pending == true` | Pulsing orange dot at top-left |
-| Blocked | `blocked_reason` is set | Red lock icon at top-left |
+| HITL waiting | `hitl_pending == true` | Pulsing dot at top-left, colored `Theme.graph-running` |
+| Blocked | `blocked_reason` is set | Lock icon at top-left, colored `Theme.graph-failed` |
 
 ### 4.3 Edge Rendering
 
@@ -190,17 +191,22 @@ Dependency edges are drawn as lines/arrows from dependency node to dependent nod
 
 ### 5.1 Columns
 
-| Column | Source Field | Sortable | Default Sort |
-|--------|------------|----------|-------------|
-| Name | `id` + `title` | Yes | -- |
-| Type | `tier_type` (Phase/Task/Subtask) | Yes | -- |
-| State | `state` (color-coded badge) | Yes | Primary (by state priority) |
-| Start | `start_ts` (formatted) | Yes | -- |
-| End | `end_ts` (formatted, or "--") | Yes | -- |
-| Duration | `elapsed_ms` (formatted) | Yes | -- |
-| Tries | `attempts` | Yes | -- |
-| Verification | `verifier_state` (badge) | Yes | -- |
-| Blocked | `blocked_reason` (truncated) | Yes | -- |
+| Column | Source Field | Sortable | Default Sort | Default Visible |
+|--------|------------|----------|-------------|-----------------|
+| Name | `id` + `title` | Yes | -- | Yes |
+| Type | `tier_type` (Phase/Task/Subtask) | Yes | -- | Yes |
+| State | `state` (color-coded badge) | Yes | Primary (by state priority) | Yes |
+| Start | `start_ts` (formatted) | Yes | -- | Yes |
+| End | `end_ts` (formatted, or "--") | Yes | -- | Yes |
+| Duration | `elapsed_ms` (formatted) | Yes | -- | Yes |
+| Tries | `attempts` | Yes | -- | Yes |
+| Verification | `verifier_state` (badge) | Yes | -- | Yes |
+| V. Start | `verifier_start_ts` (formatted) | Yes | -- | No (expandable) |
+| V. End | `verifier_end_ts` (formatted, or "--") | Yes | -- | No (expandable) |
+| V. Duration | `verifier_elapsed_ms` (formatted) | Yes | -- | No (expandable) |
+| Blocked | `blocked_reason` (truncated) | Yes | -- | Yes |
+
+**State sort priority** (highest to lowest): Failed > Escalated > Retrying > Running > Gating > Planning > Pending > Reopened > Skipped > Passed. On ties within the same state, sort by `start_ts` ascending (oldest first). For disconnected-state ties, sort by `node.id` lexicographically.
 
 ### 5.2 Filtering
 
@@ -251,9 +257,9 @@ Shows where this node maps to the human-readable plan (plan.md):
 
 | Field | Source | Behavior |
 |-------|--------|----------|
-| Breadcrumb | `GraphNode.plan_mapping.breadcrumb` | E.g., "Phase 1 > Task 2 > Subtask 3" |
-| Section heading | `GraphNode.plan_mapping.section_anchor` | Plan section title |
-| Excerpt | `GraphNode.plan_mapping.excerpt` | 1-3 lines of plan text (read-only) |
+| Breadcrumb | `GraphNode.plan_mapping.plan_breadcrumb` | E.g., "Phase 1 > Task 2 > Subtask 3" |
+| Section heading | `GraphNode.plan_mapping.plan_section_anchor` | Plan section title |
+| Excerpt | `GraphNode.plan_mapping.plan_excerpt` | 1-3 lines of plan text (read-only) |
 | "Open plan at section" | Action button | Navigate to plan view or open plan artifact in File Editor, scrolled to the relevant section |
 | "Copy plan reference" | Action button | Copy breadcrumb + anchor to clipboard |
 
@@ -274,7 +280,7 @@ Live stream of what the worker agent is doing for this node:
 | Files changed | List of files modified by this node's worker | Each entry: file path, +N -M counts. Click to open diff in File Editor. |
 | Evidence produced | Links to evidence artifacts | Each entry: evidence type, description. Click to open in Evidence view. |
 
-Data source: `PuppetMasterEvent::Output` (filtered by tier_id), `PuppetMasterEvent::EvidenceStored`, tool call events from the worker's session.
+Data source: `PuppetMasterEvent::Output` (filtered by tier_id), `PuppetMasterEvent::EvidenceStored`, tool call events from the worker's session. **Backend requirement**: `Output` events MUST carry a `tier_id` field to enable per-node filtering; if the current event schema lacks this field, it must be added before this view can be implemented.
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md
 
@@ -409,10 +415,14 @@ pub struct GraphNode {
     pub evidence_refs: Vec<String>,
     pub event_refs: Vec<String>,
     pub worker_activity_refs: Vec<String>,
+    pub worker_identity: Option<String>,
+    pub worker_provider: Option<String>,
     pub worker_model: Option<String>,
     pub worker_reasoning_effort: Option<String>,
     pub worker_tokens: TokenUsage,
     pub verifier_state: Option<VerificationState>,
+    pub verifier_identity: Option<String>,
+    pub verifier_provider: Option<String>,
     pub verifier_model: Option<String>,
     pub verifier_start_ts: Option<DateTime<Utc>>,
     pub verifier_end_ts: Option<DateTime<Utc>>,
@@ -429,6 +439,10 @@ pub struct GraphNode {
 
 ```rust
 /// Token usage for a single agent (worker or verifier).
+/// Projected from UsageRecord entries (Plans/usage-feature.md) correlated by tier_id.
+/// Backend requirement: UsageRecord MUST provide per-tier worker/verifier
+/// breakdowns with input/output/reasoning splits. If the current UsageRecord
+/// only has aggregate `tokens: Option<u64>`, it must be extended.
 pub struct TokenUsage {
     pub input: u64,
     pub output: u64,
@@ -450,6 +464,9 @@ pub struct GraphEdge {
 }
 
 /// Verification state for a node.
+/// NOTE: This is a new projection enum introduced by this spec.
+/// It MUST be added to puppet-master-rs/src/types/state.rs alongside TierState.
+/// If a backend VerificationState already exists, use that instead.
 pub enum VerificationState {
     Pending,
     InProgress,
@@ -472,7 +489,7 @@ pub struct NodePosition {
 These projection structs are **computed from** existing backend structs:
 - `TierNode` (puppet-master-rs/src/core/tier_node.rs): provides id, tier_type, title, description, dependencies, state_machine.
 - `TierTree` (same file): arena-based storage; used to build the full graph.
-- `TierState` (puppet-master-rs/src/core/orchestrator.rs): enum values map directly to `GraphNode.state`.
+- `TierState` (puppet-master-rs/src/types/state.rs): enum values map directly to `GraphNode.state`.
 - `PuppetMasterEvent` variants (puppet-master-rs/src/types/events.rs): `TierChanged`, `IterationStart/Complete`, `GateStart/Complete`, `Progress`, `Output`, `Error`, `UserInteractionRequired`, `EvidenceStored`.
 - `UsageRecord` (puppet-master-rs/src/types/budget.rs): provides token counts and cost.
 - `StoredEvidence` (puppet-master-rs/src/types/evidence.rs): evidence type and file path.
@@ -534,6 +551,13 @@ Layout computation runs on a **background thread** (tokio::spawn_blocking). The 
 2. **Crossing reduction**: Barycenter heuristic to minimize edge crossings within each layer.
 3. **Coordinate assignment**: Brandes-Kopf for compact horizontal/vertical positioning.
 4. **Edge routing**: orthogonal routing with bend minimization.
+
+**Deterministic tie-break rules** (to guarantee same graph → same layout):
+- Layer assignment ties: break by `node.id` lexicographic order.
+- Barycenter ties in crossing reduction: break by `node.id` lexicographic order.
+- Node ordering within a layer: after crossing reduction, stable-sort by `node.id` for equal barycenters.
+- Disconnected subgraphs: order subgraphs by the lexicographically smallest `node.id` in each subgraph.
+- All traversals use a deterministic iteration order (sorted `node.id`).
 
 ### 9.3 Grouped by Phase (Preset 4)
 
@@ -696,8 +720,227 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#6
 
 ---
 
-<a id="14-accessibility"></a>
-## 14. Accessibility
+<a id="14-slint-implementation"></a>
+## 14. Slint Implementation Guide
+
+This section specifies the implementation details for the `RunGraphView.slint` component and its Rust backing.
+
+### 14.1 Component Structure (`RunGraphView.slint`)
+
+The component MUST expose properties for data model injection and callbacks for interactions.
+
+```slint
+import { Button, VerticalBox, HorizontalBox, ScrollView, ListView } from "std-widgets.slint";
+import { Theme } from "../theme.slint";
+
+export struct GraphNodeUI {
+    id: string,
+    title: string,
+    x: length,
+    y: length,
+    width: length,
+    height: length,
+    state: string, // "pending", "running", "passed", etc.
+    selected: bool,
+    state_color: color,     // pre-resolved from state via Rust
+    border_color: color,    // pre-resolved darker shade or accent if selected
+    attempts: int,
+    hitl_pending: bool,
+    blocked: bool,
+    duration_text: string,  // pre-formatted "1m 23s" or ""
+    tier_type: string,      // "phase", "task", "subtask"
+}
+
+export struct EdgeUI {
+    path_data: string, // SVG path command
+    stroke_color: color, // pre-resolved from upstream node state via Rust
+}
+
+export component RunGraphView {
+    // Data Properties
+    // NOTE: nodes and edges contain ONLY visible items (viewport-culled by Rust).
+    // The Rust view-model filters the full node/edge lists to those intersecting
+    // the current viewport (with 200px overscan) before updating these models.
+    in property <[GraphNodeUI]> nodes;
+    in property <[EdgeUI]> edges;
+    in property <string> run_id;
+    in property <string> run_status;
+    in property <string> selected_node_id;
+    in property <float> zoom_level: 1.0;
+    in property <{x: length, y: length}> pan_offset;
+
+    // Interaction Callbacks
+    callback node_clicked(string); // node_id
+    callback background_clicked();
+    callback pan_delta(length, length); // dx, dy
+    callback zoom_delta(float); // factor
+    callback layout_preset_selected(int);
+    callback hitl_action(string, string, string); // node_id, action (approve/deny), rationale
+
+    // Layout
+    VerticalBox {
+        // Top Bar
+        HorizontalBox { height: 60px; /* ... run header ... */ }
+
+        HorizontalBox {
+            // Left: Graph Canvas
+            Rectangle {
+                clip: true;
+                background: Theme.base-background;
+                // Event handler for pan/zoom
+                TouchArea {
+                    moved => { root.pan_delta(self.mouse-x - self.pressed-x, self.mouse-y - self.pressed-y); }
+                    scroll-event(event) => { /* handle zoom via zoom_delta callback */ }
+                }
+
+                // Canvas content (translated; zoom is applied by Rust to node x/y/w/h)
+                // NOTE: Slint Rectangle does not have a `scale` property.
+                // Zoom is implemented by the Rust view-model multiplying all
+                // NodePosition x/y/width/height by zoom_level before passing
+                // to the Slint model. This avoids Slint transform limitations.
+                Rectangle {
+                    x: root.pan_offset.x;
+                    y: root.pan_offset.y;
+
+                    // Edges (bottom layer)
+                    // NOTE: width/height set to 0px to disable Slint's default
+                    // scale-to-fit behavior (Path defaults to 100% parent size).
+                    // With 0px dimensions, SVG path commands render in native
+                    // graph coordinates (already zoom-adjusted by Rust).
+                    for edge in root.edges : Path {
+                        width: 0px;
+                        height: 0px;
+                        commands: edge.path_data;
+                        stroke: edge.stroke_color;
+                        stroke-width: 2px;
+                    }
+
+                    // Nodes (top layer)
+                    for node in root.nodes : Rectangle {
+                        x: node.x;
+                        y: node.y;
+                        width: node.width;
+                        height: node.height;
+                        background: node.state_color;
+                        border-width: node.selected ? 4px : 2px;
+                        border-color: node.border_color;
+
+                        TouchArea { clicked => { root.node_clicked(node.id); } }
+
+                        // Node content...
+                        Text { text: node.title; /* ... */ }
+                    }
+                }
+
+                // Minimap overlay (bottom-left)
+                Rectangle { /* ... */ }
+            }
+
+            // Right: Split Panel (List + Details)
+            VerticalBox {
+                width: 400px; // Default width, resizable in real impl
+                
+                // Node Table
+                ListView { /* ... */ }
+
+                // Node Details
+                ScrollView {
+                    visible: root.selected_node_id != "";
+                    // ... detail sections ...
+                }
+            }
+        }
+    }
+}
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#14, ContractName:Plans/Contracts_V0.md
+
+### 14.2 Rust View-Model Integration
+
+The Rust backend MUST implement a view-model struct that holds the state and handles Slint callbacks.
+
+```rust
+struct RunGraphViewModel {
+    // State
+    run_meta: RunGraphMeta,
+    nodes: Vec<GraphNode>,
+    edges: Vec<GraphEdge>,
+    layout_cache: HashMap<(String, LayoutPreset), Vec<NodePosition>>,
+    view_state: ViewState, // zoom, pan, selection, viewport bounds
+    visible_nodes: Vec<usize>, // indices into `nodes` that intersect the viewport
+    visible_edges: Vec<usize>, // indices into `edges` with at least one endpoint visible
+
+    // Slint Handle
+    ui_handle: Weak<RunGraphView>,
+}
+
+impl RunGraphViewModel {
+    fn new(ui_handle: Weak<RunGraphView>, initial_tree: &TierTree) -> Self {
+        // 1. Convert TierTree nodes to Vec<GraphNode> projections
+        // 2. Build Vec<GraphEdge> from dependency lists
+        // 3. Compute initial layout (Layered L-R preset)
+        // 4. Compute initial viewport-visible subset
+        // 5. Push initial data to Slint model
+        // Return initialized struct
+        todo!()
+    }
+
+    /// Called when new events arrive via invoke_from_event_loop.
+    /// Events are batched at 16ms intervals by a timer; this processes the batch.
+    fn on_event_batch(&mut self, events: &[PuppetMasterEvent]) {
+        let mut structural_change = false;
+        for event in events {
+            match event {
+                // Update the specific GraphNode fields per section 12.2 mapping
+                // Set structural_change = true if new nodes/edges added
+                _ => { /* per-event-type update logic */ }
+            }
+        }
+        if structural_change {
+            self.recompute_layout_async(); // spawn_blocking
+        }
+        self.update_visible_set(); // re-filter nodes/edges by viewport
+        self.push_to_slint(); // ModelRc row-level updates, not full replacement
+    }
+
+    fn compute_layout(&self, preset: LayoutPreset) -> Vec<NodePosition> {
+        // Runs on spawn_blocking thread.
+        // Implements Sugiyama (section 9.2) with deterministic tie-break rules.
+        // Returns calculated x/y/w/h for all nodes.
+        todo!()
+    }
+
+    /// Filters nodes/edges to those intersecting the current viewport.
+    /// Viewport = visible screen area in graph coordinates (accounting for zoom/pan).
+    /// Overscan buffer: 200px on each side.
+    fn update_visible_set(&mut self) {
+        // Recompute visible_nodes and visible_edges from view_state viewport bounds
+        // Push filtered model to Slint (only visible items in the repeater models)
+    }
+
+    /// Resolves state-to-color mapping using theme tokens.
+    /// Called when building GraphNodeUI items for Slint.
+    fn resolve_node_color(&self, state: &TierState) -> (Color, Color) {
+        // Returns (state_color, border_color) from theme token lookup
+        todo!()
+    }
+}
+```
+
+### 14.3 Performance Optimization in Slint
+
+1. **Viewport Culling**: The Rust view-model maintains the visible viewport bounds (in graph coordinates, accounting for zoom and pan). Only nodes whose bounding rectangles intersect the viewport (+ 200px overscan) are included in the `nodes` model passed to Slint. Similarly, only edges with at least one endpoint in the visible set are included in the `edges` model. When the user pans or zooms, the Rust view-model recomputes the visible set and updates the Slint models via `ModelRc` row-level mutations.
+2. **Zoom via Coordinate Multiplication**: Since Slint `Rectangle` does not have a `scale` property, the Rust view-model multiplies all `NodePosition` coordinates (`x`, `y`, `width`, `height`) by `zoom_level` before passing them to the `GraphNodeUI` Slint struct. Edge SVG path data is similarly recomputed at the current zoom level.
+3. **Color Pre-Resolution**: State-to-color mapping is resolved in Rust (not Slint) because Slint properties are static bindings, not callable functions. The Rust view-model looks up `Theme.graph-*` token values and writes pre-resolved `state_color` and `border_color` into each `GraphNodeUI`. Similarly, edge `stroke_color` is pre-resolved from the upstream node's state.
+4. **Canvas Rendering Fallback**: For 500+ nodes, standard `Rectangle` widgets may have overhead. If performance drops < 60fps, switch to a custom `Canvas` widget (Slint's `Image` populated by a Rust software renderer or custom shader) for the graph background, using `TouchArea` overlay for interaction.
+5. **ListView Virtualization**: The node table MUST use `ListView` which supports virtualization natively.
+6. **Change Tracking**: Only update properties that change. Do not replace the entire `nodes` model vector on every status change; use `ModelRc` in Slint to update specific row/item data.
+
+---
+
+<a id="15-accessibility"></a>
+## 15. Accessibility
 
 - **Graph panel**: `accessible-role: "application"`, `accessible-label: "Node graph for run {run_id}"`.
 - **Each node**: `accessible-role: "button"`, `accessible-label: "{title}, {state}"`.
@@ -706,13 +949,15 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#6
 - **HITL controls**: Approve/Deny buttons are focus-trapped when HITL pending; Enter activates focused button.
 - **Keyboard-only navigation**: all interactions achievable without mouse (section 10.2).
 - **Color contrast**: all status colors meet WCAG AA contrast ratio against their background (at minimum; Basic themes target AAA).
+- **Live region announcements** (WCAG 4.1.3): top-bar status counts and overall run status use `accessible-role: "status"` (live region, polite) so screen readers announce changes without stealing focus. Node state transitions are NOT individually announced (too noisy); users query state via node selection.
+- **Reduced motion**: when the OS prefers-reduced-motion setting is active, structural re-layout animations (section 12.3, 200ms transition) are replaced with instant repositioning. Pulsing HITL badge is replaced with a static badge.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#13
 
 ---
 
-<a id="15-persistence"></a>
-## 15. Persistence
+<a id="16-persistence"></a>
+## 16. Persistence
 
 | Key | Content | Write Frequency |
 |-----|---------|----------------|
@@ -725,8 +970,8 @@ ContractRef: ContractName:Plans/storage-plan.md
 
 ---
 
-<a id="16-uicommand-ids"></a>
-## 16. UICommand IDs
+<a id="17-uicommand-ids"></a>
+## 17. UICommand IDs
 
 | Command ID | Args | Behavior |
 |-----------|------|----------|
@@ -747,8 +992,8 @@ ContractRef: Primitive:UICommand (Plans/Contracts_V0.md#UICommand), ContractName
 
 ---
 
-<a id="17-acceptance-criteria"></a>
-## 17. Acceptance Criteria
+<a id="18-acceptance-criteria"></a>
+## 18. Acceptance Criteria
 
 With a plan_graph and simulated run events:
 
@@ -758,7 +1003,7 @@ With a plan_graph and simulated run events:
 4. **Worker + verifier activity**: C3 and C4 update live as events arrive for the selected node.
 5. **Plan mapping**: C2 shows correct breadcrumb, section anchor, and excerpt for the selected node.
 6. **Model and tokens**: C5 shows model, reasoning effort, and token usage for both worker and verifier. "View in Usage" link navigates to Usage page.
-7. **HITL**: C6 shows pending approvals; Approve/Deny actions update node state immediately in the graph, table, and detail panel.
+7. **HITL**: C6 shows pending approvals; Approve/Deny actions (with rationale text) update node state immediately in the graph, table, and detail panel.
 8. **Layout presets**: Switching presets produces deterministic layouts. Critical path preset highlights the longest chain.
 9. **Filtering and search**: State filters and search work correctly. Quick filters toggle as expected.
 10. **Performance**: 500 nodes renders and pans at 60fps. Table scrolls smoothly. Layout computation < 500ms.
@@ -767,11 +1012,18 @@ With a plan_graph and simulated run events:
 13. **Keyboard**: All interactions achievable via keyboard (section 10.2).
 14. **Theming**: Correct rendering in all 4 built-in themes. No hard-coded colors.
 15. **Persistence**: Layout preset, zoom, pan, and selection restored on view re-open.
+16. **Hover tooltip**: Hovering a node shows tooltip with id, title, state, start/end time, elapsed, attempts.
+17. **Context menu**: Right-clicking a node shows context menu with state-appropriate actions (section 10.3).
+18. **Node badges**: Attempt count badge appears when attempts > 1. Duration badge shows formatted time. HITL pulsing badge appears when hitl_pending. Blocked lock icon appears when blocked_reason is set.
+19. **Large-graph fallback (200+ nodes)**: At 200+ nodes, node titles truncate to 12 chars and edges switch to straight lines. Phase group collapse activates for phases with uniform state.
+20. **Large-graph fallback (500+ nodes)**: At 500+ nodes, node rectangles reduce to 120x36px. At zoom < 50%, nodes render as colored dots only (no text).
+21. **Verification columns**: Table shows verification start, end, and elapsed columns. Sorting by verification duration works correctly.
+22. **Deterministic layout**: Same graph with same preset produces identical node positions across multiple layout computations.
 
 ---
 
-<a id="18-references"></a>
-## 18. References
+<a id="19-references"></a>
+## 19. References
 
 | Document | What It Provides |
 |----------|-----------------|
@@ -787,7 +1039,8 @@ With a plan_graph and simulated run events:
 | Concepts/dag_run_graph.png | Reference image (dark theme) |
 | Concepts/dag_run_graph1.png | Reference image (light theme) |
 | puppet-master-rs/src/core/tier_node.rs | TierNode, TierTree Rust structs |
-| puppet-master-rs/src/core/orchestrator.rs | OrchestratorState, TierState enums |
+| puppet-master-rs/src/core/orchestrator.rs | OrchestratorState enum |
+| puppet-master-rs/src/types/state.rs | TierState enum |
 | puppet-master-rs/src/types/events.rs | PuppetMasterEvent enum |
 | puppet-master-rs/src/types/budget.rs | UsageRecord, BudgetInfo structs |
 | puppet-master-rs/src/types/evidence.rs | StoredEvidence, EvidenceType |

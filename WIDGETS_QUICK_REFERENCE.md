@@ -1,4 +1,4 @@
-# RWM Puppet Master Widgets - Quick Reference
+# Puppet Master Widgets - Quick Reference
 
 ## Import
 ```rust

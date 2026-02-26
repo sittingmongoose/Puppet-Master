@@ -1,11 +1,11 @@
 #!/bin/bash
-# Build Linux installers for RWM Puppet Master
+# Build Linux installers for Puppet Master
 set -euo pipefail
 
 BASE_VERSION="${1:-}"
 ARCH="amd64"
 # Avoid Debian/RPM namespace collisions with Puppet's "puppet-master" packages (common on dev machines).
-PKG_NAME="rwm-puppet-master"
+PKG_NAME="puppet-master"
 
 if [ -z "${BASE_VERSION}" ]; then
     BASE_VERSION="$(grep '^version = ' "$(dirname "$0")/../puppet-master-rs/Cargo.toml" | head -n1 | cut -d'"' -f2)"
@@ -20,7 +20,7 @@ VERSION="${BASE_VERSION}+b${BUILD_ID}"
 export PM_BUILD_ID="${BUILD_ID}"
 export PM_BUILD_UTC="${BUILD_UTC}"
 
-echo "=== Building RWM Puppet Master v${VERSION} for Linux ==="
+echo "=== Building Puppet Master v${VERSION} for Linux ==="
 echo "Build metadata: PM_BUILD_ID=${PM_BUILD_ID} PM_BUILD_UTC=${PM_BUILD_UTC}"
 
 cd "$(dirname "$0")/../puppet-master-rs" || {
@@ -86,9 +86,9 @@ Version: ${VERSION}
 Section: devel
 Priority: optional
 Architecture: ${ARCH}
-Maintainer: RWM <rwm@example.com>
-Description: RWM Puppet Master - AI-assisted development orchestrator
- A GUI orchestrator implementing the Ralph Wiggum Method for
+Maintainer: Puppet Master <puppet-master@example.com>
+Description: Puppet Master - AI-assisted development orchestrator
+ A GUI orchestrator implementing the Puppet Master Method for
  AI-assisted development. Coordinates multiple AI CLI platforms
  (Cursor, Codex, Claude Code, Gemini, GitHub Copilot).
 EOF
@@ -100,7 +100,7 @@ EOF
 cat > "$DEB_DIR/usr/share/applications/puppet-master.desktop" << EOF
 [Desktop Entry]
 Type=Application
-Name=RWM Puppet Master
+Name=Puppet Master
 Comment=AI-assisted development orchestrator
 Exec=puppet-master
 Icon=puppet-master
@@ -131,7 +131,7 @@ fi
 # Create postinstall script
 cat > "$DEB_DIR/DEBIAN/postinst" << 'EOF'
 #!/bin/bash
-# Postinstall script for RWM Puppet Master
+# Postinstall script for Puppet Master
 # This script must never fail, so all commands have || true
 
 # Update desktop database (allows launcher to find the .desktop file)
@@ -147,13 +147,13 @@ fi
 # Success message
 cat << 'ENDMSG'
 
-RWM Puppet Master installed successfully!
+Puppet Master installed successfully!
 
 To launch:
-  - From application menu: Search for "RWM Puppet Master"
+  - From application menu: Search for "Puppet Master"
   - From terminal: puppet-master
 
-Data will be stored in: ~/.local/share/RWM Puppet Master
+Data will be stored in: ~/.local/share/Puppet Master
 
 ENDMSG
 
@@ -234,14 +234,14 @@ cat > "$RPM_DIR/SPECS/puppet-master.spec" << EOF
 Name: ${PKG_NAME}
 Version: ${BASE_VERSION}
 Release: 1.${BUILD_ID}
-Summary: RWM Puppet Master - AI-assisted development orchestrator
+Summary: Puppet Master - AI-assisted development orchestrator
 License: MIT
 Group: Development/Tools
 # Binary uses Iced (pure Rust GUI) - no GTK/WebKit runtime deps needed
 Requires:
 
 %description
-A GUI orchestrator implementing the Ralph Wiggum Method for
+A GUI orchestrator implementing the Puppet Master Method for
 AI-assisted development.
 
 %install

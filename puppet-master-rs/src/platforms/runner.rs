@@ -351,8 +351,8 @@ impl BaseRunner {
         let collect_result = timeout(timeout_duration, async {
             while let Some(line) = rx.recv().await {
                 // Check for completion signals
-                if line.text.contains("<ralph>COMPLETE</ralph>")
-                    || line.text.contains("<ralph>GUTTER</ralph>")
+                if line.text.contains("<pm>COMPLETE</pm>")
+                    || line.text.contains("<pm>GUTTER</pm>")
                 {
                     completion_detected = true;
                 }
@@ -429,7 +429,7 @@ impl BaseRunner {
             .join("\n");
 
         let completion_signal = if completion_detected {
-            if output_str.contains("<ralph>COMPLETE</ralph>") {
+            if output_str.contains("<pm>COMPLETE</pm>") {
                 CompletionSignal::Complete
             } else {
                 CompletionSignal::Gutter
@@ -513,8 +513,8 @@ impl BaseRunner {
     // DRY:FN:has_completion_signal — Parse completion signals from output
     /// Parse completion signals from output
     pub fn has_completion_signal(output: &[OutputLine]) -> bool {
-        let complete_regex = Regex::new(r"<ralph>COMPLETE</ralph>").unwrap();
-        let gutter_regex = Regex::new(r"<ralph>GUTTER</ralph>").unwrap();
+        let complete_regex = Regex::new(r"<pm>COMPLETE</pm>").unwrap();
+        let gutter_regex = Regex::new(r"<pm>GUTTER</pm>").unwrap();
 
         output
             .iter()

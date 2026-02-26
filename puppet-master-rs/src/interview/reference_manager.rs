@@ -602,7 +602,7 @@ impl ReferenceManager {
         // Use a blocking request since we're in a sync context
         let client = reqwest::blocking::Client::builder()
             .timeout(Duration::from_secs(self.http_timeout_secs))
-            .user_agent("RWM-PuppetMaster/0.1")
+            .user_agent("puppet-master/0.1")
             .build()
             .context("Failed to create HTTP client")?;
 

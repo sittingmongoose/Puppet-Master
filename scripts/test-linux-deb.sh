@@ -5,7 +5,7 @@ set -e
 VERSION="${1:-0.1.1}"
 DEB_FILE="installer/linux/puppet-master_${VERSION}_amd64.deb"
 
-echo "=== RWM Puppet Master DEB Installation Test ==="
+echo "=== Puppet Master DEB Installation Test ==="
 echo ""
 
 if [ ! -f "$DEB_FILE" ]; then
@@ -97,10 +97,10 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 echo ""
 echo "=== Installation Log ==="
 echo "Check dpkg logs:"
-echo "  sudo grep -E 'rwm-puppet-master|puppet-master' /var/log/dpkg.log | tail -20"
+echo "  sudo grep -E 'puppet-master' /var/log/dpkg.log | tail -20"
 echo ""
 echo "Check apt logs:"
-echo "  sudo grep -E 'rwm-puppet-master|puppet-master' /var/log/apt/term.log | tail -20"
+echo "  sudo grep -E 'puppet-master' /var/log/apt/term.log | tail -20"
 else
     echo "Skipping installation"
 fi

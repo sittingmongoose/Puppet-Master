@@ -1692,7 +1692,7 @@ Platform-specific parsers handle output from each Provider:
 
 When a platform-specific parser fails:
 1. **Log:** Record parse error in seglog (`parser.error` event) with the first 500 characters of raw output for diagnostics.
-2. **Generic fallback:** Attempt generic text extraction — scan for completion signals (`<ralph>COMPLETE</ralph>`, `<ralph>GUTTER</ralph>`), error patterns (stack traces, "error:", "fatal:"), and file modification markers.
+2. **Generic fallback:** Attempt generic text extraction — scan for completion signals (including legacy naming variants), error patterns (stack traces, "error:", "fatal:"), and file modification markers.
 3. **If generic succeeds:** Use extracted data; flag the turn as `parser_fallback_used` in seglog metadata.
 4. **If generic also fails:** Treat as a Provider error. Retry once with the same Provider. If retry also fails, surface error to user: "Could not parse output from [Provider]. [Retry] [Skip] [View raw output]."
 5. **Never silently drop output.** All raw output is preserved in the seglog event regardless of parse success.

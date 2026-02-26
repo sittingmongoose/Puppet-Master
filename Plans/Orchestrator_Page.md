@@ -475,7 +475,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 | `widget_layout:v1:orchestrator:evidence` | Widget layout for Evidence tab | On change (debounced 300ms) |
 | `widget_layout:v1:orchestrator:history` | Widget layout for History tab | On change (debounced 300ms) |
 | `widget_layout:v1:orchestrator:ledger` | Widget layout for Ledger tab | On change (debounced 300ms) |
-| `graph_view_state:v1:{run_id}` | Graph view state (preset, zoom, selection) | See Plans/Run_Graph_View.md section 15 |
+| `graph_view_state:v1:{run_id}` | Graph view state `{ preset, zoom, pan_x, pan_y, selected_node_id }` | See Plans/Run_Graph_View.md section 16 |
 
 On page load: restore active tab from `orchestrator_tab:v1`. If no persisted state, default to Progress tab.
 

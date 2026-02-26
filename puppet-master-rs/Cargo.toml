@@ -3,7 +3,7 @@ name = "puppet-master"
 version = "0.1.1"
 edition = "2024"
 rust-version = "1.93"
-description = "RWM Puppet Master - AI-assisted development orchestrator"
+description = "Puppet Master - AI-assisted development orchestrator"
 license = "MIT"
 default-run = "puppet-master"
 
@@ -137,9 +137,9 @@ debug = true
 codegen-units = 16
 
 [package.metadata.bundle]
-name = "RWM Puppet Master"
-identifier = "com.rwm.puppet-master"
+name = "Puppet Master"
+identifier = "com.puppetmaster.puppet-master"
 icon = ["icons/icon.png"]
 category = "Developer Tool"
 short_description = "AI-assisted development orchestrator"
-copyright = "Copyright (c) 2026 RWM"
+copyright = "Copyright (c) 2026 Puppet Master"

@@ -1084,7 +1084,7 @@ impl App {
             },
             output_lines: Vec::new(),
             terminal_editor_content: text_editor::Content::with_text(
-                "=== RWM Puppet Master Terminal ===\n\
+                "=== Puppet Master Terminal ===\n\
                  No active orchestration.\n\
                  Start a new orchestration from the Wizard page or resume from the Dashboard.\n",
             ),
@@ -8412,7 +8412,7 @@ pub fn run(shutdown: Arc<AtomicBool>) -> Result<()> {
         App::update,
         App::view,
     )
-    .title("RWM Puppet Master")
+    .title("Puppet Master")
     .theme(App::theme)
     .subscription(App::subscription)
     .window(iced::window::Settings {

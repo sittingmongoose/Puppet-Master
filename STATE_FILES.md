@@ -1,4 +1,4 @@
-# RWM Puppet Master — STATE_FILES.md
+# Puppet Master — STATE_FILES.md
 
 > Version: 2.2  
 > Status: Design Document  
@@ -8,7 +8,7 @@
 
 ## 1. Overview
 
-RWM Puppet Master uses file-based state management to persist memory across iterations and enable fresh agent contexts. This document specifies all state files, their schemas, update policies, and locations.
+Puppet Master uses file-based state management to persist memory across iterations and enable fresh agent contexts. This document specifies all state files, their schemas, update policies, and locations.
 
 ### Core Principle
 
@@ -546,7 +546,7 @@ interface GateReport {
   "version": "1.0.0",
   "createdAt": "2026-01-10T10:00:00Z",
   "updatedAt": "2026-01-10T14:35:00Z",
-  "branchName": "ralph/friends-feature",
+  "branchName": "pm/friends-feature",
   "description": "Add investor friend tagging and custom sequences",
   
   "phases": [
@@ -1078,11 +1078,11 @@ Total Duration: 5146ms
 **Format:** JSONL
 
 ```jsonl
-{"timestamp":"2026-01-10T14:00:00Z","action":"commit","sha":"abc1234","message":"ralph: ST-001-001-001 add auth middleware","files_count":3,"branch":"ralph/ph-001/tk-001"}
-{"timestamp":"2026-01-10T14:05:00Z","action":"push","branch":"ralph/ph-001/tk-001","result":"success","remote":"origin"}
-{"timestamp":"2026-01-10T15:00:00Z","action":"pr_create","number":42,"title":"ralph: TK-001-001 Authentication Task","branch":"ralph/ph-001/tk-001","base":"main"}
-{"timestamp":"2026-01-10T15:30:00Z","action":"branch_create","name":"ralph/ph-001/tk-002","base":"ralph/ph-001/tk-001"}
-{"timestamp":"2026-01-10T16:00:00Z","action":"merge","source":"ralph/ph-001/tk-001","target":"main","strategy":"squash","sha":"def5678"}
+{"timestamp":"2026-01-10T14:00:00Z","action":"commit","sha":"abc1234","message":"pm: ST-001-001-001 add auth middleware","files_count":3,"branch":"pm/ph-001/tk-001"}
+{"timestamp":"2026-01-10T14:05:00Z","action":"push","branch":"pm/ph-001/tk-001","result":"success","remote":"origin"}
+{"timestamp":"2026-01-10T15:00:00Z","action":"pr_create","number":42,"title":"pm: TK-001-001 Authentication Task","branch":"pm/ph-001/tk-001","base":"main"}
+{"timestamp":"2026-01-10T15:30:00Z","action":"branch_create","name":"pm/ph-001/tk-002","base":"pm/ph-001/tk-001"}
+{"timestamp":"2026-01-10T16:00:00Z","action":"merge","source":"pm/ph-001/tk-001","target":"main","strategy":"squash","sha":"def5678"}
 ```
 
 ### 7.4 Iteration Log
@@ -1134,7 +1134,7 @@ Total Duration: 5146ms
     "parsed": {
       "files_changed": ["src/lib/auth.ts", "src/middleware.ts"],
       "commands_run": ["npm run typecheck", "npm test"],
-      "completion_signal": "<ralph>COMPLETE</ralph>"
+      "completion_signal": "<pm>COMPLETE</pm>"
     }
   },
   
@@ -1155,7 +1155,7 @@ Total Duration: 5146ms
   
   "git_commit": {
     "sha": "abc1234def",
-    "message": "ralph: ST-001-001-001 add auth middleware",
+    "message": "pm: ST-001-001-001 add auth middleware",
     "files_committed": ["src/lib/auth.ts", "src/middleware.ts"]
   },
   
@@ -1391,7 +1391,7 @@ As a [role], I want [feature] so that [benefit].
 3. Update prd.json with new items
 4. Update progress.txt with replan note
 5. Log to audit.log
-6. Git commit: "ralph: replan [reason]"
+6. Git commit: "pm: replan [reason]"
 ```
 
 ### 9.5 On Budget Limit Reached (ADDENDUM v2.0)

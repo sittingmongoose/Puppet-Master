@@ -2,7 +2,7 @@
 
 ## Overview
 
-Comprehensive process management system for the RWM Puppet Master Rust rewrite, providing robust child process tracking, graceful shutdown sequences, and automatic cleanup with RAII patterns.
+Comprehensive process management system for the Puppet Master Rust rewrite, providing robust child process tracking, graceful shutdown sequences, and automatic cleanup with RAII patterns.
 
 **File**: `puppet-master-rs/src/utils/process.rs` (775 lines)
 

@@ -1,7 +1,7 @@
-//! Git integration for RWM Puppet Master
+//! Git integration for Puppet Master
 //!
 //! Provides git operations, branch management, commit formatting,
-//! and PR automation for the RWM workflow.
+//! and PR automation for the Puppet Master workflow.
 
 mod branch_strategy;
 mod commit_formatter;

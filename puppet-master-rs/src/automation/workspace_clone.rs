@@ -38,7 +38,7 @@ pub fn create_ephemeral_clone(original_root: &Path, run_id: &str) -> Result<Clon
     }
 
     let clone_root = std::env::temp_dir()
-        .join("rwm-puppet-master-gui-automation")
+        .join("puppet-master-gui-automation")
         .join(run_id)
         .join("workspace");
 

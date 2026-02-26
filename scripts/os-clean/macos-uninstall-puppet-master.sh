@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Uninstall RWM Puppet Master from macOS and remove common leftovers.
+# Uninstall Puppet Master from macOS and remove common leftovers.
 # Intended for installer smoke tests (fresh install each run).
 #
 # Usage:
@@ -14,7 +14,7 @@ PROTECTED_CLIS=(agent codex claude gemini copilot gh node)
 usage() {
   cat <<'EOF'
 Usage: scripts/os-clean/macos-uninstall-puppet-master.sh [--dry-run|-n]
-Removes RWM Puppet Master install/runtime artifacts.
+Removes Puppet Master install/runtime artifacts.
 EOF
 }
 
@@ -100,7 +100,7 @@ safe_remove_user_dir() {
 
 log "starting"
 
-for app in "/Applications/RWM Puppet Master.app" "/Applications/Puppet Master.app"; do
+for app in "/Applications/Puppet Master.app"; do
   if [[ -d "$app" ]]; then
     log "removing $app"
     safe_remove_root_dir "$app"
@@ -116,17 +116,16 @@ safe_remove_root_dir /usr/local/lib/puppet-master
 log "removing per-user runtime state"
 if [[ -n "${HOME:-}" ]]; then
   safe_remove_user_dir "${HOME}/.puppet-master"
-  safe_remove_user_dir "${HOME}/.rwm-puppet-master"
+
+  # Remove autostart/LaunchAgent entries
+  run_best_effort rm -f "${HOME}/Library/LaunchAgents/com.puppetmaster.puppet-master.plist"
 fi
 
 # Best-effort: app support/log/cache locations changed over time.
 if [[ -n "${HOME:-}" ]]; then
-  safe_remove_user_dir "${HOME}/Library/Application Support/RWM Puppet Master"
-  safe_remove_user_dir "${HOME}/Library/Application Support/com.rwm.puppet-master"
-  safe_remove_user_dir "${HOME}/Library/Logs/RWM Puppet Master"
-  safe_remove_user_dir "${HOME}/Library/Logs/com.rwm.puppet-master"
-  safe_remove_user_dir "${HOME}/Library/Caches/RWM Puppet Master"
-  safe_remove_user_dir "${HOME}/Library/Caches/com.rwm.puppet-master"
+  safe_remove_user_dir "${HOME}/Library/Application Support/com.puppetmaster.Puppet-Master"
+  safe_remove_user_dir "${HOME}/Library/Logs/com.puppetmaster.Puppet-Master"
+  safe_remove_user_dir "${HOME}/Library/Caches/com.puppetmaster.Puppet-Master"
 fi
 
 log "done"

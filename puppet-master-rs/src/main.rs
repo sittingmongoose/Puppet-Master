@@ -1,4 +1,4 @@
-// RWM Puppet Master - Rust + Iced Rewrite
+// Puppet Master - Rust + Iced Rewrite
 // Main entry point
 
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
@@ -44,7 +44,7 @@ fn main() -> Result<()> {
     // Launch the Iced application with tray icon
     puppet_master::app::run(shutdown_flag)?;
 
-    info!("RWM Puppet Master shutdown complete.");
+    info!("Puppet Master shutdown complete.");
     Ok(())
 }
 

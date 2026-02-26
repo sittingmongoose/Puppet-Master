@@ -2,7 +2,7 @@
 //!
 //! This module provides comprehensive parsing of stdout/stderr from AI platform CLIs,
 //! extracting:
-//! - Completion signals: `<ralph>COMPLETE</ralph>` and `<ralph>GUTTER</ralph>`
+//! - Completion signals: `<pm>COMPLETE</pm>` and `<pm>GUTTER</pm>`
 //! - File changes: detecting file paths in output
 //! - Token usage: platform-specific usage information
 //! - Error categorization: rate limits, quotas, auth failures, etc.
@@ -96,10 +96,10 @@ impl ParsedOutput {
 /// Completion signal types
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum CompletionSignal {
-    /// Task completed successfully: `<ralph>COMPLETE</ralph>`
+    /// Task completed successfully: `<pm>COMPLETE</pm>`
     Complete,
 
-    /// Reached gutter (no more work to do): `<ralph>GUTTER</ralph>`
+    /// Reached gutter (no more work to do): `<pm>GUTTER</pm>`
     Gutter,
 }
 
@@ -107,9 +107,9 @@ impl CompletionSignal {
     // DRY:FN:detect
     /// Detects completion signal in text
     pub fn detect(text: &str) -> Option<Self> {
-        if text.contains("<ralph>COMPLETE</ralph>") {
+        if text.contains("<pm>COMPLETE</pm>") {
             Some(Self::Complete)
-        } else if text.contains("<ralph>GUTTER</ralph>") {
+        } else if text.contains("<pm>GUTTER</pm>") {
             Some(Self::Gutter)
         } else {
             None
@@ -1068,11 +1068,11 @@ mod tests {
     #[test]
     fn test_completion_signal_detection() {
         assert_eq!(
-            CompletionSignal::detect("Some output <ralph>COMPLETE</ralph> more text"),
+            CompletionSignal::detect("Some output <pm>COMPLETE</pm> more text"),
             Some(CompletionSignal::Complete)
         );
         assert_eq!(
-            CompletionSignal::detect("Output <ralph>GUTTER</ralph>"),
+            CompletionSignal::detect("Output <pm>GUTTER</pm>"),
             Some(CompletionSignal::Gutter)
         );
         assert_eq!(CompletionSignal::detect("No signal here"), None);

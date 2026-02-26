@@ -1,6 +1,6 @@
 //! Default Configuration
 //!
-//! Provides sensible default configuration values for the RWM Puppet Master.
+//! Provides sensible default configuration values for Puppet Master.
 
 use crate::platforms::platform_specs;
 use crate::types::*;
@@ -15,43 +15,43 @@ pub fn default_workspace_dir() -> PathBuf {
     // On macOS and when running from source, use current directory.
 
     if cfg!(windows) {
-        // Windows: Use %LOCALAPPDATA%\RWM Puppet Master
-        if let Some(proj_dirs) = directories::ProjectDirs::from("com", "RWM", "Puppet Master") {
+        // Windows: Use %LOCALAPPDATA%\puppetmaster\Puppet Master
+        if let Some(proj_dirs) = directories::ProjectDirs::from("com", "puppetmaster", "Puppet Master") {
             let path = proj_dirs.data_local_dir().to_path_buf();
             // Ensure directory exists
             let _ = std::fs::create_dir_all(&path);
             path
         } else if let Some(base_dirs) = directories::BaseDirs::new() {
-            let path = base_dirs.data_local_dir().join("RWM Puppet Master");
+            let path = base_dirs.data_local_dir().join("Puppet Master");
             let _ = std::fs::create_dir_all(&path);
             path
         } else if let Some(home) = directories::BaseDirs::new().map(|b| b.home_dir().to_path_buf())
         {
-            let path = home.join(".rwm-puppet-master");
+            let path = home.join(".puppet-master");
             let _ = std::fs::create_dir_all(&path);
             path
         } else {
             // Last resort: temp directory
-            let path = std::env::temp_dir().join("rwm-puppet-master");
+            let path = std::env::temp_dir().join("puppetmaster");
             let _ = std::fs::create_dir_all(&path);
             path
         }
     } else if cfg!(target_os = "linux") {
         // Linux: Prefer XDG_DATA_HOME or ~/.local/share
         if let Ok(xdg_data) = std::env::var("XDG_DATA_HOME") {
-            let path = PathBuf::from(xdg_data).join("rwm-puppet-master");
+            let path = PathBuf::from(xdg_data).join("puppetmaster");
             if std::fs::create_dir_all(&path).is_ok() {
                 return path;
             }
         }
 
         // Check if we're running from a system install (/usr/bin)
-        // If so, use ~/.local/share/rwm-puppet-master
+        // If so, use ~/.local/share/puppetmaster (Puppet Master app data)
         if let Ok(exe_path) = std::env::current_exe() {
             if exe_path.starts_with("/usr/bin") || exe_path.starts_with("/usr/local/bin") {
                 // System-wide install, use user data directory
                 if let Some(proj_dirs) =
-                    directories::ProjectDirs::from("com", "RWM", "Puppet Master")
+                    directories::ProjectDirs::from("com", "puppetmaster", "Puppet Master")
                 {
                     let path = proj_dirs.data_local_dir().to_path_buf();
                     if std::fs::create_dir_all(&path).is_ok() {
@@ -59,7 +59,7 @@ pub fn default_workspace_dir() -> PathBuf {
                     }
                 }
                 if let Some(base_dirs) = directories::BaseDirs::new() {
-                    let path = base_dirs.data_local_dir().join("rwm-puppet-master");
+                    let path = base_dirs.data_local_dir().join("puppetmaster");
                     if std::fs::create_dir_all(&path).is_ok() {
                         return path;
                     }
@@ -69,7 +69,7 @@ pub fn default_workspace_dir() -> PathBuf {
 
         // Try home directory
         if let Some(base_dirs) = directories::BaseDirs::new() {
-            let path = base_dirs.home_dir().join(".rwm-puppet-master");
+            let path = base_dirs.home_dir().join(".puppet-master");
             if std::fs::create_dir_all(&path).is_ok() {
                 return path;
             }
@@ -78,7 +78,7 @@ pub fn default_workspace_dir() -> PathBuf {
         // Running from source or local install, try current directory
         if let Ok(current) = std::env::current_dir() {
             // Only use current dir if it's writable
-            let test_file = current.join(".puppet-master-write-test");
+            let test_file = current.join("pm-write-probe");
             if std::fs::write(&test_file, "test").is_ok() {
                 let _ = std::fs::remove_file(&test_file);
                 return current;
@@ -86,12 +86,12 @@ pub fn default_workspace_dir() -> PathBuf {
         }
 
         // Last resort: temp directory
-        let path = std::env::temp_dir().join("rwm-puppet-master");
+        let path = std::env::temp_dir().join("puppetmaster");
         let _ = std::fs::create_dir_all(&path);
         path
     } else if cfg!(target_os = "macos") {
-        // macOS: Use ~/Library/Application Support/RWM Puppet Master
-        if let Some(proj_dirs) = directories::ProjectDirs::from("com", "RWM", "Puppet Master") {
+        // macOS: Use ~/Library/Application Support/Puppet Master
+        if let Some(proj_dirs) = directories::ProjectDirs::from("com", "puppetmaster", "Puppet Master") {
             let path = proj_dirs.data_local_dir().to_path_buf();
             if std::fs::create_dir_all(&path).is_ok() {
                 return path;
@@ -100,7 +100,7 @@ pub fn default_workspace_dir() -> PathBuf {
 
         // Fallback to home directory
         if let Some(base_dirs) = directories::BaseDirs::new() {
-            let path = base_dirs.home_dir().join(".rwm-puppet-master");
+            let path = base_dirs.home_dir().join(".puppet-master");
             if std::fs::create_dir_all(&path).is_ok() {
                 return path;
             }
@@ -108,7 +108,7 @@ pub fn default_workspace_dir() -> PathBuf {
 
         // Try current directory if writable
         if let Ok(current) = std::env::current_dir() {
-            let test_file = current.join(".puppet-master-write-test");
+            let test_file = current.join("pm-write-probe");
             if std::fs::write(&test_file, "test").is_ok() {
                 let _ = std::fs::remove_file(&test_file);
                 return current;
@@ -116,27 +116,27 @@ pub fn default_workspace_dir() -> PathBuf {
         }
 
         // Last resort: temp directory
-        let path = std::env::temp_dir().join("rwm-puppet-master");
+        let path = std::env::temp_dir().join("puppetmaster");
         let _ = std::fs::create_dir_all(&path);
         path
     } else {
         // Other platforms: try home, then current, then temp
         if let Some(base_dirs) = directories::BaseDirs::new() {
-            let path = base_dirs.home_dir().join(".rwm-puppet-master");
+            let path = base_dirs.home_dir().join(".puppet-master");
             if std::fs::create_dir_all(&path).is_ok() {
                 return path;
             }
         }
 
         if let Ok(current) = std::env::current_dir() {
-            let test_file = current.join(".puppet-master-write-test");
+            let test_file = current.join("pm-write-probe");
             if std::fs::write(&test_file, "test").is_ok() {
                 let _ = std::fs::remove_file(&test_file);
                 return current;
             }
         }
 
-        let path = std::env::temp_dir().join("rwm-puppet-master");
+        let path = std::env::temp_dir().join("puppetmaster");
         let _ = std::fs::create_dir_all(&path);
         path
     }

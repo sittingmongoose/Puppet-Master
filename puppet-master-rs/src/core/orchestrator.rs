@@ -2934,7 +2934,7 @@ mod tests {
 
         let output = r#"
 Some agent output here...
-<ralph>COMPLETE</ralph>
+<pm>COMPLETE</pm>
 
 ```agents-update
 PATTERN: Use async/await for all I/O operations

@@ -14,10 +14,10 @@ This writes to `~/.cursor/mcp.json`. **Quit Cursor completely and reopen it** (n
 
 ## The app must see the right file (workspace root)
 
-Cursor and the Claude Code extension decide "project root" from the **workspace folder** you open. If you open a **parent** folder (e.g. "Cursor" or your home), they look for MCP config in that folder — not in "RWM Puppet Master" — so they never see our config.
+Cursor and the Claude Code extension decide "project root" from the **workspace folder** you open. If you open a **parent** folder (e.g. "Cursor" or your home), they look for MCP config in that folder — not in this repo — so they never see our config.
 
 **Do this:**
-1. **File → Open Folder** and choose the **RWM Puppet Master** folder itself (the one that contains `.cursor/`, `.claude/`, `.mcp.json`).
+1. **File → Open Folder** and choose the **repo folder** itself (the one that contains `.cursor/`, `.claude/`, `.mcp.json`).
 2. Do **not** open "Cursor" or a parent; the workspace root must be this repo.
 3. Restart Cursor (or Reload Window) after opening the correct folder.
 
@@ -37,7 +37,7 @@ It prints the repo root path to open in Cursor.
 
 ## CLI vs extension use different paths (why extension can't see project .mcp.json)
 
-The **CLI** uses your **terminal cwd** (e.g. `/home/sittingmongoose/Cursor/RWM Puppet Master`) to find `.mcp.json`. The **extension** uses the **workspace path** that Cursor reports, which can be different (e.g. another mount or normalization). So the extension may look for `.mcp.json` in a different directory and not find it. See **`.cursor/MCP-CLI-vs-EXTENSION-PATHS.md`** for details.
+The **CLI** uses your **terminal cwd** (e.g. `<repo-root>`) to find `.mcp.json`. The **extension** uses the **workspace path** that Cursor reports, which can be different (e.g. another mount or normalization). So the extension may look for `.mcp.json` in a different directory and not find it. See **`.cursor/MCP-CLI-vs-EXTENSION-PATHS.md`** for details.
 
 **Fix:** Add the same MCP servers to **user scope** in `~/.claude.json` so the extension sees them regardless of workspace path:
 

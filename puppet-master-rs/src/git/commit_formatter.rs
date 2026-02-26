@@ -3,14 +3,14 @@
 use crate::types::{ItemStatus, TierType};
 
 // DRY:DATA:CommitFormatter
-/// Formats commit messages according to RWM conventions
+/// Formats commit messages according to Puppet Master conventions
 pub struct CommitFormatter;
 
 impl CommitFormatter {
     // DRY:FN:format_commit
     /// Format a commit message for a tier
     ///
-    /// Format: `ralph: [TIER_TYPE] {id}: {title} - {status}`
+    /// Format: `pm: [TIER_TYPE] {id}: {title} - {status}`
     ///
     /// # Arguments
     /// * `tier_type` - Type of tier (Phase, Task, Subtask)
@@ -26,7 +26,7 @@ impl CommitFormatter {
         };
 
         format!(
-            "ralph: [{}] {}: {} - {}",
+            "pm: [{}] {}: {} - {}",
             tier_str,
             id,
             Self::sanitize_title(title),
@@ -46,7 +46,7 @@ impl CommitFormatter {
 
         let result = if passed { "PASSED" } else { "FAILED" };
 
-        format!("ralph: [{}] {} gate {}", tier_str, id, result)
+        format!("pm: [{}] {} gate {}", tier_str, id, result)
     }
 
     // DRY:FN:format_iteration_commit
@@ -54,7 +54,7 @@ impl CommitFormatter {
     pub fn format_iteration_commit(subtask_id: &str, iteration: u32, success: bool) -> String {
         let result = if success { "completed" } else { "attempted" };
         format!(
-            "ralph: [ITERATION] {} attempt {} {}",
+            "pm: [ITERATION] {} attempt {} {}",
             subtask_id, iteration, result
         )
     }
@@ -62,14 +62,14 @@ impl CommitFormatter {
     // DRY:FN:format_checkpoint_commit
     /// Format a checkpoint commit
     pub fn format_checkpoint_commit(description: &str) -> String {
-        format!("ralph: [CHECKPOINT] {}", Self::sanitize_title(description))
+        format!("pm: [CHECKPOINT] {}", Self::sanitize_title(description))
     }
 
     // DRY:FN:format_rollback_commit
     /// Format a rollback commit
     pub fn format_rollback_commit(target: &str, reason: &str) -> String {
         format!(
-            "ralph: [ROLLBACK] to {} - {}",
+            "pm: [ROLLBACK] to {} - {}",
             target,
             Self::sanitize_title(reason)
         )
@@ -142,20 +142,20 @@ mod tests {
         );
         assert_eq!(
             msg,
-            "ralph: [TASK] TK-001-002: Implement authentication - Passed"
+            "pm: [TASK] TK-001-002: Implement authentication - Passed"
         );
     }
 
     #[test]
     fn test_format_gate_commit() {
         let msg = CommitFormatter::format_gate_commit(TierType::Phase, "PH-001", true);
-        assert_eq!(msg, "ralph: [PHASE] PH-001 gate PASSED");
+        assert_eq!(msg, "pm: [PHASE] PH-001 gate PASSED");
     }
 
     #[test]
     fn test_format_iteration_commit() {
         let msg = CommitFormatter::format_iteration_commit("ST-001-001-001", 3, true);
-        assert_eq!(msg, "ralph: [ITERATION] ST-001-001-001 attempt 3 completed");
+        assert_eq!(msg, "pm: [ITERATION] ST-001-001-001 attempt 3 completed");
     }
 
     #[test]
@@ -180,7 +180,7 @@ mod tests {
             Some("Implemented basic form structure"),
         );
 
-        assert!(msg.contains("ralph: [SUBTASK]"));
+        assert!(msg.contains("pm: [SUBTASK]"));
         assert!(msg.contains("Files changed:"));
         assert!(msg.contains("src/auth.rs"));
         assert!(msg.contains("Notes:"));

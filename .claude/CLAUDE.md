@@ -1,19 +1,23 @@
-# RWM Puppet Master — Claude Code Notes
+# Puppet Master — Claude Instructions (PLANNING PHASE)
 
-## Goal
-Work only inside this repository and keep changes small and reviewable.
+Follow the repo-root `AGENTS.md`.
 
-## Workflow
-- Prefer a short plan first, then implement.
-- Run relevant tests/linters after changes (fill in commands below).
+## Scope
+- Edit `Plans/**` only (plus agent-rule files if explicitly requested).
+- No application code changes until rewrite execution begins.
 
-## Commands (fill these in)
-- Install:
-- Dev:
-- Test:
-- Lint:
+## Plans rules (SSOT)
+When adding/modifying requirements in `Plans/`:
+- Follow `Plans/DRY_Rules.md`
+- Add/maintain `ContractRef:` immediately after the affected block
+- No open questions; use `Plans/Decision_Log.md` per `Plans/Decision_Policy.md`
 
-## Conventions
-- Don't add secrets or tokens to the repo.
-- Keep edits focused; avoid drive-by refactors.
-- Always use the Context7 MCP server when I need library/API documentation, code generation, setup or configuration steps without me having to explicitly ask.
+## Hygiene
+- No secrets/tokens.
+- Keep edits small and reviewable.
+- Update `Plans/00-plans-index.md` if you add/rename plan documents.
+
+## Completion marker
+End with exactly one:
+- `<status>COMPLETE</status>`
+- `<status>BLOCKED</status>`

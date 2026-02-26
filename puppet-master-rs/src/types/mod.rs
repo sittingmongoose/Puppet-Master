@@ -1,4 +1,4 @@
-//! Type definitions for the RWM Puppet Master.
+//! Type definitions for Puppet Master.
 //!
 //! This module contains all the core types used throughout the application,
 //! organized into logical sub-modules.

@@ -1,4 +1,4 @@
-# RWM Puppet Master — REQUIREMENTS.md
+# Puppet Master — REQUIREMENTS.md
 
 > Version: 2.2  
 > Status: Design Document  
@@ -8,9 +8,9 @@
 
 ## 1. Executive Summary
 
-**RWM Puppet Master** is a native Rust/Iced desktop application and CLI orchestrator that scales the Ralph Wiggum Method (RWM) into a four-tier workflow: Phase → Task → Subtask → Iteration. It coordinates five AI CLI platforms (Cursor, Codex, Claude Code, Gemini, GitHub Copilot) without using any APIs, relying exclusively on CLI invocations. The system spawns fresh agents per iteration, uses file-based memory layers (`prd.json`, `progress.txt`, `AGENTS.md`) plus git as durable state, and provides both a native desktop GUI (Rust/Iced) and CLI interface for control.
+**Puppet Master** is a native Rust/Iced desktop application and CLI orchestrator that scales the Puppet Master Method into a four-tier workflow: Phase → Task → Subtask → Iteration. It coordinates five AI CLI platforms (Cursor, Codex, Claude Code, Gemini, GitHub Copilot) without using any APIs, relying exclusively on CLI invocations. The system spawns fresh agents per iteration, uses file-based memory layers (`prd.json`, `progress.txt`, `AGENTS.md`) plus git as durable state, and provides both a native desktop GUI (Rust/Iced) and CLI interface for control.
 
-### Core Principles (from RWM)
+### Core Principles (legacy naming)
 
 1. **Small, testable work units** with tight acceptance criteria
 2. **Iteration loops** that retry until acceptance + tests pass
@@ -36,7 +36,7 @@
 |------|------------|
 | **Phase** | Highest-level grouping of work (e.g., "Authentication System") |
 | **Task** | Integration-level work within a Phase (e.g., "JWT Middleware") |
-| **Subtask** | RWM-sized ticket (~1 context window) |
+| **Subtask** | Single-context ticket (~1 context window) |
 | **Iteration** | Single fresh-agent attempt at a Subtask |
 
 ---
@@ -96,7 +96,7 @@ The tier pipeline is **fully user-configurable**. There is NO hardcoded ladder.
 
 ## 4. Constraint: No APIs (Subscription-Based Access Only)
 
-**CRITICAL**: RWM Puppet Master MUST NOT use direct API calls that charge per-use. All agent interactions must use subscription-based access via CLI.
+**CRITICAL**: Puppet Master MUST NOT use direct API calls that charge per-use. All agent interactions must use subscription-based access via CLI.
 
 **Key Distinction:**
 - ✅ **CLI usage**: Uses subscription account (ChatGPT/Codex plan) - no per-use charges
@@ -150,7 +150,7 @@ Before execution begins, Puppet Master MUST support a complete "Start Chain" wor
 4. **Generate 4-Tier Plan**
    - Phases with acceptance criteria + test plans
    - Tasks within phases with acceptance criteria + tests
-   - Subtasks per task (RWM-sized)
+   - Subtasks per task (single-context)
    - Iteration rules defined
 
 5. **Validation Gate**
@@ -198,7 +198,7 @@ puppet-master start [--phase <id>] [--task <id>]
 - Task Plan (approach, dependencies, integration notes)
 - Task Acceptance Criteria
 - Task Test Plan (integration-level where applicable)
-- Subtask breakdown list (RWM-sized)
+- Subtask breakdown list (single-context)
 - Evidence schema + evidence storage paths
 
 **Gating:**
@@ -455,7 +455,7 @@ All commands support:
 ### 14.2 Configuration Options
 
 - `base_branch`: Branch to start from (default: `main`)
-- `naming_pattern`: Branch name template (e.g., `ralph/{phase}/{task}`)
+- `naming_pattern`: Branch name template (e.g., `pm/{phase}/{task}`)
 - `push_policy`: When to push (`per-iteration`, `per-subtask`, `per-task`, `per-phase`)
 - `merge_policy`: How to merge (`merge`, `squash`, `rebase`)
 - `auto_pr`: Automatically create pull requests (boolean)
@@ -547,7 +547,7 @@ tiers:
 
 branching:
   base_branch: "main"
-  naming_pattern: "ralph/{phase}/{task}"
+  naming_pattern: "pm/{phase}/{task}"
   granularity: "per-task"  # single, per-phase, per-task
   push_policy: "per-subtask"
   merge_policy: "squash"
@@ -581,7 +581,7 @@ cli_paths:
 Detect when agent is stuck:
 - Same command failed 3x
 - Same file written 5x in 10 minutes
-- Agent signals `<ralph>GUTTER</ralph>`
+- Agent signals `<pm>GUTTER</pm>`
 - Token limit reached without progress
 
 ### 18.2 Recovery Actions
@@ -1227,12 +1227,12 @@ Every iteration records:
 
 | Tier | Template |
 |------|----------|
-| Iteration | `ralph: [subtask-id] [summary]` |
-| Subtask Complete | `ralph: complete [subtask-id] - [title]` |
-| Task Gate | `ralph: task-gate [task-id] - [status]` |
-| Phase Gate | `ralph: phase-gate [phase-id] - [status]` |
-| Replan | `ralph: replan [scope] - [reason]` |
-| Reopen | `ralph: reopen [item-id] - [reason]` |
+| Iteration | `pm: [subtask-id] [summary]` |
+| Subtask Complete | `pm: complete [subtask-id] - [title]` |
+| Task Gate | `pm: task-gate [task-id] - [status]` |
+| Phase Gate | `pm: phase-gate [phase-id] - [status]` |
+| Replan | `pm: replan [scope] - [reason]` |
+| Reopen | `pm: reopen [item-id] - [reason]` |
 
 ### 27.3 Branch Operations
 
@@ -1263,7 +1263,7 @@ git:
     auto_merge: false
     require_review: true
     template: ".github/pull_request_template.md"
-    labels: ["ralph-automated"]
+    labels: ["pm-automated"]
     
   conflict:
     strategy: "pause"  # pause | rebase | abort
@@ -1291,9 +1291,9 @@ When conflicts are detected:
 All git operations recorded in: `.puppet-master/logs/git-actions.log`
 
 ```jsonl
-{"timestamp":"2026-01-10T14:00:00Z","action":"commit","sha":"abc1234","message":"ralph: ST-001-001-001 add auth middleware","files":3}
-{"timestamp":"2026-01-10T14:05:00Z","action":"push","branch":"ralph/ph-001/tk-001","result":"success"}
-{"timestamp":"2026-01-10T15:00:00Z","action":"pr_create","number":42,"branch":"ralph/ph-001/tk-001","base":"main"}
+{"timestamp":"2026-01-10T14:00:00Z","action":"commit","sha":"abc1234","message":"pm: ST-001-001-001 add auth middleware","files":3}
+{"timestamp":"2026-01-10T14:05:00Z","action":"push","branch":"pm/ph-001/tk-001","result":"success"}
+{"timestamp":"2026-01-10T15:00:00Z","action":"pr_create","number":42,"branch":"pm/ph-001/tk-001","base":"main"}
 ```
 
 ### 27.7 Doctor Checks for Git
@@ -1314,7 +1314,7 @@ Doctor must verify:
 
 **IMPORTANT**: The progress.txt template previously used "Thread" (from amp-skills heritage). This is renamed to **"Session"** for platform neutrality.
 
-**ADDENDUM (v2.1):** The term "Thread" originated from Amp-specific terminology (example.invalid/threads/<id>). Because RWM Puppet Master is a CLI-only orchestrator that works with multiple platforms (Cursor, Codex, Claude Code) without any Amp dependency, we use the platform-neutral term **"Session"** to refer to a single orchestration run. This avoids implying any Amp involvement and maintains clarity across all supported CLI platforms.
+**ADDENDUM (v2.1):** The term "Thread" originated from Amp-specific terminology (example.invalid/threads/<id>). Because Puppet Master is a CLI-only orchestrator that works with multiple platforms (Cursor, Codex, Claude Code) without any Amp dependency, we use the platform-neutral term **"Session"** to refer to a single orchestration run. This avoids implying any Amp involvement and maintains clarity across all supported CLI platforms.
 
 **Old:**
 ```markdown
@@ -1692,23 +1692,23 @@ Example: `PM-2026-01-10-14-00-00-001`
 
 ## Appendix C: Reference Implementation Patterns
 
-### From snarktank/ralph (Original)
+### From upstream legacy prototype (original)
 
-- `ralph.sh` - Bash loop spawning fresh Amp instances
+- Legacy loop script - Bash loop spawning fresh Amp instances
 - `prompt.md` - Instructions per iteration
 - `prd.json` - User stories with pass status
 - `progress.txt` - Append-only learnings
 - `<promise>COMPLETE</promise>` - Completion signal
 
-### From agrimsingh/ralph-wiggum-cursor
+### From upstream Cursor prototype
 
 - Stream parsing for token tracking
 - Context rotation at thresholds (70k warn, 80k rotate)
 - Guardrails/signs system for learned lessons
-- RALPH_TASK.md with checkbox tracking
-- `.ralph/` state directory
+- Legacy task tracking doc with checkbox tracking
+- Legacy state directory
 
-### From frankbria/ralph-claude-code
+### From upstream Claude Code prototype
 
 - Claude Code specific adaptations
 - Session management
@@ -1913,8 +1913,8 @@ After implementation, these must pass:
 2. Do NOT modify files outside the specified scope
 3. Run tests after making changes
 4. If you encounter a gotcha or pattern worth remembering, note it clearly
-5. Signal completion with: `<ralph>COMPLETE</ralph>`
-6. If stuck, signal: `<ralph>GUTTER</ralph>`
+5. Signal completion with: `<pm>COMPLETE</pm>`
+6. If stuck, signal: `<pm>GUTTER</pm>`
 
 ## Previous Iteration Failures (if any)
 

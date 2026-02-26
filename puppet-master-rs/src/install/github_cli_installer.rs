@@ -78,7 +78,7 @@ pub async fn install_gh_to_app_bin() -> InstallOutcome {
 /// Fetch the latest release JSON from GitHub API.
 async fn fetch_latest_release(log_lines: &mut Vec<String>) -> Result<serde_json::Value, String> {
     let client = reqwest::Client::builder()
-        .user_agent("rwm-puppet-master/1.0")
+        .user_agent("puppet-master/1.0")
         .build()
         .map_err(|e| format!("Failed to build HTTP client: {e}"))?;
 
@@ -166,7 +166,7 @@ fn current_platform_keys() -> (&'static str, &'static str, &'static str) {
 /// Download bytes from a URL.
 async fn download_bytes(url: &str, log_lines: &mut Vec<String>) -> Result<Vec<u8>, String> {
     let client = reqwest::Client::builder()
-        .user_agent("rwm-puppet-master/1.0")
+        .user_agent("puppet-master/1.0")
         .build()
         .map_err(|e| format!("HTTP client build error: {e}"))?;
 
@@ -199,7 +199,7 @@ fn extract_and_install_gh(
     asset_url: &str,
     log_lines: &mut Vec<String>,
 ) -> Result<PathBuf, String> {
-    let tmp_dir = std::env::temp_dir().join(format!("rwm-gh-{}", std::process::id()));
+    let tmp_dir = std::env::temp_dir().join(format!("pm-gh-{}", std::process::id()));
     std::fs::create_dir_all(&tmp_dir).map_err(|e| format!("Failed to create temp dir: {e}"))?;
 
     let tmp_archive = if asset_url.ends_with(".zip") {

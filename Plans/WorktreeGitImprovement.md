@@ -187,8 +187,8 @@ The plan is **ready to implement** with the following in mind:
 
 ### 3.8 Commit message format
 
-- **Gap:** `commit_tier_progress` uses `format!("tier: {} iteration {} complete", tier_id, iteration)`. AGENTS.md and `CommitFormatter` use the `ralph: [ITERATION] ...` convention.
-- **Fix:** Use `CommitFormatter::format_iteration_commit(subtask_id, iteration, success)` (or equivalent) for iteration commits so they match the documented "ralph:" convention.
+- **Gap:** `commit_tier_progress` uses `format!("tier: {} iteration {} complete", tier_id, iteration)`. AGENTS.md and `CommitFormatter` use the `pm: [ITERATION] ...` convention.
+- **Fix:** Use `CommitFormatter::format_iteration_commit(subtask_id, iteration, success)` (or equivalent) for iteration commits so they match the documented "pm:" convention.
 
 ### 3.9 git-actions.log path and .gitignore
 
@@ -339,7 +339,7 @@ The plan is **ready to implement** with the following in mind:
 - [ ] Branch strategy: load from config; use in create_tier_branch.
 - [ ] Single branch naming implementation (remove duplicate logic).
 - [ ] naming_pattern: wire to branch names or hide and document.
-- [ ] Iteration commits: use CommitFormatter (ralph: format).
+- [ ] Iteration commits: use CommitFormatter (pm: format).
 - [ ] git-actions.log path and REQUIREMENTS/.gitignore alignment.
 - [ ] Optional: Doctor check for git in project dir; optional "nothing to commit" handling.
 
@@ -365,7 +365,7 @@ The plan is **ready to implement** with the following in mind:
 |-------|----------------------|
 | **Phase 1** | (1) With "Enable parallel execution" on and no Save, start run → worktrees are created when applicable. (2) Run started from Dashboard uses `current_project.path` as config hint (e.g. `discover_with_hint` called with it). (3) Branching/base_branch and auto_pr from GUI are present in the config passed to the orchestrator at run start. |
 | **Phase 2** | (1) After restart, `get_tier_worktree(tier_id)` returns the path for tiers that still have worktrees under worktree_base (repopulation or fallback). (2) New worktrees are created from `config.branching.base_branch` (checkout or ref). (3) Doctor "worktrees" check runs when project is a git repo and reports worktree count and/or orphaned suggestion. |
-| **Phase 3** | (1) GitManager and Doctor git checks use the same resolved `git` binary (e.g. shared `path_utils::resolve_git_executable()`). (2) Iteration commits use CommitFormatter and produce "ralph:"-style messages. (3) git-actions.log path matches REQUIREMENTS (`.puppet-master/logs/git-actions.log`) and is documented in .gitignore if runtime-only. |
+| **Phase 3** | (1) GitManager and Doctor git checks use the same resolved `git` binary (e.g. shared `path_utils::resolve_git_executable()`). (2) Iteration commits use CommitFormatter and produce "pm:"-style messages. (3) git-actions.log path matches REQUIREMENTS (`.puppet-master/logs/git-actions.log`) and is documented in .gitignore if runtime-only. |
 | **Phase 4** | (1) Branching tab has Enable Git, Auto PR, Branch strategy wired to run config (run uses current GUI values). (2) Naming pattern is either wired to branch names or hidden and documented. (3) After GUI changes, `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` run and pass. |
 | **Phase 5** | (1) Integration test: parallel run in temp git repo creates worktree dirs and uses them as cwd for subtasks. (2) Integration test: run with Git disabled does not create branches/commits/PRs. (3) AGENTS.md Pre-Completion Verification Checklist completed and Task Status Log updated for any closed tasks. |
 
@@ -536,7 +536,7 @@ The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines **C
 **DuringGitOp crew coordination responsibilities:**
 
 - **Coordinate branch names:** Crew members coordinate branch names to avoid conflicts (e.g., `subtask/ST-001-001-001`, `subtask/ST-001-001-002`)
-- **Coordinate commit messages:** Crew members coordinate commit message formats to ensure consistency (e.g., `ralph: [ITERATION] ...`)
+- **Coordinate commit messages:** Crew members coordinate commit message formats to ensure consistency (e.g., `pm: [ITERATION] ...`)
 - **Coordinate PR content:** Crew members coordinate PR titles, descriptions, and review requirements
 - **Avoid git conflicts:** Crew members check coordination state before editing files to avoid conflicts
 
@@ -943,7 +943,7 @@ pub struct GitOperationResult {
 
 - **Branch naming patterns:** Examples of branch names created (e.g., `subtask/ST-001-001-001`, `feature/auth-system`).
 - **Worktree usage patterns:** Which tiers use worktrees, worktree cleanup patterns.
-- **Commit message patterns:** Examples of commit messages (e.g., `ralph: [ITERATION] ...`).
+- **Commit message patterns:** Examples of commit messages (e.g., `pm: [ITERATION] ...`).
 
 **When to persist:**
 
@@ -1009,7 +1009,7 @@ pub struct GitOperationResult {
 
 ## 8. References
 
-- **AGENTS.md:** Git commit format ("ralph:"), gitignore rules, DRY, platform_specs, pre-completion checklist.
+- **AGENTS.md:** Git commit format ("pm:"), gitignore rules, DRY, platform_specs, pre-completion checklist.
 - **STATE_FILES.md:** State file hierarchy; add worktrees subsection.
 - **REQUIREMENTS.md:** git-actions.log path, Git operations.
 - **Plans/orchestrator-subagent-integration.md:** Worktree isolation for parallel subagents; ensure worktrees and config wiring are in place before or with subagent work.

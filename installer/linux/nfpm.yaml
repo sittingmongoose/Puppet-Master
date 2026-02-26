@@ -1,4 +1,5 @@
-# nfpm.yaml - build .deb/.rpm installers for rwm-puppet-master
+# nfpm.yaml - build .deb/.rpm installers for Puppet Master
+# Desktop entry: com.puppetmaster.puppet-master
 #
 # Notes:
 # - nFPM does not support templating; we use environment variable expansion.
@@ -12,9 +13,9 @@
 #
 # Schema reference: https://nfpm.goreleaser.com/schema.json
 
-# IMPORTANT: Package name is "rwm-puppet-master" to avoid conflict with
-# the Puppetlabs "puppet-master" package (puppet config management system).
-name: rwm-puppet-master
+# IMPORTANT: Package name is "puppet-master" (app); desktop id com.puppetmaster.puppet-master
+# avoids conflict with Puppetlabs "puppet-master" package (puppet config management system).
+name: puppet-master
 arch: ${PM_ARCH}
 platform: linux
 version: ${PM_VERSION}
@@ -22,9 +23,9 @@ version_schema: semver
 release: "1"
 section: utils
 priority: optional
-maintainer: "RWM Puppet Master <devnull@example.com>"
+maintainer: "Puppet Master <devnull@example.com>"
 description: |
-  RWM Puppet Master - CLI orchestrator for AI development workflows.
+  Puppet Master - CLI orchestrator for AI development workflows.
   (Not related to Puppetlabs Puppet configuration management)
 
 # Dependencies removed - binary uses Iced (pure Rust GUI) with minimal system deps
@@ -67,9 +68,9 @@ contents:
       owner: root
       group: root
 
-  # Desktop entry for app menu
-  - src: installer/linux/applications/com.rwm.puppet-master.desktop
-    dst: /usr/share/applications/com.rwm.puppet-master.desktop
+  # Desktop entry for app menu (com.puppetmaster.puppet-master)
+  - src: installer/linux/applications/com.puppetmaster.puppet-master.desktop
+    dst: /usr/share/applications/com.puppetmaster.puppet-master.desktop
     file_info:
       mode: 0644
       owner: root

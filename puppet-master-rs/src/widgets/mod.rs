@@ -1,4 +1,4 @@
-//! Custom Iced widgets for RWM Puppet Master
+//! Custom Iced widgets for Puppet Master
 //!
 //! This module provides themed, reusable UI components following the
 //! "Vibrant Technical / Retro-Futuristic Paper Texture" design language.

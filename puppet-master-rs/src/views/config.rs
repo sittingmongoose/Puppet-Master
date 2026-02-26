@@ -777,7 +777,7 @@ fn tab_branching<'a>(
             help_tooltip("branching.naming_pattern", tooltip_variant, theme, scaled),
             styled_text_input(
                 theme,
-                "rwm/{tier}/{id}",
+                "pm/{tier}/{id}",
                 &gui_config.branching.naming_pattern,
                 scaled
             )
@@ -1961,7 +1961,7 @@ fn tab_interview<'a>(
     );
 
     content = content.push(
-        text("Configure the interactive requirements interview for the Ralph Wiggum Model")
+        text("Configure the interactive requirements interview for the requirements interview model")
             .size(tokens::font_size::SM)
             .color(theme.ink_faded()),
     );

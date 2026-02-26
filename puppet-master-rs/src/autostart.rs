@@ -25,7 +25,7 @@ fn apply_linux(enabled: bool, exe: &std::path::Path) -> Result<(), anyhow::Error
     let dirs = directories::BaseDirs::new()
         .ok_or_else(|| anyhow::anyhow!("could not determine base directories"))?;
     let autostart_dir = dirs.config_dir().join("autostart");
-    let path = autostart_dir.join("com.rwm.puppet-master.desktop");
+    let path = autostart_dir.join("com.puppetmaster.puppet-master.desktop");
     if enabled {
         fs::create_dir_all(&autostart_dir)?;
         let content = format!(
@@ -48,7 +48,7 @@ fn apply_linux(enabled: bool, exe: &std::path::Path) -> Result<(), anyhow::Error
 fn apply_macos(enabled: bool, exe: &std::path::Path) -> Result<(), anyhow::Error> {
     let dirs = directories::BaseDirs::new()
         .ok_or_else(|| anyhow::anyhow!("could not determine base directories"))?;
-    let path = dirs.home_dir().join("Library/LaunchAgents/com.rwm.puppet-master.plist");
+    let path = dirs.home_dir().join("Library/LaunchAgents/com.puppetmaster.puppet-master.plist");
     if enabled {
         let escaped = xml_escape(exe.to_string_lossy().as_ref());
         let content = format!(
@@ -65,7 +65,7 @@ fn apply_macos(enabled: bool, exe: &std::path::Path) -> Result<(), anyhow::Error
   <key>RunAtLoad</key>
   <true/>
   <key>Label</key>
-  <string>com.rwm.puppet-master</string>
+  <string>com.puppetmaster.puppet-master</string>
 </dict>
 </plist>
 "#,

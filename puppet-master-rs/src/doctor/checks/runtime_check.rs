@@ -20,11 +20,11 @@ impl RuntimeCheck {
     pub fn new() -> Self {
         // Use the same workspace logic as default_paths() to avoid permission issues
         let working_dir = if cfg!(windows) {
-            // Windows: Use %LOCALAPPDATA%\RWM Puppet Master
-            if let Some(proj_dirs) = directories::ProjectDirs::from("com", "RWM", "Puppet Master") {
+            // Windows: Use %LOCALAPPDATA%\puppetmaster\Puppet Master
+            if let Some(proj_dirs) = directories::ProjectDirs::from("com", "puppetmaster", "Puppet Master") {
                 proj_dirs.data_local_dir().to_path_buf()
             } else if let Some(base_dirs) = directories::BaseDirs::new() {
-                base_dirs.data_local_dir().join("RWM Puppet Master")
+                base_dirs.data_local_dir().join("Puppet Master")
             } else {
                 std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
             }
@@ -33,11 +33,11 @@ impl RuntimeCheck {
             if let Ok(exe_path) = std::env::current_exe() {
                 if exe_path.starts_with("/usr/bin") || exe_path.starts_with("/usr/local/bin") {
                     if let Some(proj_dirs) =
-                        directories::ProjectDirs::from("com", "RWM", "Puppet Master")
+                        directories::ProjectDirs::from("com", "puppetmaster", "Puppet Master")
                     {
                         proj_dirs.data_local_dir().to_path_buf()
                     } else if let Some(base_dirs) = directories::BaseDirs::new() {
-                        base_dirs.data_local_dir().join("RWM Puppet Master")
+                        base_dirs.data_local_dir().join("Puppet Master")
                     } else {
                         std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
                     }

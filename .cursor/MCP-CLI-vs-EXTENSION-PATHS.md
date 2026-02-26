@@ -3,11 +3,11 @@
 ## CLI (terminal)
 
 - **Binary**: Native install at `~/.local/share/claude/versions/<ver>` (or npm global).
-- **Project root**: The **current working directory (cwd)** when you run `claude` — e.g. `~/Cursor/RWM Puppet Master` → `/home/sittingmongoose/Cursor/RWM Puppet Master`.
+- **Project root**: The **current working directory (cwd)** when you run `claude` — e.g. `~/Cursor/<repo>` → `/home/<user>/Cursor/<repo>`.
 - **Project MCP**: Reads **`.mcp.json`** from that cwd.
 - **User config**: **`~/.claude.json`** — `projects["<path>"]` is keyed by that same path; user-scope MCP can live at top-level `mcpServers`.
 
-So when you run `claude` in the repo terminal, it uses **`/home/sittingmongoose/Cursor/RWM Puppet Master`** and finds `.mcp.json` there.
+So when you run `claude` in the repo terminal, it uses **`<repo-root>`** and finds `.mcp.json` there.
 
 ---
 
@@ -15,7 +15,7 @@ So when you run `claude` in the repo terminal, it uses **`/home/sittingmongoose/
 
 - **Process**: Started by Cursor; may use the same native binary or an extension bundle.
 - **Project root**: Comes from **Cursor’s workspace API** (e.g. the folder you opened), not from the terminal cwd. Cursor can report a **different path** (e.g. different mount, URI normalization, or multi-root).
-- **Project MCP**: Extension looks for **`.mcp.json`** at whatever path Cursor reports as the workspace folder. If that path is different (e.g. `/mnt/user/Cursor/RWM Puppet Master` on another mount), the file there may not exist and the extension sees no project MCP.
+- **Project MCP**: Extension looks for **`.mcp.json`** at whatever path Cursor reports as the workspace folder. If that path is different (e.g. `/mnt/user/Cursor/<repo>` on another mount), the file there may not exist and the extension sees no project MCP.
 - **User config**: Same **`~/.claude.json`**. User-scope MCP (top-level `mcpServers`) is available in **all** projects and does not depend on workspace path.
 
 So if the extension’s “workspace path” is not the same as the CLI’s cwd, it won’t see project `.mcp.json`. **User-scope MCP in `~/.claude.json`** is the reliable way to make the same servers visible in the extension regardless of path.

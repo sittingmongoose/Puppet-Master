@@ -319,12 +319,12 @@ mod tests {
     #[test]
     fn test_find_in_shell_path_nonexistent() {
         // Should return None for a command that cannot exist
-        assert!(find_in_shell_path("__rwm_nonexistent_binary_42__").is_none());
+        assert!(find_in_shell_path("__pm_nonexistent_binary_42__").is_none());
     }
 
     #[test]
     fn test_resolve_executable_nonexistent() {
-        assert!(resolve_executable("__rwm_nonexistent_binary_42__").is_none());
+        assert!(resolve_executable("__pm_nonexistent_binary_42__").is_none());
     }
 
     #[test]

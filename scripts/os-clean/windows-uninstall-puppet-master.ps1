@@ -7,7 +7,7 @@ param(
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
-# Uninstall RWM Puppet Master from Windows and remove common leftovers.
+# Uninstall Puppet Master from Windows and remove common leftovers.
 # Intended for installer smoke tests (fresh install each run).
 #
 # Usage (Admin PowerShell recommended):
@@ -117,8 +117,7 @@ $programFilesRoot = if ($env:ProgramW6432) {
 
 if ($programFilesRoot) {
   $installDirs = @(
-    (Join-Path $programFilesRoot "RWM Puppet Master"),
-    (Join-Path $programFilesRoot "Puppet Master") # legacy path
+    (Join-Path $programFilesRoot "Puppet Master")
   )
 
   foreach ($installDir in $installDirs) {
@@ -133,10 +132,10 @@ if ($programFilesRoot) {
   Write-Host "[windows-uninstall] ProgramFiles environment variable is unavailable; skipping install-dir cleanup"
 }
 
-# Remove Start Menu folders and Desktop shortcuts for current + legacy names.
+# Remove Start Menu folders and Desktop shortcuts.
 if (${env:ProgramData}) {
   $startMenuRoot = Join-Path ${env:ProgramData} "Microsoft\\Windows\\Start Menu\\Programs"
-  foreach ($menuName in @("RWM Puppet Master", "Puppet Master")) {
+  foreach ($menuName in @("Puppet Master")) {
     Remove-PathSafe -Path (Join-Path $startMenuRoot $menuName) -Directory
   }
 }
@@ -146,20 +145,14 @@ foreach ($desktopRoot in @(${env:Public}, ${env:USERPROFILE})) {
     continue
   }
 
-  foreach ($shortcut in @("RWM Puppet Master.lnk", "Puppet Master.lnk")) {
+  foreach ($shortcut in @("Puppet Master.lnk")) {
     Remove-PathSafe -Path (Join-Path (Join-Path $desktopRoot "Desktop") $shortcut)
   }
 }
 
-# Runtime paths changed across releases; remove both current and legacy.
+# Runtime paths changed across releases.
 if (${env:USERPROFILE}) {
   Remove-PathSafe -Path (Join-Path ${env:USERPROFILE} ".puppet-master") -Directory
-  Remove-PathSafe -Path (Join-Path ${env:USERPROFILE} ".rwm-puppet-master") -Directory
-}
-
-if (${env:LOCALAPPDATA}) {
-  Remove-PathSafe -Path (Join-Path ${env:LOCALAPPDATA} "RWM Puppet Master") -Directory
-  Remove-PathSafe -Path (Join-Path ${env:LOCALAPPDATA} "rwm-puppet-master") -Directory
 }
 
 Write-Host "[windows-uninstall] done"
