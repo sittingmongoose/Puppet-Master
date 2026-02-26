@@ -69,6 +69,7 @@ See: `Plans/rewrite-tie-in-memo.md`.
 | `MiscPlan.md` | Cleanup + runner contract + artifact retention | Should map to patch pipeline + event artifacts retention |
 | `newtools.md` | GUI testing/tools discovery + MCP tooling | Should map to central tool registry/policy engine |
 | `Tools.md` | Built-in tools, custom tools, permissions (allow/deny/ask) | Canonical for tool semantics and permission model; OpenCode-style. **task** tool launches subagents; `subagent_type` must be one of the **41 subagents** (orchestrator §4, §3.6). MCP config covered in newtools.md and AGENTS.md. |
+| `OpenCode_Deep_Extraction.md` | OpenCode pattern extraction procedure | Provenance doc for extracting upstream patterns and mapping them into Puppet Master SSOT docs; use the category → target mapping in §7 rather than duplicating definitions. |
 | `usage-feature.md` | Usage UX + dashboards | Treat usage as projections/rollups over event ledger; **per-thread usage in chat** (context circle, hover tooltip, thread Usage tab) per §5 (OpenCode-style). Widget-composed page addendum (2026-02-23). |
 | `newfeatures.md` | Feature ideas + patterns | Treat Iced references as legacy examples; no SQLite (storage is seglog/redb/Tantivy); rewrite anchors are Provider/event-store/tool-policy |
 | `Widget_System.md` | Cross-cutting widget catalog, grid layout, add-widget flow | Canonical for portable page widgets, grid-based resizing, layout persistence. Referenced by Dashboard, Usage, Orchestrator pages. Single widget catalog shared across all widget-composed surfaces. |
@@ -78,6 +79,7 @@ See: `Plans/rewrite-tie-in-memo.md`.
 | `Executor_Protocol.md` | Deterministic overseer flow and lifecycle semantics | Canonical for Builder/Verifier/Overseer roles, next-ready selection, and verifier-driven auto completion to `done`. |
 | `UI_Wiring_Rules.md` | UI wiring rules + verification | Canonical for Rule 1 (UI dispatches only typed UICommands) and Rule 2 (every UI element maps to one UICommandID). Defines UI Command Dispatcher boundary and Wiring Matrix verification concept. |
 | `Provider_OpenCode.md` | OpenCode server-bridged provider integration | Optional provider; user installs OpenCode locally; Puppet Master connects via HTTP REST + SSE. See also CLI_Bridged_Providers.md (extended for HTTP transport). |
+| `BinaryLocator_Spec.md` | Deterministic provider CLI discovery | Canonical algorithm for locating + validating external Provider CLIs (initially Cursor Agent + Claude Code) across OS using only official install footprints (override/PATH/common locations/launchers). |
 | `Wiring_Matrix.md` | Wiring matrix template + examples | Template and 10 EXAMPLE rows for the wiring matrix. Real entries are JSON validated against Wiring_Matrix.schema.json. |
 
 ## Known cross-cutting duplication hotspots

@@ -34,6 +34,7 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, ContractName:Pl
 This document references only sources that exist in this repo checkout.
 
 - **Protocol normalization + bounded buffers:** `Plans/newfeatures.md`
+- **Provider CLI discovery + validation (Cursor Agent / Claude Code):** `Plans/BinaryLocator_Spec.md`
 - **Persistent event log (seglog) + event envelope:** `Plans/storage-plan.md` (§2.2)
 - **Tool permissions + tool events (`tool.invoked`, `tool.denied`):** `Plans/Tools.md` (§8.0, §8.2, §10.7)
 - **FileSafe guards and blocking semantics:** `Plans/FileSafe.md`

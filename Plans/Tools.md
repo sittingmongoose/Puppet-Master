@@ -591,6 +591,7 @@ Use this list in order to derive a step-by-step implementation plan. Dependencie
 - Plans/newtools.md -- GUI testing tools, **MCP support and GUI settings**, per-platform MCP table, cited web search.
 - Plans/rewrite-tie-in-memo.md -- Central tool registry, policy engine, event model, storage.
 - Plans/storage-plan.md -- seglog, redb, Tantivy, analytics scan, rollups.
+- Plans/OpenCode_Deep_Extraction.md -- Provenance: category → SSOT mapping for upstream OpenCode pattern extraction.
 - Plans/00-plans-index.md -- Plan map and rewrite tie-in.
 
 ---
