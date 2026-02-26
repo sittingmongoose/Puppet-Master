@@ -1,0 +1,17 @@
+{
+  "output_root": "Plans/_shards",
+  "evidence_root": "Plans/.evidence",
+  "split_rule": {
+    "primary": "## outside fences",
+    "fallback": "line-count-200"
+  },
+  "sources": [
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/interview-subagent-integration.md",
+    "Plans/newtools.md",
+    "Plans/LSPSupport.md",
+    "Plans/FileManager.md",
+    "Plans/FileSafe.md"
+  ]
+}

@@ -1,0 +1,863 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "plan-sharding-2026-02-26",
+  "created_at_utc": "2026-02-26T22:16:55.726172+00:00",
+  "node": {
+    "node_id": "plan-sharding"
+  },
+  "summary": "Lossless sharding verified by sha256 reconstruction for each source doc.",
+  "commands_run": [
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": -1,
+      "stdout_excerpt": "not yet run"
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool_id": "pm-shard-plans",
+      "count": 2
+    }
+  ],
+  "events": {
+    "event_refs": [
+      {
+        "source": "other",
+        "ref": "plan-sharding-2026-02-26"
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/00-preamble.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/01-plan-document-status.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/02-executive-summary.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/03-rewrite-alignment-2026-02-21.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/04-relationship-between-the-two-plans.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/05-tier-level-subagent-strategy.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/06-dynamic-subagent-selection-architecture.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/07-integration-with-orchestrator.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/08-benefits.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/09-implementation-phases.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/10-platform-cli-verification-subagent-invocation-testing.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/11-plan-mode-strategy-defaults.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/12-gui-and-backend-scope-all-in-scope-now.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/13-gaps-and-clarifications.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/14-dry-method-compliance.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/15-potential-issues.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/16-interviewer-enhancements-and-config-wiring.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/17-avoiding-built-but-not-wired.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/18-start-and-end-verification-at-phase-task-and-subtask.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/19-lifecycle-and-quality-features.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/20-considerations.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/21-next-steps.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/22-implementation-notes-where-code-lives-and-what-to-add.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/23-parallel-execution-subagent-integration.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/24-platform-specific-capabilities-extensions.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/25-leveraging-platform-capabilities-for-subagent-integration.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/26-updated-implementation-architecture.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/27-benefits-of-platform-capabilities.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/28-implementation-considerations.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/29-next-steps-2.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/30-autonomous-qa-loop-pattern-integration.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/31-change-summary.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/manifest.json",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/_index.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-02-26/reports/orchestrator-subagent-integration.reconstruct.sha256.txt",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-02-26/reports/orchestrator-subagent-integration.reconstruct.diff.txt",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/00-preamble.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/01-table-of-contents.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/02-1-executive-summary.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/03-2-tech-stack-and-renderer.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/04-3-master-layout.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/05-4-navigation-architecture.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/06-5-panel-system.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/07-6-theme-system.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/08-7-views-specification.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/09-8-widget-catalog.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/10-9-state-management.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/11-10-ux-patterns.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/12-11-anti-flickering-and-scroll-preservation.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/13-12-responsive-design.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/14-13-accessibility.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/15-14-slint-file-organization.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/16-15-persistence.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/17-16-migration-mapping.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/18-17-risks-and-mitigations.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/19-18-promoted-features-formerly-future-considerations.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/20-appendix-a-cross-references.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/21-appendix-b-locked-decisions-summary.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/22-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-addendum-2026-02-23.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/manifest.json",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/_index.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-02-26/reports/FinalGUISpec.reconstruct.sha256.txt",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-02-26/reports/FinalGUISpec.reconstruct.diff.txt",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/00-preamble.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/01-change-summary.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/02-plan-document-status.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/03-rewrite-alignment-2026-02-21.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/04-executive-summary.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/05-relationship-to-orchestrator-plan.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/06-subagent-phase-assignments.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/07-adaptive-interview-phases-contract-layer-outputs-cross-plan-alignment.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/08-integration-architecture.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/09-dry-method-compliance-dry-compliance.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/10-implementation-phases.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/11-configuration-example.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/12-benefits.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/13-considerations.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/14-crews-and-subagent-communication-enhancements-for-interview-flow.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/15-lifecycle-and-quality-enhancements-for-interview-flow.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/16-next-steps.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/17-gui-gaps-interview-tab.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/18-subagent-file-management.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/19-platform-specific-subagent-invocation.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/20-updated-configuration.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/21-updated-considerations.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/22-platform-specific-limitations-workarounds.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/23-testing-strategy.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/24-user-project-output-contract-sharded-plan-graph-canonical.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/25-change-summary-2.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/manifest.json",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/_index.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-02-26/reports/interview-subagent-integration.reconstruct.sha256.txt",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-02-26/reports/interview-subagent-integration.reconstruct.diff.txt",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/00-preamble.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/01-plan-document-status.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/02-rewrite-alignment-2026-02-21.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/03-dry-method-compliance.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/04-table-of-contents.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/05-1-executive-summary.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/06-2-relationship-to-other-plans.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/07-3-problem-statement.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/08-4-goals.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/09-5-design-overview.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/10-6-framework-tool-discovery-dry.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/11-7-interviewer-flow-changes.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/12-8-mcp-support-and-gui-settings.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/13-9-custom-headless-gui-tool.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/14-10-integration-with-test-strategy-plans.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/15-11-implementation-checklist.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/16-12-gaps-risks-and-dry-notes.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/17-127-crews-and-subagent-communication-enhancements-for-tool-discovery.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/18-128-lifecycle-and-quality-enhancements-for-tool-discovery.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/19-13-evidence-in-chat-contract-and-flow-research-evidence-media-chat.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/20-14-live-visualization-execution-architecture-research-live-visualization.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/21-145-mobile-testing-stacks-research-mobile-testing-stacks.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/22-146-preview-build-docker-and-actions-contracts.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/23-15-references.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/manifest.json",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newtools/_index.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-02-26/reports/newtools.reconstruct.sha256.txt",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-02-26/reports/newtools.reconstruct.diff.txt",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/00-preamble.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/01-1-purpose.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/02-2-lsp-basics-reference.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/03-3-how-opencode-does-it-reference-for-rewrite.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/04-4-rust-stack-client-side.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/05-5-integration-with-our-editor-filemanager-rewrite.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/06-6-scope-and-phasing.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/07-7-resolved-design-decisions-and-implementation-constraints.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/08-8-potential-issues-and-mitigations.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/09-9-mvp-lsp-features-summary.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/10-10-transport-alternatives-and-bridge-pattern.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/11-11-references.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/12-12-implementation-checklist-when-phased-in.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/13-13-gui-requirements-and-cross-references.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/14-14-technical-implementation-implementation-guide-source.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/15-15-implementation-phases-and-acceptance-criteria.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/16-16-open-points-and-decisions-for-implementer.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/17-appendix-implementation-plan-checklist-single-ordered-list-for-implementers.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/18-17-lsp-verification-gate-evidence-subagent-selection-implementation-spec.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/manifest.json",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/LSPSupport/_index.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-02-26/reports/LSPSupport.reconstruct.sha256.txt",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-02-26/reports/LSPSupport.reconstruct.diff.txt",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/00-preamble.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/01-change-summary.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/02-summary.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/03-table-of-contents.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/04-1-file-manager-panel.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/05-2-in-app-ide-style-editor-mvp.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/06-3-mention-in-chat.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/07-4-integration-file-manager-editor-and-chat.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/08-5-click-to-open-from-chat.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/09-6-out-of-scope.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/10-7-edge-cases.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/11-8-image-viewer-and-html-preview.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/12-9-tabs-editor-terminal-browser.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/13-10-editor-enhancements-mvp.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/14-11-languageframework-presets.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/15-12-gaps-potential-problems-and-enhancements.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/16-verification-ai-executable.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/17-13-git-status-integration.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/manifest.json",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/_index.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-02-26/reports/FileManager.reconstruct.sha256.txt",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-02-26/reports/FileManager.reconstruct.diff.txt",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/00-preamble.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/01-dry-method-compliance.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/02-rewrite-alignment-2026-02-21.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/03-executive-summary.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/04-table-of-contents.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/05-1-architecture-overview.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/06-2-implementation-details.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/07-3-integration-with-platform-runner.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/08-4-pattern-file.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/09-5-configuration-options.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/10-6-event-logging.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/11-7-error-messages.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/12-8-testing.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/13-9-implementation-checklist.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/14-10-relationship-to-other-plans.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/15-10a-filesafe-and-assistant-yolo-mode.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/16-11-additional-filesafe-features.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/17-12-gaps-and-potential-issues.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/18-13-enhancements.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/19-14-context-compilation-token-efficiency.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/20-15-system-integration-analysis.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/21-16-references.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/22-17-implementation-order-and-dependencies.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/manifest.json",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/_index.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-02-26/reports/FileSafe.reconstruct.sha256.txt",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-02-26/reports/FileSafe.reconstruct.diff.txt",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-02-26/reports/commands.txt",
+      "change_type": "added"
+    }
+  ],
+  "contract_refs_satisfied": [],
+  "reproducibility": {
+    "snapshot_ref": "plan-sharding-2026-02-26",
+    "note": "Rerunning --generate with unchanged sources produces identical output (idempotent)."
+  },
+  "artifacts": [
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-02-26"
+    }
+  ],
+  "checks": [
+    {
+      "name": "sha256-reconstruction-orchestrator-subagent-integration",
+      "result": "PASS",
+      "details": "source_sha256=2f528418299acb815be7710b49442f687469aabff8c239ecec0289e80f575f14"
+    },
+    {
+      "name": "sha256-reconstruction-FinalGUISpec",
+      "result": "PASS",
+      "details": "source_sha256=9081107dd1f68eeb081ddda11843e06ea949517bd7578decd063ad3f3f3c3d80"
+    },
+    {
+      "name": "sha256-reconstruction-interview-subagent-integration",
+      "result": "PASS",
+      "details": "source_sha256=580843f70104c3ef7979a598ac6053f1e524083a5510844e44af786915776051"
+    },
+    {
+      "name": "sha256-reconstruction-newtools",
+      "result": "PASS",
+      "details": "source_sha256=01ae15206caf1190170a0196ac1fe3a267a17ba35a2f19d8f52f5e6e6f697158"
+    },
+    {
+      "name": "sha256-reconstruction-LSPSupport",
+      "result": "PASS",
+      "details": "source_sha256=18957609444a2c5378b8723bdd9ff6080c5c6bbf55de1a629c3e631a7fabf778"
+    },
+    {
+      "name": "sha256-reconstruction-FileManager",
+      "result": "PASS",
+      "details": "source_sha256=8f0d061da30779e8845b02648cc4d8b73729e3f0216397e8e4be4e8fdbb2baaa"
+    },
+    {
+      "name": "sha256-reconstruction-FileSafe",
+      "result": "PASS",
+      "details": "source_sha256=1b04c0892fbad3daa336727fe021017a8eff888bf74cfec840344c7f3f97fddd"
+    }
+  ]
+}
