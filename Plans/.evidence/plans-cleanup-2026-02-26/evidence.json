@@ -30,16 +30,22 @@
     ]
   },
   "files_changed": [
+    {"path": ".claude/CLAUDE.md", "change_type": "modified"},
+    {"path": "AGENTS.md", "change_type": "modified"},
+    {"path": "Plans/.evidence/plans-cleanup-2026-02-26/evidence.json", "change_type": "added"},
     {"path": "Plans/Crosswalk.md", "change_type": "modified"},
-    {"path": "Plans/Spec_Lock.json", "change_type": "modified"},
-    {"path": "Plans/rebrand.md", "change_type": "deleted"},
-    {"path": "Plans/Rebrand_Chunked_Playbook.md", "change_type": "deleted"},
-    {"path": "Plans/rebrand_chunks.json", "change_type": "deleted"},
+    {"path": "Plans/Decision_Log.md", "change_type": "deleted"},
+    {"path": "Plans/FinalGUISpec.md", "change_type": "modified"},
     {"path": "Plans/RECOVERY_AUDIT_REPORT.md", "change_type": "deleted"},
     {"path": "Plans/RECOVERY_FIX_QUEUE.md", "change_type": "deleted"},
-    {"path": "Plans/Decision_Log.md", "change_type": "deleted"},
+    {"path": "Plans/Rebrand_Chunked_Playbook.md", "change_type": "deleted"},
+    {"path": "Plans/Spec_Lock.json", "change_type": "modified"},
+    {"path": "Plans/agent-rules-context.md", "change_type": "modified"},
+    {"path": "Plans/auto_decisions.jsonl", "change_type": "modified"},
     {"path": "Plans/evidence_context_injection_scoping_journaling_2026-02-26.json", "change_type": "deleted"},
-    {"path": "Plans/evidence_spec_doc_remediation_2026-02-23.json", "change_type": "deleted"}
+    {"path": "Plans/evidence_spec_doc_remediation_2026-02-23.json", "change_type": "deleted"},
+    {"path": "Plans/rebrand.md", "change_type": "deleted"},
+    {"path": "Plans/rebrand_chunks.json", "change_type": "deleted"}
   ],
   "contract_refs_satisfied": [
     "PolicyRule:Decision_Policy.md#spec-lock-update-protocol",

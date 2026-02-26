@@ -269,7 +269,7 @@ When user edits AGENTS.md in Puppet Master:
 - long command encyclopedias
 - architecture tours
 - redundant discoverable info
-- enforce budgets (defaults may be decided in Plans/Decision_Policy.md):
+- enforce budgets (defaults may be decided in Plans/auto_decisions.jsonl per Plans/Decision_Policy.md):
 - max bytes (e.g. 6–10KB)
 - max lines (e.g. 80)
 - max headings (e.g. 6)

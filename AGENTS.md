@@ -20,7 +20,7 @@ It defines only: scope, non-negotiable constraints, and the SSOT paths for **Pla
 When editing anything in `Plans/`, follow these files and do not duplicate their content:
 - `Plans/DRY_Rules.md` (DRY/SSOT + ContractRef rules)
 - `Plans/Contracts_V0.md` (canonical contracts)
-- `Plans/Decision_Policy.md` (no open questions; deterministic defaults)
+- `Plans/Decision_Policy.md` + `Plans/auto_decisions.jsonl` (deterministic defaults + recorded decisions)
 - `Plans/Spec_Lock.json` + `Plans/Crosswalk.md` (global precedence & traceability)
 - `Plans/00-plans-index.md` (authoritative navigation map)
 
