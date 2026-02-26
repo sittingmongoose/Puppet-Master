@@ -4,6 +4,7 @@
 
 
 ## Change Summary
+- 2026-02-26: Registered Plans/assistant-memory-subsystem.md as canonical Assistant-only memory SSOT.
 - 2026-02-25: Registered Plans/GitHub_Integration.md in plan map table.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
@@ -57,6 +58,7 @@ See: `Plans/rewrite-tie-in-memo.md`.
 | `orchestrator-subagent-integration.md` | Main run loop policy: tiers, subagents, wiring validation | **41 subagents** (canonical list §4: Phase, Task lang/domain/framework, Subtask, Iteration, Cross-phase including explore). DRY:DATA:subagent_registry; task tool (Tools.md §3.6) validates against this list. Treat platform specifics as Provider concerns. |
 | `interview-subagent-integration.md` | Interview phases + subagent use | Phase assignments use the same **41 subagents**; cross-phase (ux-researcher, knowledge-synthesizer, context-manager, explore, etc.). Mirrors orchestrator patterns at interview-phase boundaries. |
 | `assistant-chat-design.md` | Assistant/Chat UX and modes | Keep UX; anchor persistence/search to event stream projections |
+| `assistant-memory-subsystem.md` | Assistant-only memory continuity subsystem | Canonical SSOT for Assistant memory boundary, per-project memory stores (`assistant_memory.redb` + lexical/semantic indexes), decay scoring, capsule/retrieval budgets, and maintenance operations. Explicitly separate from rules pipeline contracts. |
 | `FinalGUISpec.md` | Slint GUI contract | Canonical UI source for **Interaction Mode (Expert/ELI5)** + **Chat ELI5** defaults/independence and the single dual-copy checklist (`§7.4.0`). |
 | `GitHub_Integration.md` | GitHub/Git IDE integration spec | Git panel (repo/branch/diff/operations), GitHub API (OAuth device-code, PRs, Actions), SSH remote dev servers, no-wizard project flows (Add Existing / New Local / New GitHub Repo). Cross-refs: Plans/GitHub_API_Auth_and_Flows.md, Plans/FileManager.md, Plans/chain-wizard-flexibility.md. |
 | `FileManager.md` | File Manager panel, IDE-style editor, @ mention, click-to-open | Canonical for file tree, editor (tabs, split panes, save, line numbers, syntax), image viewer, HTML preview + hot reload, same browser as §15.18, terminal/browser tabs (§9), editor enhancements MVP (§10), language/framework presets (§11). **LSP is MVP** (§10.10): diagnostics, hover, completion, navigation, inlay hints, code actions, code lens; implement with desktop editor from start. |

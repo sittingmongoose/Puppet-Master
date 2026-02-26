@@ -126,6 +126,16 @@ This plan’s **two-tier rules pipeline** (Application rules + Project rules) re
 
 Separately, Puppet Master supports **scoped instruction files** (`AGENTS.md`) and memory injectors (Attempt Journal, Parent Summary) as context-management primitives (SSOT: `Plans/Contracts_V0.md` §5; feature spec verbatim below).
 
+### Assistant-memory separation (clarification)
+
+Rule: Assistant-only memory (`Plans/assistant-memory-subsystem.md`) is continuity/project-state context and MUST NOT be treated as part of Application rules or Project rules assembly.
+
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract, ContractName:Plans/agent-rules-context.md
+
+Rule: The shared rules pipeline MUST output rules content only; Assistant memory injection is a separate Assistant-only stage and is excluded from orchestrator/interview/subagent prompt assembly.
+
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
+
 Rule: For every agent invocation, Puppet Master MUST assemble an Instruction Bundle that incorporates, in deterministic order:
 1) Application rules (via the rules pipeline)
 2) Project rules (via the rules pipeline, when a project is selected)
