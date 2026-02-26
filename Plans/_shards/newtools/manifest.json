@@ -1,0 +1,175 @@
+{
+  "source_path": "Plans/newtools.md",
+  "source_sha256": "01ae15206caf1190170a0196ac1fe3a267a17ba35a2f19d8f52f5e6e6f697158",
+  "split_rule": "## outside fences",
+  "shards": [
+    {
+      "dest_path": "Plans/_shards/newtools/00-preamble.md",
+      "start_line": 1,
+      "end_line": 5,
+      "segment_sha256": "d7b81d431f94d9e9cdacdbb3e2dc1dee8448bbed86f231ae7810af7f104f0207",
+      "heading": null
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/01-plan-document-status.md",
+      "start_line": 6,
+      "end_line": 15,
+      "segment_sha256": "83f28b589f6168f260133410f5973284cf8c006447e4c84f5274b80b52f5689f",
+      "heading": "## Plan Document Status"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/02-rewrite-alignment-2026-02-21.md",
+      "start_line": 16,
+      "end_line": 26,
+      "segment_sha256": "b50b938e76d02541b8ba2f11f3a8ec4a6c32ddda4145742c5180b87bab8214cb",
+      "heading": "## Rewrite alignment (2026-02-21)"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/03-dry-method-compliance.md",
+      "start_line": 27,
+      "end_line": 62,
+      "segment_sha256": "a4d2708f6e4af22ab1de56df9dec3a02bdfb2073e5a13812ed2480db57f3ba7e",
+      "heading": "## DRY Method Compliance"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/04-table-of-contents.md",
+      "start_line": 63,
+      "end_line": 88,
+      "segment_sha256": "cd2d2c566d6cd45b03b20536273e2899e7d8e87429edab6980aac4567311c5b6",
+      "heading": "## Table of Contents"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/05-1-executive-summary.md",
+      "start_line": 89,
+      "end_line": 107,
+      "segment_sha256": "ccbbc9c54ffc1919916bbb926dbff5e90160f95f9cafbc8a74e0a1badc54c20d",
+      "heading": "## 1. Executive Summary"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/06-2-relationship-to-other-plans.md",
+      "start_line": 108,
+      "end_line": 120,
+      "segment_sha256": "31dfbd7979cb2630d318b119237180cd58f7e31ad9a438804818037ad048622b",
+      "heading": "## 2. Relationship to Other Plans"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/07-3-problem-statement.md",
+      "start_line": 121,
+      "end_line": 128,
+      "segment_sha256": "9c7c6e49e87e8a6f70534079674a34efcebaede52a245c0653655e8106fc7bf5",
+      "heading": "## 3. Problem Statement"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/08-4-goals.md",
+      "start_line": 129,
+      "end_line": 143,
+      "segment_sha256": "3a7f7a221cf6e689cb5f5ce67418b14b9b4fb2ec53f4d4c2a3bd9bca05c56da6",
+      "heading": "## 4. Goals"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/09-5-design-overview.md",
+      "start_line": 144,
+      "end_line": 159,
+      "segment_sha256": "9ac253390077478f60b25ed9b3214b08901d5f8503c8eaebe3fcff93461ba2c2",
+      "heading": "## 5. Design Overview"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/10-6-framework-tool-discovery-dry.md",
+      "start_line": 160,
+      "end_line": 220,
+      "segment_sha256": "c8b5343a7a20be58c9ecb68ed56dbaf7be247e30bf486d3b1533234d48904c1a",
+      "heading": "## 6. Framework & Tool Discovery (DRY)"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/11-7-interviewer-flow-changes.md",
+      "start_line": 221,
+      "end_line": 249,
+      "segment_sha256": "2ef28d7c7942f5ef0b0c4d478b026c846a5486433777102c2a69e8df2ccbdce6",
+      "heading": "## 7. Interviewer Flow Changes"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/12-8-mcp-support-and-gui-settings.md",
+      "start_line": 250,
+      "end_line": 415,
+      "segment_sha256": "37b638c156110c9b5e317f65d1dc42b07b1a1078cd1229f04bc4f026621832a1",
+      "heading": "## 8. MCP Support and GUI Settings"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/13-9-custom-headless-gui-tool.md",
+      "start_line": 416,
+      "end_line": 443,
+      "segment_sha256": "1c4a9c130867bb3f6fc18b0da4cf2878fc4107e597650ef479a5d2b322302682",
+      "heading": "## 9. Custom Headless GUI Tool"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/14-10-integration-with-test-strategy-plans.md",
+      "start_line": 444,
+      "end_line": 470,
+      "segment_sha256": "652bc248992367b7fd97dd9c08ec543477e120f7607c3a02d6a64dbdaccc8e15",
+      "heading": "## 10. Integration with Test Strategy & Plans"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/15-11-implementation-checklist.md",
+      "start_line": 471,
+      "end_line": 493,
+      "segment_sha256": "9b45277dd3c3b983b75a7389b6a3fc85f05c8edbbfa600019007e0b7d2ff6e21",
+      "heading": "## 11. Implementation Checklist"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/16-12-gaps-risks-and-dry-notes.md",
+      "start_line": 494,
+      "end_line": 657,
+      "segment_sha256": "b9a10310079cf4a4581736d12e441a442390491230923e49acb5cf0f2f93856e",
+      "heading": "## 12. Gaps, Risks, and DRY Notes"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/17-127-crews-and-subagent-communication-enhancements-for-tool-discovery.md",
+      "start_line": 658,
+      "end_line": 875,
+      "segment_sha256": "45531a6ef9d52c3f3df6b08b4a7bbda890cda5100d290b029892963e09406978",
+      "heading": "## 12.7 Crews and Subagent Communication Enhancements for Tool Discovery"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/18-128-lifecycle-and-quality-enhancements-for-tool-discovery.md",
+      "start_line": 876,
+      "end_line": 995,
+      "segment_sha256": "802be1511e1e3d68d08ccb150893cbecb9c6781df4bbc0a6b8e22bc68e293345",
+      "heading": "## 12.8 Lifecycle and Quality Enhancements for Tool Discovery"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/19-13-evidence-in-chat-contract-and-flow-research-evidence-media-chat.md",
+      "start_line": 996,
+      "end_line": 1099,
+      "segment_sha256": "fca72b679a6d08ef46083a9f5943b61e6efedbfb85d7c9dfe48756a39ea9dacf",
+      "heading": "## 13. Evidence-in-Chat Contract and Flow (research-evidence-media-chat)"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/20-14-live-visualization-execution-architecture-research-live-visualization.md",
+      "start_line": 1100,
+      "end_line": 1213,
+      "segment_sha256": "6bca9e35027ef8ebb869c66b457c509650ed6e84aef7f0bafce56207117e605c",
+      "heading": "## 14. Live Visualization Execution Architecture (research-live-visualization)"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/21-145-mobile-testing-stacks-research-mobile-testing-stacks.md",
+      "start_line": 1214,
+      "end_line": 1310,
+      "segment_sha256": "20e080aa4343ffea9a122007531fdf6d84e00a266448eccac7ccaf25cfff8afb",
+      "heading": "## 14.5 Mobile Testing Stacks (research-mobile-testing-stacks)"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/22-146-preview-build-docker-and-actions-contracts.md",
+      "start_line": 1311,
+      "end_line": 1449,
+      "segment_sha256": "727509892d5860593544a1c80e850b763d8aeae5334901823321475583aa2f36",
+      "heading": "## 14.6 Preview, Build, Docker, and Actions Contracts"
+    },
+    {
+      "dest_path": "Plans/_shards/newtools/23-15-references.md",
+      "start_line": 1450,
+      "end_line": 1488,
+      "segment_sha256": "b9ee249147eddc461cd7f7e58a4e06e1af3280ca00cb5c941476c427c9cb54e1",
+      "heading": "## 15. References"
+    }
+  ]
+}

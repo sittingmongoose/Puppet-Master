@@ -1,3 +1,5 @@
+Warning this application does not work in its current state.  It is in the process of being completely rewritten from back to front.  None of the below information is accurate anymore.
+
 # Puppet Master
 
 A Rust/Iced desktop orchestrator that coordinates multiple AI coding CLI platforms using a four-tier workflow system.

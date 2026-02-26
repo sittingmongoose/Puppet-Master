@@ -1,6 +1,8 @@
 node_modules/
 dist/
 coverage/
+.opencode-dev
+.promptpack
 
 # Rust build output
 **/target/
@@ -79,3 +81,4 @@ local.json
 
 # UsageTracker in-memory test artifact (invalid filename on Windows)
 :memory:
+scripts/__pycache__/
