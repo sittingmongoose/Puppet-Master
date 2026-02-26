@@ -226,6 +226,18 @@ ContractRef: Primitive:OrchestratorPage, ContractName:Plans/Orchestrator_Page.md
 
 ---
 
+### 3.15 UIScaling
+**Owner:** UI scaling domain (`Plans/Contracts_V0.md` §8, `Plans/FinalGUISpec.md` §7.4 and §16.2).
+
+Rules:
+- UI scale (0.75–1.5) MUST use Slint native window/global scale factor; per-token manual scaling MUST NOT be ported.
+- Four preset buttons (75 %, 90 %, 100 %, 110 %) in Settings → General.
+- Editor text zoom is independent of app-level UI scale.
+
+ContractRef: Primitive:UIScaling, ContractName:Plans/Contracts_V0.md#8
+
+---
+
 ## References
 - `Plans/Spec_Lock.json`
 - `Plans/DRY_Rules.md`

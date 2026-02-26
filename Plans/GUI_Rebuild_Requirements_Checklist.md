@@ -30,6 +30,7 @@ This checklist is the single auditable summary that verifies the 2026-02-23 GUI 
 | Docker runtime + DockerHub settings contract | `Plans/FinalGUISpec.md` §7.4.8; `Plans/newtools.md` §14.7 | PASS | Advanced settings specify containers/registry defaults, auth mode, and publish policy. |
 | GitHub Actions generation settings contract | `Plans/FinalGUISpec.md` §7.4.9; `Plans/newtools.md` §14.8; `Plans/UI_Command_Catalog.md` §2.5 | PASS | Advanced settings specify workflow templates, secrets checklist, preview/apply flow, and command IDs. |
 | Automation migration (legacy Iced reference -> Slint runtime target) | `Plans/newtools.md` §14.9; `Plans/rewrite-tie-in-memo.md` | PASS | Migration boundary is explicit: keep evidence/tooling contracts while targeting Slint runtime semantics. |
+| UI scaling migration (legacy Iced custom scaling -> Slint native scaling) | `Plans/FinalGUISpec.md` §7.4 and §16.2; `Plans/rewrite-tie-in-memo.md` | PASS | UI scale remains a UX setting; Slint sections now lock scaling to native Slint scale-factor paths and avoid porting token-multiplication layers. |
 
 ## Command Catalog Coverage Check
 

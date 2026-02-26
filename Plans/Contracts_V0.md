@@ -293,6 +293,33 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md, SchemaID:Wiring_Matrix.schem
 
 ---
 
+## 8. UI Scaling
+
+The application exposes a user-facing UI scale setting (Settings → General tab).
+In the Slint rewrite this MUST be implemented via Slint's native window/global scale-factor mechanism.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#7.4, ContractName:Plans/FinalGUISpec.md#16.2
+
+**Contract fields:**
+
+| Field | Value |
+|-------|-------|
+| `scale_range` | `[0.75, 1.5]` (clamped) |
+| `presets` | `[0.75, 0.9, 1.0, 1.1]` |
+| `default` | `1.0` |
+| `mechanism` | Slint native scale factor (window-level) |
+| `prohibited` | Per-token manual scaling / Iced-era `ScaledTokens` multiplication layers |
+
+Rules:
+- UI scale MUST use Slint's native global/window scale factor as the **only** scaling path.
+- Per-token manual scaling (e.g. the legacy Iced `ScaledTokens` multiplication approach) MUST NOT be ported to Slint view code.
+- The same four preset buttons (75 %, 90 %, 100 %, 110 %) MUST appear in Settings → General.
+- Editor text zoom (Ctrl+= / Ctrl+−) is independent of app-level UI scale.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#7.4, ContractName:Plans/FinalGUISpec.md#16.2, PolicyRule:Plans/rewrite-tie-in-memo.md#ui-scaling-migration
+
+---
+
 ## References
 - `Plans/storage-plan.md` (seglog envelope and persistence)
 - `Plans/Tools.md` (tool permission semantics + payload definitions)

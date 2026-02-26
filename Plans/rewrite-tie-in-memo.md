@@ -48,6 +48,9 @@ This project is moving to a single, deterministic "agent loop" architecture wher
 
 ### Immediate contradictions to resolve in Plans (so requirements do not fight each other)
 - **UI tech:** any plan text that assumes **Iced** UI implementation should be treated as *UX requirements only*, not a widget/library implementation commitment
+<a id="ui-scaling-migration"></a>
+- **UI scaling migration:** Iced custom scaling mechanics (for example token-by-token multiplication layers) MUST be treated as legacy implementation references; Slint-target sections MUST describe native Slint scaling paths.
+  ContractRef: ContractName:Plans/Contracts_V0.md#8
 - **Storage:** any plan that proposes **SQLite** for run/session/history storage needs to be reframed as **event-sourced** storage with seglog/redb/Tantivy projections
 - **Provider abstraction:** platform-specific execution terminology in touched sections must use **Provider** + unified event model, especially for streaming output and tool gating
 - **Gemini auth:** existing "subscription-only / no API keys" guidance must explicitly allow a Gemini exception: "no API keys **except Gemini** (Gemini API key can represent subscription access)"

@@ -172,7 +172,7 @@ The title bar contains a **project bar** -- a dropdown/strip showing all known p
 
 ### 3.5 Spacing and Density
 
-**Global spacing scale** (retained from existing `ScaledTokens`):
+**Global spacing tokens** (base design tokens; independent of UI scaling):
 
 | Token | Base (px) | Use |
 |-------|-----------|-----|
@@ -746,7 +746,7 @@ This is a **heavily redesigned** unified settings page that merges four previous
 
 | Tab | Content | Source |
 |-----|---------|--------|
-| **General** | Log level, auto-scroll, show timestamps, minimize to tray, start on boot, retention days, intensive logging, **Interaction Mode (Expert/ELI5)** (app-level copy selector; default ELI5/ON), UI scale (0.75-1.5), max editor tabs (LRU cap, default 20), run-complete notification toggle, max concurrent runs per thread (default 10), **sound effects** toggle (default off; see §10.13), max terminal instances (default 12, range 4-20), max browser tabs (default 8, range 2-12), hot-reload debounce (default 500ms, range 100-5000ms), **theme management** section (theme selector dropdown, "Open themes folder", "Create new theme", "Import theme", "Export theme" -- see §6.6), **Per-platform concurrency limits** (see §7.4.7) | Old "Settings" view + newfeatures.md |
+| **General** | Log level, auto-scroll, show timestamps, minimize to tray, start on boot, retention days, intensive logging, **Interaction Mode (Expert/ELI5)** (app-level copy selector; default ELI5/ON), UI scale (0.75-1.5; Slint native scale factor, no per-token manual scaling), max editor tabs (LRU cap, default 20), run-complete notification toggle, max concurrent runs per thread (default 10), **sound effects** toggle (default off; see §10.13), max terminal instances (default 12, range 4-20), max browser tabs (default 8, range 2-12), hot-reload debounce (default 500ms, range 100-5000ms), **theme management** section (theme selector dropdown, "Open themes folder", "Create new theme", "Import theme", "Export theme" -- see §6.6), **Per-platform concurrency limits** (see §7.4.7) | Old "Settings" view + newfeatures.md |
 | **Tiers** | Phase/task/subtask tier configuration; per-tier: platform (**dropdown**), model (**dropdown**), reasoning_effort, plan_mode, ask_mode, output_format | Old "Config" Tiers tab |
 | **Branching** | **Enable Git** toggle (bound to `orchestrator.enable_git`; tooltip: "Enable git branch creation, commits, and PR creation during runs"); **Auto PR** toggle (bound to `branching.auto_pr`); **Branch strategy** dropdown: MainOnly / Feature / Release (bound to `branching.strategy`); **Use worktrees** toggle; **Parallel execution** toggle (note: "Parallel subtasks use separate git worktrees"); **Granularity** dropdown or label mapped to BranchStrategy (per_phase / per_task / per_subtask); Git info display (user, email, remote, branch -- resolved for active project, not CWD); **Orchestrator concurrency overrides** (collapsible, per-platform, see §7.4.7) | Old "Config" Branching tab |
 | **Verification** | Verification checks, screenshot toggles | Old "Config" Verification tab |
@@ -2405,7 +2405,9 @@ All 25 current Iced widgets map to Slint equivalents. Key differences:
 - **Subscriptions** (50ms polling): Replace with event-driven `invoke_from_event_loop`
 - **Context menu:** Custom implementation (Slint has no built-in)
 - **Animations** (page transitions, pulsing status dots): Use Slint's property transitions and `animate` keyword
-- **Dynamic scaling** (UI scale 0.75-1.5): Use Slint's global scale factor or multiply all token values by scale
+- **Dynamic scaling** (UI scale 0.75-1.5): Use Slint's native global/window scale factor as the only scaling path; do not port Iced token-multiplication layers into Slint view code
+
+ContractRef: ContractName:Plans/Contracts_V0.md#8, PolicyRule:Plans/rewrite-tie-in-memo.md#ui-scaling-migration
 
 ### 16.3 Data Type Preservation
 
