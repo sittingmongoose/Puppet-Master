@@ -750,7 +750,7 @@ This is a **heavily redesigned** unified settings page that merges four previous
 | **Tiers** | Phase/task/subtask tier configuration; per-tier: platform (**dropdown**), model (**dropdown**), reasoning_effort, plan_mode, ask_mode, output_format | Old "Config" Tiers tab |
 | **Branching** | **Enable Git** toggle (bound to `orchestrator.enable_git`; tooltip: "Enable git branch creation, commits, and PR creation during runs"); **Auto PR** toggle (bound to `branching.auto_pr`); **Branch strategy** dropdown: MainOnly / Feature / Release (bound to `branching.strategy`); **Use worktrees** toggle; **Parallel execution** toggle (note: "Parallel subtasks use separate git worktrees"); **Granularity** dropdown or label mapped to BranchStrategy (per_phase / per_task / per_subtask); Git info display (user, email, remote, branch -- resolved for active project, not CWD); **Orchestrator concurrency overrides** (collapsible, per-platform, see §7.4.7) | Old "Config" Branching tab |
 | **Verification** | Verification checks, screenshot toggles | Old "Config" Verification tab |
-| **Memory** | Multi-level memory with progress/agents/PRD file paths | Old "Config" Memory tab |
+| **Memory** | Multi-level memory with progress/agents/PRD file paths; **Context Injection** toggles and injected-context breakdown | Old "Config" Memory tab |
 | **Budgets** | Per-platform token budgets | Old "Config" Budgets tab |
 | **Advanced** | **FileSafe Guards** (collapsible card): three independent toggles -- "Block destructive commands" (on/off), "Restrict writes to plan" (on/off), "Block sensitive files" (on/off); approved commands list (scrollable, per-row remove, optional manual add); override toggle with warning styling. **MCP Configuration** (collapsible card): per-platform MCP toggles for **all five platforms** (Cursor, Codex, Claude Code, Gemini, Copilot), MCP server list (add/edit/remove servers with name/command/args/env fields), "Test connection" button per server, Context7 API key input (password-style), web search provider selection and API key. **Tool permissions** (collapsible card, see §7.4.1): per-tool or wildcard allow/deny/ask; optional presets (Read-only, Plan mode, Full); list built-in + MCP-discovered tools with permission dropdown per row; bound to central tool registry per Plans/Tools.md. **Containers & Registry** (collapsible card, see §7.4.8): Docker runtime/compose defaults, DockerHub namespace/repo/tag defaults, auth mode and push policy. **CI / GitHub Actions** (collapsible card, see §7.4.9): workflow template selection, trigger/matrix controls, required-secrets checklist, generate/preview/apply actions. **Other:** Experimental features, sub-agent toggles, cleanup config (clean untracked before run, clean ignored files, clear agent-output dir, evidence retention days) | Old "Config" Advanced tab + newtools.md + FileSafe.md + Tools.md + MiscPlan.md + GitHub_API_Auth_and_Flows.md |
 | **LSP** | **Language Server Protocol (MVP)** (see §7.4.2): LSP is required for desktop release. Global "Disable automatic LSP server downloads" toggle; built-in servers list with per-server enable/disable (all on by default); per-server env vars and initialization options; custom LSP servers (add/edit/remove: command, extensions, env, initialization). Stored in app config (redb); project overrides optional. | Plans/LSPSupport.md |
@@ -766,6 +766,16 @@ This is a **heavily redesigned** unified settings page that merges four previous
 | **Debug** | Debug adapter configuration and run/debug profiles. See §7.4.6. | FileManager.md |
 | **HITL** | Three independent toggles: pause at phase/task/subtask completion; explanation of each level; all off by default | From human-in-the-loop.md |
 | **YAML** | Raw YAML editor for full config | Old "Config" YAML tab |
+
+**§7.4.X Context Injection (Memory tab; per-project; optional per-run override)**
+
+Rule: Puppet Master MUST expose three per-project Context Injection toggles (default ON): Parent Summary, Scoped `AGENTS.md` beyond top-level, and Attempt Journal. The toggles MUST affect Instruction/Memory bundle assembly deterministically, and the UI MUST display an “Injected Context” breakdown per run/turn (paths + byte counts; truncation reason).
+
+ContractRef: ContractName:Plans/Contracts_V0.md#ContextInjectionToggles, ContractName:Plans/agent-rules-context.md#FeatureSpecVerbatim
+
+Rule: When users edit `AGENTS.md` in Puppet Master (via File Editor or any in-app editing surface), Puppet Master MUST apply lightness lint + budget enforcement, and strict mode MUST be able to block runs when budgets are exceeded.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#AgentsMdLightEnforcement
 
 **§7.4.0 Interaction Mode and Dual-Copy Contract (SSOT):**
 

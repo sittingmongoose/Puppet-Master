@@ -248,8 +248,17 @@ When a node is selected, the detail panel shows comprehensive information organi
 | Run Date | `RunGraphMeta.run_date` |
 | Start / End / Elapsed | `GraphNode.start_ts` / `end_ts` / `elapsed_ms` |
 | Attempts | `GraphNode.attempts` (with retry count) |
+| Injected context | Injected-context breakdown (Instruction/Work/Memory) for the selected node |
 | Blocked Reason | `GraphNode.blocked_reason` (if set) |
 | HITL Status | "Pending approval" or "No HITL request" |
+
+Rule: The detail panel MUST show an “Injected Context” breakdown for the selected node/run, including: included `AGENTS.md` paths + byte counts; parent summary and attempt journal inclusion + byte counts; and whether truncation occurred (and why).
+
+ContractRef: ContractName:Plans/Contracts_V0.md#ContextInjectionToggles
+
+Rule: Attempt journals are per-Subtask Iteration; when enabled, only the most recent attempt journal for the same Subtask is injected into the next Iteration by default (no history injection).
+
+ContractRef: ContractName:Plans/Contracts_V0.md#AttemptJournal, ContractName:Plans/agent-rules-context.md#FeatureSpecVerbatim
 
 ### C2. Plan Mapping
 

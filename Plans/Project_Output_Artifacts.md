@@ -83,6 +83,30 @@ ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requ
   quickstart.md                          # optional derived human convenience file (see §12; non-canonical)
 ```
 
+### 2.2 Non-canonical execution workspace (sidecar) — `.puppet-master/workspace/**`
+
+The **Project Plan Package** (this document) is staged under `.puppet-master/project/**`.
+
+Separately, Puppet Master maintains an execution **workspace sidecar** (ephemeral, non-canonical) under:
+
+`.puppet-master/workspace/<project>/<phase>/<task>/<subtask>/`
+
+This sidecar exists to support deterministic, low-bloat context management without polluting user repos.
+
+Rule: Puppet Master MUST store Attempt Journal and Parent Summary artifacts in the workspace sidecar by default, and MUST treat them as execution-time artifacts (not part of the canonical Project Plan Package).
+
+ContractRef: ContractName:Plans/Contracts_V0.md#AttemptJournal, ContractName:Plans/Contracts_V0.md#ParentSummary, ContractName:Plans/agent-rules-context.md#FeatureSpecVerbatim
+
+Recommended contents (non-exhaustive):
+- `AGENTS.md` (scoped instruction file for this subtree; managed or user-owned depending on mode)
+- `parent_summary.md`
+- `attempt_journal.md`
+- Iteration run artifacts (logs, snapshots, per-iteration output)
+
+Rule: Promotion of stable learnings into scoped `AGENTS.md` MUST follow Promotion rules and MUST preserve `AGENTS.md` lightness budgets.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#PromotionRules, ContractName:Plans/Contracts_V0.md#AgentsMdLightEnforcement
+
 ## 3. Schema alignment (critical; do not rename fields)
 
 This document uses the exact terminology/field names of the canonical schemas under `Plans/`:

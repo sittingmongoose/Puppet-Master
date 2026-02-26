@@ -240,6 +240,77 @@ ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans
 
 ---
 
+## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)
+
+This section defines cross-cutting context assembly and enforcement behaviors for the finished Puppet Master product.
+
+<a id="InstructionBundleAssembly"></a>
+### 5.1 InstructionBundleAssembly
+
+**Definition:** Deterministic assembly rules for the **Instruction Bundle** used by Puppet Master agent runs at all tiers.
+
+Rules:
+- Puppet Master MUST assemble the run context as three explicit bundles in deterministic order: **Instruction Bundle**, then **Work Bundle**, then **Memory Bundle**.
+- If scoped `AGENTS.md` is enabled, Puppet Master MUST include the applicable `AGENTS.md` chain from project root → the node scope directory.
+- If scoped `AGENTS.md` is disabled, Puppet Master MUST include only the top-level `AGENTS.md` (if present).
+- Precedence within the scoped `AGENTS.md` chain MUST be “closest wins” (deep overrides parent), and the chain MUST be de-duplicated deterministically.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/Contracts_V0.md#ContextInjectionToggles
+
+<a id="AttemptJournal"></a>
+### 5.2 AttemptJournal
+
+**Definition:** `attempt_journal` is the per-Subtask, per-Iteration ephemeral artifact used to prevent repeated failed attempts.
+
+Rules:
+- When Attempt Journal injection is enabled, Puppet Master MUST inject only the **most recent** attempt journal for the same Subtask into the next Iteration’s Memory Bundle.
+- Puppet Master MUST NOT inject attempt-journal history by default (no multi-entry rollups in the Memory Bundle).
+
+ContractRef: ContractName:Plans/Contracts_V0.md#AttemptJournal, ContractName:Plans/Contracts_V0.md#ContextInjectionToggles
+
+<a id="ParentSummary"></a>
+### 5.3 ParentSummary
+
+**Definition:** `parent_summary` is a short handoff summary injected into Iteration context to preserve intent without long history.
+
+Rules:
+- When Parent Summary injection is enabled, Puppet Master MUST inject `parent_summary` into the Iteration Memory Bundle.
+- `parent_summary` MUST be capped to a short, deterministic budget (hard cap; see Decision Policy + defaults).
+
+ContractRef: ContractName:Plans/Contracts_V0.md#ParentSummary, ContractName:Plans/Contracts_V0.md#ContextInjectionToggles, PolicyRule:Decision_Policy.md§2
+
+<a id="PromotionRules"></a>
+### 5.4 PromotionRules (journal → scoped `AGENTS.md` with anti-clutter gating)
+
+Rules:
+- Promotion MUST move only stable, non-obvious, scope-relevant learnings into the nearest appropriate `AGENTS.md`.
+- Promotion MUST NOT add session-narrative or run-specific story text.
+- Promotion MUST be budget-aware; if promotion would exceed budgets, promotion MUST require replacement/condense rather than growth.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#PromotionRules, ContractName:Plans/Contracts_V0.md#AgentsMdLightEnforcement
+
+<a id="AgentsMdLightEnforcement"></a>
+### 5.5 `AGENTS.md` light enforcement (authoring-time lint + runtime budgets)
+
+Rules:
+- Puppet Master MUST lint `AGENTS.md` content at authoring time to discourage wiki-style bloat (directory trees, architecture tours, command encyclopedias, redundant discoverable info).
+- Before a run, Puppet Master MUST enforce instruction budgets deterministically; when strict mode is enabled, Puppet Master MUST block the run until budgets are met.
+- If runtime truncation is required, Puppet Master MUST NOT truncate Work Bundle acceptance criteria; truncation MUST prefer illustrative/examples content first and MUST be recorded in run metadata.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#AgentsMdLightEnforcement
+
+<a id="ContextInjectionToggles"></a>
+### 5.6 ContextInjectionToggles (GUI toggles + defaults + injected-context transparency)
+
+Rules:
+- Puppet Master MUST expose three per-project context injection toggles: Parent Summary, Scoped `AGENTS.md` beyond top-level, and Attempt Journal.
+- Deterministic defaults for these toggles MUST be defined and recorded via the Decision Policy (no open questions).
+- The GUI MUST show an “Injected Context” breakdown per run describing: included `AGENTS.md` paths + byte counts; parent summary and attempt journal inclusion + byte counts; and truncation (if any) with reason.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#ContextInjectionToggles, PolicyRule:Decision_Policy.md§2
+
+---
+
 <a id="7"></a>
 <a id="UICommand"></a>
 ## 7. UICommand

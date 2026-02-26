@@ -67,6 +67,16 @@ The project uses **two plan documents** that divide scope by execution context:
 
 **Application and project rules:** **Plans/agent-rules-context.md** defines **application-level rules** (Puppet Master; e.g. "Always use Context7 MCP") and **project-level rules** (target project; e.g. "Always use DRY Method") that are fed into **every** agent. The orchestrator must include the shared rules pipeline output when building iteration prompts (see that plan for the single pipeline and injection point).
 
+### Context management across tiers (Phase → Task → Subtask → Iteration)
+
+Rule: For every tier run, the orchestrator MUST assemble agent run context as explicit bundles (Instruction / Work / Memory) and MUST apply tier visibility rules so Iteration runs receive minimal but sufficient context (including optional Parent Summary and Attempt Journal injection where enabled).
+
+ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/Contracts_V0.md#AttemptJournal, ContractName:Plans/Contracts_V0.md#ParentSummary, ContractName:Plans/agent-rules-context.md#FeatureSpecVerbatim
+
+Rule: The orchestrator MUST compute and persist an “Injected Context” breakdown per Iteration run (included `AGENTS.md` chain, parent summary, attempt journal, and any truncation applied) so UI surfaces can display it deterministically.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#ContextInjectionToggles
+
 **Cited web search:** **Web search with citations** (inline citations + Sources list) is shared by the **Assistant**, **Interview**, and **Orchestrator**; the same run config and MCP/tool wiring apply. See **Plans/newtools.md** §8 (cited web search, [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited)-style) and **Plans/assistant-chat-design.md** §7.
 
 **Tool permissions:** **Plans/Tools.md** defines the central tool registry and permission model (allow/deny/ask, granular rules, [OpenCode Permissions](https://opencode.ai/docs/permissions/)). Run config snapshot includes tool permissions; in headless orchestrator runs, "ask" maps to deny or HITL. Tier/subagent config may override permissions per agent. See Tools.md §2.5 and §8.2-§8.3.
