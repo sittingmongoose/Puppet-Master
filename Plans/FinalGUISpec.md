@@ -56,7 +56,7 @@ Key changes from the current Iced GUI:
 - **Catalog and sync:** Community content catalog with one-click install; config export/import bundles for cross-machine sync
 - **SSH remote editing:** Edit files on remote hosts via SSH/SFTP with connection management and offline resilience
 - **Run/debug:** Integrated debugging with DAP protocol, breakpoint management, run configurations
-- **Product name:** "Puppet Master" (per Plans/rebrand.md)
+- **Product name:** "Puppet Master" (per Plans/Glossary.md)
 
 ---
 
@@ -2523,7 +2523,7 @@ No features are deferred. All items in this specification are MVP scope.
 | `Plans/chain-wizard-flexibility.md` | Wizard redesign (section 7.5), intent selection, intent-specific fields, file upload limits, Builder opener + turn semantics, checklist status UI, findings preview, single final approval gate, tri-location chat pointers, embedded document pane + agent activity separation, pause/cancel/resume controls, recovery state, adaptive interview phases |
 | `Plans/storage-plan.md` | Persistence (§15), seglog projections, redb schema, Tantivy |
 | `Plans/agent-rules-context.md` | Settings/Rules tab (§7.4), application + project rules |
-| `Plans/rebrand.md` | Product name "Puppet Master" throughout |
+| `Plans/Glossary.md` | Product name "Puppet Master" throughout |
 | `Plans/newfeatures.md` | Bottom panel/terminal (§7.20), thinking display, streaming, keyboard shortcuts, stream event visualization, duration timers, background runs, restore points, config migration dialog, rate-limit banner, version update banner, **project bar (§3.4)**, **sound effects (§10.13)**, **hot reload controls (§7.20 Ports)**, **instructions editor (§7.18)**, **language auto-detection (§7.3)** |
 | `Plans/interview-subagent-integration.md` | Interview config tab (section 7.4), agent activity (section 7.19), embedded document pane (section 7.19.1), findings summary preview, single final approval gate, multi-pass review |
 | `Plans/orchestrator-subagent-integration.md` | Dashboard (§7.2), orchestrator controls, tier display |

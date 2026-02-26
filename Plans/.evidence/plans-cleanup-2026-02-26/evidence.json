@@ -1,0 +1,69 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "ev-2026-02-26-plans-cleanup",
+  "created_at_utc": "2026-02-26T11:03:36Z",
+  "node": {
+    "node_id": "plans.cleanup.rebrand-recovery-and-spec-lock-refresh"
+  },
+  "summary": "Deleted completed rebrand/recovery planning artifacts and removed stale references; refreshed Spec_Lock Crosswalk sha256 so GATE-002 stays deterministic.",
+  "commands_run": [
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "exit_code": 0,
+      "stdout_excerpt": "PASS",
+      "stderr_excerpt": ""
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0,
+      "stdout_excerpt": "PASS",
+      "stderr_excerpt": ""
+    }
+  ],
+  "tool_calls": [
+    {"tool_id": "bash", "count": 1, "denied_count": 0, "error_count": 0, "note": "Verifier checks"},
+    {"tool_id": "edit", "count": 2, "denied_count": 0, "error_count": 0, "note": "Spec lock + index fix"}
+  ],
+  "events": {
+    "event_refs": [
+      {"source": "other", "ref": "git:working-tree", "note": "Plans cleanup changes; see commit history once merged."}
+    ]
+  },
+  "files_changed": [
+    {"path": "Plans/Crosswalk.md", "change_type": "modified"},
+    {"path": "Plans/Spec_Lock.json", "change_type": "modified"},
+    {"path": "Plans/rebrand.md", "change_type": "deleted"},
+    {"path": "Plans/Rebrand_Chunked_Playbook.md", "change_type": "deleted"},
+    {"path": "Plans/rebrand_chunks.json", "change_type": "deleted"},
+    {"path": "Plans/RECOVERY_AUDIT_REPORT.md", "change_type": "deleted"},
+    {"path": "Plans/RECOVERY_FIX_QUEUE.md", "change_type": "deleted"},
+    {"path": "Plans/Decision_Log.md", "change_type": "deleted"},
+    {"path": "Plans/evidence_context_injection_scoping_journaling_2026-02-26.json", "change_type": "deleted"},
+    {"path": "Plans/evidence_spec_doc_remediation_2026-02-23.json", "change_type": "deleted"}
+  ],
+  "contract_refs_satisfied": [
+    "PolicyRule:Decision_Policy.md#spec-lock-update-protocol",
+    "Gate:GATE-002",
+    "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
+    "SchemaID:evidence.schema.json"
+  ],
+  "reproducibility": {
+    "snapshot_ref": "git:uncommitted",
+    "note": "Re-run the two verifier commands above on the commit that lands these changes."
+  },
+  "artifacts": [],
+  "checks": [
+    {
+      "name": "plans.verify-spec-lock",
+      "result": "PASS",
+      "details": "Spec lock hashes match current SSOT files.",
+      "contract_refs": ["Gate:GATE-002"]
+    },
+    {
+      "name": "plans.run-gates",
+      "result": "PASS",
+      "details": "All plans anti-drift gates pass.",
+      "contract_refs": ["Gate:GATE-001", "Gate:GATE-002"]
+    }
+  ]
+}

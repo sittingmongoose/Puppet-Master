@@ -10,7 +10,7 @@ Follow the repo-root `AGENTS.md`.
 When adding/modifying requirements in `Plans/`:
 - Follow `Plans/DRY_Rules.md`
 - Add/maintain `ContractRef:` immediately after the affected block
-- No open questions; use `Plans/Decision_Log.md` per `Plans/Decision_Policy.md`
+- No open questions; use `Plans/auto_decisions.jsonl` per `Plans/Decision_Policy.md`
 
 ## Hygiene
 - No secrets/tokens.
