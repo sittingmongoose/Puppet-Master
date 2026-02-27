@@ -585,9 +585,9 @@ This section is the canonical mapping from OpenCode extraction categories to Pup
 | A1 | Plan mode / run modes | `session/prompt/plan.txt`, `tool/plan.ts`, `session/prompt.ts` | `Plans/Run_Modes.md` | MODE-ask, MODE-plan, MODE-regular, MODE-yolo |
 | A2 | Agent/mode switching | `tool/plan.ts`, `session/prompt.ts` | `Plans/Orchestrator_Page.md` | agent-switching |
 | A3 | Ask/approval semantics | `permission/next.ts`, `question/` | `Plans/human-in-the-loop.md` | approval-flow |
-| B1 | Agent definitions | `agent/agent.ts` | `Plans/Agent_System.md` | agent-schema |
+| B1 | Agent definitions | `agent/agent.ts` | `Plans/Personas.md` | DEF-AGENT |
 | B2 | Subagent invocation | `tool/task.ts`, `session/prompt.ts` | `Plans/orchestrator-subagent-integration.md` | subagent-lifecycle |
-| B3 | Explore agent | `agent/prompt/explore.txt`, `agent/agent.ts` | `Plans/Agent_System.md` | explore-baseline |
+| B3 | Explore agent | `agent/prompt/explore.txt`, `agent/agent.ts` | `Plans/orchestrator-subagent-integration.md` | DRY:DATA:subagent_registry |
 | B4 | Prompt assembly | `session/system.ts`, `session/prompt.ts` | `Plans/Prompt_Pipeline.md` | assembly-pipeline |
 | B5 | Compaction / summaries | `session/compaction.ts` | `Plans/Prompt_Pipeline.md` | compaction |
 | C1 | Permission resolution | `permission/next.ts` | `Plans/Permissions_System.md` | resolution-algorithm |
@@ -600,21 +600,21 @@ This section is the canonical mapping from OpenCode extraction categories to Pup
 | D2 | Command frontmatter | `command/index.ts` | `Plans/Commands_System.md` | schema |
 | D3 | Template features | `config/markdown.ts`, `session/prompt.ts` | `Plans/Commands_System.md` | template-engine |
 | D4 | Subtask / model override | `command/index.ts` | `Plans/Commands_System.md` | overrides |
-| E1 | Formatter trigger | `format/index.ts` | `Plans/Formatter_System.md` | trigger-mechanism |
-| E2 | Built-in formatters | `format/formatter.ts` | `Plans/Formatter_System.md` | built-ins |
-| E3 | Formatter config | `format/index.ts` | `Plans/Formatter_System.md` | config-schema |
+| E1 | Formatter trigger | `format/index.ts` | `Plans/Formatters_System.md` | trigger-mechanism |
+| E2 | Built-in formatters | `format/formatter.ts` | `Plans/Formatters_System.md` | built-ins |
+| E3 | Formatter config | `format/index.ts` | `Plans/Formatters_System.md` | config-schema |
 | F1 | Skill discovery | `skill/skill.ts`, `skill/discovery.ts` | `Plans/Skills_System.md` | discovery |
 | F2 | Skill frontmatter | `skill/skill.ts` | `Plans/Skills_System.md` | schema |
 | F3 | Skill-to-agent surface | `command/index.ts` | `Plans/Skills_System.md` | agent-integration |
 | F4 | Skill permissions | `agent/agent.ts` | `Plans/Skills_System.md` | permissions |
-| G1 | Plugin discovery | `plugin/index.ts` | `Plans/Plugin_System.md` | discovery-load-order |
-| G2 | Plugin context | `plugin/index.ts` | `Plans/Plugin_System.md` | plugin-signature |
-| G3 | Plugin hooks | `packages/plugin/src/index.ts` | `Plans/Plugin_System.md` | hook-events |
-| G4 | Custom tools | `plugin/index.ts`, `tool/registry.ts` | `Plans/Plugin_System.md` | custom-tools |
-| H1 | Model ID format | `provider/provider.ts` | `Plans/Provider_OpenCode.md` | model-id-format |
-| H2 | Default selection | `provider/provider.ts` | `Plans/Provider_OpenCode.md` | model-defaults |
-| H3 | Model options/variants | `provider/provider.ts`, `provider/transform.ts` | `Plans/Provider_OpenCode.md` | model-options |
-| H4 | Error handling | `provider/error.ts` | `Plans/Provider_OpenCode.md` | error-handling |
+| G1 | Plugin discovery | `plugin/index.ts` | `Plans/Plugins_System.md` | discovery-load-order |
+| G2 | Plugin context | `plugin/index.ts` | `Plans/Plugins_System.md` | plugin-signature |
+| G3 | Plugin hooks | `packages/plugin/src/index.ts` | `Plans/Plugins_System.md` | hook-events |
+| G4 | Custom tools | `plugin/index.ts`, `tool/registry.ts` | `Plans/Plugins_System.md` | custom-tools |
+| H1 | Model ID format | `provider/provider.ts` | `Plans/Models_System.md` | MODEL-ID |
+| H2 | Default selection | `provider/provider.ts` | `Plans/Models_System.md` | SELECTION-PRIORITY |
+| H3 | Model options/variants | `provider/provider.ts`, `provider/transform.ts` | `Plans/Models_System.md` | MODEL-OPTIONS |
+| H4 | Error handling | `provider/error.ts` | `Plans/Models_System.md` | MODEL-ERRORS |
 | -- | Tools + ToolContext | `tool/tool.ts`, `tool/registry.ts` | `Plans/Tools.md` | S3, S3.5, S10 |
 | -- | Provider stream | `provider/transform.ts` | `Plans/Contracts_V0.md`, `Plans/CLI_Bridged_Providers.md` | S2 (normalized stream) |
 | -- | UI commands | `command/index.ts` | `Plans/UI_Command_Catalog.md` | S2 (stable IDs) |

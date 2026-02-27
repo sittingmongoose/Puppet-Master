@@ -12,7 +12,7 @@ Records decisions made during plan document updates that are not captured in `Pl
 ### DL-001: OpenCode Deep Extraction — SSOT target mapping for new subsystems
 - **Date**: 2026-02-27
 - **Context**: Expanding `Plans/OpenCode_Deep_Extraction.md` to cover 8 new subsystem categories (run modes, agents, permissions, commands, formatters, skills, plugins, models) required mapping each to a Puppet Master SSOT document.
-- **Decision**: New SSOT targets were assigned as `Plans/Agent_System.md`, `Plans/Permissions_System.md`, `Plans/Commands_System.md`, `Plans/Formatter_System.md`, `Plans/Skills_System.md`, `Plans/Plugin_System.md`, and `Plans/Prompt_Pipeline.md`. These files do not yet exist; they are placeholder targets for future prompt pipeline execution.
+- **Decision**: New SSOT targets were assigned as `Plans/Personas.md` (Agent definitions), `Plans/orchestrator-subagent-integration.md` (subagents + explore registry), `Plans/Permissions_System.md`, `Plans/Commands_System.md`, `Plans/Formatters_System.md`, `Plans/Skills_System.md`, `Plans/Plugins_System.md`, `Plans/Models_System.md`, and `Plans/Prompt_Pipeline.md`.
 - **Rationale**: Each OpenCode subsystem maps to a distinct concern in Puppet Master. Collapsing them into existing docs (e.g., Tools.md) would violate separation of concerns and make the mapping table ambiguous. Existing targets (`Plans/Provider_OpenCode.md`, `Plans/Orchestrator_Page.md`, `Plans/human-in-the-loop.md`, `Plans/orchestrator-subagent-integration.md`) were reused where they already cover the topic.
 
 ### DL-002: Section numbering shift in OpenCode_Deep_Extraction.md

@@ -126,7 +126,7 @@ ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
 
 ### 4.1 Global disable
 
-Setting `config.formatter = false` disables **all** formatters globally. No formatters run regardless of per-formatter config.
+Setting `config.formatters.enabled = false` disables **all** formatters globally. No formatters run regardless of per-formatter config.
 
 ContractRef: PolicyRule:Decision_Policy.md§2
 
@@ -244,7 +244,7 @@ ContractRef: ContractName:Plans/Formatters_System.md, ContractName:Plans/Progres
 **AC-FMT01:** Formatters MUST run after every file write/edit performed by hosted tools in HTE mode. Formatters MUST NOT run in DAE mode.
 
 <a id="AC-FMT02"></a>
-**AC-FMT02:** Setting `config.formatter = false` MUST disable all formatters globally.
+**AC-FMT02:** Setting `config.formatters.enabled = false` MUST disable all formatters globally.
 
 <a id="AC-FMT03"></a>
 **AC-FMT03:** Per-formatter `disabled = true` MUST prevent that formatter from running, even if auto-detection passes.
