@@ -14,7 +14,7 @@
 - **VBW:** https://github.com/yidakee/vibe-better-with-claude-code-vbw (token efficiency, context compilation).  
 - **GSD:** https://github.com/gsd-build/get-shit-done (spec-driven development, context engineering).  
 - **yume:** https://github.com/aofp/yume (session recovery, native UI for Claude Code).
-- **Plans/assistant-chat-design.md §23:** Gaps, competitive comparison (OpenCode, Claude Code, Codex, Gemini, Antigravity, Cursor), and recommended enhancements.
+- **Plans/assistant-chat-design.md §23:** Gaps, competitive comparison (OpenCode, Claude Code, Codex, Gemini CLI, Antigravity, Cursor), and recommended enhancements.
 - **Plans/assistant-chat-design.md §24:** Chat thread performance, virtualization, and flicker avoidance (long threads, Slint, virtualized list, stable IDs, incremental stream updates).
 - **Plans/newfeatures.md §15.11:** Virtualization for long lists (messages, iterations, logs); overscan, visible slice, placeholder height. **Plans/FinalGUISpec.md**, **Plans/feature-list.md:** Slint + winit, virtualized file tree, backend (Skia).
 

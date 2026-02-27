@@ -10,7 +10,7 @@ When multiple CLI platforms are used, **normalize their output** to a single int
 
 ### 5.2 Relevance to Puppet Master
 
-We already support six providers with different CLI flags and output shapes. Today we may parse platform-specific output in each runner. Normalization would:
+We already support five platforms with different CLI flags and output shapes. Today we may parse platform-specific output in each runner. Normalization would:
 
 - **Centralize parsing:** One stream-parser that expects a single schema; each runner converts CLI stdout into that schema (or we run a small "shim" that does it).
 - **Unify usage tracking:** Usage (tokens, cost) is one event type in the normalized protocol; we fill it from platform-specific data so the rest of the app only sees "usage updated".

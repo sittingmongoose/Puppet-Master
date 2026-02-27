@@ -10,7 +10,7 @@
 1. **Cursor:** Test `/subagent-name` syntax (expect failure in CLI)
 2. **Codex:** Test MCP server tool invocation
 3. **Claude Code:** Test both `--agents` flag and file-based invocation
-4. **Gemini:** Test direct-provider model invocation; subagent orchestration remains internal
+4. **Gemini:** Test tool-based invocation with `enableAgents: true`
 5. **Copilot:** Test `/fleet`, `/delegate`, and `/agent` commands
 
 ### Integration Tests

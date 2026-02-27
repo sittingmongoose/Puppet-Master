@@ -223,16 +223,15 @@ pub async fn execute_command(
 }
 ```
 
-### 3.4 Multi-Provider Support
+### 3.4 Multi-Platform Support
 
-The guard must work across all providers:
+The guard must work for all 5 platforms:
 
 - **Cursor:** `agent -p "..."` -- check compiled prompt content
 - **Codex:** `codex exec "..."` -- check compiled prompt content
 - **Claude Code:** `claude -p "..."` -- check compiled prompt content
-- **Gemini:** Gemini is a Direct API provider; check compiled prompt content via API request inspection.
+- **Gemini:** `gemini -p "..."` -- check compiled prompt content (with `@path` tokens)
 - **GitHub Copilot:** `copilot -p "..."` -- check compiled prompt content (with `@path` tokens)
-- **OpenCode (server-bridged):** enforce the guard inside Puppet Master before sending requests to the OpenCode server.
 
 **Strategy:** 
 1. Check **compiled prompt** (after context compilation) at platform runner level

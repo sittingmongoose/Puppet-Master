@@ -7,7 +7,7 @@ All previously "optional" or "later" plan-mode and subagent GUI/backend items ar
 - **Defaults:** In `default_config.rs`, set `plan_mode: false` for phase, task, subtask, iteration. In `config_override.rs` and YAML defaults, use `plan_mode: false` unless explicitly overridden. In `gui_config.rs`, keep tier defaults at `false` for migration-safe behavior.
 - **Global "use plan mode for all tiers":** Add `use_plan_mode_all_tiers: bool` to `GuiConfig` (canonical storage; no separate `settings.json` key). Optionally add `last_per_tier_plan_mode: Option<HashMap<String, bool>>` to restore per-tier values when turning the global toggle off. When `use_plan_mode_all_tiers == true`, load/sync forces all four tier `plan_mode` values to `true`. When toggled off, restore `last_per_tier_plan_mode` or set all to `false`. Use write-through so tier configs and saved YAML stay in sync.
 - **Subagent invocations:** When building `ExecutionRequest` for subagent runs (e.g. in `execute_tier_with_subagents` or the platform adapter), set `request.plan_mode = tier_config.plan_mode` (from `TierConfig` or `IterationContext`). Document in plan and code.
-- **Gemini:** Gemini is a Direct API provider; plan-mode constraints are applied via API parameters. In Doctor, validate Gemini API key presence when any tier uses Gemini. No CLI settings file interaction is needed.
+- **Gemini:** In Doctor, add a check: if any tier uses Gemini and `plan_mode == true`, warn that `experimental.plan: true` may be required in `~/.gemini/settings.json`. Optionally probe the file and only warn if the setting is missing. In Config, when platform is Gemini and plan mode is on, show a short tooltip or help: "Gemini plan mode may require `experimental.plan: true` in ~/.gemini/settings.json."
 
 ### 2. Plan Mode -- Frontend (Config)
 
@@ -37,7 +37,7 @@ All previously "optional" or "later" plan-mode and subagent GUI/backend items ar
 
 ### 6. Doctor -- Gemini Plan Mode Check
 
-- **Check:** In `doctor/` (new check or inside existing config check): if any tier has platform Gemini, validate that a Google Gemini API key is configured. Gemini is a Direct API provider; no CLI settings file check is needed.
+- **Check:** In `doctor/` (new check or inside existing config check): if any tier has platform Gemini and `plan_mode == true`, check `~/.gemini/settings.json` for `experimental.plan: true` (or equivalent path); if missing, add Doctor warning: "Gemini plan mode is enabled for a tier but experimental.plan may not be set in ~/.gemini/settings.json." Prefer reading the file and only warning when plan mode is on and setting is missing.
 
 ### 7. Implementation Checklist (GUI & Backend -- Add/Expand)
 

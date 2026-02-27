@@ -3,7 +3,7 @@
 ### Problem 1: Platform APIs require secrets
 
 - **Risk**
-  - Claude Admin API and Copilot metrics require `ANTHROPIC_API_KEY` and `GITHUB_TOKEN`/`GH_TOKEN`. Many users will not set these; 5h/7d from APIs would be missing or "N/A" for those platforms.
+  - Claude Admin API, Copilot metrics, Gemini quotas require `ANTHROPIC_API_KEY`, `GITHUB_TOKEN`/`GH_TOKEN`, `GOOGLE_CLOUD_PROJECT` (and possibly `GOOGLE_APPLICATION_CREDENTIALS`). Many users will not set these; 5h/7d from APIs would be missing or "N/A" for those platforms.
 - **Impact**
   - Users might assume "no data" means "no usage" instead of "API not configured"; or they may not know how to enable live data.
 - **Mitigation**
@@ -40,7 +40,7 @@
 - **Impact**
   - User misinterprets "5h" for Gemini as the same as Codex; or we show misleading comparisons.
 - **Mitigation**
-  - Per-platform labels in the UI (e.g. "Codex 5h", "Claude 7d", "Gemini (estimated)") and a short tooltip or doc link explaining what each window means.
+  - Per-platform labels in the UI (e.g. "Codex 5h", "Claude 7d", "Gemini quota") and a short tooltip or doc link explaining what each window means.
   - Avoid one generic "5h/7d" column when semantics differ; use platform-specific columns or clearly labeled sections.
 
 ### Problem 5: Ledger file size

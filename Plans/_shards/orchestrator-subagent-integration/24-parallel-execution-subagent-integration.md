@@ -592,7 +592,7 @@ if prompt.contains("crew") || prompt.contains("crews") || prompt.contains("use a
 
 - **Source:** Current tier config platform, or GUI platform selection if in GUI mode
 - **Fallback:** If no platform selected, use deterministic default platform (cursor)
-- **Validation:** Ensure platform supports subagents (all providers support subagents via coordination)
+- **Validation:** Ensure platform supports subagents (all 5 platforms support subagents via coordination)
 - **Note:** Exact implementation will be defined when Assistant feature is designed (see Gap #37)
 
 **Example user-initiated crew flow (Future):**
@@ -1554,17 +1554,17 @@ When interview generates PRD (`prd.json`), add crew metadata to tasks/subtasks:
 
 **Why this is valuable:**
 
-1. **Cross-platform communication:** Works for all supported providers (Cursor, Claude Code, OpenCode, Codex, Gemini, GitHub Copilot), even those without native teams/fleets support
+1. **Cross-platform communication:** Works for all 5 platforms (Cursor, Codex, Claude, Gemini, Copilot), even those without native teams/fleets support
 2. **Orchestrator visibility:** Boss agent (orchestrator) can monitor all subagent communication, providing insights into what subagents are doing and how they're coordinating
 3. **Platform-agnostic:** Can be used alongside native teams/fleets (Claude Code Teams, Copilot Fleets) but provides fallback and cross-platform capabilities
 4. **Enhanced coordination:** Enables more sophisticated coordination patterns (agents asking for help, sharing decisions, requesting reviews)
-5. **Unified interface:** Single communication system works the same way across all providers
+5. **Unified interface:** Single communication system works the same way across all platforms
 
 **Comparison with native solutions:**
 
 | Feature | Claude Code Teams | Copilot Fleets | Puppet Master Communication |
 |---------|------------------|----------------|---------------------------|
-| Cross-platform | ❌ Claude only | ❌ Copilot only | ✅ All supported providers |
+| Cross-platform | ❌ Claude only | ❌ Copilot only | ✅ All 5 platforms |
 | Orchestrator visibility | Limited | Limited | ✅ Full visibility |
 | Agent-to-agent messaging | ✅ Native | ❌ Not supported | ✅ Supported |
 | File-based (no API) | ❌ Uses API | ❌ Uses API | ✅ File-based |
@@ -2000,7 +2000,7 @@ impl OrchestratorInsights {
 
 **Benefits:**
 
-1. **Cross-platform:** Works for all providers, even without native teams/fleets
+1. **Cross-platform:** Works for all 5 platforms, even without native teams/fleets
 2. **Orchestrator visibility:** Boss agent can see all subagent communication
 3. **Enhanced coordination:** Agents can ask for help, share decisions, warn about conflicts
 4. **File-based:** No API calls, pure file-based (fits Puppet Master architecture)

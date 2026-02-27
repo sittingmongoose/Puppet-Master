@@ -12,7 +12,7 @@ Part 2 records what exists in the codebase today for reference. Plans define tar
 
 ### 2. Platforms
 
-**Supported providers (rewrite).** CLI-bridged: Cursor, Claude Code. Server-bridged: OpenCode. Direct-provider: Codex, GitHub Copilot, Gemini. Provider specs cover auth, model discovery, plan mode (where applicable), media capability gating, headless flags (where applicable), subagents, and MCP capability.
+**Supported platforms.** Cursor, Codex, Claude Code, Gemini, GitHub Copilot (types/platform.rs, platforms/platform_specs.rs). platform_specs currently holds CLI binary names, install paths, auth, model discovery, plan mode, effort/reasoning (where applicable), image support (all five), headless flags, subagents, MCP capability.
 
 **Runners and support.** cursor.rs, codex.rs, claude.rs, gemini.rs, copilot.rs; registry in platforms/registry.rs; auth_actions.rs, auth_status.rs; platform_detector.rs; capability.rs; model_catalog.rs. Provider auth strategy is realm-aware: `github_api` (GitHub API provider operations) and `copilot_github` (Copilot provider auth) are separate inventories.
 

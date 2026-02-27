@@ -11,7 +11,7 @@ Plan mode is implemented per tier (phase, task, subtask, iteration) and flows fr
 | Cursor    | `--mode plan` (else `--force`) | Native; read-only planning then execute. |
 | Claude    | `--permission-mode plan`       | Native; read-only analysis. |
 | Codex     | `--sandbox read-only` (no `--full-auto`) | Read-only sandbox; no native "plan" flag. |
-| Gemini    | Direct API plan-mode request              | Gemini is a Direct API provider; plan constraints applied via API parameters. |
+| Gemini    | `--approval-mode plan` (else `yolo`)     | May require `experimental.plan: true` in `~/.gemini/settings.json`. |
 | Copilot   | Omit `--allow-all-paths` / `--allow-all-urls` when plan_mode | Restrictive mode; no dedicated plan flag in CLI. |
 
 ### Plan Mode & Platform CLI Updates (Last ~2 Months)
@@ -40,10 +40,13 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 - **Plugins:** `.claude-plugin/plugin.json`; skills namespaced as `/plugin-name:skill-name`.  
 - **Impact:** Plan mode and subagent/hook/plugin docs are still accurate; v2.1.45 plugin and `--add-dir` behavior may matter for project-specific plugins.
 
-**Gemini (Direct API provider)**  
-- **Plan mode:** Plan mode is enforced by Puppet Master (prompt/routing/policy). Gemini receives a plan-constrained request when `plan_mode` is enabled.  
-- **Doctor / verification checks (Direct-provider):** API key present; `models.list` works; capability gating is consistent with Settings toggles; media routing matches `Plans/Media_Generation_and_Capabilities.md` (Cursor image routes to Cursor-native; Gemini media requires key and compatible model).  
-- **Impact:** No provider CLI flags or provider-local config files are used for Gemini in this stack.
+**Gemini CLI**  
+- **v0.22-v0.28 (Dec 2025 - Feb 2026):** Extensions (Conductor, Endor Labs), Colab headless use, Agent Skills (built-in skills, `/agents refresh`, `/skills`), policy engine (modes like `plan`, granular shell allowlisting), hooks visibility, default folder trust.  
+- **v0.24-v0.26:** Agent skills by default, generalist agent, skill-creator/pr-creator skills, rewind/introspect.  
+- **v0.28 (Feb 3):** Auth/consent, custom themes, Positron IDE, `/prompt-suggest`.  
+- **Plan mode:** Experimental; enable with `experimental.plan: true` in settings; `--approval-mode=plan` or `general.defaultApprovalMode: "plan"`; tool restrictions (read-only + write only in plans dir); policies can allow e.g. `run_shell_command` for `git status`/`git diff` or research subagents in plan mode.  
+- **Subagents:** `experimental.enableAgents: true`; built-in codebase_investigator, cli_help, generalist; custom agents in `~/.gemini/agents/*.md` or `.gemini/agents/*.md`.  
+- **Impact:** Our use of `--approval-mode plan` is correct. Document that `experimental.plan: true` (and optionally `enableAgents`) may be required; policy engine and research subagents in plan mode are relevant for advanced use.
 
 **GitHub Copilot CLI**  
 - **Jan 14-21, 2026:** Plan mode in interactive UI (Shift+Tab); advanced reasoning models; GPT-5.2-Codex; inline steering; background delegation `&`; `/review`; context auto-compaction; automation flags (`--silent`, `--share`, `--available-tools`, `--excluded-tools`).  
@@ -52,8 +55,8 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 - **Impact:** No change to our headless plan-mode mapping; document that native plan mode is interactive; if Copilot adds a headless plan flag, switch to it in runner and platform_specs.
 
 **Summary for this plan**  
-- Plan mode: CLI plan-mode applies to Cursor and Claude Code only; Gemini is Direct-provider (no CLI plan-mode flags or CLI config files in this stack). Codex and Copilot headless behaviors remain unchanged.  
-- Subagents/hooks/plugins: Several providers have had relevant changes (Cursor plugins/async subagents; Codex MCP; Claude plugins/hooks; Gemini skills/policies/subagents; Copilot provider/CLI behavior). Keep platform-capabilities and subagent-integration sections in sync with release notes and official docs.
+- Plan mode: Cursor, Claude, Gemini implementations are up to date; Codex (read-only sandbox) and Copilot (restrictive flags) unchanged.  
+- Subagents/hooks/plugins: All five platforms have had relevant changes (Cursor plugins/async subagents; Codex MCP; Claude plugins/hooks; Gemini skills/policies/subagents; Copilot provider/CLI behavior). Keep platform-capabilities and subagent-integration sections in sync with release notes and official docs.
 
 **Gaps vs "use plan mode for every request":**
 
@@ -61,8 +64,8 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 2. **No global override** -- There is no single "use plan mode for all tiers" or "prefer plan mode by default" setting; only per-tier toggles in Config and Wizard.
 3. **No one-click "all tiers"** -- Enabling plan mode for every tier requires toggling four tier cards.
 4. **Subagent invocations** -- When subagent integration is added, `ExecutionRequest` built for subagent runs must receive the same `plan_mode` as the tier (so plan mode is applied to every request, including subagent calls).
-5. **Copilot** -- If the CLI gains a native headless plan flag (e.g. `--plan`), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
-5. **Copilot** -- If the CLI gains a native headless plan flag (e.g. `--plan`), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
+5. **Gemini** -- `--approval-mode plan` can require `experimental.plan: true` in settings; we do not currently validate or document this at runtime.
+6. **Copilot** -- If the CLI gains a native headless plan flag (e.g. `--plan`), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
 
 ### Recommendations
 
@@ -92,7 +95,7 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 
 **5. Platform-specific robustness (in scope)**
 
-- **Gemini:** Gemini is a Direct API provider; plan-mode constraints are applied via API parameters. No CLI settings file check is needed.
+- **Gemini:** When `plan_mode` is true and platform is Gemini, document in GUI tooltip and add a Doctor check that reads `~/.gemini/settings.json` and warns if `experimental.plan` is not set.
 - **Copilot:** When a native plan flag exists, add it to `platform_specs` and the Copilot runner (e.g. `--plan` or equivalent) and use it when `plan_mode` is true, instead of or in addition to omitting `--allow-all-paths` / `--allow-all-urls`.
 - **Codex:** Current "read-only sandbox" behavior is a reasonable stand-in for plan mode; if Codex adds an explicit plan/read-only flag, prefer that and document in AGENTS.md.
 
@@ -131,7 +134,7 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 - [ ] Add **Subagent personas / info setup:** preload list from project `.claude/agents`; user can add their own and delete any (including preloaded); optional AI/batch trim for smaller footprint; list with name + description; "Edit" per subagent to set custom description/instruction (persist to `SubagentGuiConfig.persona_overrides` -- overrides come only from this UI); prompt builder / runner injects persona (override if present, else preloaded content) when invoking that subagent (see Gap §11).
 
 **Doctor**
-- [ ] Gemini is a Direct API provider; no CLI settings check is needed. Doctor validates Gemini API key presence when any tier uses Gemini.
+- [ ] Add Gemini + plan mode check in Doctor: read `~/.gemini/settings.json`, warn if `experimental.plan` missing when any tier has Gemini and plan_mode true.
 - [ ] **Plans/newtools.md:** Add Doctor checks for (1) headless tool exists/runs when project planned custom headless tool, (2) platform CLI versions (e.g. `agent --version`, `codex --version`), (3) MCP/Context7 reachable per platform. Use newtools §8.2 for per-platform MCP config reference; §11 and §12.6 for headless-tool and MCP check details.
 
 **Other**

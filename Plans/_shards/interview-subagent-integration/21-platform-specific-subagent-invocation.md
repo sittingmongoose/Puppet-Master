@@ -104,14 +104,41 @@ fn invoke_claude_subagent(
 }
 ```
 
-#### Gemini (direct-provider)
-Gemini is a **Direct-provider** in Puppet Master: it is used as a model provider via the Google Gemini API, not as a CLI-bridged platform.
+#### Gemini CLI (v0.29.0 - Feb 17, 2026)
+**Latest Stable:** v0.29.0 (Feb 17, 2026)  
+**Preview:** v0.30.0-preview.0 (Feb 17, 2026)
 
-**Invocation method:** Puppet Master subagents are internal/orchestrator-level. The Gemini provider receives the final prompt produced by the orchestrator; there are no provider-native agent directories and no provider-specific subagent flags.
+- **Plan Mode:** Formalized 5-phase sequential planning workflow
+- **Subagent Registration:** Fixed to ensure sub-agents are registered regardless of tools.allowed
+- **Policy Engine:** Deprecated --allowed-tools and excludeTools in favor of policy engine
+- **Tool Output Masking:** Enabled by default for better context management
+- **Memory System:** Session-linked tool output storage and cleanup
+- **Dynamic Policy Registration:** For subagents (from v0.28.0)
+- **Event-Driven Scheduler:** For tool execution (from v0.28.0)
 
-**Configuration:**
-- Google Gemini API key (Settings)
-- Model selection in Settings (and Media toggles/models per `Plans/Media_Generation_and_Capabilities.md`)
+**Invocation Method:**
+Subagents are exposed as **tools** to the main agent. Main agent calls tool by name.
+
+**Requirements:**
+- Must enable in `settings.json`: `{"experimental": {"enableAgents": true}}`
+- Subagents defined in `.gemini/agents/*.md` or `~/.gemini/agents/*.md`
+
+**Implementation:**
+```rust
+// Gemini subagent invocation
+fn invoke_gemini_subagent(
+    subagent_name: &str,
+    task: &str,
+) -> String {
+    // Gemini subagents are invoked as tools
+    // The main agent calls the tool by name
+    // Format: Natural language mentioning the subagent
+    format!(
+        "Use the {} subagent to: {}",
+        subagent_name, task
+    )
+}
+```
 
 #### GitHub Copilot CLI (v0.0.411 - Feb 17, 2026)
 **Latest Stable:** v0.0.411 (Feb 17, 2026)  
