@@ -287,7 +287,7 @@ ContractRef: SchemaID:pm.auto_decisions.schema.v1, Gate:GATE-013, SchemaID:evide
 <a id="GATE-014"></a>
 ## GATE-014 -- Document Set packaging verification
 **Pass conditions (ALL must hold):**
-1. For each Markdown/text artifact under `.puppet-master/**` that reaches Document Packaging Policy triggers, a Document Set exists with:
+1. For each Markdown/text artifact under `.puppet-master/**` that reaches Document Packaging Policy triggers, a `.docset/` directory exists at `<original_path>.docset/` with:
    - `00-index.md`
    - `manifest.json`
    - ordered shard files
@@ -297,8 +297,19 @@ ContractRef: SchemaID:pm.auto_decisions.schema.v1, Gate:GATE-013, SchemaID:evide
 4. Index/manifest exact match passes: shard ordering, links, existence checks, and no extra shard files.
 5. Idempotency passes: regenerate twice with same source yields no diffs.
 6. Clean-room determinism passes: regeneration in a clean directory yields byte-identical outputs and matching hashes.
+7. Pointer stub acceptance: the original artifact file path MUST contain a valid pointer stub with:
+   - the `docset_entrypoint` field matching `<filename>.docset/00-index.md`
+   - the `source_sha256` field matching `manifest.json` `source_sha256`
+   - a `verify_command` field
 
-**Fail condition:** Any pass condition (1–6) fails, or a triggered artifact is left unpackaged.
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
+
+**Fail condition:** Any pass condition (1–7) fails, or any of the following:
+- A triggered artifact is left unpackaged (no `.docset/` exists and file exceeds budget).
+- A pointer stub exists but the corresponding `.docset/` directory is missing.
+- A `.docset/` directory exists but the pointer stub `source_sha256` does not match `manifest.json` `source_sha256`.
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
 
 Required evidence:
 - Evidence bundle entries for each triggered artifact that include:
@@ -307,7 +318,10 @@ Required evidence:
   - index/manifest parity report
   - idempotency report
   - clean-room parity report
+  - pointer stub validation report (entrypoint matches, sha256 matches, verify command present)
 - Evidence detail lists MUST be exhaustive for full shard sets (no sampling).
+
+ContractRef: SchemaID:evidence.schema.json, Gate:GATE-014
 
 **Script enforcement status:** Not yet enforced by `run-gates`; targeted for inclusion after Document Set artifact generation is integrated.
 

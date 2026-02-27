@@ -111,11 +111,21 @@ ContractRef: ContractName:Plans/Contracts_V0.md#PromotionRules, ContractName:Pla
 
 When Markdown/text artifacts under `.puppet-master/**` reach configured size triggers, Puppet Master MUST package them as Document Sets per `Plans/Document_Packaging_Policy.md` and MUST run the required packaging audits before run completion.
 
-For verification, the Document Set (`00-index.md` + `manifest.json` + shard set + `evidence/`) is the canonical packaging form for those large text artifacts.
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014, SchemaID:pm.project-plan-graph-index.v1
+
+**On-disk path convention:** When packaging triggers are reached for a Markdown/text artifact, the canonical packaged form is a `.docset/` directory adjacent to the original file path (e.g. `.puppet-master/project/requirements.md.docset/`). The original file path MUST remain present as a deterministic pointer stub (derived artifact) pointing to the Document Set entrypoint. Full convention defined in `Plans/Document_Packaging_Policy.md §7`.
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
+
+**Canonical truth:** For any large Markdown/text artifact, the artifact inventory recognizes either:
+- the file path as canonical (when no `.docset/` exists), or
+- the `.docset/` directory as canonical with the file path as a derived pointer stub (when packaging has occurred).
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
 
 The plan graph contract remains unchanged: canonical user-project plan graph is still sharded JSON at `.puppet-master/project/plan_graph/index.json` with node shards under `nodes/<node_id>.json`.
 
-ContractRef: ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014, SchemaID:pm.project-plan-graph-index.v1
+ContractRef: SchemaID:pm.project-plan-graph-index.v1
 
 ## 3. Schema alignment (critical; do not rename fields)
 
@@ -696,6 +706,7 @@ ContractRef: SchemaID:pm.acceptance_manifest.schema.v1, ContractName:Plans/Proje
 
 ## Change Summary
 
+- 2026-02-27: Updated §2.3 to declare `.docset/` canonical packaging convention and pointer stub behavior for large Markdown/text artifacts; re-asserted plan graph sharded JSON contract unchanged. Cross-ref: `Plans/Document_Packaging_Policy.md §7`.
 - 2026-02-25: Added required derived verification contract for `.puppet-master/project/traceability/requirements_quality_report.json` (schema: `pm.requirements_quality_report.schema.v1`), added optional derived `.puppet-master/project/quickstart.md` contract, added deterministic quickstart generation/validation rules, aligned requirements coverage generation rules with `Plans/requirements_coverage.schema.json` (`orphaned_node_requirement_refs[].reason` sentinel and schema-aligned `uncovered_acceptance[]` semantics), updated validator acceptance checks, and clarified Pass 3 write-protection interaction (requirements/plan protected; quickstart may be regenerated as derived output).
 - 2026-07-24: Added §11 Traceability outputs (requirements_coverage.json + requirements_coverage.md under `.puppet-master/project/traceability/`); added item 9 in §2 required artifact set; added `traceability/` to §2.1 staging tree; added `requirements_coverage_json` and `requirements_coverage_md` `artifact_type` values to §8.2; added acceptance criterion item 10 in §9. ContractRefs: SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011.
 - 2026-02-25: Hardened validation sweep acceptance contracts: added provider/model-to-settings linkage (`validation_sweep.passN.*`), deterministic/headless sweep provenance requirement, post-pass artifact finality requirement, and fixed `unresolved_findings[]` naming in Pass 3 write-protection invariant.
