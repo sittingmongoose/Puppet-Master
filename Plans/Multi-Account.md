@@ -11,7 +11,7 @@
 ## 1. Purpose and scope
 
 - **Purpose:** Support multiple accounts per platform so users can sign into several identities for Codex, Gemini, Copilot, Claude Code, and Cursor (multi-identity), with **pick-best-by-usage**, **auto-rotation on rate limit**, and optional session migrate/resume for Claude.
-- **Scope:** All five platforms (Claude Code, Codex, Gemini, Copilot, Cursor). Behavior is provider-specific where usage APIs, auth layout, and rate-limit detection differ.
+- **Scope:** Five of the six supported providers (Claude Code, Codex, Gemini, Copilot, Cursor; OpenCode excluded — see §9.1). Behavior is provider-specific where usage APIs, auth layout, and rate-limit detection differ.
 - **Rewrite alignment:** This spec targets the upcoming architecture: **provider abstraction** (account selection and env/config wiring are part of the Provider contract), **seglog + redb** for state (no SQLite), and **UI as UX requirements only** (no Iced/Slint commitment here).
 
 ---
@@ -32,7 +32,7 @@
 
 ## 3. Assessment: what we have and gaps (filled)
 
-**Question:** Do we have what we need to reverse-engineer multi-account and apply it to Puppet Master for all five providers?
+**Question:** Do we have what we need to reverse-engineer multi-account and apply it to Puppet Master for all covered providers?
 
 **Answer:** Yes. Design and patterns are documented and backed by claude-nonstop and both OpenCode PRs. Remaining work is Rust port and provider-specific clients (usage APIs, rate-limit parsing).
 
@@ -72,7 +72,7 @@
 
 ### 3.5 Current Puppet Master context
 
-- **Stack:** Rust/Iced; 5 platforms; CLI-only (no in-process OAuth store). **PlatformConfig** per platform -- one identity per platform; no accounts[] or activeAccountId yet. **platform_specs.rs** is single source of truth for CLI/auth -- no multi-account data today.
+- **Stack:** Rust/Iced; 6 providers (CLI-bridged: Cursor, Claude Code; Server-bridged: OpenCode; Direct: Codex, GitHub Copilot, Gemini); CLI-only (no in-process OAuth store). **PlatformConfig** per platform -- one identity per platform; no accounts[] or activeAccountId yet. **platform_specs.rs** is single source of truth for CLI/auth -- no multi-account data today.
 - **Future:** When native auth for Codex, Copilot, Gemini lands, use OpenCode PR #11832 store + rotating-fetch + per-request context as the blueprint for in-process tokens and HTTP.
 
 ---
@@ -176,7 +176,7 @@ All of the following are **UX requirements**; no commitment to Iced or Slint -- 
 ### 9.1 Setup + Health/Doctor visibility
 
 - **Shared visibility contract:** Setup and Health/Doctor MUST show the same per-provider multi-account summary: active account, account count, cooldown/rate-limit status, and last auth freshness timestamp when available.
-- **Provider coverage:** Multi-account visibility in this spec applies to Cursor, Codex, Claude Code, Gemini, Copilot, and GitHub realm entries; OpenCode is excluded.
+- **Provider coverage:** Multi-account visibility in this spec applies to Cursor, Codex, Claude Code, Gemini, GitHub Copilot, and GitHub realm entries; OpenCode is excluded.
   - **GitHub realm entries are explicit:** `github_api` and `copilot_github` (SSOT: `Plans/Contracts_V0.md` `AuthRealm`). They MUST be shown as separate entries and may represent different accounts.
 - **Real-time provider auth states:** Both surfaces use the same live auth state set: `LoggedOut`, `LoggingIn`, `LoggedIn`, `LoggingOut`, `AuthExpired`, `AuthFailed`.
 - **Tool readiness integration:** Setup and Health/Doctor expose install state rows for Cursor CLI, Claude CLI, and Playwright runtime with states `Not Installed`, `Installing`, `Installed`, `Uninstalling`, `Failed`.
