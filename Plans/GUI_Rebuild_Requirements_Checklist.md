@@ -31,6 +31,7 @@ This checklist is the single auditable summary that verifies the 2026-02-23 GUI 
 | GitHub Actions generation settings contract | `Plans/FinalGUISpec.md` §7.4.9; `Plans/newtools.md` §14.8; `Plans/UI_Command_Catalog.md` §2.5 | PASS | Advanced settings specify workflow templates, secrets checklist, preview/apply flow, and command IDs. |
 | Automation migration (legacy Iced reference -> Slint runtime target) | `Plans/newtools.md` §14.9; `Plans/rewrite-tie-in-memo.md` | PASS | Migration boundary is explicit: keep evidence/tooling contracts while targeting Slint runtime semantics. |
 | UI scaling migration (legacy Iced custom scaling -> Slint native scaling) | `Plans/FinalGUISpec.md` §7.4 and §16.2; `Plans/rewrite-tie-in-memo.md` | PASS | UI scale remains a UX setting; Slint sections now lock scaling to native Slint scale-factor paths and avoid porting token-multiplication layers. |
+| Remove experimental settings (GUI section, config key, CLI flags) | `Plans/rewrite-tie-in-memo.md`; `Plans/FinalGUISpec.md` §7 (Advanced) | PASS when implemented | "Experimental features" section and `tooltip.experimental_*` tooltips are omitted in the Slint GUI; per-platform `experimentalEnabled` config and experimental CLI flags are not implemented. |
 
 ## Command Catalog Coverage Check
 
