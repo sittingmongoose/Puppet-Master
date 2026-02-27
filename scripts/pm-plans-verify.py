@@ -434,6 +434,246 @@ def verify_spec_lock_hashes() -> list[Finding]:
     return findings
 
 
+def validate_plan_shards_freshness() -> list[Finding]:
+    findings: list[Finding] = []
+    config_path = PLANS_DIR / "sharding_config.json"
+    if not config_path.exists():
+        return findings
+
+    try:
+        config = _load_json(config_path)
+    except Exception as e:
+        return [
+            Finding(
+                kind="plan_shards",
+                location=str(config_path.relative_to(REPO_ROOT)),
+                message=f"failed to load sharding config: {e}",
+            )
+        ]
+
+    if not isinstance(config, dict):
+        return [
+            Finding(
+                kind="plan_shards",
+                location=str(config_path.relative_to(REPO_ROOT)),
+                message="sharding config must be a JSON object",
+            )
+        ]
+
+    output_root_raw = config.get("output_root")
+    sources = config.get("sources")
+    if not isinstance(output_root_raw, str) or not output_root_raw.strip():
+        return [
+            Finding(
+                kind="plan_shards",
+                location=str(config_path.relative_to(REPO_ROOT)),
+                message="sharding config missing output_root",
+            )
+        ]
+    if not isinstance(sources, list):
+        return [
+            Finding(
+                kind="plan_shards",
+                location=str(config_path.relative_to(REPO_ROOT)),
+                message="sharding config missing sources array",
+            )
+        ]
+
+    output_root = Path(output_root_raw)
+    if not output_root.is_absolute():
+        output_root = REPO_ROOT / output_root
+
+    shards_exist = False
+    for source_rel in sources:
+        if not isinstance(source_rel, str) or not source_rel.strip():
+            continue
+
+        source_path = REPO_ROOT / source_rel
+        stem = Path(source_rel).stem
+        shard_dir = output_root / stem
+        canonical_index_path = shard_dir / "00-index.md"
+        legacy_index_path = shard_dir / "_index.md"
+        manifest_path = shard_dir / "manifest.json"
+
+        if shard_dir.exists():
+            shards_exist = True
+        else:
+            continue
+
+        if not manifest_path.exists():
+            findings.append(
+                Finding(
+                    kind="plan_shards",
+                    location=str(manifest_path.relative_to(REPO_ROOT)),
+                    message="missing manifest for existing shard directory",
+                )
+            )
+            continue
+
+        try:
+            manifest = _load_json(manifest_path)
+        except Exception as e:
+            findings.append(
+                Finding(
+                    kind="plan_shards",
+                    location=str(manifest_path.relative_to(REPO_ROOT)),
+                    message=f"failed to parse manifest: {e}",
+                )
+            )
+            continue
+
+        if not isinstance(manifest, dict):
+            findings.append(
+                Finding(
+                    kind="plan_shards",
+                    location=str(manifest_path.relative_to(REPO_ROOT)),
+                    message="manifest is not a JSON object",
+                )
+            )
+            continue
+
+        if not source_path.exists():
+            findings.append(
+                Finding(
+                    kind="plan_shards",
+                    location=str(source_path.relative_to(REPO_ROOT)),
+                    message="source file missing for shard set",
+                )
+            )
+            continue
+
+        if not canonical_index_path.exists():
+            findings.append(
+                Finding(
+                    kind="plan_shards",
+                    location=str(canonical_index_path.relative_to(REPO_ROOT)),
+                    message="missing canonical shard index file 00-index.md",
+                )
+            )
+
+        if legacy_index_path.exists():
+            findings.append(
+                Finding(
+                    kind="plan_shards",
+                    location=str(legacy_index_path.relative_to(REPO_ROOT)),
+                    message="legacy shard index file _index.md detected; expected 00-index.md only",
+                )
+            )
+
+        legacy_zero_shards = sorted(
+            p.name
+            for p in shard_dir.iterdir()
+            if p.is_file() and p.name.startswith("00-") and p.name.endswith(".md") and p.name != "00-index.md"
+        )
+        if legacy_zero_shards:
+            findings.append(
+                Finding(
+                    kind="plan_shards",
+                    location=str(shard_dir.relative_to(REPO_ROOT)),
+                    message=f"legacy 00-* shard filenames detected (expected 01-* and above): {legacy_zero_shards}",
+                )
+            )
+
+        expected_source_path = manifest.get("source_path")
+        if expected_source_path != source_rel:
+            findings.append(
+                Finding(
+                    kind="plan_shards",
+                    location=str(manifest_path.relative_to(REPO_ROOT)),
+                    message=(
+                        f"manifest source_path mismatch: expected {source_rel}, "
+                        f"got {expected_source_path}"
+                    ),
+                )
+            )
+
+        source_sha = _sha256_file(source_path)
+        manifest_sha = manifest.get("source_sha256")
+        if not isinstance(manifest_sha, str) or manifest_sha != source_sha:
+            findings.append(
+                Finding(
+                    kind="plan_shards",
+                    location=str(manifest_path.relative_to(REPO_ROOT)),
+                    message=(
+                        "stale shards detected: "
+                        f"manifest source_sha256={manifest_sha} current source_sha256={source_sha}"
+                    ),
+                )
+            )
+            continue
+
+        shards = manifest.get("shards")
+        if not isinstance(shards, list):
+            findings.append(
+                Finding(
+                    kind="plan_shards",
+                    location=str(manifest_path.relative_to(REPO_ROOT)),
+                    message="manifest.shards must be an array",
+                )
+            )
+            continue
+
+        reconstructed = b""
+        reconstruction_failed = False
+        for idx, entry in enumerate(shards):
+            if not isinstance(entry, dict):
+                findings.append(
+                    Finding(
+                        kind="plan_shards",
+                        location=str(manifest_path.relative_to(REPO_ROOT)),
+                        message=f"manifest.shards[{idx}] is not an object",
+                    )
+                )
+                reconstruction_failed = True
+                continue
+
+            dest_rel = entry.get("dest_path")
+            if not isinstance(dest_rel, str) or not dest_rel.strip():
+                findings.append(
+                    Finding(
+                        kind="plan_shards",
+                        location=str(manifest_path.relative_to(REPO_ROOT)),
+                        message=f"manifest.shards[{idx}] missing dest_path",
+                    )
+                )
+                reconstruction_failed = True
+                continue
+
+            shard_path = REPO_ROOT / dest_rel
+            if not shard_path.exists():
+                findings.append(
+                    Finding(
+                        kind="plan_shards",
+                        location=str(shard_path.relative_to(REPO_ROOT)),
+                        message="manifest shard missing on disk",
+                    )
+                )
+                reconstruction_failed = True
+                continue
+
+            reconstructed += shard_path.read_bytes()
+
+        if reconstruction_failed:
+            continue
+
+        reconstructed_sha = hashlib.sha256(reconstructed).hexdigest()
+        if reconstructed_sha != source_sha:
+            findings.append(
+                Finding(
+                    kind="plan_shards",
+                    location=str(manifest_path.relative_to(REPO_ROOT)),
+                    message=(
+                        "stale shards detected by reconstruction hash: "
+                        f"source_sha256={source_sha} reconstructed_sha256={reconstructed_sha}"
+                    ),
+                )
+            )
+
+    if not shards_exist:
+        return []
+    return findings
+
+
 def lint_banned_phrases() -> list[Finding]:
     findings: list[Finding] = []
 
@@ -576,6 +816,7 @@ def main() -> int:
     p_evidence = sub.add_parser("validate-evidence", help="Validate an evidence bundle JSON against schema")
     p_evidence.add_argument("path", help="Path to evidence.json")
     sub.add_parser("verify-spec-lock", help="Verify Spec Lock canonical SSOT sha256 list")
+    sub.add_parser("validate-plan-shards", help="Fail when existing plan shards are stale")
     sub.add_parser("lint-banned-phrases", help="Fail on banned drift phrases in canonical SSOT docs")
     sub.add_parser("lint-contractrefs", help="Fail on operational requirements missing ContractRef blocks")
     sub.add_parser("validate-node-artifacts", help="Validate non-example node evidence and change-budget declarations")
@@ -591,6 +832,8 @@ def main() -> int:
         findings = validate_evidence_bundle(Path(args.path))
     elif args.cmd == "verify-spec-lock":
         findings = verify_spec_lock_hashes()
+    elif args.cmd == "validate-plan-shards":
+        findings = validate_plan_shards_freshness()
     elif args.cmd == "lint-banned-phrases":
         findings = lint_banned_phrases()
     elif args.cmd == "lint-contractrefs":
@@ -602,6 +845,7 @@ def main() -> int:
         findings.extend(validate_plan_graph())
         findings.extend(validate_auto_decisions())
         findings.extend(verify_spec_lock_hashes())
+        findings.extend(validate_plan_shards_freshness())
         findings.extend(lint_banned_phrases())
         findings.extend(lint_contractrefs())
         findings.extend(validate_non_example_node_artifacts())
