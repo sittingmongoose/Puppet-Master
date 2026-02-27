@@ -186,14 +186,18 @@ This is a **heavily redesigned** unified settings page that merges four previous
 | **Verification** | Verification checks, screenshot toggles | Old "Config" Verification tab |
 | **Memory** | Multi-level memory with progress/agents/PRD file paths; **Context Injection** toggles and injected-context breakdown | Old "Config" Memory tab |
 | **Budgets** | Per-platform token budgets | Old "Config" Budgets tab |
-| **Advanced** | **FileSafe Guards** (collapsible card): three independent toggles -- "Block destructive commands" (on/off), "Restrict writes to plan" (on/off), "Block sensitive files" (on/off); approved commands list (scrollable, per-row remove, optional manual add); override toggle with warning styling. **MCP Configuration** (collapsible card): per-platform MCP toggles for **all five platforms** (Cursor, Codex, Claude Code, Gemini, Copilot), MCP server list (add/edit/remove servers with name/command/args/env fields), "Test connection" button per server, Context7 API key input (password-style), web search provider selection and API key. **Tool permissions** (collapsible card, see §7.4.1): per-tool or wildcard allow/deny/ask; optional presets (Read-only, Plan mode, Full); list built-in + MCP-discovered tools with permission dropdown per row; bound to central tool registry per Plans/Tools.md. **Containers & Registry** (collapsible card, see §7.4.8): Docker runtime/compose defaults, DockerHub namespace/repo/tag defaults, auth mode and push policy. **CI / GitHub Actions** (collapsible card, see §7.4.9): workflow template selection, trigger/matrix controls, required-secrets checklist, generate/preview/apply actions. **Other:** Sub-agent toggles and cleanup config (clean untracked before run, clean ignored files, clear agent-output dir, evidence retention days); the legacy Iced-era "Experimental features" subsection with per-platform "Enable Codex/Gemini/Copilot Experimental" toggles is removed in the Slint rewrite and MUST NOT be implemented. | Old "Config" Advanced tab + newtools.md + FileSafe.md + Tools.md + MiscPlan.md + GitHub_API_Auth_and_Flows.md |
+| **Advanced** | **FileSafe Guards** (collapsible card): three independent toggles -- "Block destructive commands" (on/off), "Restrict writes to plan" (on/off), "Block sensitive files" (on/off); approved commands list (scrollable, per-row remove, optional manual add); override toggle with warning styling. **MCP Configuration** (collapsible card): per-platform MCP toggles for **all five platforms** (Cursor, Codex, Claude Code, Gemini, Copilot), MCP server list (add/edit/remove servers with name/command/args/env fields), "Test connection" button per server, Context7 API key input (password-style), web search provider selection and API key. **Personas** (collapsible card): list, create, edit, delete Personas (project-local vs global); schema validation on save; permission profile and skill reference editing; see `Plans/Personas.md` §4 (canonical SSOT). **Containers & Registry** (collapsible card, see §7.4.8): Docker runtime/compose defaults, DockerHub namespace/repo/tag defaults, auth mode and push policy. **CI / GitHub Actions** (collapsible card, see §7.4.9): workflow template selection, trigger/matrix controls, required-secrets checklist, generate/preview/apply actions. **Other:** Sub-agent toggles and cleanup config (clean untracked before run, clean ignored files, clear agent-output dir, evidence retention days); the legacy Iced-era "Experimental features" subsection with per-platform "Enable Codex/Gemini/Copilot Experimental" toggles is removed in the Slint rewrite and MUST NOT be implemented. | Old "Config" Advanced tab + newtools.md + FileSafe.md + MiscPlan.md + GitHub_API_Auth_and_Flows.md + Personas.md |
+| **Permissions** | Dedicated permissions management screen (see §7.4.10): scope selector (Global/Project), global wildcard default, per-tool override table (Allow/Ask/Deny per row with expand for granular rules), presets (Read-only, Plan mode, Full), external directory allowlist manager, doom_loop policy config, per-Persona permission profile editor. Canonical SSOT: `Plans/Permissions_System.md` §10. | Plans/Permissions_System.md + Plans/Tools.md |
 | **LSP** | **Language Server Protocol (MVP)** (see §7.4.2): LSP is required for desktop release. Global "Disable automatic LSP server downloads" toggle; built-in servers list with per-server enable/disable (all on by default); per-server env vars and initialization options; custom LSP servers (add/edit/remove: command, extensions, env, initialization). Stored in app config (redb); project overrides optional. | Plans/LSPSupport.md |
 | **Interview** | Interview-specific config; enable_phase_subagents, enable_research_subagents, enable_validation_subagents, enable_document_subagents; **Multi-Pass Review:** toggle on/off (default off), number of review passes (1-5 dropdown, default 2), max review subagents (1-10, default 3), show warning label when enabled ("Increases cost and time"); min/max questions (spinners), architecture confirmation toggle, vision provider dropdown; **Interview concurrency overrides** (collapsible, per-platform, see §7.4.7) | Old "Config" Interview tab + interview-subagent-integration.md |
 | **Authentication** | Per-provider auth status (Cursor, Codex, Claude, Gemini, Copilot, OpenCode, GitHub) with **real-time auth state** chips (`LoggedOut`, `LoggingIn`, `LoggedIn`, `LoggingOut`, `AuthExpired`, `AuthFailed`); login/logout/re-auth buttons; auth method indicators; auth URLs (selectable/copyable); Git info (user, email, remote, branch); **auth realm split:** show separate entries for `github_api` and `copilot_github` (SSOT: `Plans/Contracts_V0.md` `AuthRealm`); **multi-account visibility:** active account, account count, cooldown/rate-limit badge, and quick switch/manage entry | Old "Login" view |
 | **Health** | System health checks with platform filtering; check categories (CLI Tools, Git, Runtimes, Browser Tools, Capabilities, Project Setup); check status (PASS/FAIL/WARN/SKIP); fix suggestions with dry-run; **explicit Install/Uninstall actions** (no automatic install behavior) with **real-time install state** for Cursor CLI, Claude CLI, and Playwright browser runtime (`Not Installed`, `Installing`, `Installed`, `Uninstalling`, `Failed`); Codex/Copilot/Gemini rows show direct-provider auth/connectivity status (no install buttons); platform version display (CLI version per detected platform); **Cursor/Claude manual path override:** `Use manual path` checkbox + native file picker + validate action (Cursor/Claude only); **multi-account health visibility:** per-provider active account + account count + cooldown/auth freshness; **Worktree management:** worktree list (path, branch, status, age columns), "Recover orphaned worktrees" button, worktree status indicators (active/stale/orphaned); **Storage & Cleanup:** DB size, cache size, evidence log count; evidence retention days input; "Clean workspace now" button (confirm modal with preview of files to delete per MiscPlan.md); storage maintenance actions | Old "Doctor" view + WorktreeGitImprovement.md + MiscPlan.md |
-| **Rules & Commands** | Application rules (list or text area, editable); project rules (when project selected, reads/writes `.puppet-master/project-rules.md`); custom slash commands editor (application-wide and project-wide, name/description/action) | From agent-rules-context.md + feature-list.md |
+| **Rules & Commands** | Application rules (list or text area, editable); project rules (when project selected, reads/writes `.puppet-master/project-rules.md`); **User Commands management** (see §7.4.11): scope selector (Global/Project), command list with name/scope/description/Persona/mode/model columns, create/edit/delete commands, dry-run preview, shortcut binding, schema validation on save. Canonical SSOT: `Plans/Commands_System.md` §6. | From agent-rules-context.md + feature-list.md + Commands_System.md |
 | **Shortcuts** | Full keyboard shortcut table (action name, current binding, default binding); search/filter by action name or key; per-row "Change" button (captures next key combination) and "Reset" button; "Reset all" button; export/import shortcuts (JSON). Data sourced from shortcut registry (single source of truth, DRY:DATA). | MiscPlan.md |
-| **Skills** | Discover and manage SKILL.md files (project-level from `.puppet-master/skills/` and global from `~/.puppet-master/skills/`). Table: skill name, description, source (project/global), permission (Allow/Deny/Ask dropdown per row). Actions: Add, Edit (opens in File Editor), Remove, "Refresh" (re-scan disk). Bulk permission by pattern (e.g., "Allow all doc-*"). Preview skill body on row expand. | MiscPlan.md |
+| **Skills** | Discover and manage SKILL.md files (project-level from `.puppet-master/skills/` and global from `~/.config/puppet-master/skills/`). Table: skill name, description, source (project/global), permission (Allow/Deny/Ask dropdown per row). Actions: Add, Edit (opens in File Editor), Remove, "Refresh" (re-scan disk). Bulk permission by pattern (e.g., "Allow all doc-*"). Preview skill body on row expand. | Plans/Skills_System.md |
+| **Plugins** | Manage installed plugins (see §7.4.12): list discovered plugins with id, name, version, source (internal/project/global/config), enabled/disabled toggle. Per-plugin component counts (commands, hooks, skills). Enable/disable per plugin or per-hook. "Reload plugins" button. Plugin log viewer. Canonical SSOT: `Plans/Plugins_System.md`. | Plans/Plugins_System.md |
+| **Formatters** | Manage code formatters (see §7.4.13): global "Enable formatters" toggle, per-formatter table (name, extensions, command, enabled/disabled toggle). Custom formatter add/edit/remove. Format-on-save indicator. Evidence log link for `format.applied` events. Canonical SSOT: `Plans/Formatters_System.md`. | Plans/Formatters_System.md |
+| **Models** | Model configuration (see §7.4.14): model picker (provider + model dropdowns), variant selector (default/fast/powerful/custom), per-Persona model override editor, custom variant definitions, provider priority list editor. Canonical SSOT: `Plans/Models_System.md`. | Plans/Models_System.md |
 | **Catalog** | Browse and install community content: commands, agents, hooks, skills, themes, and MCP server configs from a curated catalog. See §7.4.3. | feature-list.md |
 | **Sync** | Export, import, and sync app configuration across machines. See §7.4.4. | feature-list.md |
 | **SSH** | Manage SSH connections for remote editing. See §7.4.5. | FileManager.md |
@@ -256,7 +260,7 @@ ContractRef: ContractName:Plans/rewrite-tie-in-memo.md
 
 **Audit rule:** Any row above marked "Required" must not ship with a missing variant. No in-scope row may remain single-variant.
 
-**Tab sub-grouping:** With 20 tabs, use a two-level navigation: left sidebar within Settings for groups, right area for the selected tab's content. Group labels act as collapsible section headers in the sidebar. Groups: **Core** (General, Tiers, Branching) | **Features** (Verification, Memory, Budgets, Advanced, Interview, LSP) | **System** (Authentication, Health, Rules & Commands, Shortcuts, Skills, HITL) | **Extensions** (Catalog, Sync, SSH, Debug) | **Raw** (YAML). Each group header shows item count badge. Clicking a group header expands/collapses that group in the sidebar. Active tab highlighted with accent-left-border (3px).
+**Tab sub-grouping:** With 24 tabs, use a two-level navigation: left sidebar within Settings for groups, right area for the selected tab's content. Group labels act as collapsible section headers in the sidebar. Groups: **Core** (General, Tiers, Branching) | **Features** (Verification, Memory, Budgets, Permissions, Advanced, Interview, LSP, Models) | **System** (Authentication, Health, Rules & Commands, Shortcuts, Skills, HITL) | **Extensions** (Plugins, Formatters, Catalog, Sync, SSH, Debug) | **Raw** (YAML). Each group header shows item count badge. Clicking a group header expands/collapses that group in the sidebar. Active tab highlighted with accent-left-border (3px).
 
 **§7.4.2 LSP (LSP tab):** LSP support is **MVP** (required for desktop release), not optional. Per Plans/LSPSupport.md, the GUI must expose full LSP configuration so users can control automatic downloads, enable/disable servers, set env and initialization options, and add custom servers. Provide **Settings > LSP** with:
 
@@ -272,7 +276,7 @@ ContractRef: ContractName:Plans/rewrite-tie-in-memo.md
 
 All LSP settings are persisted in app config (redb or equivalent). Optional: project-level overrides (e.g. `.puppet-master/lsp.json` or project key in redb) so a project can disable a server or add a custom server for that project only; document merge rules (project overrides app) in implementation.
 
-**§7.4.1 Tool permissions (Advanced tab):** Per Plans/Tools.md, the GUI must expose the tool permission model (allow / deny / ask) so users can control which tools the agent may use without approval, require approval for, or disable. Provide a **Tool permissions** collapsible card under Settings > Advanced with: (1) **Presets** (optional): dropdown or buttons for "Read-only" (deny edit, bash, webfetch, websearch), "Plan mode" (allow read/grep/glob/list only), "Full" (allow all with ask for bash/edit); (2) **Per-tool list**: table or list of tools (built-in canonical names + discovered MCP/custom tools when available), each with a permission dropdown (Allow | Deny | Ask); (3) **Wildcard rules** (optional): add rule e.g. `mymcp_*: Ask` for all tools from a server. Stored in same config as other Settings; run config reads it for the central tool registry. Tool list may be populated from registry at load time; MCP tools appear when MCP servers are enabled. If the registry is not yet available (pre-rewrite), a minimal UI can show built-in tools only (bash, edit, read, grep, glob, list, webfetch, websearch, question, etc.) with Allow/Deny/Ask per row.
+**§7.4.1 Tool permissions:** Tool permissions have been promoted from a collapsible card in Advanced to a dedicated **Permissions** tab (see §7.4.10). The canonical SSOT for permission actions, precedence, granular rules, defaults, and GUI requirements is `Plans/Permissions_System.md`. The tool registry (`Plans/Tools.md`) supplies the list of known tool names to populate the Permissions tab.
 
 **Critical form control requirements:**
 - **Model selection MUST use dropdowns** populated from dynamic model discovery, NOT text entry boxes
@@ -418,6 +422,126 @@ Add a collapsible **CI / GitHub Actions** card in Settings > Advanced for workfl
 - **Post-apply visibility:** generated workflows appear in a Settings list with edit/open actions.
 
 ContractRef: ContractName:Plans/newtools.md#148-github-actions-settings--generation-contract, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+
+**§7.4.10 Permissions (Permissions tab):**
+
+> **SSOT:** The canonical specification for the Permissions GUI is `Plans/Permissions_System.md` §10. This section provides the FinalGUISpec integration points; normative behavior is defined in the SSOT.
+
+ContractRef: ContractName:Plans/Permissions_System.md#GUI-PERMISSIONS, ContractName:Plans/Tools.md
+
+The **Permissions** tab in Settings provides a dedicated screen for managing tool permissions across all scopes. Layout:
+
+1. **Scope selector** (top bar): Toggle between **Global** and **Project** (project visible only when a project is active). Indicates which config file is being edited (`~/.config/puppet-master/permissions.toml` or `<project>/.puppet-master/permissions.toml`). When in Global scope with a project active, show effective (merged) permissions with layer-of-origin badges.
+
+2. **Presets bar**: Three buttons — "Read-only", "Plan mode", "Full" — each applying a batch of permission rules per `Plans/Permissions_System.md` §10.4. Clicking triggers a confirmation dialog: "This will replace your current permissions. Continue?"
+
+3. **Global wildcard default**: Single dropdown (`Allow` | `Ask` | `Deny`) setting the fallback action for any tool without an explicit rule. Default: `Ask`.
+
+4. **Per-tool override table**: Table of all known tools (built-in canonical names from `Plans/Permissions_System.md` §5 + MCP-discovered tools). Columns: Tool name, Category badge, Permission dropdown (`Allow` | `Ask` | `Deny`), expand chevron. Tool list populated from registry at load time.
+
+5. **Granular rule editor** (per-tool expand): When a tool row is expanded, an ordered list of `{pattern, action}` entries with: "Add rule" button, drag handles for reorder (last-match-wins), delete button per row, pattern input with wildcard help tooltip (`*` and `?`).
+
+6. **External directory allowlist** (collapsible card): Scrollable list of allowlisted paths; "Add path" button (text input + optional native directory picker); per-row delete; home expansion display.
+
+7. **doom_loop policy** (collapsible card): Action dropdown (`Allow` | `Ask` | `Deny`), repeat threshold spinner (default 3, range 2–10), explanation text.
+
+8. **Per-Persona permission profiles** (collapsible card): List of named profiles from `~/.config/puppet-master/permission-profiles/`. "Create profile" button opens a permission editor scoped to the new profile. Profile rows: name, override count, edit/delete. The `default_permissions_profile` dropdown in the Personas editor (`Plans/Personas.md` §4) is populated from this list.
+
+9. **ELI5/Expert**: In ELI5 mode, only per-tool dropdowns and presets are visible. Granular rules, profile editor, allowlist, and doom_loop config are hidden. Tooltip prefix: `tooltip.permissions.*`.
+
+**Tab sub-grouping update**: The Permissions tab belongs to the **Features** group in the Settings sidebar (alongside Verification, Memory, Budgets, Advanced, Interview, LSP).
+
+**§7.4.11 Commands (Rules & Commands tab):**
+
+> **SSOT:** The canonical specification for the Commands GUI is `Plans/Commands_System.md` §6. This section provides the FinalGUISpec integration points; normative behavior is defined in the SSOT.
+
+ContractRef: ContractName:Plans/Commands_System.md#GUI-COMMANDS, ContractName:Plans/DRY_Rules.md
+
+The **Rules & Commands** tab in Settings includes a **Commands** section for managing User Command presets. Layout:
+
+1. **Scope selector** (top of Commands section): Toggle between **Global** (`~/.config/puppet-master/commands/`) and **Project** (`<project_root>/.puppet-master/commands/`; visible only when a project is active).
+
+2. **Command list**: Table of all resolved commands (project + global). Columns: Name (with `/x-` prefix), Scope badge, Description (truncated), Persona (or "—"), Mode (or "inherit"), Model (or "inherit"), Subtask indicator. Project-local entries sort before global when names match.
+
+3. **Create / Edit / Delete**: "New Command" button opens an editor with name, description, Persona dropdown, mode dropdown, model dropdown, subtask toggle, permissions profile override dropdown, and Markdown template editor. Edit pre-populates; delete confirms. Global commands offer "Save as project override" when a project is active.
+
+4. **Dry-run preview**: "Preview" button resolves the template with sample arguments and displays the rendered prompt in a read-only Markdown view without submitting a run. Highlights placeholder substitutions, file includes, and shell injection results (or permission-blocked placeholders).
+
+5. **Shortcut binding**: Per-command "Bind shortcut" action opens the shortcut capture UI. Bindings appear in Settings > Shortcuts as "Run command: \<name\>".
+
+6. **Schema validation**: On save, validates name format, reserved-name collision, required description, mode/model format. Blocks save on errors.
+
+7. **ELI5/Expert**: In ELI5 mode, only name, description, and a "Run" button are shown. Template editor, Persona/mode/model overrides, permissions profile, and dry-run are hidden in ELI5. Tooltip prefix: `tooltip.commands.*`.
+
+**Tab sub-grouping update**: The Rules & Commands tab belongs to the **System** group in the Settings sidebar.
+
+**§7.4.12 Plugins (Plugins tab):**
+
+> **SSOT:** The canonical specification for the Plugins system is `Plans/Plugins_System.md`. This section provides the FinalGUISpec integration points; normative behavior is defined in the SSOT.
+
+ContractRef: ContractName:Plans/Plugins_System.md#GUI-PLUGINS, ContractName:Plans/DRY_Rules.md
+
+The **Plugins** tab in Settings provides visibility and control over discovered plugins. Layout:
+
+1. **Plugin list**: Table of all discovered plugins (internal + project + global + config). Columns: ID, Name, Version, Source badge (Internal/Project/Global/Config), Enabled toggle, Component counts (commands, hooks, skills). Sorted by load order (internal first, then project, global, config; lexicographic within each source).
+
+2. **Enable/Disable**: Per-plugin toggle. Disabling a plugin removes its hooks and tools from the active set without deleting the plugin from disk. Per-hook disable: expand a plugin row to see its registered hooks; each hook has an independent enable/disable toggle.
+
+3. **Plugin details**: Expand a plugin row to see: registered hook events, registered custom tools (with collision status), and the plugin's log output (filtered from structured log).
+
+4. **Reload plugins**: "Reload" button re-scans discovery paths and reloads all plugin manifests. Toast confirms reload with count.
+
+5. **Per-Persona disabling**: A note linking to Settings > Advanced > Personas where `disabled_plugins` can be set per Persona.
+
+6. **ELI5/Expert**: In ELI5 mode, show only plugin name, description, and enabled toggle. Component counts, log viewer, and hook-level toggles are hidden. Tooltip prefix: `tooltip.plugins.*`.
+
+**Tab sub-grouping update**: The Plugins tab belongs to the **Extensions** group in the Settings sidebar.
+
+**§7.4.13 Formatters (Formatters tab):**
+
+> **SSOT:** The canonical specification for the Formatters system is `Plans/Formatters_System.md`. This section provides the FinalGUISpec integration points; normative behavior is defined in the SSOT.
+
+ContractRef: ContractName:Plans/Formatters_System.md#GUI-FORMATTERS, ContractName:Plans/DRY_Rules.md
+
+The **Formatters** tab in Settings provides formatter configuration. Layout:
+
+1. **Global toggle**: "Enable formatters" (bound to `config.formatters.enabled`; default: true). When off, no formatters run.
+
+2. **Formatter table**: Table of all known formatters (built-in + custom). Columns: Name, File Extensions, Command, Enabled toggle. Built-in formatters are pre-populated from the canonical table (`Plans/Formatters_System.md` §2). Custom formatters appear below with a "Custom" badge.
+
+3. **Add custom formatter**: "Add formatter" button opens a form: name (unique), command (with `$FILE` placeholder), extensions (comma-separated), optional environment variables. Validate command on save.
+
+4. **Edit / Remove**: Edit button for custom formatters (built-in formatters only allow enable/disable and command override). Remove button for custom formatters only.
+
+5. **Evidence link**: "View format events" link opens the Evidence ledger filtered to `format.applied` events.
+
+6. **ELI5/Expert**: In ELI5 mode, show only formatter name, extensions, and enabled toggle. Command, environment, and evidence link are hidden. Tooltip prefix: `tooltip.formatters.*`.
+
+**Tab sub-grouping update**: The Formatters tab belongs to the **Extensions** group in the Settings sidebar.
+
+**§7.4.14 Models (Models tab):**
+
+> **SSOT:** The canonical specification for the Models system is `Plans/Models_System.md`. This section provides the FinalGUISpec integration points; normative behavior is defined in the SSOT.
+
+ContractRef: ContractName:Plans/Models_System.md#GUI-MODELS, ContractName:Plans/DRY_Rules.md
+
+The **Models** tab in Settings provides model and variant configuration. Layout:
+
+1. **Default model selector**: Provider dropdown + Model dropdown. Displays the canonical model ID (`provider_id/model_id`). Sets `config.model`.
+
+2. **Variant selector**: Dropdown with built-in variants (default, fast, powerful) plus any custom variants. "Edit variants" button opens the variant editor. Variant cycling shortcut binding note.
+
+3. **Variant editor** (collapsible card): List of custom variants with name, model ID, and description. Add/edit/remove custom variants. Built-in variants (default/fast/powerful) can be customized (model ID override) but not deleted. Disable a variant: toggle to exclude it from the cycling order.
+
+4. **Per-Persona model overrides** (collapsible card): Table of Personas with `default_model` and `default_variant` columns. Edit button per row opens a model/variant picker. Clearing a field falls back to global config. Links to Settings > Advanced > Personas for full Persona editing.
+
+5. **Provider priority list** (collapsible card): Ordered list of provider IDs. Drag-to-reorder or up/down buttons. Determines the internal priority list for fallback when no model is explicitly set.
+
+6. **Model options** (collapsible card): Per-provider-model option editor. Select provider + model, then edit options (temperature, max_tokens, top_p, reasoning_effort, etc.) as key-value fields.
+
+7. **ELI5/Expert**: In ELI5 mode, show only default model selector and variant selector. Provider priority, model options, and per-Persona overrides are hidden. Tooltip prefix: `tooltip.models.*`.
+
+**Tab sub-grouping update**: The Models tab belongs to the **Features** group in the Settings sidebar.
 
 ### 7.5 Wizard
 
@@ -845,7 +969,7 @@ The chat supports web search with citations. When the assistant performs web sea
 
 #### 7.16.2 Slash Commands
 
-Typing `/` in the chat input shows an autocomplete popup listing available commands.
+Typing `/` in the chat input shows an autocomplete popup listing available commands. The popup includes both **reserved slash commands** (built-in actions) and **User Commands** (user-authored presets from `Plans/Commands_System.md`). Reserved commands appear first; User Commands appear below, prefixed with `/x-`.
 
 **Built-in commands (reserved):**
 
@@ -861,7 +985,7 @@ Typing `/` in the chat input shows an autocomplete popup listing available comma
 | `/revert` | Revert last agent file edit |
 | `/share` | Share thread bundle |
 
-**Custom commands:** Users can define application-wide and project-wide custom slash commands. Custom commands are editable in Settings > Slash Commands tab. Custom command names must not conflict with built-in commands. Format: name, description, action (prompt template or callback).
+**User Commands (presets):** Users can define project-level and global command presets as `.md` files with YAML frontmatter + template body. Each preset may override Persona, mode, and model for its run. Custom command names MUST NOT conflict with reserved commands. Full schema, template syntax, and management GUI: `Plans/Commands_System.md` (canonical SSOT). Management UI: Settings > Rules & Commands (§7.4.11).
 
 ### 7.17 File Manager Panel (NEW)
 

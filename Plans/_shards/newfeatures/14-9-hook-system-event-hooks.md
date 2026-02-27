@@ -33,5 +33,9 @@ Events could include: before sending user message, before tool use, after tool u
 - **Config:** Hooks listed in config (or in plugin manifests); GUI settings page to add/remove/reorder hooks per event.
 - **No new runtime:** Prefer spawning a process per hook so we don't embed a script engine; keep the contract simple (JSON in/out).
 
+> **Canonical SSOT:** The authoritative hook event catalog (10 events with typed I/O payloads and return enums), execution order, timeout semantics, and compaction hook (`CompactionPrepare`) are defined in `Plans/Plugins_System.md` §3 (`#HOOK-EVENTS`). This section (§9) provides feature-level context; all normative hook behavior is in the SSOT.
+
+ContractRef: ContractName:Plans/Plugins_System.md#HOOK-EVENTS, ContractName:Plans/Plugins_System.md#HOOK-COMPACTION
+
 ---
 

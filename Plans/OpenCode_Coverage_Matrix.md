@@ -16,7 +16,7 @@ This document audits every OpenCode-derived capability extracted in `Plans/OpenC
 | **Partial** | A target doc exists but is missing stable anchors, missing GUI wiring, or the capability is only described in `OpenCode_Deep_Extraction.md` without a dedicated SSOT section. |
 | **Missing** | No SSOT doc and no clear contract for this capability. The extraction doc records the baseline but nothing in `Plans/` owns it. |
 
-**Inspection corpus:** All files listed in `Plans/00-plans-index.md` plus the eight prompt-04–06 SSOT docs (`Run_Modes.md`, `Personas.md`, `Permissions_System.md`, `Commands_System.md`, `Formatters_System.md`, `Plugins_System.md`, `Models_System.md`) and `OpenCode_Deep_Extraction.md` itself.
+**Inspection corpus:** All files listed in `Plans/00-plans-index.md` plus subsystem SSOT docs (`Run_Modes.md`, `Personas.md`, `Permissions_System.md`, `Commands_System.md`, `Skills_System.md`, `Prompt_Pipeline.md`, `Formatters_System.md`, `Plugins_System.md`, `Models_System.md`) and `OpenCode_Deep_Extraction.md` itself.
 
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 
@@ -40,11 +40,11 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 | 12 | **Formatters — post-write/edit trigger, $FILE** | §7E.1, §7E.3 | `Plans/Formatters_System.md` #LIFECYCLE, #FORMATTER-CONFIG | Run_Modes.md (HTE-only) | **Covered** | HTE-only enforcement is a PM delta. |
 | 13 | **Formatters — disable/override** | §7E.3 | `Plans/Formatters_System.md` #FORMATTER-CONFIG | — | **Covered** | Global disable + per-formatter disable/command override. |
 | 14 | **Formatters — built-in formatter set** | §7E.2 | `Plans/Formatters_System.md` #BUILT-IN-FORMATTERS | — | **Covered** | 21 formatters with auto-detection. |
-| 15 | **Skills — discovery** | §7F.1 | **No dedicated SSOT** | Extraction §8 row F1 targets `Plans/Skills_System.md` (does not exist). FinalGUISpec.md §7.4 "Skills" tab exists. Personas.md §3.2 `default_skill_refs`, Permissions_System.md #TOOL-KEYS (`skill` key). | **Missing** | `Plans/Skills_System.md` is referenced by Personas.md, Plugins_System.md, and the extraction mapping table but has never been created. The extraction baseline (§7F) is the only documentation. |
-| 16 | **Skills — frontmatter/schema** | §7F.2 | **No dedicated SSOT** | Same as #15 | **Missing** | — |
-| 17 | **Skills — agent surface (skill tool, as-command registration)** | §7F.3 | **No dedicated SSOT** | Tools.md lists `skill` in the tool table. Permissions_System.md §5 lists `skill` key. | **Missing** | Skill-as-command dual-registration is unspecified. |
-| 18 | **Skills — permission gating** | §7F.4 | `Plans/Permissions_System.md` #TOOL-KEYS (lists `skill` key) | — | **Partial** | The `skill` permission key exists in the defaults table, but the skill-specific external_directory auto-allowlist and prune-protection semantics have no SSOT owner. |
-| 19 | **Skills — per-Persona skill refs** | §7B.1 (agent.skills) | `Plans/Personas.md` §3.2 `default_skill_refs` | — | **Partial** | Schema field exists; runtime loading defers to missing `Skills_System.md`. |
+| 15 | **Skills — discovery** | §7F.1 | `Plans/Skills_System.md` #DISCOVERY, #SEARCH-ORDER | FinalGUISpec.md (Skills tab), Personas.md (`default_skill_refs`), Tools.md (`skill` tool), Permissions_System.md (`skill` key), FileSafe.md (Skill Bundling), MiscPlan.md (implementation checklist) | **Covered** | Canonical discovery roots + ordering + first-wins shadowing rules are defined in Skills_System.md. |
+| 16 | **Skills — frontmatter/schema** | §7F.2 | `Plans/Skills_System.md` #SKILL-SCHEMA | FinalGUISpec.md, Personas.md, Tools.md | **Covered** | Required frontmatter fields (`name`, `description`) and validation are specified. |
+| 17 | **Skills — agent surface (skill tool, as-command registration)** | §7F.3 | `Plans/Skills_System.md` #RUNTIME-SURFACE, `Plans/Tools.md` (skill tool I/O) | — | **Partial** | The `skill` tool surface is specified; skill-as-command dual-registration is not required for v1 and remains unspecified. |
+| 18 | **Skills — permission gating** | §7F.4 | `Plans/Skills_System.md` #PERMISSIONS, `Plans/Permissions_System.md` #TOOL-KEYS | — | **Covered** | Skill-specific permission patterns and external_directory root handling are owned by Skills_System.md. |
+| 19 | **Skills — per-Persona skill refs** | §7B.1 (agent.skills) | `Plans/Skills_System.md` #RUNTIME-SURFACE, `Plans/Personas.md` §3.2 | — | **Covered** | Persona `default_skill_refs` resolution + warning behavior is specified. |
 | 20 | **Plugins — discovery + load order** | §7G.1 | `Plans/Plugins_System.md` #DISCOVERY, #LOAD-ORDER | — | **Covered** | Four-source priority, lexicographic tiebreak. |
 | 21 | **Plugins — hooks (tool, permission, session, message, compaction, shell.env, system.prompt)** | §7G.3 | `Plans/Plugins_System.md` #HOOK-EVENTS, #HOOK-COMPACTION | — | **Covered** | 10 hook events with typed returns. |
 | 22 | **Plugins — custom tools + collision** | §7G.4 | `Plans/Plugins_System.md` #CUSTOM-TOOLS, #TOOL-COLLISION | Tools.md | **Covered** | Namespaced aliasing default; override opt-in. |
@@ -57,17 +57,17 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 | 29 | **Provider error classification (retryable, overflow, auth)** | §7H.5, §10.3 | `Plans/CLI_Bridged_Providers.md` (auth error), `Plans/Models_System.md` §4 | Run_Modes.md §5 kill conditions | **Partial** | Overflow detection and retryable-error retry policy are described in Models_System.md §4 but lack a canonical anchor. Auth-error classification lives in CLI_Bridged_Providers.md. No unified error-classification SSOT. |
 | 30 | **Tool lifecycle and hook boundaries** | §10.1 | `Plans/Tools.md` (tool semantics), `Plans/Plugins_System.md` #HOOK-TOOL-EXECUTE | — | **Covered** | Tool execution before/after hooks defined in Plugins_System.md; tool semantics in Tools.md. |
 | 31 | **Subagent management** | §7B.1–§7B.3 | `Plans/orchestrator-subagent-integration.md` §4 (registry), `Plans/Personas.md` #DEF-SUBAGENT | interview-subagent-integration.md, Tools.md §3.6 (task tool) | **Covered** | Registry-driven Persona set; task-tool validation. |
-| 32 | **Context handling / compaction / rotation** | §7B.4, §7B.5 | `Plans/FileSafe.md` Part B (context compilation), `Plans/Run_Modes.md` §7 (mode-specific context deltas) | — | **Partial** | Compaction thresholds and pruning rules from extraction §7B.5 have no dedicated SSOT. Mapping table §8 targets `Plans/Prompt_Pipeline.md` which does not exist. FileSafe Part B covers compilation but not full compaction/rotation contract. |
+| 32 | **Context handling / compaction / rotation** | §7B.4, §7B.5 | `Plans/Prompt_Pipeline.md` #ASSEMBLY-PIPELINE, #COMPACTION, `Plans/FileSafe.md` Part B (context compilation), `Plans/Run_Modes.md` §7 (mode-specific context deltas) | — | **Partial** | Prompt assembly + pruning contracts now have a dedicated SSOT (Prompt_Pipeline.md). Detailed compaction thresholds remain owned by FileSafe.md Part B / Run_Modes.md and still need stable anchors if referenced cross-doc. |
 | 33 | **LSP integration** | — (not in extraction §7) | `Plans/LSPSupport.md` (canonical) | FinalGUISpec.md §7.4.2 (Settings > LSP), FileManager.md §10.10 | **Covered** | Not part of extraction scope but has its own SSOT. |
 | 34 | **MCP integration** | §7D.1 (MCP prompts → commands) | `Plans/newtools.md` (MCP config, server list), `Plans/Tools.md` §5 (MCP in registry) | FinalGUISpec.md §7.4 Advanced (MCP config card) | **Partial** | MCP tools enter the central registry and permission model, but there is no single `Plans/MCP_System.md` SSOT. Config paths, GUI, and discovery rules are split across newtools.md, Tools.md, and FinalGUISpec.md. |
 | 35 | **GitHub API: Auth vs usage/tool** | — (not in extraction §7) | `Plans/GitHub_API_Auth_and_Flows.md` (auth contract), `Plans/GitHub_Integration.md` (Git panel + API usage) | FinalGUISpec.md, Architecture_Invariants.md #INV-002 | **Covered** | OAuth device-code default; no secrets in storage. Not part of OpenCode extraction scope. |
 | 36 | **GUI config wiring — Permissions** | — | `Plans/Permissions_System.md` §10, `Plans/FinalGUISpec.md` §7.4.10 | — | **Covered** | Dedicated tab with all sub-sections. |
 | 37 | **GUI config wiring — Commands** | — | `Plans/Commands_System.md` §6, `Plans/FinalGUISpec.md` §7.4.11 | — | **Covered** | Rules & Commands tab. |
-| 38 | **GUI config wiring — Skills** | — | `Plans/FinalGUISpec.md` §7.4 "Skills" row | — | **Partial** | FinalGUISpec lists a Skills tab (table: name, description, source, permission), but there is no `Skills_System.md` to be the canonical SSOT. The tab description references `MiscPlan.md` (not a subsystem SSOT). |
+| 38 | **GUI config wiring — Skills** | — | `Plans/Skills_System.md` #GUI-SKILLS, `Plans/FinalGUISpec.md` §7.4 "Skills" row | — | **Partial** | Skills SSOT now exists; FinalGUISpec sources the Skills row from Skills_System.md. A dedicated numbered §7.4.X Skills subsection is still optional but recommended for symmetry with other subsystem tabs. |
 | 39 | **GUI config wiring — Plugins** | — | `Plans/Plugins_System.md` §9, `Plans/FinalGUISpec.md` §7.4.12 | — | **Covered** | Dedicated tab cross-referencing SSOT. |
 | 40 | **GUI config wiring — Models** | — | `Plans/Models_System.md` §7, `Plans/FinalGUISpec.md` §7.4.14 | — | **Covered** | Model picker + Settings > Models tab. |
 | 41 | **GUI config wiring — Formatters** | — | `Plans/Formatters_System.md` §5, `Plans/FinalGUISpec.md` §7.4.13 | — | **Covered** | Dedicated tab cross-referencing SSOT. |
-| 42 | **Prompt assembly pipeline** | §7B.4 | **No dedicated SSOT** | Extraction §8 row B4 targets `Plans/Prompt_Pipeline.md` (does not exist). FileSafe.md Part B covers context compilation. Personas.md §5.2 covers Persona injection. | **Missing** | Multi-layer prompt assembly (system + instructions + agent context + reminders + transforms) has no single SSOT. Fragments exist in FileSafe Part B and Personas.md. |
+| 42 | **Prompt assembly pipeline** | §7B.4 | `Plans/Prompt_Pipeline.md` #ASSEMBLY-PIPELINE | FileSafe.md Part B (context compilation details), Personas.md §5.2 (Persona injection), Plugins_System.md (#HOOK-COMPACTION) | **Covered** | Prompt assembly stage ordering and the compaction/rotation contract are owned by Prompt_Pipeline.md; other docs provide subsystem-specific details. |
 
 ---
 
@@ -78,9 +78,9 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 | Document | Duplicated Content | Should Reference Instead |
 |---|---|---|
 | `Plans/Tools.md` §2 | Restates permission action definitions (allow/ask/deny) and precedence summary | Already references `Plans/Permissions_System.md` via summary — acceptable (marked as summary). No normative duplication detected; §2 explicitly defers to Permissions_System.md. |
-| `Plans/OpenCode_Deep_Extraction.md` §8 | Maps Skills targets to `Plans/Skills_System.md` and Models targets to `Plans/Provider_OpenCode.md` | Skills_System.md does not exist; Models_System.md is the actual SSOT (not Provider_OpenCode.md for model options/variants). Mapping table rows F1–F4 and H1–H4 need correction. |
-| `Plans/Personas.md` §1.4, §5.4 | References `Plans/Skills_System.md` and `Plans/Plugin_System.md` (note: typo — should be `Plugins_System.md`) | These docs are marked "(future; prompt 06)" — Plugins_System.md now exists and should be linked correctly. Skills_System.md remains missing. |
-| `Plans/FinalGUISpec.md` §7.4 "Skills" row | Sources Skills tab from `MiscPlan.md` | Should reference `Plans/Skills_System.md` once created, not MiscPlan.md. |
+| `Plans/OpenCode_Deep_Extraction.md` §8 | Mapping-table SSOT targets | Mapping table rows for Skills (F1–F4) now target `Plans/Skills_System.md`; Models rows (H1–H4) now target `Plans/Models_System.md` anchors (not Provider_OpenCode.md). |
+| `Plans/Personas.md` §1.4, §5.4 | SSOT reference list typos / stale qualifiers | `Plugins_System.md` is now referenced correctly (plural) and `Skills_System.md` is no longer marked as missing/future. |
+| `Plans/FinalGUISpec.md` §7.4 "Skills" row | Skills tab SSOT source | Skills tab now sources from `Plans/Skills_System.md` (not MiscPlan.md). |
 | `Plans/Run_Modes.md` §8 | Restates extraction baseline for run modes | Acceptable: baseline section explicitly cites `Plans/OpenCode_Deep_Extraction.md` §7A. Not a DRY violation — it documents the delta context. |
 
 ### 3.2 SSOT docs missing stable anchors
@@ -120,7 +120,7 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 | Check | Status | Detail |
 |---|---|---|
 | GUI surface in FinalGUISpec.md | ⚠️ | Skills tab row exists in §7.4 table but has **no dedicated §7.4.X subsection** (unlike Permissions, Commands, Plugins, Formatters, Models which all have one). |
-| Config keys/state storage | ❌ | No SSOT defines skill storage paths for Puppet Master. FinalGUISpec references `.puppet-master/skills/` and `~/.puppet-master/skills/` but these are not confirmed by any `Skills_System.md`. |
+| Config keys/state storage | ✅ | Canonical storage and discovery roots are defined in `Plans/Skills_System.md` (project: `.puppet-master/skills/`, global: `~/.config/puppet-master/skills/`, plus legacy discovery roots for compatibility). |
 | No secrets in files | ✅ | Skills are Markdown files with no secret content. |
 | Doctor/preflight checks | ❌ | No Doctor check for skill validation. |
 
@@ -159,9 +159,9 @@ These are documentation-only edits required to close coverage gaps. They are NOT
 
 ### 5.1 Missing SSOT Documents
 
-1. **`Plans/Skills_System.md` must be created** as the canonical SSOT for skill discovery, schema, agent surface, permission integration, and per-Persona skill refs. It is referenced by `Plans/Personas.md` §1.4/§3.2/§5.4, `Plans/Plugins_System.md` §0, `Plans/Permissions_System.md` §5, `Plans/FinalGUISpec.md` Skills tab, and `Plans/OpenCode_Deep_Extraction.md` §8 rows F1–F4. Baseline content exists in extraction §7F.
+1. ✅ **`Plans/Skills_System.md` created** as the canonical SSOT for skill discovery, schema, agent surface, permission integration, and per-Persona skill refs.
 
-2. **`Plans/Prompt_Pipeline.md`** (or equivalent anchor in `Plans/FileSafe.md`) must be created or scoped to own the prompt assembly pipeline (system prompt + instructions + agent context + reminders + plugin transforms) and compaction/rotation contract. Currently `Plans/OpenCode_Deep_Extraction.md` §8 rows B4/B5 target this non-existent doc.
+2. ✅ **`Plans/Prompt_Pipeline.md` created** to own the prompt assembly pipeline and compaction/rotation contract.
 
 ### 5.2 Anchor Additions
 
@@ -175,11 +175,11 @@ These are documentation-only edits required to close coverage gaps. They are NOT
 
 ### 5.3 Cross-Reference Corrections
 
-7. **`Plans/OpenCode_Deep_Extraction.md` §8** mapping table rows H1–H4 target `Plans/Provider_OpenCode.md` for model options/variants/errors. The actual SSOT for model selection, options, and variants is `Plans/Models_System.md`. The table should be updated to reflect this (Provider_OpenCode.md remains correct for provider-specific transport concerns).
+7. ✅ **`Plans/OpenCode_Deep_Extraction.md` §8** mapping table rows H1–H4 now target `Plans/Models_System.md` anchors for model options/variants/errors.
 
-8. **`Plans/Personas.md`** §0 SSOT references list `Plans/Plugin_System.md` (typo — should be `Plans/Plugins_System.md`, singular→plural mismatch) and `Plans/Skills_System.md` marked "(future; prompt 06)". `Plugins_System.md` now exists and the reference should drop the "(future; prompt 06)" qualifier.
+8. ✅ **`Plans/Personas.md`** SSOT reference list now uses `Plans/Plugins_System.md` (plural) and no longer marks `Plans/Skills_System.md` as missing/future.
 
-9. **`Plans/FinalGUISpec.md`** §7.4 Skills tab row sources from `MiscPlan.md`. Once `Plans/Skills_System.md` is created, the source column should reference it as the canonical SSOT.
+9. ✅ **`Plans/FinalGUISpec.md`** Skills tab row now sources from `Plans/Skills_System.md`.
 
 ### 5.4 DRY Tightening
 
@@ -197,13 +197,13 @@ These are documentation-only edits required to close coverage gaps. They are NOT
 
 | Coverage Status | Count | Examples |
 |---|---|---|
-| **Covered** | 30 | Run modes, permissions (all facets), commands, formatters, plugins, models, subagents, LSP, GitHub auth, GUI wiring for permissions/commands/plugins/formatters/models |
-| **Partial** | 7 | Skills permission gating (#18), per-Persona skill refs (#19), provider transform layer (#28), provider error classification (#29), context/compaction (#32), MCP integration (#34), GUI Skills tab (#38) |
-| **Missing** | 4 | Skills discovery/schema/agent-surface (#15–#17), prompt assembly pipeline (#42) |
+| **Covered** | 32 | Run modes, permissions (all facets), commands, skills (discovery + schema + Persona refs), prompt pipeline, formatters, plugins, models, subagents, LSP, GitHub auth |
+| **Partial** | 7 | Skills agent surface as-commands (#17), provider transform layer (#28), provider error classification (#29), context/compaction (#32), MCP integration (#34), GUI Skills tab subsectioning (#38) |
+| **Missing** | 0 | — (no remaining extraction-core SSOT docs missing; remaining gaps are anchors/subsections) |
 
-**Critical gap:** `Plans/Skills_System.md` is the largest single missing SSOT. It is referenced by five existing docs but does not exist. All skill-related rows in the extraction mapping table point to it.
-
-**Second gap:** Prompt assembly / compaction / rotation has no single SSOT. Fragments exist in FileSafe Part B, Run_Modes.md §7, and Personas.md §5.2, but the full pipeline (system prompt assembly, compaction thresholds, pruning rules, continuation summaries, rotation triggers) is undocumented as a unified contract.
+**Remaining gaps (high value):**
+- Add stable anchors for provider transform and error classification (`CLI_Bridged_Providers.md`) and for context compilation/compaction thresholds (FileSafe.md / Run_Modes.md), so other plans can ContractRef them cleanly.
+- Consider adding a dedicated numbered `§7.4.X` Skills subsection in FinalGUISpec.md for symmetry with other subsystem tabs.
 
 ---
 

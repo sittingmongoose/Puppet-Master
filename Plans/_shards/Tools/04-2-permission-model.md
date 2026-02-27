@@ -1,54 +1,38 @@
 ## 2. Permission model
 
-By default, tools can be **enabled** without per-call approval. Behavior is controlled by a **permission** per tool (or wildcard): **allow**, **deny**, or **ask** (require user approval before running).
+> **SSOT:** The canonical specification for permission actions (`allow`/`ask`/`deny`), precedence layers, granular rules, wildcard syntax, special guards, ask-flow semantics, deterministic defaults, and resolution algorithm is **`Plans/Permissions_System.md`**. This section provides a summary for tool-registry context; do not duplicate normative detail here.
 
-### 2.1 Values and semantics
+ContractRef: ContractName:Plans/Permissions_System.md, Primitive:DRYRules
 
-- **allow** -- Tool may run without prompting. Use for read-only or low-risk tools (read, grep, glob, list) or when the user has opted into full automation (e.g. YOLO mode).
-- **deny** -- Tool is disabled for the run. The agent cannot invoke it; attempts are blocked and optionally logged.
-- **ask** -- User must approve each use, or "approve for session" (per assistant-chat-design). Applies to bash, edit, webfetch, websearch, and any MCP/custom tool where approval is desired.
+### 2.1 Values and semantics (summary)
 
-### 2.2 Config and precedence
+- **allow** — Tool may run without prompting. FileSafe guards still apply after permission.
+- **deny** — Tool is blocked; `tool.denied` event emitted.
+- **ask** — User must approve (`once` / `always` / `reject`). In headless runs, maps to `deny` unless HITL is enabled.
 
-Config key: **`tool_permissions`** in the same config blob as the rest of Settings (e.g. GuiConfig; persisted to redb as part of `config:v1`). Full schema: §10.1.
+Full definitions: `Plans/Permissions_System.md` §2.
 
-Example:
+### 2.2 Config and precedence (summary)
 
-```json
-{
-  "tool_permissions": {
-    "edit": "deny",
-    "bash": "ask",
-    "webfetch": "allow",
-    "mymcp_*": "ask"
-  }
-}
-```
+Permission rules are evaluated in a deterministic precedence order: Mode override > Session cache > Persona overrides > Project-level > Global-level > Defaults. Within a single ruleset, last-match-wins. Full precedence table: `Plans/Permissions_System.md` §2.4.
 
-- **Wildcards:** e.g. `mymcp_*` applies one permission to all tools from an MCP server or namespace. Enables "ask for all tools from server X" without listing each tool.
-- **Precedence:** **deny** overrides allow/ask when multiple rules match (e.g. `edit: deny` and `*: allow` → edit is denied). Resolution order: §10.3.
-- **Default:** If a tool has no explicit permission, use the default policy table (§10.2). Pattern matching: `*` = zero or more chars, `?` = one char ([OpenCode Permissions -- Wildcards](https://opencode.ai/docs/permissions/#wildcards)). With granular rules (object syntax), last matching rule wins ([OpenCode Permissions](https://opencode.ai/docs/permissions/)).
+Config is stored in TOML files at deterministic paths (global: `~/.config/puppet-master/permissions.toml`, project: `<project_root>/.puppet-master/permissions.toml`). A `tool_permissions` key in redb `config:v1` is a projection of the merged ruleset. Full schema: `Plans/Permissions_System.md` §9.
 
 ### 2.3 Session vs run; subagents
 
-- **Session (Assistant):** "Approve for session" can persist allow for that chat session only; do not persist across restarts (per assistant-chat-design).
-- **Run (Orchestrator/Interview):** Permissions are fixed from run config at start; no interactive ask unless HITL is enabled at tier boundaries (human-in-the-loop.md).
-- **Subagents:** todowrite and todoread default to **deny** for subagent runs to avoid conflicting task state. Run config may override via e.g. `subagent_tool_overrides: { "todowrite": "allow", "todoread": "allow" }` (exact key and schema in implementation plan; document in orchestrator-subagent-integration.md). All other tools use the same default table (§10.2) unless run config specifies otherwise.
+- **Session (Assistant):** `always` approval inserts a session-scoped allow rule; does not persist across restarts. See `Plans/Permissions_System.md` §6.2.
+- **Run (Orchestrator/Interview):** Permissions are fixed from run config at start; no interactive ask unless HITL is enabled at tier boundaries (`Plans/human-in-the-loop.md`).
+- **Subagents:** `todowrite` and `todoread` default to **deny** for subagent runs. Run config may override. All other tools use the default table (`Plans/Permissions_System.md` §7).
 
 ### 2.4 Interaction with FileSafe
 
-FileSafe (command blocklist, write scope, sensitive files) runs **in addition to** tool permissions. A tool may be **allowed** by permission but still **blocked** by FileSafe (e.g. bash allowed, but command `rm -rf /` blocked). Tool permission = "may the agent call this tool?"; FileSafe = "may this specific invocation proceed?". See **FileSafe.md**; ensure policy engine applies both layers.
+FileSafe runs **in addition to** tool permissions. A tool may be **allowed** by permission but still **blocked** by FileSafe. Tool permission = "may the agent call this tool?"; FileSafe = "may this specific invocation proceed?". See `Plans/FileSafe.md`. The policy engine applies both layers in order: permission first, then FileSafe. Full integration order: §10.6.
 
-### 2.5 OpenCode Permissions alignment and cross-plan references
-
-Permission semantics and optional **granular rules** align with [OpenCode Permissions](https://opencode.ai/docs/permissions/). Summary and cross-plan ties:
-
-**Granular rules (object syntax):** Per-tool, permission can be an **object** with pattern-based rules ([OpenCode -- Granular Rules](https://opencode.ai/docs/permissions/#granular-rules-object-syntax)): **bash** -- command pattern (`"git *": "allow"`, `"rm *": "deny"`); **edit** -- file path; **read**, **glob**, **grep**, **list** -- path/pattern; **webfetch** -- URL. **Last matching rule wins.** FileSafe-style: bash blocklist ≈ bash deny patterns, write scope ≈ edit path allowlist, sensitive files ≈ read path deny.
-
-**Special permissions:** **external_directory** -- paths outside project cwd; default ask; `~`/`$HOME` expansion ([OpenCode -- External Directories](https://opencode.ai/docs/permissions/#external-directories)). **doom_loop** -- same tool 3× identical input; default ask. **Defaults:** read allows except `.env` denied (`*.env`, `*.env.*`; `*.env.example` allowed) ([OpenCode -- Defaults](https://opencode.ai/docs/permissions/#defaults)). **What "Ask" does:** once, always, reject ([OpenCode](https://opencode.ai/docs/permissions/#what-ask-does)); our "approve for session" ≈ always. **Per-agent overrides:** [OpenCode -- Agents](https://opencode.ai/docs/permissions/#agents); relevant for orchestrator/interview tier config.
+### 2.5 Cross-plan references
 
 | Plan | Relation to tool permissions |
 |------|------------------------------|
+| **Permissions_System.md** | Canonical SSOT for allow/ask/deny semantics, precedence, granular rules, defaults, resolution algorithm, GUI, and persistence. |
 | **FileSafe.md** | Command blocklist ≈ bash deny; write scope ≈ edit path allowlist; security filter ≈ read path deny (.env). Central policy engine; permission + FileSafe both apply. |
 | **FileManager.md** | Workspace roots, open paths; external_directory and path rules may affect File Manager/editor exposure. |
 | **assistant-chat-design.md** | YOLO/Regular (§3); approve for session ≈ always; bash audit trail and FileSafe. |

@@ -28,5 +28,9 @@ A **plugin directory** (e.g. under app data or project `.puppet-master/plugins/`
 - **Bundled "default" plugin:** Ship one built-in plugin (e.g. `puppet-master-default`) with a few commands and agents so the mechanism is used from day one and we dogfood it.
 - **One-click install, no code:** To make extension truly "no code," provide a **curated catalog** of commands, agents, hooks, and skills that users can install with one click (§15.14). The catalog lists pre-built items; install = copy into plugin dir and enable. No editing of config or writing scripts required.
 
+> **Canonical SSOT:** The authoritative specification for plugin discovery, load order, hook events, custom tool registration, compaction hooks, and plugin logging is `Plans/Plugins_System.md`. This section (§6) provides feature-level context and relevance; all normative plugin behavior is defined in the SSOT.
+
+ContractRef: ContractName:Plans/Plugins_System.md#DISCOVERY, ContractName:Plans/Plugins_System.md#HOOK-EVENTS
+
 ---
 

@@ -126,6 +126,8 @@ Dangerous-command blocking is part of **FileSafe** (Plans/FileSafe.md): Command 
 
 **Implementation:** Define a **catalog format** (e.g. a JSON or manifest listing id, name, description, type [command|agent|hook|skill], source URL or bundled path, version). Catalog can be bundled in the app or fetched from a static URL (e.g. GitHub Pages or a simple index file). "Install" = copy files to the appropriate plugin/config location and enable. GUI: "Extensions" or "Plugin catalog" view with search and "Install" / "Remove" / "Update" per item. No code execution beyond copying and parsing; all catalog items are static assets (markdown, JSON, or signed scripts if we ever support remote scripts). Ship a small default catalog (e.g. FileSafe-style dangerous-command blocklist hook, a few skills) so the feature is useful from day one.
 
+> **SSOT cross-reference:** Plugin discovery paths, manifest format, and install mechanics for catalog items that are plugins are defined in `Plans/Plugins_System.md` §1 (`#DISCOVERY`). The Catalog tab GUI spec is in `Plans/FinalGUISpec.md` §7.4.3.
+
 ---
 
 ### 15.14 Full IDE-Style Terminal and Panes

@@ -1,0 +1,58 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "spec-lock-refresh-dec-2026-02-27-spec-lock-sha-refresh-e4033ea9",
+  "created_at_utc": "2026-02-27T05:51:51Z",
+  "node": {
+    "node_id": "plans.spec_lock.refresh"
+  },
+  "summary": "Refreshed Spec Lock sha256 entries for modified canonical SSOT docs after Plans updates; verified gates.",
+  "commands_run": [
+    {
+      "cmd": "sha256sum Plans/00-plans-index.md Plans/orchestrator-subagent-integration.md Plans/interview-subagent-integration.md",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0
+    }
+  ],
+  "tool_calls": [],
+  "events": {
+    "event_refs": [
+      {
+        "source": "other",
+        "ref": "git:903353afe10efba579b3c20ecd4122f1db081b30",
+        "note": "Repository snapshot ref"
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/Spec_Lock.json",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "change_type": "modified"
+    }
+  ],
+  "contract_refs_satisfied": [
+    "PolicyRule:Decision_Policy.md#spec-lock-update-protocol",
+    "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
+    "Gate:GATE-002"
+  ],
+  "reproducibility": {
+    "snapshot_ref": "git:903353afe10efba579b3c20ecd4122f1db081b30"
+  },
+  "artifacts": [],
+  "checks": [
+    {
+      "name": "pm-plans-verify run-gates",
+      "result": "PASS",
+      "contract_refs": [
+        "Gate:GATE-001",
+        "Gate:GATE-002"
+      ]
+    }
+  ]
+}

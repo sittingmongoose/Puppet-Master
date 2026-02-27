@@ -19,9 +19,9 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 - Tool permissions: `Plans/Tools.md`
 - OpenCode baseline (agents/subagents): `Plans/OpenCode_Deep_Extraction.md` §7B
 - Permissions system: `Plans/Permissions_System.md`
-- Plugin system: `Plans/Plugin_System.md` (future; prompt 06)
-- Models system: `Plans/Models_System.md` (future; prompt 06)
-- Skills system: `Plans/Skills_System.md` (future; prompt 06)
+- Plugin system: `Plans/Plugins_System.md`
+- Models system: `Plans/Models_System.md`
+- Skills system: `Plans/Skills_System.md`
 
 ---
 
@@ -57,7 +57,7 @@ ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/Tools.md
 
 A Persona is **not** a provider-native "agent" (e.g., OpenCode's `Agent.Info`, Cursor's agent definitions under `.cursor/agents/`). Provider-native agent configs are consumed by the Provider facade (`Plans/CLI_Bridged_Providers.md`) as transport-level concerns. Personas are a Puppet Master abstraction that sits above the provider layer.
 
-A Persona is **not** a provider-native "skill" or "plugin." Skills (`Plans/Skills_System.md`, future) are invocable context-injection units. Plugins (`Plans/Plugin_System.md`, future) are extension modules with hook-based lifecycle. A Persona MAY reference skills via `default_skill_refs` but does not contain skill logic itself.
+A Persona is **not** a provider-native "skill" or "plugin." Skills (`Plans/Skills_System.md`) are invocable context-injection units. Plugins (`Plans/Plugins_System.md`) are extension modules with hook-based lifecycle. A Persona MAY reference skills via `default_skill_refs` but does not contain skill logic itself.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/OpenCode_Deep_Extraction.md
 
@@ -117,6 +117,8 @@ name: "Rust Engineer"
 description: "Expert Rust developer specializing in systems programming, memory safety, and zero-cost abstractions."
 default_mode: "regular"
 default_permissions_profile: null
+default_model: null
+default_variant: null
 default_skill_refs: []
 tags: ["language", "rust", "systems"]
 ---
@@ -130,8 +132,10 @@ tags: ["language", "rust", "systems"]
 | `name` | **Required** | `string` | Human-readable display name. Max 100 characters. |
 | `description` | **Required** | `string` | One-paragraph description of the Persona's expertise. Max 500 characters. |
 | `default_mode` | Recommended | `string` enum | Default run mode (`ask`, `plan`, `regular`, `yolo`) per `Plans/Run_Modes.md`. If omitted, inherits from run config. |
-| `default_permissions_profile` | Recommended | `string` or `null` | Named permissions profile to apply when this Persona is active. References a profile defined in the Permissions system (`Plans/Permissions_System.md`, future). `null` means inherit from run config. |
-| `default_skill_refs` | Recommended | `string[]` | List of skill IDs to auto-load when this Persona is active. References skills per `Plans/Skills_System.md` (future). Empty array means no auto-loaded skills. |
+| `default_permissions_profile` | Recommended | `string` or `null` | Named permissions profile to apply when this Persona is active. References a profile defined in the Permissions system (`Plans/Permissions_System.md`). `null` means inherit from run config. |
+| `default_model` | Optional | `string` or `null` | Default model identifier (`provider_id/model_id`) for this Persona. Selection priority and validation per `Plans/Models_System.md`. `null` means inherit. |
+| `default_variant` | Optional | `string` or `null` | Default variant name for this Persona (e.g., `"fast"`, `"powerful"`). Variant semantics per `Plans/Models_System.md`. `null` means inherit. |
+| `default_skill_refs` | Recommended | `string[]` | List of skill IDs to auto-load when this Persona is active. References skills per `Plans/Skills_System.md`. Empty array means no auto-loaded skills. |
 | `tags` | Recommended | `string[]` | Categorization tags for filtering and search. Values from: `phase`, `task`, `subtask`, `iteration`, `cross-phase`, `language`, `domain`, `framework`, and freeform tags. |
 
 ### 3.3 Validation rules
@@ -190,13 +194,13 @@ ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA, ContractName:Plans/P
 
 ### 4.2 Permission profile editing
 
-When editing a Persona, the `default_permissions_profile` field allows selecting from named permission profiles defined in the Permissions system (`Plans/Permissions_System.md`, future). The Personas GUI does not define permission profiles itself — it references them. When the Permissions system SSOT is available, the dropdown is populated from that registry.
+When editing a Persona, the `default_permissions_profile` field allows selecting from named permission profiles defined in the Permissions system (`Plans/Permissions_System.md`). The Personas GUI does not define permission profiles itself — it references them. The dropdown is populated from that registry.
 
 ContractRef: ContractName:Plans/Personas.md#GUI-PERSONAS
 
 ### 4.3 Skill/plugin references
 
-The `default_skill_refs` field presents a multi-select populated from the skill registry (`Plans/Skills_System.md`, future). Skills not yet installed show as "(not installed)" with a link to the Catalog (§7.4.3 in `Plans/FinalGUISpec.md`).
+The `default_skill_refs` field presents a multi-select populated from the skill registry (`Plans/Skills_System.md`). Skills not yet installed show as "(not installed)" with a link to the Catalog (§7.4.3 in `Plans/FinalGUISpec.md`).
 
 ### 4.4 No mutation of external agent files
 
@@ -251,14 +255,14 @@ The Persona's `default_mode` field interacts with the run mode system (`Plans/Ru
 
 ContractRef: ContractName:Plans/Run_Modes.md
 
-### 5.4 Cross-references to future SSOTs
+### 5.4 Cross-references to SSOT subsystems
 
-The following integrations will be fully specified when the referenced SSOT documents are created:
+The following integrations are specified by their subsystem SSOTs and MUST NOT be restated here:
 
-- **Permissions:** Persona `default_permissions_profile` → `Plans/Permissions_System.md` (prompt 04). Until that SSOT exists, `default_permissions_profile` is accepted in the schema but has no runtime effect.
-- **Skills:** Persona `default_skill_refs` → `Plans/Skills_System.md` (prompt 06). Until that SSOT exists, `default_skill_refs` is accepted in the schema but has no runtime effect.
-- **Plugins:** Plugin hooks that transform Persona context → `Plans/Plugin_System.md` (prompt 06).
-- **Models:** Per-Persona model preferences → `Plans/Models_System.md` (prompt 06). The Persona schema intentionally omits a `model` field; model selection is a Provider/run-config concern, not a Persona concern.
+- **Permissions:** Persona `default_permissions_profile` → `Plans/Permissions_System.md`.
+- **Skills:** Persona `default_skill_refs` → `Plans/Skills_System.md`.
+- **Plugins:** Plugin hooks that transform Persona context → `Plans/Plugins_System.md`.
+- **Models:** Per-Persona model preferences (`default_model`, `default_variant`) → `Plans/Models_System.md`.
 
 ---
 

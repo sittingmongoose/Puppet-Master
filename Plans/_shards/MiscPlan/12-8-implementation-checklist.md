@@ -65,7 +65,7 @@
 Implement in order; discovery path order is canonical (§7.10).
 
 - [ ] **8.9.1** Add `src/skills/` (or under `src/config/`): `mod.rs`, `discovery.rs`, `frontmatter.rs`, `permissions.rs`; declare in parent `mod.rs`.
-- [ ] **8.9.2** Define discovery paths (DRY:DATA:skill_search_paths) in **canonical order**: project first (`.puppet-master/skills`, `.opencode/skills`, `.claude/skills`, `.agents/skills`), then global (`~/.config/puppet-master/skills`, etc.); implement `discover_skills(project_root) -> Vec<SkillInfo>` with first-wins deduplication by name; tag DRY:FN:discover_skills.
+- [ ] **8.9.2** Define discovery paths (DRY:DATA:skill_search_paths) in **canonical order**: project first (`.puppet-master/skills`, `.claude/skills`, `.agents/skills`), then global (`~/.config/puppet-master/skills`, etc.); implement `discover_skills(project_root) -> Vec<SkillInfo>` with first-wins deduplication by name; tag DRY:FN:discover_skills.
 - [ ] **8.9.3** Implement `load_skill(path) -> Result<SkillInfo>` with YAML frontmatter parsing and name/description validation (length, regex, dir-name match); return clear errors for invalid frontmatter or missing file; tag DRY:FN:load_skill.
 - [ ] **8.9.4** Add `skill_permissions` to GuiConfig; implement pattern-based resolve (allow/deny/ask) with wildcards; **explicit per-skill entry wins over pattern**; tag DRY:FN:resolve_skill_permission.
 - [ ] **8.9.5** Implement CRUD: create skill dir + SKILL.md (if target dir already contains SKILL.md, return error and do not overwrite -- §7.11); update SKILL.md; delete (with confirmation); persist only permissions in config. On config write failure, return error to caller.

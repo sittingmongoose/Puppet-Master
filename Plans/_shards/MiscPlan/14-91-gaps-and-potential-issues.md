@@ -156,7 +156,7 @@ The following reflects a sweep of the codebase and plans. Use it to avoid missin
 **Known risks**
 
 - **Slint key API:** Key event handling depends on Slint's key-event API (e.g. `FocusScope` `key-pressed` callback, `KeyEvent` struct). Behavior may differ by Slint version; implementer should confirm the integration point against Slint 1.15.1 docs and document it in the implementation plan.
-- **Skill discovery on Windows path case:** Discovery paths (e.g. `.puppet-master/skills`, `.opencode/skills`) may behave differently on Windows (case-insensitivity, path separators). First-wins deduplication by name should account for case-normalization if needed.
+- **Skill discovery on Windows path case:** Discovery paths (e.g. `.puppet-master/skills`, `.claude/skills`, `.agents/skills`) may behave differently on Windows (case-insensitivity, path separators). First-wins deduplication by name should account for case-normalization if needed.
 - **platform_specs skill injection:** How each platform (Cursor, Codex, Claude, Gemini, Copilot) receives the skill list (env var, prompt injection, tool) must be defined in platform_specs or orchestrator plan; until then, Skills integration with runners is stubbed.
 
 **Before implementation plan**

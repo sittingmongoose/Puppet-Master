@@ -5,6 +5,7 @@
 - Canonical terms: `Plans/Glossary.md`
 - Deterministic ambiguity handling: `Plans/Decision_Policy.md` + `Plans/auto_decisions.jsonl`
 - Evidence + verifier gates: `Plans/evidence.schema.json`, `Plans/Progression_Gates.md`
+- **Permission system (allow/ask/deny semantics, precedence, granular rules, defaults):** `Plans/Permissions_System.md` (canonical SSOT)
 
 ---
 
