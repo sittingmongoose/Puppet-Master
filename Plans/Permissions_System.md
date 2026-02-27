@@ -225,6 +225,8 @@ ContractRef: ContractName:Plans/Tools.md, PolicyRule:Decision_Policy.md§2
 | `webfetch` | Network | Fetch URL content | Granular: URL patterns |
 | `websearch` | Network | Web search | Granular: query patterns |
 | `codesearch` | Search | Code/symbol search | Low risk; read-only |
+| `capabilities.get` | Introspection | Capability listing across media + provider tools | Read-only introspection; low risk |
+| `media.generate` | Generation | Image/video/tts/music generation | Content generation operation; user-facing output |
 | `todoread` | State | Read task state | Subagent default: `deny` |
 | `todowrite` | State | Write task state | Subagent default: `deny` |
 | `external_directory` | Guard | Paths outside working roots | See §4.2 |
@@ -288,6 +290,8 @@ ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Tools.md
 | `webfetch` | `ask` | Network access |
 | `websearch` | `ask` | Network access |
 | `codesearch` | `allow` | Read-only code search |
+| `capabilities.get` | `allow` | Read-only capability introspection |
+| `media.generate` | `allow` | First-class internal generation tool |
 | `todoread` | `allow` | State read (subagent: `deny`) |
 | `todowrite` | `allow` | State write (subagent: `deny`) |
 | `external_directory` | `ask` | Paths outside project roots |

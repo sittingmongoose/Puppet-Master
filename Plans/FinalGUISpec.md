@@ -756,7 +756,8 @@ This is a **heavily redesigned** unified settings page that merges four previous
 | **Permissions** | Dedicated permissions management screen (see §7.4.10): scope selector (Global/Project), global wildcard default, per-tool override table (Allow/Ask/Deny per row with expand for granular rules), presets (Read-only, Plan mode, Full), external directory allowlist manager, doom_loop policy config, per-Persona permission profile editor. Canonical SSOT: `Plans/Permissions_System.md` §10. | Plans/Permissions_System.md + Plans/Tools.md |
 | **LSP** | **Language Server Protocol (MVP)** (see §7.4.2): LSP is required for desktop release. Global "Disable automatic LSP server downloads" toggle; built-in servers list with per-server enable/disable (all on by default); per-server env vars and initialization options; custom LSP servers (add/edit/remove: command, extensions, env, initialization). Stored in app config (redb); project overrides optional. | Plans/LSPSupport.md |
 | **Interview** | Interview-specific config; enable_phase_subagents, enable_research_subagents, enable_validation_subagents, enable_document_subagents; **Multi-Pass Review:** toggle on/off (default off), number of review passes (1-5 dropdown, default 2), max review subagents (1-10, default 3), show warning label when enabled ("Increases cost and time"); min/max questions (spinners), architecture confirmation toggle, vision provider dropdown; **Interview concurrency overrides** (collapsible, per-platform, see §7.4.7) | Old "Config" Interview tab + interview-subagent-integration.md |
-| **Authentication** | Per-provider auth status (Cursor, Codex, Claude, Gemini, Copilot, OpenCode, GitHub) with **real-time auth state** chips (`LoggedOut`, `LoggingIn`, `LoggedIn`, `LoggingOut`, `AuthExpired`, `AuthFailed`); login/logout/re-auth buttons; auth method indicators; auth URLs (selectable/copyable); Git info (user, email, remote, branch); **auth realm split:** show separate entries for `github_api` and `copilot_github` (SSOT: `Plans/Contracts_V0.md` `AuthRealm`); **multi-account visibility:** active account, account count, cooldown/rate-limit badge, and quick switch/manage entry | Old "Login" view |
+| **Media** | Media generation configuration (see §7.4.15). Four capability toggles (Image Gen, Video Gen, TTS, Music Gen) each with model dropdown and description panel. Disabled-state rule: toggles greyed out when the required API key is missing — except Image Gen in Cursor chats, which remains enabled without a key. Canonical contract details (tool IDs, disabled reasons, request/response shapes) live in `Plans/Media_Generation_and_Capabilities.md` (SSOT); this tab provides the settings surface only. | Plans/Media_Generation_and_Capabilities.md |
+| **Authentication** | Per-provider auth status (Cursor, Codex, Claude, Gemini, Copilot, OpenCode, GitHub) with **real-time auth state** chips (`LoggedOut`, `LoggingIn`, `LoggedIn`, `LoggingOut`, `AuthExpired`, `AuthFailed`); login/logout/re-auth buttons; auth method indicators; auth URLs (selectable/copyable); Git info (user, email, remote, branch); **auth realm split:** show separate entries for `github_api` and `copilot_github` (SSOT: `Plans/Contracts_V0.md` `AuthRealm`); **multi-account visibility:** active account, account count, cooldown/rate-limit badge, and quick switch/manage entry. **Gemini Provider section:** Google Gemini API key field (password-style text input with show/hide toggle); clickable **[Get API key](https://aistudio.google.com/app/api-keys)** link next to the field; note near model dropdown: *"Usage limits vary by model/tier."*; informational sentence: *"Linking an API enables Image Generation as well."* See `Plans/Media_Generation_and_Capabilities.md` §2.4 for backend routing rules. | Old "Login" view |
 | **Health** | System health checks with platform filtering; check categories (CLI Tools, Git, Runtimes, Browser Tools, Capabilities, Project Setup); check status (PASS/FAIL/WARN/SKIP); fix suggestions with dry-run; **explicit Install/Uninstall actions** (no automatic install behavior) with **real-time install state** for Cursor CLI, Claude CLI, and Playwright browser runtime (`Not Installed`, `Installing`, `Installed`, `Uninstalling`, `Failed`); Codex/Copilot/Gemini rows show direct-provider auth/connectivity status (no install buttons); platform version display (CLI version per detected platform); **Cursor/Claude manual path override:** `Use manual path` checkbox + native file picker + validate action (Cursor/Claude only); **multi-account health visibility:** per-provider active account + account count + cooldown/auth freshness; **Worktree management:** worktree list (path, branch, status, age columns), "Recover orphaned worktrees" button, worktree status indicators (active/stale/orphaned); **Storage & Cleanup:** DB size, cache size, evidence log count; evidence retention days input; "Clean workspace now" button (confirm modal with preview of files to delete per MiscPlan.md); storage maintenance actions | Old "Doctor" view + WorktreeGitImprovement.md + MiscPlan.md |
 | **Rules & Commands** | Application rules (list or text area, editable); project rules (when project selected, reads/writes `.puppet-master/project-rules.md`); **User Commands management** (see §7.4.11): scope selector (Global/Project), command list with name/scope/description/Persona/mode/model columns, create/edit/delete commands, dry-run preview, shortcut binding, schema validation on save. Canonical SSOT: `Plans/Commands_System.md` §6. | From agent-rules-context.md + feature-list.md + Commands_System.md |
 | **Shortcuts** | Full keyboard shortcut table (action name, current binding, default binding); search/filter by action name or key; per-row "Change" button (captures next key combination) and "Reset" button; "Reset all" button; export/import shortcuts (JSON). Data sourced from shortcut registry (single source of truth, DRY:DATA). | MiscPlan.md |
@@ -826,7 +827,7 @@ ContractRef: ContractName:Plans/rewrite-tie-in-memo.md
 
 **Audit rule:** Any row above marked "Required" must not ship with a missing variant. No in-scope row may remain single-variant.
 
-**Tab sub-grouping:** With 24 tabs, use a two-level navigation: left sidebar within Settings for groups, right area for the selected tab's content. Group labels act as collapsible section headers in the sidebar. Groups: **Core** (General, Tiers, Branching) | **Features** (Verification, Memory, Budgets, Permissions, Advanced, Interview, LSP, Models) | **System** (Authentication, Health, Rules & Commands, Shortcuts, Skills, HITL) | **Extensions** (Plugins, Formatters, Catalog, Sync, SSH, Debug) | **Raw** (YAML). Each group header shows item count badge. Clicking a group header expands/collapses that group in the sidebar. Active tab highlighted with accent-left-border (3px).
+**Tab sub-grouping:** With 25 tabs, use a two-level navigation: left sidebar within Settings for groups, right area for the selected tab's content. Group labels act as collapsible section headers in the sidebar. Groups: **Core** (General, Tiers, Branching) | **Features** (Verification, Memory, Budgets, Permissions, Advanced, Interview, LSP, Models, Media) | **System** (Authentication, Health, Rules & Commands, Shortcuts, Skills, HITL) | **Extensions** (Plugins, Formatters, Catalog, Sync, SSH, Debug) | **Raw** (YAML). Each group header shows item count badge. Clicking a group header expands/collapses that group in the sidebar. Active tab highlighted with accent-left-border (3px).
 
 **§7.4.2 LSP (LSP tab):** LSP support is **MVP** (required for desktop release), not optional. Per Plans/LSPSupport.md, the GUI must expose full LSP configuration so users can control automatic downloads, enable/disable servers, set env and initialization options, and add custom servers. Provide **Settings > LSP** with:
 
@@ -1109,6 +1110,42 @@ The **Models** tab in Settings provides model and variant configuration. Layout:
 
 **Tab sub-grouping update**: The Models tab belongs to the **Features** group in the Settings sidebar.
 
+**§7.4.15 Media (Media tab):**
+
+> **SSOT:** The canonical specification for media generation capabilities, capability gating, disabled reasons, request/response contracts, and UI copy is `Plans/Media_Generation_and_Capabilities.md`. This section provides the FinalGUISpec Settings integration points only; normative behavior is defined in the SSOT.
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM, ContractName:Plans/DRY_Rules.md
+
+The **Media** tab in Settings provides enable/disable toggles and model selection for each media capability. Layout:
+
+1. **Image Generation** (collapsible row):
+   - **Enable** toggle (default: follows backend — ON when Cursor backend or valid Google key present; OFF otherwise).
+   - **Model dropdown**: lists available image-generation models for the configured provider. Selection sets the default image model. Description panel below the dropdown changes dynamically with each model selection (short model description, supported features, max resolution).
+   - Disabled-state rule: greyed out when no Google Gemini API key is configured **except** in Cursor chats where Image Gen remains enabled without a key (routes via Cursor-native generation per `Plans/Media_Generation_and_Capabilities.md` §2.4).
+
+2. **Video Generation** (collapsible row):
+   - **Enable** toggle (default OFF; requires Google Gemini API key).
+   - **Model dropdown** + dynamic description panel (same pattern as Image Gen).
+   - Disabled-state rule: greyed out when no Google key is configured.
+
+3. **Text-to-Speech (TTS)** (collapsible row):
+   - **Enable** toggle (default OFF; requires Google Gemini API key).
+   - **Model dropdown** + dynamic description panel.
+   - Disabled-state rule: greyed out when no Google key is configured.
+
+4. **Music Generation** (collapsible row):
+   - **Enable** toggle (default OFF; requires Google Gemini API key).
+   - **Model dropdown** + dynamic description panel.
+   - Disabled-state rule: greyed out when no Google key is configured.
+
+**Disabled-state presentation:** When the required API key is missing, the toggle and dropdown are rendered **greyed out** (non-interactive). A footnote below the disabled row displays: *"Requires a Google API Key. [Get API key](https://aistudio.google.com/app/api-keys)"* (clickable link). When a capability is admin-disabled (toggle OFF), the model dropdown is hidden.
+
+**DRY note:** Capability IDs, disabled-reason values, backend routing rules, and UI copy strings are defined in `Plans/Media_Generation_and_Capabilities.md` §1–§5 and MUST NOT be restated here.
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM, ToolID:capabilities.get, ToolID:media.generate
+
+**Tab sub-grouping update**: The Media tab belongs to the **Features** group in the Settings sidebar.
+
 ### 7.5 Wizard
 
 **Group:** Run | **Location:** Primary content
@@ -1257,6 +1294,10 @@ Dedicated usage view providing persistent visibility into platform quota and con
 6. **Tool usage widget:** Card or section showing tool-level metrics from seglog rollups (per Plans/Tools.md and storage-plan analytics scan). Columns or list: **Tool name** (built-in + MCP/custom), **Invocation count** (in selected window), **Latency** (e.g. p50 / p95 ms or median), **Error rate** (failures / total, %). Optional: sort by count or error rate; filter by time window (5h / 7d / custom); expand row for breakdown by platform or session. Data from redb projections produced by analytics scan over tool events in seglog. Helps identify noisy or failing tools (e.g. repeated grep, MCP timeouts).
 
 **Data sources:** Primary: seglog/redb rollups from analytics scan jobs. Fallback: aggregate from `usage.jsonl`. Platform APIs augment when env vars are set. Tool usage: same analytics scan rollups (tool latency, error counts per tool).
+
+7. **Media usage display (local counters):** Per-capability usage counters sourced from local generation logs (redb projections), **not** authoritative provider quotas. Displays: current count vs configured cap (e.g., *"3 / 20 images today"*), estimated per-call cost (based on model pricing metadata when available), and approximate remaining budget. Puppet Master MUST NOT claim authoritative provider quota values unless a provider API explicitly returns them. When no provider quota API exists, show only local counters and an **"Open Usage & Limits"** external link (e.g., to [Google AI Studio](https://aistudio.google.com/) or the relevant provider dashboard) so the user can check their actual quota externally. Caps are user-configurable per capability in Settings > Media (§7.4.15); defaults: no cap (unlimited local counter, display only).
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM, ToolID:media.generate
 
 **Always-visible usage:** Status bar shows compact usage (e.g., "5h: 80% | 7d: 45%") for the selected platform. Dashboard budget widgets show donut charts.
 
@@ -1500,6 +1541,10 @@ The active mode shows as a subtle label next to the SEND button ("Steer" or "Que
 
 **Reasoning/effort selector:** Shown only when `platform_specs::supports_effort(platform)` returns true. For Claude Code: dropdown with Low / Medium / High (maps to `CLAUDE_CODE_EFFORT_LEVEL` env var). For Codex and Copilot: dropdown with Low / Medium / High / Extra High. For Cursor: hidden (reasoning is encoded in model names like `sonnet-4.5-thinking`). For Gemini: hidden (no effort support). Per-thread setting.
 
+**Capability picker (media):** Compact dropdown (icon: sparkle or media icon) near the composer, listing the four media capabilities: **Image**, **Video**, **TTS**, **Music**. Each item maps to a capability ID from `Plans/Media_Generation_and_Capabilities.md` §4.1. **Enabled items** are clickable and insert the corresponding capability prompt into the composer (verbatim prompts per SSOT §5.1). **Disabled items** are visible but **greyed out** with a tooltip showing the disabled-reason message (per SSOT §5.2). When any capability requires a missing Google API key, the dropdown footer shows a banner: *"Please provide a free or paid Google API Key."* **[Get API key](https://aistudio.google.com/app/api-keys)** (clickable link). Cursor backend behavior: Image enabled without key; Video/TTS/Music disabled with `BACKEND_UNSUPPORTED`. **Helper only:** the capability picker is a convenience shortcut — media generation is primarily invoked by natural language in the chat (see `Plans/Media_Generation_and_Capabilities.md` §3 for slot extraction). Per-thread; no persistence.
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-PICKER, ToolID:capabilities.get, Invariant:INV-003
+
 **Context usage:** Text label (e.g., "42k / 128k") plus a context circle (progress gauge, ~16px) showing context usage percentage. Color transitions: blue (0-75%), amber (75-90%), red (90-100%). Hover shows tokens/cost/percentage tooltip. Click opens Usage tab for that thread.
 
 **Per-thread usage:** Small context indicator (circular progress, ~16px) in chat header. Hover tooltip: total tokens, usage %, cost (USD). Click opens thread Usage tab with: summary (total tokens, context %, total cost), breakdown (input/output/reasoning/cache), optional per-turn table, link to app-wide Usage page.
@@ -1507,7 +1552,7 @@ The active mode shows as a subtle label next to the SEND button ("Steer" or "Que
 **LSP in Chat (MVP):** The Chat Window fully uses LSP (Plans/LSPSupport.md §5.1). **Diagnostics in Assistant context:** When building context for the next Assistant (or Interview) turn, include a summary of current LSP diagnostics for the project or @'d files (errors/warnings with file, line, message, severity, source) so the agent can suggest fixes. **@ symbol with LSP:** When LSP is available, the **@** menu includes **symbols** (from LSP workspace/symbol and optionally documentSymbol) so the user can add a function/class/symbol to context by name; results show path, line, kind. **Code blocks in messages:** Code blocks in assistant or user messages support **LSP hover** (tooltip with type/docs) and **click-to-definition** (e.g. Ctrl+Click) when the block has a known language and the project has an LSP server; definition opens in the File Editor. **Problems link from Chat:** Chat footer or message area offers a link or badge (e.g. "N problems") that opens the Problems panel (LSP diagnostics) for the current project or context. Optional: compact hint for @'d files (e.g. "2 errors in @'d files") with click-through to Problems. Fallback when LSP unavailable: @ symbol uses text-based symbol search; code blocks have no hover/definition; diagnostics in context omitted.
 
 **Chat LSP control placement and behavior:**
-- **Footer strip (left-to-right order):** Platform selector → Model selector → Reasoning/effort selector (when supported) → Context usage → **Problems link**. The Problems link is the rightmost LSP-related control in the footer.
+- **Footer strip (left-to-right order):** Platform selector → Model selector → Reasoning/effort selector (when supported) → **Capability picker** (media) → Context usage → **Problems link**. The Problems link is the rightmost LSP-related control in the footer. The Capability picker lives between the effort selector and the context usage indicator.
 - **Problems link:** Label text: **"N problems"** when count > 0 (e.g. "3 problems"), or **"Problems"** when count is 0. Placement: immediately to the right of the context usage indicator (context circle / "42k/128k"). Click target: opens the **Problems** tab of the Bottom Panel (§7.20), filtered to the **current project** (or to files in current chat context if project is set). When no project is set, the link opens Problems with no filter (or shows "Select a project to see problems" in the panel).
 - **@ symbol:** Lives in the input area (below-input row: @ mention button). When opened, the overlay shows files and (when LSP available) symbols. No separate header control for LSP in Chat.
 - **Code-block LSP:** Hover and go-to-definition apply in the **message area** (message stream); no dedicated control -- interaction is on the code block content itself.

@@ -358,6 +358,11 @@ Process isolation policy: each iteration creates a new session and deletes it af
 
 > Full integration details: `Plans/Provider_OpenCode.md`
 
+### Capability reporting (OpenCode)
+OpenCode-discovered tools MUST feed into `capabilities.get` with `category: "provider_tool"` so agents and users can discover them via capability introspection. Media generation capabilities (`media.*`) are Puppet Master internal tools backed by the Gemini API key and are NOT part of the OpenCode provider; see `Plans/Media_Generation_and_Capabilities.md` [§1](Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM). Full OpenCode capability reporting requirements: `Plans/Provider_OpenCode.md` §8.
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM
+
 ### Acceptance criteria (OpenCode-specific)
 1. When the OpenCode server is reachable, Puppet Master can create a session, prompt, receive normalized events, and delete the session through the unified Provider facade.
 2. OpenCode runs produce the same normalized event types (`text_delta`, `tool_use`, `tool_result`, `usage`, `done`) as CLI-bridged provider runs — consumers do not branch on transport.
