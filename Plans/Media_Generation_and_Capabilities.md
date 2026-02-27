@@ -237,7 +237,7 @@ ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md,
       "meta": {
         "w": 1024,
         "h": 1024,
-        "model_used": "gemini-2.0-flash-preview-image-generation",
+        "model_used": "gemini-3-pro-image-preview",
         "seed": 42,
         "generation_time_ms": 3200
       }
