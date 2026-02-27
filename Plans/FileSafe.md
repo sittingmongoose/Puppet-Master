@@ -804,15 +804,16 @@ pub async fn execute_command(
 }
 ```
 
-### 3.4 Multi-Platform Support
+### 3.4 Multi-Provider Support
 
-The guard must work for all 5 platforms:
+The guard must work across all providers:
 
 - **Cursor:** `agent -p "..."` -- check compiled prompt content
 - **Codex:** `codex exec "..."` -- check compiled prompt content
 - **Claude Code:** `claude -p "..."` -- check compiled prompt content
-- **Gemini:** `gemini -p "..."` -- check compiled prompt content (with `@path` tokens)
+- **Gemini:** Gemini is a Direct API provider; check compiled prompt content via API request inspection.
 - **GitHub Copilot:** `copilot -p "..."` -- check compiled prompt content (with `@path` tokens)
+- **OpenCode (server-bridged):** enforce the guard inside Puppet Master before sending requests to the OpenCode server.
 
 **Strategy:** 
 1. Check **compiled prompt** (after context compilation) at platform runner level
@@ -1694,7 +1695,7 @@ impl BashGuard {
 - Platform-specific prompt parsers
 - Fallback to simple pattern matching
 - Document platform-specific behavior
-- Test with all 5 platforms
+- Test across all providers
 
 ### 12.5 Write-scope plan integration
 
@@ -2486,7 +2487,7 @@ pub struct GateOverrideConfig {
 **Mitigation:**
 - Platform-specific prompt parsers
 - Fallback to simple pattern matching
-- Test with all 5 platforms
+- Test across all providers
 - Document platform-specific behavior
 
 #### Issue 5: Guard Initialization Failure

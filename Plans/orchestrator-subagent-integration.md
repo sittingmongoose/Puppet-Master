@@ -1057,7 +1057,7 @@ ContractRef: PolicyRule:Decision_Policy.md§2
   - **Cursor:** Run `agent -p "/code-reviewer Review the last commit." --output-format json` (or current equivalent from platform_specs). Assert exit code 0 (or documented non-zero for "no changes"). Assert stdout is non-empty and, if JSON, parseable; optionally assert presence of expected top-level keys.
   - **Codex:** Run `codex exec "As code-reviewer, list the files you would review in this repo."` with project `--cd` and non-interactive flags. Assert exit code 0 and non-empty stdout (or documented behavior).
   - **Claude:** Run `claude -p "As code-reviewer, respond with only: READY" --no-session-persistence --output-format text`. Assert exit code 0 and stdout contains expected token (e.g. READY) or is non-empty.
-  - **Gemini:** Run `gemini -p "You are the code-reviewer agent. Reply with only: OK" --output-format json --approval-mode yolo` (or equivalent from platform_specs). Assert exit code 0 and non-empty, parseable JSON (or expected key).
+  - **Gemini:** Gemini is a Direct API provider; verify API connectivity by sending a minimal generation request via the Gemini API. Assert a successful response with non-empty, parseable JSON.
   - **Copilot:** Run `copilot -p "/agent code-reviewer Reply with only: OK" --allow-all-tools` (or equivalent). Assert exit code 0 and non-empty stdout.
 - **Artifacts:** Optionally capture stdout/stderr to `.puppet-master/evidence/cli-smoke-<platform>.log` for debugging; do not assert on exact text, only on success and shape.
 - **Documentation:** In the plan and in code comments, document that these tests are optional/manual in CI and list required env vars (e.g. `RUN_CURSOR_CLI_SMOKE=1`, `RUN_CODEX_CLI_SMOKE=1`, ...) and that auth must be configured for the corresponding platform.
@@ -1193,9 +1193,9 @@ Both sections should be referenced from Phase 5 and from any "Testing" or "Verif
 
 ### 3. Plan Mode CLI Verification (Real-CLI Tests)
 
-**Purpose:** Confirm that each platform's CLI accepts and honors plan mode when invoked with the same flags the orchestrator uses (e.g. `--mode=plan`, `--permission-mode plan`, `--sandbox read-only`, `--approval-mode plan`). This validates plan mode end-to-end in the real CLIs, not just that we pass the right args.
+**Purpose:** Confirm that each platform's CLI accepts and honors plan mode when invoked with the same flags the orchestrator uses (e.g. `--mode=plan`, `--permission-mode plan`, `--sandbox read-only`). This validates plan mode end-to-end in the real CLIs, not just that we pass the right args.
 
-**Scope:** One plan-mode test per platform (Cursor, Codex, Claude, Gemini, Copilot). Each test runs the real CLI with plan mode enabled and a minimal prompt, then asserts process success and (where possible) that the platform behaved in a plan-like way (e.g. read-only, or plan output present).
+**Scope:** One plan-mode test per CLI-bridged provider (Cursor, Claude Code). For Direct-provider backends (e.g., Gemini), verify plan-mode behavior via API-based calls (plan mode is internal to Puppet Master, not provider CLI flags). Each test runs the real CLI with plan mode enabled and a minimal prompt, then asserts process success and (where possible) that the platform behaved in a plan-like way (e.g. read-only, or plan output present).
 
 **Environment gating:** Same as other CLI tests: require CLI on PATH and (where applicable) auth; gate with an env var (e.g. `RUN_PLAN_MODE_CLI_TESTS=1`) and use `#[ignore]` so CI without CLIs/auth still passes.
 
@@ -1206,7 +1206,7 @@ Both sections should be referenced from Phase 5 and from any "Testing" or "Verif
   - **Cursor:** `agent -p "Reply with only: PLAN_OK" --mode plan --output-format json`. Assert exit code 0 and non-empty stdout; optionally assert `--mode` and `plan` appear in the effective command or in logs.
   - **Claude:** `claude -p "Reply with only: PLAN_OK" --permission-mode plan --no-session-persistence --output-format text`. Assert exit code 0 and stdout contains expected token or is non-empty.
   - **Codex:** `codex exec "Reply with only: PLAN_OK" --sandbox read-only --json --color never --cd <workspace>`. Assert exit code 0 and non-empty stdout (read-only sandbox implies plan-like behavior).
-  - **Gemini:** `gemini -p "Reply with only: PLAN_OK" --approval-mode plan --output-format json` (and `--yolo` omitted). Assert exit code 0 and non-empty output; skip or warn if `experimental.plan` is not enabled in settings.
+  - **Gemini:** Gemini is a Direct API provider; verify plan-mode API call by sending a plan-constrained request via the Gemini API. Assert a successful response with non-empty output.
   - **Copilot:** Run with the same flags the Copilot runner uses when `plan_mode` is true (omit `--allow-all-paths` / `--allow-all-urls`), e.g. `copilot -p "Reply with only: PLAN_OK" --allow-all-tools --stream off -s`. Assert exit code 0 and non-empty stdout.
 - **Assertions:** (1) Process exit success. (2) Stdout non-empty (or parseable JSON where applicable). (3) Optionally: verify that the command line actually contained the plan-mode flag (e.g. by logging the command and asserting the flag string is present, or by using the same builder as the runner and checking args).
 - **Artifacts:** Optionally capture stdout/stderr to `.puppet-master/evidence/plan-mode-cli-<platform>.log` for debugging.
@@ -1264,7 +1264,7 @@ Plan mode is implemented per tier (phase, task, subtask, iteration) and flows fr
 | Cursor    | `--mode plan` (else `--force`) | Native; read-only planning then execute. |
 | Claude    | `--permission-mode plan`       | Native; read-only analysis. |
 | Codex     | `--sandbox read-only` (no `--full-auto`) | Read-only sandbox; no native "plan" flag. |
-| Gemini    | `--approval-mode plan` (else `yolo`)     | May require `experimental.plan: true` in `~/.gemini/settings.json`. |
+| Gemini    | Direct API plan-mode request              | Gemini is a Direct API provider; plan constraints applied via API parameters. |
 | Copilot   | Omit `--allow-all-paths` / `--allow-all-urls` when plan_mode | Restrictive mode; no dedicated plan flag in CLI. |
 
 ### Plan Mode & Platform CLI Updates (Last ~2 Months)
@@ -1293,13 +1293,10 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 - **Plugins:** `.claude-plugin/plugin.json`; skills namespaced as `/plugin-name:skill-name`.  
 - **Impact:** Plan mode and subagent/hook/plugin docs are still accurate; v2.1.45 plugin and `--add-dir` behavior may matter for project-specific plugins.
 
-**Gemini CLI**  
-- **v0.22-v0.28 (Dec 2025 - Feb 2026):** Extensions (Conductor, Endor Labs), Colab headless use, Agent Skills (built-in skills, `/agents refresh`, `/skills`), policy engine (modes like `plan`, granular shell allowlisting), hooks visibility, default folder trust.  
-- **v0.24-v0.26:** Agent skills by default, generalist agent, skill-creator/pr-creator skills, rewind/introspect.  
-- **v0.28 (Feb 3):** Auth/consent, custom themes, Positron IDE, `/prompt-suggest`.  
-- **Plan mode:** Experimental; enable with `experimental.plan: true` in settings; `--approval-mode=plan` or `general.defaultApprovalMode: "plan"`; tool restrictions (read-only + write only in plans dir); policies can allow e.g. `run_shell_command` for `git status`/`git diff` or research subagents in plan mode.  
-- **Subagents:** `experimental.enableAgents: true`; built-in codebase_investigator, cli_help, generalist; custom agents in `~/.gemini/agents/*.md` or `.gemini/agents/*.md`.  
-- **Impact:** Our use of `--approval-mode plan` is correct. Document that `experimental.plan: true` (and optionally `enableAgents`) may be required; policy engine and research subagents in plan mode are relevant for advanced use.
+**Gemini (Direct API provider)**  
+- **Plan mode:** Plan mode is enforced by Puppet Master (prompt/routing/policy). Gemini receives a plan-constrained request when `plan_mode` is enabled.  
+- **Doctor / verification checks (Direct-provider):** API key present; `models.list` works; capability gating is consistent with Settings toggles; media routing matches `Plans/Media_Generation_and_Capabilities.md` (Cursor image routes to Cursor-native; Gemini media requires key and compatible model).  
+- **Impact:** No provider CLI flags or provider-local config files are used for Gemini in this stack.
 
 **GitHub Copilot CLI**  
 - **Jan 14-21, 2026:** Plan mode in interactive UI (Shift+Tab); advanced reasoning models; GPT-5.2-Codex; inline steering; background delegation `&`; `/review`; context auto-compaction; automation flags (`--silent`, `--share`, `--available-tools`, `--excluded-tools`).  
@@ -1308,8 +1305,8 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 - **Impact:** No change to our headless plan-mode mapping; document that native plan mode is interactive; if Copilot adds a headless plan flag, switch to it in runner and platform_specs.
 
 **Summary for this plan**  
-- Plan mode: Cursor, Claude, Gemini implementations are up to date; Codex (read-only sandbox) and Copilot (restrictive flags) unchanged.  
-- Subagents/hooks/plugins: All five platforms have had relevant changes (Cursor plugins/async subagents; Codex MCP; Claude plugins/hooks; Gemini skills/policies/subagents; Copilot provider/CLI behavior). Keep platform-capabilities and subagent-integration sections in sync with release notes and official docs.
+- Plan mode: CLI plan-mode applies to Cursor and Claude Code only; Gemini is Direct-provider (no CLI plan-mode flags or CLI config files in this stack). Codex and Copilot headless behaviors remain unchanged.  
+- Subagents/hooks/plugins: Several providers have had relevant changes (Cursor plugins/async subagents; Codex MCP; Claude plugins/hooks; Gemini skills/policies/subagents; Copilot provider/CLI behavior). Keep platform-capabilities and subagent-integration sections in sync with release notes and official docs.
 
 **Gaps vs "use plan mode for every request":**
 
@@ -1317,8 +1314,8 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 2. **No global override** -- There is no single "use plan mode for all tiers" or "prefer plan mode by default" setting; only per-tier toggles in Config and Wizard.
 3. **No one-click "all tiers"** -- Enabling plan mode for every tier requires toggling four tier cards.
 4. **Subagent invocations** -- When subagent integration is added, `ExecutionRequest` built for subagent runs must receive the same `plan_mode` as the tier (so plan mode is applied to every request, including subagent calls).
-5. **Gemini** -- `--approval-mode plan` can require `experimental.plan: true` in settings; we do not currently validate or document this at runtime.
-6. **Copilot** -- If the CLI gains a native headless plan flag (e.g. `--plan`), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
+5. **Copilot** -- If the CLI gains a native headless plan flag (e.g. `--plan`), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
+5. **Copilot** -- If the CLI gains a native headless plan flag (e.g. `--plan`), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
 
 ### Recommendations
 
@@ -1348,7 +1345,7 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 
 **5. Platform-specific robustness (in scope)**
 
-- **Gemini:** When `plan_mode` is true and platform is Gemini, document in GUI tooltip and add a Doctor check that reads `~/.gemini/settings.json` and warns if `experimental.plan` is not set.
+- **Gemini:** Gemini is a Direct API provider; plan-mode constraints are applied via API parameters. No CLI settings file check is needed.
 - **Copilot:** When a native plan flag exists, add it to `platform_specs` and the Copilot runner (e.g. `--plan` or equivalent) and use it when `plan_mode` is true, instead of or in addition to omitting `--allow-all-paths` / `--allow-all-urls`.
 - **Codex:** Current "read-only sandbox" behavior is a reasonable stand-in for plan mode; if Codex adds an explicit plan/read-only flag, prefer that and document in AGENTS.md.
 
@@ -1387,7 +1384,7 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 - [ ] Add **Subagent personas / info setup:** preload list from project `.claude/agents`; user can add their own and delete any (including preloaded); optional AI/batch trim for smaller footprint; list with name + description; "Edit" per subagent to set custom description/instruction (persist to `SubagentGuiConfig.persona_overrides` -- overrides come only from this UI); prompt builder / runner injects persona (override if present, else preloaded content) when invoking that subagent (see Gap §11).
 
 **Doctor**
-- [ ] Add Gemini + plan mode check in Doctor: read `~/.gemini/settings.json`, warn if `experimental.plan` missing when any tier has Gemini and plan_mode true.
+- [ ] Gemini is a Direct API provider; no CLI settings check is needed. Doctor validates Gemini API key presence when any tier uses Gemini.
 - [ ] **Plans/newtools.md:** Add Doctor checks for (1) headless tool exists/runs when project planned custom headless tool, (2) platform CLI versions (e.g. `agent --version`, `codex --version`), (3) MCP/Context7 reachable per platform. Use newtools §8.2 for per-platform MCP config reference; §11 and §12.6 for headless-tool and MCP check details.
 
 **Other**
@@ -1438,7 +1435,7 @@ All previously "optional" or "later" plan-mode and subagent GUI/backend items ar
 - **Defaults:** In `default_config.rs`, set `plan_mode: false` for phase, task, subtask, iteration. In `config_override.rs` and YAML defaults, use `plan_mode: false` unless explicitly overridden. In `gui_config.rs`, keep tier defaults at `false` for migration-safe behavior.
 - **Global "use plan mode for all tiers":** Add `use_plan_mode_all_tiers: bool` to `GuiConfig` (canonical storage; no separate `settings.json` key). Optionally add `last_per_tier_plan_mode: Option<HashMap<String, bool>>` to restore per-tier values when turning the global toggle off. When `use_plan_mode_all_tiers == true`, load/sync forces all four tier `plan_mode` values to `true`. When toggled off, restore `last_per_tier_plan_mode` or set all to `false`. Use write-through so tier configs and saved YAML stay in sync.
 - **Subagent invocations:** When building `ExecutionRequest` for subagent runs (e.g. in `execute_tier_with_subagents` or the platform adapter), set `request.plan_mode = tier_config.plan_mode` (from `TierConfig` or `IterationContext`). Document in plan and code.
-- **Gemini:** In Doctor, add a check: if any tier uses Gemini and `plan_mode == true`, warn that `experimental.plan: true` may be required in `~/.gemini/settings.json`. Optionally probe the file and only warn if the setting is missing. In Config, when platform is Gemini and plan mode is on, show a short tooltip or help: "Gemini plan mode may require `experimental.plan: true` in ~/.gemini/settings.json."
+- **Gemini:** Gemini is a Direct API provider; plan-mode constraints are applied via API parameters. In Doctor, validate Gemini API key presence when any tier uses Gemini. No CLI settings file interaction is needed.
 
 ### 2. Plan Mode -- Frontend (Config)
 
@@ -1468,7 +1465,7 @@ All previously "optional" or "later" plan-mode and subagent GUI/backend items ar
 
 ### 6. Doctor -- Gemini Plan Mode Check
 
-- **Check:** In `doctor/` (new check or inside existing config check): if any tier has platform Gemini and `plan_mode == true`, check `~/.gemini/settings.json` for `experimental.plan: true` (or equivalent path); if missing, add Doctor warning: "Gemini plan mode is enabled for a tier but experimental.plan may not be set in ~/.gemini/settings.json." Prefer reading the file and only warning when plan mode is on and setting is missing.
+- **Check:** In `doctor/` (new check or inside existing config check): if any tier has platform Gemini, validate that a Google Gemini API key is configured. Gemini is a Direct API provider; no CLI settings file check is needed.
 
 ### 7. Implementation Checklist (GUI & Backend -- Add/Expand)
 
@@ -1825,10 +1822,10 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 
 **Canonical subagent name registry:** Maintained in `platform_specs` or a dedicated `subagent_registry` module. Names are stable strings (kebab-case, e.g., `architect-reviewer`, `security-auditor`).
 
-### 3. Gemini settings path and format
+### 3. Gemini API key validation
 
-- **Issue:** `~/.gemini/settings.json` must be resolved (home dir on all platforms). JSON might be missing, malformed, or use a different structure; the `experimental.plan` key might be nested (e.g. `experimental.plan` or under another key).
-- **Mitigation:** (1) **Path:** Use the same path resolution as the rest of the app (e.g. `platforms::path_utils::expand_home` or `dirs::home_dir()` + join) so `~/.gemini/settings.json` works on all platforms. (2) **Key:** Confirm in Gemini CLI docs; typically `experimental.plan` (boolean) or nested under `experimental`. Parse JSON and check that key; if missing or false, emit the warning. (3) **Errors:** On missing file or parse error, Doctor check should warn "could not read Gemini settings" and not assume plan is disabled.
+- **Issue:** Gemini is a Direct API provider. The Doctor check must validate that a Google Gemini API key is present and valid when any tier uses Gemini.
+- **Mitigation:** (1) **Key:** Check for the configured Gemini API key in app settings. (2) **Validation:** Optionally send a lightweight API probe to verify the key is active. (3) **Errors:** If no key is configured and a tier uses Gemini, Doctor should warn "Gemini API key is not configured; Gemini tiers will fail."
 
 ### 4. Doctor check when config is not GuiConfig
 
@@ -2729,7 +2726,7 @@ When a phase/tier fails with issues outside its task scope:
 
 ## Lifecycle and Quality Features
 
-This section defines lifecycle hooks, structured handoff contracts, remediation loops, and cross-session persistence that enhance reliability and quality across **all five platforms** (Cursor, Codex, Claude Code, Gemini, Copilot). These features complement the start/end verification above and can be implemented using platform-native hooks where available, or via orchestrator-level middleware for platforms without native hooks.
+This section defines lifecycle hooks, structured handoff contracts, remediation loops, and cross-session persistence that enhance reliability and quality across **all providers** (Cursor, Codex, Claude Code, Gemini, Copilot). These features complement the start/end verification above and can be implemented using platform-native hooks where available, or via orchestrator-level middleware for platforms without native hooks.
 
 ### 1. Hook-Based Lifecycle Middleware (BeforeTier/AfterTier)
 
@@ -2740,7 +2737,7 @@ This section defines lifecycle hooks, structured handoff contracts, remediation 
 - **Cursor:** Register hooks in `.cursor/hooks.json` or `~/.cursor/hooks.json` for native hooks (`SubagentStart`, `SubagentStop`, `beforeSubmitPrompt`, `afterAgentResponse`). Also implement orchestrator-level hooks in Rust that wrap platform calls. **Note:** CLI subagents have reported issues (Feb 2026); use orchestrator-level hooks as primary, native hooks as enhancement when CLI subagents are fixed.
 - **Codex:** Use CLI lifecycle outputs and orchestrator-managed hooks/middleware. Implement orchestrator-level hooks as primary middleware.
 - **Claude Code:** Register hooks in `.claude/settings.json` for native hooks (`SubagentStart`, `SubagentStop`, `PreToolUse`, `PostToolUse`, `SessionStart`, `SessionEnd`). Also implement orchestrator-level hooks. Native hooks can block operations (exit code 2) or inject context.
-- **Gemini:** Register hooks in `~/.gemini/settings.json` or extension config for native hooks (`BeforeAgent`, `AfterAgent`, `BeforeModel`, `AfterModel`, `BeforeTool`, `AfterTool`). Implement orchestrator-level hooks as fallback. Gemini hooks communicate via JSON stdin/stdout.
+- **Gemini:** Gemini is a Direct API provider; hooks are implemented at the orchestrator level. No platform-native hook config file is needed for Gemini.
 - **Copilot:** Use CLI lifecycle outputs and orchestrator-managed hooks/middleware. Implement orchestrator-level hooks as primary.
 
 **Hook trait definition:**
@@ -4165,7 +4162,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 
 **Gap #14: Platform-native hook registration and discovery**
 
-**Issue:** How do we discover and register platform-native hooks (Cursor `.cursor/hooks.json`, Claude `.claude/settings.json`, Gemini `~/.gemini/settings.json`)? Should Puppet Master auto-discover hooks or require explicit configuration?
+**Issue:** How do we discover and register platform-native hooks (Cursor `.cursor/hooks.json`, Claude `.claude/settings.json`)? Gemini is a Direct API provider and does not use a platform-native hook config file. Should Puppet Master auto-discover hooks or require explicit configuration?
 
 **Mitigation:**
 - **Auto-discovery:** Scan for hook config files in project root and home directory on startup. Register discovered hooks as adapters.
@@ -4179,8 +4176,8 @@ These lifecycle and quality features **complement** the existing start/end verif
       enabled: true
       config_path: ".claude/settings.json"
     gemini:
-      enabled: true
-      config_path: "~/.gemini/settings.json"
+      enabled: false
+      # Gemini is a Direct API provider; hooks are orchestrator-level only
   ```
 - **Fallback:** If platform-native hooks fail or are unavailable, fall back to orchestrator-level hooks (always available).
 
@@ -5004,7 +5001,7 @@ if prompt.contains("crew") || prompt.contains("crews") || prompt.contains("use a
 
 - **Source:** Current tier config platform, or GUI platform selection if in GUI mode
 - **Fallback:** If no platform selected, use deterministic default platform (cursor)
-- **Validation:** Ensure platform supports subagents (all 5 platforms support subagents via coordination)
+- **Validation:** Ensure platform supports subagents (all providers support subagents via coordination)
 - **Note:** Exact implementation will be defined when Assistant feature is designed (see Gap #37)
 
 **Example user-initiated crew flow (Future):**
@@ -5966,17 +5963,17 @@ When interview generates PRD (`prd.json`), add crew metadata to tasks/subtasks:
 
 **Why this is valuable:**
 
-1. **Cross-platform communication:** Works for all 5 platforms (Cursor, Codex, Claude, Gemini, Copilot), even those without native teams/fleets support
+1. **Cross-platform communication:** Works for all supported providers (Cursor, Claude Code, OpenCode, Codex, Gemini, GitHub Copilot), even those without native teams/fleets support
 2. **Orchestrator visibility:** Boss agent (orchestrator) can monitor all subagent communication, providing insights into what subagents are doing and how they're coordinating
 3. **Platform-agnostic:** Can be used alongside native teams/fleets (Claude Code Teams, Copilot Fleets) but provides fallback and cross-platform capabilities
 4. **Enhanced coordination:** Enables more sophisticated coordination patterns (agents asking for help, sharing decisions, requesting reviews)
-5. **Unified interface:** Single communication system works the same way across all platforms
+5. **Unified interface:** Single communication system works the same way across all providers
 
 **Comparison with native solutions:**
 
 | Feature | Claude Code Teams | Copilot Fleets | Puppet Master Communication |
 |---------|------------------|----------------|---------------------------|
-| Cross-platform | ❌ Claude only | ❌ Copilot only | ✅ All 5 platforms |
+| Cross-platform | ❌ Claude only | ❌ Copilot only | ✅ All supported providers |
 | Orchestrator visibility | Limited | Limited | ✅ Full visibility |
 | Agent-to-agent messaging | ✅ Native | ❌ Not supported | ✅ Supported |
 | File-based (no API) | ❌ Uses API | ❌ Uses API | ✅ File-based |
@@ -6412,7 +6409,7 @@ impl OrchestratorInsights {
 
 **Benefits:**
 
-1. **Cross-platform:** Works for all 5 platforms, even without native teams/fleets
+1. **Cross-platform:** Works for all providers, even without native teams/fleets
 2. **Orchestrator visibility:** Boss agent can see all subagent communication
 3. **Enhanced coordination:** Agents can ask for help, share decisions, warn about conflicts
 4. **File-based:** No API calls, pure file-based (fits Puppet Master architecture)
@@ -7313,8 +7310,8 @@ SDK orchestration is not an implementation target in this plan.
 - Agent files (`.claude/agents`) and hooks are consumed through CLI/runtime behavior.
 
 **Gemini**
-- `gemini -p` with approval/output modes is the runtime invocation path.
-- Extension/hook surfaces are used only where compatible with CLI automation.
+- Gemini is a Direct API provider; runtime invocation uses the Gemini API directly (not a CLI subprocess).
+- Extension/hook surfaces are orchestrator-level only.
 
 **GitHub Copilot**
 - `copilot -p` (or `npx -y @github/copilot`) is the runtime invocation path.

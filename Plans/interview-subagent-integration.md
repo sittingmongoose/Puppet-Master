@@ -2697,7 +2697,7 @@ Subagent files are currently located in `.claude/agents/` directory (41 subagent
    - **Cursor**: `.cursor/agents/` or `~/.cursor/agents/`
    - **Claude Code**: `.claude/agents/` or `~/.claude/agents/`
    - **Codex**: `.codex/agents/` or `~/.codex/agents/`
-   - **Gemini**: `.gemini/agents/` or `~/.gemini/agents/`
+   - **Gemini**: Gemini is a Direct API provider; subagents are orchestrated via Puppet Master's internal Persona system (no platform agent directory)
    - **GitHub Copilot**: `.github/agents/` or `~/.copilot/agents/`
 
 ### Implementation Strategy
@@ -2918,41 +2918,14 @@ fn invoke_claude_subagent(
 }
 ```
 
-#### Gemini CLI (v0.29.0 - Feb 17, 2026)
-**Latest Stable:** v0.29.0 (Feb 17, 2026)  
-**Preview:** v0.30.0-preview.0 (Feb 17, 2026)
+#### Gemini (direct-provider)
+Gemini is a **Direct-provider** in Puppet Master: it is used as a model provider via the Google Gemini API, not as a CLI-bridged platform.
 
-- **Plan Mode:** Formalized 5-phase sequential planning workflow
-- **Subagent Registration:** Fixed to ensure sub-agents are registered regardless of tools.allowed
-- **Policy Engine:** Deprecated --allowed-tools and excludeTools in favor of policy engine
-- **Tool Output Masking:** Enabled by default for better context management
-- **Memory System:** Session-linked tool output storage and cleanup
-- **Dynamic Policy Registration:** For subagents (from v0.28.0)
-- **Event-Driven Scheduler:** For tool execution (from v0.28.0)
+**Invocation method:** Puppet Master subagents are internal/orchestrator-level. The Gemini provider receives the final prompt produced by the orchestrator; there are no provider-native agent directories and no provider-specific subagent flags.
 
-**Invocation Method:**
-Subagents are exposed as **tools** to the main agent. Main agent calls tool by name.
-
-**Requirements:**
-- Must enable in `settings.json`: `{"experimental": {"enableAgents": true}}`
-- Subagents defined in `.gemini/agents/*.md` or `~/.gemini/agents/*.md`
-
-**Implementation:**
-```rust
-// Gemini subagent invocation
-fn invoke_gemini_subagent(
-    subagent_name: &str,
-    task: &str,
-) -> String {
-    // Gemini subagents are invoked as tools
-    // The main agent calls the tool by name
-    // Format: Natural language mentioning the subagent
-    format!(
-        "Use the {} subagent to: {}",
-        subagent_name, task
-    )
-}
-```
+**Configuration:**
+- Google Gemini API key (Settings)
+- Model selection in Settings (and Media toggles/models per `Plans/Media_Generation_and_Capabilities.md`)
 
 #### GitHub Copilot CLI (v0.0.411 - Feb 17, 2026)
 **Latest Stable:** v0.0.411 (Feb 17, 2026)  
@@ -3084,8 +3057,6 @@ pub struct PlatformSubagentSettings {
     pub use_dynamic_agents: bool,
     /// For Copilot: Preferred invocation type
     pub copilot_invocation_type: Option<CopilotInvocationType>,
-    /// For Gemini: Require enableAgents setting
-    pub require_experimental_flag: bool,
 }
 ```
 
@@ -3100,14 +3071,14 @@ pub struct PlatformSubagentSettings {
    - **Cursor:** `/subagent-name` syntax (broken in CLI as of Feb 2026, works in editor)
    - **Codex:** MCP server tools or natural language
    - **Claude Code:** `--agents` JSON flag or automatic file-based invocation
-   - **Gemini:** Tool-based invocation (requires `enableAgents: true`)
+   - **Gemini:** Direct-provider model invocation (no CLI flags or local config files)
    - **GitHub Copilot:** `/fleet`, `/delegate`, or `/agent` commands
 
 3. **Recent Changes (as of Feb 18, 2026):**
    - **Cursor 2.5 (Feb 17):** Async subagents, subagent trees, plugins marketplace
    - **Codex 0.104.0 (Feb 18):** Distinct approval IDs, thread archive notifications, websocket proxy support
    - **Claude Code 2.1.45 (Feb 17-18):** Agent Teams fixes, Sonnet 4.6 support, performance improvements
-   - **Gemini v0.29.0 (Feb 17):** Plan mode formalization, subagent registration fixes, policy engine improvements
+    - **Gemini:** Model catalog/capability availability may change; verify at implementation time
    - **Copilot 0.0.411 (Feb 17):** Fleets/autopilot available to all users, SDK APIs, memory improvements
    - **Note:** Versions are changing rapidly - verify latest versions before implementation
 
@@ -3131,12 +3102,6 @@ pub struct PlatformSubagentSettings {
 2. Fallback to direct platform invocation without subagents
 3. Monitor Cursor releases for CLI fix
 
-### Gemini Experimental Flag Requirement
-**Issue:** Gemini requires `enableAgents: true` in settings.json
-**Solution:** 
-- Check for `.gemini/settings.json` existence
-- Automatically add/update experimental flag if needed
-- Warn user if flag cannot be set
 
 ### Codex MCP Server Requirement
 **Issue:** Codex subagents require MCP server mode
@@ -3163,7 +3128,7 @@ pub struct PlatformSubagentSettings {
 1. **Cursor:** Test `/subagent-name` syntax (expect failure in CLI)
 2. **Codex:** Test MCP server tool invocation
 3. **Claude Code:** Test both `--agents` flag and file-based invocation
-4. **Gemini:** Test tool-based invocation with `enableAgents: true`
+4. **Gemini:** Test direct-provider model invocation; subagent orchestration remains internal
 5. **Copilot:** Test `/fleet`, `/delegate`, and `/agent` commands
 
 ### Integration Tests

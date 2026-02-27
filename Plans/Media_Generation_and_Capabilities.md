@@ -72,7 +72,7 @@ ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md
       "id": "media.video",
       "category": "media",
       "enabled": false,
-      "disabled_reason": "MISSING_GOOGLE_KEY",
+      "disabled_reason": "NOT_CONFIGURED",
       "setup_hint": "Add a Google Gemini API key in Settings → Gemini Provider."
     }
   ]
@@ -92,7 +92,7 @@ ContractRef: ToolID:capabilities.get, ContractName:Plans/Contracts_V0.md
 
 | Value | Meaning |
 |-------|---------|
-| `MISSING_GOOGLE_KEY` | No Google Gemini API key is configured. |
+| `NOT_CONFIGURED` | Required provider configuration is missing (e.g., no Google Gemini API key). |
 | `MODEL_UNAVAILABLE` | The requested or configured model is not available with the current API key or provider setup. |
 | `ADMIN_DISABLED` | The feature is explicitly disabled in Settings (Media settings). |
 | `BACKEND_UNSUPPORTED` | The current backend does not support this media kind (e.g., Cursor backend for video/tts/music). |
@@ -105,7 +105,7 @@ ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
 
 ### 1.4 Disabled-reason evaluation precedence
 
-When multiple disabled causes apply to the same capability at the same time, `capabilities.get` MUST return exactly one `disabled_reason` using this deterministic precedence (highest to lowest): `BACKEND_UNSUPPORTED` → `MISSING_GOOGLE_KEY` → `RATE_LIMITED` → `QUOTA_EXCEEDED` → `ADMIN_DISABLED` → `MODEL_UNAVAILABLE`.
+When multiple disabled causes apply to the same capability at the same time, `capabilities.get` MUST return exactly one `disabled_reason` using this deterministic precedence (highest to lowest): `BACKEND_UNSUPPORTED` → `NOT_CONFIGURED` → `RATE_LIMITED` → `QUOTA_EXCEEDED` → `ADMIN_DISABLED` → `MODEL_UNAVAILABLE`.
 
 ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
 
@@ -212,7 +212,7 @@ ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
 
 **All non-Cursor backends:**
 - All media kinds (`image`, `video`, `tts`, `music`) use the **Gemini media APIs** with the configured Google Gemini API key.
-- If no Google Gemini API key is configured, media capabilities are disabled with `disabled_reason: MISSING_GOOGLE_KEY`.
+- If no Google Gemini API key is configured, media capabilities are disabled with `disabled_reason: NOT_CONFIGURED`.
 
 ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:Decision_Policy.md§2
 
@@ -221,37 +221,95 @@ ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md,
 ```json
 {
   "success": true,
+  "request_id": "req_20260301_a1b2c3d4",
   "kind": "image",
-  "outputs": [
+  "engine": {
+    "backend": "gemini_api"
+  },
+  "artifacts": [
     {
-      "index": 0,
-      "data_uri": "data:image/png;base64,...",
-      "format": "png",
-      "metadata": {
+      "artifact_id": "art_0001",
+      "kind": "image",
+      "mime": "image/png",
+      "uri": "artifact://media/req_20260301_a1b2c3d4/output_000.png",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb924...",
+      "bytes": 204800,
+      "meta": {
+        "w": 1024,
+        "h": 1024,
         "model_used": "gemini-2.0-flash-preview-image-generation",
         "seed": 42,
         "generation_time_ms": 3200
       }
     }
   ],
+  "usage": {
+    "estimated_cost_usd": 0.003,
+    "input_tokens": 42,
+    "output_tokens": 0,
+    "media_units": 1
+  },
   "error": null
 }
 ```
+
+Response fields:
+- `request_id` (string, required): unique opaque ID for this generation request.
+- `engine.backend` (string, required): one of `gemini_api` | `cursor_native`.
+- `artifacts[]` (array, required on success): each item contains:
+  - `artifact_id` (string): unique artifact identifier.
+  - `kind` (string): media kind that was generated.
+  - `mime` (string): MIME type (e.g., `image/png`, `video/mp4`, `audio/wav`).
+  - `uri` (string): `artifact://` path relative to `.puppet-master/artifacts/media/<request_id>/`.
+  - `sha256` (string): hex-encoded SHA-256 of the artifact bytes.
+  - `bytes` (integer): artifact file size in bytes.
+  - `meta` (object): kind-specific metadata — `w`/`h` for images/video, `duration` for video/audio, `sample_rate` for audio, plus `model_used`, `seed`, `generation_time_ms`.
+- `usage` (object, required): `estimated_cost_usd` (f64, explicitly an estimate), plus optional local counters (`input_tokens`, `output_tokens`, `media_units`).
+- `error` (object | null): present on failure (see §2.6).
+
+**Deterministic artifact layout:** Generated artifacts are written to `.puppet-master/artifacts/media/<request_id>/output_000.<ext>` (zero-padded index). A `manifest.json` is co-located alongside artifacts in the same directory, containing the full `artifacts[]` array plus `request_id` and generation metadata, enabling offline re-verification. No inline `data_uri` is returned.
+
+**Cursor special-case:** When `engine.backend = "cursor_native"`, Cursor routes `kind=image` to Cursor-native image generation without requiring a Google API key. For `kind` ∈ {`video`, `tts`, `music`}, the Cursor backend returns `error.code = "BACKEND_UNSUPPORTED"`.
 
 On failure:
 ```json
 {
   "success": false,
+  "request_id": "req_20260301_a1b2c3d4",
   "kind": "image",
-  "outputs": [],
+  "engine": {
+    "backend": "gemini_api"
+  },
+  "artifacts": [],
+  "usage": null,
   "error": {
-    "code": "MISSING_GOOGLE_KEY",
+    "code": "NOT_CONFIGURED",
     "message": "This feature requires a free or paid Google API Key. Add one in Settings → Gemini Provider (Get API key), then try again."
   }
 }
 ```
 
-ContractRef: ToolID:media.generate, ContractName:Plans/Contracts_V0.md
+### 2.6 Stable error codes
+
+The `error.code` field MUST be exactly one of the following canonical values:
+
+ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2, ContractName:Plans/Contracts_V0.md
+
+| Code | When |
+|------|------|
+| `NOT_CONFIGURED` | Required provider configuration is missing (e.g., no Google Gemini API key). |
+| `MODEL_UNAVAILABLE` | Requested `model_override` could not be resolved or model is offline. |
+| `RATE_LIMITED` | Provider returned a rate-limit / 429. |
+| `QUOTA_EXCEEDED` | Provider quota exhausted. |
+| `BACKEND_UNSUPPORTED` | Active backend does not support the requested `kind`. |
+| `ADMIN_DISABLED` | Capability disabled in Settings > Media. |
+| `INVALID_REQUEST` | Request envelope failed local validation (missing `kind`, bad `count`, etc.). |
+| `PROVIDER_ERROR` | Provider accepted the request but generation failed (safety filter, timeout, upstream error). |
+| `INTERNAL_ERROR` | Unexpected internal failure not attributable to provider or configuration. |
+
+These nine codes are stable across versions. Implementations MUST NOT invent ad-hoc code strings.
+
+ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
 
 ---
 
@@ -311,10 +369,7 @@ Controls-block key/values override everything. Then, in order:
 
 Keyword form:
 ```
-(?is)\b(?:using|with|via|use|model)\s*(?:[:=]\s*)?(?P<model>@?[a-z0-9][a-z0-9._/\- ]{0,80}?) (?=(?:\s*(?:,|;|\)|\]|\.$|$))|\s+\b(?:for|aspect|ratio|size|resolution|format|voice|duration|negative|quality|seed|bpm|variations?|versions?|options?)\b)
-```
-
-`@` shorthand:
+(?is)\b(?:using|with|via|use|model)\s*(?:[:=]\s*)?(?P<model>@?[a-z0-9][a-z0-9._/\-\s]{0,80}?)(?=(?:\s*(?:,|;|\)|\]|\.$|$))|\s+\b(?:for|aspect|ratio|size|resolution|format|voice|duration|negative|quality|seed|bpm|variations?|versions?|options?)\b)
 ```
 (?i)(?<!\w)@(?P<model2>[a-z0-9][a-z0-9._/\-]{1,64})(?!\w)
 ```
@@ -323,7 +378,9 @@ Keyword form:
 
 **Resolution order:** alias → exact model id → exact displayName → else `MODEL_UNAVAILABLE`.
 
-ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
+**Canonical media model aliases** (e.g., "Nano Banana", "Nano Banana Pro", "Veo fast", "TTS flash", "TTS pro") are defined in `Plans/Models_System.md` [§6.8](Plans/Models_System.md#MEDIA-ALIASES) (SSOT). Do not restate the alias table here.
+
+ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID, ContractName:Plans/Models_System.md#MEDIA-ALIASES
 
 ### 3.5 `count` extraction
 
@@ -532,7 +589,7 @@ ContractRef: ToolID:capabilities.get, Invariant:INV-003
 
 ### 5.2 Disabled-reason messages
 
-**Missing key reason (`MISSING_GOOGLE_KEY`):**
+**Not configured reason (`NOT_CONFIGURED`):**
 > “This feature requires a free or paid Google API Key. Add one in Settings → Gemini Provider (Get API key), then try again.”
 
 **Model unavailable reason (`MODEL_UNAVAILABLE`):**
@@ -583,12 +640,12 @@ ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/
 ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
 
 <a id="AC-MED04"></a>
-**AC-MED04:** When the active backend is non-Cursor and a valid Google Gemini API key is configured, all four media capabilities (`media.image`, `media.video`, `media.tts`, `media.music`) MUST be enabled.
+**AC-MED04:** When the active backend is non-Cursor and a valid Google Gemini API key is configured, each media capability (`media.image`, `media.video`, `media.tts`, `media.music`) is eligible for enablement and routes through the Gemini media APIs, **subject to**: (a) the per-capability Settings > Media toggle (if toggled OFF → `ADMIN_DISABLED`), and (b) the underlying model being available for that kind (if unavailable → `MODEL_UNAVAILABLE`). A configured key alone does NOT guarantee all four are enabled.
 
 ContractRef: ToolID:capabilities.get, ToolID:media.generate
 
 <a id="AC-MED05"></a>
-**AC-MED05:** When the active backend is non-Cursor and no Google Gemini API key is configured, all four media capabilities MUST be disabled with `MISSING_GOOGLE_KEY`.
+**AC-MED05:** When the active backend is non-Cursor and no Google Gemini API key is configured, all four media capabilities MUST be disabled with `NOT_CONFIGURED`.
 
 ContractRef: ToolID:capabilities.get, ToolID:media.generate
 
@@ -623,9 +680,24 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 ContractRef: ToolID:capabilities.get, Invariant:INV-003
 
 <a id="AC-MED12"></a>
-**AC-MED12:** When both an infrastructure-disabled condition (`BACKEND_UNSUPPORTED`, `MISSING_GOOGLE_KEY`, `RATE_LIMITED`, or `QUOTA_EXCEEDED`) and an admin toggle disable are simultaneously true, `capabilities.get` MUST return the infrastructure-disabled reason based on the precedence in §1.4 (not `ADMIN_DISABLED`).
+**AC-MED12:** When both an infrastructure-disabled condition (`BACKEND_UNSUPPORTED`, `NOT_CONFIGURED`, `RATE_LIMITED`, or `QUOTA_EXCEEDED`) and an admin toggle disable are simultaneously true, `capabilities.get` MUST return the infrastructure-disabled reason based on the precedence in §1.4 (not `ADMIN_DISABLED`).
 
 ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
+
+<a id="AC-MED13"></a>
+**AC-MED13:** When the active backend is Cursor, `media.generate` for `kind=image` MUST route via Cursor-native image generation (no Google API key required) and MUST NOT fall through to the Gemini media API path. For `kind` ∈ {`video`, `tts`, `music`}, `media.generate` MUST return `error.code = "BACKEND_UNSUPPORTED"`.
+
+ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
+
+<a id="AC-MED14"></a>
+**AC-MED14:** `media.generate` MUST write generated artifacts to `.puppet-master/artifacts/media/<request_id>/output_000.<ext>` and co-locate a `manifest.json` in the same directory. Each artifact entry MUST include `artifact_id`, `kind`, `mime`, `artifact://` URI, `sha256`, `bytes`, and `meta`. No inline `data_uri` field is permitted in the response.
+
+ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+
+<a id="AC-MED15"></a>
+**AC-MED15:** `error.code` values in `media.generate` failure responses MUST be exactly one of the nine canonical stable error codes defined in §2.6. No ad-hoc error code strings are permitted.
+
+ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
 
 ---
 
@@ -647,7 +719,7 @@ music: \b(music|song|beat|instrumental|soundtrack)\b
 - Else verb fallback only if unambiguous.
 3) Precedence: controls block key/values override everything then: model_override, count, aspect_ratio, size/resolution, duration, format, voice/style, quality, seed, bpm, negative_prompt
 4) model_override:
-Keyword form: (?is)\b(?:using|with|via|use|model)\s*(?:[:=]\s*)?(?P<model>@?[a-z0-9][a-z0-9._/\- ]{0,80}?) (?=(?:\s*(?:,|;|\)|\]|\.$|$))|\s+\b(?:for|aspect|ratio|size|resolution|format|voice|duration|negative|quality|seed|bpm|variations?|versions?|options?)\b)
+Keyword form: (?is)\b(?:using|with|via|use|model)\s*(?:[:=]\s*)?(?P<model>@?[a-z0-9][a-z0-9._/\-\s]{0,80}?)(?=(?:\s*(?:,|;|\)|\]|\.$|$))|\s+\b(?:for|aspect|ratio|size|resolution|format|voice|duration|negative|quality|seed|bpm|variations?|versions?|options?)\b)
 @ shorthand: (?i)(?<!\w)@(?P<model2>[a-z0-9][a-z0-9._/\-]{1,64})(?!\w)
 Normalize model key: lowercase; collapse spaces/underscores/hyphens.
 Resolve: alias -> exact model id -> exact displayName -> else MODEL_UNAVAILABLE.
