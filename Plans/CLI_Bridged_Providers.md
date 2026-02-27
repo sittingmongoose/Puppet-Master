@@ -87,7 +87,9 @@ This document primarily defines bridged transports. For decision completeness, d
 
 Direct-provider integrations MUST emit the same normalized provider stream schema as bridged transports.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/newtools.md, ContractName:Plans/Architecture_Invariants.md#INV-009
+Direct-provider integrations MUST NOT rely on per-platform experimental feature switches in Puppet Master (GUI, config keys, or provider invocation) — experimental CLI flags and settings (for example Copilot `--experimental` or Gemini `experimental.plan` in `~/.gemini/settings.json`) are treated as legacy implementation details and MUST NOT be surfaced as experimental toggles in the Slint rewrite.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/newtools.md, ContractName:Plans/Architecture_Invariants.md#INV-009, ContractName:Plans/rewrite-tie-in-memo.md
 
 ---
 
