@@ -21,3 +21,7 @@ When adding/modifying requirements in `Plans/`:
 End with exactly one:
 - `<status>COMPLETE</status>`
 - `<status>BLOCKED</status>`
+
+If you edit a Plans/*.md that has Plans/_shards/<doc>/, you MUST run python3 scripts/pm-shard-plans.py --generate and python3 scripts/pm-shard-plans.py --check before finishing.
+
+python3 scripts/pm-plans-verify.py run-gates is required and fails if plan shards are stale.
