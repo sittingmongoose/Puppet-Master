@@ -467,11 +467,11 @@ The Config view has **8 tabs**: Tiers, Branching, Verification, Memory, Budgets,
 
 ### 7.6 Leveraging platform CLI capabilities (hooks, skills, plugins, extensions)
 
-Platform CLIs (Cursor, Codex, Claude Code, Gemini, Copilot) support **hooks**, **skills**, **plugins**, **extensions**, and **MCP servers**. These can complement (not replace) Puppet Master's own prepare/cleanup and orchestration.
+Provider integrations (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini) support **hooks**, **skills**, **plugins**, **extensions**, and **MCP servers**. These can complement (not replace) Puppet Master's own prepare/cleanup and orchestration.
 
 **Current stance**
 
-- **Prepare and cleanup:** Puppet Master implements prepare_working_directory and cleanup_after_execution **internally** and invokes them via `run_with_cleanup` before/after each `runner.execute()`. Puppet Master does **not** rely on platform-specific hooks or scripts to perform workspace cleanup, so behavior is consistent across all five platforms and does not require the user to install or configure per-platform hooks.
+- **Prepare and cleanup:** Puppet Master implements prepare_working_directory and cleanup_after_execution **internally** and invokes them via `run_with_cleanup` before/after each `runner.execute()`. Puppet Master does **not** rely on platform-specific hooks or scripts to perform workspace cleanup, so behavior is consistent across all supported providers and does not require the user to install or configure per-provider hooks.
 - **Subagents and plan mode:** Subagent names and plan-mode flags are passed in the **prompt or CLI args** (per platform_specs and runners). Puppet Master does not require Cursor plugins or Claude hooks to define subagents; the orchestrator and interview plans define how Puppet Master invokes each platform.
 
 **Ways we might leverage CLI capabilities (optional / future)**
@@ -702,7 +702,7 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:D
 
 **Discovery and platform_specs:**
 
-- How runners receive skills must be explicitly tied to **platform_specs** (or a dedicated doc section referenced from AGENTS.md). **Implementation plan must list per platform (Cursor, Codex, Claude, Gemini, Copilot) how skill paths or content are passed** -- e.g. env var, prompt injection, or tool (e.g. `skill` tool). No implementation of runner wiring without this mapping.
+- How runners receive skills must be explicitly tied to **platform_specs** (or a dedicated doc section referenced from AGENTS.md). **Implementation plan must list per provider (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini) how skill paths or content are passed** -- e.g. env var, prompt injection, or tool (e.g. `skill` tool). No implementation of runner wiring without this mapping.
 
 **Error handling (backend):**
 
@@ -750,7 +750,7 @@ This subsection closes open decisions and documents gaps so an **implementation 
 | **"Import from path"** | **Decision:** **Copy into a discovery path.** "Import" means: user picks an existing folder containing `SKILL.md`; we copy that folder into a chosen discovery base (e.g. `.puppet-master/skills/<name>` or `~/.config/puppet-master/skills/<name>`). We do not persist arbitrary external paths (keeps discovery simple and portable). Validate name and frontmatter after copy. |
 | **Create skill when no project** | When no project is open (no project root), "Create new" skill: offer **global only** (e.g. `~/.config/puppet-master/skills/<name>`). Disable or hide "project" option when `project_root` is None. |
 | **Edit: name change in frontmatter** | **Decision:** **Name in frontmatter must match directory name.** On save, if user changes `name` in frontmatter so it no longer matches the dir name: (1) reject with validation error "Name must match folder name", or (2) offer "Rename folder" to rename dir to match (then save). Prefer (1) for v1 to avoid accidental renames. |
-| **How runners receive skills** | **Document per platform:** platform_specs (or orchestrator plan) should state for each platform how skills are passed (paths only vs full content; CLI env var vs prompt injection vs `skill` tool). **Implementation plan must list per platform (Cursor, Codex, Claude, Gemini, Copilot) how skill paths or content are passed (env, prompt, tool).** See §7.10 "Discovery and platform_specs" and §8.9.6. |
+| **How runners receive skills** | **Document per provider:** platform_specs (or orchestrator plan) should state for each provider how skills are passed (paths only vs full content; CLI env var vs prompt injection vs `skill` tool). **Implementation plan must list per provider (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini) how skill paths or content are passed (env, prompt, tool).** See §7.10 "Discovery and platform_specs" and §8.9.6. |
 | **Tests** | Add unit tests: `discover_skills` (mock dirs, order and deduplication); `load_skill` (valid/invalid frontmatter, name validation, dir-name match); `resolve_skill_permission` (exact + wildcard, default allow). See §8.9.7. |
 
 **Required scope** (fleshed out below in §7.11.1 and §7.11.2)
@@ -935,7 +935,7 @@ Implement in order; discovery path order is canonical (§7.10).
 - [ ] **8.9.3** Implement `load_skill(path) -> Result<SkillInfo>` with YAML frontmatter parsing and name/description validation (length, regex, dir-name match); return clear errors for invalid frontmatter or missing file; tag DRY:FN:load_skill.
 - [ ] **8.9.4** Add `skill_permissions` to GuiConfig; implement pattern-based resolve (allow/deny/ask) with wildcards; **explicit per-skill entry wins over pattern**; tag DRY:FN:resolve_skill_permission.
 - [ ] **8.9.5** Implement CRUD: create skill dir + SKILL.md (if target dir already contains SKILL.md, return error and do not overwrite -- §7.11); update SKILL.md; delete (with confirmation); persist only permissions in config. On config write failure, return error to caller.
-- [ ] **8.9.6** Implement `list_skills_for_agent(project_root, permissions) -> Vec<SkillInfo>` for runner/prompt integration; tag DRY:FN:list_skills_for_agent. **Document per platform (Cursor, Codex, Claude, Gemini, Copilot) how skill paths or content are passed** (env, prompt, tool) in platform_specs or linked doc; implementation plan must list this mapping.
+- [ ] **8.9.6** Implement `list_skills_for_agent(project_root, permissions) -> Vec<SkillInfo>` for runner/prompt integration; tag DRY:FN:list_skills_for_agent. **Document per provider (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini) how skill paths or content are passed** (env, prompt, tool) in platform_specs or linked doc; implementation plan must list this mapping.
 - [ ] **8.9.7** Unit tests for skills: discover_skills (mock dirs, order and deduplication); load_skill (valid/invalid frontmatter, name validation, dir-name match); resolve_skill_permission (exact + wildcard, default allow, explicit over pattern). See §7.11.
 
 ### 8.10 Shortcuts and Skills: export/import, search/filter, discoverability, bulk permission, sort/filter, preview, last modified, validate all
@@ -1129,7 +1129,7 @@ The following reflects a sweep of the codebase and plans. Use it to avoid missin
 
 - **Discovery path order and portability:** Discovery path order is canonical (§7.10); any change (e.g. adding a path) can change which skill "wins" for a given name. **Recommendation:** Keep DRY:DATA:skill_search_paths as the single source of truth; document order in code and in AGENTS.md so implementers and users understand first-wins behavior. On Windows, path case and separators may affect discovery; first-wins deduplication should use consistent name comparison (e.g. normalize case for comparison if desired).
 - **Permission "ask" and runner wiring:** Until "ask" is implemented (§7.11), only allow/deny are active. When "ask" is added, the app must prompt the user at the point where the runner would load the skill (before or at run start); implementation must decide exact UI (modal vs toast) and persistence (e.g. "Always/Never for this skill").
-- **Per-platform skill delivery:** Runners must receive the allowed skill list in a form each platform understands. **Recommendation:** Implementation plan must list per platform (Cursor, Codex, Claude, Gemini, Copilot) how skill paths or content are passed (env var, prompt injection, tool); without this, Skills integration remains stubbed. See §7.10 "Discovery and platform_specs" and §8.9.6.
+- **Per-provider skill delivery:** Runners must receive the allowed skill list in a form each provider understands. **Recommendation:** Implementation plan must list per provider (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini) how skill paths or content are passed (env var, prompt injection, tool); without this, Skills integration remains stubbed. See §7.10 "Discovery and platform_specs" and §8.9.6.
 - **Create/import overwrite and concurrent edit:** Creating a skill when the target directory already contains SKILL.md must not overwrite (§7.11); implementation must return a clear error. Concurrent edit on disk during in-app edit is an implementation must-decide (detect and prompt Reload/Overwrite/Cancel recommended).
 
 ### 9.1.22 Shortcuts and Skills: implementation summary
@@ -1138,7 +1138,7 @@ The following reflects a sweep of the codebase and plans. Use it to avoid missin
 
 - **Slint key API:** Key event handling depends on Slint's key-event API (e.g. `FocusScope` `key-pressed` callback, `KeyEvent` struct). Behavior may differ by Slint version; implementer should confirm the integration point against Slint 1.15.1 docs and document it in the implementation plan.
 - **Skill discovery on Windows path case:** Discovery paths (e.g. `.puppet-master/skills`, `.claude/skills`, `.agents/skills`) may behave differently on Windows (case-insensitivity, path separators). First-wins deduplication by name should account for case-normalization if needed.
-- **platform_specs skill injection:** How each platform (Cursor, Codex, Claude, Gemini, Copilot) receives the skill list (env var, prompt injection, tool) must be defined in platform_specs or orchestrator plan; until then, Skills integration with runners is stubbed.
+- **platform_specs skill injection:** How each provider (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini) receives the skill list (env var, prompt injection, tool) must be defined in platform_specs or orchestrator plan; until then, Skills integration with runners is stubbed.
 
 **Before implementation plan**
 
