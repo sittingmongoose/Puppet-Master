@@ -221,9 +221,15 @@ There are **two separate ELI5 toggles**; they are independent and must not be co
 
 ## 5. Commands (slash commands and custom commands)
 
+This section defines the **reserved slash commands** — built-in actions invoked via `/` in chat. For **User Commands** (user-authored command presets with templated prompts, stored as `.md` files), see `Plans/Commands_System.md` (canonical SSOT). User Commands and reserved slash commands share the chat `/` autocomplete surface; reserved names take precedence and MUST NOT be overridden.
+
+**Distinction:** Reserved slash commands listed below are **UICommand dispatch actions** (each has a `cmd.chat.*` ID in `Plans/UI_Command_Catalog.md` §2.7). User Commands are **prompt presets** — they resolve a template and submit it as a prompt. The two concepts are orthogonal; see `Plans/Commands_System.md` §1.2 for the full distinction.
+
+ContractRef: ContractName:Plans/Commands_System.md#DEF-UICOMMAND-DISTINCTION, ContractName:Plans/UI_Command_Catalog.md
+
 - **Slash commands in the GUI:** The app supports **slash commands** (e.g. `/new`, `/model`, `/export`, `/compact`, `/stop`) invoked by typing `/` in chat or via a command palette. Unlike CLIs, slash commands here are a first-class GUI feature so the user can run actions without leaving the chat.
-- **Application-wide and project-wide commands:** Commands can be **application-wide** (apply everywhere) or **project-wide** (apply when that project is active). Configuration lives **near Project/Application Rules** (similar to Cursor's rules), so the user manages commands and rules in the same area.
-- **User-customizable:** The user can **customize** what commands do: add new slash commands, change behavior of built-in ones (where allowed), or define custom actions (e.g. run a script, inject a prompt template). Custom commands are stored **per application** (e.g. in app config or user data dir) or **per project** (e.g. in `.puppet-master/` or project root); the same UI that manages Application/Project Rules (Plans/agent-rules-context.md) hosts command definitions so the user edits commands and rules in one place. Custom commands are invoked with `/` like built-ins. **No conflicting names:** the app does **not** allow the user to define a custom command whose name clashes with a built-in; if they try, the UI explains why (e.g. "This name is reserved for a built-in command").
+- **User Commands (presets):** Users can define custom prompt-template commands stored as `.md` files at project level (`.puppet-master/commands/<name>.md`) or global level (`~/.config/puppet-master/commands/<name>.md`). Full schema, template syntax, permissions integration, and GUI requirements are specified in `Plans/Commands_System.md` (SSOT). Custom commands appear in the `/` autocomplete popup alongside reserved commands, prefixed with `/x-` by convention.
+- **No conflicting names:** The app does **not** allow the user to define a custom command whose name clashes with a reserved command; if they try, the UI explains why (e.g. "This name is reserved for a built-in command"). Enforcement rules: `Plans/Commands_System.md` §2.4.
 - **Reserved Slash Commands (Canonical List):**
 
 | Command | Action | Scope |
@@ -242,7 +248,7 @@ There are **two separate ELI5 toggles**; they are independent and must not be co
 
 User-defined custom commands MUST NOT use any reserved command name. Custom commands are prefixed with `/x-` by convention (e.g., `/x-deploy`).
 
-This list is the SSOT. The canonical machine-readable list is in Plans/UI_Command_Catalog.md.
+This list is the SSOT for reserved slash commands. The canonical machine-readable list is in `Plans/UI_Command_Catalog.md`. For User Commands (presets), the SSOT is `Plans/Commands_System.md`.
 
 ### 5.1 Git & GitHub Slash Commands
 
