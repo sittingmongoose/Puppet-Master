@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.evidence.schema.v1",
   "evidence_id": "plan-sharding-2026-02-27",
-  "created_at_utc": "2026-02-27T07:21:12.260098+00:00",
+  "created_at_utc": "2026-02-27T21:01:25.772934+00:00",
   "node": {
     "node_id": "plan-sharding"
   },
@@ -17,7 +17,8 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py run-gates",
-      "exit_code": 0
+      "exit_code": -1,
+      "stdout_excerpt": "not yet run"
     }
   ],
   "tool_calls": [
@@ -1789,7 +1790,11 @@
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/11-platform-cli-verification-subagent-invocation-testing.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/11-provider-connectivity-smoke-tests-subagent-invocation-testing.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/12-plan-mode-strategy-defaults.md",
