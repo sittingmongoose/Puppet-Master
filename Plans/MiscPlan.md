@@ -556,13 +556,24 @@ A **GUI screen** is required to let users **manage Agent Skills**: discover, lis
 
 **Placement:** Add under **Config** (e.g. **Advanced** tab → "Skills" or a dedicated **Skills** tab), or under **Settings**. Use widgets from `docs/gui-widget-catalog.md` (e.g. `page_header`, `styled_button`, `selectable_label` / `selectable_label_mono` for skill names and paths).
 
-**Skill model (align with OpenCode):**
+**Skill model (aligned with OpenCode baseline per `Plans/OpenCode_Deep_Extraction.md` §7F):**
 
 - **One folder per skill**, with a `SKILL.md` inside. Recognized fields in frontmatter: `name` (required), `description` (required), `license`, `compatibility`, `metadata` (optional map).
 - **Discovery paths** (single source of truth in backend, §7.10):
-  - Project: `.puppet-master/skills/<name>/SKILL.md`, `.opencode/skills/<name>/SKILL.md`, `.claude/skills/<name>/SKILL.md`, `.agents/skills/<name>/SKILL.md` (walk up from cwd to git worktree).
-  - Global: `~/.config/puppet-master/skills/<name>/SKILL.md`, `~/.config/opencode/skills/<name>/SKILL.md`, `~/.claude/skills/<name>/SKILL.md`, `~/.agents/skills/<name>/SKILL.md`.
-- **Name rules:** 1-64 chars, lowercase alphanumeric with single hyphens, no leading/trailing `-`, no consecutive `--`; must match directory name. **Description:** 1-1024 chars.
+  - Project: `.puppet-master/skills/<name>/SKILL.md`, `.claude/skills/<name>/SKILL.md`, `.agents/skills/<name>/SKILL.md` (walk up from cwd to git worktree).
+  - Global: `~/.config/puppet-master/skills/<name>/SKILL.md`, `~/.claude/skills/<name>/SKILL.md`, `~/.agents/skills/<name>/SKILL.md`.
+- **Name validation (OpenCode-aligned):** Regex `^[a-z0-9]+(-[a-z0-9]+)*$`, 1-64 chars, no leading/trailing `-`, no consecutive `--`; MUST match directory name. **Description:** 1-1024 chars.
+
+**Permissions integration:**
+
+- Skills are **permission-gated** using the `permission.skill` key in `Plans/Permissions_System.md` §5. The `skill` permission key supports per-skill patterns (e.g., `{ "my-skill": "allow", "internal-*": "deny", "*": "allow" }`).
+- **Per-Persona overrides:** A Persona's `default_skill_refs` (`Plans/Personas.md` §3.2) lists skill IDs to auto-load. Per-Persona permission profiles (`Plans/Permissions_System.md` §2.4, priority 3) may further restrict or allow specific skills.
+- **Disabling skill tool per Persona:** A Persona MAY set the `skill` permission key to `deny` in its permission profile to disable skill loading entirely for runs using that Persona.
+- **Skills in tool description:** Skills are listed in the `skill` tool description with `<available_skills>` XML blocks containing name and description. The agent invokes a skill via `skill({ name })` which loads the skill's content on demand. Skills are also registered as invokable commands (so `/skillname` works from the command palette).
+- Skill directories are automatically added to the `external_directory` allowlist for permission purposes (`Plans/Permissions_System.md` §3.3).
+- Skill tool calls are protected from pruning during compaction.
+
+ContractRef: ContractName:Plans/Permissions_System.md#TOOL-KEYS, ContractName:Plans/Personas.md#PERSONA-SCHEMA, ContractName:Plans/OpenCode_Deep_Extraction.md
 
 **GUI behavior:**
 
@@ -655,12 +666,14 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:D
 
 Backend components required so the Agent Skills GUI (§7.8) and skill-aware flows (orchestrator, interview, platform runners) work.
 
+> **SSOT cross-references:** Plugin-level skill injection (skills loaded by plugins) is defined in `Plans/Plugins_System.md` §4 (Custom Tool Registration). Skill permissions follow `Plans/Permissions_System.md` §5 (`skill` key). Persona skill refs and per-Persona skill disabling follow `Plans/Personas.md` §3.2. OpenCode baseline for skills is in `Plans/OpenCode_Deep_Extraction.md` §7F.
+
 **Discovery paths (DRY:DATA:skill_search_paths):**
 
 - Define the ordered list of (base_dir, relative_path) or full paths to search for `skills/<name>/SKILL.md`. Include:
-  - Project: `.puppet-master/skills`, `.opencode/skills`, `.claude/skills`, `.agents/skills` -- resolve relative to project root (walk up from cwd to git worktree or use configured project path).
-  - Global: `~/.config/puppet-master/skills`, `~/.config/opencode/skills`, `~/.claude/skills`, `~/.agents/skills`.
-- **discover_skills(project_root: Option<&Path>) -> Vec<SkillInfo>:** Walk each path; for each `<base>/<name>/SKILL.md` found, collect name, path, source (project vs global). Deduplicate by name (e.g. project overrides global, or first-wins -- document the rule). Tag **DRY:FN:discover_skills**.
+  - Project: `.puppet-master/skills`, `.claude/skills`, `.agents/skills` -- resolve relative to project root (walk up from cwd to git worktree or use configured project path).
+  - Global: `~/.config/puppet-master/skills`, `~/.claude/skills`, `~/.agents/skills`.
+- **discover_skills(project_root: Option<&Path>) -> Vec<SkillInfo>:** Walk each path; for each `<base>/<name>/SKILL.md` found, collect name, path, source (project vs global). Deduplicate by name (first-wins per load order: project paths first, then global; within each, `.puppet-master` before `.claude` before `.agents`). Tag **DRY:FN:discover_skills**.
 
 **Skill content and frontmatter:**
 

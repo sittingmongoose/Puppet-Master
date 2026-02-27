@@ -1513,7 +1513,7 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 - Platform availability checks
 - **Task tool** (`Plans/Tools.md`): `subagent_type` must be one of these names; validate with `subagent_registry::is_valid_subagent_name()`
 
-**Full set: 41 subagents.** Persona definitions (SKILL.md) live in `.github/agents/` and `.claude/agents/` (41 files). The orchestrator and interview use subsets by tier/phase; the **task** tool accepts any valid name from this list.
+**Full set: 41 subagents.** Persona definitions are stored per `Plans/Personas.md` §2 (project-local: `.puppet-master/personas/<persona_id>/PERSONA.md`; global: `~/.config/puppet-master/personas/<persona_id>/PERSONA.md`). Persona schema, validation, GUI management, and context injection rules are defined in `Plans/Personas.md` (canonical SSOT). The orchestrator and interview use subsets by tier/phase; the **task** tool accepts any valid name from this list.
 
 | Category | Names |
 |----------|--------|
@@ -1715,10 +1715,12 @@ When a platform-specific parser fails:
 4. **If generic also fails:** Treat as a Provider error. Retry once with the same Provider. If retry also fails, surface error to user: "Could not parse output from [Provider]. [Retry] [Skip] [View raw output]."
 5. **Never silently drop output.** All raw output is preserved in the seglog event regardless of parse success.
 
-### 11. Subagent persona info: preload, overrides (config only), and injection
+### 11. Subagent Persona info: storage, overrides, and injection
 
-- **Gap:** The "Subagent personas / info setup" (Section 5) requires (a) initial persona list and content, (b) user overrides persisted somewhere, and (c) persona text injected when a subagent is invoked. The plan now specifies preloading from `.claude/agents`, user add/delete, and optional AI trim; `SubagentGuiConfig` (Gap §2) holds `persona_overrides`; the injection point must be explicit.
-- **Clarify:** (1) **Preload and list:** Load personas from the project's `.claude/agents` (e.g. repo root or `puppet-master-rs`); each `.md` file gives name and content. User can add custom personas and delete any (including preloaded). Optionally run an AI/batch trim step to produce smaller-footprint descriptions. (2) **Persona overrides -- single source:** Overrides come **only** from the user's edits in the Personas UI; we persist them to `SubagentGuiConfig.persona_overrides` in the same config file as the rest of Config. No other "source" of overrides. At runtime: for a given subagent name, if `persona_overrides.get(name)` is present, use it; else use the content from the preloaded/trimmed agent. (3) **Injection:** When building the prompt or CLI args for a subagent run, resolve persona text (override if present, else preloaded content) and prepend or append to the system prompt or first user message. Document the injection point so orchestrator and interview use the same logic. (4) **Interview:** Interview uses **multiple** personas **dynamically** by phase and tech stack (phase_subagents, research/validation subagents, etc.). For whichever subagent(s) are selected for that phase/context, resolve that subagent's persona content (override from config if present, else preloaded); inject into the phase prompt. Persona_overrides do not change *which* subagents the interview uses -- they only supply the custom description/instruction for those selected subagents.
+- **Resolved:** Persona storage layout, schema, validation, GUI management, and context-injection rules are canonically defined in `Plans/Personas.md` (SSOT). This gap is closed; do not restate those definitions here.
+- **Summary:** (1) **Storage:** `Plans/Personas.md` §2 — project-local (`.puppet-master/personas/<id>/PERSONA.md`) overrides global (`~/.config/puppet-master/personas/<id>/PERSONA.md`). (2) **Overrides:** User edits Personas via the GUI (Settings > Advanced > Personas); edits persist to Puppet Master Persona storage only — never to `.claude/`, `.github/`, or other provider-native dirs (`Plans/Personas.md` §4.4). (3) **Injection:** The context compiler resolves the Persona and injects its Markdown body into the Instruction Bundle (`Plans/Personas.md` §5.2). Orchestrator and interview use the same injection logic. (4) **Interview:** Interview selects Personas dynamically by phase/tech stack; Persona overrides supply custom content for selected Personas but do not change *which* Personas are selected (`Plans/Personas.md` §5.2).
+
+ContractRef: ContractName:Plans/Personas.md#PERSONA-INJECTION, ContractName:Plans/Personas.md#STORAGE-LAYOUT
 
 ---
 

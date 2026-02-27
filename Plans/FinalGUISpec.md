@@ -761,6 +761,9 @@ This is a **heavily redesigned** unified settings page that merges four previous
 | **Rules & Commands** | Application rules (list or text area, editable); project rules (when project selected, reads/writes `.puppet-master/project-rules.md`); **User Commands management** (see §7.4.11): scope selector (Global/Project), command list with name/scope/description/Persona/mode/model columns, create/edit/delete commands, dry-run preview, shortcut binding, schema validation on save. Canonical SSOT: `Plans/Commands_System.md` §6. | From agent-rules-context.md + feature-list.md + Commands_System.md |
 | **Shortcuts** | Full keyboard shortcut table (action name, current binding, default binding); search/filter by action name or key; per-row "Change" button (captures next key combination) and "Reset" button; "Reset all" button; export/import shortcuts (JSON). Data sourced from shortcut registry (single source of truth, DRY:DATA). | MiscPlan.md |
 | **Skills** | Discover and manage SKILL.md files (project-level from `.puppet-master/skills/` and global from `~/.puppet-master/skills/`). Table: skill name, description, source (project/global), permission (Allow/Deny/Ask dropdown per row). Actions: Add, Edit (opens in File Editor), Remove, "Refresh" (re-scan disk). Bulk permission by pattern (e.g., "Allow all doc-*"). Preview skill body on row expand. | MiscPlan.md |
+| **Plugins** | Manage installed plugins (see §7.4.12): list discovered plugins with id, name, version, source (internal/project/global/config), enabled/disabled toggle. Per-plugin component counts (commands, hooks, skills). Enable/disable per plugin or per-hook. "Reload plugins" button. Plugin log viewer. Canonical SSOT: `Plans/Plugins_System.md`. | Plans/Plugins_System.md |
+| **Formatters** | Manage code formatters (see §7.4.13): global "Enable formatters" toggle, per-formatter table (name, extensions, command, enabled/disabled toggle). Custom formatter add/edit/remove. Format-on-save indicator. Evidence log link for `format.applied` events. Canonical SSOT: `Plans/Formatters_System.md`. | Plans/Formatters_System.md |
+| **Models** | Model configuration (see §7.4.14): model picker (provider + model dropdowns), variant selector (default/fast/powerful/custom), per-Persona model override editor, custom variant definitions, provider priority list editor. Canonical SSOT: `Plans/Models_System.md`. | Plans/Models_System.md |
 | **Catalog** | Browse and install community content: commands, agents, hooks, skills, themes, and MCP server configs from a curated catalog. See §7.4.3. | feature-list.md |
 | **Sync** | Export, import, and sync app configuration across machines. See §7.4.4. | feature-list.md |
 | **SSH** | Manage SSH connections for remote editing. See §7.4.5. | FileManager.md |
@@ -823,7 +826,7 @@ ContractRef: ContractName:Plans/rewrite-tie-in-memo.md
 
 **Audit rule:** Any row above marked "Required" must not ship with a missing variant. No in-scope row may remain single-variant.
 
-**Tab sub-grouping:** With 21 tabs, use a two-level navigation: left sidebar within Settings for groups, right area for the selected tab's content. Group labels act as collapsible section headers in the sidebar. Groups: **Core** (General, Tiers, Branching) | **Features** (Verification, Memory, Budgets, Permissions, Advanced, Interview, LSP) | **System** (Authentication, Health, Rules & Commands, Shortcuts, Skills, HITL) | **Extensions** (Catalog, Sync, SSH, Debug) | **Raw** (YAML). Each group header shows item count badge. Clicking a group header expands/collapses that group in the sidebar. Active tab highlighted with accent-left-border (3px).
+**Tab sub-grouping:** With 24 tabs, use a two-level navigation: left sidebar within Settings for groups, right area for the selected tab's content. Group labels act as collapsible section headers in the sidebar. Groups: **Core** (General, Tiers, Branching) | **Features** (Verification, Memory, Budgets, Permissions, Advanced, Interview, LSP, Models) | **System** (Authentication, Health, Rules & Commands, Shortcuts, Skills, HITL) | **Extensions** (Plugins, Formatters, Catalog, Sync, SSH, Debug) | **Raw** (YAML). Each group header shows item count badge. Clicking a group header expands/collapses that group in the sidebar. Active tab highlighted with accent-left-border (3px).
 
 **§7.4.2 LSP (LSP tab):** LSP support is **MVP** (required for desktop release), not optional. Per Plans/LSPSupport.md, the GUI must expose full LSP configuration so users can control automatic downloads, enable/disable servers, set env and initialization options, and add custom servers. Provide **Settings > LSP** with:
 
@@ -1037,6 +1040,74 @@ The **Rules & Commands** tab in Settings includes a **Commands** section for man
 7. **ELI5/Expert**: In ELI5 mode, only name, description, and a "Run" button are shown. Template editor, Persona/mode/model overrides, permissions profile, and dry-run are hidden in ELI5. Tooltip prefix: `tooltip.commands.*`.
 
 **Tab sub-grouping update**: The Rules & Commands tab belongs to the **System** group in the Settings sidebar.
+
+**§7.4.12 Plugins (Plugins tab):**
+
+> **SSOT:** The canonical specification for the Plugins system is `Plans/Plugins_System.md`. This section provides the FinalGUISpec integration points; normative behavior is defined in the SSOT.
+
+ContractRef: ContractName:Plans/Plugins_System.md#GUI-PLUGINS, ContractName:Plans/DRY_Rules.md
+
+The **Plugins** tab in Settings provides visibility and control over discovered plugins. Layout:
+
+1. **Plugin list**: Table of all discovered plugins (internal + project + global + config). Columns: ID, Name, Version, Source badge (Internal/Project/Global/Config), Enabled toggle, Component counts (commands, hooks, skills). Sorted by load order (internal first, then project, global, config; lexicographic within each source).
+
+2. **Enable/Disable**: Per-plugin toggle. Disabling a plugin removes its hooks and tools from the active set without deleting the plugin from disk. Per-hook disable: expand a plugin row to see its registered hooks; each hook has an independent enable/disable toggle.
+
+3. **Plugin details**: Expand a plugin row to see: registered hook events, registered custom tools (with collision status), and the plugin's log output (filtered from structured log).
+
+4. **Reload plugins**: "Reload" button re-scans discovery paths and reloads all plugin manifests. Toast confirms reload with count.
+
+5. **Per-Persona disabling**: A note linking to Settings > Advanced > Personas where `disabled_plugins` can be set per Persona.
+
+6. **ELI5/Expert**: In ELI5 mode, show only plugin name, description, and enabled toggle. Component counts, log viewer, and hook-level toggles are hidden. Tooltip prefix: `tooltip.plugins.*`.
+
+**Tab sub-grouping update**: The Plugins tab belongs to the **Extensions** group in the Settings sidebar.
+
+**§7.4.13 Formatters (Formatters tab):**
+
+> **SSOT:** The canonical specification for the Formatters system is `Plans/Formatters_System.md`. This section provides the FinalGUISpec integration points; normative behavior is defined in the SSOT.
+
+ContractRef: ContractName:Plans/Formatters_System.md#GUI-FORMATTERS, ContractName:Plans/DRY_Rules.md
+
+The **Formatters** tab in Settings provides formatter configuration. Layout:
+
+1. **Global toggle**: "Enable formatters" (bound to `config.formatters.enabled`; default: true). When off, no formatters run.
+
+2. **Formatter table**: Table of all known formatters (built-in + custom). Columns: Name, File Extensions, Command, Enabled toggle. Built-in formatters are pre-populated from the canonical table (`Plans/Formatters_System.md` §2). Custom formatters appear below with a "Custom" badge.
+
+3. **Add custom formatter**: "Add formatter" button opens a form: name (unique), command (with `$FILE` placeholder), extensions (comma-separated), optional environment variables. Validate command on save.
+
+4. **Edit / Remove**: Edit button for custom formatters (built-in formatters only allow enable/disable and command override). Remove button for custom formatters only.
+
+5. **Evidence link**: "View format events" link opens the Evidence ledger filtered to `format.applied` events.
+
+6. **ELI5/Expert**: In ELI5 mode, show only formatter name, extensions, and enabled toggle. Command, environment, and evidence link are hidden. Tooltip prefix: `tooltip.formatters.*`.
+
+**Tab sub-grouping update**: The Formatters tab belongs to the **Extensions** group in the Settings sidebar.
+
+**§7.4.14 Models (Models tab):**
+
+> **SSOT:** The canonical specification for the Models system is `Plans/Models_System.md`. This section provides the FinalGUISpec integration points; normative behavior is defined in the SSOT.
+
+ContractRef: ContractName:Plans/Models_System.md#GUI-MODELS, ContractName:Plans/DRY_Rules.md
+
+The **Models** tab in Settings provides model and variant configuration. Layout:
+
+1. **Default model selector**: Provider dropdown + Model dropdown. Displays the canonical model ID (`provider_id/model_id`). Sets `config.model`.
+
+2. **Variant selector**: Dropdown with built-in variants (default, fast, powerful) plus any custom variants. "Edit variants" button opens the variant editor. Variant cycling shortcut binding note.
+
+3. **Variant editor** (collapsible card): List of custom variants with name, model ID, and description. Add/edit/remove custom variants. Built-in variants (default/fast/powerful) can be customized (model ID override) but not deleted. Disable a variant: toggle to exclude it from the cycling order.
+
+4. **Per-Persona model overrides** (collapsible card): Table of Personas with `default_model` and `default_variant` columns. Edit button per row opens a model/variant picker. Clearing a field falls back to global config. Links to Settings > Advanced > Personas for full Persona editing.
+
+5. **Provider priority list** (collapsible card): Ordered list of provider IDs. Drag-to-reorder or up/down buttons. Determines the internal priority list for fallback when no model is explicitly set.
+
+6. **Model options** (collapsible card): Per-provider-model option editor. Select provider + model, then edit options (temperature, max_tokens, top_p, reasoning_effort, etc.) as key-value fields.
+
+7. **ELI5/Expert**: In ELI5 mode, show only default model selector and variant selector. Provider priority, model options, and per-Persona overrides are hidden. Tooltip prefix: `tooltip.models.*`.
+
+**Tab sub-grouping update**: The Models tab belongs to the **Features** group in the Settings sidebar.
 
 ### 7.5 Wizard
 
