@@ -895,6 +895,8 @@ Interview-tab bounds for these controls are sourced from `Plans/FinalGUISpec.md`
 
 The `requirements-quality-reviewer` MUST run deterministically at two trigger points (both are mandatory, independent triggers — not an "AND/OR" choice — both situations independently trigger the reviewer):
 
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md, SchemaID:pm.requirements_quality_report.schema.v1
+
 1. **After `requirements-doc-builder` output:** immediately after the requirements document is produced, before any planning or implementation subagent sees it.
 2. **After `interview-doc-generator` output:** immediately after the interview-generated requirements doc is produced, before the Contract Unification Pass.
 

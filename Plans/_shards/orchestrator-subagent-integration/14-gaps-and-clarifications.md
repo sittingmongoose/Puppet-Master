@@ -53,11 +53,11 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 
 **Implementation:** Create `src/core/subagent_registry.rs` with:
 
-**DRY REQUIREMENT:** This module is the SINGLE SOURCE OF TRUTH for all subagent names. DO NOT hardcode subagent names anywhere else in the codebase. All code that needs subagent names MUST use functions from this module.
+**DRY requirement:** This module is the single source of truth for all subagent names. Do not hardcode subagent names anywhere else in the codebase. All code that needs subagent names must use functions from this module.
 
 ```rust
 // DRY:DATA:subagent_registry — Canonical list of all subagent names
-// DRY REQUIREMENT: This is the ONLY place subagent names should be defined. All other code MUST use functions from this module.
+// DRY requirement: This is the only place subagent names should be defined. All other code must use functions from this module.
 pub mod subagent_registry {
     use std::collections::HashMap;
     

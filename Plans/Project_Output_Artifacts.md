@@ -107,6 +107,16 @@ Rule: Promotion of stable learnings into scoped `AGENTS.md` MUST follow Promotio
 
 ContractRef: ContractName:Plans/Contracts_V0.md#PromotionRules, ContractName:Plans/Contracts_V0.md#AgentsMdLightEnforcement
 
+### 2.3 Document Set packaging for large Markdown/text artifacts
+
+When Markdown/text artifacts under `.puppet-master/**` reach configured size triggers, Puppet Master MUST package them as Document Sets per `Plans/Document_Packaging_Policy.md` and MUST run the required packaging audits before run completion.
+
+For verification, the Document Set (`00-index.md` + `manifest.json` + shard set + `evidence/`) is the canonical packaging form for those large text artifacts.
+
+The plan graph contract remains unchanged: canonical user-project plan graph is still sharded JSON at `.puppet-master/project/plan_graph/index.json` with node shards under `nodes/<node_id>.json`.
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014, SchemaID:pm.project-plan-graph-index.v1
+
 ## 3. Schema alignment (critical; do not rename fields)
 
 This document uses the exact terminology/field names of the canonical schemas under `Plans/`:

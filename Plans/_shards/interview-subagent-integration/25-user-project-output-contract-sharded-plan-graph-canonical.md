@@ -23,9 +23,10 @@ Canonical rules:
 - `plan.md` remains mandatory as the human-readable summary for operators.
 - Contract pack uses stable `ProjectContract:*` IDs resolved via `contracts/index.json`; every node must reference at least one project contract ID.
 - All artifacts above must be persisted canonically in seglog as full-content artifact events.
+- Interview-generated Markdown/text artifacts under `.puppet-master/**` that reach packaging triggers MUST comply with `Plans/Document_Packaging_Policy.md` and pass its full audit set.
 - Field-level schema requirements, deterministic node-ID rules, and validation pointers are defined in `Plans/Project_Output_Artifacts.md` (SSOT).
 
-ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014
 
 ### Contract Layer Crosswalk (User Project)
 

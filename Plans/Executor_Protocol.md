@@ -119,3 +119,11 @@ ContractRef: ContractName:Plans/plan_graph.schema.json, ContractName:Plans/proje
 
 Overseer MUST produce deterministic ordering for identical graph state and Spec Lock inputs.
 ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3
+
+### 6.1 Run-completion Document Packaging gate
+
+Before a run is finalized, Overseer MUST enforce `Plans/Document_Packaging_Policy.md` for any Markdown/text artifact under `.puppet-master/**` produced by the run that reached packaging triggers.
+
+A run MUST NOT be marked complete when any required Document Set audit (reconstruction/line accounting/idempotency, index-manifest match, clean-room determinism) fails.
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md, ContractName:Plans/Progression_Gates.md#GATE-014

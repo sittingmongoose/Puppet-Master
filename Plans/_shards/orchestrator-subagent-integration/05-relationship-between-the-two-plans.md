@@ -67,6 +67,8 @@ This document intentionally keeps only orchestrator-specific consumption behavio
 - `.puppet-master/project/contracts/index.json`
 - `.puppet-master/project/acceptance_manifest.json`
 
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1, SchemaID:pm.project_contracts_index.schema.v1
+
 Optional supplemental artifacts:
 
 - `.puppet-master/project/plan_graph/edges.json` (supplemental consistency view)
@@ -90,20 +92,26 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project
    - load it as a supplemental view and validate it is **consistent** with node-level `depends_on` (no extra edges, no missing edges)
    - if inconsistent, treat as an integrity error (do not silently choose one representation over the other)
 4. If a derived export `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` exists:
-   - treat it as **optional** / **derived** (non-canonical) reference artifact
-   - the orchestrator MAY compare it for consistency, but MUST NOT use it as the scheduling/readiness source
-   - the orchestrator MUST NOT require `plan_graph/exports/plan_graph.monolithic.json` to exist for headless execution
+    - treat it as **derived** (non-canonical) reference artifact
+    - the orchestrator MAY compare it for consistency, but MUST NOT use it as the scheduling/readiness source
+    - the orchestrator MUST NOT require `plan_graph/exports/plan_graph.monolithic.json` to exist for headless execution
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md
 5. Load and validate required validation targets:
-   - **Project Contract Pack:** `.puppet-master/project/contracts/index.json` must validate (`pm.project_contracts_index.schema.v1`) and every `ProjectContract:*` referenced by any node MUST resolve via this index.
+    - **Project Contract Pack:** `.puppet-master/project/contracts/index.json` must validate (`pm.project_contracts_index.schema.v1`) and every `ProjectContract:*` referenced by any node MUST resolve via this index.
    - **Acceptance registry:** `.puppet-master/project/acceptance_manifest.json` must validate (`pm.acceptance_manifest.schema.v1`) and cover every node acceptance ref (e.g. `acceptance[].check_id`). Validate that every acceptance check is **automatable** (no human-only criteria).
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project_contracts_index.schema.v1, SchemaID:pm.acceptance_manifest.schema.v1
 6. Validate node execution policy fields (`allowed_tools`, `tool_policy_mode`, `policy_mode`) are present and legal per `Plans/Project_Output_Artifacts.md` before scheduling.
 7. **UI wiring validation (conditional; when `.puppet-master/project/ui/` exists):**
    - Validate `ui/wiring_matrix.json` against the wiring matrix schema (adapted from `Plans/Wiring_Matrix.schema.json`): all required fields present (`ui_element_id`, `ui_location`, `ui_command_id`, `handler_location`, `expected_event_types`, `acceptance_checks`, `evidence_required`).
-   - Validate `ui/ui_command_catalog.json`: every `UICommandID` has a description and handler reference.
+    - Validate `ui/ui_command_catalog.json`: every `UICommandID` has a description and handler reference.
    - **Coverage check:** Every `UICommandID` in the command catalog has at least one wiring matrix entry. Every wiring matrix entry's `ui_command_id` exists in the command catalog.
    - **No unbound UI actions:** Every interactive UI element in the wiring matrix has a bound `UICommandID` and a non-empty `handler_location` (no placeholder or empty handler references).
    - **Plan node cross-reference:** Every plan node whose `objective` or scope involves UI work (creating/modifying interactive elements) MUST include at least one `contract_refs` entry pointing to a wiring matrix entry or command catalog ID. Flag nodes with UI scope but no wiring reference as a validation warning.
    - If any required UI wiring validation fails, treat as a planning-artifact integrity error (same severity as contract/acceptance validation failures).
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project_contracts_index.schema.v1, SchemaID:pm.acceptance_manifest.schema.v1
 8. If any required validation fails, halt scheduling and return a planning-artifact integrity error (no silent fallback, and no skipping contract/acceptance validation).
 
 ContractRef: Gate:GATE-001, Gate:GATE-010, ContractName:Plans/UI_Wiring_Rules.md

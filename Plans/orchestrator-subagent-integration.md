@@ -123,6 +123,8 @@ This document intentionally keeps only orchestrator-specific consumption behavio
 - `.puppet-master/project/contracts/index.json`
 - `.puppet-master/project/acceptance_manifest.json`
 
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1, SchemaID:pm.project_contracts_index.schema.v1
+
 Optional supplemental artifacts:
 
 - `.puppet-master/project/plan_graph/edges.json` (supplemental consistency view)
@@ -146,20 +148,26 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project
    - load it as a supplemental view and validate it is **consistent** with node-level `depends_on` (no extra edges, no missing edges)
    - if inconsistent, treat as an integrity error (do not silently choose one representation over the other)
 4. If a derived export `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` exists:
-   - treat it as **optional** / **derived** (non-canonical) reference artifact
-   - the orchestrator MAY compare it for consistency, but MUST NOT use it as the scheduling/readiness source
-   - the orchestrator MUST NOT require `plan_graph/exports/plan_graph.monolithic.json` to exist for headless execution
+    - treat it as **derived** (non-canonical) reference artifact
+    - the orchestrator MAY compare it for consistency, but MUST NOT use it as the scheduling/readiness source
+    - the orchestrator MUST NOT require `plan_graph/exports/plan_graph.monolithic.json` to exist for headless execution
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md
 5. Load and validate required validation targets:
-   - **Project Contract Pack:** `.puppet-master/project/contracts/index.json` must validate (`pm.project_contracts_index.schema.v1`) and every `ProjectContract:*` referenced by any node MUST resolve via this index.
+    - **Project Contract Pack:** `.puppet-master/project/contracts/index.json` must validate (`pm.project_contracts_index.schema.v1`) and every `ProjectContract:*` referenced by any node MUST resolve via this index.
    - **Acceptance registry:** `.puppet-master/project/acceptance_manifest.json` must validate (`pm.acceptance_manifest.schema.v1`) and cover every node acceptance ref (e.g. `acceptance[].check_id`). Validate that every acceptance check is **automatable** (no human-only criteria).
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project_contracts_index.schema.v1, SchemaID:pm.acceptance_manifest.schema.v1
 6. Validate node execution policy fields (`allowed_tools`, `tool_policy_mode`, `policy_mode`) are present and legal per `Plans/Project_Output_Artifacts.md` before scheduling.
 7. **UI wiring validation (conditional; when `.puppet-master/project/ui/` exists):**
    - Validate `ui/wiring_matrix.json` against the wiring matrix schema (adapted from `Plans/Wiring_Matrix.schema.json`): all required fields present (`ui_element_id`, `ui_location`, `ui_command_id`, `handler_location`, `expected_event_types`, `acceptance_checks`, `evidence_required`).
-   - Validate `ui/ui_command_catalog.json`: every `UICommandID` has a description and handler reference.
+    - Validate `ui/ui_command_catalog.json`: every `UICommandID` has a description and handler reference.
    - **Coverage check:** Every `UICommandID` in the command catalog has at least one wiring matrix entry. Every wiring matrix entry's `ui_command_id` exists in the command catalog.
    - **No unbound UI actions:** Every interactive UI element in the wiring matrix has a bound `UICommandID` and a non-empty `handler_location` (no placeholder or empty handler references).
    - **Plan node cross-reference:** Every plan node whose `objective` or scope involves UI work (creating/modifying interactive elements) MUST include at least one `contract_refs` entry pointing to a wiring matrix entry or command catalog ID. Flag nodes with UI scope but no wiring reference as a validation warning.
    - If any required UI wiring validation fails, treat as a planning-artifact integrity error (same severity as contract/acceptance validation failures).
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project_contracts_index.schema.v1, SchemaID:pm.acceptance_manifest.schema.v1
 8. If any required validation fails, halt scheduling and return a planning-artifact integrity error (no silent fallback, and no skipping contract/acceptance validation).
 
 ContractRef: Gate:GATE-001, Gate:GATE-010, ContractName:Plans/UI_Wiring_Rules.md
@@ -1114,8 +1122,8 @@ Other platforms follow the same pattern: check env gate, find binary (from `plat
 // puppet-master-rs/tests/subagent_invocation_integration.rs
 
 /// Builds the exact Command the orchestrator would use for Cursor + subagent.
-// DRY REQUIREMENT: MUST use platform_specs::cli_binary_names() — NEVER hardcode "agent" or "cursor-agent"
-// DRY REQUIREMENT: MUST use platform_specs::get_subagent_invocation_format() — NEVER hardcode "/{subagent} {prompt}" format
+// DRY requirement: must use platform_specs::cli_binary_names() — never hardcode "agent" or "cursor-agent"
+// DRY requirement: must use platform_specs::get_subagent_invocation_format() — never hardcode "/{subagent} {prompt}" format
 fn build_cursor_subagent_command(
     subagent_name: &str,
     prompt: &str,
@@ -1519,11 +1527,11 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 
 **Implementation:** Create `src/core/subagent_registry.rs` with:
 
-**DRY REQUIREMENT:** This module is the SINGLE SOURCE OF TRUTH for all subagent names. DO NOT hardcode subagent names anywhere else in the codebase. All code that needs subagent names MUST use functions from this module.
+**DRY requirement:** This module is the single source of truth for all subagent names. Do not hardcode subagent names anywhere else in the codebase. All code that needs subagent names must use functions from this module.
 
 ```rust
 // DRY:DATA:subagent_registry — Canonical list of all subagent names
-// DRY REQUIREMENT: This is the ONLY place subagent names should be defined. All other code MUST use functions from this module.
+// DRY requirement: This is the only place subagent names should be defined. All other code must use functions from this module.
 pub mod subagent_registry {
     use std::collections::HashMap;
     
@@ -2306,6 +2314,9 @@ When the orchestrator **completes** a Phase, Task, or Subtask (e.g. all iteratio
 3. **Quality verification (new):** Beyond acceptance criteria, **review the code (or artifacts) produced at this tier** to ensure the work was done well -- not just "does it pass the gate?" but "is it maintainable, correct, and aligned with project standards?" Both of the following are **required** (no human review; agent-driven only):
    - **Structured code review by reviewer subagent (required, not optional):** Run a dedicated reviewer subagent (e.g. `code-reviewer`) at end-of-phase/task/subtask. It inspects the diff or artifacts and outputs pass/fail + feedback. There is no path that skips this. Do **not** use human review.
    - **Quality criteria in the gate (required as well):** Extend the verification gate for this tier to include automated quality items (e.g. "no new clippy warnings," "new code has tests," "no TODOs without tickets").
+4. **Document packaging verification (new):** End-of-run verification MUST enforce `Plans/Document_Packaging_Policy.md` for any Markdown/text artifact under `.puppet-master/**` produced during the run that reached packaging triggers.
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014
 
 **Quality Gate: Fail vs Warn Rules (Resolved):**
 
@@ -2336,6 +2347,7 @@ Config: `quality.gate.{check_name}.action` — override per check (`"fail"` or `
 - **Run quality verification:**
   - **Code review by reviewer subagent:** Invoke reviewer subagent (e.g., `code-reviewer`) to review diff/artifacts
   - **Quality gate criteria:** Run automated quality checks (linters, formatters, test coverage, security scanners)
+- **Run Document Set verification:** For large Markdown/text artifacts produced in the run, execute full Document Set audit checks (A/B/C) and fail tier completion on any packaging verification breach.
 - **Collect verification results:** Collect all verification results (wiring, acceptance, quality)
 - **Determine tier status:** Determine if tier should be marked "complete", "incomplete" (rework), or "complete with warnings"
 
@@ -2522,13 +2534,13 @@ async fn run_quality_verification(
 ) -> Result<QualityCheckResult> {
     let mut findings = Vec::new();
     
-    // 3a. Code review by reviewer subagent (REQUIRED, not optional)
+    // 3a. Code review by reviewer subagent (required, not optional)
     let reviewer_result = run_reviewer_subagent(tier_type, artifacts, diff, config, context).await?;
     if !reviewer_result.passed {
         findings.extend(reviewer_result.findings);
     }
     
-    // 3b. Quality gate criteria (REQUIRED as well)
+    // 3b. Quality gate criteria (required as well)
     let quality_gate_result = run_quality_gate_criteria(tier_type, artifacts, diff, config).await?;
     if !quality_gate_result.passed {
         findings.extend(quality_gate_result.findings);
@@ -2549,23 +2561,23 @@ async fn run_reviewer_subagent(
     config: &PuppetMasterConfig,
     context: &OrchestratorContext,
 ) -> Result<ReviewerResult> {
-    // DRY REQUIREMENT: MUST use subagent_registry::get_subagents_for_tier() to get reviewer subagent — NEVER hardcode "code-reviewer"
+    // DRY requirement: must use subagent_registry::get_subagents_for_tier() to get reviewer subagent — never hardcode "code-reviewer"
     // Get reviewer subagent for this tier type
     let reviewer_subagent = get_reviewer_subagent_for_tier(tier_type)?;
-    // Implementation note: get_reviewer_subagent_for_tier() MUST use subagent_registry::get_subagents_for_tier(TierType::Subtask)
+    // Implementation note: get_reviewer_subagent_for_tier() must use subagent_registry::get_subagents_for_tier(TierType::Subtask)
     // and filter for "code-reviewer" or use subagent_registry::get_reviewer_subagent_for_tier() if such a function exists
     
     // Build review prompt
     let review_prompt = build_review_prompt(artifacts, diff, tier_type)?;
     
-    // DRY REQUIREMENT: MUST use platform_specs functions — NEVER hardcode platform-specific behavior
+    // DRY requirement: must use platform_specs functions — never hardcode platform-specific behavior
     // Invoke reviewer subagent via platform runner
     let platform = get_platform_for_tier(tier_type, config)?;
     let model = get_model_for_tier(tier_type, config)?;
     
     // DRY: Use platform_specs to get runner — DO NOT use match statements for platform selection
     let runner = get_platform_runner(platform)?;
-    // DRY REQUIREMENT: execute_with_subagent MUST use platform_specs::get_subagent_invocation_format() internally
+    // DRY requirement: execute_with_subagent must use platform_specs::get_subagent_invocation_format() internally
     let review_output = runner.execute_with_subagent(
         &reviewer_subagent,
         &review_prompt,
@@ -3138,7 +3150,7 @@ pub trait OutputParser: Send + Sync {
 impl OutputParser for CursorOutputParser {
     // DRY REQUIREMENT: Tag with // DRY:FN:parse_subagent_output_cursor
     fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
-        // DRY REQUIREMENT: Output format detection MUST use platform_specs — DO NOT hardcode "--output-format json"
+        // DRY requirement: output format detection must use platform_specs — do not hardcode "--output-format json"
         // Cursor outputs JSON with --output-format json (from platform_specs)
         // Implementation note: Use platform_specs to determine expected output format for this platform
         let json: serde_json::Value = serde_json::from_str(stdout)
@@ -3213,7 +3225,7 @@ pub struct HandoffValidator {
 
 impl HandoffValidator {
     // DRY:FN:validate_subagent_output — Validate subagent output format
-    // DRY REQUIREMENT: MUST use platform_specs to determine parser type — NEVER hardcode parser selection by platform
+    // DRY requirement: must use platform_specs to determine parser type — never hardcode parser selection by platform
     pub async fn validate_subagent_output(
         &self,
         stdout: &str,
@@ -3221,7 +3233,7 @@ impl HandoffValidator {
         platform: Platform,
         retry_count: u32,
     ) -> Result<SubagentOutput, ValidationError> {
-        // DRY: Parser selection MUST use platform_specs to determine output format — DO NOT use match platform statements
+        // DRY: parser selection must use platform_specs to determine output format — do not use match platform statements
         // Try structured parsing first
         match self.parser.parse_subagent_output(stdout, stderr) {
             Ok(output) => {

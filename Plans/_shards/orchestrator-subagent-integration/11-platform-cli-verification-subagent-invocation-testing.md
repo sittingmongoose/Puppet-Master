@@ -86,8 +86,8 @@ Other platforms follow the same pattern: check env gate, find binary (from `plat
 // puppet-master-rs/tests/subagent_invocation_integration.rs
 
 /// Builds the exact Command the orchestrator would use for Cursor + subagent.
-// DRY REQUIREMENT: MUST use platform_specs::cli_binary_names() — NEVER hardcode "agent" or "cursor-agent"
-// DRY REQUIREMENT: MUST use platform_specs::get_subagent_invocation_format() — NEVER hardcode "/{subagent} {prompt}" format
+// DRY requirement: must use platform_specs::cli_binary_names() — never hardcode "agent" or "cursor-agent"
+// DRY requirement: must use platform_specs::get_subagent_invocation_format() — never hardcode "/{subagent} {prompt}" format
 fn build_cursor_subagent_command(
     subagent_name: &str,
     prompt: &str,

@@ -315,6 +315,8 @@ ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/CLI_Bri
 - **Tool readiness strip (Setup):** Show Cursor CLI, Claude CLI, and Playwright runtime install state (`Not Installed`, `Installing`, `Installed`, `Uninstalling`, `Failed`) with explicit Install/Uninstall actions. Codex/Copilot/Gemini are direct-provider integrations and do not show install buttons in this strip. Cursor/Claude rows include `Use manual path` checkbox + file picker; no manual path controls for Playwright.
 - **Command contract source:** Setup actions for Cursor/Claude install/uninstall/PATH/verify MUST follow `Plans/FinalGUISpec.md` §7.15 command contract verbatim.
 
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/chain-wizard-flexibility.md
+
 ### 3.4 Navigation and Recovery
 
 - **Back/forward:** User can go back and change intent or project setup; document behavior when intent changes mid-flow (e.g. clear requirements and interview state, or prompt "Changing intent will reset requirements and interview; continue?").
@@ -420,6 +422,8 @@ The Assistant MUST initiate the interview/requirements flow with an opening ques
 - **Existing project (has requirements/codebase):** "What are you adding or changing?"
 - **Fork/contribute (detected from project setup):** "What are you adding or changing in this fork?"
 
+ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/chain-wizard-flexibility.md
+
 The Assistant does NOT wait for the user to speak first. This opening question is the first message in the interview thread. After the user responds, the scope probe phase begins (see §6.2).
 
 ### 5.2 Flow
@@ -449,6 +453,9 @@ The Assistant does NOT wait for the user to speak first. This opening question i
 - **Single vs. multiple:** Builder produces one requirements document per generation run.
 - **Persistence:** Handoff state (paths, source, checklist/conversation state, approval stage) is persisted for recovery.
 - **Contract Layer seed pack:** Builder also emits `.puppet-master/requirements/contract-seeds.md` as a structured seed input for the Contract Layer (§5.7, §6.6). This file is **not** the canonical project contract pack; canonical contracts live under `.puppet-master/project/contracts/` and are referenced by stable `ProjectContract:*` IDs (SSOT: `Plans/Project_Output_Artifacts.md`).
+- **Document packaging policy:** Requirements Builder outputs under `.puppet-master/requirements/**` that reach packaging triggers MUST be emitted as Document Sets and verified per `Plans/Document_Packaging_Policy.md` before handoff continues.
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014
 
 **Builder output template (required):** The Assistant/Builder must emit a single Markdown document with the following **required top-level sections** (headings). Implementations may validate and warn if sections are missing.
 
@@ -774,8 +781,10 @@ At interview completion, a single deterministic **Contract Unification Pass** mu
 6. **When the user project includes a GUI:** Generate UI wiring artifacts under `.puppet-master/project/ui/`:
    - `ui/wiring_matrix.json` — maps every interactive UI element to its `UICommandID`, handler, expected events, acceptance checks, and evidence requirements. MUST validate against a project-local adaptation of `Plans/Wiring_Matrix.schema.json` (same schema shape; `handler_location` and `ui_location` reflect user-project module paths, not Puppet Master internals).
    - `ui/ui_command_catalog.json` — stable registry of all `UICommandID` values for the user project, with descriptions and handler references.
-   - Plan graph nodes that involve UI work (creating screens, adding interactive elements, wiring handlers) MUST include `contract_refs` entries pointing to the relevant wiring matrix entries and/or command catalog IDs.
-   - GUI detection: The project is considered to have a GUI if the Architecture or Product/UX interview phases identify a graphical interface (desktop, web, or mobile). The `has_gui` flag is set during the interview and persisted in interview state.
+    - Plan graph nodes that involve UI work (creating screens, adding interactive elements, wiring handlers) MUST include `contract_refs` entries pointing to the relevant wiring matrix entries and/or command catalog IDs.
+    - GUI detection: The project is considered to have a GUI if the Architecture or Product/UX interview phases identify a graphical interface (desktop, web, or mobile). The `has_gui` flag is set during the interview and persisted in interview state.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1
 
 Large-output handling:
 
@@ -1048,11 +1057,15 @@ Before implementation, an implementation agent must complete or have clear specs
 54. **Headless execution:** All three passes MUST run headless (no GUI, no user approval gates between passes).
 55. **Failure surfacing:** If Pass 1 fails, halt and surface failure; if Pass 2 or 3 fails, surface unresolved findings while still writing the corrected artifact set.
 
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/assistant-chat-design.md
+
 ---
 
 ## 11. User-Project Output Artifacts (Sharded-Only)
 
 Interviewer/Wizard outputs for user projects MUST follow the canonical artifact, sharding, and persistence contract in `Plans/Project_Output_Artifacts.md`.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1
 
 This section is intentionally flow-specific and does not restate SSOT schema fields.
 
@@ -1066,11 +1079,15 @@ Flow-specific requirements:
 - When `has_gui` is true, generate `.puppet-master/project/ui/wiring_matrix.json` and `.puppet-master/project/ui/ui_command_catalog.json`, and ensure UI-scope nodes carry wiring-related `contract_refs`.
 - Persist planning artifacts canonically in seglog; filesystem copies are regenerable projections.
 
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014
+
 ### 11.1 Plan-Graph Handling (Flow-Specific)
 
 - Validators and orchestrator MUST use only the canonical sharded graph for scheduling/execution inputs.
 - Field-level schema requirements, deterministic node-ID rules, contract/acceptance coverage, and evidence requirements are defined in `Plans/Project_Output_Artifacts.md` and enforced by the dry-run validator.
 - If `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` is materialized, validate it only as a consistency export; never treat it as canonical input.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1
 
 ### 11.2 Autonomy + HITL (deterministic ambiguity handling)
 
@@ -1186,6 +1203,8 @@ All three passes run serially in sequence: Pass 1 → Pass 2 → Pass 3. Each pa
 
 > **Invariant (normative):** Pass 3 MUST NOT modify `requirements.md`, `plan.md`, or any artifact whose content is driven by user intent or product scope. It enforces structural and canonical invariants only.
 
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/chain-wizard-flexibility.md
+
 ---
 
 ### 12.3 Execution Model
@@ -1198,6 +1217,8 @@ All three passes run serially in sequence: Pass 1 → Pass 2 → Pass 3. Each pa
 - The **final project artifacts** reflect all post-pass corrections applied by Passes 2 and 3.
 - **If Pass 1 fails:** Passes 2 and 3 do not run; the workflow surfaces the Pass 1 failure to the user.
 - **If Pass 2 or Pass 3 fails** (unresolved findings): The failure is surfaced to the user; however, the corrected artifact set (with all resolvable fixes already applied) is still written.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Project_Output_Artifacts.md
 
 ### 12.4 Acceptance Criteria (normative)
 
@@ -1295,6 +1316,8 @@ This section defines the minimum criteria every requirement MUST satisfy before 
 
 Each requirement MUST satisfy ALL of the following coverage criteria:
 
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, PolicyRule:Decision_Policy.md§6
+
 ---
 
 ### C-1: Scenario Coverage
@@ -1309,7 +1332,7 @@ Each requirement MUST satisfy ALL of the following coverage criteria:
 
 - Explicit **in-scope** statement (what the feature covers)
 - Explicit **out-of-scope** statement (what is explicitly excluded)
-- May not use "TBD", "later", or similar deferral language
+- May not use deferred placeholder text (for example: "later" or unresolved marker text), or similar deferral language
 - Blocking issue type: `missing_boundary`
 
 ---
@@ -1341,6 +1364,8 @@ All unknowns must become either:
 - **(b) A deterministic auto-decision** — only when it is truly a choice between equally valid options, not missing user intent (see `Plans/Decision_Policy.md §6`)
 
 Open unknowns that do not fit (a) or (b) MUST become `needs_user_clarification[]` entries in the quality report.
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, PolicyRule:Decision_Policy.md§6
 
 Blocking issue type: `missing_research` (for unresolved unknowns)
 

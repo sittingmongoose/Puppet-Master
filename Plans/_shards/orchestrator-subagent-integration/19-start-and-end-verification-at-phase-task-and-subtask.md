@@ -290,6 +290,9 @@ When the orchestrator **completes** a Phase, Task, or Subtask (e.g. all iteratio
 3. **Quality verification (new):** Beyond acceptance criteria, **review the code (or artifacts) produced at this tier** to ensure the work was done well -- not just "does it pass the gate?" but "is it maintainable, correct, and aligned with project standards?" Both of the following are **required** (no human review; agent-driven only):
    - **Structured code review by reviewer subagent (required, not optional):** Run a dedicated reviewer subagent (e.g. `code-reviewer`) at end-of-phase/task/subtask. It inspects the diff or artifacts and outputs pass/fail + feedback. There is no path that skips this. Do **not** use human review.
    - **Quality criteria in the gate (required as well):** Extend the verification gate for this tier to include automated quality items (e.g. "no new clippy warnings," "new code has tests," "no TODOs without tickets").
+4. **Document packaging verification (new):** End-of-run verification MUST enforce `Plans/Document_Packaging_Policy.md` for any Markdown/text artifact under `.puppet-master/**` produced during the run that reached packaging triggers.
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014
 
 **Quality Gate: Fail vs Warn Rules (Resolved):**
 
@@ -320,6 +323,7 @@ Config: `quality.gate.{check_name}.action` — override per check (`"fail"` or `
 - **Run quality verification:**
   - **Code review by reviewer subagent:** Invoke reviewer subagent (e.g., `code-reviewer`) to review diff/artifacts
   - **Quality gate criteria:** Run automated quality checks (linters, formatters, test coverage, security scanners)
+- **Run Document Set verification:** For large Markdown/text artifacts produced in the run, execute full Document Set audit checks (A/B/C) and fail tier completion on any packaging verification breach.
 - **Collect verification results:** Collect all verification results (wiring, acceptance, quality)
 - **Determine tier status:** Determine if tier should be marked "complete", "incomplete" (rework), or "complete with warnings"
 
@@ -506,13 +510,13 @@ async fn run_quality_verification(
 ) -> Result<QualityCheckResult> {
     let mut findings = Vec::new();
     
-    // 3a. Code review by reviewer subagent (REQUIRED, not optional)
+    // 3a. Code review by reviewer subagent (required, not optional)
     let reviewer_result = run_reviewer_subagent(tier_type, artifacts, diff, config, context).await?;
     if !reviewer_result.passed {
         findings.extend(reviewer_result.findings);
     }
     
-    // 3b. Quality gate criteria (REQUIRED as well)
+    // 3b. Quality gate criteria (required as well)
     let quality_gate_result = run_quality_gate_criteria(tier_type, artifacts, diff, config).await?;
     if !quality_gate_result.passed {
         findings.extend(quality_gate_result.findings);
@@ -533,23 +537,23 @@ async fn run_reviewer_subagent(
     config: &PuppetMasterConfig,
     context: &OrchestratorContext,
 ) -> Result<ReviewerResult> {
-    // DRY REQUIREMENT: MUST use subagent_registry::get_subagents_for_tier() to get reviewer subagent — NEVER hardcode "code-reviewer"
+    // DRY requirement: must use subagent_registry::get_subagents_for_tier() to get reviewer subagent — never hardcode "code-reviewer"
     // Get reviewer subagent for this tier type
     let reviewer_subagent = get_reviewer_subagent_for_tier(tier_type)?;
-    // Implementation note: get_reviewer_subagent_for_tier() MUST use subagent_registry::get_subagents_for_tier(TierType::Subtask)
+    // Implementation note: get_reviewer_subagent_for_tier() must use subagent_registry::get_subagents_for_tier(TierType::Subtask)
     // and filter for "code-reviewer" or use subagent_registry::get_reviewer_subagent_for_tier() if such a function exists
     
     // Build review prompt
     let review_prompt = build_review_prompt(artifacts, diff, tier_type)?;
     
-    // DRY REQUIREMENT: MUST use platform_specs functions — NEVER hardcode platform-specific behavior
+    // DRY requirement: must use platform_specs functions — never hardcode platform-specific behavior
     // Invoke reviewer subagent via platform runner
     let platform = get_platform_for_tier(tier_type, config)?;
     let model = get_model_for_tier(tier_type, config)?;
     
     // DRY: Use platform_specs to get runner — DO NOT use match statements for platform selection
     let runner = get_platform_runner(platform)?;
-    // DRY REQUIREMENT: execute_with_subagent MUST use platform_specs::get_subagent_invocation_format() internally
+    // DRY requirement: execute_with_subagent must use platform_specs::get_subagent_invocation_format() internally
     let review_output = runner.execute_with_subagent(
         &reviewer_subagent,
         &review_prompt,

@@ -427,7 +427,7 @@ pub trait OutputParser: Send + Sync {
 impl OutputParser for CursorOutputParser {
     // DRY REQUIREMENT: Tag with // DRY:FN:parse_subagent_output_cursor
     fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
-        // DRY REQUIREMENT: Output format detection MUST use platform_specs — DO NOT hardcode "--output-format json"
+        // DRY requirement: output format detection must use platform_specs — do not hardcode "--output-format json"
         // Cursor outputs JSON with --output-format json (from platform_specs)
         // Implementation note: Use platform_specs to determine expected output format for this platform
         let json: serde_json::Value = serde_json::from_str(stdout)
@@ -502,7 +502,7 @@ pub struct HandoffValidator {
 
 impl HandoffValidator {
     // DRY:FN:validate_subagent_output — Validate subagent output format
-    // DRY REQUIREMENT: MUST use platform_specs to determine parser type — NEVER hardcode parser selection by platform
+    // DRY requirement: must use platform_specs to determine parser type — never hardcode parser selection by platform
     pub async fn validate_subagent_output(
         &self,
         stdout: &str,
@@ -510,7 +510,7 @@ impl HandoffValidator {
         platform: Platform,
         retry_count: u32,
     ) -> Result<SubagentOutput, ValidationError> {
-        // DRY: Parser selection MUST use platform_specs to determine output format — DO NOT use match platform statements
+        // DRY: parser selection must use platform_specs to determine output format — do not use match platform statements
         // Try structured parsing first
         match self.parser.parse_subagent_output(stdout, stderr) {
             Ok(output) => {
