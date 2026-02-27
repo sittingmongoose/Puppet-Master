@@ -13,6 +13,8 @@ It does **not** remove or override detail in any plan; it exists so implementati
 ## Anti-drift layer (required reading order)
 To prevent agent drift while building Puppet Master autonomously, these are the **canonical SSOT** inputs and gates. Other plans MUST reference these instead of redefining them.
 
+ContractRef: SchemaID:Spec_Lock.json, ContractName:Plans/DRY_Rules.md#7
+
 1. `Plans/Spec_Lock.json` — locked decisions + schema version pins + SSOT hashes
 2. `Plans/Contracts_V0.md` — canonical contracts (event envelope, tool events, UICommand, auth)
 3. `Plans/Crosswalk.md` — ownership boundaries for primitives
@@ -65,6 +67,7 @@ See: `Plans/rewrite-tie-in-memo.md`.
 | `LSPSupport.md` | LSP client support for rewrite | **LSP is MVP** -- in scope for desktop release. Canonical for LSP: diagnostics, hover, completion, navigation, inlay hints, code actions, code lens, Chat Window LSP (§5.1); OpenCode-style server registry/root discovery; Rust client crates (lsp-types, lsp-client/async_lsp_client). Implement with desktop editor and Chat from start. |
 | `storage-plan.md` | seglog, redb, Tantivy, projectors, analytics scan | Implementation checklist; chat persistence/search map to this stack; analytics scan rollups in redb feed dashboard/usage (usage-feature.md, feature-list). |
 | `chain-wizard-flexibility.md` | Wizard intents + requirements canonicalization + GitHub flows | Canonical for intent-based flows and requirements merge/canonical artifact |
+| `Document_Packaging_Policy.md` | Deterministic packaging for large Markdown/text artifacts | Canonical Document Set contract: sharded set + `00-index.md` + `manifest.json` + full audits with non-bypassable run failure on verification breach. |
 | `human-in-the-loop.md` | HITL semantics at tier boundaries | Canonical for pause-for-approval toggles + tier boundary meaning |
 | `FileSafe.md` | Safe-edit guards + context compilation | Should map to central tool policy + patch pipeline |
 | `WorktreeGitImprovement.md` | Worktree/git correctness + GUI wiring | Should map to patch/apply/verify/rollback + Provider run dirs |

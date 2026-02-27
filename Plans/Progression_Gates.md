@@ -41,8 +41,9 @@ The Verifier is an AI role that runs these gates and returns a binary PASS/FAIL 
 - `GATE-006` non-example node change-budget declaration checks
 - `GATE-009` ContractRef coverage lint
 - `GATE-011`, `GATE-012`, `GATE-013` target the traceability layer (not yet enforced by `run-gates`; pending traceability artifact generation integration)
+- `GATE-014` targets Document Set packaging verification (not yet enforced by `run-gates`; pending Document Set artifact generation integration)
 
-ContractRef: Gate:GATE-001, Gate:GATE-002, Gate:GATE-004, Gate:GATE-005, Gate:GATE-006, Gate:GATE-009, Gate:GATE-011, Gate:GATE-012, Gate:GATE-013
+ContractRef: Gate:GATE-001, Gate:GATE-002, Gate:GATE-004, Gate:GATE-005, Gate:GATE-006, Gate:GATE-009, Gate:GATE-011, Gate:GATE-012, Gate:GATE-013, Gate:GATE-014
 
 ---
 
@@ -283,6 +284,37 @@ ContractRef: SchemaID:pm.auto_decisions.schema.v1, Gate:GATE-013, SchemaID:evide
 
 ---
 
+<a id="GATE-014"></a>
+## GATE-014 -- Document Set packaging verification
+**Pass conditions (ALL must hold):**
+1. For each Markdown/text artifact under `.puppet-master/**` that reaches Document Packaging Policy triggers, a Document Set exists with:
+   - `00-index.md`
+   - `manifest.json`
+   - ordered shard files
+   - `evidence/` audit outputs
+2. Reconstruction proof passes: concatenated shard bytes in manifest order produce source `sha256` equality.
+3. Line accounting passes: each source line is covered exactly once (no gaps, no overlaps).
+4. Index/manifest exact match passes: shard ordering, links, existence checks, and no extra shard files.
+5. Idempotency passes: regenerate twice with same source yields no diffs.
+6. Clean-room determinism passes: regeneration in a clean directory yields byte-identical outputs and matching hashes.
+
+**Fail condition:** Any pass condition (1–6) fails, or a triggered artifact is left unpackaged.
+
+Required evidence:
+- Evidence bundle entries for each triggered artifact that include:
+  - reconstruction hash report
+  - line accounting report
+  - index/manifest parity report
+  - idempotency report
+  - clean-room parity report
+- Evidence detail lists MUST be exhaustive for full shard sets (no sampling).
+
+**Script enforcement status:** Not yet enforced by `run-gates`; targeted for inclusion after Document Set artifact generation is integrated.
+
+ContractRef: Gate:GATE-014, SchemaID:evidence.schema.json, ContractName:Plans/Document_Packaging_Policy.md, PolicyRule:Decision_Policy.md§2
+
+---
+
 ## References
 - `Plans/DRY_Rules.md`
 - `Plans/Architecture_Invariants.md`
@@ -295,3 +327,4 @@ ContractRef: SchemaID:pm.auto_decisions.schema.v1, Gate:GATE-013, SchemaID:evide
 - `Plans/human-in-the-loop.md`
 - `Plans/UI_Wiring_Rules.md`
 - `Plans/Wiring_Matrix.schema.json`
+- `Plans/Document_Packaging_Policy.md`
