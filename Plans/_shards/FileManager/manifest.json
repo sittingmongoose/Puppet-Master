@@ -1,129 +1,133 @@
 {
   "source_path": "Plans/FileManager.md",
   "source_sha256": "8f0d061da30779e8845b02648cc4d8b73729e3f0216397e8e4be4e8fdbb2baaa",
-  "split_rule": "## outside fences",
+  "split_rule": {
+    "primary": "## outside fences",
+    "fallback": "line-count-200",
+    "applied": "## outside fences"
+  },
   "shards": [
     {
-      "dest_path": "Plans/_shards/FileManager/00-preamble.md",
+      "dest_path": "Plans/_shards/FileManager/01-preamble.md",
       "start_line": 1,
       "end_line": 5,
       "segment_sha256": "525812d26adc3acda7e70bb9a1ec0bfe56e053b60a0f9101961dee49c389ae38",
       "heading": null
     },
     {
-      "dest_path": "Plans/_shards/FileManager/01-change-summary.md",
+      "dest_path": "Plans/_shards/FileManager/02-change-summary.md",
       "start_line": 6,
       "end_line": 18,
       "segment_sha256": "cc45779fab8734f629a51f176f483ca3a8b3df7dfd58d59ec8bba7a95ee148e4",
       "heading": "## Change Summary"
     },
     {
-      "dest_path": "Plans/_shards/FileManager/02-summary.md",
+      "dest_path": "Plans/_shards/FileManager/03-summary.md",
       "start_line": 19,
       "end_line": 39,
       "segment_sha256": "5984d6492a40f04f34aa2692e1a5bcdfdeba1e0e907f7f8dd54b459f359175fa",
       "heading": "## Summary"
     },
     {
-      "dest_path": "Plans/_shards/FileManager/03-table-of-contents.md",
+      "dest_path": "Plans/_shards/FileManager/04-table-of-contents.md",
       "start_line": 40,
       "end_line": 66,
       "segment_sha256": "ae79995dc8da02f70e26568930b82e7f3c4af7ae97d36a90947c1a216d3d78b2",
       "heading": "## Table of Contents"
     },
     {
-      "dest_path": "Plans/_shards/FileManager/04-1-file-manager-panel.md",
+      "dest_path": "Plans/_shards/FileManager/05-1-file-manager-panel.md",
       "start_line": 67,
       "end_line": 154,
       "segment_sha256": "790057e3fece441cf1e3b767f50ed2e3ac6cdeb16782b660d5e024ccd222f54f",
       "heading": "## 1. File Manager panel"
     },
     {
-      "dest_path": "Plans/_shards/FileManager/05-2-in-app-ide-style-editor-mvp.md",
+      "dest_path": "Plans/_shards/FileManager/06-2-in-app-ide-style-editor-mvp.md",
       "start_line": 155,
       "end_line": 241,
       "segment_sha256": "97bce46202bded27c8c6ac74c001dfbc707d6fc244dd6efd51ac25169e64e537",
       "heading": "## 2. In-app IDE-style editor (MVP)"
     },
     {
-      "dest_path": "Plans/_shards/FileManager/06-3-mention-in-chat.md",
+      "dest_path": "Plans/_shards/FileManager/07-3-mention-in-chat.md",
       "start_line": 242,
       "end_line": 251,
       "segment_sha256": "57186975251501f2fc57a9cb5a7b9a4dc0daac98d8b438ca94d4de6529787ad9",
       "heading": "## 3. @ mention in chat"
     },
     {
-      "dest_path": "Plans/_shards/FileManager/07-4-integration-file-manager-editor-and-chat.md",
+      "dest_path": "Plans/_shards/FileManager/08-4-integration-file-manager-editor-and-chat.md",
       "start_line": 252,
       "end_line": 267,
       "segment_sha256": "5044d5ac91705c469160e88696ca22fded49acc2bb124916ae00cd19b2f693b8",
       "heading": "## 4. Integration: File Manager, editor, and chat"
     },
     {
-      "dest_path": "Plans/_shards/FileManager/08-5-click-to-open-from-chat.md",
+      "dest_path": "Plans/_shards/FileManager/09-5-click-to-open-from-chat.md",
       "start_line": 268,
       "end_line": 281,
       "segment_sha256": "fdbc8e2084545a0f00ad04e8760c0725a4e451dbd0aaa05e55b66cfa4a492e2e",
       "heading": "## 5. Click-to-open from chat"
     },
     {
-      "dest_path": "Plans/_shards/FileManager/09-6-out-of-scope.md",
+      "dest_path": "Plans/_shards/FileManager/10-6-out-of-scope.md",
       "start_line": 282,
       "end_line": 303,
       "segment_sha256": "9330c96efcf4719836832b74f220aab08906836df9038cfc3b5d531892666ab8",
       "heading": "## 6. Out of scope"
     },
     {
-      "dest_path": "Plans/_shards/FileManager/10-7-edge-cases.md",
+      "dest_path": "Plans/_shards/FileManager/11-7-edge-cases.md",
       "start_line": 304,
       "end_line": 318,
       "segment_sha256": "745ec0cadc1c3f1301b87e0cc88a4f0e387268cb9b4c5bbde85523923b4c8286",
       "heading": "## 7. Edge cases"
     },
     {
-      "dest_path": "Plans/_shards/FileManager/11-8-image-viewer-and-html-preview.md",
+      "dest_path": "Plans/_shards/FileManager/12-8-image-viewer-and-html-preview.md",
       "start_line": 319,
       "end_line": 345,
       "segment_sha256": "db6ef10b365943464477e08be42367472cc9e22b1d4c94dba4903130b787c77d",
       "heading": "## 8. Image viewer and HTML preview"
     },
     {
-      "dest_path": "Plans/_shards/FileManager/12-9-tabs-editor-terminal-browser.md",
+      "dest_path": "Plans/_shards/FileManager/13-9-tabs-editor-terminal-browser.md",
       "start_line": 346,
       "end_line": 355,
       "segment_sha256": "d1db315106bc246c48d698f169fac0babb41a8617a5e492548c5c3e29c34b010",
       "heading": "## 9. Tabs: Editor, Terminal, Browser"
     },
     {
-      "dest_path": "Plans/_shards/FileManager/13-10-editor-enhancements-mvp.md",
+      "dest_path": "Plans/_shards/FileManager/14-10-editor-enhancements-mvp.md",
       "start_line": 356,
       "end_line": 557,
       "segment_sha256": "ce32002ab14f43cadd91d8bf544ac440825262b972b6f0ac189d5d40d7d86e05",
       "heading": "## 10. Editor enhancements (MVP)"
     },
     {
-      "dest_path": "Plans/_shards/FileManager/14-11-languageframework-presets.md",
+      "dest_path": "Plans/_shards/FileManager/15-11-languageframework-presets.md",
       "start_line": 558,
       "end_line": 569,
       "segment_sha256": "e2eb0d5710b7aff15f2df65c4c14d0bea863c51f45677bf0ef5e5aeb93f755c1",
       "heading": "## 11. Language/framework presets"
     },
     {
-      "dest_path": "Plans/_shards/FileManager/15-12-gaps-potential-problems-and-enhancements.md",
+      "dest_path": "Plans/_shards/FileManager/16-12-gaps-potential-problems-and-enhancements.md",
       "start_line": 570,
       "end_line": 836,
       "segment_sha256": "3484a3ef33a42e3a6021366af8d95836fc6153e05588ced31c7512a03ebefbb5",
       "heading": "## 12. Gaps, potential problems, and enhancements"
     },
     {
-      "dest_path": "Plans/_shards/FileManager/16-verification-ai-executable.md",
+      "dest_path": "Plans/_shards/FileManager/17-verification-ai-executable.md",
       "start_line": 837,
       "end_line": 855,
       "segment_sha256": "b83d5c4ab5d474fda9f199391ee77f854241f74dc35354592d73f819b064c51b",
       "heading": "## Verification (AI-executable)"
     },
     {
-      "dest_path": "Plans/_shards/FileManager/17-13-git-status-integration.md",
+      "dest_path": "Plans/_shards/FileManager/18-13-git-status-integration.md",
       "start_line": 856,
       "end_line": 891,
       "segment_sha256": "d3751ec7ff44e0e07a013cecd82e8fd2af3343995b6649d6d45a0108251084f6",

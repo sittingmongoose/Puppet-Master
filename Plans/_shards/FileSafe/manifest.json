@@ -1,164 +1,168 @@
 {
   "source_path": "Plans/FileSafe.md",
   "source_sha256": "1b04c0892fbad3daa336727fe021017a8eff888bf74cfec840344c7f3f97fddd",
-  "split_rule": "## outside fences",
+  "split_rule": {
+    "primary": "## outside fences",
+    "fallback": "line-count-200",
+    "applied": "## outside fences"
+  },
   "shards": [
     {
-      "dest_path": "Plans/_shards/FileSafe/00-preamble.md",
+      "dest_path": "Plans/_shards/FileSafe/01-preamble.md",
       "start_line": 1,
       "end_line": 9,
       "segment_sha256": "344206e9f871775098c09adc64f691c10c4d00ea2325ecfa067f9fc22bf54f13",
       "heading": null
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/01-dry-method-compliance.md",
+      "dest_path": "Plans/_shards/FileSafe/02-dry-method-compliance.md",
       "start_line": 10,
       "end_line": 21,
       "segment_sha256": "ebffeda4ed0ac6aa23d2abbc4ed24e2aad4f5adb8cd5e850daa923d308d67ca2",
       "heading": "## DRY Method Compliance"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/02-rewrite-alignment-2026-02-21.md",
+      "dest_path": "Plans/_shards/FileSafe/03-rewrite-alignment-2026-02-21.md",
       "start_line": 22,
       "end_line": 34,
       "segment_sha256": "c94cfc2d7927c475818ed88690993bdb01d4e844ddbd0bd203695b1ed5069321",
       "heading": "## Rewrite alignment (2026-02-21)"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/03-executive-summary.md",
+      "dest_path": "Plans/_shards/FileSafe/04-executive-summary.md",
       "start_line": 35,
       "end_line": 63,
       "segment_sha256": "e94a26677e16398d56956e4d7ea33e0e36db68e69938a111cadedbe18e6967b4",
       "heading": "## Executive Summary"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/04-table-of-contents.md",
+      "dest_path": "Plans/_shards/FileSafe/05-table-of-contents.md",
       "start_line": 64,
       "end_line": 76,
       "segment_sha256": "03c04d7ba82199e25bb3a40b0bc94e082d772037160c3ac9961e88845d405b25",
       "heading": "## Table of Contents"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/05-1-architecture-overview.md",
+      "dest_path": "Plans/_shards/FileSafe/06-1-architecture-overview.md",
       "start_line": 77,
       "end_line": 104,
       "segment_sha256": "37ece2508ddc9a78f815fc60cd0d0d942c44bf75bdd088ca6130fdbf40b0cc64",
       "heading": "## 1. Architecture Overview"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/06-2-implementation-details.md",
+      "dest_path": "Plans/_shards/FileSafe/07-2-implementation-details.md",
       "start_line": 105,
       "end_line": 581,
       "segment_sha256": "9d85b422c981e9b4f6f902947af9831f21254cd1275dbc1a3f3a38577b68d7bc",
       "heading": "## 2. Implementation Details"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/07-3-integration-with-platform-runner.md",
+      "dest_path": "Plans/_shards/FileSafe/08-3-integration-with-platform-runner.md",
       "start_line": 582,
       "end_line": 826,
       "segment_sha256": "471ac4ea11df6c2f74ae898728889a4c2cad6e3225fc6b868debe320b88813c8",
       "heading": "## 3. Integration with Platform Runner"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/08-4-pattern-file.md",
+      "dest_path": "Plans/_shards/FileSafe/09-4-pattern-file.md",
       "start_line": 827,
       "end_line": 905,
       "segment_sha256": "d0ad72a1f6b2bdacc2e6cfcc2c5d7bb95b4630bfcce1d4b242fe7860496b4ca5",
       "heading": "## 4. Pattern File"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/09-5-configuration-options.md",
+      "dest_path": "Plans/_shards/FileSafe/10-5-configuration-options.md",
       "start_line": 906,
       "end_line": 954,
       "segment_sha256": "bd73fb06bc5aee5dfe941bda2eb27cc63a2af575f7943f4c834592a7ee79cca0",
       "heading": "## 5. Configuration Options"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/10-6-event-logging.md",
+      "dest_path": "Plans/_shards/FileSafe/11-6-event-logging.md",
       "start_line": 955,
       "end_line": 979,
       "segment_sha256": "392222d6f15e75f7b4b38a0ca58f45c5fc651863e9543708ea0380b7674d92d3",
       "heading": "## 6. Event Logging"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/11-7-error-messages.md",
+      "dest_path": "Plans/_shards/FileSafe/12-7-error-messages.md",
       "start_line": 980,
       "end_line": 1004,
       "segment_sha256": "7f0bcedd4a490789958c232cc60cc8d85c5256fc723e7018adfa786d4e95e51b",
       "heading": "## 7. Error Messages"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/12-8-testing.md",
+      "dest_path": "Plans/_shards/FileSafe/13-8-testing.md",
       "start_line": 1005,
       "end_line": 1108,
       "segment_sha256": "123066ac924a1fe20b559e4a1b70ff2865764a02e65413e7c71a5d1d5a428278",
       "heading": "## 8. Testing"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/13-9-implementation-checklist.md",
+      "dest_path": "Plans/_shards/FileSafe/14-9-implementation-checklist.md",
       "start_line": 1109,
       "end_line": 1210,
       "segment_sha256": "9df6805cd645197b270ffd5f9097e9be9717788b78d00d7293e7dded2d129473",
       "heading": "## 9. Implementation Checklist"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/14-10-relationship-to-other-plans.md",
+      "dest_path": "Plans/_shards/FileSafe/15-10-relationship-to-other-plans.md",
       "start_line": 1211,
       "end_line": 1238,
       "segment_sha256": "8ebc3d35ae7cb09cfd1db88a368106db07adcc6e2ac7239a6ccc81d0a8d57ba6",
       "heading": "## 10. Relationship to Other Plans"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/15-10a-filesafe-and-assistant-yolo-mode.md",
+      "dest_path": "Plans/_shards/FileSafe/16-10a-filesafe-and-assistant-yolo-mode.md",
       "start_line": 1239,
       "end_line": 1255,
       "segment_sha256": "54bc91dc206aee1a2a1226aaf91d3c9d7b711e766088bc3f5a5a7ca41ee67361",
       "heading": "## 10a. FileSafe and Assistant YOLO mode"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/16-11-additional-filesafe-features.md",
+      "dest_path": "Plans/_shards/FileSafe/17-11-additional-filesafe-features.md",
       "start_line": 1256,
       "end_line": 1656,
       "segment_sha256": "5e9600999cec11f2543dfa730110a2c18cd4082f44a6543535aa8a00edea81a2",
       "heading": "## 11. Additional FileSafe Features"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/17-12-gaps-and-potential-issues.md",
+      "dest_path": "Plans/_shards/FileSafe/18-12-gaps-and-potential-issues.md",
       "start_line": 1657,
       "end_line": 1733,
       "segment_sha256": "190d7cd6c6a46400b347733e7aab39e12b5f2cbf9afc1dd7bf9e48364221f617",
       "heading": "## 12. Gaps and Potential Issues"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/18-13-enhancements.md",
+      "dest_path": "Plans/_shards/FileSafe/19-13-enhancements.md",
       "start_line": 1734,
       "end_line": 1797,
       "segment_sha256": "f0f4ac8ee8c4515db21bf9c624609f8547576cf92f59df09c6683dcd4594478c",
       "heading": "## 13. Enhancements"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/19-14-context-compilation-token-efficiency.md",
+      "dest_path": "Plans/_shards/FileSafe/20-14-context-compilation-token-efficiency.md",
       "start_line": 1798,
       "end_line": 2016,
       "segment_sha256": "de7284f857744e58048f0ca290b076b82dec22cc200280628b43a1256ae482b7",
       "heading": "## 14. Context Compilation & Token Efficiency"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/20-15-system-integration-analysis.md",
+      "dest_path": "Plans/_shards/FileSafe/21-15-system-integration-analysis.md",
       "start_line": 2017,
       "end_line": 2619,
       "segment_sha256": "c2c3eff9cca420e1edf341d5e9d0252f7b8a0442f93c0583cf5a9c1a64a7ca31",
       "heading": "## 15. System Integration Analysis"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/21-16-references.md",
+      "dest_path": "Plans/_shards/FileSafe/22-16-references.md",
       "start_line": 2620,
       "end_line": 2638,
       "segment_sha256": "ed5bf298452eec2d866478621896227fee3caba7459d528882e977b1f8c6d48d",
       "heading": "## 16. References"
     },
     {
-      "dest_path": "Plans/_shards/FileSafe/22-17-implementation-order-and-dependencies.md",
+      "dest_path": "Plans/_shards/FileSafe/23-17-implementation-order-and-dependencies.md",
       "start_line": 2639,
       "end_line": 2682,
       "segment_sha256": "ec85112bb1b7e1a6023f53ec11747cd030dd0d6c502722ec18bfcb3d92281493",

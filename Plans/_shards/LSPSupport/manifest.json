@@ -1,136 +1,140 @@
 {
   "source_path": "Plans/LSPSupport.md",
   "source_sha256": "18957609444a2c5378b8723bdd9ff6080c5c6bbf55de1a629c3e631a7fabf778",
-  "split_rule": "## outside fences",
+  "split_rule": {
+    "primary": "## outside fences",
+    "fallback": "line-count-200",
+    "applied": "## outside fences"
+  },
   "shards": [
     {
-      "dest_path": "Plans/_shards/LSPSupport/00-preamble.md",
+      "dest_path": "Plans/_shards/LSPSupport/01-preamble.md",
       "start_line": 1,
       "end_line": 19,
       "segment_sha256": "6da95657ad99aab1ca3951ce1336cc6e4119190fb238ad8b4f1677a251058fc3",
       "heading": null
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/01-1-purpose.md",
+      "dest_path": "Plans/_shards/LSPSupport/02-1-purpose.md",
       "start_line": 20,
       "end_line": 67,
       "segment_sha256": "1986eacfc0058917955a808e3373d9f22428beb12445e9b78f2baf8309745929",
       "heading": "## 1. Purpose"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/02-2-lsp-basics-reference.md",
+      "dest_path": "Plans/_shards/LSPSupport/03-2-lsp-basics-reference.md",
       "start_line": 68,
       "end_line": 83,
       "segment_sha256": "3720805ee1b39bc750cecd7e66f7b87d614fd547849858831ec97f8c90c16c6e",
       "heading": "## 2. LSP Basics (Reference)"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/03-3-how-opencode-does-it-reference-for-rewrite.md",
+      "dest_path": "Plans/_shards/LSPSupport/04-3-how-opencode-does-it-reference-for-rewrite.md",
       "start_line": 84,
       "end_line": 221,
       "segment_sha256": "2b4cbc53a649d54d162e67deec6f7f14b24c0541c2b2d5df5433186e3d94d6db",
       "heading": "## 3. How OpenCode Does It (Reference for Rewrite)"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/04-4-rust-stack-client-side.md",
+      "dest_path": "Plans/_shards/LSPSupport/05-4-rust-stack-client-side.md",
       "start_line": 222,
       "end_line": 236,
       "segment_sha256": "7e71decb5ff57bda2339f0446111afa633d4b8d0799f6514ee4d415c770453d3",
       "heading": "## 4. Rust Stack (Client Side)"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/05-5-integration-with-our-editor-filemanager-rewrite.md",
+      "dest_path": "Plans/_shards/LSPSupport/06-5-integration-with-our-editor-filemanager-rewrite.md",
       "start_line": 237,
       "end_line": 305,
       "segment_sha256": "97b18d350bbc2d57fc9c8ae197b39d64101c64af8479b68b9e3da9fd30ce71da",
       "heading": "## 5. Integration with Our Editor (FileManager / Rewrite)"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/06-6-scope-and-phasing.md",
+      "dest_path": "Plans/_shards/LSPSupport/07-6-scope-and-phasing.md",
       "start_line": 306,
       "end_line": 313,
       "segment_sha256": "7599db9698bc3582b6c41bb5f2b041ae62a47dc6bdd5d232b79d290dfa8d7226",
       "heading": "## 6. Scope and Phasing"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/07-7-resolved-design-decisions-and-implementation-constraints.md",
+      "dest_path": "Plans/_shards/LSPSupport/08-7-resolved-design-decisions-and-implementation-constraints.md",
       "start_line": 314,
       "end_line": 324,
       "segment_sha256": "09b982dfcba2c2087d0b30a16196ecc1745837e52cbea9d6c093867cd28a5bfe",
       "heading": "## 7. Resolved design decisions and implementation constraints"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/08-8-potential-issues-and-mitigations.md",
+      "dest_path": "Plans/_shards/LSPSupport/09-8-potential-issues-and-mitigations.md",
       "start_line": 325,
       "end_line": 342,
       "segment_sha256": "cbbfee71f3605e64a0fc8cdf63d309f9b51b73636024bc9a46202cc244aa1581",
       "heading": "## 8. Potential issues and mitigations"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/09-9-mvp-lsp-features-summary.md",
+      "dest_path": "Plans/_shards/LSPSupport/10-9-mvp-lsp-features-summary.md",
       "start_line": 343,
       "end_line": 425,
       "segment_sha256": "b7271ac05d99b99192b5b47e63f8270c2155e62babae86185b4fa9475e801384",
       "heading": "## 9. MVP LSP features (summary)"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/10-10-transport-alternatives-and-bridge-pattern.md",
+      "dest_path": "Plans/_shards/LSPSupport/11-10-transport-alternatives-and-bridge-pattern.md",
       "start_line": 426,
       "end_line": 443,
       "segment_sha256": "002dfdc30b717893f99b549670fb625891ce0169d76984419df14154a7a2eab2",
       "heading": "## 10. Transport alternatives and bridge pattern"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/11-11-references.md",
+      "dest_path": "Plans/_shards/LSPSupport/12-11-references.md",
       "start_line": 444,
       "end_line": 462,
       "segment_sha256": "a3ffec283f116e078aac01c873ea3e2655bf255a0ac1b12a7255c3228b3786b0",
       "heading": "## 11. References"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/12-12-implementation-checklist-when-phased-in.md",
+      "dest_path": "Plans/_shards/LSPSupport/13-12-implementation-checklist-when-phased-in.md",
       "start_line": 463,
       "end_line": 521,
       "segment_sha256": "2a9261374ecd9c5843bfe2cafa77ffe4ef779bfa181740ab39b7a5e7a26bd8d5",
       "heading": "## 12. Implementation checklist (when phased in)"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/13-13-gui-requirements-and-cross-references.md",
+      "dest_path": "Plans/_shards/LSPSupport/14-13-gui-requirements-and-cross-references.md",
       "start_line": 522,
       "end_line": 573,
       "segment_sha256": "971c428e438be58dbd95fa6086f3dd98b77b70d85df5f19bbb26190791b529dc",
       "heading": "## 13. GUI requirements and cross-references"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/14-14-technical-implementation-implementation-guide-source.md",
+      "dest_path": "Plans/_shards/LSPSupport/15-14-technical-implementation-implementation-guide-source.md",
       "start_line": 574,
       "end_line": 676,
       "segment_sha256": "f00a02ac6c9b19398d3deb448a3479156bbdadc5c11c241044f9204ff63909a3",
       "heading": "## 14. Technical implementation (implementation guide source)"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/15-15-implementation-phases-and-acceptance-criteria.md",
+      "dest_path": "Plans/_shards/LSPSupport/16-15-implementation-phases-and-acceptance-criteria.md",
       "start_line": 677,
       "end_line": 695,
       "segment_sha256": "8d0314876326a8f9878fd1cd58b38e762298284e3ed1f567638ca771c68e800f",
       "heading": "## 15. Implementation phases and acceptance criteria"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/16-16-open-points-and-decisions-for-implementer.md",
+      "dest_path": "Plans/_shards/LSPSupport/17-16-open-points-and-decisions-for-implementer.md",
       "start_line": 696,
       "end_line": 710,
       "segment_sha256": "6be9ccc7c04ff8193508c8151734f721d79adff4be3a76a39000fc41b21a658a",
       "heading": "## 16. Open points and decisions for implementer"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/17-appendix-implementation-plan-checklist-single-ordered-list-for-implementers.md",
+      "dest_path": "Plans/_shards/LSPSupport/18-appendix-implementation-plan-checklist-single-ordered-list-for-implementers.md",
       "start_line": 711,
       "end_line": 766,
       "segment_sha256": "2408dc211cfcb182b51c6d014e8d12c80df04c2cff9d8278aa6cbd56cefd1306",
       "heading": "## Appendix: Implementation plan checklist (single ordered list for implementers)"
     },
     {
-      "dest_path": "Plans/_shards/LSPSupport/18-17-lsp-verification-gate-evidence-subagent-selection-implementation-spec.md",
+      "dest_path": "Plans/_shards/LSPSupport/19-17-lsp-verification-gate-evidence-subagent-selection-implementation-spec.md",
       "start_line": 767,
       "end_line": 921,
       "segment_sha256": "13ae279a0a6bfa1059deb55ac8c0b5a45632ea5ab0d103ea645658a77937f94d",
