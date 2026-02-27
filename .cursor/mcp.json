@@ -5,18 +5,6 @@
       "headers": {
         "Accept": "text/event-stream"
       }
-    },
-    "context7-local": {
-      "type": "stdio",
-      "command": "node",
-      "args": ["${workspaceFolder}/node_modules/@upstash/context7-mcp/dist/index.js"],
-      "env": {}
-    },
-    "gui-automation": {
-      "type": "stdio",
-      "command": "node",
-      "args": ["${workspaceFolder}/scripts/mcp-gui-automation-server.js"],
-      "env": {}
     }
   }
 }

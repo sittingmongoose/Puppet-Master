@@ -1,22 +1,11 @@
 {
   "mcpServers": {
     "context7": {
-      "type": "local",
-      "command": "node",
-      "args": ["./node_modules/@upstash/context7-mcp/dist/index.js"],
-      "tools": ["query-docs", "resolve-library-id"]
-    },
-    "gui-automation": {
-      "type": "local",
-      "command": "node",
-      "args": ["./scripts/mcp-gui-automation-server.js"],
-      "tools": [
-        "gui_run_scenario",
-        "gui_run_step",
-        "gui_get_debug_feed",
-        "gui_get_artifact",
-        "gui_list_actions"
-      ]
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "Accept": "text/event-stream"
+      }
     }
   }
 }

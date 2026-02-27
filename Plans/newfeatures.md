@@ -222,6 +222,10 @@ A **plugin directory** (e.g. under app data or project `.puppet-master/plugins/`
 - **Bundled "default" plugin:** Ship one built-in plugin (e.g. `puppet-master-default`) with a few commands and agents so the mechanism is used from day one and we dogfood it.
 - **One-click install, no code:** To make extension truly "no code," provide a **curated catalog** of commands, agents, hooks, and skills that users can install with one click (§15.14). The catalog lists pre-built items; install = copy into plugin dir and enable. No editing of config or writing scripts required.
 
+> **Canonical SSOT:** The authoritative specification for plugin discovery, load order, hook events, custom tool registration, compaction hooks, and plugin logging is `Plans/Plugins_System.md`. This section (§6) provides feature-level context and relevance; all normative plugin behavior is defined in the SSOT.
+
+ContractRef: ContractName:Plans/Plugins_System.md#DISCOVERY, ContractName:Plans/Plugins_System.md#HOOK-EVENTS
+
 ---
 
 ## 7. Analytics and Usage Dashboard
@@ -324,6 +328,10 @@ Events could include: before sending user message, before tool use, after tool u
 - **Wiring:** In the execution path (e.g. in runner or orchestrator), call the hook runner at the right points. Start with 2-3 events (e.g. `UserMessageSubmit`, `PreToolUse`) and add more as needed.
 - **Config:** Hooks listed in config (or in plugin manifests); GUI settings page to add/remove/reorder hooks per event.
 - **No new runtime:** Prefer spawning a process per hook so we don't embed a script engine; keep the contract simple (JSON in/out).
+
+> **Canonical SSOT:** The authoritative hook event catalog (10 events with typed I/O payloads and return enums), execution order, timeout semantics, and compaction hook (`CompactionPrepare`) are defined in `Plans/Plugins_System.md` §3 (`#HOOK-EVENTS`). This section (§9) provides feature-level context; all normative hook behavior is in the SSOT.
+
+ContractRef: ContractName:Plans/Plugins_System.md#HOOK-EVENTS, ContractName:Plans/Plugins_System.md#HOOK-COMPACTION
 
 ---
 
@@ -580,6 +588,8 @@ Dangerous-command blocking is part of **FileSafe** (Plans/FileSafe.md): Command 
 **Relevance:** Makes the plugin/skills system (§6) and hooks (§9) accessible to non-developers. "One-click install, no code" is a strong UX promise: extend behavior by choosing from a list, not by writing scripts or editing JSON.
 
 **Implementation:** Define a **catalog format** (e.g. a JSON or manifest listing id, name, description, type [command|agent|hook|skill], source URL or bundled path, version). Catalog can be bundled in the app or fetched from a static URL (e.g. GitHub Pages or a simple index file). "Install" = copy files to the appropriate plugin/config location and enable. GUI: "Extensions" or "Plugin catalog" view with search and "Install" / "Remove" / "Update" per item. No code execution beyond copying and parsing; all catalog items are static assets (markdown, JSON, or signed scripts if we ever support remote scripts). Ship a small default catalog (e.g. FileSafe-style dangerous-command blocklist hook, a few skills) so the feature is useful from day one.
+
+> **SSOT cross-reference:** Plugin discovery paths, manifest format, and install mechanics for catalog items that are plugins are defined in `Plans/Plugins_System.md` §1 (`#DISCOVERY`). The Catalog tab GUI spec is in `Plans/FinalGUISpec.md` §7.4.3.
 
 ---
 
