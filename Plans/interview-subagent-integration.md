@@ -5,6 +5,7 @@
 
 ## Change Summary
 
+- 2026-02-26: Added capability introspection and media-generation gating requirements: Interview agent MUST call `capabilities.get` when offering media options and honor enabled/disabled gating; may propose media generation but only execute when enabled. SSOT: `Plans/Media_Generation_and_Capabilities.md`. ContractRef: ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM
 - 2026-02-24: Added UI wiring artifacts (`ui/wiring_matrix.json`, `ui/ui_command_catalog.json`) to interview outputs for GUI projects; updated Phase 3 (Product/UX) subagent responsibilities, §5.2 wiring/completeness requirements, and Contract Layer outputs. SSOT: `Plans/UI_Wiring_Rules.md`, `Plans/Wiring_Matrix.schema.json`.
 - 2026-02-24: Updated the user-project Contract Layer outputs so the Interviewer/Wizard emits a **sharded-only plan graph** under `.puppet-master/project/plan_graph/` (canonical; persisted canonically in seglog). `plan_graph/exports/plan_graph.monolithic.json` is an optional derived export only. (SSOT: `Plans/Project_Output_Artifacts.md`, `Plans/orchestrator-subagent-integration.md`.)
 - 2026-02-24: Added `requirements-quality-reviewer` cross-phase subagent persona (Quality Review category in Cross-Phase Subagents); added §5.5 Requirements Quality Reviewer Trigger Rule with deterministic two-trigger invocation order, 2-iteration autofill loop cap, and Autofill-First Rule; added quality gate bullet to §2) Contract Layer output generation specifying how `verdict` from the quality report gates the Contract Unification Pass. ContractRef: `Plans/chain-wizard-flexibility.md`, `SchemaID:pm.requirements_quality_report.schema.v1`.
@@ -157,6 +158,20 @@ ContractRef: ContractName:Plans/chain-wizard-flexibility.md#requirements-quality
 **Research Operations:**
 - `ux-researcher` -- Web research via Browser MCP (when configured). **Cited web search:** Interview (and Assistant, Orchestrator) use **cited web search** (inline citations + Sources list) from a single shared implementation; see **Plans/newtools.md** §8 (cited web search, [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited)-style) and **Plans/assistant-chat-design.md** §7.
 - `context-manager` -- Manage interview state and context across phases
+
+## Capability Introspection and Media-Generation Gating
+
+The Interview agent MUST call `capabilities.get` when offering media-related options to the user (e.g., suggesting visual mockups, audio samples, or video previews as part of an interview phase). The response determines which media capabilities are currently available and which are disabled (with reasons).
+
+**Gating rules:**
+
+1. The Interview agent MAY **propose** media generation during any phase (e.g., *"I can generate a mockup of that UI layout"*) regardless of capability state.
+2. The Interview agent MUST NOT **execute** `media.generate` for a capability that is currently disabled. If the user requests a disabled capability, the agent MUST surface the disabled reason and setup hint (from `capabilities.get`) and guide the user to resolve it (e.g., add a Google API key in Settings → Gemini Provider).
+3. When listing what the interview can do (e.g., in phase introductions or help responses), the agent MUST reflect the real-time enabled/disabled state from `capabilities.get`, not a static list.
+
+**DRY:** Capability IDs, disabled-reason values, and UI copy strings are defined in `Plans/Media_Generation_and_Capabilities.md` §1–§5 (SSOT). The Interview agent reuses the same `capabilities.get` tool and response shape as the Assistant and Orchestrator.
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM, ContractName:Plans/Personas.md
 
 ## Adaptive Interview Phases + Contract Layer Outputs (Cross-Plan Alignment)
 
@@ -3242,6 +3257,7 @@ Execution-critical node requirements (required fields, determinism, evidence, an
 
 ## Change Summary
 
+- 2026-02-26: Added capability introspection and media-generation gating requirements (new section before Adaptive Interview Phases). SSOT: `Plans/Media_Generation_and_Capabilities.md`.
 - 2026-02-23: Added user-project artifact contract requiring `.puppet-master/project/...` outputs and canonical sharded plan graph handling.
 - 2026-02-23: Added `interview.artifact.generated` payload contract for full-content/chunked seglog artifact persistence.
 - 2026-02-23: Added execution-critical shard-node field requirements and deterministic node ID constraints.

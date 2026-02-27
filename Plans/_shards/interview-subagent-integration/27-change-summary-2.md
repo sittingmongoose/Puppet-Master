@@ -1,5 +1,6 @@
 ## Change Summary
 
+- 2026-02-26: Added capability introspection and media-generation gating requirements (new section before Adaptive Interview Phases). SSOT: `Plans/Media_Generation_and_Capabilities.md`.
 - 2026-02-23: Added user-project artifact contract requiring `.puppet-master/project/...` outputs and canonical sharded plan graph handling.
 - 2026-02-23: Added `interview.artifact.generated` payload contract for full-content/chunked seglog artifact persistence.
 - 2026-02-23: Added execution-critical shard-node field requirements and deterministic node ID constraints.

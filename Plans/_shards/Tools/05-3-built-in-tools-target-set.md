@@ -24,6 +24,14 @@ The following built-in tools are the **target set** for the central tool registr
 | **lsp** (MVP) | LSP operations: definition, hover, references; rename (with user approval) | `lsp` | No feature flag; available when LSP client is enabled. See §3.4.1 LSP tool (MVP). |
 | **task** | Launch subagents (matches subagent type) | `task` | **subagent_type** must be one of the **canonical 41 subagents** documented in Plans (orchestrator-subagent-integration.md §4, interview-subagent-integration.md). Validate with subagent_registry; see §3.6. |
 | **codesearch** | Code search (matches the query); when LSP available, symbol-aware via workspace/symbol (§3.4) | `codesearch` | Default allow (§10.2). Enabled when config or platform provides search backend. Fallback order: text-based search → LSP workspace/symbol when available → MCP or platform-native if configured. Result and timeout limits per §3.5. |
+| **capabilities.get** | Return all available capabilities (media + provider-tool) with enablement status, disabled reasons, and setup hints | `capabilities.get` | Internal tool; not forwarded to providers. Default allow (§10.2). Full contract: `Plans/Media_Generation_and_Capabilities.md` [§1](Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM). |
+| **media.generate** | Generate media (image / video / tts / music) via structured request envelope with optional per-request model override | `media.generate` | Internal tool; backed by Gemini API key (or Cursor-native for images). Default allow (§10.2). Full contract: `Plans/Media_Generation_and_Capabilities.md` [§2](Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE). |
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Media_Generation_and_Capabilities.md
+
+> **Internal tools vs provider-exposed tools:** `capabilities.get` and `media.generate` are **Puppet Master internal tools** — they execute inside the Puppet Master process and are never forwarded to a provider CLI or server. In `capabilities.get` output, the `provider_tool` category is the umbrella non-media bucket and includes both provider-exposed tools (e.g., OpenCode tools discovered via `GET /provider`) and existing internal tool capabilities (e.g., read/grep/write/task). These non-media tool capabilities are **not** part of the media capability picker dropdown (§4.1 of `Plans/Media_Generation_and_Capabilities.md`), which shows only the four `media.*` capabilities. Permission and policy for all tool categories (internal, built-in, provider-exposed, MCP, custom) use the same model defined in `Plans/Permissions_System.md`.
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-PICKER, ContractName:Plans/Permissions_System.md
 
 ### 3.2 Edit group and ignore patterns
 

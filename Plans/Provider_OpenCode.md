@@ -4,6 +4,7 @@
 
 ## Change Summary
 
+- 2026-02-26: Clarified that OpenCode provider capability/tool reporting feeds `capabilities.get` (category `provider_tool`); media tools remain Puppet Master internal (not OpenCode-provided).
 - 2026-02-24: Clarified OpenCode UX/contract details: server-bridged provider status, connection method selection (direct server vs CLI launcher/discovery fallback), auth/sign-in endpoints, model selection through shared Provider contract, and required failure-state mappings.
 - 2026-02-24: Initial creation. Defines OpenCode as a server-bridged provider for Puppet Master.
 
@@ -285,8 +286,10 @@ Capability flags are **SSOT in** `puppet-master-rs/src/platforms/platform_specs.
 OpenCode-specific capability requirements (normative):
 - Transport remains `http` (server-bridged).
 - **Plan mode:** When `mode=plan`, Puppet Master MUST use the OpenCode `plan` agent (read-only). When `mode=execute`, use the `build` agent.
+- **Provider-tool capability reporting:** OpenCode-discovered tools (from `GET /provider` and session tool lists) MUST be reported through `capabilities.get` with `category: "provider_tool"`. Each tool entry includes the same `enabled` / `disabled_reason` / `setup_hint` shape defined in `Plans/Media_Generation_and_Capabilities.md` [§1.2](Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM). This enables agents and users to discover all available OpenCode tools via capability introspection.
+- **Media tools are NOT OpenCode-provided:** Media generation (`media.image`, `media.video`, `media.tts`, `media.music`) remains a Puppet Master internal capability backed by the Gemini API key (or Cursor-native for images). OpenCode MUST NOT expose or proxy media-generation tools. The media capability picker dropdown does not include OpenCode tools; see `Plans/Media_Generation_and_Capabilities.md` [§4](Plans/Media_Generation_and_Capabilities.md#CAPABILITY-PICKER).
 
-ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, CodePath:puppet-master-rs/src/platforms/platform_specs.rs, PolicyRule:Decision_Policy.md§4
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, CodePath:puppet-master-rs/src/platforms/platform_specs.rs, PolicyRule:Decision_Policy.md§4, ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM
 
 ---
 

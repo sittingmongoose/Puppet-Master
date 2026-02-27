@@ -80,6 +80,14 @@
     "hash_alg": "sha256",
     "files": [
       {
+        "path": "Plans/00-plans-index.md",
+        "sha256": "776dea18bed666cc100ec76f9a43404967de49fca35f8a5c4ceb7f607cb489dd"
+      },
+      {
+        "path": "Plans/Architecture_Invariants.md",
+        "sha256": "fd31da20c28e505947d8fbdcf94e50db47325f5c30b47e3d0bf26814316afe47"
+      },
+      {
         "path": "Plans/Contracts_V0.md",
         "sha256": "822a412767f8b967decee1e4e18266aabd38124781946de9f60871c90ff54391"
       },
@@ -92,56 +100,72 @@
         "sha256": "24e1c26cab36eb636f1cafecc06ff29bf995cef756c6f8938d3ab4afea68ac52"
       },
       {
-        "path": "Plans/Glossary.md",
-        "sha256": "909cc9b93d36fb8aaef4e928224354a7e3abf0b52e7037090c24ad2460f66ea1"
-      },
-      {
         "path": "Plans/Decision_Policy.md",
         "sha256": "38b193f41b29f1bfcc916abedd05c143490c2ba2940d809d4c788f005a26cab3"
       },
       {
-        "path": "Plans/GitHub_API_Auth_and_Flows.md",
-        "sha256": "214449691157ea647b644b6cce2ac7fd8ecc6f9e2b602fe9c2f305c1f5a4b403"
-      },
-      {
-        "path": "Plans/Architecture_Invariants.md",
-        "sha256": "fd31da20c28e505947d8fbdcf94e50db47325f5c30b47e3d0bf26814316afe47"
-      },
-      {
-        "path": "Plans/Progression_Gates.md",
-        "sha256": "1d6a3a14c557915c5138c6a7736ffcd69bff368fc1e061384a9058537bd3067d"
-      },
-      {
-        "path": "Plans/UI_Command_Catalog.md",
-        "sha256": "6654ba687ba216b9f56e63313868ac94fc9db089beedb924448b013d92555a91"
-      },
-      {
-        "path": "Plans/plan_graph.schema.json",
-        "sha256": "38bb73940324e6d53c8104f24ff3e91495a0e8d31f8d68cdf5486139393cce29"
-      },
-      {
-        "path": "Plans/plan_graph.json",
-        "sha256": "41c837f3fbc8db407784c868b037a3931cb91b10299771e6a340f83e8575e6da"
-      },
-      {
-        "path": "Plans/evidence.schema.json",
-        "sha256": "005b3a2270676f036ec1a78d1c47787e9b7cfdfb7b844f106a37275a24e1368e"
-      },
-      {
-        "path": "Plans/change_budget.schema.json",
-        "sha256": "277c72ce79ba09f8b78a3b8811043572c6cf143414da0f1a3362361ac42874d3"
-      },
-      {
-        "path": "Plans/auto_decisions.schema.json",
-        "sha256": "9f4f78462e5124ae145642f87b90631b2d2c0aa0797fc34a5390947b1ea6284e"
+        "path": "Plans/Document_Packaging_Policy.md",
+        "sha256": "d4144a5b36416c4f545fe734187e8e919f04f507dc26e79d57b56014341e9656"
       },
       {
         "path": "Plans/Executor_Protocol.md",
         "sha256": "923046ee1440de8cb7764be0778ee05d3394362a67d0217bed6cb527163a59c6"
       },
       {
+        "path": "Plans/GitHub_API_Auth_and_Flows.md",
+        "sha256": "214449691157ea647b644b6cce2ac7fd8ecc6f9e2b602fe9c2f305c1f5a4b403"
+      },
+      {
+        "path": "Plans/Glossary.md",
+        "sha256": "909cc9b93d36fb8aaef4e928224354a7e3abf0b52e7037090c24ad2460f66ea1"
+      },
+      {
+        "path": "Plans/Media_Generation_and_Capabilities.md",
+        "sha256": "618f26f2713023655b704a23bef3a0d8a6b5cd5d2f6e4f20f0d77ab2c81bdf85"
+      },
+      {
+        "path": "Plans/Progression_Gates.md",
+        "sha256": "1d6a3a14c557915c5138c6a7736ffcd69bff368fc1e061384a9058537bd3067d"
+      },
+      {
         "path": "Plans/Project_Output_Artifacts.md",
         "sha256": "7f036aaae2b8088717edd5f96ca49f589d3be2311e684a28f4644e30a778a1bd"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "sha256": "6654ba687ba216b9f56e63313868ac94fc9db089beedb924448b013d92555a91"
+      },
+      {
+        "path": "Plans/auto_decisions.schema.json",
+        "sha256": "9f4f78462e5124ae145642f87b90631b2d2c0aa0797fc34a5390947b1ea6284e"
+      },
+      {
+        "path": "Plans/chain-wizard-flexibility.md",
+        "sha256": "7c6acb365b7a37748645f70a82aabaac0788da0757398a7dbd1af25cfffe0e38"
+      },
+      {
+        "path": "Plans/change_budget.schema.json",
+        "sha256": "277c72ce79ba09f8b78a3b8811043572c6cf143414da0f1a3362361ac42874d3"
+      },
+      {
+        "path": "Plans/evidence.schema.json",
+        "sha256": "005b3a2270676f036ec1a78d1c47787e9b7cfdfb7b844f106a37275a24e1368e"
+      },
+      {
+        "path": "Plans/interview-subagent-integration.md",
+        "sha256": "bb75cc85264132893adcb3d137bb41a3e5c7fd9fb81d4a3e9bf26e5da1de155a"
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "sha256": "7f4137e8ffc93050ecb7efff6a2a4783a9c36f55e4897b71c9f7c91d366bb4b0"
+      },
+      {
+        "path": "Plans/plan_graph.json",
+        "sha256": "41c837f3fbc8db407784c868b037a3931cb91b10299771e6a340f83e8575e6da"
+      },
+      {
+        "path": "Plans/plan_graph.schema.json",
+        "sha256": "38bb73940324e6d53c8104f24ff3e91495a0e8d31f8d68cdf5486139393cce29"
       },
       {
         "path": "Plans/project_plan_node.schema.json",
@@ -152,32 +176,12 @@
         "sha256": "d043a8d4bb238e479cb9f265fef3d3726c0dcc9c9782cde40fcb260a4e33251a"
       },
       {
-        "path": "scripts/pm-plans-verify.py",
-        "sha256": "2ec8002966a473b52be96e88ab4fd65045c9aaba779171d74e38c88cd84f3128"
-      },
-      {
         "path": "Plans/requirements_quality_report.schema.json",
         "sha256": "5a1d9680e2678c921a3f8445249c13d0d418f0fa0ef66f767aff13c521605240"
       },
       {
-        "path": "Plans/00-plans-index.md",
-        "sha256": "05fe81aa2eebc8901605ca035e176708078c8b755a789ff10fa702c8960ab225"
-      },
-      {
-        "path": "Plans/Document_Packaging_Policy.md",
-        "sha256": "d4144a5b36416c4f545fe734187e8e919f04f507dc26e79d57b56014341e9656"
-      },
-      {
-        "path": "Plans/chain-wizard-flexibility.md",
-        "sha256": "7c6acb365b7a37748645f70a82aabaac0788da0757398a7dbd1af25cfffe0e38"
-      },
-      {
-        "path": "Plans/interview-subagent-integration.md",
-        "sha256": "6190c35d6dd425dba81c710ddd1008877afbd3e40358b3a1d4000d2341f86c16"
-      },
-      {
-        "path": "Plans/orchestrator-subagent-integration.md",
-        "sha256": "477ffc1ef003b23802625de4a04206be35c0aa8af911d1d00b94c47db392c21d"
+        "path": "scripts/pm-plans-verify.py",
+        "sha256": "2ec8002966a473b52be96e88ab4fd65045c9aaba779171d74e38c88cd84f3128"
       }
     ]
   },

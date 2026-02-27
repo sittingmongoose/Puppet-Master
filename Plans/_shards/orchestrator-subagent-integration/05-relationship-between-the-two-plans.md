@@ -25,6 +25,10 @@ ContractRef: ContractName:Plans/Contracts_V0.md#ContextInjectionToggles
 
 **Tool permissions:** **Plans/Tools.md** defines the central tool registry and permission model (allow/deny/ask, granular rules, [OpenCode Permissions](https://opencode.ai/docs/permissions/)). Run config snapshot includes tool permissions; in headless orchestrator runs, "ask" maps to deny or HITL. Tier/subagent config may override permissions per agent. See Tools.md §2.5 and §8.2-§8.3.
 
+**Capability introspection and media-generation gating:** The Orchestrator MUST call `capabilities.get` when a tier or subagent attempts to use media-generation capabilities. The response determines which capabilities (`media.image`, `media.video`, `media.tts`, `media.music`) are currently enabled. The Orchestrator MUST NOT dispatch `media.generate` for a capability that is disabled; instead, it MUST log the disabled reason and either skip the media step or surface the issue via the thread/Dashboard CtA system. Subagents MAY propose media generation in their plans, but the Orchestrator gates actual execution on real-time capability state. Canonical capability IDs, disabled reasons, and gating rules are defined in `Plans/Media_Generation_and_Capabilities.md` §1 (SSOT); do not restate here.
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM
+
 **ELI5/Expert copy alignment:** Any authored tooltip/help/interviewer copy referenced by orchestrator-facing UI in this plan (for example plan-mode hints, tier explanations, interview controls) must follow `Plans/FinalGUISpec.md` §7.4.0. Defaults are fixed: app-level **Interaction Mode (Expert/ELI5)** ON (ELI5), chat-level **Chat ELI5** OFF (Expert). The chat toggle only affects assistant chat style prompts and must not alter tooltip/interviewer variant selection.
 
 ### Respecting PRD/plan: subagent personas and parallelization
