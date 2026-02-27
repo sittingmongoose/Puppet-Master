@@ -266,6 +266,24 @@ Deterministic alias resolution requirements:
 
 Aliases and variants are distinct concepts: aliases are lookup keys for model resolution, while variants are named model presets selected by the user.
 
+### 6.8 Canonical media model alias table
+
+<a id="MEDIA-ALIASES"></a>
+
+The following aliases are registered by default for media-generation models. They are resolved by `media.generate` `model_override` (§2.3 of `Plans/Media_Generation_and_Capabilities.md`) and by any other model-override surface that uses alias resolution.
+
+| Alias (normalized key) | Canonical model ID | Kind(s) |
+|------------------------|--------------------|---------|
+| `nano banana` | `google/gemini-2.0-flash-preview-image-generation` | image |
+| `nano banana pro` | `google/imagen-4` | image |
+| `veo fast` | `google/veo-2` | video |
+| `tts flash` | `google/gemini-2.5-flash-preview-tts` | tts |
+| `tts pro` | `google/gemini-2.5-pro-preview-tts` | tts |
+
+Alias keys are normalized per §6.7 rules (lowercase, collapse spaces/underscores/hyphens). Implementations MUST ship these aliases in the default alias registry; users MAY add or override aliases in config.
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE, PolicyRule:Decision_Policy.md§2
+
 ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE, PolicyRule:Decision_Policy.md§2
 
 ---

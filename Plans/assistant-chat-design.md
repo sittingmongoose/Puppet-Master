@@ -299,7 +299,7 @@ Git and GitHub commands are available in chat when the active project is a git r
 
 ## 7. Attachments, Web Search, and Extensibility
 
-- **Files and photos:** User can add files to the chat, especially **photos**, so the agent has visual and file context. **Paste** (e.g. image from clipboard) and **drag-drop** into the composer are supported; same attachment pipeline as "add files." Attachments are included in the context sent to the platform CLI (per platform capabilities; all five platforms support image **attachments** per AGENTS.md). **Image generation vs. attachment:** All platforms can *accept* image attachments as input context, but image *generation* (creating new images from prompts) is available only via Cursor-native generation (no API key required) or Google Gemini API-backed generation (requires a configured Google API key). For the full generation contract, capability gating, and disabled-reason semantics, see `Plans/Media_Generation_and_Capabilities.md` §1–§2 (SSOT).
+- **Files and photos:** User can add files to the chat, especially **photos**, so the agent has visual and file context. **Paste** (e.g. image from clipboard) and **drag-drop** into the composer are supported; same attachment pipeline as "add files." Attachments are included in the context sent to the platform CLI (per platform capabilities; all providers support image **attachments** per AGENTS.md). **Image generation vs. attachment:** All platforms can *accept* image attachments as input context, but image *generation* (creating new images from prompts) is available only via Cursor-native generation (no API key required) or Google Gemini API-backed generation (requires a configured Google API key). For the full generation contract, capability gating, and disabled-reason semantics, see `Plans/Media_Generation_and_Capabilities.md` §1–§2 (SSOT).
 
 ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE, ToolID:media.generate
 
@@ -782,7 +782,7 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assist
 - **VBW:** https://github.com/yidakee/vibe-better-with-claude-code-vbw (token efficiency, context compilation).  
 - **GSD:** https://github.com/gsd-build/get-shit-done (spec-driven development, context engineering).  
 - **yume:** https://github.com/aofp/yume (session recovery, native UI for Claude Code).
-- **Plans/assistant-chat-design.md §23:** Gaps, competitive comparison (OpenCode, Claude Code, Codex, Gemini CLI, Antigravity, Cursor), and recommended enhancements.
+- **Plans/assistant-chat-design.md §23:** Gaps, competitive comparison (OpenCode, Claude Code, Codex, Gemini, Antigravity, Cursor), and recommended enhancements.
 - **Plans/assistant-chat-design.md §24:** Chat thread performance, virtualization, and flicker avoidance (long threads, Slint, virtualized list, stable IDs, incremental stream updates).
 - **Plans/newfeatures.md §15.11:** Virtualization for long lists (messages, iterations, logs); overscan, visible slice, placeholder height. **Plans/FinalGUISpec.md**, **Plans/feature-list.md:** Slint + winit, virtualized file tree, backend (Skia).
 
@@ -816,14 +816,14 @@ The **Assistant** can **call up live testing tools**: the user (or the Assistant
 
 ## 23. Gaps, Competitive Comparison, and Enhancements
 
-This section reviews the Assistant & Chat plan for **gaps**, **potential problems**, and **competitive coverage** (vs. OpenCode, Claude Code, Codex, Gemini CLI, Antigravity, Cursor). **All gaps listed below are adopted as MVP:** the main body of this plan (§1-§22) has been updated to include every adopted requirement (slash commands, interrupt vs. stop, up to 2 queued messages FIFO, Plan read-only until execute, thinking toggle, export, compact, model switch UI, resume/rewind, revert last edit, session share, HITL dashboard + thread notification).
+This section reviews the Assistant & Chat plan for **gaps**, **potential problems**, and **competitive coverage** (vs. OpenCode, Claude Code, Codex, Gemini, Antigravity, Cursor). **All gaps listed below are adopted as MVP:** the main body of this plan (§1-§22) has been updated to include every adopted requirement (slash commands, interrupt vs. stop, up to 2 queued messages FIFO, Plan read-only until execute, thinking toggle, export, compact, model switch UI, resume/rewind, revert last edit, session share, HITL dashboard + thread notification).
 
 ### 23.1 Gaps (all adopted as MVP)
 
 | Gap | Description | Recommendation |
 |-----|-------------|----------------|
 | **Thinking/reasoning visibility** | §15 mentions "thought stream" for Interview; the plan does not explicitly require a **toggle** to show/hide extended thinking in **Assistant** chat (e.g. when platform streams `thinking` events). Newfeatures.md §12 and §15.6 define stream event viz and "Interleaved Thinking Toggle" but are not cited in this plan. | Add a brief requirement: Assistant chat can show/hide extended thinking when the normalized stream provides it; align with Plans/newfeatures.md §12, §15.6. |
-| **Slash commands** | Competitors (OpenCode, Codex, Claude Code, Gemini CLI) support slash commands (e.g. `/model`, `/compact`, `/new`, `/export`). This plan does not mention slash commands or a command palette for chat. | Consider adding: chat supports slash-style or command-palette actions (e.g. switch model, new thread, export, compact session) for keyboard-first users; can be phased after MVP. |
+| **Slash commands** | Competitors (OpenCode, Codex, Claude Code, Gemini) support slash commands (e.g. `/model`, `/compact`, `/new`, `/export`). This plan does not mention slash commands or a command palette for chat. | Consider adding: chat supports slash-style or command-palette actions (e.g. switch model, new thread, export, compact session) for keyboard-first users; can be phased after MVP. |
 | **Session export / share** | OpenCode has `/export` (conversation to Markdown) and `/share`; Codex has resume/transcripts. This plan has "chat history search" but no explicit **export conversation** (e.g. to Markdown) or **share session** (link or bundle). | Add: user can export current thread (or conversation) to Markdown (or JSON); optional "share session" (e.g. bundle for support or replay) as enhancement. |
 | **Session compact / compress** | OpenCode's `/compact` compresses session history. We have §16 (context & truncation) and newfeatures.md §10 (auto-compaction) but no explicit **user-triggered "compact this session"** in chat. | Consider: user-initiated "Compact session" (or "Summarize and continue") in chat, triggering the same compaction logic as auto-compact; document in §16 or reference newfeatures.md §10. |
 | **Model switch mid-thread** | Plan says "Platform/model/effort are selectable at any time" and "context is passed along" when switching; it does not say **where** (toolbar, thread header, slash command) or whether the **current run** is cancelled when the user switches model mid-stream. | **Addressed in §1.1:** Controls in chat header or footer; change applies to next turn; current run continues with previous selection unless user stops it; `/model` can open model selector. |
@@ -832,7 +832,7 @@ This section reviews the Assistant & Chat plan for **gaps**, **potential problem
 | **Interrupt vs. steer semantics** | Codex has had bugs where ESC acts like "steer" instead of true interrupt. Plan has "Stop" and "Send now (steer)" but does not distinguish **hard stop** (cancel current turn, no new input) vs. **steer** (inject new message as next input). | Clarify: "Stop" = cancel current run, no message sent; "Send now" = steer (inject message). Ensure UI and backend do not conflate the two. |
 | **Permission granularity** | Claude Code has plan / default / acceptEdits / bypassPermissions; we have YOLO vs Regular and "approve once" vs "approve for session." We do not have an explicit **read-only (plan) mode** in the mode table; Ask is read-only but not named as "plan." | Consider: explicit "Plan (read-only)" mode or alias in UI for Ask when user wants plan-only behavior; or document that Ask maps to platform plan/read-only where available. |
 | **LSP / language intelligence** | **LSP** = Language Server Protocol (editor + Chat: diagnostics, hover, go-to-definition, etc.). | **In scope for MVP.** Plans/LSPSupport.md §5.1 (LSP in the Chat Window); assistant-chat-design §9.1. Full LSP in editor (FileManager.md) and Chat (diagnostics in context, @ symbol with LSP, code-block hover/definition, Problems link). |
-| **Agent skills (Gemini-style)** | Gemini CLI has "Agent Skills" (load-on-demand by trigger). Newfeatures.md §6 mentions skills. | Reference newfeatures.md §6; skill triggers can be added when we implement skills. |
+| **Agent skills (Gemini-style)** | Gemini has "Agent Skills" (load-on-demand by trigger). Newfeatures.md §6 mentions skills. | Reference newfeatures.md §6; skill triggers can be added when we implement skills. |
 | **Resume / rewind in chat** | Resume thread from state; rewind/restore to message N. | **Adopted:** §11 (Threads) now requires resume and rewind; §5 (Commands) exposes them. |
 | **Inbox / per-agent threads** | **Inbox-per-agent** = one conversation thread per agent (e.g. Antigravity). We have multiple threads and crew, not "inbox per agent." | Out of scope for MVP; we do not model inbox-per-agent. |
 | **Real-time collaboration** | **Real-time collaboration** = multiple humans (or humans + agents) editing the same project at once with live updates. | Out of scope for MVP; not in this plan. |
@@ -851,7 +851,7 @@ This section reviews the Assistant & Chat plan for **gaps**, **potential problem
 
 ### 23.3 Competitive comparison (what others have)
 
-| Feature | OpenCode | Claude Code | Codex | Gemini CLI | Antigravity | Cursor | Our plan |
+| Feature | OpenCode | Claude Code | Codex | Gemini | Antigravity | Cursor | Our plan |
 |---------|----------|-------------|-------|------------|------------|--------|----------|
 | **Steer / queue** | -- | -- | ✅ Steer, queue | -- | -- | -- | ✅ §4 |
 | **Queued message above chat, edit + send now** | -- | -- | (extension lags CLI) | -- | -- | -- | ✅ §4 |

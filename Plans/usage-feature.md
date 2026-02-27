@@ -179,11 +179,12 @@ Beyond state-file aggregation, each platform can augment Usage with API or CLI d
 - **What we get:** Organization-level usage and cost; `customer_type`, `subscription_type` for plan detection. Per-session usage also available from **stream-json** output when we use `--output-format stream-json` (usage events in the stream).
 - **Usage feature:** Use Admin API for 5h/7d or org windows when key is set; use stream-json usage events for per-run tokens and optional mid-stream context %. No SDK required for CLI-based runs.
 
-### Gemini -- APIs and CLI (mixed)
+### Gemini -- Direct-provider (local counters + estimated cost)
 
-- **Availability:** **Cloud Quotas API** (`cloudquotas.googleapis.com`): quota limits, usage counts, reset times when `GOOGLE_CLOUD_PROJECT` and (optionally) `GOOGLE_APPLICATION_CREDENTIALS` are set. **Error parsing:** "Your quota will reset after 8h44m7s." from CLI errors. **CLI:** `gemini` CLI may expose usage or account info via a flag or subcommand -- **to be confirmed** (e.g. `gemini --account` or similar; not all platforms document this).
-- **What we're not sure about:** Exact shape of Gemini's usage/limits from (1) CLI only (no SDK in our stack today), (2) Cloud Quotas API response (which metrics map to "5h" or "7d" or a single quota window). Plan detection is inferred from quota limits; no explicit "plan name" unless we derive it from limits.
-- **Usage feature:** (1) Use Cloud Quotas API when credentials are set to get quota/usage and show in Usage view with a label like "Gemini quota". (2) Keep error-message parsing for reset countdown when a limit is hit. (3) Document in UI what "Gemini quota" means (e.g. "Quota window -- resets per API response or error message"). (4) If Gemini CLI adds an account/usage command, add a reader for it and document in this plan.
+- **Availability:** Gemini is a **Direct-provider**. Puppet Master records local per-run usage events into `usage.jsonl` and can display **estimated** cost (estimate only).
+- **What we show (authoritative):** Local counters and ledger derived from `usage.jsonl` (e.g., 5h/7d rollups) plus per-run totals when available from provider responses.
+- **Optional external reference:** Provide an optional UI link/button to AI Studio "Usage & Limits" for account-level quota/limit visibility. Do **not** claim authoritative remaining quota in-app unless a supported API exists for the configured key/account.
+
 
 ### Summary table (augmentation sources)
 
@@ -193,14 +194,14 @@ Beyond state-file aggregation, each platform can augment Usage with API or CLI d
 | **Codex** | CLI stream + provider data         | CLI login / `CODEX_API_KEY`   | Per-run usage from CLI JSON/JSONL + optional provider quota data.      |
 | **Copilot**| CLI + REST metrics API            | `GITHUB_TOKEN` / `GH_TOKEN`  | Per-run usage from CLI; org-level from `/orgs/{org}/copilot/metrics`.  |
 | **Claude**| Admin API + stream-json usage     | `ANTHROPIC_API_KEY`          | Org usage + plan; per-run tokens from stream.                          |
-| **Gemini**| Cloud Quotas API + error parsing  | `GOOGLE_CLOUD_PROJECT`, creds| Quota/usage from API; reset time from errors; do not rely on a CLI account/usage subcommand. |
+| **Gemini**| Local counters + estimated cost (no authoritative quota) | Google Gemini API key (see Settings) | Optional external link to AI Studio "Usage & Limits"; do not claim remaining quota in-app without a supported API. |
 
-**Implementation order:** State-file aggregation first (works for all platforms). Then add augmentation per platform: Claude (Admin API + stream) and error parsing (Codex, Gemini) are already documented; next wire Cursor API, Codex CLI usage enrichment, Copilot CLI + metrics API, and Gemini Cloud Quotas (and any CLI usage when confirmed).
+**Implementation order:** State-file aggregation first (works for all platforms). Then add augmentation per platform: Claude (Admin API + stream) and error parsing (Codex) is already documented; next wire Cursor API, Codex CLI usage enrichment, Copilot CLI + metrics API, and Gemini estimated-cost display (plus optional AI Studio link).
 
 ## Data and Backend (conceptual)
 
 - **Data layer:** Reuse and extend existing usage/plan-detection logic. Expose a clear "current usage" contract (per platform) that the GUI can poll or subscribe to (e.g. 5h used/limit, 7d used/limit, plan label). **Primary input:** aggregate from `usage.jsonl` (and optional `summary.json`); secondary: platform APIs where configured.
-- **Sources:** Prefer **state JSON/JSONL first** (usage.jsonl, summary.json, active-subagents.json); then **per-platform API/CLI** (see "Per-platform usage data (API / CLI)"): Cursor API (usage/account only -- we do not use it for model invocation; OAuth + CLI for that), Codex CLI stream + provider data, Copilot CLI + GitHub Copilot metrics API, Claude Admin API + stream-json usage, Gemini Cloud Quotas API + error parsing. Document which platforms support live vs after-run stats. AGENTS.md "Cursor | No API available" refers to model invocation; Cursor has a separate API for usage/limits that we may use to augment the Usage view.
+- **Sources:** Prefer **state JSON/JSONL first** (usage.jsonl, summary.json, active-subagents.json); then **per-platform API/CLI** (see "Per-platform usage data (API / CLI)"): Cursor API (usage/account only -- we do not use it for model invocation; OAuth + CLI for that), Codex CLI stream + provider data, Copilot CLI + GitHub Copilot metrics API, Claude Admin API + stream-json usage, Gemini direct-provider usage (local counters + estimated cost). Document which platforms support live vs after-run stats. AGENTS.md "Cursor | No API available" refers to model invocation; Cursor has a separate API for usage/limits that we may use to augment the Usage view.
 - **Persistence:** Current `usage.jsonl` (and any future redb) remains the source for event-level data; aggregated 5h/7d may be derived or cached from the same data or from platform APIs.
 
 ## GUI Placement Options
@@ -218,7 +219,7 @@ The plan does not mandate A/B/C; the product can choose one and document it. Con
 - **Current state**
   - No 5h or 7d window is displayed anywhere in the app (Dashboard, Config, Ledger, or header).
   - **Data exists:** `usage.jsonl` has `timestamp`, `platform`, `tokens`, `tier_id`, `session_id` per event -- we can aggregate by 5h/7d from this file.
-  - `platforms::UsageTracker` has `QuotaInfo`, `PlanInfo`, and error parsing (Codex 5h message limit, Gemini "quota will reset after..."); the GUI never calls these.
+  - `platforms::UsageTracker` has `QuotaInfo`, `PlanInfo`, and error parsing (e.g., Codex 5h message limit); the GUI never calls these.
   - Doctor `usage_check` only counts ledger lines per platform; it does not compute 5h/7d or show limits.
 - **Desired**
   - Always-visible 5h/7d (or platform-equivalent window) per platform in at least one of: Dashboard, header, or dedicated Usage page.
@@ -230,7 +231,7 @@ The plan does not mandate A/B/C; the product can choose one and document it. Con
 ### Gap 2: No live platform usage APIs in GUI path
 
 - **Current state**
-  - AGENTS.md documents Claude Admin API (`/v1/organizations/usage_report/claude_code`), Copilot metrics API, Gemini Cloud Quotas, Codex/Gemini error parsing.
+  - AGENTS.md documents Claude Admin API (`/v1/organizations/usage_report/claude_code`), Copilot metrics API, Gemini direct-provider usage (local counters + estimated cost), Codex error parsing.
   - No app code path calls these APIs and exposes results to the UI.
   - Quota is inferred from config (`platform_config.quota`) or from error parsing only after a run fails.
 - **Desired**
@@ -302,7 +303,7 @@ The plan does not mandate A/B/C; the product can choose one and document it. Con
 ### Problem 1: Platform APIs require secrets
 
 - **Risk**
-  - Claude Admin API, Copilot metrics, Gemini quotas require `ANTHROPIC_API_KEY`, `GITHUB_TOKEN`/`GH_TOKEN`, `GOOGLE_CLOUD_PROJECT` (and possibly `GOOGLE_APPLICATION_CREDENTIALS`). Many users will not set these; 5h/7d from APIs would be missing or "N/A" for those platforms.
+  - Claude Admin API and Copilot metrics require `ANTHROPIC_API_KEY` and `GITHUB_TOKEN`/`GH_TOKEN`. Many users will not set these; 5h/7d from APIs would be missing or "N/A" for those platforms.
 - **Impact**
   - Users might assume "no data" means "no usage" instead of "API not configured"; or they may not know how to enable live data.
 - **Mitigation**
@@ -339,7 +340,7 @@ The plan does not mandate A/B/C; the product can choose one and document it. Con
 - **Impact**
   - User misinterprets "5h" for Gemini as the same as Codex; or we show misleading comparisons.
 - **Mitigation**
-  - Per-platform labels in the UI (e.g. "Codex 5h", "Claude 7d", "Gemini quota") and a short tooltip or doc link explaining what each window means.
+  - Per-platform labels in the UI (e.g. "Codex 5h", "Claude 7d", "Gemini (estimated)") and a short tooltip or doc link explaining what each window means.
   - Avoid one generic "5h/7d" column when semantics differ; use platform-specific columns or clearly labeled sections.
 
 ### Problem 5: Ledger file size
@@ -480,7 +481,7 @@ The plan does not mandate A/B/C; the product can choose one and document it. Con
 | 2026-02-21 | Fleshed out: Gaps (5h/7d not in GUI, no live APIs in GUI path, Ledger vs usage_tracker split, quota only from errors, alert threshold, analytics, interview/orchestrator policy); Potential problems (API secrets, rate limits, two tracker types, platform semantics, file size, stale data, multi-project); Enhancements (time-window selector, reset countdown, per-tier usage, export, header compact, Doctor integration, cost column, alerts history). |
 | 2026-02-21 | Data sources: added "Data Sources: State Files (JSON/JSONL)" -- usage.jsonl is primary source for Ledger and 5h/7d aggregation; summary.json (STATE_FILES §5.3) and active-subagents.json can enrich. State-file-first approach so we get most Usage info from existing JSON/JSONL without platform APIs. |
 | 2026-02-21 | Fleshed out Gaps, Potential Problems, Enhancements: each gap has Current state / Desired / Acceptance; each problem has Risk / Impact / Mitigation; each enhancement has Benefit / Notes / Phase. |
-| 2026-02-21 | Per-platform usage data: added section on Cursor API (augment with usage/limits; CURSOR_API_KEY); Codex CLI stream/provider data; Copilot CLI + metrics API; Claude Admin API + stream-json (existing); Gemini (Cloud Quotas API + error parsing; CLI account/usage subcommand not required). Summary table and implementation order. |
+| 2026-02-21 | Per-platform usage data: added section on Cursor API (augment with usage/limits; CURSOR_API_KEY); Codex CLI stream/provider data; Copilot CLI + metrics API; Claude Admin API + stream-json (existing); Gemini (direct-provider: local counters + estimated cost; optional AI Studio link; no CLI usage assumptions). Summary table and implementation order. |
 | 2026-02-21 | Clarified Cursor API: usage/account/limits only -- we do not use it for model invocation; model engagement stays OAuth + CLI. AGENTS.md "No API available" refers to model invocation; Cursor has a separate API for augmenting the Usage view. |
 | 2026-02-22 | Added "Storage dependency (implementation)": Usage depends on seglog + redb + projectors + analytics scan; embedded implementation checklist from storage-plan.md; clarified state-file-first fallback until stack exists; cross-referenced storage-plan.md and deterministic verifier/evidence contracts in Relationship to Existing Docs. |
 | 2026-02-23 | Added widget-composed page layout addendum (sections below): Usage page is fully widget-composed with grid-based resizing, per-widget config, Multi-Account widget as first-class catalog entry, and Dashboard reuse via add-widget flow. |

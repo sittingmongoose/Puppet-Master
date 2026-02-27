@@ -275,7 +275,7 @@ MCP is **in scope** for this document: MCP-discovered tools are first-class entr
 | Mechanism | What it adds | Where it's configured | Notes |
 |-----------|--------------|------------------------|-------|
 | **MCP server** | New tools/resources/prompts from one server | Per-platform MCP config (see §7) | Single MCP server can expose many tools. Context7, cited web search, GUI automation; see newtools.md. |
-| **Platform CLI flags** | Allow/deny built-in tools (shell, write, MCP by name) | Run config / runner args | Copilot: `--allow-tool` / `--deny-tool`. Claude: `--allowedTools`. Gemini: `--approval-mode`. |
+| **Platform CLI flags** | Allow/deny built-in tools (shell, write, MCP by name) | Run config / runner args | Copilot: `--allow-tool` / `--deny-tool`. Claude: `--allowedTools`. Gemini: N/A (Direct-provider; enforced by Puppet Master). |
 | **Central tool registry** | All tools (MCP + native) registered and gated by policy | Puppet Master core (rewrite) | Permissions, validation, normalized results; events in seglog; analytics on latency/errors. |
 | **GUI tool catalog** | Framework-specific tools (e.g. Playwright, headless runners) offered in Interview | DRY:DATA:gui_tool_catalog; interview config | newtools.md: discovery, user choice, test strategy and PRD wiring. |
 | **GUI MCP settings** | Enable/disable MCP servers, API keys (e.g. Context7) | Config → MCP (or Advanced → MCP / Tools) | newtools §8.1; MCP tools then integrated per §5 above. |
@@ -334,7 +334,7 @@ The runner (or a dedicated module) derives platform-specific CLI flags from the 
 
 - **Claude:** `--allowedTools "Read,Edit,Bash"` → build list from registry "allow" + "ask" (ask still requires approval at runtime); if edit is deny, omit Edit.
 - **Copilot:** `--allow-tool 'shell(git)'` etc., or `--allow-all-tools` when policy is permissive; `--deny-tool` for denied tools. Build allow/deny lists from registry.
-- **Gemini:** `--approval-mode yolo` when all tools are allow; `auto_edit` or more restrictive when some are ask/deny.
+- **Gemini:** N/A (Direct-provider; tool gating is enforced by Puppet Master policy, not provider CLI flags).
 
 **Single source of truth:** Registry + policy (from config) → derive flags per platform; no hardcoding in runner. Document the derivation rules in platform_specs or a single "tool policy → CLI args" function.
 
@@ -381,7 +381,7 @@ If an MCP server is enabled in config but fails to start or connect at run start
 | **Permission change mid-run** | User changes Settings while a run is active. | Run uses immutable snapshot at start; no change until next run (FinalGUISpec §9.7; §8.1). |
 | **MCP server down** | Context7 (or other server) enabled but fails to start. | Hide that server's tools for the run or mark unavailable; Doctor shows "Context7 unavailable" (§8.7). |
 | **Tool usage widget empty** | New install or no tool events yet. | Show "No tool data yet -- run a task to see tool usage" and short explanation; don't leave blank. |
-| **All five platforms in MCP GUI** | FinalGUISpec listed only Cursor, Claude, Gemini for MCP toggles. | Ensure **Codex** and **Copilot** are included in Settings > Advanced > MCP Configuration (all five platforms). |
+| **All providers in MCP GUI** | FinalGUISpec listed only Cursor, Claude, Gemini for MCP toggles. | Ensure **Codex** and **Copilot** are included in Settings > Advanced > MCP Configuration (all providers). |
 | **Policy application point** | Where in the stack we enforce allow/deny/ask. | In Provider/runner when processing tool call from platform stream; before executing or forwarding (§8.2). |
 | **LSP server crash mid-call** | LSP server crashes or disconnects while handling lsp.references / definition / hover / rename. | lsp adapter returns `{ "error": "lsp_unavailable", "message": "LSP server closed or timed out" }` (§3.5); enforce request timeout (e.g. 10s). |
 
@@ -459,7 +459,7 @@ Implement a single function or table that, given the **resolved** permission set
 |----------|------------------|
 | Claude | Build `--allowedTools "Read,Edit,Bash"` from tools that are allow or ask (ask still needs runtime approval). Omit any tool that is deny. |
 | Copilot | Build `--allow-tool '...'` list from allow+ask; build `--deny-tool '...'` from deny. If all allow, can use `--allow-all-tools` and only pass `--deny-tool` for denied. |
-| Gemini | `--approval-mode yolo` if all tools allow; else `auto_edit` or more restrictive; document mapping in implementation plan. |
+| Gemini | N/A (Direct-provider; tool gating is enforced by Puppet Master policy, not provider CLI flags). |
 | Cursor, Codex | No single CLI flag for tool allowlist. Tool set is determined by MCP config and platform behavior. Runner **filters** tool calls against policy before forwarding: allow → forward; deny → return "Tool disabled" to agent; ask → map to deny or HITL in headless. Document in implementation plan. |
 
 No hardcoded tool names in runner; all names come from registry + policy.
@@ -471,7 +471,7 @@ No hardcoded tool names in runner; all names come from registry + policy.
 | Plan | How tool support relates |
 |------|---------------------------|
 | **rewrite-tie-in-memo.md** | Central tool registry + policy engine; no per-provider special cases; tool results in unified event model → seglog → projections. |
-| **newtools.md** | GUI testing tools catalog, **MCP settings in GUI** (Context7, others), MCP config for all five platforms, cited web search (MCP option). Tool support here; MCP config/GUI there. |
+| **newtools.md** | GUI testing tools catalog, **MCP settings in GUI** (Context7, others), MCP config for all providers, cited web search (MCP option). Tool support here; MCP config/GUI there. |
 | **storage-plan.md** | Tool invocation/completion events in seglog; tool latency/errors in analytics scan → redb; dashboard/usage rollups. |
 | **agent-rules-context.md** | Rules and context injected into every run; tool policy and safe-edit (FileSafe) align with central policy. |
 | **orchestrator-subagent-integration.md** | Run config and tier wiring; **41 subagents** canonical list (§4, subagent_registry); task tool validates subagent_type against this list. MCP and tool flags passed to platform runner from same run-config build. |
@@ -498,7 +498,7 @@ Use this list in order to derive a step-by-step implementation plan. Dependencie
 8. **Usage widget and rollups** -- Analytics scan → redb `rollups` / `tool_usage.{window}` (§8.4); Usage view §7.8; empty state message.
 9. **Central registry and policy engine** -- Registry + policy; single API e.g. `policy.may_execute_tool` (§10.6).
 10. **Registry → CLI derivation** -- Single function per platform (§8.3, §10.8).
-11. **MCP integration** -- Discovery, namespacing, hide if server fails (§8.7); all five platforms in GUI.
+11. **MCP integration** -- Discovery, namespacing, hide if server fails (§8.7); all providers in GUI.
 12. **Ask UI and headless** -- Assistant: Once / For session / Deny; headless: ask → deny or HITL (§10.7).
 13. **LSP tool promotion** -- MVP when LSP is MVP (Plans/LSPSupport.md §9.1); no feature flag; rename requires approval.
 14. **Doctor and docs** -- MCP/LSP checks; document default table and resolution.
