@@ -208,6 +208,16 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-001, ContractName
 - **Tolerant parsing:** malformed/partial lines MUST NOT crash the run; they MUST be handled by the Reconciler and surfaced as diagnostics.
 ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-009, ContractName:Plans/Architecture_Invariants.md#INV-001, ContractName:Plans/newfeatures.md, Gate:GATE-009
 
+### Extended mapping semantics (normative)
+
+- **HITL pause semantics:** When a Provider signals `input_required`, the adapter emits a `diagnostic` event (category `input_required`). This is a non-terminal pause: no `done` event is emitted, and the `seq` counter continues from the pause point when input is provided.
+- **Artifact identity and chunk semantics:** Artifact identity (`artifact_id`), append/last-chunk flags, and part kind MUST be preserved in `diagnostic.details` so that consumers can reconstruct artifact assembly without transport-specific knowledge.
+- **Chat-log projection:** A chat-log view MAY be derived from the normalized stream by filtering `text_delta` events. This projection exists as a debug-only view and MUST NOT be treated as the canonical event history.
+
+Canonical mapping SSOT for upstream external-framework and A2A bridge concepts: `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.md, Gate:GATE-009
+
 ---
 
 ## Transport ingestion + mapping rules

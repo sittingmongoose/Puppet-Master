@@ -12,7 +12,7 @@ Use this list in order to derive a step-by-step implementation plan. Dependencie
 8. **Usage widget and rollups** -- Analytics scan → redb `rollups` / `tool_usage.{window}` (§8.4); Usage view §7.8; empty state message.
 9. **Central registry and policy engine** -- Registry + policy; single API e.g. `policy.may_execute_tool` (§10.6).
 10. **Registry → CLI derivation** -- Single function per platform (§8.3, §10.8).
-11. **MCP integration** -- Discovery, namespacing, hide if server fails (§8.7); all five platforms in GUI.
+11. **MCP integration** -- Discovery, namespacing, hide if server fails (§8.7); all providers in GUI.
 12. **Ask UI and headless** -- Assistant: Once / For session / Deny; headless: ask → deny or HITL (§10.7).
 13. **LSP tool promotion** -- MVP when LSP is MVP (Plans/LSPSupport.md §9.1); no feature flag; rename requires approval.
 14. **Doctor and docs** -- MCP/LSP checks; document default table and resolution.

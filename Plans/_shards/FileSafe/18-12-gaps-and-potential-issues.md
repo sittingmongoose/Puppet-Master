@@ -38,7 +38,7 @@
 - Platform-specific prompt parsers
 - Fallback to simple pattern matching
 - Document platform-specific behavior
-- Test with all 5 platforms
+- Test across all providers
 
 ### 12.5 Write-scope plan integration
 

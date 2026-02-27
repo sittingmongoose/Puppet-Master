@@ -55,7 +55,7 @@ Implement a single function or table that, given the **resolved** permission set
 |----------|------------------|
 | Claude | Build `--allowedTools "Read,Edit,Bash"` from tools that are allow or ask (ask still needs runtime approval). Omit any tool that is deny. |
 | Copilot | Build `--allow-tool '...'` list from allow+ask; build `--deny-tool '...'` from deny. If all allow, can use `--allow-all-tools` and only pass `--deny-tool` for denied. |
-| Gemini | `--approval-mode yolo` if all tools allow; else `auto_edit` or more restrictive; document mapping in implementation plan. |
+| Gemini | N/A (Direct-provider; tool gating is enforced by Puppet Master policy, not provider CLI flags). |
 | Cursor, Codex | No single CLI flag for tool allowlist. Tool set is determined by MCP config and platform behavior. Runner **filters** tool calls against policy before forwarding: allow → forward; deny → return "Tool disabled" to agent; ask → map to deny or HITL in headless. Document in implementation plan. |
 
 No hardcoded tool names in runner; all names come from registry + policy.

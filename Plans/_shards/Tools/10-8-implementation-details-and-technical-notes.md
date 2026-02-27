@@ -27,7 +27,7 @@ The runner (or a dedicated module) derives platform-specific CLI flags from the 
 
 - **Claude:** `--allowedTools "Read,Edit,Bash"` → build list from registry "allow" + "ask" (ask still requires approval at runtime); if edit is deny, omit Edit.
 - **Copilot:** `--allow-tool 'shell(git)'` etc., or `--allow-all-tools` when policy is permissive; `--deny-tool` for denied tools. Build allow/deny lists from registry.
-- **Gemini:** `--approval-mode yolo` when all tools are allow; `auto_edit` or more restrictive when some are ask/deny.
+- **Gemini:** N/A (Direct-provider; tool gating is enforced by Puppet Master policy, not provider CLI flags).
 
 **Single source of truth:** Registry + policy (from config) → derive flags per platform; no hardcoding in runner. Document the derivation rules in platform_specs or a single "tool policy → CLI args" function.
 

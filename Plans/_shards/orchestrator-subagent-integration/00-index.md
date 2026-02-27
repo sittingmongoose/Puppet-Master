@@ -16,7 +16,7 @@ Canonical source: [Plans/orchestrator-subagent-integration.md](../../orchestrato
 - [08-integration-with-orchestrator.md](08-integration-with-orchestrator.md) — ## Integration with Orchestrator
 - [09-benefits.md](09-benefits.md) — ## Benefits
 - [10-implementation-phases.md](10-implementation-phases.md) — ## Implementation Phases
-- [11-platform-cli-verification-subagent-invocation-testing.md](11-platform-cli-verification-subagent-invocation-testing.md) — ## Platform CLI Verification & Subagent Invocation Testing
+- [11-provider-connectivity-smoke-tests-subagent-invocation-testing.md](11-provider-connectivity-smoke-tests-subagent-invocation-testing.md) — ## Provider Connectivity Smoke Tests & Subagent Invocation Testing
 - [12-plan-mode-strategy-defaults.md](12-plan-mode-strategy-defaults.md) — ## Plan Mode Strategy & Defaults
 - [13-gui-and-backend-scope-all-in-scope-now.md](13-gui-and-backend-scope-all-in-scope-now.md) — ## GUI and Backend Scope (All In-Scope Now)
 - [14-gaps-and-clarifications.md](14-gaps-and-clarifications.md) — ## Gaps and Clarifications

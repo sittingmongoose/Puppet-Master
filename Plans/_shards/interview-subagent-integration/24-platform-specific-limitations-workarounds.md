@@ -7,12 +7,6 @@
 2. Fallback to direct platform invocation without subagents
 3. Monitor Cursor releases for CLI fix
 
-### Gemini Experimental Flag Requirement
-**Issue:** Gemini requires `enableAgents: true` in settings.json
-**Solution:** 
-- Check for `.gemini/settings.json` existence
-- Automatically add/update experimental flag if needed
-- Warn user if flag cannot be set
 
 ### Codex MCP Server Requirement
 **Issue:** Codex subagents require MCP server mode

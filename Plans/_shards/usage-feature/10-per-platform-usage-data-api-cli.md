@@ -28,11 +28,12 @@ Beyond state-file aggregation, each platform can augment Usage with API or CLI d
 - **What we get:** Organization-level usage and cost; `customer_type`, `subscription_type` for plan detection. Per-session usage also available from **stream-json** output when we use `--output-format stream-json` (usage events in the stream).
 - **Usage feature:** Use Admin API for 5h/7d or org windows when key is set; use stream-json usage events for per-run tokens and optional mid-stream context %. No SDK required for CLI-based runs.
 
-### Gemini -- APIs and CLI (mixed)
+### Gemini -- Direct-provider (local counters + estimated cost)
 
-- **Availability:** **Cloud Quotas API** (`cloudquotas.googleapis.com`): quota limits, usage counts, reset times when `GOOGLE_CLOUD_PROJECT` and (optionally) `GOOGLE_APPLICATION_CREDENTIALS` are set. **Error parsing:** "Your quota will reset after 8h44m7s." from CLI errors. **CLI:** `gemini` CLI may expose usage or account info via a flag or subcommand -- **to be confirmed** (e.g. `gemini --account` or similar; not all platforms document this).
-- **What we're not sure about:** Exact shape of Gemini's usage/limits from (1) CLI only (no SDK in our stack today), (2) Cloud Quotas API response (which metrics map to "5h" or "7d" or a single quota window). Plan detection is inferred from quota limits; no explicit "plan name" unless we derive it from limits.
-- **Usage feature:** (1) Use Cloud Quotas API when credentials are set to get quota/usage and show in Usage view with a label like "Gemini quota". (2) Keep error-message parsing for reset countdown when a limit is hit. (3) Document in UI what "Gemini quota" means (e.g. "Quota window -- resets per API response or error message"). (4) If Gemini CLI adds an account/usage command, add a reader for it and document in this plan.
+- **Availability:** Gemini is a **Direct-provider**. Puppet Master records local per-run usage events into `usage.jsonl` and can display **estimated** cost (estimate only).
+- **What we show (authoritative):** Local counters and ledger derived from `usage.jsonl` (e.g., 5h/7d rollups) plus per-run totals when available from provider responses.
+- **Optional external reference:** Provide an optional UI link/button to AI Studio "Usage & Limits" for account-level quota/limit visibility. Do **not** claim authoritative remaining quota in-app unless a supported API exists for the configured key/account.
+
 
 ### Summary table (augmentation sources)
 
@@ -42,7 +43,7 @@ Beyond state-file aggregation, each platform can augment Usage with API or CLI d
 | **Codex** | CLI stream + provider data         | CLI login / `CODEX_API_KEY`   | Per-run usage from CLI JSON/JSONL + optional provider quota data.      |
 | **Copilot**| CLI + REST metrics API            | `GITHUB_TOKEN` / `GH_TOKEN`  | Per-run usage from CLI; org-level from `/orgs/{org}/copilot/metrics`.  |
 | **Claude**| Admin API + stream-json usage     | `ANTHROPIC_API_KEY`          | Org usage + plan; per-run tokens from stream.                          |
-| **Gemini**| Cloud Quotas API + error parsing  | `GOOGLE_CLOUD_PROJECT`, creds| Quota/usage from API; reset time from errors; do not rely on a CLI account/usage subcommand. |
+| **Gemini**| Local counters + estimated cost (no authoritative quota) | Google Gemini API key (see Settings) | Optional external link to AI Studio "Usage & Limits"; do not claim remaining quota in-app without a supported API. |
 
-**Implementation order:** State-file aggregation first (works for all platforms). Then add augmentation per platform: Claude (Admin API + stream) and error parsing (Codex, Gemini) are already documented; next wire Cursor API, Codex CLI usage enrichment, Copilot CLI + metrics API, and Gemini Cloud Quotas (and any CLI usage when confirmed).
+**Implementation order:** State-file aggregation first (works for all platforms). Then add augmentation per platform: Claude (Admin API + stream) and error parsing (Codex) is already documented; next wire Cursor API, Codex CLI usage enrichment, Copilot CLI + metrics API, and Gemini estimated-cost display (plus optional AI Studio link).
 

@@ -1,37 +1,38 @@
-## Platform CLI Verification & Subagent Invocation Testing
+## Provider Connectivity Smoke Tests & Subagent Invocation Testing
 
-### 1. Platform CLI Verification (Smoke Tests)
+### 1. Provider Connectivity Smoke Tests
 
-**Purpose:** Confirm that each platform's CLI can be invoked with a subagent-style prompt and returns a successful run with usable output. These tests validate the **invocation path** (binary, args, env) and **basic behavior**, not full orchestrator logic.
+**Purpose:** Confirm that each provider's invocation path (CLI for CLI-bridged providers, server endpoint/tool handshake for Server-bridged OpenCode, and API for Direct providers) can be exercised with a subagent-style prompt and returns a successful run with usable output. These tests validate the **invocation path** (binary/server/API, args, env) and **basic behavior**, not full orchestrator logic.
 
-**Scope:** One smoke test per platform (Cursor, Codex, Claude, Gemini, Copilot). Each test runs the real CLI with a minimal, non-destructive prompt that triggers subagent behavior (or equivalent) and asserts process success and output shape.
+**Scope:** One smoke test per provider (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini). CLI-bridged providers (Cursor, Claude Code) run their real CLIs; Server-bridged OpenCode is validated via server endpoint/tool handshake (no CLI requirement); Direct providers (Codex, GitHub Copilot, Gemini) use minimal API calls. Each test issues a minimal, non-destructive prompt that triggers subagent behavior (or equivalent) and asserts process/response success and output shape.
 
-**Environment gating:** Tests require the corresponding CLI to be installed and (where applicable) authenticated. They MUST be gated so they do not fail CI when CLIs or auth are missing.
+**Environment gating:** Tests are transport-specific and require corresponding prerequisites (CLI installed for CLI-bridged providers, reachable/authenticated OpenCode server for Server-bridged, API key/auth for Direct providers). They MUST be gated so they do not fail CI when prerequisites are missing.
 
 ContractRef: PolicyRule:Decision_Policy.md§2
 
 **Implementation:**
 
-- **Gate:** Only run platform CLI smoke tests when the appropriate env var is set and the CLI binary is on `PATH` (and optionally when a "CI has auth" flag is set). If not set or binary missing, skip with a clear "skipped: Cursor CLI not available" style message.
+- **Gate:** Only run provider connectivity smoke tests when the appropriate env var is set and required transport prerequisites are available. If not set or prerequisite missing, skip with a clear message (for example, "skipped: Cursor CLI not available", "skipped: OpenCode endpoint not configured", or "skipped: Gemini API key missing").
 - **Per-platform commands and assertions:**
   - **Cursor:** Run `agent -p "/code-reviewer Review the last commit." --output-format json` (or current equivalent from platform_specs). Assert exit code 0 (or documented non-zero for "no changes"). Assert stdout is non-empty and, if JSON, parseable; optionally assert presence of expected top-level keys.
-  - **Codex:** Run `codex exec "As code-reviewer, list the files you would review in this repo."` with project `--cd` and non-interactive flags. Assert exit code 0 and non-empty stdout (or documented behavior).
   - **Claude:** Run `claude -p "As code-reviewer, respond with only: READY" --no-session-persistence --output-format text`. Assert exit code 0 and stdout contains expected token (e.g. READY) or is non-empty.
-  - **Gemini:** Run `gemini -p "You are the code-reviewer agent. Reply with only: OK" --output-format json --approval-mode yolo` (or equivalent from platform_specs). Assert exit code 0 and non-empty, parseable JSON (or expected key).
-  - **Copilot:** Run `copilot -p "/agent code-reviewer Reply with only: OK" --allow-all-tools` (or equivalent). Assert exit code 0 and non-empty stdout.
+  - **OpenCode:** Validate ServerBridge connectivity by performing a minimal server endpoint/tool handshake (for example, list tools or execute a no-op tool call). Assert successful handshake/response and expected response shape.
+  - **Codex:** Codex is a Direct API provider; verify API connectivity with a minimal request. Assert successful response and non-empty, parseable JSON.
+  - **GitHub Copilot:** Copilot is a Direct API provider; verify API connectivity with a minimal request. Assert successful response and non-empty, parseable JSON.
+  - **Gemini:** Gemini is a Direct API provider; verify API connectivity by sending a minimal generation request via the Gemini API. Assert a successful response with non-empty, parseable JSON.
 - **Artifacts:** Optionally capture stdout/stderr to `.puppet-master/evidence/cli-smoke-<platform>.log` for debugging; do not assert on exact text, only on success and shape.
-- **Documentation:** In the plan and in code comments, document that these tests are optional/manual in CI and list required env vars (e.g. `RUN_CURSOR_CLI_SMOKE=1`, `RUN_CODEX_CLI_SMOKE=1`, ...) and that auth must be configured for the corresponding platform.
+- **Documentation:** In the plan and in code comments, document that these tests are optional/manual in CI and list required env vars (e.g. `RUN_CURSOR_CLI_SMOKE=1`, `RUN_OPENCODE_SERVER_SMOKE=1`, `RUN_GEMINI_API_SMOKE=1`) and that auth/connectivity must be configured for the corresponding provider.
 
 **Test location and naming:**
 
-- **File:** `puppet-master-rs/tests/platform_cli_smoke.rs` (or under `puppet-master-rs/tests/integration/`).
-- **Tests:** `cursor_cli_smoke`, `codex_cli_smoke`, `claude_cli_smoke`, `gemini_cli_smoke`, `copilot_cli_smoke`.
-- **Runner:** Use `#[ignore]` by default with a clear reason ("requires installed CLI and auth"); run with `cargo test --ignored` or a dedicated `cargo test platform_cli_smoke` when env is set.
+- **File:** `puppet-master-rs/tests/provider_connectivity_smoke.rs` (or under `puppet-master-rs/tests/integration/`).
+- **Tests:** `cursor_cli_smoke`, `claude_cli_smoke`, `opencode_server_smoke`, `codex_api_smoke`, `copilot_api_smoke`, `gemini_api_smoke`.
+- **Runner:** Use `#[ignore]` by default with a clear reason ("requires provider auth/connectivity prerequisites"); run with `cargo test --ignored` or a dedicated `cargo test provider_connectivity_smoke` when env is set.
 
 **Fleshed-out example (Cursor):**
 
 ```rust
-// puppet-master-rs/tests/platform_cli_smoke.rs
+// puppet-master-rs/tests/provider_connectivity_smoke.rs
 
 #[test]
 #[ignore = "Requires Cursor CLI (agent) installed and authenticated; set RUN_CURSOR_CLI_SMOKE=1"]
@@ -54,7 +55,7 @@ fn cursor_cli_smoke() {
 }
 ```
 
-Other platforms follow the same pattern: check env gate, find binary (from `platform_specs` or PATH), run the minimal subagent-style command, assert success and non-empty/parseable output.
+Other providers follow the same transport-specific pattern: check env gate, run the minimal connectivity probe for that provider transport (CLI, server handshake, or API), and assert success with non-empty/parseable output.
 
 ---
 
@@ -153,9 +154,9 @@ Both sections should be referenced from Phase 5 and from any "Testing" or "Verif
 
 ### 3. Plan Mode CLI Verification (Real-CLI Tests)
 
-**Purpose:** Confirm that each platform's CLI accepts and honors plan mode when invoked with the same flags the orchestrator uses (e.g. `--mode=plan`, `--permission-mode plan`, `--sandbox read-only`, `--approval-mode plan`). This validates plan mode end-to-end in the real CLIs, not just that we pass the right args.
+**Purpose:** Confirm that each platform's CLI accepts and honors plan mode when invoked with the same flags the orchestrator uses (e.g. `--mode=plan`, `--permission-mode plan`, `--sandbox read-only`). This validates plan mode end-to-end in the real CLIs, not just that we pass the right args.
 
-**Scope:** One plan-mode test per platform (Cursor, Codex, Claude, Gemini, Copilot). Each test runs the real CLI with plan mode enabled and a minimal prompt, then asserts process success and (where possible) that the platform behaved in a plan-like way (e.g. read-only, or plan output present).
+**Scope:** One plan-mode test per CLI-bridged provider (Cursor, Claude Code). For Direct-provider backends (e.g., Gemini), verify plan-mode behavior via API-based calls (plan mode is internal to Puppet Master, not provider CLI flags). Each test runs the real CLI with plan mode enabled and a minimal prompt, then asserts process success and (where possible) that the platform behaved in a plan-like way (e.g. read-only, or plan output present).
 
 **Environment gating:** Same as other CLI tests: require CLI on PATH and (where applicable) auth; gate with an env var (e.g. `RUN_PLAN_MODE_CLI_TESTS=1`) and use `#[ignore]` so CI without CLIs/auth still passes.
 
@@ -166,7 +167,7 @@ Both sections should be referenced from Phase 5 and from any "Testing" or "Verif
   - **Cursor:** `agent -p "Reply with only: PLAN_OK" --mode plan --output-format json`. Assert exit code 0 and non-empty stdout; optionally assert `--mode` and `plan` appear in the effective command or in logs.
   - **Claude:** `claude -p "Reply with only: PLAN_OK" --permission-mode plan --no-session-persistence --output-format text`. Assert exit code 0 and stdout contains expected token or is non-empty.
   - **Codex:** `codex exec "Reply with only: PLAN_OK" --sandbox read-only --json --color never --cd <workspace>`. Assert exit code 0 and non-empty stdout (read-only sandbox implies plan-like behavior).
-  - **Gemini:** `gemini -p "Reply with only: PLAN_OK" --approval-mode plan --output-format json` (and `--yolo` omitted). Assert exit code 0 and non-empty output; skip or warn if `experimental.plan` is not enabled in settings.
+  - **Gemini:** Gemini is a Direct API provider; verify plan-mode API call by sending a plan-constrained request via the Gemini API. Assert a successful response with non-empty output.
   - **Copilot:** Run with the same flags the Copilot runner uses when `plan_mode` is true (omit `--allow-all-paths` / `--allow-all-urls`), e.g. `copilot -p "Reply with only: PLAN_OK" --allow-all-tools --stream off -s`. Assert exit code 0 and non-empty stdout.
 - **Assertions:** (1) Process exit success. (2) Stdout non-empty (or parseable JSON where applicable). (3) Optionally: verify that the command line actually contained the plan-mode flag (e.g. by logging the command and asserting the flag string is present, or by using the same builder as the runner and checking args).
 - **Artifacts:** Optionally capture stdout/stderr to `.puppet-master/evidence/plan-mode-cli-<platform>.log` for debugging.

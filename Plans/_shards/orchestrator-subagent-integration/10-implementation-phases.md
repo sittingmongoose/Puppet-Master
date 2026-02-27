@@ -27,7 +27,7 @@
 - [ ] Test with different project types (Rust, Python, JavaScript, Swift)
 - [ ] Verify subagent selection accuracy
 - [ ] Refine selection logic based on results
-- [ ] **Platform CLI verification (smoke tests)**: Run real CLIs per platform with minimal subagent-style prompts; assert exit success and non-empty/expected output; environment-gated or manual where CI has no CLI/auth.
+- [ ] **Provider connectivity smoke tests**: Run transport-specific smoke checks with minimal subagent-style prompts; CLI smoke for CLI-bridged providers (Cursor, Claude Code), direct API smoke for Direct-provider Gemini, and server-endpoint/tool-handshake smoke for Server-bridged OpenCode; assert success and expected output/response shape; environment-gated or manual where CI has no auth/connectivity.
 - [ ] **Subagent-invocation integration tests**: Build and execute the actual orchestrator CLI command per platform for a given tier + subagent; verify invocation path and run completion.
-- [ ] **Plan mode CLI verification**: Run real CLIs per platform with plan mode enabled (e.g. `--mode=plan`, `--permission-mode plan`); assert exit success and that plan-mode flags are applied and honored; environment-gated like other CLI tests.
+- [ ] **Plan mode CLI verification (CLI-bridged only)**: Run real CLIs for CLI-bridged providers (Cursor, Claude Code) with plan mode enabled (e.g. `--mode=plan`, `--permission-mode plan`); assert exit success and that plan-mode flags are applied and honored; environment-gated like other CLI tests.
 

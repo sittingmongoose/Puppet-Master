@@ -9,7 +9,7 @@ Subagent files are currently located in `.claude/agents/` directory (41 subagent
    - **Cursor**: `.cursor/agents/` or `~/.cursor/agents/`
    - **Claude Code**: `.claude/agents/` or `~/.claude/agents/`
    - **Codex**: `.codex/agents/` or `~/.codex/agents/`
-   - **Gemini**: `.gemini/agents/` or `~/.gemini/agents/`
+   - **Gemini**: Gemini is a Direct API provider; subagents are orchestrated via Puppet Master's internal Persona system (no platform agent directory)
    - **GitHub Copilot**: `.github/agents/` or `~/.copilot/agents/`
 
 ### Implementation Strategy
