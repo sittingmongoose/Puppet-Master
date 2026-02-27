@@ -76,7 +76,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Arc
 | `artifact_update` | `run_id`, `source`, `artifact_id`, `artifact_name`, `append`, `last_chunk`, `part_kind` | An artifact chunk was received. `part_kind` is `"text"`, `"data"`, `"file"`, or `"mixed"`. |
 | `artifact_data_part` | `run_id`, `source`, `artifact_id`, `part_kind`, `part_index` | A data part within an artifact. `part_kind`: `"text"` or `"data"`. |
 | `artifact_file_part` | `run_id`, `source`, `artifact_id`, `file_path`, `persisted` | A file-type part within an artifact has been persisted. |
-| `raw_observation` | `run_id`, `source`, `event_type_name`, `truncated` | A raw upstream event was captured for debugging. Bounded ring buffer (see §8.5). |
+| `raw_observation` | `run_id`, `source`, `event_type_name`, `truncated` | A raw upstream event was captured for debugging. Bounded ring buffer (see §8.6). |
 | `overseer_audit_started` | `run_id`, `source`, `tier`, `audit_kind` | Overseer begins a subjective audit. `audit_kind`: `"start_of_tier"` or `"end_of_tier"`. |
 | `overseer_reviewer_spawned` | `run_id`, `source`, `reviewer_id`, `tier` | Overseer spawned a reviewer subagent. |
 | `overseer_reviewer_verdict` | `run_id`, `source`, `reviewer_id`, `verdict` | A reviewer returned a verdict. `verdict`: `"accept"` or `"remediate"`. |
@@ -286,4 +286,3 @@ Upstream A2A polling treats `TaskState.input_required` as a completion condition
 Where upstream emits incremental streaming text via artifact updates, adapters project text to `text_delta` while preserving artifact identity, chunk flags, and part kind in `diagnostic.details` (see §8.5; ref:autogen/a2a/utils.py::update_artifact_to_streaming).
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/newfeatures.md, ContractName:Plans/Architecture_Invariants.md#INV-001, ContractName:Plans/Project_Output_Artifacts.md, Gate:GATE-009
-
