@@ -31,7 +31,7 @@ Add **MCP settings** to the Config view so users can enable and configure MCP se
 
 ### 8.2 MCP and all platforms
 
-Ensure MCP configuration is applied in a way that works for **all five platforms**.
+Ensure MCP configuration is applied in a way that works for **all supported providers**.
 
 **MCP responsibility by ProviderTransport (Resolved):**
 - **Canonical configuration lives in Puppet Master** (Settings → Advanced → MCP Configuration; central tool registry + policy engine).
@@ -46,9 +46,10 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md, Po
 |-------------|-------------------|----------------------------|----------------------|--------|
 | Cursor      | `CliBridge`       | `.cursor/mcp.json`         | `~/.cursor/mcp.json` | JSON   |
 | Claude Code | `CliBridge`       | `.mcp.json` (cwd)          | `~/.claude.json`     | JSON   |
+| OpenCode    | `ServerBridge`    | N/A (server-bridged)       | N/A                  | N/A    |
 | Codex       | `DirectApi`       | N/A (central MCP registry) | N/A                  | N/A    |
 | Gemini      | `DirectApi`       | N/A (central MCP registry) | N/A                  | N/A    |
-| Copilot     | `DirectApi`       | N/A (central MCP registry) | N/A                  | N/A    |
+| GitHub Copilot | `DirectApi`    | N/A (central MCP registry) | N/A                  | N/A    |
 
 **Context7:** Key is resolved via env/credential store and injected **in-memory** into the MCP client/server process environment; it MUST NOT appear in config files (including derived adapter files).  
 ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage
@@ -129,7 +130,7 @@ ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage
 
 | Gap / risk | Description | Mitigation |
 |------------|-------------|------------|
-| **Platform MCP support varies** | Not all five platforms may expose MCP tools to the model in the same way; some may strip or rename tools. | Test each platform with a minimal "echo" MCP tool; document which platforms actually invoke `websearch_cited` (or chosen name). Doctor check: "Cited web search available" per platform. |
+| **Platform MCP support varies** | Not all providers may expose MCP tools to the model in the same way; some may strip or rename tools. | Test each provider with a minimal "echo" MCP tool; document which providers actually invoke `websearch_cited` (or chosen name). Doctor check: "Cited web search available" per provider. |
 | **Dual-model cost and latency** | Cited search often uses a second model (grounding) in addition to the chat model; adds latency and cost. | Document in Config that web search may use a separate model and quota; allow user to disable or choose a cheaper/faster search model. Show usage in usage/analytics if available. |
 | **Provider order and fallback** | If Google is first and fails, falling back to OpenAI may surprise the user (different cost, different index). | Make provider order explicit in config; on fallback, optionally show "Used &lt;provider&gt; (fallback after &lt;first&gt; failed)." |
 | **Stale or wrong citations** | LLM grounding can hallucinate or misattach citations. | Treat citations as best-effort; consider adding "Verify sources" in UI (open URL). Do not promise "all citations are accurate." |

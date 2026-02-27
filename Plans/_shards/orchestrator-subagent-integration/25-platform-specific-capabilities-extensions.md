@@ -26,8 +26,8 @@ SDK orchestration is not an implementation target in this plan.
 - Agent files (`.claude/agents`) and hooks are consumed through CLI/runtime behavior.
 
 **Gemini**
-- `gemini -p` with approval/output modes is the runtime invocation path.
-- Extension/hook surfaces are used only where compatible with CLI automation.
+- Gemini is a Direct API provider; runtime invocation uses the Gemini API directly (not a CLI subprocess).
+- Extension/hook surfaces are orchestrator-level only.
 
 **GitHub Copilot**
 - `copilot -p` (or `npx -y @github/copilot`) is the runtime invocation path.

@@ -25,10 +25,10 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 
 **Canonical subagent name registry:** Maintained in `platform_specs` or a dedicated `subagent_registry` module. Names are stable strings (kebab-case, e.g., `architect-reviewer`, `security-auditor`).
 
-### 3. Gemini settings path and format
+### 3. Gemini API key validation
 
-- **Issue:** `~/.gemini/settings.json` must be resolved (home dir on all platforms). JSON might be missing, malformed, or use a different structure; the `experimental.plan` key might be nested (e.g. `experimental.plan` or under another key).
-- **Mitigation:** (1) **Path:** Use the same path resolution as the rest of the app (e.g. `platforms::path_utils::expand_home` or `dirs::home_dir()` + join) so `~/.gemini/settings.json` works on all platforms. (2) **Key:** Confirm in Gemini CLI docs; typically `experimental.plan` (boolean) or nested under `experimental`. Parse JSON and check that key; if missing or false, emit the warning. (3) **Errors:** On missing file or parse error, Doctor check should warn "could not read Gemini settings" and not assume plan is disabled.
+- **Issue:** Gemini is a Direct API provider. The Doctor check must validate that a Google Gemini API key is present and valid when any tier uses Gemini.
+- **Mitigation:** (1) **Key:** Check for the configured Gemini API key in app settings. (2) **Validation:** Optionally send a lightweight API probe to verify the key is active. (3) **Errors:** If no key is configured and a tier uses Gemini, Doctor should warn "Gemini API key is not configured; Gemini tiers will fail."
 
 ### 4. Doctor check when config is not GuiConfig
 

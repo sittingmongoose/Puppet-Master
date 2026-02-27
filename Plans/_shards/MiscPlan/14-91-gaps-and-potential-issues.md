@@ -148,7 +148,7 @@ The following reflects a sweep of the codebase and plans. Use it to avoid missin
 
 - **Discovery path order and portability:** Discovery path order is canonical (§7.10); any change (e.g. adding a path) can change which skill "wins" for a given name. **Recommendation:** Keep DRY:DATA:skill_search_paths as the single source of truth; document order in code and in AGENTS.md so implementers and users understand first-wins behavior. On Windows, path case and separators may affect discovery; first-wins deduplication should use consistent name comparison (e.g. normalize case for comparison if desired).
 - **Permission "ask" and runner wiring:** Until "ask" is implemented (§7.11), only allow/deny are active. When "ask" is added, the app must prompt the user at the point where the runner would load the skill (before or at run start); implementation must decide exact UI (modal vs toast) and persistence (e.g. "Always/Never for this skill").
-- **Per-platform skill delivery:** Runners must receive the allowed skill list in a form each platform understands. **Recommendation:** Implementation plan must list per platform (Cursor, Codex, Claude, Gemini, Copilot) how skill paths or content are passed (env var, prompt injection, tool); without this, Skills integration remains stubbed. See §7.10 "Discovery and platform_specs" and §8.9.6.
+- **Per-provider skill delivery:** Runners must receive the allowed skill list in a form each provider understands. **Recommendation:** Implementation plan must list per provider (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini) how skill paths or content are passed (env var, prompt injection, tool); without this, Skills integration remains stubbed. See §7.10 "Discovery and platform_specs" and §8.9.6.
 - **Create/import overwrite and concurrent edit:** Creating a skill when the target directory already contains SKILL.md must not overwrite (§7.11); implementation must return a clear error. Concurrent edit on disk during in-app edit is an implementation must-decide (detect and prompt Reload/Overwrite/Cancel recommended).
 
 ### 9.1.22 Shortcuts and Skills: implementation summary
@@ -157,7 +157,7 @@ The following reflects a sweep of the codebase and plans. Use it to avoid missin
 
 - **Slint key API:** Key event handling depends on Slint's key-event API (e.g. `FocusScope` `key-pressed` callback, `KeyEvent` struct). Behavior may differ by Slint version; implementer should confirm the integration point against Slint 1.15.1 docs and document it in the implementation plan.
 - **Skill discovery on Windows path case:** Discovery paths (e.g. `.puppet-master/skills`, `.claude/skills`, `.agents/skills`) may behave differently on Windows (case-insensitivity, path separators). First-wins deduplication by name should account for case-normalization if needed.
-- **platform_specs skill injection:** How each platform (Cursor, Codex, Claude, Gemini, Copilot) receives the skill list (env var, prompt injection, tool) must be defined in platform_specs or orchestrator plan; until then, Skills integration with runners is stubbed.
+- **platform_specs skill injection:** How each provider (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini) receives the skill list (env var, prompt injection, tool) must be defined in platform_specs or orchestrator plan; until then, Skills integration with runners is stubbed.
 
 **Before implementation plan**
 

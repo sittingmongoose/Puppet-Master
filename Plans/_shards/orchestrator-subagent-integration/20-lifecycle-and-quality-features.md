@@ -1,6 +1,6 @@
 ## Lifecycle and Quality Features
 
-This section defines lifecycle hooks, structured handoff contracts, remediation loops, and cross-session persistence that enhance reliability and quality across **all five platforms** (Cursor, Codex, Claude Code, Gemini, Copilot). These features complement the start/end verification above and can be implemented using platform-native hooks where available, or via orchestrator-level middleware for platforms without native hooks.
+This section defines lifecycle hooks, structured handoff contracts, remediation loops, and cross-session persistence that enhance reliability and quality across **all providers** (Cursor, Codex, Claude Code, Gemini, Copilot). These features complement the start/end verification above and can be implemented using platform-native hooks where available, or via orchestrator-level middleware for platforms without native hooks.
 
 ### 1. Hook-Based Lifecycle Middleware (BeforeTier/AfterTier)
 
@@ -11,7 +11,7 @@ This section defines lifecycle hooks, structured handoff contracts, remediation 
 - **Cursor:** Register hooks in `.cursor/hooks.json` or `~/.cursor/hooks.json` for native hooks (`SubagentStart`, `SubagentStop`, `beforeSubmitPrompt`, `afterAgentResponse`). Also implement orchestrator-level hooks in Rust that wrap platform calls. **Note:** CLI subagents have reported issues (Feb 2026); use orchestrator-level hooks as primary, native hooks as enhancement when CLI subagents are fixed.
 - **Codex:** Use CLI lifecycle outputs and orchestrator-managed hooks/middleware. Implement orchestrator-level hooks as primary middleware.
 - **Claude Code:** Register hooks in `.claude/settings.json` for native hooks (`SubagentStart`, `SubagentStop`, `PreToolUse`, `PostToolUse`, `SessionStart`, `SessionEnd`). Also implement orchestrator-level hooks. Native hooks can block operations (exit code 2) or inject context.
-- **Gemini:** Register hooks in `~/.gemini/settings.json` or extension config for native hooks (`BeforeAgent`, `AfterAgent`, `BeforeModel`, `AfterModel`, `BeforeTool`, `AfterTool`). Implement orchestrator-level hooks as fallback. Gemini hooks communicate via JSON stdin/stdout.
+- **Gemini:** Gemini is a Direct API provider; hooks are implemented at the orchestrator level. No platform-native hook config file is needed for Gemini.
 - **Copilot:** Use CLI lifecycle outputs and orchestrator-managed hooks/middleware. Implement orchestrator-level hooks as primary.
 
 **Hook trait definition:**
@@ -1436,7 +1436,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 
 **Gap #14: Platform-native hook registration and discovery**
 
-**Issue:** How do we discover and register platform-native hooks (Cursor `.cursor/hooks.json`, Claude `.claude/settings.json`, Gemini `~/.gemini/settings.json`)? Should Puppet Master auto-discover hooks or require explicit configuration?
+**Issue:** How do we discover and register platform-native hooks (Cursor `.cursor/hooks.json`, Claude `.claude/settings.json`)? Gemini is a Direct API provider and does not use a platform-native hook config file. Should Puppet Master auto-discover hooks or require explicit configuration?
 
 **Mitigation:**
 - **Auto-discovery:** Scan for hook config files in project root and home directory on startup. Register discovered hooks as adapters.
@@ -1450,8 +1450,8 @@ These lifecycle and quality features **complement** the existing start/end verif
       enabled: true
       config_path: ".claude/settings.json"
     gemini:
-      enabled: true
-      config_path: "~/.gemini/settings.json"
+      enabled: false
+      # Gemini is a Direct API provider; hooks are orchestrator-level only
   ```
 - **Fallback:** If platform-native hooks fail or are unavailable, fall back to orchestrator-level hooks (always available).
 

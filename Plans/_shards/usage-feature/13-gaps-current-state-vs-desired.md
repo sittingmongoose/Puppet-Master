@@ -5,7 +5,7 @@
 - **Current state**
   - No 5h or 7d window is displayed anywhere in the app (Dashboard, Config, Ledger, or header).
   - **Data exists:** `usage.jsonl` has `timestamp`, `platform`, `tokens`, `tier_id`, `session_id` per event -- we can aggregate by 5h/7d from this file.
-  - `platforms::UsageTracker` has `QuotaInfo`, `PlanInfo`, and error parsing (Codex 5h message limit, Gemini "quota will reset after..."); the GUI never calls these.
+  - `platforms::UsageTracker` has `QuotaInfo`, `PlanInfo`, and error parsing (e.g., Codex 5h message limit); the GUI never calls these.
   - Doctor `usage_check` only counts ledger lines per platform; it does not compute 5h/7d or show limits.
 - **Desired**
   - Always-visible 5h/7d (or platform-equivalent window) per platform in at least one of: Dashboard, header, or dedicated Usage page.
@@ -17,7 +17,7 @@
 ### Gap 2: No live platform usage APIs in GUI path
 
 - **Current state**
-  - AGENTS.md documents Claude Admin API (`/v1/organizations/usage_report/claude_code`), Copilot metrics API, Gemini Cloud Quotas, Codex/Gemini error parsing.
+  - AGENTS.md documents Claude Admin API (`/v1/organizations/usage_report/claude_code`), Copilot metrics API, Gemini direct-provider usage (local counters + estimated cost), Codex error parsing.
   - No app code path calls these APIs and exposes results to the UI.
   - Quota is inferred from config (`platform_config.quota`) or from error parsing only after a run fails.
 - **Desired**

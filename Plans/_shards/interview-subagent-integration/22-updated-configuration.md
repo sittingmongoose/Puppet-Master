@@ -15,8 +15,6 @@ pub struct PlatformSubagentSettings {
     pub use_dynamic_agents: bool,
     /// For Copilot: Preferred invocation type
     pub copilot_invocation_type: Option<CopilotInvocationType>,
-    /// For Gemini: Require enableAgents setting
-    pub require_experimental_flag: bool,
 }
 ```
 

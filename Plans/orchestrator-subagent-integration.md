@@ -1034,19 +1034,19 @@ subagentConfig:
 - [ ] Test with different project types (Rust, Python, JavaScript, Swift)
 - [ ] Verify subagent selection accuracy
 - [ ] Refine selection logic based on results
-- [ ] **Platform CLI verification (smoke tests)**: Run real CLIs per platform with minimal subagent-style prompts; assert exit success and non-empty/expected output; environment-gated or manual where CI has no CLI/auth.
+- [ ] **Provider connectivity verification (smoke tests)**: Run real CLIs for CLI-bridged providers and a minimal API call for Gemini; assert exit success or successful response and non-empty/expected output; environment-gated or manual where CI has no CLI/auth.
 - [ ] **Subagent-invocation integration tests**: Build and execute the actual orchestrator CLI command per platform for a given tier + subagent; verify invocation path and run completion.
 - [ ] **Plan mode CLI verification**: Run real CLIs per platform with plan mode enabled (e.g. `--mode=plan`, `--permission-mode plan`); assert exit success and that plan-mode flags are applied and honored; environment-gated like other CLI tests.
 
 ## Platform CLI Verification & Subagent Invocation Testing
 
-### 1. Platform CLI Verification (Smoke Tests)
+### 1. Provider connectivity smoke tests
 
-**Purpose:** Confirm that each platform's CLI can be invoked with a subagent-style prompt and returns a successful run with usable output. These tests validate the **invocation path** (binary, args, env) and **basic behavior**, not full orchestrator logic.
+**Purpose:** Confirm that each provider can be reached via its expected interface (CLI for Cursor/Codex/Claude/Copilot; Direct API for Gemini) and returns a successful run with usable output. These tests validate the **invocation path** (binary, args, env, or API client/config) and **basic behavior**, not full orchestrator logic.
 
-**Scope:** One smoke test per platform (Cursor, Codex, Claude, Gemini, Copilot). Each test runs the real CLI with a minimal, non-destructive prompt that triggers subagent behavior (or equivalent) and asserts process success and output shape.
+**Scope:** One smoke test per platform (Cursor, Codex, Claude, Gemini, Copilot). Each test runs the real CLI with a minimal, non-destructive prompt that triggers subagent behavior (or equivalent) for CLI-bridged providers, and a minimal Gemini API call, and asserts success and output/response shape.
 
-**Environment gating:** Tests require the corresponding CLI to be installed and (where applicable) authenticated. They MUST be gated so they do not fail CI when CLIs or auth are missing.
+**Environment gating:** Tests require the corresponding interface to be available and (where applicable) authenticated (CLI installed for CLI-bridged providers; API credentials for Gemini). They MUST be gated so they do not fail CI when CLIs or auth are missing.
 
 ContractRef: PolicyRule:Decision_Policy.md§2
 
@@ -1065,7 +1065,7 @@ ContractRef: PolicyRule:Decision_Policy.md§2
 **Test location and naming:**
 
 - **File:** `puppet-master-rs/tests/platform_cli_smoke.rs` (or under `puppet-master-rs/tests/integration/`).
-- **Tests:** `cursor_cli_smoke`, `codex_cli_smoke`, `claude_cli_smoke`, `gemini_cli_smoke`, `copilot_cli_smoke`.
+- **Tests:** `cursor_cli_smoke`, `codex_cli_smoke`, `claude_cli_smoke`, `gemini_api_smoke`, `copilot_cli_smoke`.
 - **Runner:** Use `#[ignore]` by default with a clear reason ("requires installed CLI and auth"); run with `cargo test --ignored` or a dedicated `cargo test platform_cli_smoke` when env is set.
 
 **Fleshed-out example (Cursor):**

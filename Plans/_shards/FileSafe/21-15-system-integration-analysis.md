@@ -470,7 +470,7 @@ pub struct GateOverrideConfig {
 **Mitigation:**
 - Platform-specific prompt parsers
 - Fallback to simple pattern matching
-- Test with all 5 platforms
+- Test across all providers
 - Document platform-specific behavior
 
 #### Issue 5: Guard Initialization Failure
