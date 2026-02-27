@@ -30,7 +30,7 @@ ContractRef: Invariant:INV-010
 ## 2. Core terms
 - **Session** -- user-facing term for one interactive run context.
   - Note: persisted events may contain a field named `thread_id` for correlation, but user-facing text MUST say "Session".
-- **Provider** -- an external AI CLI platform integration (Cursor Agent, Codex, Claude Code, Gemini, GitHub Copilot).
+- **Provider** -- an external AI platform integration (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini).
 - **Tool** -- a host capability invoked by Puppet Master (filesystem, shell, network fetch, etc) under policy.
 - **UICommand** -- a stable command ID dispatched by the UI to trigger non-trivial logic.
 - **ContractRef** -- a citation that binds an operational requirement to a canonical contract, schema, policy, invariant, or primitive.

@@ -1034,44 +1034,45 @@ subagentConfig:
 - [ ] Test with different project types (Rust, Python, JavaScript, Swift)
 - [ ] Verify subagent selection accuracy
 - [ ] Refine selection logic based on results
-- [ ] **Platform CLI verification (smoke tests)**: Run real CLIs per platform with minimal subagent-style prompts; assert exit success and non-empty/expected output; environment-gated or manual where CI has no CLI/auth.
+- [ ] **Provider connectivity smoke tests**: Run transport-specific smoke checks with minimal subagent-style prompts; CLI smoke for CLI-bridged providers (Cursor, Claude Code), direct API smoke for Direct-provider Gemini, and server-endpoint/tool-handshake smoke for Server-bridged OpenCode; assert success and expected output/response shape; environment-gated or manual where CI has no auth/connectivity.
 - [ ] **Subagent-invocation integration tests**: Build and execute the actual orchestrator CLI command per platform for a given tier + subagent; verify invocation path and run completion.
 - [ ] **Plan mode CLI verification**: Run real CLIs per platform with plan mode enabled (e.g. `--mode=plan`, `--permission-mode plan`); assert exit success and that plan-mode flags are applied and honored; environment-gated like other CLI tests.
 
-## Platform CLI Verification & Subagent Invocation Testing
+## Provider Connectivity Smoke Tests & Subagent Invocation Testing
 
-### 1. Platform CLI Verification (Smoke Tests)
+### 1. Provider Connectivity Smoke Tests
 
-**Purpose:** Confirm that each platform's CLI can be invoked with a subagent-style prompt and returns a successful run with usable output. These tests validate the **invocation path** (binary, args, env) and **basic behavior**, not full orchestrator logic.
+**Purpose:** Confirm that each provider's invocation path (CLI for CLI-bridged providers, server endpoint/tool handshake for Server-bridged OpenCode, and API for Direct providers) can be exercised with a subagent-style prompt and returns a successful run with usable output. These tests validate the **invocation path** (binary/server/API, args, env) and **basic behavior**, not full orchestrator logic.
 
-**Scope:** One smoke test per platform (Cursor, Codex, Claude, Gemini, Copilot). Each test runs the real CLI with a minimal, non-destructive prompt that triggers subagent behavior (or equivalent) and asserts process success and output shape.
+**Scope:** One smoke test per provider (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini). CLI-bridged providers (Cursor, Claude Code) run their real CLIs; Server-bridged OpenCode is validated via server endpoint/tool handshake (no CLI requirement); Direct providers (Codex, GitHub Copilot, Gemini) use minimal API calls. Each test issues a minimal, non-destructive prompt that triggers subagent behavior (or equivalent) and asserts process/response success and output shape.
 
-**Environment gating:** Tests require the corresponding CLI to be installed and (where applicable) authenticated. They MUST be gated so they do not fail CI when CLIs or auth are missing.
+**Environment gating:** Tests are transport-specific and require corresponding prerequisites (CLI installed for CLI-bridged providers, reachable/authenticated OpenCode server for Server-bridged, API key/auth for Direct providers). They MUST be gated so they do not fail CI when prerequisites are missing.
 
 ContractRef: PolicyRule:Decision_Policy.md§2
 
 **Implementation:**
 
-- **Gate:** Only run platform CLI smoke tests when the appropriate env var is set and the CLI binary is on `PATH` (and optionally when a "CI has auth" flag is set). If not set or binary missing, skip with a clear "skipped: Cursor CLI not available" style message.
+- **Gate:** Only run provider connectivity smoke tests when the appropriate env var is set and required transport prerequisites are available. If not set or prerequisite missing, skip with a clear message (for example, "skipped: Cursor CLI not available", "skipped: OpenCode endpoint not configured", or "skipped: Gemini API key missing").
 - **Per-platform commands and assertions:**
   - **Cursor:** Run `agent -p "/code-reviewer Review the last commit." --output-format json` (or current equivalent from platform_specs). Assert exit code 0 (or documented non-zero for "no changes"). Assert stdout is non-empty and, if JSON, parseable; optionally assert presence of expected top-level keys.
-  - **Codex:** Run `codex exec "As code-reviewer, list the files you would review in this repo."` with project `--cd` and non-interactive flags. Assert exit code 0 and non-empty stdout (or documented behavior).
   - **Claude:** Run `claude -p "As code-reviewer, respond with only: READY" --no-session-persistence --output-format text`. Assert exit code 0 and stdout contains expected token (e.g. READY) or is non-empty.
+  - **OpenCode:** Validate ServerBridge connectivity by performing a minimal server endpoint/tool handshake (for example, list tools or execute a no-op tool call). Assert successful handshake/response and expected response shape.
+  - **Codex:** Codex is a Direct API provider; verify API connectivity with a minimal request. Assert successful response and non-empty, parseable JSON.
+  - **GitHub Copilot:** Copilot is a Direct API provider; verify API connectivity with a minimal request. Assert successful response and non-empty, parseable JSON.
   - **Gemini:** Gemini is a Direct API provider; verify API connectivity by sending a minimal generation request via the Gemini API. Assert a successful response with non-empty, parseable JSON.
-  - **Copilot:** Run `copilot -p "/agent code-reviewer Reply with only: OK" --allow-all-tools` (or equivalent). Assert exit code 0 and non-empty stdout.
 - **Artifacts:** Optionally capture stdout/stderr to `.puppet-master/evidence/cli-smoke-<platform>.log` for debugging; do not assert on exact text, only on success and shape.
-- **Documentation:** In the plan and in code comments, document that these tests are optional/manual in CI and list required env vars (e.g. `RUN_CURSOR_CLI_SMOKE=1`, `RUN_CODEX_CLI_SMOKE=1`, ...) and that auth must be configured for the corresponding platform.
+- **Documentation:** In the plan and in code comments, document that these tests are optional/manual in CI and list required env vars (e.g. `RUN_CURSOR_CLI_SMOKE=1`, `RUN_OPENCODE_SERVER_SMOKE=1`, `RUN_GEMINI_API_SMOKE=1`) and that auth/connectivity must be configured for the corresponding provider.
 
 **Test location and naming:**
 
-- **File:** `puppet-master-rs/tests/platform_cli_smoke.rs` (or under `puppet-master-rs/tests/integration/`).
-- **Tests:** `cursor_cli_smoke`, `codex_cli_smoke`, `claude_cli_smoke`, `gemini_cli_smoke`, `copilot_cli_smoke`.
-- **Runner:** Use `#[ignore]` by default with a clear reason ("requires installed CLI and auth"); run with `cargo test --ignored` or a dedicated `cargo test platform_cli_smoke` when env is set.
+- **File:** `puppet-master-rs/tests/provider_connectivity_smoke.rs` (or under `puppet-master-rs/tests/integration/`).
+- **Tests:** `cursor_cli_smoke`, `claude_cli_smoke`, `opencode_server_smoke`, `codex_api_smoke`, `copilot_api_smoke`, `gemini_api_smoke`.
+- **Runner:** Use `#[ignore]` by default with a clear reason ("requires provider auth/connectivity prerequisites"); run with `cargo test --ignored` or a dedicated `cargo test provider_connectivity_smoke` when env is set.
 
 **Fleshed-out example (Cursor):**
 
 ```rust
-// puppet-master-rs/tests/platform_cli_smoke.rs
+// puppet-master-rs/tests/provider_connectivity_smoke.rs
 
 #[test]
 #[ignore = "Requires Cursor CLI (agent) installed and authenticated; set RUN_CURSOR_CLI_SMOKE=1"]
@@ -1094,7 +1095,7 @@ fn cursor_cli_smoke() {
 }
 ```
 
-Other platforms follow the same pattern: check env gate, find binary (from `platform_specs` or PATH), run the minimal subagent-style command, assert success and non-empty/parseable output.
+Other providers follow the same transport-specific pattern: check env gate, run the minimal connectivity probe for that provider transport (CLI, server handshake, or API), and assert success with non-empty/parseable output.
 
 ---
 
