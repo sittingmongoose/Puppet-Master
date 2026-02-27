@@ -255,6 +255,19 @@ When set, this variant is pre-selected when the Persona is active. The user can 
 
 ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA
 
+### 6.7 Model aliases (friendly names)
+
+Model aliases are optional friendly names that resolve to canonical model identifiers (`provider_id/model_id`) during model override parsing (for example, natural-language `model_override` in media generation).
+
+Deterministic alias resolution requirements:
+- Alias keys MUST be normalized by lowercasing and collapsing spaces/underscores/hyphens.
+- Resolution order for user-provided model text is: alias → exact model id → exact display name.
+- If no match is found, the caller receives a model-unavailable result from the requesting subsystem.
+
+Aliases and variants are distinct concepts: aliases are lookup keys for model resolution, while variants are named model presets selected by the user.
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE, PolicyRule:Decision_Policy.md§2
+
 ---
 
 ## 7. GUI requirements

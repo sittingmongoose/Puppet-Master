@@ -12,7 +12,7 @@ For backward compatibility, the merged permission set is also projected to redb 
 
 ### 10.2 Default policy table
 
-Canonical default table: `Plans/Permissions_System.md` §7. Tool-to-default mapping includes `read` → allow (with §7.1 `.env` deny), `edit`/`bash` → ask, `glob`/`grep`/`list`/`codesearch`/`skill`/`lsp`/`capabilities.get`/`media.generate` → allow, `webfetch`/`websearch`/`task` → ask, `todoread`/`todowrite` → allow (subagent: deny), `external_directory`/`doom_loop` → ask, unknown tools → ask.
+Canonical default table: `Plans/Permissions_System.md` §7. Tool-to-default mapping includes `read` → allow (with §7.1 `.env` deny), `edit`/`bash`/`media.generate` → ask, `glob`/`grep`/`list`/`codesearch`/`skill`/`lsp`/`capabilities.get` → allow, `webfetch`/`websearch`/`task` → ask, `todoread`/`todowrite` → allow (subagent: deny), `external_directory`/`doom_loop` → ask, unknown tools → ask.
 
 ### 10.3 Resolution algorithm
 

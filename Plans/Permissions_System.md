@@ -291,7 +291,7 @@ ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Tools.md
 | `websearch` | `ask` | Network access |
 | `codesearch` | `allow` | Read-only code search |
 | `capabilities.get` | `allow` | Read-only capability introspection |
-| `media.generate` | `allow` | First-class internal generation tool |
+| `media.generate` | `ask` | External API generation; quota/cost impact |
 | `todoread` | `allow` | State read (subagent: `deny`) |
 | `todowrite` | `allow` | State write (subagent: `deny`) |
 | `external_directory` | `ask` | Paths outside project roots |
@@ -328,7 +328,7 @@ Rule: Given identical inputs (tool name, invocation context, config, mode, sessi
 
 ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3
 
-1. **Mode override:** If the run mode is `yolo`, return `allow`. If the run mode is `ask` or `plan`, and the tool is mutating (`edit`, `bash`, `task`, `webfetch`, `websearch`, `todowrite`), return `deny`.
+1. **Mode override:** If the run mode is `yolo`, return `allow`. If the run mode is `ask` or `plan`, and the tool is mutating (`edit`, `bash`, `task`, `webfetch`, `websearch`, `media.generate`, `todowrite`), return `deny`.
 2. **Session cache (Assistant only):** If this tool+context matches a session-scoped `allow` rule (from prior `always` responses), return `allow`.
 3. **Persona overrides:** If the active Persona has a `default_permissions_profile` that contains a matching rule for this tool+context, use it.
 4. **Project-level rules:** If `.puppet-master/permissions.toml` in the active project contains a matching rule, use it.
