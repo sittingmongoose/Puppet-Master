@@ -274,11 +274,11 @@ The following aliases are registered by default for media-generation models. The
 
 | Alias (normalized key) | Canonical model ID | Kind(s) |
 |------------------------|--------------------|---------|
-| `nano banana` | `google/gemini-2.0-flash-preview-image-generation` | image |
-| `nano banana pro` | `google/imagen-4` | image |
-| `veo fast` | `google/veo-2` | video |
-| `tts flash` | `google/gemini-2.5-flash-preview-tts` | tts |
-| `tts pro` | `google/gemini-2.5-pro-preview-tts` | tts |
+| `nano banana` | `gemini-2.5-flash-image` | image |
+| `nano banana pro` | `gemini-3-pro-image-preview` | image |
+| `veo fast` | `veo-3.1-fast-generate-preview` | video |
+| `tts flash` | `gemini-2.5-flash-preview-tts` | tts |
+| `tts pro` | `gemini-2.5-pro-preview-tts` | tts |
 
 Alias keys are normalized per §6.7 rules (lowercase, collapse spaces/underscores/hyphens). Implementations MUST ship these aliases in the default alias registry; users MAY add or override aliases in config.
 
