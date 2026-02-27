@@ -1,0 +1,144 @@
+{
+  "source_path": "Plans/usage-feature.md",
+  "source_sha256": "397fd48027e9231af241b5d6b2c8acecdd07304cb16427331d83d05bff8cbeca",
+  "split_rule": {
+    "primary": "## outside fences",
+    "fallback": "line-count-200",
+    "applied": "## outside fences"
+  },
+  "shards": [
+    {
+      "dest_path": "Plans/_shards/usage-feature/01-preamble.md",
+      "start_line": 1,
+      "end_line": 5,
+      "segment_sha256": "672128e76379f293b9a0ddb651c195c8502ffdc3f7cdc7533f79587b04bf0591",
+      "heading": null
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/02-plan-document-status.md",
+      "start_line": 6,
+      "end_line": 13,
+      "segment_sha256": "053f2402dac1188a141839c3b72df863b3aeb66c7e9b669b01562b2ffdcffcf9",
+      "heading": "## Plan Document Status"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/03-rewrite-alignment-2026-02-21.md",
+      "start_line": 14,
+      "end_line": 19,
+      "segment_sha256": "d513eb09dbdd488d859e5ef69357549c35c5cca3398d665624e4a3f8cbae483e",
+      "heading": "## Rewrite alignment (2026-02-21)"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/04-storage-dependency-implementation.md",
+      "start_line": 20,
+      "end_line": 44,
+      "segment_sha256": "f2dd6f6574c605393af09cd5e5f7eda4542846eedbc701bbde6e7883a1f1b3bc",
+      "heading": "## Storage dependency (implementation)"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/05-executive-summary.md",
+      "start_line": 45,
+      "end_line": 48,
+      "segment_sha256": "5e8b2b144202deac94f4ba1c23954c4017eebb5a6bf2217ae7a6a56ef4def3ba",
+      "heading": "## Executive Summary"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/06-relationship-to-existing-docs.md",
+      "start_line": 49,
+      "end_line": 67,
+      "segment_sha256": "f1ed4d2613cae1cc954bcc7b68ef46f50b9921cc4638899de5df279d62f3a95b",
+      "heading": "## Relationship to Existing Docs"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/07-external-references-competitive-ecosystem.md",
+      "start_line": 68,
+      "end_line": 77,
+      "segment_sha256": "3be9eb1280f7f29cad7398bf752329af84fe2433ea97f9827fcb13c0ddc3f1d7",
+      "heading": "## External References (Competitive & Ecosystem)"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/08-scope-of-the-usage-feature.md",
+      "start_line": 78,
+      "end_line": 136,
+      "segment_sha256": "8395f6b08fb8e91f74d5f5b7179e137c0d5c31ed549eeda1aef818396d85e664",
+      "heading": "## Scope of the Usage Feature"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/09-data-sources-state-files-json-jsonl.md",
+      "start_line": 137,
+      "end_line": 151,
+      "segment_sha256": "e40a5693ba627c0c41837dcf60006e9bef1ef05808b9d276f199eacf37a7dd0a",
+      "heading": "## Data Sources: State Files (JSON / JSONL)"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/10-per-platform-usage-data-api-cli.md",
+      "start_line": 152,
+      "end_line": 199,
+      "segment_sha256": "3c59473de08286d07b14d0a3f76f8715a0f34a6f62de2cb94bac6efb9c085984",
+      "heading": "## Per-platform usage data (API / CLI)"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/11-data-and-backend-conceptual.md",
+      "start_line": 200,
+      "end_line": 205,
+      "segment_sha256": "2ae17c15341e1691826e34034a614e9d5a24b62e63da67cba69f6f9a67d3aefc",
+      "heading": "## Data and Backend (conceptual)"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/12-gui-placement-options.md",
+      "start_line": 206,
+      "end_line": 213,
+      "segment_sha256": "af6a6802bb5162d7ef852539e01dc41bf235fcd49383113715793145c98bd4dc",
+      "heading": "## GUI Placement Options"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/13-gaps-current-state-vs-desired.md",
+      "start_line": 214,
+      "end_line": 299,
+      "segment_sha256": "72a07d4969d6ae7305d9a151fc9a63c70d514eedffbe65d7a064404130909fb5",
+      "heading": "## Gaps (Current State vs. Desired)"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/14-potential-problems.md",
+      "start_line": 300,
+      "end_line": 377,
+      "segment_sha256": "afa6bd7624210254de09b7319b32ccc651bc0d6197bc300dde294830811c38f1",
+      "heading": "## Potential Problems"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/15-enhancements-beyond-minimum.md",
+      "start_line": 378,
+      "end_line": 460,
+      "segment_sha256": "f3ce0c6317204de0400a52b1cc3e5607e400f1c4fac77e2a32eff7cb5ee9a241",
+      "heading": "## Enhancements (Beyond Minimum)"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/16-out-of-scope-for-this-plan.md",
+      "start_line": 461,
+      "end_line": 466,
+      "segment_sha256": "840be484e9ac974c58b8b14864280e68212e51926112914c4d3ec88f9055d980",
+      "heading": "## Out of Scope for This Plan"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/17-success-criteria.md",
+      "start_line": 467,
+      "end_line": 474,
+      "segment_sha256": "a9e54460761a8ecc70732420dd0d64196f68f6b6adf5ff0eb5043e488a8711c5",
+      "heading": "## Success Criteria"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/18-version-history.md",
+      "start_line": 475,
+      "end_line": 490,
+      "segment_sha256": "1af72be34ff16f61037ebdd898c02a4173916ddba4e04d191467d2f057471412",
+      "heading": "## Version History"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/19-widget-composed-page-layout-addendum-2026-02-23.md",
+      "start_line": 491,
+      "end_line": 590,
+      "segment_sha256": "b7ab25f40bc1569da6d94db67e8e35a596c163b4fdb1f9c640e0d0a9d59ede88",
+      "heading": "## Widget-Composed Page Layout (Addendum -- 2026-02-23)"
+    }
+  ]
+}

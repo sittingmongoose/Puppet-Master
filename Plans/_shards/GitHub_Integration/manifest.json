@@ -1,0 +1,88 @@
+{
+  "source_path": "Plans/GitHub_Integration.md",
+  "source_sha256": "8fb48911fad89d6c464446e6cdbc53be7c46597440760d38c8803907512dfbf1",
+  "split_rule": {
+    "primary": "## outside fences",
+    "fallback": "line-count-200",
+    "applied": "## outside fences"
+  },
+  "shards": [
+    {
+      "dest_path": "Plans/_shards/GitHub_Integration/01-preamble.md",
+      "start_line": 1,
+      "end_line": 20,
+      "segment_sha256": "fbe6982d0494340c44331eabdc213e0256eeb3c6b9b5b84dae8f4a7db1d934d0",
+      "heading": null
+    },
+    {
+      "dest_path": "Plans/_shards/GitHub_Integration/02-change-summary.md",
+      "start_line": 21,
+      "end_line": 31,
+      "segment_sha256": "87cd4272d6ca9c9ece991657166864b7bbebde75016a08ac6c92681f65732f41",
+      "heading": "## Change Summary"
+    },
+    {
+      "dest_path": "Plans/_shards/GitHub_Integration/03-ssot-references-dry.md",
+      "start_line": 32,
+      "end_line": 69,
+      "segment_sha256": "93cbbad69d83612120b5bf9f561d80c6df171684482bc768ede9befe8df36280",
+      "heading": "## SSOT References (DRY)"
+    },
+    {
+      "dest_path": "Plans/_shards/GitHub_Integration/04-a-git-panel-ide-surface.md",
+      "start_line": 70,
+      "end_line": 443,
+      "segment_sha256": "6d2d8f97827ce152d8e430988451f815a0be26ed3472a283cba4f06c45c727d6",
+      "heading": "## A. Git Panel (IDE Surface)"
+    },
+    {
+      "dest_path": "Plans/_shards/GitHub_Integration/05-b-github-api-integration.md",
+      "start_line": 444,
+      "end_line": 672,
+      "segment_sha256": "b889e97fd3417a85ef25a784bd081fc26d97ead4e36e76c8f1f16c54fb9c3477",
+      "heading": "## B. GitHub API Integration"
+    },
+    {
+      "dest_path": "Plans/_shards/GitHub_Integration/06-c-ssh-remote-dev-servers.md",
+      "start_line": 673,
+      "end_line": 852,
+      "segment_sha256": "eeeb2c6120d627b4c1b128ef2263b52c9ac10f6a2c97be9d50da077d75fd7eb1",
+      "heading": "## C. SSH Remote Dev Servers"
+    },
+    {
+      "dest_path": "Plans/_shards/GitHub_Integration/07-d-project-management-flows-no-chain-wizard-required.md",
+      "start_line": 853,
+      "end_line": 1091,
+      "segment_sha256": "c2ac44cd58b8415b0dbfadd3a8510455358ba75356e4fba843993694c4dbc7c4",
+      "heading": "## D. Project Management Flows (No Chain Wizard Required)"
+    },
+    {
+      "dest_path": "Plans/_shards/GitHub_Integration/08-e-ui-command-ids-reserved-by-this-document.md",
+      "start_line": 1092,
+      "end_line": 1139,
+      "segment_sha256": "4fffee2ff925bc681b961721a44fa97af605679750fb9ae5196e44e910f337bf",
+      "heading": "## E. UI Command IDs Reserved by This Document"
+    },
+    {
+      "dest_path": "Plans/_shards/GitHub_Integration/09-f-redb-configuration-keys-reserved-by-this-document.md",
+      "start_line": 1140,
+      "end_line": 1161,
+      "segment_sha256": "ac7ff0b42bb08fe80501b536e98f176c6547530b311f714251e4ecea0cc555a2",
+      "heading": "## F. redb Configuration Keys Reserved by This Document"
+    },
+    {
+      "dest_path": "Plans/_shards/GitHub_Integration/10-anti-drift-compliance.md",
+      "start_line": 1162,
+      "end_line": 1180,
+      "segment_sha256": "3d5b3f4ca30aa8a944b9d2c7b1ba6fe09915172a8d5e163f94788edb6bb3ea13",
+      "heading": "## Anti-Drift Compliance"
+    },
+    {
+      "dest_path": "Plans/_shards/GitHub_Integration/11-references.md",
+      "start_line": 1181,
+      "end_line": 1196,
+      "segment_sha256": "660a6944818a6729f64bec03cbf98f66dd80e3517ab6dde8fe9d2e60b7ca56af",
+      "heading": "## References"
+    }
+  ]
+}

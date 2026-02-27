@@ -1,0 +1,207 @@
+{
+  "source_path": "Plans/newfeatures.md",
+  "source_sha256": "2c73ade5d4ee40312039b082fc9c495a912d2c12bc4f52442a85c87ebebf571e",
+  "split_rule": {
+    "primary": "## outside fences",
+    "fallback": "line-count-200",
+    "applied": "## outside fences"
+  },
+  "shards": [
+    {
+      "dest_path": "Plans/_shards/newfeatures/01-preamble.md",
+      "start_line": 1,
+      "end_line": 5,
+      "segment_sha256": "711eeef22394ad37849cd2530cca62db55d74c904cb7398242076df1a8f8a159",
+      "heading": null
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/02-plan-document-status.md",
+      "start_line": 6,
+      "end_line": 14,
+      "segment_sha256": "0a4b506d4ef136c1ddfcc445dab4a9c18c527a7bfc63602b2e09f4cec0b555ad",
+      "heading": "## Plan Document Status"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/03-rewrite-alignment-2026-02-21.md",
+      "start_line": 15,
+      "end_line": 27,
+      "segment_sha256": "c71a69f704d91a5fa70edb21214da2b39b6b30634d1bf58ebb2f5b1e7fe44f1b",
+      "heading": "## Rewrite alignment (2026-02-21)"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/04-executive-summary.md",
+      "start_line": 28,
+      "end_line": 45,
+      "segment_sha256": "c57943a05692e936bcf5c0c7ddd1ed0f1988a90a30f3ff7cae2cbaab6b8a9f48",
+      "heading": "## Executive Summary"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/05-table-of-contents.md",
+      "start_line": 46,
+      "end_line": 51,
+      "segment_sha256": "76b65c0dedd7f9e9cdaf82027be3e6106e50a8241e483ea63c458ed85e976a3f",
+      "heading": "## Table of Contents"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/06-1-automatic-task-decomposition-and-orchestration-flow.md",
+      "start_line": 52,
+      "end_line": 78,
+      "segment_sha256": "d8f1f7f32a8af6ee2ea0458145d026b556cd12cc40419b8293dd032997830687",
+      "heading": "## 1. Automatic Task Decomposition and Orchestration Flow"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/07-2-background-async-agents-with-queue-and-git-isolation.md",
+      "start_line": 79,
+      "end_line": 111,
+      "segment_sha256": "fe0887c3e754a31b3147fe2640c75f4cd6ad73e4a703df92d5d4385bab945bb2",
+      "heading": "## 2. Background / Async Agents with Queue and Git Isolation"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/08-3-persistent-rate-limit-and-usage-visibility.md",
+      "start_line": 112,
+      "end_line": 135,
+      "segment_sha256": "0d150e1ff7d71be484baa0e8425be70754ad8d5e5ff2a3adf9164cb94f8bba30",
+      "heading": "## 3. Persistent Rate Limit and Usage Visibility"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/09-4-session-and-crash-recovery.md",
+      "start_line": 136,
+      "end_line": 167,
+      "segment_sha256": "c83c8c255d41669c28bb4230329bdf399040de02c37bdf4b1dc17b8e1677dbaa",
+      "heading": "## 4. Session and Crash Recovery"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/10-5-protocol-normalization-for-multi-provider-streaming.md",
+      "start_line": 168,
+      "end_line": 194,
+      "segment_sha256": "f3e3d4c7f97d347de355a1d3ed59cf3f7e24aa55cbf45d15552107b02fc86dbc",
+      "heading": "## 5. Protocol Normalization for Multi-Provider Streaming"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/11-6-plugin-and-skills-extensibility.md",
+      "start_line": 195,
+      "end_line": 226,
+      "segment_sha256": "c997205e8621bcf2334d73eef7f938bdad9ad0240629e5a7a6c74ac3f542543a",
+      "heading": "## 6. Plugin and Skills Extensibility"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/12-7-analytics-and-usage-dashboard.md",
+      "start_line": 227,
+      "end_line": 255,
+      "segment_sha256": "a5ebb9a12f8d9ec0cdb5d4ee2b3881092df9496ef82d108e3e6f9753f53df369",
+      "heading": "## 7. Analytics and Usage Dashboard"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/13-8-history-and-rollback-restore-points.md",
+      "start_line": 256,
+      "end_line": 292,
+      "segment_sha256": "8dd536b22ecf3e0c13d3744cbc21f38ce8a1060ee43f90186017faeac7cfb9ee",
+      "heading": "## 8. History and Rollback (Restore Points)"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/14-9-hook-system-event-hooks.md",
+      "start_line": 293,
+      "end_line": 329,
+      "segment_sha256": "daa95cad2d63c3b054981416e3c0d9b6aa29f0c15330e550f5f985a775539098",
+      "heading": "## 9. Hook System (Event Hooks)"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/15-10-auto-compaction-and-context-thresholds.md",
+      "start_line": 330,
+      "end_line": 362,
+      "segment_sha256": "f714da4721b21adf30b7b60fb54c37d4362c6ec12ccb28fd8ccb24fa82f499c5",
+      "heading": "## 10. Auto-Compaction and Context Thresholds"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/16-11-keyboard-first-and-command-palette.md",
+      "start_line": 363,
+      "end_line": 384,
+      "segment_sha256": "58795f09115987442606580c1649088d01c15887f4c1a8fe132abd1a77e7be8f",
+      "heading": "## 11. Keyboard-First and Command Palette"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/17-12-stream-event-visualization-and-thinking-display.md",
+      "start_line": 385,
+      "end_line": 406,
+      "segment_sha256": "b7cc233152680aa312e2cedd5cc8a0a39aa3f02d96ef2116763a7979c4cad0c1",
+      "heading": "## 12. Stream Event Visualization and \"Thinking\" Display"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/18-13-bounded-buffers-and-process-isolation.md",
+      "start_line": 407,
+      "end_line": 432,
+      "segment_sha256": "6b45d4722f2ecb38d171ddbd6f65f631d555b7f03416112132690d7cd890c9ce",
+      "heading": "## 13. Bounded Buffers and Process Isolation"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/19-14-database-and-persistence-structured-state.md",
+      "start_line": 433,
+      "end_line": 455,
+      "segment_sha256": "1a3b3dea97177b90689b210bb100f200b04f6e1dd8909f9c1670325a9013e307",
+      "heading": "## 14. Database and Persistence (Structured State)"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/20-15-additional-feature-ideas.md",
+      "start_line": 456,
+      "end_line": 858,
+      "segment_sha256": "54ee42915d2fc1148e21a947118f52b59f86482fbfd6c71ff49979d6387a9e1f",
+      "heading": "## 15. Additional Feature Ideas"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/21-16-phasing-and-dependencies.md",
+      "start_line": 859,
+      "end_line": 878,
+      "segment_sha256": "ff06623590da44098a377ce48d0d18e4bf973f7c213036d616cb4a6cdbd2df9a",
+      "heading": "## 16. Phasing and Dependencies"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/22-17-relationship-to-existing-plans-and-cross-reference.md",
+      "start_line": 879,
+      "end_line": 978,
+      "segment_sha256": "1b25354b80bc67be48dc479a4df2e5a7a73c0176aa7a75ed8551c00113bae3ae",
+      "heading": "## 17. Relationship to Existing Plans and Cross-Reference"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/23-18-task-status-log.md",
+      "start_line": 979,
+      "end_line": 986,
+      "segment_sha256": "7605d374bfa4f698ef9eb494e12c82847187d592c32d042a4d7249f948307559",
+      "heading": "## 18. Task Status Log"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/24-19-technical-analysis-how-these-mechanisms-work.md",
+      "start_line": 987,
+      "end_line": 1208,
+      "segment_sha256": "e8bf9fe0764061e272e36caadc636b6e724da7948a0026dcb44fd2d618073ba0",
+      "heading": "## 19. Technical Analysis: How These Mechanisms Work"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/25-20-human-in-the-loop-hitl-mode.md",
+      "start_line": 1209,
+      "end_line": 1216,
+      "segment_sha256": "7dbde5d69d19c9d40b8a1201f3c00143102421967bb65a754315f167828f173b",
+      "heading": "## 20. Human-in-the-Loop (HITL) Mode"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/26-21-updating-puppet-master.md",
+      "start_line": 1217,
+      "end_line": 1247,
+      "segment_sha256": "bbb094ddf042b505146ffe997f40718455e4c235f78a880d576a980e6817428d",
+      "heading": "## 21. Updating Puppet Master"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/27-22-cross-device-sync.md",
+      "start_line": 1248,
+      "end_line": 1288,
+      "segment_sha256": "3f933714499bc74bbfb7bd5ab61478def93dea375683212fa89774461e92d341",
+      "heading": "## 22. Cross-Device Sync"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/28-23-gaps-and-potential-issues.md",
+      "start_line": 1289,
+      "end_line": 1384,
+      "segment_sha256": "809bc84131447d8e5ae735e1fa419d425aec01a53eea1383c1e42dc174188d16",
+      "heading": "## 23. Gaps and Potential Issues"
+    }
+  ]
+}

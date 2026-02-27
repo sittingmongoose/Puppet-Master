@@ -1,0 +1,32 @@
+{
+  "source_path": "Plans/feature-list.md",
+  "source_sha256": "db36add65fed4639c5e3ee0f28ea6124d6bb63654ad04a6b16cc16d4d866f1df",
+  "split_rule": {
+    "primary": "## outside fences",
+    "fallback": "line-count-200",
+    "applied": "## outside fences"
+  },
+  "shards": [
+    {
+      "dest_path": "Plans/_shards/feature-list/01-preamble.md",
+      "start_line": 1,
+      "end_line": 9,
+      "segment_sha256": "fad666db8e39bbdae552088cbfe5314bed4c22d38452d8e46f5715b3e1a48cb3",
+      "heading": null
+    },
+    {
+      "dest_path": "Plans/_shards/feature-list/02-part-1-planned-and-new-features-from-plans.md",
+      "start_line": 10,
+      "end_line": 298,
+      "segment_sha256": "e8f78c226d8ad3d1ae5e05ff7b18c3cdd50f872b761593fdcd0f738567636c2b",
+      "heading": "## Part 1 - Planned and New Features (from Plans)"
+    },
+    {
+      "dest_path": "Plans/_shards/feature-list/03-part-2-existing-codebase-features.md",
+      "start_line": 299,
+      "end_line": 377,
+      "segment_sha256": "e5ccd4b4bdb833a0347c4591f9952250b4a495bb639c3bcba84f547206c8fb76",
+      "heading": "## Part 2 - Existing Codebase Features"
+    }
+  ]
+}

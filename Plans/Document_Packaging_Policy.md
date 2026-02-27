@@ -146,6 +146,125 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/
 
 ---
 
+## 7. On-disk path convention and pointer stub contract
+
+<a id="7"></a>
+
+### 7.1 Document Set directory naming
+
+When a logical artifact path is a Markdown/text file and packaging triggers are reached (§3), the canonical packaged form MUST be a directory named by appending `.docset` to the full filename:
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
+
+- Logical file path: `.puppet-master/project/requirements.md`
+- Document Set directory: `.puppet-master/project/requirements.md.docset/`
+
+The `.docset` suffix MUST be appended to the complete filename including its extension.
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
+
+### 7.2 Document Set directory contents
+
+The Document Set directory MUST contain:
+
+1. `00-index.md` (per §1.1)
+2. `manifest.json` (per §1.2)
+3. `NN-*.md` or `NN-*.txt` shards (per §1.3)
+4. `evidence/` directory (per §5)
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
+
+### 7.3 Pointer stub at original artifact path
+
+When packaging produces a `.docset/` directory, the original file path MUST remain present as a file.
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
+
+That file MUST become a deterministic pointer stub with the following fixed fields:
+
+1. A statement that canonical content is packaged as a Document Set.
+2. A pointer to the Document Set entrypoint: `<filename>.docset/00-index.md`.
+3. The `source_sha256` value from the Document Set `manifest.json`.
+4. A verification command: `puppet-master docset verify <docset_path>` (CLI name is a placeholder until implemented; the command signature is deterministic).
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014, Gate:GATE-002
+
+**Pointer stub fixed format:**
+
+```markdown
+<!-- Puppet Master Document Set pointer stub — do not edit -->
+# <artifact title>
+
+This file is a **pointer stub**. Canonical content is packaged as a Document Set.
+
+- **Entrypoint:** `<filename>.docset/00-index.md`
+- **Source SHA-256:** `<source_sha256 from manifest.json>`
+- **Verify:** `puppet-master docset verify <filename>.docset/`
+```
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
+
+### 7.4 Canonical truth rules
+
+1. When a `.docset/` directory exists for an artifact, the `.docset/` directory is canonical and the pointer stub file is derived.
+2. When no `.docset/` directory exists, the `.md` (or `.txt`) file at the logical path is canonical.
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
+
+### 7.5 Verification discovery rules
+
+Verification MUST treat a pointer stub as compliant only if:
+- the `.docset/` directory exists
+- the `.docset/manifest.json` exists
+- all verification checks pass: reconstruction sha256 equals `manifest.json` `source_sha256`, line coverage, index/manifest match, idempotency, clean-room determinism (per §4 and §5)
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
+
+Verification MUST fail if:
+- the pointer stub exists but the `.docset/` directory is missing
+- the `.docset/` directory exists but any verification check fails
+- the `.md` file exceeds budget thresholds (§3) and no `.docset/` directory exists
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
+
+### 7.6 Example
+
+Source artifact: `.puppet-master/project/requirements.md`
+
+When `requirements.md` reaches size triggers:
+
+```text
+.puppet-master/project/
+  requirements.md                       # pointer stub (derived)
+  requirements.md.docset/               # Document Set directory (canonical)
+    00-index.md
+    manifest.json
+    01-introduction.md
+    02-functional-requirements.md
+    ...
+    evidence/
+      audit_a_verification.json
+      audit_b_index_manifest.json
+      audit_c_clean_room.json
+```
+
+Pointer stub content at `requirements.md`:
+
+```markdown
+<!-- Puppet Master Document Set pointer stub — do not edit -->
+# Requirements
+
+This file is a **pointer stub**. Canonical content is packaged as a Document Set.
+
+- **Entrypoint:** `requirements.md.docset/00-index.md`
+- **Source SHA-256:** `a1b2c3d4e5f6...`
+- **Verify:** `puppet-master docset verify requirements.md.docset/`
+```
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
+
+---
+
 ## References
 - `Plans/Project_Output_Artifacts.md`
 - `Plans/Progression_Gates.md`

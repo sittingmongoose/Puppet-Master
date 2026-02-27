@@ -1,0 +1,158 @@
+{
+  "source_path": "Plans/MiscPlan.md",
+  "source_sha256": "89596f3ed9ff9b35eb94edf96dc79d826a267f03279312fe698dee78f6197136",
+  "split_rule": {
+    "primary": "## outside fences",
+    "fallback": "line-count-200",
+    "applied": "## outside fences"
+  },
+  "shards": [
+    {
+      "dest_path": "Plans/_shards/MiscPlan/01-preamble.md",
+      "start_line": 1,
+      "end_line": 5,
+      "segment_sha256": "3afe6593c7b857bdbe78d20eff74ace9b263015b6ac6670e04cb7ca96867ca7f",
+      "heading": null
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/02-plan-document-status.md",
+      "start_line": 6,
+      "end_line": 16,
+      "segment_sha256": "afe1d03878009bbe3dba6b38b20fa87c60d4a75536e5b0e6ae662b6857635266",
+      "heading": "## Plan Document Status"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/03-rewrite-alignment-2026-02-21.md",
+      "start_line": 17,
+      "end_line": 39,
+      "segment_sha256": "2820143cf40a9ecce795f4ae2cb56f1cf904bd7a3f547e3eab064fd86d3399cb",
+      "heading": "## Rewrite alignment (2026-02-21)"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/04-table-of-contents.md",
+      "start_line": 40,
+      "end_line": 55,
+      "segment_sha256": "cdb22517bef2440b9c99b2209897e2aa48f7ab6d8700bc907a447702a60084d6",
+      "heading": "## Table of Contents"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/05-1-executive-summary.md",
+      "start_line": 56,
+      "end_line": 75,
+      "segment_sha256": "74b846ba13da8740512017f7c33cc21f29810ee44100d15cdd61e34c96957a94",
+      "heading": "## 1. Executive Summary"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/06-2-problem-statement.md",
+      "start_line": 76,
+      "end_line": 88,
+      "segment_sha256": "eae6aba44d4f23c96abfa66116350183ee6a2b6273a113c418c2de1399d506df",
+      "heading": "## 2. Problem Statement"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/07-3-cleanup-policy.md",
+      "start_line": 89,
+      "end_line": 176,
+      "segment_sha256": "b922b78ae6ea4284fcbbbe114561db8b1be9bf369a659ac2a548c53b0d600ab3",
+      "heading": "## 3. Cleanup Policy"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/08-4-runner-contract-implementation.md",
+      "start_line": 177,
+      "end_line": 330,
+      "segment_sha256": "3629c7c9e1ed53e15291c6ac1981f9b921cb8a37e12200fff2224d3121d3e546",
+      "heading": "## 4. Runner Contract Implementation"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/09-5-agent-output-directory.md",
+      "start_line": 331,
+      "end_line": 356,
+      "segment_sha256": "b7ef70842fa34f33fc8e6de4353080cd62d7e88d75b55271ab12ef2623f192f3",
+      "heading": "## 5. Agent Output Directory"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/10-6-evidence-retention-pruning.md",
+      "start_line": 357,
+      "end_line": 382,
+      "segment_sha256": "a4c390b71c386039ca1ac147dd32f65d05ba6884ebaf4239b4d9e6cd3501a738",
+      "heading": "## 6. Evidence Retention & Pruning"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/11-7-cleanup-ux-config.md",
+      "start_line": 383,
+      "end_line": 853,
+      "segment_sha256": "72bbb38c250aed2a15dec5f2adb6ee2c658863db92900419051c8b679fb1efe0",
+      "heading": "## 7. Cleanup UX & Config"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/12-8-implementation-checklist.md",
+      "start_line": 854,
+      "end_line": 958,
+      "segment_sha256": "08a44ed5cd54f298607176f72de8c3831d7caa3239ce93a06957e1880c064efd",
+      "heading": "## 8. Implementation Checklist"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/13-9-risks-notes.md",
+      "start_line": 959,
+      "end_line": 968,
+      "segment_sha256": "9c2fa963d593d125beb5ef132d35bc1980a6008dbd44f1e8a1f18b521eb133e3",
+      "heading": "## 9. Risks & Notes"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/14-91-gaps-and-potential-issues.md",
+      "start_line": 969,
+      "end_line": 1136,
+      "segment_sha256": "5e2f07f9169f16bd0e92855c9a1b6382ba3ce9ea8c39944ffb07ae2fc1d47865",
+      "heading": "## 9.1 Gaps and Potential Issues"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/15-10-cross-plan-dependencies-and-impacts.md",
+      "start_line": 1137,
+      "end_line": 1194,
+      "segment_sha256": "61875143b42c2a7df2545504a0a153742896f6d6d7b22526e6c79cbd1fde0e27",
+      "heading": "## 10. Cross-Plan Dependencies and Impacts"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/16-105-crews-and-subagent-communication-enhancements-for-cleanup-operations.md",
+      "start_line": 1195,
+      "end_line": 1356,
+      "segment_sha256": "4e7b89b4619e9e4b9e1c0e5b7809a98ffd7ad180862c32c92100d453477a3a82",
+      "heading": "## 10.5 Crews and Subagent Communication Enhancements for Cleanup Operations"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/17-106-lifecycle-and-quality-enhancements-for-cleanup-operations.md",
+      "start_line": 1357,
+      "end_line": 1524,
+      "segment_sha256": "51b411eac87183e0d063c9429cd87fffdfe6ca19d17fc183de2295aa4ca97580",
+      "heading": "## 10.6 Lifecycle and Quality Enhancements for Cleanup Operations"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/18-11-references.md",
+      "start_line": 1525,
+      "end_line": 1537,
+      "segment_sha256": "6b57d6bd108a70b9411e402b0ff01faf781e891f570fbd4090ca5fc9108a157a",
+      "heading": "## 11. References"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/19-implementation-status-tray-and-start-on-boot-phase-4.md",
+      "start_line": 1538,
+      "end_line": 1548,
+      "segment_sha256": "417a5e633c17797344d5e2ee6b00fa7ee7be01804f693567d166424b356e7fd8",
+      "heading": "## Implementation status (Tray and Start-on-Boot, Phase 4)"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/20-11-references-2.md",
+      "start_line": 1549,
+      "end_line": 1561,
+      "segment_sha256": "6b57d6bd108a70b9411e402b0ff01faf781e891f570fbd4090ca5fc9108a157a",
+      "heading": "## 11. References"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/21-implementation-status-tray-and-start-on-boot-phase-4-2.md",
+      "start_line": 1562,
+      "end_line": 1568,
+      "segment_sha256": "5b79d6e40f42f9bf9704b6e1a2dc1d0cfef83e08209273f0c6169cccfb1a7795",
+      "heading": "## Implementation status (Tray and Start-on-Boot, Phase 4)"
+    }
+  ]
+}

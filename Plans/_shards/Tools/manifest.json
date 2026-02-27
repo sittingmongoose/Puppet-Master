@@ -1,0 +1,116 @@
+{
+  "source_path": "Plans/Tools.md",
+  "source_sha256": "984b4d023d7882ba325ee9116aede6f82209467525341dd5f15d0b20a8f4436e",
+  "split_rule": {
+    "primary": "## outside fences",
+    "fallback": "line-count-200",
+    "applied": "## outside fences"
+  },
+  "shards": [
+    {
+      "dest_path": "Plans/_shards/Tools/01-preamble.md",
+      "start_line": 1,
+      "end_line": 7,
+      "segment_sha256": "d144ad60779449c4b36551853453296775e2c9073936af25e486117e39b9c02c",
+      "heading": null
+    },
+    {
+      "dest_path": "Plans/_shards/Tools/02-ssot-references-dry.md",
+      "start_line": 8,
+      "end_line": 17,
+      "segment_sha256": "2aff8c4d19019025de10f9d553d30d90cbe787a5db3b02b6dee63c47079e0406",
+      "heading": "## SSOT references (DRY)"
+    },
+    {
+      "dest_path": "Plans/_shards/Tools/03-1-purpose-and-scope.md",
+      "start_line": 18,
+      "end_line": 42,
+      "segment_sha256": "c3cddd60d51da89bb66779280f3c1ae62e82eef7a2eca35251ae79131427e40d",
+      "heading": "## 1. Purpose and scope"
+    },
+    {
+      "dest_path": "Plans/_shards/Tools/04-2-permission-model.md",
+      "start_line": 43,
+      "end_line": 101,
+      "segment_sha256": "1f178d2fa5216ca297f881392a6e069604080e2bb7d998f42a3e37aac9c83fd5",
+      "heading": "## 2. Permission model"
+    },
+    {
+      "dest_path": "Plans/_shards/Tools/05-3-built-in-tools-target-set.md",
+      "start_line": 102,
+      "end_line": 230,
+      "segment_sha256": "83eba838c6d2bbc03284d025e4d6b3c106273b5db8902f3b53a7ff7e7c3bb30d",
+      "heading": "## 3. Built-in tools (target set)"
+    },
+    {
+      "dest_path": "Plans/_shards/Tools/06-4-custom-tools.md",
+      "start_line": 231,
+      "end_line": 257,
+      "segment_sha256": "777860103ad5646d12aba158c9e41af7d1af4849e7420aefe197a35d185f36e8",
+      "heading": "## 4. Custom tools"
+    },
+    {
+      "dest_path": "Plans/_shards/Tools/07-5-mcp-integration-in-scope.md",
+      "start_line": 258,
+      "end_line": 279,
+      "segment_sha256": "061feba506dbc898b6253d0042e9e6d93f949f4447d783d69f57cb698004cad7",
+      "heading": "## 5. MCP integration (in scope)"
+    },
+    {
+      "dest_path": "Plans/_shards/Tools/08-6-ways-to-add-tools-implementation-angles.md",
+      "start_line": 280,
+      "end_line": 297,
+      "segment_sha256": "6377e4cb9cb2a76cc0cfe2af13a8e554266948c6ad123ac6ed329b05ba827504",
+      "heading": "## 6. Ways to add tools (implementation angles)"
+    },
+    {
+      "dest_path": "Plans/_shards/Tools/09-7-per-platform-mcp-and-tool-config-reference.md",
+      "start_line": 298,
+      "end_line": 314,
+      "segment_sha256": "741e4839f0708dfcd5346ca4de150dcfcc4db68f7e51c29d1934b6bb48208147",
+      "heading": "## 7. Per-platform MCP and tool config (reference)"
+    },
+    {
+      "dest_path": "Plans/_shards/Tools/10-8-implementation-details-and-technical-notes.md",
+      "start_line": 315,
+      "end_line": 370,
+      "segment_sha256": "9b1fb6ebe68912b50e31970cf9a391b47f465a84d588a0671418c5ce679c879e",
+      "heading": "## 8. Implementation details and technical notes"
+    },
+    {
+      "dest_path": "Plans/_shards/Tools/11-9-gaps-potential-problems-and-enhancements.md",
+      "start_line": 371,
+      "end_line": 411,
+      "segment_sha256": "367035b90919d6ec16860418aa8543687623e66309c74d27a79967285a0f834e",
+      "heading": "## 9. Gaps, potential problems, and enhancements"
+    },
+    {
+      "dest_path": "Plans/_shards/Tools/12-10-implementation-plan-permissions-spec-for-implementers.md",
+      "start_line": 412,
+      "end_line": 543,
+      "segment_sha256": "de67c907692d11a873e108364e88e533273cfb383da46d7cce1fb783e0d7c705",
+      "heading": "## 10. Implementation plan: permissions (spec for implementers)"
+    },
+    {
+      "dest_path": "Plans/_shards/Tools/13-11-relationship-to-other-plans.md",
+      "start_line": 544,
+      "end_line": 560,
+      "segment_sha256": "659e5de7d4fc133cbefa836a20236025372a9705d522246f0737d8886a4dc4fc",
+      "heading": "## 11. Relationship to other plans"
+    },
+    {
+      "dest_path": "Plans/_shards/Tools/14-12-implementation-checklist-ordered-for-implementation-plan.md",
+      "start_line": 561,
+      "end_line": 583,
+      "segment_sha256": "2c17971a93d2242d13f77c556c21ab1ac6ec29ddc79d6193a55e7422b499b519",
+      "heading": "## 12. Implementation checklist (ordered for implementation plan)"
+    },
+    {
+      "dest_path": "Plans/_shards/Tools/15-13-references.md",
+      "start_line": 584,
+      "end_line": 599,
+      "segment_sha256": "4be64f145a4b1203c80b487346821cf55abd02e4be0b91b0e58524bd21047837",
+      "heading": "## 13. References"
+    }
+  ]
+}
