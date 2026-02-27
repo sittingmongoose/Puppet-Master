@@ -128,9 +128,9 @@ ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md
 
 ### 1.6 Agent invocation rule
 
-The **Assistant**, **Interviewer**, and **Requirements Doc Builder** personas MUST call `capabilities.get` when the user asks about available capabilities, features, or what Puppet Master can do. The response is used to give the user an accurate, real-time answer about what is enabled and what is not (with reasons and setup guidance).
+The **Assistant** and **Interviewer** personas MUST call `capabilities.get` when the user asks about available capabilities, features, or what Puppet Master can do. When Assistant is operating in the **Requirements Doc Builder** workflow, the same requirement applies. The response is used to give the user an accurate, real-time answer about what is enabled and what is not (with reasons and setup guidance).
 
-ContractRef: ToolID:capabilities.get, ContractName:Plans/Personas.md
+ContractRef: ToolID:capabilities.get, ContractName:Plans/Personas.md, ContractName:Plans/chain-wizard-flexibility.md
 
 ---
 
@@ -154,6 +154,7 @@ ContractRef: ToolID:media.generate, ContractName:Plans/Tools.md
   "count": 2,
   "aspect_ratio": "16:9",
   "size": 1024,
+  "resolution": null,
   "duration": null,
   "format": "png",
   "voice": null,
@@ -172,6 +173,7 @@ ContractRef: ToolID:media.generate, ContractName:Plans/Tools.md
 | `count` | `integer \| null` | Optional | Number of variations (default 1; clamped to safe max, default 8). |
 | `aspect_ratio` | `string \| null` | Optional | e.g., `"1:1"`, `"16:9"`, `"9:16"`. |
 | `size` | `integer \| null` | Optional | Image pixel size (e.g., 512, 1024, 2048). |
+| `resolution` | `string \| null` | Optional | Canonical resolution token when provided (e.g., `720p`, `1080p`, `1440p`, `2160p`, `4k`, `2k`, `8k`). |
 | `duration` | `float \| null` | Optional | Duration in seconds (video/music only). |
 | `format` | `string \| null` | Optional | Output format (e.g., `png`, `jpg`, `mp4`, `wav`, `mp3`). |
 | `voice` | `string \| null` | Optional | Voice ID or style descriptor (TTS only). |
@@ -179,6 +181,14 @@ ContractRef: ToolID:media.generate, ContractName:Plans/Tools.md
 | `seed` | `integer \| null` | Optional | Deterministic seed for reproducibility. |
 | `negative_prompt` | `string \| null` | Optional | Content to avoid in generation. |
 | `quality` | `string \| null` | Optional | One of: `draft`, `standard`, `high`. |
+
+ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+
+Deterministic `size` / `resolution` normalization for the request envelope:
+- If `kind=image` and `size_px` is matched, set `size` to the parsed integer and set `resolution` to `null` unless an explicit symbolic resolution token is also provided.
+- If `size_k` is matched, map `2k -> 2048`, `4k -> 4096`, `8k -> 8192` into `size`; also set `resolution` to the symbolic token (`2k`, `4k`, or `8k`).
+- If `kind=video` and `vres` is matched, set `resolution` to the parsed token (`720p`, `1080p`, `1440p`, `2160p`, or `4k`) and keep `size` as `null`.
+- Conflict rule: for `kind=image`, `size_k`/`size_px` controls are authoritative over `vres`; for `kind=video`, `vres` is authoritative for `resolution`. Within the same keyed family, last match wins.
 
 ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
 
@@ -265,7 +275,7 @@ Controls-block regex:
 
 Control token gate (at least one must match inside the captured controls):
 ```
-\b(model|aspect|ratio|size|resolution|duration|voice|format|bpm|seed|negative)\b
+\b(model|aspect|ratio|size|resolution|duration|voice|format|bpm|seed|negative|quality)\b
 ```
 
 ### 3.2 Kind detection
@@ -357,6 +367,14 @@ Video resolution:
 
 Bare numbers are **not** treated as size unless they appear in a controls block or trailing comma controls.
 
+Deterministic assignment to envelope fields:
+- `size_px` populates `size`.
+- `size_k` populates `size` using `2k -> 2048`, `4k -> 4096`, `8k -> 8192`, and also populates `resolution` with the symbolic token.
+- `vres` populates `resolution` for `kind=video`; for `kind=image`, bare `vres` matches in creative prose are ignored unless provided in a keyed controls context.
+- If both `size_k` and `vres` are present in an image request, `size_k` is authoritative and `resolution` remains the symbolic `size_k` token.
+
+ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+
 ### 3.8 `duration` extraction (video/music only)
 
 Keyworded:
@@ -394,6 +412,10 @@ Voice style:
 ```
 
 Optional phrase mapping (e.g., "quick draft" → `draft`, "high quality" → `high`).
+
+Deterministic guard: bare lexical matches from the regex above are candidate tokens only. `quality` MUST be set only when the match is in a controls block or a quality-keyword phrase (`quality: high`, `quality=standard`, `high quality`, `draft quality`); plain descriptive adjectives in the creative prompt MUST NOT set `quality`.
+
+ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
 
 ### 3.12 `seed` extraction
 
@@ -586,9 +608,9 @@ ContractRef: ToolID:capabilities.get, Invariant:INV-003
 ContractRef: ToolID:capabilities.get, Invariant:INV-003
 
 <a id="AC-MED09"></a>
-**AC-MED09:** The Assistant, Interviewer, and Requirements Doc Builder MUST call `capabilities.get` when the user asks about capabilities or features.
+**AC-MED09:** The Assistant and Interviewer MUST call `capabilities.get` when the user asks about capabilities or features. When Assistant is operating in the Requirements Doc Builder workflow, the same requirement applies.
 
-ContractRef: ToolID:capabilities.get, ContractName:Plans/Personas.md
+ContractRef: ToolID:capabilities.get, ContractName:Plans/Personas.md, ContractName:Plans/chain-wizard-flexibility.md
 
 <a id="AC-MED10"></a>
 **AC-MED10:** All media-generation and capability references across plan documents MUST reference `Plans/Media_Generation_and_Capabilities.md` anchors rather than restating rules (DRY).
@@ -614,7 +636,7 @@ ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
 - Keep raw (original) and s_lower (normalized lowercased).
 - If trailing controls block exists (ends with (...) or [...] and contains control tokens), split body + controls and parse controls first; remove block from prompt.
 Controls-block regex: (?is)^(?P<body>.*?)(?:\s*(?P<bracket>\(|\[)\s*(?P<controls>[^)\]]{1,400})\s*(?:\)|\])\s*)$
-Control token gate: \b(model|aspect|ratio|size|resolution|duration|voice|format|bpm|seed|negative)\b
+Control token gate: \b(model|aspect|ratio|size|resolution|duration|voice|format|bpm|seed|negative|quality)\b
 2) kind detection:
 - Prefix form: (?is)^\s*(?P<prefix>image|video|tts|music)\s*:\s*
 - Else keyword-based:
@@ -642,6 +664,8 @@ Image keyworded: (?i)\b(?:size|resolution|res)\s*[:=]?\s*(?P<size_px>512|768|102
 Image keyworded k: (?i)\b(?:size|resolution|res)\s*[:=]?\s*(?P<size_k>2k|4k|8k)\b
 Video: (?i)\b(?P<vres>720p|1080p|1440p|2160p|4k)\b
 Do not treat bare numbers as size unless they are in controls block or trailing comma controls.
+Envelope mapping: size_px -> size; size_k -> size (2k=2048,4k=4096,8k=8192) plus resolution token; vres -> resolution for video and MUST NOT override size_k-derived resolution for image prompts.
+ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
 8) duration (video/music only):
 keyworded: (?i)\b(?:for|duration|length)\s*(?P<secs>\d{1,3}(?:\.\d+)?)\s*(?:s|sec|secs|second|seconds)\b
 bare (only in controls block or trailing controls): (?i)\b(?P<secs2>\d{1,3}(?:\.\d+)?)\s*(?:s|sec|secs)\b
@@ -649,7 +673,8 @@ bare (only in controls block or trailing controls): (?i)\b(?P<secs2>\d{1,3}(?:\.
 10) voice (tts):
 voice id: (?i)\bvoice\s*[:=]\s*(?P<voice>[a-z0-9][a-z0-9 _\-]{0,32})\b
 voice style: (?i)\bin\s+a[n]?\s+(?P<voice_style>[^,.;]{1,40})\s+voice\b
-11) quality: (?i)\b(?P<qual>draft|standard|high)\b optional phrase mapping.
+11) quality: (?i)\b(?P<qual>draft|standard|high)\b optional phrase mapping. Guard: set only when in controls block or quality-keyword phrase; bare descriptive adjectives in creative prompt MUST NOT set quality.
+ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
 12) seed: (?i)\bseed\s*[:=]?\s*(?P<seed>\d{1,10})\b
 13) bpm: (?i)\b(?P<bpm>\d{2,3})\s*bpm\b|\bbpm\s*[:=]\s*(?P<bpm2>\d{2,3})\b
 14) negative_prompt:

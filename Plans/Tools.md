@@ -111,7 +111,7 @@ The following built-in tools are the **target set** for the central tool registr
 | **task** | Launch subagents (matches subagent type) | `task` | **subagent_type** must be one of the **canonical 41 subagents** documented in Plans (orchestrator-subagent-integration.md §4, interview-subagent-integration.md). Validate with subagent_registry; see §3.6. |
 | **codesearch** | Code search (matches the query); when LSP available, symbol-aware via workspace/symbol (§3.4) | `codesearch` | Default allow (§10.2). Enabled when config or platform provides search backend. Fallback order: text-based search → LSP workspace/symbol when available → MCP or platform-native if configured. Result and timeout limits per §3.5. |
 | **capabilities.get** | Return all available capabilities (media + provider-tool) with enablement status, disabled reasons, and setup hints | `capabilities.get` | Internal tool; not forwarded to providers. Default allow (§10.2). Full contract: `Plans/Media_Generation_and_Capabilities.md` [§1](Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM). |
-| **media.generate** | Generate media (image / video / tts / music) via structured request envelope with optional per-request model override | `media.generate` | Internal tool; backed by Gemini API key (or Cursor-native for images). Default allow (§10.2). Full contract: `Plans/Media_Generation_and_Capabilities.md` [§2](Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE). |
+| **media.generate** | Generate media (image / video / tts / music) via structured request envelope with optional per-request model override | `media.generate` | Internal tool; backed by Gemini API key (or Cursor-native for images). Default ask (§10.2). Full contract: `Plans/Media_Generation_and_Capabilities.md` [§2](Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE). |
 
 ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Media_Generation_and_Capabilities.md
 
@@ -416,7 +416,7 @@ For backward compatibility, the merged permission set is also projected to redb 
 
 ### 10.2 Default policy table
 
-Canonical default table: `Plans/Permissions_System.md` §7. Tool-to-default mapping includes `read` → allow (with §7.1 `.env` deny), `edit`/`bash` → ask, `glob`/`grep`/`list`/`codesearch`/`skill`/`lsp`/`capabilities.get`/`media.generate` → allow, `webfetch`/`websearch`/`task` → ask, `todoread`/`todowrite` → allow (subagent: deny), `external_directory`/`doom_loop` → ask, unknown tools → ask.
+Canonical default table: `Plans/Permissions_System.md` §7. Tool-to-default mapping includes `read` → allow (with §7.1 `.env` deny), `edit`/`bash`/`media.generate` → ask, `glob`/`grep`/`list`/`codesearch`/`skill`/`lsp`/`capabilities.get` → allow, `webfetch`/`websearch`/`task` → ask, `todoread`/`todowrite` → allow (subagent: deny), `external_directory`/`doom_loop` → ask, unknown tools → ask.
 
 ### 10.3 Resolution algorithm
 
