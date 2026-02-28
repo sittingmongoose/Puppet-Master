@@ -12,10 +12,6 @@ It defines only: scope, non-negotiable constraints, and the SSOT paths for **Pla
 - **Disallowed edits (until rewrite execution begins):**
   - Any application code (e.g. `puppet-master-rs/**`), build scripts, or runtime configs.
 
-## Naming rule (ABSOLUTE)
-- Platform name is **“Puppet Master”** only.
-- If older naming exists, refer to it only as **“legacy naming”** (do not quote it).
-
 ## Plans governance (SSOT-first)
 When editing anything in `Plans/`, follow these files and do not duplicate their content:
 - `Plans/DRY_Rules.md` (DRY/SSOT + ContractRef rules)
@@ -36,10 +32,6 @@ If you add or modify a normative requirement in `Plans/` (e.g. MUST/REQUIRED/SHA
 ## Working style for Plans
 - No stubs. No placeholders. No “Open Questions” sections—log a decision and proceed deterministically.
 - Keep edits localized and update `Plans/00-plans-index.md` when adding/renaming plan docs.
-
-## Tooling (don’t create an attention tax)
-Only use external-doc tools (e.g., Context7) when you truly need third-party reference material.
-Prefer repo SSOT documents first.
 
 ## Output status markers
 End with exactly one marker:
