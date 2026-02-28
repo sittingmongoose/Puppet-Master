@@ -16,7 +16,7 @@
 | `Plans/WorktreeGitImprovement.md` | Branching tab in Settings (§7.4), worktree recovery in Health tab |
 | `Plans/FileSafe.md` | Advanced tab in Settings (§7.4), command blocklist, write scope, security filter |
 | `Plans/MiscPlan.md` | Health tab "Clean workspace" button (§7.4), cleanup config in Advanced tab, Shortcuts tab (§7.4) |
-| `Plans/Skills_System.md` | Skills tab (§7.4) |
+| `Plans/Skills_System.md` | Skills tab (§7.4.16) |
 | `Plans/feature-list.md` | Master feature reference: chat modes (§7.16), thread management, slash commands (§7.16.2), ELI5/YOLO, attachments, Teach, context management (§9.6), editor detach (§7.18), **catalog install UI (§7.4.3)**, **sync bundle manager (§7.4.4)** |
 | `Plans/newtools.md` | MCP configuration in Advanced tab (§7.4), tool discovery during interview |
 | `Plans/Tools.md` | Tool permissions in Advanced tab (§7.4.1), permission model (allow/deny/ask), presets, central tool registry; tool usage widget on Usage page (§7.8); tool approval dialog in Chat (§7.16) |

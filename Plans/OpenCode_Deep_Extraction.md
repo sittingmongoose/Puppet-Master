@@ -38,8 +38,7 @@ Extract reusable, implementation-grade guidance from OpenCode (run modes, agents
 - Puppet Master Plans directory (SSOT).
 
 ## 4. Deterministic extraction procedure
-1) **Clone OpenCode into a temporary workspace** (do not commit it):
-   - Path: `./.tmp/opencode` (or another deterministic temp dir).
+1) **Reference the OpenCode upstream repository** (https://github.com/anomalyco/opencode) via its web interface or API — do not clone it into Puppet Master.
 2) **Inventory OpenCode surfaces** (deterministic list):
    - Tools model + permissions model
    - Provider execution model (streaming events, tool use/result)
@@ -55,7 +54,7 @@ Extract reusable, implementation-grade guidance from OpenCode (run modes, agents
 5) **Map findings into Puppet Master SSOT docs**:
    - For each extracted concept, choose exactly one target plan doc section to update (or mark as discarded).
    - Never duplicate: add a reference to the correct SSOT doc instead of copying long definitions.
-6) **Delete the OpenCode clone** (`./.tmp/opencode`) after extraction to avoid accidental commits.
+6) **No local clone cleanup required** — extraction reads from the upstream repo directly; nothing to delete.
 
 ## 5. Output format (for downstream agents)
 For each extracted item, emit a record with:

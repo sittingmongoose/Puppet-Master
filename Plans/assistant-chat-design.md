@@ -220,6 +220,7 @@ There are **two separate ELI5 toggles**; they are independent and must not be co
 
 ---
 
+<a id="5"></a>
 ## 5. Commands (slash commands and custom commands)
 
 This section defines the **reserved slash commands** — built-in actions invoked via `/` in chat. For **User Commands** (user-authored command presets with templated prompts, stored as `.md` files), see `Plans/Commands_System.md` (canonical SSOT). User Commands and reserved slash commands share the chat `/` autocomplete surface; reserved names take precedence and MUST NOT be overridden.

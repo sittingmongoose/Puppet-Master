@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/FinalGUISpec.md",
-  "source_sha256": "36c36440ca789059121998ad955028b7ad05216d8d611edd12a57be335f11e11",
+  "source_sha256": "3fbef8a951b67e18f5a21b115773b4b108fa6e93db84479d673254374bab5e52",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -66,105 +66,105 @@
     {
       "dest_path": "Plans/_shards/FinalGUISpec/09-7-views-specification.md",
       "start_line": 567,
-      "end_line": 1832,
-      "segment_sha256": "0d1877eec71ae49629751b79a33a55486170ff4c2c242569cbbd8fedd507a05e",
+      "end_line": 1875,
+      "segment_sha256": "c3ec425da04df751c8f9916a91a9a136f02f1b47221fb45e3a3c894d88170bd9",
       "heading": "## 7. Views Specification"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/10-8-widget-catalog.md",
-      "start_line": 1833,
-      "end_line": 1891,
+      "start_line": 1876,
+      "end_line": 1934,
       "segment_sha256": "b903374fc499f60563b633fbb26289fb91002dd5579ea27ccd7d9abc5af3b12c",
       "heading": "## 8. Widget Catalog"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/11-9-state-management.md",
-      "start_line": 1892,
-      "end_line": 1970,
+      "start_line": 1935,
+      "end_line": 2013,
       "segment_sha256": "b910b3477dd3136a6b528d35ef4a51eb710d00c0ef4207b3e7e4a407a696cfae",
       "heading": "## 9. State Management"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/12-10-ux-patterns.md",
-      "start_line": 1971,
-      "end_line": 2221,
+      "start_line": 2014,
+      "end_line": 2264,
       "segment_sha256": "a33a5a617ff116053273a63417dd7273a13768f5132d053b719e7d0b453f78c2",
       "heading": "## 10. UX Patterns"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/13-11-anti-flickering-and-scroll-preservation.md",
-      "start_line": 2222,
-      "end_line": 2263,
+      "start_line": 2265,
+      "end_line": 2306,
       "segment_sha256": "b795893cdaaeb63c731bea147cfec354b312f0608716676e4f9f22a04e332625",
       "heading": "## 11. Anti-Flickering and Scroll Preservation"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/14-12-responsive-design.md",
-      "start_line": 2264,
-      "end_line": 2297,
+      "start_line": 2307,
+      "end_line": 2340,
       "segment_sha256": "4af4745b1242be4f0bbaac9d739eab2b1a44935fec8c97309ca3f891c878c99c",
       "heading": "## 12. Responsive Design"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/15-13-accessibility.md",
-      "start_line": 2298,
-      "end_line": 2337,
+      "start_line": 2341,
+      "end_line": 2380,
       "segment_sha256": "9e8c79e4916df135cd94e977230fad106e13e98ff79212f59b89b02c5f42a4d5",
       "heading": "## 13. Accessibility"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/16-14-slint-file-organization.md",
-      "start_line": 2338,
-      "end_line": 2479,
+      "start_line": 2381,
+      "end_line": 2522,
       "segment_sha256": "436f4188824a370b47eab56cbc2e032f448551d7d1818111380cb41ef9b2071c",
       "heading": "## 14. Slint File Organization"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/17-15-persistence.md",
-      "start_line": 2480,
-      "end_line": 2552,
+      "start_line": 2523,
+      "end_line": 2595,
       "segment_sha256": "dd30b50ef3442fbe7ce8d771ae7350336ae36a6990824da89903d4ac770d131f",
       "heading": "## 15. Persistence"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/18-16-migration-mapping.md",
-      "start_line": 2553,
-      "end_line": 2629,
+      "start_line": 2596,
+      "end_line": 2672,
       "segment_sha256": "323c10e668bf9104bac94cb0e36f7c28f01877fea2ef778e3fc79914d715fbad",
       "heading": "## 16. Migration Mapping"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/19-17-risks-and-mitigations.md",
-      "start_line": 2630,
-      "end_line": 2664,
+      "start_line": 2673,
+      "end_line": 2707,
       "segment_sha256": "2403e1b50f67b653ea47bb5470c082e539e825ea99e3ae5898b9db32a1447f5c",
       "heading": "## 17. Risks and Mitigations"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/20-18-promoted-features-formerly-future-considerations.md",
-      "start_line": 2665,
-      "end_line": 2687,
+      "start_line": 2708,
+      "end_line": 2730,
       "segment_sha256": "d5f4ed4426faafbee829bb3ad4b02be3e302bcdf4fde0319de2ac57e489f2a09",
       "heading": "## 18. Promoted Features (Formerly Future Considerations)"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/21-appendix-a-cross-references.md",
-      "start_line": 2688,
-      "end_line": 2713,
-      "segment_sha256": "d849db0a051bc710c2daf77b46d3fad1609b885102c290987c0a8a8904c7115c",
+      "start_line": 2731,
+      "end_line": 2756,
+      "segment_sha256": "bd30e8145e6b23163fafd0b0d9bf63d96a45d376cb5cbff75089ca073ac5b21a",
       "heading": "## Appendix A: Cross-References"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/22-appendix-b-locked-decisions-summary.md",
-      "start_line": 2714,
-      "end_line": 2736,
+      "start_line": 2757,
+      "end_line": 2779,
       "segment_sha256": "0285f85120d13b7fa71e3805a7a02ee724c5e0d4c42cab48747ddc06d1a88712",
       "heading": "## Appendix B: Locked Decisions Summary"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/23-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-addendum-2026-02-23.md",
-      "start_line": 2737,
-      "end_line": 2819,
+      "start_line": 2780,
+      "end_line": 2862,
       "segment_sha256": "82c5d96f598ad07669246f37934342405249e8dfb28e26717c73fe8d53d899c5",
       "heading": "## Appendix C: Dashboard Widget Grid and Widget Catalog Integration (Addendum -- 2026-02-23)"
     }

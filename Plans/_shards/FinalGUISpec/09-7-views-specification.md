@@ -580,6 +580,49 @@ ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-
 
 **Tab sub-grouping update**: The Media tab belongs to the **Features** group in the Settings sidebar.
 
+<a id="SKILLS-TAB"></a>
+
+**§7.4.16 Skills (Skills tab):**
+
+> **SSOT:** The canonical specification for skill identity, on-disk format, discovery roots, search order, shadowing, validation, and permission semantics is `Plans/Skills_System.md`. This section provides the FinalGUISpec GUI integration points only; normative behavior is defined in the SSOT.
+
+ContractRef: ContractName:Plans/Skills_System.md#GUI-SKILLS, ContractName:Plans/DRY_Rules.md
+
+The **Skills** tab in Settings provides discovery, inspection, and permission management for SKILL.md files. Skills are discovered from project-local roots (e.g., `.puppet-master/skills/`) and global roots (`~/.config/puppet-master/skills/`); the full set of discovery roots and their priority order is defined in `Plans/Skills_System.md` §3.
+
+**Layout:**
+
+1. **Skill list table**: Table of all discovered skills. Columns:
+   - **Name**: Skill ID (from YAML frontmatter `name` field).
+   - **Description**: Skill description (truncated with expand; see §10.10).
+   - **Source**: Badge indicating Project or Global, with sub-label showing root origin (`.puppet-master`, `.claude`, `.agents`). Source column requirements per `Plans/Skills_System.md` §6.
+   - **Permission**: Dropdown per row (`Allow` | `Deny` | `Ask`). Persisted per Skill ID in the permission store. Semantics defined in `Plans/Skills_System.md` §5.
+   - **Status**: Validation indicator — green check for valid, red warning icon for invalid (hover shows error message). Invalid skills are listed but not loadable. Validation rules per `Plans/Skills_System.md` §3.3.
+   - **Shadowed**: When a skill is shadowed by a higher-priority root, show amber badge "Shadowed" with tooltip listing the overriding skill's path. Shadowing rules per `Plans/Skills_System.md` §3.2.
+
+2. **Actions toolbar** (above table):
+   - **Add**: Opens a native directory picker to select a skill directory containing `SKILL.md`. Validates on selection; on success, copies to the active scope's skill root and re-scans.
+   - **Edit**: Opens the selected skill's `SKILL.md` in the File Editor (§7.18). Disabled when no row is selected.
+   - **Remove**: Deletes the selected skill directory from disk (confirmation modal: "Remove skill '{name}'? This cannot be undone." with [Remove] and [Cancel]). Disabled for shadowed-only entries or when no row is selected.
+   - **Refresh**: Re-scans all discovery roots and rebuilds the skill list. Toast: "Skills refreshed — {N} skills found."
+   - **Validate all**: Runs validation (per `Plans/Skills_System.md` §3.3) across all discovered skills and updates the Status column. Toast summary: "{N} valid, {M} invalid."
+
+3. **Bulk permission** (below toolbar): Pattern input with "Apply" button. Example: entering `doc-*` and selecting `Allow` sets permission to Allow for all skills whose ID matches the glob pattern. Pattern matching uses the same `*` and `?` wildcards as the Permissions tab (§7.4.10).
+
+4. **Skill preview** (row expand): Expanding a skill row reveals a read-only Markdown preview of the skill body (content after YAML frontmatter). For invalid skills, the expand area shows the validation error details instead.
+
+5. **Scope indicator** (top bar): Shows whether the current project provides project-local skills. When no project is active, only global skills are listed with a note: "Open a project to see project-level skills."
+
+**Error handling:**
+
+- Discovery errors (e.g., unreadable directory, permission denied on a root): per-root warning banner at the top of the skill list: "Could not scan {root}: {error}". Other roots continue scanning.
+- YAML parse failures: skill appears in the table with Status = invalid; expand shows the parse error. Skill is not loadable.
+- Directory-name mismatch (folder name ≠ Skill ID): shown as a validation error in the Status column per `Plans/Skills_System.md` §3.3.
+
+**ELI5/Expert**: In ELI5 mode, show only skill name, description, source, and permission dropdown. Status column, shadowed badge, bulk permission, and validate-all button are hidden. Tooltip prefix: `tooltip.skills.*`.
+
+**Tab sub-grouping update**: The Skills tab belongs to the **System** group in the Settings sidebar.
+
 ### 7.5 Wizard
 
 **Group:** Run | **Location:** Primary content
