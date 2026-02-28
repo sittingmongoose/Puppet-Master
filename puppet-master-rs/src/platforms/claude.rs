@@ -48,7 +48,7 @@
 //! - Fresh process per iteration (no `-c`/`--continue`, no `--resume`)
 //! - Uses `--no-session-persistence` to prevent session saves
 //! - Plan mode uses `--permission-mode plan` flag
-//! - Always uses `--output-format json` for structured output
+//! - Always uses `--output-format stream-json` for structured NDJSON output
 
 use crate::platforms::context_files::{append_prompt_attachments, context_file_parent_dirs};
 use crate::platforms::{BaseRunner, PlatformRunner, platform_specs};
@@ -214,9 +214,9 @@ impl PlatformRunner for ClaudeRunner {
         args.push("--model".to_string());
         args.push(request.model.clone());
 
-        // JSON output format
+        // Stream-JSON (NDJSON) output for deterministic line-by-line parsing
         args.push("--output-format".to_string());
-        args.push("json".to_string());
+        args.push("stream-json".to_string());
 
         // No session persistence for orchestrator use
         args.push("--no-session-persistence".to_string());
@@ -284,7 +284,8 @@ mod tests {
         assert!(args.contains(&"--model".to_string()));
         assert!(args.contains(&"claude-3-5-sonnet-20241022".to_string()));
         assert!(args.contains(&"--output-format".to_string()));
-        assert!(args.contains(&"json".to_string()));
+        assert!(args.contains(&"stream-json".to_string()));
+        assert!(!args.contains(&"json".to_string()), "must use stream-json, not json");
         assert!(args.contains(&"--no-session-persistence".to_string()));
         assert!(args.contains(&"--permission-mode".to_string()));
         assert!(args.contains(&"bypassPermissions".to_string()));

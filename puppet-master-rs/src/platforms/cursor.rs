@@ -15,7 +15,7 @@
 //! - `-p "prompt"` or `--print "prompt"` — Headless print mode
 //! - `--model <model>` or `-m <model>` — Model selection
 //! - `--mode=plan|ask` — Plan (read-only) or Ask (Q&A) mode
-//! - `--output-format text|json|stream-json` — Output format (requires -p)
+//! - `--output-format text|json|stream-json` — Output format (stream-json = NDJSON; requires -p)
 //! - `--stream-partial-output` — Incremental updates with stream-json
 //! - `--force` or `-f` — Force file/command changes in headless mode
 //! - `-a <key>` or `--api-key <key>` — API key for headless auth
@@ -240,9 +240,9 @@ impl PlatformRunner for CursorRunner {
             args.push("--force".to_string());
         }
 
-        // Always request JSON output for structured parsing
+        // Stream-JSON (NDJSON) output for deterministic line-by-line parsing
         args.push("--output-format".to_string());
-        args.push("json".to_string());
+        args.push("stream-json".to_string());
 
         // NOTE: Cursor uses --add-dir in platform_specs, but it doesn't need explicit working_dir
         // flag since cmd.current_dir() (set by base runner) is sufficient
@@ -285,7 +285,8 @@ mod tests {
         assert!(args.contains(&"gpt-4o".to_string()));
         assert!(args.contains(&"--force".to_string()));
         assert!(args.contains(&"--output-format".to_string()));
-        assert!(args.contains(&"json".to_string()));
+        assert!(args.contains(&"stream-json".to_string()));
+        assert!(!args.contains(&"json".to_string()), "must use stream-json, not json");
     }
 
     #[test]

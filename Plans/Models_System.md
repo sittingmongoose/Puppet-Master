@@ -158,7 +158,7 @@ ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
 
 <a id="PERSONA-MODEL-OVERRIDES"></a>
 
-A Persona MAY specify a preferred model via a `default_model` field in the PERSONA.md frontmatter (future extension to `Plans/Personas.md` §3.1):
+A Persona MAY specify a preferred model via the `default_model` field in the PERSONA.md frontmatter (defined in `Plans/Personas.md` §3.2):
 
 ```yaml
 ---

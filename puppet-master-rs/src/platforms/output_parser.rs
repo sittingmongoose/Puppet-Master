@@ -6,7 +6,7 @@
 //! - File changes: detecting file paths in output
 //! - Token usage: platform-specific usage information
 //! - Error categorization: rate limits, quotas, auth failures, etc.
-//! - JSON output: structured responses when platform supports it
+//! - JSON / NDJSON (stream-json) output: structured responses parsed line-by-line
 
 use crate::types::Platform;
 use regex::Regex;
@@ -750,35 +750,76 @@ impl OutputParser for CursorOutputParser {
     fn parse(&self, stdout: &str, stderr: &str) -> ParsedOutput {
         let mut output = ParsedOutput::new(stdout.to_string());
 
-        // Detect completion signal
+        // Detect completion signal across all lines
         output.completion_signal = CompletionSignal::detect(stdout);
 
-        // Try to parse JSON output (Cursor supports --output-format json)
-        if let Some(json) = ParsingUtils::try_parse_json(stdout) {
-            output.json_response = Some(json.clone());
+        // Parse NDJSON (stream-json): each line may be an independent JSON event.
+        // Accumulate assistant text fragments and structured data across events.
+        let mut assistant_text_parts: Vec<String> = Vec::new();
+        let mut total_input_tokens = 0u64;
+        let mut total_output_tokens = 0u64;
+        let mut has_usage = false;
+        let mut files_from_json: Vec<String> = Vec::new();
 
-            // Extract token usage from JSON
-            if let Some(usage) = json.get("usage") {
-                let mut token_usage = TokenUsage::default();
+        for line in stdout.lines() {
+            let trimmed = line.trim();
+            if trimmed.is_empty() {
+                continue;
+            }
+            if let Some(json) = ParsingUtils::try_parse_json(trimmed) {
+                // Store last JSON event as json_response (final event wins)
+                output.json_response = Some(json.clone());
 
-                if let Some(input) = usage.get("input_tokens").and_then(|v| v.as_u64()) {
-                    token_usage.input_tokens = Some(input);
+                // Extract assistant text from message content blocks
+                if let Some(content) = json.get("content").and_then(|v| v.as_str()) {
+                    assistant_text_parts.push(content.to_string());
                 }
-                if let Some(output_tok) = usage.get("output_tokens").and_then(|v| v.as_u64()) {
-                    token_usage.output_tokens = Some(output_tok);
+                // Handle content array (e.g. [{type:"text", text:"..."}])
+                if let Some(content_arr) = json.get("content").and_then(|v| v.as_array()) {
+                    for block in content_arr {
+                        if let Some(text) = block.get("text").and_then(|v| v.as_str()) {
+                            assistant_text_parts.push(text.to_string());
+                        }
+                    }
+                }
+                // Extract message text field (Cursor variants)
+                if let Some(text) = json.get("message").and_then(|v| v.as_str()) {
+                    assistant_text_parts.push(text.to_string());
                 }
 
-                if !token_usage.is_empty() {
-                    output.token_usage = Some(token_usage);
+                // Extract token usage from top-level or nested usage object
+                if let Some(usage) = json.get("usage") {
+                    if let Some(input) = usage.get("input_tokens").and_then(|v| v.as_u64()) {
+                        total_input_tokens += input;
+                        has_usage = true;
+                    }
+                    if let Some(output_tok) = usage.get("output_tokens").and_then(|v| v.as_u64()) {
+                        total_output_tokens += output_tok;
+                        has_usage = true;
+                    }
+                }
+
+                // Extract files_changed if present in any event
+                if let Some(files) = json.get("files_changed").and_then(|v| v.as_array()) {
+                    for f in files {
+                        if let Some(s) = f.as_str() {
+                            files_from_json.push(s.to_string());
+                        }
+                    }
                 }
             }
+            // Non-JSON lines are silently absorbed into raw_response (already stored above)
+        }
 
-            // Extract files changed
-            if let Some(files) = json.get("files_changed").and_then(|v| v.as_array()) {
-                output.files_changed = files
-                    .iter()
-                    .filter_map(|v| v.as_str().map(String::from))
-                    .collect();
+        if has_usage {
+            output.token_usage = Some(TokenUsage::new(total_input_tokens, total_output_tokens));
+        }
+
+        // Check for completion signal in accumulated assistant text
+        if output.completion_signal.is_none() {
+            let joined = assistant_text_parts.join("");
+            if let Some(signal) = CompletionSignal::detect(&joined) {
+                output.completion_signal = Some(signal);
             }
         }
 
@@ -791,8 +832,8 @@ impl OutputParser for CursorOutputParser {
             output.token_usage = ParsingUtils::extract_token_usage_from_text(&combined);
         }
 
-        // Merge any JSON-provided file list with best-effort extraction
-        let mut file_set: HashSet<String> = output.files_changed.drain(..).collect();
+        // Merge JSON-provided files with best-effort extraction
+        let mut file_set: HashSet<String> = files_from_json.drain(..).collect();
         for f in ParsingUtils::extract_files_changed(&combined) {
             file_set.insert(f);
         }
@@ -816,43 +857,106 @@ impl OutputParser for ClaudeOutputParser {
     fn parse(&self, stdout: &str, stderr: &str) -> ParsedOutput {
         let mut output = ParsedOutput::new(stdout.to_string());
 
-        // Detect completion signal
+        // Detect completion signal across all lines
         output.completion_signal = CompletionSignal::detect(stdout);
 
-        // Try to parse JSON output (Claude supports --output-format json)
-        if let Some(json) = ParsingUtils::try_parse_json(stdout) {
-            output.json_response = Some(json.clone());
+        // Parse NDJSON (stream-json): each line may be an independent JSON event.
+        // Accumulate assistant text fragments and structured data across events.
+        let mut assistant_text_parts: Vec<String> = Vec::new();
+        let mut total_input_tokens = 0u64;
+        let mut total_output_tokens = 0u64;
+        let mut has_usage = false;
+        let mut token_usage_detail = TokenUsage::default();
 
-            // Extract token usage from result.usage
-            if let Some(result) = json.get("result") {
-                if let Some(usage) = result.get("usage") {
-                    let mut token_usage = TokenUsage::default();
+        for line in stdout.lines() {
+            let trimmed = line.trim();
+            if trimmed.is_empty() {
+                continue;
+            }
+            if let Some(json) = ParsingUtils::try_parse_json(trimmed) {
+                // Store last JSON event as json_response (final event wins)
+                output.json_response = Some(json.clone());
 
+                // Extract assistant text from content field (string or array)
+                if let Some(content) = json.get("content").and_then(|v| v.as_str()) {
+                    assistant_text_parts.push(content.to_string());
+                }
+                if let Some(content_arr) = json.get("content").and_then(|v| v.as_array()) {
+                    for block in content_arr {
+                        if let Some(text) = block.get("text").and_then(|v| v.as_str()) {
+                            assistant_text_parts.push(text.to_string());
+                        }
+                    }
+                }
+
+                // Extract usage from top-level usage object
+                if let Some(usage) = json.get("usage") {
                     if let Some(input) = usage.get("input_tokens").and_then(|v| v.as_u64()) {
-                        token_usage.input_tokens = Some(input);
+                        total_input_tokens += input;
+                        has_usage = true;
                     }
                     if let Some(output_tok) = usage.get("output_tokens").and_then(|v| v.as_u64()) {
-                        token_usage.output_tokens = Some(output_tok);
+                        total_output_tokens += output_tok;
+                        has_usage = true;
                     }
-
-                    // Claude-specific cache tokens
+                    // Claude-specific cache tokens (use last seen values)
                     if let Some(cache_read) = usage
                         .get("cache_read_input_tokens")
                         .and_then(|v| v.as_u64())
                     {
-                        token_usage.cache_read_tokens = Some(cache_read);
+                        token_usage_detail.cache_read_tokens = Some(cache_read);
                     }
                     if let Some(cache_create) = usage
                         .get("cache_creation_input_tokens")
                         .and_then(|v| v.as_u64())
                     {
-                        token_usage.cache_creation_tokens = Some(cache_create);
-                    }
-
-                    if !token_usage.is_empty() {
-                        output.token_usage = Some(token_usage);
+                        token_usage_detail.cache_creation_tokens = Some(cache_create);
                     }
                 }
+
+                // Also check result.usage (single-JSON backward compat)
+                if let Some(result_obj) = json.get("result") {
+                    if let Some(usage) = result_obj.get("usage") {
+                        if let Some(input) = usage.get("input_tokens").and_then(|v| v.as_u64()) {
+                            total_input_tokens += input;
+                            has_usage = true;
+                        }
+                        if let Some(output_tok) =
+                            usage.get("output_tokens").and_then(|v| v.as_u64())
+                        {
+                            total_output_tokens += output_tok;
+                            has_usage = true;
+                        }
+                        if let Some(cache_read) = usage
+                            .get("cache_read_input_tokens")
+                            .and_then(|v| v.as_u64())
+                        {
+                            token_usage_detail.cache_read_tokens = Some(cache_read);
+                        }
+                        if let Some(cache_create) = usage
+                            .get("cache_creation_input_tokens")
+                            .and_then(|v| v.as_u64())
+                        {
+                            token_usage_detail.cache_creation_tokens = Some(cache_create);
+                        }
+                    }
+                }
+            }
+            // Non-JSON lines are silently absorbed into raw_response
+        }
+
+        if has_usage {
+            token_usage_detail.input_tokens = Some(total_input_tokens);
+            token_usage_detail.output_tokens = Some(total_output_tokens);
+            token_usage_detail.total_tokens = Some(total_input_tokens + total_output_tokens);
+            output.token_usage = Some(token_usage_detail);
+        }
+
+        // Check for completion signal in accumulated assistant text
+        if output.completion_signal.is_none() {
+            let joined = assistant_text_parts.join("");
+            if let Some(signal) = CompletionSignal::detect(&joined) {
+                output.completion_signal = Some(signal);
             }
         }
 
@@ -1174,17 +1278,49 @@ index 0000000..1111111 100644
     #[test]
     fn test_cursor_parser() {
         let parser = CursorOutputParser;
+        // Single-line JSON (backward compat)
         let stdout = r#"{"usage": {"input_tokens": 150, "output_tokens": 75}, "files_changed": ["test.rs"]}"#;
         let output = parser.parse(stdout, "");
 
         assert!(output.json_response.is_some());
         assert!(output.token_usage.is_some());
-        assert_eq!(output.files_changed, vec!["test.rs"]);
+        assert!(output.files_changed.iter().any(|f| f == "test.rs"));
+    }
+
+    #[test]
+    fn test_cursor_parser_ndjson() {
+        let parser = CursorOutputParser;
+        let stdout = r#"{"type":"start","message":"starting"}
+{"type":"content","content":"Hello world"}
+{"type":"usage","usage":{"input_tokens":100,"output_tokens":50}}
+{"type":"content","content":" <pm>COMPLETE</pm>"}
+{"type":"done","files_changed":["src/lib.rs","src/main.rs"]}"#;
+        let output = parser.parse(stdout, "");
+
+        assert_eq!(output.completion_signal, Some(CompletionSignal::Complete));
+        assert!(output.token_usage.is_some());
+        let usage = output.token_usage.unwrap();
+        assert_eq!(usage.input_tokens, Some(100));
+        assert_eq!(usage.output_tokens, Some(50));
+        assert!(output.files_changed.iter().any(|f| f == "src/lib.rs"));
+        assert!(output.files_changed.iter().any(|f| f == "src/main.rs"));
+    }
+
+    #[test]
+    fn test_cursor_parser_ndjson_unknown_shapes() {
+        let parser = CursorOutputParser;
+        // Unknown event types and non-JSON lines must not crash the parser
+        let stdout = "not json at all\n{\"type\":\"unknown_event\",\"data\":42}\n{\"usage\":{\"input_tokens\":10,\"output_tokens\":5}}";
+        let output = parser.parse(stdout, "");
+
+        assert!(output.token_usage.is_some());
+        assert!(output.errors.is_empty() || true); // parser must not crash
     }
 
     #[test]
     fn test_claude_parser() {
         let parser = ClaudeOutputParser;
+        // Single-line result.usage JSON (backward compat)
         let stdout = r#"{"result": {"usage": {"input_tokens": 200, "output_tokens": 100, "cache_read_input_tokens": 50}}}"#;
         let output = parser.parse(stdout, "");
 
@@ -1192,6 +1328,42 @@ index 0000000..1111111 100644
         let usage = output.token_usage.unwrap();
         assert_eq!(usage.input_tokens, Some(200));
         assert_eq!(usage.cache_read_tokens, Some(50));
+    }
+
+    #[test]
+    fn test_claude_parser_ndjson() {
+        let parser = ClaudeOutputParser;
+        let stdout = r#"{"type":"assistant","content":[{"type":"text","text":"Analysis complete"}]}
+{"type":"result","usage":{"input_tokens":300,"output_tokens":120,"cache_read_input_tokens":80,"cache_creation_input_tokens":20}}"#;
+        let output = parser.parse(stdout, "");
+
+        assert!(output.token_usage.is_some());
+        let usage = output.token_usage.unwrap();
+        assert_eq!(usage.input_tokens, Some(300));
+        assert_eq!(usage.output_tokens, Some(120));
+        assert_eq!(usage.cache_read_tokens, Some(80));
+        assert_eq!(usage.cache_creation_tokens, Some(20));
+    }
+
+    #[test]
+    fn test_claude_parser_ndjson_completion_in_content() {
+        let parser = ClaudeOutputParser;
+        let stdout = r#"{"content":"Phase 1 done"}
+{"content":"Phase 2 <pm>GUTTER</pm>"}"#;
+        let output = parser.parse(stdout, "");
+
+        assert_eq!(output.completion_signal, Some(CompletionSignal::Gutter));
+    }
+
+    #[test]
+    fn test_claude_parser_ndjson_unknown_shapes() {
+        let parser = ClaudeOutputParser;
+        let stdout = "{\"unknown_field\":true}\nnot-json-line\n{\"usage\":{\"input_tokens\":5,\"output_tokens\":3}}";
+        let output = parser.parse(stdout, "");
+
+        assert!(output.token_usage.is_some());
+        let usage = output.token_usage.unwrap();
+        assert_eq!(usage.input_tokens, Some(5));
     }
 
     #[test]

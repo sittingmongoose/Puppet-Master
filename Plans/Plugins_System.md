@@ -355,7 +355,7 @@ Individual plugins can be disabled via `config.plugins.disabled.<plugin_id> = tr
 
 ### 7.3 Per-Persona plugin overrides
 
-A Persona MAY list plugins to disable for runs using that Persona, via the `disabled_plugins` field in the PERSONA.md frontmatter (future extension to `Plans/Personas.md` §3.1):
+A Persona MAY list plugins to disable for runs using that Persona, via the `disabled_plugins` field in the PERSONA.md frontmatter (defined in `Plans/Personas.md` §3.2):
 
 ```yaml
 disabled_plugins: ["noisy-plugin"]
@@ -438,13 +438,13 @@ Per `Plans/OpenCode_Deep_Extraction.md` §7G and §9G:
 
 ### 10.1 Baseline
 
-OpenCode plugins are JavaScript/TypeScript modules loaded via `import()`. Plugin sources: internal (compiled), built-in npm packages, and config-specified packages/paths. Plugins receive a `PluginInput` with SDK client, project metadata, and Bun shell. The `Hooks` interface defines ~15 named hooks including `tool.execute.before/after`, `permission.ask`, `session.compacting`, `chat.message`, `chat.params`, `shell.env`, and system/message transforms. Custom tools are registered via the `tool` property; plugin tools override built-ins on name collision.
+OpenCode plugins are JavaScript/TypeScript modules loaded via `import()`. Plugin sources: internal (compiled), built-in npm packages, and config-specified packages/paths. Plugins receive a `PluginInput` with SDK client, project metadata, and Bun shell. The `Hooks` interface defines ~15 named hooks including `tool.execute.before/after`, `permission.ask`, `experimental.session.compacting`, `chat.message`, `chat.params`, `shell.env`, and system/message transforms. Custom tools are registered via the `tool` property; plugin tools override built-ins on name collision.
 
 ### 10.2 Puppet Master deltas
 
 1. **Plugin runtime:** OpenCode uses JS `import()` with Bun. Puppet Master uses a platform-agnostic plugin API (WASM modules, subprocess-based, or dynamic libraries — entry format defined by `plugin.json` `entry` field). No JavaScript runtime dependency.
 2. **Tool collision policy:** OpenCode allows plugin tools to override built-ins by default. Puppet Master defaults to **namespaced aliasing** (built-in wins); override requires explicit opt-in via `allow_tool_override`.
-3. **Compaction hook semantics:** OpenCode's `experimental.session.compacting` allows plugins to add context or replace the compaction prompt. Puppet Master formalizes this with `InjectContext` vs `ReplacePrompt` return types and first-wins conflict resolution for `ReplacePrompt`.
+3. **Compaction hook naming and semantics:** OpenCode uses `experimental.session.compacting` as the hook key. Puppet Master canonicalizes this as `session.compacting` (dropping the `experimental.` prefix). For backward compatibility, plugins subscribing to `experimental.session.compacting` are mapped to the canonical `session.compacting` hook at registration time as an alias. Puppet Master additionally formalizes the return semantics with `InjectContext` vs `ReplacePrompt` return types and first-wins conflict resolution for `ReplacePrompt`.
 4. **Deterministic load order:** OpenCode deduplicates by function identity. Puppet Master defines strict priority-ordered discovery with lexicographic tiebreaking and documents the order for reproducibility.
 5. **Structured logging:** OpenCode plugin errors are logged but not structured. Puppet Master emits typed ledger events (`plugin.loaded`, `plugin.hook.invoked`, etc.) for auditability.
 6. **Per-Persona overrides:** OpenCode has no per-agent plugin controls. Puppet Master allows Personas to disable specific plugins via `disabled_plugins`.
@@ -487,6 +487,11 @@ ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Progressio
 
 <a id="AC-PL09"></a>
 **AC-PL09:** The GUI Plugins tab MUST display all discovered plugins with enable/disable toggles, and persist disable state across sessions.
+
+<a id="AC-PL10"></a>
+**AC-PL10:** Plugins subscribing to the OpenCode-era hook key `experimental.session.compacting` MUST be treated as subscribers to the canonical `session.compacting` hook. The alias mapping is applied at plugin registration time; no runtime distinction exists between the two keys.
+
+ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Plugins_System.md#HOOK-EVENTS
 
 ---
 

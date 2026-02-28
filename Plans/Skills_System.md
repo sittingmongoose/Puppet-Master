@@ -20,7 +20,7 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 - Permission model + tool keys: `Plans/Permissions_System.md` (`skill`, `external_directory`)
 - Persona schema + default_skill_refs: `Plans/Personas.md#PERSONA-SCHEMA`
 - Context compiler + skill bundling: `Plans/FileSafe.md` Part B
-- GUI requirements: `Plans/FinalGUISpec.md` (§7.4 Skills tab)
+- GUI requirements: `Plans/FinalGUISpec.md` §7.4.16 Skills tab
 - OpenCode baseline (skills): `Plans/OpenCode_Deep_Extraction.md` §7F
 
 ---
@@ -199,7 +199,7 @@ ContractRef: ContractName:Plans/Permissions_System.md
 
 <a id="GUI-SKILLS"></a>
 
-The **Skills** tab in Settings MUST implement the GUI behavior described in `Plans/FinalGUISpec.md` (Settings tabs table, Skills row). This SSOT adds the subsystem-specific requirements:
+The **Skills** tab in Settings MUST implement the GUI behavior described in `Plans/FinalGUISpec.md` [§7.4.16 Skills tab](Plans/FinalGUISpec.md#SKILLS-TAB). This SSOT adds the subsystem-specific requirements:
 
 1. **Source column:** Must label skills as Project/Global and indicate which root they came from (`.puppet-master`, `.claude`, `.agents`).
 2. **Validation status:** Must show invalid skills with error messages (frontmatter parse errors, missing required fields, directory mismatch).
