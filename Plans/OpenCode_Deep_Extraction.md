@@ -15,13 +15,13 @@ ABSOLUTE NAMING RULE:
 
 ---
 
-## Baseline Snapshot
+## Baseline Reference
 
 | Field | Value |
 |---|---|
-| **Snapshot location** | Local OpenCode snapshot (pinned by repo owner) |
-| **Snapshot date** | 2026-02-27 UTC |
-| **Version policy** | Do not verify version; snapshot pinned manually by repo owner. |
+| **Upstream repository** | https://github.com/anomalyco/opencode |
+| **Reference date** | 2026-02-27 UTC |
+| **Version policy** | Reference the upstream repo at the above date; no local clone required. |
 
 ---
 
@@ -68,7 +68,6 @@ For each extracted item, emit a record with:
 ## 6. Acceptance criteria
 - Extraction can run end-to-end without prompts.
 - Every adopted/adapted item is mapped to a single Puppet Master SSOT doc section.
-- Temporary OpenCode clone is deleted after completion.
 - No Puppet Master locked decisions are overwritten by OpenCode-derived content.
 
 ---
@@ -632,44 +631,44 @@ Each topic below lists 1-5 specific points where Puppet Master's implementation 
 
 ### 9A. Run Modes and Enforcement
 1. **Rust-native plan mode**: Puppet Master implements plan mode in Rust, not TypeScript. The system-reminder injection mechanism must be replicated in the Rust prompt builder.
-2. **No Bun dependency**: Plan mode's `PlanExitTool` uses `Question.ask()` which is tied to OpenCode's Node/Bun runtime. Puppet Master must implement an equivalent question/approval flow via its own GUI or CLI.
-3. **Plan file location**: OpenCode writes plan files to `.opencode/plans/`. Puppet Master must define its own plan file location convention.
+2. **No Bun dependency**: Plan mode's `PlanExitTool` uses `Question.ask()` which is tied to OpenCode's Node/Bun runtime. Puppet Master implements the approval flow via its Slint GUI (primary) with CLI fallback per `Plans/Permissions_System.md`.
+3. **Plan file location**: OpenCode writes plan files to `.opencode/plans/`. Puppet Master stores plan files at `~/.config/puppet-master/plans/` (global) and `.puppet-master/plans/` (project-level), per existing config path conventions.
 
 ### 9B. Subagents and Context Injection
 1. **Subagent execution model**: OpenCode runs subagents in-process via the task tool. Puppet Master's Rust backend may use subprocess-based or thread-based agent execution.
 2. **Prompt assembly in Rust**: The multi-layered prompt pipeline (system + instructions + reminders + transforms) must be reimplemented. Model-specific prompt variants (anthropic.txt, codex_header.txt, gemini.txt) need a Rust equivalent selection mechanism.
 3. **Compaction thresholds**: The 20,000-token reserve and 40,000-token prune-protect values are hardcoded. Puppet Master should make these configurable.
-4. **Plugin prompt transforms**: Puppet Master must decide whether to support `experimental.chat.system.transform` and `experimental.chat.messages.transform` hooks or replace them with a different extension mechanism.
+4. **Plugin prompt transforms**: Puppet Master supports both `experimental.chat.system.transform` and `experimental.chat.messages.transform` hooks under its plugin hook system with the `experimental.` prefix accepted as alias (consistent with the compaction hook alias decision in `Plans/Plugins_System.md`).
 
 ### 9C. Permissions and Approval Mechanics
-1. **Permission storage**: OpenCode's `always` approvals are session-scoped and not persisted to disk (see TODO comment in `next.ts` line ~228). Puppet Master must decide on persistence strategy.
+1. **Permission storage**: OpenCode's `always` approvals are session-scoped and not persisted to disk. **Delta:** Puppet Master adopts session-scoped approvals as the default (per `Plans/Permissions_System.md`); persistence across sessions is not supported.
 2. **Rust wildcard engine**: The `Wildcard.match()` regex-based engine must be ported to Rust (or use an existing Rust glob/wildcard library).
 3. **GUI approval flow**: OpenCode's ask/reply cycle uses bus events + server routes. Puppet Master needs to wire this through its Tauri GUI or CLI interface.
-4. **Reject-all cascade**: OpenCode's `reject` reply cascades to ALL pending permissions in the session. Puppet Master must decide if this aggressive behavior is desired.
+4. **Reject-all cascade**: OpenCode's `reject` reply cascades to ALL pending permissions in the session. Puppet Master preserves this reject-all cascade behavior (matching OpenCode baseline).
 
 ### 9D. Commands
-1. **Command discovery paths**: OpenCode uses `.opencode/commands/`. Puppet Master must define its own project-level and global command directories.
+1. **Command discovery paths**: OpenCode uses `.opencode/commands/`. Puppet Master uses project-level `.puppet-master/commands/` and global `~/.config/puppet-master/commands/` (per `Plans/Commands_System.md`).
 2. **Template engine**: The `$ARGUMENTS`, `$1`/`$2`, shell injection, `@file` syntax must be reimplemented in Rust.
 3. **MCP prompt integration**: OpenCode converts MCP prompts to commands. Puppet Master's MCP integration may differ.
 
 ### 9E. Formatters
-1. **Event-driven trigger**: OpenCode uses a bus event (`File.Event.Edited`) to trigger formatting. Puppet Master must define an equivalent event/hook in its Rust event system.
+1. **Event-driven trigger**: OpenCode uses a bus event (`File.Event.Edited`) to trigger formatting. Puppet Master defines an equivalent `file.edited` event in its Rust event system to trigger formatting.
 2. **Formatter auto-detection**: The enabled() checks (e.g., "is prettier in package.json?") must be ported to Rust or delegated to shell scripts.
-3. **Bun-specific commands**: Several formatters use `BunProc.which()` for execution. Puppet Master must substitute with system-level package runners.
+3. **Bun-specific commands**: Several formatters use `BunProc.which()` for execution. Puppet Master substitutes with `which`-based system-level package detection and direct process invocation.
 
 ### 9F. Skills
-1. **External skill compatibility**: OpenCode discovers skills from `.claude/` and `.agents/` directories for compatibility. Puppet Master must decide whether to maintain this compatibility or use its own skill directory convention.
+1. **External skill compatibility**: OpenCode discovers skills from `.claude/` and `.agents/` directories for compatibility. Puppet Master uses its own skill directory convention (`~/.config/puppet-master/skills/<name>/SKILL.md` and `.puppet-master/skills/`) per `Plans/Skills_System.md`. Compatibility with `.claude/` and `.agents/` directories is not maintained.
 2. **Remote skill discovery**: The `Discovery.pull()` URL-based skill download mechanism needs a Rust HTTP client equivalent.
-3. **Skill-as-command registration**: Skills automatically become commands. Puppet Master must decide if this dual registration is desired.
+3. **Skill-as-command registration**: Skills automatically become commands. Puppet Master adopts this behavior: skills automatically register as slash commands, per `Plans/Skills_System.md`.
 
 ### 9G. Plugins
 1. **Plugin runtime**: OpenCode plugins are JavaScript/TypeScript modules loaded via `import()`. Puppet Master's Rust backend must define its own plugin API (WASM, dynamic libraries, subprocess-based, or scripting language bindings).
-2. **Hook interface**: The `Hooks` interface has ~15 named hooks. Puppet Master must decide which hooks to support and define equivalent Rust trait signatures.
-3. **Built-in plugins**: OpenCode bundles auth plugins (Codex, Copilot, GitLab). Puppet Master must implement equivalent auth providers natively or via its own plugin system.
-4. **Tool precedence**: Plugin tools overriding built-ins is by design in OpenCode. Puppet Master must explicitly choose whether to preserve this behavior.
+2. **Hook interface**: The `Hooks` interface has ~15 named hooks. Puppet Master supports the hook subset defined in `Plans/Plugins_System.md §4`; unsupported hooks are silently ignored at registration.
+3. **Built-in plugins**: OpenCode bundles auth plugins (Codex, Copilot, GitLab). Puppet Master implements auth providers natively (not via plugins), per `Plans/rewrite-tie-in-memo.md`.
+4. **Tool precedence**: Plugin tools overriding built-ins is by design in OpenCode. Puppet Master disallows plugin tools overriding built-in tools by default; override requires explicit `override_builtin: true` (consistent with `Plans/Commands_System.md` override policy).
 
 ### 9H. Models
-1. **AI SDK dependency**: OpenCode uses the Vercel AI SDK for model abstraction. Puppet Master must implement its own provider abstraction in Rust (or use a Rust AI SDK).
+1. **AI SDK dependency**: OpenCode uses the Vercel AI SDK for model abstraction. Puppet Master implements its own provider abstraction in Rust, per `Plans/Models_System.md`.
 2. **Provider transform layer**: The extensive per-provider normalization (Anthropic empty content filtering, Claude toolCallId normalization, etc.) must be replicated in the Puppet Master provider layer.
 3. **Model priority list**: The hardcoded priority list `["gpt-5", "claude-sonnet-4", "big-pickle", "gemini-3-pro"]` should be configurable in Puppet Master.
 4. **Overflow detection**: The regex-based overflow detection patterns (12+ provider-specific patterns) must be maintained and extended as new providers are added.
