@@ -619,7 +619,7 @@ This section is the canonical mapping from OpenCode extraction categories to Pup
 | -- | Storage | `session/message-v2.ts` | `Plans/storage-plan.md` | S2.2 (event types) |
 | -- | Message/part taxonomy | `session/message-v2.ts` | `Plans/Contracts_V0.md` | S1 (EventRecord) |
 
-All file paths above are relative to `packages/opencode/src/` within the OpenCode snapshot.
+All file paths above are relative to `packages/opencode/src/` in the upstream OpenCode repository (https://github.com/anomalyco/opencode).
 
 ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Contracts_V0.md#UICommand, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Tools.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
 
