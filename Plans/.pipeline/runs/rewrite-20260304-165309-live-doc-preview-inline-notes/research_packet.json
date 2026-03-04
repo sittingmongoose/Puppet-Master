@@ -1,0 +1,169 @@
+{
+  "schema_id": "research_packet.v1",
+  "run_id": "rewrite-20260304-165309-live-doc-preview-inline-notes",
+  "created_at_utc": "2026-03-04T16:53:09Z",
+  "topic": "Live Doc Preview + Inline Notes for Requirements Doc Builder + Interviewer",
+  "objective": "Update planning docs under Plans/** (no code changes) to fully specify:\n\n1) Live, multi-document preview in the Embedded Document Pane while Requirements Doc Builder or Interview doc generation is running (and during targeted resubmits): users can watch every document being produced, switch between docs, and see live updates as the agent writes.\n\n2) Inline note mode: users can highlight text and attach anchored notes (questions and/or change requests) that persist robustly across edits via deterministic re-anchoring.\n\n3) A cheap iteration loop: \"Resubmit with Notes\" runs a targeted revision pass that applies requested edits and/or answers questions WITHOUT triggering the expensive Multi-Pass Review.\n\n4) Multi-Pass Review becomes final-only: it runs once per bundle by default, only after all docs are Approved/Done and there are no open notes, and ends in a single Accept | Reject | Edit gate. Review outputs must be stored as a separate artifact set so Reject discards cleanly while preserving the pre-review bundle.\n\nNon-goal: no \"suggested change / patch apply\" (diff/patch) mode; notes are instructions/questions and the agent edits normally.\n\nHard constraints:\n- doc_intents[*].path must be Plans/**\n- Do NOT propose edits to Plans/_shards/**, Plans/.evidence/**, Plans/Spec_Lock.json, Plans/auto_decisions.jsonl, Plans/.pipeline/** (other than saving this packet as Plans/.pipeline/research_packet.json)\n",
+  "decisions": [
+    {
+      "id": "non_goal_no_patch_apply",
+      "decision": "Non-goal: no suggested-change / patch-apply mode. Notes are plain instructions/questions; agent edits normally.",
+      "default": true
+    },
+    {
+      "id": "follow_active_doc_default",
+      "decision": "Embedded Document Pane includes a 'Follow active doc' toggle with default ON; when OFF, writing never steals focus.",
+      "default": true
+    },
+    {
+      "id": "doc_status_badges_canonical",
+      "decision": "Doc list status badges include: writing…, draft, needs-review, changes-requested, approved (Approved/Done).",
+      "default": [
+        "writing…",
+        "draft",
+        "needs-review",
+        "changes-requested",
+        "approved"
+      ]
+    },
+    {
+      "id": "writing_docs_read_only",
+      "decision": "Docs with status writing… are read-only to prevent dueling writes; this requires a write-in-progress lock across GUI surfaces consistent with the shared-buffer contract.",
+      "default": true
+    },
+    {
+      "id": "note_kind_inference",
+      "decision": "Note kind inference is deterministic: if note ends with '?' or starts with 'Q:' => question; otherwise change_request. User can override; note may be both.",
+      "default": "deterministic"
+    },
+    {
+      "id": "note_lifecycle",
+      "decision": "Note lifecycle is: open → addressed → resolved. Agent can mark addressed with reply/pointer; user controls final resolved.",
+      "default": [
+        "open",
+        "addressed",
+        "resolved"
+      ]
+    },
+    {
+      "id": "note_anchor_selectors",
+      "decision": "Anchor robustness required: store BOTH TextPositionSelector (start/end offsets) and TextQuoteSelector (exact + prefix/suffix).",
+      "default": "both"
+    },
+    {
+      "id": "note_prefix_suffix_len",
+      "decision": "Default TextQuoteSelector prefix/suffix length is 32 chars (clamped).",
+      "default": 32
+    },
+    {
+      "id": "reanchoring_algorithm",
+      "decision": "Deterministic re-anchoring algorithm: try position selector first; if mismatch, try quote selector match using prefix/suffix; if still not found, keep note open and show 'Anchor not found — reselect to re-anchor' warning; never discard silently.",
+      "default": "deterministic"
+    },
+    {
+      "id": "resubmit_with_notes_contract",
+      "decision": "Resubmit with Notes triggers a targeted revision pass on docs with open notes (or user-selected subset); outputs updated docs and question replies; marks notes addressed; MUST NOT trigger Multi-Pass Review.",
+      "default": true
+    },
+    {
+      "id": "final_review_gating",
+      "decision": "Multi-Pass Review is final-only: enabled only when all bundle docs are Approved/Done AND there are no open notes; user explicitly clicks Run Final Review; runs once by default; rerun explicit only.",
+      "default": true
+    },
+    {
+      "id": "final_gate_semantics",
+      "decision": "Final review ends in a single gate: Accept | Reject | Edit. Review output stored as a separate artifact set so Reject discards cleanly and preserves the pre-review bundle; Edit opens revised docs without rerunning review.",
+      "default": [
+        "accept",
+        "reject",
+        "edit"
+      ]
+    }
+  ],
+  "doc_intents": [
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 7.19.1 Embedded Document Pane (NEW)",
+          "content_markdown": "### 7.19.1 Embedded Document Pane (NEW)\n\n**Purpose:** The Embedded Document Pane supports live, multi-document preview during doc generation (Requirements Doc Builder + Interviewer) and provides inline notes + targeted resubmits for cheap iteration.\n\n**Non-goal (explicit):** No “suggested change / patch apply” mode. Notes are plain instructions/questions; agent edits normally.\n\n---\n\n#### A) Live Multi-Document Preview (during generation + targeted resubmits)\n\n**Doc list requirements**\n- Shows ALL generation artifacts for the current bundle/run, including staged artifacts (examples: `requirements-builder.md`, `contract-seeds.md`, and interview artifacts like phase docs, PRD, `AGENTS.md`).\n- Updates as new docs appear mid-run.\n- Click to switch between docs at any time.\n\n**Doc entry status badges (canonical set)**\n- `writing…` (live updating; read-only)\n- `draft` (editable)\n- `needs-review`\n- `changes-requested`\n- `approved` (Approved/Done for final review gating)\n\n**Live update behavior**\n- If viewing the actively-written doc: show streaming updates.\n- If viewing another doc: that doc stays stable; the active doc continues writing in background (badge + updated_at continue to update).\n\n**Follow active doc toggle (default ON)**\n- ON: auto-switch selection to the doc being written.\n- OFF: user selection is sticky; writing never steals focus.\n\n**Editing guardrails**\n- If a doc is `writing…`, it is read-only in this pane (prevents dueling writes).\n- Once it leaves `writing…`, it becomes editable with basic edit+save.\n\n---\n\n#### B) Inline Note Mode (Highlight + Note)\n\n**UX**\n- Select text → context menu: Add note.\n- Note appears as:\n  - a margin marker in the doc, and\n  - a note card in a Notes drawer/list.\n\n**Notes list**\n- Filters: Open / Addressed / Resolved\n- Note kind (auto-inferred, deterministic default):\n  - if note ends with `?` or starts with `Q:` → question\n  - otherwise → change_request\n  - user can override; note may be both\n\n**Note lifecycle**\n- open → addressed → resolved\n- Agent can set addressed (with reply/link/pointer); user controls final resolved.\n\n**Anchor robustness (required)**\nStore both:\n- Position selector: start/end offsets (fast, brittle)\n- Quote selector: exact text + prefix/suffix context (resilient)\n\nDefault prefix/suffix length: 32 chars (clamped).\n\n**Re-anchoring algorithm (deterministic)**\n1) try position selector\n2) if mismatch, try quote selector match (exact + prefix/suffix preference)\n3) if still not found: keep note open + show warning `Anchor not found — reselect to re-anchor` (never discard)\n\n---\n\n#### C) Bundle Controls: Resubmit with Notes + Final Review\n\n**Resubmit with Notes (targeted revision pass)**\n- Runs a targeted revision pass on docs with open notes (or user-selected subset).\n- Applies requested edits and/or answers questions.\n- Marks notes addressed with an explanation and (if possible) updated anchor location.\n- Hard rule: MUST NOT trigger Multi-Pass Review.\n\n**Final Multi-Pass Review (runs once, final-only)**\n- Multi-Pass Review is disabled until:\n  - all bundle docs are Approved/Done, and\n  - there are no open notes.\n- User explicitly clicks Run Final Review (do not auto-run).\n- Runs once by default; rerun explicit only.\n- Outputs findings and optional revised bundle.\n\n**Single final gate**\n- After final review completes, show Accept | Reject | Edit.\n- Accept applies revised bundle.\n- Reject discards review output bundle and preserves pre-review bundle.\n- Edit opens revised docs without rerunning review.\n\n---\n\n#### D) Acceptance Criteria (UI-level, testable)\n\n- During generation, ≥2 docs appear in the doc list; user can switch between them and watch live updates.\n- Notes are anchored to selections; after edits, notes re-attach via quote+context or remain open with a clear anchor-not-found warning (never silently lost).\n- Resubmit with Notes applies/answers notes and does not run Multi-Pass Review.\n- Multi-Pass Review cannot start until all docs are Approved/Done and notes resolved; it runs once by default and ends in a single Accept/Reject/Edit gate.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/FileManager.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 2.4.1 Embedded document pane shared-buffer contract",
+          "content_markdown": "### 2.4.1 Embedded document pane shared-buffer contract\n\n- The embedded document pane (wizard/interview) uses the same file buffer and history model as File Editor.\n- If File Editor and document pane open the same path at the same time:\n  - both views read/write one shared in-memory buffer,\n  - one dirty state is authoritative,\n  - save in either surface persists the same underlying artifact.\n- There is one source of truth for save history and restore points; document pane does not create a separate history branch.\n- Restore actions launched from document pane (checkpoint restore or revert-to-checkpoint) must call the same open-file and buffer-refresh pipeline.\n- The \"Restore to…\" / \"History\" action is available from both the File Editor and the embedded document pane. Both surfaces query the backend store for the restore-point list and invoke the same restore pipeline; neither surface stores or manages restore points independently.\n\n**Write-in-progress lock (required to prevent dueling edits):**\n- When a document is in DocumentPane status `writing…` (actively being written by a generation/revision worker), that path is considered **write-locked** for user edits across GUI surfaces:\n  - Embedded document pane shows the doc as **read-only** with status `writing…`.\n  - File Editor, if the same path is open, must prevent user edits (or immediately revert local edits) and show an inline banner: `Locked: agent is writing this document` (optionally with a pointer to run controls).\n- Streaming updates from the agent still apply to the shared buffer so the user can watch content evolve.\n- Once the doc leaves `writing…`, the lock is released and both surfaces return to normal edit/save behavior.\n\n**Note:** This lock is an interaction rule only; it does not create a separate buffer or history branch. The shared-buffer invariant remains intact.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Crosswalk.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 3.7 DocumentPane",
+          "content_markdown": "### 3.7 DocumentPane\n**Owner:** GUI interaction contract in `Plans/FinalGUISpec.md`, editor/buffer contract in `Plans/FileManager.md`.\n\nRules:\n- The embedded document pane is a dedicated GUI primitive, separate from chat and separate from the agent activity pane.\n- Document-pane edits MUST target the same file buffer/history contract as the File Editor.\n- Plan graph appears in the pane as a read-only rendered view, not raw JSON editing.\n- The document pane MUST support **live multi-document preview** during document generation and targeted revision runs:\n  - doc list grows mid-run as new artifacts are created,\n  - per-doc status badges include `writing…`, `draft`, `needs-review`, `changes-requested`, `approved`,\n  - follow-active toggle default ON (auto-follow active written doc),\n  - selected-doc stability when follow is OFF (no focus stealing).\n- While a doc is `writing…`, it MUST be read-only to prevent dueling writes; this rule is coordinated with the shared-buffer contract (`Plans/FileManager.md` §2.4.1).\n- The document pane MUST support anchored **Inline Notes** (highlight + note) with robust selectors and deterministic re-anchoring; see Primitive:DocumentInlineNotes.\n\nContractRef: Primitive:DocumentPane, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md\n"
+        },
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "\n\n### 3.13 DocumentInlineNotes\n**Owner:** GUI contract in `Plans/FinalGUISpec.md`; persistence contract in `Plans/storage-plan.md`; workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`.\n\nRules:\n- Notes are anchored to a text selection and have a lifecycle: `open` → `addressed` → `resolved`.\n- Note kind is deterministic by default: `question` if note ends with `?` or starts with `Q:`, else `change_request`; user can override and set `both`.\n- Anchor storage MUST include both:\n  - TextPositionSelector `{ start, end }`, and\n  - TextQuoteSelector `{ exact, prefix, suffix }` with default prefix/suffix length 32 chars (clamped).\n- Re-anchoring algorithm is deterministic:\n  1) position selector match, else 2) quote selector match using prefix/suffix preference, else 3) keep note open and show `Anchor not found — reselect to re-anchor`; never silently discard.\n\nContractRef: Primitive:DocumentInlineNotes, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md\n\n---\n\n### 3.14 TargetedRevisionPass\n**Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; UI placement in `Plans/FinalGUISpec.md`.\n\nRules:\n- “Resubmit with Notes” triggers a targeted revision pass scoped to documents with open notes (or a user-selected subset).\n- Targeted revision:\n  - applies requested edits and/or answers questions,\n  - marks notes `addressed` with explanation and (when possible) updated anchor locations,\n  - MUST NOT trigger Multi-Pass Review.\n- Multi-Pass Review is bundle-level and gated separately (all docs approved + no open notes).\n\nContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/FinalGUISpec.md\n\n---\n\n### 3.15 FinalReviewGate\n**Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; artifact taxonomy and restore semantics in `Plans/storage-plan.md`.\n\nRules:\n- Multi-Pass Review is final-review only: enabled only when all bundle docs are Approved/Done and no open notes exist.\n- Final review runs once by default; rerun explicit only.\n- Final gate is a single decision: `Accept | Reject | Edit`.\n  - Accept applies the revised review bundle.\n  - Reject discards the review output bundle and preserves the pre-review bundle.\n  - Edit opens the revised docs without rerunning review; returns to the same gate afterward.\n- Review output bundle MUST be stored separately so Reject is a clean discard.\n\nContractRef: Primitive:FinalReviewGate, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/storage-plan.md\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/chain-wizard-flexibility.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 5.5 Document review surfaces and generation order",
+          "content_markdown": "### 5.5 Document review surfaces and generation order\n\nThis section defines the bundle-level review + iteration model for Requirements Doc Builder outputs, aligned with the Embedded Document Pane contract (`Plans/FinalGUISpec.md` §7.19.1).\n\n**Key constraint:** The user must be able to iterate cheaply (targeted revisions driven by notes) without repeatedly invoking expensive Multi-Pass Review. Multi-Pass Review is final-only and runs once per bundle by default.\n\n---\n\n#### 5.5.0 Bundle + doc state model\n\n**Bundle-level states (canonical):**\n- `idle`\n- `generating` (some docs `writing…`)\n- `awaiting_user_review` (generation complete; docs are `draft/needs-review`)\n- `revision_running` (Resubmit with Notes targeted revision pass)\n- `awaiting_approvals` (user marks docs Approved/Done)\n- `ready_for_final_review` (all docs approved + no open notes)\n- `final_review_running` (Multi-Pass Review)\n- `final_gate` (Accept | Reject | Edit)\n- `complete`\n- `error` / `interrupted` (resume supported)\n\n**Doc-level states (canonical):**\n- `writing…` → `draft` → `approved`\n- `draft` ↔ `changes-requested` (notes open / resubmits)\n\n`needs-review` may be used as a doc badge when helpful.\n\n---\n\n#### 5.5.1 Requirements Doc Builder flow (updated)\n\n1. Conversation phase.\n2. User confirms generation.\n3. Qualifying questions for `empty` and `thin` checklist sections only.\n4. Builder generates staged artifacts (requirements doc + contract seed pack) as a **bundle**, streaming writes into the Embedded Document Pane (live multi-doc preview).\n5. Generation completes → docs become `draft` or `needs-review`.\n6. User reviews, optionally edits, and adds inline notes (questions/change requests).\n7. User clicks **Resubmit with Notes** (targeted revision pass). This step can repeat as needed.\n8. User resolves notes and marks each doc **Approved/Done**.\n9. When **all** docs are Approved/Done **and** there are **no open notes**, enable **Run Final Review** (Multi-Pass Review). Do not auto-run.\n10. Multi-Pass Review runs once by default and ends with a single gate: **Accept | Reject | Edit**.\n\n**Hard rule:** Resubmit with Notes MUST NOT trigger Multi-Pass Review.\n\n---\n\n#### 5.5.2 Resubmit with Notes: targeted revision contract\n\n**Input:**\n- Current doc contents for docs with open notes (or user-selected subset)\n- All open notes (anchors + note_text + kind)\n- Minimal context: document registry + which docs are Approved/Done\n\n**Output:**\n- Updated doc text for modified docs\n- Replies for question notes (attached to the note thread)\n- For each note: mark `addressed` with explanation and (if possible) updated anchor location\n\n**Hard rules:**\n- MUST NOT trigger Multi-Pass Review\n- May answer questions without changing docs\n\n---\n\n#### 5.5.3 Acceptance criteria (workflow-level)\n\n- During generation, ≥2 docs appear in the doc list; user can switch and see streaming updates in the active doc.\n- Notes persist and re-anchor using quote+context; if not found, note remains open with explicit warning.\n- Resubmit with Notes performs a targeted pass and never invokes Multi-Pass Review.\n- Final review cannot run until all docs Approved/Done and no open notes exist; runs once by default; ends in Accept/Reject/Edit gate with clean discard semantics for Reject.\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 5.6 Multi-Pass Review (Requirements Doc)",
+          "content_markdown": "### 5.6 Multi-Pass Review (Requirements Doc)\n\nMulti-Pass Review is the **final-review** step for the Requirements Doc Builder bundle. It is intentionally not part of the cheap iteration loop; targeted revisions happen via **Resubmit with Notes** (§5.5).\n\n**Trigger (hard gate):**\n- Enabled only when:\n  - all docs in the bundle are marked **Approved/Done**, and\n  - there are **no open notes** (all notes resolved), and\n  - user explicitly clicks **Run Final Review**.\n- Must not auto-run when the conditions become true.\n- Runs once by default; rerun explicit only.\n\n**Output + gate:**\n- Produces a findings summary and optional revised bundle.\n- After completion, show a single gate: **Accept | Reject | Edit**.\n- Review output is stored as a separate artifact set so:\n  - Reject discards review output cleanly and preserves the pre-review bundle.\n  - Accept applies the revised bundle.\n  - Edit opens revised docs without rerunning review.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/interview-subagent-integration.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 5.4 Multi-Pass Review (Interview Documents)",
+          "content_markdown": "### 5.4 Multi-Pass Review (Interview Documents)\n\nMulti-Pass Review is the **final-review** step for the Interview document bundle. Cheap iteration during interview doc creation happens via inline notes + Resubmit with Notes (targeted revision), not by repeatedly running Multi-Pass Review.\n\n**Bundle preconditions (hard gate):**\n- Multi-Pass Review is enabled only when:\n  - all docs in the interview bundle are marked **Approved/Done**, and\n  - there are **no open notes** (all notes resolved), and\n  - user explicitly clicks **Run Final Review**.\n- Runs once by default; rerun explicit only.\n\n**Live preview + notes (required supporting workflow):**\n- During interview doc creation and targeted resubmits, the Embedded Document Pane provides live multi-document preview:\n  - doc list grows as docs are created\n  - per-doc badges include `writing…`, `draft`, `needs-review`, `changes-requested`, `approved`\n  - follow-active toggle default ON\n- Inline notes (highlight + note) are supported with robust anchoring + deterministic re-anchoring (position + quote selectors; default prefix/suffix 32 chars).\n- Resubmit with Notes triggers a targeted revision pass that applies requested changes and/or answers questions, marks notes `addressed`, and MUST NOT trigger Multi-Pass Review.\n\n**Final gate (single decision):**\n- After final review completes, show **Accept | Reject | Edit** once for the review output bundle.\n  - Accept applies revised bundle.\n  - Reject discards review output bundle and preserves pre-review bundle.\n  - Edit opens revised docs without rerunning review.\n- Review output bundle MUST be stored separately so Reject is a clean discard.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 2.3 redb: schema, migrations, key patterns",
+          "content_markdown": "#### Additions: Document bundle registry + inline notes persistence\n\nDocument-generation bundles (Requirements Doc Builder bundles and Interview bundles) must persist enough state to:\n- restore the Embedded Document Pane doc list + selection after restart\n- restore inline notes and their lifecycle state\n- enforce final-review gating (all docs approved + no open notes)\n- support clean discard semantics for final review Reject\n\n**Recommended redb placement:**\n- Store durable bundle state in `runs` and/or `checkpoints` namespaces as JSON blobs keyed by `bundle_id` / `run_id`.\n\n**Key patterns (add rows to the table above):**\n- `runs` → `bundle.{bundle_id}` → JSON `{ bundle_id, run_id, page_context, bundle_state, created_at, updated_at }`\n- `runs` → `doc_registry.{bundle_id}` → JSON `document_registry.v1`\n- `runs` → `notes_index.{bundle_id}` → JSON `{ note_ids: [note_id...], open_count, addressed_count, resolved_count }`\n- `runs` → `note.{bundle_id}.{note_id}` → JSON `note_record.v1`\n- `checkpoints` → `document_pane_state.{bundle_id}` → JSON `document_pane_state.v1`\n- `checkpoints` → `final_review_output.{bundle_id}` → JSON `{ artifact_set_ref, created_at, status }` (separate artifact set so Reject discards cleanly)\n\n**Schema notes (must align with workflow contracts):**\n- `document_registry.v1` fields: `{ bundle_id, docs[]: { doc_id, path, display_name, created_by, status, updated_at } }`.\n- `note_record.v1` includes both selector types:\n  - `anchor.text_position` `{ start, end }`\n  - `anchor.text_quote` `{ exact, prefix, suffix }` with default prefix/suffix length 32 chars (clamped).\n- Notes kind + lifecycle rules are enforced at write time:\n  - kind inference: `question` if ends with `?` or starts with `Q:`, else `change_request`; allow user override and `both`.\n  - lifecycle: `open` → `addressed` → `resolved` (user controls resolved).\n\n**Seglog vs redb:**\n- redb is the durable snapshot store for UI restoration and gating decisions.\n- Optional: emit note events (create/status/addressed) into seglog for audit; projectors can deterministically rebuild redb snapshots.\n"
+        }
+      ]
+    }
+  ]
+}
