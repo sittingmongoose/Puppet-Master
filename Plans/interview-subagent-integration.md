@@ -1039,12 +1039,16 @@ Multi-Pass Review is the **final-review** step for the Interview document bundle
 - Inline notes (highlight + note) are supported with robust anchoring + deterministic re-anchoring (position + quote selectors; default prefix/suffix 32 chars).
 - Resubmit with Notes triggers a targeted revision pass that applies requested changes and/or answers questions, marks notes `addressed`, and MUST NOT trigger Multi-Pass Review.
 
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md
+
 **Final gate (single decision):**
 - After final review completes, show **Accept | Reject | Edit** once for the review output bundle.
   - Accept applies revised bundle.
   - Reject discards review output bundle and preserves pre-review bundle.
   - Edit opens revised docs without rerunning review.
 - Review output bundle MUST be stored separately so Reject is a clean discard.
+
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/storage-plan.md
 
 ### 5.5 Requirements Quality Reviewer Trigger Rule
 
