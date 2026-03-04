@@ -1799,28 +1799,103 @@ Read-only, chat-like pane showing streaming agent output during document generat
 
 ### 7.19.1 Embedded Document Pane (NEW)
 
-**Location:** Embedded in Wizard and Interview primary content, separate from Agent Activity Pane and separate from side-panel Chat.
+**Purpose:** The Embedded Document Pane supports live, multi-document preview during doc generation (Requirements Doc Builder + Interviewer) and provides inline notes + targeted resubmits for cheap iteration.
 
-**Purpose:** Newbie-friendly surface to review and lightly edit human-readable project artifacts without leaving the flow.
+**Non-goal (explicit):** No "suggested change / patch apply" mode. Notes are plain instructions/questions; agent edits normally.
 
-**Content scope:**
-- Include: requirements docs, plan docs, interview-generated docs (phase docs, PRD, AGENTS.md), and related human-readable artifacts.
-- Exclude: raw JSON/non-human-readable files from editable list.
-- Special entry: `Plan graph` rendered view (read-only tree/graph). Do not expose raw plan graph JSON for editing in this pane.
+---
 
-**Navigation and editing:**
-- Left tree/hierarchical sidebar with button-like document entries.
-- Selecting an entry shows document content in main editor area.
-- Editing is basic text edit + save. Advanced IDE features remain in File Editor.
-- Saves write to the same artifact and shared buffer/history contract as File Editor.
+#### A) Live Multi-Document Preview (during generation + targeted resubmits)
 
-**Plan graph entry requirements:**
-- Rendered read-only plan graph view.
-- Notice near graph view: `Talk to Assistant to edit plan graph.`
+**Doc list requirements**
+- Shows ALL generation artifacts for the current bundle/run, including staged artifacts (examples: `requirements-builder.md`, `contract-seeds.md`, and interview artifacts like phase docs, PRD, `AGENTS.md`).
+- Updates as new docs appear mid-run.
+- Click to switch between docs at any time.
 
-**Checkpoint history UI:**
-- Show checkpoint restore options (for example `before_multi_pass`, `after_user_edit_1`).
-- Restore actions route through shared file open/refresh pipeline and maintain single source of truth history.
+**Doc entry status badges (canonical set)**
+- `writing…` (live updating; read-only)
+- `draft` (editable)
+- `needs-review`
+- `changes-requested`
+- `approved` (Approved/Done for final review gating)
+
+**Live update behavior**
+- If viewing the actively-written doc: show streaming updates.
+- If viewing another doc: that doc stays stable; the active doc continues writing in background (badge + updated_at continue to update).
+
+**Follow active doc toggle (default ON)**
+- ON: auto-switch selection to the doc being written.
+- OFF: user selection is sticky; writing never steals focus.
+
+**Editing guardrails**
+- If a doc is `writing…`, it is read-only in this pane (prevents dueling writes).
+- Once it leaves `writing…`, it becomes editable with basic edit+save.
+
+---
+
+#### B) Inline Note Mode (Highlight + Note)
+
+**UX**
+- Select text → context menu: Add note.
+- Note appears as:
+  - a margin marker in the doc, and
+  - a note card in a Notes drawer/list.
+
+**Notes list**
+- Filters: Open / Addressed / Resolved
+- Note kind (auto-inferred, deterministic default):
+  - if note ends with `?` or starts with `Q:` → question
+  - otherwise → change_request
+  - user can override; note may be both
+
+**Note lifecycle**
+- open → addressed → resolved
+- Agent can set addressed (with reply/link/pointer); user controls final resolved.
+
+**Anchor robustness (required)**
+Store both:
+- Position selector: start/end offsets (fast, brittle)
+- Quote selector: exact text + prefix/suffix context (resilient)
+
+Default prefix/suffix length: 32 chars (clamped).
+
+**Re-anchoring algorithm (deterministic)**
+1) try position selector
+2) if mismatch, try quote selector match (exact + prefix/suffix preference)
+3) if still not found: keep note open + show warning `Anchor not found — reselect to re-anchor` (never discard)
+
+---
+
+#### C) Bundle Controls: Resubmit with Notes + Final Review
+
+**Resubmit with Notes (targeted revision pass)**
+- Runs a targeted revision pass on docs with open notes (or user-selected subset).
+- Applies requested edits and/or answers questions.
+- Marks notes addressed with an explanation and (if possible) updated anchor location.
+- Hard rule: MUST NOT trigger Multi-Pass Review.
+
+**Final Multi-Pass Review (runs once, final-only)**
+- Multi-Pass Review is disabled until:
+  - all bundle docs are Approved/Done, and
+  - there are no open notes.
+- User explicitly clicks Run Final Review (do not auto-run).
+- Runs once by default; rerun explicit only.
+- Outputs findings and optional revised bundle.
+
+**Single final gate**
+- After final review completes, show Accept | Reject | Edit.
+- Accept applies revised bundle.
+- Reject discards review output bundle and preserves pre-review bundle.
+- Edit opens revised docs without rerunning review.
+
+---
+
+#### D) Acceptance Criteria (UI-level, testable)
+
+- During generation, ≥2 docs appear in the doc list; user can switch between them and watch live updates.
+- Notes are anchored to selections; after edits, notes re-attach via quote+context or remain open with a clear anchor-not-found warning (never silently lost).
+- Resubmit with Notes applies/answers notes and does not run Multi-Pass Review.
+- Multi-Pass Review cannot start until all docs are Approved/Done and notes resolved; it runs once by default and ends in a single Accept/Reject/Edit gate.
 
 ### 7.20 Bottom Panel (NEW)
 

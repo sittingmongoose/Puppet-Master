@@ -506,113 +506,95 @@ The Assistant/Builder must also emit a **single** Markdown document at `.puppet-
 
 ### 5.5 Document review surfaces and generation order
 
-**Strict order for requirements Builder flow:**
+This section defines the bundle-level review + iteration model for Requirements Doc Builder outputs, aligned with the Embedded Document Pane contract (`Plans/FinalGUISpec.md` §7.19.1).
+
+**Key constraint:** The user must be able to iterate cheaply (targeted revisions driven by notes) without repeatedly invoking expensive Multi-Pass Review. Multi-Pass Review is final-only and runs once per bundle by default.
+
+---
+
+#### 5.5.0 Bundle + doc state model
+
+**Bundle-level states (canonical):**
+- `idle`
+- `generating` (some docs `writing…`)
+- `awaiting_user_review` (generation complete; docs are `draft/needs-review`)
+- `revision_running` (Resubmit with Notes targeted revision pass)
+- `awaiting_approvals` (user marks docs Approved/Done)
+- `ready_for_final_review` (all docs approved + no open notes)
+- `final_review_running` (Multi-Pass Review)
+- `final_gate` (Accept | Reject | Edit)
+- `complete`
+- `error` / `interrupted` (resume supported)
+
+**Doc-level states (canonical):**
+- `writing…` → `draft` → `approved`
+- `draft` ↔ `changes-requested` (notes open / resubmits)
+
+`needs-review` may be used as a doc badge when helpful.
+
+---
+
+#### 5.5.1 Requirements Doc Builder flow (updated)
+
 1. Conversation phase.
 2. User confirms generation.
 3. Qualifying questions for `empty` and `thin` checklist sections only.
-4. Builder generates staged requirements doc and staged contract seeds.
-5. Builder asks: `Do you want to make any more changes or talk about it more?`
-6. If user requests edits, return to conversation and repeat generation path as needed.
-7. If user confirms no more changes, run optional Multi-Pass Review (if enabled).
-8. Show Multi-Pass findings summary (chat + preview section).
-9. Capture one final approval decision for the review run.
-10. Promote canonical artifacts and hand off to Interview.
+4. Builder generates staged artifacts (requirements doc + contract seed pack) as a **bundle**, streaming writes into the Embedded Document Pane (live multi-doc preview).
+5. Generation completes → docs become `draft` or `needs-review`.
+6. User reviews, optionally edits, and adds inline notes (questions/change requests).
+7. User clicks **Resubmit with Notes** (targeted revision pass). This step can repeat as needed.
+8. User resolves notes and marks each doc **Approved/Done**.
+9. When **all** docs are Approved/Done **and** there are **no open notes**, enable **Run Final Review** (Multi-Pass Review). Do not auto-run.
+10. Multi-Pass Review runs once by default and ends with a single gate: **Accept | Reject | Edit**.
 
-**Three-location review rule (required):**
-- Full document bodies are not rendered in chat.
-- After generation or revision, chat must always point to all three review locations:
-  1. Opened in File Editor (auto-open action),
-  2. Clickable canonical file path,
-  3. Embedded document pane entry on the current page.
+**Hard rule:** Resubmit with Notes MUST NOT trigger Multi-Pass Review.
 
-**Preview section contract (requirements/wizard page):**
-- The preview section must show the findings summary and the current approval state before handoff.
-- The same preview area hosts or links to the embedded document pane for requirements artifacts.
+---
 
-**Document pane + recovery state contracts:**
-- `document_pane_state.v1`
-  - `project_id`
-  - `page_context` (`wizard | interview`)
-  - `selected_document_id`
-  - `selected_view` (`document | plan_graph`)
-  - `cursor_scroll_state`
-  - `history_selection`
-  - `approval_stage`
-- `document_checkpoint.v1`
-  - `checkpoint_id`
-  - `document_id`
-  - `label`
-  - `artifact_ref`
-  - `created_at`
-  - `restorable=true`
+#### 5.5.2 Resubmit with Notes: targeted revision contract
 
-### 5.5.1 Gaps and Risks
+**Input:**
+- Current doc contents for docs with open notes (or user-selected subset)
+- All open notes (anchors + note_text + kind)
+- Minimal context: document registry + which docs are Approved/Done
 
-- **Token usage:** Long conversations before handoff may use significant context; support `Summarize and produce doc` as an explicit Builder action.
-- **Quality:** Builder output is best-effort and Interview can still clarify; validation is enforced through checklist status and review gates.
-- **Abandonment:** Builder includes `Cancel and return to requirements` with no save.
+**Output:**
+- Updated doc text for modified docs
+- Replies for question notes (attached to the note thread)
+- For each note: mark `addressed` with explanation and (if possible) updated anchor location
+
+**Hard rules:**
+- MUST NOT trigger Multi-Pass Review
+- May answer questions without changing docs
+
+---
+
+#### 5.5.3 Acceptance criteria (workflow-level)
+
+- During generation, ≥2 docs appear in the doc list; user can switch and see streaming updates in the active doc.
+- Notes persist and re-anchor using quote+context; if not found, note remains open with explicit warning.
+- Resubmit with Notes performs a targeted pass and never invokes Multi-Pass Review.
+- Final review cannot run until all docs Approved/Done and no open notes exist; runs once by default; ends in Accept/Reject/Edit gate with clean discard semantics for Reject.
 
 ### 5.6 Multi-Pass Review (Requirements Doc)
 
-When the Requirements Doc Builder reaches post-generation confirmation, an optional **Multi-Pass Review** runs before handoff to Interview. A **review agent** spawns N **review subagents** (each can use a different model/provider) to evaluate gaps, problems, missing information, and consistency.
+Multi-Pass Review is the **final-review** step for the Requirements Doc Builder bundle. It is intentionally not part of the cheap iteration loop; targeted revisions happen via **Resubmit with Notes** (§5.5).
 
-This review covers the requirements document **and** the staged Contract Layer seed pack (`.puppet-master/requirements/contract-seeds.md`) as a single bundle, so the Interview’s Contract Layer does not start from inconsistent assumptions/constraints/glossary.
+**Trigger (hard gate):**
+- Enabled only when:
+  - all docs in the bundle are marked **Approved/Done**, and
+  - there are **no open notes** (all notes resolved), and
+  - user explicitly clicks **Run Final Review**.
+- Must not auto-run when the conditions become true.
+- Runs once by default; rerun explicit only.
 
-**When it runs:** After post-generation user confirmation and before canonical promotion/handoff.
-
-**Settings (early in the flow -- same page as requirements step or wizard):**
-
-- **Multi-Pass Review:** On/off. **Default: off.** When on, review runs after the Builder produces a document and before handoff to Interview.
-- **Number of reviews (additional checks):** How many subagents review the doc. Default **2**, max **10**. So with 2, the review agent spawns 2 subagents; with 10, it spawns 10 subagents.
-- **Use different models:** Default **true**. When true, each subagent can use a different model (and optionally platform) from a user-configured list.
-- **Model/platform list:** User can configure which models (and platforms) to use for review subagents; **cross-platform** is allowed (e.g. one subagent on Claude, one on Codex).
-- **Model/platform list validation:** Minimum 1 entry; maximum 20. When "Use different models" is true and list has fewer than N entries (N = number of reviews), **cycle** through the list (assign models round-robin to subagents) and show a short UI notice: "Fewer models than reviews; some models will be reused."
-- **Review agent model/provider:** The review agent (the process that consumes subagent reports and produces the revised doc) uses a **configurable** model/provider. Default: same as the primary provider used for the Builder. GUI: same model/provider list or a dedicated "Review agent" dropdown; may be the same as one of the subagent models or different.
-
-**Flow:**
-
-1. Requirements doc is produced by the Assistant. **Empty or minimal doc:** Before starting Multi-Pass Review, check Builder output size (e.g. character or token count). Minimum document size to trigger Multi-Pass review: **100 characters**. Documents shorter than 100 characters (or empty/whitespace-only) skip Multi-Pass and proceed directly. Config: `interview.multi_pass.min_doc_chars`, default `100`. Show a brief notice: "Document too short for review; using as-is."
-2. Review agent spawns N subagents (N = number of reviews). **Single document:** There is always exactly one requirements document from the Builder. N subagents each review that same doc; no per-document batching. Whole-set pass does not apply (single doc = whole set). Each subagent receives:
-   - the requirements doc, and
-   - `contract-seeds.md` (when present), and
-   - (for delta/feature intents) optional codebase context from codebase_scanner
-3. Subagents look for: gaps, problems, missing information, unscoped items. Depth is lighter than the Interview -- the Interview will flesh details out.
-4. Each subagent reports findings back to the review agent, then is terminated (no long-lived context).
-5. Review agent **produces a revised requirements document** (and, when present, a revised `contract-seeds.md`) plus a findings summary.
-6. Findings summary is shown in chat and in the wizard preview section before approval.
-7. **One final approval gate:** user chooses **Accept**, **Reject**, or **Edit** for the revised output bundle. No per-section approval and no per-document approval.
-8. If **Edit** is chosen, open the revised artifacts in editor/document pane, then return to the same final approval gate.
-9. On **Accept**, revised artifacts become canonical and handoff proceeds. On **Reject**, original Builder artifacts remain canonical and handoff proceeds.
-
-**Run state:** Persist and expose for UI/recovery: `pending` → `spawning` → `reviewing` (with progress: pass/round and subagents active) → `producing` (review agent writing revised doc) → `awaiting_approval` → `complete` | `cancelled` | `failed`. On failure, set `failed` and store error reason; on cancel, set `cancelled`. Recovery snapshot (newfeatures §4) must include this state and progress so "run was interrupted" and optional resume are accurate.
-
-**Review agent behavior:** Produce revised document; user must approve before handoff. No automatic apply without approval.
-
-**Dependencies:** Assistant chat, review agent plus N subagents (Multi-Pass Review pattern; not the Crew feature), platform_specs for model/platform selection. For fork/PR/enhance intents, review subagents may receive codebase context so they can check feasibility against existing code. **Codebase context:** For intents **Fork & evolve**, **Enhance/rewrite/add**, and **Contribute (PR)**, always attach a **short codebase context** (e.g. from codebase_scanner: key paths, module list, tech stack summary) to each review subagent prompt when project path is set. No extra user setting; intent + project path imply inclusion.
-
-**Error handling:**
-
-- **Subagent crash or timeout:** Treat as one failed review; collect partial report if available. If fewer than half of the requested reviews complete, mark run as `failed` and surface "Multi-Pass Review failed (too few reviews completed)." Otherwise, continue with completed reports and log the failure.
-- **Review agent fails to produce revised doc:** Mark run as `failed`. Surface error message and option to "Use original document" (set Builder output as canonical and continue) or "Retry" (re-run review agent once with same reports).
-- **All subagent spawns fail:** Mark run as `failed`; surface "Could not start review subagents (check model/provider and auth)." Option "Use original document" as above.
-
-**Findings and approval contracts (required):**
-- `review_findings_summary.v1`
-  - `run_id`
-  - `scope` (`requirements | interview`)
-  - `gaps`
-  - `consistency_issues`
-  - `missing_information`
-  - `applied_changes_summary`
-  - `unresolved_items`
-- `review_approval_gate.v1`
-  - `run_id`
-  - `decision` (`accept | reject | edit`)
-  - `decision_timestamp`
-  - `decision_actor`
-  - `preconditions` (`findings_summary_shown=true`)
-
-**GUI and visibility:** See section 3.5 (agent activity view and progress indicator) so the user sees the review agent and subagents working during Multi-Pass Review. **Pause, cancel, resume** are supported options (section 3.5). Findings summary and final approval UI must be shown in both chat and preview section before handoff.
+**Output + gate:**
+- Produces a findings summary and optional revised bundle.
+- After completion, show a single gate: **Accept | Reject | Edit**.
+- Review output is stored as a separate artifact set so:
+  - Reject discards review output cleanly and preserves the pre-review bundle.
+  - Accept applies the revised bundle.
+  - Edit opens revised docs without rerunning review.
 
 ### 5.7 Contract Layer (Requirements → Contracts → Plan → Execution)
 

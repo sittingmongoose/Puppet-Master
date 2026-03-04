@@ -190,8 +190,17 @@ The app includes an **IDE-style editor** so users can open, view, and edit proje
   - one dirty state is authoritative,
   - save in either surface persists the same underlying artifact.
 - There is one source of truth for save history and restore points; document pane does not create a separate history branch.
-- Restore actions launched from document pane (checkpoint restore or revert-to-checkpoint) must call the same open-file and buffer-refresh pipeline defined by section 4.1.
-- The "Restore to…" / "History" action (§2.2) is available from both the File Editor and the embedded document pane. Both surfaces query the backend (redb) for the restore-point list and invoke the same restore pipeline; neither surface stores or manages restore points independently. ContractRef: Primitive:DocumentCheckpoint (Crosswalk §3.11).
+- Restore actions launched from document pane (checkpoint restore or revert-to-checkpoint) must call the same open-file and buffer-refresh pipeline.
+- The "Restore to…" / "History" action is available from both the File Editor and the embedded document pane. Both surfaces query the backend store for the restore-point list and invoke the same restore pipeline; neither surface stores or manages restore points independently.
+
+**Write-in-progress lock (required to prevent dueling edits):**
+- When a document is in DocumentPane status `writing…` (actively being written by a generation/revision worker), that path is considered **write-locked** for user edits across GUI surfaces:
+  - Embedded document pane shows the doc as **read-only** with status `writing…`.
+  - File Editor, if the same path is open, must prevent user edits (or immediately revert local edits) and show an inline banner: `Locked: agent is writing this document` (optionally with a pointer to run controls).
+- Streaming updates from the agent still apply to the shared buffer so the user can watch content evolve.
+- Once the doc leaves `writing…`, the lock is released and both surfaces return to normal edit/save behavior.
+
+**Note:** This lock is an interaction rule only; it does not create a separate buffer or history branch. The shared-buffer invariant remains intact.
 
 ### 2.5 Data model and dirty state
 
