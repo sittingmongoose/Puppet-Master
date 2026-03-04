@@ -139,6 +139,8 @@ This section defines the bundle-level review + iteration model for Requirements 
 
 **Hard rule:** Resubmit with Notes MUST NOT trigger Multi-Pass Review.
 
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md
+
 ---
 
 #### 5.5.2 Resubmit with Notes: targeted revision contract
@@ -156,6 +158,8 @@ This section defines the bundle-level review + iteration model for Requirements 
 **Hard rules:**
 - MUST NOT trigger Multi-Pass Review
 - May answer questions without changing docs
+
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md
 
 ---
 

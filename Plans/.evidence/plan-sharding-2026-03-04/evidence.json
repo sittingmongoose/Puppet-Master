@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.evidence.schema.v1",
   "evidence_id": "plan-sharding-2026-03-04",
-  "created_at_utc": "2026-03-04T19:47:33.451226+00:00",
+  "created_at_utc": "2026-03-04T20:01:03.076152+00:00",
   "node": {
     "node_id": "plan-sharding"
   },
@@ -17,8 +17,7 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py run-gates",
-      "exit_code": -1,
-      "stdout_excerpt": "not yet run"
+      "exit_code": 0
     }
   ],
   "tool_calls": [
