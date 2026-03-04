@@ -1,27 +1,29 @@
-# Puppet Master — Claude Instructions (PLANNING PHASE)
+# CLAUDE.md — Puppet Master (PLANNING PHASE)
 
-Follow the repo-root `AGENTS.md`.
+## Scope (STRICT)
+- Allowed edits: `Plans/**`
+- Allowed when explicitly requested: `AGENTS.md`, `.cursorrules`, `.claude/**`, `.cursor/**`
+- Disallowed: application code (e.g. `puppet-master-rs/**`), installers, runtime configs
 
-## Scope
-- Edit `Plans/**` only (plus agent-rule files if explicitly requested).
-- No application code changes until rewrite execution begins.
+## Do not hand-edit derived artifacts
+- Do not edit: `Plans/_shards/**`
+- Do not edit: `Plans/.evidence/**`
 
-## Plans rules (SSOT)
-When adding/modifying requirements in `Plans/`:
-- Follow `Plans/DRY_Rules.md`
-- Add/maintain `ContractRef:` immediately after the affected block
-- No open questions; use `Plans/auto_decisions.jsonl` per `Plans/Decision_Policy.md`
+## Do not edit these unless your prompt explicitly tells you to
+- `Plans/Spec_Lock.json`
+- `Plans/auto_decisions.jsonl`
 
-## Hygiene
-- No secrets/tokens.
-- Keep edits small and reviewable.
-- Update `Plans/00-plans-index.md` if you add/rename plan documents.
+## Pipeline commands (only when your prompt instructs you to run maintenance/verification)
+- Shards:
+  - `python3 scripts/pm-shard-plans.py --generate`
+  - `python3 scripts/pm-shard-plans.py --check`
+- Gates:
+  - `python3 scripts/pm-plans-verify.py run-gates`
 
-## Completion marker
+## Safety
+- Never add secrets/tokens.
+
+## Finish marker
 End with exactly one:
 - `<status>COMPLETE</status>`
 - `<status>BLOCKED</status>`
-
-If you edit a Plans/*.md that has Plans/_shards/<doc>/, you MUST run python3 scripts/pm-shard-plans.py --generate and python3 scripts/pm-shard-plans.py --check before finishing.
-
-python3 scripts/pm-plans-verify.py run-gates is required and fails if plan shards are stale.
