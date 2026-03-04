@@ -134,6 +134,13 @@ Rules:
 - The embedded document pane is a dedicated GUI primitive, separate from chat and separate from the agent activity pane.
 - Document-pane edits MUST target the same file buffer/history contract as the File Editor.
 - Plan graph appears in the pane as a read-only rendered view, not raw JSON editing.
+- The document pane MUST support **live multi-document preview** during document generation and targeted revision runs:
+  - doc list grows mid-run as new artifacts are created,
+  - per-doc status badges include `writing…`, `draft`, `needs-review`, `changes-requested`, `approved`,
+  - follow-active toggle default ON (auto-follow active written doc),
+  - selected-doc stability when follow is OFF (no focus stealing).
+- While a doc is `writing…`, it MUST be read-only to prevent dueling writes; this rule is coordinated with the shared-buffer contract (`Plans/FileManager.md` §2.4.1).
+- The document pane MUST support anchored **Inline Notes** (highlight + note) with robust selectors and deterministic re-anchoring; see Primitive:DocumentInlineNotes.
 
 ContractRef: Primitive:DocumentPane, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md
 
@@ -249,3 +256,49 @@ ContractRef: Primitive:UIScaling, ContractName:Plans/Contracts_V0.md#8
 - `Plans/Widget_System.md`
 - `Plans/Run_Graph_View.md`
 - `Plans/Orchestrator_Page.md`
+
+
+### 3.13 DocumentInlineNotes
+**Owner:** GUI contract in `Plans/FinalGUISpec.md`; persistence contract in `Plans/storage-plan.md`; workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`.
+
+Rules:
+- Notes are anchored to a text selection and have a lifecycle: `open` → `addressed` → `resolved`.
+- Note kind is deterministic by default: `question` if note ends with `?` or starts with `Q:`, else `change_request`; user can override and set `both`.
+- Anchor storage MUST include both:
+  - TextPositionSelector `{ start, end }`, and
+  - TextQuoteSelector `{ exact, prefix, suffix }` with default prefix/suffix length 32 chars (clamped).
+- Re-anchoring algorithm is deterministic:
+  1) position selector match, else 2) quote selector match using prefix/suffix preference, else 3) keep note open and show `Anchor not found — reselect to re-anchor`; never silently discard.
+
+ContractRef: Primitive:DocumentInlineNotes, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md
+
+---
+
+### 3.14 TargetedRevisionPass
+**Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; UI placement in `Plans/FinalGUISpec.md`.
+
+Rules:
+- "Resubmit with Notes" triggers a targeted revision pass scoped to documents with open notes (or a user-selected subset).
+- Targeted revision:
+  - applies requested edits and/or answers questions,
+  - marks notes `addressed` with explanation and (when possible) updated anchor locations,
+  - MUST NOT trigger Multi-Pass Review.
+- Multi-Pass Review is bundle-level and gated separately (all docs approved + no open notes).
+
+ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/FinalGUISpec.md
+
+---
+
+### 3.15 FinalReviewGate
+**Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; artifact taxonomy and restore semantics in `Plans/storage-plan.md`.
+
+Rules:
+- Multi-Pass Review is final-review only: enabled only when all bundle docs are Approved/Done and no open notes exist.
+- Final review runs once by default; rerun explicit only.
+- Final gate is a single decision: `Accept | Reject | Edit`.
+  - Accept applies the revised review bundle.
+  - Reject discards the review output bundle and preserves the pre-review bundle.
+  - Edit opens the revised docs without rerunning review; returns to the same gate afterward.
+- Review output bundle MUST be stored separately so Reject is a clean discard.
+
+ContractRef: Primitive:FinalReviewGate, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/storage-plan.md

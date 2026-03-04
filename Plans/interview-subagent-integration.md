@@ -1022,90 +1022,29 @@ When implementing or changing **interview-related code** in Puppet Master (inter
 
 ### 5.4 Multi-Pass Review (Interview Documents)
 
-After interview documents are generated (phase docs, AGENTS.md, PRD, and related artifacts), an optional **Multi-Pass Review** checks the document set for gaps, contradictions, unwired components, missing information, and consistency issues. A **review agent** spawns a worker pool of review subagents, each tasking one document review at a time, then aggregates findings into a revised bundle and findings summary.
+Multi-Pass Review is the **final-review** step for the Interview document bundle. Cheap iteration during interview doc creation happens via inline notes + Resubmit with Notes (targeted revision), not by repeatedly running Multi-Pass Review.
 
-**When it runs:** After interview document generation and before interview handoff completion. **Zero documents:** If no documents exist, skip Multi-Pass Review, log the skip, and complete interview with no revised bundle.
+**Bundle preconditions (hard gate):**
+- Multi-Pass Review is enabled only when:
+  - all docs in the interview bundle are marked **Approved/Done**, and
+  - there are **no open notes** (all notes resolved), and
+  - user explicitly clicks **Run Final Review**.
+- Runs once by default; rerun explicit only.
 
-**Order of operations (required):**
-1. Interview document generation completes.
-2. User confirms they are done with direct edits/conversation for this review cycle.
-3. Optional Multi-Pass Review runs (if enabled).
-4. Findings summary is shown in chat and in the Interview preview section.
-5. One final approval gate is shown: **Accept | Reject | Edit**.
-6. Handoff completion occurs only after this final approval gate resolves.
+**Live preview + notes (required supporting workflow):**
+- During interview doc creation and targeted resubmits, the Embedded Document Pane provides live multi-document preview:
+  - doc list grows as docs are created
+  - per-doc badges include `writing…`, `draft`, `needs-review`, `changes-requested`, `approved`
+  - follow-active toggle default ON
+- Inline notes (highlight + note) are supported with robust anchoring + deterministic re-anchoring (position + quote selectors; default prefix/suffix 32 chars).
+- Resubmit with Notes triggers a targeted revision pass that applies requested changes and/or answers questions, marks notes `addressed`, and MUST NOT trigger Multi-Pass Review.
 
-**Settings (same conceptual model as requirements Multi-Pass):**
-Interview-tab bounds for these controls are sourced from `Plans/FinalGUISpec.md` §7.4 (number of review passes: default 2, range 1-5; max review subagents: default 3, range 1-10). Requirements Builder Multi-Pass settings remain separate under `Plans/chain-wizard-flexibility.md` §5.6.
-- **Multi-Pass Review:** On/off.
-- **Number of reviews:** Number of review tasks per document (default 2, min 1, max 5).
-- **Max subagents spawn:** Maximum in-flight review subagents (default 3, min 1, max 10) with warning text: "This will go through token usage quickly."
-- **Use different models / model-provider list:** Default true. User-configurable cross-provider list. Validation: min 1 entry, max 20. If list length is less than required tasks, assign round-robin and show UI notice.
-- **Review agent model/provider:** Configurable; default is the primary interview provider/model.
-
-**Worker-pool semantics:**
-- Total review tasks = (document count) x (number of reviews).
-- Pool runs up to max subagents in flight.
-- Each subagent handles one task and terminates after reporting.
-**Spawn Failure Retry Policy (Resolved):**
-1. **Retry with same Provider:** 2 retries (3 total attempts) with the same model and Provider. Backoff: 1s, then 3s.
-2. **Fallback to next Provider:** If all 3 attempts fail, automatically try the next Provider in the tier's configured provider list (order as specified in GUI config).
-3. **Exhaust all Providers:** If all configured Providers fail, surface error to user: "All providers failed for [tier]. [Retry all] [Skip tier] [Abort run]."
-4. **Seglog events:** `spawn.retry` (each retry), `spawn.fallback` (provider switch), `spawn.exhausted` (all failed).
-- Config: `orchestrator.spawn_retry_count`, default `2`. `orchestrator.spawn_retry_backoff_ms`, default `[1000, 3000]`.
-- If all configured Provider entries fail for a task, skip the task and log it.
-- If more than 25% of review tasks are skipped due to spawn failure, mark run `failed`.
-
-**Review criteria:**
-- Gaps, missing scope, missing information, and contradictions.
-- Wiring completeness (components and GUI flow connections).
-- Cross-document consistency and feasibility against available codebase context.
-
-**Whole-set synthesis step:**
-- After per-document tasks, run a whole-set synthesis/review pass to detect cross-document conflicts.
-- If raw document set is too large, review agent produces a bounded synthesis artifact and reviewers consume that synthesis.
-
-**Findings summary and approval contracts (required):**
-- `review_findings_summary.v1`
-  - `run_id`
-  - `scope` (`requirements | interview`)
-  - `gaps`
-  - `consistency_issues`
-  - `missing_information`
-  - `applied_changes_summary`
-  - `unresolved_items`
-- `review_approval_gate.v1`
-  - `run_id`
-  - `decision` (`accept | reject | edit`)
-  - `decision_timestamp`
-  - `decision_actor`
-  - `preconditions` (`findings_summary_shown=true`)
-
-**Approval model (required):**
-- Exactly one final approval gate per Multi-Pass run.
-- No auto-apply mode and no per-document approval mode.
-- **Accept:** revised bundle is promoted and handoff completes.
-- **Reject:** revised bundle is discarded, original generated bundle remains active, and handoff completes.
-- **Edit:** open revised docs in editor/document pane, then return to the same final gate.
-
-**Document review surfaces (required):**
-- Chat shows summaries/findings only, not full document bodies.
-- Chat must point to all three review locations after generation/revision:
-  1. Opened in File Editor,
-  2. Clickable canonical file path,
-  3. Embedded document pane entry.
-- Interview preview section must display findings summary and final approval UI.
-
-**Interview page document pane requirements:**
-- Interview page includes the embedded document pane for interview artifacts (phase docs, PRD, and related human-readable docs).
-- Document pane includes a `Plan graph` entry as a read-only rendered view.
-- Near plan graph view show notice: `Talk to Assistant to edit plan graph.`
-
-**Dependencies:** Same Multi-Pass pattern as requirements Builder (review agent + N subagents; not Crew). Use provider capabilities from `platform_specs`; use `codebase_scanner` context for existing-code intents. Cross-reference `Plans/chain-wizard-flexibility.md` section 5.6 for shared settings and model selection.
-
-**Recovery requirements (required):**
-- Persist in-progress review state for resume/start-over behavior.
-- Persist `awaiting_final_approval` state and restore directly to findings + final approval UI after restart.
-- Restore document pane selection and preview context for the same review run when possible.
+**Final gate (single decision):**
+- After final review completes, show **Accept | Reject | Edit** once for the review output bundle.
+  - Accept applies revised bundle.
+  - Reject discards review output bundle and preserves pre-review bundle.
+  - Edit opens revised docs without rerunning review.
+- Review output bundle MUST be stored separately so Reject is a clean discard.
 
 ### 5.5 Requirements Quality Reviewer Trigger Rule
 
