@@ -138,6 +138,38 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#2-physical-storage
 
 **Migrations:** Use redb's schema version or a custom `schema_version` key in a `meta` namespace. On open, check version; if older, run migration functions (e.g. create new namespaces, copy/transform data, bump version). Document each migration (version N → N+1) and keep migrations reversible where possible (e.g. add column, don't drop until next major).
 
+#### Additions: Document bundle registry + inline notes persistence
+
+Document-generation bundles (Requirements Doc Builder bundles and Interview bundles) must persist enough state to:
+- restore the Embedded Document Pane doc list + selection after restart
+- restore inline notes and their lifecycle state
+- enforce final-review gating (all docs approved + no open notes)
+- support clean discard semantics for final review Reject
+
+**Recommended redb placement:**
+- Store durable bundle state in `runs` and/or `checkpoints` namespaces as JSON blobs keyed by `bundle_id` / `run_id`.
+
+**Key patterns (add rows to the table above):**
+- `runs` → `bundle.{bundle_id}` → JSON `{ bundle_id, run_id, page_context, bundle_state, created_at, updated_at }`
+- `runs` → `doc_registry.{bundle_id}` → JSON `document_registry.v1`
+- `runs` → `notes_index.{bundle_id}` → JSON `{ note_ids: [note_id...], open_count, addressed_count, resolved_count }`
+- `runs` → `note.{bundle_id}.{note_id}` → JSON `note_record.v1`
+- `checkpoints` → `document_pane_state.{bundle_id}` → JSON `document_pane_state.v1`
+- `checkpoints` → `final_review_output.{bundle_id}` → JSON `{ artifact_set_ref, created_at, status }` (separate artifact set so Reject discards cleanly)
+
+**Schema notes (must align with workflow contracts):**
+- `document_registry.v1` fields: `{ bundle_id, docs[]: { doc_id, path, display_name, created_by, status, updated_at } }`.
+- `note_record.v1` includes both selector types:
+  - `anchor.text_position` `{ start, end }`
+  - `anchor.text_quote` `{ exact, prefix, suffix }` with default prefix/suffix length 32 chars (clamped).
+- Notes kind + lifecycle rules are enforced at write time:
+  - kind inference: `question` if ends with `?` or starts with `Q:`, else `change_request`; allow user override and `both`.
+  - lifecycle: `open` → `addressed` → `resolved` (user controls resolved).
+
+**Seglog vs redb:**
+- redb is the durable snapshot store for UI restoration and gating decisions.
+- Optional: emit note events (create/status/addressed) into seglog for audit; projectors can deterministically rebuild redb snapshots.
+
 ### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints
 
 **Consumption model:** Each projector runs in a loop (or is triggered periodically):
