@@ -48,14 +48,15 @@ Storage for the rewrite follows a multi-store design: **seglog** as the canonica
 
 ### 2.1 File locations and directory layout
 
-All storage lives under a single **app data root** (e.g. `~/.puppet-master/` or `$XDG_DATA_HOME/puppet-master/` on Linux; `%APPDATA%/puppet-master` on Windows; `~/Library/Application Support/puppet-master` on macOS). Project-specific data (e.g. per-project seglog or redb) may live under **project root** (e.g. `.puppet-master/`) when we want isolation per repo; the plan below assumes **app-global** seglog/redb by default, with **project_id** or **project_path** in keys where needed.
+All storage lives under a single **app data root** (e.g. `~/.puppet-master/` or `$XDG_DATA_HOME/puppet-master/` on Linux; `%APPDATA%/puppet-master` on Windows; `~/Library/Application Support/puppet-master` on macOS). Project-specific data (e.g. per-project seglog or redb) may live under **project root / project workspace** (e.g. `.puppet-master/`) when we want isolation per workspace; the plan below assumes **app-global** seglog/redb by default, with **project_id** or **project_path** in keys where needed.
 
 | Path (relative to app data root) | Purpose |
 |----------------------------------|---------|
 | `storage/seglog/` | seglog segment files (or single `events.log`). Append-only. |
 | `storage/redb/` | redb database file(s). One main DB (e.g. `state.redb`) for settings, sessions, checkpoints, rollups; schema versioned via migrations. |
 | `storage/jsonl/` | Human-readable JSONL mirror of seglog (one file per day or one rolling file). Written by projector. |
-| `storage/tantivy/` | Tantivy index directories (e.g. `chat`, `docs`, `logs`). Built by projectors. |
+| `storage/tantivy/projects/{project_id}/` | **Per-project** Tantivy index directories (e.g. `chat`, `code`, `logs`, optional `docs`). Built by projectors/watchers. Per-project indices are required for project-only search scoping and for long-lived performance (see §2.4 and Plans/assistant-chat-design.md §10.3). |
+| `storage/blobs/` | Blob store for large persisted payloads referenced by `blob_ref` (e.g. secrets-scrubbed tool/log payloads used by `logread`). |
 | `storage/backups/` | Optional: point-in-time copies of redb or seglog for recovery. |
 
 **Implementation:** Resolve app data root at startup (env override optional). Create `storage/seglog`, `storage/redb`, `storage/jsonl`, `storage/tantivy` if missing. Use a single redb file for MVP; split by domain (e.g. `state.redb`, `rollups.redb`) only if needed later.
@@ -73,7 +74,6 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-bound
 
 Rule: The separation boundary exists to avoid writer contention/coupling and MUST NOT change `seglog` as the canonical system event source.
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#2-physical-storage-layout, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Contracts_V0.md#EventRecord
-
 ### 2.2 seglog: format, writer, rotation
 
 **Event envelope (per record):** Each appended record is a single line or frame so we can tail easily. Recommended: **newline-delimited JSON** (NDJSON) with a common envelope, e.g.:
@@ -160,6 +160,7 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#2-physical-storage
 | `rollups` | `thread_usage.{thread_id}` | Optional per-thread usage rollup (context circle, thread Usage tab) | Overwritten by projector or analytics; keys for archived/deleted threads can be removed or left to retention. |
 | `sessions` | `queue.{thread_id}` | Queue state (items, order) for thread | Restored on load; written when queue events applied. |
 | `sessions` | `plan_todo.{thread_id}` | Plan and todo state for thread | Restored on load; written when plan_todo events applied. |
+| `sessions` | `context_overlay.{thread_id}` | JSON `context_overlay_state.v1` | Thread-local Context Lens overlay state (mute/focus/subcompact) + Auto Retrieval override (assistant-chat-design.md §17.5–§17.6). |
 | `editor` | `file_tree_expanded.{project_id}` | Expanded paths in file tree | Optional; value: list of path_hashes or paths. |
 | `editor` | `layout.{project_id}` (optional) | Split sizes, panel visibility | Optional; value: layout blob. |
 | `editor` | `recent_files.{project_id}` (optional) | Recently opened file paths | Optional; value: ordered list. |
@@ -174,7 +175,7 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#2-physical-storage
 **Value encoding (per namespace):** Keys are UTF-8 or fixed encoding; values are namespace-specific. Use **JSON** for human-inspectable or cross-version flexibility (settings, thread metadata, checkpoints, queue, plan_todo, rollups for dashboard). Use **bincode** (or redb native types) where compact and fast read/write matter (e.g. editor scroll_cursor, large blobs). Document the choice per namespace in code.
 
 - **settings:** JSON (app and project keys).
-- **sessions:** `thread.{id}` → JSON `{ title, created_ts, project_id, archived? }`; `thread_list.{project_id}` → JSON array of thread_id; `queue.{thread_id}`, `plan_todo.{thread_id}` → JSON (structure per assistant-chat-design §11).
+- **sessions:** `thread.{id}` → JSON `{ title, created_ts, project_id, archived? }`; `thread_list.{project_id}` → JSON array of thread_id; `queue.{thread_id}`, `plan_todo.{thread_id}`, `context_overlay.{thread_id}` → JSON (structure per assistant-chat-design §11).
 - **runs:** JSON `{ status, started_ts, ... }`.
 - **checkpoints:** JSON `{ segment, offset }` or `{ seq }` for projectors; run/interview/hitl checkpoints as JSON with enough to resume.
 - **restore_points:** JSON for metadata and index; blob references point to app-data files or inline bincode for small snapshots. Pruning deletes both redb key and referenced blob file.
@@ -216,6 +217,22 @@ Document-generation bundles (Requirements Doc Builder bundles and Interview bund
 - redb is the durable snapshot store for UI restoration and gating decisions.
 - Optional: emit note events (create/status/addressed) into seglog for audit; projectors can deterministically rebuild redb snapshots.
 
+
+#### Additions: Auto Retrieval + Context Lens persistence (Assistant chat)
+
+The Assistant chat context pipeline requires durable per-thread state for Auto Retrieval override and Context Lens overlays (mute/focus/subcompact) so resume/rewind remains consistent across restarts.
+
+**Recommended redb placement (add rows to the table above):**
+- `sessions` → `context_overlay.{thread_id}` → JSON `context_overlay_state.v1`
+
+**context_overlay_state.v1 (keys only; deterministic):**
+- `auto_retrieval_enabled: boolean` (default `true`)
+- `muted_message_ids: string[]`
+- `focused_message_ids: string[]`
+- `subcompacts: { subcompact_id: string, message_ids: string[], summary_text?: string, summary_blob_ref?: string, created_ts: string }[]`
+
+Rule: Any persisted overlay summaries and any indexed/log payloads MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (secrets stripped/redacted before persistence).
+ContractRef: ContractName:Plans/assistant-chat-design.md#17-context-truncation, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
 ### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints
 
 **Consumption model:** Each projector runs in a loop (or is triggered periodically):
@@ -227,16 +244,39 @@ Document-generation bundles (Requirements Doc Builder bundles and Interview bund
 
 **JSONL mirror:** Same envelope format as seglog; one file per day under `storage/jsonl/` (e.g. `events_2026-02-21.jsonl`) or one rolling file. Human-readable; useful for debugging and for analytics scan if we prefer scanning JSONL. Writer: single projector that reads seglog and appends to the mirror.
 
-**Tantivy indices:** Separate index per domain, e.g.:
+**Tantivy indices (required per project):** Indices are written under `storage/tantivy/projects/{project_id}/…` to enforce **project-only scoping** and keep performance stable for long-lived projects (Plans/assistant-chat-design.md §10.3). Separate index per domain:
 
-- **chat:** Documents from `chat.message` (and maybe `chat.thread_created`); fields: `thread_id`, `content`, `role`, `ts`, `message_id`. Used for chat history search (human and agent). **thread_id** is a keyword field so the UI can filter search results by thread (e.g. "search within this thread only") and so any feature that needs "messages or usage for this thread" can correlate with per-thread usage (context circle, thread Usage tab) via the same thread_id.
-- **docs:** Optional; from events that reference doc content (e.g. PRD, AGENTS.md snippets).
-- **logs:** Optional; from run/usage events for log-summary search.
+- **chat (required):** Documents from `chat.message` (and optionally `chat.thread_created` / `chat.thread_updated`).  
+  **Fields (minimum):** `project_id`, `thread_id`, `message_id`, `role`, `ts`, `content`.  
+  **Optional fields:** `archived`, `deleted`, `context_overlay_flags` (muted/subcompacted markers) to support Context Lens filtering.  
+  **Use:** Chat history search (human + agent), and smart auto-retrieval (RAG) from prior project threads.
 
-Schema per index: define fields (text, keyword, date) and build documents from event payloads. Index is written incrementally (add document per event) and periodically committed.
+- **code (required, MVP):** A project-scoped code search index for the **project workspace / project root**.  
+  **Producer:** A file-watcher + indexer (can be implemented as a “projector” even though the source is filesystem change events rather than seglog). The indexer must respect `.gitignore` by default and apply FileSafe-style sensitive-path exclusions (see below).  
+  **Chunking:** Index large files as chunks so results return tight snippets (e.g. 4–16 KiB chunks with `chunk_id` and byte/line range metadata).  
+  **Fields (minimum):** `project_id`, `path`, `chunk_id`, `content`, `language?`, `mtime` (or `content_hash`).  
+  **Use:** `codesearch` tool and auto-retrieval for code grounding. LSP symbol search remains complementary (symbol-aware), not a replacement.
 
-**Checkpoints:** Stored in redb under `checkpoints` namespace. Value encodes enough to resume: e.g. `{ "segment": "events_2026-02-21.ndjson", "offset": 123456 }` or `{ "seq": 99999 }`. On startup, projector reads checkpoint, opens seglog from that position, and continues.
+- **logs (required, MVP):** A project-scoped logs/search index based on **log summaries** with pointers to full payload.  
+  **Producers:** seglog projectors that consume `tool.invoked`, `tool.denied`, `run.*`, `bash.*`, and error events and emit index documents.  
+  **Index the summary, not the blob:** Store only compact summaries/snippets in Tantivy; store full (secrets-scrubbed) payload as a blob/file under `storage/blobs/…` referenced by `blob_ref` (or event id) so log search stays fast and storage remains bounded.  
+  **Fields (minimum):** `project_id`, `ts`, `thread_id?`, `run_id?`, `tool_name?`, `level?`, `summary`, `blob_ref` (or `event_id`).  
+  **Use:** `logsearch` tool, auto-retrieval for “why did this fail,” and UI debugging surfaces.
 
+- **docs (optional):** Index selected long-form docs or generated artifacts if needed for retrieval (“teach” mode, doc lookup). Prefer indexing doc summaries/pointers rather than full bodies when possible.
+
+**Sensitive indexing + persistence guards (chat + code + logs):**
+- **PolicyRule:no_secrets_in_storage / INV-002 (mandatory):** Any text persisted to seglog/redb/Tantivy/blob files MUST be passed through a strict secrets scrubber that removes tokens/credentials/private keys. This mandatory scrub is always-on and not user-configurable.
+- **Path-based exclusions (mandatory):** Default deny indexing of `.env` and `.env.*` while allowing `.env.example` (align with Permissions_System default `.env` deny semantics). Exclude common key/cert paths (e.g. `*.pem`, `*.key`, `id_rsa*`) from indexing and from log/blob persistence when detected.
+- **Additional heuristic redaction (optional; default OFF):** `retrieval.redaction.secretish_enabled` MAY apply an additional aggressive heuristic redaction pass (on top of the mandatory scrub) to log-summary indexing, snippet display, and retrieved-context injection.
+
+**Blob refs (logs):**
+- Store log payload blobs under `storage/blobs/projects/{project_id}/logs/` with a deterministic filename (e.g. `{event_id}.json` or `{content_hash}.json`).
+- `blob_ref` is a stable identifier that resolves to this blob path; `logread` reads the blob and returns the secrets-scrubbed content (bounded by size caps).
+
+**Schema per index:** Define fields (text, keyword, date) and build documents from event payloads / filesystem scanner output. Index is written incrementally (add/update documents) and periodically committed.
+
+**Checkpoints:** Stored in redb under `checkpoints` namespace. Value encodes enough to resume: e.g. `{ "segment": "events_2026-02-21.ndjson", "offset": 123456 }` or `{ "seq": 99999 }`. On startup, projector reads checkpoint, opens seglog from that position, and continues. Code indexer maintains its own checkpoint (e.g. last scan watermark / file mtime map) and supports a full rebuild when schema changes.
 ### 2.5 Analytics scan jobs
 
 **Trigger:** Periodic (e.g. every 5 minutes) or on-demand (e.g. when Usage view is opened). Can run in a background task or a separate thread; must not block the main UI.

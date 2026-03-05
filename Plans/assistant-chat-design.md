@@ -434,8 +434,63 @@ Not included in MVP. Priority: **P3** (post-MVP polish). When implemented: show 
 - **Human search:** Chat must support **search across chats / history** so **users** can find prior conversations and reuse context (e.g. search within current chat and, if applicable, across past chats or sessions). This is a first-class UI feature (search box, filters, results list). Implementation: Tantivy chat index fed by seglog projector (Plans/storage-plan.md).
 - **Agent search:** **Agents** must also be able to **search through chat history** when answering or planning. Provide a way for the running agent (Assistant, Interview, or subagent) to query past messages or sessions -- e.g. via a tool/MCP, or by including a searchable index of chat history in the context pipeline -- so the agent can retrieve relevant prior decisions, explanations, or outcomes. Enables continuity (e.g. "last time we decided X") and avoids asking the user to re-paste old context. Implementation can share the same storage/index as human search (Tantivy) but must expose an agent-callable interface (tool, API, or injected context).
 
----
+### 10.1 Smart auto-retrieval (RAG) across project sources (NOT “always search everything”)
 
+In addition to explicit human/agent search, the Assistant Chat context pipeline supports **smart auto-retrieval** that can pull **relevant slices** from **project chat history**, **project workspace code**, and **project logs** to keep long threads usable without overloading the context window.
+
+**Hard rules:**
+- **Project-only by default:** Auto-retrieval searches **only within the current project** (project-scoped indices; see §10.3). It MUST NOT search other projects or external sources unless the user explicitly requests external navigation/import (§7.4).
+- **Not always-on for everything:** Auto-retrieval MUST be **triggered and budgeted**, not “search everything every turn.”
+- **Deterministic budget caps:** Auto-retrieval has strict per-source limits (queries/hits/bytes) so it cannot crowd out user/assistant messages.
+
+**Retrieval sources (project-only):**
+- **Chat history retrieval:** Tantivy chat index; enables “what did we decide earlier / in another thread.”
+- **Code retrieval:** Tantivy code index (MVP) + LSP symbol search + ripgrep fallback (Plans/Tools.md + Plans/storage-plan.md).
+- **Logs retrieval:** Tantivy logs index (MVP) over log summaries + pointers to full payload (Plans/storage-plan.md).
+
+**Trigger heuristics (examples; implementation may add more, but must remain deterministic):**
+- **Chat-history triggers:** user references earlier decisions (“last time”, “earlier thread”, “we decided”), asks to continue previous work, or asks “why did we do X.”
+- **Code triggers:** user mentions file paths/symbol names, asks “where is X implemented,” references diagnostics (file:line), or requests edits that require locating code.
+- **Logs triggers:** user references failures (“it crashed,” “why did this fail”), mentions run IDs/tool errors, or asks for the last output.
+
+**Modes and defaults (Settings-controlled; see FinalGUISpec.md):**
+- For each retrieval source (chat/code/logs): `off` | `auto` | `always`.
+- Default: **`auto`** for chat/code/logs.
+- A thread-local override exists (Auto Retrieval chip; §12 addendum): **On/Off** for the current thread (does not change project defaults).
+
+**Context injection behavior:**
+- Retrieval results are injected into the **Work bundle** as a dedicated **“Retrieved Context”** block with:
+  - source type (chat/code/logs),
+  - provenance (thread_id/message_id or path/line or run_id/event_id),
+  - byte/token sizes per snippet,
+  - truncation notes if caps were hit.
+- Retrieved Context is **not** “memory” and must not be written into the Assistant memory store unless separately captured as a verified gist (Plans/assistant-memory-subsystem.md).
+- Auto-retrieval MUST respect **Context Lens** overlays (§17): muted messages are excluded; focused messages are prioritized; subcompacted messages use the subcompact summary instead of raw messages.
+
+### 10.2 Agent-callable search tools (project-only)
+
+To support both explicit agent reasoning and smart retrieval, provide agent-callable tools (or MCP equivalents) that query the project indices:
+
+- `chatsearch(query, filters={thread_id?, time_range?}, k)` → hits with `thread_id`, `message_id`, `ts`, snippet, score.
+- `codesearch(query, path?, mode={text|symbol}, k)` → hits with `path`, line/range, snippet (symbol-aware when LSP available).
+- `logsearch(query, filters={time_range?, run_id?, thread_id?, tool_name?, level?}, k)` → hits with `event_id`/`blob_ref`, `ts`, short summary/snippet.
+- `logread(ref)` → full payload (bounded by size caps; subject to stricter permission defaults).
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+
+### 10.3 Scoping and performance: per-project indices (required)
+
+To guarantee **project-only search** and keep performance stable as threads grow:
+
+- Tantivy indices for chat/code/logs MUST be stored **per project**:
+  - `storage/tantivy/projects/{project_id}/chat`
+  - `storage/tantivy/projects/{project_id}/code`
+  - `storage/tantivy/projects/{project_id}/logs`
+- This enables fast queries in long-lived projects, supports clean retention/cleanup per project, and does not block future cross-project search (future enhancement: query multiple project indices and merge top-K).
+
+ContractRef: ContractName:Plans/storage-plan.md
+
+---
 ## 11. Threads and chat management
 
 - **Multiple threads, single chat window:** The user can add **additional chats** (message threads). This **switches to another message thread** in the same chat UI -- it does **not** open a new chat window or pop-out. So there is one chat panel with a **thread list** (or equivalent); selecting a thread shows that thread's messages. This lets the user run **multiple things in parallel** (e.g. one thread in Plan mode, another in Ask mode) by switching between threads.
@@ -577,6 +632,24 @@ ContractRef: `ContractName:Plans/chain-wizard-flexibility.md#requirements-qualit
 
 ## 12. Context usage display
 
+### 12.1 Auto Retrieval indicator (thread override) — live state + animation
+
+In addition to the context circle, the chat header/footer MUST expose a small **Auto Retrieval** control for the current thread:
+
+- **Control:** A compact **chip** labeled **“Auto Retrieval”** with an On/Off state.
+- **Scope:** Thread-local override only (does not mutate project Settings defaults).
+- **States:**
+  - **On:** chip is lit/colored.
+  - **Off:** chip is muted/neutral.
+  - **Searching (in-flight):** chip animates (spinner/pulse) while any retrieval query is running.
+- **Source indicators (optional but recommended):** When searching, tiny glyphs for **Chat / Code / Logs** may light up as each source runs.
+- **Popover:** Clicking the chip opens a small popover showing:
+  - current thread override (On/Off),
+  - which sources are enabled for auto retrieval (chat/code/logs),
+  - last retrieval time and a “view last retrieval details” link (navigates to the latest audit entry per §13).
+- **Accessibility:** chip is focusable; tooltip/aria-label communicates state (“Auto Retrieval on”, “Auto Retrieval searching”, etc.).
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#13-activity-transparency-search-bash-and-file-activity, ContractName:Plans/FinalGUISpec.md#7-16-chat-panel-new
 - **Streaming:** When the platform supports it, the assistant's **response streams** (text appears as it arrives rather than all at once). The UI consumes the normalized stream (Plans/newfeatures.md §5, §19.3); fallback to batch when the platform does not stream.
 - **Visible context and usage info:** The chat UI should show **context usage and related information** in a way similar to **OpenCode's desktop application** -- e.g. token or context-window usage, current model, rate limits, or other usage/limits that help the user understand how much context is in use and when limits might be hit.
 - **Context circle (OpenCode-style):** At the **top of the chat** (e.g. in the chat header next to platform/model), show a **small context indicator** -- a circular progress or gauge showing **context usage %** for the current thread. **Hover:** Tooltip shows **token count**, **usage %**, and **cost** (USD or equivalent) for that thread. **Click:** Opens a **Usage tab (or panel) for that chat thread** with detailed breakdown: tokens (input/output/reasoning/cache if available), cost, usage over time or per turn, and link to the app-wide Usage view. Reference: OpenCode -- `packages/app/src/components/session-context-usage.tsx` (ProgressCircle + Tooltip, click opens "context" tab), `session-context-metrics.ts` (metrics from messages). Full spec: Plans/usage-feature.md "Per-thread usage in Chat (OpenCode-style)".
@@ -591,6 +664,32 @@ ContractRef: `ContractName:Plans/chain-wizard-flexibility.md#requirements-qualit
 
 ## 13. Activity transparency: search, bash, and file activity
 
+### 13.1 Retrieval audit (Auto Retrieval + project indices)
+
+Auto-retrieval and agent-callable search tools MUST be visible in the thread audit trail (in addition to web search):
+
+- **Auto Retrieval audit entry:** When the context pipeline performs auto retrieval (chat/code/logs), insert a collapsible audit block labeled e.g. **“Auto Retrieval”** with:
+  - sources used (Chat / Code / Logs),
+  - query strings (or derived query rationale) per source,
+  - scope summary (“project-only”, optionally thread filter),
+  - counts (“searched N messages / M files / K log events; returned R snippets”),
+  - truncation notes when caps are hit (bytes/token caps, hit caps).
+- **Agent search tool audit entry:** Any invocation of `chatsearch`, `codesearch`, `logsearch`, or `logread` must emit a similar audit block with the tool name, query/filters, and summary counts.
+- **Linkage to Auto Retrieval chip:** The most recent auto-retrieval audit entry is the “details” target for the Auto Retrieval chip popover (§12.1).
+
+### 13.2 Context Lens audit (mute / focus / subcompact)
+
+Context Lens actions (see §17) change what the agent sees and MUST be auditable:
+
+- When Context Lens is activated/deactivated, insert a lightweight audit entry: mode and timestamp.
+- When message selection changes (messages muted/focused/subcompacted), emit `context.overlay.updated` with counts and a link/affordance to review the selected messages (UI can highlight them).
+- When Subcompact generates or updates a summary block, persist:
+  - the message_id list (or range) covered,
+  - the summary text (or a pointer/blob ref if very large),
+  - who initiated it (user action),
+  - and a “Revert subcompact” action (UICommand) that restores original inclusion semantics.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#17-context-truncation, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 - **Audit trail:** Everything the agent does in the thread that affects context or the system (searches, **bash commands and scripts**, file reads/edits, tool calls) must form a **full audit trail** in the thread: what was run, when, and what the outcome was. Commands entered and scripts run are first-class entries; persist them with the thread (§11) so the user can scroll back and see exactly what was executed. Much of this detail should be **collapsible** (see "Collapsible sections" below) so the thread stays scannable while still preserving the complete record.
 - **Internet/web search -- show search and links:** When the agent performs an **internet or web search** (e.g. via cited web search tool per §7), the thread must **show that a search was performed** and **show the links** (sources/URLs) that were used. Display can be **collapsible**: when collapsed, show a summary (e.g. "Web search: 3 sources" or "Web search: &lt;query&gt; -- 3 links"); when expanded, show the **search query** and the **list of links** (title + URL per source). Same Sources list as in cited web search output; persist with the thread (§11). Align with Plans/newtools.md §8.2.1 (cited web search).
 - **Show what it searched:** The chat must **show what was searched** whenever the agent (or the system) performs a search. For chat-history search, web search, file search, or other search actions, the thread should display the **search query** (or scope) and, where appropriate, a short summary of what was searched (e.g. "Searched: 3 threads, 12 messages" or "Web search: ..."). This gives the user visibility into what context the agent used.
@@ -769,8 +868,67 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-bound
 Rule: Gist Review actions in Assistant chat MUST dispatch canonical `cmd.chat.memory.*` UI command IDs from `Plans/UI_Command_Catalog.md` and MUST NOT use ad-hoc command identifiers.
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#UICommand
 
----
+### 17.5 Project retrieval injection (chat/code/logs) — “RAG” for long threads (project-only)
 
+In addition to the Assistant-only memory capsule (§17.4), the chat context pipeline MAY inject **project-scoped retrieved context** (chat/code/logs) per §10.1. This is designed to keep long-running threads usable without relying on full-history in-context.
+
+Rule: Project retrieval injection MUST remain **separate** from Assistant memory injection:
+- Project retrieval injection is **fresh, ephemeral context for the current turn** (Work Bundle: “Retrieved Context”).
+- Assistant memory injection remains governed by verification + gist rules (Plans/assistant-memory-subsystem.md) and is never implicitly expanded by chat/code/log retrieval.
+
+Rule: Project retrieval injection MUST respect:
+- **Thread-local Auto Retrieval override** (chip; default On; user can disable per thread).
+- **Per-project retrieval settings** (allowlist + modes + budgets; Settings/Memory).
+- **Context Lens overlays** (§17.6) to avoid injecting muted content or ignoring focused selections.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
+
+### 17.6 Context Lens (Mute / Focus / Subcompact) — user-directed context shaping (thread-local)
+
+Context Lens is a chat UI control that lets the user **shape what the agent sees** in a thread without deleting messages.
+
+**UI control:**
+- A single **Context Lens** button in the chat header (or near footer controls). When active, the button is **lit/colored**.
+- Clicking the button opens a submenu to select a mode:
+  - **Mute**
+  - **Focus**
+  - **Subcompact**
+- When Context Lens is active, clicking messages toggles them in the active selection set for the current mode.
+- Exiting Context Lens clears the current selection (no “keep selection” behavior).
+
+**Per-message visual states (required):**
+- **Muted messages:** visually dimmed; “Muted” badge; tooltip: “Excluded from context.”
+- **Focused messages:** visually highlighted/pinned; “Focus” badge.
+- **Subcompacted messages:** show a compact “Subcompacted” summary block in place of full content (originals remain accessible via expand).
+
+**Mode semantics (deterministic):**
+
+1) **Mute (temporary exclusion)**
+- Selected messages are excluded from:
+  - active context assembly (recent turns + summaries),
+  - project chat-history retrieval hits/injection,
+  - any “compact session” summary input (unless the user explicitly includes muted content).
+- Muting is **non-destructive**: messages remain in the thread and searchable in the UI, but they are not provided to the agent while muted.
+- Toggling Context Lens off returns messages to normal inclusion (no permanent removal).
+
+2) **Focus (temporary prioritization)**
+- Selected messages are pinned near the top of the Work Bundle as a **“Focused Messages”** block.
+- The context packer should prefer retaining Focused Messages over non-focused messages when truncation is required.
+- Auto retrieval may use Focused Messages to seed or boost retrieval ranking (chat/code/log queries) while still obeying budgets.
+
+3) **Subcompact (local compaction)**
+- Selected messages are replaced in active context assembly by a **local summary** (“Subcompact Summary”) generated at the time of action.
+- **Warning modal (required):** Before applying subcompact, show a modal warning that subcompact changes what the agent sees and may lose nuance.
+- The summary must be persisted with the thread (so resume/rewind remains consistent) and can be reverted via a “Revert subcompact” action.
+- Subcompact affects retrieval: chat-history retrieval should treat subcompacted regions as represented by their summary (not raw messages) unless explicitly expanded by the user.
+
+**Persistence and audit:**
+- Context Lens state (muted/focused/subcompacted message ids + summaries) MUST persist with the thread so that resume/rewind and cross-session viewing reflect the same context state.
+- All Context Lens actions must emit audit entries per §13.2 (activation, mode changes, selection changes, subcompact create/revert).
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md#7-16-chat-panel-new, ContractName:Plans/storage-plan.md
+
+---
 ## 18. BrainStorm Mode
 
 - **Flow:** BrainStorm runs a **plan-style flow** (questions, research, debugging as needed) to form a **single plan**. Questions are **not** asked multiple times by multiple subagents; one coordinated Q&A/research phase, then the plan is formed.

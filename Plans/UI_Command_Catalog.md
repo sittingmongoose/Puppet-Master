@@ -168,18 +168,24 @@ ContractRef: ContractName:Plans/Orchestrator_Page.md#14, ContractName:Plans/Cont
 ---
 
 ### 2.6 Chat context usage commands
-These IDs are required by `Plans/assistant-chat-design.md` section 25.
+These IDs are required by `Plans/assistant-chat-design.md` section 25 and related context controls (§12–§13, §17).
 
 | Command ID | Args schema (keys only) | Expected events | Affected surfaces |
 |---|---|---|---|
 | `cmd.chat.compact_context` | `{ thread_id }` | `context.compaction.started`, `context.compaction.completed` | Assistant chat context ring + usage pop-out |
 | `cmd.chat.open_usage_popout` | `{ thread_id }` | no persisted domain event (window open/focus state update) | Assistant chat context ring + usage pop-out |
 | `cmd.chat.close_usage_popout` | `{ thread_id }` | no persisted domain event (window close state update) | Assistant chat context ring + usage pop-out |
+| `cmd.chat.auto_retrieval.toggle` | `{ thread_id, enabled }` | `chat.thread.auto_retrieval_override.updated` | Assistant chat (Auto Retrieval chip) |
+| `cmd.chat.context_lens.toggle` | `{ thread_id, enabled }` | `context.lens.activated` / `context.lens.deactivated` | Assistant chat (Context Lens button + selection mode) |
+| `cmd.chat.context_lens.set_mode` | `{ thread_id, mode }` | `context.lens.mode_set` | Assistant chat (Context Lens submenu) |
+| `cmd.chat.context_overlay.toggle_mute` | `{ thread_id, message_id }` | `context.overlay.updated` | Assistant chat (message mute state) |
+| `cmd.chat.context_overlay.toggle_focus` | `{ thread_id, message_id }` | `context.overlay.updated` | Assistant chat (message focus state) |
+| `cmd.chat.subcompact.apply` | `{ thread_id, message_ids }` | `context.subcompact.created`, `context.overlay.updated` | Assistant chat (subcompact summary block) |
+| `cmd.chat.subcompact.revert` | `{ thread_id, subcompact_id }` | `context.subcompact.reverted`, `context.overlay.updated` | Assistant chat |
 
-ContractRef: ContractName:Plans/assistant-chat-design.md#25-context-enhancements, ContractName:Plans/Contracts_V0.md#UICommand
+ContractRef: ContractName:Plans/assistant-chat-design.md#17-context-truncation, ContractName:Plans/assistant-chat-design.md#13-activity-transparency-search-bash-and-file-activity, ContractName:Plans/Contracts_V0.md#UICommand
 
 ---
-
 ### 2.7 Chat slash commands (reserved)
 These IDs are required by `Plans/assistant-chat-design.md` section 5.
 
