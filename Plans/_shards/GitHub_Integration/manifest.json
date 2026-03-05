@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/GitHub_Integration.md",
-  "source_sha256": "8fb48911fad89d6c464446e6cdbc53be7c46597440760d38c8803907512dfbf1",
+  "source_sha256": "610ba0751302bfdf484e67abd28d35bfac76ead67ee452acbb29a36365dc57d4",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -83,6 +83,13 @@
       "end_line": 1196,
       "segment_sha256": "660a6944818a6729f64bec03cbf98f66dd80e3517ab6dde8fe9d2e60b7ca56af",
       "heading": "## References"
+    },
+    {
+      "dest_path": "Plans/_shards/GitHub_Integration/12-chat-driven-external-repo-import-mvp.md",
+      "start_line": 1197,
+      "end_line": 1219,
+      "segment_sha256": "39116e82e7a3363bade2d6e473af89c33d463cd6c9f133b658ce96071d1fceb6",
+      "heading": "## Chat-driven external repo import (MVP)"
     }
   ]
 }

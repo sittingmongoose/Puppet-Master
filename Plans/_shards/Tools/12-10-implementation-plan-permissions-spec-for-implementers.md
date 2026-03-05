@@ -12,8 +12,7 @@ For backward compatibility, the merged permission set is also projected to redb 
 
 ### 10.2 Default policy table
 
-Canonical default table: `Plans/Permissions_System.md` §7. Tool-to-default mapping includes `read` → allow (with §7.1 `.env` deny), `edit`/`bash`/`media.generate` → ask, `glob`/`grep`/`list`/`codesearch`/`skill`/`lsp`/`capabilities.get` → allow, `webfetch`/`websearch`/`task` → ask, `todoread`/`todowrite` → allow (subagent: deny), `external_directory`/`doom_loop` → ask, unknown tools → ask.
-
+Canonical default table: `Plans/Permissions_System.md` §7. Tool-to-default mapping includes `read` → allow (with §7.1 `.env` deny), `edit`/`bash`/`media.generate` → ask, `glob`/`grep`/`list`/`codesearch`/`chatsearch`/`logsearch`/`skill`/`lsp`/`capabilities.get` → allow, `webfetch`/`websearch`/`task`/`logread`/`repo.import` → ask, `todoread`/`todowrite` → allow (subagent: deny), `external_directory`/`doom_loop` → ask, unknown tools → ask.
 ### 10.3 Resolution algorithm
 
 Canonical algorithm: `Plans/Permissions_System.md` §8. Summary: Mode override → Session cache → Persona overrides → Project rules → Global rules → Defaults → Special guards. Post-resolution, FileSafe applies (§10.6).
@@ -24,12 +23,11 @@ Presets apply batch permission rules. Canonical preset definitions: `Plans/Permi
 
 | Preset | Effect on tool_permissions |
 |--------|----------------------------|
-| **Read-only** | `edit`, `bash`, `webfetch`, `websearch`, `task` → deny; all others allow (or leave unset to use defaults). |
-| **Plan mode** | Only `read`, `grep`, `glob`, `list`, `codesearch` → allow; everything else → deny. |
-| **Full** | All built-in → allow except `bash` and `edit` → ask. |
+| **Read-only** | `edit`, `bash`, `webfetch`, `websearch`, `task`, `repo.import` → deny; all others allow (or leave unset to use defaults). |
+| **Plan mode** | Only `read`, `grep`, `glob`, `list`, `codesearch`, `chatsearch`, `logsearch` → allow; everything else → deny. |
+| **Full** | All tools → allow except `bash`, `edit`, `repo.import` → ask. |
 
 Store as the same TOML config; presets are a GUI shortcut to set multiple keys at once.
-
 ### 10.5 GUI ↔ config serialization
 
 The Permissions GUI is specified in `Plans/Permissions_System.md` §10 and `Plans/FinalGUISpec.md` §7.4.10. The tool registry supplies the list of known tool names (built-in + MCP-discovered) to populate the GUI's per-tool list.

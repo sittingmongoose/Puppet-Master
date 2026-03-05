@@ -224,7 +224,11 @@ ContractRef: ContractName:Plans/Tools.md, PolicyRule:Decision_Policy.md§2
 | `lsp` | IDE | Language server operations | Read-only ops `allow` by default; `rename` requires separate approval (`Plans/Tools.md` §3.4.1). |
 | `webfetch` | Network | Fetch URL content | Granular: URL patterns |
 | `websearch` | Network | Web search | Granular: query patterns |
-| `codesearch` | Search | Code/symbol search | Low risk; read-only |
+| `codesearch` | Search | Project workspace code/symbol search | Low risk; read-only |
+| `chatsearch` | Search | Project chat history search | Low risk; read-only; supports thread/time filters |
+| `logsearch` | Search | Project logs (summary) search | Read-only; returns refs to full payload |
+| `logread` | Logs | Read full log payload by ref | May contain sensitive data; default `ask` recommended |
+| `repo.import` | Workspace | Import external repo into project workspace | Requires explicit user intent; network + filesystem effects; default `ask` recommended |
 | `capabilities.get` | Introspection | Capability listing across media + provider tools | Read-only introspection; low risk |
 | `media.generate` | Generation | Image/video/tts/music generation | Content generation operation; user-facing output |
 | `todoread` | State | Read task state | Subagent default: `deny` |
@@ -233,7 +237,6 @@ ContractRef: ContractName:Plans/Tools.md, PolicyRule:Decision_Policy.md§2
 | `doom_loop` | Guard | Identical repeated calls | See §4.1 |
 
 ---
-
 ## 6. Ask flow semantics
 
 <a id="ASK-FLOW"></a>
@@ -289,7 +292,11 @@ ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Tools.md
 | `lsp` | `allow` | Read-only IDE operations |
 | `webfetch` | `ask` | Network access |
 | `websearch` | `ask` | Network access |
-| `codesearch` | `allow` | Read-only code search |
+| `codesearch` | `allow` | Read-only project code search |
+| `chatsearch` | `allow` | Read-only project chat index search |
+| `logsearch` | `allow` | Read-only log-summary search |
+| `logread` | `ask` | Full log payload may contain sensitive data |
+| `repo.import` | `ask` | Imports external code into workspace; network + filesystem impact |
 | `capabilities.get` | `allow` | Read-only capability introspection |
 | `media.generate` | `ask` | External API generation; quota/cost impact |
 | `todoread` | `allow` | State read (subagent: `deny`) |
@@ -317,7 +324,6 @@ These defaults apply at the lowest precedence layer. Any explicit rule at a high
 ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
 
 ---
-
 ## 8. Resolution algorithm
 
 <a id="RESOLUTION"></a>
@@ -328,7 +334,7 @@ Rule: Given identical inputs (tool name, invocation context, config, mode, sessi
 
 ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3
 
-1. **Mode override:** If the run mode is `yolo`, return `allow`. If the run mode is `ask` or `plan`, and the tool is mutating (`edit`, `bash`, `task`, `webfetch`, `websearch`, `media.generate`, `todowrite`), return `deny`.
+1. **Mode override:** If the run mode is `yolo`, return `allow`. If the run mode is `ask` or `plan`, and the tool is mutating (`edit`, `bash`, `task`, `webfetch`, `websearch`, `repo.import`, `media.generate`, `todowrite`), return `deny`.
 2. **Session cache (Assistant only):** If this tool+context matches a session-scoped `allow` rule (from prior `always` responses), return `allow`.
 3. **Persona overrides:** If the active Persona has a `default_permissions_profile` that contains a matching rule for this tool+context, use it.
 4. **Project-level rules:** If `.puppet-master/permissions.toml` in the active project contains a matching rule, use it.
@@ -341,7 +347,6 @@ ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md
 
 ---
-
 ## 9. Persistence and storage
 
 <a id="PERSISTENCE"></a>
@@ -442,12 +447,13 @@ When a tool row is expanded (§10.2), the granular rule editor appears:
 
 | Preset | Effect |
 |--------|--------|
-| **Read-only** | `edit`, `bash`, `webfetch`, `websearch`, `task` → `deny`; all others → `allow`. |
-| **Plan mode** | Only `read`, `grep`, `glob`, `list`, `codesearch` → `allow`; everything else → `deny`. |
-| **Full** | All tools → `allow` except `bash`, `edit` → `ask`. |
+| **Read-only** | `edit`, `bash`, `webfetch`, `websearch`, `task`, `repo.import` → `deny`; all others → `allow`. |
+| **Plan mode** | Only `read`, `grep`, `glob`, `list`, `codesearch`, `chatsearch`, `logsearch` → `allow`; everything else → `deny`. |
+| **Full** | All tools → `allow` except `bash`, `edit`, `repo.import` → `ask`. |
 
 Applying a preset overwrites the current ruleset with a confirmation dialog: "This will replace your current permissions. Continue?"
 
+Presets apply to **tool** keys; special guards (`external_directory`, `doom_loop`) remain unchanged (defaults apply unless the user edits them explicitly).
 ### 10.5 External directory allowlist manager
 
 A dedicated card for managing the external directory allowlist (§3.3):

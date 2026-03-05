@@ -1,5 +1,31 @@
 ## 13. Activity transparency: search, bash, and file activity
 
+### 13.1 Retrieval audit (Auto Retrieval + project indices)
+
+Auto-retrieval and agent-callable search tools MUST be visible in the thread audit trail (in addition to web search):
+
+- **Auto Retrieval audit entry:** When the context pipeline performs auto retrieval (chat/code/logs), insert a collapsible audit block labeled e.g. **“Auto Retrieval”** with:
+  - sources used (Chat / Code / Logs),
+  - query strings (or derived query rationale) per source,
+  - scope summary (“project-only”, optionally thread filter),
+  - counts (“searched N messages / M files / K log events; returned R snippets”),
+  - truncation notes when caps are hit (bytes/token caps, hit caps).
+- **Agent search tool audit entry:** Any invocation of `chatsearch`, `codesearch`, `logsearch`, or `logread` must emit a similar audit block with the tool name, query/filters, and summary counts.
+- **Linkage to Auto Retrieval chip:** The most recent auto-retrieval audit entry is the “details” target for the Auto Retrieval chip popover (§12.1).
+
+### 13.2 Context Lens audit (mute / focus / subcompact)
+
+Context Lens actions (see §17) change what the agent sees and MUST be auditable:
+
+- When Context Lens is activated/deactivated, insert a lightweight audit entry: mode and timestamp.
+- When message selection changes (messages muted/focused/subcompacted), emit `context.overlay.updated` with counts and a link/affordance to review the selected messages (UI can highlight them).
+- When Subcompact generates or updates a summary block, persist:
+  - the message_id list (or range) covered,
+  - the summary text (or a pointer/blob ref if very large),
+  - who initiated it (user action),
+  - and a “Revert subcompact” action (UICommand) that restores original inclusion semantics.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#17-context-truncation, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 - **Audit trail:** Everything the agent does in the thread that affects context or the system (searches, **bash commands and scripts**, file reads/edits, tool calls) must form a **full audit trail** in the thread: what was run, when, and what the outcome was. Commands entered and scripts run are first-class entries; persist them with the thread (§11) so the user can scroll back and see exactly what was executed. Much of this detail should be **collapsible** (see "Collapsible sections" below) so the thread stays scannable while still preserving the complete record.
 - **Internet/web search -- show search and links:** When the agent performs an **internet or web search** (e.g. via cited web search tool per §7), the thread must **show that a search was performed** and **show the links** (sources/URLs) that were used. Display can be **collapsible**: when collapsed, show a summary (e.g. "Web search: 3 sources" or "Web search: &lt;query&gt; -- 3 links"); when expanded, show the **search query** and the **list of links** (title + URL per source). Same Sources list as in cited web search output; persist with the thread (§11). Align with Plans/newtools.md §8.2.1 (cited web search).
 - **Show what it searched:** The chat must **show what was searched** whenever the agent (or the system) performs a search. For chat-history search, web search, file search, or other search actions, the thread should display the **search query** (or scope) and, where appropriate, a short summary of what was searched (e.g. "Searched: 3 threads, 12 messages" or "Web search: ..."). This gives the user visibility into what context the agent used.

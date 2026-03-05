@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.evidence.schema.v1",
   "evidence_id": "plan-sharding-2026-03-05",
-  "created_at_utc": "2026-03-05T03:23:11.501341+00:00",
+  "created_at_utc": "2026-03-05T03:59:47.558031+00:00",
   "node": {
     "node_id": "plan-sharding"
   },
@@ -674,6 +674,10 @@
     {
       "path": "Plans/_shards/GitHub_Integration/11-references.md",
       "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/GitHub_Integration/12-chat-driven-external-repo-import-mvp.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/GitHub_Integration/manifest.json",

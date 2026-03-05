@@ -738,6 +738,53 @@ Project management and switching. Shows project list with status indicators, cur
 
 ### 7.4 Settings (Unified)
 
+#### 7.4.R Retrieval & Search (Memory tab; project-scoped; complements Context Injection)
+
+In addition to the three required Context Injection toggles (**Parent Summary**, **Scoped `AGENTS.md`**, **Attempt Journal**) defined by `Plans/Contracts_V0.md#ContextInjectionToggles`, the Memory tab MUST include a **Retrieval & Search** configuration card that governs **project-scoped auto-retrieval (RAG)** and **agent-callable search** across:
+
+- **Project chat history** (Tantivy chat index; `chatsearch`)
+- **Project workspace code** (Tantivy code index + LSP + ripgrep; `codesearch`)
+- **Project logs** (Tantivy logs index; `logsearch`/`logread`)
+
+**Source allowlist toggles (per project):**
+- `retrieval.allow_chat_history` (default **ON**)
+- `retrieval.allow_code` (default **ON**)
+- `retrieval.allow_logs` (default **ON**)
+
+**Auto-retrieval mode per source (per project):**
+- Enum: `off | auto | always`
+- Keys: `retrieval.mode.chat_history`, `retrieval.mode.code`, `retrieval.mode.logs`
+- Default: **auto** for all three sources.
+- Note: “auto” uses deterministic trigger heuristics and budgets (see Plans/assistant-chat-design.md §10.1).
+
+**Budgets / caps (per project):**
+- `retrieval.max_queries_per_turn.<source>` (default: `2`)
+- `retrieval.max_hits_per_query.<source>` (default: `5`)
+- `retrieval.max_injected_bytes_per_turn.<source>` (default: `24_000`)
+- `retrieval.max_injected_bytes_per_turn.total` (default: `48_000`)
+- `retrieval.logs.max_lookback_days` (default: `7`)
+
+**Secrets policy (mandatory; non-configurable):**
+- Puppet Master MUST enforce PolicyRule:no_secrets_in_storage / INV-002: secrets (tokens/credentials/private keys) are stripped/redacted before any content is persisted to seglog/redb/Tantivy/blob files.
+- This mandatory scrub applies regardless of Retrieval settings and cannot be disabled.
+
+**Additional heuristic redaction (optional; default OFF):**
+- Toggle: `retrieval.redaction.secretish_enabled` (default **OFF**)
+- When enabled, apply an additional aggressive “secret-ish” redaction pass (on top of the mandatory scrub) to:
+  - log index summaries/snippets
+  - retrieved-context injection snippets (logs)
+  - (optional) code snippets displayed in retrieval blocks
+- UI copy must warn: “Heuristic redaction is best-effort and may hide useful details; it does not replace the mandatory secrets policy.”
+
+**Thread-local override (UI):**
+- The chat header/footer includes an **Auto Retrieval** On/Off chip per thread (Plans/assistant-chat-design.md §12.1). This override is stored per thread and does not change project defaults.
+- The chip animates while retrieval is in-flight and links to the latest retrieval audit entry (§13).
+
+**Permissions interplay (required):**
+- Retrieval settings do not bypass Permissions: tool permissions still apply (`chatsearch`, `codesearch`, `logsearch`, `logread`, `webfetch`, `websearch`, `repo.import`).
+- If a source is allowed in Retrieval settings but the corresponding tool is denied by Permissions, that source is effectively disabled for the run and the UI must show the disabled reason (consistent with other capability/permission UI).
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#10-chat-history-search, ContractName:Plans/assistant-chat-design.md#17-context-truncation, ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
 **Group:** Settings | **Location:** Primary content
 
 This is a **heavily redesigned** unified settings page that merges four previously separate views. It uses a tabbed interface.
@@ -1472,6 +1519,29 @@ Platform readiness view for Setup and first-run troubleshooting. Shows detected 
 
 ### 7.16 Chat Panel (NEW)
 
+#### 7.16.R Auto Retrieval chip (thread-local) + live animation
+
+Add an **Auto Retrieval** chip to the Chat Panel header/footer (placement may be near the context usage indicator):
+
+- **Function:** Thread-local On/Off override for smart auto-retrieval (RAG) across project chat/code/log sources.
+- **Visual states:** Off (neutral), On (lit/accent), Searching (animated spinner/pulse while any retrieval query is running).
+- **Popover:** On click, show current override state and last retrieval summary with a “View details” action that scrolls to the most recent retrieval audit block in the thread.
+- **Accessibility:** Keyboard focusable; state announced via aria-label.
+
+#### 7.16.S Context Lens (Mute / Focus / Subcompact) — chat header button + per-message styling
+
+Add a **Context Lens** button to the Chat Panel header (next to other thread-level controls):
+
+- **Button state:** Lit/colored when active; clicking shows submenu with **Mute / Focus / Subcompact** and highlights the current mode.
+- **Selection mode:** When active, clicking messages toggles them in the current mode selection set; exiting Context Lens clears selection (no “keep selection” behavior).
+- **Per-message visuals (required):**
+  - **Muted:** dimmed + “Muted” badge; tooltip “Excluded from context.”
+  - **Focused:** highlighted/pinned styling + “Focus” badge.
+  - **Subcompacted:** show compact “Subcompacted” summary block with expand/collapse and “Revert subcompact” action.
+- **Subcompact warning:** Applying Subcompact must show a warning modal before committing.
+- **Audit affordance:** Context Lens actions must create/update an audit entry block (see assistant-chat-design.md §13), and the UI should offer a “Review selection” link from the Context Lens submenu when any messages are selected.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#17-context-truncation, ContractName:Plans/UI_Command_Catalog.md#2-6-chat-context-usage-commands
 **Location:** Side panel (right by default, 240-480px, detachable)
 
 **Structure:**

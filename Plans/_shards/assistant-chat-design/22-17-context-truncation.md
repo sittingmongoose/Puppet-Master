@@ -67,5 +67,64 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-bound
 Rule: Gist Review actions in Assistant chat MUST dispatch canonical `cmd.chat.memory.*` UI command IDs from `Plans/UI_Command_Catalog.md` and MUST NOT use ad-hoc command identifiers.
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#UICommand
 
----
+### 17.5 Project retrieval injection (chat/code/logs) — “RAG” for long threads (project-only)
 
+In addition to the Assistant-only memory capsule (§17.4), the chat context pipeline MAY inject **project-scoped retrieved context** (chat/code/logs) per §10.1. This is designed to keep long-running threads usable without relying on full-history in-context.
+
+Rule: Project retrieval injection MUST remain **separate** from Assistant memory injection:
+- Project retrieval injection is **fresh, ephemeral context for the current turn** (Work Bundle: “Retrieved Context”).
+- Assistant memory injection remains governed by verification + gist rules (Plans/assistant-memory-subsystem.md) and is never implicitly expanded by chat/code/log retrieval.
+
+Rule: Project retrieval injection MUST respect:
+- **Thread-local Auto Retrieval override** (chip; default On; user can disable per thread).
+- **Per-project retrieval settings** (allowlist + modes + budgets; Settings/Memory).
+- **Context Lens overlays** (§17.6) to avoid injecting muted content or ignoring focused selections.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
+
+### 17.6 Context Lens (Mute / Focus / Subcompact) — user-directed context shaping (thread-local)
+
+Context Lens is a chat UI control that lets the user **shape what the agent sees** in a thread without deleting messages.
+
+**UI control:**
+- A single **Context Lens** button in the chat header (or near footer controls). When active, the button is **lit/colored**.
+- Clicking the button opens a submenu to select a mode:
+  - **Mute**
+  - **Focus**
+  - **Subcompact**
+- When Context Lens is active, clicking messages toggles them in the active selection set for the current mode.
+- Exiting Context Lens clears the current selection (no “keep selection” behavior).
+
+**Per-message visual states (required):**
+- **Muted messages:** visually dimmed; “Muted” badge; tooltip: “Excluded from context.”
+- **Focused messages:** visually highlighted/pinned; “Focus” badge.
+- **Subcompacted messages:** show a compact “Subcompacted” summary block in place of full content (originals remain accessible via expand).
+
+**Mode semantics (deterministic):**
+
+1) **Mute (temporary exclusion)**
+- Selected messages are excluded from:
+  - active context assembly (recent turns + summaries),
+  - project chat-history retrieval hits/injection,
+  - any “compact session” summary input (unless the user explicitly includes muted content).
+- Muting is **non-destructive**: messages remain in the thread and searchable in the UI, but they are not provided to the agent while muted.
+- Toggling Context Lens off returns messages to normal inclusion (no permanent removal).
+
+2) **Focus (temporary prioritization)**
+- Selected messages are pinned near the top of the Work Bundle as a **“Focused Messages”** block.
+- The context packer should prefer retaining Focused Messages over non-focused messages when truncation is required.
+- Auto retrieval may use Focused Messages to seed or boost retrieval ranking (chat/code/log queries) while still obeying budgets.
+
+3) **Subcompact (local compaction)**
+- Selected messages are replaced in active context assembly by a **local summary** (“Subcompact Summary”) generated at the time of action.
+- **Warning modal (required):** Before applying subcompact, show a modal warning that subcompact changes what the agent sees and may lose nuance.
+- The summary must be persisted with the thread (so resume/rewind remains consistent) and can be reverted via a “Revert subcompact” action.
+- Subcompact affects retrieval: chat-history retrieval should treat subcompacted regions as represented by their summary (not raw messages) unless explicitly expanded by the user.
+
+**Persistence and audit:**
+- Context Lens state (muted/focused/subcompacted message ids + summaries) MUST persist with the thread so that resume/rewind and cross-session viewing reflect the same context state.
+- All Context Lens actions must emit audit entries per §13.2 (activation, mode changes, selection changes, subcompact create/revert).
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md#7-16-chat-panel-new, ContractName:Plans/storage-plan.md
+
+---

@@ -23,7 +23,11 @@ The following built-in tools are the **target set** for the central tool registr
 | **todoread** | Read current todo list state | `todoread` | Subagent default: disabled. |
 | **lsp** (MVP) | LSP operations: definition, hover, references; rename (with user approval) | `lsp` | No feature flag; available when LSP client is enabled. See §3.4.1 LSP tool (MVP). |
 | **task** | Launch subagents (matches subagent type) | `task` | **subagent_type** must be one of the **canonical 41 subagents** documented in Plans (orchestrator-subagent-integration.md §4, interview-subagent-integration.md). Validate with subagent_registry; see §3.6. |
-| **codesearch** | Code search (matches the query); when LSP available, symbol-aware via workspace/symbol (§3.4) | `codesearch` | Default allow (§10.2). Enabled when config or platform provides search backend. Fallback order: text-based search → LSP workspace/symbol when available → MCP or platform-native if configured. Result and timeout limits per §3.5. |
+| **chatsearch** | Search project chat history (threads/messages) via Tantivy chat index | `chatsearch` | Project-only scope; supports filters (thread_id/time); result/hit limits per §3.5. Used for agent search + auto retrieval. |
+| **codesearch** | Code search within the **project workspace / project root** | `codesearch` | MVP backend is multi-tier: Tantivy code index + LSP workspace/symbol + ripgrep fallback. Result and timeout limits per §3.5. |
+| **logsearch** | Search project log summaries (runs/tools/bash) via Tantivy logs index | `logsearch` | Project-only; returns summaries + refs (event_id/blob_ref). Use `logread` for full payload. |
+| **logread** | Read full log payload referenced by `logsearch` | `logread` | Subject to stricter permissions + size caps; prefer summaries in-chat; full payload is expandable/collapsible. |
+| **repo.import** | Import an external repo into the project workspace (e.g. GitHub) | `repo.import` | Requires explicit user intent; governed by network + external_directory + GitHub auth rules; produces audit entry. See assistant-chat-design.md §7.4. |
 | **capabilities.get** | Return all available capabilities (media + provider-tool) with enablement status, disabled reasons, and setup hints | `capabilities.get` | Internal tool; not forwarded to providers. Default allow (§10.2). Full contract: `Plans/Media_Generation_and_Capabilities.md` [§1](Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM). |
 | **media.generate** | Generate media (image / video / tts / music) via structured request envelope with optional per-request model override | `media.generate` | Internal tool; backed by Gemini API key (or Cursor-native for images). Default ask (§10.2). Full contract: `Plans/Media_Generation_and_Capabilities.md` [§2](Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE). |
 
@@ -32,7 +36,6 @@ ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/
 > **Internal tools vs provider-exposed tools:** `capabilities.get` and `media.generate` are **Puppet Master internal tools** — they execute inside the Puppet Master process and are never forwarded to a provider CLI or server. In `capabilities.get` output, the `provider_tool` category is the umbrella non-media bucket and includes both provider-exposed tools (e.g., OpenCode tools discovered via `GET /provider`) and existing internal tool capabilities (e.g., read/grep/write/task). These non-media tool capabilities are **not** part of the media capability picker dropdown (§4.1 of `Plans/Media_Generation_and_Capabilities.md`), which shows only the four `media.*` capabilities. Permission and policy for all tool categories (internal, built-in, provider-exposed, MCP, custom) use the same model defined in `Plans/Permissions_System.md`.
 
 ContractRef: ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-PICKER, ContractName:Plans/Permissions_System.md
-
 ### 3.2 Edit group and ignore patterns
 
 - **Edit group:** `edit`, `write`, `patch`, and `multiedit` share one **edit** permission so that "allow file changes" is a single knob ([OpenCode](https://opencode.ai/docs/tools/): "The edit permission covers all file modifications (edit, write, patch, multiedit)").
@@ -84,6 +87,41 @@ So: **definition**, **hover**, **references** return results directly; **rename*
 
 ### 3.5 Per-tool semantics (I/O, errors, limits)
 
+#### 3.5.A Additional semantics: chatsearch / logs / repo import and codesearch multi-tier (MVP)
+
+This subsection supplements the per-tool table below with required behavior for new MVP tools and multi-tier search backends.
+
+**chatsearch (project chat index)**
+- **Input:** `query: string`, optional `filters: { thread_id?, time_range? }`, `k?: number`.
+- **Output:** hits with `{ thread_id, message_id, ts, role, snippet, score }`.
+- **Scope rule:** MUST be project-scoped (per-project Tantivy index directory).
+- **Secrets policy:** Persisted chat index content MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (mandatory strict secrets scrubbing before persistence).
+- **Context Lens integration:** When Context Lens mutes messages, chatsearch MUST exclude muted message_ids from results returned to the agent (or annotate them as excluded so the context packer can drop them).
+
+**codesearch (project workspace code search; MVP multi-tier)**
+- **Primary backend:** Tantivy code index (filesystem watcher + chunked documents; see Plans/storage-plan.md).
+- **Secondary backend:** LSP `workspace/symbol` and/or `documentSymbol` for symbol-aware search when LSP is active (Plans/LSPSupport.md).
+- **Fallback backend:** text grep/ripgrep (`grep` tool) when index is unavailable or query requires regex semantics.
+- **Output:** Return best-effort results with stable `{ path, line_or_range, snippet, kind? }`.
+- **Ignore + sensitive guards:** Respect `.gitignore` by default; exclude `.env` and `.env.*` (allow `.env.example`) consistent with FileSafe + Permissions defaults.
+- **Secrets policy:** Any indexed/stored snippet text MUST be secrets-scrubbed before persistence to Tantivy.
+
+**logsearch / logread (project logs)**
+- **logsearch input:** `query: string`, optional `filters: { time_range?, run_id?, thread_id?, tool_name?, level? }`, `k?: number`.
+- **logsearch output:** hits with `{ ts, summary, run_id?, thread_id?, tool_name?, level?, ref: { event_id? | blob_ref? } }`.
+- **logread input:** `{ event_id? | blob_ref? }`.
+- **logread output:** `{ content, truncated?: boolean, truncation_reason? }` (bounded by size caps).
+- **Index rule:** Tantivy logs index stores summaries/snippets only; full payload remains out-of-index and is fetched via logread.
+- **Secrets policy:** Log summaries/snippets and any persisted payload returned by logread MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (mandatory strict secrets scrubbing before persistence).
+- **Blob resolution:** `blob_ref` resolves to `storage/blobs/projects/{project_id}/logs/...` (see Plans/storage-plan.md).
+
+**repo.import (external repo import; separate from workspace search)**
+- **Input:** `{ source: string (URL or owner/repo), dest_path?, mode?: "new_project"|"add_workspace_root"|"temporary_mount" }`.
+- **Behavior:** Resolve auth/clone URLs (GitHub via GitHubApiTool when applicable), then acquire repo via clone/download. Must not overwrite existing directories without explicit user confirmation.
+- **Audit:** Always emit an audit entry in the thread (assistant-chat-design.md §13).
+- **Permissions:** Default `ask` + respect network allow/deny rules and `external_directory` constraints.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
 Canonical input/output shapes align with [OpenCode built-in tools](https://opencode.ai/docs/tools/#built-in); platform runners normalize to/from these. Error conditions and limits are enforced by the adapter/runner before or after calling the platform.
 
 | Tool | Canonical input (key params) | Canonical output / result shape | Error conditions | Limits |

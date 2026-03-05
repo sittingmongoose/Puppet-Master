@@ -17,3 +17,4 @@ Canonical source: [Plans/GitHub_Integration.md](../../GitHub_Integration.md)
 - [09-f-redb-configuration-keys-reserved-by-this-document.md](09-f-redb-configuration-keys-reserved-by-this-document.md) — ## F. redb Configuration Keys Reserved by This Document
 - [10-anti-drift-compliance.md](10-anti-drift-compliance.md) — ## Anti-Drift Compliance
 - [11-references.md](11-references.md) — ## References
+- [12-chat-driven-external-repo-import-mvp.md](12-chat-driven-external-repo-import-mvp.md) — ## Chat-driven external repo import (MVP)
