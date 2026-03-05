@@ -1,9 +1,13 @@
 {
   "run_id": "rewrite-20260304-222659-assistant-smart-retrieval-project-search-context-lens",
   "changed_files": [
-    "Plans/.pipeline/research_packet.json"
+    "Plans/.evidence/plan-sharding-2026-03-05/evidence.json",
+    "Plans/.evidence/plan-sharding-2026-03-05/reports/commands.txt",
+    "Plans/.evidence/plan-sharding-2026-03-05/reports/feature-list.reconstruct.sha256.txt",
+    "Plans/_shards/feature-list/02-part-1-planned-and-new-features-from-plans.md",
+    "Plans/_shards/feature-list/manifest.json",
+    "Plans/assistant-chat-design.md",
+    "Plans/feature-list.md"
   ],
-  "untracked_files": [
-    "Plans/.pipeline/runs/rewrite-20260304-222659-assistant-smart-retrieval-project-search-context-lens/research_packet.json"
-  ]
+  "untracked_files": []
 }
