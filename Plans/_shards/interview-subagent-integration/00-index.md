@@ -33,3 +33,4 @@ Canonical source: [Plans/interview-subagent-integration.md](../../interview-suba
 - [25-testing-strategy.md](25-testing-strategy.md) — ## Testing Strategy
 - [26-user-project-output-contract-sharded-plan-graph-canonical.md](26-user-project-output-contract-sharded-plan-graph-canonical.md) — ## User-Project Output Contract (Sharded plan_graph/ canonical)
 - [27-change-summary-2.md](27-change-summary-2.md) — ## Change Summary
+- [28-persona-stage-strategy-addendum-2026-03-06.md](28-persona-stage-strategy-addendum-2026-03-06.md) — ## Persona Stage Strategy Addendum (2026-03-06)

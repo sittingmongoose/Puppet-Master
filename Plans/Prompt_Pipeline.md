@@ -144,3 +144,137 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md#ASSEMBLY-PIPELINE
 **AC-PP02:** Compaction MUST preserve protected tool outputs; `skill` outputs MUST NOT be pruned.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md#COMPACTION, ContractName:Plans/Run_Modes.md
+## 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)
+
+This addendum expands the prompt pipeline to mirror the OpenCode-style role-resolution mechanics while preserving Puppet Master architecture.
+
+### 6.1 Expanded pre-prompt resolution stages
+
+Before final prompt payload emission, the runtime MUST resolve:
+
+1. **Surface context**
+   Chat / Interview / Requirements Builder / Orchestrator / Multi-Pass / child subagent.
+2. **Task context**
+   Examples: discussion, clarification, planning, research, drafting, review, code execution, debugging, production-readiness validation.
+3. **Persona selection mode**
+   manual / auto / hybrid.
+4. **Requested Persona**
+   From explicit UI selection, structured config, plan/tier assignment, natural-language invocation, or none.
+5. **Effective Persona**
+   After resolver, alias normalization, fallback, and provider availability checks.
+6. **Requested/effective runtime controls**
+   platform/model/variant/temperature/top_p/reasoning_effort.
+7. **Provider capability filtering**
+   Remove or downgrade unsupported Persona controls; record reasons.
+8. **Instruction assembly**
+   Combine rules + Persona instructions + compiled context + tool schemas.
+9. **Final runtime payload emission**
+   To provider runner/CLI/server bridge.
+
+### 6.2 Selection-source enumeration
+
+`persona_selection_source` MUST be one of:
+- `manual_ui`
+- `auto_surface_resolver`
+- `plan_or_tier_default`
+- `config_default`
+- `user_natural_language`
+- `fallback`
+
+The runtime MUST also store a human-readable `selection_reason`.
+
+### 6.3 Natural-language Persona invocation in prompt assembly
+
+Before Persona auto resolution completes, the pipeline must inspect the current user instruction/message for natural-language Persona requests.
+
+Examples that SHOULD be recognized:
+- `Use Explorer`
+- `Switch to Collaborator`
+- `Be a Rust engineer`
+- `Answer as a technical writer`
+- `Use the security auditor for this`
+
+Resolution behavior:
+- If a clear Persona match exists, create a `requested_persona` override before auto selection.
+- Determine default override scope from phrasing:
+  - one-turn phrasing -> turn scope,
+  - persistent phrasing -> session scope.
+- If no reliable match exists, proceed without override or trigger clarification according to surface policy.
+
+### 6.4 Auto Persona resolution requirements
+
+Auto mode MUST be deterministic and surface-aware.
+
+Examples of required auto behavior:
+- Rust repo + code-edit task -> `rust-engineer`
+- planning/discussion mode -> `collaborator`
+- repo discovery/read-only investigation -> `explorer`
+- external-source research/synthesis -> `researcher` or `deep-researcher` depending on depth
+- documentation drafting -> `technical-writer`
+- security review -> `security-auditor`
+- implementation-focused security work -> `security-engineer`
+- deployment/IaC implementation -> `devops-engineer`
+- production readiness validation -> `sre`
+
+Rule: auto mode MUST always expose the selected effective Persona and reason. It MUST NEVER emit an opaque `Auto` state with no resolved output.
+
+### 6.5 Effective resolution record
+
+Every prompt assembly run MUST produce an effective resolution record containing at least:
+
+- `requested_persona`
+- `effective_persona`
+- `persona_selection_source`
+- `selection_reason`
+- `requested_platform`
+- `effective_platform`
+- `requested_model`
+- `effective_model`
+- `requested_variant`
+- `effective_variant`
+- `effective_temperature`
+- `effective_top_p`
+- `effective_reasoning_effort`
+- `applied_persona_controls[]`
+- `skipped_persona_controls[]`
+
+This record is part of prompt assembly observability and must be available to event/history/UI consumers.
+
+### 6.6 Provider capability filtering stage
+
+Persona controls must pass through provider capability filtering before prompt/model execution.
+
+Processing rule:
+1. collect requested Persona controls,
+2. compare them to the provider capability matrix,
+3. apply supported controls,
+4. downgrade or skip partially supported/unsupported controls,
+5. record every skipped control with a reason,
+6. expose the resulting effective state to the UI.
+
+### 6.7 OpenCode baseline mapping
+
+This pipeline deliberately mirrors the mechanics observed in OpenCode:
+- select runtime role by name,
+- resolve role prompt and model before the model call,
+- merge runtime options/variant,
+- merge role and session permissions for tool gating.
+
+Puppet Master implements the same effective behavior through Persona resolution rather than OpenCode `agent` terminology.
+
+### 6.8 UI transparency requirement
+
+Prompt assembly must emit enough state for UI surfaces to display:
+- effective Persona,
+- effective platform/model,
+- selection reason,
+- applied controls,
+- skipped controls,
+- and current scope of any natural-language Persona override.
+
+### 6.9 Acceptance criteria addendum
+
+- Prompt assembly must include Persona/runtime resolution before final provider invocation.
+- Natural-language Persona invocation must be parsed before auto selection finalization.
+- Unsupported Persona controls must be skipped explicitly and surfaced.
+- Effective resolution record must be available for thread history, activity panes, and run inspection UIs.

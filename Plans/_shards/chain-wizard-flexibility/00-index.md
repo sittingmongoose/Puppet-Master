@@ -28,3 +28,4 @@ Canonical source: [Plans/chain-wizard-flexibility.md](../../chain-wizard-flexibi
 - [20-13-no-wizard-project-management-flows.md](20-13-no-wizard-project-management-flows.md) — ## 13. No-Wizard Project Management Flows
 - [21-14-requirements-completion-contract.md](21-14-requirements-completion-contract.md) — ## 14. Requirements Completion Contract
 - [22-15-requirements-quality-escalation-semantics.md](22-15-requirements-quality-escalation-semantics.md) — ## 15. Requirements Quality Escalation Semantics
+- [23-requirements-builder-persona-strategy-addendum-2026-03-06.md](23-requirements-builder-persona-strategy-addendum-2026-03-06.md) — ## Requirements Builder Persona Strategy Addendum (2026-03-06)

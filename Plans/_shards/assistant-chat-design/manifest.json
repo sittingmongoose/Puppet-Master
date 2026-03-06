@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/assistant-chat-design.md",
-  "source_sha256": "00635e1ecbf84e06dbe649b0bc43585a24bd55aa7b05bd87cb588de227d235d6",
+  "source_sha256": "847f1724b3baba3bafb929a3f73e69c196006c0e6c40ca30facdd0a082f04573",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -223,6 +223,13 @@
       "end_line": 1382,
       "segment_sha256": "f78237c1ca52de98b37416bdf4b52d7ee1fd2e8ebeeea31675bbd841488615b3",
       "heading": "## 26. Per-Pass Validation Model/Provider Settings (Invariant Sweep)"
+    },
+    {
+      "dest_path": "Plans/_shards/assistant-chat-design/32-27-persona-control-in-assistant-chat-2026-03-06.md",
+      "start_line": 1383,
+      "end_line": 1487,
+      "segment_sha256": "e5b08e3fb0e66a298c77dda575a1755838365fa67ffdbcfa5fa36fa2bfc5df75",
+      "heading": "## 27. Persona Control in Assistant Chat (2026-03-06)"
     }
   ]
 }

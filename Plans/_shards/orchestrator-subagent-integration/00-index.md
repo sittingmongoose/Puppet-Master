@@ -38,3 +38,4 @@ Canonical source: [Plans/orchestrator-subagent-integration.md](../../orchestrato
 - [30-next-steps-2.md](30-next-steps-2.md) — ## Next Steps
 - [31-autonomous-qa-loop-pattern-integration.md](31-autonomous-qa-loop-pattern-integration.md) — ## Autonomous QA Loop Pattern Integration
 - [32-change-summary.md](32-change-summary.md) — ## Change Summary
+- [33-persona-and-effective-runtime-resolution-addendum-2026-03-06.md](33-persona-and-effective-runtime-resolution-addendum-2026-03-06.md) — ## Persona and Effective Runtime Resolution Addendum (2026-03-06)
