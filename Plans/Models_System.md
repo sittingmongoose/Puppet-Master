@@ -405,3 +405,147 @@ ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Progression
 ---
 
 *Document created for planning only; no code changes.*
+## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)
+
+This addendum expands the Models system so Persona-driven runtime control is explicit, provider-aware, and visible to the user.
+
+### 10.1 Persona-driven model/runtime control principle
+
+A Persona may request:
+- platform/provider,
+- model,
+- variant,
+- temperature,
+- top_p,
+- reasoning_effort,
+- and provider-specific runtime options.
+
+These Persona preferences participate in effective run assembly but MUST pass through a provider capability matrix before being applied.
+
+### 10.2 Effective selection fields (cross-system runtime contract)
+
+Every run/sub-run/phase/tier/pass MUST persist:
+
+- `requested_platform`
+- `effective_platform`
+- `requested_model`
+- `effective_model`
+- `requested_variant`
+- `effective_variant`
+- `effective_temperature`
+- `effective_top_p`
+- `effective_reasoning_effort`
+- `applied_persona_controls[]`
+- `skipped_persona_controls[]`
+
+These are recorded in addition to the Persona fields declared in `Plans/Personas.md`.
+
+### 10.3 Selection precedence (expanded)
+
+The effective model/runtime selection chain is:
+
+1. **Explicit run-envelope override**
+   Manual surface selection or structured run override for platform/model/variant/runtime controls.
+2. **Persona preference**
+   Persona `default_platform`, `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`.
+3. **Surface/tier/phase defaults**
+   Chat/Interview/Builder/Orchestrator/Multi-Pass defaults.
+4. **Global/project config defaults**
+5. **Last-used state** where supported
+6. **Internal/provider defaults**
+
+Rule: Given the same inputs and provider availability set, effective selection MUST be deterministic.
+
+### 10.4 Provider Persona Capability Matrix (canonical support states)
+
+Each provider transport must declare support state for each Persona control using:
+- `supported`
+- `partially_supported`
+- `unsupported`
+
+#### Minimum capability keys
+
+- `persona_prompt_body`
+- `persona_model_preference`
+- `persona_variant_preference`
+- `persona_reasoning_effort`
+- `persona_temperature`
+- `persona_top_p`
+- `persona_tool_guidance`
+- `persona_tool_permissions`
+- `persona_subagents`
+- `persona_native_definition_files`
+
+#### Initial baseline expectations (current planning assumption)
+
+| Provider transport | Prompt body | Model pref | Variant pref | Effort | Temperature | Top_p | Tool guidance | Tool permissions | Subagents | Native persona/agent defs |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Claude Code | supported | supported | supported | supported | unsupported | unsupported | supported | supported | supported | supported via `.claude/agents` |
+| Cursor CLI | supported | partially_supported | partially_supported | unsupported | unsupported | unsupported | supported | partially_supported | partially_supported | partially_supported / undocumented for CLI parity |
+| OpenCode / ServerBridge baseline | supported | supported | supported | partially_supported via runtime options | supported | supported | supported | supported | supported | supported via agent config/files |
+| Direct/API providers | supported | supported | supported | provider-dependent | supported when API supports it | supported when API supports it | supported | provider-dependent / PM-enforced | PM-managed | PM-managed |
+
+Notes:
+- These states are planning defaults and must be updated as provider implementations are verified.
+- GUI and runtime must use the same matrix source.
+
+### 10.5 Unsupported control disclosure rules
+
+If a Persona requests a control the active provider cannot honor:
+- do not silently ignore it,
+- do not show it as applied,
+- record it in `skipped_persona_controls[]`,
+- record the reason and provider,
+- and expose that status in UI.
+
+Example skipped control records:
+- `temperature`: `unsupported by Claude Code transport`
+- `top_p`: `unsupported by Cursor CLI transport`
+- `reasoning_effort`: `provider does not expose effort knob`
+
+### 10.6 GUI disclosure requirements
+
+Persona-related model/runtime controls shown in GUI MUST reflect provider support state:
+
+- **supported:** editable normally
+- **partially_supported:** editable with warning badge and explanatory tooltip
+- **unsupported:** disabled with explanatory text
+
+Example UI copy patterns:
+- `Reasoning effort` -> disabled on Cursor CLI with note `Cursor CLI does not expose a documented effort control.`
+- `Temperature` -> disabled on Claude Code with note `Not exposed in official Claude Code CLI settings.`
+
+### 10.7 Runtime display requirements
+
+All run surfaces must display effective runtime choices, not only raw configured values.
+
+Minimum display requirements:
+- Persona name
+- selection reason
+- effective platform
+- effective model
+- effective variant/effort when present
+- indication of skipped controls when relevant
+
+Example display:
+- `Persona: Rust Engineer (Auto: Rust repo + code task)`
+- `Model: Codex GPT-5.3 (Persona preferred)`
+- `Platform: Codex (Available)`
+- `Skipped controls: temperature unsupported by provider`
+
+### 10.8 OpenCode baseline note
+
+OpenCode demonstrates the integrated runtime shape Puppet Master is adopting:
+- role object carries prompt, model, variant, temperature, topP, permission, and options,
+- selected role is resolved by name,
+- role prompt is injected into system prompt assembly,
+- role model and runtime options are applied before model call.
+
+Puppet Master follows that structure conceptually, but uses Persona as the canonical stored contract and adds provider capability disclosure instead of assuming all backends honor all knobs.
+
+### 10.9 Acceptance criteria addendum
+
+- Effective runtime state must distinguish requested vs effective vs skipped Persona controls.
+- Unsupported controls must be visible in both editor UI and runtime UI.
+- Provider capability matrix must be the shared source for editor gating and runtime disclosure.
+- Chat/Interview/Builder/Orchestrator history/event views must show effective Persona/model/platform rather than only stored preferences.
