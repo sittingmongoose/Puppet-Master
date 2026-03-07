@@ -4,7 +4,7 @@
 
 Tool events feed analytics and the Usage tool widget. Align with **storage-plan.md** §2.2.
 
-- **`tool.invoked`:** Emitted when a tool call is allowed and execution completes. Payload: `tool_name` (string, required), `run_id` (string, required), `thread_id` (string, optional), `latency_ms` (number, required), `success` (boolean, required), `error` (string, optional when success is false). See storage-plan.md §2.2.
+- **`tool.invoked`:** Emitted when a tool call is allowed and execution completes. Payload: `tool_name` (string, required), `run_id` (string, required), `thread_id` (string, optional), `latency_ms` (number, required; wall-clock execution time in milliseconds), `success` (boolean, required), `error` (string, optional when success is false). See storage-plan.md §2.2.
 - **`tool.denied`:** Emitted when policy blocks (deny) or user declines ask. Payload: `tool_name`, `run_id`, `thread_id` (optional), `reason` (required: `permission_denied` or `user_declined`). Do not emit for FileSafe blocks. redb: `tool_permissions` in app config (`config:v1`); rollups key `rollups` / `tool_usage.{window}` per §8.4.
 
 ### 8.1 Config persistence
@@ -38,6 +38,8 @@ Analytics scan writes rollups for the Usage page (FinalGUISpec §7.8). For the *
 - **Namespace:** `rollups`
 - **Key:** `tool_usage.{window}` where **window** is one of the **canonical** values: `5h`, `7d`, `24h` (and optionally `1h`). The definitive list of window values is in storage-plan.md; Analytics scan and Usage widget must use the same set.
 - **Value shape:** JSON or bincode: `{ [tool_name: string]: { count: number, p50_ms: number, p95_ms: number, error_count: number } }`. Example: `{ "bash": { "count": 42, "p50_ms": 120, "p95_ms": 500, "error_count": 2 }, "read": { ... } }`. Analytics scan aggregates `tool.invoked` events (fields: tool_name, latency_ms, success, error) into this structure so the Usage page can render the table without scanning seglog. See §8.0 for event payload and storage-plan.md §2.3.
+- **Error-count semantics:** `error_count` is the number of `tool.invoked` events in the window where `success = false`. `tool.denied` events and FileSafe blocks are excluded from `tool_usage.{window}` rollups so the widget reflects executed tool calls only.
+- **Freshness signal:** Analytics scan SHOULD also persist `tool_usage_meta.{window}` with `computed_at`, `window_started_at`, and `window_ended_at` so the Usage page can show a "Last updated" timestamp without opening seglog.
 
 ### 8.5 YOLO and tool permissions
 

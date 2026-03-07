@@ -18,41 +18,41 @@ Plan mode is implemented per tier (phase, task, subtask, iteration) and flows fr
 
 The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect plan mode, subagents, hooks, plugins, and related behavior. Use this to keep `platform_specs`, runners, and AGENTS.md aligned with current behavior.
 
-**Cursor (agent / cursor-agent)**  
-- **Jan 16, 2026:** Plan mode and Ask mode in CLI: `/plan` or `--mode=plan`, `/ask` or `--mode=ask`; cloud handoff with `&`; one-click MCP auth; word-level diffs.  
-- **v2.4 (Jan 22):** Subagents (parallel, custom configs).  
-- **v2.5 (Feb 17):** Plugins (marketplace: skills, subagents, MCP, hooks, rules); async subagents (can spawn child subagents); sandbox network access controls.  
+**Cursor (agent / cursor-agent)**
+- **Jan 16, 2026:** Plan mode and Ask mode in CLI: `/plan` or `--mode=plan`, `/ask` or `--mode=ask`; cloud handoff with `&`; one-click MCP auth; word-level diffs.
+- **v2.4 (Jan 22):** Subagents (parallel, custom configs).
+- **v2.5 (Feb 17):** Plugins (marketplace: skills, subagents, MCP, hooks, rules); async subagents (can spawn child subagents); sandbox network access controls.
 - **Impact:** Plan mode implementation (`--mode plan`) is correct. Subagent and plugin support has expanded; consider documenting plugins and async subagents in platform capabilities.
 
-**Codex**  
-- **0.100 (Feb 12):** ReadOnlyAccess policy, memory slash commands (`/m_update`, `/m_drop`), experimental JS REPL, app-server websocket refresh.  
-- **0.101 (Feb 12):** Memory/model stability, model slug preservation.  
-- **0.104 (Feb 18):** Distinct approval IDs for multi-approval shell commands; app-server v2 (thread archive notifications); `WS_PROXY`/`WSS_PROXY`; safety-check and cwd-prompt fixes.  
-- **Sandbox:** `--sandbox read-only | workspace-write | danger-full-access`; no native "plan" flag; our use of `--sandbox read-only` for plan mode remains correct.  
-- **Subagents/MCP:** Codex as MCP server (`codex mcp-server`) exposes `codex`/`codex-reply` tools; community `codex-subagents-mcp` uses profiles (e.g. `sandbox_mode = "read-only"` for review).  
+**Codex**
+- **0.100 (Feb 12):** ReadOnlyAccess policy, memory slash commands (`/m_update`, `/m_drop`), experimental JS REPL, app-server websocket refresh.
+- **0.101 (Feb 12):** Memory/model stability, model slug preservation.
+- **0.104 (Feb 18):** Distinct approval IDs for multi-approval shell commands; app-server v2 (thread archive notifications); `WS_PROXY`/`WSS_PROXY`; safety-check and cwd-prompt fixes.
+- **Sandbox:** `--sandbox read-only | workspace-write | danger-full-access`; no native "plan" flag; our use of `--sandbox read-only` for plan mode remains correct.
+- **Subagents/MCP:** Codex as MCP server (`codex mcp-server`) exposes `codex`/`codex-reply` tools; community `codex-subagents-mcp` uses profiles (e.g. `sandbox_mode = "read-only"` for review).
 - **Impact:** No change to plan-mode mapping. Subagent/MCP integration for Codex is relevant for orchestrator subagent invocation.
 
-**Claude Code**  
-- **v2.1.41-v2.1.45 (Feb 2026):** CLI auth commands, Windows ARM64, prompt cache and startup improvements; v2.1.45: Sonnet 4.6, `spinnerTipsOverride`, rate-limit telemetry type updates, `enabledPlugins`/`extraKnownMarketplaces` from `--add-dir`, permission destination persistence, plugin command availability fix.  
-- **Plan mode:** `--permission-mode plan` (unchanged).  
-- **Subagents:** `.claude/agents/` markdown definitions; built-in Explore/Plan/General-purpose; CLI/runtime subagent support.  
-- **Hooks:** SessionStart, UserPromptSubmit, PreToolUse, PermissionRequest, PostToolUse, SubagentStart/SubagentStop, etc.; config via `/hooks` or `~/.claude/settings.json` / project settings.  
-- **Plugins:** `.claude-plugin/plugin.json`; skills namespaced as `/plugin-name:skill-name`.  
+**Claude Code**
+- **v2.1.41-v2.1.45 (Feb 2026):** CLI auth commands, Windows ARM64, prompt cache and startup improvements; v2.1.45: Sonnet 4.6, `spinnerTipsOverride`, rate-limit telemetry type updates, `enabledPlugins`/`extraKnownMarketplaces` from `--add-dir`, permission destination persistence, plugin command availability fix.
+- **Plan mode:** `--permission-mode plan` (unchanged).
+- **Subagents:** `.claude/agents/` markdown definitions; built-in Explore/Plan/General-purpose; CLI/runtime subagent support.
+- **Hooks:** SessionStart, UserPromptSubmit, PreToolUse, PermissionRequest, PostToolUse, SubagentStart/SubagentStop, etc.; config via `/hooks` or `~/.claude/settings.json` / project settings.
+- **Plugins:** `.claude-plugin/plugin.json`; skills namespaced as `/plugin-name:skill-name`.
 - **Impact:** Plan mode and subagent/hook/plugin docs are still accurate; v2.1.45 plugin and `--add-dir` behavior may matter for project-specific plugins.
 
-**Gemini (Direct API provider)**  
-- **Plan mode:** Plan mode is enforced by Puppet Master (prompt/routing/policy). Gemini receives a plan-constrained request when `plan_mode` is enabled.  
-- **Doctor / verification checks (Direct-provider):** API key present; `models.list` works; capability gating is consistent with Settings toggles; media routing matches `Plans/Media_Generation_and_Capabilities.md` (Cursor image routes to Cursor-native; Gemini media requires key and compatible model).  
+**Gemini (Direct API provider)**
+- **Plan mode:** Plan mode is enforced by Puppet Master (prompt/routing/policy). Gemini receives a plan-constrained request when `plan_mode` is enabled.
+- **Doctor / verification checks (Direct-provider):** API key present; `models.list` works; capability gating is consistent with Settings toggles; media routing matches `Plans/Media_Generation_and_Capabilities.md` (Cursor image routes to Cursor-native; Gemini media requires key and compatible model).
 - **Impact:** No provider CLI flags or provider-local config files are used for Gemini in this stack.
 
-**GitHub Copilot CLI**  
-- **Jan 14-21, 2026:** Plan mode in interactive UI (Shift+Tab); advanced reasoning models; GPT-5.2-Codex; inline steering; background delegation `&`; `/review`; context auto-compaction; automation flags (`--silent`, `--share`, `--available-tools`, `--excluded-tools`).  
-- **Plan mode:** Interactive only (Shift+Tab); no dedicated `--plan` flag for headless `-p` usage. Programmatic use remains `-p` with existing flags; our "omit `--allow-all-paths`/`--allow-all-urls` when plan_mode" remains the way to get more restrictive behavior in headless.  
+**GitHub Copilot CLI**
+- **Jan 14-21, 2026:** Plan mode in interactive UI (Shift+Tab); advanced reasoning models; GPT-5.2-Codex; inline steering; background delegation `&`; `/review`; context auto-compaction; automation flags (`--silent`, `--share`, `--available-tools`, `--excluded-tools`).
+- **Plan mode:** Interactive only (Shift+Tab); no dedicated `--plan` flag for headless `-p` usage. Programmatic use remains `-p` with existing flags; our "omit `--allow-all-paths`/`--allow-all-urls` when plan_mode" remains the way to get more restrictive behavior in headless.
 - **Provider bridge:** Plan mode remains interactive in Copilot UI; headless runs continue through CLI-bridged restrictive flags.
 - **Impact:** No change to our headless plan-mode mapping; document that native plan mode is interactive; if Copilot adds a headless plan flag, switch to it in runner and platform_specs.
 
-**Summary for this plan**  
-- Plan mode: CLI plan-mode applies to Cursor and Claude Code only; Gemini is Direct-provider (no CLI plan-mode flags or CLI config files in this stack). Codex and Copilot headless behaviors remain unchanged.  
+**Summary for this plan**
+- Plan mode: CLI plan-mode applies to Cursor and Claude Code only; Gemini is Direct-provider (no CLI plan-mode flags or CLI config files in this stack). Codex and Copilot headless behaviors remain unchanged.
 - Subagents/hooks/plugins: Several providers have had relevant changes (Cursor plugins/async subagents; Codex MCP; Claude plugins/hooks; Gemini skills/policies/subagents; Copilot provider/CLI behavior). Keep platform-capabilities and subagent-integration sections in sync with release notes and official docs.
 
 **Gaps vs "use plan mode for every request":**
@@ -63,6 +63,12 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 4. **Subagent invocations** -- When subagent integration is added, `ExecutionRequest` built for subagent runs must receive the same `plan_mode` as the tier (so plan mode is applied to every request, including subagent calls).
 5. **Copilot** -- If the CLI gains a native headless plan flag (e.g. `--plan`), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
 5. **Copilot** -- If the CLI gains a native headless plan flag (e.g. `--plan`), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
+
+### Canonical decision
+
+Runtime `plan_mode` defaults remain **migration-safe OFF** for phase/task/subtask/iteration until a project or user explicitly opts in. This aligns with `Plans/Run_Modes.md`, where `plan` is a distinct read-only runtime mode rather than the default execution posture.
+
+A future convenience control MAY enable "all tiers plan-first" in one action, but it MUST write explicit per-tier config rather than changing the default.
 
 ### Recommendations
 
@@ -128,7 +134,7 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 
 **Subagent -- frontend (Config)**
 - [ ] Add "Subagents" section on Config: enable toggle, tier overrides (per-tier list or multi-select), disabled/required lists; messages and handlers; persist to same config as backend.
-- [ ] Add **Subagent personas / info setup:** preload list from project `.claude/agents`; user can add their own and delete any (including preloaded); optional AI/batch trim for smaller footprint; list with name + description; "Edit" per subagent to set custom description/instruction (persist to `SubagentGuiConfig.persona_overrides` -- overrides come only from this UI); prompt builder / runner injects persona (override if present, else preloaded content) when invoking that subagent (see Gap §11).
+- [ ] Add **Subagent personas / info setup:** seed/import available subagent persona definitions from provider-native directories (for example project `.claude/agents`) into Puppet Master Persona storage; user can add their own and delete any imported or user-created Persona; optional AI/batch trim writes a normalized lower-footprint copy back into Puppet Master storage; list with name + description; "Edit" opens Persona editing against canonical Puppet Master storage; prompt builder / runner resolves the Persona from Puppet Master storage when invoking that subagent (see Gap §11).
 
 **Doctor**
 - [ ] Gemini is a Direct API provider; no CLI settings check is needed. Doctor validates Gemini API key presence when any tier uses Gemini.

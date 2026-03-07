@@ -153,7 +153,7 @@ The wizard and Interview must support **four distinct intents**. Each intent cha
 
 ### 2.1 Wizard State Shape
 
-The app must hold a single, explicit **wizard state** that drives project setup, requirements, and downstream Interview/start chain. All fields required for the four intents are defined below.
+The app must hold a single, explicit **wizard state** that drives project setup, requirements, and downstream Interview/start chain. The struct below captures the core form/state fields; the normative runtime fields table that follows is also required.
 
 **Rust struct (reference; implementation may use equivalent in app state):**
 
@@ -242,6 +242,20 @@ pub struct ChainWizardState {
 }
 ```
 
+**Required runtime fields (normative, additive to the reference struct):**
+
+| Field | Type | Purpose |
+|---|---|---|
+| `wizard_id` | string | Stable wizard instance ID used by recovery, Dashboard CtAs, and thread deep links. |
+| `wizard_status` | enum | `setup | requirements | interview | validating | attention_required | ready_to_execute | complete | cancelled`. |
+| `launch_source` | enum | `dashboard | file_menu | assistant | no_wizard_add_existing | no_wizard_new_local | no_wizard_new_github`. |
+| `phase_override_mode` | enum | `selector_plan | run_all | manual_checklist`. |
+| `phase_plan_ref` | path/null | Canonical persisted phase-plan location used by resume and audit. |
+| `has_gui` | bool/null | Interview-derived GUI flag that affects Product/UX coverage and downstream artifact generation. |
+| `attention_required_report_path` | path/null | Latest blocking requirements-quality report when clarification is required. |
+| `remote_repo_ref` | object/null | Credential-safe remote reference (`owner`, `repo`, `host`, `clone_transport`, `clone_url_redacted`) for GitHub/fork flows. |
+| `deferred_wizard_payload_ref` | path/null | Preloaded payload created by no-wizard flows for `Run Chain Wizard later`. |
+
 **Field usage by intent:**
 
 | Field | New project | Fork & evolve | Enhance/rewrite/add | Contribute (PR) |
@@ -264,6 +278,34 @@ pub struct ChainWizardState {
 
 - `canonical_requirements_path` is set only after at least one of: uploads (merged) or Builder output (or both merged). For user-project execution, it points to `.puppet-master/project/requirements.md` after canonical promotion from staging (see §4 and §11).
 - For Contribute (PR), `branch_name` is set when the user (or app) creates the feature branch; all work for that flow happens on that branch in the **main clone** (no tier worktrees -- see §7).
+- Secrets or credential-bearing GitHub URLs MUST NOT be persisted in wizard state; store redacted remote metadata + credential-store account refs only.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/GitHub_Integration.md
+
+### 2.2 Downstream Handoff Contract
+
+Wizard hands a single normalized payload to Builder handoff, Interview initialization, and start-chain kickoff.
+
+Required fields:
+- `wizard_id`
+- `intent`
+- `wizard_status`
+- `launch_source`
+- `project_path`
+- `canonical_requirements_path`
+- `remote_repo_ref` (when Git/GitHub is involved)
+- `branch_name` (Contribute PR only)
+- `phase_plan_ref` and `phase_override_mode`
+- `has_gui` when already known
+- `resume_checkpoint_ref` when resuming an interrupted run
+
+Rules:
+- Builder may read/write requirements-stage fields only; it must not mutate GitHub setup fields except via explicit wizard actions.
+- Interview consumes the payload as read-mostly input and persists Interview-owned state separately.
+- Start chain MUST read the post-validation canonical `.puppet-master/project/**` package, not wizard staging inputs.
+- No-wizard flows populate the same payload shape via `deferred_wizard_payload_ref`; opening the wizard later must be reconstructible after restart.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/interview-subagent-integration.md, Primitive:SessionStore
 
 ---
 
@@ -298,7 +340,7 @@ ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/CLI_Bri
 - **Single prompt:** "Provide your Requirements Document(s)."
 - **Options (at least two):**
   1. **Upload your own** -- Single or **multiple** files (see §4). Supported formats per REQUIREMENTS.md (md, pdf, txt, docx); store under `.puppet-master/requirements/`.
-  2. **Requirements Doc Builder** -- Button that opens Builder chat (section 5). The first Assistant message is `What are you trying to do?`. User describes the project (or delta, or feature); Assistant generates a requirements document after explicit user confirmation and hands it off to the flow. No re-upload required.
+  2. **Requirements Doc Builder** -- Button that opens Builder chat (section 5). The first Assistant message is context-sensitive per §5.1 ("What are you building?" / "What are you adding or changing?" / "What are you adding or changing in this fork?"). User describes the project (or delta, or feature); Assistant generates a requirements document after explicit user confirmation and hands it off to the flow. No re-upload required.
 - **Framing by intent:** The exact label or helper text can vary by intent (e.g. "Describe the product" vs "Describe what you're adding or changing" vs "Describe the feature and acceptance criteria").
 - **After requirements:** Proceed to Interview (or skip to PRD if we add "Skip interview" for advanced users later). Interview receives the canonical requirements (merged multi-doc or Builder output).
 
@@ -371,16 +413,22 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
   - **Max file size per file:** **5 MiB** (5 × 2^20 bytes). Reject any file larger than this before saving; show a clear error (e.g. "File X exceeds 5 MB limit").
 - **Order:** Merge order is the **list order** in the UI. User can reorder (e.g. drag-and-drop or up/down); that order is the only ordering used for canonical merge (see §4.2). No "primary" vs "supplements" -- list order is the precedence.
 - **Formats:** Same as REQUIREMENTS.md: md, pdf, txt, docx. Per-file type validation and optional normalization (e.g. to markdown) for downstream consumption.
+- **Normalization (normative):**
+  - Original uploads are preserved byte-for-byte under `.puppet-master/requirements/uploaded/`.
+  - Canonical merge input is the **normalized UTF-8 text projection** of each upload, never raw bytes.
+  - `md` and `txt` normalize by UTF-8 decode + newline canonicalization.
+  - `pdf` and `docx` normalize via deterministic text extraction into `.puppet-master/requirements/normalized/<upload_id>.md`.
+  - If extraction fails, the wizard remains on the requirements step and surfaces an upload-specific error; failed files are excluded from merge until replaced or removed.
 
 ### 4.2 Canonical Input for Interview/PRD
 
 **Single merge order and precedence:**
 
-1. **User uploads multiple files ONLY (no Builder):** Merge order = **list order** in the UI. Produce one canonical doc by **concatenating** file contents in that order, with a separator between each: `\n\n--- Requirements doc N ---\n\n` where N is 1-based index (e.g. first file gets "Requirements doc 1", second "Requirements doc 2"). No AI merge; no conflict resolution. If the user wants a different order, they reorder in the UI and we re-run the merge.
+1. **User uploads multiple files ONLY (no Builder):** Merge order = **list order** in the UI. Produce one canonical doc by **concatenating normalized text** in that order, with a separator between each: `\n\n--- Requirements doc N ---\n\n` where N is 1-based index (e.g. first file gets "Requirements doc 1", second "Requirements doc 2"). No AI merge; no conflict resolution. If the user wants a different order, they reorder in the UI and we re-run the merge.
 
 2. **User uses Requirements Doc Builder ONLY (no uploads):** Builder output is staged at **`.puppet-master/requirements/requirements-builder.md`**. Canonical promotion then writes **`.puppet-master/project/requirements.md`**. Interview and start chain read only `.puppet-master/project/requirements.md`.
 
-3. **User has BOTH uploads and Builder:** **Uploads first** (in list order): concatenate all uploaded files with separator `\n\n--- Requirements doc N ---\n\n` (N = 1..upload count). **Then** append the Builder output with separator `\n\n--- Requirements Doc Builder ---\n\n`. Write the merged staging result to `.puppet-master/requirements/canonical-requirements.md`, then promote canonical user-project requirements to `.puppet-master/project/requirements.md`, and set `canonical_requirements_path` to `.puppet-master/project/requirements.md`.
+3. **User has BOTH uploads and Builder:** **Uploads first** (in list order): concatenate all uploaded normalized texts with separator `\n\n--- Requirements doc N ---\n\n` (N = 1..upload count). **Then** append the Builder output with separator `\n\n--- Requirements Doc Builder ---\n\n`. Write the merged staging result to `.puppet-master/requirements/canonical-requirements.md`, then promote canonical user-project requirements to `.puppet-master/project/requirements.md`, and set `canonical_requirements_path` to `.puppet-master/project/requirements.md`.
 
 **Conflicting content:** There is no "conflicting content" merge. Merge is **always** concatenation in the order above. We do not run AI or rule-based conflict resolution. If the user wants a different order or to drop a doc, they reorder or remove files in the UI and the app regenerates `canonical-requirements.md` and then re-promotes `.puppet-master/project/requirements.md`.
 
@@ -391,7 +439,8 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 - **Seglog/redb:** Requirements uploads, merge result, and Builder output should be represented as **artifacts** in the event stream (seglog): emit an event when a requirements doc is added, merged, or set as canonical. Projectors can mirror to JSONL and maintain redb projections (e.g. current canonical requirements ref or artifact index) for fast lookup. Implementation should follow storage-plan.md (seglog writer, redb schema, projectors) so requirements artifacts are queryable and replayable like other app artifacts.
 - **Path:** Per REQUIREMENTS.md, store under `.puppet-master/requirements/`.
 - **Exact storage paths:**
-  - **Uploaded files (one per upload):** `.puppet-master/requirements/uploaded/<sanitized_filename>`. `<sanitized_filename>`: take the original filename, remove or replace characters that are invalid or unsafe for the filesystem (e.g. path separators, control chars). Prefer a convention that keeps names unique (e.g. prepend index or hash if duplicate names). Example: `my-spec.md` → `my-spec.md`; `my spec (1).md` → `my_spec_1.md` or similar.
+- **Uploaded files (one per upload):** `.puppet-master/requirements/uploaded/<sanitized_filename>`. `<sanitized_filename>`: take the original filename, remove or replace characters that are invalid or unsafe for the filesystem (e.g. path separators, control chars). Prefer a convention that keeps names unique (e.g. prepend index or hash if duplicate names). Example: `my-spec.md` → `my-spec.md`; `my spec (1).md` → `my_spec_1.md` or similar.
+- **Normalized text projection (one per upload):** `.puppet-master/requirements/normalized/<two_digit_index>-<sanitized_stem>.md`. Duplicate filenames are disambiguated by the prefixed stable list index; merge and hashing operate on these normalized files.
   - **Requirements Doc Builder output:** `.puppet-master/requirements/requirements-builder.md`.
   - **Contract Layer seed pack (Builder output; staging only):** `.puppet-master/requirements/contract-seeds.md`. This is an input to the interview’s contract unification pass (§6.6) and MUST NOT be treated as the canonical project contract pack (which lives under `.puppet-master/project/contracts/`; SSOT: `Plans/Project_Output_Artifacts.md`).
     ContractRef: ContractName:Plans/Project_Output_Artifacts.md
@@ -498,6 +547,21 @@ The Assistant/Builder must also emit a **single** Markdown document at `.puppet-
 - Before generation, ask qualifying questions only for checklist entries with `status=empty` or `status=thin`.
 - Do not ask follow-up questions for sections already marked `filled`.
 
+### 5.3.1 Builder handoff lifecycle and promotion
+
+Builder runs against a staged bundle; canonical promotion happens only after the final user gate.
+
+Required staged artifacts:
+- `.puppet-master/requirements/staging/builder/<run_id>/requirements.md`
+- `.puppet-master/requirements/staging/builder/<run_id>/contract-seeds.md`
+- `.puppet-master/requirements/staging/builder/<run_id>/review-summary.json`
+
+Promotion rules:
+- **Accept:** promote the staged `requirements.md` to `.puppet-master/requirements/requirements-builder.md`, promote `contract-seeds.md`, update `canonical_requirements_path` via merge/promotion, then allow `Done -- hand off to Interview`.
+- **Reject:** discard the staged review output and leave the last accepted Builder artifact (or no Builder artifact) unchanged.
+- **Edit:** opens the revised staged bundle; user edits remain staged until the same Accept gate is completed.
+- `Done -- hand off to Interview` is enabled only when the bundle state is `approved_for_handoff`; it must persist `builder_stage`, `builder_run_id`, `awaiting_final_approval`, and the accepted artifact refs.
+
 ### 5.4 Dependencies
 
 - **Assistant chat** must be implemented (assistant-chat-design.md).
@@ -600,6 +664,14 @@ Multi-Pass Review is the **final-review** step for the Requirements Doc Builder 
   - Accept applies the revised bundle.
   - Edit opens revised docs without rerunning review.
 
+**Reviewer selection (deterministic):**
+- Always include `requirements-quality-reviewer`.
+- Add at most **two** secondary reviewers:
+  - one domain reviewer resolved from the Builder domain-fragment stage when a single dominant domain exists
+  - one structural reviewer: `architect-reviewer` for architecture-heavy requirements, otherwise `code-reviewer`
+- Maximum reviewers per Builder Multi-Pass run: **3**
+- Reviewer Personas are read-only during review; only the final synthesis pass writes a revised staged bundle.
+
 ### 5.7 Contract Layer (Requirements → Contracts → Plan → Execution)
 
 This flow must insert an explicit **Contract Layer** between requirements and plans so large, parallel agent execution stays deterministic and DRY:
@@ -688,38 +760,62 @@ Depth is enforced as a **soft cap** based on question count (not token budget):
 
 **Input (Rust struct or JSON):**
 
-- `intent`: enum -- `NewProject` | `ForkEvolve` | `EnhanceRewriteAdd` | `ContributePR`
+- `intent`: enum -- `NewProject` | `ForkAndEvolve` | `EnhanceRewriteAdd` | `ContributePr`
 - `requirements_summary`: `String` -- first 2000 characters of the canonical requirements document (after merge/Builder)
 - `codebase_summary`: `Option<String>` -- from codebase_scanner when project path exists and is an existing project; `None` for new project or when scanner not run
+- `has_gui`: `Option<bool>`
 
-**Output:**
+**Canonical phase registry (ordered):**
+1. `scope_goals`
+2. `architecture_technology`
+3. `product_ux`
+4. `data_persistence`
+5. `security_secrets`
+6. `deployment_environments`
+7. `performance_reliability`
+8. `testing_verification`
+
+**Output (normalized plan):**
 
 - `phase_plan`: `Vec<PhasePlanEntry>` where each entry is:
-  - `phase_id`: `String` (e.g. `"scope_goals"`, `"architecture"`, `"ux"`, `"data"`, `"security"`, `"deployment"`, `"performance"`, `"testing"`, or other phase IDs from interview-subagent-integration.md)
-  - `depth`: enum -- `Full` | `Short` | `Skip`
+  - `phase_id`: one value from the registry above
+  - `depth`: `Full | Short | Skip`
+
+Normalization / ordering rules:
+- array order is the **execution order**
+- duplicate `phase_id` values are invalid and cause selector failure fallback
+- unknown `phase_id` values are invalid and cause selector failure fallback
+- omitted registry phases are normalized to `Skip` before persistence so resume always has a complete 8-entry plan
+- selector/provider-specific hints are advisory only; the persisted plan is the phase manager’s normalized output
+
+**Selector runtime:**
+- MVP source of truth is the **local phase manager normalizer** using intent + scope probe + available context
+- implementations MAY obtain an AI recommendation, but the persisted plan MUST still be normalized by the local phase manager
+- no separate selector-only provider/model contract is required for MVP
+
+ContractRef: ContractName:Plans/interview-subagent-integration.md, PolicyRule:Decision_Policy.md§2
 
 **Depth semantics:**
 
 - **Full:** Run full phase -- all questions for that phase, research if configured.
 - **Short:** Run abbreviated phase -- maximum 2 questions for that phase, no research.
-- **Skip:** Do not run this phase; omit from interview run.
+- **Skip:** Do not run phase questions, research, or document generation for that phase.
 
 **Fallback when selector fails or returns empty:**
 
 Use rule-based default (do not re-invoke selector):
-
 - **NewProject** → all phases `Full`
-- **ForkEvolve** → all phases `Full`
+- **ForkAndEvolve** → all phases `Full`
 - **EnhanceRewriteAdd** → all phases `Full`
-- **ContributePR** → only `scope_goals` (Short), `testing` (Short); all other phases `Skip`
+- **ContributePr** → `scope_goals=Short`, `architecture_technology=Short`, `testing_verification=Short`; all others `Skip`
 
-**Storage:** Persist `phase_plan` in interview state. Path: `.puppet-master/interview/phase_plan.json` (or include in existing interview state file if one exists). Schema must allow round-trip of `Vec<PhasePlanEntry>` (phase_id + depth).
+**Storage:** Persist the normalized 8-entry `phase_plan` in interview state. Path: `.puppet-master/interview/phase_plan.json` (or include in existing interview state file if one exists). Also persist `phase_override_mode` and `phase_plan_source` (`selector | fallback | run_all | manual_checklist`) for audit/replay.
 
 **Resume:** When resuming an interview, load `phase_plan` from stored state; do **not** re-run the phase selector. Run only the phases and depths already in the loaded plan.
 
-**User override -- "Run all phases":** Add a GUI checkbox **"Run all phases"** (default **off**). When **on**, ignore stored/generated `phase_plan` and run all phases at **Full** depth. This overrides both selector output and fallback.
+**User override -- "Run all phases":** Add a GUI checkbox **"Run all phases"** (default **off**). When **on**, ignore stored/generated `phase_plan` and run all registry phases at **Full** depth. This overrides both selector output and fallback.
 
-**User override -- Phase checklist (optional):** Show a list of phases with checkboxes. Checked = run the phase (use depth from `phase_plan` or Full when "Run all phases" is on). Unchecked = force-skip that phase regardless of plan. If "Run all phases" is on, all checkboxes default checked; user can uncheck to skip specific phases.
+**User override -- Phase checklist:** Show the ordered registry with checkboxes. Checked = run the phase (use stored depth unless Run all phases is on). Unchecked = force `Skip`. Manual edits persist as the next normalized `phase_plan`.
 
 ### 6.4 Relationship to interview-subagent-integration.md
 
@@ -908,12 +1004,12 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, Contrac
 - **Phase selector failure:**
 
 **Phase Selector Failure Fallback (Resolved):**
-If the AI phase selector returns an empty set or fails to respond:
-1. Fallback to **Scope + Architecture** (minimal safe set). Rationale: these two phases capture the essential "what" and "how" needed for any project.
-2. Log the failure as a `phase_selector.fallback` seglog event with the original error.
-3. Surface a warning in the interview UI: "Phase selection used fallback (Scope + Architecture). You can manually add phases if needed."
-4. Never fallback to "all phases" (too expensive and slow for simple projects).
-5. If the fallback phases also fail to execute, surface an error to the user and halt the interview.
+If the selector returns an invalid/empty plan or fails to respond:
+1. Use the deterministic per-intent fallback from §6.3 (all phases Full for New/Fork/Enhance; Contribute = Scope + Architecture + Testing at Short depth).
+2. Log the failure as a `phase_selector.fallback` seglog event with the original error and the normalized fallback plan.
+3. Surface a warning in the interview UI: "Phase selection used fallback. You can manually adjust the phase checklist if needed."
+4. Never synthesize an ad-hoc phase subset outside the canonical fallback table.
+5. If fallback phases also fail to execute, surface an error to the user and halt the interview.
 
 - **Depth semantics:** "Short" vs "full" depth must be defined per phase (e.g. "short = 1-2 questions") so the Interview agent has clear instructions.
   **Resolution:** Full = all questions for phase, research if configured. Short = max 2 questions for that phase, no research. Skip = do not run phase. Document in phase manager and interviewer prompt; enforce cap in phase runner (e.g. question count or token budget for Short).
@@ -987,12 +1083,12 @@ If the AI phase selector returns an empty set or fails to respond:
 
 Before implementation, an implementation agent must complete or have clear specs for the following. Use this list to derive implementation tasks; order may be adjusted by dependency.
 
-1. Add **FlowIntent** enum to app state: `NewProject | ForkEvolve | EnhanceRewriteAdd | ContributePR`.
+1. Add **WizardIntent** enum to app state: `NewProject | ForkAndEvolve | EnhanceRewriteAdd | ContributePr`.
 2. Persist **intent** in wizard/app state and in recovery snapshot (with `wizard_step`).
 3. Implement **merge_canonical_requirements(uploads, builder_path) → Path**: merge order uploads then Builder, write canonical doc, return path.
 4. Add **phase_plan** to interview state schema (e.g. `.puppet-master/interview/phase_plan.json` or embedded in existing interview state file).
 5. Define **PhasePlanEntry** (phase_id, depth: Full | Short | Skip) in types and JSON schema.
-6. Implement **phase selector** input (intent, requirements_summary first 2000 chars, codebase_summary Option) and output (Vec<PhasePlanEntry>); call from pre-interview step.
+6. Implement **phase selector** input (intent, requirements_summary first 2000 chars, codebase_summary Option, has_gui Option) and output (normalized Vec<PhasePlanEntry> over the canonical 8-phase registry); call from pre-interview step.
 7. Implement **rule-based fallback** when phase selector fails or returns empty (per-intent defaults from §6.3).
 8. On **resume interview**, load phase_plan from state and do not re-run selector.
 9. Add GUI checkbox **"Run all phases"** (default off); when on, ignore phase_plan and run all phases Full.
@@ -1026,7 +1122,7 @@ Before implementation, an implementation agent must complete or have clear specs
 37. **Contract seed pack (Builder):** When Requirements Doc Builder is used, write `.puppet-master/requirements/contract-seeds.md` and include it in Multi-Pass Review (§5.6). Treat it as staging input and reconcile it during the Contract Unification Pass (§6.6); do not treat it as the canonical Project Contract Pack.
 38. **Contract Unification Pass:** Implement the deterministic unification step (§6.6) to materialize SSOT-defined canonical artifacts and ensure every plan node references at least one resolvable `ProjectContract:*`.
 39. **Dry-run validator:** Run the SSOT-defined validator rules before execution begins; surface failures as gating errors (no manual verification).
-40. **Builder opener:** Ensure first Builder Assistant message is exactly `What are you trying to do?`.
+40. **Builder opener:** Ensure first Builder Assistant message is the context-sensitive opener from §5.1 (new project / existing project / fork).
 41. **Turn counter + 6-turn suggestion:** Implement completed-turn semantics (Assistant message + user response) and suggest generation when `completed_turns >= 6` or earlier if enough info exists; suggestion does not auto-generate.
 42. **Checklist dual state:** Implement `builder_checklist_state.v1` and `builder_conversation_state.v1` and keep them synchronized.
 43. **Qualifying questions:** Ask only for checklist sections marked `empty` or `thin` before generation.
@@ -1090,7 +1186,7 @@ ContractRef: Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md, Cont
 
 ### 12.1 Context
 
-This section defines an **always-on mandatory invariant sweep** that runs immediately after the Contract Unification Pass (§6.6) produces the canonical project artifact pack. It is **separate** from the optional §5.6 Multi-Pass Review (which is user-facing and off by default). The invariant sweep **cannot be disabled** and always runs even when other review features are present or enabled.
+This section defines an **always-on mandatory invariant sweep** that runs immediately after the Contract Unification Pass (§6.6) produces the **provisional** canonical project artifact pack. It is **separate** from the optional §5.6 Multi-Pass Review (which is user-facing and off by default). The invariant sweep **cannot be disabled** and always runs even when other review features are present or enabled.
 
 The three-pass pipeline enforces canonical system integrity, DRY/SSOT compliance, plan graph structural correctness, and deterministic decision logging — without requiring human intervention or a running GUI.
 
@@ -1102,12 +1198,12 @@ All three passes run serially in sequence: Pass 1 → Pass 2 → Pass 3. Each pa
 
 #### Pass 1: Document Creation
 
-**Purpose:** Primary document generation — requirements, contracts pack (Project Contract Pack), plan_graph (sharded), and acceptance manifest.
+**Purpose:** Validate and complete the provisional artifact pack produced by Contract Unification. Pass 1 may materialize missing derived artifacts or deterministic projections, but it is not the first author of requirements or contract fragments.
 
 **Scope:** All required project artifacts under `.puppet-master/project/` per `Plans/Project_Output_Artifacts.md §2`.
 
 **Produces:**
-- The initial artifact set written to `.puppet-master/project/`.
+- The first validation snapshot of the provisional `.puppet-master/project/` pack, plus any missing deterministic projections required for the full package.
 - A `validation_pass_report` artifact stored in seglog (`artifact_type: validation_pass_report`) containing (schema per `Plans/Project_Output_Artifacts.md §10.2`):
   - `pass_number: 1`
   - `pass_name: "document_creation"`
@@ -1118,8 +1214,8 @@ All three passes run serially in sequence: Pass 1 → Pass 2 → Pass 3. Each pa
 - A `requirements_quality_report` artifact (schema: `pm.requirements_quality_report.schema.v1`) stored at `.puppet-master/project/traceability/requirements_quality_report.json`: for each requirement, checks coverage against the Requirements Completion Contract (§14). The Pass 1 report is **read-only** — it identifies issues and classifies each as `auto_fixable: true/false`. No edits to requirements are made in Pass 1.
 
 **Verdict rules:**
-- `pass_verdict: "pass"` — all required artifacts were successfully generated.
-- `pass_verdict: "fail"` — one or more required artifacts could not be generated; reason recorded.
+- `pass_verdict: "pass"` — all required artifacts were present or deterministically completed.
+- `pass_verdict: "fail"` — one or more required artifacts were missing or invalid and could not be completed deterministically; reason recorded.
 
 ---
 
@@ -1200,9 +1296,11 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/
 - Passes run **serially** (Pass 1 → Pass 2 → Pass 3); each pass receives the artifact set as corrected by the previous pass.
 - Per-pass provider and model are configurable (see `Plans/assistant-chat-design.md §26`); defaults are deterministic and safe when not explicitly configured.
 - Each `validation_pass_report` MUST include `provider` and `model` values matching resolved app settings keys `validation_sweep.passN.provider` and `validation_sweep.passN.model` for the same pass (see `Plans/assistant-chat-design.md §26` and `Plans/Project_Output_Artifacts.md §10.2`).
+- Exactly three pass reports are emitted per sweep. If a later pass does not execute because an earlier pass blocked progress, emit the later report with `pass_verdict: "skipped"` and a `verdict_reason` explaining which earlier pass blocked it.
 - The **final project artifacts** reflect all post-pass corrections applied by Passes 2 and 3.
-- **If Pass 1 fails:** Passes 2 and 3 do not run; the workflow surfaces the Pass 1 failure to the user.
-- **If Pass 2 or Pass 3 fails** (unresolved findings): The failure is surfaced to the user; however, the corrected artifact set (with all resolvable fixes already applied) is still written.
+- **If Pass 1 fails:** Pass 2 and Pass 3 are emitted as `skipped`; the workflow surfaces the Pass 1 failure to the user.
+- **If Pass 2 ends with unresolved `needs_user_clarification[]`:** transition the wizard to `attention_required`, emit Pass 3 as `skipped`, and preserve the corrected-but-blocked artifact set for resume.
+- **If Pass 2 or Pass 3 fails** for other unresolved findings: The failure is surfaced to the user; however, the corrected artifact set (with all resolvable fixes already applied) is still written.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Project_Output_Artifacts.md
 
@@ -1214,6 +1312,7 @@ The following criteria are required for a conformant implementation of this work
 - [ ] Each pass can be executed headless (no GUI required; no approval gates between passes).
 - [ ] Pass 3 never edits `requirements.md`, `plan.md`, or user-intent-derived content; it only enforces canonical system integrity and flags failures.
 - [ ] Each pass emits a `validation_pass_report` artifact stored in seglog (`artifact_type: validation_pass_report`).
+- [ ] Exactly three pass reports exist per sweep run, using `pass_verdict: skipped` when later passes are blocked by earlier failures.
 - [ ] The final project artifacts reflect all corrections applied by Passes 2 and 3.
 - [ ] Per-pass provider + model selection is exposed in the GUI settings (see `Plans/assistant-chat-design.md §26`).
 
@@ -1281,10 +1380,28 @@ ContractRef: Plans/GitHub_Integration.md §D.3, Plans/GitHub_API_Auth_and_Flows.
 
 ### 13.5 "Run Chain Wizard Later" Affordance
 
-All three flows show a "Run Chain Wizard" button on their finish screen. Clicking it:
-- Navigates to the Chain Wizard / Interview flow
-- Pre-fills project context (name, path, language, GitHub remote if linked)
-- User can proceed through all wizard phases or skip any optional phase
+All three flows show a `Run Chain Wizard later` button on their finish screen. Clicking it:
+- dispatches the canonical wizard-launch command from the no-wizard flow (`Plans/GitHub_Integration.md`)
+- navigates to the Chain Wizard / Interview flow
+- pre-fills project context (name, path, language, GitHub remote if linked)
+- restores a persisted deferred payload after restart when the wizard was not launched immediately
+
+Default preload mapping:
+- **Add Existing Project** → `EnhanceRewriteAdd`
+- **Create New Local Project** → `NewProject`
+- **Create New GitHub Repo + Project** → `NewProject`
+
+Deferred payload minimum fields:
+- `wizard_id`
+- `launch_source`
+- `default_intent`
+- `project_name`
+- `project_path`
+- `detected_language_frameworks[]`
+- `remote_repo_ref` (if linked/created)
+- `created_repo_but_clone_failed` flag for recovery/error copy
+
+The wizard opens at **Project Setup review**, not at a blank intent picker, when launched from a deferred payload.
 
 This satisfies the requirement that no wizard step is mandatory for basic project setup. The wizard remains the recommended path for AI-assisted requirements gathering; it is not the only path.
 
@@ -1373,6 +1490,20 @@ Key fields:
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/requirements_quality_report.schema.json
 
+### 14.2 Deterministic report shaping
+
+The `requirements_quality_report` artifact MUST be stable across equivalent reruns.
+
+Deterministic shaping rules:
+- `requirements_touched[]` MUST follow canonical requirement order from `requirements.md`.
+- `issues[]` MUST be ordered by `(requirement_id, category, description)` using normalized lexicographic comparison.
+- `issue_id` values MUST be emitted as zero-padded ordinals in report order: `ISS-0001`, `ISS-0002`, ...
+- `auto_fixes_applied[]` MUST be ordered by referenced `issue_id`; `fix_id` values MUST be emitted as `FIX-0001`, `FIX-0002`, ...
+- `needs_user_clarification[]` MUST be ordered by referenced `issue_id`; `question_id` values MUST be emitted as `Q-0001`, `Q-0002`, ...
+- Re-running Pass 1 + Pass 2 with unchanged requirement content and unchanged user answers MUST preserve byte-stable ordering for these arrays.
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, Invariant:INV-005, PolicyRule:Decision_Policy.md§2
+
 ---
 
 ## 15. Requirements Quality Escalation Semantics
@@ -1450,6 +1581,23 @@ The Dashboard card is dismissed automatically when all questions are answered an
 - When the user answers all clarification questions, the wizard is re-run through Pass 1 and Pass 2 with the answers injected; the canonical quality report file is regenerated at the same path and `attention_required_report_path` is updated to that canonical path
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/chain-wizard-flexibility.md, Plans/Project_Output_Artifacts.md
+
+### 15.5 Clarification round cap
+
+A clarification cycle is one complete sequence of:
+1. a report with non-empty `needs_user_clarification[]`,
+2. user answer submission,
+3. automatic re-run of Pass 1 + Pass 2.
+
+The maximum clarification cycles for one wizard instance is **3**.
+
+- Cycles 1-2: wizard state remains `attention_required` when follow-up questions remain.
+- After cycle 3 still produces non-empty `needs_user_clarification[]`, wizard state becomes `blocked`.
+- `blocked` disables "Proceed" and "Start Run" exactly like `attention_required`, but the UI copy MUST explain that repeated clarification attempts did not resolve the requirements set.
+- In `blocked`, Puppet Master MUST preserve the latest canonical quality report and MUST NOT auto-rewrite requirements further without new explicit user input.
+
+ContractRef: Gate:GATE-012, SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/assistant-chat-design.md#11-thread-state-lifecycle-attention_required
+
 ## Requirements Builder Persona Strategy Addendum (2026-03-06)
 
 This addendum defines Persona behavior for the Requirements Builder / chain wizard flow.

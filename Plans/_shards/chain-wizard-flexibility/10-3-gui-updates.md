@@ -29,7 +29,7 @@ ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/CLI_Bri
 - **Single prompt:** "Provide your Requirements Document(s)."
 - **Options (at least two):**
   1. **Upload your own** -- Single or **multiple** files (see §4). Supported formats per REQUIREMENTS.md (md, pdf, txt, docx); store under `.puppet-master/requirements/`.
-  2. **Requirements Doc Builder** -- Button that opens Builder chat (section 5). The first Assistant message is `What are you trying to do?`. User describes the project (or delta, or feature); Assistant generates a requirements document after explicit user confirmation and hands it off to the flow. No re-upload required.
+  2. **Requirements Doc Builder** -- Button that opens Builder chat (section 5). The first Assistant message is context-sensitive per §5.1 ("What are you building?" / "What are you adding or changing?" / "What are you adding or changing in this fork?"). User describes the project (or delta, or feature); Assistant generates a requirements document after explicit user confirmation and hands it off to the flow. No re-upload required.
 - **Framing by intent:** The exact label or helper text can vary by intent (e.g. "Describe the product" vs "Describe what you're adding or changing" vs "Describe the feature and acceptance criteria").
 - **After requirements:** Proceed to Interview (or skip to PRD if we add "Skip interview" for advanced users later). Interview receives the canonical requirements (merged multi-doc or Builder output).
 

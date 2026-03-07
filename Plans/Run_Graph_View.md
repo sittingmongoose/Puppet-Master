@@ -542,7 +542,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#6
 
 All layout algorithms are **deterministic**: same graph + same preset = same layout every time.
 
-Layout computation runs on a **background thread** (tokio::spawn_blocking). The UI shows a skeleton/shimmer during layout computation. Layout positions are cached per `(run_id, preset)` tuple.
+Layout computation runs on a **background thread** (tokio::spawn_blocking). The UI shows a skeleton/shimmer during layout computation. Layout positions are cached per `(run_id, preset)` tuple. If computation fails or exceeds 2 seconds, the UI reuses the last cached layout for that preset when available; otherwise it falls back to **Preset 3 Compact** and shows a non-blocking banner explaining the fallback.
 
 ### 9.1 Preset Table
 
@@ -568,27 +568,36 @@ Layout computation runs on a **background thread** (tokio::spawn_blocking). The 
 - Disconnected subgraphs: order subgraphs by the lexicographically smallest `node.id` in each subgraph.
 - All traversals use a deterministic iteration order (sorted `node.id`).
 
-### 9.3 Grouped by Phase (Preset 4)
+### 9.3 Compact (Preset 3)
+
+- Uses the same dependency-respecting layer assignment as Layered L-R, but reduces inter-layer spacing and intra-layer gaps to maximize visible nodes before scrolling.
+- Applies an additional crossing-reduction pass that prefers shorter edge spans when barycenter scores tie.
+- Shrinks node padding before it shrinks text; labels still use the standard truncation/tooltip rules from §4.2.
+- Deterministic tie-break rules remain lexicographic by `node.id`.
+
+### 9.4 Grouped by Phase (Preset 4)
 
 - Phase nodes become **containers** (larger rectangles with a header showing phase title).
 - Task/subtask nodes are laid out inside their parent phase container.
 - Phase containers are laid out left-to-right based on phase dependencies.
 - Within a container: Sugiyama layout for tasks/subtasks.
 
-### 9.4 Critical Path (Preset 5)
+### 9.5 Critical Path (Preset 5)
 
 - Same layout as Layered L-R.
 - **Critical path** = longest path from start to current frontier (or end if complete).
+- If multiple paths have equal duration/length, choose the path whose ordered `node.id` tuple is lexicographically smallest so highlighting stays deterministic.
 - Critical path nodes: thicker border (4px vs 2px), brighter status color.
 - Critical path edges: thicker (3px vs 2px), fully opaque.
 - Non-critical nodes and edges: reduced opacity (50%).
 
-### 9.5 Large-Graph Fallback
+### 9.6 Large-Graph Fallback
 
 When node count exceeds a threshold (default: 200 nodes):
 - **Label simplification**: truncate node titles to 12 chars.
 - **Edge simplification**: straight lines instead of orthogonal routing.
 - **Optional group collapse**: phases with all children in same state (e.g., all Passed) collapse to a single summary node showing "{N} tasks passed". Click to expand.
+- Threshold checks re-run whenever live updates materially change node count; the graph must not oscillate between modes more than once per refresh cycle.
 
 When node count exceeds 500:
 - Additionally: reduce node rectangle size (120x36px at 100% zoom).

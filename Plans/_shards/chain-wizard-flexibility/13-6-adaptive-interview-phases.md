@@ -35,38 +35,62 @@ Depth is enforced as a **soft cap** based on question count (not token budget):
 
 **Input (Rust struct or JSON):**
 
-- `intent`: enum -- `NewProject` | `ForkEvolve` | `EnhanceRewriteAdd` | `ContributePR`
+- `intent`: enum -- `NewProject` | `ForkAndEvolve` | `EnhanceRewriteAdd` | `ContributePr`
 - `requirements_summary`: `String` -- first 2000 characters of the canonical requirements document (after merge/Builder)
 - `codebase_summary`: `Option<String>` -- from codebase_scanner when project path exists and is an existing project; `None` for new project or when scanner not run
+- `has_gui`: `Option<bool>`
 
-**Output:**
+**Canonical phase registry (ordered):**
+1. `scope_goals`
+2. `architecture_technology`
+3. `product_ux`
+4. `data_persistence`
+5. `security_secrets`
+6. `deployment_environments`
+7. `performance_reliability`
+8. `testing_verification`
+
+**Output (normalized plan):**
 
 - `phase_plan`: `Vec<PhasePlanEntry>` where each entry is:
-  - `phase_id`: `String` (e.g. `"scope_goals"`, `"architecture"`, `"ux"`, `"data"`, `"security"`, `"deployment"`, `"performance"`, `"testing"`, or other phase IDs from interview-subagent-integration.md)
-  - `depth`: enum -- `Full` | `Short` | `Skip`
+  - `phase_id`: one value from the registry above
+  - `depth`: `Full | Short | Skip`
+
+Normalization / ordering rules:
+- array order is the **execution order**
+- duplicate `phase_id` values are invalid and cause selector failure fallback
+- unknown `phase_id` values are invalid and cause selector failure fallback
+- omitted registry phases are normalized to `Skip` before persistence so resume always has a complete 8-entry plan
+- selector/provider-specific hints are advisory only; the persisted plan is the phase manager’s normalized output
+
+**Selector runtime:**
+- MVP source of truth is the **local phase manager normalizer** using intent + scope probe + available context
+- implementations MAY obtain an AI recommendation, but the persisted plan MUST still be normalized by the local phase manager
+- no separate selector-only provider/model contract is required for MVP
+
+ContractRef: ContractName:Plans/interview-subagent-integration.md, PolicyRule:Decision_Policy.md§2
 
 **Depth semantics:**
 
 - **Full:** Run full phase -- all questions for that phase, research if configured.
 - **Short:** Run abbreviated phase -- maximum 2 questions for that phase, no research.
-- **Skip:** Do not run this phase; omit from interview run.
+- **Skip:** Do not run phase questions, research, or document generation for that phase.
 
 **Fallback when selector fails or returns empty:**
 
 Use rule-based default (do not re-invoke selector):
-
 - **NewProject** → all phases `Full`
-- **ForkEvolve** → all phases `Full`
+- **ForkAndEvolve** → all phases `Full`
 - **EnhanceRewriteAdd** → all phases `Full`
-- **ContributePR** → only `scope_goals` (Short), `testing` (Short); all other phases `Skip`
+- **ContributePr** → `scope_goals=Short`, `architecture_technology=Short`, `testing_verification=Short`; all others `Skip`
 
-**Storage:** Persist `phase_plan` in interview state. Path: `.puppet-master/interview/phase_plan.json` (or include in existing interview state file if one exists). Schema must allow round-trip of `Vec<PhasePlanEntry>` (phase_id + depth).
+**Storage:** Persist the normalized 8-entry `phase_plan` in interview state. Path: `.puppet-master/interview/phase_plan.json` (or include in existing interview state file if one exists). Also persist `phase_override_mode` and `phase_plan_source` (`selector | fallback | run_all | manual_checklist`) for audit/replay.
 
 **Resume:** When resuming an interview, load `phase_plan` from stored state; do **not** re-run the phase selector. Run only the phases and depths already in the loaded plan.
 
-**User override -- "Run all phases":** Add a GUI checkbox **"Run all phases"** (default **off**). When **on**, ignore stored/generated `phase_plan` and run all phases at **Full** depth. This overrides both selector output and fallback.
+**User override -- "Run all phases":** Add a GUI checkbox **"Run all phases"** (default **off**). When **on**, ignore stored/generated `phase_plan` and run all registry phases at **Full** depth. This overrides both selector output and fallback.
 
-**User override -- Phase checklist (optional):** Show a list of phases with checkboxes. Checked = run the phase (use depth from `phase_plan` or Full when "Run all phases" is on). Unchecked = force-skip that phase regardless of plan. If "Run all phases" is on, all checkboxes default checked; user can uncheck to skip specific phases.
+**User override -- Phase checklist:** Show the ordered registry with checkboxes. Checked = run the phase (use stored depth unless Run all phases is on). Unchecked = force `Skip`. Manual edits persist as the next normalized `phase_plan`.
 
 ### 6.4 Relationship to interview-subagent-integration.md
 

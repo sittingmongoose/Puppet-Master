@@ -53,6 +53,11 @@ These are the **required artifacts** (staging paths in the user workspace) and *
 10) Optional (human convenience derived output; non-canonical):
     - `.puppet-master/project/quickstart.md` (deterministic command quickstart; AI correctness and validator correctness MUST NOT depend on this file)
 
+**GUI artifact trigger rule (normative):**
+- If the generated project includes interactive GUI surfaces that dispatch `UICommand` IDs, Puppet Master MUST emit both `.puppet-master/project/ui/wiring_matrix.json` and `.puppet-master/project/ui/ui_command_catalog.json`.
+- If no interactive GUI surface is in scope, both files MAY be absent.
+- A project MUST NOT emit only one of the two GUI artifacts.
+
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, Gate:GATE-011, ContractName:Plans/Project_Output_Artifacts.md
 
 ### 2.1 Canonical staging tree
@@ -97,6 +102,13 @@ Rule: Puppet Master MUST store Attempt Journal and Parent Summary artifacts in t
 
 ContractRef: ContractName:Plans/Contracts_V0.md#AttemptJournal, ContractName:Plans/Contracts_V0.md#ParentSummary, ContractName:Plans/agent-rules-context.md#FeatureSpecVerbatim
 
+Reserved runtime subtree note:
+- `.puppet-master/state/**` is reserved for project-local runtime state such as optional local seglog/mirror/backups when enabled by `Plans/storage-plan.md`.
+- `.puppet-master/project/**` remains the canonical staged Project Plan Package tree.
+- `.puppet-master/workspace/**` remains the non-canonical execution sidecar and MUST NOT be repurposed as canonical storage.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Project_Output_Artifacts.md
+
 Recommended contents (non-exhaustive):
 - `AGENTS.md` (scoped instruction file for this subtree; managed or user-owned depending on mode)
 - `parent_summary.md`
@@ -123,6 +135,19 @@ ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
 
 ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
 
+### Canonical persistence for packaged Document Sets
+
+When packaging occurs for a logical Markdown/text artifact:
+- `<logical_artifact_path>.docset/00-index.md` is canonical.
+- `<logical_artifact_path>.docset/manifest.json` is canonical.
+- shard files under `<logical_artifact_path>.docset/` are canonical.
+- audit outputs under `<logical_artifact_path>.docset/evidence/` are canonical verification artifacts.
+- `<logical_artifact_path>` remains present only as a derived pointer stub.
+
+Generated `.docset/**` contents are packaging outputs, not new packaging inputs; verifiers and generators MUST NOT recurse and package Document Set members again.
+
+ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
+
 The plan graph contract remains unchanged: canonical user-project plan graph is still sharded JSON at `.puppet-master/project/plan_graph/index.json` with node shards under `nodes/<node_id>.json`.
 
 ContractRef: SchemaID:pm.project-plan-graph-index.v1
@@ -137,7 +162,7 @@ This document uses the exact terminology/field names of the canonical schemas un
 - `Plans/project_plan_node.schema.json` (`pm.project-plan-node.v1`)
   - node `contract_refs`, `evidence_required`, `allowed_tools`, `tool_policy_mode`, `policy_mode`, `change_budget`,
     `blockers`, `unblocks`, `status`, `evidence_pointer`, `verifier_result`, `decision_refs`, `spec_lock_requirements`
-    (and optional `depends_on`, `parallel_group`)
+    (and optional `depends_on`)
 - `pm.project-plan-graph.v1` (optional derived monolithic export)
   - `plan_graph/exports/plan_graph.monolithic.json` is a monolithic wrapper over the same node object fields as `pm.project-plan-node.v1` (inlined nodes), plus graph-level `graph_id`, `entrypoints`, and `validation.targets`.
 - `Plans/contracts_index.schema.json` (`pm.project_contracts_index.schema.v1`)
@@ -212,6 +237,9 @@ ContractRef: ContractName:Plans/DRY_Rules.md#7
   - ContractRef: `PolicyRule:Decision_Policy.md`
 - All ambiguities (where multiple valid options exist) MUST be recorded to `.puppet-master/project/auto_decisions.jsonl`
   (newline-delimited JSON; each row conforms to `Plans/auto_decisions.schema.json`).
+- `.puppet-master/project/auto_decisions.jsonl` is the canonical user-project decision log only; Puppet Master internal SSOT maintenance decisions continue to use `Plans/auto_decisions.jsonl`.
+- User-project auto-decision rows MUST conform to `pm.auto_decisions.schema.v1` exactly.
+- For user-project outputs, canonical persistence remains seglog first; decision rows are projected to `.puppet-master/project/auto_decisions.jsonl` as a regenerable filesystem artifact.
 - Puppet Master MUST continue execution without requiring humans to resolve ambiguities (the log is for traceability, not gating).
 
 ContractRef: SchemaID:pm.auto_decisions.schema.v1, PolicyRule:Decision_Policy.md§4
@@ -273,6 +301,7 @@ ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project
   - `acceptance_manifest` (recommended relative path: `../acceptance_manifest.json`)
   - `contracts_index` (recommended relative path: `../contracts/index.json`)
 - Overseer semantics for status transitions and auto-marking MUST follow `Plans/Executor_Protocol.md`.
+- Dependency semantics are canonicalized as follows: `blockers[]` is the readiness-driving dependency list, `unblocks[]` is the forward adjacency projection, `depends_on[]` is optional compatibility metadata only, and `edges.json` (if materialized) is a derived consistency artifact rather than an authority.
 
 ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Executor_Protocol.md
 
@@ -318,6 +347,8 @@ ContractRef: SchemaID:pm.project-plan-node.v1, Gate:GATE-001, ContractName:Plans
 
 If present, `.puppet-master/project/plan_graph/edges.json` MUST be consistent with dependency semantics expressed in node shards
 (`blockers`, `unblocks`, and optional `depends_on`).
+
+`edges.json` MUST NOT be required for headless execution and MUST NOT override shard-local `blockers[]` readiness semantics.
 
 ContractRef: Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md
 
@@ -587,6 +618,12 @@ ContractRef: SchemaID:pm.requirements_coverage.schema.v1
 ContractRef: SchemaID:pm.project-plan-node.v1
 
 #### Step 3 — Acceptance mapping source: `.puppet-master/project/acceptance_manifest.json`
+
+- Each acceptance check entry MUST declare `req_id` when that check is intended to provide requirement coverage evidence.
+- If `req_id` exists in the requirements set, add the check's `check_id` to that requirement's `acceptance_check_ids[]`.
+- Checks with no `req_id` are allowed, but they do not contribute to requirements coverage.
+
+ContractRef: SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011, ContractName:Plans/Project_Output_Artifacts.md
 
 - Schema: `pm.acceptance_manifest.schema.v1`.
 - For each acceptance check that contains a `req_id` field: if `req_id` exists in the Step 1 requirements set, add the check's ID to that requirement's `acceptance_check_ids[]`.

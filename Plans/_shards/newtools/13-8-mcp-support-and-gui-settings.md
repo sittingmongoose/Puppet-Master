@@ -2,7 +2,7 @@
 
 ### 8.1 MCP settings in the GUI
 
-Add **MCP settings** to the Config view so users can enable and configure MCP servers used by catalog tools and by the interview (e.g. Context7, Browser MCP). Placement: a new subsection **Config → MCP** (or under **Advanced → MCP / Tools**) so all MCP-related controls live in one place. Use the same GuiConfig and Option B run-config build as other tabs so one Save persists MCP settings.
+Add **MCP settings** to the Config view so users can enable and configure MCP servers used by catalog tools and by the interview (e.g. Context7, Browser MCP). Canonical placement is **Settings → Advanced → MCP Configuration** so all MCP-related controls live in one place. Use the same GuiConfig and Option B run-config build as other tabs so one Save persists MCP settings.
 
 **Context7 (default on, API key, toggle off):**
 
@@ -73,6 +73,26 @@ ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage
     [2] Another Source (https://example.com/page2)
     ```
   - Define a **convention or schema** (e.g. markdown subsection, or structured fields in tool result) so the GUI can reliably detect and render links (e.g. clickable URLs in chat, copyable list in run log).
+- **Canonical tool identity:** Default MCP server slug `websearch-cited`; default tool name `websearch_cited`. If implementation uses a built-in tool instead of MCP, it MUST still expose the same tool name and result contract to higher layers.
+- **Canonical result contract:** Tool result MUST include structured fields sufficient for deterministic UI rendering:
+  ```json
+  {
+    "query": "latest rust release",
+    "provider": "google",
+    "model": "gemini-2.5-flash",
+    "answer_markdown": "Rust 1.89 introduced ... [1]",
+    "sources": [
+      {
+        "marker": 1,
+        "title": "Rust Blog",
+        "url": "https://blog.rust-lang.org/...",
+        "snippet": "Rust 1.89...",
+        "published_at": "2025-08-07T00:00:00Z"
+      }
+    ]
+  }
+  ```
+  `answer_markdown` carries the inline-citation text shown in chat/logs; `sources[]` is the canonical machine-readable source list used by GUI rendering, copy actions, and run logs. A rendered **Sources:** block may be derived from `sources[]`; it MUST NOT be the only representation.
 - **Activity transparency:** For every web search call, the UI must show at least the **search query** (and, where appropriate, provider used or result count). See Plans/assistant-chat-design.md §13.
 
 **Architecture options**
@@ -94,14 +114,20 @@ ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage
     - `pm.secret.websearch.openai.api_key`
     - `pm.secret.websearch.openrouter.api_key`
   ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage
-- **Model selection and fallback:** Define a **provider + model** preference order (e.g. try Google → OpenAI → OpenRouter). If the user has configured a preferred provider/model for web search (e.g. in Config → MCP / Tools), use that first. On failure (rate limit, auth error, timeout), fall back to the next provider if configured, or surface a clear error and suggest "Switch web search provider/model in Config" or "Check API key for &lt;provider&gt;". Avoid burning the user's chat/orchestrator model quota for search if a dedicated search model is available.
-- **Config surface:** Add GUI controls (e.g. under Config → MCP / Tools) to enable/disable cited web search, choose provider (and optionally model), and manage API keys via credential-store actions (`Save key`/`Clear key`, masked input; status only). Persist **non-secret** preferences in the same GuiConfig/run-config pipeline as other MCP settings so Assistant, Interview, and Orchestrator all see identical behavior.
+- **Model selection and fallback:** Define a **provider + model** preference order (e.g. try Google → OpenAI → OpenRouter). If the user has configured a preferred provider/model for web search in **Settings → Advanced → MCP Configuration**, use that first. On failure (rate limit, auth error, timeout), fall back to the next provider if configured, or surface a clear error and suggest "Switch web search provider/model in MCP Configuration" or "Check API key for &lt;provider&gt;". Avoid burning the user's chat/orchestrator model quota for search if a dedicated search model is available.
+- **Config surface:** Add GUI controls in **Settings → Advanced → MCP Configuration** to enable/disable cited web search, choose provider (and optionally model), and manage API keys via credential-store actions (`Save key`/`Clear key`, masked input; status only). Persist **non-secret** preferences in the same GuiConfig/run-config pipeline as other MCP settings so Assistant, Interview, and Orchestrator all see identical behavior.
+  - Canonical non-secret keys:
+    - `mcp.cited_websearch.enabled: bool` (default `false`)
+    - `mcp.cited_websearch.provider_order: string[]` (default `["google","openai","openrouter"]`)
+    - `mcp.cited_websearch.models: { [provider: string]: string }` (optional dedicated search model per provider)
+    - `mcp.cited_websearch.timeout_ms: u32` (default `60000`)
+    - `mcp.cited_websearch.log_query_plaintext: bool` (default `false`)
   ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, PolicyRule:Decision_Policy.md§2
 
 **Errors, rate limits, and timeouts**
 
 - **Rate limits:** Provider-specific. When the search API returns 429 or "quota exceeded", do not retry indefinitely. Surface a user-visible message (e.g. in chat or run log): "Web search rate limit reached. Try again later or switch provider/model in Config." Optionally suggest switching platform or model per Plans/assistant-chat-design.md §12 (rate limit handling).
-- **Auth failures:** If the configured API key is missing or rejected, fail the tool call with a clear message (e.g. "Web search unavailable: invalid or missing API key for &lt;provider&gt;. Check Config → MCP / Tools and credential store."). Do not fall back to another provider's key without user consent (privacy/cost).
+- **Auth failures:** If the configured API key is missing or rejected, fail the tool call with a clear message (e.g. "Web search unavailable: invalid or missing API key for &lt;provider&gt;. Check Settings → Advanced → MCP Configuration and credential store."). Do not fall back to another provider's key without user consent (privacy/cost).
 - **Timeouts:** Set a reasonable timeout for the search call (e.g. 30-60 s). On timeout, return a structured error to the agent and show the user "Web search timed out. You can retry or try a different query."
 - **No results / empty:** Define behavior when the provider returns zero results (e.g. return "No results found for this query" with no Sources list, or a short message so the agent can respond appropriately). Avoid leaving the user with no feedback.
 

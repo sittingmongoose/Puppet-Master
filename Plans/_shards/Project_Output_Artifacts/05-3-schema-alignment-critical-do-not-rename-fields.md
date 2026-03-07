@@ -8,7 +8,7 @@ This document uses the exact terminology/field names of the canonical schemas un
 - `Plans/project_plan_node.schema.json` (`pm.project-plan-node.v1`)
   - node `contract_refs`, `evidence_required`, `allowed_tools`, `tool_policy_mode`, `policy_mode`, `change_budget`,
     `blockers`, `unblocks`, `status`, `evidence_pointer`, `verifier_result`, `decision_refs`, `spec_lock_requirements`
-    (and optional `depends_on`, `parallel_group`)
+    (and optional `depends_on`)
 - `pm.project-plan-graph.v1` (optional derived monolithic export)
   - `plan_graph/exports/plan_graph.monolithic.json` is a monolithic wrapper over the same node object fields as `pm.project-plan-node.v1` (inlined nodes), plus graph-level `graph_id`, `entrypoints`, and `validation.targets`.
 - `Plans/contracts_index.schema.json` (`pm.project_contracts_index.schema.v1`)

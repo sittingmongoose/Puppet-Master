@@ -9,7 +9,7 @@
 
 ### 2.1 Wizard State Shape
 
-The app must hold a single, explicit **wizard state** that drives project setup, requirements, and downstream Interview/start chain. All fields required for the four intents are defined below.
+The app must hold a single, explicit **wizard state** that drives project setup, requirements, and downstream Interview/start chain. The struct below captures the core form/state fields; the normative runtime fields table that follows is also required.
 
 **Rust struct (reference; implementation may use equivalent in app state):**
 
@@ -98,6 +98,20 @@ pub struct ChainWizardState {
 }
 ```
 
+**Required runtime fields (normative, additive to the reference struct):**
+
+| Field | Type | Purpose |
+|---|---|---|
+| `wizard_id` | string | Stable wizard instance ID used by recovery, Dashboard CtAs, and thread deep links. |
+| `wizard_status` | enum | `setup | requirements | interview | validating | attention_required | ready_to_execute | complete | cancelled`. |
+| `launch_source` | enum | `dashboard | file_menu | assistant | no_wizard_add_existing | no_wizard_new_local | no_wizard_new_github`. |
+| `phase_override_mode` | enum | `selector_plan | run_all | manual_checklist`. |
+| `phase_plan_ref` | path/null | Canonical persisted phase-plan location used by resume and audit. |
+| `has_gui` | bool/null | Interview-derived GUI flag that affects Product/UX coverage and downstream artifact generation. |
+| `attention_required_report_path` | path/null | Latest blocking requirements-quality report when clarification is required. |
+| `remote_repo_ref` | object/null | Credential-safe remote reference (`owner`, `repo`, `host`, `clone_transport`, `clone_url_redacted`) for GitHub/fork flows. |
+| `deferred_wizard_payload_ref` | path/null | Preloaded payload created by no-wizard flows for `Run Chain Wizard later`. |
+
 **Field usage by intent:**
 
 | Field | New project | Fork & evolve | Enhance/rewrite/add | Contribute (PR) |
@@ -120,6 +134,34 @@ pub struct ChainWizardState {
 
 - `canonical_requirements_path` is set only after at least one of: uploads (merged) or Builder output (or both merged). For user-project execution, it points to `.puppet-master/project/requirements.md` after canonical promotion from staging (see §4 and §11).
 - For Contribute (PR), `branch_name` is set when the user (or app) creates the feature branch; all work for that flow happens on that branch in the **main clone** (no tier worktrees -- see §7).
+- Secrets or credential-bearing GitHub URLs MUST NOT be persisted in wizard state; store redacted remote metadata + credential-store account refs only.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/GitHub_Integration.md
+
+### 2.2 Downstream Handoff Contract
+
+Wizard hands a single normalized payload to Builder handoff, Interview initialization, and start-chain kickoff.
+
+Required fields:
+- `wizard_id`
+- `intent`
+- `wizard_status`
+- `launch_source`
+- `project_path`
+- `canonical_requirements_path`
+- `remote_repo_ref` (when Git/GitHub is involved)
+- `branch_name` (Contribute PR only)
+- `phase_plan_ref` and `phase_override_mode`
+- `has_gui` when already known
+- `resume_checkpoint_ref` when resuming an interrupted run
+
+Rules:
+- Builder may read/write requirements-stage fields only; it must not mutate GitHub setup fields except via explicit wizard actions.
+- Interview consumes the payload as read-mostly input and persists Interview-owned state separately.
+- Start chain MUST read the post-validation canonical `.puppet-master/project/**` package, not wizard staging inputs.
+- No-wizard flows populate the same payload shape via `deferred_wizard_payload_ref`; opening the wizard later must be reconstructible after restart.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/interview-subagent-integration.md, Primitive:SessionStore
 
 ---
 

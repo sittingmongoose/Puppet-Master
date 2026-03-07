@@ -92,7 +92,24 @@ Plan output can be "run immediately" or "added to queue" depending on the curren
 | **BrainStorm** | Multi-model collaboration: same plan, shared context, subagents can talk to each other; on execute, chat switches to Agent mode. See §18. |
 | **Crew**  | User invokes crew (button or "use a crew"); must work together with Plan mode. See §15. |
 
+**Taxonomy note (required):** These five entries are **chat-surface modes**. They are distinct from the execution-layer run modes in `Plans/Run_Modes.md` (`ask`, `plan`, `regular`, `yolo`). Chat modes decide the user-facing flow and available controls in the thread. Run modes decide permission posture and delegated-tool behavior once execution starts. When a read-only chat mode transitions into execution (for example, approved Plan execution or BrainStorm execution), the chat switches to Agent mode and the execution layer resolves the appropriate run mode per `Plans/Run_Modes.md`.
+
 **Requires a project:** Many chat features (e.g. @ file mention, File Manager, project-specific commands, running the Assistant with project context) **do not work when no project is selected**; when no project is selected, only application rules apply and project-scoped actions are unavailable or disabled.
+
+
+### 1.0.1 Runtime mode normalization (canonical)
+
+The chat surface exposes both **workflow overlays** and **runtime execution posture**. Only the runtime posture normalizes into the canonical run-envelope `mode` used by `Plans/Run_Modes.md`.
+
+| UI/workflow state | Canonical runtime mode | Notes |
+|---|---|---|
+| Ask | `ask` | Always read-only. |
+| Plan (before execution) | `plan` | Always read-only; produces plan output only. |
+| Execute from Plan / Interview / BrainStorm / Crew with standard approvals | `regular` | Workflow overlay stays visible in UI, but does not create a new runtime mode enum. |
+| Explicit Regular posture | `regular` | Standard execute posture. |
+| Explicit YOLO posture | `yolo` | Full-automation execute posture. |
+
+`Interview`, `BrainStorm`, and `Crew` are **workflow overlays**, not additional runtime mode enum values. The UI MUST normalize any active overlay + posture into one canonical runtime mode before spawning a run, and MAY persist the overlay separately for UX/restoration purposes only.
 
 ### 1.1 Chat controls: platform, model, and reasoning/effort (OpenCode-style)
 
@@ -404,7 +421,7 @@ Chat renders a compact findings block for review flows:
 - `Applied changes summary`
 - `Unresolved items`
 
-The findings block is shown before final approval and links to the same artifact surfaced in the page preview section.
+The findings block is shown before final approval and links to the same canonical findings artifact surfaced in the page preview section. Chat may render a compact projection, but it MUST resolve to the same review-run identity and revised-artifact reference used by the final approval gate.
 
 ### 9.1 LSP support in Chat (MVP)
 
@@ -694,6 +711,8 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#17-context-truncation, 
 - **Internet/web search -- show search and links:** When the agent performs an **internet or web search** (e.g. via cited web search tool per §7), the thread must **show that a search was performed** and **show the links** (sources/URLs) that were used. Display can be **collapsible**: when collapsed, show a summary (e.g. "Web search: 3 sources" or "Web search: &lt;query&gt; -- 3 links"); when expanded, show the **search query** and the **list of links** (title + URL per source). Same Sources list as in cited web search output; persist with the thread (§11). Align with Plans/newtools.md §8.2.1 (cited web search).
 - **Show what it searched:** The chat must **show what was searched** whenever the agent (or the system) performs a search. For chat-history search, web search, file search, or other search actions, the thread should display the **search query** (or scope) and, where appropriate, a short summary of what was searched (e.g. "Searched: 3 threads, 12 messages" or "Web search: ..."). This gives the user visibility into what context the agent used.
 - **Bash and commands -- audit trail:** The Assistant must be able to **use bash** (run shell commands and scripts) when not in read-only mode (e.g. in Plan execution or Agent mode). Every **command entered** and **script run** must appear in the thread as part of the audit trail: the command/script text and the outcome (stdout/stderr, or a summary with expandable full output). Execution is subject to permissions (YOLO vs regular approval) and to FileSafe/guards where applicable. Bash blocks in the thread should be **collapsible** (e.g. show "Ran: `cargo test`" or "3 commands" when collapsed; expand to show full command(s) and output). Persist commands and output with the thread so the audit trail is complete.
+  - **Execution limits:** Bash timeout, output truncation, and CWD semantics are defined canonically in `Plans/Tools.md` §3.5.
+  - **Thread disclosure on truncation:** If bash output is truncated because it exceeds the canonical output cap, the thread must show that truncation occurred and provide a pointer to the persisted full-output record (seglog/log viewer), rather than pretending the shown output is complete.
 - **Files explored in the thread:** For each agent turn (or run), the thread should show **which files the agent explored** (read or opened for context). Display a concise list or summary in the thread -- e.g. "Read: `src/main.rs`, `docs/ARCHITECTURE.md`" -- so the user knows what the agent had access to.
 - **What it changed in the thread:** The thread should show **what the agent changed** -- files edited, created, or deleted, with enough detail to understand the impact (e.g. "Edited: `src/lib.rs` (lines 12-45)", "Created: `tests/foo.rs`"). This can be a summary line per file or an expandable diff/list. Together with "files explored", this gives a clear **audit trail** in the thread: what was read, what was run (bash), and what was changed. All of this (search, bash, files explored, files changed, code block diffs) is part of the thread and **must persist** with the thread per §11.
 - **Document review content policy:** For requirements/interview document workflows, chat audit entries summarize document updates and findings but do not inline full document bodies. Long artifacts are reviewed in File Editor or embedded document pane.
@@ -796,6 +815,8 @@ When the chat is in **Interview** mode (interview flow):
   - A **"Something else"** control that reveals a **text bar** where the user can type a freeform response.  
 - This keeps navigation quick for common answers while allowing any custom answer.
 - **Contract Layer outputs (completion surface):** When the interview completes (or when a phase boundary produces artifacts), the Interview surface must provide a read-only **Outputs** card/pane listing the canonical user-project artifact set under `.puppet-master/project/` (requirements, Project Contract Pack with `contracts/index.json`, `plan.md` (human-readable), **sharded plan graph** under `plan_graph/` (**index + node shards**), `acceptance_manifest.json`, and validator status). These outputs are **persisted canonically in seglog** and surfaced here via projection into `.puppet-master/project/...` (do not assume anything about the user project’s own folder layout). Each entry must be click-to-open via the File Manager/editor surface (Plans/FileManager.md). Authoritative artifact contract: `Plans/Project_Output_Artifacts.md` (do not duplicate schemas here).
+- **Runtime visibility:** Active Interview stage/subagent blocks in chat must show the effective Persona, selection reason, effective platform, effective model, optional variant/effort, and any skipped unsupported Persona controls. Chat may render these inline or in expandable details, but the fields must remain visible without leaving the Interview surface.
+- **Activity-pane parity:** When Interview document creation or Multi-Pass Review is active, chat and the Interview activity pane must consume the same underlying run state. Chat may use conversational rendering, but it must expose the same runtime visibility fields as the activity pane for the active work block.
 
 ---
 
@@ -1451,6 +1472,10 @@ Examples:
 - `collaborator` -> `collaborator`
 
 If multiple Personas match, chat may request clarification. If exactly one reliable match exists, it should resolve without extra friction.
+If no Persona matches:
+- **Manual picker:** the selector must reject submission with an inline `Persona not found` validation state.
+- **Natural-language request:** chat must ask for clarification (for example, nearest matches or a prompt to pick a Persona) before starting a run; it must not silently pretend a request resolved when it did not.
+- **Persisted unresolved reference:** if a stored/manual/auto Persona reference reaches runtime and remains unresolved, the fallback contract in `Plans/Personas.md` §2.3 applies, and chat must surface that the run is proceeding without Persona context.
 
 ### 27.5 Chat-level controls
 
@@ -1485,3 +1510,5 @@ Examples:
 - Auto Persona mode must always disclose the resolved Persona and why it was chosen.
 - Current effective Persona/model/platform must be visible in the chat surface.
 - Subagent inline blocks must display effective Persona/model/platform rather than only generic role text.
+- Manual Persona selection must block submission when the selected Persona cannot be resolved.
+- Natural-language Persona requests that do not resolve to a single reliable match must produce clarification or fallback disclosure, not a silent wrong-Persona resolution.

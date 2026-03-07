@@ -45,6 +45,29 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 7. **PRD crew recommendations:** Extend PRD generator to analyze task complexity and suggest crews for tasks/subtasks that would benefit from multiple subagents. Add `crew_recommendation` field to PRD JSON schema. Include crew recommendations in generated PRD and plan markdown.
 8. **Document generation crews:** Use crews for document generation (e.g., technical-writer + knowledge-synthesizer + qa-expert crew) to coordinate document creation and ensure consistency.
 
+### 5.1 Interview artifact review loop: TargetedRevisionPass
+
+Interview-generated human-readable artifacts (for example phase documents, PRD, `AGENTS.md`, and related bundle docs shown in the Embedded Document Pane) use the same bundle review loop as the Requirements Doc Builder.
+
+**SSOT:**
+- Workflow semantics: `Plans/chain-wizard-flexibility.md` §5.5
+- Ownership boundary: `Plans/Crosswalk.md` §3.14
+- UI contract: `Plans/FinalGUISpec.md` §7.19.1
+
+**Required behavior:**
+1. After interview document generation completes, artifacts enter the shared document-bundle review flow (`draft` / `changes-requested` / `approved`).
+2. Users may add inline notes to interview artifacts using the same anchored-note model as Requirements Doc Builder bundles.
+3. Clicking **Resubmit with Notes** launches a targeted revision pass over all interview artifacts with `open` notes, or a user-selected subset of interview artifacts with `open` notes.
+4. The targeted revision pass MAY update artifact content and/or answer question notes without modifying artifact text.
+5. For each processed note, the pass MUST record an addressed explanation and an updated anchor when re-anchoring succeeds.
+6. The targeted revision pass MUST NOT trigger Multi-Pass Review.
+7. Final Multi-Pass Review remains a separate final-only gate and is enabled only when all bundle docs are `Approved/Done` and no notes remain `open`.
+8. Resume/recovery MUST restore document statuses, note states, selected revision scope, and any in-progress targeted revision pass from persisted bundle state.
+
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md, Primitive:Seglog, ContractName:Plans/FinalGUISpec.md
+
+This section is intentionally DRY: interview bundles reuse the same targeted revision lifecycle rather than defining a second review model.
+
 ### Phase 6: Testing & Refinement
 1. Test subagent invocations for each phase
 2. Validate research quality improvements

@@ -860,6 +860,8 @@ All three flows below MUST:
 (c) Provide full error handling — no dead ends; every error state has a resolution action.
 (d) Be accessible from both the app's main **File** menu and the **Dashboard**.
 
+The `Run Chain Wizard later` button dispatches **`UICommand:cmd.project.chain_wizard_open_deferred`**. The command payload MUST contain, at minimum: `project_id`, `wizard_id`, `default_intent`, `project_path`, optional `remote_repo_ref`, and optional `deferred_wizard_payload_ref`. It opens the wizard at the preloaded Project Setup review state instead of a blank intent picker.
+
 ContractRef: ContractName:Plans/chain-wizard-flexibility.md, PolicyRule:Decision_Policy.md§2
 
 ---
@@ -1132,6 +1134,7 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md, Invariant:INV-007, Invari
 | `cmd.project.new_local` | §D.2 | `{ name: string, parent_path: string, init_git?: boolean, preset?: string }` | `project.created` |
 | `cmd.project.new_github_repo` | §D.3 | `{ name: string, description?: string, private: boolean, ... }` | `project.created`, `git.clone.completed` |
 | `cmd.project.open` | §D.1, §D.2, §D.3 | `{ project_id: string }` | no persisted domain event (navigation) |
+| `cmd.project.chain_wizard_open_deferred` | §D.1, §D.2, §D.3 | `{ project_id: string, wizard_id: string, default_intent: string, project_path: string, remote_repo_ref?: object, deferred_wizard_payload_ref?: string }` | `wizard.opened`, `wizard.deferred_payload.loaded` |
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, Invariant:INV-007, Invariant:INV-011, Invariant:INV-012, Gate:GATE-010
 

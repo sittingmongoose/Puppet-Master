@@ -1,1 +1,38 @@
-PASS
+--- /home/sittingmongoose/Cursor/Puppet Master/Plans/newtools.md
++++ reconstructed
+@@ -1366,28 +1366,23 @@
+ 
+ **Local runtime flow (default):**
+ 1. Preflight checks: Docker engine reachable, compose file resolvable, required ports available.
+-2. If registry push is requested, validate DockerHub auth before launch and fail closed with actionable remediation if auth is missing or expired.
+-3. Resolve runtime settings from Settings > Advanced > Containers & Registry (runtime selector, binary path, compose path, project-name strategy, namespace/repository/tag defaults).
+-4. Launch path:
++2. Launch path:
+    - `docker compose up -d` for service stacks
+    - `docker buildx build` for deterministic image build path
+-5. Capture logs/health until preview or build completes.
+-6. Teardown with `docker compose down` when session policy requires cleanup.
+-7. Evidence/log capture MUST redact credentials, auth headers, and token-bearing environment variables before persistence.
++3. Capture logs/health until preview or build completes.
++4. Teardown with `docker compose down` when session policy requires cleanup.
+ 
+ **Settings contract (Slint Settings):**
+ - `Containers & Registry` section includes:
+   - runtime selector (`docker` default)
+-  - Docker binary path override and compose file/path defaults
+-  - compose project-name strategy (`auto`, `fixed`, `hash-based`)
+-  - DockerHub namespace/repository/tag defaults and tag templates
+-  - auth mode (`pat` default) plus validate/clear-token actions
++  - compose file/path defaults
++  - DockerHub namespace/repository/tag defaults
++  - auth mode (`pat` default)
+   - push policy (`manual` default; optional `after_build`)
+ 
+ **DockerHub auth/push contract:**
+ - Use PAT/token-based auth flow.
+-- Store tokens in the OS credential store only; never place tokens in project files, redb, or evidence logs.
+-- Validation status includes a timestamp and last-known registry host so the UI can explain what was verified.
++- Never place tokens in project files or evidence logs.
+ - Push results include digest and tag map in evidence and chat summary.
+ 
+ **CI template defaults for container publish:**

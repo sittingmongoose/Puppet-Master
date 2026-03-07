@@ -10,17 +10,17 @@ The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines lif
 
 - **Track active subagent:** Record which subagent is active for this phase (e.g., `product-manager` for Phase 1, `architect-reviewer` for Phase 2) in interview state.
 - **Inject phase context:** Add current phase status, previous phase decisions, detected GUI frameworks, and known gaps to subagent prompt or context.
-- **Load cross-session memory:** Load prior interview decisions (architecture, patterns, tech choices) from `.puppet-master/memory/` and inject into phase context.
-- **Prune stale state:** Clean up old interview state files older than threshold (e.g., 2 hours).
+- **Load cross-session memory:** Load prior interview decisions (architecture, patterns, tech choices) from canonical memory projections (seglog/redb-backed) and inject into phase context.
+- **Prune stale state:** Clean up or compact stale projections/checkpoints per canonical storage policy; do not rely on deleting ad-hoc files as the primary lifecycle mechanism.
 
 **AfterPhase hook responsibilities:**
 
 - **Validate subagent output format:** Check that phase subagent output matches structured handoff contract (see orchestrator plan §2).
 - **Track completion:** Update active subagent tracking, mark phase completion state.
-- **Save memory:** Persist architectural decisions, patterns, tech choices from this phase to `.puppet-master/memory/` (especially Architecture & Technology phase).
+- **Save memory:** Persist architectural decisions, patterns, tech choices from this phase to canonical interview memory storage (especially Architecture & Technology phase).
 - **Safe error handling:** Guarantee structured output even on hook failure.
 
-**Implementation:** Create `src/interview/hooks.rs` with `BeforePhaseHook` and `AfterPhaseHook` traits. Register hooks per phase type. Call hooks automatically at phase boundaries (before `process_ai_turn` for a new phase, after phase completion). Use the same hook registry pattern as orchestrator hooks (`HookRegistry`), but with interview-specific contexts.
+**Implementation:** Create `src/interview/hooks.rs` with `BeforePhaseHook` and `AfterPhaseHook` traits. Register hooks per phase type. Call hooks automatically at phase boundaries (before `process_ai_turn` for a new phase, after phase completion). Use the same hook registry pattern as orchestrator hooks (`HookRegistry`), but with interview-specific contexts. Any file-path examples in this section are legacy examples only; rewrite-era canonical persistence is seglog + redb projection.
 
 **Integration with interview orchestrator:**
 
@@ -83,7 +83,7 @@ if current_phase.phase_type == PhaseType::ArchitectureTechnology {
 
 ### 3. Cross-Session Memory for Interview Decisions
 
-**Concept:** Persist interview decisions (architecture, patterns, tech choices) to `.puppet-master/memory/` so future interview runs or orchestrator runs can load prior context.
+**Concept:** Persist interview decisions (architecture, patterns, tech choices) to canonical interview memory storage so future interview runs or orchestrator runs can load prior context.
 
 **What to persist from interview:**
 
@@ -99,37 +99,48 @@ if current_phase.phase_type == PhaseType::ArchitectureTechnology {
 
 **When to load:**
 
-- **At interview start:** Load all memory files and inject into Phase 1 (Scope & Goals) context.
+- **At interview start:** Load all canonical memory projections and inject into Phase 1 (Scope & Goals) context.
 - **At each phase start:** Load relevant memory (e.g., Architecture phase loads prior architectural decisions).
 
 **Integration:** Use the same `MemoryManager` from orchestrator plan (`src/core/memory.rs`). In interview orchestrator, call `memory_manager.save_architecture_decisions()`, `save_pattern()`, `save_tech_choice()` at phase completion. Call `memory_manager.load_all_for_prompt()` at interview start and inject into Phase 1 prompt.
 
+**Resume / checkpoint rule (normative):**
+- At minimum, persist `interview_id`, `wizard_id`, `phase_plan`, `current_phase_id`, `awaiting_user_answer`, `awaiting_final_approval`, `active_run_kind`, `active_validation_issue_ids[]`, and references to the latest staged artifact bundle / quality report.
+- Resume MUST reconstruct the same effective phase order and the same unresolved issue set; it MUST NOT silently regenerate a different plan on restore.
+
+ContractRef: Primitive:Seglog, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Project_Output_Artifacts.md
+
 ### 4. Active Agent Tracking for Interview Phases
 
 **Concept:** Track which subagent is currently active at each interview phase. Store in interview state and expose for logging, debugging, and audit trails.
+
+**Canonical visibility rule:**
+- The Interview surface, shared Agent Activity Pane, and any audit projection must display/request the same fields: `requested_persona_id`, `effective_persona_id`, `selection_reason`, `provider`, `model`, and skipped unsupported controls if any. This aligns Interview-specific visibility with the shared runtime-display rules added in `Plans/assistant-chat-design.md`, `Plans/FinalGUISpec.md`, and `Plans/Models_System.md`.
 
 **BeforePhase tracking responsibilities:**
 
 - **Determine active subagent:** Determine which subagent is active for this phase (from `SubagentConfig.phase_subagents` or override)
 - **Set active subagent:** Set `active_subagent` in `InterviewPhaseState` for current phase
 - **Update interview tracking:** Update `active_subagents` HashMap in interview orchestrator state
-- **Persist tracking state:** Write active subagent tracking to `.puppet-master/interview/active-subagents.json`
-- **Log tracking event:** Log active subagent change to `.puppet-master/logs/interview.log`
+- **Persist tracking state:** Persist active subagent tracking to canonical interview state projection (optionally mirrored to a debug file)
+- **Log tracking event:** Emit a structured runtime event for active-subagent changes
 
 **DuringPhase tracking responsibilities:**
 
 - **Monitor subagent status:** Monitor subagent execution status (active, waiting, blocked, complete)
 - **Update tracking on status change:** Update tracking state when subagent status changes
-- **Persist status changes:** Persist status changes to active-subagents.json
+- **Persist status changes:** Persist status changes to the same canonical projection
 
 **AfterPhase tracking responsibilities:**
 
 - **Clear active subagent:** Clear `active_subagent` in `InterviewPhaseState` when phase completes
 - **Update interview tracking:** Remove phase entry from `active_subagents` HashMap (or mark as complete)
-- **Persist final state:** Persist final tracking state to active-subagents.json
-- **Archive tracking:** Archive tracking data to `.puppet-master/memory/interview-{interview_id}-subagents.json`
+- **Persist final state:** Persist final tracking state to the canonical projection
+- **Archive tracking:** Archive tracking data via seglog/redb so audit/replay can query it without file crawling
 
 **Implementation:** Extend `src/interview/orchestrator.rs` and `src/interview/state.rs` to track active subagents.
+
+The code example below illustrates state shape only; concrete persistence should target canonical storage rather than treating JSON files as the source of truth.
 
 **Integration with interview orchestrator:**
 
@@ -216,10 +227,7 @@ impl InterviewOrchestrator {
     
     async fn persist_active_subagent_tracking(&self) -> Result<()> {
         let tracking_data = self.active_subagent_tracker.get_all_tracking().await?;
-        let path = self.config.working_directory.join(".puppet-master/interview/active-subagents.json");
-        
-        std::fs::create_dir_all(path.parent().unwrap())?;
-        std::fs::write(&path, serde_json::to_string_pretty(&tracking_data)?)?;
+        self.interview_state_store.persist_active_subagents(&tracking_data).await?;
         
         Ok(())
     }
@@ -282,7 +290,7 @@ impl ActiveSubagentTracker {
 
 - **Logging:** "Phase 2 (Architecture): active subagent = architect-reviewer"
 - **Debugging:** "Why did this phase fail? Check active subagent logs."
-- **Audit trails:** "Which subagents ran in this interview? See active-subagents.json."
+- **Audit trails:** "Which subagents ran in this interview? Query the active-subagent runtime projection."
 - **GUI display:** Show active subagent in interview phase status UI.
 
 ### 5. Remediation Loop for Interview Answer Validation

@@ -81,7 +81,7 @@ impl QASystem {
     pub async fn run_preflight(&self, tier_id: &str) -> Result<PreflightResult> {
         // Existing preflight logic
     }
-    
+
     /// Tier 2: Task Inspector (run after each task completion)
     pub async fn inspect_task(
         &self,
@@ -94,7 +94,7 @@ impl QASystem {
         // Check test coverage
         // Return: Complete or Incomplete with feedback
     }
-    
+
     /// Tier 3: Phase Inspector (run when phase completes)
     pub async fn inspect_phase(
         &self,
@@ -123,10 +123,10 @@ impl Orchestrator {
         context: &OrchestratorContext,
     ) -> Result<()> {
         // ... existing subagent selection and execution ...
-        
+
         // Execute subagent
         let result = self.execute_with_subagent(...).await?;
-        
+
         // Tier 2: Task Inspector (automatic after completion)
         if tier_node.tier_type == TierType::Subtask {
             let inspection = self.qa_system.inspect_task(
@@ -134,7 +134,7 @@ impl Orchestrator {
                 &task_file_path,
                 &latest_commit_hash,
             ).await?;
-            
+
             match inspection.status {
                 InspectionStatus::Complete => {
                     // Mark as ✅ Completed
@@ -146,13 +146,13 @@ impl Orchestrator {
                         &tier_node.id,
                         feedback,
                     ).await?;
-                    
+
                     // Prepend feedback to task file for next iteration
                     self.prepend_task_feedback(&tier_node.id, feedback).await?;
                 }
             }
         }
-        
+
         Ok(())
     }
 }
@@ -169,18 +169,18 @@ impl Orchestrator {
     async fn check_phase_completion(&self, phase_id: &str) -> Result<()> {
         let all_tasks_complete = self.progress_tracker
             .phase_tasks_complete(phase_id)?;
-        
+
         if all_tasks_complete {
             // Tier 3: Phase Inspector
             let phase_report = self.qa_system.inspect_phase(
                 phase_id,
                 &self.progress_tracker.get_phase_tasks(phase_id)?,
             ).await?;
-            
+
             // Advance to next phase
             self.progress_tracker.advance_phase().await?;
         }
-        
+
         Ok(())
     }
 }
@@ -198,23 +198,23 @@ impl Orchestrator {
         let pause_file = self.config.paths.workspace
             .join(".puppet-master")
             .join("PAUSE.md");
-        
+
         if pause_file.exists() {
             log::info!("Pause gate active - orchestrator halted");
             // Emit event for GUI
             return Ok(true);
         }
-        
+
         Ok(false)
     }
-    
+
     async fn run_loop(&self) -> Result<()> {
         loop {
             // Check pause gate first
             if self.check_pause_gate().await? {
                 return Ok(()); // Exit loop, wait for resume
             }
-            
+
             // ... rest of loop ...
         }
     }
@@ -242,7 +242,7 @@ impl Orchestrator {
         } else {
             format!("tier: {} iteration {} complete", tier_id, iteration)
         };
-        
+
         if is_rework {
             // Amend previous commit
             self.git_manager.commit_amend(&message).await?;
@@ -250,7 +250,7 @@ impl Orchestrator {
             // New commit
             self.git_manager.commit(&message).await?;
         }
-        
+
         Ok(())
     }
 }
@@ -267,10 +267,10 @@ async fn run_enhanced_loop(&self) -> Result<()> {
         if self.check_pause_gate().await? {
             return Ok(()); // Paused
         }
-        
+
         // Step 1: Read progress
         let progress = self.progress_tracker.read().await?;
-        
+
         // Step 2: Get next task (prioritize incomplete)
         let next_task = match progress.get_next_task() {
             Some(task) => task,
@@ -279,7 +279,7 @@ async fn run_enhanced_loop(&self) -> Result<()> {
                 break;
             }
         };
-        
+
         // Step 3: Execute with subagent
         // DRY REQUIREMENT: Subagent selection MUST use subagent_selector which uses subagent_registry
         let subagents = self.subagent_selector.select_for_tier(
@@ -287,13 +287,13 @@ async fn run_enhanced_loop(&self) -> Result<()> {
             &tier_context,
         );
         // DRY: Validate selected subagent names using subagent_registry::is_valid_subagent_name()
-        
+
         // DRY REQUIREMENT: execute_with_subagents MUST use platform_specs for platform-specific invocation
         let result = self.execute_with_subagents(
             &next_task.tier_node,
             &subagents,
         ).await?;
-        
+
         // Step 4: Run preflight (Tier 1 QA)
         let preflight_result = self.qa_system.run_preflight(&next_task.id).await?;
         if !preflight_result.passed {
@@ -303,14 +303,14 @@ async fn run_enhanced_loop(&self) -> Result<()> {
             ).await?;
             continue;
         }
-        
+
         // Step 5: Task Inspector (Tier 2 QA)
         let inspection = self.qa_system.inspect_task(
             &next_task.id,
             &next_task.file_path,
             &result.commit_hash,
         ).await?;
-        
+
         match inspection.status {
             InspectionStatus::Complete => {
                 self.progress_tracker.mark_completed(&next_task.id).await?;
@@ -324,7 +324,7 @@ async fn run_enhanced_loop(&self) -> Result<()> {
                 continue; // Re-loop to fix incomplete task
             }
         }
-        
+
         // Step 6: Check phase completion
         if self.progress_tracker.phase_complete(&next_task.phase)? {
             // Tier 3: Phase Inspector
@@ -332,12 +332,12 @@ async fn run_enhanced_loop(&self) -> Result<()> {
                 &next_task.phase,
                 &self.progress_tracker.get_phase_tasks(&next_task.phase)?,
             ).await?;
-            
+
             // Advance to next phase
             self.progress_tracker.advance_phase().await?;
         }
     }
-    
+
     Ok(())
 }
 ```
@@ -369,19 +369,19 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 orchestrator:
   # Autonomous QA loop enhancements
   enableAutonomousQaLoopPatterns: true
-  
+
   # Three-tier QA system
   qaSystem:
     enablePreflight: true
     enableTaskInspector: true
     enablePhaseInspector: true
-  
+
   # Progress tracking
   progressTracking:
     useVisualStatus: true  # ⬜ 🔄 ✅ 🔴
     trackInspectorFeedback: true
     prependFeedbackToTasks: true
-  
+
   # Commit strategy
   commits:
     amendForRework: true

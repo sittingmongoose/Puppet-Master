@@ -58,6 +58,28 @@ Each surface should expose, at minimum:
 - platform/model display
 - selection reason
 - manual override control or lock/unlock affordance
+- skipped unsupported Persona controls when relevant
+
+Interview/Builder visibility rule:
+- The Interview chat surface, Interview activity pane, and Builder activity pane MUST display the same effective-runtime fields for the active run block, even if one surface uses a more compact layout than another.
+
+#### 17.4.1 Persona mode semantics
+
+- **Auto:** Resolver selects the Persona from surface defaults, mappings, and runtime context. User sees the chosen Persona and reason string but does not pin a manual choice.
+- **Manual:** User explicitly selects a Persona for the next eligible run/turn on that surface. Manual selection overrides Auto resolution until cleared or replaced.
+- **Hybrid:** Resolver proposes a Persona, but the user may override it before execution while still seeing the automatic recommendation and reason text.
+- Mode changes apply only to the next eligible run/turn or queued execution on that surface; they do not retroactively change an active run already in progress.
+
+#### 17.4.2 Selection reason and override behavior
+
+- The **effective Persona display** must show the resolved Persona name plus a one-line reason string such as `User requested`, `Stage default`, `Provider fallback`, or `Mapped from Interview phase`.
+- Every surface needs a compact **Override Persona** affordance (dropdown, popover, or button+menu) with `Set override`, `Clear override`, and `Return to Auto` actions.
+- When overrides are unavailable for the current provider or run state, the control remains visible but locked/disabled with a tooltip explaining why.
+
+#### 17.4.3 Platform/model display scope
+
+- The `platform/model display` requirement may reuse the existing status-bar/footer platform and model controls where those already exist; the surface must not introduce conflicting duplicate controls.
+- If a user overrides model/platform independently from the Persona, the UI must show both the requested Persona and the effective platform/model outcome.
 
 ### 17.5 Runtime display requirements
 
@@ -95,6 +117,14 @@ If a control is skipped, the UI must disclose it in at least one of:
 - tooltip,
 - activity detail popover,
 - run detail/history panel.
+
+#### 17.7.1 Disclosure mechanics
+
+- **Honored** = requested control applied as requested. **Skipped** = ignored entirely. **Clamped** = partially honored but changed to a supported value/range.
+- Every disclosure must include: control name, requested value, effective value (if any), and human-readable reason.
+- When a limitation is known before execution, render the control disabled or warning-badged in place; do not let the user believe it is actionable.
+- When a limitation is only discovered at runtime, surface the disclosure inline on the active surface **and** persist the same information in run detail/history so it is auditable later.
+- Disclosures must name the provider explicitly (for example: `Claude Code ignored reasoning_effort=high; provider does not support that control on this model`).
 
 ### 17.8 Interview/Builder/Orchestrator mapping editors
 

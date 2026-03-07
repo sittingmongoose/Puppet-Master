@@ -1,5 +1,14 @@
 ## Platform-Specific Subagent Invocation
 
+Normative rule: Interview resolves an **effective Persona** first, then routes through the Provider facade / platform runner. Platform-specific prompt syntax or agent-export files are implementation details behind that facade. The Interview runtime MUST NOT require provider-native agent files to exist in the target project in order to run.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Models_System.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+Requested/effective contract:
+- Inputs: `requested_persona_id`, stage, phase_id, provider/platform preferences, capability constraints.
+- Outputs: `effective_persona_id`, `provider`, `model`, `selection_reason`, `invocation_mode`.
+- Persist these values in runtime telemetry and expose them in the Interview UI/activity pane.
+
 ### Recent Release Notes (February 2026)
 
 #### Cursor CLI (v2.5 - Feb 17, 2026)

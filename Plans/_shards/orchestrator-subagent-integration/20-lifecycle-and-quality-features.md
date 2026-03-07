@@ -2,6 +2,15 @@
 
 This section defines lifecycle hooks, structured handoff contracts, remediation loops, and cross-session persistence that enhance reliability and quality across **all providers** (Cursor, Codex, Claude Code, Gemini, Copilot). These features complement the start/end verification above and can be implemented using platform-native hooks where available, or via orchestrator-level middleware for platforms without native hooks.
 
+Canonical persistence note:
+- Seglog/redb are the authoritative persistence layers for hook execution, QA loop progress, crew state, and active-tier/runtime snapshots.
+- Examples under `.puppet-master/state/` in this section are derived/debug mirrors only unless another SSOT explicitly promotes them.
+
+Autonomous QA loop contract:
+- When end verification finds blocking Critical/Major issues that are retryable, orchestrator MAY start a bounded QA remediation cycle.
+- Each cycle MUST emit `run.qa_cycle_started` and `run.qa_cycle_completed`.
+- Warning-only findings attach evidence but do not create alternate terminal node statuses.
+
 ### 1. Hook-Based Lifecycle Middleware (BeforeTier/AfterTier)
 
 **Concept:** Puppet Master should support **BeforeTier** and **AfterTier** hooks that run automatically at tier boundaries (Phase, Task, Subtask, Iteration). Hooks handle lifecycle concerns (tracking, state management, validation) separately from execution logic.
@@ -54,7 +63,7 @@ pub enum CompletionStatus {
 pub trait BeforeTierHook: Send + Sync {
     /// Execute hook before tier starts
     fn execute(&self, ctx: &BeforeTierContext) -> Result<BeforeTierResult>;
-    
+
     /// Hook name for logging/debugging
     fn name(&self) -> &str;
 }
@@ -63,7 +72,7 @@ pub trait BeforeTierHook: Send + Sync {
 pub trait AfterTierHook: Send + Sync {
     /// Execute hook after tier completes
     fn execute(&self, ctx: &AfterTierContext) -> Result<AfterTierResult>;
-    
+
     /// Hook name for logging/debugging
     fn name(&self) -> &str;
 }
@@ -103,22 +112,22 @@ impl HookRegistry {
             after_tier_hooks: Vec::new(),
         }
     }
-    
+
     pub fn register_before_tier(&mut self, hook: Box<dyn BeforeTierHook>) {
         self.before_tier_hooks.push(hook);
     }
-    
+
     pub fn register_after_tier(&mut self, hook: Box<dyn AfterTierHook>) {
         self.after_tier_hooks.push(hook);
     }
-    
+
     /// Execute all BeforeTier hooks (safe wrapper)
     pub fn execute_before_tier(&self, ctx: &BeforeTierContext) -> Result<BeforeTierResult> {
         let mut active_subagent = None;
         let mut injected_contexts = Vec::new();
         let mut block = false;
         let mut block_reason = None;
-        
+
         for hook in &self.before_tier_hooks {
             match safe_hook_main(|| hook.execute(ctx)) {
                 Ok(result) => {
@@ -140,7 +149,7 @@ impl HookRegistry {
                 }
             }
         }
-        
+
         Ok(BeforeTierResult {
             active_subagent,
             injected_context: if injected_contexts.is_empty() {
@@ -152,14 +161,14 @@ impl HookRegistry {
             block_reason,
         })
     }
-    
+
     /// Execute all AfterTier hooks (safe wrapper)
     pub fn execute_after_tier(&self, ctx: &AfterTierContext) -> Result<AfterTierResult> {
         let mut validation_passed = true;
         let mut validation_error = None;
         let mut request_retry = false;
         let mut retry_reason = None;
-        
+
         for hook in &self.after_tier_hooks {
             match safe_hook_main(|| hook.execute(ctx)) {
                 Ok(result) => {
@@ -177,7 +186,7 @@ impl HookRegistry {
                 }
             }
         }
-        
+
         Ok(AfterTierResult {
             validation_passed,
             validation_error,
@@ -210,7 +219,7 @@ In `src/core/orchestrator.rs`, modify `execute_tier`:
 ```rust
 async fn execute_tier(&self, tier_id: &str) -> Result<()> {
     // ... existing state transition logic ...
-    
+
     // BEFORE TIER: Execute BeforeTier hooks
     let before_ctx = BeforeTierContext {
         tier_id: tier_id.to_string(),
@@ -221,29 +230,29 @@ async fn execute_tier(&self, tier_id: &str) -> Result<()> {
         config_snapshot: serde_json::to_value(&tier_config)?,
         known_gaps: self.get_known_gaps_for_tier(tier_type)?,
     };
-    
+
     let before_result = self.hook_registry.execute_before_tier(&before_ctx)?;
-    
+
     if before_result.block {
         return Err(anyhow!("Tier {} blocked by hook: {}", tier_id, before_result.block_reason.unwrap_or_default()));
     }
-    
+
     // Update TierContext with active subagent
     if let Some(subagent) = before_result.active_subagent {
         self.update_tier_context(tier_id, |ctx| {
             ctx.active_subagent = Some(subagent);
         })?;
     }
-    
+
     // Inject context into prompt if provided
     let prompt = if let Some(injected) = before_result.injected_context {
         format!("{}\n\n{}", prompt, injected)
     } else {
         prompt
     };
-    
+
     // ... existing iteration execution ...
-    
+
     // AFTER TIER: Execute AfterTier hooks
     let after_ctx = AfterTierContext {
         tier_id: tier_id.to_string(),
@@ -257,9 +266,9 @@ async fn execute_tier(&self, tier_id: &str) -> Result<()> {
         },
         iteration_count: attempt,
     };
-    
+
     let after_result = self.hook_registry.execute_after_tier(&after_ctx)?;
-    
+
     if !after_result.validation_passed {
         if after_result.request_retry && attempt < max_iterations {
             // Retry with format instruction
@@ -272,7 +281,7 @@ async fn execute_tier(&self, tier_id: &str) -> Result<()> {
             // Mark tier as complete with warnings
         }
     }
-    
+
     // ... rest of tier completion logic ...
 }
 ```
@@ -414,10 +423,10 @@ pub struct ParsedOutput {
 // Add to OutputParser trait:
 pub trait OutputParser: Send + Sync {
     // ... existing methods ...
-    
+
     /// Parse structured subagent output (platform-specific)
     fn parse_subagent_output(&self, stdout: &str, stderr: &str) -> Result<SubagentOutput, ValidationError>;
-    
+
     /// Extract structured output from text (fallback)
     fn extract_subagent_output_from_text(&self, stdout: &str, stderr: &str) -> Result<SubagentOutput, ValidationError>;
 }
@@ -432,17 +441,17 @@ impl OutputParser for CursorOutputParser {
         // Implementation note: Use platform_specs to determine expected output format for this platform
         let json: serde_json::Value = serde_json::from_str(stdout)
             .map_err(|e| ValidationError::JsonParse(e))?;
-        
+
         // Extract structured fields
         let task_report = json.get("task_report")
             .and_then(|v| v.as_str())
             .ok_or_else(|| ValidationError::MissingField("task_report".to_string()))?
             .to_string();
-        
+
         let downstream_context = json.get("downstream_context")
             .and_then(|v| v.as_str())
             .map(String::from);
-        
+
         let findings = json.get("findings")
             .and_then(|v| v.as_array())
             .map(|arr| {
@@ -453,20 +462,20 @@ impl OutputParser for CursorOutputParser {
                     .collect()
             })
             .unwrap_or_default();
-        
+
         Ok(SubagentOutput {
             task_report,
             downstream_context,
             findings,
         })
     }
-    
+
     fn extract_subagent_output_from_text(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
         // Fallback: extract from text output
         // Look for structured markers (e.g., "Task Report:", "Findings:", etc.)
         // Or use LLM to extract structured data from text
         // Implementation depends on platform output format
-        
+
         // Simple text extraction (can be enhanced with LLM)
         let task_report = if let Some(start) = stdout.find("Task Report:") {
             let end = stdout[start..].find("\n\n").unwrap_or(stdout.len() - start);
@@ -474,7 +483,7 @@ impl OutputParser for CursorOutputParser {
         } else {
             stdout.to_string() // Fallback: use entire output as task report
         };
-        
+
         Ok(SubagentOutput {
             task_report,
             downstream_context: None,
@@ -526,7 +535,7 @@ impl HandoffValidator {
                         "Output is not valid JSON. Please output structured JSON format.".to_string()
                     ));
                 }
-                
+
                 // Max retries reached, try text extraction as fallback
                 self.parser.extract_subagent_output_from_text(stdout, stderr)
                     .map_err(|e| ValidationError::TextExtraction(format!("Failed to extract from text: {}", e)))
@@ -542,25 +551,25 @@ impl HandoffValidator {
             }
         }
     }
-    
+
     fn validate_required_fields(&self, output: &SubagentOutput) -> Result<(), ValidationError> {
         // Validate task_report is not empty
         if output.task_report.trim().is_empty() {
             return Err(ValidationError::MissingField("task_report".to_string()));
         }
-        
+
         // Validate findings have required fields
         for finding in &output.findings {
             if finding.description.trim().is_empty() {
                 return Err(ValidationError::MissingField("finding.description".to_string()));
             }
-            
+
             // Validate severity is valid
             match finding.severity {
                 Severity::Critical | Severity::Major | Severity::Minor | Severity::Info => {}
             }
         }
-        
+
         Ok(())
     }
 }
@@ -584,7 +593,7 @@ impl Orchestrator {
     ) -> Result<SubagentOutput> {
         let runner = self.get_platform_runner(platform)?;
         let mut retry_count = 0;
-        
+
         loop {
             // Execute subagent
             let output = runner.execute_with_subagent(
@@ -592,7 +601,7 @@ impl Orchestrator {
                 prompt,
                 &context.workspace,
             ).await?;
-            
+
             // Validate handoff output
             let validator = HandoffValidator::new(platform)?;
             match validator.validate_subagent_output(
@@ -613,14 +622,14 @@ impl Orchestrator {
                         tracing::warn!("Handoff validation failed after {} retries: {}", retry_count, msg);
                         return Ok(validator.extract_partial_output(&output.stdout, &output.stderr)?);
                     }
-                    
+
                     // Update prompt with format instruction
                     let updated_prompt = format!(
                         "{}\n\n**IMPORTANT:** Output must be valid JSON matching this format:\n{}\n\nCurrent output was not valid JSON. Please retry with structured JSON output.",
                         prompt,
                         serde_json::to_string_pretty(&SubagentOutput::example())?
                     );
-                    
+
                     // Continue loop with updated prompt
                     continue;
                 }
@@ -643,7 +652,7 @@ impl Orchestrator {
                     .collect()
             })
             .unwrap_or_default();
-        
+
         Ok(SubagentOutput {
             task_report,
             downstream_context,
@@ -661,7 +670,7 @@ impl OutputParser for CodexOutputParser {
         let mut task_report = String::new();
         let mut downstream_context = None;
         let mut findings = Vec::new();
-        
+
         for line in stdout.lines() {
             if let Ok(json) = serde_json::from_str::<serde_json::Value>(line) {
                 // Look for Turn event with structured output
@@ -679,7 +688,7 @@ impl OutputParser for CodexOutputParser {
                         }
                     }
                 }
-                
+
                 // Aggregate findings from multiple events
                 if let Some(f) = json.get("findings").and_then(|v| v.as_array()) {
                     for finding_val in f {
@@ -690,12 +699,12 @@ impl OutputParser for CodexOutputParser {
                 }
             }
         }
-        
+
         // If no structured output found, try to extract from text
         if task_report.is_empty() {
             return Err(ValidationError::TextExtraction("No structured output found in JSONL".to_string()));
         }
-        
+
         Ok(SubagentOutput {
             task_report,
             downstream_context,
@@ -711,29 +720,29 @@ impl OutputParser for ClaudeOutputParser {
         // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Claude outputs JSON"
         // Claude outputs JSON with --output-format json -- format from platform_specs
         let json: serde_json::Value = serde_json::from_str(stdout)?;
-        
+
         // Claude wraps output in "result" -> "content" or direct fields
         let content = json.get("result")
             .and_then(|r| r.get("content"))
             .or_else(|| Some(&json))
             .ok_or_else(|| ValidationError::MissingField("result.content".to_string()))?;
-        
+
         // Try direct parse
         if let Ok(output) = serde_json::from_value::<SubagentOutput>(content.clone()) {
             return Ok(output);
         }
-        
+
         // Fallback: extract fields manually
         let task_report = content.get("task_report")
             .and_then(|v| v.as_str())
             .or_else(|| content.as_str())
             .ok_or_else(|| ValidationError::MissingField("task_report".to_string()))?
             .to_string();
-        
+
         let downstream_context = content.get("downstream_context")
             .and_then(|v| v.as_str())
             .map(String::from);
-        
+
         let findings = content.get("findings")
             .and_then(|v| v.as_array())
             .map(|arr| {
@@ -742,7 +751,7 @@ impl OutputParser for ClaudeOutputParser {
                     .collect()
             })
             .unwrap_or_default();
-        
+
         Ok(SubagentOutput {
             task_report,
             downstream_context,
@@ -758,7 +767,7 @@ impl OutputParser for GeminiOutputParser {
         // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Gemini outputs JSON"
         // Gemini outputs JSON with --output-format json -- format from platform_specs
         let json: serde_json::Value = serde_json::from_str(stdout)?;
-        
+
         // Gemini wraps in "candidates" -> [0] -> "content" -> "parts" -> [0] -> "text"
         let text = json.get("candidates")
             .and_then(|c| c.as_array())
@@ -770,12 +779,12 @@ impl OutputParser for GeminiOutputParser {
             .and_then(|p| p.get("text"))
             .and_then(|t| t.as_str())
             .ok_or_else(|| ValidationError::MissingField("candidates[0].content.parts[0].text".to_string()))?;
-        
+
         // Try to parse text as JSON (Gemini may output JSON as text)
         if let Ok(output) = serde_json::from_str::<SubagentOutput>(text) {
             return Ok(output);
         }
-        
+
         // Fallback: extract from text patterns
         Err(ValidationError::TextExtraction("Gemini text output requires pattern extraction".to_string()))
     }
@@ -788,26 +797,26 @@ impl OutputParser for CopilotOutputParser {
         // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Copilot outputs text"
         // Copilot outputs text (no JSON) -- format from platform_specs
         // Extract structured sections via regex/pattern matching
-        
+
         let combined = format!("{stdout}\n{stderr}");
-        
+
         // Pattern: ## Task Report\n\n...content...
         let task_report_re = Regex::new(r"(?s)##\s*Task\s*Report\s*\n\n(.*?)(?=\n##|\z)").unwrap();
         let task_report = task_report_re.captures(&combined)
             .and_then(|cap| cap.get(1))
             .map(|m| m.as_str().trim().to_string())
             .ok_or_else(|| ValidationError::MissingField("Task Report section".to_string()))?;
-        
+
         // Pattern: ## Downstream Context\n\n...content... (optional)
         let downstream_re = Regex::new(r"(?s)##\s*Downstream\s*Context\s*\n\n(.*?)(?=\n##|\z)").unwrap();
         let downstream_context = downstream_re.captures(&combined)
             .and_then(|cap| cap.get(1))
             .map(|m| m.as_str().trim().to_string());
-        
+
         // Pattern: ## Findings\n\n- [Severity] Category: Description (file:line) Suggestion
         let findings_re = Regex::new(r"(?m)^-\s*\[(Critical|Major|Minor|Info)\]\s*(\w+):\s*(.*?)(?:\s*\(([^:]+):(\d+)\))?(?:\s*Suggestion:\s*(.*))?$").unwrap();
         let mut findings = Vec::new();
-        
+
         if let Some(findings_section) = Regex::new(r"(?s)##\s*Findings\s*\n\n(.*?)(?=\n##|\z)").unwrap().captures(&combined) {
             for cap in findings_re.captures_iter(findings_section.get(1).unwrap().as_str()) {
                 let severity = match cap.get(1).unwrap().as_str() {
@@ -817,7 +826,7 @@ impl OutputParser for CopilotOutputParser {
                     "Info" => Severity::Info,
                     _ => continue,
                 };
-                
+
                 findings.push(Finding {
                     severity,
                     category: cap.get(2).unwrap().as_str().to_string(),
@@ -828,7 +837,7 @@ impl OutputParser for CopilotOutputParser {
                 });
             }
         }
-        
+
         Ok(SubagentOutput {
             task_report,
             downstream_context,
@@ -873,10 +882,10 @@ impl OutputParser for CursorOutputParser {
     fn parse(&self, stdout: &str, stderr: &str) -> ParsedOutput {
         let mut output = ParsedOutput::new(stdout.to_string());
         // ... existing parsing ...
-        
+
         // Try to parse structured subagent output
         output.subagent_output = self.parse_subagent_output(stdout, stderr).ok();
-        
+
         output
     }
 }
@@ -915,7 +924,7 @@ impl RemediationLoop {
     pub fn new(max_retries: u32, orchestrator: Arc<Orchestrator>) -> Self {
         Self { max_retries, orchestrator }
     }
-    
+
     // DRY:FN:run — Run remediation loop for a tier
     // DRY REQUIREMENT: Reviewer subagent name MUST come from subagent_registry — NEVER hardcode "code-reviewer"
     /// Run remediation loop for a tier
@@ -929,49 +938,49 @@ impl RemediationLoop {
             .iter()
             .filter(|f| matches!(f.severity, Severity::Critical | Severity::Major))
             .collect();
-        
+
         if critical_major.is_empty() {
             // Only Minor/Info findings: log and proceed
             self.log_findings(&reviewer_output.findings);
             return Ok(RemediationResult::Complete);
         }
-        
+
         // Critical/Major findings: enter remediation loop
         let mut retry_count = 0;
         let mut current_findings = critical_major.clone();
-        
+
         while retry_count < self.max_retries {
             // Mark tier as incomplete
             self.orchestrator.mark_tier_incomplete(tier_id, &current_findings).await?;
-            
+
             // Build remediation prompt
             let remediation_prompt = self.build_remediation_prompt(&current_findings);
-            
+
             // DRY REQUIREMENT: Overseer and reviewer subagent names MUST come from subagent_registry — NEVER hardcode names
             // Re-run overseer subagent with remediation prompt
             // Implementation note: re_run_overseer_with_prompt MUST use subagent_registry to get overseer subagent name
             let overseer_result = self.orchestrator
                 .re_run_overseer_with_prompt(tier_id, &remediation_prompt)
                 .await?;
-            
+
             // DRY REQUIREMENT: Reviewer subagent name MUST come from subagent_registry::get_reviewer_subagent_for_tier()
             // Re-run reviewer subagent
             // Implementation note: re_run_reviewer MUST use subagent_registry to get reviewer subagent name
             let reviewer_result = self.orchestrator
                 .re_run_reviewer(tier_id)
                 .await?;
-            
+
             // Parse new findings
             let new_critical_major: Vec<_> = reviewer_result.findings
                 .iter()
                 .filter(|f| matches!(f.severity, Severity::Critical | Severity::Major))
                 .collect();
-            
+
             if new_critical_major.is_empty() {
                 // All Critical/Major resolved
                 return Ok(RemediationResult::Resolved);
             }
-            
+
             // Check if findings changed (progress made)
             if self.findings_unchanged(&current_findings, &new_critical_major) {
                 retry_count += 1;
@@ -983,13 +992,13 @@ impl RemediationLoop {
                 // Progress made, reset retry count
                 retry_count = 0;
             }
-            
+
             current_findings = new_critical_major;
         }
-        
+
         Ok(RemediationResult::Escalate(current_findings))
     }
-    
+
     fn build_remediation_prompt(&self, findings: &[&Finding]) -> String {
         let mut prompt = "CRITICAL/Major findings must be fixed before tier completion:\n\n".to_string();
         for finding in findings {
@@ -1013,7 +1022,7 @@ impl RemediationLoop {
         prompt.push_str("\nPlease fix these issues and re-run verification.");
         prompt
     }
-    
+
     fn findings_unchanged(&self, old: &[&Finding], new: &[&Finding]) -> bool {
         // Compare finding descriptions and locations
         old.len() == new.len() && old.iter().all(|o| {
@@ -1024,7 +1033,7 @@ impl RemediationLoop {
             })
         })
     }
-    
+
     fn log_findings(&self, findings: &[Finding]) {
         for finding in findings {
             log::info!(
@@ -1171,7 +1180,7 @@ impl MemoryManager {
         });
         Self { memory_dir }
     }
-    
+
     // DRY:FN:save_architecture — Save architectural decision
     /// Save architectural decision
     pub async fn save_architecture(&self, decision: ArchitecturalDecision) -> Result<()> {
@@ -1180,7 +1189,7 @@ impl MemoryManager {
         arch.last_updated = Utc::now();
         self.save_file("architecture.json", &arch).await
     }
-    
+
     /// Load architectural decisions
     pub async fn load_architecture(&self) -> Result<ArchitectureMemory> {
         self.load_file("architecture.json").await
@@ -1189,7 +1198,7 @@ impl MemoryManager {
                 last_updated: Utc::now(),
             })
     }
-    
+
     /// Save pattern
     pub async fn save_pattern(&self, pattern: EstablishedPattern) -> Result<()> {
         let mut patterns = self.load_patterns().await?;
@@ -1197,7 +1206,7 @@ impl MemoryManager {
         patterns.last_updated = Utc::now();
         self.save_file("patterns.json", &patterns).await
     }
-    
+
     /// Load patterns
     pub async fn load_patterns(&self) -> Result<PatternsMemory> {
         self.load_file("patterns.json").await
@@ -1206,7 +1215,7 @@ impl MemoryManager {
                 last_updated: Utc::now(),
             })
     }
-    
+
     /// Save tech choice
     pub async fn save_tech_choice(&self, choice: TechChoice) -> Result<()> {
         let mut tech = self.load_tech_choices().await?;
@@ -1214,7 +1223,7 @@ impl MemoryManager {
         tech.last_updated = Utc::now();
         self.save_file("tech-choices.json", &tech).await
     }
-    
+
     /// Load tech choices
     pub async fn load_tech_choices(&self) -> Result<TechChoicesMemory> {
         self.load_file("tech-choices.json").await
@@ -1223,7 +1232,7 @@ impl MemoryManager {
                 last_updated: Utc::now(),
             })
     }
-    
+
     /// Save pitfall
     pub async fn save_pitfall(&self, pitfall: Pitfall) -> Result<()> {
         let mut pitfalls = self.load_pitfalls().await?;
@@ -1231,7 +1240,7 @@ impl MemoryManager {
         pitfalls.last_updated = Utc::now();
         self.save_file("pitfalls.json", &pitfalls).await
     }
-    
+
     /// Load pitfalls
     pub async fn load_pitfalls(&self) -> Result<PitfallsMemory> {
         self.load_file("pitfalls.json").await
@@ -1240,16 +1249,16 @@ impl MemoryManager {
                 last_updated: Utc::now(),
             })
     }
-    
+
     /// Load all memory and format for prompt injection
     pub async fn load_all_for_prompt(&self) -> Result<String> {
         let arch = self.load_architecture().await?;
         let patterns = self.load_patterns().await?;
         let tech = self.load_tech_choices().await?;
         let pitfalls = self.load_pitfalls().await?;
-        
+
         let mut prompt = String::new();
-        
+
         if !arch.decisions.is_empty() {
             prompt.push_str("## Previous Architectural Decisions\n\n");
             for decision in &arch.decisions {
@@ -1260,7 +1269,7 @@ impl MemoryManager {
             }
             prompt.push('\n');
         }
-        
+
         if !patterns.patterns.is_empty() {
             prompt.push_str("## Established Patterns\n\n");
             for pattern in &patterns.patterns {
@@ -1268,7 +1277,7 @@ impl MemoryManager {
             }
             prompt.push('\n');
         }
-        
+
         if !tech.choices.is_empty() {
             prompt.push_str("## Tech Choices\n\n");
             for choice in &tech.choices {
@@ -1280,7 +1289,7 @@ impl MemoryManager {
             }
             prompt.push('\n');
         }
-        
+
         if !pitfalls.pitfalls.is_empty() {
             prompt.push_str("## Known Pitfalls to Avoid\n\n");
             for pitfall in &pitfalls.pitfalls {
@@ -1290,10 +1299,10 @@ impl MemoryManager {
                 }
             }
         }
-        
+
         Ok(prompt)
     }
-    
+
     async fn save_file<T: Serialize>(&self, filename: &str, data: &T) -> Result<()> {
         std::fs::create_dir_all(&self.memory_dir)?;
         let path = self.memory_dir.join(filename);
@@ -1301,7 +1310,7 @@ impl MemoryManager {
         std::fs::write(path, json)?;
         Ok(())
     }
-    
+
     async fn load_file<T: for<'de> Deserialize<'de>>(&self, filename: &str) -> Result<T> {
         let path = self.memory_dir.join(filename);
         let json = std::fs::read_to_string(path)?;

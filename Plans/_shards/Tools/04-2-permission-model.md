@@ -28,6 +28,34 @@ Config is stored in TOML files at deterministic paths (global: `~/.config/puppet
 
 FileSafe runs **in addition to** tool permissions. A tool may be **allowed** by permission but still **blocked** by FileSafe. Tool permission = "may the agent call this tool?"; FileSafe = "may this specific invocation proceed?". See `Plans/FileSafe.md`. The policy engine applies both layers in order: permission first, then FileSafe. Full integration order: §10.6.
 
+### 2.4.1 Central policy engine contract
+
+Every agent-usable tool attempt MUST pass through one canonical policy engine that resolves permission, approval/HITL, FileSafe, execution, and result normalization.
+
+Canonical order:
+1. resolve tool identity and permission
+2. evaluate `allow` / `ask` / `deny`
+3. if `ask`, resolve approval or headless fallback
+4. apply FileSafe and other invocation validation
+5. execute or reject
+6. normalize the terminal outcome for persistence/analytics
+
+At minimum, the normalized terminal outcome set MUST distinguish:
+- `allowed_succeeded`
+- `allowed_runtime_error`
+- `permission_denied`
+- `user_declined`
+- `headless_ask_denied`
+- `filesafe_blocked`
+- `validation_blocked`
+- `cancelled`
+- `timed_out`
+- `post_scan_failure`
+
+This document owns the normalized tool-result taxonomy and policy order. Provider docs emit observations; storage docs persist normalized results.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/CLI_Bridged_Providers.md
+
 ### 2.5 Cross-plan references
 
 | Plan | Relation to tool permissions |

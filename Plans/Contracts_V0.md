@@ -62,6 +62,10 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:Spec_Lock.
 
 **Compatibility:** Readers MAY accept `EventEnvelopeV1` during transition; writers MUST emit `EventRecord` for persisted seglog. (See §1.2.)
 
+**Run-event minimums (canonical):**
+- `run.started` persisted via `EventRecord` MUST include `mode`, `strategy`, and `strategy_resolution_reason` in `payload`.
+- `run.completed` persisted via `EventRecord` MUST include `status` and canonical `outcome`, and SHOULD include `stop_reason`, `budget_key`, `budget_limit`, and `observed_value` when termination was budget- or policy-driven.
+
 ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, PolicyRule:Decision_Policy.md§1
 
 ---
@@ -84,6 +88,12 @@ Rules:
 - Readers MUST tolerate both envelopes; projectors SHOULD upgrade in-memory to `EventRecord` form.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#EventEnvelopeV1, PolicyRule:Decision_Policy.md§2
+
+---
+
+**Payload schema ownership:** `Contracts_V0.md` owns the canonical persisted envelope (`EventRecord`) and cross-cutting auth/event contracts. Concrete persisted event-type payload schemas are registered in `Plans/storage-plan.md` so writers, projectors, analytics, and generated docs share one payload SSOT.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord
 
 ---
 
@@ -162,6 +172,67 @@ Emitted when policy blocks (deny) or the user declines an ask.
 ```
 
 **SSOT tie-in:** Payload fields and semantics are SSOT in `Plans/Tools.md` (§8.0) and `Plans/storage-plan.md` (§2.2). This file defines the event-type names as a contract.
+
+### 3.3 Requirements quality events
+
+Requirements-quality workflow state MUST be represented in the persisted event stream with stable event types.
+
+ContractRef: EventType:requirements.quality_report.generated, EventType:requirements.clarification_requested, EventType:requirements.clarification_resolved, SchemaID:pm.requirements_quality_report.schema.v1
+
+#### `requirements.quality_report.generated`
+Emitted when Pass 1 or Pass 2 writes the canonical quality report artifact.
+
+Minimum payload:
+```json
+{
+  "wizard_id": "WIZ-...",
+  "report_path": ".puppet-master/project/traceability/requirements_quality_report.json",
+  "verdict": "PASS",
+  "needs_user_clarification_count": 0,
+  "question_ids": []
+}
+```
+
+#### `requirements.clarification_requested`
+Emitted when the workflow enters `attention_required` or `blocked`.
+
+Minimum payload:
+```json
+{
+  "wizard_id": "WIZ-...",
+  "wizard_step": "requirements",
+  "report_path": ".puppet-master/project/traceability/requirements_quality_report.json",
+  "thread_id": "TH-...",
+  "question_ids": ["Q-0001"]
+}
+```
+
+#### `requirements.clarification_resolved`
+Emitted when user answers are accepted and a subsequent report clears all clarification items.
+
+Minimum payload:
+```json
+{
+  "wizard_id": "WIZ-...",
+  "thread_id": "TH-...",
+  "report_path": ".puppet-master/project/traceability/requirements_quality_report.json",
+  "previous_question_ids": ["Q-0001"],
+  "verdict": "PASS"
+}
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/chain-wizard-flexibility.md#15-requirements-quality-escalation-semantics
+
+### 3.4 Tool-specific payload extensions
+
+The minimum payloads in §§3.1–3.2 apply to all tools. Individual tool contracts MAY attach additional fields under `payload.meta` as long as the common fields remain present.
+
+- **`capabilities.get`** (`tool.invoked`): MAY include `meta.capability_count`, `meta.enabled_count`, and `meta.disabled_count` so analytics and debugging can explain what snapshot was returned, but the authoritative capability list remains the tool result payload defined in `Plans/Media_Generation_and_Capabilities.md`.
+- **`media.generate`** (`tool.invoked`): MAY include `meta.request_id`, `meta.kind`, `meta.backend`, `meta.artifacts_count`, and `meta.error_code` (when `success = false`) so telemetry can correlate generation runs with artifact directories and stable error codes. The canonical request/response contract remains in `Plans/Media_Generation_and_Capabilities.md`.
+
+Any such extensions MUST remain additive and MUST NOT duplicate secrets or raw artifact bytes in persisted events.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, PolicyRule:no_secrets_in_storage, ContractName:Plans/Media_Generation_and_Capabilities.md
 
 ---
 
@@ -254,6 +325,8 @@ Rules:
 - If scoped `AGENTS.md` is enabled, Puppet Master MUST include the applicable `AGENTS.md` chain from project root → the node scope directory.
 - If scoped `AGENTS.md` is disabled, Puppet Master MUST include only the top-level `AGENTS.md` (if present).
 - Precedence within the scoped `AGENTS.md` chain MUST be “closest wins” (deep overrides parent), and the chain MUST be de-duplicated deterministically.
+- InstructionBundleAssembly owns Instruction/Work/Memory composition, scoped `AGENTS.md` precedence, and injected-context provenance metadata.
+- Injected-context provenance metadata MUST record source kind, source path or stable ID, applied order, and whether redaction or summarization was applied before persistence or UI display.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/Contracts_V0.md#ContextInjectionToggles
 
@@ -308,6 +381,33 @@ Rules:
 - The GUI MUST show an “Injected Context” breakdown per run describing: included `AGENTS.md` paths + byte counts; parent summary and attempt journal inclusion + byte counts; and truncation (if any) with reason.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#ContextInjectionToggles, PolicyRule:Decision_Policy.md§2
+
+---
+
+## 6. HITLRequest
+
+**Definition:** `HITLRequest` is the canonical persisted/requestable contract for a human-approval pause at an orchestrator boundary.
+
+**Minimum fields:**
+```json
+{
+  "request_id": "HITL-...",
+  "run_id": "PM-...",
+  "tier_id": "subtask-001",
+  "tier_type": "subtask",
+  "request_kind": "tier_boundary_approval",
+  "message": "Subtask complete — approval required to continue.",
+  "allowed_actions": ["approve_continue", "reject", "cancel_run"]
+}
+```
+
+Rules:
+- `request_kind` is `tier_boundary_approval` for V0.
+- `allowed_actions` MUST be an ordered subset of `approve_continue | reject | cancel_run | skip`.
+- `hitl.approval_requested`, `hitl.approved`, `hitl.rejected`, and `hitl.cancelled` events MUST carry a stable `request_id`.
+- Rejections MAY add `reject_resolution` (`rerun | skip | abort`) and optional `rationale`.
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/storage-plan.md
 
 ---
 

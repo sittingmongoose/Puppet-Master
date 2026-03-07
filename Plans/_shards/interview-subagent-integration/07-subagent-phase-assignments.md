@@ -92,6 +92,10 @@
 
 ### Cross-Phase Subagents
 
+Automatic runtime selection in Interview MUST use only IDs present in the canonical 42-entry subagent registry (`Plans/orchestrator-subagent-integration.md`). Older aliases such as `explore` are invalid; the canonical built-in ID is `explorer`.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Personas.md
+
 **Document Generation:**
 - `technical-writer` -- Generate phase documents, AGENTS.md, requirements
 - `knowledge-synthesizer` -- Cross-phase analysis, technology matrix generation
@@ -106,6 +110,7 @@
 ContractRef: ContractName:Plans/chain-wizard-flexibility.md#requirements-quality-escalation-semantics, SchemaID:pm.requirements_quality_report.schema.v1
 
 **Research Operations:**
+- `explorer` -- Read-only codebase / repository investigation when the interview needs local-project understanding before asking or validating questions.
 - `ux-researcher` -- Web research via Browser MCP (when configured). **Cited web search:** Interview (and Assistant, Orchestrator) use **cited web search** (inline citations + Sources list) from a single shared implementation; see **Plans/newtools.md** §8 (cited web search, [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited)-style) and **Plans/assistant-chat-design.md** §7.
 - `context-manager` -- Manage interview state and context across phases
 

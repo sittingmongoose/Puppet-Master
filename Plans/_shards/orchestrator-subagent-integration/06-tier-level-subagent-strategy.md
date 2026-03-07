@@ -1,5 +1,16 @@
 ## Tier-Level Subagent Strategy
 
+Canonical selection precedence:
+1. explicit tier override / required-subagent contract
+2. plan/acceptance-driven hard requirement
+3. LSP bias (when enabled; ranking hint only)
+4. language/domain/framework heuristics
+5. deterministic fallback
+
+`explore` is legacy naming only; all persistence, registry validation, and display MUST use `explorer` per `Plans/Personas.md`.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/orchestrator-subagent-integration.md
+
 ### Phase Level (Strategic Planning)
 
 **Primary Subagents:**

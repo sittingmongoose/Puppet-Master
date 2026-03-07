@@ -11,7 +11,7 @@ Snapshot for implementation; re-verify with Doctor or platform docs at implement
 | Copilot     | N/A (DirectApi; central MCP registry) | N/A                  | N/A    | (provider/tool boundary) |
 
 - **Context7:** API key as `Authorization: Bearer <key>`; resolve via env/credential store and inject in-memory. Derived adapter config MUST contain no secrets.
-- **Cited web search:** Prefer one MCP server (e.g. `websearch_cited`) registered centrally like Context7; derived adapters for `CliBridge` providers only (newtools §8.2.1).
+- **Cited web search:** Prefer one MCP server (e.g. server slug `websearch-cited`, default tool name `websearch_cited`) registered centrally like Context7; derived adapters for `CliBridge` providers only (newtools §8.2.1). Tool results MUST normalize to the cited-search contract in `Plans/newtools.md` §8.2.1 before reaching chat/interview/orchestrator consumers.
 
 ---
 

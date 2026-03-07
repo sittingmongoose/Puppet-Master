@@ -73,3 +73,20 @@ The Dashboard card is dismissed automatically when all questions are answered an
 - When the user answers all clarification questions, the wizard is re-run through Pass 1 and Pass 2 with the answers injected; the canonical quality report file is regenerated at the same path and `attention_required_report_path` is updated to that canonical path
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/chain-wizard-flexibility.md, Plans/Project_Output_Artifacts.md
+
+### 15.5 Clarification round cap
+
+A clarification cycle is one complete sequence of:
+1. a report with non-empty `needs_user_clarification[]`,
+2. user answer submission,
+3. automatic re-run of Pass 1 + Pass 2.
+
+The maximum clarification cycles for one wizard instance is **3**.
+
+- Cycles 1-2: wizard state remains `attention_required` when follow-up questions remain.
+- After cycle 3 still produces non-empty `needs_user_clarification[]`, wizard state becomes `blocked`.
+- `blocked` disables "Proceed" and "Start Run" exactly like `attention_required`, but the UI copy MUST explain that repeated clarification attempts did not resolve the requirements set.
+- In `blocked`, Puppet Master MUST preserve the latest canonical quality report and MUST NOT auto-rewrite requirements further without new explicit user input.
+
+ContractRef: Gate:GATE-012, SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/assistant-chat-design.md#11-thread-state-lifecycle-attention_required
+

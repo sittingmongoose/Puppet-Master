@@ -14,6 +14,11 @@ Required artifact set:
 - `.puppet-master/project/auto_decisions.jsonl`
 - `.puppet-master/project/evidence/<node_id>.json` (produced during execution; schema `pm.evidence.schema.v1`)
 
+Interview-owned adjunct artifacts / checkpoints:
+- canonical Interview checkpoint/state projection containing `phase_plan`, current phase, unresolved validation issues, and final-approval state
+- `requirements_quality_report` artifact (`.puppet-master/project/traceability/requirements_quality_report.json`) when requirements quality gating has run
+- GUI-only artifacts `.puppet-master/project/ui/wiring_matrix.json` and `.puppet-master/project/ui/ui_command_catalog.json` when `has_gui = true`
+
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1
 
 Canonical rules:
@@ -25,6 +30,7 @@ Canonical rules:
 - All artifacts above must be persisted canonically in seglog as full-content artifact events.
 - Interview-generated Markdown/text artifacts under `.puppet-master/**` that reach packaging triggers MUST comply with `Plans/Document_Packaging_Policy.md` and pass its full audit set.
 - Field-level schema requirements, deterministic node-ID rules, and validation pointers are defined in `Plans/Project_Output_Artifacts.md` (SSOT).
+- Interview resume/recovery MUST reference canonical artifact IDs/paths from this package; it must not rely on transient staging paths alone.
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014
 

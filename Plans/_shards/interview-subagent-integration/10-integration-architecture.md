@@ -66,6 +66,16 @@ pub fn generate_system_prompt(
 
 Enhance `research_engine.rs` to use subagents with detailed error handling, retry logic, and structured output parsing.
 
+**Normative runtime contract:**
+
+- Research is **advisory input** to questioning and drafting; it does not directly mutate canonical project artifacts.
+- Each research run emits a seglog artifact/event with at least: `research_run_id`, `phase_id`, `topic`, `persona_id`, `provider`, `model`, `citations[]`, `summary`, and `raw_output_ref`.
+- Research results are cached by `(phase_id, topic_hash, context_hash)` for the lifetime of the interview run; resume reuses cached results unless the underlying context materially changed.
+- If cited web research is used, the stored artifact MUST preserve inline-citation/source mapping so later prompts can quote or summarize without losing provenance.
+- Failure mode is non-fatal: if research fails, the phase manager records a warning artifact and continues with reduced-context questioning.
+
+ContractRef: ContractName:Plans/newtools.md, Primitive:Seglog, ContractName:Plans/assistant-chat-design.md
+
 **BeforeResearch responsibilities:**
 
 - **Determine research subagent:** Determine which research subagent to use (from phase config or fallback)
@@ -324,6 +334,16 @@ pub struct ResearchResult {
 
 Add validation methods to orchestrator with detailed error handling, retry logic, and structured output parsing.
 
+**Normative validation lifecycle:**
+
+- Validation runs after each user answer that changes phase-completion state and again once before a phase is marked complete.
+- The validator used is stage-resolved (see Persona Stage Strategy Addendum) and MUST record `requested_persona_id` and `effective_persona_id` when overrides/capability filtering change the actual runner.
+- Findings are persisted as structured artifacts/events with stable IDs so the remediation loop can reopen the same issue set instead of inventing new prose-only feedback each retry.
+- Critical/Major findings block phase completion. Minor/Info findings are attached to the phase summary and downstream drafting context but do not block.
+- If retries are exhausted, Interview transitions the phase to `needs_review` and persists a resume checkpoint; it MUST NOT silently mark the phase complete.
+
+ContractRef: ContractName:Plans/Personas.md, Primitive:Seglog, ContractName:Plans/chain-wizard-flexibility.md
+
 **BeforeValidation responsibilities:**
 
 - **Load validation subagent:** Determine validation subagent for this phase (from `SubagentConfig.phase_subagents` or fallback)
@@ -558,6 +578,16 @@ pub struct ValidationContext {
 
 Enhance document writers to use subagents and crews:
 
+**Normative document-generation contract:**
+
+- Document generation works from Interview decisions + validated phase summaries + contract fragments; it must not independently invent contradictory project scope.
+- Each generated document writes through a staging bundle first. Promotion to the canonical `.puppet-master/project/**` location happens only through the Contract Unification / validation pipeline.
+- Required document-generation inventory for a successful interview-complete path is: phase summaries, final requirements context handoff, contracts fragments bundle, `plan.md`, canonical sharded `plan_graph/`, acceptance manifest, AGENTS.md (when enabled), and GUI wiring artifacts when `has_gui = true`.
+- Generated artifacts MUST preserve overwrite policy metadata: `create | replace_generated | merge_user_authored`. If an artifact may overwrite user-authored content, the policy must be explicit and surfaced to the user before promotion.
+- Multi-Pass Review and targeted revision operate on staged artifacts; `Accept | Reject | Edit` gates which staged bundle becomes the next provisional artifact set.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/FinalGUISpec.md
+
 ```rust
 impl DocumentWriter {
     /// Writes phase document with subagent assistance
@@ -770,6 +800,8 @@ Use `depends_on: Vec<TaskId>` on each task in the PRD/plan:
   }
   ```
 - SSOT: this schema definition. Cross-reference from STATE_FILES.md.
+
+**Generation rule:** All examples and downstream schemas in this document MUST use `depends_on` only. Any older `parallel_group` or `can_run_after` examples are non-canonical and must be treated as superseded by this section.
 
 6. **UI wiring traceability (GUI projects).** When the user project includes a GUI (detected during Architecture or Product/UX interview phases):
    - Every plan node that creates, modifies, or wires interactive UI elements MUST include `contract_refs` entries pointing to the relevant `ui/wiring_matrix.json` entries and/or `ui/ui_command_catalog.json` command IDs.

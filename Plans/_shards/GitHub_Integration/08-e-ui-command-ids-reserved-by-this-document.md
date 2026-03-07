@@ -41,6 +41,7 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md, Invariant:INV-007, Invari
 | `cmd.project.new_local` | §D.2 | `{ name: string, parent_path: string, init_git?: boolean, preset?: string }` | `project.created` |
 | `cmd.project.new_github_repo` | §D.3 | `{ name: string, description?: string, private: boolean, ... }` | `project.created`, `git.clone.completed` |
 | `cmd.project.open` | §D.1, §D.2, §D.3 | `{ project_id: string }` | no persisted domain event (navigation) |
+| `cmd.project.chain_wizard_open_deferred` | §D.1, §D.2, §D.3 | `{ project_id: string, wizard_id: string, default_intent: string, project_path: string, remote_repo_ref?: object, deferred_wizard_payload_ref?: string }` | `wizard.opened`, `wizard.deferred_payload.loaded` |
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, Invariant:INV-007, Invariant:INV-011, Invariant:INV-012, Gate:GATE-010
 

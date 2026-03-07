@@ -18,7 +18,7 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 ### 2. Subagent config in GuiConfig
 
 - **Gap:** Plan says load subagent config from `.puppet-master/config.yaml` under `subagentConfig`, and "single save path that includes subagent config," but **GuiConfig** (in `config/gui_config.rs`) has no `subagentConfig` field.
-- **Clarify:** Add a top-level field to **GuiConfig**, e.g. `subagent: SubagentGuiConfig`, with `enable_tier_subagents`, `tier_overrides`, `disabled_subagents`, `required_subagents`. Serialize as `subagentConfig` in YAML (or `subagent` with serde rename) so load/save use the same file as the rest of Config. Ensure default in GuiConfig matches plan defaults (enable_tier_subagents: true, empty overrides/lists). **Persona overrides:** For the "Subagent personas / info setup" feature, add `persona_overrides: HashMap<String, PersonaOverride>` to `SubagentGuiConfig`. **Persona overrides come from exactly one place:** the user's edits in the Subagent Personas UI; when the user clicks Save, those edits are written to the same config file as the rest of Config (e.g. `subagentConfig.personaOverrides` in YAML). Key = subagent name, value = optional custom description and/or instruction snippet. At runtime: if an override exists for that name, use it; else use content from the preloaded agent (e.g. from `.claude/agents` or trimmed copy). Orchestrator and interview both read the same config.
+- **Clarify:** Add a top-level field to **GuiConfig**, e.g. `subagent: SubagentGuiConfig`, with `enable_tier_subagents`, `tier_overrides`, `disabled_subagents`, `required_subagents`. Serialize as `subagentConfig` in YAML (or `subagent` with serde rename) so load/save use the same file as the rest of Config. Ensure default in GuiConfig matches plan defaults (enable_tier_subagents: true, empty overrides/lists). **Persona content storage:** For the "Subagent personas / info setup" feature, do **not** store canonical Persona body overrides inside `SubagentGuiConfig`. Persona description/instruction edits persist in Puppet Master Persona storage per `Plans/Personas.md`; config may store selection or visibility state only if needed. At runtime, resolve the subagent name against Puppet Master Persona storage first; provider-native agent directories are seed/import sources only. Orchestrator and interview both read the same canonical Persona content.
 
 ### 3. Doctor Gemini plan-mode check: source of tier config
 
@@ -39,7 +39,7 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 - Platform availability checks
 - **Task tool** (`Plans/Tools.md`): `subagent_type` must be one of these names; validate with `subagent_registry::is_valid_subagent_name()`
 
-**Full set: 41 subagents.** Persona definitions are stored per `Plans/Personas.md` §2 (project-local: `.puppet-master/personas/<persona_id>/PERSONA.md`; global: `~/.config/puppet-master/personas/<persona_id>/PERSONA.md`). Persona schema, validation, GUI management, and context injection rules are defined in `Plans/Personas.md` (canonical SSOT). The orchestrator and interview use subsets by tier/phase; the **task** tool accepts any valid name from this list.
+**Full set: 42 subagents.** Persona definitions are stored per `Plans/Personas.md` §2 (project-local: `.puppet-master/personas/<persona_id>/PERSONA.md`; global: `~/.config/puppet-master/personas/<persona_id>/PERSONA.md`). Persona schema, validation, GUI management, and context injection rules are defined in `Plans/Personas.md` (canonical SSOT). The orchestrator and interview use subsets by tier/phase; the **task** tool accepts any valid name from this list.
 
 | Category | Names |
 |----------|--------|
@@ -49,7 +49,7 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 | Task (framework) | `react-specialist`, `vue-expert`, `nextjs-developer`, `laravel-specialist` |
 | Subtask | `code-reviewer`, `test-automator`, `technical-writer`, `api-designer`, `ui-designer`, `security-engineer`, `accessibility-tester`, `compliance-auditor` |
 | Iteration | `debugger`, `qa-expert` |
-| Cross-phase / Interview | `ux-researcher`, `sql-pro`, `prompt-engineer`, `knowledge-synthesizer`, `deployment-engineer`, `context-manager`, `explore` |
+| Cross-phase / Interview | `ux-researcher`, `sql-pro`, `prompt-engineer`, `knowledge-synthesizer`, `deployment-engineer`, `context-manager`, `explorer`, `requirements-quality-reviewer` |
 
 **Implementation:** Create `src/core/subagent_registry.rs` with:
 
@@ -60,14 +60,14 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 // DRY requirement: This is the only place subagent names should be defined. All other code must use functions from this module.
 pub mod subagent_registry {
     use std::collections::HashMap;
-    
+
     // DRY:DATA:subagent_names_by_category — Subagents grouped by tier/category
     pub const PHASE_SUBAGENTS: &[&str] = &[
         "project-manager",
         "architect-reviewer",
         "product-manager",
     ];
-    
+
     pub const TASK_LANGUAGE_SUBAGENTS: &[&str] = &[
         "rust-engineer",
         "python-pro",
@@ -79,7 +79,7 @@ pub mod subagent_registry {
         "php-pro",
         "golang-pro",
     ];
-    
+
     pub const TASK_DOMAIN_SUBAGENTS: &[&str] = &[
         "backend-developer",
         "frontend-developer",
@@ -90,14 +90,14 @@ pub mod subagent_registry {
         "security-auditor",
         "performance-engineer",
     ];
-    
+
     pub const TASK_FRAMEWORK_SUBAGENTS: &[&str] = &[
         "react-specialist",
         "vue-expert",
         "nextjs-developer",
         "laravel-specialist",
     ];
-    
+
     pub const SUBTASK_SUBAGENTS: &[&str] = &[
         "code-reviewer",
         "test-automator",
@@ -108,12 +108,12 @@ pub mod subagent_registry {
         "accessibility-tester",
         "compliance-auditor",
     ];
-    
+
     pub const ITERATION_SUBAGENTS: &[&str] = &[
         "debugger",
         "qa-expert",
     ];
-    
+
     // Cross-phase / Interview (used by interview-subagent-integration.md and task tool)
     pub const CROSS_PHASE_SUBAGENTS: &[&str] = &[
         "ux-researcher",
@@ -122,10 +122,11 @@ pub mod subagent_registry {
         "knowledge-synthesizer",
         "deployment-engineer",
         "context-manager",
-        "explore",
+        "explorer",
+        "requirements-quality-reviewer",
     ];
-    
-    // DRY:DATA:all_subagent_names — Union of all subagent names (41 total)
+
+    // DRY:DATA:all_subagent_names — Union of all subagent names (42 total)
     pub fn all_subagent_names() -> Vec<String> {
         let mut all = Vec::new();
         all.extend(PHASE_SUBAGENTS.iter().map(|s| s.to_string()));
@@ -137,7 +138,7 @@ pub mod subagent_registry {
         all.extend(CROSS_PHASE_SUBAGENTS.iter().map(|s| s.to_string()));
         all
     }
-    
+
     // DRY:DATA:language_to_subagent_mapping — Language → subagent mapping
     pub fn get_subagent_for_language(lang: &str) -> Option<String> {
         let mapping: HashMap<&str, &str> = HashMap::from([
@@ -151,10 +152,10 @@ pub mod subagent_registry {
             ("php", "php-pro"),
             ("go", "golang-pro"),
         ]);
-        
+
         mapping.get(lang).map(|s| s.to_string())
     }
-    
+
     // DRY:DATA:framework_to_subagent_mapping — Framework → subagent mapping
     pub fn get_subagent_for_framework(framework: &str) -> Option<String> {
         let framework_lower = framework.to_lowercase();
@@ -165,15 +166,15 @@ pub mod subagent_registry {
             ("next.js", "nextjs-developer"),
             ("laravel", "laravel-specialist"),
         ]);
-        
+
         mapping.get(framework_lower.as_str()).map(|s| s.to_string())
     }
-    
+
     // DRY:FN:is_valid_subagent_name — Validate subagent name against canonical list
     pub fn is_valid_subagent_name(name: &str) -> bool {
         all_subagent_names().contains(&name.to_string())
     }
-    
+
     // DRY:FN:get_subagents_for_tier — Get subagents available for a tier type
     pub fn get_subagents_for_tier(tier_type: TierType) -> Vec<String> {
         match tier_type {

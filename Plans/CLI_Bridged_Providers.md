@@ -143,12 +143,16 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, PolicyRule:Deci
 | `platform` | ✅ | Platform selector for bridged providers covered here (Cursor, Claude Code, OpenCode). |
 | `transport` | ✅ | `stream-json`, `acp`, or `http`. |
 | `model_id` | ✅ | Model identifier passed through to the underlying transport runtime (CLI args for Cursor/Claude; HTTP body fields for OpenCode). |
-| `mode` | ✅ | `plan` or `execute` (high-level). |
+| `run_mode` | ✅ | Canonical Puppet Master runtime mode: `ask`, `plan`, `regular`, or `yolo`. |
+| `execution_strategy` | ✅ | Canonical execution strategy resolved from `Plans/Run_Modes.md`: `hte` or `dae`. |
+| `strategy_resolution_reason` | ✅ | Stable reason code for the resolved strategy (for example `ask_forces_hte`, `plan_forces_hte`, `regular_default_hte`, `regular_dae_opt_in`, `regular_dae_disallowed`, `yolo_requires_dae`). |
+| `mode` | ✅ | Provider-facing execution hint `plan` or `execute`. This field is derived from `run_mode` + `execution_strategy` and is **not** the canonical Puppet Master runtime mode. |
 | `working_directory` | ✅ | CWD/primary workspace directory. |
 | `workspace_roots` | ✅ | Ordered list of roots the provider is allowed to reference. |
 | `prompt_parts` | ✅ | Ordered prompt parts: text blocks plus file references (paths/URIs). |
 | `context_files` | ✅ | Explicit file attachments list for CLIs that support file attachment prompts; also used by reconciliation when available. |
 | `tool_policy` | ✅ | Snapshot of tool permissions keyed by Tool ID (allow/deny/ask semantics SSOT: `Plans/Tools.md`). |
+| `budget` | ✅ | Effective budget snapshot for this run (`max_wall_ms`, `max_same_shell_failure`, `max_write_thrashing`, etc.). |
 | `env` | ✅ | Environment variables to set for the provider process. |
 | `timeout` | ✅ | `{ soft_ms, hard_ms }`. |
 | `client_hints` | ⛔️ | Optional opaque map for transport-specific hints; see constraints below. |
@@ -158,6 +162,7 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, PolicyRule:Deci
 **Normative constraints:**
 - The envelope MUST be sufficient to replay the provider run (modulo model nondeterminism) without referring to UI state.
 - The envelope MUST be stable across transports: ACP requests MUST be convertible into the same envelope.
+- `run_mode`, `execution_strategy`, `strategy_resolution_reason`, and `budget` are part of the replay contract and MUST be preserved across all transports.
 - The envelope MUST NOT embed tool schemas; only tool IDs and policy decisions.
 - `client_hints` MUST NOT change normalized semantics (it may only affect transport mechanics).
 - Behavior MUST NOT branch on `origin` (audit-only).
@@ -194,12 +199,12 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-001, ContractName
 | `text_delta` | Incremental assistant output | `text` |
 | `thinking_delta` | Incremental "thinking/reasoning" output (if provider exposes it) | `text` |
 | `tool_use` | Tool invocation start | `tool_use_id`, `tool_name`, `arguments` (JSON value), optional `invocation_summary` |
-| `tool_result` | Tool invocation end/result | `tool_use_id`, `tool_name`, `ok` (bool), `result` (JSON value or string), optional `error` |
+| `tool_result` | Tool invocation end/result | `tool_use_id`, `tool_name`, `ok` (bool), `result` (JSON value or string), optional `error`, optional `mutated_paths` |
 | `usage` | Usage updates | provider-specific usage fields (at least `input_tokens`, `output_tokens` when available) |
 | `auth_state` | Auth/availability state changes | `state` (see auth state machine) |
 | `diagnostic` | Non-fatal parse/adapter diagnostics | `category`, `message`, optional `details` |
 | `error` | Fatal or near-fatal adapter error | `category`, `message`, optional `details` |
-| `done` | Terminal event | `status` = `success` \| `cancelled` \| `failed`, optional `stop_reason` |
+| `done` | Terminal event | `status` = `success` \| `cancelled` \| `failed`, `outcome` = `done.ok` \| `done.failed` \| `done.deferred` \| `done.rotated` \| `done.gutter`, optional `stop_reason` |
 
 ### Mapping principles (normative)
 - **No UI special-casing:** a consumer MUST NOT need to know whether the Provider used stream-json or ACP.
@@ -213,8 +218,16 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-009, ContractName
 - **HITL pause semantics:** When a Provider signals `input_required`, the adapter emits a `diagnostic` event (category `input_required`). This is a non-terminal pause: no `done` event is emitted, and the `seq` counter continues from the pause point when input is provided.
 - **Artifact identity and chunk semantics:** Artifact identity (`artifact_id`), append/last-chunk flags, and part kind MUST be preserved in `diagnostic.details` so that consumers can reconstruct artifact assembly without transport-specific knowledge.
 - **Chat-log projection:** A chat-log view MAY be derived from the normalized stream by filtering `text_delta` events. This projection exists as a debug-only view and MUST NOT be treated as the canonical event history.
+- **HTE breach handling:** When `execution_strategy = hte`, any provider-originated `tool_use` is a policy breach. The adapter MUST finalize the run with `done.status = failed`, `done.outcome = done.failed`, and `done.stop_reason = kill.hte_tool_observed`.
+- **Live mutation metadata:** DAE-eligible providers MUST surface enough live mutation data for write-thrash accounting. When path-level mutation information is available, mutating `tool_result` events SHOULD populate `mutated_paths[]`.
 
 Canonical mapping SSOT for upstream external-framework and A2A bridge concepts: `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`.
+
+### Strategy signaling and DAE eligibility (normative)
+- Every provider request MUST carry `run_mode`, `execution_strategy`, `strategy_resolution_reason`, and `budget`.
+- HTE adapters MUST select the provider's most restrictive available **no-tools / no-side-effect** posture for the chosen transport.
+- Providers MUST expose a policy/capability snapshot field `dae_allowed: bool`. Absence means `false`.
+- `dae_allowed = true` is valid only when the provider supports deterministic pre-spawn restriction, jailed working-directory injection, and enough mutation observation for DAE audit/reconciliation. Providers lacking those guarantees MUST advertise `dae_allowed = false`.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.md, Gate:GATE-009
 
@@ -508,12 +521,12 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/
 Persistent storage is SSOT in `Plans/storage-plan.md`. This section only states the required mapping from normalized provider runs to seglog event types that already exist in that plan.
 
 Minimum required persistence:
-- Emit `run.started` at run begin with `{ run_id, thread_id, platform, mode }`.
+- Emit `run.started` at run begin with `{ run_id, thread_id, platform, tier_id?, mode, strategy, strategy_resolution_reason }`.
 - Emit `usage.event` for any usage updates that can be normalized.
 - Emit tool analytics events per `Plans/Tools.md`:
   - `tool.invoked` when a tool completes (allowed and executed) with required payload fields.
   - `tool.denied` when policy blocks (deny) or user declines (ask) with required payload fields.
-- Emit `run.completed` exactly once with `{ run_id, status }` and an optional usage summary.
+- Emit `run.completed` exactly once with `{ run_id, status, outcome, stop_reason?, budget_key?, budget_limit?, observed_value? }` and an optional usage summary.
 
 ---
 

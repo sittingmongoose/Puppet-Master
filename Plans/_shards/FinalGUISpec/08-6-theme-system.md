@@ -1,12 +1,16 @@
 ## 6. Theme System
 
-### 6.1 Three Theme Families (Four Variants)
+### 6.1 Three Theme Families (Three User-Facing Choices)
 
 | Theme Family | Variants | Retro Effects | Target Audience |
 |-------|--------|--------------|----------------|
 | **Retro Dark** | 1 | Full: pixel grid, paper texture, scanlines, hard shadows, sharp corners, Orbitron + Rajdhani | Users who love the current aesthetic |
 | **Retro Light** | 1 | Full (reduced opacity): pixel grid, paper texture, hard shadows, sharp corners, Orbitron + Rajdhani | Light-mode users who want the aesthetic |
-| **Basic Modern** | 2 (Light + Dark) | None: flat colors, subtle borders, rounded corners, system fonts | Accessibility, readability, reduced visual noise |
+| **Basic Modern** | 2 internal palette variants | None: flat colors, subtle borders, rounded corners, system fonts | Accessibility, readability, reduced visual noise |
+
+User-facing selector contract:
+- The GUI MUST expose exactly three built-in theme choices: `Retro Dark`, `Retro Light`, and `Basic`.
+- `Basic` may internally resolve to light or dark palette tokens based on explicit sub-setting or system scheme, but that internal palette choice does not create a fourth user-facing built-in theme promise.
 
 ### 6.2 Theme Token Table
 
@@ -61,6 +65,7 @@ if Theme.retro-effects-enabled && Theme.paper-texture-enabled: PaperTextureOverl
 - **Live switch** for colors, spacing, borders, overlays: Slint's reactive property system propagates changes instantly
 - **Restart required** for font family change: Switching between Retro (Orbitron/Rajdhani) and Basic (system fonts) requires app restart because Slint loads fonts at initialization
 - **Within same family is live:** Switching between Retro Dark and Retro Light is instant (same fonts)
+- **Basic palette note:** Switching Basic between its internal light/dark palette variants MAY be live when fonts do not change, but it remains one built-in theme family in the UI model.
 
 ### 6.5 Slint Implementation
 

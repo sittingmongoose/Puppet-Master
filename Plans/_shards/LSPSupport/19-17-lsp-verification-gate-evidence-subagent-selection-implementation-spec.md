@@ -6,7 +6,7 @@ This section defines the **contract, config, failure handling, evidence schema, 
 
 #### Contract
 
-- **When it runs:** After each **iteration** completes (before promoting to next tier). Optionally configurable to run at **subtask** boundary only, **task** boundary only, or **phase** boundary only; default: run at **subtask** boundary (after last iteration of the subtask, before promotion to task).
+- **When it runs:** At configured **tier boundaries** before promotion. It MAY be enabled for `phase`, `task`, and/or `subtask`; default: **phase boundary only**. Implementations MAY also run an iteration-local preflight, but that is advisory and MUST NOT replace the configured boundary gate.
 - **Tier boundaries:** Configurable per tier: phase, task, subtask. At least one of these must be enabled for the gate to run; when the orchestrator reaches that boundary (e.g. "subtask passed"), the LSP gate runs as one of the criteria before the tier is marked passed.
 - **Scope:** What files are checked. One of:
   - **`changed_files`** -- Only files that were modified in the last iteration (or in the current subtask). Requires tracking changed paths (e.g. from git diff or execution engine "files touched").
@@ -137,6 +137,13 @@ ContractRef: ContractName:Plans/LSPSupport.md
   - **Task's file list** -- If the task/subtask has an explicit list of files (e.g. from PRD or plan), use that list.
   - Default: **changed in last iteration** for consistency with LSP gate.
 - **Documentation:** This behavior is specified in **Plans/orchestrator-subagent-integration.md** (Subagent selection from LSP) and summarized here. Implement in the same place that performs `select_for_tier`: after building tier context, optionally call LSP client `get_diagnostics_for_paths(scope_paths)`; from the returned diagnostics, derive language(s) from `source` or from file extension → server id mapping; then bias subagent selection toward matching language (e.g. add to ProjectContext or TierContext: "prefer_subagents": ["rust-engineer"] when Rust errors present).
+
+Bias rules (canonical):
+- LSP bias is a **tie-breaker / ranking hint**, not an absolute selector.
+- Explicit plan requirements, tier override lists, or hard-coded contract needs (for example `required_subagents`) take precedence over LSP bias.
+- Preferred scope order is: explicit task file list -> changed files in current tier -> open files.
+- Default bias threshold is diagnostics with severity `Error`; implementations MAY optionally include `Warning` when configured.
+- The chosen bias inputs and outcome SHOULD be persisted in run metadata or verification evidence so selection remains explainable.
 
 ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/orchestrator-subagent-integration.md
 

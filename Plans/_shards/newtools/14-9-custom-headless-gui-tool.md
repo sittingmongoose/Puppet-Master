@@ -9,7 +9,7 @@ The custom headless GUI tool must be **fully featured**, not minimal. Use **Pupp
 - **Headless execution:** Runs without display (CI-friendly); uses software rendering or framework-specific headless mode (e.g. Iced tiny-skia, or framework's own headless API).
 - **Action catalog:** A defined set of actions or scenarios so that smoke and regression flows can be scripted and repeated. Not a one-off script -- a reusable catalog the agent can extend and run.  
   ContractRef: ContractName:AGENTS.md#automation-action-catalog
-- **Full evidence output:** After each run, the tool MUST produce the **same depth of debug information** as Puppet Master's GUI automation: **Timeline** (e.g. `timeline.jsonl`), **Summary** (e.g. `summary.md`), **Artifacts** (screenshots or state dumps per step). **Consistent paths:** Evidence under a standard location (e.g. `.puppet-master/evidence/gui-automation/...`). Optional: **ephemeral workspace clone** as in Puppet Master's headless runner.  
+  - **Full evidence output:** After each run, the tool MUST produce the **same depth of debug information** as Puppet Master's GUI automation: **Timeline** (e.g. `timeline.jsonl`), **Summary** (e.g. `summary.md`), **Artifacts** (screenshots or state dumps per step), and the canonical manifest described in **§13**. **Consistent paths:** Evidence under `.puppet-master/evidence/gui-automation/<run_id>/`. Optional: **ephemeral workspace clone** as in Puppet Master's headless runner.  
   ContractRef: SchemaID:evidence.schema.json, Gate:GATE-005, ContractName:AGENTS.md#automation-evidence
 
 ### 9.2 What gets written into plans

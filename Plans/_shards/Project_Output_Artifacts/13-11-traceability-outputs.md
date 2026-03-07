@@ -48,6 +48,12 @@ ContractRef: SchemaID:pm.project-plan-node.v1
 
 #### Step 3 — Acceptance mapping source: `.puppet-master/project/acceptance_manifest.json`
 
+- Each acceptance check entry MUST declare `req_id` when that check is intended to provide requirement coverage evidence.
+- If `req_id` exists in the requirements set, add the check's `check_id` to that requirement's `acceptance_check_ids[]`.
+- Checks with no `req_id` are allowed, but they do not contribute to requirements coverage.
+
+ContractRef: SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011, ContractName:Plans/Project_Output_Artifacts.md
+
 - Schema: `pm.acceptance_manifest.schema.v1`.
 - For each acceptance check that contains a `req_id` field: if `req_id` exists in the Step 1 requirements set, add the check's ID to that requirement's `acceptance_check_ids[]`.
 - Checks with no `req_id` field are not included in coverage mapping (this is not an error).

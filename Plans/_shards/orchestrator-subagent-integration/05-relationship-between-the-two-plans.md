@@ -37,11 +37,11 @@ The **orchestrator must respect** two kinds of information that the interview (o
 
 1. **Subagent persona recommendations.** When the PRD (or loaded plan) contains **subagent recommendations** for a task or subtask in `crew_recommendation.subagents` (interview-subagent-integration §5.2 and Crew-Aware Plan Generation), the orchestrator **must use those personas** when executing that tier. Use the recommended subagent set as the source for which subagents to invoke; only fall back to dynamic selection (e.g. `select_for_tier`) when the PRD/plan does not specify recommendations for that item. Config overrides (disabled/required/override lists) can still apply on top of PRD recommendations. This ensures that interview-generated plans are executed with the intended specialists.
 
-2. **Parallelization.** When the PRD/plan contains **parallelism** information (e.g. `depends_on` and `parallel_group` per STATE_FILES.md §3.3 and interview-subagent-integration §5.2), the orchestrator **must respect it** when building the execution schedule. Build a dependency graph from `depends_on`; run tasks/subtasks that have no unsatisfied dependencies, and run items in the same `parallel_group` **in parallel** where the execution engine supports it. Do not run items in parallel when the plan says they depend on another; do run independent items in parallel when the plan allows it. See **Schedule building: order of operations** below.
+2. **Parallelization.** When the PRD/plan contains **parallelism** information (`depends_on` per interview-subagent-integration §5.2), the orchestrator **must respect it** when building the execution schedule. Build a dependency graph from `depends_on`; run tasks/subtasks that have no unsatisfied dependencies in parallel where the execution engine supports it. Do not run items in parallel when the plan says they depend on another; do run independent items in parallel when the plan allows it. See **Schedule building: order of operations** below.
 
 **Subagent selection: order of operations.** (1) Load the PRD and the current tier item (phase/task/subtask). (2) Read `crew_recommendation` for that item; if absent, go to step 5. (3) Read `crew_recommendation.subagents`; if missing or empty array, treat as **no recommendation** and go to step 5. (4) Use the list in `subagents` as the source set for which subagents to invoke; apply config overrides (disabled/required/override) on top; then exit. (5) Fall back to dynamic selection (e.g. `select_for_tier`) for this item; apply config overrides on top.
 
-**Schedule building: order of operations.** (1) Build a dependency graph from `depends_on` at the tier level(s) the orchestrator schedules (e.g. subtasks). Use item ids; support phase, task, and subtask ids as in STATE_FILES. Missing `depends_on` or empty array = no incoming edges. (2) Topological sort the graph; items with no unsatisfied dependencies form the next runnable set. (3) Within the runnable set, group items that share the same non-empty `parallel_group`; items in the same group may run in parallel. (4) Execute batches in topological order: run each batch (possibly multiple items in parallel) before advancing to items that depend on them.
+**Schedule building: order of operations.** (1) Build a dependency graph from `depends_on` at the tier level(s) the orchestrator schedules (e.g. subtasks). Use item ids; support phase, task, and subtask ids as in STATE_FILES. Missing `depends_on` or empty array = no incoming edges. (2) Topological sort the graph; items with no unsatisfied dependencies form the next runnable set. (3) Execute each runnable set in parallel where the execution engine and concurrency caps allow. (4) Advance only after dependencies for the next set are satisfied.
 
 ### Respecting PRD/plan: plan graph consumption (user projects)
 
@@ -124,7 +124,6 @@ Scheduling inputs must be sourced only from the validated canonical sharded plan
 
 - `depends_on` (from node shards; if `edges.json` exists, it MUST match)
 - `blockers` / `unblocks` from node definitions
-- `parallel_group` metadata when available
 
 ContractRef: Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md
 

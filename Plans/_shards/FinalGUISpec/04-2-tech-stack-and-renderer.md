@@ -34,6 +34,15 @@ The `cosmic` base style is used because it supports `ColorScheme` toggling and h
 
 Backend is chosen at startup; all windows use the same backend. Selection uses `slint::BackendSelector::new().select()` with `SLINT_BACKEND` environment variable override. Cargo features control which renderers are compiled in (e.g., `default = ["renderer-skia"]`, optional `renderer-femtovg`).
 
+Deterministic selection order:
+1. Explicit valid `SLINT_BACKEND` override wins.
+2. Otherwise use the persisted app preference if it maps to a compiled-in backend.
+3. Otherwise use compiled default order: `winit + Skia` → `winit + FemtoVG-wgpu` → emergency software renderer.
+
+Failure handling:
+- An invalid override or unavailable preferred backend MUST emit a startup diagnostic and fall through deterministically to the next compiled-in backend.
+- The selected backend MUST be shown in diagnostics/setup surfaces so fallback behavior is inspectable.
+
 ```rust
 // main.rs entry point
 fn main() -> Result<(), Box<dyn std::error::Error>> {

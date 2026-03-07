@@ -8,7 +8,7 @@ Use this list in order to derive a step-by-step implementation plan. Dependencie
 4. **FileSafe and YOLO order** -- After allow (or ask approved), run FileSafe before executing; do not emit `tool.denied` for FileSafe blocks (§10.6).
 5. **Per-tool adapters** -- Input/output, errors, limits per §3.5; LSP tool with timeout and crash/disconnect handling (§3.5).
 6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0.
-7. **GUI Tool permissions** -- Settings > Advanced > Tool permissions (FinalGUISpec §7.4.1); presets per §10.4; load/save `tool_permissions` (§10.5).
+7. **GUI Tool permissions** -- Settings > Permissions (FinalGUISpec §7.4.10); presets per §10.4; load/save `tool_permissions` (§10.5).
 8. **Usage widget and rollups** -- Analytics scan → redb `rollups` / `tool_usage.{window}` (§8.4); Usage view §7.8; empty state message.
 9. **Central registry and policy engine** -- Registry + policy; single API e.g. `policy.may_execute_tool` (§10.6).
 10. **Registry → CLI derivation** -- Single function per platform (§8.3, §10.8).

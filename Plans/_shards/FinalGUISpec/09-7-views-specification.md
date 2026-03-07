@@ -439,7 +439,7 @@ concurrency:
 
 When an override is set (e.g. `overrides.orchestrator.per_provider.claude: 5`), that value is used for that context+platform. When absent, the global value applies.
 
-**Plan graph independence:** Max concurrent limits are NOT part of the user-project plan graph (`.puppet-master/project/plan_graph/`). The plan graph defines only dependency structure (`depends_on`, `parallel_group`, `blockers`/`unblocks`). Concurrency limits are an execution/config concern: the scheduler loads the plan graph, respects its parallelism structure, and applies the effective per-platform caps from config.
+**Plan graph independence:** Max concurrent limits are NOT part of the user-project plan graph (`.puppet-master/project/plan_graph/`). The plan graph defines only dependency structure (`depends_on`, `blockers`/`unblocks`). Concurrency limits are an execution/config concern: the scheduler loads the plan graph, respects its dependency-derived parallelism structure, and applies the effective per-platform caps from config.
 
 | copy_id | Surface | Expert variant | ELI5 variant | Status |
 |---|---|---|---|---|
@@ -452,10 +452,11 @@ When an override is set (e.g. `overrides.orchestrator.per_provider.claude: 5`), 
 
 Add a collapsible **Containers & Registry** card in Settings > Advanced for local container runtime and registry publishing defaults.
 
-- **Runtime controls:** runtime selector (`docker` default), Docker binary path override, compose file/path defaults, compose project-name strategy.
-- **Registry defaults:** registry provider (`dockerhub` default), namespace/repository/tag defaults, push policy (`manual` default; optional `after_build`).
-- **Auth controls:** auth mode (`pat` default), login validation action, last validation timestamp.
-- **Preview/build integration:** settings are consumed by Preview and Build actions so container preview/build flows use consistent defaults.
+- **Runtime controls:** runtime selector (`docker` default), Docker binary path override, compose file path input with Browse/Auto-detect actions, and compose project-name strategy (`auto`, `fixed`, `hash-based`).
+- **Registry defaults:** registry provider (`dockerhub` default), namespace/repository/tag defaults, tag templates (`{commit}`, `{version}`, `{timestamp}`), and push policy (`manual` default; optional `after_build`).
+- **Auth controls:** auth mode (`pat` default), `Set DockerHub PAT` / `Clear token` actions, stored-token status, login validation action, and last validation timestamp. Tokens MUST be stored in the OS credential store only; never in redb, YAML, or evidence logs.
+- **Validation behavior:** `Validate Docker configuration` runs inline preflight checks (Docker reachable, compose path valid, required ports available, and DockerHub auth if push policy is `after_build`). Failing checks block Preview/Build or Push entry points and surface an inline error plus remediation text in the card.
+- **Preview/build integration:** these settings are consumed by Preview and Build actions so container preview/build flows use consistent defaults. Build/push evidence MUST redact credentials and only persist sanitized command output.
 
 ContractRef: ContractName:Plans/newtools.md#147-docker-runtime--dockerhub-contract, ContractName:Plans/newtools.md#146-preview-build-docker-and-actions-contracts, ContractName:Plans/GitHub_API_Auth_and_Flows.md
 
@@ -688,7 +689,7 @@ Multi-step requirements wizard (10 steps: 0-9):
 - **Fork & evolve / Contribute PR:** Upstream repo input (URL or owner/repo); "Create fork for me" or "I'll create the fork myself" radio; fork URL/path input when manual.
 - **Contribute PR:** Feature branch name input (text input with auto-suggest from requirements slug; sanitized per git ref rules).
 
-**Requirements step:** Upload files (max 10 files, max 5 MiB per file; drag-and-drop or file picker; list display with remove and reorder; reject oversized files with inline error). Requirements Doc Builder button opens Builder chat mode. First Builder Assistant message is exactly `What are you trying to do?`. Multiple uploads are concatenated in display order with separators. Builder output is appended after uploads.
+**Requirements step:** Upload files (max 10 files, max 5 MiB per file; drag-and-drop or file picker; list display with remove and reorder; reject oversized files with inline error). Requirements Doc Builder button opens Builder chat mode. First Builder Assistant message is context-sensitive: `What are you building?` (new project), `What are you adding or changing?` (existing project), or `What are you adding or changing in this fork?` (fork / contribute). Multiple uploads are concatenated in display order after deterministic text normalization; Builder output is appended after uploads.
 
 **Builder conversation flow (required):**
 - Turn definition: one Assistant message plus one user response.
@@ -719,6 +720,8 @@ Multi-step requirements wizard (10 steps: 0-9):
 - **Reject:** Discard revised bundle and keep original bundle as canonical.
 - **Edit:** Open revised bundle in File Editor or embedded document pane; on save, return to same final gate.
 No per-document approval and no extra approval modes.
+
+The findings summary shown here MUST be the canonical workflow artifact for that review run. At minimum the rendered payload must resolve back to review-run identity, per-document findings counts, unresolved items, and any revised-artifact reference needed by the final approval gate.
 
 **Document review locations (required):**
 - Chat summary includes three pointers after generation/revision:
@@ -771,7 +774,7 @@ Interactive requirements gathering with phase tracking, Q&A flow, reference mate
 
 **Question UI:** Each interview question shows: question text, suggested answer options as clickable chips/buttons, and a "Something else" text input bar for freeform answers. Thought stream toggle (show/hide the model's reasoning). Message strip showing conversation flow.
 
-**Subagent activity:** When interview subagents are enabled (see Settings > Interview), show an "Agent Activity" card beneath the Q&A area listing active subagents (name, provider, model, current action, elapsed time). Progress spinner per active subagent. When Multi-Pass Review is active, show review round counter and per-reviewer status.
+**Subagent activity:** When interview subagents are enabled (see Settings > Interview), reuse the shared **Agent Activity Pane** (`§7.19`) as an embedded Interview surface rather than a one-off card. The Interview layout is: Q&A/chat region + shared activity pane + embedded document pane. Active Interview stage/subagent rows show Persona, selection reason, effective platform/model, current action, elapsed time, and skipped-control disclosure when relevant. When Multi-Pass Review is active, show review round counter and per-reviewer status in the same pane.
 
 **Interview preview section (required):**
 - Preview section shows Multi-Pass findings summary and one final approval gate.
@@ -815,7 +818,7 @@ Dedicated usage view providing persistent visibility into platform quota and con
 
 5. **Reset countdown:** "Resets in 2h 15m" shown when reset time is available (from error parsing or API).
 
-6. **Tool usage widget:** Card or section showing tool-level metrics from seglog rollups (per Plans/Tools.md and storage-plan analytics scan). Columns or list: **Tool name** (built-in + MCP/custom), **Invocation count** (in selected window), **Latency** (e.g. p50 / p95 ms or median), **Error rate** (failures / total, %). Optional: sort by count or error rate; filter by time window (5h / 7d / custom); expand row for breakdown by platform or session. Data from redb projections produced by analytics scan over tool events in seglog. Helps identify noisy or failing tools (e.g. repeated grep, MCP timeouts).
+6. **Tool usage widget:** Card or section showing tool-level metrics from seglog rollups (per Plans/Tools.md and storage-plan analytics scan). Columns or list: **Tool name** (built-in + MCP/custom), **Invocation count** (in selected window), **Latency** (e.g. p50 / p95 ms or median), **Error rate** (failures / total executed calls, %). Optional: sort by count or error rate; filter by time window (**5h / 24h / 7d**; custom is optional later); expand row for breakdown by platform or session. Data from redb projections produced by analytics scan over tool events in seglog. The card shows a **Last updated** timestamp sourced from rollup metadata; while a refresh is in progress, keep the previous values visible and show a lightweight "Refreshing…" state. Empty state copy: **"No tool activity recorded for this window yet."** Helps identify noisy or failing tools (e.g. repeated grep, MCP timeouts).
 
 **Data sources:** Primary: seglog/redb rollups from analytics scan jobs. Fallback: aggregate from `usage.jsonl`. Platform APIs augment when env vars are set. Tool usage: same analytics scan rollups (tool latency, error counts per tool).
 
@@ -883,6 +886,7 @@ Platform readiness view for Setup and first-run troubleshooting. Shows detected 
 - **Explicit actions:** Each row has explicit install/uninstall actions (no automatic install behavior).
   - **Windows (Cursor only):** show two install actions: `Install Native` and `Install WSL`.
 - **Manual path override (Cursor/Claude only):** `Use manual path` checkbox reveals a native file picker and path field; Save triggers immediate validation and state update (`Valid` / `Invalid` + reason).
+- **Binary validation error rendering:** When validation fails, Setup renders the stable `BinaryErrorCode` from `Plans/BinaryLocator_Spec.md` and maps it to deterministic copy/actions: `OverrideMissing`/`NotFound` → explain that no usable binary was found and keep install actions visible; `NotExecutable` → explain permission issue and suggest fixing file mode; `BlockedByOSSecurity` → show OS-specific unblock guidance; `MissingRuntime` → explain missing launcher runtime (for example Node.js) and link to install guidance; `WrongBinary` → explain that a different CLI was found; `Timeout`/`OverrideInvalid` → show validation failure details with a `Retry` action. The trace/details expander MUST use the same mapping in Setup and Health/Doctor.
 - **Provider auth + multi-account snapshot:** Compact per-provider auth state (`LoggedOut`, `LoggingIn`, `LoggedIn`, `LoggingOut`, `AuthExpired`, `AuthFailed`), active account label, and account count, with links to Settings > Authentication and Settings > Health.
 - **Command contract (normative):**
   - Cursor install (Linux/macOS/WSL):
@@ -1012,6 +1016,8 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#17-context-truncation, 
 
 **Mode tabs:** Ask | Plan | Interview | BrainStorm | Crew. Active tab has accent background + 2px bottom border.
 
+Normalization rule: `Interview`, `BrainStorm`, and `Crew` are workflow overlays/surfaces. The canonical runtime mode sent to execution remains `ask`, `plan`, `regular`, or `yolo` per `Plans/Run_Modes.md`; overlay selection is persisted separately for UX only.
+
 **Mode details:**
 - **Ask:** Read-only analysis mode. No file edits, no execution. Good for questions, explanations, code review.
 - **Plan:** Creates a plan before execution. Three depth levels selectable via dropdown in plan panel header:
@@ -1088,7 +1094,7 @@ The active mode shows as a subtle label next to the SEND button ("Steer" or "Que
 
 **Reasoning/effort selector:** Shown only when `platform_specs::supports_effort(platform)` returns true. For Claude Code: dropdown with Low / Medium / High (maps to `CLAUDE_CODE_EFFORT_LEVEL` env var). For Codex and Copilot: dropdown with Low / Medium / High / Extra High. For Cursor: hidden (reasoning is encoded in model names like `sonnet-4.5-thinking`). For Gemini: hidden (no effort support). Per-thread setting.
 
-**Capability picker (media):** Compact dropdown (icon: sparkle or media icon) near the composer, listing the four media capabilities: **Image**, **Video**, **TTS**, **Music**. Each item maps to a capability ID from `Plans/Media_Generation_and_Capabilities.md` §4.1. **Enabled items** are clickable and insert the corresponding capability prompt into the composer (verbatim prompts per SSOT §5.1). **Disabled items** are visible but **greyed out** with a tooltip showing the disabled-reason message (per SSOT §5.2). When any capability requires a missing Google API key, the dropdown footer shows a banner: *"Please provide a free or paid Google API Key."* **[Get API key](https://aistudio.google.com/app/api-keys)** (clickable link). Cursor backend behavior: Image enabled without key; Video/TTS/Music disabled with `BACKEND_UNSUPPORTED`. **Helper only:** the capability picker is a convenience shortcut — media generation is primarily invoked by natural language in the chat (see `Plans/Media_Generation_and_Capabilities.md` §3 for slot extraction). Per-thread; no persistence.
+**Capability picker (media):** Compact dropdown (icon: sparkle or media icon) near the composer, listing the four media capabilities: **Image**, **Video**, **TTS**, **Music**. Each item maps to a capability ID from `Plans/Media_Generation_and_Capabilities.md` §4.1. **Enabled items** are clickable and insert the corresponding capability prompt into the composer (verbatim prompts per SSOT §5.1). **Disabled items** are visible but **greyed out** with a tooltip showing the disabled-reason message (per SSOT §5.2). Disabled rows remain keyboard-focusable so the same reason text is available on hover and focus. When any capability requires a missing Google API key, the dropdown footer shows a banner: *"Please provide a free or paid Google API Key."* **[Get API key](https://aistudio.google.com/app/api-keys)** (clickable link). Cursor backend behavior: Image enabled without key; Video/TTS/Music disabled with `BACKEND_UNSUPPORTED`. The dropdown refreshes after Settings changes that affect capability state and keeps the footer banner pinned while any visible item is blocked for the same missing-key reason. **Helper only:** the capability picker is a convenience shortcut — media generation is primarily invoked by natural language in the chat (see `Plans/Media_Generation_and_Capabilities.md` §3 for slot extraction). Per-thread; no persistence.
 
 ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-PICKER, ToolID:capabilities.get, Invariant:INV-003
 
@@ -1123,7 +1129,14 @@ ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-
 
 #### 7.16.1 Web Search
 
-The chat supports web search with citations. When the assistant performs web search, results are displayed with inline citations (numbered superscripts linking to sources) and a "Sources" list at the bottom of the message showing URL, title, and snippet for each cited source.
+The chat supports web search with inline citations and a structured sources block. When the assistant performs web search:
+
+- The message body uses numbered citations (`[1]`, `[2]`, …) at the claim site. Activating a citation scrolls to and highlights the corresponding source row.
+- The message shows a query label such as `Web search: {query}` in the activity detail or sources header.
+- A **Sources** section appears below the message with clickable URL, title, and 1-2 sentence snippet per source. Clicking a source opens it in the Bottom Panel Browser tab (§7.20).
+- When more than 5 sources are present, the Sources section may collapse to a summary row (`Web search: N sources`) and expand on demand.
+- If the search fails or returns no usable sources, the chat shows an inline error or empty-result message and does not render a misleading citations block.
+- Accessibility: citation controls must be keyboard focusable and expose descriptive labels (for example `Citation 1 of 3`).
 
 #### 7.16.2 Slash Commands
 
@@ -1187,7 +1200,7 @@ Typing `/` in the chat input shows an autocomplete popup listing available comma
 - **Current file highlighting:** The file currently open in the editor is highlighted with accent background in the tree (even if the tree is scrolled; on click-to-open from editor, auto-scroll tree to show the file)
 - **Expand/collapse persistence:** Tree expansion state is persisted per-project in redb. Restored on project open. "Collapse All" and "Expand All" buttons in the search bar area.
 
-**External drag-and-drop:** Drag files from the system file manager into the File Manager tree to copy or move them into the project. Uses platform-specific APIs: Windows (IDropTarget / OLE drag-drop), macOS (NSDraggingDestination / NSPasteboard), Linux (Xdnd protocol / wl_data_device for Wayland). On drop: show confirmation dialog listing files to import ("Copy N files into {folder}?" with [Copy] [Cancel]). If a file already exists at the destination, show conflict resolution: "File already exists" with [Replace] [Skip] [Rename (auto-suffix)] per file, plus [Apply to all]. Progress indicator for multi-file copies. Dropped directories are copied recursively.
+**External drag-and-drop:** Drag files from the system file manager into the File Manager tree to copy or move them into the project. Uses platform-specific APIs: Windows (IDropTarget / OLE drag-drop), macOS (NSDraggingDestination / NSPasteboard), Linux (Xdnd protocol / wl_data_device for Wayland). On drop: multi-file and directory drops show a preflight confirmation dialog ("Copy N files into {folder}?" with [Copy] [Cancel]); single-file drops without conflicts may proceed immediately. If a file already exists at the destination, show conflict resolution per Plans/FileManager.md §1.1 (`Overwrite` / `Keep both` / `Cancel`, with optional "apply to all" behavior from Settings). Hold **Shift** during drag to move instead of copy; cursor/drag-image feedback must show the current mode. Progress indicator for multi-file copies. Dropped directories are copied recursively.
 
 **File preview:** When a file is selected, read-only preview in primary content area (or in-panel split when panel >400px). Monospace font with basic syntax highlighting using accent palette.
 
@@ -1286,18 +1299,37 @@ IDE-style editor with:
 
 ### 7.19 Agent Activity Pane (NEW)
 
-**Location:** Embedded in Wizard and Interview views
+**Location:** Embedded in Wizard, Interview, and Requirements Builder views
 
-Read-only, chat-like pane showing streaming agent output during document generation and Multi-Pass Review. Shows which persona/subagent is working on which task. Non-interactive. Progress indicators for documents in progress. Monospace font. Min height 120px, max ~500 visible lines (virtualized via `ListView`).
+Read-only, chat-like pane showing streaming agent output during document generation and Multi-Pass Review. Shows which persona/subagent is working on which task. Output lines are non-interactive; progress controls live in the pane footer. Monospace font. Min height 120px, max ~500 visible lines (virtualized via `ListView`).
 
 **Responsibility boundary (required):**
 - Agent Activity Pane is for streaming/progress only.
 - It must not host document navigation, document editing, or approval controls.
 - Findings summary and approval controls are shown in chat + preview section; document editing happens in File Editor or embedded document pane.
 
+**Virtual buffer and auto-scroll:**
+- Backed by a bounded FIFO buffer of 500 visible lines; oldest lines are evicted first.
+- Auto-scroll is on by default. If the user scrolls upward, auto-scroll pauses and a `New output` affordance re-enables it.
+- Auto-scroll preference is persisted per project under `project.{project_id}.ui.agent_activity_auto_scroll` (default `true`).
+
+**Progress display and controls:**
+- Header shows current state badge (`idle`, `generating`, `reviewing`, `paused`, `cancelling`, `cancelled`, `complete`, `error`).
+- Status text uses deterministic progress wording such as `Writing document 3 of 15` or `Reviewing pass 2 of 4`.
+- Footer buttons are `Pause`, `Resume`, and `Cancel`. These control the run state but never make the log stream itself editable or clickable.
+
+**Embedding and persistence:**
+- In Interview and Requirements Builder, the pane sits in a vertical split below the primary surface. Default split ratio: 65/35 for Interview, 60/40 for Requirements Builder.
+- Collapsed state and split ratio are persisted per project: `project.{project_id}.ui.agent_activity_pane_visible` and `project.{project_id}.ui.agent_activity_pane_ratio`.
+
 **Event wiring (required):**
 - Pane consumes normalized Provider event stream used by chat.
 - UI updates are dispatched through the Slint event loop (`invoke_from_event_loop`) for immediate state refresh.
+
+**Error handling:**
+- On stream disconnect, keep existing output visible and show a persistent inline warning with reconnect/retry affordance.
+- On cancellation, append a final `[cancelled]` line instead of clearing the pane.
+- On provider/runtime error, append the error line, set the header badge to `error`, and keep prior output available for review.
 
 **Accessibility:** The pane uses `accessible-role: text` (or equivalent for read-only log output). Screen readers should announce new output as it arrives via a live region equivalent (Slint: set `accessible-label` to include latest line summary). Focus can be placed on the pane for keyboard scrolling (Up/Down/Page Up/Page Down). Keyboard shortcut to toggle auto-scroll.
 

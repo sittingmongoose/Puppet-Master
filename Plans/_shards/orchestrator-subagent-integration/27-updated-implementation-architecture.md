@@ -21,6 +21,12 @@ impl PlatformCapabilityManager {
 }
 ```
 
+Capability snapshot rules:
+- Capability evaluation happens at run start and produces a frozen snapshot for the run/tier.
+- Precedence is: live runtime discovery -> provider policy snapshot -> static model/platform baseline.
+- `platform.capability_evaluated` is the canonical persistence event for that snapshot and any gated features.
+- This manager complements provider `capabilities.get`; it does not replace the provider-facing capability API.
+
 ### Enhanced Subagent Invoker
 
 ```rust

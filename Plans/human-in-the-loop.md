@@ -19,6 +19,25 @@ HITL semantics are part of the deterministic agent-loop core described in `Plans
 - "Pause for approval" must be reproducible/replayable (event stream + projections), not just an in-memory UI state
 - UI can change (Slint rewrite), but tier-boundary meaning and approval requirements must not
 
+### Canonical HITL request contract
+
+HITL pauses use one canonical request record:
+- `request_id` (stable approval request ID)
+- `run_id`
+- `tier_id`
+- `tier_type` (`phase | task | subtask`)
+- `request_kind = "tier_boundary_approval"`
+- `message`
+- ordered `allowed_actions[]`
+
+Canonical events are:
+- `hitl.approval_requested`
+- `hitl.approved`
+- `hitl.rejected`
+- `hitl.cancelled`
+
+All four events MUST carry the same `request_id` so replay, UI restoration, and command dispatch are deterministic across restart.
+
 ## Executive Summary
 
 **Human-in-the-Loop (HITL) mode** lets the user require explicit human approval at selected tier boundaries. The orchestrator completes all work within the current tier (phase, task, or subtask), then **pauses at the boundary** until the human reviews and approves before proceeding to the next phase, task, or subtask. HITL is a **setting**: it can be enabled independently at phase level, task level, and subtask level. All HITL toggles are **off by default**.
@@ -142,7 +161,7 @@ ContractRef: ContractName:Plans/newfeatures.md, ContractName:Plans/storage-plan.
 **Seglog:** Emit a HITL event when the run pauses for approval and when the user approves/rejects (event type, tier, timestamp, outcome). This makes approval history replayable and auditable.
 ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord
 
-**redb:** Persist **checkpoint/approval state** in redb (e.g. run or session table or a dedicated HITL state): current run id, tier at which pause occurred, status = awaiting_approval | approved | rejected, and optional timestamp. On restore, read this state so the UI shows 'waiting for approval' and the user can approve or cancel. Align with Plans/storage-plan.md checkpoints in redb.
+**redb:** Persist **checkpoint/approval state** in redb (e.g. run or session table or a dedicated HITL state): `request_id`, current `run_id`, `tier_id`, `tier_type`, `request_kind`, `allowed_actions`, status = awaiting_approval | approved | rejected | cancelled, and timestamps/rationale as applicable. On restore, read this state so the UI shows 'waiting for approval' and the user can approve or cancel. Align with Plans/storage-plan.md checkpoints in redb.
 ContractRef: ContractName:Plans/storage-plan.md
 
 ## Optional: Interview Flow

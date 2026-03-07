@@ -15,7 +15,7 @@ The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines **C
 
 - **Check phase subagent configuration:** Determine if phase has multiple subagents (primary + secondary) that would benefit from crew coordination
 - **Create phase crew:** If phase has multiple subagents, create crew with all phase subagents as members
-- **Register crew:** Register crew with `CrewManager` and persist to `.puppet-master/state/crews.json`
+- **Register crew:** Register crew with `CrewManager` and persist canonical crew metadata to redb/seglog projections (not ad-hoc JSON files)
 - **Initialize crew communication:** Set up message board routing for crew (crew_id = `interview-phase-{phase_id}`)
 - **Inject crew context:** Add crew information to phase subagent prompts (crew members, message board access, coordination instructions)
 
@@ -29,11 +29,11 @@ The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines **C
 **AfterPhase crew completion responsibilities:**
 
 - **Validate crew output:** Check that crew members completed their work and posted final messages
-- **Archive crew messages:** Archive crew messages to `.puppet-master/memory/interview-phase-{phase_id}-messages.json`
+- **Archive crew messages:** Archive crew messages/events to seglog with a queryable redb projection for replay/resume
 - **Disband crew:** Mark crew as `CrewStatus::Complete` and remove from active crews
-- **Save crew decisions:** Persist crew decisions and findings to memory for use by later phases
+- **Save crew decisions:** Persist crew decisions and findings to canonical interview memory storage for use by later phases
 
-**Implementation:** Extend `src/interview/orchestrator.rs` to create crews at phase start, coordinate during phase execution, and disband at phase completion. Use `CrewManager` from orchestrator plan (`src/core/crews.rs`).
+**Implementation:** Extend `src/interview/orchestrator.rs` to create crews at phase start, coordinate during phase execution, and disband at phase completion. Use `CrewManager` from orchestrator plan (`src/core/crews.rs`). File examples below are illustrative legacy persistence only; canonical storage for rewrite-era implementation is seglog + redb projections.
 
 **Integration with interview orchestrator:**
 
@@ -109,10 +109,9 @@ let after_result = self.hook_registry.execute_after_phase(&after_ctx)?;
 if let Some(crew_id) = phase_crew {
     self.crew_manager.disband_crew(&crew_id, "Phase completed").await?;
     
-    // Archive crew messages
+    // Archive crew messages to canonical storage / projection
     let messages = self.crew_manager.get_crew_messages(&crew_id).await?;
-    let archive_path = format!(".puppet-master/memory/interview-phase-{}-messages.json", current_phase.id);
-    std::fs::write(&archive_path, serde_json::to_string_pretty(&messages)?)?;
+    self.persist_phase_crew_messages(&current_phase.id, &messages).await?;
     
     // Save crew decisions to memory
     self.memory_manager.save_phase_decisions(&current_phase.id, &extract_crew_decisions(&messages)).await?;
@@ -131,7 +130,7 @@ if let Some(crew_id) = phase_crew {
 
 **What to include in generated plans:**
 - **Subagent persona recommendations:** Which subagent(s) to use per task, subtask, or phase (names from subagent_registry). PRD subtasks carry `crew_recommendation` with `subagents`; phase plans and other docs must carry subagent recommendations where applicable.
-- **Parallelism:** Which tasks/subtasks can run in parallel (e.g. `depends_on`, `can_run_after`, or `parallel_group`) so the Overseer can schedule parallel execution.
+- **Parallelism:** Which tasks/subtasks can run in parallel via the canonical `depends_on` dependency graph so the Overseer can schedule parallel execution.
 - **Crew recommendations:** Suggest crews for complex tasks/subtasks when multiple subagents work together.
 - **Crew templates:** Reference crew templates (e.g., "Use 'Full Stack Crew' for this phase")
 - **Crew metadata:** Add crew hints to PRD tasks/subtasks
@@ -156,8 +155,7 @@ if let Some(crew_id) = phase_crew {
                 "complexity_score": 7.5,
                 "expertise_areas": ["security", "backend", "testing"]
               },
-              "depends_on": [],
-              "parallel_group": "A"
+               "depends_on": []
             }
           ]
         }
@@ -167,13 +165,12 @@ if let Some(crew_id) = phase_crew {
 }
 ```
 
-- **Parallelism fields:** `depends_on` lists task/subtask ids that must complete before this one; empty means no dependencies. `parallel_group` (optional) identifies items that can run in parallel with each other (same group = can run together). Document the chosen schema in the PRD generator and STATE_FILES; orchestrator uses it to schedule parallel execution.
+- **Parallelism fields:** `depends_on` lists task/subtask ids that must complete before this one; empty means no dependencies. Parallel execution is inferred from the dependency graph. Document this schema in the PRD generator and STATE_FILES; orchestrator uses it to schedule parallel execution.
 
 **Crew and parallelism field semantics (canonical: STATE_FILES.md §3.3):**
 
 - **crew_recommendation:** Optional. When present, `subagents` is **required** (array of strings; names from subagent_registry). Other fields (rationale, crew_template, complexity_score, expertise_areas) are optional. If `crew_recommendation` is present but `subagents` is missing or empty, the orchestrator **treats it as no recommendation** and falls back to dynamic selection.
 - **depends_on:** Optional. Type: array of strings (item ids). Empty array or missing = no dependencies. This item may run only after every listed item has completed. Use `depends_on` for ordering; do not introduce a separate `can_run_after` in the PRD schema.
-- **parallel_group:** Optional. Type: string or null. Missing or null = no parallel-group constraint. Items with the same non-empty `parallel_group` may run in parallel, **subject to** `depends_on` (dependencies take precedence).
 - **Phase/Task:** Phase and Task may carry the same optional fields with the same types and semantics when the generator specifies at that level.
 
 **Complexity analysis responsibilities:**
@@ -495,8 +492,8 @@ impl SubtaskComplexity {
 
 **BeforePhase cross-phase coordination responsibilities:**
 
-- **Load prior phase crew messages:** Load messages from previous phase crews from `.puppet-master/memory/interview-phase-{phase_id}-messages.json`
-- **Load prior phase decisions:** Load decisions from previous phases from `.puppet-master/memory/interview-decisions.json`
+- **Load prior phase crew messages:** Load messages from previous phase crews from canonical crew-message projections
+- **Load prior phase decisions:** Load decisions from previous phases from canonical interview-memory projections
 - **Inject cross-phase context:** Add prior phase decisions and crew messages to current phase crew context
 - **Set up cross-phase message routing:** Configure message board to route messages to previous phase crews (for questions/validation)
 
@@ -508,7 +505,7 @@ impl SubtaskComplexity {
 
 **AfterPhase cross-phase coordination responsibilities:**
 
-- **Archive phase decisions:** Save phase decisions to `.puppet-master/memory/interview-decisions.json` with phase_id key
+- **Archive phase decisions:** Save phase decisions to canonical interview-memory storage with phase_id linkage
 - **Archive crew messages:** Archive crew messages with cross-phase routing information
 - **Prepare for next phase:** Set up message routing for next phase to access current phase decisions
 
@@ -595,9 +592,8 @@ if let Some(crew_id) = phase_crew {
     // Save decisions to memory
     self.memory_manager.save_phase_decisions(&current_phase.id, &decisions).await?;
     
-    // Archive messages
-    let archive_path = format!(".puppet-master/memory/interview-phase-{}-messages.json", current_phase.id);
-    std::fs::write(&archive_path, serde_json::to_string_pretty(&messages)?)?;
+    // Archive messages to canonical storage / projection
+    self.persist_phase_crew_messages(&current_phase.id, &messages).await?;
     
     // Disband crew
     self.crew_manager.disband_crew(&crew_id, "Phase completed").await?;
@@ -690,10 +686,10 @@ impl CrewManager {
 
 - **Validate research results:** Crew members validate each other's research results before catalog update
 - **Merge research findings:** Combine findings from all crew members into unified catalog entries
-- **Archive research messages:** Archive research crew messages to `.puppet-master/memory/tool-research-{research_id}-messages.json`
+- **Archive research messages:** Archive research crew messages to canonical research/crew projections
 - **Disband research crew:** Mark crew as complete and remove from active crews
 
-**Implementation:** Extend `src/interview/research_engine.rs` to create research crews, coordinate research operations, and disband crews after research completes.
+**Implementation:** Extend `src/interview/research_engine.rs` to create research crews, coordinate research operations, and disband crews after research completes. File-path examples below are illustrative legacy persistence only; canonical storage for rewrite-era implementation is seglog + redb projection.
 
 **Integration with research engine:**
 
@@ -782,10 +778,9 @@ impl ResearchEngine {
         
         // Disband research crew if it exists
         if let Some((crew_id, research_id)) = research_crew {
-            // Archive research messages
+            // Archive research messages to canonical storage / projection
             let messages = self.crew_manager.get_crew_messages(&crew_id).await?;
-            let archive_path = format!(".puppet-master/memory/tool-research-{}-messages.json", research_id);
-            std::fs::write(&archive_path, serde_json::to_string_pretty(&messages)?)?;
+            self.persist_research_crew_messages(&research_id, &messages).await?;
             
             // Disband crew
             self.crew_manager.disband_crew(&crew_id, "Research completed").await?;

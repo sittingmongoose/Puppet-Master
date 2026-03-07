@@ -30,7 +30,7 @@ Column definitions for wiring matrix entries:
 | `ui_element_id` | Stable DOM/widget ID of the triggering UI element (e.g., `btn.github.connect`). |
 | `ui_location` | Human-readable surface path where the element appears (e.g., "Settings > GitHub/Auth"). |
 | `ui_command_id` | The `cmd.*` ID from `UI_Command_Catalog.md` that this element dispatches. |
-| `handler_location` | Module path to the handler function (e.g., `handlers::github_auth::connect`). |
+| `handler_location` | Canonical Rust module/function path (e.g., `handlers::github_auth::connect` or `crate::core::handlers::auth::connect`). |
 | `expected_event_types` | Event types emitted on successful dispatch, or "(none — UI-only)" for view-state-only commands. |
 | `acceptance_checks` | 2–3 checks that GATE-010 verification validates for this entry. |
 | `evidence_required` | Evidence artifact or bundle required to satisfy the gate. |
@@ -158,6 +158,7 @@ GATE-010 also checks each row's `ui_element_id` value matches its key to prevent
 ### 4.3 Handler resolution
 Every `handler_location` in the wiring matrix MUST resolve to an existing module and function in the codebase.
 GATE-010 parses module paths (e.g., `handlers::github_auth::connect`) and verifies the target exists in `puppet-master-rs/src/`.
+The canonical format is `(crate::)?module(::submodule)+::function`, with the final segment naming the callable handler symbol. When resolution fails, GATE-010 evidence MUST record the owning `ui_element_id`, `ui_command_id`, unresolved `handler_location`, and the candidate files/modules inspected so the failure is actionable.
 
 ### 4.4 Event tests
 Every wiring matrix entry with non-empty `expected_event_types` MUST have a corresponding dispatch test that:

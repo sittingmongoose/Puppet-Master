@@ -23,7 +23,7 @@ Chat renders a compact findings block for review flows:
 - `Applied changes summary`
 - `Unresolved items`
 
-The findings block is shown before final approval and links to the same artifact surfaced in the page preview section.
+The findings block is shown before final approval and links to the same canonical findings artifact surfaced in the page preview section. Chat may render a compact projection, but it MUST resolve to the same review-run identity and revised-artifact reference used by the final approval gate.
 
 ### 9.1 LSP support in Chat (MVP)
 

@@ -19,7 +19,7 @@ ContractRef: Primitive:Gate
 ---
 
 ## 1. Verifier role (AI-only; deterministic)
-The Verifier is an AI role that runs these gates and returns a binary PASS/FAIL result.
+The Verifier is an AI role that runs these gates and returns a progression decision.
 
 **Hard rules:**
 - The Verifier MUST run gates exactly as written here (no discretionary skipping).  
@@ -44,6 +44,23 @@ The Verifier is an AI role that runs these gates and returns a binary PASS/FAIL 
 - `GATE-014` targets Document Set packaging verification (not yet enforced by `run-gates`; pending Document Set artifact generation integration)
 
 ContractRef: Gate:GATE-001, Gate:GATE-002, Gate:GATE-004, Gate:GATE-005, Gate:GATE-006, Gate:GATE-009, Gate:GATE-011, Gate:GATE-012, Gate:GATE-013, Gate:GATE-014
+
+### Verifier scope boundary
+
+`python3 scripts/pm-plans-verify.py run-gates` is the canonical repo-local verifier command for build-governing Puppet Master repository artifacts.
+
+- Generated user-project artifacts under `.puppet-master/project/**` MUST satisfy the relevant gate contracts defined here.
+- They are not implied to be fully covered by the current repo-local `run-gates` script unless a validator explicitly targets them.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, Gate:GATE-011, Gate:GATE-012, Gate:GATE-013, Gate:GATE-014
+
+### Verifier result normalization
+
+- Individual gates MAY expose machine states beyond `PASS` / `FAIL` for workflow or UI purposes.
+- For the Verifier's top-level progression decision, any gate state other than `PASS` MUST be treated as a blocking non-pass outcome.
+- The original gate-specific state MUST still be preserved in machine-readable evidence.
+
+ContractRef: Primitive:Gate, Gate:GATE-012, PolicyRule:Decision_Policy.md§2
 
 ---
 
@@ -148,9 +165,12 @@ ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/DRY_Rules.md#
 2. All wiring matrix artifacts validate against `Plans/Wiring_Matrix.schema.json`.
 3. Every wiring entry key is a unique `ui_element_id`, and each row's `ui_element_id` value matches its containing key.
 4. Every `UICommandID` in `Plans/UI_Command_Catalog.md` has at least one wiring matrix entry.
-5. Every wiring matrix entry's `handler_location` resolves to an existing module/function in the codebase.
+5. Every wiring matrix entry's `handler_location` resolves to an existing module/function in the codebase; unresolved entries are listed in evidence with `ui_element_id`, `ui_command_id`, `handler_location`, and inspected candidate files/modules.
 6. Every wiring matrix entry with non-empty `expected_event_types` has a corresponding test that exercises command dispatch and verifies the declared events are emitted.
-7. No dead commands: UICommandIDs referenced in code but absent from the catalog are flagged.
+7. Dispatcher tests prove unknown `command_id` values return a structured error and emit no domain events.
+8. Handler modules pass an architectural lint that rejects imports/references to UI widget or view namespaces.
+9. UI/view-layer code passes an architectural lint that rejects direct state mutation outside dispatcher/projection/store boundaries.
+10. No dead commands: UICommandIDs referenced in code but absent from the catalog are flagged.
 
 Required evidence:
 - Evidence bundle conforming to `Plans/evidence.schema.json` with `checks[]` entries for schema validation, coverage, handler resolution, and event emission tests.
@@ -207,6 +227,14 @@ ContractRef: SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-pl
 
 <a id="GATE-012"></a>
 ## GATE-012 -- Requirements quality
+### Evaluation moment and progression boundary
+
+- GATE-012 evaluates the latest `.puppet-master/project/traceability/requirements_quality_report.json` produced by the requirements validation workflow.
+- For this gate, “advance to the next plan node” means any transition from requirements-generation/validation into execution of executable plan-graph nodes, and any later attempt to resume execution after a prior `BLOCKED` result.
+- Puppet Master MUST NOT start or resume executable plan-node progression while GATE-012 is `BLOCKED` or `FAIL`.
+
+ContractRef: Gate:GATE-012, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Decision_Policy.md#6.4-requirements-quality-report-boundary-severity-and-persistence
+
 **Pass conditions (ALL must hold):**
 1. `.puppet-master/project/traceability/requirements_quality_report.json` exists.
 2. The file validates against schema `pm.requirements_quality_report.schema.v1` (cross-ref: `Plans/requirements_quality_report.schema.json`).
@@ -232,15 +260,19 @@ Required evidence:
    - Schema validation of `requirements_quality_report.json` against `pm.requirements_quality_report.schema.v1`
    - Deterministic gate-state classification evidence (`PASS` | `BLOCKED` | `FAIL`) derived from `verdict` + `needs_user_clarification[]`
    - PASS-path assertions (required when classified as PASS): `verdict == "PASS"` and `needs_user_clarification[]` is empty
-   - BLOCKED-path escalation evidence (required when `needs_user_clarification[]` is non-empty):
-     - Thread state transitioned to `attention_required` with unanswered-question count equal to `len(needs_user_clarification[])` (thread badge evidence).  
-       Cross-ref: `Plans/assistant-chat-design.md §11.1`
-     - A dashboard clarification Call to Action was emitted and linked to the same clarification scope (wizard/thread context), consistent with dashboard CtA behavior.  
-       Cross-ref: `Plans/assistant-chat-design.md §21`
-     - Clarification request payload/message evidence includes all `question_id`s from `needs_user_clarification[]` (no omissions).  
-       Cross-ref: `Plans/assistant-chat-design.md §11.2`
-   - Unblock/re-run evidence (required before progression resumes from BLOCKED): subsequent report shows `needs_user_clarification[] == []` and `verdict == "PASS"`.  
-  ContractRef: SchemaID:evidence.schema.json, Gate:GATE-012, ContractName:Plans/assistant-chat-design.md, PolicyRule:Decision_Policy.md§6
+    - BLOCKED-path escalation evidence (required when `needs_user_clarification[]` is non-empty):
+      - Thread state transitioned to `attention_required` with unanswered-question count equal to `len(needs_user_clarification[])` (thread badge evidence).
+        Cross-ref: `Plans/assistant-chat-design.md §11.1`
+      - A dashboard clarification Call to Action was emitted and linked to the same clarification scope (wizard/thread context), consistent with dashboard CtA behavior.
+        Cross-ref: `Plans/assistant-chat-design.md §21`
+      - Clarification request payload/message evidence includes all `question_id`s from `needs_user_clarification[]` (no omissions).
+        Cross-ref: `Plans/assistant-chat-design.md §11.2`
+      - A persisted `requirements.clarification_requested` event exists for the same `wizard_id`, `thread_id`, and `question_id` set represented by the final blocked report.
+        Cross-ref: `Plans/Contracts_V0.md §3.3`
+      - A deterministic redaction check proves that `description`, `before`, `after`, `context`, and `question` fields in the stored report contain no secret-like values.
+        Cross-ref: `Plans/Decision_Policy.md §6.4`
+    - Unblock/re-run evidence (required before progression resumes from BLOCKED): subsequent report shows `needs_user_clarification[] == []` and `verdict == "PASS"`.
+   ContractRef: SchemaID:evidence.schema.json, Gate:GATE-012, ContractName:Plans/assistant-chat-design.md, PolicyRule:Decision_Policy.md§6
 
 **Script enforcement status:** Not yet enforced by `run-gates`; targeted for inclusion after traceability artifact generation is integrated.
 
@@ -263,6 +295,13 @@ Example: `<!-- AMBIGUOUS: AMB-001 Unclear whether this requirement applies to gu
    ContractRef: Gate:GATE-013, ContractName:Plans/Decision_Policy.md
 3. The `auto_decisions.jsonl` entry MUST validate against `Plans/auto_decisions.schema.json`.  
    ContractRef: SchemaID:pm.auto_decisions.schema.v1, Gate:GATE-013, ContractName:Plans/Decision_Policy.md
+
+**Ambiguity marker resolution rule (normative):**
+- An ambiguity is unresolved only when an active `<!-- AMBIGUOUS: ... -->` marker lacks a matching schema-valid auto-decision row.
+- Historical auto-decision rows MAY remain in `.puppet-master/project/auto_decisions.jsonl` after the corresponding marker is removed from current artifacts.
+- Duplicate active ambiguity IDs in the current artifact set are a gate failure.
+
+ContractRef: Gate:GATE-013, SchemaID:pm.auto_decisions.schema.v1
 
 **Deterministic detection rules:**
 - Scan: `grep -rn '<!-- AMBIGUOUS:' .puppet-master/project/requirements.md .puppet-master/project/plan.md .puppet-master/project/contracts/`
@@ -298,9 +337,13 @@ ContractRef: SchemaID:pm.auto_decisions.schema.v1, Gate:GATE-013, SchemaID:evide
 5. Idempotency passes: regenerate twice with same source yields no diffs.
 6. Clean-room determinism passes: regeneration in a clean directory yields byte-identical outputs and matching hashes.
 7. Pointer stub acceptance: the original artifact file path MUST contain a valid pointer stub with:
-   - the `docset_entrypoint` field matching `<filename>.docset/00-index.md`
-   - the `source_sha256` field matching `manifest.json` `source_sha256`
-   - a `verify_command` field
+    - the `docset_entrypoint` field matching `<filename>.docset/00-index.md`
+    - the `source_sha256` field matching `manifest.json` `source_sha256`
+    - a `verify_command` field
+   - verifier checks map pointer-stub labels as follows:
+     - `Entrypoint` line → `docset_entrypoint`
+     - `Source SHA-256` line → `source_sha256`
+     - `Verify` line → `verify_command`
 
 ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
 

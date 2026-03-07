@@ -8,6 +8,8 @@ All three flows below MUST:
 (c) Provide full error handling — no dead ends; every error state has a resolution action.
 (d) Be accessible from both the app's main **File** menu and the **Dashboard**.
 
+The `Run Chain Wizard later` button dispatches **`UICommand:cmd.project.chain_wizard_open_deferred`**. The command payload MUST contain, at minimum: `project_id`, `wizard_id`, `default_intent`, `project_path`, optional `remote_repo_ref`, and optional `deferred_wizard_payload_ref`. It opens the wizard at the preloaded Project Setup review state instead of a blank intent picker.
+
 ContractRef: ContractName:Plans/chain-wizard-flexibility.md, PolicyRule:Decision_Policy.md§2
 
 ---

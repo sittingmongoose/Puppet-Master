@@ -1,16 +1,18 @@
 ## Subagent File Management
 
 ### Current State
-Subagent files are currently located in `.claude/agents/` directory (41 subagent persona files, including explore).
+Legacy provider-native agent files may exist under directories such as `.claude/agents/`. They are **seed/import sources only** and are not the canonical runtime representation of Puppet Master Personas.
 
 ### Requirements
-1. **Copy subagents to project:** Subagent files must be available in the Puppet Master project for use during interviews
-2. **Platform-specific locations:** Different platforms expect subagents in different locations:
+1. **Canonical runtime source:** Interview resolves Personas from canonical Persona storage defined in `Plans/Personas.md` (project-local/global `PERSONA.md` files), not from provider-native agent directories.
+2. **Import/seed support:** Provider-native agent files MAY be imported/seeded into canonical Persona storage for convenience/migration.
+3. **Platform-specific export (optional):** Different platforms may support exported provider-native agent files for interoperability:
    - **Cursor**: `.cursor/agents/` or `~/.cursor/agents/`
    - **Claude Code**: `.claude/agents/` or `~/.claude/agents/`
    - **Codex**: `.codex/agents/` or `~/.codex/agents/`
    - **Gemini**: Gemini is a Direct API provider; subagents are orchestrated via Puppet Master's internal Persona system (no platform agent directory)
    - **GitHub Copilot**: `.github/agents/` or `~/.copilot/agents/`
+4. **Registry alignment:** Automatic interview selection may only choose Persona IDs present in the canonical 42-entry registry; imported/exported provider-native files must not create new auto-selectable IDs implicitly.
 
 ### Implementation Strategy
 
@@ -38,8 +40,8 @@ pub struct SubagentInfo {
 }
 
 impl SubagentManager {
-    /// Discovers subagents from source location (.claude/agents/)
-    pub fn discover_subagents(source_dir: &Path) -> Result<Vec<SubagentInfo>> {
+    /// Discovers provider-native agent definitions that can be imported into canonical Persona storage.
+    pub fn discover_importable_subagents(source_dir: &Path) -> Result<Vec<SubagentInfo>> {
         let agents_dir = source_dir.join(".claude/agents");
         let mut subagents = Vec::new();
         
@@ -59,26 +61,14 @@ impl SubagentManager {
         Ok(subagents)
     }
     
-    /// Copies subagents to platform-specific locations in project
-    pub fn copy_subagents_to_project(
+    /// Imports provider-native files into canonical Persona storage after validation.
+    pub fn import_subagents_into_persona_store(
         source_dir: &Path,
-        project_dir: &Path,
-        platforms: &[Platform],
+        persona_store_dir: &Path,
     ) -> Result<()> {
-        let subagents = Self::discover_subagents(source_dir)?;
-        
-        for platform in platforms {
-            let target_dir = Self::platform_agents_dir(project_dir, *platform);
-            std::fs::create_dir_all(&target_dir)
-                .context("Failed to create platform agents directory")?;
-            
-            for subagent in &subagents {
-                let target_path = target_dir.join(format!("{}.md", subagent.name));
-                std::fs::copy(&subagent.file_path, &target_path)
-                    .context("Failed to copy subagent file")?;
-            }
-        }
-        
+        let subagents = Self::discover_importable_subagents(source_dir)?;
+        // Validate IDs, normalize schema, and write PERSONA.md to canonical storage.
+        // Export back to provider-native locations is a separate optional flow.
         Ok(())
     }
     
@@ -103,22 +93,21 @@ impl SubagentManager {
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 #### 2. Integration into Interview Orchestrator
-Add subagent file management to orchestrator initialization:
+Interview initialization resolves Personas from canonical Persona storage. Import/export of provider-native agent files is setup/migration behavior, not a per-run prerequisite.
 
 ```rust
 impl InterviewOrchestrator {
     pub fn new(config: InterviewOrchestratorConfig) -> Result<Self> {
-        // Copy subagents to project if configured
+        // Optionally import provider-native seed files into canonical Persona storage
         if let Some(subagent_cfg) = &config.subagent_config {
-            if subagent_cfg.enable_phase_subagents {
-                SubagentManager::copy_subagents_to_project(
+            if subagent_cfg.import_provider_native_agents_on_startup {
+                SubagentManager::import_subagents_into_persona_store(
                     &config.base_dir,
-                    &config.output_dir,
-                    &[config.primary_platform.platform],
+                    &config.persona_store_dir,
                 )?;
             }
         }
-        
+
         // ... rest of initialization ...
     }
 }

@@ -2,12 +2,12 @@
 
 Before implementation, an implementation agent must complete or have clear specs for the following. Use this list to derive implementation tasks; order may be adjusted by dependency.
 
-1. Add **FlowIntent** enum to app state: `NewProject | ForkEvolve | EnhanceRewriteAdd | ContributePR`.
+1. Add **WizardIntent** enum to app state: `NewProject | ForkAndEvolve | EnhanceRewriteAdd | ContributePr`.
 2. Persist **intent** in wizard/app state and in recovery snapshot (with `wizard_step`).
 3. Implement **merge_canonical_requirements(uploads, builder_path) → Path**: merge order uploads then Builder, write canonical doc, return path.
 4. Add **phase_plan** to interview state schema (e.g. `.puppet-master/interview/phase_plan.json` or embedded in existing interview state file).
 5. Define **PhasePlanEntry** (phase_id, depth: Full | Short | Skip) in types and JSON schema.
-6. Implement **phase selector** input (intent, requirements_summary first 2000 chars, codebase_summary Option) and output (Vec<PhasePlanEntry>); call from pre-interview step.
+6. Implement **phase selector** input (intent, requirements_summary first 2000 chars, codebase_summary Option, has_gui Option) and output (normalized Vec<PhasePlanEntry> over the canonical 8-phase registry); call from pre-interview step.
 7. Implement **rule-based fallback** when phase selector fails or returns empty (per-intent defaults from §6.3).
 8. On **resume interview**, load phase_plan from state and do not re-run selector.
 9. Add GUI checkbox **"Run all phases"** (default off); when on, ignore phase_plan and run all phases Full.
@@ -41,7 +41,7 @@ Before implementation, an implementation agent must complete or have clear specs
 37. **Contract seed pack (Builder):** When Requirements Doc Builder is used, write `.puppet-master/requirements/contract-seeds.md` and include it in Multi-Pass Review (§5.6). Treat it as staging input and reconcile it during the Contract Unification Pass (§6.6); do not treat it as the canonical Project Contract Pack.
 38. **Contract Unification Pass:** Implement the deterministic unification step (§6.6) to materialize SSOT-defined canonical artifacts and ensure every plan node references at least one resolvable `ProjectContract:*`.
 39. **Dry-run validator:** Run the SSOT-defined validator rules before execution begins; surface failures as gating errors (no manual verification).
-40. **Builder opener:** Ensure first Builder Assistant message is exactly `What are you trying to do?`.
+40. **Builder opener:** Ensure first Builder Assistant message is the context-sensitive opener from §5.1 (new project / existing project / fork).
 41. **Turn counter + 6-turn suggestion:** Implement completed-turn semantics (Assistant message + user response) and suggest generation when `completed_turns >= 6` or earlier if enough info exists; suggestion does not auto-generate.
 42. **Checklist dual state:** Implement `builder_checklist_state.v1` and `builder_conversation_state.v1` and keep them synchronized.
 43. **Qualifying questions:** Ask only for checklist sections marked `empty` or `thin` before generation.

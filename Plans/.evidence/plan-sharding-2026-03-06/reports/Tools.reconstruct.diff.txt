@@ -1,1 +1,19 @@
-PASS
+--- /home/sittingmongoose/Cursor/Puppet Master/Plans/Tools.md
++++ reconstructed
+@@ -210,15 +210,9 @@
+ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
+ Canonical input/output shapes align with [OpenCode built-in tools](https://opencode.ai/docs/tools/#built-in); platform runners normalize to/from these. Error conditions and limits are enforced by the adapter/runner before or after calling the platform.
+ 
+-**bash execution limits (required):**
+-- **Timeout:** default `120s` per bash invocation. On timeout, the adapter terminates the process, returns collected stdout/stderr up to that point, and marks the tool result as timed out.
+-- **Output cap:** default `512 KiB` per stream (`stdout`, `stderr`). If a stream exceeds the cap, the adapter truncates the in-thread payload, marks the result as truncated, and preserves the full payload in the persisted log/seglog record when available.
+-- **CWD resolution:** default to the active project/workspace root. In multi-root projects, use the root containing the active file when one exists; otherwise use the first configured workspace root. Explicit `cwd` overrides are allowed only within the permitted workspace scope.
+-- **User-visible behavior:** thread/audit rendering must disclose timeouts and truncation explicitly; it must not present partial output as complete output.
+-
+ | Tool | Canonical input (key params) | Canonical output / result shape | Error conditions | Limits |
+ |------|-----------------------------|----------------------------------|------------------|--------|
+-| **bash** | `command: string`, `cwd?: string` | `stdout: string`, `stderr: string`, `exit_code: number`, `timed_out?: boolean`, `truncated?: boolean` | Permission denied (tool or FileSafe), command blocklist, timeout, non-zero exit | Timeout `120s` default; output cap `512 KiB` per stream by default; CWD = project/workspace per §3.5 bash limits |
++| **bash** | `command: string`, `cwd?: string` | `stdout: string`, `stderr: string`, `exit_code: number` | Permission denied (tool or FileSafe), command blocklist, timeout, non-zero exit | Timeout (e.g. 120s default); output size cap (e.g. 512 KiB); CWD = project/workspace |
+ | **edit** | `path: string`, `old_string: string`, `new_string: string` | `path: string`, `updated: boolean` | File not found, path not in write scope (FileSafe), permission denied | Single replacement per call; file size cap (e.g. 2 MiB) |
+ | **write** | `path: string`, `contents: string` | `path: string`, `created: boolean` | Path not in write scope, permission denied | File size cap (e.g. 2 MiB) |
+ | **read** | `path: string`, `offset?: number`, `limit?: number` (line range) | `contents: string`, `path: string` | File not found, path in sensitive list (.env etc.), permission denied | Line range or size cap (e.g. 10_000 lines or 1 MiB); offset/limit 0-based |

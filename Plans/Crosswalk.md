@@ -98,8 +98,11 @@ ContractRef: Primitive:Provider, ContractName:Plans/CLI_Bridged_Providers.md
 
 Rules:
 - Git primitives (worktrees, remotes, push) are local-git owned; hosting operations are GitHub API owned per Spec Lock.
+- PatchPipeline owns the transactional `patch -> apply -> verify -> rollback` reliability contract for code/document mutations.
+- Transactional rollback in PatchPipeline is distinct from user-facing restore-point rewind in chat/history flows; docs MUST NOT use the terms interchangeably.
+- PatchPipeline verification outcomes feed the central evidence/Verifier flow and MUST remain transport/provider independent.
 
-ContractRef: Primitive:PatchPipeline, SchemaID:Spec_Lock.json#github_operations
+ContractRef: Primitive:PatchPipeline, SchemaID:Spec_Lock.json#github_operations, ContractName:Plans/WorktreeGitImprovement.md
 
 ---
 
@@ -153,6 +156,7 @@ Rules:
 - Full document bodies MUST NOT be rendered in chat.
 - Review guidance MUST use the same tri-location pattern: editor open, clickable file path, and embedded document pane entry.
 - Wizard and Interview pages MUST expose preview-surface review summaries before final approval.
+- The same review-surface semantics MUST be used for initial multi-doc review and targeted revision follow-ups; page-specific copy may differ, but routing and approval meaning MUST remain identical.
 
 ContractRef: Primitive:DocumentReviewSurface, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/assistant-chat-design.md
 
@@ -165,6 +169,8 @@ Rules:
 - Multi-Pass outputs MUST include findings (gaps, consistency issues, missing information), not only revised content.
 - Findings summary MUST be shown in chat and in the page preview section before approval.
 - Findings summary schema and persistence MUST align with storage contracts.
+- Findings summary is a canonical workflow artifact, not a GUI-only convenience. At minimum it MUST preserve review run identity, per-doc findings counts, unresolved items, and any revised-artifact reference needed by the final approval gate.
+- GUI-local views of findings summaries MUST map back to the canonical storage-plan bundle/review contract and MUST NOT invent competing persistence shapes.
 
 ContractRef: Primitive:ReviewFindingsSummary, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
@@ -177,6 +183,7 @@ Rules:
 - Revised document handoff MUST pass through one final approval gate per review run.
 - Preconditions MUST include findings-summary visibility before decision capture.
 - Approval decision artifacts MUST be restorable in recovery flows.
+- `Accept | Reject | Edit` is the only final gate model for this review family unless a higher-precedence SSOT explicitly states otherwise.
 
 ContractRef: Primitive:ReviewApprovalGate, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Project_Output_Artifacts.md
 

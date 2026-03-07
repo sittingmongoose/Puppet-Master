@@ -33,7 +33,7 @@ The GUI must expose tool support in two places (see **Plans/FinalGUISpec.md**):
 
 - **Settings > Advanced > MCP Configuration** -- Already specified: per-platform MCP toggles, MCP server list, Context7 API key, web search provider. MCP-discovered tools then feed into the central registry and permission model (§5).
 
-- **Settings > Advanced > Tool permissions** -- **Required:** Per-tool (and optional wildcard) allow/deny/ask; **presets are in scope for MVP** (Read-only, Plan mode, Full) per §10.4 -- user may choose not to apply a preset, but the preset feature must be implemented; list of built-in + MCP-discovered tools with permission dropdown per row. Bound to the same config that the run uses for the central tool registry. Spec: FinalGUISpec §7.4.1, §7.8 (Usage view).
+- **Settings > Permissions** -- **Required:** Per-tool (and optional wildcard) allow/deny/ask; **presets are in scope for MVP** (Read-only, Plan mode, Full) per §10.4 -- user may choose not to apply a preset, but the preset feature must be implemented; list of built-in + MCP-discovered tools with permission dropdown per row. Bound to the same config that the run uses for the central tool registry. Spec: FinalGUISpec §7.4.10, §7.8 (Usage view).
 
 **Usage page:** Tool usage widget is specified in FinalGUISpec §7.8 (Usage view): tool name, invocation count, latency p50/p95, error rate; data from seglog rollups via analytics scan. See §9.2 enhancement list for context.
 
@@ -70,6 +70,34 @@ Config is stored in TOML files at deterministic paths (global: `~/.config/puppet
 ### 2.4 Interaction with FileSafe
 
 FileSafe runs **in addition to** tool permissions. A tool may be **allowed** by permission but still **blocked** by FileSafe. Tool permission = "may the agent call this tool?"; FileSafe = "may this specific invocation proceed?". See `Plans/FileSafe.md`. The policy engine applies both layers in order: permission first, then FileSafe. Full integration order: §10.6.
+
+### 2.4.1 Central policy engine contract
+
+Every agent-usable tool attempt MUST pass through one canonical policy engine that resolves permission, approval/HITL, FileSafe, execution, and result normalization.
+
+Canonical order:
+1. resolve tool identity and permission
+2. evaluate `allow` / `ask` / `deny`
+3. if `ask`, resolve approval or headless fallback
+4. apply FileSafe and other invocation validation
+5. execute or reject
+6. normalize the terminal outcome for persistence/analytics
+
+At minimum, the normalized terminal outcome set MUST distinguish:
+- `allowed_succeeded`
+- `allowed_runtime_error`
+- `permission_denied`
+- `user_declined`
+- `headless_ask_denied`
+- `filesafe_blocked`
+- `validation_blocked`
+- `cancelled`
+- `timed_out`
+- `post_scan_failure`
+
+This document owns the normalized tool-result taxonomy and policy order. Provider docs emit observations; storage docs persist normalized results.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/CLI_Bridged_Providers.md
 
 ### 2.5 Cross-plan references
 
@@ -108,7 +136,7 @@ The following built-in tools are the **target set** for the central tool registr
 | **todowrite** | Create/update task lists during the session | `todowrite` | Subagent default: disabled (OpenCode). Single todo state per run/session. |
 | **todoread** | Read current todo list state | `todoread` | Subagent default: disabled. |
 | **lsp** (MVP) | LSP operations: definition, hover, references; rename (with user approval) | `lsp` | No feature flag; available when LSP client is enabled. See §3.4.1 LSP tool (MVP). |
-| **task** | Launch subagents (matches subagent type) | `task` | **subagent_type** must be one of the **canonical 41 subagents** documented in Plans (orchestrator-subagent-integration.md §4, interview-subagent-integration.md). Validate with subagent_registry; see §3.6. |
+| **task** | Launch subagents (matches subagent type) | `task` | **subagent_type** must be one of the **canonical 42 subagents** documented in Plans (orchestrator-subagent-integration.md §4, interview-subagent-integration.md). Validate with subagent_registry; see §3.6. |
 | **chatsearch** | Search project chat history (threads/messages) via Tantivy chat index | `chatsearch` | Project-only scope; supports filters (thread_id/time); result/hit limits per §3.5. Used for agent search + auto retrieval. |
 | **codesearch** | Code search within the **project workspace / project root** | `codesearch` | MVP backend is multi-tier: Tantivy code index + LSP workspace/symbol + ripgrep fallback. Result and timeout limits per §3.5. |
 | **logsearch** | Search project log summaries (runs/tools/bash) via Tantivy logs index | `logsearch` | Project-only; returns summaries + refs (event_id/blob_ref). Use `logread` for full payload. |
@@ -210,9 +238,15 @@ This subsection supplements the per-tool table below with required behavior for 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
 Canonical input/output shapes align with [OpenCode built-in tools](https://opencode.ai/docs/tools/#built-in); platform runners normalize to/from these. Error conditions and limits are enforced by the adapter/runner before or after calling the platform.
 
+**bash execution limits (required):**
+- **Timeout:** default `120s` per bash invocation. On timeout, the adapter terminates the process, returns collected stdout/stderr up to that point, and marks the tool result as timed out.
+- **Output cap:** default `512 KiB` per stream (`stdout`, `stderr`). If a stream exceeds the cap, the adapter truncates the in-thread payload, marks the result as truncated, and preserves the full payload in the persisted log/seglog record when available.
+- **CWD resolution:** default to the active project/workspace root. In multi-root projects, use the root containing the active file when one exists; otherwise use the first configured workspace root. Explicit `cwd` overrides are allowed only within the permitted workspace scope.
+- **User-visible behavior:** thread/audit rendering must disclose timeouts and truncation explicitly; it must not present partial output as complete output.
+
 | Tool | Canonical input (key params) | Canonical output / result shape | Error conditions | Limits |
 |------|-----------------------------|----------------------------------|------------------|--------|
-| **bash** | `command: string`, `cwd?: string` | `stdout: string`, `stderr: string`, `exit_code: number` | Permission denied (tool or FileSafe), command blocklist, timeout, non-zero exit | Timeout (e.g. 120s default); output size cap (e.g. 512 KiB); CWD = project/workspace |
+| **bash** | `command: string`, `cwd?: string` | `stdout: string`, `stderr: string`, `exit_code: number`, `timed_out?: boolean`, `truncated?: boolean` | Permission denied (tool or FileSafe), command blocklist, timeout, non-zero exit | Timeout `120s` default; output cap `512 KiB` per stream by default; CWD = project/workspace per §3.5 bash limits |
 | **edit** | `path: string`, `old_string: string`, `new_string: string` | `path: string`, `updated: boolean` | File not found, path not in write scope (FileSafe), permission denied | Single replacement per call; file size cap (e.g. 2 MiB) |
 | **write** | `path: string`, `contents: string` | `path: string`, `created: boolean` | Path not in write scope, permission denied | File size cap (e.g. 2 MiB) |
 | **read** | `path: string`, `offset?: number`, `limit?: number` (line range) | `contents: string`, `path: string` | File not found, path in sensitive list (.env etc.), permission denied | Line range or size cap (e.g. 10_000 lines or 1 MiB); offset/limit 0-based |
@@ -228,19 +262,19 @@ Canonical input/output shapes align with [OpenCode built-in tools](https://openc
 | **todowrite** | `todos: Array<{ id?, content, status? }>` | `ack: boolean` | Subagent default deny; permission denied | Single todo list per run/session |
 | **todoread** | -- | `todos: Array<{ id, content, status }>` | Subagent default deny; permission denied | N/A |
 | **lsp** | `operation: "references"\|"definition"\|"hover"\|"rename"`, `path: string`, `position: { line, character }`, `newName?` (rename only) | references/definition: `locations: Array<{ path, range }>`; hover: `contents: string`; rename: `pending_approval` + edits or `rejected` | LSP unavailable, no server for language, timeout, invalid path/position, server crash mid-call | Timeout per request (e.g. 10s); return "LSP unavailable" or "LSP server error" on disconnect/crash |
-| **task** | `subagent_type: string`, `prompt: string`, ... | `result: object` (subagent output) | Tool denied, subagent type unknown (not in canonical 41), launch failure | Per run config (max concurrent subagents etc.); validate subagent_type with subagent_registry (§3.6) |
+| **task** | `subagent_type: string`, `prompt: string`, ... | `result: object` (subagent output) | Tool denied, subagent type unknown (not in canonical 42), launch failure | Per run config (max concurrent subagents etc.); validate subagent_type with subagent_registry (§3.6) |
 | **codesearch** | `query: string`, `path?: string` | `results: Array<{ path, line, snippet }>` or symbol results when LSP available | Permission denied, search backend unavailable | Result limit (e.g. 100); timeout (e.g. 15s) |
 
 **LSP sub-operations:** For `lsp`, `operation` determines the LSP method and return shape: `references` → `textDocument/references`; `definition` → `textDocument/definition`; `hover` → `textDocument/hover`; `rename` → `textDocument/prepareRename` + `textDocument/rename`, result pending user approval (§3.4.1). When the LSP server crashes or disconnects mid-call, return a structured error (e.g. `{ "error": "lsp_unavailable", "message": "LSP server closed or timed out" }`) so the agent can retry or fall back.
 
-### 3.6 Task tool and the 41 subagents (Plans)
+### 3.6 Task tool and the 42 subagents (Plans)
 
-The **task** tool launches a subagent by type. The **subagent_type** parameter must be one of the **canonical 41 subagents** documented in the Plans folder:
+The **task** tool launches a subagent by type. The **subagent_type** parameter must be one of the **canonical 42 subagents** documented in the Plans folder:
 
-- **Plans/orchestrator-subagent-integration.md §4** -- Known subagent names (DRY:DATA:subagent_registry): Phase (3), Task language (9), Task domain (8), Task framework (4), Subtask (8), Iteration (2), Cross-phase/Interview (7, including `explore`) = **41 total**. Used for orchestrator tier selection, GUI validation, and task-tool validation.
+- **Plans/orchestrator-subagent-integration.md §4** -- Known subagent names (DRY:DATA:subagent_registry): Phase (3), Task language (9), Task domain (8), Task framework (4), Subtask (8), Iteration (2), Cross-phase/Interview (8, including `explorer` and `requirements-quality-reviewer`) = **42 total**. Used for orchestrator tier selection, GUI validation, and task-tool validation.
 - **Plans/interview-subagent-integration.md** -- Phase assignments (e.g. Scope & Goals → product-manager, Architecture → architect-reviewer, Product/UX → ux-researcher); cross-phase roles (technical-writer, knowledge-synthesizer, context-manager, etc.).
 
-**Implementation:** The central registry (e.g. `subagent_registry::is_valid_subagent_name(subagent_type)`) must be the single source of truth. When the **task** tool is invoked, validate `subagent_type` against the registry; if invalid, return a structured error (e.g. "Subagent type 'X' not in canonical list; see Plans/orchestrator-subagent-integration.md §4"). Persona content (SKILL.md) lives in `.github/agents/` and `.claude/agents/` (41 files); the runner loads the matching persona for the requested type.
+**Implementation:** The central registry (e.g. `subagent_registry::is_valid_subagent_name(subagent_type)`) must be the single source of truth. When the **task** tool is invoked, validate `subagent_type` against the registry; if invalid, return a structured error (e.g. "Subagent type 'X' not in canonical list; see Plans/orchestrator-subagent-integration.md §4"). Persona content (SKILL.md) lives in `.github/agents/` and `.claude/agents/` (42 files); the runner loads the matching persona for the requested type.
 
 ### GitHubApiTool
 
@@ -316,7 +350,7 @@ MCP is **in scope** for this document: MCP-discovered tools are first-class entr
 | **Platform CLI flags** | Allow/deny built-in tools (shell, write, MCP by name) | Run config / runner args | Copilot: `--allow-tool` / `--deny-tool`. Claude: `--allowedTools`. Gemini: N/A (Direct-provider; enforced by Puppet Master). |
 | **Central tool registry** | All tools (MCP + native) registered and gated by policy | Puppet Master core (rewrite) | Permissions, validation, normalized results; events in seglog; analytics on latency/errors. |
 | **GUI tool catalog** | Framework-specific tools (e.g. Playwright, headless runners) offered in Interview | DRY:DATA:gui_tool_catalog; interview config | newtools.md: discovery, user choice, test strategy and PRD wiring. |
-| **GUI MCP settings** | Enable/disable MCP servers, API keys (e.g. Context7) | Config → MCP (or Advanced → MCP / Tools) | newtools §8.1; MCP tools then integrated per §5 above. |
+| **GUI MCP settings** | Enable/disable MCP servers, API keys (e.g. Context7) | Settings → Advanced → MCP Configuration | newtools §8.1; MCP tools then integrated per §5 above. |
 
 Implementations should:
 
@@ -339,7 +373,7 @@ Snapshot for implementation; re-verify with Doctor or platform docs at implement
 | Copilot     | N/A (DirectApi; central MCP registry) | N/A                  | N/A    | (provider/tool boundary) |
 
 - **Context7:** API key as `Authorization: Bearer <key>`; resolve via env/credential store and inject in-memory. Derived adapter config MUST contain no secrets.
-- **Cited web search:** Prefer one MCP server (e.g. `websearch_cited`) registered centrally like Context7; derived adapters for `CliBridge` providers only (newtools §8.2.1).
+- **Cited web search:** Prefer one MCP server (e.g. server slug `websearch-cited`, default tool name `websearch_cited`) registered centrally like Context7; derived adapters for `CliBridge` providers only (newtools §8.2.1). Tool results MUST normalize to the cited-search contract in `Plans/newtools.md` §8.2.1 before reaching chat/interview/orchestrator consumers.
 
 ---
 
@@ -349,7 +383,7 @@ Snapshot for implementation; re-verify with Doctor or platform docs at implement
 
 Tool events feed analytics and the Usage tool widget. Align with **storage-plan.md** §2.2.
 
-- **`tool.invoked`:** Emitted when a tool call is allowed and execution completes. Payload: `tool_name` (string, required), `run_id` (string, required), `thread_id` (string, optional), `latency_ms` (number, required), `success` (boolean, required), `error` (string, optional when success is false). See storage-plan.md §2.2.
+- **`tool.invoked`:** Emitted when a tool call is allowed and execution completes. Payload: `tool_name` (string, required), `run_id` (string, required), `thread_id` (string, optional), `latency_ms` (number, required; wall-clock execution time in milliseconds), `success` (boolean, required), `error` (string, optional when success is false). See storage-plan.md §2.2.
 - **`tool.denied`:** Emitted when policy blocks (deny) or user declines ask. Payload: `tool_name`, `run_id`, `thread_id` (optional), `reason` (required: `permission_denied` or `user_declined`). Do not emit for FileSafe blocks. redb: `tool_permissions` in app config (`config:v1`); rollups key `rollups` / `tool_usage.{window}` per §8.4.
 
 ### 8.1 Config persistence
@@ -383,6 +417,8 @@ Analytics scan writes rollups for the Usage page (FinalGUISpec §7.8). For the *
 - **Namespace:** `rollups`
 - **Key:** `tool_usage.{window}` where **window** is one of the **canonical** values: `5h`, `7d`, `24h` (and optionally `1h`). The definitive list of window values is in storage-plan.md; Analytics scan and Usage widget must use the same set.
 - **Value shape:** JSON or bincode: `{ [tool_name: string]: { count: number, p50_ms: number, p95_ms: number, error_count: number } }`. Example: `{ "bash": { "count": 42, "p50_ms": 120, "p95_ms": 500, "error_count": 2 }, "read": { ... } }`. Analytics scan aggregates `tool.invoked` events (fields: tool_name, latency_ms, success, error) into this structure so the Usage page can render the table without scanning seglog. See §8.0 for event payload and storage-plan.md §2.3.
+- **Error-count semantics:** `error_count` is the number of `tool.invoked` events in the window where `success = false`. `tool.denied` events and FileSafe blocks are excluded from `tool_usage.{window}` rollups so the widget reflects executed tool calls only.
+- **Freshness signal:** Analytics scan SHOULD also persist `tool_usage_meta.{window}` with `computed_at`, `window_started_at`, and `window_ended_at` so the Usage page can show a "Last updated" timestamp without opening seglog.
 
 ### 8.5 YOLO and tool permissions
 
@@ -425,7 +461,7 @@ If an MCP server is enabled in config but fails to start or connect at run start
 
 ### 9.2 Enhancements (all optional; not MVP)
 
-The following are **optional** improvements. MVP is defined by §3 built-in tools, §10 permission model, §8 events/rollups, and GUI Tool permissions (FinalGUISpec §7.4.1).
+The following are **optional** improvements. MVP is defined by §3 built-in tools, §10 permission model, §8 events/rollups, and GUI Tool permissions (FinalGUISpec §7.4.10).
 
 | Enhancement | Description | Priority / notes |
 |------------|-------------|-------------------|
@@ -498,6 +534,8 @@ Implement a single function or table that, given the **resolved** permission set
 | Gemini | N/A (Direct-provider; tool gating is enforced by Puppet Master policy, not provider CLI flags). |
 | Cursor, Codex | No single CLI flag for tool allowlist. Tool set is determined by MCP config and platform behavior. Runner **filters** tool calls against policy before forwarding: allow → forward; deny → return "Tool disabled" to agent; ask → map to deny or HITL in headless. Document in implementation plan. |
 
+HTE / DAE split (canonical): the "before forwarding" wording above applies to **HTE** only, where Puppet Master remains the tool executor. In **DAE**, the provider executes tools inside a jail, so enforcement relies on deterministic pre-spawn restriction + post-run reconciliation. Providers that cannot support that restriction path MUST NOT advertise `dae_allowed = true`.
+
 No hardcoded tool names in runner; all names come from registry + policy.
 
 ---
@@ -510,8 +548,8 @@ No hardcoded tool names in runner; all names come from registry + policy.
 | **newtools.md** | GUI testing tools catalog, **MCP settings in GUI** (Context7, others), MCP config for all providers, cited web search (MCP option). Tool support here; MCP config/GUI there. |
 | **storage-plan.md** | Tool invocation/completion events in seglog; tool latency/errors in analytics scan → redb; dashboard/usage rollups. |
 | **agent-rules-context.md** | Rules and context injected into every run; tool policy and safe-edit (FileSafe) align with central policy. |
-| **orchestrator-subagent-integration.md** | Run config and tier wiring; **41 subagents** canonical list (§4, subagent_registry); task tool validates subagent_type against this list. MCP and tool flags passed to platform runner from same run-config build. |
-| **interview-subagent-integration.md** | Interview phase assignments use the same **41 subagents**; config (framework tools, MCP enabled) drives test strategy and PRD; same MCP/tool config available to interview runs. |
+| **orchestrator-subagent-integration.md** | Run config and tier wiring; **42 subagents** canonical list (§4, subagent_registry); task tool validates subagent_type against this list. MCP and tool flags passed to platform runner from same run-config build. |
+| **interview-subagent-integration.md** | Interview phase assignments use the same **42 subagents**; config (framework tools, MCP enabled) drives test strategy and PRD; same MCP/tool config available to interview runs. |
 | **FileSafe.md** | Safe-edit and path/URL guards; runs in addition to tool permissions; map to central tool policy and patch/apply/verify pipeline. |
 | **usage-feature.md** | Tool usage and cost can be reflected in usage rollups (from seglog/analytics). |
 | **LSPSupport.md** | LSP MVP; lsp tool promoted (§3.4, §3.5); diagnostics in context; §9.1. |
@@ -530,7 +568,7 @@ Use this list in order to derive a step-by-step implementation plan. Dependencie
 4. **FileSafe and YOLO order** -- After allow (or ask approved), run FileSafe before executing; do not emit `tool.denied` for FileSafe blocks (§10.6).
 5. **Per-tool adapters** -- Input/output, errors, limits per §3.5; LSP tool with timeout and crash/disconnect handling (§3.5).
 6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0.
-7. **GUI Tool permissions** -- Settings > Advanced > Tool permissions (FinalGUISpec §7.4.1); presets per §10.4; load/save `tool_permissions` (§10.5).
+7. **GUI Tool permissions** -- Settings > Permissions (FinalGUISpec §7.4.10); presets per §10.4; load/save `tool_permissions` (§10.5).
 8. **Usage widget and rollups** -- Analytics scan → redb `rollups` / `tool_usage.{window}` (§8.4); Usage view §7.8; empty state message.
 9. **Central registry and policy engine** -- Registry + policy; single API e.g. `policy.may_execute_tool` (§10.6).
 10. **Registry → CLI derivation** -- Single function per platform (§8.3, §10.8).

@@ -53,16 +53,21 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/FileSafe.md
 
 The prompt MUST be assembled in this stage order:
 
-1. **Resolve run config**: finalize run envelope (tier/mode/model), load permissions snapshot.
-2. **Resolve Personas**: resolve Persona files and compute Persona instruction blocks.
-3. **Resolve skills**: resolve `default_skill_refs` and compute skill bundle inputs.
-4. **Compile context**: invoke the context compiler to produce compiled context artifacts (role-specific) and an "Injected Context" breakdown.
-5. **Assemble Instruction Bundle**: combine rules + Persona instructions + compiled context references.
-6. **Apply plugin prompt transforms** (optional): allow plugins to inject context or replace the prompt (per `Plans/Plugins_System.md`).
-7. **Attach tool schemas**: include the canonical tool registry definitions and any custom tools.
-8. **Finalize**: emit the final prompt payload to the provider runner.
+1. **Resolve run config and surface context**: finalize run envelope (tier/mode/platform/model), identify the active surface, and load the permissions snapshot.
+2. **Resolve Persona selection inputs**: detect Persona mode (`manual` / `auto` / `hybrid`), inspect natural-language Persona requests, and compute the requested Persona when present.
+3. **Resolve effective Persona and runtime state**: resolve Persona files, aliases, requested/effective platform/model/variant/runtime controls, and provider capability filtering.
+4. **Resolve skills**: resolve `default_skill_refs` and compute skill bundle inputs.
+5. **Compile context**: invoke the context compiler to produce compiled context artifacts (role-specific) and an "Injected Context" breakdown.
+6. **Assemble Instruction Bundle**: combine rules + Persona instructions + compiled context references + effective runtime metadata needed for observability.
+7. **Apply plugin prompt transforms** (optional): allow plugins to inject context or replace the prompt (per `Plans/Plugins_System.md`).
+8. **Attach tool schemas**: include the canonical tool registry definitions and any custom tools.
+9. **Finalize**: emit the final prompt payload and effective-resolution metadata to the provider runner and event/history surfaces.
 
-Rule: Stages 1–8 MUST be deterministic given the same inputs and filesystem state.
+Rule: Stages 1–9 MUST be deterministic given the same inputs and filesystem state.
+
+Additional orchestration rules:
+- Mode-specific context overlays are applied during **Stage 5 / Compile context**, before attachments and the Injected Context breakdown are emitted. `ask` and `plan` use the `read_only` overlay; `plan` additionally applies `plan_output_scaffold_v1`; `regular` and `yolo` use `full_execution`. Child/subagent/rotated runs may narrow an inherited overlay, but they MUST NOT widen a read-only overlay into `full_execution`.
+- When the active surface is **Orchestrator** or a delegated child/subagent run, the Instruction Bundle MUST carry the canonical orchestration flow contract `assess → understand → decompose → act → verify`. Work that resolves to one or two atomic steps may proceed directly from understanding to action, but work that requires three or more atomic steps MUST emit an explicit plan before action. This prompt-level orchestration flow MUST NOT create new execution tiers beyond Phase / Task / Subtask / Iteration.
 
 ContractRef: ContractName:Plans/Plugins_System.md, PolicyRule:Decision_Policy.md§3
 
@@ -113,6 +118,12 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/OpenCode_Deep_E
 
 Rotation is the act of terminating a run and spawning a follow-up run (typically due to overflow/compaction constraints) while preserving continuity.
 
+
+Rotation decision boundary (canonical):
+- Deterministic compaction/pruning is attempted first against the **final assembled payload**. Rotation is considered only if the payload still cannot fit after compaction.
+- `ask` and `plan` are **rotation-ineligible**. If the payload still does not fit after deterministic compaction, the run terminates under the normal failure/budget taxonomy rather than spawning a follow-up run.
+- `regular` and `yolo` are **rotation-eligible**. A rotated follow-up run MUST inherit `thread_id`, `mode`, `strategy`, effective Persona/runtime state, and a narrowed-or-equal tool-policy snapshot.
+
 Rule: When rotation occurs, the run outcome MUST be `done.rotated` per `Plans/Run_Modes.md`.
 
 ContractRef: ContractName:Plans/Run_Modes.md
@@ -150,6 +161,10 @@ This addendum expands the prompt pipeline to mirror the OpenCode-style role-reso
 
 ### 6.1 Expanded pre-prompt resolution stages
 
+The following stages refine the canonical ordering in §1.2 by expanding stages 1–3 into explicit Persona/runtime resolution steps before final prompt payload emission.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#ASSEMBLY-PIPELINE, ContractName:Plans/Prompt_Pipeline.md#PROVIDER-CAPABILITY-FILTERING
+
 Before final prompt payload emission, the runtime MUST resolve:
 
 1. **Surface context**
@@ -171,6 +186,7 @@ Before final prompt payload emission, the runtime MUST resolve:
 9. **Final runtime payload emission**
    To provider runner/CLI/server bridge.
 
+<a id="PERSONA-SELECTION-SOURCE-ENUM"></a>
 ### 6.2 Selection-source enumeration
 
 `persona_selection_source` MUST be one of:
@@ -220,6 +236,8 @@ Rule: auto mode MUST always expose the selected effective Persona and reason. It
 
 ### 6.5 Effective resolution record
 
+<a id="EFFECTIVE-RESOLUTION-RECORD"></a>
+
 Every prompt assembly run MUST produce an effective resolution record containing at least:
 
 - `requested_persona`
@@ -238,8 +256,9 @@ Every prompt assembly run MUST produce an effective resolution record containing
 - `applied_persona_controls[]`
 - `skipped_persona_controls[]`
 
-This record is part of prompt assembly observability and must be available to event/history/UI consumers.
+This record is the canonical cross-system effective runtime record referenced by `Plans/Personas.md` and `Plans/Models_System.md`. It is part of prompt assembly observability and must be available to event/history/UI consumers.
 
+<a id="PROVIDER-CAPABILITY-FILTERING"></a>
 ### 6.6 Provider capability filtering stage
 
 Persona controls must pass through provider capability filtering before prompt/model execution.
@@ -251,6 +270,8 @@ Processing rule:
 4. downgrade or skip partially supported/unsupported controls,
 5. record every skipped control with a reason,
 6. expose the resulting effective state to the UI.
+
+ContractRef: ContractName:Plans/Models_System.md#PERSONA-CAPABILITY-MATRIX, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
 
 ### 6.7 OpenCode baseline mapping
 

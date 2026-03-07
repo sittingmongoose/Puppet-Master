@@ -56,12 +56,12 @@ When `max_questions_per_phase` is configured:
 
 ### Other unwired interview settings -- resolution
 
-- **`require_architecture_confirmation`**  
-  **Intended behavior:** Before leaving certain phases (e.g. architecture/tech stack), the interview requires explicit user or agent confirmation of architecture/tech choices.  
+- **`require_architecture_confirmation`**
+  **Intended behavior:** Before leaving certain phases (e.g. architecture/tech stack), the interview requires explicit user or agent confirmation of architecture/tech choices.
   **Wiring:** Add `require_architecture_confirmation: bool` to `InterviewOrchestratorConfig`; set from `gui_config.interview` in `app.rs`. In the interview flow, add a step or phase gate that, when this is true, waits for or prompts for explicit confirmation (e.g. a dedicated phase or a prompt line) before allowing phase complete. Document in interview prompts and in AGENTS.md.
 
-- **`vision_provider`**  
-  **Intended behavior:** When the interview or follow-up uses image/vision (e.g. screenshots, diagrams), this setting selects the preferred platform for vision-capable requests.  
+- **`vision_provider`**
+  **Intended behavior:** When the interview or follow-up uses image/vision (e.g. screenshots, diagrams), this setting selects the preferred platform for vision-capable requests.
   **Wiring:** Add `vision_provider: String` to `InterviewOrchestratorConfig`; set from `gui_config.interview` in `app.rs`. When building requests that include images, use this platform (filtered by platform_specs vision capability). If no image flow exists yet, wire the field and leave the behavior as "use when implementing image/vision flows"; document that in the plan or code.
 
 ### Main-run config source note

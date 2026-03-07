@@ -251,7 +251,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#platform-ca
 
 ### 8.1 MCP settings in the GUI
 
-Add **MCP settings** to the Config view so users can enable and configure MCP servers used by catalog tools and by the interview (e.g. Context7, Browser MCP). Placement: a new subsection **Config → MCP** (or under **Advanced → MCP / Tools**) so all MCP-related controls live in one place. Use the same GuiConfig and Option B run-config build as other tabs so one Save persists MCP settings.
+Add **MCP settings** to the Config view so users can enable and configure MCP servers used by catalog tools and by the interview (e.g. Context7, Browser MCP). Canonical placement is **Settings → Advanced → MCP Configuration** so all MCP-related controls live in one place. Use the same GuiConfig and Option B run-config build as other tabs so one Save persists MCP settings.
 
 **Context7 (default on, API key, toggle off):**
 
@@ -322,6 +322,26 @@ ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage
     [2] Another Source (https://example.com/page2)
     ```
   - Define a **convention or schema** (e.g. markdown subsection, or structured fields in tool result) so the GUI can reliably detect and render links (e.g. clickable URLs in chat, copyable list in run log).
+- **Canonical tool identity:** Default MCP server slug `websearch-cited`; default tool name `websearch_cited`. If implementation uses a built-in tool instead of MCP, it MUST still expose the same tool name and result contract to higher layers.
+- **Canonical result contract:** Tool result MUST include structured fields sufficient for deterministic UI rendering:
+  ```json
+  {
+    "query": "latest rust release",
+    "provider": "google",
+    "model": "gemini-2.5-flash",
+    "answer_markdown": "Rust 1.89 introduced ... [1]",
+    "sources": [
+      {
+        "marker": 1,
+        "title": "Rust Blog",
+        "url": "https://blog.rust-lang.org/...",
+        "snippet": "Rust 1.89...",
+        "published_at": "2025-08-07T00:00:00Z"
+      }
+    ]
+  }
+  ```
+  `answer_markdown` carries the inline-citation text shown in chat/logs; `sources[]` is the canonical machine-readable source list used by GUI rendering, copy actions, and run logs. A rendered **Sources:** block may be derived from `sources[]`; it MUST NOT be the only representation.
 - **Activity transparency:** For every web search call, the UI must show at least the **search query** (and, where appropriate, provider used or result count). See Plans/assistant-chat-design.md §13.
 
 **Architecture options**
@@ -343,14 +363,20 @@ ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage
     - `pm.secret.websearch.openai.api_key`
     - `pm.secret.websearch.openrouter.api_key`
   ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage
-- **Model selection and fallback:** Define a **provider + model** preference order (e.g. try Google → OpenAI → OpenRouter). If the user has configured a preferred provider/model for web search (e.g. in Config → MCP / Tools), use that first. On failure (rate limit, auth error, timeout), fall back to the next provider if configured, or surface a clear error and suggest "Switch web search provider/model in Config" or "Check API key for &lt;provider&gt;". Avoid burning the user's chat/orchestrator model quota for search if a dedicated search model is available.
-- **Config surface:** Add GUI controls (e.g. under Config → MCP / Tools) to enable/disable cited web search, choose provider (and optionally model), and manage API keys via credential-store actions (`Save key`/`Clear key`, masked input; status only). Persist **non-secret** preferences in the same GuiConfig/run-config pipeline as other MCP settings so Assistant, Interview, and Orchestrator all see identical behavior.
+- **Model selection and fallback:** Define a **provider + model** preference order (e.g. try Google → OpenAI → OpenRouter). If the user has configured a preferred provider/model for web search in **Settings → Advanced → MCP Configuration**, use that first. On failure (rate limit, auth error, timeout), fall back to the next provider if configured, or surface a clear error and suggest "Switch web search provider/model in MCP Configuration" or "Check API key for &lt;provider&gt;". Avoid burning the user's chat/orchestrator model quota for search if a dedicated search model is available.
+- **Config surface:** Add GUI controls in **Settings → Advanced → MCP Configuration** to enable/disable cited web search, choose provider (and optionally model), and manage API keys via credential-store actions (`Save key`/`Clear key`, masked input; status only). Persist **non-secret** preferences in the same GuiConfig/run-config pipeline as other MCP settings so Assistant, Interview, and Orchestrator all see identical behavior.
+  - Canonical non-secret keys:
+    - `mcp.cited_websearch.enabled: bool` (default `false`)
+    - `mcp.cited_websearch.provider_order: string[]` (default `["google","openai","openrouter"]`)
+    - `mcp.cited_websearch.models: { [provider: string]: string }` (optional dedicated search model per provider)
+    - `mcp.cited_websearch.timeout_ms: u32` (default `60000`)
+    - `mcp.cited_websearch.log_query_plaintext: bool` (default `false`)
   ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, PolicyRule:Decision_Policy.md§2
 
 **Errors, rate limits, and timeouts**
 
 - **Rate limits:** Provider-specific. When the search API returns 429 or "quota exceeded", do not retry indefinitely. Surface a user-visible message (e.g. in chat or run log): "Web search rate limit reached. Try again later or switch provider/model in Config." Optionally suggest switching platform or model per Plans/assistant-chat-design.md §12 (rate limit handling).
-- **Auth failures:** If the configured API key is missing or rejected, fail the tool call with a clear message (e.g. "Web search unavailable: invalid or missing API key for &lt;provider&gt;. Check Config → MCP / Tools and credential store."). Do not fall back to another provider's key without user consent (privacy/cost).
+- **Auth failures:** If the configured API key is missing or rejected, fail the tool call with a clear message (e.g. "Web search unavailable: invalid or missing API key for &lt;provider&gt;. Check Settings → Advanced → MCP Configuration and credential store."). Do not fall back to another provider's key without user consent (privacy/cost).
 - **Timeouts:** Set a reasonable timeout for the search call (e.g. 30-60 s). On timeout, return a structured error to the agent and show the user "Web search timed out. You can retry or try a different query."
 - **No results / empty:** Define behavior when the provider returns zero results (e.g. return "No results found for this query" with no Sources list, or a short message so the agent can respond appropriately). Avoid leaving the user with no feedback.
 
@@ -425,7 +451,7 @@ The custom headless GUI tool must be **fully featured**, not minimal. Use **Pupp
 - **Headless execution:** Runs without display (CI-friendly); uses software rendering or framework-specific headless mode (e.g. Iced tiny-skia, or framework's own headless API).
 - **Action catalog:** A defined set of actions or scenarios so that smoke and regression flows can be scripted and repeated. Not a one-off script -- a reusable catalog the agent can extend and run.  
   ContractRef: ContractName:AGENTS.md#automation-action-catalog
-- **Full evidence output:** After each run, the tool MUST produce the **same depth of debug information** as Puppet Master's GUI automation: **Timeline** (e.g. `timeline.jsonl`), **Summary** (e.g. `summary.md`), **Artifacts** (screenshots or state dumps per step). **Consistent paths:** Evidence under a standard location (e.g. `.puppet-master/evidence/gui-automation/...`). Optional: **ephemeral workspace clone** as in Puppet Master's headless runner.  
+  - **Full evidence output:** After each run, the tool MUST produce the **same depth of debug information** as Puppet Master's GUI automation: **Timeline** (e.g. `timeline.jsonl`), **Summary** (e.g. `summary.md`), **Artifacts** (screenshots or state dumps per step), and the canonical manifest described in **§13**. **Consistent paths:** Evidence under `.puppet-master/evidence/gui-automation/<run_id>/`. Optional: **ephemeral workspace clone** as in Puppet Master's headless runner.  
   ContractRef: SchemaID:evidence.schema.json, Gate:GATE-005, ContractName:AGENTS.md#automation-evidence
 
 ### 9.2 What gets written into plans
@@ -448,7 +474,7 @@ ContractRef: ContractName:AGENTS.md#automation, SchemaID:evidence.schema.json
 
 - **Extend** test strategy outputs (`test-strategy.md` + `.puppet-master/interview/test-strategy.json`, schema `Plans/test_strategy.schema.json`) to include:
   - **Framework tools:** List of selected framework tool IDs and how they are used (e.g. "Run Dioxus devtools for live preview; use for manual smoke checks" or "Run Iced headless runner with action set X").
-  - **Custom headless tool:** When selected, a dedicated section or items that state: "Use the project's headless GUI tool for smoke tests; read debug log at `<path>` after each run."
+  - **Custom headless tool:** When selected, a dedicated section or items that state: "Use the project's headless GUI tool for smoke tests; read evidence at `.puppet-master/evidence/gui-automation/<run_id>/` (timeline, summary, manifest, artifacts) after each run."
   ContractRef: SchemaID:pm.test_strategy.schema.v1, PolicyRule:Decision_Policy.md§2
 - **Test types:** Add or reuse test types (e.g. `headless_gui`, `framework_tool`) in addition to `playwright`, so that verification commands and criteria can reference "run headless tool" or "run framework tool X".
 - **DRY:** Extend `test_strategy_generator` and `TestItem` (or equivalent) so that new options are generated from the **same** interview state (selected_framework_tools, plan_custom_headless_tool); no duplicate logic in views vs generator.
@@ -477,7 +503,7 @@ ContractRef: ContractName:AGENTS.md#automation, SchemaID:evidence.schema.json
 - [ ] **7.1** Add GUI stack detection (from Architecture/UX or feature_detector); store `detected_gui_frameworks` in interview state.
 - [ ] **7.2** In Testing phase, call catalog (and optional research to populate catalog); build options (Playwright, framework tools, custom headless); persist user choices in interview config/state and wire into `InterviewOrchestratorConfig`.
 - [ ] **7.3** Add UI for tool selection using existing widgets; tag new widgets; run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` after changes.
-- [ ] **8.1** MCP settings in GUI: add Config → MCP (or Advanced → MCP); Context7 enabled by default; manage key via OS credential store; toggle to turn Context7 off; wire to GuiConfig and Option B run-config.
+- [ ] **8.1** MCP settings in GUI: add **Settings → Advanced → MCP Configuration**; Context7 enabled by default; manage key via OS credential store; toggle to turn Context7 off; wire to GuiConfig and Option B run-config.
 - [ ] **8.2** Per-platform MCP: implement central MCP registry + derived adapter config for `CliBridge` providers; `DirectApi` providers use the central tool registry (no provider-side MCP config files). Context7 key is resolved via env/credential store and injected in-memory. See §8.2 and provider transport/auth taxonomy (§8.3).
 - [ ] **9** Document custom headless tool as **full-featured** (headless runner, action catalog, full evidence per §9.1); document how plans reference existing automation (e.g. Iced headless runner) vs building new.
 - [ ] **10.1** Extend test strategy generator and schema for framework tools and custom headless; add test types and verification commands as needed.
@@ -1366,23 +1392,28 @@ ContractRef: UICommand:cmd.orchestrator.build_run, UICommand:cmd.orchestrator.op
 
 **Local runtime flow (default):**
 1. Preflight checks: Docker engine reachable, compose file resolvable, required ports available.
-2. Launch path:
+2. If registry push is requested, validate DockerHub auth before launch and fail closed with actionable remediation if auth is missing or expired.
+3. Resolve runtime settings from Settings > Advanced > Containers & Registry (runtime selector, binary path, compose path, project-name strategy, namespace/repository/tag defaults).
+4. Launch path:
    - `docker compose up -d` for service stacks
    - `docker buildx build` for deterministic image build path
-3. Capture logs/health until preview or build completes.
-4. Teardown with `docker compose down` when session policy requires cleanup.
+5. Capture logs/health until preview or build completes.
+6. Teardown with `docker compose down` when session policy requires cleanup.
+7. Evidence/log capture MUST redact credentials, auth headers, and token-bearing environment variables before persistence.
 
 **Settings contract (Slint Settings):**
 - `Containers & Registry` section includes:
   - runtime selector (`docker` default)
-  - compose file/path defaults
-  - DockerHub namespace/repository/tag defaults
-  - auth mode (`pat` default)
+  - Docker binary path override and compose file/path defaults
+  - compose project-name strategy (`auto`, `fixed`, `hash-based`)
+  - DockerHub namespace/repository/tag defaults and tag templates
+  - auth mode (`pat` default) plus validate/clear-token actions
   - push policy (`manual` default; optional `after_build`)
 
 **DockerHub auth/push contract:**
 - Use PAT/token-based auth flow.
-- Never place tokens in project files or evidence logs.
+- Store tokens in the OS credential store only; never place tokens in project files, redb, or evidence logs.
+- Validation status includes a timestamp and last-known registry host so the UI can explain what was verified.
 - Push results include digest and tag map in evidence and chat summary.
 
 **CI template defaults for container publish:**
@@ -1445,6 +1476,11 @@ The Slint rebuild must expose deterministic readiness checks before Preview/Buil
 | `doctor.registry.auth` | docker publish | Registry auth validated for selected provider (`dockerhub` default) | Block publish; preserve local build results |
 | `doctor.actions.workflow-ready` | GitHub Actions | Workflow template validates and required secrets are declared | Block workflow apply; show missing/invalid fields |
 | `doctor.evidence.media` | evidence/chat | Manifest + media artifacts are readable and hash-valid | Keep run result, mark evidence degraded with explicit fallback message |
+| `doctor.mcp.context7` | MCP / docs | Context7 enablement is on and a usable key resolves from env or credential store; server can list tools | Keep run usable, but mark Context7-backed tools unavailable and surface remediation |
+| `doctor.mcp.provider-ready` | MCP / provider bridge | For each selected provider, MCP bridge/adapters are present and the configured server set exposes the expected tool names | Mark MCP-backed tools unavailable for that provider; do not silently advertise missing tools |
+| `doctor.websearch.cited` | cited web search | `websearch_cited` result contract passes a dry-run/provider health check for the configured provider order | Keep run usable, but disable cited web search with explicit config/auth/timeout reason |
+| `doctor.gui.custom-headless` | custom GUI tool | When `plan_custom_headless_tool = true`, configured tool path exists, is executable, and produces canonical evidence layout | Mark custom headless path unavailable and point to config/evidence contract remediation |
+| `doctor.gui_tool_catalog.freshness` | framework tool catalog | Base catalog version plus overlay `last_updated` metadata are present and readable | Keep run usable, but warn that tool recommendations may be stale and show the recorded snapshot date |
 
 ContractRef: ContractName:Plans/MiscPlan.md#doctor, ContractName:Plans/FinalGUISpec.md#74-settings-unified, ContractName:Plans/newtools.md#13-evidence-in-chat-contract-and-flow-research-evidence-media-chat, SchemaID:evidence.schema.json
 

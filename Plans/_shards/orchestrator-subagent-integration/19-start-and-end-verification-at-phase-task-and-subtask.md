@@ -2,6 +2,11 @@
 
 Beyond config-wiring validation (which runs at **start** of each tier), this section defines a **broader start verification** (wiring + readiness) and an **end verification** (wiring again + **quality review**) at Phase, Task, and Subtask boundaries. The goal is to catch things that need to be wired, confirm GUI/backend are in sync, validate that steps make sense, and at the end not only pass acceptance criteria but ensure the work was done well via actual code review. **Human-in-the-Loop (HITL):** Optional pause for human approval at these same boundaries is specified in **Plans/human-in-the-loop.md** (runs after end verification, before advancing to the next tier).
 
+Canonical lifecycle alignment:
+- Verification results are persisted as seglog/redb events and projections (`config.validation.*`, `run.qa_cycle_*`, HITL events), not as authoritative ad hoc JSON files.
+- Executor node `status` remains governed by `Plans/Executor_Protocol.md`; labels such as `waiting_approval`, `needs_review`, and warning states are overlays/projections, not replacement node statuses.
+- Start verification blocks before any provider spawn. End verification runs before promotion and before any HITL pause for the same tier.
+
 ### Start-of-phase / start-of-task / start-of-subtask verification
 
 When the orchestrator **enters** a Phase, Task, or Subtask, run the following **before** building execution context or spawning the agent:
@@ -32,7 +37,7 @@ When the orchestrator **enters** a Phase, Task, or Subtask, run the following **
 
 **AfterTierStart verification responsibilities:**
 
-- **Persist verification results:** Save verification results to `.puppet-master/state/verification-{tier_id}.json`
+- **Persist verification results:** Emit canonical `config.validation.passed|warning|failed` events and update redb projections for this tier/runtime snapshot
 - **Track verification history:** Add verification entry to verification history for this tier
 
 **Implementation:** Create `src/verification/tier_start.rs` with `verify_tier_start()` function. Integrate with orchestrator tier entry point.
@@ -56,7 +61,7 @@ impl Orchestrator {
             &self.config,
             context,
         ).await?;
-        
+
         // Handle verification failures
         match verification_result.status {
             VerificationStatus::Pass => {
@@ -78,16 +83,16 @@ impl Orchestrator {
                 // Continue with tier execution
             }
         }
-        
+
         // Log verification results
         self.log_verification_result(&tier_node.id, &verification_result).await?;
-        
+
         // Persist verification results
         self.persist_verification_result(&tier_node.id, &verification_result).await?;
-        
+
         // Build execution context (only if verification passed or warn-and-continue)
         let execution_context = self.build_execution_context(tier_node, context)?;
-        
+
         // Continue with tier execution...
         Ok(())
     }
@@ -153,7 +158,7 @@ pub async fn verify_tier_start(
     context: &OrchestratorContext,
 ) -> Result<StartVerificationResult> {
     let mut findings = Vec::new();
-    
+
     // 1. Config-wiring check
     let config_wiring_result = validate_config_wiring_for_tier(tier_type, config)?;
     if !config_wiring_result.passed {
@@ -164,7 +169,7 @@ pub async fn verify_tier_start(
             suggestion: Some("Ensure tier config is present and all required fields are wired".to_string()),
         }));
     }
-    
+
     // 2. GUI-backend mapping check
     let gui_backend_result = check_gui_backend_mapping(tier_type, config)?;
     if !gui_backend_result.passed {
@@ -175,7 +180,7 @@ pub async fn verify_tier_start(
             suggestion: Some("Add GUI control for this backend setting or document why it is internal-only".to_string()),
         }));
     }
-    
+
     // 3. Backend-GUI mapping check
     let backend_gui_result = check_backend_gui_mapping(tier_type, config)?;
     if !backend_gui_result.passed {
@@ -186,7 +191,7 @@ pub async fn verify_tier_start(
             suggestion: Some("Read and apply this GUI setting in the execution path for this tier".to_string()),
         }));
     }
-    
+
     // 4. Operation sequence validation
     let sequence_result = validate_operation_sequence(tier_type, config)?;
     if !sequence_result.passed {
@@ -197,7 +202,7 @@ pub async fn verify_tier_start(
             suggestion: Some("Ensure operation sequence matches config schema and plan".to_string()),
         }));
     }
-    
+
     // 5. Gap check
     let gap_result = check_known_gaps(tier_type)?;
     if !gap_result.gaps.is_empty() {
@@ -210,7 +215,7 @@ pub async fn verify_tier_start(
             });
         }
     }
-    
+
     // Determine overall status
     let status = if findings.iter().any(|f| matches!(f.severity, FindingSeverity::Critical)) {
         VerificationStatus::Fail
@@ -219,7 +224,7 @@ pub async fn verify_tier_start(
     } else {
         VerificationStatus::Pass
     };
-    
+
     Ok(StartVerificationResult {
         tier_type,
         tier_id: context.tier_id.clone(),
@@ -243,7 +248,7 @@ fn check_gui_backend_mapping(
 ) -> Result<MappingCheckResult> {
     // Load GUI-backend mapping (from config_wiring.rs or static list)
     let mapping = load_gui_backend_mapping(tier_type)?;
-    
+
     // Check all execution-affecting settings have GUI controls
     // ...
 }
@@ -254,7 +259,7 @@ fn check_backend_gui_mapping(
 ) -> Result<MappingCheckResult> {
     // Load backend-GUI mapping
     let mapping = load_backend_gui_mapping(tier_type)?;
-    
+
     // Check all GUI controls are read and applied in execution path
     // ...
 }
@@ -270,7 +275,7 @@ fn validate_operation_sequence(
 fn check_known_gaps(tier_type: TierType) -> Result<GapCheckResult> {
     // Load known gaps per tier type
     let gaps = load_known_gaps(tier_type)?;
-    
+
     Ok(GapCheckResult { gaps })
 }
 ```
@@ -352,10 +357,10 @@ impl Orchestrator {
     ) -> Result<TierStatus> {
         // Collect tier artifacts
         let artifacts = self.collect_tier_artifacts(tier_node, context).await?;
-        
+
         // Compute diff
         let diff = self.compute_tier_diff(tier_node, context).await?;
-        
+
         // Run end verification
         let verification_result = verify_tier_end(
             tier_node.tier_type,
@@ -365,7 +370,7 @@ impl Orchestrator {
             &self.config,
             context,
         ).await?;
-        
+
         // Handle verification results
         let tier_status = match verification_result.status {
             VerificationStatus::Pass => {
@@ -386,18 +391,18 @@ impl Orchestrator {
                 }
             }
         };
-        
+
         // Persist verification results
         self.persist_verification_result(&tier_node.id, &verification_result).await?;
-        
+
         // Update tier status in PRD/state
         self.update_tier_status(tier_node, &tier_status).await?;
-        
+
         // Generate feedback if verification failed
         if matches!(tier_status, TierStatus::Incomplete { .. }) {
             self.generate_verification_feedback(tier_node, &verification_result).await?;
         }
-        
+
         Ok(tier_status)
     }
 }
@@ -438,7 +443,7 @@ pub async fn verify_tier_end(
     context: &OrchestratorContext,
 ) -> Result<EndVerificationResult> {
     let mut findings = Vec::new();
-    
+
     // 1. Re-run wiring check
     let wiring_result = re_run_wiring_check(tier_type, config, context).await?;
     if !wiring_result.passed {
@@ -449,7 +454,7 @@ pub async fn verify_tier_end(
             suggestion: Some("Ensure new config/settings introduced during tier are properly wired".to_string()),
         }));
     }
-    
+
     // 2. Run acceptance criteria
     let acceptance_result = run_acceptance_criteria(tier_type, outcome, artifacts, config).await?;
     if !acceptance_result.passed {
@@ -460,7 +465,7 @@ pub async fn verify_tier_end(
             suggestion: Some("Ensure acceptance criteria from PRD are met".to_string()),
         }));
     }
-    
+
     // 3. Run quality verification
     let quality_result = run_quality_verification(tier_type, artifacts, diff, config, context).await?;
     if !quality_result.passed {
@@ -471,7 +476,7 @@ pub async fn verify_tier_end(
             suggestion: f.suggestion,
         }));
     }
-    
+
     // Determine overall status
     let status = if findings.iter().any(|f| matches!(f.severity, FindingSeverity::Critical)) {
         VerificationStatus::Fail
@@ -480,14 +485,14 @@ pub async fn verify_tier_end(
     } else {
         VerificationStatus::Pass
     };
-    
+
     // Generate feedback if verification failed
     let feedback = if matches!(status, VerificationStatus::Fail) {
         Some(generate_verification_feedback(&findings, artifacts, diff)?)
     } else {
         None
     };
-    
+
     Ok(EndVerificationResult {
         tier_type,
         tier_id: context.tier_id.clone(),
@@ -509,19 +514,19 @@ async fn run_quality_verification(
     context: &OrchestratorContext,
 ) -> Result<QualityCheckResult> {
     let mut findings = Vec::new();
-    
+
     // 3a. Code review by reviewer subagent (required, not optional)
     let reviewer_result = run_reviewer_subagent(tier_type, artifacts, diff, config, context).await?;
     if !reviewer_result.passed {
         findings.extend(reviewer_result.findings);
     }
-    
+
     // 3b. Quality gate criteria (required as well)
     let quality_gate_result = run_quality_gate_criteria(tier_type, artifacts, diff, config).await?;
     if !quality_gate_result.passed {
         findings.extend(quality_gate_result.findings);
     }
-    
+
     Ok(QualityCheckResult {
         passed: findings.is_empty(),
         reviewer_result,
@@ -542,15 +547,15 @@ async fn run_reviewer_subagent(
     let reviewer_subagent = get_reviewer_subagent_for_tier(tier_type)?;
     // Implementation note: get_reviewer_subagent_for_tier() must use subagent_registry::get_subagents_for_tier(TierType::Subtask)
     // and filter for "code-reviewer" or use subagent_registry::get_reviewer_subagent_for_tier() if such a function exists
-    
+
     // Build review prompt
     let review_prompt = build_review_prompt(artifacts, diff, tier_type)?;
-    
+
     // DRY requirement: must use platform_specs functions — never hardcode platform-specific behavior
     // Invoke reviewer subagent via platform runner
     let platform = get_platform_for_tier(tier_type, config)?;
     let model = get_model_for_tier(tier_type, config)?;
-    
+
     // DRY: Use platform_specs to get runner — DO NOT use match statements for platform selection
     let runner = get_platform_runner(platform)?;
     // DRY requirement: execute_with_subagent must use platform_specs::get_subagent_invocation_format() internally
@@ -559,10 +564,10 @@ async fn run_reviewer_subagent(
         &review_prompt,
         &context.workspace,
     ).await?;
-    
+
     // Parse reviewer output as structured SubagentOutput
     let parsed_output = parse_reviewer_output(&review_output.stdout)?;
-    
+
     // Extract findings from reviewer output
     let findings = parsed_output.findings.into_iter()
         .map(|f| QualityFinding {
@@ -573,7 +578,7 @@ async fn run_reviewer_subagent(
             suggestion: f.suggestion,
         })
         .collect();
-    
+
     Ok(ReviewerResult {
         passed: findings.iter().all(|f| matches!(f.severity, Severity::Info | Severity::Minor)),
         findings,
@@ -588,10 +593,10 @@ async fn run_quality_gate_criteria(
     config: &PuppetMasterConfig,
 ) -> Result<QualityGateResult> {
     let mut findings = Vec::new();
-    
+
     // Get quality criteria for this tier type
     let quality_criteria = get_quality_criteria_for_tier(tier_type)?;
-    
+
     // Run each quality check
     for criterion in quality_criteria {
         let check_result = run_quality_check(&criterion, artifacts, diff, config).await?;
@@ -605,7 +610,7 @@ async fn run_quality_gate_criteria(
             });
         }
     }
-    
+
     Ok(QualityGateResult {
         passed: findings.is_empty(),
         findings,

@@ -32,25 +32,25 @@ When subtasks run in parallel, each subtask can have **different subagents** sel
 
 async fn execute_subtasks_parallel(&self, subtask_ids: &[String]) -> Result<Vec<Result<()>>> {
     // ... existing dependency analysis ...
-    
+
     // Get parallelizable groups
     let groups = self.dependency_analyzer.get_parallelizable_groups(dependencies)?;
-    
+
     // Execute each group sequentially
     for group in groups {
         // Create worktrees for each subtask
         for id in &group {
             let _ = self.create_subtask_worktree(id).await?;
         }
-        
+
         // Execute subtasks in parallel, each with its own subagent selection
         let results = join_all(group.iter().map(|id| async {
             let tree = self.tier_tree.lock().unwrap();
             let tier_node = tree.find_by_id(id).unwrap();
-            
+
             // Build context for this specific subtask
             let tier_context = self.build_tier_context(&tier_node, &context)?;
-            
+
             // DRY REQUIREMENT: Subagent selection MUST use subagent_selector which uses subagent_registry — NEVER hardcode subagent names
             // Select subagents for THIS subtask (independent of others)
             let subagent_names = self.subagent_selector.select_for_tier(
@@ -63,12 +63,12 @@ async fn execute_subtasks_parallel(&self, subtask_ids: &[String]) -> Result<Vec<
                     log::warn!("Invalid subagent name selected: {}", name);
                 }
             }
-            
+
             // DRY REQUIREMENT: execute_tier_with_subagents MUST use platform_specs for platform-specific invocation
             // Execute with selected subagents
             self.execute_tier_with_subagents(&tier_node, &tier_context, &subagent_names).await
         })).await;
-        
+
         // ... cleanup ...
     }
 }
@@ -101,7 +101,7 @@ impl SubagentSelector {
         tier_context: &TierContext,
     ) -> Vec<String> {
         let mut subagents = self.select_for_tier(tier_node.tier_type, tier_context);
-        
+
         // DRY REQUIREMENT: language_to_subagent MUST use subagent_registry::get_subagent_for_language()
         // Inherit language/domain from completed dependencies
         for dep in completed_dependencies {
@@ -117,14 +117,14 @@ impl SubagentSelector {
                         }
                     }
                 }
-                
+
                 // Inherit domain if not already set
                 if tier_context.domain == ProjectDomain::Unknown {
                     // Use domain from dependency
                 }
             }
         }
-        
+
         subagents
     }
 }
@@ -152,7 +152,7 @@ When multiple agents/subagents run concurrently (parallel subtasks, different ti
    - What operations each agent is performing (e.g., "editing src/api.rs", "running tests")
    - Platform identifier (so agents know which platform other agents are using)
    - Timestamp of last update
-   
+
    **This file-based coordination works across ALL platforms** -- a Codex agent can see what a Claude agent is doing, and vice versa. All platforms read/write to the same JSON file.
 
 3. **Provider-bridge coordination (current):**
@@ -172,11 +172,11 @@ When multiple agents/subagents run concurrently (parallel subtasks, different ti
    **Active Agents:**
    - rust-engineer (Codex) is editing src/api.rs (started 2 minutes ago)
    - test-automator (Claude Code) is running tests in tests/api_test.rs (started 1 minute ago)
-   
+
    **Files Being Modified:**
    - src/api.rs (by rust-engineer on Codex)
    - tests/api_test.rs (by test-automator on Claude Code)
-   
+
    **Your Task:** Implement authentication middleware. Avoid editing src/api.rs until rust-engineer finishes.
    ```
 
@@ -301,7 +301,7 @@ impl AgentCoordinator {
             state_file: project_root.join(".puppet-master").join("state").join("active-agents.json"),
         }
     }
-    
+
     // DRY:FN:register_agent — Register an agent as active
     // DRY REQUIREMENT: Agent platform field MUST be from tier_config.platform — NEVER hardcode platform
     /// Register an agent as active
@@ -312,7 +312,7 @@ impl AgentCoordinator {
         state.last_updated = Utc::now();
         self.save_state(&state).await
     }
-    
+
     /// Update agent status (files being edited, current operation)
     pub async fn update_agent_status(
         &self,
@@ -331,7 +331,7 @@ impl AgentCoordinator {
             Err(anyhow!("Agent {} not found", agent_id))
         }
     }
-    
+
     /// Unregister an agent (when it completes)
     pub async fn unregister_agent(&self, agent_id: &str) -> Result<()> {
         let mut state = self.load_state().await?;
@@ -339,13 +339,13 @@ impl AgentCoordinator {
         state.last_updated = Utc::now();
         self.save_state(&state).await
     }
-    
+
     // DRY:FN:get_coordination_context — Get coordination context for prompt injection
     /// Get coordination context for prompt injection
     pub async fn get_coordination_context(&self) -> Result<String> {
         let state = self.load_state().await?;
         let mut context = String::new();
-        
+
         if !state.active_agents.is_empty() {
             context.push_str("**Active Agents:**\n");
             for agent in state.active_agents.values() {
@@ -361,7 +361,7 @@ impl AgentCoordinator {
                     agent.tier_id
                 ));
             }
-            
+
             context.push_str("\n**Files Being Modified:**\n");
             let mut all_files: Vec<_> = state.active_agents.values()
                 .flat_map(|a| &a.files_being_edited)
@@ -380,10 +380,10 @@ impl AgentCoordinator {
                 ));
             }
         }
-        
+
         Ok(context)
     }
-    
+
     async fn load_state(&self) -> Result<AgentCoordinationState> {
         if self.state_file.exists() {
             let json = std::fs::read_to_string(&self.state_file)?;
@@ -403,7 +403,7 @@ impl AgentCoordinator {
             })
         }
     }
-    
+
     async fn save_state(&self, state: &AgentCoordinationState) -> Result<()> {
         std::fs::create_dir_all(self.state_file.parent().unwrap())?;
         let json = serde_json::to_string_pretty(state)?;
@@ -554,8 +554,16 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, tier_id)).await?;
      - Task level with platform = Codex → Crew uses Codex subagents
      - Subtask level with platform = Copilot → Crew uses Copilot subagents
    - Each crew uses the platform specified in that tier's config
-   - **Cross-platform coordination:** Different crews (different platforms) coordinate via shared message board (`agent-messages.json`) and coordination state (`active-agents.json`)
-   - **Rationale:** Orchestrator respects tier-level platform selections while enabling cross-platform coordination through shared state
+    - **Cross-platform coordination:** Different crews (different platforms) coordinate via shared message board (`agent-messages.json`) and coordination state (`active-agents.json`)
+    - **Rationale:** Orchestrator respects tier-level platform selections while enabling cross-platform coordination through shared state
+
+**Canonical crew contract:**
+- A Crew is a runtime coordination construct, not a replacement for tier or node ownership.
+- Canonical crew state is persisted via seglog/redb (`crew.started`, `crew.member_*`, `crew.message_posted`, `crew.completed` plus `runs -> crew.*` projections).
+- File-based message boards such as `agent-messages.json` or `active-agents.json` are debug/interop mirrors only and MUST be rebuildable from canonical events.
+- Crew permissions are bounded by the member run's platform, strategy, tool policy, and FileSafe scope; crew membership does not widen those permissions.
+
+ContractRef: Primitive:Seglog, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md
 
 **User-initiated Crew invocation (Future: Assistant feature):**
 
@@ -576,13 +584,13 @@ if prompt.contains("crew") || prompt.contains("crews") || prompt.contains("use a
     // 2) Assistant thread/platform selection (when present)
     // 3) fallback: cursor
     let platform = self.resolve_platform_for_crew()?; // e.g., Platform::Cursor
-    
+
     // Parse crew request (extract task, subagents needed)
     let crew_request = parse_crew_request(&prompt)?;
-    
+
     // Create crew with platform-specific subagents
     let crew = Crew::new(platform, crew_request.subagents, crew_request.task);
-    
+
     // Spawn crew (all subagents use same platform)
     crew.execute().await?;
 }
@@ -700,10 +708,10 @@ impl Crew {
         // Set message routing to crew members
         message.to_tier_id = None; // Override tier_id
         message.crew_id = Some(self.crew_id.clone()); // Scope to crew
-        
+
         communicator.post_message(message).await
     }
-    
+
     /// Get messages for crew
     pub async fn get_crew_messages(&self) -> Result<Vec<AgentMessage>> {
         communicator.get_messages_for_crew(&self.crew_id).await
@@ -833,7 +841,7 @@ let subtask_crew = Crew {
 Task level (1.1):
   Platform: Codex
   Crew: Codex subagents (rust-engineer, backend-developer)
-  
+
 Subtask level (1.1.1):
   Platform: Copilot
   Crew: Copilot subagents (test-automator)
@@ -950,13 +958,13 @@ Coordination:
 // Detect crew invocation in prompts
 fn detect_crew_invocation(prompt: &str) -> Option<CrewRequest> {
     let lower = prompt.to_lowercase();
-    
+
     if lower.contains("crew") || lower.contains("crews") {
         // Parse crew request
         // Extract: subagents, task, optional name
         // ...
     }
-    
+
     None
 }
 ```
@@ -972,7 +980,7 @@ fn detect_crew_invocation(prompt: &str) -> Option<CrewRequest> {
 
 - **Where:** New module `src/core/crews.rs` for crew management; extend `src/core/agent_communication.rs` for crew-scoped messaging; extend GUI views for crew monitoring
 - **What:** Implement `Crew` struct, crew creation (orchestrator-initiated only for now), crew execution, crew communication, GUI components for crew visibility
-- **When:** 
+- **When:**
   - **Current:** Orchestrator creates crew for tier → use platform from tier config (`tier_config_for(tier_type, tier_id).platform`)
   - **Future (Assistant feature):** User invokes crew → create platform-specific crew using deterministic platform selection (no prompting; fallback = cursor)
   - Cross-platform coordination happens automatically via shared message board (`agent-messages.json`)
@@ -1033,12 +1041,12 @@ impl Crew {
         if let Some(member) = self.subagents.iter_mut().find(|a| a.agent_id == failed_agent_id) {
             member.status = SubagentStatus::Blocked;
         }
-        
+
         // Check if crew can continue
         let active_members: Vec<_> = self.subagents.iter()
             .filter(|a| matches!(a.status, SubagentStatus::Active | SubagentStatus::Pending))
             .collect();
-        
+
         if active_members.is_empty() {
             // All members failed — disband crew
             self.status = CrewStatus::Disbanded;
@@ -1057,10 +1065,10 @@ impl Crew {
                 // ...
             }).await?;
         }
-        
+
         Ok(())
     }
-    
+
     pub async fn cancel(&mut self) -> Result<()> {
         // Send cancellation to all members
         self.post_to_crew(AgentMessage {
@@ -1069,14 +1077,14 @@ impl Crew {
             content: "User has cancelled this crew. Please stop work and clean up.".to_string(),
             // ...
         }).await?;
-        
+
         // Wait for members to acknowledge (with timeout)
         tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
-        
+
         // Disband crew
         self.status = CrewStatus::Disbanded;
         self.save_state().await?;
-        
+
         Ok(())
     }
 }
@@ -1101,7 +1109,7 @@ impl AgentCommunicator {
             .cloned()
             .collect())
     }
-    
+
     pub async fn get_messages_for_agent_in_crews(
         &self,
         agent_id: &str,
@@ -1147,22 +1155,22 @@ impl CrewManager {
         if crew_size > self.config.max_crew_size {
             return Err(anyhow!("Crew size {} exceeds maximum {}", crew_size, self.config.max_crew_size));
         }
-        
+
         // Check concurrent crew limit
         let active_crews = self.get_active_crews_for_platform(platform).await?;
         if active_crews.len() >= self.config.max_concurrent_crews_per_platform {
-            return Err(anyhow!("Maximum concurrent crews ({}) reached for platform {:?}", 
+            return Err(anyhow!("Maximum concurrent crews ({}) reached for platform {:?}",
                 self.config.max_concurrent_crews_per_platform, platform));
         }
-        
+
         // Check platform quota (if available)
         if let Some(quota) = self.check_platform_quota(platform).await? {
             if quota.remaining < crew_size as u64 {
-                return Err(anyhow!("Insufficient platform quota. Need {}, have {}", 
+                return Err(anyhow!("Insufficient platform quota. Need {}, have {}",
                     crew_size, quota.remaining));
             }
         }
-        
+
         Ok(true)
     }
 }
@@ -1192,7 +1200,7 @@ fn parse_crew_request(prompt: &str) -> Result<CrewRequest> {
         // Auto-select based on task
         vec![] // Will be filled by SubagentSelector
     };
-    
+
     // Extract task
     // Pattern: "crew to <task>" or "crew: <task>"
     let task_pattern = regex::Regex::new(r"crew\s+(?:to|:)\s+(.+)")?;
@@ -1200,14 +1208,14 @@ fn parse_crew_request(prompt: &str) -> Result<CrewRequest> {
         .and_then(|c| c.get(1))
         .map(|m| m.as_str().to_string())
         .ok_or_else(|| anyhow!("Could not parse task from crew request"))?;
-    
+
     // Extract platform override
     // Pattern: "crew with <platform>"
     let platform_pattern = regex::Regex::new(r"crew\s+with\s+(codex|copilot|claude|cursor|gemini)")?;
     let platform_override = platform_pattern.captures(prompt)
         .and_then(|c| c.get(1))
         .map(|m| parse_platform(m.as_str()));
-    
+
     Ok(CrewRequest {
         subagents,
         task,
@@ -1231,7 +1239,7 @@ impl CrewManager {
     pub async fn recover_crews_on_startup(&self) -> Result<()> {
         let crews = self.load_crews().await?;
         let coordination_state = self.coordinator.load_state().await?;
-        
+
         for mut crew in crews {
             if matches!(crew.status, CrewStatus::Active | CrewStatus::Forming) {
                 // Check if crew members are still active
@@ -1240,7 +1248,7 @@ impl CrewManager {
                         coordination_state.active_agents.contains_key(&member.agent_id)
                     })
                     .collect();
-                
+
                 if active_members.is_empty() {
                     // All members inactive — mark crew as disbanded
                     crew.status = CrewStatus::Disbanded;
@@ -1254,11 +1262,11 @@ impl CrewManager {
                     }
                     tracing::info!("Crew {} recovered with {} active members", crew.crew_id, active_members.len());
                 }
-                
+
                 self.save_crew(&crew).await?;
             }
         }
-        
+
         Ok(())
     }
 }
@@ -1285,7 +1293,7 @@ impl Crew {
         // Check if all members are waiting
         let all_waiting = self.subagents.iter()
             .all(|member| matches!(member.status, SubagentStatus::Waiting));
-        
+
         if all_waiting {
             // Check how long they've been waiting
             let oldest_wait = self.subagents.iter()
@@ -1298,17 +1306,17 @@ impl Crew {
                     }
                 })
                 .min();
-            
+
             if let Some(wait_time) = oldest_wait {
                 if wait_time.num_minutes() > 5 {
                     return Ok(true); // Deadlock detected
                 }
             }
         }
-        
+
         Ok(false)
     }
-    
+
     pub async fn resolve_deadlock(&mut self, orchestrator: &Orchestrator) -> Result<()> {
         // Orchestrator injects resolution message
         orchestrator.post_to_crew(self.crew_id.clone(), AgentMessage {
@@ -1317,14 +1325,14 @@ impl Crew {
             content: "Orchestrator detected deadlock. Proceeding with approach X. All members should proceed.".to_string(),
             // ...
         }).await?;
-        
+
         // Unblock all members
         for member in &mut self.subagents {
             if matches!(member.status, SubagentStatus::Waiting) {
                 member.status = SubagentStatus::Active;
             }
         }
-        
+
         Ok(())
     }
 }
@@ -1404,18 +1412,18 @@ impl Crew {
 impl AgentCommunicator {
     pub async fn post_message_with_rate_limit(&self, message: AgentMessage) -> Result<()> {
         // Check rate limit
-        let recent_messages = self.get_recent_messages_for_agent(&message.from_agent_id, 
+        let recent_messages = self.get_recent_messages_for_agent(&message.from_agent_id,
             chrono::Duration::minutes(1)).await?;
-        
+
         if recent_messages.len() >= 10 {
             return Err(anyhow!("Rate limit exceeded: max 10 messages per minute"));
         }
-        
+
         // Check for duplicates
         if self.is_duplicate(&message, &recent_messages)? {
             return Err(anyhow!("Duplicate message detected"));
         }
-        
+
         // Post message
         self.post_message(message).await
     }
@@ -1794,7 +1802,7 @@ impl AgentCommunicator {
             coordinator: AgentCoordinator::new(project_root),
         }
     }
-    
+
     // DRY:FN:post_message — Post a message to the message board
     // DRY REQUIREMENT: Validate agent_id using subagent_registry::is_valid_subagent_name() if it's a subagent name
     /// Post a message to the message board
@@ -1807,7 +1815,7 @@ impl AgentCommunicator {
         board.last_updated = Utc::now();
         self.save_message_board(&board).await
     }
-    
+
     /// Get messages relevant to an agent
     pub async fn get_messages_for_agent(
         &self,
@@ -1817,7 +1825,7 @@ impl AgentCommunicator {
     ) -> Result<Vec<AgentMessage>> {
         let board = self.load_message_board().await?;
         let active_agents = self.coordinator.load_state().await?;
-        
+
         // Filter messages relevant to this agent
         let relevant: Vec<_> = board.messages.iter()
             .filter(|msg| {
@@ -1827,26 +1835,26 @@ impl AgentCommunicator {
                         return true;
                     }
                 }
-                
+
                 // Message to agent type
                 if let Some(ref to_type) = msg.to_agent_type {
                     if agent_type.map(|t| t == to_type).unwrap_or(false) {
                         return true;
                     }
                 }
-                
+
                 // Message to tier
                 if let Some(ref to_tier) = msg.to_tier_id {
                     if to_tier == tier_id {
                         return true;
                     }
                 }
-                
+
                 // Broadcast (no specific recipient)
                 if msg.to_agent_id.is_none() && msg.to_agent_type.is_none() && msg.to_tier_id.is_none() {
                     return true;
                 }
-                
+
                 // Message mentions files agent is working on
                 if let Some(agent) = active_agents.active_agents.get(agent_id) {
                     for file in &agent.files_being_edited {
@@ -1855,24 +1863,24 @@ impl AgentCommunicator {
                         }
                     }
                 }
-                
+
                 false
             })
             .cloned()
             .collect();
-        
+
         Ok(relevant)
     }
-    
+
     /// Format messages for prompt injection
     pub fn format_messages_for_prompt(&self, messages: &[AgentMessage]) -> Result<String> {
         if messages.is_empty() {
             return Ok(String::new());
         }
-        
+
         let mut formatted = String::new();
         formatted.push_str("**Recent Messages from Other Agents:**\n\n");
-        
+
         for msg in messages.iter().take(10) { // Limit to 10 most recent
             // DRY REQUIREMENT: Platform display name MUST use platform_specs::display_name_for() — NEVER hardcode platform names
             let platform_display = platform_specs::display_name_for(msg.from_platform);
@@ -1886,7 +1894,7 @@ impl AgentCommunicator {
                 MessageType::Warning => "⚠️ Warning",
                 MessageType::Announcement => "📣 Announcement",
             };
-            
+
             formatted.push_str(&format!(
                 "- **{}** from {}: {}\n  {}\n",
                 message_type_str,
@@ -1894,7 +1902,7 @@ impl AgentCommunicator {
                 msg.subject,
                 msg.content
             ));
-            
+
             if !msg.context.files_mentioned.is_empty() {
                 formatted.push_str(&format!(
                     "  Files: {}\n",
@@ -1905,10 +1913,10 @@ impl AgentCommunicator {
                 ));
             }
         }
-        
+
         Ok(formatted)
     }
-    
+
     /// Mark message as read
     pub async fn mark_message_read(&self, message_id: &str, agent_id: &str) -> Result<()> {
         let mut board = self.load_message_board().await?;
@@ -1920,34 +1928,34 @@ impl AgentCommunicator {
         }
         Ok(())
     }
-    
+
     /// Archive old messages (>24 hours)
     pub async fn archive_old_messages(&self) -> Result<()> {
         let mut board = self.load_message_board().await?;
         let cutoff = Utc::now() - chrono::Duration::hours(24);
-        
+
         let (active, archived): (Vec<_>, Vec<_>) = board.messages
             .into_iter()
             .partition(|msg| msg.created_at > cutoff || !msg.resolved);
-        
+
         board.messages = active;
         self.save_message_board(&board).await?;
-        
+
         // Save archived messages to separate file
         if !archived.is_empty() {
             let archive_file = self.message_board_file.with_extension("archive.json");
             // Append to archive file
             // ...
         }
-        
+
         Ok(())
     }
-    
+
     async fn load_message_board(&self) -> Result<AgentMessageBoard> {
         // Similar to AgentCoordinator::load_state
         // ...
     }
-    
+
     async fn save_message_board(&self, board: &AgentMessageBoard) -> Result<()> {
         // Similar to AgentCoordinator::save_state (with locking)
         // ...
@@ -1991,7 +1999,7 @@ pub struct OrchestratorInsights {
 impl OrchestratorInsights {
     pub async fn analyze_communication(&self, communicator: &AgentCommunicator) -> Result<Self> {
         let board = communicator.load_message_board().await?;
-        
+
         // Analyze messages for insights
         // ...
     }
@@ -2049,7 +2057,7 @@ impl AgentCoordinator {
         let lock_file = self.state_file.with_extension("lock");
         let mut attempts = 0;
         const MAX_ATTEMPTS: u32 = 3;
-        
+
         loop {
             // Try to acquire lock
             match self.acquire_lock(&lock_file).await {
@@ -2066,26 +2074,26 @@ impl AgentCoordinator {
                 }
             }
         }
-        
+
         // Write to temp file first
         let temp_file = self.state_file.with_extension("tmp");
         let json = serde_json::to_string_pretty(state)?;
         std::fs::write(&temp_file, json)?;
-        
+
         // Atomic rename
         std::fs::rename(&temp_file, &self.state_file)?;
-        
+
         // Release lock
         let _ = std::fs::remove_file(&lock_file);
-        
+
         Ok(())
     }
-    
+
     async fn acquire_lock(&self, lock_file: &Path) -> Result<()> {
         // Create lock file with PID
         let pid = std::process::id();
         let lock_content = format!("{}\n", pid);
-        
+
         // Try to create lock file exclusively
         match std::fs::OpenOptions::new()
             .write(true)
@@ -2113,7 +2121,7 @@ impl AgentCoordinator {
             Err(e) => Err(anyhow!("Failed to create lock: {}", e)),
         }
     }
-    
+
     fn process_exists(&self, pid: u32) -> bool {
         // Unix-specific: check if process exists
         #[cfg(unix)]
@@ -2154,7 +2162,7 @@ async fn load_state(&self) -> Result<AgentCoordinationState> {
                 return Ok(AgentCoordinationState::default());
             }
         };
-        
+
         // Try to parse JSON
         match serde_json::from_str::<AgentCoordinationState>(&json) {
             Ok(state) => {
@@ -2174,7 +2182,7 @@ async fn load_state(&self) -> Result<AgentCoordinationState> {
                         }
                     }
                 }
-                
+
                 // Last resort: empty state
                 tracing::error!("Coordination state corrupted and backup recovery failed: {}. Using empty state.", e);
                 Ok(AgentCoordinationState::default())
@@ -2221,21 +2229,21 @@ fn validate_state(&self, state: &AgentCoordinationState) -> Result<()> {
 ```rust
 async fn load_state(&self) -> Result<AgentCoordinationState> {
     // ... existing load logic ...
-    
+
     // Prune stale agents
     let mut pruned = state.clone();
     let cutoff = Utc::now() - chrono::Duration::minutes(5); // 5 minute timeout
     let initial_count = pruned.active_agents.len();
-    
+
     pruned.active_agents.retain(|agent_id, agent| {
         // Check if agent is stale
         if agent.last_update < cutoff {
-            tracing::info!("Pruning stale agent: {} (last update: {} ago)", 
-                agent_id, 
+            tracing::info!("Pruning stale agent: {} (last update: {} ago)",
+                agent_id,
                 Utc::now().signed_duration_since(agent.last_update));
             return false;
         }
-        
+
         // Check if worktree still exists (if applicable)
         if let Some(ref worktree) = agent.worktree_path {
             if !worktree.exists() {
@@ -2243,15 +2251,15 @@ async fn load_state(&self) -> Result<AgentCoordinationState> {
                 return false;
             }
         }
-        
+
         true
     });
-    
+
     if pruned.active_agents.len() != initial_count {
         // Save pruned state
         self.save_state(&pruned).await?;
     }
-    
+
     Ok(pruned)
 }
 ```
@@ -2278,30 +2286,30 @@ impl FileOperationExtractor {
         git_diff: Option<Vec<PathBuf>>, // Files changed in git diff
     ) -> Vec<PathBuf> {
         let mut files = std::collections::HashSet::new();
-        
+
         // Source 1: Platform hooks (highest confidence)
         if let Some(hook_files) = platform_hooks {
             for file in hook_files {
                 files.insert(PathBuf::from(file));
             }
         }
-        
+
         // Source 2: Git diff (high confidence)
         if let Some(diff_files) = git_diff {
             for file in diff_files {
                 files.insert(file);
             }
         }
-        
+
         // Source 3: Agent output parsing (medium confidence)
         let output_files = self.parse_files_from_output(agent_output);
         for file in output_files {
             files.insert(file);
         }
-        
+
         files.into_iter().collect()
     }
-    
+
     fn parse_files_from_output(&self, output: &str) -> Vec<PathBuf> {
         // Regex patterns for common file mentions
         let patterns = vec![
@@ -2310,7 +2318,7 @@ impl FileOperationExtractor {
             r#""([^"]+\.(rs|ts|js|py|go|java))""#,
             r#"'([^']+\.(rs|ts|js|py|go|java))'"#,
         ];
-        
+
         let mut files = Vec::new();
         for pattern in patterns {
             let re = regex::Regex::new(pattern).unwrap();
@@ -2320,7 +2328,7 @@ impl FileOperationExtractor {
                 }
             }
         }
-        
+
         files
     }
 }
@@ -2344,7 +2352,7 @@ pub async fn get_coordination_context(
 ) -> Result<String> {
     let state = self.load_state().await?;
     let mut context = String::new();
-    
+
     // Apply filters
     let filtered_agents: Vec<_> = state.active_agents.values()
         .filter(|agent| {
@@ -2368,24 +2376,24 @@ pub async fn get_coordination_context(
             true
         })
         .collect();
-    
+
     // Limit to max agents
     let max_agents = 20; // Limit to prevent token bloat
     let agents_to_show: Vec<_> = filtered_agents.iter().take(max_agents).collect();
-    
+
     if agents_to_show.is_empty() {
         return Ok(String::new());
     }
-    
+
     // Build context (same as before but with limit)
     // ... existing context building logic ...
-    
+
     // If context exceeds token limit, summarize
     let estimated_tokens = context.len() / 4; // Rough estimate
     if estimated_tokens > 2000 {
         context = self.summarize_coordination_context(&agents_to_show)?;
     }
-    
+
     Ok(context)
 }
 
@@ -2424,7 +2432,7 @@ impl AgentCoordinator {
     ) -> Result<Vec<FileConflict>> {
         let state = self.load_state().await?;
         let mut conflicts = Vec::new();
-        
+
         for file in files_to_edit {
             // Check if any other agent is editing this file
             for (other_agent_id, other_agent) in &state.active_agents {
@@ -2437,10 +2445,10 @@ impl AgentCoordinator {
                 }
             }
         }
-        
+
         Ok(conflicts)
     }
-    
+
     /// Acquire file lock (if available)
     pub async fn acquire_file_lock(
         &self,
@@ -2449,11 +2457,11 @@ impl AgentCoordinator {
         duration_minutes: u64,
     ) -> Result<bool> {
         let mut state = self.load_state().await?;
-        
+
         // Check if file is already locked
         // (This would require extending AgentCoordinationState with file_locks field)
         // For now, check files_being_edited
-        
+
         // If not locked, add to agent's files_being_edited
         if let Some(agent) = state.active_agents.get_mut(agent_id) {
             if !agent.files_being_edited.contains(file) {
@@ -2463,7 +2471,7 @@ impl AgentCoordinator {
                 return Ok(true);
             }
         }
-        
+
         Ok(false) // File already locked
     }
 }
@@ -2493,7 +2501,7 @@ impl AgentCoordinator {
                 return relative.to_path_buf();
             }
         }
-        
+
         // If path is in worktree, convert to main repo path
         if let Ok(stripped) = path.strip_prefix(".puppet-master/worktrees/") {
             // Extract worktree name and file path
@@ -2502,7 +2510,7 @@ impl AgentCoordinator {
                 return stripped.strip_prefix(components).unwrap_or(stripped).to_path_buf();
             }
         }
-        
+
         path.to_path_buf()
     }
 }
@@ -2542,7 +2550,7 @@ impl AgentCoordinator {
             .cloned()
             .collect())
     }
-    
+
     pub async fn get_agents_by_tier(&self, tier_id: &str) -> Result<Vec<ActiveAgent>> {
         let state = self.load_state().await?;
         Ok(state.active_agents.values()
@@ -2550,7 +2558,7 @@ impl AgentCoordinator {
             .cloned()
             .collect())
     }
-    
+
     pub async fn get_agents_editing_file(&self, file: &Path) -> Result<Vec<ActiveAgent>> {
         let state = self.load_state().await?;
         Ok(state.active_agents.values()
@@ -2572,15 +2580,15 @@ impl AgentCoordinator {
         if self.state_file.exists() {
             let backup_file = self.state_file.with_extension(format!("bak.{}", Utc::now().timestamp()));
             let _ = std::fs::copy(&self.state_file, &backup_file);
-            
+
             // Cleanup old backups (keep last 10)
             self.cleanup_old_backups().await?;
         }
-        
+
         // Save new state (with locking as above)
         self.save_state_with_lock(state).await
     }
-    
+
     async fn cleanup_old_backups(&self) -> Result<()> {
         // Implementation: list backup files, sort by timestamp, keep last 10
         // ...
@@ -2603,7 +2611,7 @@ pub struct AgentCoordinationState {
 impl AgentCoordinator {
     fn validate_schema_version(&self, state: &AgentCoordinationState) -> Result<()> {
         const CURRENT_SCHEMA_VERSION: u32 = 1;
-        
+
         if state.schema_version != CURRENT_SCHEMA_VERSION {
             return Err(anyhow!(
                 "Coordination state schema version mismatch: expected {}, got {}",
@@ -2611,10 +2619,10 @@ impl AgentCoordinator {
                 state.schema_version
             ));
         }
-        
+
         Ok(())
     }
-    
+
     async fn migrate_schema(&self, old_state: AgentCoordinationState) -> Result<AgentCoordinationState> {
         // Migrate old schema versions to current
         // ...
@@ -2639,7 +2647,7 @@ Level 0:
   - Subtask A (rust-engineer) → Worktree: .puppet-master/worktrees/A
   - Subtask B (react-specialist) → Worktree: .puppet-master/worktrees/B
   - Subtask C (python-pro) → Worktree: .puppet-master/worktrees/C
-  
+
 // All run concurrently, each with appropriate subagent
 // Results merged back to main branch after completion
 ```
@@ -2676,7 +2684,7 @@ impl SubagentConflictDetector {
     ) -> Vec<Conflict> {
         let mut conflicts = Vec::new();
         let coordination_state = coordinator.load_state().await.ok();
-        
+
         // Check for overlapping file modifications using coordination state
         for (i, context_a) in tier_contexts.iter().enumerate() {
             for (j, context_b) in tier_contexts.iter().enumerate().skip(i + 1) {
@@ -2690,11 +2698,11 @@ impl SubagentConflictDetector {
                         .filter(|a| a.tier_id == context_b.item_id)
                         .flat_map(|a| &a.files_being_edited)
                         .collect();
-                    
+
                     let overlapping: Vec<_> = files_a.iter()
                         .filter(|f| files_b.contains(f))
                         .collect();
-                    
+
                     if !overlapping.is_empty() {
                         conflicts.push(Conflict {
                             type_: ConflictType::FileOverlap,
@@ -2706,7 +2714,7 @@ impl SubagentConflictDetector {
                 }
             }
         }
-        
+
         // Check for architectural conflicts
         for (i, subagents_a) in subagent_groups.iter().enumerate() {
             for (j, subagents_b) in subagent_groups.iter().enumerate().skip(i + 1) {
@@ -2720,10 +2728,10 @@ impl SubagentConflictDetector {
                 }
             }
         }
-        
+
         conflicts
     }
-    
+
     fn has_architectural_conflict(
         &self,
         subagents_a: &[String],
@@ -2757,7 +2765,7 @@ pub struct Conflict {
 1. **Provider rate limits:** Each platform (Cursor, Codex, Claude Code, Gemini, Copilot) enforces rate limits on concurrent requests. Exceeding them causes throttling, errors, or temporary bans.
 2. **Dev-machine load:** Agent processes consume CPU, disk I/O, and memory on the machine hosting the project folder. Running too many concurrent processes degrades the user's development environment.
 
-**Source of caps:** The orchestrator uses the **effective per-provider cap** from config (global default + Orchestrator-context override if set), NOT a value from the plan graph. The plan graph defines only dependency and parallel-group structure (`depends_on`, `parallel_group`); max concurrent is an execution/config concern. See `Plans/FinalGUISpec.md` §7.4.7 for the full settings model (global + per-context overrides).
+**Source of caps:** The orchestrator uses the **effective per-provider cap** from config (global default + Orchestrator-context override if set), NOT a value from the plan graph. The plan graph defines only dependency structure (`depends_on`, plus blocking edges such as `blockers`/`unblocks` where applicable); max concurrent is an execution/config concern. See `Plans/FinalGUISpec.md` §7.4.7 for the full settings model (global + per-context overrides).
 
 **Crew limits vs agent limits:** These are separate concepts:
 - **Per-platform agent cap** (below): limits individual concurrent agent/subagent processes per platform. This is what hits rate limits and machine load.
@@ -2770,17 +2778,17 @@ Both limits apply: a crew spawn must not exceed either the crew cap or the per-p
 
 orchestrator:
   enableParallelExecution: true
-  
+
   parallelConfig:
     maxConcurrent: 3
     continueOnFailure: false
     taskTimeoutSecs: 3600
-  
+
   # Subagent-specific parallel settings
   subagentParallelConfig:
     # Allow different subagents to run in parallel
     allowParallelSubagents: true
-    
+
     # Per-platform agent caps are now sourced from the global concurrency
     # config (concurrency.global.per_provider) with optional Orchestrator-
     # context override (concurrency.overrides.orchestrator.per_provider).
@@ -2793,11 +2801,11 @@ orchestrator:
       claude: 3
       gemini: 2
       copilot: 2
-    
+
     # Conflict detection
     detectConflicts: true
     failOnConflict: false  # Warn but continue
-    
+
     # Context inheritance from dependencies
     inheritFromDependencies: true
     inheritLanguage: true

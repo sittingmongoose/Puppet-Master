@@ -34,6 +34,13 @@
 | `sound_prefs:v1` | Sound effects master toggle, per-event toggles, volume level | On change |
 | `hotreload_state:v1:{project_id}` | Watch mode toggle state, build command, watched paths | On change |
 
+Normative mapping note for review workflows:
+- The canonical durable review/bundle contract is owned by `Plans/storage-plan.md` (`bundle.{bundle_id}`, `doc_registry.{bundle_id}`, `notes_index.{bundle_id}`, `note.{bundle_id}.{note_id}`, `document_pane_state.{bundle_id}`, `final_review_output.{bundle_id}`).
+- GUI-facing keys in this table are logical/UI projections and MUST NOT become competing SSOTs with incompatible field shapes.
+- Findings-summary and final-gate restoration MUST resolve back to the canonical bundle/review records defined in `Plans/storage-plan.md`.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md#3.9, ContractName:Plans/Crosswalk.md#3.10
+
 ### 15.2 seglog Projections (for Usage)
 
 - Usage events (tokens, cost, platform, tier, session, thread_id) appended to seglog

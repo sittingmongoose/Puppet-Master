@@ -88,6 +88,21 @@ The Assistant/Builder must also emit a **single** Markdown document at `.puppet-
 - Before generation, ask qualifying questions only for checklist entries with `status=empty` or `status=thin`.
 - Do not ask follow-up questions for sections already marked `filled`.
 
+### 5.3.1 Builder handoff lifecycle and promotion
+
+Builder runs against a staged bundle; canonical promotion happens only after the final user gate.
+
+Required staged artifacts:
+- `.puppet-master/requirements/staging/builder/<run_id>/requirements.md`
+- `.puppet-master/requirements/staging/builder/<run_id>/contract-seeds.md`
+- `.puppet-master/requirements/staging/builder/<run_id>/review-summary.json`
+
+Promotion rules:
+- **Accept:** promote the staged `requirements.md` to `.puppet-master/requirements/requirements-builder.md`, promote `contract-seeds.md`, update `canonical_requirements_path` via merge/promotion, then allow `Done -- hand off to Interview`.
+- **Reject:** discard the staged review output and leave the last accepted Builder artifact (or no Builder artifact) unchanged.
+- **Edit:** opens the revised staged bundle; user edits remain staged until the same Accept gate is completed.
+- `Done -- hand off to Interview` is enabled only when the bundle state is `approved_for_handoff`; it must persist `builder_stage`, `builder_run_id`, `awaiting_final_approval`, and the accepted artifact refs.
+
 ### 5.4 Dependencies
 
 - **Assistant chat** must be implemented (assistant-chat-design.md).
@@ -189,6 +204,14 @@ Multi-Pass Review is the **final-review** step for the Requirements Doc Builder 
   - Reject discards review output cleanly and preserves the pre-review bundle.
   - Accept applies the revised bundle.
   - Edit opens revised docs without rerunning review.
+
+**Reviewer selection (deterministic):**
+- Always include `requirements-quality-reviewer`.
+- Add at most **two** secondary reviewers:
+  - one domain reviewer resolved from the Builder domain-fragment stage when a single dominant domain exists
+  - one structural reviewer: `architect-reviewer` for architecture-heavy requirements, otherwise `code-reviewer`
+- Maximum reviewers per Builder Multi-Pass run: **3**
+- Reviewer Personas are read-only during review; only the final synthesis pass writes a revised staged bundle.
 
 ### 5.7 Contract Layer (Requirements → Contracts → Plan → Execution)
 

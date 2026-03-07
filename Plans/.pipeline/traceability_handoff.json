@@ -1,0 +1,764 @@
+{
+  "schema_id": "section_audit_traceability.v1",
+  "run_id": "rewrite-20260306-220950-persona-system-provider-capability-resolution",
+  "topic": "Persona system + provider capability matrix + effective resolution + natural-language invocation",
+  "objective": "Update the planning docs so Puppet Master treats Persona as a first-class stored behavior-and-runtime contract inspired by OpenCode agent mechanics: prompt/instruction injection, model/platform/variant preferences, optional sampling/runtime controls where supported, effective requested-vs-effective state tracking, provider capability disclosure, auto persona mode, natural-language persona invocation, and surface-specific persona selection for Chat, Interview, Requirements Builder, Orchestrator, Multi-Pass, and subagents. The packet must preserve all rules, defaults, flows, data model, UI behavior, constraints, non-goals, and acceptance expectations discussed in the research thread.",
+  "synthesis_rules": [
+    "No feature-level detail may be lost during synthesis.",
+    "Every feature packet must remain traceable to exact canonical doc edits or to an explicit no_doc_change_required disposition.",
+    "Preserve detailed packet artifacts in the session workspace.",
+    "After canonical Plans edits, hand off downstream normalization only for docs changed by this packet."
+  ],
+  "feature_packets": [
+    {
+      "packet_id": "canonical-terminology",
+      "source_decision": {
+        "decision": "Canonical terminology",
+        "choice": "Puppet Master uses Persona as the stored contract, Agent as a running instance, and Subagent as a delegated Agent. Provider-native agent/subagent naming is reference material only and must not replace Puppet Master terminology."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.1 Canonical terminology and invariants"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "persona-scope",
+      "source_decision": {
+        "decision": "Persona scope",
+        "choice": "A Persona is broader than prompt text. It includes behavior contract, workflow guidance, tool guidance, preferred platform/model/variant, optional runtime controls such as temperature/top_p/reasoning_effort where supported, and UI metadata."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.2 Persona is broader than prompt text"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "collaborative-behavior-placement",
+      "source_decision": {
+        "decision": "Collaborative behavior placement",
+        "choice": "Engaged / creative / talk-more / collaborative behavior is part of Persona itself, not a separate style overlay. Collaborator is a first-class built-in Persona."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.3 Persona behavior style is part of Persona, not a separate overlay"
+          },
+          {
+            "path": "Plans/interview-subagent-integration.md",
+            "heading": "### Default stage Personas"
+          },
+          {
+            "path": "Plans/chain-wizard-flexibility.md",
+            "heading": "### Default stage Personas"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "tool-control-philosophy",
+      "source_decision": {
+        "decision": "Tool control philosophy",
+        "choice": "Persona may express tool guidance and tool preference, but Persona is not the primary hard tool restriction layer by default. Hard allow/ask/deny enforcement remains in the Permissions system."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.4 Schema expansion (additive)"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "model-runtime-controls-in-persona",
+      "source_decision": {
+        "decision": "Model/runtime controls in Persona",
+        "choice": "Persona schema should support default_platform, default_model, default_variant, temperature, top_p, and reasoning_effort. Unsupported controls must be skipped with recorded reasons rather than silently ignored."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.4 Schema expansion (additive)"
+          },
+          {
+            "path": "Plans/Models_System.md",
+            "heading": "### 10.1 Persona-driven model/runtime control principle"
+          },
+          {
+            "path": "Plans/Models_System.md",
+            "heading": "### 10.4 Provider Persona Capability Matrix (canonical support states)"
+          },
+          {
+            "path": "Plans/FinalGUISpec.md",
+            "heading": "### 17.2 Persona editor fields (expanded)"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "requested-vs-effective-runtime-state",
+      "source_decision": {
+        "decision": "Requested vs effective runtime state",
+        "choice": "Every run/sub-run/phase/tier/pass records requested_persona, effective_persona, persona_selection_source, selection_reason, requested/effective platform/model/variant, effective runtime controls, applied_persona_controls, and skipped_persona_controls."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.11 Effective Persona Resolution Record (cross-reference)"
+          },
+          {
+            "path": "Plans/Models_System.md",
+            "heading": "### 10.2 Effective selection fields (cross-system runtime contract)"
+          },
+          {
+            "path": "Plans/Prompt_Pipeline.md",
+            "heading": "### 6.5 Effective resolution record"
+          },
+          {
+            "path": "Plans/orchestrator-subagent-integration.md",
+            "heading": "### Requested vs effective runtime state for every tier run"
+          },
+          {
+            "path": "Plans/interview-subagent-integration.md",
+            "heading": "### Requested vs effective visibility in Interview"
+          },
+          {
+            "path": "Plans/chain-wizard-flexibility.md",
+            "heading": "### Requested vs effective visibility"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "provider-capability-disclosure",
+      "source_decision": {
+        "decision": "Provider capability disclosure",
+        "choice": "Persona editor and runtime UI must show support state per provider for each Persona control using supported / partially_supported / unsupported, with explanations for Claude Code, Cursor CLI, OpenCode, and Direct/API providers."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Models_System.md",
+            "heading": "### 10.4 Provider Persona Capability Matrix (canonical support states)"
+          },
+          {
+            "path": "Plans/Models_System.md",
+            "heading": "### 10.6 GUI disclosure requirements"
+          },
+          {
+            "path": "Plans/FinalGUISpec.md",
+            "heading": "### 17.1 Persona editor compatibility matrix (required)"
+          },
+          {
+            "path": "Plans/FinalGUISpec.md",
+            "heading": "### 17.3 Compatibility panel copy examples"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "heading": "### 27.7 Provider compatibility disclosure in chat"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "opencode-baseline-usage",
+      "source_decision": {
+        "decision": "OpenCode baseline usage",
+        "choice": "Use OpenCode as the baseline reference for how role definitions drive prompt injection, model selection, permission merging, and runtime controls. Copy the mechanics, not the terminology or every policy choice."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.6 Provider-native OpenCode baseline (informative but normative for delta design)"
+          },
+          {
+            "path": "Plans/Models_System.md",
+            "heading": "### 10.8 OpenCode baseline note"
+          },
+          {
+            "path": "Plans/Prompt_Pipeline.md",
+            "heading": "### 6.7 OpenCode baseline mapping"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "opencode-technical-findings-adopted",
+      "source_decision": {
+        "decision": "OpenCode technical findings adopted",
+        "choice": "OpenCode resolves the selected agent by name, injects agent.prompt into the system prompt, chooses model using explicit run input then agent.model then last-used model, applies variant/runtime options, and merges agent/session permissions for tool execution. Puppet Master should mirror this shape through Persona resolution."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.6 Provider-native OpenCode baseline (informative but normative for delta design)"
+          },
+          {
+            "path": "Plans/Prompt_Pipeline.md",
+            "heading": "### 6.1 Expanded pre-prompt resolution stages"
+          },
+          {
+            "path": "Plans/Prompt_Pipeline.md",
+            "heading": "### 6.7 OpenCode baseline mapping"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "provider-support-baseline",
+      "source_decision": {
+        "decision": "Provider support baseline",
+        "choice": "Claude Code is treated as high-control among CLI providers (prompt, model, effort, subagents, permissions). Cursor CLI is treated as medium-control (prompt/rules/model steering, weaker low-level knobs and subagent definition). Raw API/direct providers remain the strongest for exact runtime control."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Models_System.md",
+            "heading": "### 10.4 Provider Persona Capability Matrix (canonical support states)"
+          },
+          {
+            "path": "Plans/FinalGUISpec.md",
+            "heading": "### 17.3 Compatibility panel copy examples"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "unsupported-control-handling",
+      "source_decision": {
+        "decision": "Unsupported control handling",
+        "choice": "If a Persona requests a control the provider cannot honor, Puppet Master must not silently ignore it. It must record the skipped control, the provider, the reason, surface it in the UI, and continue with deterministic fallback behavior."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.4 Schema expansion (additive)"
+          },
+          {
+            "path": "Plans/Models_System.md",
+            "heading": "### 10.5 Unsupported control disclosure rules"
+          },
+          {
+            "path": "Plans/Prompt_Pipeline.md",
+            "heading": "### 6.6 Provider capability filtering stage"
+          },
+          {
+            "path": "Plans/FinalGUISpec.md",
+            "heading": "### 17.7 Provider-gap disclosure rule"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "heading": "### 27.7 Provider compatibility disclosure in chat"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "auto-persona-mode",
+      "source_decision": {
+        "decision": "Auto Persona Mode",
+        "choice": "All major surfaces support persona selection modes manual / auto / hybrid. Auto mode remains visible and must always disclose the resolved effective persona and why it was chosen."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.10 Auto/manual/hybrid Persona selection"
+          },
+          {
+            "path": "Plans/Prompt_Pipeline.md",
+            "heading": "### 6.4 Auto Persona resolution requirements"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "heading": "### 27.1 Chat Persona modes"
+          },
+          {
+            "path": "Plans/FinalGUISpec.md",
+            "heading": "### 17.4 Surface-level Persona controls"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "natural-language-persona-invocation",
+      "source_decision": {
+        "decision": "Natural-language persona invocation",
+        "choice": "Users may summon personas through natural language such as \"Use Explorer\", \"Switch to Collaborator\", \"Be a Rust engineer\", or \"Answer as a technical writer\". This resolves to a requested_persona override with deterministic scope handling (turn/session/run/subagent) and selection_source=user_natural_language."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.9 Natural-language Persona invocation"
+          },
+          {
+            "path": "Plans/Prompt_Pipeline.md",
+            "heading": "### 6.3 Natural-language Persona invocation in prompt assembly"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "heading": "### 27.3 Natural-language Persona invocation in chat"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "heading": "### 27.4 Persona aliases and fuzzy matching"
+          },
+          {
+            "path": "Plans/FinalGUISpec.md",
+            "heading": "### 17.6 Natural-language invocation feedback"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "natural-language-scope-defaults",
+      "source_decision": {
+        "decision": "Natural-language scope defaults",
+        "choice": "Default interpretation is turn-scope for one-shot phrasing (\"for this\", \"this answer\") and session-scope for persistent phrasing (\"from now on\", \"in this chat\", \"for this session\"). UI must display when the override is active and when control returns to auto mode."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.9 Natural-language Persona invocation"
+          },
+          {
+            "path": "Plans/Prompt_Pipeline.md",
+            "heading": "### 6.3 Natural-language Persona invocation in prompt assembly"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "heading": "### 27.3 Natural-language Persona invocation in chat"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "canonical-explorer-naming",
+      "source_decision": {
+        "decision": "Canonical explorer naming",
+        "choice": "Puppet Master standardizes on explorer, not explore. Existing plan references to explore are stale and must be normalized to explorer across registry, interview/orchestrator references, feature list references, and related UI text."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.8 Canonical explorer naming"
+          },
+          {
+            "path": "Plans/orchestrator-subagent-integration.md",
+            "heading": "### Registry normalization"
+          },
+          {
+            "path": "Plans/Prompt_Pipeline.md",
+            "heading": "### 6.4 Auto Persona resolution requirements"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "persona-storage",
+      "source_decision": {
+        "decision": "Persona storage",
+        "choice": "Personas are stored only in Puppet Master storage paths. .claude/agents and other provider-native directories are seed/import sources only and never canonical storage."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.5 Persona import baseline from provider-native agent files"
+          },
+          {
+            "path": "Plans/orchestrator-subagent-integration.md",
+            "heading": "### Provider-native seed sources are not canonical"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "imported-agent-content",
+      "source_decision": {
+        "decision": "Imported agent content",
+        "choice": "Imported .claude/agents content may include workflow assumptions and tool guidance; Puppet Master should preserve useful behavioral/process content during import, but normalize it into Persona artifacts and provider capability-aware fields."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.5 Persona import baseline from provider-native agent files"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "built-in-personas-to-flesh-out-immediately",
+      "source_decision": {
+        "decision": "Built-in personas to flesh out immediately",
+        "choice": "Collaborator, general-purpose, explorer, researcher, deep-researcher are first-class built-ins to fully define now. Additional built-ins needing sharper contracts include technical-writer, requirements-quality-reviewer, security-engineer, security-auditor, devops-engineer, and sre."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.7 New built-in Personas that MUST be fully defined"
+          },
+          {
+            "path": "Plans/Prompt_Pipeline.md",
+            "heading": "### 6.4 Auto Persona resolution requirements"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "interview-persona-strategy",
+      "source_decision": {
+        "decision": "Interview persona strategy",
+        "choice": "Interview uses different personas for asking questions, researching, validating, drafting, and reviewing. Collaborator is the default questioning persona. Product/UX GUI/UI/UX work may prefer Gemini by default when available, configurable in GUI."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/interview-subagent-integration.md",
+            "heading": "## Persona Stage Strategy Addendum (2026-03-06)"
+          },
+          {
+            "path": "Plans/interview-subagent-integration.md",
+            "heading": "### Default stage Personas"
+          },
+          {
+            "path": "Plans/interview-subagent-integration.md",
+            "heading": "### Requested vs effective visibility in Interview"
+          },
+          {
+            "path": "Plans/FinalGUISpec.md",
+            "heading": "### 17.8 Interview/Builder/Orchestrator mapping editors"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "requirements-builder-persona-strategy",
+      "source_decision": {
+        "decision": "Requirements Builder persona strategy",
+        "choice": "Requirements Builder uses Collaborator for intake/clarification, Technical Writer for drafting, domain personas for specialized fragments, and reviewer personas such as requirements-quality-reviewer/security-auditor/code-reviewer for review passes."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/chain-wizard-flexibility.md",
+            "heading": "## Requirements Builder Persona Strategy Addendum (2026-03-06)"
+          },
+          {
+            "path": "Plans/chain-wizard-flexibility.md",
+            "heading": "### Default stage Personas"
+          },
+          {
+            "path": "Plans/chain-wizard-flexibility.md",
+            "heading": "### Requested vs effective visibility"
+          },
+          {
+            "path": "Plans/FinalGUISpec.md",
+            "heading": "### 17.8 Interview/Builder/Orchestrator mapping editors"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "orchestrator-tier-strategy",
+      "source_decision": {
+        "decision": "Orchestrator tier strategy",
+        "choice": "Orchestrator retains Phase -> Task -> Subtask -> Iteration, with Iteration as the lowest tier. Persona defaults and auto resolution must be defined per tier and may switch between planning/review/execution mental frames without adding new tiers."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/orchestrator-subagent-integration.md",
+            "heading": "## Persona and Effective Runtime Resolution Addendum (2026-03-06)"
+          },
+          {
+            "path": "Plans/orchestrator-subagent-integration.md",
+            "heading": "### Tier-specific Persona defaults"
+          },
+          {
+            "path": "Plans/orchestrator-subagent-integration.md",
+            "heading": "### Planning vs execution Persona switching"
+          },
+          {
+            "path": "Plans/orchestrator-subagent-integration.md",
+            "heading": "### Requested vs effective runtime state for every tier run"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "runtime-transparency",
+      "source_decision": {
+        "decision": "Runtime transparency",
+        "choice": "Chat, Interview, Requirements Builder, Orchestrator, Multi-Pass, and subagent activity panes must show the effective persona, platform, model, optional variant/effort, and selection reason. Auto mode must never display only the word Auto."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Models_System.md",
+            "heading": "### 10.7 Runtime display requirements"
+          },
+          {
+            "path": "Plans/FinalGUISpec.md",
+            "heading": "### 17.5 Runtime display requirements"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "heading": "### 27.2 Current Persona display (required)"
+          },
+          {
+            "path": "Plans/assistant-chat-design.md",
+            "heading": "### 27.6 Subagent and child-run display"
+          },
+          {
+            "path": "Plans/interview-subagent-integration.md",
+            "heading": "### Requested vs effective visibility in Interview"
+          },
+          {
+            "path": "Plans/chain-wizard-flexibility.md",
+            "heading": "### Requested vs effective visibility"
+          },
+          {
+            "path": "Plans/orchestrator-subagent-integration.md",
+            "heading": "### Requested vs effective runtime state for every tier run"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "persona-editor-disclosure",
+      "source_decision": {
+        "decision": "Persona editor disclosure",
+        "choice": "Persona editor must indicate unavailable or partially supported controls for Claude Code and Cursor CLI directly in the UI, with disabled controls and explanatory text."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/FinalGUISpec.md",
+            "heading": "### 17.1 Persona editor compatibility matrix (required)"
+          },
+          {
+            "path": "Plans/FinalGUISpec.md",
+            "heading": "### 17.2 Persona editor fields (expanded)"
+          },
+          {
+            "path": "Plans/FinalGUISpec.md",
+            "heading": "### 17.3 Compatibility panel copy examples"
+          },
+          {
+            "path": "Plans/Models_System.md",
+            "heading": "### 10.6 GUI disclosure requirements"
+          }
+        ]
+      }
+    },
+    {
+      "packet_id": "opencode-temp-reference-note",
+      "source_decision": {
+        "decision": "OpenCode temp reference note",
+        "choice": "OpenCode reference implementation examined: agent object contains prompt, mode, permission, model, variant, temperature, topP, and options; task tool launches subagents by name; SessionPrompt resolves agent and LLM assembly injects agent prompt and runtime settings. This baseline should be cited in the docs as the implementation precedent."
+      },
+      "traceability": {
+        "disposition": "doc_change_applied",
+        "exact_canonical_edits": [
+          {
+            "path": "Plans/Personas.md",
+            "heading": "### 10.6 Provider-native OpenCode baseline (informative but normative for delta design)"
+          },
+          {
+            "path": "Plans/Models_System.md",
+            "heading": "### 10.8 OpenCode baseline note"
+          },
+          {
+            "path": "Plans/Prompt_Pipeline.md",
+            "heading": "### 6.7 OpenCode baseline mapping"
+          }
+        ]
+      }
+    }
+  ],
+  "normalization_handoff": {
+    "changed_source_docs": [
+      {
+        "path": "Plans/Personas.md",
+        "changed_heading": "## 10. Persona Runtime Contract Expansion (2026-03-06)",
+        "likely_affected_shards": [],
+        "likely_affected_docsets": [],
+        "likely_contract_dry_cleanup": [
+          "Review newly added MUST/SHALL language here for ContractRef coverage and DRY back-references."
+        ]
+      },
+      {
+        "path": "Plans/Models_System.md",
+        "changed_heading": "## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)",
+        "likely_affected_shards": [],
+        "likely_affected_docsets": [],
+        "likely_contract_dry_cleanup": [
+          "Review newly added MUST/SHALL language here for ContractRef coverage and DRY back-references."
+        ]
+      },
+      {
+        "path": "Plans/Prompt_Pipeline.md",
+        "changed_heading": "## 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)",
+        "likely_affected_shards": [],
+        "likely_affected_docsets": [],
+        "likely_contract_dry_cleanup": [
+          "Review newly added MUST/SHALL language here for ContractRef coverage and DRY back-references."
+        ]
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "changed_heading": "## 27. Persona Control in Assistant Chat (2026-03-06)",
+        "likely_affected_shards": [
+          "Plans/_shards/assistant-chat-design/00-index.md"
+        ],
+        "likely_affected_docsets": [],
+        "likely_contract_dry_cleanup": [
+          "Review newly added MUST/SHALL language here for ContractRef coverage and DRY back-references.",
+          "Shard regeneration is likely required: validation reported stale assistant-chat-design shard manifests for this source doc."
+        ]
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "changed_heading": "## 17. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)",
+        "likely_affected_shards": [
+          "Plans/_shards/FinalGUISpec/00-index.md"
+        ],
+        "likely_affected_docsets": [],
+        "likely_contract_dry_cleanup": [
+          "Review newly added MUST/SHALL language here for ContractRef coverage and DRY back-references.",
+          "Shard regeneration is likely required: validation reported stale FinalGUISpec shard manifests for this source doc."
+        ]
+      },
+      {
+        "path": "Plans/interview-subagent-integration.md",
+        "changed_heading": "## Persona Stage Strategy Addendum (2026-03-06)",
+        "likely_affected_shards": [
+          "Plans/_shards/interview-subagent-integration/00-index.md"
+        ],
+        "likely_affected_docsets": [],
+        "likely_contract_dry_cleanup": [
+          "Review newly added MUST/SHALL language here for ContractRef coverage and DRY back-references."
+        ]
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "changed_heading": "## Persona and Effective Runtime Resolution Addendum (2026-03-06)",
+        "likely_affected_shards": [
+          "Plans/_shards/orchestrator-subagent-integration/00-index.md"
+        ],
+        "likely_affected_docsets": [],
+        "likely_contract_dry_cleanup": [
+          "Review newly added MUST/SHALL language here for ContractRef coverage and DRY back-references.",
+          "Shard regeneration and Spec_Lock refresh are likely required: validation reported stale orchestrator shards and a Spec_Lock hash mismatch for this source doc."
+        ]
+      },
+      {
+        "path": "Plans/chain-wizard-flexibility.md",
+        "changed_heading": "## Requirements Builder Persona Strategy Addendum (2026-03-06)",
+        "likely_affected_shards": [
+          "Plans/_shards/chain-wizard-flexibility/00-index.md"
+        ],
+        "likely_affected_docsets": [],
+        "likely_contract_dry_cleanup": [
+          "Review newly added MUST/SHALL language here for ContractRef coverage and DRY back-references."
+        ]
+      }
+    ],
+    "likely_affected_shards": [
+      "Plans/_shards/FinalGUISpec/00-index.md",
+      "Plans/_shards/assistant-chat-design/00-index.md",
+      "Plans/_shards/chain-wizard-flexibility/00-index.md",
+      "Plans/_shards/interview-subagent-integration/00-index.md",
+      "Plans/_shards/orchestrator-subagent-integration/00-index.md"
+    ],
+    "likely_affected_docsets": [],
+    "likely_contract_dry_cleanup": [
+      "Review the persona addenda for missing ContractRef annotations on operational MUST/SHALL language before final DRY cleanup.",
+      "If summary/index docs are republished from this packet, update those derivatives separately rather than doing repo-wide normalization here."
+    ],
+    "validation_commands": [
+      "python3 scripts/pm-shard-plans.py --check",
+      "python3 scripts/pm-plans-verify.py run-gates"
+    ],
+    "immediate_local_shard_drift": [
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "shard_root": "Plans/_shards/assistant-chat-design",
+        "status": "detected",
+        "note": "Validation reported stale assistant-chat-design shard manifests; rerun shard regeneration/check before manager-level normalization."
+      },
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "shard_root": "Plans/_shards/FinalGUISpec",
+        "status": "detected",
+        "note": "Validation reported stale FinalGUISpec shard manifests; rerun shard regeneration/check before manager-level normalization."
+      },
+      {
+        "path": "Plans/interview-subagent-integration.md",
+        "shard_root": "Plans/_shards/interview-subagent-integration",
+        "status": "none_detected",
+        "note": "Shard addendum/index entries are already present; no immediate local shard drift detected."
+      },
+      {
+        "path": "Plans/orchestrator-subagent-integration.md",
+        "shard_root": "Plans/_shards/orchestrator-subagent-integration",
+        "status": "detected",
+        "note": "Validation reported stale orchestrator shard manifests and a Spec_Lock hash mismatch for the source doc."
+      },
+      {
+        "path": "Plans/chain-wizard-flexibility.md",
+        "shard_root": "Plans/_shards/chain-wizard-flexibility",
+        "status": "none_detected",
+        "note": "Shard addendum/index entries are already present; no immediate local shard drift detected."
+      }
+    ],
+    "manager_notes": [
+      "No repo-wide normalization was performed; follow-up is limited to docs changed by this persona packet.",
+      "No packaging/docset consistency work is expected because touched files are Plans sources, not packaged .puppet-master artifacts.",
+      "Current validation status: `python3 scripts/pm-shard-plans.py --check` and `python3 scripts/pm-plans-verify.py run-gates` both failed, with persona-adjacent shard drift on orchestrator-subagent-integration, FinalGUISpec, and assistant-chat-design."
+    ]
+  }
+}

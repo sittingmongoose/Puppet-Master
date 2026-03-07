@@ -83,7 +83,7 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 ### 14. Subagent persona overrides (token budget and scope)
 
 - **Issue:** Custom instruction snippets in persona overrides could be long; injecting them into every subagent prompt may consume token budget or conflict with platform limits.
-- **Mitigation:** (1) Persona overrides apply to any subagent name that exists in the current list (preloaded from `.claude/agents` or user-added). Keys in `persona_overrides` are names the user has edited in the Personas UI; no separate "second source" -- overrides come only from config (user's saved edits). (2) Optionally cap length of `custom_instruction` / `custom_description` in UI and config (e.g. 500-1000 chars) and document that persona text is prepended to the prompt so users are aware of token impact. (3) Use the same resolution (override if present, else preloaded content) in both orchestrator and interview.
+- **Mitigation:** (1) Persona edits apply to any subagent name that exists in the current list (imported from provider-native seed files or user-created in Puppet Master storage). The canonical content lives in Puppet Master Persona storage; do not maintain a second runtime source in config. (2) Optionally cap length of editable Persona instruction/description content in UI and storage workflows (e.g. 500-1000 chars for inline override affordances) and document that persona text is prepended to the prompt so users are aware of token impact. (3) Use the same resolution (canonical Puppet Master Persona content, with optional re-import/trim refresh) in both orchestrator and interview.
 
 ---
 

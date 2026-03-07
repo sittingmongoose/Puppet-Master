@@ -18,21 +18,21 @@ pub struct Orchestrator {
 impl Orchestrator {
     pub fn new(config: OrchestratorConfig) -> Result<Self> {
         // ... existing initialization ...
-        
+
         // Initialize subagent selector
         let project_context = Self::detect_project_context(&config.paths.workspace)?;
         let subagent_selector = Arc::new(SubagentSelector::new(project_context)?);
-        
+
         // Initialize subagent manager (from interview plan)
         let subagent_manager = Arc::new(SubagentManager::new(&config.paths.workspace)?);
-        
+
         Ok(Self {
             // ... existing fields ...
             subagent_selector,
             subagent_manager,
         })
     }
-    
+
     /// Select and invoke subagents for tier execution
     async fn execute_tier_with_subagents(
         &self,
@@ -41,14 +41,16 @@ impl Orchestrator {
     ) -> Result<()> {
         // Build tier context
         let tier_context = self.build_tier_context(tier_node, context)?;
-        
+        // build_tier_context MUST populate workspace/worktree/runtime snapshot fields
+        // from the same frozen tier-start config snapshot used by validation/persistence.
+
         // Select subagents
         // DRY REQUIREMENT: SubagentSelector MUST use subagent_registry:: functions — NEVER hardcode subagent names
         let mut subagent_names = self.subagent_selector.select_for_tier(
             tier_node.tier_type,
             &tier_context,
         );
-        
+
         // Apply tier overrides (replace if non-empty, else use selected list)
         // DRY REQUIREMENT: Validate override names using subagent_registry::is_valid_subagent_name()
         if let Some(overrides) = self.get_tier_overrides(tier_node.tier_type) {
@@ -62,7 +64,7 @@ impl Orchestrator {
                 subagent_names = overrides;
             }
         }
-        
+
         // Filter disabled subagents
         // DRY REQUIREMENT: Validate disabled names using subagent_registry::is_valid_subagent_name()
         subagent_names.retain(|name| {
@@ -73,7 +75,7 @@ impl Orchestrator {
                 !self.is_subagent_disabled(name)
             }
         });
-        
+
         // Add required subagents
         // DRY REQUIREMENT: Validate required names using subagent_registry::is_valid_subagent_name()
         if let Some(required) = self.get_required_subagents(tier_node.tier_type) {
@@ -86,14 +88,14 @@ impl Orchestrator {
                 }
             }
         }
-        
+
         // Get platform and model for this tier
         let platform = self.get_platform_for_tier(tier_node.tier_type)?;
         let model = self.get_model_for_tier(tier_node.tier_type)?;
-        
+
         // Get coordination context
         let coordination_context = self.coordinator.get_coordination_context(&tier_context.workspace).await?;
-        
+
         // Register agents in coordination state before execution
         for subagent_name in &subagent_names {
             let agent_id = format!("{}-{}", subagent_name, tier_node.id);
@@ -108,7 +110,7 @@ impl Orchestrator {
                 last_update: Utc::now(),
             }).await?;
         }
-        
+
         // Execute subagents (sequential or parallel based on config)
         if self.config.enable_parallel_subagents {
             // Execute subagents in parallel
@@ -124,10 +126,10 @@ impl Orchestrator {
                 );
                 tasks.push(task);
             }
-            
+
             // Wait for all subagents to complete
             let results = futures::future::join_all(tasks).await;
-            
+
             // Check for failures
             for result in results {
                 result??; // Propagate errors
@@ -145,16 +147,16 @@ impl Orchestrator {
                 ).await?;
             }
         }
-        
+
         // Unregister agents from coordination state after execution
         for subagent_name in &subagent_names {
             let agent_id = format!("{}-{}", subagent_name, tier_node.id);
             self.coordinator.unregister_agent(&agent_id).await?;
         }
-        
+
         Ok(())
     }
-    
+
     // DRY:FN:execute_subagent — Execute a single subagent for a tier
     async fn execute_subagent(
         &self,
@@ -166,7 +168,7 @@ impl Orchestrator {
         coordination_context: &str,
     ) -> Result<SubagentOutput> {
         let agent_id = format!("{}-{}", subagent_name, tier_node.id);
-        
+
         // Build subagent invocation prompt with coordination context
         let invocation = self.build_subagent_invocation(
             subagent_name,
@@ -174,13 +176,13 @@ impl Orchestrator {
             tier_context,
             coordination_context,
         )?;
-        
+
         // Update coordination state: mark agent as active
         self.coordinator.update_agent_operation(
             &agent_id,
             format!("Executing {}: {}", subagent_name, tier_node.title),
         ).await?;
-        
+
         // Execute via platform runner with subagent
         let output = self.execute_with_subagent(
             platform,
@@ -189,14 +191,14 @@ impl Orchestrator {
             &invocation,
             tier_context,
         ).await?;
-        
+
         // Update coordination state: extract file operations from output
         let file_operations = self.extract_file_operations_from_output(&output)?;
         self.coordinator.update_agent_files(&agent_id, &file_operations).await?;
-        
+
         Ok(output)
     }
-    
+
     // DRY:FN:build_subagent_invocation — Build platform-specific subagent invocation prompt
     // DRY REQUIREMENT: MUST use platform_specs::get_subagent_invocation_format() — NEVER hardcode platform-specific formats
     fn build_subagent_invocation(
@@ -208,22 +210,22 @@ impl Orchestrator {
     ) -> Result<String> {
         // Build platform-specific subagent invocation using platform_specs
         let platform = self.get_platform_for_tier(tier_context.tier_type)?;
-        
+
         // DRY: Use platform_specs to get subagent invocation format (DRY:DATA:platform_specs)
         // DO NOT hardcode match statements for Platform::Cursor, Platform::Codex, etc.
         // DO NOT duplicate platform-specific format strings here
         let invocation_format = platform_specs::get_subagent_invocation_format(platform)?;
-        
+
         // Format invocation using platform-specific format from platform_specs
         let invocation = invocation_format
             .replace("{subagent}", subagent_name)
             .replace("{task}", task_description)
             .replace("{context}", &format_tier_context(tier_context))
             .replace("{coordination}", coordination_context);
-        
+
         Ok(invocation)
     }
-    
+
     // DRY:FN:extract_file_operations_from_output — Extract file paths from subagent output
     fn extract_file_operations_from_output(
         &self,
@@ -232,17 +234,17 @@ impl Orchestrator {
         // Extract file paths from subagent output
         // Can parse from task_report, downstream_context, or findings
         let mut files = Vec::new();
-        
+
         // Extract from findings (file field)
         for finding in &output.findings {
             if let Some(file) = &finding.file {
                 files.push(file.clone());
             }
         }
-        
+
         // Extract from task_report (parse file mentions)
         // Implementation: regex or text parsing to find file paths
-        
+
         Ok(files)
     }
 ```
@@ -255,7 +257,7 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 - **Coordination registration failure:** If coordination registration fails, log warning and continue (coordination is best-effort)
 - **Subagent execution failure:** If subagent execution fails, log error and continue with next subagent (or fail tier if critical)
 - **Coordination update failure:** If coordination update fails, log warning and continue (coordination updates are best-effort)
-    
+
     // DRY:FN:build_tier_context -- Build tier context for subagent selection
     fn build_tier_context(
         &self,
@@ -267,13 +269,13 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
             .detect_language(&context.workspace)?
             .first()
             .map(|l| l.name.clone());
-        
+
         // Determine domain from task type or description
         let domain = self.infer_domain(tier_node);
-        
+
         // Detect framework
         let framework = self.detect_framework(&context.workspace)?;
-        
+
         // Build context
         Ok(TierContext {
             tier_type: tier_node.tier_type,
@@ -305,39 +307,39 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 subagentConfig:
   enableTierSubagents: true
-  
+
   # Override automatic selection
   tierOverrides:
     phase:
       default: ["project-manager"]
       architecture: ["architect-reviewer", "project-manager"]
       product: ["product-manager", "project-manager"]
-    
+
     task:
       # Language-specific overrides
       rust: ["rust-engineer"]
       python: ["python-pro"]
       javascript: ["javascript-pro"]
       typescript: ["typescript-pro"]
-      
+
       # Domain-specific overrides
       backend: ["backend-developer"]
       frontend: ["frontend-developer"]
       mobile: ["mobile-developer"]
-    
+
     subtask:
       testing: ["test-automator"]
       documentation: ["technical-writer"]
       review: ["code-reviewer"]
-    
+
     iteration:
       errors: ["debugger"]
       review: ["code-reviewer"]
       testing: ["qa-expert"]
-  
+
   # Disable specific subagents
   disabledSubagents: []
-  
+
   # Require specific subagents
   requiredSubagents: []
 ```

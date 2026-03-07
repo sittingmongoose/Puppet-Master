@@ -33,6 +33,11 @@ During **interview document creation** (phase documents, AGENTS.md, PRD, etc.) a
 **Agent Activity Pane Sync (Resolved):**
 Agent activity pane and interviewer chat **share the same event source** (seglog event projection). They stay in sync in **real time** — both subscribe to the same seglog projection stream. Redundant display is intentional and acceptable: the activity pane shows structured event cards (icon, label, timestamp), while the chat shows conversational rendering of the same events. Neither can diverge because they read from the same source.
 
+**Runtime identity visibility (required):**
+- For each Interview run stage (questioning, research, validation, drafting, review), the UI must display `requested_persona_id`, `effective_persona_id`, `selection_reason`, `provider`, and `model`.
+- When a requested control is unavailable after capability/provider filtering, show it as skipped/disabled with reason rather than silently omitting it.
+- Interview-specific displays must follow the same visibility contract as Builder and Assistant surfaces; no Interview-only hidden runtime substitutions are allowed.
+
 **Preview section and document pane (required):**
 - Interview page preview section must show the Multi-Pass findings summary and the final approval gate (`Accept | Reject | Edit`).
 - Interview page also includes a separate embedded document pane (not the agent activity pane) for reviewing/editing human-readable interview artifacts.

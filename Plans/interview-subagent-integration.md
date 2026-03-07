@@ -142,6 +142,10 @@ This document covers the **interview flow** (multi-phase interview: Scope, Archi
 
 ### Cross-Phase Subagents
 
+Automatic runtime selection in Interview MUST use only IDs present in the canonical 42-entry subagent registry (`Plans/orchestrator-subagent-integration.md`). Older aliases such as `explore` are invalid; the canonical built-in ID is `explorer`.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Personas.md
+
 **Document Generation:**
 - `technical-writer` -- Generate phase documents, AGENTS.md, requirements
 - `knowledge-synthesizer` -- Cross-phase analysis, technology matrix generation
@@ -156,6 +160,7 @@ This document covers the **interview flow** (multi-phase interview: Scope, Archi
 ContractRef: ContractName:Plans/chain-wizard-flexibility.md#requirements-quality-escalation-semantics, SchemaID:pm.requirements_quality_report.schema.v1
 
 **Research Operations:**
+- `explorer` -- Read-only codebase / repository investigation when the interview needs local-project understanding before asking or validating questions.
 - `ux-researcher` -- Web research via Browser MCP (when configured). **Cited web search:** Interview (and Assistant, Orchestrator) use **cited web search** (inline citations + Sources list) from a single shared implementation; see **Plans/newtools.md** §8 (cited web search, [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited)-style) and **Plans/assistant-chat-design.md** §7.
 - `context-manager` -- Manage interview state and context across phases
 
@@ -199,6 +204,10 @@ Implementation responsibilities (conceptual):
 - **UI wiring artifacts (GUI projects):** When the interview detects the user project has a GUI (`has_gui = true` from Architecture or Product/UX phases), the Contract Unification Pass also generates `.puppet-master/project/ui/wiring_matrix.json` and `.puppet-master/project/ui/ui_command_catalog.json` from the Product/UX phase wiring fragments. The validation gate must verify schema conformance and "no unbound UI actions" (every interactive element has a bound command and handler).
 - **Builder contract seeds:** When Requirements Doc Builder is used (chain-wizard §5), `.puppet-master/requirements/contract-seeds.md` is a staging input to the unification pass and must be reconciled with phase-derived fragments.
 - **Quality gate (requirements-quality-reviewer):** Before the Contract Unification Pass reads the requirements artifact, the `requirements-quality-reviewer` MUST have run and produced a `requirements_quality_report` artifact (`SchemaID:pm.requirements_quality_report.schema.v1`). The Contract Unification Pass MUST check the `verdict` field: if `"FAIL"` the pass is blocked and the orchestrator transitions the wizard to `attention_required`; if `"PASS"` the pass proceeds, appending `auto_fixes_applied[]` entries to its change log as normative changes. The Contract Unification Pass MUST NOT re-review requirements quality — it only checks the `verdict` field.
+- **Lifecycle ownership:** The Interview phase manager owns fragment collection and writes a provisional artifact bundle. The Three-Pass Canonical Validation Workflow in `Plans/chain-wizard-flexibility.md §12` then validates/completes that provisional bundle; this document does not redefine those pass responsibilities.
+- **Blocking clarification path:** If the quality report still contains `needs_user_clarification[]` after allowed autofill attempts, Interview MUST persist the blocked bundle state, set `wizard_status = attention_required`, expose the clarification set through the Interview thread + Dashboard CtA, and resume from the same provisional bundle after the user answers.
+- **Artifact provenance:** Every generated artifact or fragment MUST record provenance metadata sufficient to answer: `source_stage`, `source_phase_ids[]`, `persona_id`, `provider`, `model`, and `timestamp`. Provenance is stored in seglog artifact metadata or an equivalent canonical projection, not as ad-hoc sidecar files.
+- **Seed-source rule:** Provider-native agent definition files are seed/import sources only. Interview runtime reads canonical Persona content via `Plans/Personas.md`; it does not treat `.claude/agents/**`, `.cursor/agents/**`, `.github/agents/**`, or similar directories as authoritative runtime state for user projects.
 
   ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/chain-wizard-flexibility.md
 
@@ -281,6 +290,16 @@ pub fn generate_system_prompt(
 ### 3. Research Engine Integration
 
 Enhance `research_engine.rs` to use subagents with detailed error handling, retry logic, and structured output parsing.
+
+**Normative runtime contract:**
+
+- Research is **advisory input** to questioning and drafting; it does not directly mutate canonical project artifacts.
+- Each research run emits a seglog artifact/event with at least: `research_run_id`, `phase_id`, `topic`, `persona_id`, `provider`, `model`, `citations[]`, `summary`, and `raw_output_ref`.
+- Research results are cached by `(phase_id, topic_hash, context_hash)` for the lifetime of the interview run; resume reuses cached results unless the underlying context materially changed.
+- If cited web research is used, the stored artifact MUST preserve inline-citation/source mapping so later prompts can quote or summarize without losing provenance.
+- Failure mode is non-fatal: if research fails, the phase manager records a warning artifact and continues with reduced-context questioning.
+
+ContractRef: ContractName:Plans/newtools.md, Primitive:Seglog, ContractName:Plans/assistant-chat-design.md
 
 **BeforeResearch responsibilities:**
 
@@ -540,6 +559,16 @@ pub struct ResearchResult {
 
 Add validation methods to orchestrator with detailed error handling, retry logic, and structured output parsing.
 
+**Normative validation lifecycle:**
+
+- Validation runs after each user answer that changes phase-completion state and again once before a phase is marked complete.
+- The validator used is stage-resolved (see Persona Stage Strategy Addendum) and MUST record `requested_persona_id` and `effective_persona_id` when overrides/capability filtering change the actual runner.
+- Findings are persisted as structured artifacts/events with stable IDs so the remediation loop can reopen the same issue set instead of inventing new prose-only feedback each retry.
+- Critical/Major findings block phase completion. Minor/Info findings are attached to the phase summary and downstream drafting context but do not block.
+- If retries are exhausted, Interview transitions the phase to `needs_review` and persists a resume checkpoint; it MUST NOT silently mark the phase complete.
+
+ContractRef: ContractName:Plans/Personas.md, Primitive:Seglog, ContractName:Plans/chain-wizard-flexibility.md
+
 **BeforeValidation responsibilities:**
 
 - **Load validation subagent:** Determine validation subagent for this phase (from `SubagentConfig.phase_subagents` or fallback)
@@ -774,6 +803,16 @@ pub struct ValidationContext {
 
 Enhance document writers to use subagents and crews:
 
+**Normative document-generation contract:**
+
+- Document generation works from Interview decisions + validated phase summaries + contract fragments; it must not independently invent contradictory project scope.
+- Each generated document writes through a staging bundle first. Promotion to the canonical `.puppet-master/project/**` location happens only through the Contract Unification / validation pipeline.
+- Required document-generation inventory for a successful interview-complete path is: phase summaries, final requirements context handoff, contracts fragments bundle, `plan.md`, canonical sharded `plan_graph/`, acceptance manifest, AGENTS.md (when enabled), and GUI wiring artifacts when `has_gui = true`.
+- Generated artifacts MUST preserve overwrite policy metadata: `create | replace_generated | merge_user_authored`. If an artifact may overwrite user-authored content, the policy must be explicit and surfaced to the user before promotion.
+- Multi-Pass Review and targeted revision operate on staged artifacts; `Accept | Reject | Edit` gates which staged bundle becomes the next provisional artifact set.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/FinalGUISpec.md
+
 ```rust
 impl DocumentWriter {
     /// Writes phase document with subagent assistance
@@ -987,6 +1026,8 @@ Use `depends_on: Vec<TaskId>` on each task in the PRD/plan:
   ```
 - SSOT: this schema definition. Cross-reference from STATE_FILES.md.
 
+**Generation rule:** All examples and downstream schemas in this document MUST use `depends_on` only. Any older `parallel_group` or `can_run_after` examples are non-canonical and must be treated as superseded by this section.
+
 6. **UI wiring traceability (GUI projects).** When the user project includes a GUI (detected during Architecture or Product/UX interview phases):
    - Every plan node that creates, modifies, or wires interactive UI elements MUST include `contract_refs` entries pointing to the relevant `ui/wiring_matrix.json` entries and/or `ui/ui_command_catalog.json` command IDs.
    - Acceptance criteria for UI nodes MUST include: (a) wiring matrix entry exists for every new interactive element, (b) no unbound UI actions (every element has a bound `UICommandID` and a resolved handler), (c) `ui/wiring_matrix.json` validates against the wiring matrix schema.
@@ -1170,6 +1211,29 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 7. **PRD crew recommendations:** Extend PRD generator to analyze task complexity and suggest crews for tasks/subtasks that would benefit from multiple subagents. Add `crew_recommendation` field to PRD JSON schema. Include crew recommendations in generated PRD and plan markdown.
 8. **Document generation crews:** Use crews for document generation (e.g., technical-writer + knowledge-synthesizer + qa-expert crew) to coordinate document creation and ensure consistency.
 
+### 5.1 Interview artifact review loop: TargetedRevisionPass
+
+Interview-generated human-readable artifacts (for example phase documents, PRD, `AGENTS.md`, and related bundle docs shown in the Embedded Document Pane) use the same bundle review loop as the Requirements Doc Builder.
+
+**SSOT:**
+- Workflow semantics: `Plans/chain-wizard-flexibility.md` §5.5
+- Ownership boundary: `Plans/Crosswalk.md` §3.14
+- UI contract: `Plans/FinalGUISpec.md` §7.19.1
+
+**Required behavior:**
+1. After interview document generation completes, artifacts enter the shared document-bundle review flow (`draft` / `changes-requested` / `approved`).
+2. Users may add inline notes to interview artifacts using the same anchored-note model as Requirements Doc Builder bundles.
+3. Clicking **Resubmit with Notes** launches a targeted revision pass over all interview artifacts with `open` notes, or a user-selected subset of interview artifacts with `open` notes.
+4. The targeted revision pass MAY update artifact content and/or answer question notes without modifying artifact text.
+5. For each processed note, the pass MUST record an addressed explanation and an updated anchor when re-anchoring succeeds.
+6. The targeted revision pass MUST NOT trigger Multi-Pass Review.
+7. Final Multi-Pass Review remains a separate final-only gate and is enabled only when all bundle docs are `Approved/Done` and no notes remain `open`.
+8. Resume/recovery MUST restore document statuses, note states, selected revision scope, and any in-progress targeted revision pass from persisted bundle state.
+
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md, Primitive:Seglog, ContractName:Plans/FinalGUISpec.md
+
+This section is intentionally DRY: interview bundles reuse the same targeted revision lifecycle rather than defining a second review model.
+
 ### Phase 6: Testing & Refinement
 1. Test subagent invocations for each phase
 2. Validate research quality improvements
@@ -1235,7 +1299,7 @@ The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines **C
 
 - **Check phase subagent configuration:** Determine if phase has multiple subagents (primary + secondary) that would benefit from crew coordination
 - **Create phase crew:** If phase has multiple subagents, create crew with all phase subagents as members
-- **Register crew:** Register crew with `CrewManager` and persist to `.puppet-master/state/crews.json`
+- **Register crew:** Register crew with `CrewManager` and persist canonical crew metadata to redb/seglog projections (not ad-hoc JSON files)
 - **Initialize crew communication:** Set up message board routing for crew (crew_id = `interview-phase-{phase_id}`)
 - **Inject crew context:** Add crew information to phase subagent prompts (crew members, message board access, coordination instructions)
 
@@ -1249,11 +1313,11 @@ The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines **C
 **AfterPhase crew completion responsibilities:**
 
 - **Validate crew output:** Check that crew members completed their work and posted final messages
-- **Archive crew messages:** Archive crew messages to `.puppet-master/memory/interview-phase-{phase_id}-messages.json`
+- **Archive crew messages:** Archive crew messages/events to seglog with a queryable redb projection for replay/resume
 - **Disband crew:** Mark crew as `CrewStatus::Complete` and remove from active crews
-- **Save crew decisions:** Persist crew decisions and findings to memory for use by later phases
+- **Save crew decisions:** Persist crew decisions and findings to canonical interview memory storage for use by later phases
 
-**Implementation:** Extend `src/interview/orchestrator.rs` to create crews at phase start, coordinate during phase execution, and disband at phase completion. Use `CrewManager` from orchestrator plan (`src/core/crews.rs`).
+**Implementation:** Extend `src/interview/orchestrator.rs` to create crews at phase start, coordinate during phase execution, and disband at phase completion. Use `CrewManager` from orchestrator plan (`src/core/crews.rs`). File examples below are illustrative legacy persistence only; canonical storage for rewrite-era implementation is seglog + redb projections.
 
 **Integration with interview orchestrator:**
 
@@ -1329,10 +1393,9 @@ let after_result = self.hook_registry.execute_after_phase(&after_ctx)?;
 if let Some(crew_id) = phase_crew {
     self.crew_manager.disband_crew(&crew_id, "Phase completed").await?;
     
-    // Archive crew messages
+    // Archive crew messages to canonical storage / projection
     let messages = self.crew_manager.get_crew_messages(&crew_id).await?;
-    let archive_path = format!(".puppet-master/memory/interview-phase-{}-messages.json", current_phase.id);
-    std::fs::write(&archive_path, serde_json::to_string_pretty(&messages)?)?;
+    self.persist_phase_crew_messages(&current_phase.id, &messages).await?;
     
     // Save crew decisions to memory
     self.memory_manager.save_phase_decisions(&current_phase.id, &extract_crew_decisions(&messages)).await?;
@@ -1351,7 +1414,7 @@ if let Some(crew_id) = phase_crew {
 
 **What to include in generated plans:**
 - **Subagent persona recommendations:** Which subagent(s) to use per task, subtask, or phase (names from subagent_registry). PRD subtasks carry `crew_recommendation` with `subagents`; phase plans and other docs must carry subagent recommendations where applicable.
-- **Parallelism:** Which tasks/subtasks can run in parallel (e.g. `depends_on`, `can_run_after`, or `parallel_group`) so the Overseer can schedule parallel execution.
+- **Parallelism:** Which tasks/subtasks can run in parallel via the canonical `depends_on` dependency graph so the Overseer can schedule parallel execution.
 - **Crew recommendations:** Suggest crews for complex tasks/subtasks when multiple subagents work together.
 - **Crew templates:** Reference crew templates (e.g., "Use 'Full Stack Crew' for this phase")
 - **Crew metadata:** Add crew hints to PRD tasks/subtasks
@@ -1376,8 +1439,7 @@ if let Some(crew_id) = phase_crew {
                 "complexity_score": 7.5,
                 "expertise_areas": ["security", "backend", "testing"]
               },
-              "depends_on": [],
-              "parallel_group": "A"
+               "depends_on": []
             }
           ]
         }
@@ -1387,13 +1449,12 @@ if let Some(crew_id) = phase_crew {
 }
 ```
 
-- **Parallelism fields:** `depends_on` lists task/subtask ids that must complete before this one; empty means no dependencies. `parallel_group` (optional) identifies items that can run in parallel with each other (same group = can run together). Document the chosen schema in the PRD generator and STATE_FILES; orchestrator uses it to schedule parallel execution.
+- **Parallelism fields:** `depends_on` lists task/subtask ids that must complete before this one; empty means no dependencies. Parallel execution is inferred from the dependency graph. Document this schema in the PRD generator and STATE_FILES; orchestrator uses it to schedule parallel execution.
 
 **Crew and parallelism field semantics (canonical: STATE_FILES.md §3.3):**
 
 - **crew_recommendation:** Optional. When present, `subagents` is **required** (array of strings; names from subagent_registry). Other fields (rationale, crew_template, complexity_score, expertise_areas) are optional. If `crew_recommendation` is present but `subagents` is missing or empty, the orchestrator **treats it as no recommendation** and falls back to dynamic selection.
 - **depends_on:** Optional. Type: array of strings (item ids). Empty array or missing = no dependencies. This item may run only after every listed item has completed. Use `depends_on` for ordering; do not introduce a separate `can_run_after` in the PRD schema.
-- **parallel_group:** Optional. Type: string or null. Missing or null = no parallel-group constraint. Items with the same non-empty `parallel_group` may run in parallel, **subject to** `depends_on` (dependencies take precedence).
 - **Phase/Task:** Phase and Task may carry the same optional fields with the same types and semantics when the generator specifies at that level.
 
 **Complexity analysis responsibilities:**
@@ -1715,8 +1776,8 @@ impl SubtaskComplexity {
 
 **BeforePhase cross-phase coordination responsibilities:**
 
-- **Load prior phase crew messages:** Load messages from previous phase crews from `.puppet-master/memory/interview-phase-{phase_id}-messages.json`
-- **Load prior phase decisions:** Load decisions from previous phases from `.puppet-master/memory/interview-decisions.json`
+- **Load prior phase crew messages:** Load messages from previous phase crews from canonical crew-message projections
+- **Load prior phase decisions:** Load decisions from previous phases from canonical interview-memory projections
 - **Inject cross-phase context:** Add prior phase decisions and crew messages to current phase crew context
 - **Set up cross-phase message routing:** Configure message board to route messages to previous phase crews (for questions/validation)
 
@@ -1728,7 +1789,7 @@ impl SubtaskComplexity {
 
 **AfterPhase cross-phase coordination responsibilities:**
 
-- **Archive phase decisions:** Save phase decisions to `.puppet-master/memory/interview-decisions.json` with phase_id key
+- **Archive phase decisions:** Save phase decisions to canonical interview-memory storage with phase_id linkage
 - **Archive crew messages:** Archive crew messages with cross-phase routing information
 - **Prepare for next phase:** Set up message routing for next phase to access current phase decisions
 
@@ -1815,9 +1876,8 @@ if let Some(crew_id) = phase_crew {
     // Save decisions to memory
     self.memory_manager.save_phase_decisions(&current_phase.id, &decisions).await?;
     
-    // Archive messages
-    let archive_path = format!(".puppet-master/memory/interview-phase-{}-messages.json", current_phase.id);
-    std::fs::write(&archive_path, serde_json::to_string_pretty(&messages)?)?;
+    // Archive messages to canonical storage / projection
+    self.persist_phase_crew_messages(&current_phase.id, &messages).await?;
     
     // Disband crew
     self.crew_manager.disband_crew(&crew_id, "Phase completed").await?;
@@ -1910,10 +1970,10 @@ impl CrewManager {
 
 - **Validate research results:** Crew members validate each other's research results before catalog update
 - **Merge research findings:** Combine findings from all crew members into unified catalog entries
-- **Archive research messages:** Archive research crew messages to `.puppet-master/memory/tool-research-{research_id}-messages.json`
+- **Archive research messages:** Archive research crew messages to canonical research/crew projections
 - **Disband research crew:** Mark crew as complete and remove from active crews
 
-**Implementation:** Extend `src/interview/research_engine.rs` to create research crews, coordinate research operations, and disband crews after research completes.
+**Implementation:** Extend `src/interview/research_engine.rs` to create research crews, coordinate research operations, and disband crews after research completes. File-path examples below are illustrative legacy persistence only; canonical storage for rewrite-era implementation is seglog + redb projection.
 
 **Integration with research engine:**
 
@@ -2002,10 +2062,9 @@ impl ResearchEngine {
         
         // Disband research crew if it exists
         if let Some((crew_id, research_id)) = research_crew {
-            // Archive research messages
+            // Archive research messages to canonical storage / projection
             let messages = self.crew_manager.get_crew_messages(&crew_id).await?;
-            let archive_path = format!(".puppet-master/memory/tool-research-{}-messages.json", research_id);
-            std::fs::write(&archive_path, serde_json::to_string_pretty(&messages)?)?;
+            self.persist_research_crew_messages(&research_id, &messages).await?;
             
             // Disband crew
             self.crew_manager.disband_crew(&crew_id, "Research completed").await?;
@@ -2181,17 +2240,17 @@ The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines lif
 
 - **Track active subagent:** Record which subagent is active for this phase (e.g., `product-manager` for Phase 1, `architect-reviewer` for Phase 2) in interview state.
 - **Inject phase context:** Add current phase status, previous phase decisions, detected GUI frameworks, and known gaps to subagent prompt or context.
-- **Load cross-session memory:** Load prior interview decisions (architecture, patterns, tech choices) from `.puppet-master/memory/` and inject into phase context.
-- **Prune stale state:** Clean up old interview state files older than threshold (e.g., 2 hours).
+- **Load cross-session memory:** Load prior interview decisions (architecture, patterns, tech choices) from canonical memory projections (seglog/redb-backed) and inject into phase context.
+- **Prune stale state:** Clean up or compact stale projections/checkpoints per canonical storage policy; do not rely on deleting ad-hoc files as the primary lifecycle mechanism.
 
 **AfterPhase hook responsibilities:**
 
 - **Validate subagent output format:** Check that phase subagent output matches structured handoff contract (see orchestrator plan §2).
 - **Track completion:** Update active subagent tracking, mark phase completion state.
-- **Save memory:** Persist architectural decisions, patterns, tech choices from this phase to `.puppet-master/memory/` (especially Architecture & Technology phase).
+- **Save memory:** Persist architectural decisions, patterns, tech choices from this phase to canonical interview memory storage (especially Architecture & Technology phase).
 - **Safe error handling:** Guarantee structured output even on hook failure.
 
-**Implementation:** Create `src/interview/hooks.rs` with `BeforePhaseHook` and `AfterPhaseHook` traits. Register hooks per phase type. Call hooks automatically at phase boundaries (before `process_ai_turn` for a new phase, after phase completion). Use the same hook registry pattern as orchestrator hooks (`HookRegistry`), but with interview-specific contexts.
+**Implementation:** Create `src/interview/hooks.rs` with `BeforePhaseHook` and `AfterPhaseHook` traits. Register hooks per phase type. Call hooks automatically at phase boundaries (before `process_ai_turn` for a new phase, after phase completion). Use the same hook registry pattern as orchestrator hooks (`HookRegistry`), but with interview-specific contexts. Any file-path examples in this section are legacy examples only; rewrite-era canonical persistence is seglog + redb projection.
 
 **Integration with interview orchestrator:**
 
@@ -2254,7 +2313,7 @@ if current_phase.phase_type == PhaseType::ArchitectureTechnology {
 
 ### 3. Cross-Session Memory for Interview Decisions
 
-**Concept:** Persist interview decisions (architecture, patterns, tech choices) to `.puppet-master/memory/` so future interview runs or orchestrator runs can load prior context.
+**Concept:** Persist interview decisions (architecture, patterns, tech choices) to canonical interview memory storage so future interview runs or orchestrator runs can load prior context.
 
 **What to persist from interview:**
 
@@ -2270,37 +2329,48 @@ if current_phase.phase_type == PhaseType::ArchitectureTechnology {
 
 **When to load:**
 
-- **At interview start:** Load all memory files and inject into Phase 1 (Scope & Goals) context.
+- **At interview start:** Load all canonical memory projections and inject into Phase 1 (Scope & Goals) context.
 - **At each phase start:** Load relevant memory (e.g., Architecture phase loads prior architectural decisions).
 
 **Integration:** Use the same `MemoryManager` from orchestrator plan (`src/core/memory.rs`). In interview orchestrator, call `memory_manager.save_architecture_decisions()`, `save_pattern()`, `save_tech_choice()` at phase completion. Call `memory_manager.load_all_for_prompt()` at interview start and inject into Phase 1 prompt.
 
+**Resume / checkpoint rule (normative):**
+- At minimum, persist `interview_id`, `wizard_id`, `phase_plan`, `current_phase_id`, `awaiting_user_answer`, `awaiting_final_approval`, `active_run_kind`, `active_validation_issue_ids[]`, and references to the latest staged artifact bundle / quality report.
+- Resume MUST reconstruct the same effective phase order and the same unresolved issue set; it MUST NOT silently regenerate a different plan on restore.
+
+ContractRef: Primitive:Seglog, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Project_Output_Artifacts.md
+
 ### 4. Active Agent Tracking for Interview Phases
 
 **Concept:** Track which subagent is currently active at each interview phase. Store in interview state and expose for logging, debugging, and audit trails.
+
+**Canonical visibility rule:**
+- The Interview surface, shared Agent Activity Pane, and any audit projection must display/request the same fields: `requested_persona_id`, `effective_persona_id`, `selection_reason`, `provider`, `model`, and skipped unsupported controls if any. This aligns Interview-specific visibility with the shared runtime-display rules added in `Plans/assistant-chat-design.md`, `Plans/FinalGUISpec.md`, and `Plans/Models_System.md`.
 
 **BeforePhase tracking responsibilities:**
 
 - **Determine active subagent:** Determine which subagent is active for this phase (from `SubagentConfig.phase_subagents` or override)
 - **Set active subagent:** Set `active_subagent` in `InterviewPhaseState` for current phase
 - **Update interview tracking:** Update `active_subagents` HashMap in interview orchestrator state
-- **Persist tracking state:** Write active subagent tracking to `.puppet-master/interview/active-subagents.json`
-- **Log tracking event:** Log active subagent change to `.puppet-master/logs/interview.log`
+- **Persist tracking state:** Persist active subagent tracking to canonical interview state projection (optionally mirrored to a debug file)
+- **Log tracking event:** Emit a structured runtime event for active-subagent changes
 
 **DuringPhase tracking responsibilities:**
 
 - **Monitor subagent status:** Monitor subagent execution status (active, waiting, blocked, complete)
 - **Update tracking on status change:** Update tracking state when subagent status changes
-- **Persist status changes:** Persist status changes to active-subagents.json
+- **Persist status changes:** Persist status changes to the same canonical projection
 
 **AfterPhase tracking responsibilities:**
 
 - **Clear active subagent:** Clear `active_subagent` in `InterviewPhaseState` when phase completes
 - **Update interview tracking:** Remove phase entry from `active_subagents` HashMap (or mark as complete)
-- **Persist final state:** Persist final tracking state to active-subagents.json
-- **Archive tracking:** Archive tracking data to `.puppet-master/memory/interview-{interview_id}-subagents.json`
+- **Persist final state:** Persist final tracking state to the canonical projection
+- **Archive tracking:** Archive tracking data via seglog/redb so audit/replay can query it without file crawling
 
 **Implementation:** Extend `src/interview/orchestrator.rs` and `src/interview/state.rs` to track active subagents.
+
+The code example below illustrates state shape only; concrete persistence should target canonical storage rather than treating JSON files as the source of truth.
 
 **Integration with interview orchestrator:**
 
@@ -2387,10 +2457,7 @@ impl InterviewOrchestrator {
     
     async fn persist_active_subagent_tracking(&self) -> Result<()> {
         let tracking_data = self.active_subagent_tracker.get_all_tracking().await?;
-        let path = self.config.working_directory.join(".puppet-master/interview/active-subagents.json");
-        
-        std::fs::create_dir_all(path.parent().unwrap())?;
-        std::fs::write(&path, serde_json::to_string_pretty(&tracking_data)?)?;
+        self.interview_state_store.persist_active_subagents(&tracking_data).await?;
         
         Ok(())
     }
@@ -2453,7 +2520,7 @@ impl ActiveSubagentTracker {
 
 - **Logging:** "Phase 2 (Architecture): active subagent = architect-reviewer"
 - **Debugging:** "Why did this phase fail? Check active subagent logs."
-- **Audit trails:** "Which subagents ran in this interview? See active-subagents.json."
+- **Audit trails:** "Which subagents ran in this interview? Query the active-subagent runtime projection."
 - **GUI display:** Show active subagent in interview phase status UI.
 
 ### 5. Remediation Loop for Interview Answer Validation
@@ -2547,6 +2614,11 @@ During **interview document creation** (phase documents, AGENTS.md, PRD, etc.) a
 **Agent Activity Pane Sync (Resolved):**
 Agent activity pane and interviewer chat **share the same event source** (seglog event projection). They stay in sync in **real time** — both subscribe to the same seglog projection stream. Redundant display is intentional and acceptable: the activity pane shows structured event cards (icon, label, timestamp), while the chat shows conversational rendering of the same events. Neither can diverge because they read from the same source.
 
+**Runtime identity visibility (required):**
+- For each Interview run stage (questioning, research, validation, drafting, review), the UI must display `requested_persona_id`, `effective_persona_id`, `selection_reason`, `provider`, and `model`.
+- When a requested control is unavailable after capability/provider filtering, show it as skipped/disabled with reason rather than silently omitting it.
+- Interview-specific displays must follow the same visibility contract as Builder and Assistant surfaces; no Interview-only hidden runtime substitutions are allowed.
+
 **Preview section and document pane (required):**
 - Interview page preview section must show the Multi-Pass findings summary and the final approval gate (`Accept | Reject | Edit`).
 - Interview page also includes a separate embedded document pane (not the agent activity pane) for reviewing/editing human-readable interview artifacts.
@@ -2632,16 +2704,18 @@ When implementing, add the fields to `InterviewOrchestratorConfig` and `Intervie
 ## Subagent File Management
 
 ### Current State
-Subagent files are currently located in `.claude/agents/` directory (41 subagent persona files, including explore).
+Legacy provider-native agent files may exist under directories such as `.claude/agents/`. They are **seed/import sources only** and are not the canonical runtime representation of Puppet Master Personas.
 
 ### Requirements
-1. **Copy subagents to project:** Subagent files must be available in the Puppet Master project for use during interviews
-2. **Platform-specific locations:** Different platforms expect subagents in different locations:
+1. **Canonical runtime source:** Interview resolves Personas from canonical Persona storage defined in `Plans/Personas.md` (project-local/global `PERSONA.md` files), not from provider-native agent directories.
+2. **Import/seed support:** Provider-native agent files MAY be imported/seeded into canonical Persona storage for convenience/migration.
+3. **Platform-specific export (optional):** Different platforms may support exported provider-native agent files for interoperability:
    - **Cursor**: `.cursor/agents/` or `~/.cursor/agents/`
    - **Claude Code**: `.claude/agents/` or `~/.claude/agents/`
    - **Codex**: `.codex/agents/` or `~/.codex/agents/`
    - **Gemini**: Gemini is a Direct API provider; subagents are orchestrated via Puppet Master's internal Persona system (no platform agent directory)
    - **GitHub Copilot**: `.github/agents/` or `~/.copilot/agents/`
+4. **Registry alignment:** Automatic interview selection may only choose Persona IDs present in the canonical 42-entry registry; imported/exported provider-native files must not create new auto-selectable IDs implicitly.
 
 ### Implementation Strategy
 
@@ -2669,8 +2743,8 @@ pub struct SubagentInfo {
 }
 
 impl SubagentManager {
-    /// Discovers subagents from source location (.claude/agents/)
-    pub fn discover_subagents(source_dir: &Path) -> Result<Vec<SubagentInfo>> {
+    /// Discovers provider-native agent definitions that can be imported into canonical Persona storage.
+    pub fn discover_importable_subagents(source_dir: &Path) -> Result<Vec<SubagentInfo>> {
         let agents_dir = source_dir.join(".claude/agents");
         let mut subagents = Vec::new();
         
@@ -2690,26 +2764,14 @@ impl SubagentManager {
         Ok(subagents)
     }
     
-    /// Copies subagents to platform-specific locations in project
-    pub fn copy_subagents_to_project(
+    /// Imports provider-native files into canonical Persona storage after validation.
+    pub fn import_subagents_into_persona_store(
         source_dir: &Path,
-        project_dir: &Path,
-        platforms: &[Platform],
+        persona_store_dir: &Path,
     ) -> Result<()> {
-        let subagents = Self::discover_subagents(source_dir)?;
-        
-        for platform in platforms {
-            let target_dir = Self::platform_agents_dir(project_dir, *platform);
-            std::fs::create_dir_all(&target_dir)
-                .context("Failed to create platform agents directory")?;
-            
-            for subagent in &subagents {
-                let target_path = target_dir.join(format!("{}.md", subagent.name));
-                std::fs::copy(&subagent.file_path, &target_path)
-                    .context("Failed to copy subagent file")?;
-            }
-        }
-        
+        let subagents = Self::discover_importable_subagents(source_dir)?;
+        // Validate IDs, normalize schema, and write PERSONA.md to canonical storage.
+        // Export back to provider-native locations is a separate optional flow.
         Ok(())
     }
     
@@ -2734,28 +2796,36 @@ impl SubagentManager {
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 #### 2. Integration into Interview Orchestrator
-Add subagent file management to orchestrator initialization:
+Interview initialization resolves Personas from canonical Persona storage. Import/export of provider-native agent files is setup/migration behavior, not a per-run prerequisite.
 
 ```rust
 impl InterviewOrchestrator {
     pub fn new(config: InterviewOrchestratorConfig) -> Result<Self> {
-        // Copy subagents to project if configured
+        // Optionally import provider-native seed files into canonical Persona storage
         if let Some(subagent_cfg) = &config.subagent_config {
-            if subagent_cfg.enable_phase_subagents {
-                SubagentManager::copy_subagents_to_project(
+            if subagent_cfg.import_provider_native_agents_on_startup {
+                SubagentManager::import_subagents_into_persona_store(
                     &config.base_dir,
-                    &config.output_dir,
-                    &[config.primary_platform.platform],
+                    &config.persona_store_dir,
                 )?;
             }
         }
-        
+
         // ... rest of initialization ...
     }
 }
 ```
 
 ## Platform-Specific Subagent Invocation
+
+Normative rule: Interview resolves an **effective Persona** first, then routes through the Provider facade / platform runner. Platform-specific prompt syntax or agent-export files are implementation details behind that facade. The Interview runtime MUST NOT require provider-native agent files to exist in the target project in order to run.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Models_System.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+Requested/effective contract:
+- Inputs: `requested_persona_id`, stage, phase_id, provider/platform preferences, capability constraints.
+- Outputs: `effective_persona_id`, `provider`, `model`, `selection_reason`, `invocation_mode`.
+- Persist these values in runtime telemetry and expose them in the Interview UI/activity pane.
 
 ### Recent Release Notes (February 2026)
 
@@ -3006,9 +3076,9 @@ pub struct PlatformSubagentSettings {
 ## Updated Considerations
 
 1. **Subagent File Management:** 
-   - Copy subagents from `.claude/agents/` to platform-specific locations
-   - Maintain subagent files in project for team sharing
-   - Handle platform-specific file format differences
+   - Import provider-native seed files into canonical Persona storage when needed
+   - Export provider-native files only as an optional interoperability feature
+   - Handle platform-specific file format differences without treating exported files as SSOT
 
 2. **Platform Support:**
    - **Cursor:** `/subagent-name` syntax (broken in CLI as of Feb 2026, works in editor)
@@ -3062,10 +3132,10 @@ pub struct PlatformSubagentSettings {
 ## Testing Strategy
 
 ### Subagent File Management Tests
-1. Test subagent discovery from `.claude/agents/`
-2. Test copying to all platform-specific locations
-3. Test YAML frontmatter parsing
-4. Test handling missing or malformed subagent files
+1. Test provider-native seed discovery/import from `.claude/agents/` (or equivalent source)
+2. Test canonical Persona-store write/merge behavior, including protected-ID collision handling
+3. Test optional export to platform-specific locations without changing canonical runtime selection
+4. Test YAML/frontmatter parsing and malformed-file rejection
 
 ### Platform-Specific Invocation Tests
 1. **Cursor:** Test `/subagent-name` syntax (expect failure in CLI)
@@ -3079,6 +3149,14 @@ pub struct PlatformSubagentSettings {
 2. Test fallback behavior when subagents unavailable
 3. Test platform failover with subagent support
 4. Measure performance impact of subagent invocations
+
+### Interview lifecycle and artifact tests
+1. Test adaptive `phase_plan` persistence/resume without re-running selector
+2. Test `requirements-quality-reviewer` gating: PASS path, FAIL→attention_required path, and clarification resume path
+3. Test staged artifact promotion rules for document generation + Multi-Pass `Accept | Reject | Edit`
+4. Test runtime identity visibility: requested/effective Persona, provider/model, and skipped-control reasons appear in Interview chat + Agent Activity Pane
+5. Test GUI-project output package includes `ui/wiring_matrix.json` and `ui/ui_command_catalog.json` only when `has_gui = true`, and omits them otherwise
+6. Test `depends_on`-only plan generation (no `parallel_group`) and scheduler consumption
 
 
 ## User-Project Output Contract (Sharded plan_graph/ canonical)
@@ -3097,6 +3175,11 @@ Required artifact set:
 - `.puppet-master/project/auto_decisions.jsonl`
 - `.puppet-master/project/evidence/<node_id>.json` (produced during execution; schema `pm.evidence.schema.v1`)
 
+Interview-owned adjunct artifacts / checkpoints:
+- canonical Interview checkpoint/state projection containing `phase_plan`, current phase, unresolved validation issues, and final-approval state
+- `requirements_quality_report` artifact (`.puppet-master/project/traceability/requirements_quality_report.json`) when requirements quality gating has run
+- GUI-only artifacts `.puppet-master/project/ui/wiring_matrix.json` and `.puppet-master/project/ui/ui_command_catalog.json` when `has_gui = true`
+
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1
 
 Canonical rules:
@@ -3108,6 +3191,7 @@ Canonical rules:
 - All artifacts above must be persisted canonically in seglog as full-content artifact events.
 - Interview-generated Markdown/text artifacts under `.puppet-master/**` that reach packaging triggers MUST comply with `Plans/Document_Packaging_Policy.md` and pass its full audit set.
 - Field-level schema requirements, deterministic node-ID rules, and validation pointers are defined in `Plans/Project_Output_Artifacts.md` (SSOT).
+- Interview resume/recovery MUST reference canonical artifact IDs/paths from this package; it must not rely on transient staging paths alone.
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014
 
@@ -3201,12 +3285,12 @@ Behavior:
 - proactive at surfacing options and tradeoffs.
 
 #### 2. Research
-Default Persona: `researcher` or domain-specific research Persona where appropriate.
+Default Persona: `explorer` for local/project investigation, or the phase/domain-specific registry Persona where appropriate.
 
 Examples:
 - UX/product research may use `ux-researcher`.
-- broader external-source synthesis may use `researcher`.
-- broader/deeper multi-source synthesis may use `deep-researcher`.
+- local codebase/repository investigation uses `explorer`.
+- broader multi-source synthesis uses `knowledge-synthesizer` after source collection, not an unregistered ad-hoc Persona.
 
 #### 3. Validation
 Use reviewer-oriented Personas such as:
@@ -3220,6 +3304,24 @@ Default Persona: `technical-writer`
 
 #### 5. Review / Multi-Pass
 Use pass-specific reviewer Personas rather than reusing the same drafting Persona.
+
+### Deterministic stage resolver (normative)
+
+Interview MUST resolve Personas in this order:
+1. stage-specific explicit override (if configured and valid in registry)
+2. phase-specific primary/secondary mapping from this document
+3. stage default from this addendum
+4. `general-purpose` only as the final fallback when no stage/phase Persona is available
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/orchestrator-subagent-integration.md, PolicyRule:Decision_Policy.md§2
+
+Additional rules:
+- Automatic resolution may return only registry-valid IDs from `Plans/orchestrator-subagent-integration.md`.
+- Requested IDs that are unavailable after capability/provider filtering must record `requested_persona_id`, `effective_persona_id`, and `selection_reason`.
+- Questioning MUST bias toward `collaborator` even when a technical phase Persona exists; technical Personas inform questioning context but do not replace the conversational default unless the user explicitly overrides it.
+- Review / validation stages MUST NOT silently reuse the drafting Persona as their effective reviewer when a reviewer Persona is available.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/orchestrator-subagent-integration.md, PolicyRule:Decision_Policy.md§2
 
 ### GUI / UI / UX phase model preference
 
@@ -3245,5 +3347,6 @@ Rule:
 ### Acceptance criteria addendum
 
 - Interview must support different Personas for questioning, research, validation, drafting, and review.
-- Interview UI must display effective Persona/model/platform during active work.
+- Interview UI must display requested/effective Persona plus effective provider/model during active work.
+- Automatic Interview Persona resolution must use registry-valid IDs and follow the deterministic resolver order above.
 - GUI/UI/UX interview work may prefer Gemini when available, but this must remain configurable and capability-aware.

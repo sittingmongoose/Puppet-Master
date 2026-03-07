@@ -85,12 +85,19 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Arc
 ### 2.1 HTE — Hosted Tool Execution
 - The provider CLI acts as a **plan/reasoner only**. It produces no file edits and executes no shell commands.
 - Puppet Master asks for a structured plan or reasoning output, executes **all** actions itself via Puppet Master tools (subject to the permission model in `Plans/Tools.md`), and feeds results back to the provider.
-- Any tool-call observation from the provider stream during HTE is a kill condition (see §5.1).
+- HTE is a **host-owned action loop**: the provider may request the next hosted action or return a final answer, but Puppet Master executes every real tool call itself under the permission + FileSafe stack and feeds the structured result back into the next provider turn.
+- When `execution_strategy = "hte"`, the adapter MUST place the provider in the most restrictive available **no-tools / no-side-effect** posture for that provider, even when the higher-level runtime mode is `regular`.
+- Any tool-call observation from the provider stream during HTE is a kill condition (see §5.2).
 
 <a id="STRATEGY-DAE"></a>
 ### 2.2 DAE — Delegated Agent Execution
 - The provider CLI **executes tools itself** (file edits, shell commands, etc.).
 - Puppet Master spawns the CLI in a jailed workspace, ingests the `stream-json` normalized event stream, and enforces policy via guards, reconciliation, and kill-switches.
+- DAE uses an **ephemeral Puppet Master-managed jail** (prefer a dedicated worktree; otherwise an equivalent isolated workspace) and the provider sees only jail paths.
+- The canonical workspace MUST NOT be directly writable during DAE. Host-side reconciliation applies the verified jail diff back only after scans and FileSafe checks succeed.
+- Providers that cannot offer deterministic pre-spawn restriction / tool-policy injection MUST advertise `dae_allowed = false` and cannot be selected for DAE.
+- The **actual jail diff** is authoritative for mutation accounting; provider-reported tool/file activity is advisory correlation data only.
+- Child/subagent runs inherit the parent selected strategy unless a higher-level SSOT explicitly narrows it.
 - End-of-run scans are mandatory (see §5.2).
 - FileSafe guards (`Plans/FileSafe.md`) apply to all DAE-originated mutations.
 
@@ -101,6 +108,18 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Arc
 Strategy selection is a pure function of `(ui_mode, config, policy)`. Given the same inputs, the same strategy MUST be selected.
 
 ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3
+
+Before strategy selection, any surface-specific workflow state MUST normalize to the runtime mode enum in this document:
+
+| Surface state | Normalized runtime mode | Notes |
+|------|-------------------------|-------|
+| `Ask` | `ask` | Read-only posture. |
+| `Plan` (before execution) | `plan` | Read-only planning posture. |
+| Execute from Plan / Interview / BrainStorm / Crew with standard approvals | `regular` | Workflow overlays do not create extra runtime mode enum values. |
+| Explicit Regular posture | `regular` | Standard execute posture. |
+| Explicit YOLO posture | `yolo` | Full-automation posture. |
+
+`Interview`, `BrainStorm`, and `Crew` are workflow overlays, not additional runtime mode enum values.
 
 | Mode | `writes_allowed` | Strategy | Selection rule |
 |------|-------------------|----------|----------------|
@@ -120,6 +139,11 @@ ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md
 
+Resolution notes:
+- `regular` + `cli_bridged_strategy = "dae"` + `dae_allowed != true` MUST resolve to HTE with `strategy_resolution_reason = "regular_dae_disallowed"`.
+- `yolo` requires DAE. If the provider policy snapshot does not allow DAE, the run MUST fail before provider spawn with `stop_reason = "yolo_requires_dae_provider"`; it MUST NOT silently downgrade to HTE.
+- The resolved `mode`, `strategy`, and `strategy_resolution_reason` MUST be persisted on `run.started`.
+
 ---
 
 ## 4. Budget defaults
@@ -138,6 +162,11 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:Decision_Po
 | `max_retryable_errors` | 3 | All modes | Maximum retryable provider errors before run termination. |
 
 Budget values MAY be overridden per-run via the run envelope's `budget` field. Overrides MUST NOT exceed hard ceilings defined by policy (implementation-defined).
+
+Interpretation rules:
+- `max_same_shell_failure` counts consecutive failures of one canonical shell fingerprint `(tool_name, normalized_command, normalized_cwd)` within a single run. The default ceiling is `3`.
+- `max_write_thrashing` counts qualifying writes to one normalized file identity within a **sliding** 10-minute window on the run supervisor's monotonic clock. In V0, `budget.max_write_thrashing` overrides only the **count** ceiling; the window remains fixed at 10 minutes.
+- Budget counters are run-local and MUST survive pause/resume for the same `run_id`.
 
 ---
 
@@ -163,11 +192,26 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Prov
 |-----------|-------------|-------------|
 | Provider tool-call observed | `kill.hte_tool_observed` | Any `tool_use` event observed in the provider stream. HTE MUST NOT allow delegated tool execution. |
 
+`kill.hte_tool_observed` contract:
+- The **first** provider-originated `tool_use` observed during HTE MUST terminate the run immediately.
+- The terminal normalized `done` event MUST set `stop_reason = "kill.hte_tool_observed"`, and persisted `run.completed` MUST carry the same `stop_reason`.
+
 ### 5.3 DAE-specific kill conditions
 | Condition | Reason code | Description |
 |-----------|-------------|-------------|
 | Repeated shell failure | `kill.shell_failure` | Same shell command fails `max_same_shell_failure` consecutive times. |
 | Write thrashing | `kill.write_thrash` | Same file written more than `max_write_thrashing` times within 10 minutes. |
+
+`kill.shell_failure` counting contract:
+- A shell failure increments the streak only when an actually executed canonical shell tool invocation ends with `tool_result.ok == false`, non-zero exit, timeout, or signal termination.
+- Permission denials, FileSafe blocks, validation failures, missing execution due to policy, and synthesized reconciler closures do **not** count as shell failures.
+- The "same shell command" identity is the canonical shell fingerprint `(tool_name, normalized_command, normalized_cwd)` after adapter normalization, including stripping provider wrapper boilerplate such as an outer `bash -lc` added by Puppet Master.
+- Success of the same fingerprint resets the streak to zero. Any executed shell invocation with a different fingerprint also resets the previous fingerprint's streak.
+
+`kill.write_thrash` counting contract:
+- File identity is the normalized project-relative real path of the mutated jail path after symlink / `.` / `..` collapse.
+- A qualifying write is an actual content-changing create / overwrite / append / rename-destination / delete observed from the authoritative jail diff or equivalent live mutation metadata. Denied, blocked, no-diff, rollback, and Puppet-Master-owned post-processing writes do **not** count.
+- The window is a **sliding** 10-minute window using the run supervisor's monotonic clock. A kill occurs immediately when a new qualifying write would make the count exceed the configured ceiling for that file.
 
 ### 5.4 DAE end-of-run scans (mandatory)
 When a DAE run completes (any terminal outcome), the following scans MUST execute before the outcome is finalized:
@@ -176,6 +220,7 @@ When a DAE run completes (any terminal outcome), the following scans MUST execut
 3. **Diff reconciliation** — compare the provider's reported changes against actual workspace diff to detect unreported mutations.
 
 Scan failures escalate the outcome to `done.failed` with reason `kill.post_scan_failure`.
+The failing scan name and details MUST be persisted in `done.stop_reason` / `run.completed.stop_reason` metadata (for example `scan_name = "diff_reconciliation"`).
 
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Providers.md
 
@@ -198,6 +243,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, PolicyRule:Decision
 | `done.gutter` | Run terminated without meaningful progress; provider produced no actionable output. |
 
 The outcome MUST be recorded in the terminal `done` event of the normalized provider stream and persisted via `EventRecord` to seglog.
+The normalized provider `done.payload.status` remains a coarse transport-facing terminal status (`success | cancelled | failed`), while `done.payload.outcome` carries the canonical taxonomy above.
 
 ---
 
@@ -213,6 +259,18 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md
 | `plan` | Read-only context + plan-output scaffold. | Standard compaction thresholds apply. | No rotation (planning is bounded). |
 | `regular` | Full role-specific context (`Plans/FileSafe.md` §14). | Standard compaction thresholds apply. | Rotation allowed; triggers `done.rotated` outcome. |
 | `yolo` | Full role-specific context. | Standard compaction thresholds apply. | Rotation allowed; triggers `done.rotated` outcome. |
+
+Canonical context overlays:
+- `ask` -> `read_only`
+- `plan` -> `read_only + plan_output_scaffold_v1`
+- `regular`, `yolo` -> `full_execution`
+
+`read_only` excludes mutation-authority metadata (write scopes, DAE reconciliation metadata, and execution affordances). `plan_output_scaffold_v1` adds a deterministic plan/todo scaffold only. The overlay is applied during prompt/context compilation before attachments and the Injected Context breakdown are emitted. Child/subagent/rotated follow-up runs inherit the parent effective overlay and may narrow but MUST NOT widen a read-only overlay into `full_execution`.
+
+Rotation decision boundary:
+- Compaction/pruning is attempted first against the final assembled payload.
+- `ask` and `plan` are rotation-ineligible; if the payload still cannot fit after deterministic compaction, the run terminates under the normal failure/budget taxonomy rather than spawning a follow-up run.
+- `regular` and `yolo` are rotation-eligible; a rotated follow-up run inherits `thread_id`, `mode`, `strategy`, effective runtime state, and a narrowed-or-equal tool-policy snapshot.
 
 ---
 
@@ -302,3 +360,21 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gat
 
 <a id="AC-07"></a>
 **AC-07:** Every run MUST terminate with exactly one outcome from the taxonomy (§6), recorded in the `done` event and persisted to seglog.
+
+<a id="AC-08"></a>
+**AC-08:** UI/workflow state MUST normalize deterministically into the canonical runtime mode enum before strategy selection. `Interview`, `BrainStorm`, and `Crew` MUST NOT create additional runtime mode values.
+
+<a id="AC-09"></a>
+**AC-09:** In `regular` mode, `cli_bridged_strategy = "dae"` with `dae_allowed != true` MUST deterministically fall back to HTE and persist `strategy_resolution_reason = "regular_dae_disallowed"`.
+
+<a id="AC-10"></a>
+**AC-10:** In `yolo` mode, a provider with `dae_allowed != true` MUST fail before provider spawn with `stop_reason = "yolo_requires_dae_provider"`; it MUST NOT silently downgrade to HTE.
+
+<a id="AC-11"></a>
+**AC-11:** `kill.shell_failure` counts only actually executed shell failures for one canonical shell fingerprint. Policy denials, FileSafe blocks, and different shell fingerprints MUST NOT increment the same streak.
+
+<a id="AC-12"></a>
+**AC-12:** `kill.write_thrash` counts only qualifying content-changing writes to one normalized file identity within a sliding 10-minute window. Writes to different files, aged-out writes, and denied / blocked / no-diff operations MUST NOT trigger the ceiling.
+
+<a id="AC-13"></a>
+**AC-13:** Child/subagent/rotated follow-up runs MUST inherit the parent effective context overlay. A read-only parent run (`ask` or `plan`) MUST NOT widen into `full_execution` context in any child run.

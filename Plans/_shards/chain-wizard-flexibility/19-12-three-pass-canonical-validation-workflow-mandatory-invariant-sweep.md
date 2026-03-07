@@ -6,7 +6,7 @@ ContractRef: Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md, Cont
 
 ### 12.1 Context
 
-This section defines an **always-on mandatory invariant sweep** that runs immediately after the Contract Unification Pass (§6.6) produces the canonical project artifact pack. It is **separate** from the optional §5.6 Multi-Pass Review (which is user-facing and off by default). The invariant sweep **cannot be disabled** and always runs even when other review features are present or enabled.
+This section defines an **always-on mandatory invariant sweep** that runs immediately after the Contract Unification Pass (§6.6) produces the **provisional** canonical project artifact pack. It is **separate** from the optional §5.6 Multi-Pass Review (which is user-facing and off by default). The invariant sweep **cannot be disabled** and always runs even when other review features are present or enabled.
 
 The three-pass pipeline enforces canonical system integrity, DRY/SSOT compliance, plan graph structural correctness, and deterministic decision logging — without requiring human intervention or a running GUI.
 
@@ -18,12 +18,12 @@ All three passes run serially in sequence: Pass 1 → Pass 2 → Pass 3. Each pa
 
 #### Pass 1: Document Creation
 
-**Purpose:** Primary document generation — requirements, contracts pack (Project Contract Pack), plan_graph (sharded), and acceptance manifest.
+**Purpose:** Validate and complete the provisional artifact pack produced by Contract Unification. Pass 1 may materialize missing derived artifacts or deterministic projections, but it is not the first author of requirements or contract fragments.
 
 **Scope:** All required project artifacts under `.puppet-master/project/` per `Plans/Project_Output_Artifacts.md §2`.
 
 **Produces:**
-- The initial artifact set written to `.puppet-master/project/`.
+- The first validation snapshot of the provisional `.puppet-master/project/` pack, plus any missing deterministic projections required for the full package.
 - A `validation_pass_report` artifact stored in seglog (`artifact_type: validation_pass_report`) containing (schema per `Plans/Project_Output_Artifacts.md §10.2`):
   - `pass_number: 1`
   - `pass_name: "document_creation"`
@@ -34,8 +34,8 @@ All three passes run serially in sequence: Pass 1 → Pass 2 → Pass 3. Each pa
 - A `requirements_quality_report` artifact (schema: `pm.requirements_quality_report.schema.v1`) stored at `.puppet-master/project/traceability/requirements_quality_report.json`: for each requirement, checks coverage against the Requirements Completion Contract (§14). The Pass 1 report is **read-only** — it identifies issues and classifies each as `auto_fixable: true/false`. No edits to requirements are made in Pass 1.
 
 **Verdict rules:**
-- `pass_verdict: "pass"` — all required artifacts were successfully generated.
-- `pass_verdict: "fail"` — one or more required artifacts could not be generated; reason recorded.
+- `pass_verdict: "pass"` — all required artifacts were present or deterministically completed.
+- `pass_verdict: "fail"` — one or more required artifacts were missing or invalid and could not be completed deterministically; reason recorded.
 
 ---
 
@@ -116,9 +116,11 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/
 - Passes run **serially** (Pass 1 → Pass 2 → Pass 3); each pass receives the artifact set as corrected by the previous pass.
 - Per-pass provider and model are configurable (see `Plans/assistant-chat-design.md §26`); defaults are deterministic and safe when not explicitly configured.
 - Each `validation_pass_report` MUST include `provider` and `model` values matching resolved app settings keys `validation_sweep.passN.provider` and `validation_sweep.passN.model` for the same pass (see `Plans/assistant-chat-design.md §26` and `Plans/Project_Output_Artifacts.md §10.2`).
+- Exactly three pass reports are emitted per sweep. If a later pass does not execute because an earlier pass blocked progress, emit the later report with `pass_verdict: "skipped"` and a `verdict_reason` explaining which earlier pass blocked it.
 - The **final project artifacts** reflect all post-pass corrections applied by Passes 2 and 3.
-- **If Pass 1 fails:** Passes 2 and 3 do not run; the workflow surfaces the Pass 1 failure to the user.
-- **If Pass 2 or Pass 3 fails** (unresolved findings): The failure is surfaced to the user; however, the corrected artifact set (with all resolvable fixes already applied) is still written.
+- **If Pass 1 fails:** Pass 2 and Pass 3 are emitted as `skipped`; the workflow surfaces the Pass 1 failure to the user.
+- **If Pass 2 ends with unresolved `needs_user_clarification[]`:** transition the wizard to `attention_required`, emit Pass 3 as `skipped`, and preserve the corrected-but-blocked artifact set for resume.
+- **If Pass 2 or Pass 3 fails** for other unresolved findings: The failure is surfaced to the user; however, the corrected artifact set (with all resolvable fixes already applied) is still written.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Project_Output_Artifacts.md
 
@@ -130,6 +132,7 @@ The following criteria are required for a conformant implementation of this work
 - [ ] Each pass can be executed headless (no GUI required; no approval gates between passes).
 - [ ] Pass 3 never edits `requirements.md`, `plan.md`, or user-intent-derived content; it only enforces canonical system integrity and flags failures.
 - [ ] Each pass emits a `validation_pass_report` artifact stored in seglog (`artifact_type: validation_pass_report`).
+- [ ] Exactly three pass reports exist per sweep run, using `pass_verdict: skipped` when later passes are blocked by earlier failures.
 - [ ] The final project artifacts reflect all corrections applied by Passes 2 and 3.
 - [ ] Per-pass provider + model selection is exposed in the GUI settings (see `Plans/assistant-chat-design.md §26`).
 

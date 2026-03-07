@@ -56,6 +56,17 @@ ContractRef: PolicyRule:Decision_Policy.md§3, ContractName:Plans/Spec_Lock.json
 If any referenced Spec Lock version key is missing or mismatched, Overseer MUST treat that node as not ready.
 ContractRef: ContractName:Plans/Spec_Lock.json, ContractName:Plans/Executor_Protocol.md
 
+**Spec Lock requirement key contract for user-project nodes:**
+- For user-project node shards under `.puppet-master/project/plan_graph/nodes/*.json`, `spec_lock_requirements.schema_versions` MUST use key names published in `Plans/Spec_Lock.json.schema_versions`.
+- User-project nodes MUST NOT invent ad-hoc schema-version key names.
+- If a referenced key is absent from `Plans/Spec_Lock.json.schema_versions`, Overseer MUST treat the node as not ready.
+
+**Blocker integrity rule:**
+- Every `blockers[]` entry MUST resolve to an existing canonical node document.
+- An unresolved blocker ID is invalid graph input and the node MUST be treated as not ready.
+
+ContractRef: ContractName:Plans/Spec_Lock.json, ContractName:Plans/Project_Output_Artifacts.md
+
 ---
 
 ## 3. Canonical status lifecycle
@@ -67,6 +78,8 @@ Failure lifecycle:
 `verify_pending -> failed`
 
 `done` and `failed` are terminal states for this protocol revision.
+
+UI/orchestrator labels such as `waiting_approval`, `needs_review`, `cancelled`, or `complete_with_warnings` are **run-local overlays / CTA states**, not canonical node `status` values in this protocol. Such overlays MUST be persisted as separate events or projections and MUST NOT replace the status lifecycle above.
 
 Overseer MUST enforce lifecycle ordering and reject out-of-order transitions.
 ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Executor_Protocol.md
@@ -125,5 +138,9 @@ ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3
 Before a run is finalized, Overseer MUST enforce `Plans/Document_Packaging_Policy.md` for any Markdown/text artifact under `.puppet-master/**` produced by the run that reached packaging triggers.
 
 A run MUST NOT be marked complete when any required Document Set audit (reconstruction/line accounting/idempotency, index-manifest match, clean-room determinism) fails.
+
+Scope note:
+- This run-completion gate applies to generated `.puppet-master/**` artifacts whether or not the current repo-local `run-gates` command enforces those artifact families directly.
+- Repo-local verifier coverage and generated-artifact validator coverage MAY be delivered by different commands, but the packaging contract remains mandatory before final completion.
 
 ContractRef: ContractName:Plans/Document_Packaging_Policy.md, ContractName:Plans/Progression_Gates.md#GATE-014

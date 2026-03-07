@@ -1,1 +1,93 @@
-PASS
+--- /home/sittingmongoose/Cursor/Puppet Master/Plans/feature-list.md
++++ reconstructed
+@@ -216,27 +216,19 @@
+ 
+ ##### Plans/Personas.md
+ - **Global persona storage layout.** Store as ~/.config/puppet-master/personas/<id>/PERSONA.md (Personas §2.2).
+-- **Persona YAML frontmatter schema.** Frontmatter fields incl default_platform/default_model/default_variant/temperature/top_p/reasoning_effort/default_skill_refs/disabled_plugins/preferred_tools/discouraged_tools/tool_usage_guidance/aliases/tags (Personas §3.1-3.2; Persona Runtime Contract Expansion).
++- **Persona YAML frontmatter schema.** Frontmatter fields incl default_model/default_variant/default_skill_refs/disabled_plugins/tags (Personas §3.1-3.2).
+ - **Persona context injection pipeline.** Persona markdown body prepended into Instruction Bundle + applies skills/permission profile (Personas §5.2).
+-- **Persona create/edit form.** GUI editor fields: id/name/description/default_mode/default_permissions_profile/default_platform/default_model/default_variant/temperature/top_p/reasoning_effort/default_skill_refs/preferred_tools/discouraged_tools/tool_usage_guidance/aliases/tags + markdown body (Personas §4.1; Persona Runtime Contract Expansion).
++- **Persona create/edit form.** GUI editor fields: id/name/description/default_mode/default_permissions_profile/default_skill_refs/tags + markdown body (Personas §4.1).
+ - **Persona resolution order.** Project-local overrides global; warn on unresolved persona selection (Personas §2.3).
+ - **Persona scope selector.** Choose project-local vs global scope for persona storage (Personas §4.1).
+ - **Persona validation rules.** ID regex, folder-name matching, reserved IDs, blocking save on validation errors (Personas §3.3/§6).
+ - **Personas management UI.** Settings card to list/create/edit/delete personas with schema validation (Personas §4.1).
+ - **Project-local persona storage layout.** Store as .puppet-master/personas/<id>/PERSONA.md (Personas §2.1).
+ - **Reserved persona ID enforcement.** Reject reserved IDs (e.g., explorer/researcher) in creation/selection logic (Personas §6).
+-- **Built-in collaboration/research personas.** First-class built-ins include collaborator, general-purpose, explorer, researcher, and deep-researcher, with explorer replacing stale explore naming (Personas Runtime Contract Expansion).
+-- **Auto/manual/hybrid persona mode.** Major surfaces support manual, auto, and hybrid Persona selection modes with visible effective Persona output (Personas §10.10).
+-- **Natural-language persona invocation.** Users can summon Personas via phrasing like "Use Explorer", "Switch to Collaborator", or "Be a Rust engineer", with alias/fuzzy matching and scoped overrides (Personas §10.9).
+-- **Requested vs effective persona runtime state.** Runs/sub-runs/phases/tiers record requested_persona, effective_persona, selection source/reason, and applied/skipped Persona controls (Personas §10.11).
+ 
+ ##### Plans/assistant-chat-design.md
+ - **Context circle pop-out + compact now.** Context usage UI with pop-out detailed breakdown and a "Compact Now" action (Assistant chat design §25).
+ - **Per-pass validation model/provider selectors.** Settings UI to select provider+model per validation pass (Pass 1/2/3) with audit mirroring to reports (Assistant chat design §26).
+-- **Chat Persona mode + effective Persona display.** Chat supports manual/auto/hybrid Persona modes and must always show effective Persona + selection reason instead of opaque Auto state (Assistant chat design §27).
+-- **Natural-language Persona summons in chat.** Chat recognizes explicit requests like "Use Explorer" or "Answer as a technical writer" as Persona overrides with turn/session scope semantics (Assistant chat design §27.3).
+-- **Chat Persona aliases and fuzzy matching.** Persona requests resolve through canonical IDs, display names, aliases, and normalized natural-language forms (Assistant chat design §27.4).
+-- **Subagent blocks show effective Persona/model/platform.** In-thread subagent blocks display effective Persona, platform, model, and skipped unsupported Persona controls when relevant (Assistant chat design §27.6-§27.7).
+ - **Thread attention_required + clarification requests.** Thread state attention_required with structured clarification_request forms (yes/no, single/multi-choice, free text) and bounded clarification loops (Assistant chat design §11).
+ 
+ ##### Plans/assistant-memory-subsystem.md
+@@ -302,10 +294,6 @@
+ - **Bottom panel multi-tool suite.** Terminal/Problems/Output/Ports/Browser/Debug integrated bottom panel with hot-reload and inspect modes (FinalGUISpec §7.20).
+ - **Embedded document pane w/ inline notes.** Live multi-doc preview with status badges + highlight/anchored inline notes + targeted resubmit-with-notes flow (FinalGUISpec §7.19-7.19.1).
+ - **File manager drag-drop + conflict dialogs.** Explicit UI contract for drag/drop + conflict resolution dialogs in file manager panel (FinalGUISpec §7.17).
+-- **Persona editor compatibility matrix.** Persona editor shows supported / partially supported / unsupported control state per provider (Claude Code, Cursor CLI, OpenCode, Direct/API) (FinalGUISpec §17.1).
+-- **Persona runtime control editor fields.** GUI support for default_platform/default_model/default_variant/temperature/top_p/reasoning_effort plus tool guidance and aliases (FinalGUISpec §17.2).
+-- **Surface-level Persona controls.** Chat, Interview, Requirements Builder, Orchestrator, and Multi-Pass expose Persona mode, effective Persona, platform/model display, selection reason, and override/lock controls (FinalGUISpec §17.4-§17.5).
+-- **Provider-gap disclosure in UI.** GUI must never imply unsupported Persona controls were honored; skipped controls are disclosed inline, via tooltips, or in run/history details (FinalGUISpec §17.7).
+ - **SSH remote file integration.** Remote file editing via SFTP with connection badge, offline resilience, conflict UI, and reconnect actions (FinalGUISpec §7.18).
+ - **Slash command catalog.** Reserved slash commands list and behavior contract (FinalGUISpec §7.16.2).
+ - **Usage page view.** Dedicated Usage view with quota summary and tool usage widgets (FinalGUISpec §7.8).
+@@ -414,9 +402,6 @@
+ - **Overseer AI role in orchestrator.** Explicit Overseer role coordinating tier execution (orchestrator-subagent-integration).
+ - **Platform capability manager.** Dynamic capability introspection + gating per platform for subagent features (orchestrator-subagent-integration).
+ - **Puppet Master crews.** Crew-based multi-agent coordination on the same tier with shared messaging (orchestrator-subagent-integration).
+-- **Tier-level effective Persona/runtime state.** Each tier run records requested/effective Persona, selection reason, requested/effective platform/model/variant, and applied/skipped Persona controls (orchestrator Persona addendum).
+-- **Tier auto Persona switching without new tiers.** Orchestrator can shift between planning/execution/review Personas inside existing Phase/Task/Subtask/Iteration structure; Iteration remains the lowest tier (orchestrator Persona addendum).
+-- **Registry normalization to explorer.** Canonical registry and plan language standardize on explorer, not stale explore naming (orchestrator Persona addendum).
+ - **Sharded-only plan graph consumption.** Orchestrator consumes validated sharded-only plan graph (not monolithic) (orchestrator-subagent-integration).
+ - **Start/end verification framework.** Start verification (wiring/readiness) and end verification (quality) at tier boundaries (orchestrator-subagent-integration).
+ - **Tier-level config-wiring validation.** Validate platform/model/effort wiring per tier at start of execution (orchestrator-subagent-integration).
+@@ -424,7 +409,7 @@
+ 
+ ### 5. Interview and wizard
+ 
+-**Interview subagent integration.** Phase assignments: Scope & Goals → product-manager; Architecture → architect-reviewer; Product/UX → ux-researcher; Data → database-administrator; Security → security-auditor, compliance-auditor; Deployment → devops-engineer, deployment-engineer; Performance → performance-engineer; Testing → qa-expert, test-automator. Cross-phase: technical-writer, knowledge-synthesizer, debugger, code-reviewer, context-manager, explorer, requirements-quality-reviewer. **42 subagents/personas** (canonical list in orchestrator-subagent-integration.md §4; task tool validates against this list per Tools.md §3.6). SubagentConfig owns phase/research/validation/document toggles plus phase_subagents and phase_secondary_subagents in InterviewOrchestratorConfig.
++**Interview subagent integration.** Phase assignments: Scope & Goals → product-manager; Architecture → architect-reviewer; Product/UX → ux-researcher; Data → database-administrator; Security → security-auditor, compliance-auditor; Deployment → devops-engineer, deployment-engineer; Performance → performance-engineer; Testing → qa-expert, test-automator. Cross-phase: technical-writer, knowledge-synthesizer, debugger, code-reviewer, context-manager, explore. **41 subagents/personas** (canonical list in orchestrator-subagent-integration.md §4; task tool validates against this list per Tools.md §3.6). SubagentConfig (enable_phase_subagents, research, validation, document); phase_subagents in InterviewOrchestratorConfig.
+ 
+ **Research engine and validation.** BeforeResearch/DuringResearch/AfterResearch; persist results, update phase context. BeforeValidation/DuringValidation/AfterValidation; remediation loop for Critical/Major (max retries, retry on severity). write_phase_document_with_subagent; write_prd_with_crew_recommendations.
+ 
+@@ -445,19 +430,14 @@
+ - **Intent-based workflows.** Wizard/interview flow adapts by intent (New Project / Fork & Evolve / Enhance / Contribute PR) (Intent-based workflows section).
+ - **No-wizard project management flows.** Project flows (add existing / create local / create GitHub repo) without mandatory chain wizard; wizard can be deferred (No-wizard flows section).
+ - **Requirements doc builder + review cycle.** Assistant generates requirements doc with optional multi-agent review cycle before user approval (Requirements/doc builder sections).
+-- **Requirements Builder Persona strategy.** Builder stages map to Personas: Collaborator for intake/clarification, Technical Writer for drafting, domain Personas for specialized fragments, and reviewer Personas for quality/final review (Requirements Builder Persona Strategy Addendum).
+-- **Per-stage/pass Persona + model selection in Builder.** Requirements Builder supports Persona/platform/model selection by stage or pass with capability-aware fallback and UI visibility of effective runtime choices (Requirements Builder Persona Strategy Addendum).
+ - **Three-pass canonical validation.** Mandatory multi-pass validation sweep (Document creation → docs+alignment → canonical-only) after contract completion (Three-pass canonical validation section).
+ 
+ ##### Plans/interview-subagent-integration.md
+ - **Interview crews and communication enhancements.** Interview-phase crews, crew-aware plan generation, cross-phase coordination, research crews for tool discovery (Interview subagent integration crews section).
+ - **Interview lifecycle + quality enhancements.** BeforePhase/AfterPhase hooks, structured handoff validation, cross-session memory, remediation loops (Interview subagent integration lifecycle section).
+ - **Interview tab GUI gaps widgets.** Interview tab progress/activity visibility for doc creation and multi-pass review (Interview subagent integration GUI gaps).
+-- **Interview stage-based Persona strategy.** Interview distinguishes questioning, research, validation, drafting, and review Personas; Collaborator is the default questioning Persona and Technical Writer is the default drafting Persona (Interview Persona Stage Strategy Addendum).
+-- **GUI/UI/UX Interview model preference.** GUI/UI/UX interview work may prefer Gemini by default when available/configured, while remaining user-adjustable and capability-aware (Interview Persona Stage Strategy Addendum).
+-- **Interview effective Persona/model/platform visibility.** Interview activity panes and chat surfaces show effective Persona, selection reason, effective platform/model, and skipped unsupported Persona controls (Interview Persona Stage Strategy Addendum).
+ - **Platform-specific subagent invocation wrappers.** Platform-specific invocation wrapper/compat layer and limitations/workarounds (Interview subagent integration invocation).
+-- **Subagent file management (agent discovery).** Discovery/import module for provider-native agent files (.cursor/agents, .claude/agents, etc.) integrated into interview orchestration; provider-native files are seed material only, while Puppet Master Personas remain the canonical runtime source (Interview subagent integration file management).
++- **Subagent file management (agent discovery).** Discovery module for agent files (.cursor/agents, .claude/agents) integrated into interview orchestrator (Interview subagent integration file management).
+ - **Testing strategy for subagent integration.** Tests for file management, platform invocation, and integration scenarios (Interview subagent integration testing).
+ - **User-project output contract (sharded plan_graph).** Canonical output contract crosswalk, event model updates, and validation refs for user artifacts (Interview subagent integration output contract).
+ ---
+@@ -673,9 +653,6 @@
+ - **Model availability refresh action.** Explicit refresh/availability checks at startup/before runs/on-demand (Models_System §4.1).
+ - **Overflow detection + auto-compaction trigger.** Provider-specific overflow detection patterns that trigger compaction and retry behaviors (Models_System §4.2-4.3).
+ - **Per-model option overrides.** Model-specific option overrides (temperature/top_p/reasoning_effort) over provider defaults (Models_System §3.2).
+-- **Provider Persona capability matrix.** Canonical supported / partially_supported / unsupported matrix for Persona prompt/model/variant/effort/temperature/top_p/tool/subagent controls across Claude Code, Cursor CLI, OpenCode, and Direct/API providers (Models_System §10.4).
+-- **Requested vs effective runtime control state.** Runs persist requested/effective platform/model/variant and effective temperature/top_p/reasoning_effort plus applied/skipped Persona controls (Models_System §10.2-§10.3).
+-- **Unsupported control disclosure rules.** Persona-requested controls unsupported by the active provider are skipped explicitly and surfaced in editor/runtime UI rather than silently ignored (Models_System §10.5-§10.7).
+ - **Per-provider model options.** Provider-level default option map (e.g., max_output_tokens, temperature) configurable via provider options (Models_System §3.1).
+ - **Provider normalization details.** Per-provider message normalization, beta headers, schema transforms, and token enforcement (Models_System §3.4).
+ - **Standard option fields spec.** Formal supported option fields, types, and defaults (Models_System §3.3).

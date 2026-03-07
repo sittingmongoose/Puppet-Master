@@ -65,6 +65,33 @@ If two choices are otherwise equal:
 
 ContractRef: PolicyRule:Decision_Policy.md§2
 
+### 3.1 Autonomous decision logging contract
+
+When Puppet Master resolves an ambiguity without human input, it MUST emit exactly one schema-valid auto-decision row for that resolved ambiguity.
+
+ContractRef: SchemaID:pm.auto_decisions.schema.v1, PolicyRule:Decision_Policy.md§2
+
+Two logging scopes exist:
+- `Plans/auto_decisions.jsonl` — internal Puppet Master plan-governance decisions.
+- `.puppet-master/project/auto_decisions.jsonl` — user-project decisions made while generating or validating project artifacts.
+
+Path selection rule:
+- If the decision changes or explains Puppet Master internal SSOT documents, write to `Plans/auto_decisions.jsonl`.
+- If the decision changes or explains generated user-project artifacts under `.puppet-master/project/**`, write to `.puppet-master/project/auto_decisions.jsonl`.
+
+Field semantics:
+- `scope` MUST identify the decision domain deterministically.
+- `inputs_hash` MUST be computed from the ambiguity inputs actually used to make the choice, using a deterministic byte representation chosen by the owning subsystem.
+- `decision` MUST name the winning choice in stable language.
+- `rationale` MUST state why the winning choice was required by the precedence stack or deterministic defaults.
+- `applied_to[]` MUST identify the concrete targets affected by the decision.
+- `contract_refs[]` MUST include the authoritative references that justified the choice.
+
+Security rule:
+- Auto-decision rows MUST NOT contain secrets or credential material in `decision`, `rationale`, or `applied_to[]`.
+
+ContractRef: SchemaID:pm.auto_decisions.schema.v1, PolicyRule:Decision_Policy.md§1, PolicyRule:no_secrets_in_storage, Invariant:INV-002
+
 ---
 
 ## 4. "No human in the loop" rule
@@ -78,8 +105,8 @@ ContractRef: PolicyRule:Decision_Policy.md§2
 <a id="spec-lock-update-protocol"></a>
 ## 5. SpecLock Update Protocol (autonomous; no human readers)
 
-**Rule:** `Plans/Spec_Lock.json` is a lockfile; agents MUST only update it via this protocol and MUST proceed deterministically (no interactive human-decision pauses, no decision logs).  
-ContractRef: SchemaID:Spec_Lock.json, PolicyRule:Decision_Policy.md§2
+**Rule:** `Plans/Spec_Lock.json` is a lockfile; agents MUST only update it via this protocol and MUST proceed deterministically (no interactive human-decision pauses; deterministic logging remains required where this protocol says to append to `auto_decisions.jsonl`).
+ContractRef: SchemaID:Spec_Lock.json, PolicyRule:Decision_Policy.md§2, SchemaID:pm.auto_decisions.schema.v1
 
 ### 5.1 When Spec Lock updates are allowed
 Spec Lock updates are allowed only when at least one locked invariant/decision must change to satisfy a higher-level requirement (e.g., a new official toolkit version, a required auth scope change).  
@@ -165,3 +192,32 @@ Clarification questions under §6.2 are generated **prior to execution**, during
 **Blocking rule:** If a clarification question cannot be resolved before an orchestrator run begins, the run MUST NOT start. The wizard state transitions to `attention_required` and blocks the "Start Run" action.
 
 ContractRef: `PolicyRule:Decision_Policy.md§4`, `ContractName:Plans/chain-wizard-flexibility.md`
+
+---
+
+### 6.4 Requirements quality report boundary, severity, and persistence
+
+The `requirements_quality_report` is a pre-execution artifact. It MUST be generated during the mandatory validation sweep defined in `Plans/chain-wizard-flexibility.md §12` after Contract Unification and before any orchestrator run, plan-node execution, or user-visible "Start Run" action begins.
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/chain-wizard-flexibility.md
+
+Blocking rule:
+- Execution MAY continue only when the latest canonical report has `verdict: "PASS"` and `needs_user_clarification[]` is empty.
+- If `needs_user_clarification[]` is non-empty, the workflow MUST transition to the clarification/escalation path instead of starting execution.
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, PolicyRule:Decision_Policy.md§4
+
+Deterministic severity rules:
+- `missing_scenarios`, `missing_boundary`, `missing_anchor`, `missing_acceptance`, and `missing_research` are always `blocking`.
+- `contradiction` is `blocking` when it changes product behavior, acceptance expectations, or contract/plan routing; otherwise it MAY be `warning` only when a deterministic autofix resolves it fully.
+- `vagueness` is `blocking` when it prevents executable acceptance, boundary declaration, or user-intent resolution; otherwise it MAY be `warning`.
+
+Persistence safety rule:
+- Before persisting `description`, `before`, `after`, `context`, or `question` fields in the quality report, Puppet Master MUST redact secret-like values and MUST NOT copy credentials or tokens into the artifact.
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, PolicyRule:no_secrets_in_storage
+
+Lifecycle note:
+- Clarification-round limits and `blocked` transition semantics are owned by `Plans/chain-wizard-flexibility.md §15`; this section defines the pre-execution boundary and severity rules only.
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, PolicyRule:Decision_Policy.md§4, PolicyRule:no_secrets_in_storage, Invariant:INV-002, ContractName:Plans/chain-wizard-flexibility.md#12-three-pass-canonical-validation-workflow-mandatory-invariant-sweep

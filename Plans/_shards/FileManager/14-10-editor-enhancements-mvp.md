@@ -58,7 +58,7 @@ All of the following are **in scope for MVP**. When **LSP is available** for the
 ### 10.8 Graphite-style (review and quality)
 
 - **AI or rule-based code review:** Assistant (or dedicated review mode) can perform **automated code review** on demand or on commit/PR: logic bugs, security, style, documentation, accidental commits. Inline-style comments or a review panel; integrates with chat and file context.
-- **Custom review rules:** User- or project-defined **review rules** (e.g. "flag TODOs," "require error handling here," "OWASP checklist"). Enforced during review runs or as optional editor hints (with or without LSP; LSP diagnostics can complement rules). **Storage:** Project-level (e.g. `.puppet-master/review-rules.md` or `.puppet-master/review-rules.yaml`) and application-level (redb or app config); project rules override or extend app rules. Format: markdown or YAML (list of descriptions or named rules with description and severity). See §12.1.9.
+- **Custom review rules:** User- or project-defined **review rules** (e.g. "flag TODOs," "require error handling here," "OWASP checklist"). Enforced during review runs or as optional editor hints (with or without LSP; LSP diagnostics can complement rules). **Canonical project file:** `.puppet-master/review-rules.yaml`. **App-level storage:** redb `review_rules/app`. Load order is app rules first, then project rules override or extend by rule id. Minimum rule fields: `id`, `description`, `severity`, optional `scopes`, and either a human-review prompt fragment or a machine-evaluable matcher. Invalid project YAML must surface a non-blocking warning and fall back to app rules instead of silently disabling review. See §12.1.9.
 - **1-click apply suggestion:** In chat or in a review panel: **"Apply this change"** applies a suggested diff (e.g. agent suggestion or review fix) to the file in the editor. Reuses same apply/patch pipeline as agent edits (FileSafe, tool policy). See §12.2.8 for merge/conflict handling.
 
 ### 10.9 Additional editor features (MVP)
@@ -67,7 +67,7 @@ All of the following are **in scope for MVP**. Evaluate usefulness at implementa
 
 - **Recover unsaved buffers:** Required. On crash or quit-with-unsaved, offer to restore unsaved content from recovery store (redb or temp per Plans/storage-plan.md). Align with section 2.9.
 - **Editor diff view:** Side-by-side or inline diff of two versions (e.g. buffer vs disk, or two branches); integrate with revert and review.
-- **Snippets and templates:** User-defined or preset code snippets; expand on trigger (e.g. prefix or shortcut).
+- **Snippets and templates:** User-defined or preset code snippets; expand on trigger (e.g. prefix or shortcut). MVP contract: support global snippets plus project overrides, TextMate-style placeholders (`${1:name}`, `$0`), autocomplete insertion, and an optional `Tab expands snippet prefix` setting. LSP completions flagged as snippets should reuse the same insertion pipeline.
 - **Search in chat / search in messages:** Extend "powerful search" (§10.2) to include chat history and thread messages (content or metadata).
 - **Breadcrumbs:** Use LSP document outline when LSP is available (§10.1, §10.10); otherwise use heuristics.
 - **Per-preset keybinding schemes:** Optional keybinding profile per preset (e.g. VS Code vs Vim vs JetBrains-style) in addition to modal editing.

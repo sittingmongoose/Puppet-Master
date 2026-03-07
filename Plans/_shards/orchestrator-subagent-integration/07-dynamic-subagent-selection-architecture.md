@@ -55,7 +55,7 @@ impl SubagentSelector {
     // DRY:FN:detect_language — Detect programming languages in workspace
     pub fn detect_language(&self, workspace: &Path) -> Result<Vec<DetectedLanguage>> {
         let mut languages = Vec::new();
-        
+
         // Check for language indicators
         if workspace.join("Cargo.toml").exists() {
             languages.push(DetectedLanguage {
@@ -64,7 +64,7 @@ impl SubagentSelector {
                 indicators: vec!["Cargo.toml".to_string()],
             });
         }
-        
+
         if workspace.join("package.json").exists() {
             // Check for TypeScript
             if workspace.join("tsconfig.json").exists() {
@@ -81,7 +81,7 @@ impl SubagentSelector {
                 });
             }
         }
-        
+
         if workspace.join("requirements.txt").exists() || workspace.join("pyproject.toml").exists() {
             languages.push(DetectedLanguage {
                 name: "python".to_string(),
@@ -89,12 +89,12 @@ impl SubagentSelector {
                 indicators: vec!["requirements.txt".to_string()],
             });
         }
-        
+
         // Add more language detection...
-        
+
         Ok(languages)
     }
-    
+
     /// Select subagent for tier level
     // DRY:FN:select_for_tier — Select subagents for a tier based on context
     pub fn select_for_tier(
@@ -109,33 +109,33 @@ impl SubagentSelector {
             TierType::Iteration => self.select_for_iteration(tier_context),
         }
     }
-    
+
     fn select_for_phase(&self, context: &TierContext) -> Vec<String> {
         let mut subagents = vec!["project-manager".to_string()];
-        
+
         // Add architect if architecture decisions needed
         if context.needs_architecture_review {
             subagents.push("architect-reviewer".to_string());
         }
-        
+
         // Add product manager if product planning
         if context.needs_product_planning {
             subagents.push("product-manager".to_string());
         }
-        
+
         subagents
     }
-    
+
     fn select_for_task(&self, context: &TierContext) -> Vec<String> {
         let mut subagents = Vec::new();
-        
+
         // 1. Language-specific engineer
         if let Some(lang) = &context.primary_language {
             if let Some(subagent) = self.language_to_subagent(lang) {
                 subagents.push(subagent);
             }
         }
-        
+
         // 2. Domain expert
         match &context.domain {
             ProjectDomain::Backend => {
@@ -155,30 +155,30 @@ impl SubagentSelector {
             }
             _ => {}
         }
-        
+
         // 3. Framework specialist
         if let Some(framework) = &context.framework {
             if let Some(subagent) = self.framework_to_subagent(framework) {
                 subagents.push(subagent);
             }
         }
-        
+
         // Fallback
         if subagents.is_empty() {
             subagents.push("fullstack-developer".to_string());
         }
-        
+
         subagents
     }
-    
+
     fn select_for_subtask(&self, context: &TierContext) -> Vec<String> {
         let mut subagents = Vec::new();
-        
+
         // Inherit from task
         if let Some(task_subagents) = &context.parent_subagents {
             subagents.extend(task_subagents.clone());
         }
-        
+
         // Add specialized subagent based on subtask focus
         match &context.subtask_focus {
             Some(SubtaskFocus::CodeReview) => {
@@ -204,31 +204,31 @@ impl SubagentSelector {
             }
             _ => {}
         }
-        
+
         subagents
     }
-    
+
     fn select_for_iteration(&self, context: &TierContext) -> Vec<String> {
         let mut subagents = Vec::new();
-        
+
         // Inherit from parent tiers
         if let Some(parent_subagents) = &context.parent_subagents {
             subagents.extend(parent_subagents.clone());
         }
-        
+
         // Add specialized roles based on iteration state
         if context.has_errors {
             subagents.push("debugger".to_string());
         }
-        
+
         if context.needs_code_review {
             subagents.push("code-reviewer".to_string());
         }
-        
+
         if context.needs_testing {
             subagents.push("qa-expert".to_string());
         }
-        
+
         // Error pattern matching
         for pattern in &context.error_patterns {
             match pattern {
@@ -241,10 +241,10 @@ impl SubagentSelector {
                 _ => {}
             }
         }
-        
+
         subagents
     }
-    
+
     // DRY:DATA:language_to_subagent_mapping — Single source of truth for language → subagent mapping
     // DRY REQUIREMENT: MUST use subagent_registry::get_subagent_for_language() — NEVER hardcode language → subagent mappings
     fn language_to_subagent(&self, lang: &str) -> Option<String> {
@@ -252,7 +252,7 @@ impl SubagentSelector {
         // DO NOT use match statements like: match lang { "rust" => Some("rust-engineer".to_string()), ... }
         subagent_registry::get_subagent_for_language(lang)
     }
-    
+
     // DRY:DATA:framework_to_subagent_mapping — Single source of truth for framework → subagent mapping
     // DRY REQUIREMENT: MUST use subagent_registry::get_subagent_for_framework() — NEVER hardcode framework → subagent mappings
     fn framework_to_subagent(&self, framework: &str) -> Option<String> {
@@ -275,25 +275,36 @@ pub struct TierContext {
     pub tier_id: String,
     pub title: String,
     pub description: String,
-    
+    pub workspace: PathBuf,
+    pub worktree_path: Option<PathBuf>,
+
     // Project context
     pub primary_language: Option<String>,
     pub domain: ProjectDomain,
     pub framework: Option<String>,
-    
+
     // Tier-specific
     pub needs_architecture_review: bool,
     pub needs_product_planning: bool,
     pub subtask_focus: Option<SubtaskFocus>,
-    
+
     // Iteration state
     pub has_errors: bool,
     pub needs_code_review: bool,
     pub needs_testing: bool,
     pub error_patterns: Vec<ErrorPattern>,
-    
+
     // Inheritance
     pub parent_subagents: Option<Vec<String>>,
+
+    // Frozen tier-runtime snapshot
+    pub requested_persona: Option<String>,
+    pub effective_persona: Option<String>,
+    pub requested_platform: Option<Platform>,
+    pub effective_platform: Platform,
+    pub requested_model: Option<String>,
+    pub effective_model: String,
+    pub persona_stage: Option<String>,
 }
 
 pub enum SubtaskFocus {

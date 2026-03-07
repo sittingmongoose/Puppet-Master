@@ -52,6 +52,7 @@ ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project
   - `acceptance_manifest` (recommended relative path: `../acceptance_manifest.json`)
   - `contracts_index` (recommended relative path: `../contracts/index.json`)
 - Overseer semantics for status transitions and auto-marking MUST follow `Plans/Executor_Protocol.md`.
+- Dependency semantics are canonicalized as follows: `blockers[]` is the readiness-driving dependency list, `unblocks[]` is the forward adjacency projection, `depends_on[]` is optional compatibility metadata only, and `edges.json` (if materialized) is a derived consistency artifact rather than an authority.
 
 ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Executor_Protocol.md
 
@@ -97,6 +98,8 @@ ContractRef: SchemaID:pm.project-plan-node.v1, Gate:GATE-001, ContractName:Plans
 
 If present, `.puppet-master/project/plan_graph/edges.json` MUST be consistent with dependency semantics expressed in node shards
 (`blockers`, `unblocks`, and optional `depends_on`).
+
+`edges.json` MUST NOT be required for headless execution and MUST NOT override shard-local `blockers[]` readiness semantics.
 
 ContractRef: Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md
 

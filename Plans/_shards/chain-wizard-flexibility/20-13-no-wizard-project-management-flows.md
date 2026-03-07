@@ -47,10 +47,28 @@ ContractRef: Plans/GitHub_Integration.md §D.3, Plans/GitHub_API_Auth_and_Flows.
 
 ### 13.5 "Run Chain Wizard Later" Affordance
 
-All three flows show a "Run Chain Wizard" button on their finish screen. Clicking it:
-- Navigates to the Chain Wizard / Interview flow
-- Pre-fills project context (name, path, language, GitHub remote if linked)
-- User can proceed through all wizard phases or skip any optional phase
+All three flows show a `Run Chain Wizard later` button on their finish screen. Clicking it:
+- dispatches the canonical wizard-launch command from the no-wizard flow (`Plans/GitHub_Integration.md`)
+- navigates to the Chain Wizard / Interview flow
+- pre-fills project context (name, path, language, GitHub remote if linked)
+- restores a persisted deferred payload after restart when the wizard was not launched immediately
+
+Default preload mapping:
+- **Add Existing Project** → `EnhanceRewriteAdd`
+- **Create New Local Project** → `NewProject`
+- **Create New GitHub Repo + Project** → `NewProject`
+
+Deferred payload minimum fields:
+- `wizard_id`
+- `launch_source`
+- `default_intent`
+- `project_name`
+- `project_path`
+- `detected_language_frameworks[]`
+- `remote_repo_ref` (if linked/created)
+- `created_repo_but_clone_failed` flag for recovery/error copy
+
+The wizard opens at **Project Setup review**, not at a blank intent picker, when launched from a deferred payload.
 
 This satisfies the requirement that no wizard step is mandatory for basic project setup. The wizard remains the recommended path for AI-assisted requirements gathering; it is not the only path.
 

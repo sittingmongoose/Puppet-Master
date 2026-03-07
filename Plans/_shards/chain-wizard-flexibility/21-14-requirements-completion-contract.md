@@ -79,5 +79,19 @@ Key fields:
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/requirements_quality_report.schema.json
 
+### 14.2 Deterministic report shaping
+
+The `requirements_quality_report` artifact MUST be stable across equivalent reruns.
+
+Deterministic shaping rules:
+- `requirements_touched[]` MUST follow canonical requirement order from `requirements.md`.
+- `issues[]` MUST be ordered by `(requirement_id, category, description)` using normalized lexicographic comparison.
+- `issue_id` values MUST be emitted as zero-padded ordinals in report order: `ISS-0001`, `ISS-0002`, ...
+- `auto_fixes_applied[]` MUST be ordered by referenced `issue_id`; `fix_id` values MUST be emitted as `FIX-0001`, `FIX-0002`, ...
+- `needs_user_clarification[]` MUST be ordered by referenced `issue_id`; `question_id` values MUST be emitted as `Q-0001`, `Q-0002`, ...
+- Re-running Pass 1 + Pass 2 with unchanged requirement content and unchanged user answers MUST preserve byte-stable ordering for these arrays.
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, Invariant:INV-005, PolicyRule:Decision_Policy.md§2
+
 ---
 

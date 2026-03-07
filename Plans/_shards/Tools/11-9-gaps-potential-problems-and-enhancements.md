@@ -24,7 +24,7 @@
 
 ### 9.2 Enhancements (all optional; not MVP)
 
-The following are **optional** improvements. MVP is defined by §3 built-in tools, §10 permission model, §8 events/rollups, and GUI Tool permissions (FinalGUISpec §7.4.1).
+The following are **optional** improvements. MVP is defined by §3 built-in tools, §10 permission model, §8 events/rollups, and GUI Tool permissions (FinalGUISpec §7.4.10).
 
 | Enhancement | Description | Priority / notes |
 |------------|-------------|-------------------|

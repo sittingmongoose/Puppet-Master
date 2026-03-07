@@ -69,6 +69,10 @@ Examples:
 - `collaborator` -> `collaborator`
 
 If multiple Personas match, chat may request clarification. If exactly one reliable match exists, it should resolve without extra friction.
+If no Persona matches:
+- **Manual picker:** the selector must reject submission with an inline `Persona not found` validation state.
+- **Natural-language request:** chat must ask for clarification (for example, nearest matches or a prompt to pick a Persona) before starting a run; it must not silently pretend a request resolved when it did not.
+- **Persisted unresolved reference:** if a stored/manual/auto Persona reference reaches runtime and remains unresolved, the fallback contract in `Plans/Personas.md` §2.3 applies, and chat must surface that the run is proceeding without Persona context.
 
 ### 27.5 Chat-level controls
 
@@ -103,3 +107,5 @@ Examples:
 - Auto Persona mode must always disclose the resolved Persona and why it was chosen.
 - Current effective Persona/model/platform must be visible in the chat surface.
 - Subagent inline blocks must display effective Persona/model/platform rather than only generic role text.
+- Manual Persona selection must block submission when the selected Persona cannot be resolved.
+- Natural-language Persona requests that do not resolve to a single reliable match must produce clarification or fallback disclosure, not a silent wrong-Persona resolution.

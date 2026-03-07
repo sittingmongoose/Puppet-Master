@@ -1,9 +1,9 @@
 ## Updated Considerations
 
 1. **Subagent File Management:** 
-   - Copy subagents from `.claude/agents/` to platform-specific locations
-   - Maintain subagent files in project for team sharing
-   - Handle platform-specific file format differences
+   - Import provider-native seed files into canonical Persona storage when needed
+   - Export provider-native files only as an optional interoperability feature
+   - Handle platform-specific file format differences without treating exported files as SSOT
 
 2. **Platform Support:**
    - **Cursor:** `/subagent-name` syntax (broken in CLI as of Feb 2026, works in editor)

@@ -55,23 +55,28 @@ ContractRef: UICommand:cmd.orchestrator.build_run, UICommand:cmd.orchestrator.op
 
 **Local runtime flow (default):**
 1. Preflight checks: Docker engine reachable, compose file resolvable, required ports available.
-2. Launch path:
+2. If registry push is requested, validate DockerHub auth before launch and fail closed with actionable remediation if auth is missing or expired.
+3. Resolve runtime settings from Settings > Advanced > Containers & Registry (runtime selector, binary path, compose path, project-name strategy, namespace/repository/tag defaults).
+4. Launch path:
    - `docker compose up -d` for service stacks
    - `docker buildx build` for deterministic image build path
-3. Capture logs/health until preview or build completes.
-4. Teardown with `docker compose down` when session policy requires cleanup.
+5. Capture logs/health until preview or build completes.
+6. Teardown with `docker compose down` when session policy requires cleanup.
+7. Evidence/log capture MUST redact credentials, auth headers, and token-bearing environment variables before persistence.
 
 **Settings contract (Slint Settings):**
 - `Containers & Registry` section includes:
   - runtime selector (`docker` default)
-  - compose file/path defaults
-  - DockerHub namespace/repository/tag defaults
-  - auth mode (`pat` default)
+  - Docker binary path override and compose file/path defaults
+  - compose project-name strategy (`auto`, `fixed`, `hash-based`)
+  - DockerHub namespace/repository/tag defaults and tag templates
+  - auth mode (`pat` default) plus validate/clear-token actions
   - push policy (`manual` default; optional `after_build`)
 
 **DockerHub auth/push contract:**
 - Use PAT/token-based auth flow.
-- Never place tokens in project files or evidence logs.
+- Store tokens in the OS credential store only; never place tokens in project files, redb, or evidence logs.
+- Validation status includes a timestamp and last-known registry host so the UI can explain what was verified.
 - Push results include digest and tag map in evidence and chat summary.
 
 **CI template defaults for container publish:**
@@ -134,6 +139,11 @@ The Slint rebuild must expose deterministic readiness checks before Preview/Buil
 | `doctor.registry.auth` | docker publish | Registry auth validated for selected provider (`dockerhub` default) | Block publish; preserve local build results |
 | `doctor.actions.workflow-ready` | GitHub Actions | Workflow template validates and required secrets are declared | Block workflow apply; show missing/invalid fields |
 | `doctor.evidence.media` | evidence/chat | Manifest + media artifacts are readable and hash-valid | Keep run result, mark evidence degraded with explicit fallback message |
+| `doctor.mcp.context7` | MCP / docs | Context7 enablement is on and a usable key resolves from env or credential store; server can list tools | Keep run usable, but mark Context7-backed tools unavailable and surface remediation |
+| `doctor.mcp.provider-ready` | MCP / provider bridge | For each selected provider, MCP bridge/adapters are present and the configured server set exposes the expected tool names | Mark MCP-backed tools unavailable for that provider; do not silently advertise missing tools |
+| `doctor.websearch.cited` | cited web search | `websearch_cited` result contract passes a dry-run/provider health check for the configured provider order | Keep run usable, but disable cited web search with explicit config/auth/timeout reason |
+| `doctor.gui.custom-headless` | custom GUI tool | When `plan_custom_headless_tool = true`, configured tool path exists, is executable, and produces canonical evidence layout | Mark custom headless path unavailable and point to config/evidence contract remediation |
+| `doctor.gui_tool_catalog.freshness` | framework tool catalog | Base catalog version plus overlay `last_updated` metadata are present and readable | Keep run usable, but warn that tool recommendations may be stale and show the recorded snapshot date |
 
 ContractRef: ContractName:Plans/MiscPlan.md#doctor, ContractName:Plans/FinalGUISpec.md#74-settings-unified, ContractName:Plans/newtools.md#13-evidence-in-chat-contract-and-flow-research-evidence-media-chat, SchemaID:evidence.schema.json
 

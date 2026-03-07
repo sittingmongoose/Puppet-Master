@@ -56,9 +56,9 @@
 
 #### 12.1.9 Review rules storage
 
-**Decision:** Review rules load from `.puppet-master/review-rules.md` (project) plus redb `review_rules` (app); project rules override/extend.
+**Decision:** Review rules load from `.puppet-master/review-rules.yaml` (project) plus redb `review_rules/app` (app); project rules override/extend by rule id.
 
-**Solution:** (1) **Storage:** Support both **project-level** and **application-level** rules. Project: e.g. `.puppet-master/review-rules.md` or `.puppet-master/review-rules.yaml` in project root. Application: e.g. in redb under `review_rules` or a user config file in app data dir. Project rules override or extend app rules when a project is selected. (2) **Format:** Prefer **markdown** or **YAML** for readability: e.g. a list of rule descriptions or named rules with description and severity. Example: `- "Flag TODOs in production code"` or `name: require-error-handling; description: "Require error handling here"; severity: warning`. (3) **Application:** When running AI/rule-based review (§10.8), the review engine loads app + project rules and applies them (e.g. inject into Assistant prompt or run a rule evaluator). Reference in agent-rules-context or a short "Review rules" plan so the rules pipeline can load them. Document path and format in §10.8.
+**Solution:** (1) **Storage:** Support both **project-level** and **application-level** rules. Project: `.puppet-master/review-rules.yaml` in project root. Application: redb key `review_rules/app` (or equivalent app-data export/import command). Project rules override or extend app rules by `id` when a project is selected. (2) **Format:** YAML for deterministic parsing and diffability. Minimum schema: `id`, `description`, `severity`, optional `scopes`, and one of `match`, `path_glob`, or `prompt_hint` depending on whether the rule is machine-evaluable or prompt-only. (3) **Application:** When running AI/rule-based review (§10.8), the review engine loads app + project rules, records the merged rule set id/count in the review request metadata, and applies them (e.g. inject into Assistant prompt or run a rule evaluator). Invalid YAML surfaces a warning with line/column if available; the engine falls back to the last valid app-level set rather than failing open.
 
 #### 12.1.10 Floating editor + multiple windows
 

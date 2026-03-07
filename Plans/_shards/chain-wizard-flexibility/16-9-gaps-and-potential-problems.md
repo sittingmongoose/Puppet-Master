@@ -27,12 +27,12 @@
 - **Phase selector failure:**
 
 **Phase Selector Failure Fallback (Resolved):**
-If the AI phase selector returns an empty set or fails to respond:
-1. Fallback to **Scope + Architecture** (minimal safe set). Rationale: these two phases capture the essential "what" and "how" needed for any project.
-2. Log the failure as a `phase_selector.fallback` seglog event with the original error.
-3. Surface a warning in the interview UI: "Phase selection used fallback (Scope + Architecture). You can manually add phases if needed."
-4. Never fallback to "all phases" (too expensive and slow for simple projects).
-5. If the fallback phases also fail to execute, surface an error to the user and halt the interview.
+If the selector returns an invalid/empty plan or fails to respond:
+1. Use the deterministic per-intent fallback from §6.3 (all phases Full for New/Fork/Enhance; Contribute = Scope + Architecture + Testing at Short depth).
+2. Log the failure as a `phase_selector.fallback` seglog event with the original error and the normalized fallback plan.
+3. Surface a warning in the interview UI: "Phase selection used fallback. You can manually adjust the phase checklist if needed."
+4. Never synthesize an ad-hoc phase subset outside the canonical fallback table.
+5. If fallback phases also fail to execute, surface an error to the user and halt the interview.
 
 - **Depth semantics:** "Short" vs "full" depth must be defined per phase (e.g. "short = 1-2 questions") so the Interview agent has clear instructions.
   **Resolution:** Full = all questions for phase, research if configured. Short = max 2 questions for that phase, no research. Skip = do not run phase. Document in phase manager and interviewer prompt; enforce cap in phase runner (e.g. question count or token budget for Short).

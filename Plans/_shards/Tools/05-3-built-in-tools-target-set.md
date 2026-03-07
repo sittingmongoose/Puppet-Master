@@ -22,7 +22,7 @@ The following built-in tools are the **target set** for the central tool registr
 | **todowrite** | Create/update task lists during the session | `todowrite` | Subagent default: disabled (OpenCode). Single todo state per run/session. |
 | **todoread** | Read current todo list state | `todoread` | Subagent default: disabled. |
 | **lsp** (MVP) | LSP operations: definition, hover, references; rename (with user approval) | `lsp` | No feature flag; available when LSP client is enabled. See §3.4.1 LSP tool (MVP). |
-| **task** | Launch subagents (matches subagent type) | `task` | **subagent_type** must be one of the **canonical 41 subagents** documented in Plans (orchestrator-subagent-integration.md §4, interview-subagent-integration.md). Validate with subagent_registry; see §3.6. |
+| **task** | Launch subagents (matches subagent type) | `task` | **subagent_type** must be one of the **canonical 42 subagents** documented in Plans (orchestrator-subagent-integration.md §4, interview-subagent-integration.md). Validate with subagent_registry; see §3.6. |
 | **chatsearch** | Search project chat history (threads/messages) via Tantivy chat index | `chatsearch` | Project-only scope; supports filters (thread_id/time); result/hit limits per §3.5. Used for agent search + auto retrieval. |
 | **codesearch** | Code search within the **project workspace / project root** | `codesearch` | MVP backend is multi-tier: Tantivy code index + LSP workspace/symbol + ripgrep fallback. Result and timeout limits per §3.5. |
 | **logsearch** | Search project log summaries (runs/tools/bash) via Tantivy logs index | `logsearch` | Project-only; returns summaries + refs (event_id/blob_ref). Use `logread` for full payload. |
@@ -124,9 +124,15 @@ This subsection supplements the per-tool table below with required behavior for 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
 Canonical input/output shapes align with [OpenCode built-in tools](https://opencode.ai/docs/tools/#built-in); platform runners normalize to/from these. Error conditions and limits are enforced by the adapter/runner before or after calling the platform.
 
+**bash execution limits (required):**
+- **Timeout:** default `120s` per bash invocation. On timeout, the adapter terminates the process, returns collected stdout/stderr up to that point, and marks the tool result as timed out.
+- **Output cap:** default `512 KiB` per stream (`stdout`, `stderr`). If a stream exceeds the cap, the adapter truncates the in-thread payload, marks the result as truncated, and preserves the full payload in the persisted log/seglog record when available.
+- **CWD resolution:** default to the active project/workspace root. In multi-root projects, use the root containing the active file when one exists; otherwise use the first configured workspace root. Explicit `cwd` overrides are allowed only within the permitted workspace scope.
+- **User-visible behavior:** thread/audit rendering must disclose timeouts and truncation explicitly; it must not present partial output as complete output.
+
 | Tool | Canonical input (key params) | Canonical output / result shape | Error conditions | Limits |
 |------|-----------------------------|----------------------------------|------------------|--------|
-| **bash** | `command: string`, `cwd?: string` | `stdout: string`, `stderr: string`, `exit_code: number` | Permission denied (tool or FileSafe), command blocklist, timeout, non-zero exit | Timeout (e.g. 120s default); output size cap (e.g. 512 KiB); CWD = project/workspace |
+| **bash** | `command: string`, `cwd?: string` | `stdout: string`, `stderr: string`, `exit_code: number`, `timed_out?: boolean`, `truncated?: boolean` | Permission denied (tool or FileSafe), command blocklist, timeout, non-zero exit | Timeout `120s` default; output cap `512 KiB` per stream by default; CWD = project/workspace per §3.5 bash limits |
 | **edit** | `path: string`, `old_string: string`, `new_string: string` | `path: string`, `updated: boolean` | File not found, path not in write scope (FileSafe), permission denied | Single replacement per call; file size cap (e.g. 2 MiB) |
 | **write** | `path: string`, `contents: string` | `path: string`, `created: boolean` | Path not in write scope, permission denied | File size cap (e.g. 2 MiB) |
 | **read** | `path: string`, `offset?: number`, `limit?: number` (line range) | `contents: string`, `path: string` | File not found, path in sensitive list (.env etc.), permission denied | Line range or size cap (e.g. 10_000 lines or 1 MiB); offset/limit 0-based |
@@ -142,19 +148,19 @@ Canonical input/output shapes align with [OpenCode built-in tools](https://openc
 | **todowrite** | `todos: Array<{ id?, content, status? }>` | `ack: boolean` | Subagent default deny; permission denied | Single todo list per run/session |
 | **todoread** | -- | `todos: Array<{ id, content, status }>` | Subagent default deny; permission denied | N/A |
 | **lsp** | `operation: "references"\|"definition"\|"hover"\|"rename"`, `path: string`, `position: { line, character }`, `newName?` (rename only) | references/definition: `locations: Array<{ path, range }>`; hover: `contents: string`; rename: `pending_approval` + edits or `rejected` | LSP unavailable, no server for language, timeout, invalid path/position, server crash mid-call | Timeout per request (e.g. 10s); return "LSP unavailable" or "LSP server error" on disconnect/crash |
-| **task** | `subagent_type: string`, `prompt: string`, ... | `result: object` (subagent output) | Tool denied, subagent type unknown (not in canonical 41), launch failure | Per run config (max concurrent subagents etc.); validate subagent_type with subagent_registry (§3.6) |
+| **task** | `subagent_type: string`, `prompt: string`, ... | `result: object` (subagent output) | Tool denied, subagent type unknown (not in canonical 42), launch failure | Per run config (max concurrent subagents etc.); validate subagent_type with subagent_registry (§3.6) |
 | **codesearch** | `query: string`, `path?: string` | `results: Array<{ path, line, snippet }>` or symbol results when LSP available | Permission denied, search backend unavailable | Result limit (e.g. 100); timeout (e.g. 15s) |
 
 **LSP sub-operations:** For `lsp`, `operation` determines the LSP method and return shape: `references` → `textDocument/references`; `definition` → `textDocument/definition`; `hover` → `textDocument/hover`; `rename` → `textDocument/prepareRename` + `textDocument/rename`, result pending user approval (§3.4.1). When the LSP server crashes or disconnects mid-call, return a structured error (e.g. `{ "error": "lsp_unavailable", "message": "LSP server closed or timed out" }`) so the agent can retry or fall back.
 
-### 3.6 Task tool and the 41 subagents (Plans)
+### 3.6 Task tool and the 42 subagents (Plans)
 
-The **task** tool launches a subagent by type. The **subagent_type** parameter must be one of the **canonical 41 subagents** documented in the Plans folder:
+The **task** tool launches a subagent by type. The **subagent_type** parameter must be one of the **canonical 42 subagents** documented in the Plans folder:
 
-- **Plans/orchestrator-subagent-integration.md §4** -- Known subagent names (DRY:DATA:subagent_registry): Phase (3), Task language (9), Task domain (8), Task framework (4), Subtask (8), Iteration (2), Cross-phase/Interview (7, including `explore`) = **41 total**. Used for orchestrator tier selection, GUI validation, and task-tool validation.
+- **Plans/orchestrator-subagent-integration.md §4** -- Known subagent names (DRY:DATA:subagent_registry): Phase (3), Task language (9), Task domain (8), Task framework (4), Subtask (8), Iteration (2), Cross-phase/Interview (8, including `explorer` and `requirements-quality-reviewer`) = **42 total**. Used for orchestrator tier selection, GUI validation, and task-tool validation.
 - **Plans/interview-subagent-integration.md** -- Phase assignments (e.g. Scope & Goals → product-manager, Architecture → architect-reviewer, Product/UX → ux-researcher); cross-phase roles (technical-writer, knowledge-synthesizer, context-manager, etc.).
 
-**Implementation:** The central registry (e.g. `subagent_registry::is_valid_subagent_name(subagent_type)`) must be the single source of truth. When the **task** tool is invoked, validate `subagent_type` against the registry; if invalid, return a structured error (e.g. "Subagent type 'X' not in canonical list; see Plans/orchestrator-subagent-integration.md §4"). Persona content (SKILL.md) lives in `.github/agents/` and `.claude/agents/` (41 files); the runner loads the matching persona for the requested type.
+**Implementation:** The central registry (e.g. `subagent_registry::is_valid_subagent_name(subagent_type)`) must be the single source of truth. When the **task** tool is invoked, validate `subagent_type` against the registry; if invalid, return a structured error (e.g. "Subagent type 'X' not in canonical list; see Plans/orchestrator-subagent-integration.md §4"). Persona content (SKILL.md) lives in `.github/agents/` and `.claude/agents/` (42 files); the runner loads the matching persona for the requested type.
 
 ### GitHubApiTool
 
