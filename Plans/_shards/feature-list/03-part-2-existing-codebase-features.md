@@ -77,3 +77,12 @@ Part 2 records what exists in the codebase today for reference. Plans define tar
 **Tray.** tray.rs -- system tray integration (TrayAction subscription in app).
 
 **Build info.** build_info.rs for version/build data.
+
+##### Plans/Containers_Registry_and_Unraid.md
+- **Contextual Docker Manage surface.** First-class Docker management UI shown when a Docker-related project is active, with `Hide Docker Manage when not used in Project.` setting (default enabled).
+- **Dual DockerHub auth UX.** Browser/device login plus PAT entry, with PAT-recommended helper copy and requested-vs-effective capability display.
+- **Protected repository auto-create flow.** Missing DockerHub repos can be created from Puppet Master, but only after explicit non-bypassable confirmation with namespace, repository name, and privacy (default private).
+- **First-class build/run/publish workflow.** Buildx-backed image build, container run for testing, user-openable container access, and publish results including digest/tag evidence.
+- **Managed Unraid template publishing.** Auto-generate/update Unraid XML after successful publish by default; manage a dedicated template repo by default with auto-commit on, auto-push off, and one-click push from the UI.
+- **Per-project template repo layout.** One template repo per project, root `ca_profile.xml`, maintainer folder, and `project-name.xml` with maintainer folder defaulting to the DockerHub namespace but remaining editable.
+- **Shared/per-project `ca_profile.xml` model.** Generate-if-missing, all fields editable, shared cross-project default with per-project override, profile image upload or external URL, and repo-managed asset default for uploaded images.

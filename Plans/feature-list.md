@@ -130,6 +130,7 @@ Contracts V0 as SSOT for event envelope, UICommand, EventRecord, AuthState. Anti
 - **GUI prompt/injected-context preview.** GUI surfaces for injected-context breakdown and safe prompt preview (Prompt_Pipeline §4).
 - **Instruction bundle format contract.** Canonical Instruction Bundle structure including injected-context breakdown (Prompt_Pipeline §1.3).
 - **Prompt assembly stage ordering.** Deterministic multi-stage prompt assembly ordering (config→personas→skills→context→bundle→plugins→tool schemas→final) (Prompt_Pipeline §1.2).
+- **Instruction-layer talkativeness control.** Persona `talkativeness` is carried into prompt assembly and effective-state records independently of provider sampling support (Prompt_Pipeline §6.5-§6.9).
 - **Run rotation outcome (done.rotated).** Explicit follow-up run spawning on overflow/rotation with outcome taxonomy (Prompt_Pipeline §3).
 
 ##### Plans/rewrite-tie-in-memo.md
@@ -216,9 +217,10 @@ Contracts V0 as SSOT for event envelope, UICommand, EventRecord, AuthState. Anti
 
 ##### Plans/Personas.md
 - **Global persona storage layout.** Store as ~/.config/puppet-master/personas/<id>/PERSONA.md (Personas §2.2).
-- **Persona YAML frontmatter schema.** Frontmatter fields incl default_platform/default_model/default_variant/temperature/top_p/reasoning_effort/default_skill_refs/disabled_plugins/preferred_tools/discouraged_tools/tool_usage_guidance/aliases/tags (Personas §3.1-3.2; Persona Runtime Contract Expansion).
+- **Persona YAML frontmatter schema.** Frontmatter fields incl default_platform/default_model/default_variant/temperature/top_p/reasoning_effort/talkativeness/default_skill_refs/disabled_plugins/preferred_tools/discouraged_tools/tool_usage_guidance/aliases/tags (Personas §3.1-3.2; Persona Runtime Contract Expansion).
 - **Persona context injection pipeline.** Persona markdown body prepended into Instruction Bundle + applies skills/permission profile (Personas §5.2).
-- **Persona create/edit form.** GUI editor fields: id/name/description/default_mode/default_permissions_profile/default_platform/default_model/default_variant/temperature/top_p/reasoning_effort/default_skill_refs/preferred_tools/discouraged_tools/tool_usage_guidance/aliases/tags + markdown body (Personas §4.1; Persona Runtime Contract Expansion).
+- **Persona create/edit form.** GUI editor fields: id/name/description/default_mode/default_permissions_profile/default_platform/default_model/default_variant/temperature/top_p/reasoning_effort/talkativeness/default_skill_refs/preferred_tools/discouraged_tools/tool_usage_guidance/aliases/tags + markdown body (Personas §4.1; Persona Runtime Contract Expansion).
+- **Persona talkativeness control.** Persona settings expose a fixed six-step talk scale: Talk a lot more, Talk more, Talk a little more, Model default, Talk a little less, Talk less; this adjusts response expansiveness/collaboration style without depending on sampling knobs (Personas §3.2/§5.2; Prompt_Pipeline §6.5-§6.9).
 - **Persona resolution order.** Project-local overrides global; warn on unresolved persona selection (Personas §2.3).
 - **Persona scope selector.** Choose project-local vs global scope for persona storage (Personas §4.1).
 - **Persona validation rules.** ID regex, folder-name matching, reserved IDs, blocking save on validation errors (Personas §3.3/§6).
@@ -303,7 +305,7 @@ Contracts V0 as SSOT for event envelope, UICommand, EventRecord, AuthState. Anti
 - **Embedded document pane w/ inline notes.** Live multi-doc preview with status badges + highlight/anchored inline notes + targeted resubmit-with-notes flow (FinalGUISpec §7.19-7.19.1).
 - **File manager drag-drop + conflict dialogs.** Explicit UI contract for drag/drop + conflict resolution dialogs in file manager panel (FinalGUISpec §7.17).
 - **Persona editor compatibility matrix.** Persona editor shows supported / partially supported / unsupported control state per provider (Claude Code, Cursor CLI, OpenCode, Direct/API) (FinalGUISpec §17.1).
-- **Persona runtime control editor fields.** GUI support for default_platform/default_model/default_variant/temperature/top_p/reasoning_effort plus tool guidance and aliases (FinalGUISpec §17.2).
+- **Persona runtime control editor fields.** GUI support for default_platform/default_model/default_variant/temperature/top_p/reasoning_effort/talkativeness plus tool guidance and aliases (FinalGUISpec §17.2).
 - **Surface-level Persona controls.** Chat, Interview, Requirements Builder, Orchestrator, and Multi-Pass expose Persona mode, effective Persona, platform/model display, selection reason, and override/lock controls (FinalGUISpec §17.4-§17.5).
 - **Provider-gap disclosure in UI.** GUI must never imply unsupported Persona controls were honored; skipped controls are disclosed inline, via tooltips, or in run/history details (FinalGUISpec §17.7).
 - **SSH remote file integration.** Remote file editing via SFTP with connection badge, offline resilience, conflict UI, and reconnect actions (FinalGUISpec §7.18).
@@ -914,3 +916,12 @@ Part 2 records what exists in the codebase today for reference. Plans define tar
 **Tray.** tray.rs -- system tray integration (TrayAction subscription in app).
 
 **Build info.** build_info.rs for version/build data.
+
+##### Plans/Containers_Registry_and_Unraid.md
+- **Contextual Docker Manage surface.** First-class Docker management UI shown when a Docker-related project is active, with `Hide Docker Manage when not used in Project.` setting (default enabled).
+- **Dual DockerHub auth UX.** Browser/device login plus PAT entry, with PAT-recommended helper copy and requested-vs-effective capability display.
+- **Protected repository auto-create flow.** Missing DockerHub repos can be created from Puppet Master, but only after explicit non-bypassable confirmation with namespace, repository name, and privacy (default private).
+- **First-class build/run/publish workflow.** Buildx-backed image build, container run for testing, user-openable container access, and publish results including digest/tag evidence.
+- **Managed Unraid template publishing.** Auto-generate/update Unraid XML after successful publish by default; manage a dedicated template repo by default with auto-commit on, auto-push off, and one-click push from the UI.
+- **Per-project template repo layout.** One template repo per project, root `ca_profile.xml`, maintainer folder, and `project-name.xml` with maintainer folder defaulting to the DockerHub namespace but remaining editable.
+- **Shared/per-project `ca_profile.xml` model.** Generate-if-missing, all fields editable, shared cross-project default with per-project override, profile image upload or external URL, and repo-managed asset default for uploaded images.

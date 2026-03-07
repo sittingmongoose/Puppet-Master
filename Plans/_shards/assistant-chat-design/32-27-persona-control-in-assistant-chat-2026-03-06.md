@@ -23,6 +23,7 @@ Required display content:
 - selection reason,
 - effective platform,
 - effective model,
+- effective talkativeness when not `model_default`,
 - optional variant/effort,
 - skipped Persona controls when relevant.
 
@@ -81,6 +82,7 @@ The chat panel should include:
 - effective Persona pill/badge,
 - optional manual Persona picker,
 - selection-reason tooltip or inline sublabel,
+- effective talkativeness in Persona details when the active Persona overrides model-default verbosity,
 - and a way to lock/unlock the current Persona.
 
 ### 27.6 Subagent and child-run display
@@ -106,6 +108,7 @@ Examples:
 - Assistant chat must support explicit natural-language Persona invocation.
 - Auto Persona mode must always disclose the resolved Persona and why it was chosen.
 - Current effective Persona/model/platform must be visible in the chat surface.
+- If the active Persona sets `talkativeness` away from `model_default`, chat details must expose the effective setting.
 - Subagent inline blocks must display effective Persona/model/platform rather than only generic role text.
 - Manual Persona selection must block submission when the selected Persona cannot be resolved.
 - Natural-language Persona requests that do not resolve to a single reliable match must produce clarification or fallback disclosure, not a silent wrong-Persona resolution.

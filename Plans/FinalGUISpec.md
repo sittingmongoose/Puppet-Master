@@ -3071,10 +3071,12 @@ Support states:
 - `partially supported`
 - `unsupported`
 
-For each control (platform/model/variant/temperature/top_p/reasoning_effort/tool-permission coupling/subagents), the editor must:
+For each control (platform/model/variant/temperature/top_p/reasoning_effort/talkativeness/tool-permission coupling/subagents), the editor must:
 - show normal editing when supported,
 - show warning styling and explanatory tooltip when partially supported,
 - show disabled control plus explanation when unsupported.
+
+`talkativeness` is a Persona instruction-layer control rather than a transport/runtime sampling knob. Its support state follows Persona prompt-body support: if a provider can apply Persona prompt instructions, it can apply `talkativeness`.
 
 Minimum provider rows to display:
 - Claude Code
@@ -3091,10 +3093,19 @@ In addition to existing Persona fields, the editor must support:
 - `temperature`
 - `top_p`
 - `reasoning_effort`
+- `talkativeness`
 - `preferred_tools`
 - `discouraged_tools`
 - `tool_usage_guidance`
 - `aliases`
+
+`talkativeness` must be rendered as a fixed single-select with these labels and stored enum values:
+- `Talk a lot more` -> `talk_a_lot_more`
+- `Talk more` -> `talk_more`
+- `Talk a little more` -> `talk_a_little_more`
+- `Model default` -> `model_default`
+- `Talk a little less` -> `talk_a_little_less`
+- `Talk less` -> `talk_less`
 
 ### 17.3 Compatibility panel copy examples
 
@@ -3202,3 +3213,21 @@ These editors should also allow platform/model selection per mapping and show co
 - All interactive run surfaces must show effective Persona/model/platform and selection reason.
 - Natural-language Persona requests must be visibly reflected in the UI when active.
 - Provider-gap disclosure must be explicit; no silent implied support.
+
+**§7.4.8A Docker Manage + Unraid publishing addendum:**
+
+Add a contextual **Docker Manage** GUI surface for Docker-related projects. This surface may be implemented as a page or dockable panel, but it MUST behave as a first-class management surface and not merely as a hidden advanced-only dialog.
+
+- **Visibility rule:** show the Docker Manage surface when a Docker-related project is active. Add a setting named **Hide Docker Manage when not used in Project.** Default: enabled.
+- **Auth controls:** place a browser-login button near DockerHub settings, retain PAT entry, show helper text that PAT is recommended, and explain/link how to obtain a PAT.
+- **Auth state presentation:** show requested auth mode separately from effective capability, along with validated account identity, namespace access, and degraded reason when capability is partial.
+- **Repository management controls:** namespace selector, repository selector, refresh action, create-repository action, and create-repository confirmation dialog that displays namespace, repository name, and privacy. Privacy defaults to private and must be visibly labeled as the default.
+- **Runtime controls:** build, run/preview, stop, open running container/web UI, open logs, and health/access state.
+- **Publish controls:** push image, show digest/tag results, and expose target DockerHub repo summary.
+- **Unraid controls:** toggle to auto-generate/update Unraid XML after successful publish (default enabled), toggle to manage template repo (default enabled), template-repo status row, one-click push action, and shortcut into `ca_profile.xml` editing.
+- **Template repo setup flow:** allow both create-new and select-existing when no template repo is configured.
+- **`ca_profile.xml` editor:** default to shared cross-project maintainer profile with per-project override option; all fields editable; support picture upload or external URL; uploaded pictures default to repo-managed assets.
+- **Auto-generated metadata warning:** when `ca_profile.xml` is created automatically, show a visible notice that the user still needs to configure/review the profile.
+- **Safety copy:** make it explicit that repository creation cannot be auto-approved by YOLO or autonomy modes.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md#147-docker-runtime--dockerhub-contract, ContractName:Plans/Permissions_System.md

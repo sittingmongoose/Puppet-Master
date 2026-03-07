@@ -125,6 +125,7 @@ default_variant: null
 temperature: null
 top_p: null
 reasoning_effort: null
+talkativeness: "model_default"
 default_skill_refs: []
 disabled_plugins: []
 preferred_tools: []
@@ -150,6 +151,7 @@ aliases: []
 | `temperature` | Optional | `number` or `null` | Preferred sampling temperature when the active provider transport supports it. Unsupported values are recorded as skipped, not silently applied. |
 | `top_p` | Optional | `number` or `null` | Preferred nucleus sampling value when supported by the active provider transport. |
 | `reasoning_effort` | Optional | `string` or `null` | Preferred provider-specific effort/reasoning level when supported. |
+| `talkativeness` | Optional | `string` enum | Persona-level verbosity/collaboration preference. Allowed values: `talk_a_lot_more`, `talk_more`, `talk_a_little_more`, `model_default`, `talk_a_little_less`, `talk_less`. This is a behavior/instruction control, not a provider sampling knob. |
 | `default_skill_refs` | Recommended | `string[]` | List of skill IDs to auto-load when this Persona is active. References skills per `Plans/Skills_System.md`. Empty array means no auto-loaded skills. |
 | `disabled_plugins` | Optional | `string[]` | List of plugin IDs to silence during hook dispatch when this Persona is active. Plugins listed here are not unloaded, only skipped during hook invocation. Semantics per `Plans/Plugins_System.md` §7.3. Empty array means no plugins disabled. |
 | `preferred_tools` | Optional | `string[]` | Tool IDs the Persona should proactively prefer when planning execution. Guidance only by default; it does not override Permissions allow/ask/deny enforcement. |
@@ -178,6 +180,8 @@ aliases: []
 
 **`default_mode` enum:** If present, MUST be one of `ask`, `plan`, `regular`, `yolo` (per `Plans/Run_Modes.md#MODE-ask` et al.).
 
+**`talkativeness` enum:** If present, MUST be one of `talk_a_lot_more`, `talk_more`, `talk_a_little_more`, `model_default`, `talk_a_little_less`, `talk_less`.
+
 **`default_skill_refs` items:** Each entry MUST be a valid skill ID (validated at load time against the skill registry; unresolvable refs produce a warning, not a hard error).
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Personas.md#RESERVED-PERSONAS
@@ -202,7 +206,7 @@ A collapsible **Personas** card in Settings > Advanced MUST provide:
 
 1. **List view:** Table of all resolved Personas (project + global, project-local indicated with badge). Columns: Name, ID, Scope (project/global), Tags, Description (truncated). Sorted alphabetically by name; project-local entries sort before global when IDs match.
 
-2. **Create:** "New Persona" button opens an editor form with fields for `id`, `name`, `description`, `default_mode` (dropdown), `default_platform`, `default_permissions_profile` (dropdown or null), `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`, `default_skill_refs` (multi-select from skill registry), `preferred_tools`, `discouraged_tools`, `tool_usage_guidance`, `aliases`, `tags` (tag input), and a Markdown body editor. Scope selector: project-local or global. Provider support-state gating for runtime controls is defined in `Plans/Models_System.md#PERSONA-CAPABILITY-MATRIX` and the GUI presentation contract is defined in `Plans/FinalGUISpec.md`.
+2. **Create:** "New Persona" button opens an editor form with fields for `id`, `name`, `description`, `default_mode` (dropdown), `default_platform`, `default_permissions_profile` (dropdown or null), `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`, `talkativeness`, `default_skill_refs` (multi-select from skill registry), `preferred_tools`, `discouraged_tools`, `tool_usage_guidance`, `aliases`, `tags` (tag input), and a Markdown body editor. Scope selector: project-local or global. `talkativeness` uses the fixed GUI labels `Talk a lot more`, `Talk more`, `Talk a little more`, `Model default`, `Talk a little less`, and `Talk less`, persisted as the enum values from §3.2. Provider support-state gating for runtime controls is defined in `Plans/Models_System.md#PERSONA-CAPABILITY-MATRIX`; `talkativeness` is Persona-instruction-level behavior and therefore follows normal Persona prompt injection rather than provider runtime-control gating.
 
 3. **Edit:** Row click or edit button opens the same editor pre-populated. Editing a global Persona while a project is active offers "Save as project override" (creates project-local copy) or "Save globally."
 
@@ -259,7 +263,8 @@ Once a Persona is resolved, its content is injected into the Agent's compiled co
 3. The Persona's `default_permissions_profile` (if set) is applied as the base permission ruleset, with run-config and tier-level overrides layered on top.
 4. The Persona's `default_skill_refs` are loaded and their content added to the context.
 5. The Persona's runtime-preference fields (`default_platform`, `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`) feed the effective runtime resolution flow defined by `Plans/Models_System.md` and `Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD`.
-6. The Persona's tool-guidance fields (`preferred_tools`, `discouraged_tools`, `tool_usage_guidance`) influence planning/tool choice but MUST NOT replace Permissions allow/ask/deny enforcement.
+6. The Persona's `talkativeness` field is compiled into a standardized behavior directive in the Instruction Bundle. `model_default` adds no extra verbosity directive. The other values instruct the active Agent to be more or less expansive/collaborative while preserving correctness, schema compliance, and any stricter user/system length requirements.
+7. The Persona's tool-guidance fields (`preferred_tools`, `discouraged_tools`, `tool_usage_guidance`) influence planning/tool choice but MUST NOT replace Permissions allow/ask/deny enforcement.
 
 **Interview integration:** The Interview phase manager uses the same injection mechanism. For each interview phase, the phase-assigned Persona(s) are resolved and injected into the phase prompt. Persona overrides do not change *which* Personas the Interview selects — they only supply custom description/instruction content for those selected Personas (per `Plans/interview-subagent-integration.md` — "Subagent personas" in §Relationship).
 
@@ -285,6 +290,7 @@ The following integrations are specified by their subsystem SSOTs and MUST NOT b
 - **Skills:** Persona `default_skill_refs` → `Plans/Skills_System.md`.
 - **Plugins:** Plugin hooks that transform Persona context → `Plans/Plugins_System.md`.
 - **Models/runtime controls:** Per-Persona platform/model/variant/runtime preferences (`default_platform`, `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`) → `Plans/Models_System.md`.
+- **Behavior controls:** Per-Persona `talkativeness` instruction behavior and effective-state emission → `Plans/Prompt_Pipeline.md`.
 - **Prompt/runtime observability:** Effective Persona/runtime resolution record and provider capability filtering → `Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD` and `Plans/Prompt_Pipeline.md#PROVIDER-CAPABILITY-FILTERING`.
 - **Tool guidance:** Persona tool-preference fields remain guidance; hard enforcement stays in `Plans/Permissions_System.md`.
 
