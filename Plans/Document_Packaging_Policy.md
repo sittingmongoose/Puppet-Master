@@ -44,6 +44,7 @@ ContractRef: ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014
 - `source_sha256`
 - `source_line_count`
 - `split_rule` object (`kind`, parameters, fence handling mode)
+- `audit_files` object with deterministic filenames for audits A/B/C
 - `shards[]` in canonical order where each item has:
   - `order`
   - `filename`
@@ -62,6 +63,7 @@ Shard filenames MUST be deterministic:
 - filename format is `<zero_padded_index>-<slug>.<ext>`
 - `<ext>` MUST match source text type (`md` for Markdown sources, `txt` for plain text sources)
 - `<slug>` is lowercase kebab-case from split heading text; fallback slug is `chunk-<start_line>-<end_line>`
+- Existing `.docset/**` members are generated outputs and MUST NOT themselves become new packaging inputs.
 
 ContractRef: PolicyRule:Decision_Policy.md§2, Gate:GATE-014
 
@@ -109,6 +111,9 @@ A packaged Document Set MUST satisfy all losslessness proofs:
 3. **Idempotency:** regeneration in place with identical inputs yields no diffs.
 4. **Clean-room determinism:** regeneration in an empty temp directory yields byte-identical `00-index.md`, `manifest.json`, shard files, and audit evidence hashes.
 
+Normalization rule:
+- Packaging is a file-boundary transformation only. It MUST NOT rewrite source bytes, normalize line endings, or “clean up” content during packaging. Any source normalization must occur before packaging and be reflected in the canonical source artifact hash.
+
 ContractRef: Gate:GATE-014, PolicyRule:Decision_Policy.md§2
 
 ---
@@ -121,7 +126,24 @@ Every packaging run MUST execute all three audits:
 - **Audit B — Index/manifest exact match:** index ordering, manifest ordering, shard existence, and no extra files all pass.
 - **Audit C — Clean-room regeneration proof:** clean-room outputs are byte-identical to primary outputs and hash reports match.
 
+ContractRef: Gate:GATE-014, ContractName:Plans/Progression_Gates.md
+
 Audit outputs MUST be written under `evidence/` and linked from `00-index.md`.
+
+ContractRef: SchemaID:evidence.schema.json, ContractName:Plans/00-plans-index.md
+
+Deterministic audit filenames (required):
+- `evidence/audit_a_verification.json`
+- `evidence/audit_b_index_manifest.json`
+- `evidence/audit_c_clean_room.json`
+
+Each audit JSON MUST include, at minimum:
+- `audit_id`
+- `source_path`
+- `source_sha256`
+- `status`
+- `generated_at`
+- `details`
 
 ContractRef: Gate:GATE-014, ContractName:Plans/Progression_Gates.md
 

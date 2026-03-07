@@ -1,0 +1,105 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "evidence-2026-03-07-spec-lock-refresh",
+  "created_at_utc": "2026-03-07T01:29:53Z",
+  "node": {
+    "node_id": "plans-spec-lock-refresh"
+  },
+  "summary": "Refreshed Spec Lock canonical SSOT hashes after fleet audit doc changes and logged the deterministic maintenance decision in auto_decisions.jsonl.",
+  "commands_run": [
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --generate",
+      "exit_code": 0,
+      "stdout_excerpt": "All sharding checks PASS."
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0,
+      "stdout_excerpt": "OVERALL: PASS"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py lint-contractrefs",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py lint-banned-phrases",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "exit_code": 0
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool_id": "bash",
+      "count": 1,
+      "note": "Refreshed hash entries, appended auto decision, and reran validation commands."
+    }
+  ],
+  "events": {
+    "event_refs": [
+      {
+        "source": "jsonl",
+        "ref": "Plans/auto_decisions.jsonl#dec-2026-03-07-spec-lock-audit-normalization-refresh",
+        "note": "Deterministic Spec Lock maintenance log row."
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/Spec_Lock.json",
+      "change_type": "modified",
+      "note": "Updated 13 canonical_ssot_hashes entries."
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "change_type": "modified",
+      "note": "Appended Spec Lock refresh auto-decision row."
+    }
+  ],
+  "contract_refs_satisfied": [
+    "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
+    "SchemaID:pm.auto_decisions.schema.v1",
+    "PolicyRule:Decision_Policy.md#spec-lock-update-protocol",
+    "Gate:GATE-002"
+  ],
+  "reproducibility": {
+    "snapshot_ref": "git:worktree:/home/sittingmongoose/Cursor/Puppet Master",
+    "note": "Validation was rerun immediately after the lockfile refresh in the same worktree."
+  },
+  "artifacts": [
+    {
+      "path": "Plans/Spec_Lock.json",
+      "sha256": "e1fce178ff3da43a86df60058024b733c1e6057d524753f260c18859d07aaeac"
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "sha256": "901afed431b5ee6d1083d0b117d768264f7734be2be2a4dadfa1c5be4e57f3be"
+    }
+  ],
+  "checks": [
+    {
+      "name": "spec_lock_hashes_refreshed",
+      "result": "PASS",
+      "details": "Updated all stale canonical_ssot_hashes entries to current SHA-256 values.",
+      "contract_refs": [
+        "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
+        "Gate:GATE-002"
+      ]
+    },
+    {
+      "name": "auto_decision_logged",
+      "result": "PASS",
+      "details": "Appended dec-2026-03-07-spec-lock-audit-normalization-refresh to Plans/auto_decisions.jsonl.",
+      "contract_refs": [
+        "SchemaID:pm.auto_decisions.schema.v1",
+        "PolicyRule:Decision_Policy.md#spec-lock-update-protocol"
+      ]
+    }
+  ]
+}

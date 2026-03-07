@@ -109,7 +109,7 @@ If the UI stack (e.g. Slint) provides a **unified drag-drop API** that abstracts
 
 **Resolving the drop target:** On drop, we have (a) the **drop location** (e.g. row index or node id under the tree) and (b) the **project root path**. Map the drop location to a **target directory path**: if the row is the project root, target = project root path; if the row is a folder, target = that folder's full path (we must store or compute full path for each tree node). **Normalize** the target path (e.g. canonicalize) and **validate** that it is under the project root (see Security below). If validation fails, reject the drop and show a brief message (e.g. "Invalid drop target").
 
-**Copy implementation:** For **drop onto tree:** For each source path from the OS D&D payload, copy the file or directory (recursively) into the target directory. Use a single **copy** operation (e.g. Rust `std::fs` or a crate that preserves permissions/timestamps if required). For **drag out:** The OS or target app performs the copy when it receives the file list/URIs; we only provide the paths. For **move:** After a successful copy, delete the source; if delete fails, report the error and do not remove the source.
+**Copy implementation:** For **drop onto tree:** For each source path from the OS D&D payload, copy the file or directory (recursively) into the target directory. Single-file drops without conflicts may execute immediately; multi-file and directory drops should run a short preflight first so conflicts and invalid targets are discovered before copying begins. Use a single **copy** operation (e.g. Rust `std::fs` or a crate that preserves permissions/timestamps if required). For **drag out:** The OS or target app performs the copy when it receives the file list/URIs; we only provide the paths. For **move:** After a successful copy, delete the source; if delete fails, report the error and do not remove the source.
 
 **Name conflicts:** When the target directory already contains a file or folder with the same name:
 
@@ -128,7 +128,7 @@ If the UI stack (e.g. Slint) provides a **unified drag-drop API** that abstracts
 | **Symlinks** | When **copying in**, AutoDecision: copy the symlink as a symlink (do not resolve). When **copying out**, the OS typically resolves; we provide the path. When **moving out**, deleting the source removes the symlink, not the target. |
 | **Read-only or locked files** | If copy or delete (move) fails because the file is read-only or locked, show the error and do not overwrite. Optionally offer "Try again" or "Skip." |
 | **Very long path** | If the resulting path exceeds OS limits (e.g. 260 chars on Windows), fail with a clear message ("Path too long") and suggest moving the project or shortening names. |
-| **Drag from within the same project** | If the user drags from one folder in the tree and drops on another folder in the same tree, treat as **move within project** (copy then delete source) or **copy within project** (copy only). Same rules as external drop; no special case unless we add "reorder" semantics later. |
+| **Drag from within the same project** | Default to **copy within project** so external drag/drop and in-project drag/drop share the same conflict model. Holding **Shift** switches the operation to **move within project** (copy then delete source). Same rules as external drop; no special case unless we add "reorder" semantics later. |
 | **Accessibility** | Keyboard alternative: e.g. "Paste from clipboard" (paste files from clipboard into selected folder) and "Copy path to clipboard" (so user can paste elsewhere). Screen reader: announce "Drop target: {folder path}" when hovering over a valid target. |
 
 #### 1.1.4 Potential problems and solutions
@@ -422,7 +422,7 @@ All of the following are **in scope for MVP**. When **LSP is available** for the
 ### 10.8 Graphite-style (review and quality)
 
 - **AI or rule-based code review:** Assistant (or dedicated review mode) can perform **automated code review** on demand or on commit/PR: logic bugs, security, style, documentation, accidental commits. Inline-style comments or a review panel; integrates with chat and file context.
-- **Custom review rules:** User- or project-defined **review rules** (e.g. "flag TODOs," "require error handling here," "OWASP checklist"). Enforced during review runs or as optional editor hints (with or without LSP; LSP diagnostics can complement rules). **Storage:** Project-level (e.g. `.puppet-master/review-rules.md` or `.puppet-master/review-rules.yaml`) and application-level (redb or app config); project rules override or extend app rules. Format: markdown or YAML (list of descriptions or named rules with description and severity). See §12.1.9.
+- **Custom review rules:** User- or project-defined **review rules** (e.g. "flag TODOs," "require error handling here," "OWASP checklist"). Enforced during review runs or as optional editor hints (with or without LSP; LSP diagnostics can complement rules). **Canonical project file:** `.puppet-master/review-rules.yaml`. **App-level storage:** redb `review_rules/app`. Load order is app rules first, then project rules override or extend by rule id. Minimum rule fields: `id`, `description`, `severity`, optional `scopes`, and either a human-review prompt fragment or a machine-evaluable matcher. Invalid project YAML must surface a non-blocking warning and fall back to app rules instead of silently disabling review. See §12.1.9.
 - **1-click apply suggestion:** In chat or in a review panel: **"Apply this change"** applies a suggested diff (e.g. agent suggestion or review fix) to the file in the editor. Reuses same apply/patch pipeline as agent edits (FileSafe, tool policy). See §12.2.8 for merge/conflict handling.
 
 ### 10.9 Additional editor features (MVP)
@@ -431,7 +431,7 @@ All of the following are **in scope for MVP**. Evaluate usefulness at implementa
 
 - **Recover unsaved buffers:** Required. On crash or quit-with-unsaved, offer to restore unsaved content from recovery store (redb or temp per Plans/storage-plan.md). Align with section 2.9.
 - **Editor diff view:** Side-by-side or inline diff of two versions (e.g. buffer vs disk, or two branches); integrate with revert and review.
-- **Snippets and templates:** User-defined or preset code snippets; expand on trigger (e.g. prefix or shortcut).
+- **Snippets and templates:** User-defined or preset code snippets; expand on trigger (e.g. prefix or shortcut). MVP contract: support global snippets plus project overrides, TextMate-style placeholders (`${1:name}`, `$0`), autocomplete insertion, and an optional `Tab expands snippet prefix` setting. LSP completions flagged as snippets should reuse the same insertion pipeline.
 - **Search in chat / search in messages:** Extend "powerful search" (§10.2) to include chat history and thread messages (content or metadata).
 - **Breadcrumbs:** Use LSP document outline when LSP is available (§10.1, §10.10); otherwise use heuristics.
 - **Per-preset keybinding schemes:** Optional keybinding profile per preset (e.g. VS Code vs Vim vs JetBrains-style) in addition to modal editing.
@@ -634,9 +634,9 @@ See §10.10.3 and §10.10.4 for cross-cutting gaps and problems; feature-specifi
 
 #### 12.1.9 Review rules storage
 
-**Decision:** Review rules load from `.puppet-master/review-rules.md` (project) plus redb `review_rules` (app); project rules override/extend.
+**Decision:** Review rules load from `.puppet-master/review-rules.yaml` (project) plus redb `review_rules/app` (app); project rules override/extend by rule id.
 
-**Solution:** (1) **Storage:** Support both **project-level** and **application-level** rules. Project: e.g. `.puppet-master/review-rules.md` or `.puppet-master/review-rules.yaml` in project root. Application: e.g. in redb under `review_rules` or a user config file in app data dir. Project rules override or extend app rules when a project is selected. (2) **Format:** Prefer **markdown** or **YAML** for readability: e.g. a list of rule descriptions or named rules with description and severity. Example: `- "Flag TODOs in production code"` or `name: require-error-handling; description: "Require error handling here"; severity: warning`. (3) **Application:** When running AI/rule-based review (§10.8), the review engine loads app + project rules and applies them (e.g. inject into Assistant prompt or run a rule evaluator). Reference in agent-rules-context or a short "Review rules" plan so the rules pipeline can load them. Document path and format in §10.8.
+**Solution:** (1) **Storage:** Support both **project-level** and **application-level** rules. Project: `.puppet-master/review-rules.yaml` in project root. Application: redb key `review_rules/app` (or equivalent app-data export/import command). Project rules override or extend app rules by `id` when a project is selected. (2) **Format:** YAML for deterministic parsing and diffability. Minimum schema: `id`, `description`, `severity`, optional `scopes`, and one of `match`, `path_glob`, or `prompt_hint` depending on whether the rule is machine-evaluable or prompt-only. (3) **Application:** When running AI/rule-based review (§10.8), the review engine loads app + project rules, records the merged rule set id/count in the review request metadata, and applies them (e.g. inject into Assistant prompt or run a rule evaluator). Invalid YAML surfaces a warning with line/column if available; the engine falls back to the last valid app-level set rather than failing open.
 
 #### 12.1.10 Floating editor + multiple windows
 

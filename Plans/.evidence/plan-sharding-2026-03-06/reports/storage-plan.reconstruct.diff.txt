@@ -1,1 +1,22 @@
-PASS
+--- /home/sittingmongoose/Cursor/Puppet Master/Plans/storage-plan.md
++++ reconstructed
+@@ -168,8 +168,7 @@
+ | `checkpoints` | `interview_session.{interview_id}` | Interview session state | Restore interview UI. |
+ | `checkpoints` | `interview_checkpoint.{interview_id}` | Interview projector/phase position | Resume interview pipeline. |
+ | `checkpoints` | `hitl.{run_id}` | HITL pending state (e.g. approval_requested) | Restore HITL prompt after crash; clear on approved/rejected. |
+-| `review_rules` | `app` or `project.{project_id}` | YAML review rules blob | FileManager.md §10.8 |
+-| `editor` | `snippets.global` / `snippets.project.{project_id}` | Snippet collections and template metadata | FileManager.md §10.9 |
++| `review_rules` | `app` or `project.{project_id}` | Review rules blob | FileManager.md §10.8 |
+ | `restore_points` | `point.{project_id}.{restore_point_id}` | JSON: `{ turn_id, timestamp, file_snapshots: [{ path, content_hash, blob_ref }] }` | Restore-point metadata and blob references for rollback (newfeatures.md §8). Blobs may be inline (small) or file-referenced. |
+ | `restore_points` | `index.{project_id}` | JSON: ordered list of `restore_point_id` | Fast listing for "History" / "Restore to…" UI. Pruned when retention exceeded. |
+ 
+@@ -182,8 +181,7 @@
+ - **restore_points:** JSON for metadata and index; blob references point to app-data files or inline bincode for small snapshots. Pruning deletes both redb key and referenced blob file.
+ - **editor:** Tabs and lists as JSON; scroll_cursor and binary blobs as bincode if desired.
+ - **rollups:** JSON: `usage_5h/7d` → `{ platform, tokens_in, tokens_out, ... }`; `tool_usage.{window}` → `{ tool_name, count, p50_ms, p95_ms, error_count }`; `thread_usage.{thread_id}` → same shape as usage rollup for one thread.
+-- **review_rules:** UTF-8 YAML text persisted as the canonical editable format; validation metadata may be cached separately if needed.
+-- **editor snippets:** JSON for snippet collections (`name`, `prefixes`, `body`, `description`, `scope`, `source`).
++- **review_rules:** JSON or bincode per FileManager.md.
+ 
+ **Migrations:** Use redb's schema version or a custom `schema_version` key in a `meta` namespace. On open, check version; if older, run migration functions (e.g. create new namespaces, copy/transform data, bump version). Document each migration (version N → N+1) and keep migrations reversible where possible (e.g. add column, don't drop until next major).
+ 

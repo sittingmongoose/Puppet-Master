@@ -97,7 +97,7 @@ Each row maps:
 | `ui_element_id` | Stable identifier for the interactive element |
 | `ui_location` | Screen / panel / section where the element appears |
 | `ui_command_id` | Stable `UICommandID` from `Plans/UI_Command_Catalog.md` |
-| `handler_location` | Rust module path to the handler function (e.g. `crate::core::handlers::auth`) |
+| `handler_location` | Canonical Rust module/function path for the dispatcher target (e.g. `handlers::github_auth::connect` or `crate::core::handlers::auth::connect`) |
 | `expected_event_types` | List of `EventRecord` event types the handler MUST emit |
 | `acceptance_checks` | Deterministic checks that verify correct behavior |
 | `evidence_required` | Artifacts that MUST be produced for gate evidence |
@@ -126,9 +126,12 @@ All wiring verification is scriptable and runs without paid UI tooling or manual
 1. **Schema validation** — Wiring matrix JSON validates against `Plans/Wiring_Matrix.schema.json`.
 2. **Element uniqueness check** — Every `entries` key is unique and each row's `ui_element_id` matches its key (`one element, one command`).
 3. **Coverage check** — Every `UICommandID` in `Plans/UI_Command_Catalog.md` has at least one wiring matrix entry.
-4. **Handler registration check** — Every wiring matrix entry's `handler_location` resolves to a real module and function in the Rust source tree.
+4. **Handler registration check** — Every wiring matrix entry's `handler_location` resolves to a real module and function in the Rust source tree, and failures produce a deterministic report containing `ui_element_id`, `ui_command_id`, unresolved `handler_location`, and candidate source files inspected.
 5. **Event emission test** — Tests that exercise command dispatch verify the `expected_event_types` listed in the wiring matrix are emitted.
-6. **Dead command detection** — `UICommandID` values found in source code but absent from `Plans/UI_Command_Catalog.md` are flagged as dead commands.
+6. **Unknown-command rejection test** — Dispatcher tests verify unrecognized `command_id` values return a structured error object and emit no domain events.
+7. **Handler statelessness lint** — Handler modules may depend on command envelopes, domain services, and event types, but MUST NOT import UI widget/view namespaces or keep UI object references.
+8. **UI purity check** — UI/view-layer code may dispatch commands and observe projected state, but direct mutation of domain/projected state outside dispatcher/projection/store modules is a gate failure.
+9. **Dead command detection** — `UICommandID` values found in source code but absent from `Plans/UI_Command_Catalog.md` are flagged as dead commands.
 
 ### 5.2 Execution
 

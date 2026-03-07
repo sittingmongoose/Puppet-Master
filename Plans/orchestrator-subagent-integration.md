@@ -93,11 +93,11 @@ The **orchestrator must respect** two kinds of information that the interview (o
 
 1. **Subagent persona recommendations.** When the PRD (or loaded plan) contains **subagent recommendations** for a task or subtask in `crew_recommendation.subagents` (interview-subagent-integration §5.2 and Crew-Aware Plan Generation), the orchestrator **must use those personas** when executing that tier. Use the recommended subagent set as the source for which subagents to invoke; only fall back to dynamic selection (e.g. `select_for_tier`) when the PRD/plan does not specify recommendations for that item. Config overrides (disabled/required/override lists) can still apply on top of PRD recommendations. This ensures that interview-generated plans are executed with the intended specialists.
 
-2. **Parallelization.** When the PRD/plan contains **parallelism** information (e.g. `depends_on` and `parallel_group` per STATE_FILES.md §3.3 and interview-subagent-integration §5.2), the orchestrator **must respect it** when building the execution schedule. Build a dependency graph from `depends_on`; run tasks/subtasks that have no unsatisfied dependencies, and run items in the same `parallel_group` **in parallel** where the execution engine supports it. Do not run items in parallel when the plan says they depend on another; do run independent items in parallel when the plan allows it. See **Schedule building: order of operations** below.
+2. **Parallelization.** When the PRD/plan contains **parallelism** information (`depends_on` per interview-subagent-integration §5.2), the orchestrator **must respect it** when building the execution schedule. Build a dependency graph from `depends_on`; run tasks/subtasks that have no unsatisfied dependencies in parallel where the execution engine supports it. Do not run items in parallel when the plan says they depend on another; do run independent items in parallel when the plan allows it. See **Schedule building: order of operations** below.
 
 **Subagent selection: order of operations.** (1) Load the PRD and the current tier item (phase/task/subtask). (2) Read `crew_recommendation` for that item; if absent, go to step 5. (3) Read `crew_recommendation.subagents`; if missing or empty array, treat as **no recommendation** and go to step 5. (4) Use the list in `subagents` as the source set for which subagents to invoke; apply config overrides (disabled/required/override) on top; then exit. (5) Fall back to dynamic selection (e.g. `select_for_tier`) for this item; apply config overrides on top.
 
-**Schedule building: order of operations.** (1) Build a dependency graph from `depends_on` at the tier level(s) the orchestrator schedules (e.g. subtasks). Use item ids; support phase, task, and subtask ids as in STATE_FILES. Missing `depends_on` or empty array = no incoming edges. (2) Topological sort the graph; items with no unsatisfied dependencies form the next runnable set. (3) Within the runnable set, group items that share the same non-empty `parallel_group`; items in the same group may run in parallel. (4) Execute batches in topological order: run each batch (possibly multiple items in parallel) before advancing to items that depend on them.
+**Schedule building: order of operations.** (1) Build a dependency graph from `depends_on` at the tier level(s) the orchestrator schedules (e.g. subtasks). Use item ids; support phase, task, and subtask ids as in STATE_FILES. Missing `depends_on` or empty array = no incoming edges. (2) Topological sort the graph; items with no unsatisfied dependencies form the next runnable set. (3) Execute each runnable set in parallel where the execution engine and concurrency caps allow. (4) Advance only after dependencies for the next set are satisfied.
 
 ### Respecting PRD/plan: plan graph consumption (user projects)
 
@@ -180,7 +180,6 @@ Scheduling inputs must be sourced only from the validated canonical sharded plan
 
 - `depends_on` (from node shards; if `edges.json` exists, it MUST match)
 - `blockers` / `unblocks` from node definitions
-- `parallel_group` metadata when available
 
 ContractRef: Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md
 
@@ -214,6 +213,17 @@ ContractRef: PolicyRule:Decision_Policy.md§2, Gate:GATE-005, ContractName:Plans
 **Cross-reference:** STATE_FILES.md §3.3 (canonical PRD schema); **Plans/interview-subagent-integration.md** §5.2 and Crew-Aware Plan Generation.
 
 ## Tier-Level Subagent Strategy
+
+Canonical selection precedence:
+1. explicit tier override / required-subagent contract
+2. plan/acceptance-driven hard requirement
+3. LSP bias (when enabled; ranking hint only)
+4. language/domain/framework heuristics
+5. deterministic fallback
+
+`explore` is legacy naming only; all persistence, registry validation, and display MUST use `explorer` per `Plans/Personas.md`.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 ### Phase Level (Strategic Planning)
 
@@ -399,7 +409,7 @@ impl SubagentSelector {
     // DRY:FN:detect_language — Detect programming languages in workspace
     pub fn detect_language(&self, workspace: &Path) -> Result<Vec<DetectedLanguage>> {
         let mut languages = Vec::new();
-        
+
         // Check for language indicators
         if workspace.join("Cargo.toml").exists() {
             languages.push(DetectedLanguage {
@@ -408,7 +418,7 @@ impl SubagentSelector {
                 indicators: vec!["Cargo.toml".to_string()],
             });
         }
-        
+
         if workspace.join("package.json").exists() {
             // Check for TypeScript
             if workspace.join("tsconfig.json").exists() {
@@ -425,7 +435,7 @@ impl SubagentSelector {
                 });
             }
         }
-        
+
         if workspace.join("requirements.txt").exists() || workspace.join("pyproject.toml").exists() {
             languages.push(DetectedLanguage {
                 name: "python".to_string(),
@@ -433,12 +443,12 @@ impl SubagentSelector {
                 indicators: vec!["requirements.txt".to_string()],
             });
         }
-        
+
         // Add more language detection...
-        
+
         Ok(languages)
     }
-    
+
     /// Select subagent for tier level
     // DRY:FN:select_for_tier — Select subagents for a tier based on context
     pub fn select_for_tier(
@@ -453,33 +463,33 @@ impl SubagentSelector {
             TierType::Iteration => self.select_for_iteration(tier_context),
         }
     }
-    
+
     fn select_for_phase(&self, context: &TierContext) -> Vec<String> {
         let mut subagents = vec!["project-manager".to_string()];
-        
+
         // Add architect if architecture decisions needed
         if context.needs_architecture_review {
             subagents.push("architect-reviewer".to_string());
         }
-        
+
         // Add product manager if product planning
         if context.needs_product_planning {
             subagents.push("product-manager".to_string());
         }
-        
+
         subagents
     }
-    
+
     fn select_for_task(&self, context: &TierContext) -> Vec<String> {
         let mut subagents = Vec::new();
-        
+
         // 1. Language-specific engineer
         if let Some(lang) = &context.primary_language {
             if let Some(subagent) = self.language_to_subagent(lang) {
                 subagents.push(subagent);
             }
         }
-        
+
         // 2. Domain expert
         match &context.domain {
             ProjectDomain::Backend => {
@@ -499,30 +509,30 @@ impl SubagentSelector {
             }
             _ => {}
         }
-        
+
         // 3. Framework specialist
         if let Some(framework) = &context.framework {
             if let Some(subagent) = self.framework_to_subagent(framework) {
                 subagents.push(subagent);
             }
         }
-        
+
         // Fallback
         if subagents.is_empty() {
             subagents.push("fullstack-developer".to_string());
         }
-        
+
         subagents
     }
-    
+
     fn select_for_subtask(&self, context: &TierContext) -> Vec<String> {
         let mut subagents = Vec::new();
-        
+
         // Inherit from task
         if let Some(task_subagents) = &context.parent_subagents {
             subagents.extend(task_subagents.clone());
         }
-        
+
         // Add specialized subagent based on subtask focus
         match &context.subtask_focus {
             Some(SubtaskFocus::CodeReview) => {
@@ -548,31 +558,31 @@ impl SubagentSelector {
             }
             _ => {}
         }
-        
+
         subagents
     }
-    
+
     fn select_for_iteration(&self, context: &TierContext) -> Vec<String> {
         let mut subagents = Vec::new();
-        
+
         // Inherit from parent tiers
         if let Some(parent_subagents) = &context.parent_subagents {
             subagents.extend(parent_subagents.clone());
         }
-        
+
         // Add specialized roles based on iteration state
         if context.has_errors {
             subagents.push("debugger".to_string());
         }
-        
+
         if context.needs_code_review {
             subagents.push("code-reviewer".to_string());
         }
-        
+
         if context.needs_testing {
             subagents.push("qa-expert".to_string());
         }
-        
+
         // Error pattern matching
         for pattern in &context.error_patterns {
             match pattern {
@@ -585,10 +595,10 @@ impl SubagentSelector {
                 _ => {}
             }
         }
-        
+
         subagents
     }
-    
+
     // DRY:DATA:language_to_subagent_mapping — Single source of truth for language → subagent mapping
     // DRY REQUIREMENT: MUST use subagent_registry::get_subagent_for_language() — NEVER hardcode language → subagent mappings
     fn language_to_subagent(&self, lang: &str) -> Option<String> {
@@ -596,7 +606,7 @@ impl SubagentSelector {
         // DO NOT use match statements like: match lang { "rust" => Some("rust-engineer".to_string()), ... }
         subagent_registry::get_subagent_for_language(lang)
     }
-    
+
     // DRY:DATA:framework_to_subagent_mapping — Single source of truth for framework → subagent mapping
     // DRY REQUIREMENT: MUST use subagent_registry::get_subagent_for_framework() — NEVER hardcode framework → subagent mappings
     fn framework_to_subagent(&self, framework: &str) -> Option<String> {
@@ -619,25 +629,36 @@ pub struct TierContext {
     pub tier_id: String,
     pub title: String,
     pub description: String,
-    
+    pub workspace: PathBuf,
+    pub worktree_path: Option<PathBuf>,
+
     // Project context
     pub primary_language: Option<String>,
     pub domain: ProjectDomain,
     pub framework: Option<String>,
-    
+
     // Tier-specific
     pub needs_architecture_review: bool,
     pub needs_product_planning: bool,
     pub subtask_focus: Option<SubtaskFocus>,
-    
+
     // Iteration state
     pub has_errors: bool,
     pub needs_code_review: bool,
     pub needs_testing: bool,
     pub error_patterns: Vec<ErrorPattern>,
-    
+
     // Inheritance
     pub parent_subagents: Option<Vec<String>>,
+
+    // Frozen tier-runtime snapshot
+    pub requested_persona: Option<String>,
+    pub effective_persona: Option<String>,
+    pub requested_platform: Option<Platform>,
+    pub effective_platform: Platform,
+    pub requested_model: Option<String>,
+    pub effective_model: String,
+    pub persona_stage: Option<String>,
 }
 
 pub enum SubtaskFocus {
@@ -672,21 +693,21 @@ pub struct Orchestrator {
 impl Orchestrator {
     pub fn new(config: OrchestratorConfig) -> Result<Self> {
         // ... existing initialization ...
-        
+
         // Initialize subagent selector
         let project_context = Self::detect_project_context(&config.paths.workspace)?;
         let subagent_selector = Arc::new(SubagentSelector::new(project_context)?);
-        
+
         // Initialize subagent manager (from interview plan)
         let subagent_manager = Arc::new(SubagentManager::new(&config.paths.workspace)?);
-        
+
         Ok(Self {
             // ... existing fields ...
             subagent_selector,
             subagent_manager,
         })
     }
-    
+
     /// Select and invoke subagents for tier execution
     async fn execute_tier_with_subagents(
         &self,
@@ -695,14 +716,16 @@ impl Orchestrator {
     ) -> Result<()> {
         // Build tier context
         let tier_context = self.build_tier_context(tier_node, context)?;
-        
+        // build_tier_context MUST populate workspace/worktree/runtime snapshot fields
+        // from the same frozen tier-start config snapshot used by validation/persistence.
+
         // Select subagents
         // DRY REQUIREMENT: SubagentSelector MUST use subagent_registry:: functions — NEVER hardcode subagent names
         let mut subagent_names = self.subagent_selector.select_for_tier(
             tier_node.tier_type,
             &tier_context,
         );
-        
+
         // Apply tier overrides (replace if non-empty, else use selected list)
         // DRY REQUIREMENT: Validate override names using subagent_registry::is_valid_subagent_name()
         if let Some(overrides) = self.get_tier_overrides(tier_node.tier_type) {
@@ -716,7 +739,7 @@ impl Orchestrator {
                 subagent_names = overrides;
             }
         }
-        
+
         // Filter disabled subagents
         // DRY REQUIREMENT: Validate disabled names using subagent_registry::is_valid_subagent_name()
         subagent_names.retain(|name| {
@@ -727,7 +750,7 @@ impl Orchestrator {
                 !self.is_subagent_disabled(name)
             }
         });
-        
+
         // Add required subagents
         // DRY REQUIREMENT: Validate required names using subagent_registry::is_valid_subagent_name()
         if let Some(required) = self.get_required_subagents(tier_node.tier_type) {
@@ -740,14 +763,14 @@ impl Orchestrator {
                 }
             }
         }
-        
+
         // Get platform and model for this tier
         let platform = self.get_platform_for_tier(tier_node.tier_type)?;
         let model = self.get_model_for_tier(tier_node.tier_type)?;
-        
+
         // Get coordination context
         let coordination_context = self.coordinator.get_coordination_context(&tier_context.workspace).await?;
-        
+
         // Register agents in coordination state before execution
         for subagent_name in &subagent_names {
             let agent_id = format!("{}-{}", subagent_name, tier_node.id);
@@ -762,7 +785,7 @@ impl Orchestrator {
                 last_update: Utc::now(),
             }).await?;
         }
-        
+
         // Execute subagents (sequential or parallel based on config)
         if self.config.enable_parallel_subagents {
             // Execute subagents in parallel
@@ -778,10 +801,10 @@ impl Orchestrator {
                 );
                 tasks.push(task);
             }
-            
+
             // Wait for all subagents to complete
             let results = futures::future::join_all(tasks).await;
-            
+
             // Check for failures
             for result in results {
                 result??; // Propagate errors
@@ -799,16 +822,16 @@ impl Orchestrator {
                 ).await?;
             }
         }
-        
+
         // Unregister agents from coordination state after execution
         for subagent_name in &subagent_names {
             let agent_id = format!("{}-{}", subagent_name, tier_node.id);
             self.coordinator.unregister_agent(&agent_id).await?;
         }
-        
+
         Ok(())
     }
-    
+
     // DRY:FN:execute_subagent — Execute a single subagent for a tier
     async fn execute_subagent(
         &self,
@@ -820,7 +843,7 @@ impl Orchestrator {
         coordination_context: &str,
     ) -> Result<SubagentOutput> {
         let agent_id = format!("{}-{}", subagent_name, tier_node.id);
-        
+
         // Build subagent invocation prompt with coordination context
         let invocation = self.build_subagent_invocation(
             subagent_name,
@@ -828,13 +851,13 @@ impl Orchestrator {
             tier_context,
             coordination_context,
         )?;
-        
+
         // Update coordination state: mark agent as active
         self.coordinator.update_agent_operation(
             &agent_id,
             format!("Executing {}: {}", subagent_name, tier_node.title),
         ).await?;
-        
+
         // Execute via platform runner with subagent
         let output = self.execute_with_subagent(
             platform,
@@ -843,14 +866,14 @@ impl Orchestrator {
             &invocation,
             tier_context,
         ).await?;
-        
+
         // Update coordination state: extract file operations from output
         let file_operations = self.extract_file_operations_from_output(&output)?;
         self.coordinator.update_agent_files(&agent_id, &file_operations).await?;
-        
+
         Ok(output)
     }
-    
+
     // DRY:FN:build_subagent_invocation — Build platform-specific subagent invocation prompt
     // DRY REQUIREMENT: MUST use platform_specs::get_subagent_invocation_format() — NEVER hardcode platform-specific formats
     fn build_subagent_invocation(
@@ -862,22 +885,22 @@ impl Orchestrator {
     ) -> Result<String> {
         // Build platform-specific subagent invocation using platform_specs
         let platform = self.get_platform_for_tier(tier_context.tier_type)?;
-        
+
         // DRY: Use platform_specs to get subagent invocation format (DRY:DATA:platform_specs)
         // DO NOT hardcode match statements for Platform::Cursor, Platform::Codex, etc.
         // DO NOT duplicate platform-specific format strings here
         let invocation_format = platform_specs::get_subagent_invocation_format(platform)?;
-        
+
         // Format invocation using platform-specific format from platform_specs
         let invocation = invocation_format
             .replace("{subagent}", subagent_name)
             .replace("{task}", task_description)
             .replace("{context}", &format_tier_context(tier_context))
             .replace("{coordination}", coordination_context);
-        
+
         Ok(invocation)
     }
-    
+
     // DRY:FN:extract_file_operations_from_output — Extract file paths from subagent output
     fn extract_file_operations_from_output(
         &self,
@@ -886,17 +909,17 @@ impl Orchestrator {
         // Extract file paths from subagent output
         // Can parse from task_report, downstream_context, or findings
         let mut files = Vec::new();
-        
+
         // Extract from findings (file field)
         for finding in &output.findings {
             if let Some(file) = &finding.file {
                 files.push(file.clone());
             }
         }
-        
+
         // Extract from task_report (parse file mentions)
         // Implementation: regex or text parsing to find file paths
-        
+
         Ok(files)
     }
 ```
@@ -909,7 +932,7 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 - **Coordination registration failure:** If coordination registration fails, log warning and continue (coordination is best-effort)
 - **Subagent execution failure:** If subagent execution fails, log error and continue with next subagent (or fail tier if critical)
 - **Coordination update failure:** If coordination update fails, log warning and continue (coordination updates are best-effort)
-    
+
     // DRY:FN:build_tier_context -- Build tier context for subagent selection
     fn build_tier_context(
         &self,
@@ -921,13 +944,13 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
             .detect_language(&context.workspace)?
             .first()
             .map(|l| l.name.clone());
-        
+
         // Determine domain from task type or description
         let domain = self.infer_domain(tier_node);
-        
+
         // Detect framework
         let framework = self.detect_framework(&context.workspace)?;
-        
+
         // Build context
         Ok(TierContext {
             tier_type: tier_node.tier_type,
@@ -959,39 +982,39 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 subagentConfig:
   enableTierSubagents: true
-  
+
   # Override automatic selection
   tierOverrides:
     phase:
       default: ["project-manager"]
       architecture: ["architect-reviewer", "project-manager"]
       product: ["product-manager", "project-manager"]
-    
+
     task:
       # Language-specific overrides
       rust: ["rust-engineer"]
       python: ["python-pro"]
       javascript: ["javascript-pro"]
       typescript: ["typescript-pro"]
-      
+
       # Domain-specific overrides
       backend: ["backend-developer"]
       frontend: ["frontend-developer"]
       mobile: ["mobile-developer"]
-    
+
     subtask:
       testing: ["test-automator"]
       documentation: ["technical-writer"]
       review: ["code-reviewer"]
-    
+
     iteration:
       errors: ["debugger"]
       review: ["code-reviewer"]
       testing: ["qa-expert"]
-  
+
   # Disable specific subagents
   disabledSubagents: []
-  
+
   # Require specific subagents
   requiredSubagents: []
 ```
@@ -1272,41 +1295,41 @@ Plan mode is implemented per tier (phase, task, subtask, iteration) and flows fr
 
 The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect plan mode, subagents, hooks, plugins, and related behavior. Use this to keep `platform_specs`, runners, and AGENTS.md aligned with current behavior.
 
-**Cursor (agent / cursor-agent)**  
-- **Jan 16, 2026:** Plan mode and Ask mode in CLI: `/plan` or `--mode=plan`, `/ask` or `--mode=ask`; cloud handoff with `&`; one-click MCP auth; word-level diffs.  
-- **v2.4 (Jan 22):** Subagents (parallel, custom configs).  
-- **v2.5 (Feb 17):** Plugins (marketplace: skills, subagents, MCP, hooks, rules); async subagents (can spawn child subagents); sandbox network access controls.  
+**Cursor (agent / cursor-agent)**
+- **Jan 16, 2026:** Plan mode and Ask mode in CLI: `/plan` or `--mode=plan`, `/ask` or `--mode=ask`; cloud handoff with `&`; one-click MCP auth; word-level diffs.
+- **v2.4 (Jan 22):** Subagents (parallel, custom configs).
+- **v2.5 (Feb 17):** Plugins (marketplace: skills, subagents, MCP, hooks, rules); async subagents (can spawn child subagents); sandbox network access controls.
 - **Impact:** Plan mode implementation (`--mode plan`) is correct. Subagent and plugin support has expanded; consider documenting plugins and async subagents in platform capabilities.
 
-**Codex**  
-- **0.100 (Feb 12):** ReadOnlyAccess policy, memory slash commands (`/m_update`, `/m_drop`), experimental JS REPL, app-server websocket refresh.  
-- **0.101 (Feb 12):** Memory/model stability, model slug preservation.  
-- **0.104 (Feb 18):** Distinct approval IDs for multi-approval shell commands; app-server v2 (thread archive notifications); `WS_PROXY`/`WSS_PROXY`; safety-check and cwd-prompt fixes.  
-- **Sandbox:** `--sandbox read-only | workspace-write | danger-full-access`; no native "plan" flag; our use of `--sandbox read-only` for plan mode remains correct.  
-- **Subagents/MCP:** Codex as MCP server (`codex mcp-server`) exposes `codex`/`codex-reply` tools; community `codex-subagents-mcp` uses profiles (e.g. `sandbox_mode = "read-only"` for review).  
+**Codex**
+- **0.100 (Feb 12):** ReadOnlyAccess policy, memory slash commands (`/m_update`, `/m_drop`), experimental JS REPL, app-server websocket refresh.
+- **0.101 (Feb 12):** Memory/model stability, model slug preservation.
+- **0.104 (Feb 18):** Distinct approval IDs for multi-approval shell commands; app-server v2 (thread archive notifications); `WS_PROXY`/`WSS_PROXY`; safety-check and cwd-prompt fixes.
+- **Sandbox:** `--sandbox read-only | workspace-write | danger-full-access`; no native "plan" flag; our use of `--sandbox read-only` for plan mode remains correct.
+- **Subagents/MCP:** Codex as MCP server (`codex mcp-server`) exposes `codex`/`codex-reply` tools; community `codex-subagents-mcp` uses profiles (e.g. `sandbox_mode = "read-only"` for review).
 - **Impact:** No change to plan-mode mapping. Subagent/MCP integration for Codex is relevant for orchestrator subagent invocation.
 
-**Claude Code**  
-- **v2.1.41-v2.1.45 (Feb 2026):** CLI auth commands, Windows ARM64, prompt cache and startup improvements; v2.1.45: Sonnet 4.6, `spinnerTipsOverride`, rate-limit telemetry type updates, `enabledPlugins`/`extraKnownMarketplaces` from `--add-dir`, permission destination persistence, plugin command availability fix.  
-- **Plan mode:** `--permission-mode plan` (unchanged).  
-- **Subagents:** `.claude/agents/` markdown definitions; built-in Explore/Plan/General-purpose; CLI/runtime subagent support.  
-- **Hooks:** SessionStart, UserPromptSubmit, PreToolUse, PermissionRequest, PostToolUse, SubagentStart/SubagentStop, etc.; config via `/hooks` or `~/.claude/settings.json` / project settings.  
-- **Plugins:** `.claude-plugin/plugin.json`; skills namespaced as `/plugin-name:skill-name`.  
+**Claude Code**
+- **v2.1.41-v2.1.45 (Feb 2026):** CLI auth commands, Windows ARM64, prompt cache and startup improvements; v2.1.45: Sonnet 4.6, `spinnerTipsOverride`, rate-limit telemetry type updates, `enabledPlugins`/`extraKnownMarketplaces` from `--add-dir`, permission destination persistence, plugin command availability fix.
+- **Plan mode:** `--permission-mode plan` (unchanged).
+- **Subagents:** `.claude/agents/` markdown definitions; built-in Explore/Plan/General-purpose; CLI/runtime subagent support.
+- **Hooks:** SessionStart, UserPromptSubmit, PreToolUse, PermissionRequest, PostToolUse, SubagentStart/SubagentStop, etc.; config via `/hooks` or `~/.claude/settings.json` / project settings.
+- **Plugins:** `.claude-plugin/plugin.json`; skills namespaced as `/plugin-name:skill-name`.
 - **Impact:** Plan mode and subagent/hook/plugin docs are still accurate; v2.1.45 plugin and `--add-dir` behavior may matter for project-specific plugins.
 
-**Gemini (Direct API provider)**  
-- **Plan mode:** Plan mode is enforced by Puppet Master (prompt/routing/policy). Gemini receives a plan-constrained request when `plan_mode` is enabled.  
-- **Doctor / verification checks (Direct-provider):** API key present; `models.list` works; capability gating is consistent with Settings toggles; media routing matches `Plans/Media_Generation_and_Capabilities.md` (Cursor image routes to Cursor-native; Gemini media requires key and compatible model).  
+**Gemini (Direct API provider)**
+- **Plan mode:** Plan mode is enforced by Puppet Master (prompt/routing/policy). Gemini receives a plan-constrained request when `plan_mode` is enabled.
+- **Doctor / verification checks (Direct-provider):** API key present; `models.list` works; capability gating is consistent with Settings toggles; media routing matches `Plans/Media_Generation_and_Capabilities.md` (Cursor image routes to Cursor-native; Gemini media requires key and compatible model).
 - **Impact:** No provider CLI flags or provider-local config files are used for Gemini in this stack.
 
-**GitHub Copilot CLI**  
-- **Jan 14-21, 2026:** Plan mode in interactive UI (Shift+Tab); advanced reasoning models; GPT-5.2-Codex; inline steering; background delegation `&`; `/review`; context auto-compaction; automation flags (`--silent`, `--share`, `--available-tools`, `--excluded-tools`).  
-- **Plan mode:** Interactive only (Shift+Tab); no dedicated `--plan` flag for headless `-p` usage. Programmatic use remains `-p` with existing flags; our "omit `--allow-all-paths`/`--allow-all-urls` when plan_mode" remains the way to get more restrictive behavior in headless.  
+**GitHub Copilot CLI**
+- **Jan 14-21, 2026:** Plan mode in interactive UI (Shift+Tab); advanced reasoning models; GPT-5.2-Codex; inline steering; background delegation `&`; `/review`; context auto-compaction; automation flags (`--silent`, `--share`, `--available-tools`, `--excluded-tools`).
+- **Plan mode:** Interactive only (Shift+Tab); no dedicated `--plan` flag for headless `-p` usage. Programmatic use remains `-p` with existing flags; our "omit `--allow-all-paths`/`--allow-all-urls` when plan_mode" remains the way to get more restrictive behavior in headless.
 - **Provider bridge:** Plan mode remains interactive in Copilot UI; headless runs continue through CLI-bridged restrictive flags.
 - **Impact:** No change to our headless plan-mode mapping; document that native plan mode is interactive; if Copilot adds a headless plan flag, switch to it in runner and platform_specs.
 
-**Summary for this plan**  
-- Plan mode: CLI plan-mode applies to Cursor and Claude Code only; Gemini is Direct-provider (no CLI plan-mode flags or CLI config files in this stack). Codex and Copilot headless behaviors remain unchanged.  
+**Summary for this plan**
+- Plan mode: CLI plan-mode applies to Cursor and Claude Code only; Gemini is Direct-provider (no CLI plan-mode flags or CLI config files in this stack). Codex and Copilot headless behaviors remain unchanged.
 - Subagents/hooks/plugins: Several providers have had relevant changes (Cursor plugins/async subagents; Codex MCP; Claude plugins/hooks; Gemini skills/policies/subagents; Copilot provider/CLI behavior). Keep platform-capabilities and subagent-integration sections in sync with release notes and official docs.
 
 **Gaps vs "use plan mode for every request":**
@@ -1317,6 +1340,12 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 4. **Subagent invocations** -- When subagent integration is added, `ExecutionRequest` built for subagent runs must receive the same `plan_mode` as the tier (so plan mode is applied to every request, including subagent calls).
 5. **Copilot** -- If the CLI gains a native headless plan flag (e.g. `--plan`), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
 5. **Copilot** -- If the CLI gains a native headless plan flag (e.g. `--plan`), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
+
+### Canonical decision
+
+Runtime `plan_mode` defaults remain **migration-safe OFF** for phase/task/subtask/iteration until a project or user explicitly opts in. This aligns with `Plans/Run_Modes.md`, where `plan` is a distinct read-only runtime mode rather than the default execution posture.
+
+A future convenience control MAY enable "all tiers plan-first" in one action, but it MUST write explicit per-tier config rather than changing the default.
 
 ### Recommendations
 
@@ -1382,7 +1411,7 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 
 **Subagent -- frontend (Config)**
 - [ ] Add "Subagents" section on Config: enable toggle, tier overrides (per-tier list or multi-select), disabled/required lists; messages and handlers; persist to same config as backend.
-- [ ] Add **Subagent personas / info setup:** preload list from project `.claude/agents`; user can add their own and delete any (including preloaded); optional AI/batch trim for smaller footprint; list with name + description; "Edit" per subagent to set custom description/instruction (persist to `SubagentGuiConfig.persona_overrides` -- overrides come only from this UI); prompt builder / runner injects persona (override if present, else preloaded content) when invoking that subagent (see Gap §11).
+- [ ] Add **Subagent personas / info setup:** seed/import available subagent persona definitions from provider-native directories (for example project `.claude/agents`) into Puppet Master Persona storage; user can add their own and delete any imported or user-created Persona; optional AI/batch trim writes a normalized lower-footprint copy back into Puppet Master storage; list with name + description; "Edit" opens Persona editing against canonical Puppet Master storage; prompt builder / runner resolves the Persona from Puppet Master storage when invoking that subagent (see Gap §11).
 
 **Doctor**
 - [ ] Gemini is a Direct API provider; no CLI settings check is needed. Doctor validates Gemini API key presence when any tier uses Gemini.
@@ -1461,7 +1490,7 @@ All previously "optional" or "later" plan-mode and subagent GUI/backend items ar
 
 - **DRY:** Check `docs/gui-widget-catalog.md` before adding controls; use existing toggler, styled_button, layout helpers; tag new reusable widgets/helpers with `DRY:WIDGET:` or `DRY:FN:`; run `scripts/generate-widget-catalog.sh` after changes.
 - **Section:** Add a "Subagents" section on the Config page (below tier cards or in a collapsible block). Controls: (1) **Enable tier subagents:** one toggle bound to `subagentConfig.enableTierSubagents`. Message e.g. `Message::ConfigSubagentEnableTierSubagentsToggled(bool)`. (2) **Tier overrides:** For each tier (phase/task/subtask/iteration), a text field or list editor for override subagent names (comma-separated or multi-select from a fixed list of known subagent names). (3) **Disabled subagents:** one list (comma-separated or tag input) for `disabledSubagents`. (4) **Required subagents:** same for `requiredSubagents`. Messages: e.g. `ConfigSubagentTierOverrideChanged(tier, list)`, `ConfigSubagentDisabledListChanged(Vec<String>)`, `ConfigSubagentRequiredListChanged(Vec<String>)`. Handler: update in-memory config and persist; backend reads from same persisted config.
-- **Subagent personas / info setup:** Provide a **place to setup and view subagent personas/info**. (1) **Preload:** Load initial persona list from the project's `.claude/agents` directory (e.g. `puppet-master-rs` or repo root `.claude/agents`); each agent file (e.g. `rust-engineer.md`) supplies name and description/purpose. (2) **User control:** Users can **add their own** personas and **delete any** (including preloaded ones). (3) **Smaller footprint:** Support an optional pass (e.g. AI or batch job) to **trim** persona content to a smaller token footprint while preserving intent. (4) **Persona overrides -- single source:** The only place "overrides" come from is **user edits in the Personas UI**, saved to the same app config as the rest of Config: `SubagentGuiConfig.persona_overrides` (key = subagent name, value = optional custom description and/or instruction snippet). At runtime, for a given subagent name: if the user has saved an override for that name, use it; otherwise use the content from the preloaded/trimmed agent file. No second "source" of personas -- the list is preloaded + user-added (user can delete any); the *content* for a name is either from the agent file or from the user's saved override in config. UI: dedicated "Subagent personas" tab or subsection (Config or Setup); list showing name + description; "Edit" to set custom description/instruction (persisted to `persona_overrides`); "Add" / "Delete" for list management.
+- **Subagent personas / info setup:** Provide a **place to setup and view subagent personas/info**. (1) **Seed/import:** Discover provider-native definitions (for example the project's `.claude/agents` directory) and import them into Puppet Master Persona storage as starter content; imported files may supply the initial name and description/purpose, but they are not canonical runtime storage. (2) **User control:** Users can **add their own** Personas and **delete any** imported or user-created Persona from Puppet Master storage. (3) **Smaller footprint:** Support an optional pass (e.g. AI or batch job) to **trim** persona content to a smaller token footprint while preserving intent; the normalized result is saved back into Puppet Master Persona storage with provenance to the imported source. (4) **Canonical Persona content -- single source:** User edits happen in the Personas UI and persist to Puppet Master Persona storage defined in `Plans/Personas.md`, not to provider-native directories and not as a second runtime source in `SubagentGuiConfig`. At runtime, resolve the subagent name to the canonical Persona stored by Puppet Master; provider-native files remain import/refresh sources only. UI: dedicated "Subagent personas" tab or subsection (Config or Setup); list showing name + description; "Edit" to change the canonical Persona content; "Add" / "Delete" for list management.
 - **Discovery:** Subagent names in the override UI come from a constant list (e.g. from this plan's persona list: project-manager, architect-reviewer, product-manager, rust-engineer, python-pro, code-reviewer, test-automator, ...) or from a future subagent registry; document so UI and backend share the same names.
 
 ### 6. Doctor -- Gemini Plan Mode Check
@@ -1494,7 +1523,7 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 ### 2. Subagent config in GuiConfig
 
 - **Gap:** Plan says load subagent config from `.puppet-master/config.yaml` under `subagentConfig`, and "single save path that includes subagent config," but **GuiConfig** (in `config/gui_config.rs`) has no `subagentConfig` field.
-- **Clarify:** Add a top-level field to **GuiConfig**, e.g. `subagent: SubagentGuiConfig`, with `enable_tier_subagents`, `tier_overrides`, `disabled_subagents`, `required_subagents`. Serialize as `subagentConfig` in YAML (or `subagent` with serde rename) so load/save use the same file as the rest of Config. Ensure default in GuiConfig matches plan defaults (enable_tier_subagents: true, empty overrides/lists). **Persona overrides:** For the "Subagent personas / info setup" feature, add `persona_overrides: HashMap<String, PersonaOverride>` to `SubagentGuiConfig`. **Persona overrides come from exactly one place:** the user's edits in the Subagent Personas UI; when the user clicks Save, those edits are written to the same config file as the rest of Config (e.g. `subagentConfig.personaOverrides` in YAML). Key = subagent name, value = optional custom description and/or instruction snippet. At runtime: if an override exists for that name, use it; else use content from the preloaded agent (e.g. from `.claude/agents` or trimmed copy). Orchestrator and interview both read the same config.
+- **Clarify:** Add a top-level field to **GuiConfig**, e.g. `subagent: SubagentGuiConfig`, with `enable_tier_subagents`, `tier_overrides`, `disabled_subagents`, `required_subagents`. Serialize as `subagentConfig` in YAML (or `subagent` with serde rename) so load/save use the same file as the rest of Config. Ensure default in GuiConfig matches plan defaults (enable_tier_subagents: true, empty overrides/lists). **Persona content storage:** For the "Subagent personas / info setup" feature, do **not** store canonical Persona body overrides inside `SubagentGuiConfig`. Persona description/instruction edits persist in Puppet Master Persona storage per `Plans/Personas.md`; config may store selection or visibility state only if needed. At runtime, resolve the subagent name against Puppet Master Persona storage first; provider-native agent directories are seed/import sources only. Orchestrator and interview both read the same canonical Persona content.
 
 ### 3. Doctor Gemini plan-mode check: source of tier config
 
@@ -1515,7 +1544,7 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 - Platform availability checks
 - **Task tool** (`Plans/Tools.md`): `subagent_type` must be one of these names; validate with `subagent_registry::is_valid_subagent_name()`
 
-**Full set: 41 subagents.** Persona definitions are stored per `Plans/Personas.md` §2 (project-local: `.puppet-master/personas/<persona_id>/PERSONA.md`; global: `~/.config/puppet-master/personas/<persona_id>/PERSONA.md`). Persona schema, validation, GUI management, and context injection rules are defined in `Plans/Personas.md` (canonical SSOT). The orchestrator and interview use subsets by tier/phase; the **task** tool accepts any valid name from this list.
+**Full set: 42 subagents.** Persona definitions are stored per `Plans/Personas.md` §2 (project-local: `.puppet-master/personas/<persona_id>/PERSONA.md`; global: `~/.config/puppet-master/personas/<persona_id>/PERSONA.md`). Persona schema, validation, GUI management, and context injection rules are defined in `Plans/Personas.md` (canonical SSOT). The orchestrator and interview use subsets by tier/phase; the **task** tool accepts any valid name from this list.
 
 | Category | Names |
 |----------|--------|
@@ -1525,7 +1554,7 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 | Task (framework) | `react-specialist`, `vue-expert`, `nextjs-developer`, `laravel-specialist` |
 | Subtask | `code-reviewer`, `test-automator`, `technical-writer`, `api-designer`, `ui-designer`, `security-engineer`, `accessibility-tester`, `compliance-auditor` |
 | Iteration | `debugger`, `qa-expert` |
-| Cross-phase / Interview | `ux-researcher`, `sql-pro`, `prompt-engineer`, `knowledge-synthesizer`, `deployment-engineer`, `context-manager`, `explore` |
+| Cross-phase / Interview | `ux-researcher`, `sql-pro`, `prompt-engineer`, `knowledge-synthesizer`, `deployment-engineer`, `context-manager`, `explorer`, `requirements-quality-reviewer` |
 
 **Implementation:** Create `src/core/subagent_registry.rs` with:
 
@@ -1536,14 +1565,14 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 // DRY requirement: This is the only place subagent names should be defined. All other code must use functions from this module.
 pub mod subagent_registry {
     use std::collections::HashMap;
-    
+
     // DRY:DATA:subagent_names_by_category — Subagents grouped by tier/category
     pub const PHASE_SUBAGENTS: &[&str] = &[
         "project-manager",
         "architect-reviewer",
         "product-manager",
     ];
-    
+
     pub const TASK_LANGUAGE_SUBAGENTS: &[&str] = &[
         "rust-engineer",
         "python-pro",
@@ -1555,7 +1584,7 @@ pub mod subagent_registry {
         "php-pro",
         "golang-pro",
     ];
-    
+
     pub const TASK_DOMAIN_SUBAGENTS: &[&str] = &[
         "backend-developer",
         "frontend-developer",
@@ -1566,14 +1595,14 @@ pub mod subagent_registry {
         "security-auditor",
         "performance-engineer",
     ];
-    
+
     pub const TASK_FRAMEWORK_SUBAGENTS: &[&str] = &[
         "react-specialist",
         "vue-expert",
         "nextjs-developer",
         "laravel-specialist",
     ];
-    
+
     pub const SUBTASK_SUBAGENTS: &[&str] = &[
         "code-reviewer",
         "test-automator",
@@ -1584,12 +1613,12 @@ pub mod subagent_registry {
         "accessibility-tester",
         "compliance-auditor",
     ];
-    
+
     pub const ITERATION_SUBAGENTS: &[&str] = &[
         "debugger",
         "qa-expert",
     ];
-    
+
     // Cross-phase / Interview (used by interview-subagent-integration.md and task tool)
     pub const CROSS_PHASE_SUBAGENTS: &[&str] = &[
         "ux-researcher",
@@ -1598,10 +1627,11 @@ pub mod subagent_registry {
         "knowledge-synthesizer",
         "deployment-engineer",
         "context-manager",
-        "explore",
+        "explorer",
+        "requirements-quality-reviewer",
     ];
-    
-    // DRY:DATA:all_subagent_names — Union of all subagent names (41 total)
+
+    // DRY:DATA:all_subagent_names — Union of all subagent names (42 total)
     pub fn all_subagent_names() -> Vec<String> {
         let mut all = Vec::new();
         all.extend(PHASE_SUBAGENTS.iter().map(|s| s.to_string()));
@@ -1613,7 +1643,7 @@ pub mod subagent_registry {
         all.extend(CROSS_PHASE_SUBAGENTS.iter().map(|s| s.to_string()));
         all
     }
-    
+
     // DRY:DATA:language_to_subagent_mapping — Language → subagent mapping
     pub fn get_subagent_for_language(lang: &str) -> Option<String> {
         let mapping: HashMap<&str, &str> = HashMap::from([
@@ -1627,10 +1657,10 @@ pub mod subagent_registry {
             ("php", "php-pro"),
             ("go", "golang-pro"),
         ]);
-        
+
         mapping.get(lang).map(|s| s.to_string())
     }
-    
+
     // DRY:DATA:framework_to_subagent_mapping — Framework → subagent mapping
     pub fn get_subagent_for_framework(framework: &str) -> Option<String> {
         let framework_lower = framework.to_lowercase();
@@ -1641,15 +1671,15 @@ pub mod subagent_registry {
             ("next.js", "nextjs-developer"),
             ("laravel", "laravel-specialist"),
         ]);
-        
+
         mapping.get(framework_lower.as_str()).map(|s| s.to_string())
     }
-    
+
     // DRY:FN:is_valid_subagent_name — Validate subagent name against canonical list
     pub fn is_valid_subagent_name(name: &str) -> bool {
         all_subagent_names().contains(&name.to_string())
     }
-    
+
     // DRY:FN:get_subagents_for_tier — Get subagents available for a tier type
     pub fn get_subagents_for_tier(tier_type: TierType) -> Vec<String> {
         match tier_type {
@@ -1881,7 +1911,7 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 ### 14. Subagent persona overrides (token budget and scope)
 
 - **Issue:** Custom instruction snippets in persona overrides could be long; injecting them into every subagent prompt may consume token budget or conflict with platform limits.
-- **Mitigation:** (1) Persona overrides apply to any subagent name that exists in the current list (preloaded from `.claude/agents` or user-added). Keys in `persona_overrides` are names the user has edited in the Personas UI; no separate "second source" -- overrides come only from config (user's saved edits). (2) Optionally cap length of `custom_instruction` / `custom_description` in UI and config (e.g. 500-1000 chars) and document that persona text is prepended to the prompt so users are aware of token impact. (3) Use the same resolution (override if present, else preloaded content) in both orchestrator and interview.
+- **Mitigation:** (1) Persona edits apply to any subagent name that exists in the current list (imported from provider-native seed files or user-created in Puppet Master storage). The canonical content lives in Puppet Master Persona storage; do not maintain a second runtime source in config. (2) Optionally cap length of editable Persona instruction/description content in UI and storage workflows (e.g. 500-1000 chars for inline override affordances) and document that persona text is prepended to the prompt so users are aware of token impact. (3) Use the same resolution (canonical Puppet Master Persona content, with optional re-import/trim refresh) in both orchestrator and interview.
 
 ---
 
@@ -1943,12 +1973,12 @@ When `max_questions_per_phase` is configured:
 
 ### Other unwired interview settings -- resolution
 
-- **`require_architecture_confirmation`**  
-  **Intended behavior:** Before leaving certain phases (e.g. architecture/tech stack), the interview requires explicit user or agent confirmation of architecture/tech choices.  
+- **`require_architecture_confirmation`**
+  **Intended behavior:** Before leaving certain phases (e.g. architecture/tech stack), the interview requires explicit user or agent confirmation of architecture/tech choices.
   **Wiring:** Add `require_architecture_confirmation: bool` to `InterviewOrchestratorConfig`; set from `gui_config.interview` in `app.rs`. In the interview flow, add a step or phase gate that, when this is true, waits for or prompts for explicit confirmation (e.g. a dedicated phase or a prompt line) before allowing phase complete. Document in interview prompts and in AGENTS.md.
 
-- **`vision_provider`**  
-  **Intended behavior:** When the interview or follow-up uses image/vision (e.g. screenshots, diagrams), this setting selects the preferred platform for vision-capable requests.  
+- **`vision_provider`**
+  **Intended behavior:** When the interview or follow-up uses image/vision (e.g. screenshots, diagrams), this setting selects the preferred platform for vision-capable requests.
   **Wiring:** Add `vision_provider: String` to `InterviewOrchestratorConfig`; set from `gui_config.interview` in `app.rs`. When building requests that include images, use this platform (filtered by platform_specs vision capability). If no image flow exists yet, wire the field and leave the behavior as "use when implementing image/vision flows"; document that in the plan or code.
 
 ### Main-run config source note
@@ -2030,6 +2060,11 @@ To prevent users from hitting settings that exist in the UI and requirements but
 
 Beyond config-wiring validation (which runs at **start** of each tier), this section defines a **broader start verification** (wiring + readiness) and an **end verification** (wiring again + **quality review**) at Phase, Task, and Subtask boundaries. The goal is to catch things that need to be wired, confirm GUI/backend are in sync, validate that steps make sense, and at the end not only pass acceptance criteria but ensure the work was done well via actual code review. **Human-in-the-Loop (HITL):** Optional pause for human approval at these same boundaries is specified in **Plans/human-in-the-loop.md** (runs after end verification, before advancing to the next tier).
 
+Canonical lifecycle alignment:
+- Verification results are persisted as seglog/redb events and projections (`config.validation.*`, `run.qa_cycle_*`, HITL events), not as authoritative ad hoc JSON files.
+- Executor node `status` remains governed by `Plans/Executor_Protocol.md`; labels such as `waiting_approval`, `needs_review`, and warning states are overlays/projections, not replacement node statuses.
+- Start verification blocks before any provider spawn. End verification runs before promotion and before any HITL pause for the same tier.
+
 ### Start-of-phase / start-of-task / start-of-subtask verification
 
 When the orchestrator **enters** a Phase, Task, or Subtask, run the following **before** building execution context or spawning the agent:
@@ -2060,7 +2095,7 @@ When the orchestrator **enters** a Phase, Task, or Subtask, run the following **
 
 **AfterTierStart verification responsibilities:**
 
-- **Persist verification results:** Save verification results to `.puppet-master/state/verification-{tier_id}.json`
+- **Persist verification results:** Emit canonical `config.validation.passed|warning|failed` events and update redb projections for this tier/runtime snapshot
 - **Track verification history:** Add verification entry to verification history for this tier
 
 **Implementation:** Create `src/verification/tier_start.rs` with `verify_tier_start()` function. Integrate with orchestrator tier entry point.
@@ -2084,7 +2119,7 @@ impl Orchestrator {
             &self.config,
             context,
         ).await?;
-        
+
         // Handle verification failures
         match verification_result.status {
             VerificationStatus::Pass => {
@@ -2106,16 +2141,16 @@ impl Orchestrator {
                 // Continue with tier execution
             }
         }
-        
+
         // Log verification results
         self.log_verification_result(&tier_node.id, &verification_result).await?;
-        
+
         // Persist verification results
         self.persist_verification_result(&tier_node.id, &verification_result).await?;
-        
+
         // Build execution context (only if verification passed or warn-and-continue)
         let execution_context = self.build_execution_context(tier_node, context)?;
-        
+
         // Continue with tier execution...
         Ok(())
     }
@@ -2181,7 +2216,7 @@ pub async fn verify_tier_start(
     context: &OrchestratorContext,
 ) -> Result<StartVerificationResult> {
     let mut findings = Vec::new();
-    
+
     // 1. Config-wiring check
     let config_wiring_result = validate_config_wiring_for_tier(tier_type, config)?;
     if !config_wiring_result.passed {
@@ -2192,7 +2227,7 @@ pub async fn verify_tier_start(
             suggestion: Some("Ensure tier config is present and all required fields are wired".to_string()),
         }));
     }
-    
+
     // 2. GUI-backend mapping check
     let gui_backend_result = check_gui_backend_mapping(tier_type, config)?;
     if !gui_backend_result.passed {
@@ -2203,7 +2238,7 @@ pub async fn verify_tier_start(
             suggestion: Some("Add GUI control for this backend setting or document why it is internal-only".to_string()),
         }));
     }
-    
+
     // 3. Backend-GUI mapping check
     let backend_gui_result = check_backend_gui_mapping(tier_type, config)?;
     if !backend_gui_result.passed {
@@ -2214,7 +2249,7 @@ pub async fn verify_tier_start(
             suggestion: Some("Read and apply this GUI setting in the execution path for this tier".to_string()),
         }));
     }
-    
+
     // 4. Operation sequence validation
     let sequence_result = validate_operation_sequence(tier_type, config)?;
     if !sequence_result.passed {
@@ -2225,7 +2260,7 @@ pub async fn verify_tier_start(
             suggestion: Some("Ensure operation sequence matches config schema and plan".to_string()),
         }));
     }
-    
+
     // 5. Gap check
     let gap_result = check_known_gaps(tier_type)?;
     if !gap_result.gaps.is_empty() {
@@ -2238,7 +2273,7 @@ pub async fn verify_tier_start(
             });
         }
     }
-    
+
     // Determine overall status
     let status = if findings.iter().any(|f| matches!(f.severity, FindingSeverity::Critical)) {
         VerificationStatus::Fail
@@ -2247,7 +2282,7 @@ pub async fn verify_tier_start(
     } else {
         VerificationStatus::Pass
     };
-    
+
     Ok(StartVerificationResult {
         tier_type,
         tier_id: context.tier_id.clone(),
@@ -2271,7 +2306,7 @@ fn check_gui_backend_mapping(
 ) -> Result<MappingCheckResult> {
     // Load GUI-backend mapping (from config_wiring.rs or static list)
     let mapping = load_gui_backend_mapping(tier_type)?;
-    
+
     // Check all execution-affecting settings have GUI controls
     // ...
 }
@@ -2282,7 +2317,7 @@ fn check_backend_gui_mapping(
 ) -> Result<MappingCheckResult> {
     // Load backend-GUI mapping
     let mapping = load_backend_gui_mapping(tier_type)?;
-    
+
     // Check all GUI controls are read and applied in execution path
     // ...
 }
@@ -2298,7 +2333,7 @@ fn validate_operation_sequence(
 fn check_known_gaps(tier_type: TierType) -> Result<GapCheckResult> {
     // Load known gaps per tier type
     let gaps = load_known_gaps(tier_type)?;
-    
+
     Ok(GapCheckResult { gaps })
 }
 ```
@@ -2380,10 +2415,10 @@ impl Orchestrator {
     ) -> Result<TierStatus> {
         // Collect tier artifacts
         let artifacts = self.collect_tier_artifacts(tier_node, context).await?;
-        
+
         // Compute diff
         let diff = self.compute_tier_diff(tier_node, context).await?;
-        
+
         // Run end verification
         let verification_result = verify_tier_end(
             tier_node.tier_type,
@@ -2393,7 +2428,7 @@ impl Orchestrator {
             &self.config,
             context,
         ).await?;
-        
+
         // Handle verification results
         let tier_status = match verification_result.status {
             VerificationStatus::Pass => {
@@ -2414,18 +2449,18 @@ impl Orchestrator {
                 }
             }
         };
-        
+
         // Persist verification results
         self.persist_verification_result(&tier_node.id, &verification_result).await?;
-        
+
         // Update tier status in PRD/state
         self.update_tier_status(tier_node, &tier_status).await?;
-        
+
         // Generate feedback if verification failed
         if matches!(tier_status, TierStatus::Incomplete { .. }) {
             self.generate_verification_feedback(tier_node, &verification_result).await?;
         }
-        
+
         Ok(tier_status)
     }
 }
@@ -2466,7 +2501,7 @@ pub async fn verify_tier_end(
     context: &OrchestratorContext,
 ) -> Result<EndVerificationResult> {
     let mut findings = Vec::new();
-    
+
     // 1. Re-run wiring check
     let wiring_result = re_run_wiring_check(tier_type, config, context).await?;
     if !wiring_result.passed {
@@ -2477,7 +2512,7 @@ pub async fn verify_tier_end(
             suggestion: Some("Ensure new config/settings introduced during tier are properly wired".to_string()),
         }));
     }
-    
+
     // 2. Run acceptance criteria
     let acceptance_result = run_acceptance_criteria(tier_type, outcome, artifacts, config).await?;
     if !acceptance_result.passed {
@@ -2488,7 +2523,7 @@ pub async fn verify_tier_end(
             suggestion: Some("Ensure acceptance criteria from PRD are met".to_string()),
         }));
     }
-    
+
     // 3. Run quality verification
     let quality_result = run_quality_verification(tier_type, artifacts, diff, config, context).await?;
     if !quality_result.passed {
@@ -2499,7 +2534,7 @@ pub async fn verify_tier_end(
             suggestion: f.suggestion,
         }));
     }
-    
+
     // Determine overall status
     let status = if findings.iter().any(|f| matches!(f.severity, FindingSeverity::Critical)) {
         VerificationStatus::Fail
@@ -2508,14 +2543,14 @@ pub async fn verify_tier_end(
     } else {
         VerificationStatus::Pass
     };
-    
+
     // Generate feedback if verification failed
     let feedback = if matches!(status, VerificationStatus::Fail) {
         Some(generate_verification_feedback(&findings, artifacts, diff)?)
     } else {
         None
     };
-    
+
     Ok(EndVerificationResult {
         tier_type,
         tier_id: context.tier_id.clone(),
@@ -2537,19 +2572,19 @@ async fn run_quality_verification(
     context: &OrchestratorContext,
 ) -> Result<QualityCheckResult> {
     let mut findings = Vec::new();
-    
+
     // 3a. Code review by reviewer subagent (required, not optional)
     let reviewer_result = run_reviewer_subagent(tier_type, artifacts, diff, config, context).await?;
     if !reviewer_result.passed {
         findings.extend(reviewer_result.findings);
     }
-    
+
     // 3b. Quality gate criteria (required as well)
     let quality_gate_result = run_quality_gate_criteria(tier_type, artifacts, diff, config).await?;
     if !quality_gate_result.passed {
         findings.extend(quality_gate_result.findings);
     }
-    
+
     Ok(QualityCheckResult {
         passed: findings.is_empty(),
         reviewer_result,
@@ -2570,15 +2605,15 @@ async fn run_reviewer_subagent(
     let reviewer_subagent = get_reviewer_subagent_for_tier(tier_type)?;
     // Implementation note: get_reviewer_subagent_for_tier() must use subagent_registry::get_subagents_for_tier(TierType::Subtask)
     // and filter for "code-reviewer" or use subagent_registry::get_reviewer_subagent_for_tier() if such a function exists
-    
+
     // Build review prompt
     let review_prompt = build_review_prompt(artifacts, diff, tier_type)?;
-    
+
     // DRY requirement: must use platform_specs functions — never hardcode platform-specific behavior
     // Invoke reviewer subagent via platform runner
     let platform = get_platform_for_tier(tier_type, config)?;
     let model = get_model_for_tier(tier_type, config)?;
-    
+
     // DRY: Use platform_specs to get runner — DO NOT use match statements for platform selection
     let runner = get_platform_runner(platform)?;
     // DRY requirement: execute_with_subagent must use platform_specs::get_subagent_invocation_format() internally
@@ -2587,10 +2622,10 @@ async fn run_reviewer_subagent(
         &review_prompt,
         &context.workspace,
     ).await?;
-    
+
     // Parse reviewer output as structured SubagentOutput
     let parsed_output = parse_reviewer_output(&review_output.stdout)?;
-    
+
     // Extract findings from reviewer output
     let findings = parsed_output.findings.into_iter()
         .map(|f| QualityFinding {
@@ -2601,7 +2636,7 @@ async fn run_reviewer_subagent(
             suggestion: f.suggestion,
         })
         .collect();
-    
+
     Ok(ReviewerResult {
         passed: findings.iter().all(|f| matches!(f.severity, Severity::Info | Severity::Minor)),
         findings,
@@ -2616,10 +2651,10 @@ async fn run_quality_gate_criteria(
     config: &PuppetMasterConfig,
 ) -> Result<QualityGateResult> {
     let mut findings = Vec::new();
-    
+
     // Get quality criteria for this tier type
     let quality_criteria = get_quality_criteria_for_tier(tier_type)?;
-    
+
     // Run each quality check
     for criterion in quality_criteria {
         let check_result = run_quality_check(&criterion, artifacts, diff, config).await?;
@@ -2633,7 +2668,7 @@ async fn run_quality_gate_criteria(
             });
         }
     }
-    
+
     Ok(QualityGateResult {
         passed: findings.is_empty(),
         findings,
@@ -2729,6 +2764,15 @@ When a phase/tier fails with issues outside its task scope:
 
 This section defines lifecycle hooks, structured handoff contracts, remediation loops, and cross-session persistence that enhance reliability and quality across **all providers** (Cursor, Codex, Claude Code, Gemini, Copilot). These features complement the start/end verification above and can be implemented using platform-native hooks where available, or via orchestrator-level middleware for platforms without native hooks.
 
+Canonical persistence note:
+- Seglog/redb are the authoritative persistence layers for hook execution, QA loop progress, crew state, and active-tier/runtime snapshots.
+- Examples under `.puppet-master/state/` in this section are derived/debug mirrors only unless another SSOT explicitly promotes them.
+
+Autonomous QA loop contract:
+- When end verification finds blocking Critical/Major issues that are retryable, orchestrator MAY start a bounded QA remediation cycle.
+- Each cycle MUST emit `run.qa_cycle_started` and `run.qa_cycle_completed`.
+- Warning-only findings attach evidence but do not create alternate terminal node statuses.
+
 ### 1. Hook-Based Lifecycle Middleware (BeforeTier/AfterTier)
 
 **Concept:** Puppet Master should support **BeforeTier** and **AfterTier** hooks that run automatically at tier boundaries (Phase, Task, Subtask, Iteration). Hooks handle lifecycle concerns (tracking, state management, validation) separately from execution logic.
@@ -2781,7 +2825,7 @@ pub enum CompletionStatus {
 pub trait BeforeTierHook: Send + Sync {
     /// Execute hook before tier starts
     fn execute(&self, ctx: &BeforeTierContext) -> Result<BeforeTierResult>;
-    
+
     /// Hook name for logging/debugging
     fn name(&self) -> &str;
 }
@@ -2790,7 +2834,7 @@ pub trait BeforeTierHook: Send + Sync {
 pub trait AfterTierHook: Send + Sync {
     /// Execute hook after tier completes
     fn execute(&self, ctx: &AfterTierContext) -> Result<AfterTierResult>;
-    
+
     /// Hook name for logging/debugging
     fn name(&self) -> &str;
 }
@@ -2830,22 +2874,22 @@ impl HookRegistry {
             after_tier_hooks: Vec::new(),
         }
     }
-    
+
     pub fn register_before_tier(&mut self, hook: Box<dyn BeforeTierHook>) {
         self.before_tier_hooks.push(hook);
     }
-    
+
     pub fn register_after_tier(&mut self, hook: Box<dyn AfterTierHook>) {
         self.after_tier_hooks.push(hook);
     }
-    
+
     /// Execute all BeforeTier hooks (safe wrapper)
     pub fn execute_before_tier(&self, ctx: &BeforeTierContext) -> Result<BeforeTierResult> {
         let mut active_subagent = None;
         let mut injected_contexts = Vec::new();
         let mut block = false;
         let mut block_reason = None;
-        
+
         for hook in &self.before_tier_hooks {
             match safe_hook_main(|| hook.execute(ctx)) {
                 Ok(result) => {
@@ -2867,7 +2911,7 @@ impl HookRegistry {
                 }
             }
         }
-        
+
         Ok(BeforeTierResult {
             active_subagent,
             injected_context: if injected_contexts.is_empty() {
@@ -2879,14 +2923,14 @@ impl HookRegistry {
             block_reason,
         })
     }
-    
+
     /// Execute all AfterTier hooks (safe wrapper)
     pub fn execute_after_tier(&self, ctx: &AfterTierContext) -> Result<AfterTierResult> {
         let mut validation_passed = true;
         let mut validation_error = None;
         let mut request_retry = false;
         let mut retry_reason = None;
-        
+
         for hook in &self.after_tier_hooks {
             match safe_hook_main(|| hook.execute(ctx)) {
                 Ok(result) => {
@@ -2904,7 +2948,7 @@ impl HookRegistry {
                 }
             }
         }
-        
+
         Ok(AfterTierResult {
             validation_passed,
             validation_error,
@@ -2937,7 +2981,7 @@ In `src/core/orchestrator.rs`, modify `execute_tier`:
 ```rust
 async fn execute_tier(&self, tier_id: &str) -> Result<()> {
     // ... existing state transition logic ...
-    
+
     // BEFORE TIER: Execute BeforeTier hooks
     let before_ctx = BeforeTierContext {
         tier_id: tier_id.to_string(),
@@ -2948,29 +2992,29 @@ async fn execute_tier(&self, tier_id: &str) -> Result<()> {
         config_snapshot: serde_json::to_value(&tier_config)?,
         known_gaps: self.get_known_gaps_for_tier(tier_type)?,
     };
-    
+
     let before_result = self.hook_registry.execute_before_tier(&before_ctx)?;
-    
+
     if before_result.block {
         return Err(anyhow!("Tier {} blocked by hook: {}", tier_id, before_result.block_reason.unwrap_or_default()));
     }
-    
+
     // Update TierContext with active subagent
     if let Some(subagent) = before_result.active_subagent {
         self.update_tier_context(tier_id, |ctx| {
             ctx.active_subagent = Some(subagent);
         })?;
     }
-    
+
     // Inject context into prompt if provided
     let prompt = if let Some(injected) = before_result.injected_context {
         format!("{}\n\n{}", prompt, injected)
     } else {
         prompt
     };
-    
+
     // ... existing iteration execution ...
-    
+
     // AFTER TIER: Execute AfterTier hooks
     let after_ctx = AfterTierContext {
         tier_id: tier_id.to_string(),
@@ -2984,9 +3028,9 @@ async fn execute_tier(&self, tier_id: &str) -> Result<()> {
         },
         iteration_count: attempt,
     };
-    
+
     let after_result = self.hook_registry.execute_after_tier(&after_ctx)?;
-    
+
     if !after_result.validation_passed {
         if after_result.request_retry && attempt < max_iterations {
             // Retry with format instruction
@@ -2999,7 +3043,7 @@ async fn execute_tier(&self, tier_id: &str) -> Result<()> {
             // Mark tier as complete with warnings
         }
     }
-    
+
     // ... rest of tier completion logic ...
 }
 ```
@@ -3141,10 +3185,10 @@ pub struct ParsedOutput {
 // Add to OutputParser trait:
 pub trait OutputParser: Send + Sync {
     // ... existing methods ...
-    
+
     /// Parse structured subagent output (platform-specific)
     fn parse_subagent_output(&self, stdout: &str, stderr: &str) -> Result<SubagentOutput, ValidationError>;
-    
+
     /// Extract structured output from text (fallback)
     fn extract_subagent_output_from_text(&self, stdout: &str, stderr: &str) -> Result<SubagentOutput, ValidationError>;
 }
@@ -3159,17 +3203,17 @@ impl OutputParser for CursorOutputParser {
         // Implementation note: Use platform_specs to determine expected output format for this platform
         let json: serde_json::Value = serde_json::from_str(stdout)
             .map_err(|e| ValidationError::JsonParse(e))?;
-        
+
         // Extract structured fields
         let task_report = json.get("task_report")
             .and_then(|v| v.as_str())
             .ok_or_else(|| ValidationError::MissingField("task_report".to_string()))?
             .to_string();
-        
+
         let downstream_context = json.get("downstream_context")
             .and_then(|v| v.as_str())
             .map(String::from);
-        
+
         let findings = json.get("findings")
             .and_then(|v| v.as_array())
             .map(|arr| {
@@ -3180,20 +3224,20 @@ impl OutputParser for CursorOutputParser {
                     .collect()
             })
             .unwrap_or_default();
-        
+
         Ok(SubagentOutput {
             task_report,
             downstream_context,
             findings,
         })
     }
-    
+
     fn extract_subagent_output_from_text(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
         // Fallback: extract from text output
         // Look for structured markers (e.g., "Task Report:", "Findings:", etc.)
         // Or use LLM to extract structured data from text
         // Implementation depends on platform output format
-        
+
         // Simple text extraction (can be enhanced with LLM)
         let task_report = if let Some(start) = stdout.find("Task Report:") {
             let end = stdout[start..].find("\n\n").unwrap_or(stdout.len() - start);
@@ -3201,7 +3245,7 @@ impl OutputParser for CursorOutputParser {
         } else {
             stdout.to_string() // Fallback: use entire output as task report
         };
-        
+
         Ok(SubagentOutput {
             task_report,
             downstream_context: None,
@@ -3253,7 +3297,7 @@ impl HandoffValidator {
                         "Output is not valid JSON. Please output structured JSON format.".to_string()
                     ));
                 }
-                
+
                 // Max retries reached, try text extraction as fallback
                 self.parser.extract_subagent_output_from_text(stdout, stderr)
                     .map_err(|e| ValidationError::TextExtraction(format!("Failed to extract from text: {}", e)))
@@ -3269,25 +3313,25 @@ impl HandoffValidator {
             }
         }
     }
-    
+
     fn validate_required_fields(&self, output: &SubagentOutput) -> Result<(), ValidationError> {
         // Validate task_report is not empty
         if output.task_report.trim().is_empty() {
             return Err(ValidationError::MissingField("task_report".to_string()));
         }
-        
+
         // Validate findings have required fields
         for finding in &output.findings {
             if finding.description.trim().is_empty() {
                 return Err(ValidationError::MissingField("finding.description".to_string()));
             }
-            
+
             // Validate severity is valid
             match finding.severity {
                 Severity::Critical | Severity::Major | Severity::Minor | Severity::Info => {}
             }
         }
-        
+
         Ok(())
     }
 }
@@ -3311,7 +3355,7 @@ impl Orchestrator {
     ) -> Result<SubagentOutput> {
         let runner = self.get_platform_runner(platform)?;
         let mut retry_count = 0;
-        
+
         loop {
             // Execute subagent
             let output = runner.execute_with_subagent(
@@ -3319,7 +3363,7 @@ impl Orchestrator {
                 prompt,
                 &context.workspace,
             ).await?;
-            
+
             // Validate handoff output
             let validator = HandoffValidator::new(platform)?;
             match validator.validate_subagent_output(
@@ -3340,14 +3384,14 @@ impl Orchestrator {
                         tracing::warn!("Handoff validation failed after {} retries: {}", retry_count, msg);
                         return Ok(validator.extract_partial_output(&output.stdout, &output.stderr)?);
                     }
-                    
+
                     // Update prompt with format instruction
                     let updated_prompt = format!(
                         "{}\n\n**IMPORTANT:** Output must be valid JSON matching this format:\n{}\n\nCurrent output was not valid JSON. Please retry with structured JSON output.",
                         prompt,
                         serde_json::to_string_pretty(&SubagentOutput::example())?
                     );
-                    
+
                     // Continue loop with updated prompt
                     continue;
                 }
@@ -3370,7 +3414,7 @@ impl Orchestrator {
                     .collect()
             })
             .unwrap_or_default();
-        
+
         Ok(SubagentOutput {
             task_report,
             downstream_context,
@@ -3388,7 +3432,7 @@ impl OutputParser for CodexOutputParser {
         let mut task_report = String::new();
         let mut downstream_context = None;
         let mut findings = Vec::new();
-        
+
         for line in stdout.lines() {
             if let Ok(json) = serde_json::from_str::<serde_json::Value>(line) {
                 // Look for Turn event with structured output
@@ -3406,7 +3450,7 @@ impl OutputParser for CodexOutputParser {
                         }
                     }
                 }
-                
+
                 // Aggregate findings from multiple events
                 if let Some(f) = json.get("findings").and_then(|v| v.as_array()) {
                     for finding_val in f {
@@ -3417,12 +3461,12 @@ impl OutputParser for CodexOutputParser {
                 }
             }
         }
-        
+
         // If no structured output found, try to extract from text
         if task_report.is_empty() {
             return Err(ValidationError::TextExtraction("No structured output found in JSONL".to_string()));
         }
-        
+
         Ok(SubagentOutput {
             task_report,
             downstream_context,
@@ -3438,29 +3482,29 @@ impl OutputParser for ClaudeOutputParser {
         // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Claude outputs JSON"
         // Claude outputs JSON with --output-format json -- format from platform_specs
         let json: serde_json::Value = serde_json::from_str(stdout)?;
-        
+
         // Claude wraps output in "result" -> "content" or direct fields
         let content = json.get("result")
             .and_then(|r| r.get("content"))
             .or_else(|| Some(&json))
             .ok_or_else(|| ValidationError::MissingField("result.content".to_string()))?;
-        
+
         // Try direct parse
         if let Ok(output) = serde_json::from_value::<SubagentOutput>(content.clone()) {
             return Ok(output);
         }
-        
+
         // Fallback: extract fields manually
         let task_report = content.get("task_report")
             .and_then(|v| v.as_str())
             .or_else(|| content.as_str())
             .ok_or_else(|| ValidationError::MissingField("task_report".to_string()))?
             .to_string();
-        
+
         let downstream_context = content.get("downstream_context")
             .and_then(|v| v.as_str())
             .map(String::from);
-        
+
         let findings = content.get("findings")
             .and_then(|v| v.as_array())
             .map(|arr| {
@@ -3469,7 +3513,7 @@ impl OutputParser for ClaudeOutputParser {
                     .collect()
             })
             .unwrap_or_default();
-        
+
         Ok(SubagentOutput {
             task_report,
             downstream_context,
@@ -3485,7 +3529,7 @@ impl OutputParser for GeminiOutputParser {
         // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Gemini outputs JSON"
         // Gemini outputs JSON with --output-format json -- format from platform_specs
         let json: serde_json::Value = serde_json::from_str(stdout)?;
-        
+
         // Gemini wraps in "candidates" -> [0] -> "content" -> "parts" -> [0] -> "text"
         let text = json.get("candidates")
             .and_then(|c| c.as_array())
@@ -3497,12 +3541,12 @@ impl OutputParser for GeminiOutputParser {
             .and_then(|p| p.get("text"))
             .and_then(|t| t.as_str())
             .ok_or_else(|| ValidationError::MissingField("candidates[0].content.parts[0].text".to_string()))?;
-        
+
         // Try to parse text as JSON (Gemini may output JSON as text)
         if let Ok(output) = serde_json::from_str::<SubagentOutput>(text) {
             return Ok(output);
         }
-        
+
         // Fallback: extract from text patterns
         Err(ValidationError::TextExtraction("Gemini text output requires pattern extraction".to_string()))
     }
@@ -3515,26 +3559,26 @@ impl OutputParser for CopilotOutputParser {
         // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Copilot outputs text"
         // Copilot outputs text (no JSON) -- format from platform_specs
         // Extract structured sections via regex/pattern matching
-        
+
         let combined = format!("{stdout}\n{stderr}");
-        
+
         // Pattern: ## Task Report\n\n...content...
         let task_report_re = Regex::new(r"(?s)##\s*Task\s*Report\s*\n\n(.*?)(?=\n##|\z)").unwrap();
         let task_report = task_report_re.captures(&combined)
             .and_then(|cap| cap.get(1))
             .map(|m| m.as_str().trim().to_string())
             .ok_or_else(|| ValidationError::MissingField("Task Report section".to_string()))?;
-        
+
         // Pattern: ## Downstream Context\n\n...content... (optional)
         let downstream_re = Regex::new(r"(?s)##\s*Downstream\s*Context\s*\n\n(.*?)(?=\n##|\z)").unwrap();
         let downstream_context = downstream_re.captures(&combined)
             .and_then(|cap| cap.get(1))
             .map(|m| m.as_str().trim().to_string());
-        
+
         // Pattern: ## Findings\n\n- [Severity] Category: Description (file:line) Suggestion
         let findings_re = Regex::new(r"(?m)^-\s*\[(Critical|Major|Minor|Info)\]\s*(\w+):\s*(.*?)(?:\s*\(([^:]+):(\d+)\))?(?:\s*Suggestion:\s*(.*))?$").unwrap();
         let mut findings = Vec::new();
-        
+
         if let Some(findings_section) = Regex::new(r"(?s)##\s*Findings\s*\n\n(.*?)(?=\n##|\z)").unwrap().captures(&combined) {
             for cap in findings_re.captures_iter(findings_section.get(1).unwrap().as_str()) {
                 let severity = match cap.get(1).unwrap().as_str() {
@@ -3544,7 +3588,7 @@ impl OutputParser for CopilotOutputParser {
                     "Info" => Severity::Info,
                     _ => continue,
                 };
-                
+
                 findings.push(Finding {
                     severity,
                     category: cap.get(2).unwrap().as_str().to_string(),
@@ -3555,7 +3599,7 @@ impl OutputParser for CopilotOutputParser {
                 });
             }
         }
-        
+
         Ok(SubagentOutput {
             task_report,
             downstream_context,
@@ -3600,10 +3644,10 @@ impl OutputParser for CursorOutputParser {
     fn parse(&self, stdout: &str, stderr: &str) -> ParsedOutput {
         let mut output = ParsedOutput::new(stdout.to_string());
         // ... existing parsing ...
-        
+
         // Try to parse structured subagent output
         output.subagent_output = self.parse_subagent_output(stdout, stderr).ok();
-        
+
         output
     }
 }
@@ -3642,7 +3686,7 @@ impl RemediationLoop {
     pub fn new(max_retries: u32, orchestrator: Arc<Orchestrator>) -> Self {
         Self { max_retries, orchestrator }
     }
-    
+
     // DRY:FN:run — Run remediation loop for a tier
     // DRY REQUIREMENT: Reviewer subagent name MUST come from subagent_registry — NEVER hardcode "code-reviewer"
     /// Run remediation loop for a tier
@@ -3656,49 +3700,49 @@ impl RemediationLoop {
             .iter()
             .filter(|f| matches!(f.severity, Severity::Critical | Severity::Major))
             .collect();
-        
+
         if critical_major.is_empty() {
             // Only Minor/Info findings: log and proceed
             self.log_findings(&reviewer_output.findings);
             return Ok(RemediationResult::Complete);
         }
-        
+
         // Critical/Major findings: enter remediation loop
         let mut retry_count = 0;
         let mut current_findings = critical_major.clone();
-        
+
         while retry_count < self.max_retries {
             // Mark tier as incomplete
             self.orchestrator.mark_tier_incomplete(tier_id, &current_findings).await?;
-            
+
             // Build remediation prompt
             let remediation_prompt = self.build_remediation_prompt(&current_findings);
-            
+
             // DRY REQUIREMENT: Overseer and reviewer subagent names MUST come from subagent_registry — NEVER hardcode names
             // Re-run overseer subagent with remediation prompt
             // Implementation note: re_run_overseer_with_prompt MUST use subagent_registry to get overseer subagent name
             let overseer_result = self.orchestrator
                 .re_run_overseer_with_prompt(tier_id, &remediation_prompt)
                 .await?;
-            
+
             // DRY REQUIREMENT: Reviewer subagent name MUST come from subagent_registry::get_reviewer_subagent_for_tier()
             // Re-run reviewer subagent
             // Implementation note: re_run_reviewer MUST use subagent_registry to get reviewer subagent name
             let reviewer_result = self.orchestrator
                 .re_run_reviewer(tier_id)
                 .await?;
-            
+
             // Parse new findings
             let new_critical_major: Vec<_> = reviewer_result.findings
                 .iter()
                 .filter(|f| matches!(f.severity, Severity::Critical | Severity::Major))
                 .collect();
-            
+
             if new_critical_major.is_empty() {
                 // All Critical/Major resolved
                 return Ok(RemediationResult::Resolved);
             }
-            
+
             // Check if findings changed (progress made)
             if self.findings_unchanged(&current_findings, &new_critical_major) {
                 retry_count += 1;
@@ -3710,13 +3754,13 @@ impl RemediationLoop {
                 // Progress made, reset retry count
                 retry_count = 0;
             }
-            
+
             current_findings = new_critical_major;
         }
-        
+
         Ok(RemediationResult::Escalate(current_findings))
     }
-    
+
     fn build_remediation_prompt(&self, findings: &[&Finding]) -> String {
         let mut prompt = "CRITICAL/Major findings must be fixed before tier completion:\n\n".to_string();
         for finding in findings {
@@ -3740,7 +3784,7 @@ impl RemediationLoop {
         prompt.push_str("\nPlease fix these issues and re-run verification.");
         prompt
     }
-    
+
     fn findings_unchanged(&self, old: &[&Finding], new: &[&Finding]) -> bool {
         // Compare finding descriptions and locations
         old.len() == new.len() && old.iter().all(|o| {
@@ -3751,7 +3795,7 @@ impl RemediationLoop {
             })
         })
     }
-    
+
     fn log_findings(&self, findings: &[Finding]) {
         for finding in findings {
             log::info!(
@@ -3898,7 +3942,7 @@ impl MemoryManager {
         });
         Self { memory_dir }
     }
-    
+
     // DRY:FN:save_architecture — Save architectural decision
     /// Save architectural decision
     pub async fn save_architecture(&self, decision: ArchitecturalDecision) -> Result<()> {
@@ -3907,7 +3951,7 @@ impl MemoryManager {
         arch.last_updated = Utc::now();
         self.save_file("architecture.json", &arch).await
     }
-    
+
     /// Load architectural decisions
     pub async fn load_architecture(&self) -> Result<ArchitectureMemory> {
         self.load_file("architecture.json").await
@@ -3916,7 +3960,7 @@ impl MemoryManager {
                 last_updated: Utc::now(),
             })
     }
-    
+
     /// Save pattern
     pub async fn save_pattern(&self, pattern: EstablishedPattern) -> Result<()> {
         let mut patterns = self.load_patterns().await?;
@@ -3924,7 +3968,7 @@ impl MemoryManager {
         patterns.last_updated = Utc::now();
         self.save_file("patterns.json", &patterns).await
     }
-    
+
     /// Load patterns
     pub async fn load_patterns(&self) -> Result<PatternsMemory> {
         self.load_file("patterns.json").await
@@ -3933,7 +3977,7 @@ impl MemoryManager {
                 last_updated: Utc::now(),
             })
     }
-    
+
     /// Save tech choice
     pub async fn save_tech_choice(&self, choice: TechChoice) -> Result<()> {
         let mut tech = self.load_tech_choices().await?;
@@ -3941,7 +3985,7 @@ impl MemoryManager {
         tech.last_updated = Utc::now();
         self.save_file("tech-choices.json", &tech).await
     }
-    
+
     /// Load tech choices
     pub async fn load_tech_choices(&self) -> Result<TechChoicesMemory> {
         self.load_file("tech-choices.json").await
@@ -3950,7 +3994,7 @@ impl MemoryManager {
                 last_updated: Utc::now(),
             })
     }
-    
+
     /// Save pitfall
     pub async fn save_pitfall(&self, pitfall: Pitfall) -> Result<()> {
         let mut pitfalls = self.load_pitfalls().await?;
@@ -3958,7 +4002,7 @@ impl MemoryManager {
         pitfalls.last_updated = Utc::now();
         self.save_file("pitfalls.json", &pitfalls).await
     }
-    
+
     /// Load pitfalls
     pub async fn load_pitfalls(&self) -> Result<PitfallsMemory> {
         self.load_file("pitfalls.json").await
@@ -3967,16 +4011,16 @@ impl MemoryManager {
                 last_updated: Utc::now(),
             })
     }
-    
+
     /// Load all memory and format for prompt injection
     pub async fn load_all_for_prompt(&self) -> Result<String> {
         let arch = self.load_architecture().await?;
         let patterns = self.load_patterns().await?;
         let tech = self.load_tech_choices().await?;
         let pitfalls = self.load_pitfalls().await?;
-        
+
         let mut prompt = String::new();
-        
+
         if !arch.decisions.is_empty() {
             prompt.push_str("## Previous Architectural Decisions\n\n");
             for decision in &arch.decisions {
@@ -3987,7 +4031,7 @@ impl MemoryManager {
             }
             prompt.push('\n');
         }
-        
+
         if !patterns.patterns.is_empty() {
             prompt.push_str("## Established Patterns\n\n");
             for pattern in &patterns.patterns {
@@ -3995,7 +4039,7 @@ impl MemoryManager {
             }
             prompt.push('\n');
         }
-        
+
         if !tech.choices.is_empty() {
             prompt.push_str("## Tech Choices\n\n");
             for choice in &tech.choices {
@@ -4007,7 +4051,7 @@ impl MemoryManager {
             }
             prompt.push('\n');
         }
-        
+
         if !pitfalls.pitfalls.is_empty() {
             prompt.push_str("## Known Pitfalls to Avoid\n\n");
             for pitfall in &pitfalls.pitfalls {
@@ -4017,10 +4061,10 @@ impl MemoryManager {
                 }
             }
         }
-        
+
         Ok(prompt)
     }
-    
+
     async fn save_file<T: Serialize>(&self, filename: &str, data: &T) -> Result<()> {
         std::fs::create_dir_all(&self.memory_dir)?;
         let path = self.memory_dir.join(filename);
@@ -4028,7 +4072,7 @@ impl MemoryManager {
         std::fs::write(path, json)?;
         Ok(())
     }
-    
+
     async fn load_file<T: for<'de> Deserialize<'de>>(&self, filename: &str) -> Result<T> {
         let path = self.memory_dir.join(filename);
         let json = std::fs::read_to_string(path)?;
@@ -4442,25 +4486,25 @@ When subtasks run in parallel, each subtask can have **different subagents** sel
 
 async fn execute_subtasks_parallel(&self, subtask_ids: &[String]) -> Result<Vec<Result<()>>> {
     // ... existing dependency analysis ...
-    
+
     // Get parallelizable groups
     let groups = self.dependency_analyzer.get_parallelizable_groups(dependencies)?;
-    
+
     // Execute each group sequentially
     for group in groups {
         // Create worktrees for each subtask
         for id in &group {
             let _ = self.create_subtask_worktree(id).await?;
         }
-        
+
         // Execute subtasks in parallel, each with its own subagent selection
         let results = join_all(group.iter().map(|id| async {
             let tree = self.tier_tree.lock().unwrap();
             let tier_node = tree.find_by_id(id).unwrap();
-            
+
             // Build context for this specific subtask
             let tier_context = self.build_tier_context(&tier_node, &context)?;
-            
+
             // DRY REQUIREMENT: Subagent selection MUST use subagent_selector which uses subagent_registry — NEVER hardcode subagent names
             // Select subagents for THIS subtask (independent of others)
             let subagent_names = self.subagent_selector.select_for_tier(
@@ -4473,12 +4517,12 @@ async fn execute_subtasks_parallel(&self, subtask_ids: &[String]) -> Result<Vec<
                     log::warn!("Invalid subagent name selected: {}", name);
                 }
             }
-            
+
             // DRY REQUIREMENT: execute_tier_with_subagents MUST use platform_specs for platform-specific invocation
             // Execute with selected subagents
             self.execute_tier_with_subagents(&tier_node, &tier_context, &subagent_names).await
         })).await;
-        
+
         // ... cleanup ...
     }
 }
@@ -4511,7 +4555,7 @@ impl SubagentSelector {
         tier_context: &TierContext,
     ) -> Vec<String> {
         let mut subagents = self.select_for_tier(tier_node.tier_type, tier_context);
-        
+
         // DRY REQUIREMENT: language_to_subagent MUST use subagent_registry::get_subagent_for_language()
         // Inherit language/domain from completed dependencies
         for dep in completed_dependencies {
@@ -4527,14 +4571,14 @@ impl SubagentSelector {
                         }
                     }
                 }
-                
+
                 // Inherit domain if not already set
                 if tier_context.domain == ProjectDomain::Unknown {
                     // Use domain from dependency
                 }
             }
         }
-        
+
         subagents
     }
 }
@@ -4562,7 +4606,7 @@ When multiple agents/subagents run concurrently (parallel subtasks, different ti
    - What operations each agent is performing (e.g., "editing src/api.rs", "running tests")
    - Platform identifier (so agents know which platform other agents are using)
    - Timestamp of last update
-   
+
    **This file-based coordination works across ALL platforms** -- a Codex agent can see what a Claude agent is doing, and vice versa. All platforms read/write to the same JSON file.
 
 3. **Provider-bridge coordination (current):**
@@ -4582,11 +4626,11 @@ When multiple agents/subagents run concurrently (parallel subtasks, different ti
    **Active Agents:**
    - rust-engineer (Codex) is editing src/api.rs (started 2 minutes ago)
    - test-automator (Claude Code) is running tests in tests/api_test.rs (started 1 minute ago)
-   
+
    **Files Being Modified:**
    - src/api.rs (by rust-engineer on Codex)
    - tests/api_test.rs (by test-automator on Claude Code)
-   
+
    **Your Task:** Implement authentication middleware. Avoid editing src/api.rs until rust-engineer finishes.
    ```
 
@@ -4711,7 +4755,7 @@ impl AgentCoordinator {
             state_file: project_root.join(".puppet-master").join("state").join("active-agents.json"),
         }
     }
-    
+
     // DRY:FN:register_agent — Register an agent as active
     // DRY REQUIREMENT: Agent platform field MUST be from tier_config.platform — NEVER hardcode platform
     /// Register an agent as active
@@ -4722,7 +4766,7 @@ impl AgentCoordinator {
         state.last_updated = Utc::now();
         self.save_state(&state).await
     }
-    
+
     /// Update agent status (files being edited, current operation)
     pub async fn update_agent_status(
         &self,
@@ -4741,7 +4785,7 @@ impl AgentCoordinator {
             Err(anyhow!("Agent {} not found", agent_id))
         }
     }
-    
+
     /// Unregister an agent (when it completes)
     pub async fn unregister_agent(&self, agent_id: &str) -> Result<()> {
         let mut state = self.load_state().await?;
@@ -4749,13 +4793,13 @@ impl AgentCoordinator {
         state.last_updated = Utc::now();
         self.save_state(&state).await
     }
-    
+
     // DRY:FN:get_coordination_context — Get coordination context for prompt injection
     /// Get coordination context for prompt injection
     pub async fn get_coordination_context(&self) -> Result<String> {
         let state = self.load_state().await?;
         let mut context = String::new();
-        
+
         if !state.active_agents.is_empty() {
             context.push_str("**Active Agents:**\n");
             for agent in state.active_agents.values() {
@@ -4771,7 +4815,7 @@ impl AgentCoordinator {
                     agent.tier_id
                 ));
             }
-            
+
             context.push_str("\n**Files Being Modified:**\n");
             let mut all_files: Vec<_> = state.active_agents.values()
                 .flat_map(|a| &a.files_being_edited)
@@ -4790,10 +4834,10 @@ impl AgentCoordinator {
                 ));
             }
         }
-        
+
         Ok(context)
     }
-    
+
     async fn load_state(&self) -> Result<AgentCoordinationState> {
         if self.state_file.exists() {
             let json = std::fs::read_to_string(&self.state_file)?;
@@ -4813,7 +4857,7 @@ impl AgentCoordinator {
             })
         }
     }
-    
+
     async fn save_state(&self, state: &AgentCoordinationState) -> Result<()> {
         std::fs::create_dir_all(self.state_file.parent().unwrap())?;
         let json = serde_json::to_string_pretty(state)?;
@@ -4964,8 +5008,16 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, tier_id)).await?;
      - Task level with platform = Codex → Crew uses Codex subagents
      - Subtask level with platform = Copilot → Crew uses Copilot subagents
    - Each crew uses the platform specified in that tier's config
-   - **Cross-platform coordination:** Different crews (different platforms) coordinate via shared message board (`agent-messages.json`) and coordination state (`active-agents.json`)
-   - **Rationale:** Orchestrator respects tier-level platform selections while enabling cross-platform coordination through shared state
+    - **Cross-platform coordination:** Different crews (different platforms) coordinate via shared message board (`agent-messages.json`) and coordination state (`active-agents.json`)
+    - **Rationale:** Orchestrator respects tier-level platform selections while enabling cross-platform coordination through shared state
+
+**Canonical crew contract:**
+- A Crew is a runtime coordination construct, not a replacement for tier or node ownership.
+- Canonical crew state is persisted via seglog/redb (`crew.started`, `crew.member_*`, `crew.message_posted`, `crew.completed` plus `runs -> crew.*` projections).
+- File-based message boards such as `agent-messages.json` or `active-agents.json` are debug/interop mirrors only and MUST be rebuildable from canonical events.
+- Crew permissions are bounded by the member run's platform, strategy, tool policy, and FileSafe scope; crew membership does not widen those permissions.
+
+ContractRef: Primitive:Seglog, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md
 
 **User-initiated Crew invocation (Future: Assistant feature):**
 
@@ -4986,13 +5038,13 @@ if prompt.contains("crew") || prompt.contains("crews") || prompt.contains("use a
     // 2) Assistant thread/platform selection (when present)
     // 3) fallback: cursor
     let platform = self.resolve_platform_for_crew()?; // e.g., Platform::Cursor
-    
+
     // Parse crew request (extract task, subagents needed)
     let crew_request = parse_crew_request(&prompt)?;
-    
+
     // Create crew with platform-specific subagents
     let crew = Crew::new(platform, crew_request.subagents, crew_request.task);
-    
+
     // Spawn crew (all subagents use same platform)
     crew.execute().await?;
 }
@@ -5110,10 +5162,10 @@ impl Crew {
         // Set message routing to crew members
         message.to_tier_id = None; // Override tier_id
         message.crew_id = Some(self.crew_id.clone()); // Scope to crew
-        
+
         communicator.post_message(message).await
     }
-    
+
     /// Get messages for crew
     pub async fn get_crew_messages(&self) -> Result<Vec<AgentMessage>> {
         communicator.get_messages_for_crew(&self.crew_id).await
@@ -5243,7 +5295,7 @@ let subtask_crew = Crew {
 Task level (1.1):
   Platform: Codex
   Crew: Codex subagents (rust-engineer, backend-developer)
-  
+
 Subtask level (1.1.1):
   Platform: Copilot
   Crew: Copilot subagents (test-automator)
@@ -5360,13 +5412,13 @@ Coordination:
 // Detect crew invocation in prompts
 fn detect_crew_invocation(prompt: &str) -> Option<CrewRequest> {
     let lower = prompt.to_lowercase();
-    
+
     if lower.contains("crew") || lower.contains("crews") {
         // Parse crew request
         // Extract: subagents, task, optional name
         // ...
     }
-    
+
     None
 }
 ```
@@ -5382,7 +5434,7 @@ fn detect_crew_invocation(prompt: &str) -> Option<CrewRequest> {
 
 - **Where:** New module `src/core/crews.rs` for crew management; extend `src/core/agent_communication.rs` for crew-scoped messaging; extend GUI views for crew monitoring
 - **What:** Implement `Crew` struct, crew creation (orchestrator-initiated only for now), crew execution, crew communication, GUI components for crew visibility
-- **When:** 
+- **When:**
   - **Current:** Orchestrator creates crew for tier → use platform from tier config (`tier_config_for(tier_type, tier_id).platform`)
   - **Future (Assistant feature):** User invokes crew → create platform-specific crew using deterministic platform selection (no prompting; fallback = cursor)
   - Cross-platform coordination happens automatically via shared message board (`agent-messages.json`)
@@ -5443,12 +5495,12 @@ impl Crew {
         if let Some(member) = self.subagents.iter_mut().find(|a| a.agent_id == failed_agent_id) {
             member.status = SubagentStatus::Blocked;
         }
-        
+
         // Check if crew can continue
         let active_members: Vec<_> = self.subagents.iter()
             .filter(|a| matches!(a.status, SubagentStatus::Active | SubagentStatus::Pending))
             .collect();
-        
+
         if active_members.is_empty() {
             // All members failed — disband crew
             self.status = CrewStatus::Disbanded;
@@ -5467,10 +5519,10 @@ impl Crew {
                 // ...
             }).await?;
         }
-        
+
         Ok(())
     }
-    
+
     pub async fn cancel(&mut self) -> Result<()> {
         // Send cancellation to all members
         self.post_to_crew(AgentMessage {
@@ -5479,14 +5531,14 @@ impl Crew {
             content: "User has cancelled this crew. Please stop work and clean up.".to_string(),
             // ...
         }).await?;
-        
+
         // Wait for members to acknowledge (with timeout)
         tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
-        
+
         // Disband crew
         self.status = CrewStatus::Disbanded;
         self.save_state().await?;
-        
+
         Ok(())
     }
 }
@@ -5511,7 +5563,7 @@ impl AgentCommunicator {
             .cloned()
             .collect())
     }
-    
+
     pub async fn get_messages_for_agent_in_crews(
         &self,
         agent_id: &str,
@@ -5557,22 +5609,22 @@ impl CrewManager {
         if crew_size > self.config.max_crew_size {
             return Err(anyhow!("Crew size {} exceeds maximum {}", crew_size, self.config.max_crew_size));
         }
-        
+
         // Check concurrent crew limit
         let active_crews = self.get_active_crews_for_platform(platform).await?;
         if active_crews.len() >= self.config.max_concurrent_crews_per_platform {
-            return Err(anyhow!("Maximum concurrent crews ({}) reached for platform {:?}", 
+            return Err(anyhow!("Maximum concurrent crews ({}) reached for platform {:?}",
                 self.config.max_concurrent_crews_per_platform, platform));
         }
-        
+
         // Check platform quota (if available)
         if let Some(quota) = self.check_platform_quota(platform).await? {
             if quota.remaining < crew_size as u64 {
-                return Err(anyhow!("Insufficient platform quota. Need {}, have {}", 
+                return Err(anyhow!("Insufficient platform quota. Need {}, have {}",
                     crew_size, quota.remaining));
             }
         }
-        
+
         Ok(true)
     }
 }
@@ -5602,7 +5654,7 @@ fn parse_crew_request(prompt: &str) -> Result<CrewRequest> {
         // Auto-select based on task
         vec![] // Will be filled by SubagentSelector
     };
-    
+
     // Extract task
     // Pattern: "crew to <task>" or "crew: <task>"
     let task_pattern = regex::Regex::new(r"crew\s+(?:to|:)\s+(.+)")?;
@@ -5610,14 +5662,14 @@ fn parse_crew_request(prompt: &str) -> Result<CrewRequest> {
         .and_then(|c| c.get(1))
         .map(|m| m.as_str().to_string())
         .ok_or_else(|| anyhow!("Could not parse task from crew request"))?;
-    
+
     // Extract platform override
     // Pattern: "crew with <platform>"
     let platform_pattern = regex::Regex::new(r"crew\s+with\s+(codex|copilot|claude|cursor|gemini)")?;
     let platform_override = platform_pattern.captures(prompt)
         .and_then(|c| c.get(1))
         .map(|m| parse_platform(m.as_str()));
-    
+
     Ok(CrewRequest {
         subagents,
         task,
@@ -5641,7 +5693,7 @@ impl CrewManager {
     pub async fn recover_crews_on_startup(&self) -> Result<()> {
         let crews = self.load_crews().await?;
         let coordination_state = self.coordinator.load_state().await?;
-        
+
         for mut crew in crews {
             if matches!(crew.status, CrewStatus::Active | CrewStatus::Forming) {
                 // Check if crew members are still active
@@ -5650,7 +5702,7 @@ impl CrewManager {
                         coordination_state.active_agents.contains_key(&member.agent_id)
                     })
                     .collect();
-                
+
                 if active_members.is_empty() {
                     // All members inactive — mark crew as disbanded
                     crew.status = CrewStatus::Disbanded;
@@ -5664,11 +5716,11 @@ impl CrewManager {
                     }
                     tracing::info!("Crew {} recovered with {} active members", crew.crew_id, active_members.len());
                 }
-                
+
                 self.save_crew(&crew).await?;
             }
         }
-        
+
         Ok(())
     }
 }
@@ -5695,7 +5747,7 @@ impl Crew {
         // Check if all members are waiting
         let all_waiting = self.subagents.iter()
             .all(|member| matches!(member.status, SubagentStatus::Waiting));
-        
+
         if all_waiting {
             // Check how long they've been waiting
             let oldest_wait = self.subagents.iter()
@@ -5708,17 +5760,17 @@ impl Crew {
                     }
                 })
                 .min();
-            
+
             if let Some(wait_time) = oldest_wait {
                 if wait_time.num_minutes() > 5 {
                     return Ok(true); // Deadlock detected
                 }
             }
         }
-        
+
         Ok(false)
     }
-    
+
     pub async fn resolve_deadlock(&mut self, orchestrator: &Orchestrator) -> Result<()> {
         // Orchestrator injects resolution message
         orchestrator.post_to_crew(self.crew_id.clone(), AgentMessage {
@@ -5727,14 +5779,14 @@ impl Crew {
             content: "Orchestrator detected deadlock. Proceeding with approach X. All members should proceed.".to_string(),
             // ...
         }).await?;
-        
+
         // Unblock all members
         for member in &mut self.subagents {
             if matches!(member.status, SubagentStatus::Waiting) {
                 member.status = SubagentStatus::Active;
             }
         }
-        
+
         Ok(())
     }
 }
@@ -5814,18 +5866,18 @@ impl Crew {
 impl AgentCommunicator {
     pub async fn post_message_with_rate_limit(&self, message: AgentMessage) -> Result<()> {
         // Check rate limit
-        let recent_messages = self.get_recent_messages_for_agent(&message.from_agent_id, 
+        let recent_messages = self.get_recent_messages_for_agent(&message.from_agent_id,
             chrono::Duration::minutes(1)).await?;
-        
+
         if recent_messages.len() >= 10 {
             return Err(anyhow!("Rate limit exceeded: max 10 messages per minute"));
         }
-        
+
         // Check for duplicates
         if self.is_duplicate(&message, &recent_messages)? {
             return Err(anyhow!("Duplicate message detected"));
         }
-        
+
         // Post message
         self.post_message(message).await
     }
@@ -6204,7 +6256,7 @@ impl AgentCommunicator {
             coordinator: AgentCoordinator::new(project_root),
         }
     }
-    
+
     // DRY:FN:post_message — Post a message to the message board
     // DRY REQUIREMENT: Validate agent_id using subagent_registry::is_valid_subagent_name() if it's a subagent name
     /// Post a message to the message board
@@ -6217,7 +6269,7 @@ impl AgentCommunicator {
         board.last_updated = Utc::now();
         self.save_message_board(&board).await
     }
-    
+
     /// Get messages relevant to an agent
     pub async fn get_messages_for_agent(
         &self,
@@ -6227,7 +6279,7 @@ impl AgentCommunicator {
     ) -> Result<Vec<AgentMessage>> {
         let board = self.load_message_board().await?;
         let active_agents = self.coordinator.load_state().await?;
-        
+
         // Filter messages relevant to this agent
         let relevant: Vec<_> = board.messages.iter()
             .filter(|msg| {
@@ -6237,26 +6289,26 @@ impl AgentCommunicator {
                         return true;
                     }
                 }
-                
+
                 // Message to agent type
                 if let Some(ref to_type) = msg.to_agent_type {
                     if agent_type.map(|t| t == to_type).unwrap_or(false) {
                         return true;
                     }
                 }
-                
+
                 // Message to tier
                 if let Some(ref to_tier) = msg.to_tier_id {
                     if to_tier == tier_id {
                         return true;
                     }
                 }
-                
+
                 // Broadcast (no specific recipient)
                 if msg.to_agent_id.is_none() && msg.to_agent_type.is_none() && msg.to_tier_id.is_none() {
                     return true;
                 }
-                
+
                 // Message mentions files agent is working on
                 if let Some(agent) = active_agents.active_agents.get(agent_id) {
                     for file in &agent.files_being_edited {
@@ -6265,24 +6317,24 @@ impl AgentCommunicator {
                         }
                     }
                 }
-                
+
                 false
             })
             .cloned()
             .collect();
-        
+
         Ok(relevant)
     }
-    
+
     /// Format messages for prompt injection
     pub fn format_messages_for_prompt(&self, messages: &[AgentMessage]) -> Result<String> {
         if messages.is_empty() {
             return Ok(String::new());
         }
-        
+
         let mut formatted = String::new();
         formatted.push_str("**Recent Messages from Other Agents:**\n\n");
-        
+
         for msg in messages.iter().take(10) { // Limit to 10 most recent
             // DRY REQUIREMENT: Platform display name MUST use platform_specs::display_name_for() — NEVER hardcode platform names
             let platform_display = platform_specs::display_name_for(msg.from_platform);
@@ -6296,7 +6348,7 @@ impl AgentCommunicator {
                 MessageType::Warning => "⚠️ Warning",
                 MessageType::Announcement => "📣 Announcement",
             };
-            
+
             formatted.push_str(&format!(
                 "- **{}** from {}: {}\n  {}\n",
                 message_type_str,
@@ -6304,7 +6356,7 @@ impl AgentCommunicator {
                 msg.subject,
                 msg.content
             ));
-            
+
             if !msg.context.files_mentioned.is_empty() {
                 formatted.push_str(&format!(
                     "  Files: {}\n",
@@ -6315,10 +6367,10 @@ impl AgentCommunicator {
                 ));
             }
         }
-        
+
         Ok(formatted)
     }
-    
+
     /// Mark message as read
     pub async fn mark_message_read(&self, message_id: &str, agent_id: &str) -> Result<()> {
         let mut board = self.load_message_board().await?;
@@ -6330,34 +6382,34 @@ impl AgentCommunicator {
         }
         Ok(())
     }
-    
+
     /// Archive old messages (>24 hours)
     pub async fn archive_old_messages(&self) -> Result<()> {
         let mut board = self.load_message_board().await?;
         let cutoff = Utc::now() - chrono::Duration::hours(24);
-        
+
         let (active, archived): (Vec<_>, Vec<_>) = board.messages
             .into_iter()
             .partition(|msg| msg.created_at > cutoff || !msg.resolved);
-        
+
         board.messages = active;
         self.save_message_board(&board).await?;
-        
+
         // Save archived messages to separate file
         if !archived.is_empty() {
             let archive_file = self.message_board_file.with_extension("archive.json");
             // Append to archive file
             // ...
         }
-        
+
         Ok(())
     }
-    
+
     async fn load_message_board(&self) -> Result<AgentMessageBoard> {
         // Similar to AgentCoordinator::load_state
         // ...
     }
-    
+
     async fn save_message_board(&self, board: &AgentMessageBoard) -> Result<()> {
         // Similar to AgentCoordinator::save_state (with locking)
         // ...
@@ -6401,7 +6453,7 @@ pub struct OrchestratorInsights {
 impl OrchestratorInsights {
     pub async fn analyze_communication(&self, communicator: &AgentCommunicator) -> Result<Self> {
         let board = communicator.load_message_board().await?;
-        
+
         // Analyze messages for insights
         // ...
     }
@@ -6459,7 +6511,7 @@ impl AgentCoordinator {
         let lock_file = self.state_file.with_extension("lock");
         let mut attempts = 0;
         const MAX_ATTEMPTS: u32 = 3;
-        
+
         loop {
             // Try to acquire lock
             match self.acquire_lock(&lock_file).await {
@@ -6476,26 +6528,26 @@ impl AgentCoordinator {
                 }
             }
         }
-        
+
         // Write to temp file first
         let temp_file = self.state_file.with_extension("tmp");
         let json = serde_json::to_string_pretty(state)?;
         std::fs::write(&temp_file, json)?;
-        
+
         // Atomic rename
         std::fs::rename(&temp_file, &self.state_file)?;
-        
+
         // Release lock
         let _ = std::fs::remove_file(&lock_file);
-        
+
         Ok(())
     }
-    
+
     async fn acquire_lock(&self, lock_file: &Path) -> Result<()> {
         // Create lock file with PID
         let pid = std::process::id();
         let lock_content = format!("{}\n", pid);
-        
+
         // Try to create lock file exclusively
         match std::fs::OpenOptions::new()
             .write(true)
@@ -6523,7 +6575,7 @@ impl AgentCoordinator {
             Err(e) => Err(anyhow!("Failed to create lock: {}", e)),
         }
     }
-    
+
     fn process_exists(&self, pid: u32) -> bool {
         // Unix-specific: check if process exists
         #[cfg(unix)]
@@ -6564,7 +6616,7 @@ async fn load_state(&self) -> Result<AgentCoordinationState> {
                 return Ok(AgentCoordinationState::default());
             }
         };
-        
+
         // Try to parse JSON
         match serde_json::from_str::<AgentCoordinationState>(&json) {
             Ok(state) => {
@@ -6584,7 +6636,7 @@ async fn load_state(&self) -> Result<AgentCoordinationState> {
                         }
                     }
                 }
-                
+
                 // Last resort: empty state
                 tracing::error!("Coordination state corrupted and backup recovery failed: {}. Using empty state.", e);
                 Ok(AgentCoordinationState::default())
@@ -6631,21 +6683,21 @@ fn validate_state(&self, state: &AgentCoordinationState) -> Result<()> {
 ```rust
 async fn load_state(&self) -> Result<AgentCoordinationState> {
     // ... existing load logic ...
-    
+
     // Prune stale agents
     let mut pruned = state.clone();
     let cutoff = Utc::now() - chrono::Duration::minutes(5); // 5 minute timeout
     let initial_count = pruned.active_agents.len();
-    
+
     pruned.active_agents.retain(|agent_id, agent| {
         // Check if agent is stale
         if agent.last_update < cutoff {
-            tracing::info!("Pruning stale agent: {} (last update: {} ago)", 
-                agent_id, 
+            tracing::info!("Pruning stale agent: {} (last update: {} ago)",
+                agent_id,
                 Utc::now().signed_duration_since(agent.last_update));
             return false;
         }
-        
+
         // Check if worktree still exists (if applicable)
         if let Some(ref worktree) = agent.worktree_path {
             if !worktree.exists() {
@@ -6653,15 +6705,15 @@ async fn load_state(&self) -> Result<AgentCoordinationState> {
                 return false;
             }
         }
-        
+
         true
     });
-    
+
     if pruned.active_agents.len() != initial_count {
         // Save pruned state
         self.save_state(&pruned).await?;
     }
-    
+
     Ok(pruned)
 }
 ```
@@ -6688,30 +6740,30 @@ impl FileOperationExtractor {
         git_diff: Option<Vec<PathBuf>>, // Files changed in git diff
     ) -> Vec<PathBuf> {
         let mut files = std::collections::HashSet::new();
-        
+
         // Source 1: Platform hooks (highest confidence)
         if let Some(hook_files) = platform_hooks {
             for file in hook_files {
                 files.insert(PathBuf::from(file));
             }
         }
-        
+
         // Source 2: Git diff (high confidence)
         if let Some(diff_files) = git_diff {
             for file in diff_files {
                 files.insert(file);
             }
         }
-        
+
         // Source 3: Agent output parsing (medium confidence)
         let output_files = self.parse_files_from_output(agent_output);
         for file in output_files {
             files.insert(file);
         }
-        
+
         files.into_iter().collect()
     }
-    
+
     fn parse_files_from_output(&self, output: &str) -> Vec<PathBuf> {
         // Regex patterns for common file mentions
         let patterns = vec![
@@ -6720,7 +6772,7 @@ impl FileOperationExtractor {
             r#""([^"]+\.(rs|ts|js|py|go|java))""#,
             r#"'([^']+\.(rs|ts|js|py|go|java))'"#,
         ];
-        
+
         let mut files = Vec::new();
         for pattern in patterns {
             let re = regex::Regex::new(pattern).unwrap();
@@ -6730,7 +6782,7 @@ impl FileOperationExtractor {
                 }
             }
         }
-        
+
         files
     }
 }
@@ -6754,7 +6806,7 @@ pub async fn get_coordination_context(
 ) -> Result<String> {
     let state = self.load_state().await?;
     let mut context = String::new();
-    
+
     // Apply filters
     let filtered_agents: Vec<_> = state.active_agents.values()
         .filter(|agent| {
@@ -6778,24 +6830,24 @@ pub async fn get_coordination_context(
             true
         })
         .collect();
-    
+
     // Limit to max agents
     let max_agents = 20; // Limit to prevent token bloat
     let agents_to_show: Vec<_> = filtered_agents.iter().take(max_agents).collect();
-    
+
     if agents_to_show.is_empty() {
         return Ok(String::new());
     }
-    
+
     // Build context (same as before but with limit)
     // ... existing context building logic ...
-    
+
     // If context exceeds token limit, summarize
     let estimated_tokens = context.len() / 4; // Rough estimate
     if estimated_tokens > 2000 {
         context = self.summarize_coordination_context(&agents_to_show)?;
     }
-    
+
     Ok(context)
 }
 
@@ -6834,7 +6886,7 @@ impl AgentCoordinator {
     ) -> Result<Vec<FileConflict>> {
         let state = self.load_state().await?;
         let mut conflicts = Vec::new();
-        
+
         for file in files_to_edit {
             // Check if any other agent is editing this file
             for (other_agent_id, other_agent) in &state.active_agents {
@@ -6847,10 +6899,10 @@ impl AgentCoordinator {
                 }
             }
         }
-        
+
         Ok(conflicts)
     }
-    
+
     /// Acquire file lock (if available)
     pub async fn acquire_file_lock(
         &self,
@@ -6859,11 +6911,11 @@ impl AgentCoordinator {
         duration_minutes: u64,
     ) -> Result<bool> {
         let mut state = self.load_state().await?;
-        
+
         // Check if file is already locked
         // (This would require extending AgentCoordinationState with file_locks field)
         // For now, check files_being_edited
-        
+
         // If not locked, add to agent's files_being_edited
         if let Some(agent) = state.active_agents.get_mut(agent_id) {
             if !agent.files_being_edited.contains(file) {
@@ -6873,7 +6925,7 @@ impl AgentCoordinator {
                 return Ok(true);
             }
         }
-        
+
         Ok(false) // File already locked
     }
 }
@@ -6903,7 +6955,7 @@ impl AgentCoordinator {
                 return relative.to_path_buf();
             }
         }
-        
+
         // If path is in worktree, convert to main repo path
         if let Ok(stripped) = path.strip_prefix(".puppet-master/worktrees/") {
             // Extract worktree name and file path
@@ -6912,7 +6964,7 @@ impl AgentCoordinator {
                 return stripped.strip_prefix(components).unwrap_or(stripped).to_path_buf();
             }
         }
-        
+
         path.to_path_buf()
     }
 }
@@ -6952,7 +7004,7 @@ impl AgentCoordinator {
             .cloned()
             .collect())
     }
-    
+
     pub async fn get_agents_by_tier(&self, tier_id: &str) -> Result<Vec<ActiveAgent>> {
         let state = self.load_state().await?;
         Ok(state.active_agents.values()
@@ -6960,7 +7012,7 @@ impl AgentCoordinator {
             .cloned()
             .collect())
     }
-    
+
     pub async fn get_agents_editing_file(&self, file: &Path) -> Result<Vec<ActiveAgent>> {
         let state = self.load_state().await?;
         Ok(state.active_agents.values()
@@ -6982,15 +7034,15 @@ impl AgentCoordinator {
         if self.state_file.exists() {
             let backup_file = self.state_file.with_extension(format!("bak.{}", Utc::now().timestamp()));
             let _ = std::fs::copy(&self.state_file, &backup_file);
-            
+
             // Cleanup old backups (keep last 10)
             self.cleanup_old_backups().await?;
         }
-        
+
         // Save new state (with locking as above)
         self.save_state_with_lock(state).await
     }
-    
+
     async fn cleanup_old_backups(&self) -> Result<()> {
         // Implementation: list backup files, sort by timestamp, keep last 10
         // ...
@@ -7013,7 +7065,7 @@ pub struct AgentCoordinationState {
 impl AgentCoordinator {
     fn validate_schema_version(&self, state: &AgentCoordinationState) -> Result<()> {
         const CURRENT_SCHEMA_VERSION: u32 = 1;
-        
+
         if state.schema_version != CURRENT_SCHEMA_VERSION {
             return Err(anyhow!(
                 "Coordination state schema version mismatch: expected {}, got {}",
@@ -7021,10 +7073,10 @@ impl AgentCoordinator {
                 state.schema_version
             ));
         }
-        
+
         Ok(())
     }
-    
+
     async fn migrate_schema(&self, old_state: AgentCoordinationState) -> Result<AgentCoordinationState> {
         // Migrate old schema versions to current
         // ...
@@ -7049,7 +7101,7 @@ Level 0:
   - Subtask A (rust-engineer) → Worktree: .puppet-master/worktrees/A
   - Subtask B (react-specialist) → Worktree: .puppet-master/worktrees/B
   - Subtask C (python-pro) → Worktree: .puppet-master/worktrees/C
-  
+
 // All run concurrently, each with appropriate subagent
 // Results merged back to main branch after completion
 ```
@@ -7086,7 +7138,7 @@ impl SubagentConflictDetector {
     ) -> Vec<Conflict> {
         let mut conflicts = Vec::new();
         let coordination_state = coordinator.load_state().await.ok();
-        
+
         // Check for overlapping file modifications using coordination state
         for (i, context_a) in tier_contexts.iter().enumerate() {
             for (j, context_b) in tier_contexts.iter().enumerate().skip(i + 1) {
@@ -7100,11 +7152,11 @@ impl SubagentConflictDetector {
                         .filter(|a| a.tier_id == context_b.item_id)
                         .flat_map(|a| &a.files_being_edited)
                         .collect();
-                    
+
                     let overlapping: Vec<_> = files_a.iter()
                         .filter(|f| files_b.contains(f))
                         .collect();
-                    
+
                     if !overlapping.is_empty() {
                         conflicts.push(Conflict {
                             type_: ConflictType::FileOverlap,
@@ -7116,7 +7168,7 @@ impl SubagentConflictDetector {
                 }
             }
         }
-        
+
         // Check for architectural conflicts
         for (i, subagents_a) in subagent_groups.iter().enumerate() {
             for (j, subagents_b) in subagent_groups.iter().enumerate().skip(i + 1) {
@@ -7130,10 +7182,10 @@ impl SubagentConflictDetector {
                 }
             }
         }
-        
+
         conflicts
     }
-    
+
     fn has_architectural_conflict(
         &self,
         subagents_a: &[String],
@@ -7167,7 +7219,7 @@ pub struct Conflict {
 1. **Provider rate limits:** Each platform (Cursor, Codex, Claude Code, Gemini, Copilot) enforces rate limits on concurrent requests. Exceeding them causes throttling, errors, or temporary bans.
 2. **Dev-machine load:** Agent processes consume CPU, disk I/O, and memory on the machine hosting the project folder. Running too many concurrent processes degrades the user's development environment.
 
-**Source of caps:** The orchestrator uses the **effective per-provider cap** from config (global default + Orchestrator-context override if set), NOT a value from the plan graph. The plan graph defines only dependency and parallel-group structure (`depends_on`, `parallel_group`); max concurrent is an execution/config concern. See `Plans/FinalGUISpec.md` §7.4.7 for the full settings model (global + per-context overrides).
+**Source of caps:** The orchestrator uses the **effective per-provider cap** from config (global default + Orchestrator-context override if set), NOT a value from the plan graph. The plan graph defines only dependency structure (`depends_on`, plus blocking edges such as `blockers`/`unblocks` where applicable); max concurrent is an execution/config concern. See `Plans/FinalGUISpec.md` §7.4.7 for the full settings model (global + per-context overrides).
 
 **Crew limits vs agent limits:** These are separate concepts:
 - **Per-platform agent cap** (below): limits individual concurrent agent/subagent processes per platform. This is what hits rate limits and machine load.
@@ -7180,17 +7232,17 @@ Both limits apply: a crew spawn must not exceed either the crew cap or the per-p
 
 orchestrator:
   enableParallelExecution: true
-  
+
   parallelConfig:
     maxConcurrent: 3
     continueOnFailure: false
     taskTimeoutSecs: 3600
-  
+
   # Subagent-specific parallel settings
   subagentParallelConfig:
     # Allow different subagents to run in parallel
     allowParallelSubagents: true
-    
+
     # Per-platform agent caps are now sourced from the global concurrency
     # config (concurrency.global.per_provider) with optional Orchestrator-
     # context override (concurrency.overrides.orchestrator.per_provider).
@@ -7203,11 +7255,11 @@ orchestrator:
       claude: 3
       gemini: 2
       copilot: 2
-    
+
     # Conflict detection
     detectConflicts: true
     failOnConflict: false  # Warn but continue
-    
+
     # Context inheritance from dependencies
     inheritFromDependencies: true
     inheritLanguage: true
@@ -7359,6 +7411,12 @@ impl PlatformCapabilityManager {
 }
 ```
 
+Capability snapshot rules:
+- Capability evaluation happens at run start and produces a frozen snapshot for the run/tier.
+- Precedence is: live runtime discovery -> provider policy snapshot -> static model/platform baseline.
+- `platform.capability_evaluated` is the canonical persistence event for that snapshot and any gated features.
+- This manager complements provider `capabilities.get`; it does not replace the provider-facing capability API.
+
 ### Enhanced Subagent Invoker
 
 ```rust
@@ -7499,7 +7557,7 @@ impl QASystem {
     pub async fn run_preflight(&self, tier_id: &str) -> Result<PreflightResult> {
         // Existing preflight logic
     }
-    
+
     /// Tier 2: Task Inspector (run after each task completion)
     pub async fn inspect_task(
         &self,
@@ -7512,7 +7570,7 @@ impl QASystem {
         // Check test coverage
         // Return: Complete or Incomplete with feedback
     }
-    
+
     /// Tier 3: Phase Inspector (run when phase completes)
     pub async fn inspect_phase(
         &self,
@@ -7541,10 +7599,10 @@ impl Orchestrator {
         context: &OrchestratorContext,
     ) -> Result<()> {
         // ... existing subagent selection and execution ...
-        
+
         // Execute subagent
         let result = self.execute_with_subagent(...).await?;
-        
+
         // Tier 2: Task Inspector (automatic after completion)
         if tier_node.tier_type == TierType::Subtask {
             let inspection = self.qa_system.inspect_task(
@@ -7552,7 +7610,7 @@ impl Orchestrator {
                 &task_file_path,
                 &latest_commit_hash,
             ).await?;
-            
+
             match inspection.status {
                 InspectionStatus::Complete => {
                     // Mark as ✅ Completed
@@ -7564,13 +7622,13 @@ impl Orchestrator {
                         &tier_node.id,
                         feedback,
                     ).await?;
-                    
+
                     // Prepend feedback to task file for next iteration
                     self.prepend_task_feedback(&tier_node.id, feedback).await?;
                 }
             }
         }
-        
+
         Ok(())
     }
 }
@@ -7587,18 +7645,18 @@ impl Orchestrator {
     async fn check_phase_completion(&self, phase_id: &str) -> Result<()> {
         let all_tasks_complete = self.progress_tracker
             .phase_tasks_complete(phase_id)?;
-        
+
         if all_tasks_complete {
             // Tier 3: Phase Inspector
             let phase_report = self.qa_system.inspect_phase(
                 phase_id,
                 &self.progress_tracker.get_phase_tasks(phase_id)?,
             ).await?;
-            
+
             // Advance to next phase
             self.progress_tracker.advance_phase().await?;
         }
-        
+
         Ok(())
     }
 }
@@ -7616,23 +7674,23 @@ impl Orchestrator {
         let pause_file = self.config.paths.workspace
             .join(".puppet-master")
             .join("PAUSE.md");
-        
+
         if pause_file.exists() {
             log::info!("Pause gate active - orchestrator halted");
             // Emit event for GUI
             return Ok(true);
         }
-        
+
         Ok(false)
     }
-    
+
     async fn run_loop(&self) -> Result<()> {
         loop {
             // Check pause gate first
             if self.check_pause_gate().await? {
                 return Ok(()); // Exit loop, wait for resume
             }
-            
+
             // ... rest of loop ...
         }
     }
@@ -7660,7 +7718,7 @@ impl Orchestrator {
         } else {
             format!("tier: {} iteration {} complete", tier_id, iteration)
         };
-        
+
         if is_rework {
             // Amend previous commit
             self.git_manager.commit_amend(&message).await?;
@@ -7668,7 +7726,7 @@ impl Orchestrator {
             // New commit
             self.git_manager.commit(&message).await?;
         }
-        
+
         Ok(())
     }
 }
@@ -7685,10 +7743,10 @@ async fn run_enhanced_loop(&self) -> Result<()> {
         if self.check_pause_gate().await? {
             return Ok(()); // Paused
         }
-        
+
         // Step 1: Read progress
         let progress = self.progress_tracker.read().await?;
-        
+
         // Step 2: Get next task (prioritize incomplete)
         let next_task = match progress.get_next_task() {
             Some(task) => task,
@@ -7697,7 +7755,7 @@ async fn run_enhanced_loop(&self) -> Result<()> {
                 break;
             }
         };
-        
+
         // Step 3: Execute with subagent
         // DRY REQUIREMENT: Subagent selection MUST use subagent_selector which uses subagent_registry
         let subagents = self.subagent_selector.select_for_tier(
@@ -7705,13 +7763,13 @@ async fn run_enhanced_loop(&self) -> Result<()> {
             &tier_context,
         );
         // DRY: Validate selected subagent names using subagent_registry::is_valid_subagent_name()
-        
+
         // DRY REQUIREMENT: execute_with_subagents MUST use platform_specs for platform-specific invocation
         let result = self.execute_with_subagents(
             &next_task.tier_node,
             &subagents,
         ).await?;
-        
+
         // Step 4: Run preflight (Tier 1 QA)
         let preflight_result = self.qa_system.run_preflight(&next_task.id).await?;
         if !preflight_result.passed {
@@ -7721,14 +7779,14 @@ async fn run_enhanced_loop(&self) -> Result<()> {
             ).await?;
             continue;
         }
-        
+
         // Step 5: Task Inspector (Tier 2 QA)
         let inspection = self.qa_system.inspect_task(
             &next_task.id,
             &next_task.file_path,
             &result.commit_hash,
         ).await?;
-        
+
         match inspection.status {
             InspectionStatus::Complete => {
                 self.progress_tracker.mark_completed(&next_task.id).await?;
@@ -7742,7 +7800,7 @@ async fn run_enhanced_loop(&self) -> Result<()> {
                 continue; // Re-loop to fix incomplete task
             }
         }
-        
+
         // Step 6: Check phase completion
         if self.progress_tracker.phase_complete(&next_task.phase)? {
             // Tier 3: Phase Inspector
@@ -7750,12 +7808,12 @@ async fn run_enhanced_loop(&self) -> Result<()> {
                 &next_task.phase,
                 &self.progress_tracker.get_phase_tasks(&next_task.phase)?,
             ).await?;
-            
+
             // Advance to next phase
             self.progress_tracker.advance_phase().await?;
         }
     }
-    
+
     Ok(())
 }
 ```
@@ -7787,19 +7845,19 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 orchestrator:
   # Autonomous QA loop enhancements
   enableAutonomousQaLoopPatterns: true
-  
+
   # Three-tier QA system
   qaSystem:
     enablePreflight: true
     enableTaskInspector: true
     enablePhaseInspector: true
-  
+
   # Progress tracking
   progressTracking:
     useVisualStatus: true  # ⬜ 🔄 ✅ 🔴
     trackInspectorFeedback: true
     prependFeedbackToTasks: true
-  
+
   # Commit strategy
   commits:
     amendForRework: true

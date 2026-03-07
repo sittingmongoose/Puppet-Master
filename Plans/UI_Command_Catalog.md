@@ -78,6 +78,21 @@ ContractRef: UICommand:cmd.github.connect, UICommand:cmd.github.disconnect
 
 ---
 
+### 2.1A Project management / deferred wizard commands
+These IDs are required by `Plans/GitHub_Integration.md` section D and `Plans/chain-wizard-flexibility.md` section 13.
+
+| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
+|---|---|---|---|
+| `cmd.project.add_existing` | `{ path?, ssh_remote_id?, ssh_path? }` | `project.added` | File menu, Dashboard, Add Existing Project flow |
+| `cmd.project.new_local` | `{ name, parent_path, init_git?, preset? }` | `project.created` | File menu, Dashboard, New Local Project flow |
+| `cmd.project.new_github_repo` | `{ name, description?, private, visibility?, gitignore_template?, license?, local_clone_path }` | `project.created`, `git.clone.completed` | File menu, Dashboard, New GitHub Repo flow |
+| `cmd.project.open` | `{ project_id }` | no persisted domain event (navigation) | File Manager, Dashboard, project finish screens |
+| `cmd.project.chain_wizard_open_deferred` | `{ project_id, wizard_id, default_intent, project_path, remote_repo_ref?, deferred_wizard_payload_ref? }` | `wizard.opened`, `wizard.deferred_payload.loaded` | Project finish screens, Dashboard, Chain Wizard |
+
+ContractRef: ContractName:Plans/GitHub_Integration.md#d-project-management-flows-no-chain-wizard-required, ContractName:Plans/chain-wizard-flexibility.md
+
+---
+
 ### 2.2 LSP (minimum required)
 These IDs are required by `Plans/LSPSupport.md`.
 
@@ -139,8 +154,8 @@ These IDs are required by `Plans/Run_Graph_View.md`.
 | `cmd.graph.retry_node` | `{ node_id }` | `tool.invoked` or `tool.denied`; run-state events emitted by orchestrator | Orchestrator > Node Graph Display |
 | `cmd.graph.replan_node` | `{ node_id }` | `tool.invoked` or `tool.denied`; run-state events emitted by orchestrator | Orchestrator > Node Graph Display |
 | `cmd.graph.reopen_node` | `{ node_id }` | run-state events emitted by orchestrator | Orchestrator > Node Graph Display |
-| `cmd.graph.approve_hitl` | `{ node_id, rationale }` | run-state events emitted by orchestrator | Orchestrator > Node Graph Display |
-| `cmd.graph.deny_hitl` | `{ node_id, rationale }` | run-state events emitted by orchestrator | Orchestrator > Node Graph Display |
+| `cmd.graph.approve_hitl` | `{ request_id, node_id, rationale }` | `hitl.approved` | Orchestrator > Node Graph Display |
+| `cmd.graph.deny_hitl` | `{ request_id, node_id, rationale, resolution? }` | `hitl.rejected` | Orchestrator > Node Graph Display |
 
 ContractRef: ContractName:Plans/Run_Graph_View.md#17, ContractName:Plans/Contracts_V0.md#UICommand
 
@@ -157,11 +172,17 @@ These IDs are required by `Plans/Orchestrator_Page.md`.
 | `cmd.orchestrator.retry_node` | `{ tier_id }` | `tool.invoked` or `tool.denied`; run-state events emitted by orchestrator | Orchestrator page |
 | `cmd.orchestrator.replan_node` | `{ tier_id }` | `tool.invoked` or `tool.denied`; run-state events emitted by orchestrator | Orchestrator page |
 | `cmd.orchestrator.reopen_node` | `{ tier_id }` | run-state events emitted by orchestrator | Orchestrator page |
+| `cmd.orchestrator.approve_hitl` | `{ request_id, tier_id, rationale? }` | `hitl.approved` | Orchestrator page, Dashboard, Assistant CtA |
+| `cmd.orchestrator.reject_hitl` | `{ request_id, tier_id, rationale?, resolution? }` | `hitl.rejected` | Orchestrator page, Dashboard, Assistant CtA |
+| `cmd.orchestrator.cancel_hitl` | `{ request_id, tier_id, rationale? }` | `hitl.cancelled` | Orchestrator page, Dashboard, Assistant CtA |
 | `cmd.orchestrator.preview_open` | `{ mode?, target? }` | `live.session.started` or `live.session.degraded` | Orchestrator page, Dashboard |
 | `cmd.orchestrator.preview_stop` | `{ preview_session_id? }` | `live.session.completed` | Orchestrator page, Dashboard |
 | `cmd.orchestrator.open_preview_artifact` | `{ artifact_id }` | no persisted domain event (artifact open/copy action) | Orchestrator page, Dashboard, Evidence tab |
 | `cmd.orchestrator.build_run` | `{ profile?, publish? }` | `build.session.started`, `build.session.completed` | Orchestrator page, Dashboard |
 | `cmd.orchestrator.open_build_artifact` | `{ artifact_path }` | no persisted domain event (artifact open/copy action) | Orchestrator page, Dashboard, Evidence tab |
+| `cmd.orchestrator.cancel_background_run` | `{ run_id }` | `run.background_state_changed` | Orchestrator page, Dashboard |
+| `cmd.orchestrator.open_background_diff` | `{ run_id }` | no persisted domain event (navigation/update) | Orchestrator page, Dashboard |
+| `cmd.orchestrator.open_crew` | `{ crew_id }` | no persisted domain event (navigation/update) | Orchestrator page, Dashboard |
 
 ContractRef: ContractName:Plans/Orchestrator_Page.md#14, ContractName:Plans/Contracts_V0.md#UICommand
 

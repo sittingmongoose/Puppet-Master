@@ -13,7 +13,7 @@
     },
     {
       "cmd": "python3 scripts/pm-shard-plans.py --check",
-      "exit_code": 0
+      "exit_code": 1
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py run-gates",

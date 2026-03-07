@@ -132,6 +132,24 @@ The **Assistant** and **Interviewer** personas MUST call `capabilities.get` when
 
 ContractRef: ToolID:capabilities.get, ContractName:Plans/Personas.md, ContractName:Plans/chain-wizard-flexibility.md
 
+### 1.7 Registry snapshot and refresh semantics
+
+`capabilities.get` is computed from the **current runtime registry snapshot** at call time. That snapshot MUST merge:
+- built-in internal tools from the canonical tool registry,
+- currently enabled MCP-discovered tools whose server/provider bridge is healthy for the active provider,
+- provider-exposed tools surfaced through the active backend,
+- media capabilities evaluated through the rules in §§1.3–1.5 and §2.4.
+
+Capability state is therefore **runtime-derived**, not a separately persisted capability database. A Settings save, provider switch, MCP adapter refresh, or Doctor/preflight remediation invalidates the previous snapshot; the next `capabilities.get` call MUST recompute from live state and MUST NOT rely on stale cached enablement.
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
+
+### 1.8 Eventing and audit behavior
+
+`capabilities.get` uses the standard tool event pipeline from `Plans/Contracts_V0.md` / `Plans/Tools.md`; it does **not** define a separate persistent capability-state event stream. Each invocation emits the canonical tool telemetry (`tool_name = "capabilities.get"`, latency, success/failure). If settings or provider state changes alter capability availability, the change becomes visible on the **next** invocation or UI refresh rather than through a dedicated durable "capability changed" event.
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md
+
 ---
 
 <a id="2"></a>
@@ -269,6 +287,14 @@ Response fields:
 
 **Deterministic artifact layout:** Generated artifacts are written to `.puppet-master/artifacts/media/<request_id>/output_000.<ext>` (zero-padded index). A `manifest.json` is co-located alongside artifacts in the same directory, containing the full `artifacts[]` array plus `request_id` and generation metadata, enabling offline re-verification. No inline `data_uri` is returned.
 
+**Manifest contract and write ordering:** `manifest.json` MUST be a durable, self-sufficient index for the request directory and include at minimum: `schema_version`, `request_id`, `kind`, `engine`, `generated_at_utc`, `artifacts[]`, and `usage` (when available). Implementations MUST write artifact files first, compute hashes/bytes from the final bytes on disk, and only then write `manifest.json`. If the provider returns partial output and final artifact persistence fails, the call returns failure and MUST NOT leave a manifest claiming success for missing artifacts.
+
+ContractRef: ToolID:media.generate, SchemaID:pm.media.generate.result.v1, Primitive:ArtifactStore
+
+**Concurrent requests:** Multiple `media.generate` calls may execute concurrently as long as each uses its own `request_id` directory. No request may append into another request's directory. Retry behavior MUST allocate a new `request_id` rather than mutating a previous manifest in place.
+
+ContractRef: ToolID:media.generate, Primitive:ArtifactStore
+
 **Cursor special-case:** When `engine.backend = "cursor_native"`, Cursor routes `kind=image` to Cursor-native image generation without requiring a Google API key. For `kind` ∈ {`video`, `tts`, `music`}, the Cursor backend returns `error.code = "BACKEND_UNSUPPORTED"`.
 
 On failure:
@@ -325,6 +351,7 @@ ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
 
 - Keep `raw` (original user text) and `s_lower` (normalized lowercased copy).
 - If a trailing controls block exists (the prompt ends with `(...)` or `[...]` and the block contains at least one control token), split `body` + `controls` and parse controls first; remove the block from the prompt before creative-prompt cleaning.
+- If the trailing block contains unmatched delimiters, control keys with empty values, or unsupported control names, ignore the malformed control token rather than failing the full request. The cleaned creative prompt still proceeds through deterministic extraction.
 
 Controls-block regex:
 ```
@@ -529,6 +556,8 @@ ContractRef: ToolID:capabilities.get, ContractName:Plans/FinalGUISpec.md
 
 Disabled capabilities are **visible** in the dropdown but rendered **greyed out**. A tooltip on hover shows the human-readable reason for the disabled state (using the copy strings from §5).
 
+Disabled rows remain keyboard-focusable so the same reason text is available on hover **and** focus. The dropdown uses standard listbox semantics (`role=listbox` / `role=option` or framework equivalent), and the disabled reason must be exposed to assistive technologies via the tooltip/description channel rather than color alone.
+
 ContractRef: ToolID:capabilities.get, Invariant:INV-003
 
 ### 4.3 Banner/footnote
@@ -538,6 +567,8 @@ When any media capability requires a Google API key that is not configured, the 
 > **"Please provide a free or paid Google API Key."** [Get API key]
 
 The "Get API key" text is a clickable link directing the user to the Google AI Studio API key page.
+
+When multiple visible capabilities are disabled for the same missing-key reason, show the footer banner once and keep it pinned at the bottom of the dropdown while the list scrolls. The banner is supplemental guidance; per-item disabled reasons remain visible on hover/focus.
 
 ContractRef: ToolID:capabilities.get, Invariant:INV-003
 
@@ -562,6 +593,12 @@ A user may specify a per-message model override inline in their prompt. For exam
 This triggers the `model_override` slot extraction (§3.4). The model `Nano Banana Pro` is resolved via alias → exact model id → exact displayName → else `MODEL_UNAVAILABLE`. The override applies only to this single generation request and does not change the model configured in Settings.
 
 ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
+
+### 4.7 Runtime refresh behavior
+
+The capability picker refreshes after Settings or provider-state changes that affect capability evaluation (for example, saving a Google API key, toggling a media capability off, switching providers, or recovering an MCP/provider bridge). Refresh MUST preserve composer text already typed by the user; only the picker contents and footer/banner state are recalculated.
+
+ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/FinalGUISpec.md
 
 ---
 
@@ -698,6 +735,21 @@ ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
 **AC-MED15:** `error.code` values in `media.generate` failure responses MUST be exactly one of the nine canonical stable error codes defined in §2.6. No ad-hoc error code strings are permitted.
 
 ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+
+<a id="AC-MED16"></a>
+**AC-MED16:** `capabilities.get` MUST evaluate provider-tool capabilities from the current runtime registry snapshot at call time, including built-ins, enabled MCP-discovered tools, and provider-exposed tools for the active backend. Tools hidden because an MCP server/provider bridge is unhealthy MUST be omitted or marked disabled based on the current snapshot; stale cached enablement MUST NOT be returned after Settings/provider changes.
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md
+
+<a id="AC-MED17"></a>
+**AC-MED17:** Successful `media.generate` calls MUST write artifact files before `manifest.json`, and `manifest.json` MUST include at least `schema_version`, `request_id`, `kind`, `engine`, `generated_at_utc`, `artifacts[]`, and `usage` (when available). A failed or partial request MUST NOT leave behind a manifest that claims artifacts that were not durably written.
+
+ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+
+<a id="AC-MED18"></a>
+**AC-MED18:** The capability picker MUST support keyboard navigation for disabled items, expose disabled-reason text to assistive technology, keep the missing-key footer pinned when applicable, and refresh after capability-affecting Settings/provider changes without clearing existing composer text.
+
+ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/FinalGUISpec.md
 
 ---
 

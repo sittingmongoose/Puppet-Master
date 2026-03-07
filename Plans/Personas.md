@@ -40,7 +40,9 @@ A **Subagent** is an Agent spawned by another Agent (or by the Orchestrator on b
 <a id="DEF-PERSONA"></a>
 ### 1.3 Persona (canonical term)
 
-A **Persona** is the assigned role definition that shapes an Agent's or Subagent's behavior. It is a static, declarative artifact — a YAML-frontmatter Markdown file — that provides identity, instructions, default permissions, and skill references. When the Orchestrator or Interview phase manager selects a Persona for a run, the Persona's content is injected into the Agent's compiled context by the context compiler.
+A **Persona** is the assigned role definition that shapes an Agent's or Subagent's behavior. It is a static, declarative artifact — a YAML-frontmatter Markdown file — that acts as a **behavior-and-runtime contract**. In addition to identity, instructions, default permissions, and skill references, a Persona MAY declare provider/model/variant preferences, optional runtime control preferences, tool-usage guidance, aliases, and UI-facing metadata. When the Orchestrator or Interview phase manager selects a Persona for a run, the Persona's content and runtime metadata feed both the Agent's compiled context and the effective runtime resolution flow.
+
+Expanded scope note: §10.2 is normative and extends this definition without replacing it.
 
 **Key distinctions:**
 
@@ -116,12 +118,20 @@ id: "rust-engineer"
 name: "Rust Engineer"
 description: "Expert Rust developer specializing in systems programming, memory safety, and zero-cost abstractions."
 default_mode: "regular"
+default_platform: null
 default_permissions_profile: null
 default_model: null
 default_variant: null
+temperature: null
+top_p: null
+reasoning_effort: null
 default_skill_refs: []
 disabled_plugins: []
+preferred_tools: []
+discouraged_tools: []
+tool_usage_guidance: ""
 tags: ["language", "rust", "systems"]
+aliases: []
 ---
 ```
 
@@ -133,12 +143,20 @@ tags: ["language", "rust", "systems"]
 | `name` | **Required** | `string` | Human-readable display name. Max 100 characters. |
 | `description` | **Required** | `string` | One-paragraph description of the Persona's expertise. Max 500 characters. |
 | `default_mode` | Recommended | `string` enum | Default run mode (`ask`, `plan`, `regular`, `yolo`) per `Plans/Run_Modes.md`. If omitted, inherits from run config. |
+| `default_platform` | Optional | `string` or `null` | Preferred provider/platform for this Persona. Runtime resolution and fallback semantics are defined in `Plans/Models_System.md`. |
 | `default_permissions_profile` | Recommended | `string` or `null` | Named permissions profile to apply when this Persona is active. References a profile defined in the Permissions system (`Plans/Permissions_System.md`). `null` means inherit from run config. |
 | `default_model` | Optional | `string` or `null` | Default model identifier (`provider_id/model_id`) for this Persona. Selection priority and validation per `Plans/Models_System.md`. `null` means inherit. |
 | `default_variant` | Optional | `string` or `null` | Default variant name for this Persona (e.g., `"fast"`, `"powerful"`). Variant semantics per `Plans/Models_System.md`. `null` means inherit. |
+| `temperature` | Optional | `number` or `null` | Preferred sampling temperature when the active provider transport supports it. Unsupported values are recorded as skipped, not silently applied. |
+| `top_p` | Optional | `number` or `null` | Preferred nucleus sampling value when supported by the active provider transport. |
+| `reasoning_effort` | Optional | `string` or `null` | Preferred provider-specific effort/reasoning level when supported. |
 | `default_skill_refs` | Recommended | `string[]` | List of skill IDs to auto-load when this Persona is active. References skills per `Plans/Skills_System.md`. Empty array means no auto-loaded skills. |
 | `disabled_plugins` | Optional | `string[]` | List of plugin IDs to silence during hook dispatch when this Persona is active. Plugins listed here are not unloaded, only skipped during hook invocation. Semantics per `Plans/Plugins_System.md` §7.3. Empty array means no plugins disabled. |
+| `preferred_tools` | Optional | `string[]` | Tool IDs the Persona should proactively prefer when planning execution. Guidance only by default; it does not override Permissions allow/ask/deny enforcement. |
+| `discouraged_tools` | Optional | `string[]` | Tool IDs the Persona should avoid unless needed. Guidance only by default. |
+| `tool_usage_guidance` | Optional | `string` | Freeform tool-planning guidance for this Persona. |
 | `tags` | Recommended | `string[]` | Categorization tags for filtering and search. Values from: `phase`, `task`, `subtask`, `iteration`, `cross-phase`, `language`, `domain`, `framework`, and freeform tags. |
+| `aliases` | Optional | `string[]` | Natural-language invocation aliases and display synonyms used during Persona resolution. |
 
 ### 3.3 Validation rules
 
@@ -184,7 +202,7 @@ A collapsible **Personas** card in Settings > Advanced MUST provide:
 
 1. **List view:** Table of all resolved Personas (project + global, project-local indicated with badge). Columns: Name, ID, Scope (project/global), Tags, Description (truncated). Sorted alphabetically by name; project-local entries sort before global when IDs match.
 
-2. **Create:** "New Persona" button opens an editor form with fields for `id`, `name`, `description`, `default_mode` (dropdown), `default_permissions_profile` (dropdown or null), `default_skill_refs` (multi-select from skill registry), `tags` (tag input), and a Markdown body editor. Scope selector: project-local or global.
+2. **Create:** "New Persona" button opens an editor form with fields for `id`, `name`, `description`, `default_mode` (dropdown), `default_platform`, `default_permissions_profile` (dropdown or null), `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`, `default_skill_refs` (multi-select from skill registry), `preferred_tools`, `discouraged_tools`, `tool_usage_guidance`, `aliases`, `tags` (tag input), and a Markdown body editor. Scope selector: project-local or global. Provider support-state gating for runtime controls is defined in `Plans/Models_System.md#PERSONA-CAPABILITY-MATRIX` and the GUI presentation contract is defined in `Plans/FinalGUISpec.md`.
 
 3. **Edit:** Row click or edit button opens the same editor pre-populated. Editing a global Persona while a project is active offers "Save as project override" (creates project-local copy) or "Save globally."
 
@@ -240,10 +258,12 @@ Once a Persona is resolved, its content is injected into the Agent's compiled co
 2. The Persona's `default_mode` (if set and not overridden by run config) influences the run mode for that Agent.
 3. The Persona's `default_permissions_profile` (if set) is applied as the base permission ruleset, with run-config and tier-level overrides layered on top.
 4. The Persona's `default_skill_refs` are loaded and their content added to the context.
+5. The Persona's runtime-preference fields (`default_platform`, `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`) feed the effective runtime resolution flow defined by `Plans/Models_System.md` and `Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD`.
+6. The Persona's tool-guidance fields (`preferred_tools`, `discouraged_tools`, `tool_usage_guidance`) influence planning/tool choice but MUST NOT replace Permissions allow/ask/deny enforcement.
 
 **Interview integration:** The Interview phase manager uses the same injection mechanism. For each interview phase, the phase-assigned Persona(s) are resolved and injected into the phase prompt. Persona overrides do not change *which* Personas the Interview selects — they only supply custom description/instruction content for those selected Personas (per `Plans/interview-subagent-integration.md` — "Subagent personas" in §Relationship).
 
-ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/FileSafe.md, ContractName:Plans/interview-subagent-integration.md
+ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/FileSafe.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Models_System.md#SELECTION-PRIORITY, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Permissions_System.md
 
 ### 5.3 Run-mode interaction
 
@@ -264,7 +284,9 @@ The following integrations are specified by their subsystem SSOTs and MUST NOT b
 - **Permissions:** Persona `default_permissions_profile` → `Plans/Permissions_System.md`.
 - **Skills:** Persona `default_skill_refs` → `Plans/Skills_System.md`.
 - **Plugins:** Plugin hooks that transform Persona context → `Plans/Plugins_System.md`.
-- **Models:** Per-Persona model preferences (`default_model`, `default_variant`) → `Plans/Models_System.md`.
+- **Models/runtime controls:** Per-Persona platform/model/variant/runtime preferences (`default_platform`, `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`) → `Plans/Models_System.md`.
+- **Prompt/runtime observability:** Effective Persona/runtime resolution record and provider capability filtering → `Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD` and `Plans/Prompt_Pipeline.md#PROVIDER-CAPABILITY-FILTERING`.
+- **Tool guidance:** Persona tool-preference fields remain guidance; hard enforcement stays in `Plans/Permissions_System.md`.
 
 ---
 
@@ -272,17 +294,19 @@ The following integrations are specified by their subsystem SSOTs and MUST NOT b
 
 <a id="RESERVED-PERSONAS"></a>
 
-The following Persona IDs are **reserved** for planned future Personas. They MUST NOT be used for user-created Personas. They are not selectable in the GUI and not assignable by the Orchestrator until their corresponding `PERSONA.md` files are officially provided.
+The following Persona IDs are **protected Puppet Master built-in IDs**. They MUST NOT be used for user-created Personas. When the corresponding built-in `PERSONA.md` definitions are present, they remain selectable and assignable as first-class built-ins; the restriction applies only to user-defined collisions.
 
 ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Personas.md#PERSONA-VALIDATION
 
 | Reserved ID | Planned purpose | Status |
 |-------------|----------------|--------|
-| `explorer` | Explores existing codebases; read-only investigation Persona. | Placeholder — not yet defined. |
-| `researcher` | Web research + collaboration-focused Persona. | Placeholder — not yet defined. |
-| `deep-researcher` | Broader/longer research Persona with extended context. | Placeholder — not yet defined. |
+| `collaborator` | User-facing planning and clarification Persona. | Protected built-in ID. |
+| `general-purpose` | Broad default execution Persona for general work. | Protected built-in ID. |
+| `explorer` | Explores existing codebases; read-only investigation Persona. | Protected built-in ID. |
+| `researcher` | Web research + collaboration-focused Persona. | Protected built-in ID. |
+| `deep-researcher` | Broader/longer research Persona with extended context. | Protected built-in ID. |
 
-**Enforcement:** The Persona validation logic (§3.3) MUST reject creation of Personas with these IDs. The `select_for_tier()` logic MUST NOT return these IDs. The GUI Persona list MUST NOT display these as available.
+**Enforcement:** The Persona validation logic (§3.3) MUST reject creation of user Personas with these IDs. If a built-in Persona with one of these IDs exists in canonical Persona storage, `select_for_tier()` and surface-specific resolvers MAY return it normally. Imported provider-native agent files MUST NOT overwrite these IDs; collisions are handled per §10.5/§10.8.
 
 ---
 
@@ -290,7 +314,7 @@ ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Personas.md#PE
 
 <a id="REGISTRY-RELATIONSHIP"></a>
 
-The canonical subagent registry (`Plans/orchestrator-subagent-integration.md` §4, `DRY:DATA:subagent_registry`) defines the **set of valid Persona IDs** for the 41 built-in Personas. This document does not duplicate that list. The registry is the single source of truth for:
+The canonical subagent registry (`Plans/orchestrator-subagent-integration.md` §4, `DRY:DATA:subagent_registry`) defines the **set of valid Persona IDs** for the 42 built-in Personas. This document does not duplicate that list. The registry is the single source of truth for:
 - Which Persona IDs are valid for tier selection, task-tool validation, and config overrides.
 - Category membership (phase, task-language, task-domain, task-framework, subtask, iteration, cross-phase).
 - Language/framework → Persona mapping.
@@ -498,6 +522,7 @@ The following existing or planned Personas also require sharpened contracts:
 Resolved naming rule:
 - Puppet Master standardizes on **`explorer`** as the canonical Persona ID and display concept.
 - Stale uses of `explore` in plans/registry/examples are legacy/OpenCode carryover and MUST be normalized to `explorer`.
+- `explore` MAY be accepted as an **input alias only** (for natural-language requests, imports, or migration), but persistence, config storage, registry rows, and UI display MUST always normalize to `explorer`.
 
 ### 10.9 Natural-language Persona invocation
 
@@ -562,6 +587,8 @@ Every run/sub-run/phase/tier/pass MUST carry at minimum:
 - `selection_reason`
 - `applied_persona_controls[]`
 - `skipped_persona_controls[]`
+
+Shared-record note: `Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD` is the canonical cross-system record definition; this section owns only the Persona-specific fields within that shared structure.
 
 `selection_reason` examples:
 - `Auto: Rust repo + code-edit task`

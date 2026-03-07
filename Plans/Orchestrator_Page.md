@@ -449,9 +449,11 @@ This section documents exactly where the UI gets the live data displayed on the 
 | Current worker (what the active agent is doing) | `PuppetMasterEvent::Output` filtered by active `tier_id` + `session_id` | Push (PTY stream); UI shows in terminal widget | Plans/orchestrator-subagent-integration.md |
 | Tier states (all tiers) | `PuppetMasterEvent::TierChanged` | Push; UI maintains a `HashMap<String, TierState>` updated incrementally | Plans/orchestrator-subagent-integration.md |
 | Progress counts | `PuppetMasterEvent::Progress` | Push; UI updates progress bars | Plans/orchestrator-subagent-integration.md |
-| HITL requests | `PuppetMasterEvent::UserInteractionRequired` | Push; UI shows in CTA stack widget and Node Graph HITL controls | Plans/human-in-the-loop.md |
+| HITL requests | `PuppetMasterEvent::UserInteractionRequired` + persisted `hitl.*` events keyed by `request_id` | Push; UI shows in CTA stack widget and Node Graph HITL controls | Plans/human-in-the-loop.md |
 | Evidence stored | `PuppetMasterEvent::EvidenceStored` | Push; UI updates evidence browser and node detail C3 | Plans/orchestrator-subagent-integration.md |
 | Gate results | `PuppetMasterEvent::GateStart`, `GateComplete` | Push; UI updates node detail C4 | Plans/orchestrator-subagent-integration.md |
+| Background runs | `run.background_enqueued`, `run.background_state_changed` projections | Pull on load + push on state change; UI updates background runs card | Plans/storage-plan.md |
+| Crew state / member activity | `crew.*` projections keyed by `crew_id` | Pull on load + push on lifecycle change; UI updates crew indicators and detail panels | Plans/orchestrator-subagent-integration.md |
 | Budget/usage | `redb:rollups/usage_5h.*`, `usage_7d.*` | Pull (timer-based, 30s interval) | Plans/storage-plan.md |
 | Run metadata | `redb:runs/run.{run_id}` | Pull on load; push-updated on run state change | Plans/storage-plan.md |
 

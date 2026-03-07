@@ -48,22 +48,27 @@ ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/
 
 ---
 
-## 2. Model selection priority
+## 2. Model and runtime selection priority
 
 <a id="SELECTION-PRIORITY"></a>
 
-When determining which model to use for a given Agent run, the following precedence applies (first match wins):
+When determining which platform/model/variant/runtime controls to use for a given Agent run, the following precedence applies (first match wins):
 
 | Priority | Source | Description |
 |----------|--------|-------------|
-| 1 (highest) | **Explicit override** | Run envelope, CLI flag, or per-tier model setting from the Tiers config. |
-| 2 | **Persona model override** | Per-Persona model preference (§5). |
-| 3 | **Variant selection** | Currently-selected variant resolves to a specific model (§6). |
-| 4 | **Config `model` field** | `config.model` in app config. |
+| 1 (highest) | **Explicit override** | Run envelope, CLI flag, manual surface selection, or per-tier model setting from the active run config. |
+| 2 | **Persona runtime preferences** | Per-Persona `default_platform`, `default_model`, `default_variant`, `temperature`, `top_p`, and `reasoning_effort` (§5). |
+| 3 | **Surface/tier/phase defaults** | Chat, Interview, Requirements Builder, Orchestrator, or Multi-Pass defaults defined by the active surface contract. |
+| 4 | **Global/project config defaults** | `config.model`, `config.default_variant`, and equivalent config defaults. |
 | 5 | **Last used** | Reads `model.json` from state directory; checks each `{providerID, modelID}` against available providers. |
-| 6 (lowest) | **Internal default** | Sorts available models by internal priority list, then by `"latest"` suffix, then alphabetically. First match wins. |
+| 6 (lowest) | **Internal/provider defaults** | Sorts available models by internal priority list, then by `"latest"` suffix, then alphabetically. First match wins. |
 
-Rule: Given the same inputs (config, Persona, variant state, available providers), model selection MUST be deterministic.
+Rule: Given the same inputs (config, Persona, surface defaults, variant state, available providers), effective runtime selection MUST be deterministic.
+
+Interpretation note:
+- A user-selected variant during a live session is an explicit override (priority 1).
+- A Persona-specified `default_variant` participates at priority 2.
+- `config.default_variant` participates at priority 4.
 
 ContractRef: PolicyRule:Decision_Policy.md§3, ContractName:Plans/Run_Modes.md
 
@@ -154,30 +159,42 @@ ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
 
 ---
 
-## 5. Per-Persona model overrides
+## 5. Per-Persona runtime preferences
 
 <a id="PERSONA-MODEL-OVERRIDES"></a>
 
-A Persona MAY specify a preferred model via the `default_model` field in the PERSONA.md frontmatter (defined in `Plans/Personas.md` §3.2):
+A Persona MAY specify preferred runtime settings in the PERSONA.md frontmatter (defined in `Plans/Personas.md` §3.2):
 
 ```yaml
 ---
 id: "rust-engineer"
 name: "Rust Engineer"
 description: "Expert Rust developer."
+default_platform: "anthropic"
 default_model: "anthropic/claude-sonnet-4"
+default_variant: "powerful"
+temperature: 0.2
+top_p: null
+reasoning_effort: "high"
 ---
 ```
 
 | Field | Required | Type | Description |
 |-------|----------|------|-------------|
+| `default_platform` | Optional | `string` or `null` | Preferred provider/platform. `null` or absent means inherit from the selection chain (§2). |
 | `default_model` | Optional | `string` or `null` | Model identifier in `provider_id/model_id` format. `null` or absent means inherit from selection priority (§2). |
+| `default_variant` | Optional | `string` or `null` | Preferred variant preset. `null` or absent means inherit from the selection chain (§2). |
+| `temperature` | Optional | `number` or `null` | Preferred sampling temperature when supported by the active provider transport. |
+| `top_p` | Optional | `number` or `null` | Preferred nucleus sampling value when supported. |
+| `reasoning_effort` | Optional | `string` or `null` | Preferred effort/reasoning level when the provider transport exposes it. |
 
-Rule: The Persona's `default_model` is priority 2 in the selection chain (§2). It is overridden by explicit run-envelope or tier-config model settings (priority 1) but overrides variant selection, config defaults, last used, and internal defaults.
+Rule: Persona runtime preferences participate at priority 2 in the selection chain (§2). They are overridden by explicit run-envelope or surface-level overrides (priority 1) but override surface defaults, config defaults, last-used state, and internal defaults.
 
-Rule: If the Persona specifies a `default_model` that is not available (provider not registered or model not found), the system logs a warning and falls through to the next priority level. The run is NOT blocked.
+Rule: If a Persona specifies a preferred platform/model/variant that is not available, the system logs a warning and falls through to the next priority level. The run is NOT blocked.
 
-ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA, PolicyRule:Decision_Policy.md§2
+Rule: If a Persona specifies runtime controls (`temperature`, `top_p`, `reasoning_effort`) that the active provider transport does not support, those controls MUST be recorded as skipped and excluded from the effective runtime state rather than silently ignored.
+
+ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA, PolicyRule:Decision_Policy.md§2, ContractName:Plans/Prompt_Pipeline.md#PROVIDER-CAPABILITY-FILTERING
 
 ---
 
@@ -332,10 +349,14 @@ Within the Models tab:
 
 When editing a Persona in the Personas management card (`Plans/Personas.md` §4):
 
-1. **`default_model` field:** Dropdown populated from available models. Shows `provider_id/model_id`. Option for "Inherit (no override)" which sets `null`.
-2. **`default_variant` field:** Dropdown populated from enabled variants. Option for "Inherit (no override)".
+1. **`default_platform` field:** Dropdown populated from available providers. Option for "Inherit (no override)" which sets `null`.
+2. **`default_model` field:** Dropdown populated from available models. Shows `provider_id/model_id`. Option for "Inherit (no override)" which sets `null`.
+3. **`default_variant` field:** Dropdown populated from enabled variants. Option for "Inherit (no override)".
+4. **Runtime control fields:** `temperature`, `top_p`, and `reasoning_effort` controls are shown only when the active provider capability matrix marks them `supported` or `partially_supported`; unsupported controls are disabled with explanatory UI.
 
-These fields are stored in the PERSONA.md frontmatter and applied at priority 2 (model) or as variant pre-selection (§6.6).
+These fields are stored in the PERSONA.md frontmatter and applied at priority 2 in the runtime selection chain (§2).
+
+ContractRef: ContractName:Plans/Models_System.md#PERSONA-CAPABILITY-MATRIX, ContractName:Plans/FinalGUISpec.md
 
 ### 7.5 ELI5/Expert copy
 
@@ -456,6 +477,26 @@ The effective model/runtime selection chain is:
 
 Rule: Given the same inputs and provider availability set, effective selection MUST be deterministic.
 
+### 10.3.1 Interview GUI/UI/UX Gemini preference (surface default)
+
+The Gemini preference for Interview is a **surface/stage default**, not a Persona-wide default.
+
+Trigger conditions:
+- active surface = `interview`
+- current Interview phase is `product_ux` **or** the Interview state has `has_gui = true`
+- active stage is one of `questioning`, `research`, `drafting`, or `review`
+- no explicit run-envelope or stage override already selected a different platform/model
+
+Behavior:
+- if a Gemini transport is configured, available, and supports the required controls for the current stage, Gemini becomes the default platform/model source at precedence level 3 ("Surface/tier/phase defaults")
+- validation stages do **not** auto-switch to Gemini unless the user or a stage override explicitly requests it
+- if Gemini is unavailable or fails capability checks, selection falls back to the normal precedence chain with no special-case retry loop
+
+Persistence / visibility:
+- the resolved selection reason MUST mention the Interview GUI/UI/UX preference when it wins (for example: `Interview GUI stage default: Gemini`)
+- when the preference is skipped, the reason MUST record why (for example: `Gemini unavailable` or `explicit user override`)
+
+<a id="PERSONA-CAPABILITY-MATRIX"></a>
 ### 10.4 Provider Persona Capability Matrix (canonical support states)
 
 Each provider transport must declare support state for each Persona control using:
@@ -488,6 +529,8 @@ Each provider transport must declare support state for each Persona control usin
 Notes:
 - These states are planning defaults and must be updated as provider implementations are verified.
 - GUI and runtime must use the same matrix source.
+
+ContractRef: ContractName:Plans/Models_System.md#PERSONA-CAPABILITY-MATRIX, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#PROVIDER-CAPABILITY-FILTERING
 
 ### 10.5 Unsupported control disclosure rules
 

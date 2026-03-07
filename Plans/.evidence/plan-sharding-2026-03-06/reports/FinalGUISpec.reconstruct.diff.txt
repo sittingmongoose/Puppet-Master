@@ -1,1 +1,124 @@
-PASS
+--- /home/sittingmongoose/Cursor/Puppet Master/Plans/FinalGUISpec.md
++++ reconstructed
+@@ -1018,11 +1018,10 @@
+ 
+ Add a collapsible **Containers & Registry** card in Settings > Advanced for local container runtime and registry publishing defaults.
+ 
+-- **Runtime controls:** runtime selector (`docker` default), Docker binary path override, compose file path input with Browse/Auto-detect actions, and compose project-name strategy (`auto`, `fixed`, `hash-based`).
+-- **Registry defaults:** registry provider (`dockerhub` default), namespace/repository/tag defaults, tag templates (`{commit}`, `{version}`, `{timestamp}`), and push policy (`manual` default; optional `after_build`).
+-- **Auth controls:** auth mode (`pat` default), `Set DockerHub PAT` / `Clear token` actions, stored-token status, login validation action, and last validation timestamp. Tokens MUST be stored in the OS credential store only; never in redb, YAML, or evidence logs.
+-- **Validation behavior:** `Validate Docker configuration` runs inline preflight checks (Docker reachable, compose path valid, required ports available, and DockerHub auth if push policy is `after_build`). Failing checks block Preview/Build or Push entry points and surface an inline error plus remediation text in the card.
+-- **Preview/build integration:** these settings are consumed by Preview and Build actions so container preview/build flows use consistent defaults. Build/push evidence MUST redact credentials and only persist sanitized command output.
++- **Runtime controls:** runtime selector (`docker` default), Docker binary path override, compose file/path defaults, compose project-name strategy.
++- **Registry defaults:** registry provider (`dockerhub` default), namespace/repository/tag defaults, push policy (`manual` default; optional `after_build`).
++- **Auth controls:** auth mode (`pat` default), login validation action, last validation timestamp.
++- **Preview/build integration:** settings are consumed by Preview and Build actions so container preview/build flows use consistent defaults.
+ 
+ ContractRef: ContractName:Plans/newtools.md#147-docker-runtime--dockerhub-contract, ContractName:Plans/newtools.md#146-preview-build-docker-and-actions-contracts, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+ 
+@@ -1690,14 +1689,7 @@
+ 
+ #### 7.16.1 Web Search
+ 
+-The chat supports web search with inline citations and a structured sources block. When the assistant performs web search:
+-
+-- The message body uses numbered citations (`[1]`, `[2]`, …) at the claim site. Activating a citation scrolls to and highlights the corresponding source row.
+-- The message shows a query label such as `Web search: {query}` in the activity detail or sources header.
+-- A **Sources** section appears below the message with clickable URL, title, and 1-2 sentence snippet per source. Clicking a source opens it in the Bottom Panel Browser tab (§7.20).
+-- When more than 5 sources are present, the Sources section may collapse to a summary row (`Web search: N sources`) and expand on demand.
+-- If the search fails or returns no usable sources, the chat shows an inline error or empty-result message and does not render a misleading citations block.
+-- Accessibility: citation controls must be keyboard focusable and expose descriptive labels (for example `Citation 1 of 3`).
++The chat supports web search with citations. When the assistant performs web search, results are displayed with inline citations (numbered superscripts linking to sources) and a "Sources" list at the bottom of the message showing URL, title, and snippet for each cited source.
+ 
+ #### 7.16.2 Slash Commands
+ 
+@@ -1761,7 +1753,7 @@
+ - **Current file highlighting:** The file currently open in the editor is highlighted with accent background in the tree (even if the tree is scrolled; on click-to-open from editor, auto-scroll tree to show the file)
+ - **Expand/collapse persistence:** Tree expansion state is persisted per-project in redb. Restored on project open. "Collapse All" and "Expand All" buttons in the search bar area.
+ 
+-**External drag-and-drop:** Drag files from the system file manager into the File Manager tree to copy or move them into the project. Uses platform-specific APIs: Windows (IDropTarget / OLE drag-drop), macOS (NSDraggingDestination / NSPasteboard), Linux (Xdnd protocol / wl_data_device for Wayland). On drop: multi-file and directory drops show a preflight confirmation dialog ("Copy N files into {folder}?" with [Copy] [Cancel]); single-file drops without conflicts may proceed immediately. If a file already exists at the destination, show conflict resolution per Plans/FileManager.md §1.1 (`Overwrite` / `Keep both` / `Cancel`, with optional "apply to all" behavior from Settings). Hold **Shift** during drag to move instead of copy; cursor/drag-image feedback must show the current mode. Progress indicator for multi-file copies. Dropped directories are copied recursively.
++**External drag-and-drop:** Drag files from the system file manager into the File Manager tree to copy or move them into the project. Uses platform-specific APIs: Windows (IDropTarget / OLE drag-drop), macOS (NSDraggingDestination / NSPasteboard), Linux (Xdnd protocol / wl_data_device for Wayland). On drop: show confirmation dialog listing files to import ("Copy N files into {folder}?" with [Copy] [Cancel]). If a file already exists at the destination, show conflict resolution: "File already exists" with [Replace] [Skip] [Rename (auto-suffix)] per file, plus [Apply to all]. Progress indicator for multi-file copies. Dropped directories are copied recursively.
+ 
+ **File preview:** When a file is selected, read-only preview in primary content area (or in-panel split when panel >400px). Monospace font with basic syntax highlighting using accent palette.
+ 
+@@ -1860,37 +1852,18 @@
+ 
+ ### 7.19 Agent Activity Pane (NEW)
+ 
+-**Location:** Embedded in Wizard, Interview, and Requirements Builder views
+-
+-Read-only, chat-like pane showing streaming agent output during document generation and Multi-Pass Review. Shows which persona/subagent is working on which task. Output lines are non-interactive; progress controls live in the pane footer. Monospace font. Min height 120px, max ~500 visible lines (virtualized via `ListView`).
++**Location:** Embedded in Wizard and Interview views
++
++Read-only, chat-like pane showing streaming agent output during document generation and Multi-Pass Review. Shows which persona/subagent is working on which task. Non-interactive. Progress indicators for documents in progress. Monospace font. Min height 120px, max ~500 visible lines (virtualized via `ListView`).
+ 
+ **Responsibility boundary (required):**
+ - Agent Activity Pane is for streaming/progress only.
+ - It must not host document navigation, document editing, or approval controls.
+ - Findings summary and approval controls are shown in chat + preview section; document editing happens in File Editor or embedded document pane.
+ 
+-**Virtual buffer and auto-scroll:**
+-- Backed by a bounded FIFO buffer of 500 visible lines; oldest lines are evicted first.
+-- Auto-scroll is on by default. If the user scrolls upward, auto-scroll pauses and a `New output` affordance re-enables it.
+-- Auto-scroll preference is persisted per project under `project.{project_id}.ui.agent_activity_auto_scroll` (default `true`).
+-
+-**Progress display and controls:**
+-- Header shows current state badge (`idle`, `generating`, `reviewing`, `paused`, `cancelling`, `cancelled`, `complete`, `error`).
+-- Status text uses deterministic progress wording such as `Writing document 3 of 15` or `Reviewing pass 2 of 4`.
+-- Footer buttons are `Pause`, `Resume`, and `Cancel`. These control the run state but never make the log stream itself editable or clickable.
+-
+-**Embedding and persistence:**
+-- In Interview and Requirements Builder, the pane sits in a vertical split below the primary surface. Default split ratio: 65/35 for Interview, 60/40 for Requirements Builder.
+-- Collapsed state and split ratio are persisted per project: `project.{project_id}.ui.agent_activity_pane_visible` and `project.{project_id}.ui.agent_activity_pane_ratio`.
+-
+ **Event wiring (required):**
+ - Pane consumes normalized Provider event stream used by chat.
+ - UI updates are dispatched through the Slint event loop (`invoke_from_event_loop`) for immediate state refresh.
+-
+-**Error handling:**
+-- On stream disconnect, keep existing output visible and show a persistent inline warning with reconnect/retry affordance.
+-- On cancellation, append a final `[cancelled]` line instead of clearing the pane.
+-- On provider/runtime error, append the error line, set the header badge to `error`, and keep prior output available for review.
+ 
+ **Accessibility:** The pane uses `accessible-role: text` (or equivalent for read-only log output). Screen readers should announce new output as it arrives via a live region equivalent (Slint: set `accessible-label` to include latest line summary). Focus can be placed on the pane for keyboard scrolling (Up/Down/Page Up/Page Down). Keyboard shortcut to toggle auto-scroll.
+ 
+@@ -3093,24 +3066,6 @@
+ - selection reason
+ - manual override control or lock/unlock affordance
+ 
+-#### 17.4.1 Persona mode semantics
+-
+-- **Auto:** Resolver selects the Persona from surface defaults, mappings, and runtime context. User sees the chosen Persona and reason string but does not pin a manual choice.
+-- **Manual:** User explicitly selects a Persona for the next eligible run/turn on that surface. Manual selection overrides Auto resolution until cleared or replaced.
+-- **Hybrid:** Resolver proposes a Persona, but the user may override it before execution while still seeing the automatic recommendation and reason text.
+-- Mode changes apply only to the next eligible run/turn or queued execution on that surface; they do not retroactively change an active run already in progress.
+-
+-#### 17.4.2 Selection reason and override behavior
+-
+-- The **effective Persona display** must show the resolved Persona name plus a one-line reason string such as `User requested`, `Stage default`, `Provider fallback`, or `Mapped from Interview phase`.
+-- Every surface needs a compact **Override Persona** affordance (dropdown, popover, or button+menu) with `Set override`, `Clear override`, and `Return to Auto` actions.
+-- When overrides are unavailable for the current provider or run state, the control remains visible but locked/disabled with a tooltip explaining why.
+-
+-#### 17.4.3 Platform/model display scope
+-
+-- The `platform/model display` requirement may reuse the existing status-bar/footer platform and model controls where those already exist; the surface must not introduce conflicting duplicate controls.
+-- If a user overrides model/platform independently from the Persona, the UI must show both the requested Persona and the effective platform/model outcome.
+-
+ ### 17.5 Runtime display requirements
+ 
+ When a run is active, the UI must display:
+@@ -3148,14 +3103,6 @@
+ - activity detail popover,
+ - run detail/history panel.
+ 
+-#### 17.7.1 Disclosure mechanics
+-
+-- **Honored** = requested control applied as requested. **Skipped** = ignored entirely. **Clamped** = partially honored but changed to a supported value/range.
+-- Every disclosure must include: control name, requested value, effective value (if any), and human-readable reason.
+-- When a limitation is known before execution, render the control disabled or warning-badged in place; do not let the user believe it is actionable.
+-- When a limitation is only discovered at runtime, surface the disclosure inline on the active surface **and** persist the same information in run detail/history so it is auditable later.
+-- Disclosures must name the provider explicitly (for example: `Claude Code ignored reasoning_effort=high; provider does not support that control on this model`).
+-
+ ### 17.8 Interview/Builder/Orchestrator mapping editors
+ 
+ Settings or surface-specific configuration must support mapping Persona defaults to:
