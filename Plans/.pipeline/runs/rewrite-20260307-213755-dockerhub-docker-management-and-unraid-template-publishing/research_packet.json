@@ -1,0 +1,239 @@
+{
+  "schema_id": "puppet-master.research-packet.v1",
+  "run_id": "rewrite-20260307-213755-dockerhub-docker-management-and-unraid-template-publishing",
+  "created_at_utc": "2026-03-07T21:37:55Z",
+  "topic": "DockerHub, Docker management, and Unraid template publishing",
+  "objective": "Make DockerHub deployment, runtime container management, and Unraid template publishing first-class in the rewrite docs, including the required GUI changes, auth model, state model, protected side effects, and managed template-repository workflow.",
+  "decisions": [
+    {
+      "id": "dockerhub-auth-modes",
+      "topic": "DockerHub authentication UX",
+      "choice": "Support both browser-based Docker Hub login and PAT entry. Place a browser-login button near DockerHub settings, retain a PAT entry field, and show helper text stating that PAT is recommended with guidance on obtaining one.",
+      "rationale": "Browser login reduces desktop onboarding friction; PAT remains the recommended explicit advanced-user and automation-friendly credential path."
+    },
+    {
+      "id": "dockerhub-browser-capabilities",
+      "topic": "Browser-login capability scope",
+      "choice": "When browser/device login yields repository-management capability, Puppet Master should allow namespace/repository browsing and repository creation through browser login as well; PAT is recommended but not mandatory when browser login is equivalent.",
+      "rationale": "Interactive desktop auth should not be artificially reduced if Docker exposes equivalent effective capability."
+    },
+    {
+      "id": "dockerhub-requested-effective-auth",
+      "topic": "Requested vs effective auth state",
+      "choice": "Model requested auth mode separately from effective capability, and show the active effective capability clearly in the UI.",
+      "rationale": "Browser login or PAT may validate into different real capability sets; the user must see what is actually available."
+    },
+    {
+      "id": "docker-manage-contextual-ui",
+      "topic": "Docker GUI visibility",
+      "choice": "Provide a contextual Docker Manage surface that appears when a Docker-related project is in use, with a settings toggle named `Hide Docker Manage when not used in Project.` Default the toggle to enabled.",
+      "rationale": "This keeps Docker first-class without cluttering non-container projects."
+    },
+    {
+      "id": "docker-runtime-testing-and-access",
+      "topic": "Running containers inside Puppet Master",
+      "choice": "Puppet Master should deploy and run project containers for testing workflows and also expose user-facing access points so the user can open/check the running container from within the app when the project supports it.",
+      "rationale": "Docker support must cover real runtime management, not just build settings."
+    },
+    {
+      "id": "dockerhub-repo-create-confirmation",
+      "topic": "Missing DockerHub repo creation safety",
+      "choice": "If the target repository does not exist, Puppet Master may offer to create it, but it must require an explicit confirmation showing namespace, repository name, and privacy. This confirmation cannot be bypassed by YOLO/autonomy modes.",
+      "rationale": "Repository creation is an external side effect with visibility/privacy impact."
+    },
+    {
+      "id": "dockerhub-repo-default-privacy",
+      "topic": "Default privacy for new DockerHub repositories",
+      "choice": "Default new repositories to private and make that default explicit in the confirmation dialog while still allowing the user to change it.",
+      "rationale": "Private-by-default reduces accidental publication risk."
+    },
+    {
+      "id": "unraid-xml-default-generation",
+      "topic": "Unraid XML generation default",
+      "choice": "Automatically generate or update the Unraid XML after successful Docker image publishing by default, with a nearby GUI setting to disable the behavior.",
+      "rationale": "This keeps container packaging artifacts current while preserving opt-out control."
+    },
+    {
+      "id": "unraid-xml-default-location",
+      "topic": "Unraid XML distribution target",
+      "choice": "Default to a separate Unraid template repository / CA-friendly template location rather than the main application repo; the main app repo remains optional rather than primary.",
+      "rationale": "This matches common Unraid ecosystem practice: images live on DockerHub, templates live in template repos/CA workflows, and installed copies live on the Unraid server."
+    },
+    {
+      "id": "unraid-template-repo-management",
+      "topic": "Managed template-repo workflow",
+      "choice": "Puppet Master should manage the Unraid template repository workflow itself, including generation/update and repo operations, while allowing the user to disable managed template-repo handling.",
+      "rationale": "The workflow should be first-class but still user-controllable."
+    },
+    {
+      "id": "unraid-template-repo-management-default",
+      "topic": "Default enablement for managed template repos",
+      "choice": "Managed Unraid template-repository workflow is enabled by default.",
+      "rationale": "User intent is that Puppet Master manages this flow unless explicitly disabled."
+    },
+    {
+      "id": "unraid-template-repo-auto-commit",
+      "topic": "Template-repo commit default",
+      "choice": "Auto-commit generated Unraid template-repo changes by default.",
+      "rationale": "Local auto-commit keeps the workflow streamlined."
+    },
+    {
+      "id": "unraid-template-repo-auto-push",
+      "topic": "Template-repo push default",
+      "choice": "Auto-push remains configurable, but the default is disabled.",
+      "rationale": "Remote push is a stronger side effect than local commit and should not happen automatically by default."
+    },
+    {
+      "id": "unraid-template-repo-remote-workflow",
+      "topic": "Default remote template-repo workflow",
+      "choice": "After local auto-commit, offer a one-click push action from the UI.",
+      "rationale": "This preserves speed without making remote publication fully automatic."
+    },
+    {
+      "id": "unraid-template-repo-setup",
+      "topic": "Template repo setup path",
+      "choice": "When no template repo is configured yet, offer both creating a new template repo and selecting an existing one.",
+      "rationale": "This supports both greenfield and existing-maintainer workflows."
+    },
+    {
+      "id": "unraid-template-repo-shape",
+      "topic": "Template repo granularity",
+      "choice": "Use one template repository per project by default.",
+      "rationale": "Per-project repos simplify ownership, history, and distribution reasoning."
+    },
+    {
+      "id": "unraid-template-repo-layout",
+      "topic": "Template repo file layout",
+      "choice": "Use a root `ca_profile.xml` plus a maintainer folder containing `project-name.xml`.",
+      "rationale": "This matches common Unraid template-repo patterns while keeping maintainer metadata separate from the app XML."
+    },
+    {
+      "id": "unraid-template-maintainer-folder-source",
+      "topic": "Maintainer folder naming default",
+      "choice": "Default the maintainer folder name to the project's DockerHub namespace, while allowing a custom maintainer slug override.",
+      "rationale": "This aligns with major Unraid template-repo conventions such as maintainer-branded folders."
+    },
+    {
+      "id": "unraid-ca-profile-generation",
+      "topic": "`ca_profile.xml` generation rule",
+      "choice": "Generate `ca_profile.xml` if it does not exist and explicitly tell the user it still needs review/configuration.",
+      "rationale": "Puppet Master can bootstrap the file without pretending the metadata is final."
+    },
+    {
+      "id": "unraid-ca-profile-editability",
+      "topic": "`ca_profile.xml` editability",
+      "choice": "All `ca_profile.xml` fields are editable by the user.",
+      "rationale": "Maintainer metadata is public-facing and must remain user-controlled."
+    },
+    {
+      "id": "unraid-ca-profile-scope",
+      "topic": "`ca_profile.xml` scope model",
+      "choice": "Default to a shared cross-project maintainer profile, with optional per-project override.",
+      "rationale": "Many users want one maintainer identity across projects, while some need project-specific branding."
+    },
+    {
+      "id": "unraid-ca-profile-image-upload",
+      "topic": "`ca_profile.xml` image editing",
+      "choice": "Allow picture upload/select in the GUI for maintainer profile/icon metadata.",
+      "rationale": "Users should not have to hand-edit repo assets for common branding tasks."
+    },
+    {
+      "id": "unraid-ca-profile-image-sources",
+      "topic": "Profile image source types",
+      "choice": "Support both repo-managed uploaded images and externally hosted image URLs.",
+      "rationale": "Maintainers use both hosting models in practice."
+    },
+    {
+      "id": "unraid-ca-profile-upload-default",
+      "topic": "Default handling of uploaded images",
+      "choice": "When the user uploads a picture through Puppet Master, copy it into the managed template repository by default and point `ca_profile.xml` at that repo-managed asset.",
+      "rationale": "Repo-managed assets provide a self-contained default that does not depend on separate hosting."
+    }
+  ],
+  "doc_intents": [
+    {
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "intent": "create",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "# Containers, Registry, and Unraid Integration\n\n## Purpose and scope\nThis document makes Docker support first-class in the Puppet Master rewrite. The scope is broader than the current runtime/build defaults: Puppet Master must be able to build container images, run them for preview/testing, let the user open the running container when the project supports user-facing access, publish images to DockerHub, generate and maintain Unraid template XML, and manage the related Unraid template repository workflow.\n\nThis plan is the canonical SSOT for:\n- DockerHub authentication UX and state modeling.\n- Requested vs effective Docker auth capability.\n- DockerHub namespace and repository discovery/selection/creation behavior.\n- Protected repository-creation rules.\n- First-class Docker management GUI behavior.\n- Unraid template generation defaults and managed template-repository workflow.\n- `ca_profile.xml` defaults, scope, editability, and image handling.\n\nThis plan does not replace the existing preview/build/runtime sections in `Plans/newtools.md`, the settings UI in `Plans/FinalGUISpec.md`, or the orchestrator control surface in `Plans/Orchestrator_Page.md`; it supplies the canonical detailed contract those docs must reference.\n\n## Relationship to existing plans\n- `Plans/newtools.md` remains canonical for runtime/tool/preflight/evidence behavior, but must reference this plan for DockerHub browser auth, repository management, and Unraid template publishing.\n- `Plans/FinalGUISpec.md` remains canonical for settings, controls, dialogs, and layout, but must reference this plan for Docker Manage surface requirements.\n- `Plans/Orchestrator_Page.md` remains canonical for orchestrator control widgets and UICommand IDs, but must reference this plan for container-publish and template-repo actions.\n- `Plans/feature-list.md` and `Plans/GUI_Rebuild_Requirements_Checklist.md` must register the new first-class GUI/runtime scope introduced here.\n\n## Product goals\n- Make Docker support a first-class workflow rather than a small extension of generic Preview/Build.\n- Let the user authenticate to DockerHub using either browser-based login or a PAT, with explicit visibility into what capability is actually available.\n- Let Puppet Master build and run containers for testing and user inspection from within the app.\n- Let Puppet Master publish to DockerHub and safely create the missing repository when necessary.\n- Let Puppet Master automatically generate/update Unraid XML after successful image publishing by default.\n- Let Puppet Master manage a dedicated Unraid template repository by default, while allowing the user to disable managed template-repo handling.\n- Keep secrets out of redb, project files, and evidence logs.\n- Keep the GUI contextual so Docker-heavy controls appear when relevant without permanently cluttering non-container projects.\n\n## User-visible surfaces\n\n### 1. Settings > Advanced > Containers & Registry\nThe existing `Containers & Registry` settings area remains the primary configuration home, but it must be expanded to include:\n\n- **Docker runtime controls**\n  - runtime selector (`docker` default)\n  - Docker binary path override\n  - compose file/path defaults\n  - compose project-name strategy (`auto`, `fixed`, `hash-based`)\n  - build context path\n  - Dockerfile path\n  - target stage (optional)\n  - target platforms and Buildx readiness status\n\n- **DockerHub authentication controls**\n  - browser-login button that opens the browser/device flow\n  - PAT entry field\n  - helper text that explicitly says PAT is recommended\n  - inline guidance/link telling the user how to obtain a PAT\n  - stored-auth status\n  - account/namespace summary\n  - validation button\n  - clear/remove credentials action\n  - requested auth mode vs effective capability display\n\n- **DockerHub repository controls**\n  - namespace selector/discovery\n  - repository selector/discovery\n  - refresh repositories action\n  - create repository action\n  - repository privacy control for creation flow\n  - tag template defaults (`{commit}`, `{version}`, `{timestamp}` plus any future canonical tag variables)\n  - push policy (`manual` default; optional `after_build`)\n\n- **Unraid publishing controls**\n  - `Generate/Update Unraid XML after successful publish` toggle (default: enabled)\n  - `Manage Unraid template repository` toggle (default: enabled)\n  - template repository path/remote settings\n  - template repository setup flow (create-new or select-existing)\n  - auto-push toggle (default: disabled)\n  - one-click push action surfaced nearby even when auto-push is off\n  - template repo status row (configured / missing / dirty / committed / ready-to-push)\n\n- **Docker Manage visibility controls**\n  - setting named exactly `Hide Docker Manage when not used in Project.`\n  - default: enabled\n  - behavior: when enabled, the contextual Docker Manage surface appears only when a Docker-related project is active; when disabled, the user may keep the Docker Manage surface available more broadly\n\n- **Maintainer profile / `ca_profile.xml` controls**\n  - scope selector: shared cross-project profile (default) vs per-project override\n  - full edit form for all `ca_profile.xml` fields\n  - profile image handling through upload/select or external URL\n  - notice when the file was auto-generated and still needs review/configuration\n\n### 2. Contextual Docker Manage surface\nPuppet Master must provide a first-class Docker management GUI surface that appears when a Docker-related project is in use. It may be implemented as a dedicated page, dockable panel, or another canonical GUI surface, but it must behave as a first-class management UI rather than a hidden advanced-only setting.\n\nThe surface must include:\n- runtime status (engine reachable, buildx ready, compose status, container status)\n- target image summary (`namespace/repository:tag`, privacy, last digest if pushed)\n- build controls\n- run/preview controls\n- stop/teardown controls\n- open-access actions so the user can open the running container or its web UI when available\n- logs/health visibility for the running container\n- publish controls\n- Unraid XML generation/update status\n- Unraid template repository status and one-click push action\n- `ca_profile.xml` status and shortcut to edit it\n- requested auth mode and effective capability chips\n- explicit warnings when browser auth produced only partial capability (for example, browse-only or push-only)\n\n### 3. Orchestrator and dashboard integration\nDocker-related actions must also remain available from orchestrator/dashboard build/preview surfaces when a Docker-related run is active. The contextual Docker Manage surface is not a replacement for orchestrator controls; it is a richer management layer that complements them.\n\n## Docker project detection and visibility rules\nA project is treated as Docker-related when Puppet Master detects a container-oriented workflow such as:\n- a `Dockerfile`\n- compose configuration\n- container-based preview/build target\n- container publish settings already configured for the project\n- an existing managed Unraid template repository associated with the project\n\nWhen detection is positive:\n- show the contextual Docker Manage surface\n- enable DockerHub repository, preview, publish, and Unraid template actions\n- retain the user’s last-used Docker surface state for that project\n\nWhen detection is negative and `Hide Docker Manage when not used in Project.` is enabled:\n- hide the contextual Docker Manage surface from normal project navigation\n- retain settings and state, but do not foreground Docker workflows\n\n## Authentication model\n\n### Supported authentication inputs\nPuppet Master must support both of these DockerHub authentication paths:\n1. **Browser/device login**\n   - the GUI launches Docker’s browser/device login flow\n   - intended for low-friction interactive sign-in\n   - preferred when the user wants guided sign-in from the desktop UI\n2. **Personal Access Token (PAT)**\n   - explicit token entry in the GUI\n   - helper text explains that PAT is recommended\n   - helper text explains where/how the user can obtain a PAT\n   - intended to be the most explicit and durable advanced-user path\n\nPAT support remains mandatory even though browser login is supported.\n\n### Requested vs effective auth state\nPuppet Master must model requested auth mode separately from effective capability.\n\nRequired state concepts:\n- `requested_auth_mode`: `browser`, `pat`, or another future explicit auth mode\n- `effective_auth_provider_state`: authenticated / unauthenticated / degraded / expired\n- `effective_capabilities[]`: a set of effective capabilities such as:\n  - browse namespaces\n  - browse repositories\n  - create repository\n  - push image\n  - read private repository state\n- `effective_account_identity`: visible DockerHub account/namespace identity\n- `last_validation_timestamp`\n- `last_validation_host`\n- `degraded_reason` when requested mode and effective capability do not match\n\nUser-visible rule:\n- the UI must never imply that browser login or PAT automatically grants full repository-management capability\n- the UI must explicitly show what is actually available after validation\n\n### Browser login capability rule\nIf browser-based DockerHub login can support namespace/repository browsing and repository creation, Puppet Master should allow those management actions through browser login as well. PAT remains the recommended explicit fallback, but it is not required when browser login yields equivalent effective capability.\n\n### Credential storage rule\n- store tokens/credentials only in OS credential storage or Docker’s credential-helper path as appropriate\n- never persist secrets to redb, YAML, project files, or evidence logs\n- evidence/log capture must redact credentials, auth headers, and token-bearing environment variables\n\n## DockerHub repository discovery, selection, and creation\n\n### Repository selection behavior\nPuppet Master must let the user:\n- view discovered namespaces\n- select the target namespace\n- view repositories within the selected namespace\n- refresh repository lists on demand\n- choose an existing repository for push\n- create a missing repository if needed for first publish\n\nDockerHub API behavior must be documented clearly:\n- use Docker CLI / Buildx for local build, run, login, and push behavior\n- use Docker Hub API for namespace/repository discovery and repository creation when app-managed listing/creation is needed\n- do not conflate image registry push with template distribution\n\n### Missing repository behavior\nIf the selected DockerHub repository does not exist:\n- Puppet Master may offer to create it automatically as part of first-push preparation\n- the creation step must be explicit and visible\n- the confirmation step must show:\n  - namespace\n  - repository name\n  - privacy\n- the confirmation step is mandatory and cannot be bypassed by YOLO modes, agent autonomy, or any other fast-path setting\n\n### Default repository privacy\n- default privacy for newly created repositories: private\n- the confirmation dialog must make this default explicit\n- the user may change privacy in the dialog before creation\n\n## Build, run, preview, and publish flow\n\n### Build flow\n- use `docker buildx build` as the deterministic image-build path\n- perform preflight before build: engine reachability, compose/config validity, buildx availability, required ports, target repo/auth when push is requested\n- capture structured build results including artifacts, logs, and image identity\n- surface build results in chat, orchestrator, and Docker Manage UI\n\n### Run/preview flow\nPuppet Master must be able to deploy and run project containers from within the app for testing workflows. When the project exposes user-facing access, Puppet Master must also provide a user-visible way to open/check the running container from within the UI.\n\nRequired actions:\n- start preview/run\n- stop preview/run\n- open exposed web UI or endpoint when available\n- open logs\n- inspect health status\n- show resolved access URL/port if one exists\n\n### Publish flow\n- publish uses DockerHub-targeted image tags and namespace/repository selection\n- push policy remains `manual` by default with optional `after_build`\n- after successful push, capture and surface:\n  - pushed tags\n  - digest(s)\n  - registry host\n  - target namespace/repository\n  - platform list\n  - sanitized logs path\n\n### Post-publish follow-on flow\nAfter successful image publishing:\n1. if `Generate/Update Unraid XML after successful publish` is enabled, generate or update the Unraid XML\n2. if managed template-repo workflow is enabled, update the target template repo\n3. auto-commit the template-repo change by default\n4. do not auto-push by default\n5. present a one-click push action from the UI\n\n## Unraid XML generation and distribution model\n\n### Distribution model\nThe default distribution target for generated Unraid XML is a separate Unraid template repository / Community Applications-friendly template location. The main application repository may still be offered as an optional export target, but it is not the primary default.\n\nRationale that must be preserved in docs:\n- DockerHub stores images, not Unraid XML\n- public Unraid template distribution is commonly done through GitHub template repositories / Community Applications workflows\n- installed copies are stored locally on the Unraid server under `/boot/config/plugins/dockerMan/templates-user`\n\n### Generation default\n- automatically generate/update Unraid XML after successful image publish by default\n- nearby GUI toggle disables this behavior\n- generation is part of the first-class Docker publish flow, not a hidden manual afterthought\n\n### Managed template-repo workflow default\n- Puppet Master should manage the Unraid template repository workflow itself by default\n- the user can disable managed template-repo handling in settings\n\n## Unraid template repository setup, layout, and publishing\n\n### Setup flow\nWhen managed Unraid template-repo publishing is enabled and no template repo is configured yet, Puppet Master must offer both:\n- creating a new template repo automatically\n- selecting an existing template repo\n\n### Default repo shape\n- default: one template repo per project\n\n### Default layout\nFor managed per-project template repos, use:\n- root-level `ca_profile.xml`\n- maintainer folder\n- `project-name.xml` inside that maintainer folder\n\n### Maintainer folder source\n- default the maintainer folder name to the project’s DockerHub namespace\n- allow the user to override it with a custom maintainer slug\n\n### Commit and push behavior\n- auto-commit template-repo changes by default\n- auto-push remains configurable but default disabled\n- expose a one-click push action in the UI after commit\n- present template-repo dirty / committed / ready-to-push status in the Docker Manage surface\n\n## `ca_profile.xml` behavior\n\n### Generation rule\nIf `ca_profile.xml` does not exist, Puppet Master must generate it and tell the user it still needs to be configured/reviewed.\n\n### Scope model\n- default scope: shared cross-project maintainer profile\n- optional override: per-project maintainer profile\n\n### Editability rule\nAll `ca_profile.xml` fields must be editable by the user.\n\n### Image handling\nThe `ca_profile.xml` editor must support both:\n- uploading/selecting an image that Puppet Master copies into the managed template repository\n- referencing an external hosted image URL\n\nDefault for uploaded images:\n- if the user uploads a picture through Puppet Master, copy it into the managed template repository by default and point `ca_profile.xml` at that repo-managed asset\n\n### User-visible messaging\nWhen `ca_profile.xml` was auto-generated, the UI must show a clear reminder that the user should configure public-facing maintainer metadata before treating the repo as final.\n\n## Data/state model to preserve in implementation docs\nImplementation-facing docs should preserve the following state concepts so GUI, orchestration, and persistence agree on one model:\n- Docker project detection state\n- `Hide Docker Manage when not used in Project.` setting\n- requested auth mode\n- effective auth capability set\n- validated DockerHub account identity\n- selected namespace and repository\n- selected repository privacy for first-time creation\n- push policy\n- image/tag template defaults\n- auto-generate Unraid XML toggle\n- managed template-repo enabled toggle\n- template-repo location / remote / branch state\n- auto-push toggle\n- template-repo dirty/committed/pushed status\n- shared vs per-project `ca_profile.xml` scope\n- uploaded image asset mode vs external URL mode\n\n## Safety and constraints\n- repository creation confirmation is mandatory and non-bypassable\n- secrets must not be written to redb, project files, YAML, or evidence\n- publish/template-repo flows must redact secrets in logs/evidence\n- docs must distinguish DockerHub image distribution from Unraid template distribution\n- browser login and PAT must be documented as different inputs that may lead to different effective capability\n- the UI must not claim full repository-management support when validation shows only partial capability\n\n## Initial non-goals\nThe first-class scope above does **not** require initial automation for:\n- Community Applications submission-form submission\n- forum support-thread creation\n- fully automatic remote template-repo push by default\n- bypassing manual review for public maintainer metadata correctness\n\n## Acceptance criteria\n- The GUI exposes both browser login and PAT entry, with PAT-recommended helper text and clear guidance.\n- The GUI shows requested auth mode and effective capability separately.\n- DockerHub namespace and repository discovery works from supported auth inputs.\n- Missing DockerHub repo creation is guarded by a mandatory non-bypassable confirmation showing namespace, repo name, and privacy.\n- New repository creation defaults to private.\n- Puppet Master can build and run project containers for testing and provide user-openable access points when available.\n- Docker publish results surface digest/tag/registry info without leaking credentials.\n- Unraid XML auto-generation/update is enabled by default after successful publish and can be disabled near DockerHub settings.\n- Managed Unraid template-repo workflow is enabled by default and can be disabled.\n- The default template-repo layout is root `ca_profile.xml` plus maintainer folder plus `project-name.xml`.\n- The default maintainer folder source is the DockerHub namespace, but the user can override it.\n- `ca_profile.xml` is generated if missing, all fields are editable, shared cross-project scope is default, and per-project override is available.\n- Profile images can be either repo-managed uploaded assets or externally hosted URLs; uploaded images default to repo-managed assets.\n- Template-repo changes auto-commit by default, do not auto-push by default, and expose a one-click push action in the UI.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/00-plans-index.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "## 2026-03-07 addendum — containers, registry, and Unraid\n\n- Registered `Plans/Containers_Registry_and_Unraid.md` as the canonical SSOT for first-class DockerHub image publishing, contextual Docker management UI, managed Unraid template repositories, and `ca_profile.xml` behavior.\n\n| Plan | Primary scope | Notes / canonical intent |\n|------|--------------|--------------------------|\n| `Containers_Registry_and_Unraid.md` | First-class DockerHub publishing, container runtime management, and Unraid template workflows | Canonical for DockerHub browser/PAT auth UX, requested vs effective auth capability, protected repo creation, contextual Docker Manage UI, managed template-repo defaults, `ca_profile.xml` scope/editability, and maintainer-asset handling. |\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/newtools.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "### 14.7A DockerHub browser auth, repository management, and Unraid publishing addendum\n\nThis addendum expands §14.7 so Docker support is first-class rather than limited to basic runtime defaults.\n\n**Normative separation of responsibilities:**\n- Use Docker CLI / Buildx for local runtime, image build, login, and push execution.\n- Use Docker Hub API only for namespace/repository discovery and repository creation when Puppet Master needs app-managed listing/creation behavior.\n- Do not treat DockerHub as a storage location for Unraid XML.\n\n**Expanded runtime/publish flow:**\n1. Detect whether the active project is Docker-related.\n2. Resolve `requested_auth_mode` and validate `effective_capabilities`.\n3. Allow browser/device login or PAT-based auth, with PAT remaining the recommended explicit path.\n4. If push is requested and the target repository is missing, gate repository creation behind a mandatory confirmation dialog that shows namespace, repository name, and privacy. This step cannot be bypassed by YOLO/autonomy modes.\n5. Build with `docker buildx build`.\n6. Run containers for preview/testing when requested and surface user-facing access points when available.\n7. Push to DockerHub using the selected namespace/repository/tag set.\n8. After successful publish, generate/update Unraid XML by default unless the user disabled it.\n9. If managed template-repo workflow is enabled, update the template repo, auto-commit by default, and expose a one-click push UI action while keeping auto-push disabled by default.\n\n**Doctor/preflight additions required by this addendum:**\n- `doctor.docker.buildx` — Buildx reachable and usable for the selected build path.\n- `doctor.dockerhub.auth.capability` — requested auth validated into effective capability set.\n- `doctor.dockerhub.repo.access` — selected namespace/repository can be read, selected, or created as required.\n- `doctor.unraid.template-repo` — template repo configuration is valid when managed template publishing is enabled.\n- `doctor.unraid.ca-profile` — `ca_profile.xml` exists or can be generated and is surfaced as needing review when auto-generated.\n\n**Evidence/result contract additions:**\n- `docker_auth_result` records requested mode, effective capability set, account identity, validation timestamp, and degraded reason if any.\n- `docker_publish_result` records registry host, namespace, repository, pushed tags, digest(s), platform list, and sanitized logs path.\n- `unraid_template_result` records XML output path, target template repo, maintainer folder, commit status, push status, and whether `ca_profile.xml` was auto-generated or user-edited.\n\nContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md, PolicyRule:no_secrets_in_storage, SchemaID:evidence.schema.json\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "**§7.4.8A Docker Manage + Unraid publishing addendum:**\n\nAdd a contextual **Docker Manage** GUI surface for Docker-related projects. This surface may be implemented as a page or dockable panel, but it MUST behave as a first-class management surface and not merely as a hidden advanced-only dialog.\n\n- **Visibility rule:** show the Docker Manage surface when a Docker-related project is active. Add a setting named **Hide Docker Manage when not used in Project.** Default: enabled.\n- **Auth controls:** place a browser-login button near DockerHub settings, retain PAT entry, show helper text that PAT is recommended, and explain/link how to obtain a PAT.\n- **Auth state presentation:** show requested auth mode separately from effective capability, along with validated account identity, namespace access, and degraded reason when capability is partial.\n- **Repository management controls:** namespace selector, repository selector, refresh action, create-repository action, and create-repository confirmation dialog that displays namespace, repository name, and privacy. Privacy defaults to private and must be visibly labeled as the default.\n- **Runtime controls:** build, run/preview, stop, open running container/web UI, open logs, and health/access state.\n- **Publish controls:** push image, show digest/tag results, and expose target DockerHub repo summary.\n- **Unraid controls:** toggle to auto-generate/update Unraid XML after successful publish (default enabled), toggle to manage template repo (default enabled), template-repo status row, one-click push action, and shortcut into `ca_profile.xml` editing.\n- **Template repo setup flow:** allow both create-new and select-existing when no template repo is configured.\n- **`ca_profile.xml` editor:** default to shared cross-project maintainer profile with per-project override option; all fields editable; support picture upload or external URL; uploaded pictures default to repo-managed assets.\n- **Auto-generated metadata warning:** when `ca_profile.xml` is created automatically, show a visible notice that the user still needs to configure/review the profile.\n- **Safety copy:** make it explicit that repository creation cannot be auto-approved by YOLO or autonomy modes.\n\nContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md#147-docker-runtime--dockerhub-contract, ContractName:Plans/Permissions_System.md\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "## 14A. Container publish and Unraid template controls addendum\n\nExtend the orchestrator status/control surface so Docker-related runs expose more than preview/build.\n\n**Required behavior:**\n- continue supporting `preview_open`, `preview_stop`, and `build_run`\n- add first-class actions for publish, open-running-container access, template regeneration, and template-repo push\n- surface DockerHub auth state, target repository, running-container access URL (when present), publish result digest/tag summary, and template-repo status in orchestrator-facing controls when the active run is Docker-related\n\n**Add UICommand IDs:**\n\n| Command ID | Args | Behavior |\n|-----------|------|----------|\n| `cmd.orchestrator.push_image` | `{ namespace?: string, repository?: string, tag_template?: string }` | Push the built image to DockerHub using resolved publish settings |\n| `cmd.orchestrator.open_running_container` | `{ preview_session_id?: string, url?: string }` | Open the running container or web UI for user inspection |\n| `cmd.orchestrator.open_container_logs` | `{ preview_session_id?: string }` | Open logs for the active container run |\n| `cmd.orchestrator.update_unraid_template` | `{ publish_result_id?: string }` | Generate or update the Unraid XML and managed template-repo state |\n| `cmd.orchestrator.push_unraid_template_repo` | `{ template_repo_id?: string }` | Execute the one-click push action for the managed template repository |\n| `cmd.orchestrator.open_unraid_template_repo` | `{ template_repo_id?: string }` | Open the managed template repository location or remote |\n\n**Status widget additions:**\n- auth chip: requested vs effective DockerHub auth capability\n- image chip: namespace/repository/tag target\n- preview chip: container running state + open access action\n- publish chip: digest/tag summary\n- template chip: XML updated / committed / ready-to-push state\n\nContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/FinalGUISpec.md, Primitive:UICommand\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/feature-list.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "##### Plans/Containers_Registry_and_Unraid.md\n- **Contextual Docker Manage surface.** First-class Docker management UI shown when a Docker-related project is active, with `Hide Docker Manage when not used in Project.` setting (default enabled).\n- **Dual DockerHub auth UX.** Browser/device login plus PAT entry, with PAT-recommended helper copy and requested-vs-effective capability display.\n- **Protected repository auto-create flow.** Missing DockerHub repos can be created from Puppet Master, but only after explicit non-bypassable confirmation with namespace, repository name, and privacy (default private).\n- **First-class build/run/publish workflow.** Buildx-backed image build, container run for testing, user-openable container access, and publish results including digest/tag evidence.\n- **Managed Unraid template publishing.** Auto-generate/update Unraid XML after successful publish by default; manage a dedicated template repo by default with auto-commit on, auto-push off, and one-click push from the UI.\n- **Per-project template repo layout.** One template repo per project, root `ca_profile.xml`, maintainer folder, and `project-name.xml` with maintainer folder defaulting to the DockerHub namespace but remaining editable.\n- **Shared/per-project `ca_profile.xml` model.** Generate-if-missing, all fields editable, shared cross-project default with per-project override, profile image upload or external URL, and repo-managed asset default for uploaded images.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "## 2026-03-07 addendum — DockerHub / Unraid GUI requirements\n\n| Area | Requirement | Canonical source |\n|------|-------------|------------------|\n| Docker Manage visibility | Contextual Docker management surface shown for Docker-related projects, with `Hide Docker Manage when not used in Project.` setting defaulting to enabled | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md` |\n| DockerHub auth UX | Browser login button plus PAT entry, PAT-recommended explainer, and requested-vs-effective capability display | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md` |\n| Repo creation safety | Non-bypassable confirmation for missing-repo creation, showing namespace/repo/privacy and defaulting privacy to private | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md` |\n| Runtime/user access | Build, run/preview, stop, open running container, logs, health, and access URL actions | `Plans/Containers_Registry_and_Unraid.md`, `Plans/Orchestrator_Page.md` |\n| Unraid publishing | Auto-generate/update XML after publish by default, managed template repo by default, one-click push UI, and clear template-repo status | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md`, `Plans/Orchestrator_Page.md` |\n| `ca_profile.xml` editing | Shared cross-project default, per-project override, all fields editable, image upload or external URL, and repo-managed asset default for uploaded images | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md` |\n"
+        }
+      ]
+    }
+  ]
+}

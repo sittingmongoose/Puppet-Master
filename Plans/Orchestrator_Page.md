@@ -565,3 +565,32 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#13
 | puppet-master-rs/src/core/tier_node.rs | TierNode, TierTree structs |
 | puppet-master-rs/src/core/orchestrator.rs | OrchestratorState, TierState enums |
 | puppet-master-rs/src/types/events.rs | PuppetMasterEvent enum |
+
+## 14A. Container publish and Unraid template controls addendum
+
+Extend the orchestrator status/control surface so Docker-related runs expose more than preview/build.
+
+**Required behavior:**
+- continue supporting `preview_open`, `preview_stop`, and `build_run`
+- add first-class actions for publish, open-running-container access, template regeneration, and template-repo push
+- surface DockerHub auth state, target repository, running-container access URL (when present), publish result digest/tag summary, and template-repo status in orchestrator-facing controls when the active run is Docker-related
+
+**Add UICommand IDs:**
+
+| Command ID | Args | Behavior |
+|-----------|------|----------|
+| `cmd.orchestrator.push_image` | `{ namespace?: string, repository?: string, tag_template?: string }` | Push the built image to DockerHub using resolved publish settings |
+| `cmd.orchestrator.open_running_container` | `{ preview_session_id?: string, url?: string }` | Open the running container or web UI for user inspection |
+| `cmd.orchestrator.open_container_logs` | `{ preview_session_id?: string }` | Open logs for the active container run |
+| `cmd.orchestrator.update_unraid_template` | `{ publish_result_id?: string }` | Generate or update the Unraid XML and managed template-repo state |
+| `cmd.orchestrator.push_unraid_template_repo` | `{ template_repo_id?: string }` | Execute the one-click push action for the managed template repository |
+| `cmd.orchestrator.open_unraid_template_repo` | `{ template_repo_id?: string }` | Open the managed template repository location or remote |
+
+**Status widget additions:**
+- auth chip: requested vs effective DockerHub auth capability
+- image chip: namespace/repository/tag target
+- preview chip: container running state + open access action
+- publish chip: digest/tag summary
+- template chip: XML updated / committed / ready-to-push state
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/FinalGUISpec.md, Primitive:UICommand

@@ -178,7 +178,7 @@ Before final prompt payload emission, the runtime MUST resolve:
 5. **Effective Persona**
    After resolver, alias normalization, fallback, and provider availability checks.
 6. **Requested/effective runtime controls**
-   platform/model/variant/temperature/top_p/reasoning_effort.
+   platform/model/variant/temperature/top_p/reasoning_effort/talkativeness.
 7. **Provider capability filtering**
    Remove or downgrade unsupported Persona controls; record reasons.
 8. **Instruction assembly**
@@ -253,6 +253,7 @@ Every prompt assembly run MUST produce an effective resolution record containing
 - `effective_temperature`
 - `effective_top_p`
 - `effective_reasoning_effort`
+- `effective_talkativeness`
 - `applied_persona_controls[]`
 - `skipped_persona_controls[]`
 
@@ -271,6 +272,8 @@ Processing rule:
 5. record every skipped control with a reason,
 6. expose the resulting effective state to the UI.
 
+Rule: `talkativeness` is a Persona instruction-layer control, not a provider runtime knob. It does not pass through provider runtime capability filtering; instead, it is applied during Instruction Bundle assembly whenever a Persona is active. `model_default` means no additional verbosity directive is injected.
+
 ContractRef: ContractName:Plans/Models_System.md#PERSONA-CAPABILITY-MATRIX, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
 
 ### 6.7 OpenCode baseline mapping
@@ -288,6 +291,7 @@ Puppet Master implements the same effective behavior through Persona resolution 
 Prompt assembly must emit enough state for UI surfaces to display:
 - effective Persona,
 - effective platform/model,
+- effective talkativeness when not `model_default`,
 - selection reason,
 - applied controls,
 - skipped controls,
@@ -298,4 +302,5 @@ Prompt assembly must emit enough state for UI surfaces to display:
 - Prompt assembly must include Persona/runtime resolution before final provider invocation.
 - Natural-language Persona invocation must be parsed before auto selection finalization.
 - Unsupported Persona controls must be skipped explicitly and surfaced.
+- Persona `talkativeness` must be applied through instruction assembly even when the provider does not expose sampling controls such as `temperature` or `top_p`.
 - Effective resolution record must be available for thread history, activity panes, and run inspection UIs.

@@ -56,3 +56,14 @@ REF: `Plans/UI_Command_Catalog.md` sections 2.3 through 2.6.
 This checklist is complete when all rows in the verification table are `PASS` and verifier gates pass.
 
 ContractRef: ContractName:Plans/Widget_System.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
+
+## 2026-03-07 addendum — DockerHub / Unraid GUI requirements
+
+| Area | Requirement | Canonical source |
+|------|-------------|------------------|
+| Docker Manage visibility | Contextual Docker management surface shown for Docker-related projects, with `Hide Docker Manage when not used in Project.` setting defaulting to enabled | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md` |
+| DockerHub auth UX | Browser login button plus PAT entry, PAT-recommended explainer, and requested-vs-effective capability display | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md` |
+| Repo creation safety | Non-bypassable confirmation for missing-repo creation, showing namespace/repo/privacy and defaulting privacy to private | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md` |
+| Runtime/user access | Build, run/preview, stop, open running container, logs, health, and access URL actions | `Plans/Containers_Registry_and_Unraid.md`, `Plans/Orchestrator_Page.md` |
+| Unraid publishing | Auto-generate/update XML after publish by default, managed template repo by default, one-click push UI, and clear template-repo status | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md`, `Plans/Orchestrator_Page.md` |
+| `ca_profile.xml` editing | Shared cross-project default, per-project override, all fields editable, image upload or external URL, and repo-managed asset default for uploaded images | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md` |

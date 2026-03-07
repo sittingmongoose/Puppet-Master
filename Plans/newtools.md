@@ -1523,3 +1523,37 @@ ContractRef: ContractName:Plans/MiscPlan.md#doctor, ContractName:Plans/FinalGUIS
 - **[DOCKER4] Docker Scout Action (`scout-action`):** https://github.com/docker/scout-action
 - **[DOCKER5] Docker CLI reference:** https://docs.docker.com/reference/cli/docker/
 - **[DOCKER6] Docker VS Code extension (reference patterns only):** https://github.com/docker/vscode-extension
+
+### 14.7A DockerHub browser auth, repository management, and Unraid publishing addendum
+
+This addendum expands §14.7 so Docker support is first-class rather than limited to basic runtime defaults.
+
+**Normative separation of responsibilities:**
+- Use Docker CLI / Buildx for local runtime, image build, login, and push execution.
+- Use Docker Hub API only for namespace/repository discovery and repository creation when Puppet Master needs app-managed listing/creation behavior.
+- Do not treat DockerHub as a storage location for Unraid XML.
+
+**Expanded runtime/publish flow:**
+1. Detect whether the active project is Docker-related.
+2. Resolve `requested_auth_mode` and validate `effective_capabilities`.
+3. Allow browser/device login or PAT-based auth, with PAT remaining the recommended explicit path.
+4. If push is requested and the target repository is missing, gate repository creation behind a mandatory confirmation dialog that shows namespace, repository name, and privacy. This step cannot be bypassed by YOLO/autonomy modes.
+5. Build with `docker buildx build`.
+6. Run containers for preview/testing when requested and surface user-facing access points when available.
+7. Push to DockerHub using the selected namespace/repository/tag set.
+8. After successful publish, generate/update Unraid XML by default unless the user disabled it.
+9. If managed template-repo workflow is enabled, update the template repo, auto-commit by default, and expose a one-click push UI action while keeping auto-push disabled by default.
+
+**Doctor/preflight additions required by this addendum:**
+- `doctor.docker.buildx` — Buildx reachable and usable for the selected build path.
+- `doctor.dockerhub.auth.capability` — requested auth validated into effective capability set.
+- `doctor.dockerhub.repo.access` — selected namespace/repository can be read, selected, or created as required.
+- `doctor.unraid.template-repo` — template repo configuration is valid when managed template publishing is enabled.
+- `doctor.unraid.ca-profile` — `ca_profile.xml` exists or can be generated and is surfaced as needing review when auto-generated.
+
+**Evidence/result contract additions:**
+- `docker_auth_result` records requested mode, effective capability set, account identity, validation timestamp, and degraded reason if any.
+- `docker_publish_result` records registry host, namespace, repository, pushed tags, digest(s), platform list, and sanitized logs path.
+- `unraid_template_result` records XML output path, target template repo, maintainer folder, commit status, push status, and whether `ca_profile.xml` was auto-generated or user-edited.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md, PolicyRule:no_secrets_in_storage, SchemaID:evidence.schema.json
