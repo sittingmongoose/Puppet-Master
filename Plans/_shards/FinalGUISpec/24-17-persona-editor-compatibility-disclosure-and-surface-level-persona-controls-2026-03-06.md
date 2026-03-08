@@ -156,6 +156,10 @@ These editors should also allow platform/model selection per mapping and show co
 
 **§7.4.8A Docker Manage + Unraid publishing addendum:**
 
+- **Template repo status row:** bind directly to canonical `TemplateRepoStatus` (`unconfigured`, `config_invalid`, `clean`, `dirty_uncommitted`, `committed_local_only`, `push_in_progress`, `push_failed`, `diverged_remote`, `needs_review`). Presentation copy may translate those values, but the GUI must not invent a second status model.
+- **Unraid controls:** when shared-profile scope is active, expose `Apply shared profile to this repo` as an explicit action in addition to generate/update and push controls.
+- **`ca_profile.xml` editor:** default to shared cross-project maintainer profile with per-project override option, and provide two editing layers: (1) structured controls for known fields and (2) advanced raw XML editing for unknown / passthrough content. Saving from either layer MUST preserve unmodified passthrough XML verbatim. Support picture upload or external URL; uploaded pictures default to repo-managed assets.
+
 Add a contextual **Docker Manage** GUI surface for Docker-related projects. This surface may be implemented as a page or dockable panel, but it MUST behave as a first-class management surface and not merely as a hidden advanced-only dialog.
 
 - **Visibility rule:** show the Docker Manage surface when a Docker-related project is active. Add a setting named **Hide Docker Manage when not used in Project.** Default: enabled.

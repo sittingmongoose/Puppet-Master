@@ -1553,6 +1553,13 @@ This subsection is authoritative wherever §14.7 still reads like a PAT-only con
 
 #### Canonical doctor / preflight additions for DockerHub + Unraid
 
+#### Canonical doctor ID and action-scope override
+
+- `doctor.registry.auth` is deprecated for DockerHub-specific flows and MUST be treated as an alias of `doctor.dockerhub.auth.capability` only until old references are removed.
+- Build-only actions require `doctor.docker.engine` and `doctor.docker.buildx`; they do not require `doctor.docker.compose` or runtime port-availability checks unless the selected build path depends on compose.
+- Run/preview actions require `doctor.docker.compose` when compose is the selected runtime path and require port-availability checks only when a user-facing access URL is expected.
+- Publish requires `doctor.dockerhub.auth.capability` and `doctor.dockerhub.repo.access`; publish MUST NOT fail solely because compose validation is irrelevant to the selected publish path.
+
 | Check ID | Scope | Required signal | Failure behavior |
 |---|---|---|---|
 | `doctor.docker.buildx` | docker build | Buildx reachable and usable for the selected build path | Block container build/publish; show remediation |

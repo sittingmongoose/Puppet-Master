@@ -83,7 +83,7 @@ Part 2 records what exists in the codebase today for reference. Plans define tar
 - **Dual DockerHub auth UX.** Browser/device login plus PAT entry, with PAT-recommended helper copy and requested-vs-effective capability display.
 - **Protected repository auto-create flow.** Missing DockerHub repos can be created from Puppet Master, but only after explicit non-bypassable confirmation with namespace, repository name, and privacy (default private).
 - **First-class build/run/publish workflow.** Buildx-backed image build, container run for testing, user-openable container access, and publish results including digest/tag evidence.
-- **Managed Unraid template publishing.** Auto-generate/update Unraid XML after successful publish by default; manage a dedicated template repo by default with auto-commit on, auto-push off, and one-click push from the UI.
+- **Managed Unraid template publishing.** Auto-generate/update Unraid XML after successful publish by default; manage a dedicated template repo by default with auto-commit on, auto-push off, one-click push from the UI, and a defined unmanaged local-output path when the managed repo is unavailable.
 - **Per-project template repo layout.** One template repo per project, root `ca_profile.xml`, maintainer folder, and `project-name.xml` with maintainer folder defaulting to the DockerHub namespace but remaining editable.
-- **Shared/per-project `ca_profile.xml` model.** Generate-if-missing, all fields editable, shared cross-project default with per-project override, profile image upload or external URL, and repo-managed asset default for uploaded images.
+- **Shared/per-project `ca_profile.xml` model.** Generate-if-missing, shared cross-project default with per-project override, profile image upload or external URL, repo-managed asset default for uploaded images, and a two-layer editor (structured fields + raw XML passthrough preservation) so all fields remain editable without losing unknown content.
 

@@ -282,6 +282,60 @@ This addendum defines the minimum persistence contract required so Settings, Doc
 
 ##### Required redb keys
 
+##### Canonical Docker / Unraid project-state schema
+
+`docker.project_state.{project_id}` -> {
+  requested_auth_mode,
+  effective_auth_snapshot: {
+    effective_auth_provider_state,
+    effective_capabilities[],
+    effective_account_identity,
+    last_validation_timestamp,
+    last_validation_host,
+    degraded_reason?
+  },
+  selected_namespace,
+  selected_repository,
+  repository_create_privacy_default,
+  tag_template,
+  push_policy,
+  auto_generate_unraid_xml,
+  manage_template_repo,
+  auto_push_template_repo,
+  last_publish_result_id?,
+  active_preview_session_id?,
+  docker_manage_surface_state:{ active_tab, dock_state, expanded_panels[] }
+}
+
+`unraid.template_repo.{project_id}` -> {
+  template_repo_id?,
+  enabled,
+  provider,
+  repo_path,
+  remote_url?,
+  remote_visibility?,
+  branch,
+  maintainer_slug,
+  status: TemplateRepoStatus,
+  last_commit_oid?,
+  last_push_ts?,
+  review_state
+}
+
+Add the following seglog events:
+
+| Event type | Minimum payload |
+|---|---|
+| `unraid.template_repo.migration.confirmation_requested` | `project_id`, `template_repo_id?`, `reason_code`, `proposed_layout` |
+| `unraid.template_repo.adoption.confirmation_requested` | `project_id`, `template_repo_id?`, `reason_code`, `dirty_paths[]` |
+| `unraid.template_repo.created` | `project_id`, `template_repo_id`, `provider`, `repo_path`, `remote_url?`, `branch`, `visibility?` |
+| `unraid.ca_profile.projection.started` | `project_id`, `template_repo_id?`, `source_scope` |
+| `unraid.ca_profile.projection.completed` | `project_id`, `template_repo_id?`, `files_written[]` |
+| `unraid.ca_profile.projection.failed` | `project_id`, `template_repo_id?`, `reason_code`, `message` |
+| `unraid.ca_profile.projection.blocked` | `project_id`, `template_repo_id?`, `blocked_step`, `reason_code`, `recovery_options[]` |
+
+`unraid.template.generation.completed.template_repo_id` is nullable when Puppet Master generated unmanaged local output rather than writing into a configured managed repo.
+
 - `settings.containers_registry.v1` -> global container defaults (runtime selector, binary path, compose defaults, push-policy default, Docker Manage visibility setting)
 - `docker.project_state.{project_id}` -> `{ requested_auth_mode, effective_auth_snapshot, selected_namespace, selected_repository, tag_template, push_policy, last_validation_timestamp, last_publish_result_id?, active_preview_session_id?, docker_manage_surface_state:{ active_tab, dock_state, expanded_panels[] } }`
 - `unraid.template_repo.{project_id}` -> `{ template_repo_id, enabled, repo_path, remote_url, branch, maintainer_slug, status: TemplateRepoStatus, last_commit_oid?, last_push_ts?, review_state }`
