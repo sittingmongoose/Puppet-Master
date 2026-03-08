@@ -144,3 +144,169 @@ Scope note:
 - Repo-local verifier coverage and generated-artifact validator coverage MAY be delivered by different commands, but the packaging contract remains mandatory before final completion.
 
 ContractRef: ContractName:Plans/Document_Packaging_Policy.md, ContractName:Plans/Progression_Gates.md#GATE-014
+
+## Runtime Scheduler Addendum (2026-03-08)
+
+This addendum supersedes any earlier lexical-dispatch wording wherever they conflict.
+
+### 1. Canonical scheduler pass
+
+The executor MUST process scheduling as a deterministic repeated pass:
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+1. Rebuild or refresh the candidate node set from canonical run state.
+2. Recompute readiness for all candidate nodes.
+3. Recompute blocked/backoff/capacity state.
+4. Build the ready set.
+5. Score ready nodes using the canonical ordered tuple.
+6. Select as many nodes as available capacity permits.
+7. Emit queue-analysis observability before dispatch.
+8. Dispatch selected nodes.
+
+### 2. Readiness rules
+
+A node is ready only if all of the following are true:
+- canonical node state is schedulable (`queued`, `reopened`, or equivalent ready-eligible state)
+- every blocker in `blockers[]` has completed successfully or reached a state explicitly declared as dependency-satisfying
+- no unresolved graph-integrity error exists for the node
+- node is not in active backoff
+- node is not blocked on HITL, clarification, external side-effect confirmation, permission denial, FileSafe, auth refresh, or replan-required state
+- the node's plan/spec generation is still valid for the active `replan_generation`
+- runtime capacity allows another dispatch in the applicable lane / pool
+
+Invalid blocker IDs remain invalid graph input and MUST keep the node non-ready.
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Contracts_V0.md
+
+### 3. Deterministic score tuple
+
+The canonical ready-node selection tuple is:
+- `scheduler_lane`
+- `manual_priority`
+- `transitive_unblock_count`
+- `ready_since_utc`
+- `node_id`
+
+Normalization rules:
+- `scheduler_lane` order is `remediation > unblocker > normal`
+- larger `manual_priority` wins
+- larger `transitive_unblock_count` wins
+- older `ready_since_utc` wins
+- lexicographically smaller `node_id` wins only as the final tiebreak
+
+Required notes:
+- no critical-path weighting term is part of MVP selection
+- queue analysis MUST expose the tuple breakdown so the user can see why a node was chosen
+- `ready_since_utc` is set when the node first enters the ready set after being non-ready; it is retained while the node stays continuously ready
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+
+### 4. Capacity-aware parallel dispatch
+
+The executor MUST select up to `available_slots` nodes per scheduler pass.
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md
+
+`available_slots` is derived from:
+- run-level concurrency limit
+- any active phase/task/subtask concurrency constraints
+- resource / provider saturation limits
+- remediation lane reservations when configured
+
+Selection is global across the ready set, not level-by-level lexical dispatch.
+
+### 5. Wakeup triggers
+
+Queue analysis MUST rerun immediately on:
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md
+- node completion
+- verification completion
+- HITL approval or rejection resolution
+- clarification resolution
+- backoff expiry
+- remediation completion
+- replan patch application
+- restore/recovery completion
+- runtime capacity changes
+
+Polling may exist only as a watchdog fallback and MUST NOT be the primary correctness mechanism.
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
+
+### 6. Blocked-to-runnable cascade
+
+When a dependency completes or a blocking condition clears:
+- direct dependents are reevaluated immediately
+- if now ready, they enter the ready set in the same scheduler wake cycle
+- unrelated blocked or waiting nodes MUST NOT stall runnable work elsewhere in the graph
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md
+
+### 7. Failure classes and retry entry points
+
+The executor MUST classify failed or non-executed attempts into one canonical `failure_class` / `blocked_reason_code` family before deciding the next action.
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
+
+Required classes:
+- `provider_transient`
+- `structured_output_invalid`
+- `verification_failed`
+- `reviewer_findings`
+- `permission_denied`
+- `user_declined`
+- `headless_ask_denied`
+- `filesafe_blocked`
+- `external_side_effect_blocked`
+- `auth_expired`
+- `storage_io`
+- `graph_integrity`
+- `replan_required`
+
+The executor MUST NOT apply generic retry behavior without classifying the attempt first.
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+### 8. Safe points
+
+Before any mutation-capable node attempt, the executor MUST create or attach a runtime safe point.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/WorktreeGitImprovement.md
+
+Required properties:
+- `safe_point_id`
+- `run_id`
+- `node_id`
+- `attempt_id`
+- `worktree_path` or equivalent execution root
+- refs to the relevant pre-attempt artifact/workspace baseline
+- active `replan_generation`
+
+Safe points are runtime recovery anchors. They are not user-facing restore points and MUST NOT be conflated with thread rewind/rollback semantics.
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md, ContractName:Plans/newfeatures.md
+
+### 9. Remediation child lineage
+
+When verification or review requires an automatic fix cycle:
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Project_Output_Artifacts.md
+- create remediation child lineage attached to the failed node attempt
+- record `remediation_root_id`, `remediation_parent_attempt_id`, `generation`, and `origin_failure_event_id`
+- preserve finding IDs / issue IDs through the remediation cycle
+- retry the parent node only after remediation completes and the retry policy says to continue
+
+A canonical graph node is created only when the remediation requires a replan that changes scope.
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Decision_Policy.md
+
+### 10. Draft decomposition degradation boundary
+
+The executor MUST distinguish between:
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Progression_Gates.md
+- draft decomposition / pre-canonical planning
+- canonical graph execution
+
+Rules:
+- draft decomposition may degrade to deterministic flat sequencing with warning evidence when dependency output is invalid or cyclic
+- canonical graph execution MUST NOT silently flatten or otherwise degrade invalid canonical graphs
+- invalid canonical graphs are `graph_integrity` failures and stop execution until repaired
+ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/chain-wizard-flexibility.md
+
+### 11. Acceptance criteria
+
+- Ready-node selection is no longer defined as pure lexicographic dispatch.
+- Queue analysis explains why selected nodes won and why ready-but-unselected nodes did not.
+- Parallel dispatch is capacity-aware and deterministic.
+- Blocked-to-runnable cascade is explicit and event-driven.
+- Safe points exist before risky execution.
+- Retry behavior is class-driven, not generic.
+- Canonical graph integrity failures do not silently degrade.

@@ -1,5 +1,25 @@
 ## 1. Modes Overview
 
+### 1.0.2 Planning workflow addendum (2026-03-08)
+
+This addendum supersedes the short planning summary above wherever they conflict.
+
+| Chat workflow overlay | Purpose | Planning-time runtime mode | Default PT | Primary output | Default next step |
+|---|---|---|---|---|---|
+| **Plan** | Faster, lighter planning for medium complexity asks | `plan` | `Balanced` | lightweight plan artifact + normalized TODO list | user reviews, then executes or queues |
+| **Deep Plan** | Heavier planning for larger features, substantial enhancements, and high-uncertainty work | `plan` | `Balanced` | rich markdown planning document + normalized TODO list | user reviews in editor/doc pane, then executes, queues, or escalates to Chain Wizard |
+
+Planning-time rules for both overlays:
+- Planning remains read-only with respect to project files.
+- Any planning artifact created during the planning run is a Puppet Master-controlled draft, not a normal repo file by default.
+- Approval is required before the assistant can switch from planning into execution.
+- Execution after approval reuses the approved plan/TODO state and runs under `regular` or `yolo`, not under `plan`.
+
+Queue applicability:
+- If the current thread is idle, **Execute** starts immediately.
+- If another run is already active in the same thread, the approved plan may be queued behind it.
+- Queueing affects only post-approval execution, never the planning-time read-only run.
+
 | Mode       | Description |
 |-----------|-------------|
 | **Ask**   | Read-only. No edits, no execution. Agent explains and researches only. |

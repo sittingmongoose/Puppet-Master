@@ -14,3 +14,4 @@
 ---
 
 *This file is a plan document only. Implementation must follow AGENTS.md (including DRY, platform_specs, Pre-Completion Verification Checklist) and the canonical plans referenced above.*
+

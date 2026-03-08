@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/chain-wizard-flexibility.md",
-  "source_sha256": "dd72b27d1b4bed7a7eb47ea2b036cc39fe179d1a3e1b534da38cf2da953652a5",
+  "source_sha256": "77e8e82f6cb206825eb7c8aef6ee3ba98a8dc538f38a847b2b3373b94a26c21e",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -73,100 +73,114 @@
     {
       "dest_path": "Plans/_shards/chain-wizard-flexibility/10-3-gui-updates.md",
       "start_line": 312,
-      "end_line": 405,
-      "segment_sha256": "7a7e062b59775e524356390c9f035e99a228445091f386f3a0aede3931fdec0c",
+      "end_line": 424,
+      "segment_sha256": "3f3f27deccdfa20ffdf2d51a9a3da84f03632b93bf3c5e418383717bdb3d1575",
       "heading": "## 3. GUI Updates"
     },
     {
       "dest_path": "Plans/_shards/chain-wizard-flexibility/11-4-requirements-multiple-uploads-and-storage.md",
-      "start_line": 406,
-      "end_line": 459,
+      "start_line": 425,
+      "end_line": 478,
       "segment_sha256": "c9f7edd7045d966ad7fe8501367be24434f81e3cc5b1eb7c4844ba2a1e390a82",
       "heading": "## 4. Requirements: Multiple Uploads and Storage"
     },
     {
       "dest_path": "Plans/_shards/chain-wizard-flexibility/12-5-requirements-doc-builder-assistant-interview-handoff.md",
-      "start_line": 460,
-      "end_line": 725,
+      "start_line": 479,
+      "end_line": 744,
       "segment_sha256": "4b4014b5192786f72f32675da091bf93ebb6d4d65ce88a1395836425abdfd4e0",
       "heading": "## 5. Requirements Doc Builder (Assistant \u2192 Interview Handoff)"
     },
     {
       "dest_path": "Plans/_shards/chain-wizard-flexibility/13-6-adaptive-interview-phases.md",
-      "start_line": 726,
-      "end_line": 891,
+      "start_line": 745,
+      "end_line": 910,
       "segment_sha256": "7451c963c9cef4149010d76f2e7669e6fa3895b622618e8b72a7cb6913140c71",
       "heading": "## 6. Adaptive Interview Phases"
     },
     {
       "dest_path": "Plans/_shards/chain-wizard-flexibility/14-7-project-setup-and-github-create-repo-fork-pr.md",
-      "start_line": 892,
-      "end_line": 958,
+      "start_line": 911,
+      "end_line": 977,
       "segment_sha256": "55d5f54202cecb87b3efbf97cbeefc636af9a58ab8661c18bc210b093e139a55",
       "heading": "## 7. Project Setup and GitHub: Create Repo, Fork, PR"
     },
     {
       "dest_path": "Plans/_shards/chain-wizard-flexibility/15-8-relationship-to-other-plans.md",
-      "start_line": 959,
-      "end_line": 977,
+      "start_line": 978,
+      "end_line": 996,
       "segment_sha256": "819addc18d5a41f6d347b29d6e1c3710629718ba86ca49e53a1f5ece79242a2e",
       "heading": "## 8. Relationship to Other Plans"
     },
     {
       "dest_path": "Plans/_shards/chain-wizard-flexibility/16-9-gaps-and-potential-problems.md",
-      "start_line": 978,
-      "end_line": 1081,
+      "start_line": 997,
+      "end_line": 1100,
       "segment_sha256": "be6584dafdbaf5441d23e257ea566eb41d17b44dc43bf7c4d117581efdc3af94",
       "heading": "## 9. Gaps and Potential Problems"
     },
     {
       "dest_path": "Plans/_shards/chain-wizard-flexibility/17-10-implementation-readiness-checklist.md",
-      "start_line": 1082,
-      "end_line": 1145,
+      "start_line": 1101,
+      "end_line": 1164,
       "segment_sha256": "5ce4dea29c0e4ca78794a772d4416a0082959a4bbc51be89101de5feb3fb148b",
       "heading": "## 10. Implementation Readiness Checklist"
     },
     {
       "dest_path": "Plans/_shards/chain-wizard-flexibility/18-11-user-project-output-artifacts-sharded-only.md",
-      "start_line": 1146,
-      "end_line": 1180,
+      "start_line": 1165,
+      "end_line": 1199,
       "segment_sha256": "22b4c38b34e663f73ade8285dd505419e20609ebf7438deb54c6fcf35b90d535",
       "heading": "## 11. User-Project Output Artifacts (Sharded-Only)"
     },
     {
       "dest_path": "Plans/_shards/chain-wizard-flexibility/19-12-three-pass-canonical-validation-workflow-mandatory-invariant-sweep.md",
-      "start_line": 1181,
-      "end_line": 1333,
+      "start_line": 1200,
+      "end_line": 1352,
       "segment_sha256": "bf94283e4e563a0589056d6c6b09057d1c39eca88a6d5a18bc479a3a76691ee9",
       "heading": "## 12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)"
     },
     {
       "dest_path": "Plans/_shards/chain-wizard-flexibility/20-13-no-wizard-project-management-flows.md",
-      "start_line": 1334,
-      "end_line": 1411,
+      "start_line": 1353,
+      "end_line": 1430,
       "segment_sha256": "1c1d0f25b8641d394dda204b26ddfda92328ec64986b2ef0debc0bbb9b43d361",
       "heading": "## 13. No-Wizard Project Management Flows"
     },
     {
       "dest_path": "Plans/_shards/chain-wizard-flexibility/21-14-requirements-completion-contract.md",
-      "start_line": 1412,
-      "end_line": 1508,
+      "start_line": 1431,
+      "end_line": 1527,
       "segment_sha256": "bdd96588d052ac6d919e3c14e66fda1be74e932bedc01e9f9425d7442bb7617c",
       "heading": "## 14. Requirements Completion Contract"
     },
     {
       "dest_path": "Plans/_shards/chain-wizard-flexibility/22-15-requirements-quality-escalation-semantics.md",
-      "start_line": 1509,
-      "end_line": 1600,
+      "start_line": 1528,
+      "end_line": 1619,
       "segment_sha256": "c8bf2520f91e004c09d4c2450f11f986061f566da3bd9aee6b4103268feb15ad",
       "heading": "## 15. Requirements Quality Escalation Semantics"
     },
     {
       "dest_path": "Plans/_shards/chain-wizard-flexibility/23-requirements-builder-persona-strategy-addendum-2026-03-06.md",
-      "start_line": 1601,
-      "end_line": 1730,
-      "segment_sha256": "c4f17aef56e02eb3ec34e07b690575fb3799fb05d6fad1fbae2e50fe255a4323",
+      "start_line": 1620,
+      "end_line": 1750,
+      "segment_sha256": "ea5679afed6ad0c64178c50d069ab0c6f33ebfc0435826a09ee73c8011e1da63",
       "heading": "## Requirements Builder Persona Strategy Addendum (2026-03-06)"
+    },
+    {
+      "dest_path": "Plans/_shards/chain-wizard-flexibility/24-17-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md",
+      "start_line": 1751,
+      "end_line": 1876,
+      "segment_sha256": "3498518c465260227d085fac9910b8e2e6a832e1864ee53df0413b0ed0f6dc2f",
+      "heading": "## 17. Assistant / Deep Plan Escalation into Chain Wizard (2026-03-08)"
+    },
+    {
+      "dest_path": "Plans/_shards/chain-wizard-flexibility/25-clarification-escalation-and-draft-decomposition-addendum-2026-03-08.md",
+      "start_line": 1877,
+      "end_line": 1934,
+      "segment_sha256": "4be719420ab682b326256fb345c52ed1fdbe9b20ac3145893db38ead03f60df9",
+      "heading": "## Clarification Escalation and Draft Decomposition Addendum (2026-03-08)"
     }
   ]
 }

@@ -1,0 +1,126 @@
+## 17. Assistant / Deep Plan Escalation into Chain Wizard (2026-03-08)
+
+### 17.1 Purpose
+
+This section defines how Assistant Chat and Deep Plan escalate larger feature/enhancement work into the Chain Wizard / Interview flow without losing already-collected context.
+
+The goal is to avoid cold-starting the interviewer when substantial planning or scoping already happened in chat.
+
+### 17.2 Recommendation sources
+
+The Chain Wizard recommendation may originate from:
+- Assistant Chat natural-language detection of feature/enhancement / major-change intent
+- Deep Plan post-plan escalation check
+- explicit user request to move the work into the wizard/interview flow
+
+Recommendation semantics:
+- recommendation is user-facing and optional
+- the user may accept or decline
+- decline keeps the user in the current chat/planning flow with no hidden redirect
+
+### 17.3 Handoff target intent
+
+When the recommendation is accepted for feature/enhancement work, the canonical target intent is:
+
+- `EnhanceRewriteAdd`
+
+This remains true even when the user entered via the friendlier CTA copy **Add a new Feature or Enhancement**.
+
+### 17.4 Assistant-to-wizard handoff payload
+
+A typed handoff payload MUST be created when Assistant Chat or Deep Plan launches the Chain Wizard.
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Project_Output_Artifacts.md
+
+Required fields:
+- `handoff_source` (`assistant_chat` | `deep_plan`)
+- `handoff_reason` (deterministic enum; examples: `feature_request`, `major_change`, `deep_plan_recommendation`, `user_explicit`)
+- `origin_thread_id`
+- `origin_message_id`
+- `default_intent`
+- `project_id` when available
+- `project_path` when available
+- `user_goal`
+- `requirements_summary`
+- `scope_summary`
+- `codebase_summary`
+- `has_gui_hint`
+- `plan_artifact_ref` when available
+- `plan_todo_snapshot[]`
+- `open_questions[]`
+- `assumptions[]`
+- `chat_excerpt_refs[]`
+
+Optional but useful fields:
+- `recommended_phase_hints[]`
+- `effective_persona`
+- `effective_platform`
+- `effective_model`
+
+### 17.5 Wizard state additions
+
+`ChainWizardState` (or equivalent persisted state) should gain fields sufficient to preserve this handoff.
+
+Required additions:
+- `assistant_handoff_ref`
+- `assistant_handoff_source`
+- `assistant_handoff_reason`
+- `imported_plan_ref`
+- `imported_has_gui_hint`
+- `imported_context_summary_ref`
+
+Rules:
+- these fields are persisted for recovery/resume
+- they are auditable and user-visible
+- they do not replace canonical requirements/interview artifacts; they seed them
+
+### 17.6 Launch behavior after user acceptance
+
+If current project context is already known:
+- open the Chain Wizard in a preloaded `EnhanceRewriteAdd` path with imported assistant/deep-plan context available immediately
+- land in the requirements/interview-ready path rather than a blank intent picker
+
+If project context is still missing:
+- open the Chain Wizard with imported context preserved
+- land on the project-setup review path first
+
+In both cases:
+- show that the wizard was opened from Assistant Chat / Deep Plan
+- keep imported context visible/auditable
+- allow the user to continue into the interview with the imported materials in scope
+
+### 17.7 Interview behavior after handoff
+
+The Interview flow still owns scoping and adaptive phase selection.
+
+Required behavior:
+- phase 0 scope probe still runs; imported assistant context does not bypass it
+- the interviewer receives the imported handoff bundle before the first question
+- the imported plan, when present, acts as additional context rather than as an already-approved project artifact
+- the phase selector uses imported context as input but the normalized `phase_plan` remains the source of truth
+
+### 17.8 Adaptive phase-pruning guidance for imported feature/enhancement work
+
+The adaptive phase selector already exists and must continue to apply across **all** chain-wizard intents, not only the new feature/enhancement CTA.
+
+Deterministic guidance for imported feature/enhancement handoffs:
+- if `has_gui = false` or strong evidence indicates **no UI impact**, `product_ux` should default to `Skip` unless the user explicitly asks for UX/UI work
+- if the imported context indicates **no data/persistence change**, `data_persistence` should default to `Short` or `Skip`
+- if the imported context indicates **no deployment/environment impact**, `deployment_environments` should default to `Short` or `Skip`
+- `testing_verification` should remain at least `Short` for feature/enhancement work unless the change is purely non-functional documentation with no runtime effect
+- imported plan recommendations may suggest phase hints, but the local phase-manager normalizer remains authoritative
+
+This pruning logic applies to:
+- `NewProject`
+- `ForkAndEvolve`
+- `EnhanceRewriteAdd`
+- `ContributePr`
+
+### 17.9 Acceptance criteria
+
+- The Chain Wizard exposes `Add a new Feature or Enhancement` as entry copy while still mapping to canonical intent `EnhanceRewriteAdd`.
+- Accepting an Assistant/Deep Plan recommendation launches the Chain Wizard with a structured imported handoff payload.
+- Imported context survives recovery/resume.
+- The interviewer does not start cold; it receives imported context before questioning begins.
+- The mandatory scope probe still runs after handoff.
+- Adaptive phase pruning continues to apply across all intents and can skip `product_ux` when the imported scope is clearly non-GUI.
+

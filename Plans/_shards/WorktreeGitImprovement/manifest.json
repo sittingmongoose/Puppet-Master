@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/WorktreeGitImprovement.md",
-  "source_sha256": "624cbe44fd951d03672768c1b8fbe64bbdbc52be949f06e223baa926ba9e7ba3",
+  "source_sha256": "3acf6fcad694336d5acce651e0db8d55c741cc58ebf910ca225f5af70140d405",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -115,9 +115,16 @@
     {
       "dest_path": "Plans/_shards/WorktreeGitImprovement/16-8-references.md",
       "start_line": 1010,
-      "end_line": 1016,
-      "segment_sha256": "a3d1b739a9c4bfbdbab21787758bd65fe8cbf6fd25fe8b2dc443e53b216ba1f7",
+      "end_line": 1017,
+      "segment_sha256": "98f012055ca1381d16dde988da88a10e7118b5ad14771c4e29af502e300d9ac1",
       "heading": "## 8. References"
+    },
+    {
+      "dest_path": "Plans/_shards/WorktreeGitImprovement/17-safe-point-and-retry-integration-addendum-2026-03-08.md",
+      "start_line": 1018,
+      "end_line": 1041,
+      "segment_sha256": "adabe73539f8f4f75ebf724ecb5afebedc70d773a08cf22a4f87b4a691c2c866",
+      "heading": "## Safe-Point and Retry Integration Addendum (2026-03-08)"
     }
   ]
 }

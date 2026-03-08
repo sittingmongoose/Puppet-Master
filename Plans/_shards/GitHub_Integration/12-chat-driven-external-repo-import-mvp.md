@@ -21,3 +21,4 @@ Puppet Master Assistant Chat supports importing an external repository (typicall
 - **Audit trail:** Import actions must be recorded as thread audit entries: source, destination, method used, and (when known) repo owner/name + default branch/commit.
 
 ContractRef: ToolID:GitHubApiTool, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
+

@@ -1,0 +1,42 @@
+{
+  "run_id": "rewrite-20260308-194441-plan-and-deep-plan-pt-wizard-escalation-and-assistant-to-interview-handoff",
+  "changed_files": [
+    "Plans/.evidence/plan-sharding-2026-03-08/evidence.json",
+    "Plans/.evidence/plan-sharding-2026-03-08/reports/FinalGUISpec.reconstruct.sha256.txt",
+    "Plans/.evidence/plan-sharding-2026-03-08/reports/assistant-chat-design.reconstruct.sha256.txt",
+    "Plans/.evidence/plan-sharding-2026-03-08/reports/chain-wizard-flexibility.reconstruct.sha256.txt",
+    "Plans/.evidence/plan-sharding-2026-03-08/reports/commands.txt",
+    "Plans/.pipeline/change_manifest.json",
+    "Plans/.pipeline/research_packet.json",
+    "Plans/.pipeline/verifier_exit_code.txt",
+    "Plans/.pipeline/verifier_report.txt",
+    "Plans/FinalGUISpec.md",
+    "Plans/Run_Modes.md",
+    "Plans/Spec_Lock.json",
+    "Plans/_shards/FinalGUISpec/00-index.md",
+    "Plans/_shards/FinalGUISpec/25-rendering-surface-addendum-2026-03-07.md",
+    "Plans/_shards/FinalGUISpec/manifest.json",
+    "Plans/_shards/assistant-chat-design/00-index.md",
+    "Plans/_shards/assistant-chat-design/06-1-modes-overview.md",
+    "Plans/_shards/assistant-chat-design/13-8-plan-mode-depth-rules.md",
+    "Plans/_shards/assistant-chat-design/33-28-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces-2026-03-07.md",
+    "Plans/_shards/assistant-chat-design/manifest.json",
+    "Plans/_shards/chain-wizard-flexibility/00-index.md",
+    "Plans/_shards/chain-wizard-flexibility/10-3-gui-updates.md",
+    "Plans/_shards/chain-wizard-flexibility/23-requirements-builder-persona-strategy-addendum-2026-03-06.md",
+    "Plans/_shards/chain-wizard-flexibility/manifest.json",
+    "Plans/assistant-chat-design.md",
+    "Plans/auto_decisions.jsonl",
+    "Plans/chain-wizard-flexibility.md"
+  ],
+  "untracked_files": [
+    "Plans/.pipeline/runs/rewrite-20260308-194441-plan-and-deep-plan-pt-wizard-escalation-and-assistant-to-interview-handoff/change_manifest.json",
+    "Plans/.pipeline/runs/rewrite-20260308-194441-plan-and-deep-plan-pt-wizard-escalation-and-assistant-to-interview-handoff/research_packet.json",
+    "Plans/.pipeline/runs/rewrite-20260308-194441-plan-and-deep-plan-pt-wizard-escalation-and-assistant-to-interview-handoff/verifier_exit_code.txt",
+    "Plans/.pipeline/runs/rewrite-20260308-194441-plan-and-deep-plan-pt-wizard-escalation-and-assistant-to-interview-handoff/verifier_report.txt",
+    "Plans/_shards/FinalGUISpec/26-assistant-planning-ux-addendum-2026-03-08.md",
+    "Plans/_shards/assistant-chat-design/13-8-plan-mode-deep-plan-mode-and-plan-thoroughness-pt.md",
+    "Plans/_shards/assistant-chat-design/34-29-natural-language-mode-invocation-and-wizard-escalation-2026-03-08.md",
+    "Plans/_shards/chain-wizard-flexibility/24-17-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md"
+  ]
+}

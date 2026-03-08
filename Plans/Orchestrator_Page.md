@@ -596,3 +596,53 @@ Extend the orchestrator status/control surface so Docker-related runs expose mor
 - template chip: canonical `TemplateRepoStatus`-derived state (`unconfigured`, `config_invalid`, `clean`, `dirty_uncommitted`, `committed_local_only`, `push_in_progress`, `push_failed`, `diverged_remote`, `needs_review`)
 
 ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/FinalGUISpec.md, Primitive:UICommand
+
+## Scheduler Queue and Recovery UX Addendum (2026-03-08)
+
+### 1. Queue analysis summary card
+
+The Orchestrator page must add a live queue/scheduler summary card.
+
+Required fields:
+- ready count
+- running count
+- blocked count
+- backoff count
+- remediation-active count
+- available slots
+- last wake reason
+- last scheduler-analysis timestamp
+- selected next nodes summary
+
+### 2. Blocked state handling
+
+Blocked nodes/actions must present exact recovery options instead of generic failure copy.
+
+Required examples:
+- `Approve` / `Reject` for HITL
+- `Resume Wizard` / `View report` for clarification-driven wizard states
+- `Re-authenticate` for `auth_expired`
+- `Approve once` / `Approve & add to list` where FileSafe allows recovery
+- `Apply replan patch` / `Open replan diff` for `replan_required`
+
+### 3. Retry and remediation controls
+
+Manual retry controls must expose retry posture clearly.
+
+Required options when allowed:
+- `Retry from safe point`
+- `Start fresh attempt`
+- `Open remediation details`
+
+The page must not imply that all retry buttons mean the same thing.
+
+### 4. Event-driven updates
+
+Scheduler and remediation widgets update from event/projection streams. Do not rely on polling loops for correctness.
+
+### 5. Acceptance criteria
+
+- The page exposes current queue pressure and wake reason.
+- Recovery options are specific to the blocked/failure class.
+- Retry UI distinguishes safe-point retry from fresh attempt.
+- Scheduler/remediation widgets update without timer-driven correctness assumptions.

@@ -91,3 +91,4 @@ Rule:
 - Interview UI must display requested/effective Persona plus effective provider/model during active work.
 - Automatic Interview Persona resolution must use registry-valid IDs and follow the deterministic resolver order above.
 - GUI/UI/UX interview work may prefer Gemini when available, but this must remain configurable and capability-aware.
+

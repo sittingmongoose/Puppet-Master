@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/GitHub_Integration.md",
-  "source_sha256": "73778899c8777f85b229fd6e9d96532d5bfe36e57b7fdda92748b6b25824758a",
+  "source_sha256": "274ae0e13876912e3b1dd9bd0a934c1f5f86f4aa4f6a12e3d87a41bf4b6e4655",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -87,9 +87,16 @@
     {
       "dest_path": "Plans/_shards/GitHub_Integration/12-chat-driven-external-repo-import-mvp.md",
       "start_line": 1200,
-      "end_line": 1222,
-      "segment_sha256": "39116e82e7a3363bade2d6e473af89c33d463cd6c9f133b658ce96071d1fceb6",
+      "end_line": 1223,
+      "segment_sha256": "89b15b94d7f74bb032f5cd1ac07407498dbbcfd5465610e3111c1245dc16acb0",
       "heading": "## Chat-driven external repo import (MVP)"
+    },
+    {
+      "dest_path": "Plans/_shards/GitHub_Integration/13-wizard-blocked-state-and-deferred-launch-reconciliation-addendum-2026-03-08.md",
+      "start_line": 1224,
+      "end_line": 1236,
+      "segment_sha256": "c0d18157a565e8905c9cc44b45cc69c285ea12cfad3d7ac70c0d1e88cba3971e",
+      "heading": "## Wizard blocked-State and Deferred Launch Reconciliation Addendum (2026-03-08)"
     }
   ]
 }

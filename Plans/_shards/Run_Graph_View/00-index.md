@@ -27,3 +27,4 @@ Canonical source: [Plans/Run_Graph_View.md](../../Run_Graph_View.md)
 - [19-17-uicommand-ids.md](19-17-uicommand-ids.md) — ## 17. UICommand IDs
 - [20-18-acceptance-criteria.md](20-18-acceptance-criteria.md) — ## 18. Acceptance Criteria
 - [21-19-references.md](21-19-references.md) — ## 19. References
+- [22-scheduler-analysis-and-remediation-visibility-addendum-2026-03-08.md](22-scheduler-analysis-and-remediation-visibility-addendum-2026-03-08.md) — ## Scheduler Analysis and Remediation Visibility Addendum (2026-03-08)

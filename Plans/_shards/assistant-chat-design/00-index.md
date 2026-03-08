@@ -18,7 +18,7 @@ Canonical source: [Plans/assistant-chat-design.md](../../assistant-chat-design.m
 - [10-5-commands-slash-commands-and-custom-commands.md](10-5-commands-slash-commands-and-custom-commands.md) — ## 5. Commands (slash commands and custom commands)
 - [11-6-teach.md](11-6-teach.md) — ## 6. Teach
 - [12-7-attachments-web-search-and-extensibility.md](12-7-attachments-web-search-and-extensibility.md) — ## 7. Attachments, Web Search, and Extensibility
-- [13-8-plan-mode-depth-rules.md](13-8-plan-mode-depth-rules.md) — ## 8. Plan Mode Depth & Rules
+- [13-8-plan-mode-deep-plan-mode-and-plan-thoroughness-pt.md](13-8-plan-mode-deep-plan-mode-and-plan-thoroughness-pt.md) — ## 8. Plan Mode, Deep Plan Mode, and Plan Thoroughness (PT)
 - [14-9-file-manager-ide-style-editor-and-mention.md](14-9-file-manager-ide-style-editor-and-mention.md) — ## 9. File Manager, IDE-style editor, and @ Mention
 - [15-10-chat-history-search.md](15-10-chat-history-search.md) — ## 10. Chat History Search
 - [16-11-threads-and-chat-management.md](16-11-threads-and-chat-management.md) — ## 11. Threads and chat management
@@ -39,3 +39,5 @@ Canonical source: [Plans/assistant-chat-design.md](../../assistant-chat-design.m
 - [31-26-per-pass-validation-modelprovider-settings-invariant-sweep.md](31-26-per-pass-validation-modelprovider-settings-invariant-sweep.md) — ## 26. Per-Pass Validation Model/Provider Settings (Invariant Sweep)
 - [32-27-persona-control-in-assistant-chat-2026-03-06.md](32-27-persona-control-in-assistant-chat-2026-03-06.md) — ## 27. Persona Control in Assistant Chat (2026-03-06)
 - [33-28-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces-2026-03-07.md](33-28-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces-2026-03-07.md) — ## 28. Markdown and Mermaid Rendering in Chat and Planning Surfaces (2026-03-07)
+- [34-29-natural-language-mode-invocation-and-wizard-escalation-2026-03-08.md](34-29-natural-language-mode-invocation-and-wizard-escalation-2026-03-08.md) — ## 29. Natural-language Mode Invocation and Wizard Escalation (2026-03-08)
+- [35-blocked-thread-state-and-recovery-addendum-2026-03-08.md](35-blocked-thread-state-and-recovery-addendum-2026-03-08.md) — ## blocked Thread State and Recovery Addendum (2026-03-08)

@@ -19,3 +19,4 @@
 | puppet-master-rs/src/types/events.rs | PuppetMasterEvent enum |
 | puppet-master-rs/src/types/budget.rs | UsageRecord, BudgetInfo structs |
 | puppet-master-rs/src/types/evidence.rs | StoredEvidence, EvidenceType |
+

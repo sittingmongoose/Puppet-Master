@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.evidence.schema.v1",
   "evidence_id": "plan-sharding-2026-03-08",
-  "created_at_utc": "2026-03-08T05:11:05.947669+00:00",
+  "created_at_utc": "2026-03-08T23:09:18.123058+00:00",
   "node": {
     "node_id": "plan-sharding"
   },
@@ -428,6 +428,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/FileManager/20-runtime-artifact-opening-and-recovery-panel-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/FileManager/manifest.json",
       "change_type": "modified"
     },
@@ -525,6 +529,10 @@
     },
     {
       "path": "Plans/_shards/FileSafe/23-17-implementation-order-and-dependencies.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/24-runtime-blocked-state-integration-addendum-2026-03-08.md",
       "change_type": "modified"
     },
     {
@@ -636,6 +644,14 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/FinalGUISpec/26-assistant-planning-ux-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/27-scheduler-blocked-and-remediation-gui-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/FinalGUISpec/manifest.json",
       "change_type": "modified"
     },
@@ -689,6 +705,10 @@
     },
     {
       "path": "Plans/_shards/GitHub_Integration/12-chat-driven-external-repo-import-mvp.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/GitHub_Integration/13-wizard-blocked-state-and-deferred-launch-reconciliation-addendum-2026-03-08.md",
       "change_type": "modified"
     },
     {
@@ -868,6 +888,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/MiscPlan/22-runner-preparationcleanup-and-safe-point-reconciliation-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/MiscPlan/manifest.json",
       "change_type": "modified"
     },
@@ -933,6 +957,10 @@
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/15-change-summary.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/Project_Output_Artifacts/16-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md",
       "change_type": "modified"
     },
     {
@@ -1028,6 +1056,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/Run_Graph_View/22-scheduler-analysis-and-remediation-visibility-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/Run_Graph_View/manifest.json",
       "change_type": "modified"
     },
@@ -1093,6 +1125,10 @@
     },
     {
       "path": "Plans/_shards/Tools/15-13-references.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/Tools/16-tool-policy-outcome-taxonomy-addendum-2026-03-08.md",
       "change_type": "modified"
     },
     {
@@ -1168,6 +1204,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/WorktreeGitImprovement/17-safe-point-and-retry-integration-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/WorktreeGitImprovement/manifest.json",
       "change_type": "modified"
     },
@@ -1224,7 +1264,7 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/13-8-plan-mode-depth-rules.md",
+      "path": "Plans/_shards/assistant-chat-design/13-8-plan-mode-deep-plan-mode-and-plan-thoroughness-pt.md",
       "change_type": "modified"
     },
     {
@@ -1305,6 +1345,14 @@
     },
     {
       "path": "Plans/_shards/assistant-chat-design/33-28-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces-2026-03-07.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/34-29-natural-language-mode-invocation-and-wizard-escalation-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/35-blocked-thread-state-and-recovery-addendum-2026-03-08.md",
       "change_type": "modified"
     },
     {
@@ -1408,6 +1456,14 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/chain-wizard-flexibility/24-17-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/chain-wizard-flexibility/25-clarification-escalation-and-draft-decomposition-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/chain-wizard-flexibility/manifest.json",
       "change_type": "modified"
     },
@@ -1429,6 +1485,10 @@
     },
     {
       "path": "Plans/_shards/feature-list/04-part-1a-markdown-mermaid-and-unified-rendering-addendum-2026-03-07.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/feature-list/05-runtime-scheduler-and-recovery-features-addendum-2026-03-08.md",
       "change_type": "modified"
     },
     {
@@ -1541,6 +1601,10 @@
     },
     {
       "path": "Plans/_shards/interview-subagent-integration/26-persona-stage-strategy-addendum-2026-03-06.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/27-interview-validation-remediation-and-blocked-state-addendum-2026-03-08.md",
       "change_type": "modified"
     },
     {
@@ -1665,6 +1729,10 @@
     },
     {
       "path": "Plans/_shards/newfeatures/29-24-unified-markdown-mermaid-html-and-image-rendering-architecture-2026-03-07.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/newfeatures/30-runtime-safe-point-clarification-addendum-2026-03-08.md",
       "change_type": "modified"
     },
     {
@@ -1912,6 +1980,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/orchestrator-subagent-integration/34-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/orchestrator-subagent-integration/manifest.json",
       "change_type": "modified"
     },
@@ -1965,6 +2037,10 @@
     },
     {
       "path": "Plans/_shards/storage-plan/12-version-history.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/13-scheduler-runtime-safe-point-and-remediation-storage-addendum-2026-03-08.md",
       "change_type": "modified"
     },
     {
@@ -2049,6 +2125,10 @@
     },
     {
       "path": "Plans/_shards/usage-feature/19-widget-composed-page-layout-addendum-2026-02-23.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/20-scheduler-blocked-usage-observability-addendum-2026-03-08.md",
       "change_type": "modified"
     },
     {

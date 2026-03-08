@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/newfeatures.md",
-  "source_sha256": "99623e76bea89c65417bdad554972cfd2e11cf7b0a7f5c46ae006579aba87c15",
+  "source_sha256": "e45cac6f55b16c871712915d577acc5fdcfcf47c506b2fed84751bcdbb309c85",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -206,9 +206,16 @@
     {
       "dest_path": "Plans/_shards/newfeatures/29-24-unified-markdown-mermaid-html-and-image-rendering-architecture-2026-03-07.md",
       "start_line": 1396,
-      "end_line": 1510,
-      "segment_sha256": "9d2fc73e0e6677ef0d94046f2aa44852bda5ab11848ff0081ca99c0fad4a940a",
+      "end_line": 1511,
+      "segment_sha256": "359e596560e791fd9f245eccb387fdff54292dc9128216c5aad199e8d97ec5eb",
       "heading": "## 24. Unified Markdown, Mermaid, HTML, and Image Rendering Architecture (2026-03-07)"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/30-runtime-safe-point-clarification-addendum-2026-03-08.md",
+      "start_line": 1512,
+      "end_line": 1534,
+      "segment_sha256": "1bbf9aa1df791f0fa427aa351c746e403ea8afc1567828605be030682ecc5c81",
+      "heading": "## Runtime Safe-Point Clarification Addendum (2026-03-08)"
     }
   ]
 }

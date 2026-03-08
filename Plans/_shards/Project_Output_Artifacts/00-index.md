@@ -21,3 +21,4 @@ Canonical source: [Plans/Project_Output_Artifacts.md](../../Project_Output_Artif
 - [13-11-traceability-outputs.md](13-11-traceability-outputs.md) — ## 11. Traceability outputs
 - [14-12-optional-derived-quickstartmd-contract-human-convenience-only.md](14-12-optional-derived-quickstartmd-contract-human-convenience-only.md) — ## 12. Optional derived `quickstart.md` contract (human convenience only)
 - [15-change-summary.md](15-change-summary.md) — ## Change Summary
+- [16-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md](16-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md) — ## Runtime Evidence and Degradation Artifact Addendum (2026-03-08)

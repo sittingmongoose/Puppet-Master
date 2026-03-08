@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/MiscPlan.md",
-  "source_sha256": "b4f25a6f00b0852dcadf5980b3753dfcd02c7b517a8570f1029f339f580850fd",
+  "source_sha256": "e82c2126ca5abbeb3ceaec7324f364e505001cb42bac03767c47f275330affa7",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -150,9 +150,16 @@
     {
       "dest_path": "Plans/_shards/MiscPlan/21-implementation-status-tray-and-start-on-boot-phase-4-2.md",
       "start_line": 1575,
-      "end_line": 1581,
-      "segment_sha256": "5b79d6e40f42f9bf9704b6e1a2dc1d0cfef83e08209273f0c6169cccfb1a7795",
+      "end_line": 1582,
+      "segment_sha256": "be34dc65200acf51c424109cec5e1d297e7533cd2a927692a9431d3e479498b6",
       "heading": "## Implementation status (Tray and Start-on-Boot, Phase 4)"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/22-runner-preparationcleanup-and-safe-point-reconciliation-addendum-2026-03-08.md",
+      "start_line": 1583,
+      "end_line": 1594,
+      "segment_sha256": "d79ffc6ae0d7eaa6a441d43133a921139ce995933d31dfec8b16ca24b5465b55",
+      "heading": "## Runner Preparation/Cleanup and Safe-Point Reconciliation Addendum (2026-03-08)"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/orchestrator-subagent-integration.md",
-  "source_sha256": "b53f3bb18a86f3d8ea192e7ec1979102460ff6849ea5f67b2335d7b0185c2aa8",
+  "source_sha256": "83f05f21d105081fef86ab5145617f1ccf34990cf68d7ebe3edc0a27d4fa9928",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -234,9 +234,16 @@
     {
       "dest_path": "Plans/_shards/orchestrator-subagent-integration/33-persona-and-effective-runtime-resolution-addendum-2026-03-06.md",
       "start_line": 7880,
-      "end_line": 7990,
-      "segment_sha256": "8ec56d406b3c6783b4e7f5abffaaf4bcaf28c0e199d36b1770f0b8c68730e9e3",
+      "end_line": 7991,
+      "segment_sha256": "4ce51dd40a4c11f4424ecc7b99aa47d6816ed322aa9de68acacdf84c195d2e9c",
       "heading": "## Persona and Effective Runtime Resolution Addendum (2026-03-06)"
+    },
+    {
+      "dest_path": "Plans/_shards/orchestrator-subagent-integration/34-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-08.md",
+      "start_line": 7992,
+      "end_line": 8131,
+      "segment_sha256": "82675a8920f2a5de7080fc90a0db0a866e4c4326c33b4b3cfc3999f971d11b3b",
+      "heading": "## Runtime Scheduler, Parallelism, and Remediation Addendum (2026-03-08)"
     }
   ]
 }

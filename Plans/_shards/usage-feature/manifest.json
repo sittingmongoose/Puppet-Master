@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/usage-feature.md",
-  "source_sha256": "36c9102a1e0b9c950fe22eb8e181cfa3f378e5f226de0dde12fd62b4f3eb1831",
+  "source_sha256": "c6b80efd1ef9ac98aa2cd3fbfc6dec0bd1a1ebad9e895f6e72765aad36f69ecf",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -136,9 +136,16 @@
     {
       "dest_path": "Plans/_shards/usage-feature/19-widget-composed-page-layout-addendum-2026-02-23.md",
       "start_line": 492,
-      "end_line": 591,
-      "segment_sha256": "b7ab25f40bc1569da6d94db67e8e35a596c163b4fdb1f9c640e0d0a9d59ede88",
+      "end_line": 592,
+      "segment_sha256": "9f96bb8432f3c07a5ff99d8edb114c9bb2efa890a4c6d78d52a9a20a8c67c6b5",
       "heading": "## Widget-Composed Page Layout (Addendum -- 2026-02-23)"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/20-scheduler-blocked-usage-observability-addendum-2026-03-08.md",
+      "start_line": 593,
+      "end_line": 602,
+      "segment_sha256": "d442b0dc78744330db62e6f3538d85ed74ad7d8484cd4bf615fb29cba7a6d19a",
+      "heading": "## Scheduler / blocked Usage Observability Addendum (2026-03-08)"
     }
   ]
 }

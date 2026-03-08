@@ -2,6 +2,25 @@
 
 ### 3.1 Intent Selection at Flow Start
 
+#### 3.1A Feature / enhancement entry copy addendum (2026-03-08)
+
+The Chain Wizard start surface MUST expose an explicit user-facing CTA labeled:
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+- **Add a new Feature or Enhancement**
+
+Mapping rule:
+- This CTA maps to existing intent `EnhanceRewriteAdd`.
+- It does **not** create a new fifth intent.
+
+Placement / reuse:
+- available in the Chain Wizard start surface
+- reusable as the recommendation CTA launched from Assistant Chat / Deep Plan
+- reusable as a deferred-wizard shortcut when the current project is already known
+
+Helper copy should make the scope clear:
+- use this when the user is working inside an existing project and wants to add a substantial feature, major enhancement, focused rewrite, or other scoped change that benefits from interview/spec generation before orchestration
+
 - **Placement:** When the user starts the flow (e.g. "Start new project" or "Open project" from Dashboard, or a dedicated "Start flow" entry), present **intent selection** before or as the first step of the wizard.
 - **UI:** Four options (cards, list, or radio group) with short descriptions and optional "Learn more":
   - **New project** -- Greenfield; we'll create or use a new directory and optional GitHub repo.

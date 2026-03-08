@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/feature-list.md",
-  "source_sha256": "5b481a5cea8d12683ae772ce6067087529aa65740af1386027c25b117dcdc793",
+  "source_sha256": "5b060a76762c4be6c9fb599b193cefcd52fddbbbe212130fac2b525ced0d9cf3",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -31,9 +31,16 @@
     {
       "dest_path": "Plans/_shards/feature-list/04-part-1a-markdown-mermaid-and-unified-rendering-addendum-2026-03-07.md",
       "start_line": 929,
-      "end_line": 943,
-      "segment_sha256": "e90aa03547ac688a68ec6fb54b69685bb395692f4bd0b0fa44e06f8506c1f23e",
+      "end_line": 944,
+      "segment_sha256": "2ff1aacaf3e46ec2dec3bab998d376ddeb40648df3c7ec2a98feb00cd921db23",
       "heading": "## Part 1A - Markdown, Mermaid, and Unified Rendering Addendum (2026-03-07)"
+    },
+    {
+      "dest_path": "Plans/_shards/feature-list/05-runtime-scheduler-and-recovery-features-addendum-2026-03-08.md",
+      "start_line": 945,
+      "end_line": 957,
+      "segment_sha256": "fed9a717cc2e8c71f4151faf2bd42f9d4bd083e8623de8e84c9698cdb818b41c",
+      "heading": "## Runtime Scheduler and Recovery Features Addendum (2026-03-08)"
     }
   ]
 }

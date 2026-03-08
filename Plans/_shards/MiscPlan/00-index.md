@@ -27,3 +27,4 @@ Canonical source: [Plans/MiscPlan.md](../../MiscPlan.md)
 - [19-implementation-status-tray-and-start-on-boot-phase-4.md](19-implementation-status-tray-and-start-on-boot-phase-4.md) — ## Implementation status (Tray and Start-on-Boot, Phase 4)
 - [20-11-references-2.md](20-11-references-2.md) — ## 11. References
 - [21-implementation-status-tray-and-start-on-boot-phase-4-2.md](21-implementation-status-tray-and-start-on-boot-phase-4-2.md) — ## Implementation status (Tray and Start-on-Boot, Phase 4)
+- [22-runner-preparationcleanup-and-safe-point-reconciliation-addendum-2026-03-08.md](22-runner-preparationcleanup-and-safe-point-reconciliation-addendum-2026-03-08.md) — ## Runner Preparation/Cleanup and Safe-Point Reconciliation Addendum (2026-03-08)

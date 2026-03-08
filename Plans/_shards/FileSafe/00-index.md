@@ -29,3 +29,4 @@ Canonical source: [Plans/FileSafe.md](../../FileSafe.md)
 - [21-15-system-integration-analysis.md](21-15-system-integration-analysis.md) — ## 15. System Integration Analysis
 - [22-16-references.md](22-16-references.md) — ## 16. References
 - [23-17-implementation-order-and-dependencies.md](23-17-implementation-order-and-dependencies.md) — ## 17. Implementation Order and Dependencies
+- [24-runtime-blocked-state-integration-addendum-2026-03-08.md](24-runtime-blocked-state-integration-addendum-2026-03-08.md) — ## Runtime Blocked-State Integration Addendum (2026-03-08)

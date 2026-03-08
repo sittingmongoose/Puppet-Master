@@ -113,3 +113,4 @@ A static screenshot is not an acceptable steady-state replacement for HTML/brows
 - do not require universal embedded-webview parity before shipping the feature set
 - do not make arbitrary WYSIWYG editing the definition of “full Markdown support”
 - do not allow generated preview trust boundaries to collapse into workspace-browser trust boundaries
+

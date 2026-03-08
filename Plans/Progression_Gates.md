@@ -385,3 +385,65 @@ ContractRef: Gate:GATE-014, SchemaID:evidence.schema.json, ContractName:Plans/Do
 - `Plans/UI_Wiring_Rules.md`
 - `Plans/Wiring_Matrix.schema.json`
 - `Plans/Document_Packaging_Policy.md`
+
+## Runtime Integrity and Recovery Gates Addendum (2026-03-08)
+
+Add the following gate expectations.
+
+### 1. Canonical graph integrity gate
+
+A run MUST NOT proceed into canonical execution when the canonical sharded graph is invalid, cyclic, or internally inconsistent.
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decision_Policy.md, Gate:GATE-014
+
+Required outcome:
+- raise `graph_integrity` failure
+- stop execution
+- do not silently degrade to flat canonical execution
+
+### 2. Safe-point-before-risk gate
+
+Any mutation-capable attempt must have a valid runtime safe point before dispatch.
+
+Missing safe point for a risky attempt is a gate failure.
+
+### 3. Blocked-outcome correctness gate
+
+UI/projections must keep blocked outcomes distinct from failures for:
+- policy denial
+- FileSafe blocks
+- external side-effect confirmation blocks
+- auth refresh blocks where the action never executed
+
+### 4. Event-driven wakeup gate
+
+Scheduler correctness must not depend on timer polling. Authoritative wakeups must be event-driven.
+
+### 5. Wizard blocked-state gate
+
+Wizard flows must recognize `blocked` as a canonical persisted state distinct from `attention_required`.
+
+### 6. Acceptance criteria
+
+- Invalid canonical graphs stop execution.
+- Risky execution cannot run without a safe point.
+- Blocked/failed semantics do not collapse into one UI state.
+- Scheduler correctness does not depend on polling.
+- Wizard blocked is treated as a real state, not a footnote.
+
+## Post-Edit Verification Sweep Addendum (2026-03-08)
+
+After applying the runtime scheduler packet, perform an explicit verification sweep across the affected docs and projections.
+
+Required verification checks:
+- `Executor_Protocol.md` no longer canonically defines pure lexicographic ready-node dispatch
+- `chain-wizard-flexibility.md` canonical `wizard_status` enum includes `blocked`
+- `assistant-chat-design.md` formally models `blocked` thread state instead of punting it out of scope
+- `FinalGUISpec.md` includes `wizard_blocked` UI/card parity with recovery behavior
+- `Contracts_V0.md`, `storage-plan.md`, `Run_Graph_View.md`, and `Orchestrator_Page.md` all expose the same scheduler/remediation field vocabulary
+- `safe point`, `restore point`, and `rollback` are kept distinct in `storage-plan.md`, `newfeatures.md`, and `Crosswalk.md`
+- `Tools.md`, `Permissions_System.md`, `FileSafe.md`, and `Containers_Registry_and_Unraid.md` agree on blocked-vs-failed semantics
+- `Prompt_Pipeline.md` and `CLI_Bridged_Providers.md` preserve the runtime lineage metadata required for retries/remediation
+- `GitHub_Integration.md` and wizard/deferred-launch paths preserve blocked-state resume behavior
+- all new scheduler/remediation GUI surfaces still follow the event-driven/no-polling rewrite rule
+
+This verification sweep is mandatory work, not an optional reminder.

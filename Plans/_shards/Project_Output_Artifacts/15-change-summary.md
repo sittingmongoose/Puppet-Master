@@ -11,3 +11,4 @@
 - 2026-02-24: Defined seglog canonical persistence as the source of truth (filesystem is staging/export/cache only) with required artifact-event fields.
 - 2026-02-24: Tightened DRY rules: node shards reference `ProjectContract:*`; acceptance manifest references node IDs + contract refs; repeated prose must point to contract pack canon.
 - 2026-02-24: Aligned terminology/field names with existing schemas in `Plans/` (graph index/node, contracts index, acceptance manifest, auto decisions).
+

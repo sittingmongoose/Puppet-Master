@@ -21,3 +21,4 @@ Canonical source: [Plans/Tools.md](../../Tools.md)
 - [13-11-relationship-to-other-plans.md](13-11-relationship-to-other-plans.md) — ## 11. Relationship to other plans
 - [14-12-implementation-checklist-ordered-for-implementation-plan.md](14-12-implementation-checklist-ordered-for-implementation-plan.md) — ## 12. Implementation checklist (ordered for implementation plan)
 - [15-13-references.md](15-13-references.md) — ## 13. References
+- [16-tool-policy-outcome-taxonomy-addendum-2026-03-08.md](16-tool-policy-outcome-taxonomy-addendum-2026-03-08.md) — ## Tool Policy Outcome Taxonomy Addendum (2026-03-08)

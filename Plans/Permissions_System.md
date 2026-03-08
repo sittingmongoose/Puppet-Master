@@ -656,3 +656,38 @@ Add the following entry to the §7 defaults table:
 | Key | Default | Rationale |
 |---|---|---|
 | `external_publish_side_effect` | `ask` | Remote publication and repo creation can change privacy/distribution state and require explicit approval |
+
+## Runtime blocked-Outcome Integration Addendum (2026-03-08)
+
+### 1. Policy-denied outcomes are blocked outcomes
+
+When the permission layer prevents execution, the runtime must treat the result as blocked/denied rather than generic failure.
+
+This includes:
+- deny rules
+- user rejection of `ask`
+- headless `ask -> deny`
+- `external_publish_side_effect` blocks
+
+### 2. Recovery-option payloads
+
+Permission outcomes that surface to runtime/UI must include exact recovery options.
+
+Minimum fields:
+- `reason_code`
+- `guard_name?`
+- `recovery_options[]`
+- whether the action executed at all
+
+### 3. Non-bypassable remote side effects
+
+`external_publish_side_effect` remains non-bypassable and must integrate with the shared blocked-outcome model.
+
+Required rule:
+- blocked remote side effects are preserved as blocked outcomes, not retried automatically and not collapsed into generic failure
+
+### 4. Acceptance criteria
+
+- Permission denials integrate cleanly with runtime blocked outcomes.
+- Recovery options are explicit.
+- Remote side-effect blocks remain non-bypassable and non-ambiguous.

@@ -22,3 +22,4 @@ Canonical source: [Plans/WorktreeGitImprovement.md](../../WorktreeGitImprovement
 - [14-712-crews-and-subagent-communication-enhancements-for-gitworktree-operations.md](14-712-crews-and-subagent-communication-enhancements-for-gitworktree-operations.md) — ## 7.12 Crews and Subagent Communication Enhancements for Git/Worktree Operations
 - [15-713-lifecycle-and-quality-enhancements-for-gitworktree-operations.md](15-713-lifecycle-and-quality-enhancements-for-gitworktree-operations.md) — ## 7.13 Lifecycle and Quality Enhancements for Git/Worktree Operations
 - [16-8-references.md](16-8-references.md) — ## 8. References
+- [17-safe-point-and-retry-integration-addendum-2026-03-08.md](17-safe-point-and-retry-integration-addendum-2026-03-08.md) — ## Safe-Point and Retry Integration Addendum (2026-03-08)

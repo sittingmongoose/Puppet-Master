@@ -582,3 +582,32 @@ Acceptance criteria are written to be testable by an agent/verifier that can run
 - `puppet-master-rs/src/platforms/output_parser.rs`
 - `puppet-master-rs/src/platforms/runner.rs`
 - `Plans/Provider_OpenCode.md`
+
+## Runtime Retry/Blocked Integration Addendum (2026-03-08)
+
+### 1. Shared failure taxonomy
+
+Bridged provider runs must emit enough normalized output for the shared runtime taxonomy to classify outcomes.
+
+Required examples:
+- transient transport/server failure -> `provider_transient`
+- headless ask denial -> `headless_ask_denied`
+- auth expiry mid-run -> `auth_expired`
+- malformed structured output -> `structured_output_invalid`
+
+### 2. Retry/replay identity
+
+Duplicate emissions across retries/replays must preserve attempt identity so remediation and retry lineage remain reconstructable.
+
+Required fields when applicable:
+- `attempt_id`
+- `retry_count`
+- `failure_class`
+- `safe_point_id?`
+- `remediation_root_id?`
+
+### 3. Acceptance criteria
+
+- Bridged-provider output is sufficient for runtime classification.
+- Retries/replays remain distinguishable in lineage.
+- Provider-local retry behavior does not bypass the shared runtime matrix.

@@ -345,3 +345,35 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and
 - `Plans/UI_Wiring_Rules.md`
 - `Plans/Wiring_Matrix.schema.json`
 - `Plans/Wiring_Matrix.md`
+
+## Scheduler Recovery and blocked-State Commands Addendum (2026-03-08)
+
+Add or update commands so retry/recovery semantics are explicit.
+
+### 1. Retry commands
+
+`cmd.graph.retry_node` and `cmd.orchestrator.retry_node` payloads must gain:
+- `retry_mode: "from_safe_point" | "fresh_attempt"`
+- `safe_point_id?`
+- `expected_failure_class?`
+
+### 2. Remediation detail command
+
+Add command:
+- `cmd.orchestrator.open_remediation_details`
+- payload: `{ run_id, node_id, remediation_root_id }`
+
+### 3. Queue analysis command
+
+Add command:
+- `cmd.orchestrator.open_queue_analysis`
+- payload: `{ run_id, analysis_id? }`
+
+### 4. Wizard blocked command parity
+
+Any existing wizard `attention_required` resume/view actions must have blocked-state parity using the same deep-link model.
+
+### 5. Contract rules
+
+- retry commands must not silently choose safe-point vs fresh-attempt behavior
+- blocked-state commands must carry enough identity to reopen the exact report/context

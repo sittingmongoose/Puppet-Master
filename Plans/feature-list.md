@@ -941,3 +941,17 @@ Reference additions for rewrite planning:
 - Generated Markdown/Mermaid previews use a restricted trust tier; full HTML/browser mode uses a separate trust tier.
 - Preview-mode edits are limited to validated structured commands and otherwise fall back to source editing.
 - Planning documents, including future Deep Plan Mode surfaces, use the same Markdown/Mermaid pipeline and canonical-source rules.
+
+## Runtime Scheduler and Recovery Features Addendum (2026-03-08)
+
+Add or revise feature bullets to include:
+- deterministic scored ready-set scheduler
+- queue analysis / scheduler observability
+- event-driven scheduler wakeups
+- blocked-to-runnable cascade
+- explicit runtime fields for retry/blocking/remediation/safe points
+- runtime safe points before risky execution
+- remediation child lineage with stable finding IDs
+- shared failure-class retry/backoff policy
+- draft decomposition degradation before canonical lock only
+- distinct `attention_required` vs `blocked` wizard/thread/dashboard states

@@ -98,3 +98,4 @@ ContractRef: ContractName:Plans/Widget_System.md#4
 - Plans/Multi-Account.md -- multi-account data model and GUI requirements
 - Plans/FinalGUISpec.md -- responsive grid (section 12.3), existing Usage view (section 7.8)
 - Plans/storage-plan.md -- redb rollup keys for usage data
+

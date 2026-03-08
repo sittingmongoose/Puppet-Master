@@ -109,3 +109,4 @@ Canonical rule:
 - Iteration remains the lowest tier; Persona switching must not add tiers.
 - Every tier run must emit effective Persona/model/platform state and selection reason.
 - Registry and plan language must standardize on `explorer`, not `explore`.
+

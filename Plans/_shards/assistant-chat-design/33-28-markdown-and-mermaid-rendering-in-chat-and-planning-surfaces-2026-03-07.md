@@ -145,3 +145,4 @@ Required consequence:
 - The same Mermaid content can be opened in source form and exported as SVG/PNG.
 - Planning documents with Mermaid render using the same rules as normal Markdown docs.
 - If inline rendered editing is not safe, the UI moves the user to source rather than corrupting content.
+

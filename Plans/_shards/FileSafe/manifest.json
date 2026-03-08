@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/FileSafe.md",
-  "source_sha256": "3aa080a38bfa21bc3ff33feecca1e217ce24e33de6e9bcd18aa2c7f0d0e94404",
+  "source_sha256": "2d44ed904cec5dfeef9a26f3891ffeb2839737052ce02bd9103aec15dc153253",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -164,9 +164,16 @@
     {
       "dest_path": "Plans/_shards/FileSafe/23-17-implementation-order-and-dependencies.md",
       "start_line": 2640,
-      "end_line": 2683,
-      "segment_sha256": "ec85112bb1b7e1a6023f53ec11747cd030dd0d6c502722ec18bfcb3d92281493",
+      "end_line": 2684,
+      "segment_sha256": "c381a890621d34ebf24ce0f26f47abc83ac453167371b95609ed404cce8791b9",
       "heading": "## 17. Implementation Order and Dependencies"
+    },
+    {
+      "dest_path": "Plans/_shards/FileSafe/24-runtime-blocked-state-integration-addendum-2026-03-08.md",
+      "start_line": 2685,
+      "end_line": 2727,
+      "segment_sha256": "6dc3673dbc6fff2553744233dac6acf3d553d11eddc759619a445ea8b4a5eab9",
+      "heading": "## Runtime Blocked-State Integration Addendum (2026-03-08)"
     }
   ]
 }

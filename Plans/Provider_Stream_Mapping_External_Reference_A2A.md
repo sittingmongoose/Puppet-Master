@@ -286,3 +286,17 @@ Upstream A2A polling treats `TaskState.input_required` as a completion condition
 Where upstream emits incremental streaming text via artifact updates, adapters project text to `text_delta` while preserving artifact identity, chunk flags, and part kind in `diagnostic.details` (see §8.5; ref:autogen/a2a/utils.py::update_artifact_to_streaming).
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/newfeatures.md, ContractName:Plans/Architecture_Invariants.md#INV-001, ContractName:Plans/Project_Output_Artifacts.md, Gate:GATE-009
+
+## Retry/Remediation Event Continuity Addendum (2026-03-08)
+
+Provider/A2A event normalization must preserve enough continuity for the shared runtime scheduler packet.
+
+Required behavior:
+- resumed or retried runs must preserve attempt identity where the upstream provider/protocol exposes it
+- normalized diagnostics should preserve distinctions relevant to `failure_class`, especially `input_provided`, forced remediation, malformed artifact streaming, and interruption/resume signals
+- when a provider-side audit forces remediation, the normalized stream must preserve that fact so runtime lineage can record `origin_failure_event_id` and remediation generation coherently
+- pause/resume semantics for input-required flows must remain compatible with scheduler wake reasons and blocked-to-runnable wakeups
+
+Acceptance criteria:
+- A2A/provider normalization does not erase retry/remediation lineage
+- input-provided / resume events remain sufficient to wake blocked runtime flows deterministically

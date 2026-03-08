@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/storage-plan.md",
-  "source_sha256": "e96dee21a68daac0b1b0e72e7f2d3b278f61e92032f44ab303077811cf8c73b8",
+  "source_sha256": "ed50da2c15d8dadd8d68119736db8dbd201a0a917349f7bacb23498f3cd2bfa9",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -87,9 +87,16 @@
     {
       "dest_path": "Plans/_shards/storage-plan/12-version-history.md",
       "start_line": 872,
-      "end_line": 879,
-      "segment_sha256": "2973689cf9667279c8438dd57deee9f0a0d3adadc8d101dfb01192d6bba547ac",
+      "end_line": 880,
+      "segment_sha256": "9f2e57dcc8c9b8dfdfd7342f94feb4fa79c4b10de1df24e963b2a002deaea16c",
       "heading": "## Version history"
+    },
+    {
+      "dest_path": "Plans/_shards/storage-plan/13-scheduler-runtime-safe-point-and-remediation-storage-addendum-2026-03-08.md",
+      "start_line": 881,
+      "end_line": 981,
+      "segment_sha256": "cfbd0b3b516d58b03964b193e73add73fe422af390ac43486d4bcdf13193d565",
+      "heading": "## Scheduler Runtime, Safe-Point, and Remediation Storage Addendum (2026-03-08)"
     }
   ]
 }

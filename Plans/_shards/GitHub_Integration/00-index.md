@@ -18,3 +18,4 @@ Canonical source: [Plans/GitHub_Integration.md](../../GitHub_Integration.md)
 - [10-anti-drift-compliance.md](10-anti-drift-compliance.md) — ## Anti-Drift Compliance
 - [11-references.md](11-references.md) — ## References
 - [12-chat-driven-external-repo-import-mvp.md](12-chat-driven-external-repo-import-mvp.md) — ## Chat-driven external repo import (MVP)
+- [13-wizard-blocked-state-and-deferred-launch-reconciliation-addendum-2026-03-08.md](13-wizard-blocked-state-and-deferred-launch-reconciliation-addendum-2026-03-08.md) — ## Wizard blocked-State and Deferred Launch Reconciliation Addendum (2026-03-08)

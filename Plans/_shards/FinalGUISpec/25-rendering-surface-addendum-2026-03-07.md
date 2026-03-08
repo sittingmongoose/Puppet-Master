@@ -84,3 +84,4 @@ Required behavior:
 - Mermaid diagrams render consistently across chat, editor, and planning/doc surfaces.
 - HTML rendered mode behaves like a browser/workspace preview, not a static screenshot.
 - Platform limitations may change whether a preview is embedded or detached, but they must not remove the feature.
+

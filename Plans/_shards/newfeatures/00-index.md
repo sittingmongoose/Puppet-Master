@@ -35,3 +35,4 @@ Canonical source: [Plans/newfeatures.md](../../newfeatures.md)
 - [27-22-cross-device-sync.md](27-22-cross-device-sync.md) — ## 22. Cross-Device Sync
 - [28-23-gaps-and-potential-issues.md](28-23-gaps-and-potential-issues.md) — ## 23. Gaps and Potential Issues
 - [29-24-unified-markdown-mermaid-html-and-image-rendering-architecture-2026-03-07.md](29-24-unified-markdown-mermaid-html-and-image-rendering-architecture-2026-03-07.md) — ## 24. Unified Markdown, Mermaid, HTML, and Image Rendering Architecture (2026-03-07)
+- [30-runtime-safe-point-clarification-addendum-2026-03-08.md](30-runtime-safe-point-clarification-addendum-2026-03-08.md) — ## Runtime Safe-Point Clarification Addendum (2026-03-08)

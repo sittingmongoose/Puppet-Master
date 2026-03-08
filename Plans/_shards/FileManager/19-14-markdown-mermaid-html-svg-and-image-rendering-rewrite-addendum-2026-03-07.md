@@ -180,3 +180,4 @@ Required fallback rules:
 - HTML files support source editing and full rendered browser-like viewing with local asset resolution.
 - Image files render natively and can detach/open without going through the browser runtime.
 - Preview actions either apply validated text patches or deterministically fall back to source focus.
+

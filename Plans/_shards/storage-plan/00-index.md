@@ -18,3 +18,4 @@ Canonical source: [Plans/storage-plan.md](../../storage-plan.md)
 - [10-7-enhancements.md](10-7-enhancements.md) — ## 7. Enhancements
 - [11-8-implementation-order-and-testing.md](11-8-implementation-order-and-testing.md) — ## 8. Implementation order and testing
 - [12-version-history.md](12-version-history.md) — ## Version history
+- [13-scheduler-runtime-safe-point-and-remediation-storage-addendum-2026-03-08.md](13-scheduler-runtime-safe-point-and-remediation-storage-addendum-2026-03-08.md) — ## Scheduler Runtime, Safe-Point, and Remediation Storage Addendum (2026-03-08)
