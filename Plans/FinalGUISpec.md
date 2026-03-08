@@ -1030,16 +1030,21 @@ When an override is set (e.g. `overrides.orchestrator.per_provider.claude: 5`), 
 
 **§7.4.8 Containers & Registry (Advanced tab):**
 
-Add a collapsible **Containers & Registry** card in Settings > Advanced for local container runtime and registry publishing defaults.
+Add a collapsible **Containers & Registry** card in Settings > Advanced for local container runtime, DockerHub publishing, and managed Unraid template defaults.
 
-- **Runtime controls:** runtime selector (`docker` default), Docker binary path override, compose file path input with Browse/Auto-detect actions, and compose project-name strategy (`auto`, `fixed`, `hash-based`).
-- **Registry defaults:** registry provider (`dockerhub` default), namespace/repository/tag defaults, tag templates (`{commit}`, `{version}`, `{timestamp}`), and push policy (`manual` default; optional `after_build`).
-- **Auth controls:** auth mode (`pat` default), `Set DockerHub PAT` / `Clear token` actions, stored-token status, login validation action, and last validation timestamp. Tokens MUST be stored in the OS credential store only; never in redb, YAML, or evidence logs.
-- **Validation behavior:** `Validate Docker configuration` runs inline preflight checks (Docker reachable, compose path valid, required ports available, and DockerHub auth if push policy is `after_build`). Failing checks block Preview/Build or Push entry points and surface an inline error plus remediation text in the card.
-- **Preview/build integration:** these settings are consumed by Preview and Build actions so container preview/build flows use consistent defaults. Build/push evidence MUST redact credentials and only persist sanitized command output.
+- **Runtime controls:** runtime selector (`docker` default), Docker binary path override, compose file path input with Browse/Auto-detect actions, compose project-name strategy (`auto`, `fixed`, `hash-based`), build context path, Dockerfile path, target stage, and target platforms / Buildx readiness.
+- **DockerHub auth controls:** browser/device login action, PAT entry, helper text stating PAT is recommended, link/explainer for obtaining a PAT, stored-auth status, validated account/namespace summary, validate action, clear/remove credentials action, and requested-auth-mode vs effective-capability presentation.
+- **Repository controls:** namespace selector, repository selector, refresh action, create-repository action, tag-template defaults (`{commit}`, `{version}`, `{timestamp}`), and push policy (`manual` default; optional `after_build`).
+- **Create-repository safety:** the create-repository confirmation dialog MUST show namespace, repository name, and privacy; privacy defaults to private and MUST be visibly labeled as the default. This confirmation is non-bypassable.
+- **Unraid controls:** `Generate/Update Unraid XML after successful publish` toggle (default enabled), `Manage Unraid template repository` toggle (default enabled), template repo path/remote/branch settings, setup flow (create-new vs select-existing), auto-push toggle (default disabled), one-click push action, and template-repo status row.
+- **Docker Manage visibility:** include a setting named exactly `Hide Docker Manage when not used in Project.` Default: enabled.
+- **`ca_profile.xml` controls:** scope selector (shared cross-project default vs per-project override), full edit surface, icon/image mode (repo-managed upload vs external URL), and warning state when the profile was auto-generated and still needs review.
 
-ContractRef: ContractName:Plans/newtools.md#147-docker-runtime--dockerhub-contract, ContractName:Plans/newtools.md#146-preview-build-docker-and-actions-contracts, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+**Validation behavior:** `Validate Docker configuration` MUST run inline preflight for Docker reachability, compose validity, Buildx readiness, requested-auth to effective-capability validation, selected repository access, managed template-repo validity (when enabled), and `ca_profile.xml` readiness. Failing checks block the relevant Preview/Build/Push entry points and surface explicit remediation text in the card.
 
+**Persistence behavior:** shared container defaults persist globally; project-specific selection state (namespace/repository/tag policy, template repo state, Docker Manage visibility state, and `ca_profile` scope selection) persists per project. Secrets persist only in OS credential storage.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md#147a-dockerhub-browser-auth-repository-management-and-unraid-publishing-addendum, ContractName:Plans/Permissions_System.md
 **§7.4.9 CI / GitHub Actions (Advanced tab):**
 
 Add a collapsible **CI / GitHub Actions** card in Settings > Advanced for workflow generation and management.
@@ -3231,3 +3236,90 @@ Add a contextual **Docker Manage** GUI surface for Docker-related projects. This
 - **Safety copy:** make it explicit that repository creation cannot be auto-approved by YOLO or autonomy modes.
 
 ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md#147-docker-runtime--dockerhub-contract, ContractName:Plans/Permissions_System.md
+
+## Rendering Surface Addendum (2026-03-07)
+
+This addendum locks how Markdown, Mermaid, HTML, SVG, and image rendering appear in the Slint GUI.
+
+### Surface inventory impact
+
+The rewrite must treat rendering as a shared capability across these existing surfaces:
+
+- **Chat Panel**: rendered Markdown text, native Mermaid cards, source toggle/open actions.
+- **File Editor**: source mode, split preview mode, detached preview mode, HTML browser mode.
+- **Embedded Document Pane**: preview-capable document review surface using the same PreviewSession contract.
+- **Bottom Panel Browser tab**: browser-like HTML/workspace preview and click-to-context surface.
+- **Detached windows**: first-class preview/browser windows for platforms where embedding is not the correct guarantee.
+
+### GUI behavior rules
+
+- Detached preview/browser windows are part of the intended UX, not a degraded workaround.
+- Embedded browser/preview panes may exist where supported, but GUI flows must remain valid when the preview opens in a separate window.
+- Markdown and Mermaid previews should visually match app theming while remaining clearly distinct from editable source.
+- HTML/browser mode must visually read as a browser-capable surface rather than as a static Markdown preview.
+- Image viewing remains native and should not inherit unnecessary browser chrome.
+
+### Chat panel behavior
+
+Chat messages that contain renderable Markdown/Mermaid content must support:
+
+- readable Markdown formatting
+- native Mermaid diagram cards where Mermaid syntax is detected
+- actions for copy source, open in editor, open detached preview, and export diagram where relevant
+- visible error states for malformed Mermaid instead of silent raw-block disappearance
+
+Chat must not execute arbitrary HTML from message content.
+
+### File editor behavior
+
+The File Editor view must expose clear mode controls for render-capable files:
+
+- Source
+- Preview
+- Split
+- Detached preview
+- Browser/rendered mode for HTML
+
+The mode switch must not change the canonical buffer model. Split mode should preserve shared-buffer editing semantics with the existing document/editor contract.
+
+### Embedded document pane behavior
+
+The Embedded Document Pane must reuse the same rendering pipeline and PreviewSession abstraction as the file editor and chat. It is a review/inspection surface, not a separate rendering system.
+
+Required actions:
+
+- open source
+- open detached preview
+- request re-render/reload
+- perform allowed structured edits when the underlying document kind supports them
+
+### Bottom panel browser behavior
+
+The Browser tab is the primary in-shell host for full HTML/browser previews and click-to-context workflows.
+
+Required behavior:
+
+- use the browser/runtime transport contract rather than Markdown preview transport
+- preserve navigation/reload state within the tab
+- support detached-open without changing the underlying PreviewSession identity
+- keep trust-tier boundaries distinct from generated Markdown/Mermaid previews
+
+### Windowing and platform behavior
+
+- GUI copy must not imply that every preview is embedded inline on every platform.
+- Linux Wayland behavior must remain correct when the product opens a detached preview/browser window rather than embedding.
+- The UI must not rely on hidden pre-created browser panes to feel responsive on platforms where hidden-window behavior is constrained.
+
+### Performance and accessibility
+
+- Use lazy rendering and virtualization for long message streams and large documents.
+- Preserve scroll positions where feasible when re-rendering preview content.
+- Preview controls must be keyboard reachable.
+- Diagram export/open/source actions must have explicit labels and accessible tooltips/text.
+
+### Acceptance criteria addendum
+
+- The same document can move between chat card, editor preview, embedded doc pane, bottom browser tab, and detached preview without inventing separate rendering contracts.
+- Mermaid diagrams render consistently across chat, editor, and planning/doc surfaces.
+- HTML rendered mode behaves like a browser/workspace preview, not a static screenshot.
+- Platform limitations may change whether a preview is embedded or detached, but they must not remove the feature.

@@ -24,3 +24,4 @@ Canonical source: [Plans/FileManager.md](../../FileManager.md)
 - [16-12-gaps-potential-problems-and-enhancements.md](16-12-gaps-potential-problems-and-enhancements.md) — ## 12. Gaps, potential problems, and enhancements
 - [17-verification-ai-executable.md](17-verification-ai-executable.md) — ## Verification (AI-executable)
 - [18-13-git-status-integration.md](18-13-git-status-integration.md) — ## 13. Git Status Integration
+- [19-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md](19-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md) — ## 14. Markdown, Mermaid, HTML, SVG, and Image Rendering (Rewrite Addendum -- 2026-03-07)

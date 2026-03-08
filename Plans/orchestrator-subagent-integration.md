@@ -1532,6 +1532,12 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 
 ### 4. Canonical list of subagent names
 
+**Clarification:** `DRY:DATA:subagent_registry` is the canonical list for **delegated subagent/task-tool execution**, not the complete set of valid runtime Personas.
+
+Non-delegated surface resolution (Chat, Interview, Requirements Builder, Orchestrator planning/review frames, and natural-language Persona resolution) MUST validate against the broader `persona_registry` defined in `Plans/Personas.md` §7.
+
+Any automatic selection logic in this document that produces a non-delegated Persona (for example `collaborator`, `general-purpose`, `researcher`, `deep-researcher`, or `sre`) MUST validate against `persona_registry` rather than being rejected for absence from the delegated-subagent subset.
+
 - **Gap:** The plan scatters subagent names across Tier-Level Subagent Strategy (project-manager, rust-engineer, code-reviewer, ...). The GUI and backend need a **single shared list** for validation and multi-select.
 - **Clarify:** Add a **"Known subagent names"** section or table in this plan (or a constant in code, e.g. in `platform_specs` or a new `subagent_registry` module) listing all allowed names: phase (project-manager, architect-reviewer, product-manager), task (rust-engineer, python-pro, ..., backend-developer, ...), subtask (code-reviewer, test-automator, ...), iteration (debugger, qa-expert, ...). Use this for UI multi-select and for validating override/disabled/required lists.
 

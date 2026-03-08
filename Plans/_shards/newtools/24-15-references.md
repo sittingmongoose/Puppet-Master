@@ -40,6 +40,59 @@
 
 ### 14.7A DockerHub browser auth, repository management, and Unraid publishing addendum
 
+#### Normative override for §14.7
+
+This subsection is authoritative wherever §14.7 still reads like a PAT-only contract.
+
+- Supported `requested_auth_mode` values are at least `browser` and `pat`.
+- Validation MUST resolve requested auth into:
+  - `effective_auth_provider_state`
+  - `effective_capabilities[]`
+  - validated account identity
+  - degraded reason when capability is partial
+- Namespace/repository discovery and repository creation MUST use the validated effective capability set; the app MUST NOT assume browser login or PAT implies full management access.
+- If publish is requested and the target repository does not exist, repository creation MUST be guarded by an explicit confirmation that shows namespace, repository, and privacy. This confirmation is mandatory and cannot be bypassed by YOLO/autonomy behavior.
+- Successful publish produces `docker_publish_result`; successful follow-on XML generation / template repo update produces `unraid_template_result`.
+
+#### Canonical doctor / preflight additions for DockerHub + Unraid
+
+| Check ID | Scope | Required signal | Failure behavior |
+|---|---|---|---|
+| `doctor.docker.buildx` | docker build | Buildx reachable and usable for the selected build path | Block container build/publish; show remediation |
+| `doctor.dockerhub.auth.capability` | docker auth | Requested auth validates into effective capability set and account identity | Block repo browsing/creation/publish; show degraded reason |
+| `doctor.dockerhub.repo.access` | docker publish | Selected namespace/repository can be read or created as required | Block publish; preserve local build result |
+| `doctor.unraid.template-repo` | unraid managed publishing | Template repo path/remote/branch settings validate and working copy state is safe | Block managed follow-on push/update; keep local publish result |
+| `doctor.unraid.ca-profile` | unraid maintainer metadata | `ca_profile.xml` exists or can be generated and any missing public metadata is surfaced as review-required | Allow local generation with warning; block auto-push while review is required |
+
+#### Result payload minima
+
+- `docker_auth_result` MUST include: `requested_auth_mode`, `effective_auth_provider_state`, `effective_capabilities[]`, `effective_account_identity`, `last_validation_timestamp`, `last_validation_host`, `degraded_reason?`
+- `docker_publish_result` MUST include: `publish_result_id`, `registry_host`, `namespace`, `repository`, `tags[]`, `digests[]`, `platforms[]`, `sanitized_logs_path`
+- `unraid_template_result` MUST include: `publish_result_id`, `template_xml_path`, `template_repo_id`, `maintainer_slug`, `commit_status`, `push_status`, `ca_profile_state`, `review_state`
+
+`unraid_template_result.commit_status` enum:
+- `not_attempted`
+- `committed`
+- `skipped_review_required`
+- `skipped_unrelated_changes`
+- `failed`
+
+`unraid_template_result.push_status` enum:
+- `not_attempted`
+- `skipped_auto_push_disabled`
+- `push_in_progress`
+- `completed`
+- `failed`
+
+`unraid_template_result.review_state` enum:
+- `clean`
+- `needs_review`
+
+`unraid_template_result.ca_profile_state` enum:
+- `existing_user_managed`
+- `auto_generated_needs_review`
+- `project_override_active`
+
 This addendum expands §14.7 so Docker support is first-class rather than limited to basic runtime defaults.
 
 **Normative separation of responsibilities:**

@@ -199,6 +199,43 @@ Before final prompt payload emission, the runtime MUST resolve:
 
 The runtime MUST also store a human-readable `selection_reason`.
 
+### 6.2.1 Canonical requested-Persona precedence
+
+When multiple Persona-selection inputs exist, the runtime MUST compute `requested_persona` using this precedence (highest wins):
+
+1. **Explicit run-envelope/manual surface override**
+   A structured run input, manual picker choice, or surface action targeted at the current execution.
+2. **Active scoped natural-language override**
+   A previously resolved natural-language override whose scope still applies to the current execution. If multiple active scoped overrides apply, the most specific owner wins:
+   - `subagent`
+   - `task`
+   - `run`
+   - `turn`
+   - `session`
+3. **Surface-specific explicit mapping**
+   A configured Interview stage override, Builder stage/pass override, Orchestrator tier override, or equivalent mapped Persona source.
+4. **Surface auto resolver candidate**
+   The Persona proposed by the active surface resolver based on stage/tier/task/repo context.
+5. **Config default**
+   A project/global default Persona configured for the surface.
+6. **Canonical fallback**
+   The fallback Persona defined by the active surface contract. If a surface contract does not define one, use `general-purpose`.
+
+`persona_selection_source` MUST reflect the winning source category, not every candidate that was considered.
+
+### 6.2.2 Scoped override lifecycle contract
+
+Natural-language Persona overrides MUST persist enough state to be replayable and auditable.
+
+Required lifecycle rules:
+- `turn` scope expires after the next eligible execution on the same thread/surface.
+- `session` scope remains active until cleared or replaced within the same thread/session.
+- `run` scope applies only to the current run tree.
+- `task` scope applies only to the owning task/tier item.
+- `subagent` scope applies only to the targeted delegated child run.
+
+If a scoped override no longer has a valid owner object, it MUST be discarded before resolution and recorded as expired rather than silently reused.
+
 ### 6.3 Natural-language Persona invocation in prompt assembly
 
 Before Persona auto resolution completes, the pipeline must inspect the current user instruction/message for natural-language Persona requests.
@@ -244,6 +281,8 @@ Every prompt assembly run MUST produce an effective resolution record containing
 - `effective_persona`
 - `persona_selection_source`
 - `selection_reason`
+- `persona_override_scope` (`none | turn | session | run | task | subagent`)
+- `persona_override_owner_id` (`thread_id | run_id | tier_id | subagent_run_id | null` depending on scope)
 - `requested_platform`
 - `effective_platform`
 - `requested_model`
@@ -257,7 +296,37 @@ Every prompt assembly run MUST produce an effective resolution record containing
 - `applied_persona_controls[]`
 - `skipped_persona_controls[]`
 
-This record is the canonical cross-system effective runtime record referenced by `Plans/Personas.md` and `Plans/Models_System.md`. It is part of prompt assembly observability and must be available to event/history/UI consumers.
+`applied_persona_controls[]` element schema:
+```json
+{
+  "control": "temperature",
+  "requested_value": 0.2,
+  "effective_value": 0.2,
+  "source": "persona",
+  "reason": "supported by selected provider/model"
+}
+```
+
+`skipped_persona_controls[]` element schema:
+```json
+{
+  "control": "reasoning_effort",
+  "requested_value": "high",
+  "effective_value": null,
+  "provider": "cursor",
+  "model": "anthropic/claude-sonnet-4",
+  "reason": "selected transport/model does not expose effort control",
+  "fallback_behavior": "omit_control"
+}
+```
+
+Rules:
+- `selection_reason` MUST be a one-line human-readable explanation suitable for direct UI display.
+- `applied_persona_controls[]` and `skipped_persona_controls[]` MUST be sufficient to power GUI/runtime disclosure without requiring undocumented side fields.
+- If a requested control is clamped rather than fully honored, record it in `applied_persona_controls[]` with both requested and effective values.
+- If no scoped override is active, `persona_override_scope = none` and `persona_override_owner_id = null`.
+
+This record is the canonical cross-system effective runtime record referenced by `Plans/Personas.md` and `Plans/Models_System.md`. It MUST be available to event/history/UI consumers and to any payload that claims to expose requested/effective Persona/runtime state.
 
 <a id="PROVIDER-CAPABILITY-FILTERING"></a>
 ### 6.6 Provider capability filtering stage

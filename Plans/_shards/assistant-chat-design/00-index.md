@@ -38,3 +38,4 @@ Canonical source: [Plans/assistant-chat-design.md](../../assistant-chat-design.m
 - [30-25-context-circle-enhancements-addendum-2026-02-23.md](30-25-context-circle-enhancements-addendum-2026-02-23.md) — ## 25. Context Circle Enhancements (Addendum -- 2026-02-23)
 - [31-26-per-pass-validation-modelprovider-settings-invariant-sweep.md](31-26-per-pass-validation-modelprovider-settings-invariant-sweep.md) — ## 26. Per-Pass Validation Model/Provider Settings (Invariant Sweep)
 - [32-27-persona-control-in-assistant-chat-2026-03-06.md](32-27-persona-control-in-assistant-chat-2026-03-06.md) — ## 27. Persona Control in Assistant Chat (2026-03-06)
+- [33-28-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces-2026-03-07.md](33-28-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces-2026-03-07.md) — ## 28. Markdown and Mermaid Rendering in Chat and Planning Surfaces (2026-03-07)

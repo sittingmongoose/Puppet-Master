@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/assistant-chat-design.md",
-  "source_sha256": "411f08593332dcffb640df5d712469a7d643d06ae3d9aeb82ae6b9fcef843aed",
+  "source_sha256": "a539e0cd0aaa111b6a7deb5bacd3dd87fc1573b328d65e07ce6d3df4e56c3ea4",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -227,9 +227,16 @@
     {
       "dest_path": "Plans/_shards/assistant-chat-design/32-27-persona-control-in-assistant-chat-2026-03-06.md",
       "start_line": 1404,
-      "end_line": 1517,
-      "segment_sha256": "75789be389ca2530e80c85b270c2d70b5d097f7f5067a4e515f3c957a6445f57",
+      "end_line": 1518,
+      "segment_sha256": "9357ebf4d4a82a37b152c354c3dd72a4be5297f1927597cdfab4b3fca36cd7c8",
       "heading": "## 27. Persona Control in Assistant Chat (2026-03-06)"
+    },
+    {
+      "dest_path": "Plans/_shards/assistant-chat-design/33-28-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces-2026-03-07.md",
+      "start_line": 1519,
+      "end_line": 1602,
+      "segment_sha256": "2b04a58de4d034800256cf8cffbf79f991e2e3e73906bc2280b6ac4dcdbb81b5",
+      "heading": "## 28. Markdown and Mermaid Rendering in Chat and Planning Surfaces (2026-03-07)"
     }
   ]
 }

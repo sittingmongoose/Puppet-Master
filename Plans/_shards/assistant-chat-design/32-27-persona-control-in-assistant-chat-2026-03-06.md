@@ -112,3 +112,4 @@ Examples:
 - Subagent inline blocks must display effective Persona/model/platform rather than only generic role text.
 - Manual Persona selection must block submission when the selected Persona cannot be resolved.
 - Natural-language Persona requests that do not resolve to a single reliable match must produce clarification or fallback disclosure, not a silent wrong-Persona resolution.
+

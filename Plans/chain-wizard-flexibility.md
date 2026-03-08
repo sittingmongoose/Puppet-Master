@@ -1613,6 +1613,54 @@ Requirements Builder and related wizard generation/review work should distinguis
 
 ### Default stage Personas
 
+### Deterministic Builder Persona resolver
+
+Requirements Builder MUST resolve Personas in this order:
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md#17.8
+
+1. explicit stage/pass override for the current Builder execution, if present
+2. configured stage/pass mapping from Builder Persona settings
+3. stage default from this addendum
+4. `general-purpose` as the final fallback when no valid mapping/default is available
+
+Additional rules:
+- Intake/clarification MUST bias toward `collaborator` unless the user explicitly overrides it.
+  ContractRef: ContractName:Plans/Personas.md
+- Review passes MUST NOT silently reuse the drafting Persona when a reviewer Persona mapping exists.
+  ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/FinalGUISpec.md#17.8
+- Automatic resolution may return only IDs valid in `persona_registry` (`Plans/Personas.md` §7).
+
+### Builder Persona config contract
+
+Builder Persona settings MUST persist a canonical config object with at least:
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#17.8, ContractName:Plans/Personas.md
+
+- `mode` (`manual | auto | hybrid`)
+- `stage_personas` (map of Builder stage -> Persona ID)
+- `review_pass_personas` (map of pass identifier -> Persona ID)
+- optional per-mapping platform/model overrides
+- optional explicit override for the next eligible Builder execution
+
+This config is the runtime backing store for the mapping editor required by `Plans/FinalGUISpec.md` §17.8.
+
+### Builder requested/effective runtime visibility contract
+
+For every Builder stage/pass execution, persist and expose:
+- `requested_persona`
+- `effective_persona`
+- `persona_selection_source`
+- `selection_reason`
+- `effective_platform`
+- `effective_model`
+- `applied_persona_controls[]`
+- `skipped_persona_controls[]`
+
+Builder activity/status UIs may render this compactly, but they MUST use the same canonical requested/effective record as other surfaces.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/FinalGUISpec.md
+
 #### 1. Intake / clarification
 Default Persona: `collaborator`
 

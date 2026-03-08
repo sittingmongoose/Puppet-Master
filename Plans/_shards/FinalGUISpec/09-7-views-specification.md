@@ -450,16 +450,21 @@ When an override is set (e.g. `overrides.orchestrator.per_provider.claude: 5`), 
 
 **§7.4.8 Containers & Registry (Advanced tab):**
 
-Add a collapsible **Containers & Registry** card in Settings > Advanced for local container runtime and registry publishing defaults.
+Add a collapsible **Containers & Registry** card in Settings > Advanced for local container runtime, DockerHub publishing, and managed Unraid template defaults.
 
-- **Runtime controls:** runtime selector (`docker` default), Docker binary path override, compose file path input with Browse/Auto-detect actions, and compose project-name strategy (`auto`, `fixed`, `hash-based`).
-- **Registry defaults:** registry provider (`dockerhub` default), namespace/repository/tag defaults, tag templates (`{commit}`, `{version}`, `{timestamp}`), and push policy (`manual` default; optional `after_build`).
-- **Auth controls:** auth mode (`pat` default), `Set DockerHub PAT` / `Clear token` actions, stored-token status, login validation action, and last validation timestamp. Tokens MUST be stored in the OS credential store only; never in redb, YAML, or evidence logs.
-- **Validation behavior:** `Validate Docker configuration` runs inline preflight checks (Docker reachable, compose path valid, required ports available, and DockerHub auth if push policy is `after_build`). Failing checks block Preview/Build or Push entry points and surface an inline error plus remediation text in the card.
-- **Preview/build integration:** these settings are consumed by Preview and Build actions so container preview/build flows use consistent defaults. Build/push evidence MUST redact credentials and only persist sanitized command output.
+- **Runtime controls:** runtime selector (`docker` default), Docker binary path override, compose file path input with Browse/Auto-detect actions, compose project-name strategy (`auto`, `fixed`, `hash-based`), build context path, Dockerfile path, target stage, and target platforms / Buildx readiness.
+- **DockerHub auth controls:** browser/device login action, PAT entry, helper text stating PAT is recommended, link/explainer for obtaining a PAT, stored-auth status, validated account/namespace summary, validate action, clear/remove credentials action, and requested-auth-mode vs effective-capability presentation.
+- **Repository controls:** namespace selector, repository selector, refresh action, create-repository action, tag-template defaults (`{commit}`, `{version}`, `{timestamp}`), and push policy (`manual` default; optional `after_build`).
+- **Create-repository safety:** the create-repository confirmation dialog MUST show namespace, repository name, and privacy; privacy defaults to private and MUST be visibly labeled as the default. This confirmation is non-bypassable.
+- **Unraid controls:** `Generate/Update Unraid XML after successful publish` toggle (default enabled), `Manage Unraid template repository` toggle (default enabled), template repo path/remote/branch settings, setup flow (create-new vs select-existing), auto-push toggle (default disabled), one-click push action, and template-repo status row.
+- **Docker Manage visibility:** include a setting named exactly `Hide Docker Manage when not used in Project.` Default: enabled.
+- **`ca_profile.xml` controls:** scope selector (shared cross-project default vs per-project override), full edit surface, icon/image mode (repo-managed upload vs external URL), and warning state when the profile was auto-generated and still needs review.
 
-ContractRef: ContractName:Plans/newtools.md#147-docker-runtime--dockerhub-contract, ContractName:Plans/newtools.md#146-preview-build-docker-and-actions-contracts, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+**Validation behavior:** `Validate Docker configuration` MUST run inline preflight for Docker reachability, compose validity, Buildx readiness, requested-auth to effective-capability validation, selected repository access, managed template-repo validity (when enabled), and `ca_profile.xml` readiness. Failing checks block the relevant Preview/Build/Push entry points and surface explicit remediation text in the card.
 
+**Persistence behavior:** shared container defaults persist globally; project-specific selection state (namespace/repository/tag policy, template repo state, Docker Manage visibility state, and `ca_profile` scope selection) persists per project. Secrets persist only in OS credential storage.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md#147a-dockerhub-browser-auth-repository-management-and-unraid-publishing-addendum, ContractName:Plans/Permissions_System.md
 **§7.4.9 CI / GitHub Actions (Advanced tab):**
 
 Add a collapsible **CI / GitHub Actions** card in Settings > Advanced for workflow generation and management.

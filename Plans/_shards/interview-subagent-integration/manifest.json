@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/interview-subagent-integration.md",
-  "source_sha256": "e975dc63c07b0eb378f37352d3e535c2635fe208a687b28481891b16599845f0",
+  "source_sha256": "c414e5c13690278320251d0e9d2c8fb2db5ebe664af6f9c83987c07658699009",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -150,56 +150,42 @@
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/21-platform-specific-subagent-invocation.md",
       "start_line": 2819,
-      "end_line": 3055,
-      "segment_sha256": "d3ec2b35862c3720fe90607a2ccc1438d5a84c235e76dfee6cb0bb4980e5f9b1",
+      "end_line": 2872,
+      "segment_sha256": "68a36db05d5128d79f6acd39ddecf6b49cf510ade6ef906047e551655bb80793",
       "heading": "## Platform-Specific Subagent Invocation"
     },
     {
-      "dest_path": "Plans/_shards/interview-subagent-integration/22-updated-configuration.md",
-      "start_line": 3056,
-      "end_line": 3075,
-      "segment_sha256": "82b0ae642993c34f3fd89f67c568d85917d028e49577d91c7ac8b7f6e5bf8d37",
-      "heading": "## Updated Configuration"
-    },
-    {
-      "dest_path": "Plans/_shards/interview-subagent-integration/23-updated-considerations.md",
-      "start_line": 3076,
-      "end_line": 3108,
-      "segment_sha256": "c30bd629ab0ea1385c28bd549ede31881f4ad795579e168b1d567806aea1973a",
-      "heading": "## Updated Considerations"
-    },
-    {
-      "dest_path": "Plans/_shards/interview-subagent-integration/24-platform-specific-limitations-workarounds.md",
-      "start_line": 3109,
-      "end_line": 3131,
+      "dest_path": "Plans/_shards/interview-subagent-integration/22-platform-specific-limitations-workarounds.md",
+      "start_line": 2873,
+      "end_line": 2895,
       "segment_sha256": "934980adb8516f921b7a0ea55995a1b305a683652086bb324f2ba4038081d1bb",
       "heading": "## Platform-Specific Limitations & Workarounds"
     },
     {
-      "dest_path": "Plans/_shards/interview-subagent-integration/25-testing-strategy.md",
-      "start_line": 3132,
-      "end_line": 3161,
+      "dest_path": "Plans/_shards/interview-subagent-integration/23-testing-strategy.md",
+      "start_line": 2896,
+      "end_line": 2925,
       "segment_sha256": "13bf0212aa135ed9efb93dd4943b7fc00ec01c3fe7ffea5106567d9ea0bd0242",
       "heading": "## Testing Strategy"
     },
     {
-      "dest_path": "Plans/_shards/interview-subagent-integration/26-user-project-output-contract-sharded-plan-graph-canonical.md",
-      "start_line": 3162,
-      "end_line": 3249,
+      "dest_path": "Plans/_shards/interview-subagent-integration/24-user-project-output-contract-sharded-plan-graph-canonical.md",
+      "start_line": 2926,
+      "end_line": 3013,
       "segment_sha256": "4ccf120cdfc25cf76d37499ea21951def6ccaeccd226433de07b97d97404a44c",
       "heading": "## User-Project Output Contract (Sharded plan_graph/ canonical)"
     },
     {
-      "dest_path": "Plans/_shards/interview-subagent-integration/27-change-summary-2.md",
-      "start_line": 3250,
-      "end_line": 3259,
+      "dest_path": "Plans/_shards/interview-subagent-integration/25-change-summary-2.md",
+      "start_line": 3014,
+      "end_line": 3023,
       "segment_sha256": "de1da05716ff4392edb74ff0eaedaec9aff673caaeec00d664fe90da5eb38242",
       "heading": "## Change Summary"
     },
     {
-      "dest_path": "Plans/_shards/interview-subagent-integration/28-persona-stage-strategy-addendum-2026-03-06.md",
-      "start_line": 3260,
-      "end_line": 3352,
+      "dest_path": "Plans/_shards/interview-subagent-integration/26-persona-stage-strategy-addendum-2026-03-06.md",
+      "start_line": 3024,
+      "end_line": 3116,
       "segment_sha256": "ee2463290156ea782948c00388178c809bc85209ba20e51dc5e79d664b762f1c",
       "heading": "## Persona Stage Strategy Addendum (2026-03-06)"
     }

@@ -27,10 +27,8 @@ Canonical source: [Plans/interview-subagent-integration.md](../../interview-suba
 - [19-gui-gaps-interview-tab.md](19-gui-gaps-interview-tab.md) — ## GUI gaps: Interview tab
 - [20-subagent-file-management.md](20-subagent-file-management.md) — ## Subagent File Management
 - [21-platform-specific-subagent-invocation.md](21-platform-specific-subagent-invocation.md) — ## Platform-Specific Subagent Invocation
-- [22-updated-configuration.md](22-updated-configuration.md) — ## Updated Configuration
-- [23-updated-considerations.md](23-updated-considerations.md) — ## Updated Considerations
-- [24-platform-specific-limitations-workarounds.md](24-platform-specific-limitations-workarounds.md) — ## Platform-Specific Limitations & Workarounds
-- [25-testing-strategy.md](25-testing-strategy.md) — ## Testing Strategy
-- [26-user-project-output-contract-sharded-plan-graph-canonical.md](26-user-project-output-contract-sharded-plan-graph-canonical.md) — ## User-Project Output Contract (Sharded plan_graph/ canonical)
-- [27-change-summary-2.md](27-change-summary-2.md) — ## Change Summary
-- [28-persona-stage-strategy-addendum-2026-03-06.md](28-persona-stage-strategy-addendum-2026-03-06.md) — ## Persona Stage Strategy Addendum (2026-03-06)
+- [22-platform-specific-limitations-workarounds.md](22-platform-specific-limitations-workarounds.md) — ## Platform-Specific Limitations & Workarounds
+- [23-testing-strategy.md](23-testing-strategy.md) — ## Testing Strategy
+- [24-user-project-output-contract-sharded-plan-graph-canonical.md](24-user-project-output-contract-sharded-plan-graph-canonical.md) — ## User-Project Output Contract (Sharded plan_graph/ canonical)
+- [25-change-summary-2.md](25-change-summary-2.md) — ## Change Summary
+- [26-persona-stage-strategy-addendum-2026-03-06.md](26-persona-stage-strategy-addendum-2026-03-06.md) — ## Persona Stage Strategy Addendum (2026-03-06)

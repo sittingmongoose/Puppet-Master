@@ -244,15 +244,17 @@ Persona management UI elements follow the app-level Interaction Mode (Expert/ELI
 
 ### 5.1 Selection
 
-The Persona for a given Agent run is determined by the following precedence:
+Cross-surface requested/effective Persona precedence is canonically defined in `Plans/Prompt_Pipeline.md` (§6.2–§6.5). This section does **not** redefine that global precedence.
 
-1. **PRD/plan recommendation:** If the PRD or plan contains `crew_recommendation.subagents` for the current tier item, use those Persona IDs (per `Plans/orchestrator-subagent-integration.md` — "Respecting PRD/plan: subagent personas and parallelization").
-2. **Dynamic selection:** If no PRD recommendation exists, the Orchestrator's `select_for_tier()` logic selects Persona IDs based on project context, language, domain, and tier level (per `Plans/orchestrator-subagent-integration.md` — "Dynamic Subagent Selection Architecture").
-3. **Config overrides:** Disabled/required/override lists from `SubagentGuiConfig` may modify the selected set (per `Plans/orchestrator-subagent-integration.md` §Gaps §2).
+This section defines only how **Orchestrator auto mode** produces candidate Persona IDs before the global prompt-pipeline precedence is applied:
 
-The selected Persona ID is resolved via the storage resolution order (§2.3).
+1. **Plan/tier hard requirement:** If the PRD or plan contains a hard Persona/subagent requirement for the current tier item, emit that candidate first.
+2. **Orchestrator auto candidate generation:** If no hard requirement exists, the Orchestrator's selector generates candidates from project context, language, domain, framework, tier level, and operation type.
+3. **Orchestrator config constraints:** Disabled/required/override lists may narrow or replace the Orchestrator-generated candidate set as defined in `Plans/orchestrator-subagent-integration.md`.
 
-ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Personas.md#STORAGE-LAYOUT
+The candidate produced here becomes a `plan_or_tier_default` or `auto_surface_resolver` input to the global requested/effective Persona resolution flow; it does **not** bypass manual selection, scoped natural-language overrides, or higher-priority run-envelope inputs.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#PERSONA-SELECTION-SOURCE-ENUM, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Personas.md#STORAGE-LAYOUT
 
 ### 5.2 Context injection
 
@@ -316,18 +318,44 @@ ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Personas.md#PE
 
 ---
 
-## 7. Relationship to the subagent registry
+## 7. Relationship to the Persona registry and delegated-subagent registry
 
 <a id="REGISTRY-RELATIONSHIP"></a>
 
-The canonical subagent registry (`Plans/orchestrator-subagent-integration.md` §4, `DRY:DATA:subagent_registry`) defines the **set of valid Persona IDs** for the 42 built-in Personas. This document does not duplicate that list. The registry is the single source of truth for:
-- Which Persona IDs are valid for tier selection, task-tool validation, and config overrides.
-- Category membership (phase, task-language, task-domain, task-framework, subtask, iteration, cross-phase).
-- Language/framework → Persona mapping.
+Puppet Master now distinguishes between two related but non-identical registries:
 
-User-created Personas (with IDs not in the registry) are valid for manual assignment and GUI management but are NOT eligible for automatic selection by `select_for_tier()` unless explicitly added to a config override list.
+### 7.1 Canonical `persona_registry`
 
-ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Tools.md
+`persona_registry` is the canonical set of **valid Persona IDs** for runtime resolution across Chat, Interview, Requirements Builder, Orchestrator, Multi-Pass Review, and delegated child runs.
+
+At minimum, `persona_registry` MUST include:
+- every ID in the canonical delegated-subagent registry, **plus**
+- the non-delegated built-ins required by Persona/runtime resolution:
+  - `collaborator`
+  - `general-purpose`
+  - `researcher`
+  - `deep-researcher`
+  - `sre`
+
+Automatic surface resolution, natural-language resolution, stored overrides, and validation of requested/effective Persona IDs MUST validate against `persona_registry`, not against the delegated-subagent subset.
+
+### 7.2 Canonical `subagent_registry`
+
+`subagent_registry` remains the canonical subset of Persona IDs that are valid for **delegated subagent/task-tool execution** and provider-facing delegated-run validation.
+
+Rules:
+- Every `subagent_registry` entry MUST also exist in `persona_registry`.
+- `persona_registry` MAY contain IDs that are **not** valid delegated subagents.
+- Task-tool validation and delegated-run launch paths validate against `subagent_registry`.
+- Chat/Interview/Builder/Orchestrator surface resolution validates against `persona_registry`.
+
+### 7.3 Why the split is required
+
+The Persona system now includes valid runtime Personas that are not purely delegated-subagent identities. Examples include `collaborator` for questioning/planning, `general-purpose` as a generic execution fallback, and `researcher` / `deep-researcher` for explicit research modes.
+
+It is therefore incorrect to treat the delegated-subagent list as the complete set of valid runtime Personas.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md
 
 ---
 

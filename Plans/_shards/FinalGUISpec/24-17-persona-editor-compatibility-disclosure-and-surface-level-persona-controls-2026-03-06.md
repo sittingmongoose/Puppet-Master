@@ -171,3 +171,4 @@ Add a contextual **Docker Manage** GUI surface for Docker-related projects. This
 - **Safety copy:** make it explicit that repository creation cannot be auto-approved by YOLO or autonomy modes.
 
 ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md#147-docker-runtime--dockerhub-contract, ContractName:Plans/Permissions_System.md
+

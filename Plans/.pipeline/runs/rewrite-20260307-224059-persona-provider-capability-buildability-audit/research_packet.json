@@ -1,0 +1,127 @@
+{
+  "schema_id": "research_packet.v1",
+  "run_id": "rewrite-20260307-224059-persona-provider-capability-buildability-audit",
+  "created_at_utc": "2026-03-07T22:40:59Z",
+  "topic": "Persona/provider capability buildability audit packet",
+  "objective": "Capture the audit-derived planning updates required to make the Persona system, provider-capability filtering, requested-vs-effective runtime state, Builder/Interview surface behavior, and registry boundaries buildable and deterministic. Preserve all material implementation guidance needed to close the gaps found during audit: split the canonical Persona registry from the delegated subagent registry, define one cross-surface requested-Persona precedence chain, specify scoped override lifecycle and persistence, fully define the effective runtime record including applied/skipped control objects, make capability filtering transport-plus-model aware, add Builder Persona config and resolver rules, and replace stale Interview provider-native invocation guidance with a Persona-first Provider-facade contract.",
+  "decisions": [
+    {
+      "decision": "Registry boundary split",
+      "choice": "Puppet Master must distinguish a broad canonical persona_registry from the delegated subagent_registry. persona_registry is the authoritative valid-ID set for Chat, Interview, Requirements Builder, Orchestrator, Multi-Pass, natural-language resolution, stored overrides, and effective-runtime validation. subagent_registry is the delegated-run/task-tool subset only. Every subagent_registry entry must also exist in persona_registry, but persona_registry must additionally include non-delegated runtime Personas such as collaborator, general-purpose, researcher, deep-researcher, and sre."
+    },
+    {
+      "decision": "Canonical requested-Persona precedence",
+      "choice": "Cross-surface requested Persona resolution must use one deterministic precedence chain: explicit run-envelope or manual surface override; then active scoped natural-language override; then surface-specific explicit mapping (Interview stage override, Builder stage/pass override, Orchestrator tier override, etc.); then surface auto-resolver candidate; then config default; then canonical fallback (general-purpose if the surface does not define a narrower fallback). Personas.md section 5.1 must stop presenting the older Orchestrator-only PRD/dynamic/config chain as the global rule."
+    },
+    {
+      "decision": "Scoped override lifecycle contract",
+      "choice": "Natural-language Persona overrides require explicit persisted scope semantics and owner binding. The effective record must carry persona_override_scope (none | turn | session | run | task | subagent) and persona_override_owner_id. turn scope expires after the next eligible execution on the same thread/surface; session scope persists until cleared or replaced in the same thread/session; run scope applies only to the current run tree; task scope applies only to the owning task/tier item; subagent scope applies only to the targeted delegated child run. If the owning object no longer exists, the override is expired rather than silently reused."
+    },
+    {
+      "decision": "Effective resolution record schema",
+      "choice": "The canonical effective runtime record must include requested_persona, effective_persona, persona_selection_source, selection_reason, persona_override_scope, persona_override_owner_id, requested/effective platform/model/variant, effective_temperature, effective_top_p, effective_reasoning_effort, effective_talkativeness, applied_persona_controls[], and skipped_persona_controls[]. The control arrays require object schemas, not bare strings. applied entries must carry at least control, requested_value, effective_value, source, and reason; skipped entries must carry at least control, requested_value, effective_value, provider, model, reason, and fallback_behavior. Clamped controls stay in applied_persona_controls[] with both requested and effective values."
+    },
+    {
+      "decision": "Capability filtering granularity",
+      "choice": "Provider Persona capability evaluation must be two-stage, not transport-only. The matrix in Models_System is the transport baseline; effective support for a specific run is the intersection of transport support, model-level support from discovered model/provider metadata, and runtime-path constraints such as variant or provider transport limitations. talkativeness is a Persona instruction-layer control whose support is derived from persona_prompt_body support rather than a separate runtime knob row."
+    },
+    {
+      "decision": "Requirements Builder Persona config",
+      "choice": "Requirements Builder requires an explicit Persona config contract and deterministic resolver: explicit stage/pass override; configured stage/pass mapping; stage default from the Builder Persona strategy addendum; then general-purpose fallback. Builder settings must persist mode (manual | auto | hybrid), stage_personas, review_pass_personas, optional per-mapping platform/model overrides, and optional next-run explicit override. Every Builder stage/pass execution must persist and display requested/effective Persona, selection source/reason, effective platform/model, and applied/skipped Persona controls."
+    },
+    {
+      "decision": "Interview Persona-first execution contract",
+      "choice": "Interview runtime must resolve an effective Persona first and then invoke the Provider facade/platform runner. Provider-native slash-command or exported-agent syntax is interoperability detail only and must not be the canonical runtime contract. Interview needs an explicit Persona config contract with mode, stage_persona_overrides, phase_primary_personas, phase_secondary_personas, optional per-stage platform/model overrides, and optional next-run explicit override. If legacy phase_subagents names are kept for compatibility, they must be interpreted as canonical Persona IDs rather than provider-native command names."
+    },
+    {
+      "decision": "Orchestrator registry clarification",
+      "choice": "orchestrator-subagent-integration must explicitly state that DRY:DATA:subagent_registry is for delegated subagent/task-tool validation only. Any auto-resolution path in that document that produces non-delegated Personas such as collaborator, general-purpose, researcher, deep-researcher, or sre must validate against persona_registry instead."
+    }
+  ],
+  "doc_intents": [
+    {
+      "path": "Plans/Personas.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 5.1 Selection",
+          "content_markdown": "### 5.1 Selection\n\nCross-surface requested/effective Persona precedence is canonically defined in `Plans/Prompt_Pipeline.md` (\u00a76.2\u2013\u00a76.5). This section does **not** redefine that global precedence.\n\nThis section defines only how **Orchestrator auto mode** produces candidate Persona IDs before the global prompt-pipeline precedence is applied:\n\n1. **Plan/tier hard requirement:** If the PRD or plan contains a hard Persona/subagent requirement for the current tier item, emit that candidate first.\n2. **Orchestrator auto candidate generation:** If no hard requirement exists, the Orchestrator's selector generates candidates from project context, language, domain, framework, tier level, and operation type.\n3. **Orchestrator config constraints:** Disabled/required/override lists may narrow or replace the Orchestrator-generated candidate set as defined in `Plans/orchestrator-subagent-integration.md`.\n\nThe candidate produced here becomes a `plan_or_tier_default` or `auto_surface_resolver` input to the global requested/effective Persona resolution flow; it does **not** bypass manual selection, scoped natural-language overrides, or higher-priority run-envelope inputs.\n\nContractRef: ContractName:Plans/Prompt_Pipeline.md#PERSONA-SELECTION-SOURCE-ENUM, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Personas.md#STORAGE-LAYOUT"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 7. Relationship to the subagent registry",
+          "content_markdown": "## 7. Relationship to the Persona registry and delegated-subagent registry\n\n<a id=\"REGISTRY-RELATIONSHIP\"></a>\n\nPuppet Master now distinguishes between two related but non-identical registries:\n\n### 7.1 Canonical `persona_registry`\n\n`persona_registry` is the canonical set of **valid Persona IDs** for runtime resolution across Chat, Interview, Requirements Builder, Orchestrator, Multi-Pass Review, and delegated child runs.\n\nAt minimum, `persona_registry` MUST include:\n- every ID in the canonical delegated-subagent registry, **plus**\n- the non-delegated built-ins required by Persona/runtime resolution:\n  - `collaborator`\n  - `general-purpose`\n  - `researcher`\n  - `deep-researcher`\n  - `sre`\n\nAutomatic surface resolution, natural-language resolution, stored overrides, and validation of requested/effective Persona IDs MUST validate against `persona_registry`, not against the delegated-subagent subset.\n\n### 7.2 Canonical `subagent_registry`\n\n`subagent_registry` remains the canonical subset of Persona IDs that are valid for **delegated subagent/task-tool execution** and provider-facing delegated-run validation.\n\nRules:\n- Every `subagent_registry` entry MUST also exist in `persona_registry`.\n- `persona_registry` MAY contain IDs that are **not** valid delegated subagents.\n- Task-tool validation and delegated-run launch paths validate against `subagent_registry`.\n- Chat/Interview/Builder/Orchestrator surface resolution validates against `persona_registry`.\n\n### 7.3 Why the split is required\n\nThe Persona system now includes valid runtime Personas that are not purely delegated-subagent identities. Examples include `collaborator` for questioning/planning, `general-purpose` as a generic execution fallback, and `researcher` / `deep-researcher` for explicit research modes.\n\nIt is therefore incorrect to treat the delegated-subagent list as the complete set of valid runtime Personas.\n\nContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Prompt_Pipeline.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 6.2 Selection-source enumeration",
+          "content_markdown": "### 6.2.1 Canonical requested-Persona precedence\n\nWhen multiple Persona-selection inputs exist, the runtime MUST compute `requested_persona` using this precedence (highest wins):\n\n1. **Explicit run-envelope/manual surface override**\n   A structured run input, manual picker choice, or surface action targeted at the current execution.\n2. **Active scoped natural-language override**\n   A previously resolved natural-language override whose scope still applies to the current execution. If multiple active scoped overrides apply, the most specific owner wins:\n   - `subagent`\n   - `task`\n   - `run`\n   - `turn`\n   - `session`\n3. **Surface-specific explicit mapping**\n   A configured Interview stage override, Builder stage/pass override, Orchestrator tier override, or equivalent mapped Persona source.\n4. **Surface auto resolver candidate**\n   The Persona proposed by the active surface resolver based on stage/tier/task/repo context.\n5. **Config default**\n   A project/global default Persona configured for the surface.\n6. **Canonical fallback**\n   The fallback Persona defined by the active surface contract. If a surface contract does not define one, use `general-purpose`.\n\n`persona_selection_source` MUST reflect the winning source category, not every candidate that was considered.\n\n### 6.2.2 Scoped override lifecycle contract\n\nNatural-language Persona overrides MUST persist enough state to be replayable and auditable.\n\nRequired lifecycle rules:\n- `turn` scope expires after the next eligible execution on the same thread/surface.\n- `session` scope remains active until cleared or replaced within the same thread/session.\n- `run` scope applies only to the current run tree.\n- `task` scope applies only to the owning task/tier item.\n- `subagent` scope applies only to the targeted delegated child run.\n\nIf a scoped override no longer has a valid owner object, it MUST be discarded before resolution and recorded as expired rather than silently reused."
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 6.5 Effective resolution record",
+          "content_markdown": "### 6.5 Effective resolution record\n\n<a id=\"EFFECTIVE-RESOLUTION-RECORD\"></a>\n\nEvery prompt assembly run MUST produce an effective resolution record containing at least:\n\n- `requested_persona`\n- `effective_persona`\n- `persona_selection_source`\n- `selection_reason`\n- `persona_override_scope` (`none | turn | session | run | task | subagent`)\n- `persona_override_owner_id` (`thread_id | run_id | tier_id | subagent_run_id | null` depending on scope)\n- `requested_platform`\n- `effective_platform`\n- `requested_model`\n- `effective_model`\n- `requested_variant`\n- `effective_variant`\n- `effective_temperature`\n- `effective_top_p`\n- `effective_reasoning_effort`\n- `effective_talkativeness`\n- `applied_persona_controls[]`\n- `skipped_persona_controls[]`\n\n`applied_persona_controls[]` element schema:\n```json\n{\n  \"control\": \"temperature\",\n  \"requested_value\": 0.2,\n  \"effective_value\": 0.2,\n  \"source\": \"persona\",\n  \"reason\": \"supported by selected provider/model\"\n}\n```\n\n`skipped_persona_controls[]` element schema:\n```json\n{\n  \"control\": \"reasoning_effort\",\n  \"requested_value\": \"high\",\n  \"effective_value\": null,\n  \"provider\": \"cursor\",\n  \"model\": \"anthropic/claude-sonnet-4\",\n  \"reason\": \"selected transport/model does not expose effort control\",\n  \"fallback_behavior\": \"omit_control\"\n}\n```\n\nRules:\n- `selection_reason` MUST be a one-line human-readable explanation suitable for direct UI display.\n- `applied_persona_controls[]` and `skipped_persona_controls[]` MUST be sufficient to power GUI/runtime disclosure without requiring undocumented side fields.\n- If a requested control is clamped rather than fully honored, record it in `applied_persona_controls[]` with both requested and effective values.\n- If no scoped override is active, `persona_override_scope = none` and `persona_override_owner_id = null`.\n\nThis record is the canonical cross-system effective runtime record referenced by `Plans/Personas.md` and `Plans/Models_System.md`. It MUST be available to event/history/UI consumers and to any payload that claims to expose requested/effective Persona/runtime state."
+        }
+      ]
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 10.4 Provider Persona Capability Matrix (canonical support states)",
+          "content_markdown": "### 10.4.1 Capability evaluation granularity\n\nThe matrix in \u00a710.4 defines the **transport-level baseline** only. Effective Persona-control support for a specific run MUST be computed as the intersection of:\n\n1. **transport support** from the Provider Persona Capability Matrix,\n2. **model-level support** from discovered model metadata / provider capability metadata,\n3. **runtime constraint support** from the selected variant or provider runtime path.\n\nThis is required because a control may be supported by a provider transport in general but unavailable for a specific model.\n\nExamples:\n- `reasoning_effort` may be supported by a provider transport but unavailable for the selected model.\n- `temperature` may be supported for direct API calls but unavailable through a narrowed CLI transport path.\n- a variant may force a model switch that changes effective support.\n\n### 10.4.2 Derived control rule: `talkativeness`\n\n`talkativeness` is a Persona instruction-layer control rather than a transport sampling knob.\n\nCanonical rule:\n- `persona_talkativeness` does **not** require its own transport matrix row.\n- its effective support is derived from `persona_prompt_body`.\n- if a provider path can apply Persona prompt-body instructions, it can apply `talkativeness`.\n- if Persona prompt-body injection is bypassed or unavailable, `talkativeness` MUST be recorded as skipped with the same provider/model disclosure rules as other Persona controls.\n\nGUI gating and runtime disclosure MUST use this derived rule rather than inventing a second inconsistent source."
+        }
+      ]
+    },
+    {
+      "path": "Plans/chain-wizard-flexibility.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### Default stage Personas",
+          "content_markdown": "### Deterministic Builder Persona resolver\n\nRequirements Builder MUST resolve Personas in this order:\n\n1. explicit stage/pass override for the current Builder execution, if present\n2. configured stage/pass mapping from Builder Persona settings\n3. stage default from this addendum\n4. `general-purpose` as the final fallback when no valid mapping/default is available\n\nAdditional rules:\n- Intake/clarification MUST bias toward `collaborator` unless the user explicitly overrides it.\n- Review passes MUST NOT silently reuse the drafting Persona when a reviewer Persona mapping exists.\n- Automatic resolution may return only IDs valid in `persona_registry` (`Plans/Personas.md` \u00a77).\n\n### Builder Persona config contract\n\nBuilder Persona settings MUST persist a canonical config object with at least:\n- `mode` (`manual | auto | hybrid`)\n- `stage_personas` (map of Builder stage -> Persona ID)\n- `review_pass_personas` (map of pass identifier -> Persona ID)\n- optional per-mapping platform/model overrides\n- optional explicit override for the next eligible Builder execution\n\nThis config is the runtime backing store for the mapping editor required by `Plans/FinalGUISpec.md` \u00a717.8.\n\n### Builder requested/effective runtime visibility contract\n\nFor every Builder stage/pass execution, persist and expose:\n- `requested_persona`\n- `effective_persona`\n- `persona_selection_source`\n- `selection_reason`\n- `effective_platform`\n- `effective_model`\n- `applied_persona_controls[]`\n- `skipped_persona_controls[]`\n\nBuilder activity/status UIs may render this compactly, but they MUST use the same canonical requested/effective record as other surfaces."
+        }
+      ]
+    },
+    {
+      "path": "Plans/interview-subagent-integration.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Platform-Specific Subagent Invocation",
+          "content_markdown": "## Platform-Specific Subagent Invocation\n\nNormative rule: Interview resolves an **effective Persona** first, then invokes the Provider facade / platform runner using the canonical requested/effective resolution record. Provider-native prompt syntax, exported agent files, or platform-specific delegation syntax are implementation details behind that facade and are **not** the canonical Interview runtime contract.\n\nThe Interview runtime MUST NOT require provider-native agent files or provider-native `/subagent` / `/agent` prompt syntax in order to execute.\n\nContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Models_System.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/orchestrator-subagent-integration.md\n\n### Interview Persona config contract\n\nInterview MUST persist Persona settings separately from legacy provider-native subagent interoperability details.\n\nRequired fields:\n- `mode` (`manual | auto | hybrid`)\n- `stage_persona_overrides` (map of `questioning | research | validation | drafting | review` -> Persona ID)\n- `phase_primary_personas` (map of phase_id -> Persona ID)\n- `phase_secondary_personas` (map of phase_id -> ordered Persona IDs)\n- optional per-stage platform/model overrides\n- optional next-run explicit override\n\nIf older config names such as `phase_subagents` / `phase_secondary_subagents` are retained for migration/backward compatibility, their values MUST be interpreted as canonical Persona IDs, not as provider-native command names.\n\n### Requested/effective Interview contract\n\nInputs:\n- `requested_persona_id`\n- `stage`\n- `phase_id`\n- `provider/platform preferences`\n- `capability constraints`\n\nOutputs:\n- `effective_persona_id`\n- `persona_selection_source`\n- `selection_reason`\n- `effective_platform`\n- `effective_model`\n- `effective_variant` (when present)\n- `applied_persona_controls[]`\n- `skipped_persona_controls[]`\n- `invocation_mode`\n\nPersist these values in runtime telemetry and expose them in the Interview UI/activity pane.\n\n### Interoperability note for provider-native formats\n\nProvider-native agent exports or prompt syntaxes MAY exist as optional interoperability layers only. They MUST be generated from the canonical effective Persona/runtime selection after resolution, and they MUST NOT become a second source of truth for Interview selection behavior."
+        }
+      ]
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 4. Canonical list of subagent names",
+          "content_markdown": "**Clarification:** `DRY:DATA:subagent_registry` is the canonical list for **delegated subagent/task-tool execution**, not the complete set of valid runtime Personas.\n\nNon-delegated surface resolution (Chat, Interview, Requirements Builder, Orchestrator planning/review frames, and natural-language Persona resolution) MUST validate against the broader `persona_registry` defined in `Plans/Personas.md` \u00a77.\n\nAny automatic selection logic in this document that produces a non-delegated Persona (for example `collaborator`, `general-purpose`, `researcher`, `deep-researcher`, or `sre`) MUST validate against `persona_registry` rather than being rejected for absence from the delegated-subagent subset."
+        }
+      ]
+    }
+  ]
+}

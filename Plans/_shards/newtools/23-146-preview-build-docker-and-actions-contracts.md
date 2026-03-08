@@ -61,7 +61,7 @@ ContractRef: UICommand:cmd.orchestrator.build_run, UICommand:cmd.orchestrator.op
    - `docker compose up -d` for service stacks
    - `docker buildx build` for deterministic image build path
 5. Capture logs/health until preview or build completes.
-6. Teardown with `docker compose down` when session policy requires cleanup.
+6. Teardown with `docker compose down` on explicit stop, on project close when `stop_on_project_close` is enabled, and on app exit; otherwise preserve the running preview and surface that state explicitly in the UI.
 7. Evidence/log capture MUST redact credentials, auth headers, and token-bearing environment variables before persistence.
 
 **Settings contract (Slint Settings):**
@@ -70,14 +70,15 @@ ContractRef: UICommand:cmd.orchestrator.build_run, UICommand:cmd.orchestrator.op
   - Docker binary path override and compose file/path defaults
   - compose project-name strategy (`auto`, `fixed`, `hash-based`)
   - DockerHub namespace/repository/tag defaults and tag templates
-  - auth mode (`pat` default) plus validate/clear-token actions
+  - auth inputs (`browser` or `pat`), with PAT recommended but not default-exclusive; browser-login, PAT-save, validation, and clear-credentials behavior are defined by §14.7A and `Plans/Containers_Registry_and_Unraid.md`
   - push policy (`manual` default; optional `after_build`)
 
 **DockerHub auth/push contract:**
-- Use PAT/token-based auth flow.
-- Store tokens in the OS credential store only; never place tokens in project files, redb, or evidence logs.
+- Use the §14.7A auth model with both browser-login and PAT inputs.
+- Store tokens in the canonical stores defined by `Plans/Containers_Registry_and_Unraid.md`; never place tokens in project files, redb, or evidence logs.
 - Validation status includes a timestamp and last-known registry host so the UI can explain what was verified.
 - Push results include digest and tag map in evidence and chat summary.
+- If auth expires during push, emit `docker.publish.failed` with `reason_code: auth_expired`, preserve the local build result, and surface a re-auth + retry CTA without forcing a rebuild.
 
 **CI template defaults for container publish:**
 - `docker/login-action`

@@ -34,3 +34,4 @@ This section specifies how the File Manager integrates Git status overlays and c
 - The "Show git status" toggle (§13.1) and "Hide ignored" toggle (§1) are independent settings
 
 ContractRef: Plans/GitHub_Integration.md §A, Plans/GitHub_Integration.md §C.3, Plans/DRY_Rules.md, Plans/Decision_Policy.md, Plans/Architecture_Invariants.md#INV-010
+

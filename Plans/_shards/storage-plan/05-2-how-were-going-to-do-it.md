@@ -141,6 +141,67 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/
 
 ### 2.3 redb: schema, migrations, key patterns
 
+#### Additions: Container publish / DockerHub / Unraid persistence contract
+
+This addendum defines the minimum persistence contract required so Settings, Docker Manage, Orchestrator, and post-publish flows restore the same state.
+
+##### Scope split
+
+| Scope | Store | What belongs here |
+|---|---|---|
+| Secret | OS credential store only | DockerHub PATs, browser-login derived credentials, credential-helper references |
+| Global app state | redb | Shared container defaults, `Hide Docker Manage when not used in Project.`, shared `ca_profile` draft/profile state |
+| Project state | redb | Selected namespace/repository/tag template, push policy, last validation snapshot (non-secret), Docker Manage surface state, template repo config/status, per-project `ca_profile` override |
+| Event ledger | seglog | Auth validation, repo create, publish, template generation, template repo push state transitions |
+
+##### Required redb keys
+
+- `settings.containers_registry.v1` -> global container defaults (runtime selector, binary path, compose defaults, push-policy default, Docker Manage visibility setting)
+- `docker.project_state.{project_id}` -> `{ requested_auth_mode, effective_auth_snapshot, selected_namespace, selected_repository, tag_template, push_policy, last_validation_timestamp, last_publish_result_id?, active_preview_session_id?, docker_manage_surface_state:{ active_tab, dock_state, expanded_panels[] } }`
+- `unraid.template_repo.{project_id}` -> `{ template_repo_id, enabled, repo_path, remote_url, branch, maintainer_slug, status: TemplateRepoStatus, last_commit_oid?, last_push_ts?, review_state }`
+- `unraid.ca_profile.shared` -> shared maintainer profile model
+- `unraid.ca_profile.project.{project_id}` -> per-project override model when project scope is enabled
+
+##### Required seglog event families
+
+| Event type | Minimum payload |
+|---|---|
+| `docker.auth.browser_login.started` | `project_id`, `provider`, `requested_auth_mode` |
+| `docker.auth.browser_login.device_code_issued` | `project_id`, `verification_uri`, `user_code`, `expires_in_seconds` |
+| `docker.auth.browser_login.polling` | `project_id`, `poll_interval_seconds`, `attempt` |
+| `docker.auth.browser_login.cancelled` | `project_id`, `provider` |
+| `docker.auth.browser_login.timed_out` | `project_id`, `provider`, `expires_in_seconds` |
+| `docker.auth.pat.saved` | `project_id`, `provider`, `storage_scope` |
+| `docker.auth.capability_validated` | `project_id`, `requested_auth_mode`, `effective_auth_provider_state`, `effective_capabilities[]`, `effective_account_identity`, `degraded_reason?` |
+| `docker.auth.failed` | `project_id`, `requested_auth_mode`, `reason_code`, `message` |
+| `docker.auth.cleared` | `provider`, `scope`, `project_id?`, `cleared_by` |
+| `docker.repositories.refreshed` | `project_id`, `namespace`, `repository_count` |
+| `docker.repositories.refresh_failed` | `project_id`, `namespace`, `reason_code`, `message` |
+| `docker.repository.create.confirmation_requested` | `project_id`, `namespace`, `repository`, `privacy` |
+| `docker.repository.created` | `project_id`, `namespace`, `repository`, `privacy` |
+| `docker.repository.create.cancelled` | `project_id`, `namespace`, `repository` |
+| `docker.repository.create_failed` | `project_id`, `namespace`, `repository`, `reason_code`, `message` |
+| `docker.publish.started` | `project_id`, `namespace`, `repository`, `tags[]` |
+| `docker.publish.completed` | `project_id`, `publish_result_id`, `registry_host`, `namespace`, `repository`, `tags[]`, `digests[]`, `platforms[]`, `sanitized_logs_path` |
+| `docker.publish.failed` | `project_id`, `namespace`, `repository`, `reason_code`, `message` |
+| `unraid.template_repo.validated` | `project_id`, `template_repo_id`, `repo_path`, `branch`, `status` |
+| `unraid.template_repo.validation_failed` | `project_id`, `repo_path`, `reason_code`, `message` |
+| `unraid.template.generation.started` | `project_id`, `publish_result_id`, `template_repo_id` |
+| `unraid.template.generation.completed` | `project_id`, `publish_result_id`, `template_xml_path`, `template_repo_id`, `maintainer_slug`, `commit_status`, `push_status`, `review_state`, `ca_profile_state` |
+| `unraid.template.generation.failed` | `project_id`, `template_repo_id?`, `reason_code`, `message` |
+| `unraid.template_repo.auto_committed` | `project_id`, `template_repo_id`, `commit_oid`, `files_committed[]` |
+| `unraid.template_repo.auto_commit_skipped` | `project_id`, `template_repo_id`, `reason_code` |
+| `unraid.template_repo.push.started` | `project_id`, `template_repo_id`, `branch`, `remote_url` |
+| `unraid.template_repo.push.completed` | `project_id`, `template_repo_id`, `branch`, `remote_url`, `commit_oid` |
+| `unraid.template_repo.push.failed` | `project_id`, `template_repo_id`, `branch`, `reason_code`, `message` |
+
+##### Restore rules
+
+- Effective auth capability snapshots MAY be restored for UI display, but they are advisory until revalidated.
+- Secret material MUST NOT be mirrored into redb or seglog.
+- Template repo status MUST be recomputed from the working copy on project open and then reconciled with the last persisted snapshot.
+- Shared `ca_profile` state is the default source unless the project explicitly enables per-project override.
+
 **Schema:** redb uses **namespaces** (tables) and **key-value** pairs. Keys and values are bytes; we define a **key encoding** (e.g. string prefix + project_id + id) and **value encoding** (e.g. bincode or JSON) per namespace.
 
 **Namespaces (tables) and key patterns:**

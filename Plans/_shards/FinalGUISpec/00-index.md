@@ -30,3 +30,4 @@ Canonical source: [Plans/FinalGUISpec.md](../../FinalGUISpec.md)
 - [22-appendix-b-locked-decisions-summary.md](22-appendix-b-locked-decisions-summary.md) — ## Appendix B: Locked Decisions Summary
 - [23-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-addendum-2026-02-23.md](23-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-addendum-2026-02-23.md) — ## Appendix C: Dashboard Widget Grid and Widget Catalog Integration (Addendum -- 2026-02-23)
 - [24-17-persona-editor-compatibility-disclosure-and-surface-level-persona-controls-2026-03-06.md](24-17-persona-editor-compatibility-disclosure-and-surface-level-persona-controls-2026-03-06.md) — ## 17. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)
+- [25-rendering-surface-addendum-2026-03-07.md](25-rendering-surface-addendum-2026-03-07.md) — ## Rendering Surface Addendum (2026-03-07)

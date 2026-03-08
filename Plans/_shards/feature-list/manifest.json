@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/feature-list.md",
-  "source_sha256": "7f946c1f4344c62aa8b3c94172a078ed6183149913753ce417c02acfaf9570fd",
+  "source_sha256": "e34930b76deba862a8fec7a4e5186e45e7104b029dc4f8eba1a36b5257ab2ce1",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -24,9 +24,16 @@
     {
       "dest_path": "Plans/_shards/feature-list/03-part-2-existing-codebase-features.md",
       "start_line": 840,
-      "end_line": 927,
-      "segment_sha256": "a080c54df818ca766c1abd010382548fc433d6c4360e1afa4b00e766bde863a1",
+      "end_line": 928,
+      "segment_sha256": "671aa5966ec80e75cf5076b34907efb67b23d492c96582ad924f535d461a920a",
       "heading": "## Part 2 - Existing Codebase Features"
+    },
+    {
+      "dest_path": "Plans/_shards/feature-list/04-part-1a-markdown-mermaid-and-unified-rendering-addendum-2026-03-07.md",
+      "start_line": 929,
+      "end_line": 943,
+      "segment_sha256": "e90aa03547ac688a68ec6fb54b69685bb395692f4bd0b0fa44e06f8506c1f23e",
+      "heading": "## Part 1A - Markdown, Mermaid, and Unified Rendering Addendum (2026-03-07)"
     }
   ]
 }

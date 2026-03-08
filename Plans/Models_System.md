@@ -532,6 +532,33 @@ Notes:
 
 ContractRef: ContractName:Plans/Models_System.md#PERSONA-CAPABILITY-MATRIX, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#PROVIDER-CAPABILITY-FILTERING
 
+### 10.4.1 Capability evaluation granularity
+
+The matrix in §10.4 defines the **transport-level baseline** only. Effective Persona-control support for a specific run MUST be computed as the intersection of:
+
+1. **transport support** from the Provider Persona Capability Matrix,
+2. **model-level support** from discovered model metadata / provider capability metadata,
+3. **runtime constraint support** from the selected variant or provider runtime path.
+
+This is required because a control may be supported by a provider transport in general but unavailable for a specific model.
+
+Examples:
+- `reasoning_effort` may be supported by a provider transport but unavailable for the selected model.
+- `temperature` may be supported for direct API calls but unavailable through a narrowed CLI transport path.
+- a variant may force a model switch that changes effective support.
+
+### 10.4.2 Derived control rule: `talkativeness`
+
+`talkativeness` is a Persona instruction-layer control rather than a transport sampling knob.
+
+Canonical rule:
+- `persona_talkativeness` does **not** require its own transport matrix row.
+- its effective support is derived from `persona_prompt_body`.
+- if a provider path can apply Persona prompt-body instructions, it can apply `talkativeness`.
+- if Persona prompt-body injection is bypassed or unavailable, `talkativeness` MUST be recorded as skipped with the same provider/model disclosure rules as other Persona controls.
+
+GUI gating and runtime disclosure MUST use this derived rule rather than inventing a second inconsistent source.
+
 ### 10.5 Unsupported control disclosure rules
 
 If a Persona requests a control the active provider cannot honor:

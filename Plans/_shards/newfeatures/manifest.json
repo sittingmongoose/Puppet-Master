@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/newfeatures.md",
-  "source_sha256": "ba31cdc24bb3ede93603d510356f0918abeb93c1ea1358025f330fe3b4c8e5c6",
+  "source_sha256": "0e90e6cc62a96ce0b9335025f86a91c957eca95051aae9f0d86a253d9eeb63bd",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -199,9 +199,16 @@
     {
       "dest_path": "Plans/_shards/newfeatures/28-23-gaps-and-potential-issues.md",
       "start_line": 1299,
-      "end_line": 1394,
-      "segment_sha256": "809bc84131447d8e5ae735e1fa419d425aec01a53eea1383c1e42dc174188d16",
+      "end_line": 1395,
+      "segment_sha256": "ad0c6e0888692b8a5925fe401a4c3dcddcec5dda73f8a398965020f2beff7ab1",
       "heading": "## 23. Gaps and Potential Issues"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/29-24-unified-markdown-mermaid-html-and-image-rendering-architecture-2026-03-07.md",
+      "start_line": 1396,
+      "end_line": 1467,
+      "segment_sha256": "86929430ddcb7ff408e4a298dc6e912ee58be12afea57540d9be782ab06092cd",
+      "heading": "## 24. Unified Markdown, Mermaid, HTML, and Image Rendering Architecture (2026-03-07)"
     }
   ]
 }
