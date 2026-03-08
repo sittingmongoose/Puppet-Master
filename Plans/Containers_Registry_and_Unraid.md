@@ -752,3 +752,15 @@ The first-class scope above does **not** require initial automation for:
 - `ca_profile.xml` is generated if missing, all fields are editable, shared cross-project scope is default, and per-project override is available.
 - Profile images can be either repo-managed uploaded assets or externally hosted URLs; uploaded images default to repo-managed assets.
 - Template-repo changes auto-commit by default, do not auto-push by default, and expose a one-click push action in the UI.
+
+## Shared blocked-Outcome Alignment Addendum (2026-03-08)
+
+The Docker/Unraid remote-side-effect contracts are the reference pattern for shared blocked outcomes.
+
+Required alignment:
+- remote side effects blocked by confirmation/policy remain `blocked`, not `failed`
+- completed local work (build artifacts, commits, generated local outputs) is preserved
+- automatic retry is not permitted until the user or policy condition explicitly resolves
+- blocked payloads must continue to provide exact `reason_code` and `recovery_options[]`
+
+This document's stronger blocked-outcome pattern should be treated as the cross-runtime baseline rather than as a domain-specific exception.

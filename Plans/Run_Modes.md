@@ -45,6 +45,18 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md
 
 <a id="MODE-plan"></a>
 ### 1.2 `plan`
+#### Planning-overlay clarification (2026-03-08)
+
+Assistant Chat now distinguishes between **Plan** and **Deep Plan** as workflow overlays, but both overlays still normalize to canonical runtime mode **`plan`** while planning.
+
+Rules:
+- `Plan` and `Deep Plan` do **not** create new runtime-mode enum values.
+- `Plan Thoroughness (PT)` is a workflow-level setting; it does **not** create a new runtime mode.
+- Runtime `plan` remains read-only with respect to project files.
+- Planning artifacts may exist as Puppet Master-controlled drafts / transient generated buffers and may be opened in the editor without violating the read-only project-file rule.
+- Planning-time runs may not widen themselves into execution authority; the user must explicitly approve a transition into `regular` or `yolo`.
+- Natural-language requests such as `use ask mode`, `use plan mode`, and `use deep plan` resolve to canonical runtime modes and workflow overlays rather than inventing ad hoc execution states.
+
 - **Intent:** Read-only planning output. The provider produces a structured plan but performs no mutations to project files.
 - **Writes allowed:** false (plan output is an artifact returned to the caller, not written to the project workspace).
 - **Permission posture:** Identical to `ask` for project files. The provider may write to its own plan-output surface (e.g., plan artifacts under Puppet Master's control) but not to project source.
@@ -378,3 +390,41 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gat
 
 <a id="AC-13"></a>
 **AC-13:** Child/subagent/rotated follow-up runs MUST inherit the parent effective context overlay. A read-only parent run (`ask` or `plan`) MUST NOT widen into `full_execution` context in any child run.
+
+## Retry, Blocking, and Safe-Point Clarification Addendum (2026-03-08)
+
+### 1. Mode interaction with runtime failure classes
+
+Run mode does not replace runtime failure classification.
+
+Required rule:
+- `ask`, `plan`, `regular`, and `yolo` all use the shared `failure_class` / `blocked_reason_code` taxonomy
+- mode may change which classes are likely, but not the meaning of those classes
+
+### 2. Ask/plan/headless interaction
+
+Existing headless behavior remains authoritative:
+- when tool policy resolves to `ask` and no interactive approval path is available, the outcome becomes `headless_ask_denied` unless the active flow explicitly supports pending HITL at that boundary
+- this is a blocked/denied outcome, not an auto-retry class
+
+### 3. Counters and kill-switch interaction
+
+Required clarifications:
+- blocked outcomes do not count as qualifying writes
+- blocked outcomes do not count as retryable provider errors
+- `max_retryable_errors` applies only to retryable classes such as `provider_transient` unless another class is explicitly declared retryable by the shared matrix
+
+### 4. Safe-point applicability
+
+Runtime safe points are required only for mutation-capable attempts.
+
+Rules:
+- `ask` and `plan` remain read-only for project files and therefore do not require mutation safe points for ordinary planning/inspection work
+- `regular` and `yolo` must create safe points before risky mutation-capable attempts
+
+### 5. Acceptance criteria
+
+- Run modes do not invent alternative retry taxonomies.
+- Headless ask denial remains explicit and non-magical.
+- Blocked outcomes are excluded from write-thrash and retryable-provider ceilings.
+- Safe-point creation follows execution authority, not generic run existence.

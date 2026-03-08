@@ -412,3 +412,26 @@ Prompt assembly must emit enough state for UI surfaces to display:
 - Unsupported Persona controls must be skipped explicitly and surfaced.
 - Persona `talkativeness` must be applied through instruction assembly even when the provider does not expose sampling controls such as `temperature` or `top_p`.
 - Effective resolution record must be available for thread history, activity panes, and run inspection UIs.
+
+## Remediation and Retry Metadata Addendum (2026-03-08)
+
+Prompt assembly must carry the minimum metadata needed for deterministic remediation, retry, and audit behavior without widening execution authority.
+
+Required runtime metadata when applicable:
+- `failure_class`
+- `blocked_reason_code`
+- `retry_count`
+- `safe_point_id`
+- `remediation_root_id`
+- `remediation_parent_attempt_id`
+- `replan_generation`
+- `wake_reason` when a run is resumed from blocked/backoff/remediation state
+
+Rules:
+- this metadata is for observability and deterministic continuation, not for speculative prompt stuffing
+- child/remediation runs may narrow inherited context but must preserve lineage metadata needed for replay/debugging
+- prompt assembly must not silently drop remediation lineage between parent attempt and remediation child
+
+Acceptance criteria:
+- remediation/retry runs receive the lineage metadata needed to continue coherently
+- prompt assembly does not become the hidden source of truth; canonical truth remains in event/storage contracts

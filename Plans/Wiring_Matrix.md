@@ -178,3 +178,33 @@ ContractRef: Gate:GATE-010, Invariant:INV-011, Invariant:INV-012, SchemaID:Wirin
 - `Plans/UI_Command_Catalog.md` — Canonical command ID definitions
 - `Plans/Contracts_V0.md` — Core contracts (UICommand, EventRecord)
 - `Plans/Progression_Gates.md` — Gate definitions including GATE-010
+
+## Scheduler/Remediation/Event Wiring Addendum (2026-03-08)
+
+Add the following producer -> consumer paths to the wiring matrix.
+
+### 1. Scheduler analysis
+- producer: executor/orchestrator scheduler pass
+- canonical event: `run.scheduler_analysis`
+- storage projection: `runs.scheduler_analysis.*`
+- consumers: Run Graph, Orchestrator Page, Assistant status surfaces, analytics/debug surfaces
+
+### 2. Blocked/unblocked
+- producer: executor/orchestrator / permission / FileSafe / auth / wizard systems
+- canonical events: `run.node_blocked`, `run.node_unblocked`, `wizard.blocked`, `wizard.unblocked`
+- consumers: Dashboard cards, Assistant thread badges/messages, Orchestrator Page, Run Graph
+
+### 3. Safe points
+- producer: mutation-capable attempt dispatcher / retry controller
+- canonical events: `safe_point.created`, `safe_point.restored`
+- consumers: runtime recovery logic, Run Graph detail panel, audit/debug surfaces
+
+### 4. Remediation lineage
+- producer: verifier/reviewer remediation controller
+- canonical events: `run.remediation_started`, `run.remediation_completed`
+- consumers: Run Graph, Orchestrator Page, Assistant summaries, storage projections
+
+### 5. Degradation evidence
+- producer: draft decomposition/planning pipeline
+- canonical event: `plan.decomposition_degraded`
+- consumers: wizard/interview planning UI, storage projections, audit/debug surfaces

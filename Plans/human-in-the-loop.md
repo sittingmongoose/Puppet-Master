@@ -173,3 +173,42 @@ This plan does not define HITL for the **interview** flow (Scope, Architecture, 
 ---
 
 *Document created for planning only; no code changes.*
+
+## HITL Retry and Safe-Point Clarification Addendum (2026-03-08)
+
+### 1. HITL resolution wakes the scheduler
+
+Approval/rejection resolution is a primary scheduler wake trigger.
+
+Required behavior:
+- `hitl.approved` / `hitl.rejected` must cause immediate queue reevaluation
+- unrelated runnable work continues while a node is waiting on HITL
+
+### 2. Re-run semantics after reject
+
+`Re-run` cannot remain ambiguous.
+
+Required rule:
+- the rejection CTA must declare whether the rerun is `retry_from_safe_point` or `fresh_attempt`
+- default should be `retry_from_safe_point` for mutation-capable tiers when a valid safe point exists
+- if no safe point exists or the tier is explicitly non-recoverable, use `fresh_attempt`
+
+### 3. Skip semantics
+
+`Skip` must preserve lineage.
+
+Required rule:
+- the skipped attempt remains in history
+- the UI must show that the user chose to advance without rerunning the rejected tier
+- downstream behavior must obey graph semantics and any declared skip policy; skip is not silent success
+
+### 4. Abort semantics
+
+Abort terminates the run and preserves the full paused/rejected lineage.
+
+### 5. Acceptance criteria
+
+- HITL resolution immediately wakes scheduling.
+- Rerun semantics are explicit about safe-point vs fresh attempt.
+- Skip preserves lineage rather than masquerading as a passed attempt.
+- Abort preserves audit history.

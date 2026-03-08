@@ -536,3 +536,171 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#7.4, ContractName:Plans/FinalGUI
 - `Plans/UI_Wiring_Rules.md` (wiring rules and verification strategy)
 - `Plans/Wiring_Matrix.schema.json` (WiringEntry schema)
 - `Plans/Provider_OpenCode.md` (OpenCode server-bridged provider integration)
+
+## Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)
+
+Add the following event families to the canonical contract set.
+
+### 1. Scheduler analysis and readiness events
+
+#### `run.scheduler_analysis`
+Emitted for every authoritative scheduling pass before dispatch.
+
+Minimum payload:
+- `run_id`
+- `analysis_id`
+- `wake_reason`
+- `available_slots`
+- `ready_nodes[]`: `{ node_id, scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, selected, non_selected_reason? }`
+- `selected_nodes[]`
+- `blocked_summary`: counts by `blocked_reason_code`
+- `backoff_summary`: counts by active backoff class
+- `replan_generation`
+- `ts`
+
+#### `run.node_ready`
+Minimum payload:
+- `run_id`
+- `node_id`
+- `ready_since_utc`
+- `wake_reason`
+- `replan_generation`
+
+#### `run.node_blocked`
+Minimum payload:
+- `run_id`
+- `node_id`
+- `blocked_reason_code`
+- `failure_class?`
+- `detail_ref?`
+- `recovery_options[]`
+- `ts`
+
+#### `run.node_unblocked`
+Minimum payload:
+- `run_id`
+- `node_id`
+- `prior_blocked_reason_code`
+- `wake_reason`
+- `ts`
+
+### 2. Retry/backoff events
+
+#### `run.node_backoff_started`
+Minimum payload:
+- `run_id`
+- `node_id`
+- `attempt_id`
+- `failure_class`
+- `backoff_until_utc`
+- `retry_count`
+- `ts`
+
+#### `run.node_backoff_expired`
+Minimum payload:
+- `run_id`
+- `node_id`
+- `attempt_id`
+- `failure_class`
+- `ts`
+
+#### `run.node_retry_scheduled`
+Minimum payload:
+- `run_id`
+- `node_id`
+- `prior_attempt_id`
+- `retry_count`
+- `failure_class`
+- `safe_point_id?`
+- `ts`
+
+### 3. Safe-point events
+
+#### `safe_point.created`
+Minimum payload:
+- `safe_point_id`
+- `run_id`
+- `node_id`
+- `attempt_id`
+- `worktree_path?`
+- `baseline_ref`
+- `replan_generation`
+- `ts`
+
+#### `safe_point.restored`
+Minimum payload:
+- `safe_point_id`
+- `run_id`
+- `node_id`
+- `attempt_id`
+- `restore_outcome`
+- `ts`
+
+### 4. Remediation lineage events
+
+#### `run.remediation_started`
+Minimum payload:
+- `run_id`
+- `node_id`
+- `remediation_root_id`
+- `remediation_parent_attempt_id`
+- `generation`
+- `origin_failure_event_id`
+- `finding_ids[]`
+- `ts`
+
+#### `run.remediation_completed`
+Minimum payload:
+- `run_id`
+- `node_id`
+- `remediation_root_id`
+- `generation`
+- `outcome`
+- `superseded_attempt_id?`
+- `resolution_summary_ref?`
+- `ts`
+
+### 5. Degradation / integrity events
+
+#### `plan.decomposition_degraded`
+Minimum payload:
+- `project_id`
+- `source_stage`
+- `reason_code`
+- `original_shape`
+- `degraded_shape`
+- `evidence_ref`
+- `ts`
+
+#### `run.graph_integrity_failed`
+Minimum payload:
+- `run_id`
+- `reason_code`
+- `detail_ref`
+- `replan_generation`
+- `ts`
+
+### 6. Wizard blocked escalation events
+
+#### `wizard.blocked`
+Minimum payload:
+- `wizard_id`
+- `thread_id?`
+- `round_count`
+- `report_ref`
+- `resume_url`
+- `ts`
+
+#### `wizard.unblocked`
+Minimum payload:
+- `wizard_id`
+- `thread_id?`
+- `resolution_source`
+- `ts`
+
+### 7. Contract rules
+
+- Events above are canonical ledger events, not debug-only instrumentation.
+- All UI and storage projections added by this packet derive from these events or fields normatively referenced by them.
+- `safe_point.*` events are runtime-internal recovery records and are distinct from user-facing `restore_point.*` / `rollback.*` contracts.
+- `plan.decomposition_degraded` is allowed only before canonical graph lock.

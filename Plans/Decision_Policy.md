@@ -221,3 +221,61 @@ Lifecycle note:
 - Clarification-round limits and `blocked` transition semantics are owned by `Plans/chain-wizard-flexibility.md §15`; this section defines the pre-execution boundary and severity rules only.
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, PolicyRule:Decision_Policy.md§4, PolicyRule:no_secrets_in_storage, Invariant:INV-002, ContractName:Plans/chain-wizard-flexibility.md#12-three-pass-canonical-validation-workflow-mandatory-invariant-sweep
+
+## Runtime Decision Rules Addendum (2026-03-08)
+
+### 1. No hidden scheduler heuristics
+
+Scheduler selection logic must be explicit, deterministic, and inspectable.
+
+Required rule:
+- if a scheduler signal materially affects dispatch order, it must be defined normatively and exposed via observability
+
+Therefore:
+- critical-path weighting is not permitted as an implicit MVP scheduler heuristic
+- hidden or provider-specific queue reordering is not permitted
+
+### 2. No blind retries
+
+The system MUST classify the outcome before retrying.
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md
+
+Required rule:
+- a failed or blocked attempt cannot be retried by generic default behavior
+- retry requires a class-defined path in the shared failure matrix
+
+### 3. No silent degradation after canonical lock
+
+Draft/pre-canonical decomposition may degrade with evidence.
+Canonical execution artifacts may not silently degrade.
+
+Required rule:
+- invalid canonical graphs are integrity failures and must stop execution until repaired
+
+### 4. Blocked vs failed outcome policy
+
+If the system intentionally does not execute an action because a guard, approval, or confirmation requirement blocked it, the outcome is `blocked`, not `failed`.
+
+This includes:
+- permission denial
+- user decline
+- headless ask denial
+- FileSafe blocks
+- external publish side-effect confirmation blocks
+- auth refresh requirements when the remote side effect did not execute
+
+### 5. Wizard clarification escalation policy
+
+`attention_required` and `blocked` are distinct policy states.
+
+Required distinction:
+- `attention_required`: clarification can continue within the current cycle
+- `blocked`: clarification rounds are exhausted; the system must stop automatic rewrite/advance and require new explicit user input
+
+### 6. Acceptance criteria
+
+- Scheduler heuristics are inspectable.
+- Blind generic retries are disallowed.
+- Canonical graph degradation is forbidden.
+- Intentional non-execution is modeled as blocked, not failed.
+- Wizard blocked escalation is policy-distinct from attention_required.
