@@ -177,6 +177,10 @@ These IDs are required by `Plans/FinalGUISpec.md` §7.4.8 / §7.4.8A and `Plans/
 - Docker Manage **Build** dispatches `cmd.orchestrator.build_run { publish: false }`.
 - Docker Manage **Run / Preview** dispatches `cmd.orchestrator.preview_open { mode: "docker" }`.
 - Docker Manage **Stop / Teardown** dispatches `cmd.orchestrator.preview_stop { preview_session_id? }`.
+- Docker Manage **Push image** dispatches `cmd.orchestrator.push_image`.
+- `push_policy = after_build` dispatches `cmd.orchestrator.push_image` only after a successful `cmd.orchestrator.build_run` result exists; it does not change `build_run` into a remote publish command.
+
+##### Command catalog
 
 | Command ID | Args schema (keys only) | Expected events | Affected surfaces |
 |---|---|---|---|
@@ -188,8 +192,18 @@ These IDs are required by `Plans/FinalGUISpec.md` §7.4.8 / §7.4.8A and `Plans/
 | `cmd.docker.create_repository` | `{ namespace: string, repository: string, privacy: "private" | "public" }` | `docker.repository.create.confirmation_requested` | Settings > Advanced, Docker Manage |
 | `cmd.docker.create_repository.confirm` | `{ namespace: string, repository: string, privacy: "private" | "public" }` | `docker.repository.created` or `docker.repository.create_failed` | Settings > Advanced, Docker Manage |
 | `cmd.docker.create_repository.cancel` | `{ namespace: string, repository: string }` | `docker.repository.create.cancelled` | Settings > Advanced, Docker Manage |
-| `cmd.docker.template_repo_setup` | `{ mode: "create_new" | "select_existing", repo_path?: string, remote_url?: string, branch?: string }` | `unraid.template_repo.validated` or `unraid.template_repo.validation_failed` | Settings > Advanced, Docker Manage |
+| `cmd.docker.template_repo_setup` | `{ mode: "create_new" | "select_existing", provider?: "github" | "local_only" | "other_git", repo_name?: string, repo_path?: string, remote_url?: string, branch?: string, local_working_copy_path?: string, maintainer_slug?: string, adopt_dirty_repo?: bool, allow_layout_migration?: bool }` | `unraid.template_repo.validated`, `unraid.template_repo.validation_failed`, `unraid.template_repo.migration.confirmation_requested`, `unraid.template_repo.adoption.confirmation_requested`, `unraid.template_repo.created`, or `unraid.template_repo.setup.blocked` | Settings > Advanced, Docker Manage |
 
+##### Additional rows required in §2.5 Orchestrator page commands
+
+| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
+|---|---|---|---|
+| `cmd.orchestrator.push_image` | `{ namespace?: string, repository?: string, tag_template?: string }` | `docker.publish.started`, `docker.publish.completed`, `docker.publish.failed`, or `docker.publish.blocked` | Orchestrator page, Dashboard, Docker Manage |
+| `cmd.orchestrator.open_running_container` | `{ preview_session_id?: string, url?: string }` | no persisted domain event (external open action) | Orchestrator page, Dashboard, Docker Manage |
+| `cmd.orchestrator.open_container_logs` | `{ preview_session_id?: string }` | no persisted domain event (navigation/open action) | Orchestrator page, Dashboard, Docker Manage |
+| `cmd.orchestrator.update_unraid_template` | `{ publish_result_id?: string }` | `unraid.template.generation.started`, `unraid.template.generation.completed`, `unraid.template.generation.failed`, or `unraid.template.generation.blocked` | Orchestrator page, Docker Manage |
+| `cmd.orchestrator.push_unraid_template_repo` | `{ template_repo_id?: string }` | `unraid.template_repo.push.started`, `unraid.template_repo.push.completed`, `unraid.template_repo.push.failed`, or `unraid.template_repo.push.blocked` | Orchestrator page, Docker Manage |
+| `cmd.orchestrator.open_unraid_template_repo` | `{ template_repo_id?: string }` | no persisted domain event (external open action) | Orchestrator page, Docker Manage |
 #### Additional rows required in §2.5 Orchestrator page commands
 
 | Command ID | Args schema (keys only) | Expected events | Affected surfaces |
@@ -228,6 +242,28 @@ ContractRef: ContractName:Plans/Orchestrator_Page.md#14, ContractName:Plans/Cont
 ---
 
 ### 2.6 Chat context usage commands
+### 2.6A Render / browser preview commands
+
+These IDs are required by rewrite-tie-in-memo.md, FileManager.md, FinalGUISpec.md, and assistant-chat-design.md for unified rendering surfaces.
+
+| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
+|---|---|---|---|
+| `cmd.preview.open` | `{ document_id?, artifact_id?, path?, mode, preferred_surface? }` | `preview.session.created`, `preview.session.attached` | File Editor, Chat, Embedded Document Pane, Browser tab |
+| `cmd.preview.close` | `{ preview_session_id }` | `preview.session.closed` | File Editor, Browser tab, Detached preview |
+| `cmd.preview.detach` | `{ preview_session_id }` | `preview.session.detached`, `preview.session.attached` | File Editor, Browser tab, Embedded Document Pane |
+| `cmd.preview.reattach` | `{ preview_session_id, target_surface }` | `preview.session.attached` | File Editor, Browser tab |
+| `cmd.preview.reload` | `{ preview_session_id, reason? }` | `preview.session.reloaded` or `preview.session.state_changed` | File Editor, Browser tab, Detached preview |
+| `cmd.preview.open_source` | `{ preview_session_id, node_id? }` | no persisted domain event (navigation/focus update) | File Editor, Chat, Embedded Document Pane |
+| `cmd.preview.request_edit` | `{ preview_session_id, node_id, operation, payload }` | `preview.action.requested`, `preview.action.completed` | File Editor, Embedded Document Pane, eligible Chat/Planning surfaces |
+| `cmd.preview.export_svg` | `{ preview_session_id, node_id?, destination? }` | `preview.session.exported` | File Editor, Chat, Embedded Document Pane |
+| `cmd.preview.export_png` | `{ preview_session_id, node_id?, destination? }` | `preview.session.exported` | File Editor, Chat, Embedded Document Pane |
+| `cmd.preview.copy_svg` | `{ preview_session_id, node_id? }` | `preview.session.exported` | File Editor, Chat, Embedded Document Pane |
+| `cmd.preview.copy_image` | `{ preview_session_id, node_id? }` | `preview.session.exported` | File Editor, Chat, Embedded Document Pane |
+| `cmd.browser.inspect_toggle` | `{ preview_session_id?, enabled }` | no persisted domain event (UI state update) | Browser tab, Detached browser |
+| `cmd.browser.capture_element` | `{ preview_session_id?, capture_mode }` | `browser.element_captured` | Browser tab, Detached browser |
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
 These IDs are required by `Plans/assistant-chat-design.md` section 25 and related context controls (§12–§13, §17).
 
 | Command ID | Args schema (keys only) | Expected events | Affected surfaces |

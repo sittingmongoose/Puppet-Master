@@ -572,8 +572,10 @@ Extend the orchestrator status/control surface so Docker-related runs expose mor
 
 **Required behavior:**
 - continue supporting `preview_open`, `preview_stop`, and `build_run`
+- treat `build_run` as a local build action only; remote image publish remains a separate action
 - add first-class actions for publish, open-running-container access, template regeneration, and template-repo push
 - surface DockerHub auth state, target repository, running-container access URL (when present), publish result digest/tag summary, and template-repo status in orchestrator-facing controls when the active run is Docker-related
+- show blocked remote steps inline with recovery options instead of collapsing them into generic failure states
 
 **Add UICommand IDs:**
 
@@ -590,7 +592,7 @@ Extend the orchestrator status/control surface so Docker-related runs expose mor
 - auth chip: requested vs effective DockerHub auth capability
 - image chip: namespace/repository/tag target
 - preview chip: container running state + open access action
-- publish chip: digest/tag summary
-- template chip: XML updated / committed / ready-to-push state
+- publish chip: one of `idle`, `in_progress`, `blocked`, `completed`, `failed`, plus digest/tag summary when completed
+- template chip: canonical `TemplateRepoStatus`-derived state (`unconfigured`, `config_invalid`, `clean`, `dirty_uncommitted`, `committed_local_only`, `push_in_progress`, `push_failed`, `diverged_remote`, `needs_review`)
 
 ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/FinalGUISpec.md, Primitive:UICommand

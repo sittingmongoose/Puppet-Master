@@ -265,6 +265,37 @@ Access URL resolution order is:
 When no access URL is available, Docker Manage MUST show `No direct access URL detected` and disable the open action rather than guessing.
 
 ### Publish flow
+#### Publish execution, approval, and blocked-outcome contract
+
+The canonical publish path is a **two-step** model:
+
+1. `cmd.orchestrator.build_run` performs local build / preview preparation only.
+2. `cmd.orchestrator.push_image` performs remote DockerHub publication only.
+
+Normative rules:
+- `cmd.orchestrator.build_run` MUST NOT create DockerHub repositories, push images, create remote template repos, or push remote template repos.
+- `push_policy = after_build` means Puppet Master automatically dispatches `cmd.orchestrator.push_image` **after** a successful local build result exists; it does **not** fold remote publish into `build_run`.
+- A direct user click on **Build** approves build only.
+- A direct user click on **Push image** approves image push only.
+- If the target DockerHub repository is missing, repository creation remains a separate side effect and requires its own confirmation/approval.
+- If managed Unraid template-repo push is later requested, that remote push is a separate side effect and requires its own approval.
+- `docker.publish.failed` means Puppet Master attempted the publish operation and the operation failed at runtime.
+- `docker.publish.blocked` means Puppet Master intentionally did not execute the remote side effect because confirmation or permission approval was missing, rejected, or cancelled.
+
+#### Missing-repository interruption and resume contract
+
+If `cmd.orchestrator.push_image` resolves a missing target repository:
+
+1. Puppet Master MUST preserve the local build result and enter `awaiting_repo_creation_confirmation`.
+2. Puppet Master MUST emit `docker.repository.create.confirmation_requested`.
+3. Confirming creation dispatches `cmd.docker.create_repository.confirm`.
+4. On successful repository creation, Puppet Master resumes the pending `cmd.orchestrator.push_image` attempt without forcing a rebuild.
+5. If repository creation is cancelled, rejected, or blocked by policy, Puppet Master MUST emit `docker.publish.blocked` with:
+   - `reason_code: repo_creation_not_confirmed`
+   - `blocked_step: create_repository`
+   - `recovery_options[]`
+6. `docker.publish.blocked` MUST preserve the already-built local image/result so the user can retry without rebuilding.
+
 - publish uses DockerHub-targeted image tags and namespace/repository selection
 - push policy remains `manual` by default with optional `after_build`
 - after successful push, capture and surface:
@@ -346,6 +377,18 @@ Implementation rule:
 - Unknown fields present in an existing template MUST be preserved on update unless the user explicitly removes them.
 
 #### `ca_profile.xml` round-trip rule
+#### Explicit editability contract for all fields
+
+The statement "all `ca_profile.xml` fields are editable" is satisfied by a two-layer editor model:
+
+1. **Structured editor** for the canonical known fields exposed in the standard UI.
+2. **Advanced raw XML editor** for any field, element, attribute, or passthrough content not yet modeled by structured controls.
+
+Normative rules:
+- The structured editor MUST round-trip through the same normalized model used by generation/update.
+- Unknown or currently unmodeled content MUST remain editable through the advanced raw XML surface.
+- Saving from either surface MUST preserve unmodified passthrough content verbatim.
+- Puppet Master MUST NOT claim "all fields editable" unless both layers exist.
 
 `ca_profile.xml` editing is a **round-trip** contract, not a one-way generator.
 
@@ -369,6 +412,24 @@ Required behavior:
 - If Puppet Master updates an existing template and cannot map a field safely, it MUST preserve the existing field and mark the template result as `needs_review` rather than dropping data silently.
 
 #### Known-field registry and XML mapping (first implementation)
+#### XML emission minima for first implementation
+
+The first implementation MUST document and preserve one deterministic emitted shape.
+
+Minimum emitted-XML contract:
+- define the root element name and required root attributes/version
+- define canonical child-element ordering for known emitted fields
+- define whether text fields emit plain text vs CDATA and when normalization occurs
+- define how comments, unknown elements, unknown attributes, and unrecognized ordering are preserved on round-trip update
+
+`Config` emission minima:
+- every emitted `<Config ...>` MUST define the minimum required attribute set for its type
+- the spec MUST explicitly map normalized fields into those attributes for:
+  - `Port`
+  - `Path`
+  - `Variable`
+  - `Device`
+- when a source runtime/config item cannot be mapped safely into the required attribute set, Puppet Master MUST preserve the existing XML and mark the result `needs_review` rather than inventing defaults silently
 
 The first implementation recognizes the fields below as the canonical known-field set. Any other element or attribute encountered in existing XML is an **unknown field** and MUST be preserved verbatim in round-trip output unless the user explicitly removes it.
 
@@ -561,6 +622,17 @@ Default for uploaded images:
 When `ca_profile.xml` was auto-generated, the UI must show a clear reminder that the user should configure public-facing maintainer metadata before treating the repo as final.
 
 ## Data/state model to preserve in implementation docs
+### Canonical scope split and blocked-outcome state
+
+To keep GUI, orchestrator, storage, and post-publish behavior aligned, the following scope rules are normative:
+
+- `Hide Docker Manage when not used in Project.` is a **global** setting.
+- Docker Manage navigation/dock/panel state is **project-scoped**.
+- Shared `ca_profile` source state is **global** unless the project explicitly enables per-project override.
+- Template-repo configuration and TemplateRepoStatus are **project-scoped**.
+- Effective-auth snapshots are advisory cached state only until revalidation.
+- Blocked remote side effects are first-class state transitions and MUST remain distinguishable from runtime failures in UI state, event state, and persisted results.
+
 Implementation-facing docs should preserve the following state concepts so GUI, orchestration, and persistence agree on one model:
 - Docker project detection state
 - `Hide Docker Manage when not used in Project.` setting

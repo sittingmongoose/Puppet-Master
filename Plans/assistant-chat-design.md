@@ -1544,6 +1544,43 @@ Applies to:
 
 ### 28.4 Allowed user actions on rendered chat/planning content
 
+### 28.4A Element-context attachment contract
+
+When browser or HTML preview capture sends element context into chat, the thread uses one canonical typed attachment:
+
+- `attachment_type = browser_element_context`
+
+**Required fields**
+- `attachment_id`
+- `schema_version`
+- `origin_kind` (`workspace_preview`, `external_browse`)
+- `preview_session_id` (required for workspace preview when available)
+- `page_url`
+- `page_title` (optional)
+- `captured_at`
+- `capture_reason` (`user_click`, `user_keyboard`)
+- `payload` (the bounded element-context schema from newfeatures.md section 15.18)
+
+**Composer behavior**
+- A capture creates a pending composer chip/card immediately visible to the user.
+- The chip is attached to the next submitted user message by default.
+- The user may remove the chip before send.
+- Capturing an element MUST NOT silently inject a hidden message into the thread.
+
+**Prompt assembly**
+- `browser_element_context` is serialized as a structured attachment before the user's freeform message text.
+- Prompt assembly MUST use bounded fields first (`tagName`, `id`, `className`, `textContent`, `role`, `rect`, `parentPath`) and include truncated optional HTML only when still within budget.
+- If truncation occurs, the attachment metadata must include that truncation occurred.
+
+**Persistence and search**
+- The attachment persists as part of the submitted user message record.
+- Search/indexing should store summary fields only; do not index unbounded raw HTML.
+- Secrets scrubbing and storage rules from storage-plan.md still apply before persistence.
+
+**Audit behavior**
+- Captures must be visible in thread history as user-supplied context, not hidden system state.
+- The thread audit view should show capture source (`workspace_preview` vs `external_browse`) and page URL/title when available.
+
 Required actions when applicable:
 
 - copy source Markdown/Mermaid

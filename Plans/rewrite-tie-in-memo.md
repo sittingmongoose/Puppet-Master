@@ -112,6 +112,49 @@ This addendum locks the rewrite-level rendering contract for Markdown, Mermaid, 
 
 ### Preview session contract
 
+#### PreviewSession lifecycle and identity contract
+
+`PreviewSession` is a durable runtime contract, not just a bag of fields.
+
+**Lifecycle states**
+- `created`
+- `loading`
+- `ready`
+- `stale`
+- `degraded`
+- `error`
+- `closed`
+
+**Identity rules**
+- Moving the same document between inline preview, split preview, browser tab, and detached window keeps the same `preview_session_id` when all of the following remain unchanged:
+  - `document_id` or `artifact_id`
+  - `source_revision`
+  - `trust_tier`
+  - `transport_mode`
+- A new `preview_session_id` MUST be created when any of those change.
+- Detaching is an attachment change, not a new session, unless the platform fallback requires a transport restart.
+
+**Attachment rules**
+- A single `PreviewSession` MAY be visible in multiple read-only surfaces at the same time.
+- Only one attachment may hold mutation-capable focus at a time.
+- `attached_surface` is the currently focused attachment; additional viewers are tracked as secondary attachments in runtime state.
+
+**Required transitions**
+- `created -> loading -> ready`
+- `ready -> stale` when source revision changes
+- `stale -> loading -> ready` on successful reload
+- `ready -> degraded` when the preferred embedded path fails but detached/native fallback still works
+- `loading|ready|stale -> error` when preview generation or runtime startup fails without a usable fallback
+- any non-closed state -> `closed` on explicit close or document disposal
+
+**Persistence and audit expectations**
+- The app MUST persist enough state to restore the user's last preview mode, last successful attachment target, and last visible preview error per document.
+- The app MUST NOT persist live DOM state or browser storage as part of `PreviewSession` state.
+- Preview lifecycle changes MUST emit canonical events in storage-plan.md and be invocable through canonical UI commands in UI_Command_Catalog.md.
+
+**Minimum restore rule**
+- On restart, the product restores preview intent (`none`, `inline`, `split`, `browser_tab`, `detached`) and reconstructs a new live runtime session as needed; it does not attempt to deserialize an old live webview.
+
 All rendered surfaces use a shared **PreviewSession** model. Minimum state:
 
 - `preview_session_id`
@@ -139,6 +182,29 @@ This state model is shared so that reload, export, click-to-context, detached-op
 
 ### Platform contract
 
+#### Platform runtime matrix and degraded-mode UX
+
+The rendering system must define runtime expectations per platform.
+
+| Platform | Embedded browser status | Guaranteed path | Runtime dependency | Required degraded UX |
+|---|---|---|---|---|
+| Windows | Supported when WebView2 is available | Detached browser/preview window | WebView2 runtime | Show explicit missing-WebView2 state with remediation; offer detached retry if embedded attach fails |
+| macOS | Supported through native webview stack | Detached browser/preview window | System webview runtime | Show explicit startup error and keep source/native surfaces usable |
+| Linux X11 | Embedded path may be supported | Detached browser/preview window | GTK/WebKitGTK runtime | Show missing-runtime remediation; do not leave a blank embedded pane |
+| Linux Wayland | Detached-first; embedding is optional/adapter-specific | Detached browser/preview window | GTK/WebKitGTK runtime plus any adapter bridge requirements | Prefer detached immediately; do not assume hidden/precreated embedded panes |
+
+**Required doctor/preflight checks**
+- browser runtime available
+- preview server startable
+- Linux GTK/WebKit prerequisites present where applicable
+- detached-window fallback path healthy
+
+**Required degraded behavior**
+- Generated Markdown/Mermaid preview failure must keep source usable.
+- HTML/browser embedding failure must attempt detached fallback before declaring the feature unavailable.
+- Missing runtime states must use explicit user-facing copy and remediation guidance.
+- Blank panes and screenshot-only substitution are not acceptable steady-state fallback behavior for browser-class surfaces.
+
 - **Detached preview/browser windows are first-class and are the only cross-platform guaranteed path.**
 - Embedded webviews are an optimization only and may be enabled where the platform adapter proves robust.
 - Linux Wayland must not be blocked on raw child-webview embedding. Detached-first or GTK-bridged behavior is acceptable behind the same abstraction.
@@ -150,6 +216,49 @@ This state model is shared so that reload, export, click-to-context, detached-op
 - Do not assume hidden pre-created preview panes are available on Wayland.
 
 ### Source/preview mapping and edit contract
+
+#### Preview action protocol v1
+
+The source/preview edit contract requires one shared action protocol across chat, editor preview, and embedded document panes.
+
+**Allowed `operation` values in v1**
+- `toggle_checkbox`
+- `edit_heading_text`
+- `edit_list_item_text`
+- `set_link_target`
+- `set_inline_format`
+- `replace_mermaid_block`
+- `open_source`
+- `open_detached`
+
+Operations outside this whitelist MUST return a non-mutating result and focus/open source when appropriate.
+
+**Request rules**
+- `PreviewActionRequest` MUST include `preview_session_id`, `node_id`, `parse_revision`, `operation`, and `payload`.
+- Mutating requests MUST also validate the current `source_revision` before applying a patch.
+- Requests from stale preview state MUST NOT be auto-rebased silently.
+
+**Result codes**
+- `applied_patch`
+- `rejected_stale_revision`
+- `unsupported_region`
+- `ambiguous_mapping`
+- `permission_denied`
+- `fallback_focus_source`
+- `render_error`
+
+**Deterministic fallback**
+- `ambiguous_mapping`, `unsupported_region`, and `rejected_stale_revision` MUST never mutate rendered DOM state.
+- Those outcomes MUST move focus to source at the mapped region when possible.
+
+**Audit**
+- Every request emits `preview.action.requested`.
+- Every terminal outcome emits `preview.action.completed` with `result_code`.
+- Patch summaries should be recorded in bounded form for audit/history, not as unbounded raw document bodies.
+
+**Surface scope**
+- File Editor preview and Embedded Document Pane may issue v1 preview actions.
+- Chat and planning surfaces may issue only non-destructive actions until their attachment/edit flow is explicitly wired to the same validation path.
 
 Preview interactions must route through a validated mapping contract instead of directly mutating the rendered DOM.
 
