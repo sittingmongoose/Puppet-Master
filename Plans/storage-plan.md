@@ -105,6 +105,36 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/
 
 ### 2.2 seglog: format, writer, rotation
 
+#### Persona/runtime payload registration
+
+The event table above is expanded by the canonical Persona/runtime snapshot contract from `Plans/Contracts_V0.md`.
+
+Required payload additions:
+- `run.started` MUST include the full Persona/runtime snapshot once prompt/runtime resolution is complete.
+- `run.completed` MUST include the final Persona/runtime snapshot actually used for the completed run, including any clamped or skipped controls.
+- `chat.subagent_started` MUST include:
+  - `subagent_run_id`
+  - `task_label`
+  - `requested_persona`
+  - `effective_persona`
+  - `persona_selection_source`
+  - `selection_reason`
+  - `effective_platform`
+  - `effective_model`
+  - optional `effective_variant`
+  - optional `effective_reasoning_effort`
+  - optional `effective_talkativeness`
+  - `applied_persona_controls[]`
+  - `skipped_persona_controls[]`
+- `chat.subagent_completed` MUST include the same fields plus completion `status`.
+- `run.persona_stage_changed` MUST carry:
+  - `persona_stage`
+  - `tier_id`
+  - the full Persona/runtime snapshot active for that stage transition.
+
+Approval visibility rule:
+- If a HITL approval request is raised for a tier that has already resolved Persona/runtime state, `hitl.approval_requested` SHOULD include the current tier's `persona_runtime_snapshot` so approval UI and replay can display what the user is approving.
+
 **Event envelope (per record):** Persisted seglog records MUST use `Plans/Contracts_V0.md#EventRecord`. Each appended record is a single line or frame so we can tail easily. Recommended persisted format: **newline-delimited JSON** (NDJSON).
 
 ```json
@@ -187,7 +217,68 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/
 
 ### 2.3 redb: schema, migrations, key patterns
 
+#### Persona resolution persistence contract
+
+redb MUST persist the user-visible Persona-resolution state that the GUI exposes.
+
+Minimum keys / records:
+- `config:chat.persona`
+  - `mode` (`manual | auto | hybrid`)
+  - optional `manual_persona`
+  - optional `locked_persona`
+  - optional per-thread default override policy
+- `config:interview.persona`
+  - `mode`
+  - `stage_persona_overrides`
+  - `phase_primary_personas`
+  - `phase_secondary_personas`
+  - optional per-stage platform/model overrides
+- `config:builder.persona`
+  - `mode`
+  - `stage_personas`
+  - `review_pass_personas`
+  - optional per-stage platform/model overrides
+  - optional next-run explicit override
+- `config:orchestrator.persona`
+  - `mode`
+  - `tier_personas`
+  - `operation_frame_personas`
+  - optional per-tier platform/model overrides
+  - optional next-run explicit override
+- `thread_state:{thread_id}:persona_override`
+  - `requested_persona`
+  - `scope` (`turn | session | run | task | subagent`)
+  - `owner_id`
+  - `selection_source`
+  - `created_seq`
+  - optional `expires_after_seq`
+  - optional `cleared_seq`
+
+Rules:
+- GUI controls MUST read/write these records rather than inventing surface-local state.
+- Session-scoped and task-scoped natural-language Persona overrides MUST survive restart if they were active before shutdown.
+- Replay from seglog remains canonical; redb stores the current projected state for fast restore.
+
 #### Additions: Preview session + browser rendering persistence contract
+
+##### Artifact-backed preview identity and restore
+
+Preview persistence MUST support both document-backed and artifact-backed subjects.
+
+**Canonical subject key**
+- `preview_subject_id = doc:<document_id>` or `artifact:<artifact_id>`
+
+**Required redb keys**
+- `preview_state.v1:{project_id}:{preview_subject_id}` -> JSON `{ preview_mode, last_preview_session_id, last_attached_surface, trust_tier, export_preferences, scroll_sync_enabled, last_error }`
+- `preview_source_artifact.v1:{project_id}:{artifact_id}` -> JSON `{ artifact_kind, source_kind, origin_surface, thread_id?, message_id?, source_revision, source_text_ref, backing_document_id?, last_saved_path? }`
+
+**Projector rule**
+- Existing lifecycle events may continue to carry `document_id` or `artifact_id`, but projectors MUST derive `preview_subject_id` deterministically for restore and UI-state joins.
+
+**Restore rules**
+- Document-backed restore reopens the workspace document path/buffer.
+- Artifact-backed restore reopens a transient `generated://<artifact_id>` source buffer unless a `backing_document_id` has since been assigned.
+- Restore MUST NOT require a historical live webview instance or persisted DOM state.
 
 Preview/browser rendering requires both durable UI state and replayable lifecycle events.
 

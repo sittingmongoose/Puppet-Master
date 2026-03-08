@@ -34,6 +34,43 @@ ContractRef: ContractName:Plans/Contracts_V0.md
 <a id="1.1"></a>
 <a id="EventRecord"></a>
 ### 1.1 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)
+#### Persona/runtime snapshot payload contract
+
+The following object is the canonical persisted payload fragment for any event that claims to expose requested/effective Persona or runtime-resolution state:
+
+```json
+{
+  "requested_persona": "rust-engineer",
+  "effective_persona": "rust-engineer",
+  "persona_selection_source": "auto_surface_resolver",
+  "selection_reason": "Auto: Rust repo + code task",
+  "persona_override_scope": "none",
+  "persona_override_owner_id": null,
+  "requested_platform": "codex",
+  "effective_platform": "codex",
+  "requested_model": "openai/gpt-5.3",
+  "effective_model": "openai/gpt-5.3",
+  "requested_variant": "powerful",
+  "effective_variant": "powerful",
+  "effective_temperature": null,
+  "effective_top_p": null,
+  "effective_reasoning_effort": "high",
+  "effective_talkativeness": "talk_more",
+  "applied_persona_controls": [],
+  "skipped_persona_controls": []
+}
+```
+
+Rules:
+- `requested_persona` and `effective_persona` are the canonical persisted field names across all surfaces. They store canonical Persona IDs.
+- Persisted payloads MUST NOT introduce parallel canonical fields named `requested_persona_id` or `effective_persona_id`. Older readers may accept them only as migration aliases before normalization.
+- `run.started` MUST include the full snapshot when a run reaches prompt/runtime assembly.
+- `run.completed` MUST include the final effective snapshot used by the completed run.
+- `chat.subagent_started`, `chat.subagent_completed`, `run.tier_started`, `run.tier_completed`, and `run.persona_stage_changed` MUST either inline these fields or carry them as a child object named `persona_runtime_snapshot`.
+- If a run proceeds without Persona context, the snapshot MAY still be emitted with `requested_persona = null`, `effective_persona = null`, and a `selection_reason` that explicitly records the bare-context fallback.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
 **Definition:** `EventRecord` is the canonical event envelope persisted to seglog (and mirrored to JSONL and projections).
 
 **Required fields:**

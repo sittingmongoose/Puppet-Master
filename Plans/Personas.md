@@ -533,6 +533,28 @@ OpenCode then:
 Puppet Master SHOULD mirror the **mechanics** of that assembly through Personas while keeping Puppet Master terminology and permission separation.
 
 ### 10.7 New built-in Personas that MUST be fully defined
+### 10.7.1 Canonical built-in Persona minima
+
+Until the full built-in `PERSONA.md` files are published, the following minima are normative and MUST be preserved by implementation:
+
+| Persona ID | Primary job | Default mode | Default talkativeness | Tool stance | Primary auto-selection cues |
+|---|---|---|---|---|---|
+| `collaborator` | User-facing clarification, planning, tradeoff discussion | `regular` | `talk_more` | Prefer questions, synthesis, and lightweight inspection before execution | ambiguity, intake, planning, conversation-heavy work |
+| `general-purpose` | Broad fallback execution Persona | `regular` | `model_default` | Balanced; no special tool bias beyond Permissions | final fallback when no better Persona resolves |
+| `explorer` | Read-oriented repository and artifact investigation | `regular` | `talk_a_little_less` | Prefer read/search/inspect tools; avoid edits unless explicitly requested | repo discovery, read-only investigation, tracing |
+| `researcher` | Focused external research and synthesis | `regular` | `talk_more` | Prefer retrieval/research flows and synthesis over code execution | web/source gathering, factual comparison |
+| `deep-researcher` | Broader or multi-source research with heavier synthesis | `regular` | `talk_more` | Same as `researcher`, but for deeper/more expensive synthesis | broad research asks, deeper evidence gathering |
+| `technical-writer` | Human-readable documentation and structured drafting | `regular` | `talk_a_little_more` | Prefer document-editing and summarization flows | drafting specs, docs, handoff artifacts |
+| `requirements-quality-reviewer` | Requirements completeness and ambiguity review | `regular` | `talk_a_little_less` | Review-oriented; should not silently become the drafting Persona | requirements QA, acceptance coverage review |
+| `security-engineer` | Implementation-focused security work | `regular` | `model_default` | Execution-oriented security remediation | security fixes, hardening implementation |
+| `security-auditor` | Security review and findings generation | `regular` | `talk_a_little_less` | Audit/review-oriented; prefer evidence before remediation | security audits, threat/risk review |
+| `devops-engineer` | Deployment, infra, CI/CD, operations implementation | `regular` | `model_default` | Execution-oriented infra/tooling work | CI/CD, deploy, infra automation |
+| `sre` | Reliability, production-readiness, operational validation | `regular` | `talk_a_little_less` | Verification and reliability review over feature drafting | production-readiness, incident/risk validation |
+
+Implementation rule:
+- Built-in `PERSONA.md` files shipped by Puppet Master MUST match these minima.
+- Surface-specific mappings may refine *when* one of these Personas is chosen, but they MUST NOT redefine the Persona's core job or invert its tool stance.
+
 
 The following built-ins are now first-class and MUST be fleshed out in Persona storage and UI:
 

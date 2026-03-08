@@ -548,6 +548,38 @@ Examples:
 - a variant may force a model switch that changes effective support.
 
 ### 10.4.2 Derived control rule: `talkativeness`
+### 10.4.3 Canonical capability snapshot source
+
+The Provider Persona Capability Matrix is not prose-only. GUI disclosure and runtime filtering MUST resolve support state from one canonical machine-readable snapshot contract.
+
+Canonical snapshot shape:
+```json
+{
+  "provider_id": "cursor",
+  "transport": "CliBridge",
+  "model_id": "anthropic/claude-sonnet-4",
+  "variant": null,
+  "controls": {
+    "persona_prompt_body": {
+      "state": "supported",
+      "reason": "provider accepts system/rules prompt injection",
+      "source": "documented"
+    },
+    "persona_reasoning_effort": {
+      "state": "unsupported",
+      "reason": "transport does not expose an effort knob",
+      "source": "documented"
+    }
+  }
+}
+```
+
+Rules:
+- The canonical effective support state for a run is the intersection of transport support, model metadata, and variant/runtime-path constraints.
+- Both the runtime filtering stage and the Persona editor MUST call the same resolver to obtain this snapshot.
+- A cached copy MAY be persisted for performance, but the cache is derivative; the canonical source is the shared capability resolver plus its provider/model metadata inputs.
+- Every control disclosure shown to the user MUST be derivable from this snapshot without ad hoc UI-only logic.
+- `source` MUST be one of `documented`, `empirical`, or `inferred` so future verification work can distinguish hard facts from provisional assumptions.
 
 `talkativeness` is a Persona instruction-layer control rather than a transport sampling knob.
 

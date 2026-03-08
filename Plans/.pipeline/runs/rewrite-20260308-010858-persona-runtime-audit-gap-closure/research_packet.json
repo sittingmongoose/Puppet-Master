@@ -1,0 +1,149 @@
+{
+  "schema_id": "puppet-master.research-packet.v1",
+  "run_id": "rewrite-20260308-010858-persona-runtime-audit-gap-closure",
+  "created_at_utc": "2026-03-08T01:08:58Z",
+  "topic": "Persona runtime audit gap closure",
+  "objective": "Capture the buildability and spec-completeness fixes required after auditing the persona runtime / provider capability / effective resolution rewrite so implementation agents can persist, resolve, disclose, and configure Persona behavior consistently across chat, interview, requirements builder, orchestrator, storage, and event history.",
+  "decisions": [
+    {
+      "id": "canonical-persisted-persona-runtime-snapshot",
+      "topic": "Persisted requested/effective Persona runtime state",
+      "choice": "A reusable persisted Persona/runtime snapshot contract must be added and reused by run, tier, and subagent events. The canonical persisted field names are requested_persona and effective_persona, with the full requested/effective platform-model-control record carried alongside them.",
+      "rationale": "The rewrite now requires Persona/runtime state to appear in history, activity panes, run inspection, and subagent blocks, but the current event/storage docs do not define one canonical persisted payload."
+    },
+    {
+      "id": "shared-capability-snapshot-resolver",
+      "topic": "Provider Persona capability source of truth",
+      "choice": "The Provider Persona Capability Matrix must become a machine-readable canonical snapshot resolved through one shared capability resolver used by both GUI disclosure and runtime filtering.",
+      "rationale": "A prose-only table is not enough to keep editor gating, runtime filtering, and disclosure copy aligned across transports, models, and variants."
+    },
+    {
+      "id": "built-in-persona-minima-required",
+      "topic": "Built-in Persona contracts required by auto resolution",
+      "choice": "The built-in Personas that the rewrite now depends on must have normative minima for primary job, default mode, talkativeness, tool stance, and auto-selection cues until their full PERSONA.md files are published.",
+      "rationale": "The resolver and stage/tier mappings now rely on collaborator, explorer, researcher, deep-researcher, technical-writer, security-auditor, and related built-ins, but the plans still mostly name them without sufficiently constraining behavior."
+    },
+    {
+      "id": "interview-normalizes-to-shared-field-names",
+      "topic": "Canonical requested/effective Persona field names",
+      "choice": "The cross-system canonical field names are requested_persona and effective_persona. Interview-specific requested_persona_id / effective_persona_id naming remains migration-only and must normalize to the shared names before persistence, event emission, and UI binding.",
+      "rationale": "Without an explicit normalization rule, different surfaces will persist different telemetry structs for the same concept."
+    },
+    {
+      "id": "conservative-natural-language-invocation",
+      "topic": "Natural-language Persona invocation safety",
+      "choice": "Natural-language Persona invocation must be conservative: inspect only the latest user-authored text span, ignore quoted/code/tool content, require imperative trigger phrasing, and use an ordered exact-to-fuzzy match policy with clarification on ambiguity.",
+      "rationale": "The rewrite adds natural-language Persona invocation, but examples alone are not enough to prevent false positives or inconsistent matching behavior."
+    },
+    {
+      "id": "surface-persona-config-persistence-contract",
+      "topic": "Persisted surface Persona mode and mapping state",
+      "choice": "Chat, Interview, Builder, and Orchestrator must each persist one canonical Persona config object plus active scoped override state in redb, with Builder review_pass_personas using canonical pass_1..pass_5 keys and Orchestrator storing tier_personas plus operation_frame_personas.",
+      "rationale": "The GUI and runtime now promise mode selectors, override controls, and mapping editors, but storage-plan still lacks the backing state contract and the Builder/Orchestrator mappings remain underspecified."
+    }
+  ],
+  "doc_intents": [
+    {
+      "path": "Plans/Contracts_V0.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 1.1 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)",
+          "content_markdown": "#### Persona/runtime snapshot payload contract\n\nThe following object is the canonical persisted payload fragment for any event that claims to expose requested/effective Persona or runtime-resolution state:\n\n```json\n{\n  \"requested_persona\": \"rust-engineer\",\n  \"effective_persona\": \"rust-engineer\",\n  \"persona_selection_source\": \"auto_surface_resolver\",\n  \"selection_reason\": \"Auto: Rust repo + code task\",\n  \"persona_override_scope\": \"none\",\n  \"persona_override_owner_id\": null,\n  \"requested_platform\": \"codex\",\n  \"effective_platform\": \"codex\",\n  \"requested_model\": \"openai/gpt-5.3\",\n  \"effective_model\": \"openai/gpt-5.3\",\n  \"requested_variant\": \"powerful\",\n  \"effective_variant\": \"powerful\",\n  \"effective_temperature\": null,\n  \"effective_top_p\": null,\n  \"effective_reasoning_effort\": \"high\",\n  \"effective_talkativeness\": \"talk_more\",\n  \"applied_persona_controls\": [],\n  \"skipped_persona_controls\": []\n}\n```\n\nRules:\n- `requested_persona` and `effective_persona` are the canonical persisted field names across all surfaces. They store canonical Persona IDs.\n- Persisted payloads MUST NOT introduce parallel canonical fields named `requested_persona_id` or `effective_persona_id`. Older readers may accept them only as migration aliases before normalization.\n- `run.started` MUST include the full snapshot when a run reaches prompt/runtime assembly.\n- `run.completed` MUST include the final effective snapshot used by the completed run.\n- `chat.subagent_started`, `chat.subagent_completed`, `run.tier_started`, `run.tier_completed`, and `run.persona_stage_changed` MUST either inline these fields or carry them as a child object named `persona_runtime_snapshot`.\n- If a run proceeds without Persona context, the snapshot MAY still be emitted with `requested_persona = null`, `effective_persona = null`, and a `selection_reason` that explicitly records the bare-context fallback.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 2.2 seglog: format, writer, rotation",
+          "content_markdown": "#### Persona/runtime payload registration\n\nThe event table above is expanded by the canonical Persona/runtime snapshot contract from `Plans/Contracts_V0.md`.\n\nRequired payload additions:\n- `run.started` MUST include the full Persona/runtime snapshot once prompt/runtime resolution is complete.\n- `run.completed` MUST include the final Persona/runtime snapshot actually used for the completed run, including any clamped or skipped controls.\n- `chat.subagent_started` MUST include:\n  - `subagent_run_id`\n  - `task_label`\n  - `requested_persona`\n  - `effective_persona`\n  - `persona_selection_source`\n  - `selection_reason`\n  - `effective_platform`\n  - `effective_model`\n  - optional `effective_variant`\n  - optional `effective_reasoning_effort`\n  - optional `effective_talkativeness`\n  - `applied_persona_controls[]`\n  - `skipped_persona_controls[]`\n- `chat.subagent_completed` MUST include the same fields plus completion `status`.\n- `run.persona_stage_changed` MUST carry:\n  - `persona_stage`\n  - `tier_id`\n  - the full Persona/runtime snapshot active for that stage transition.\n\nApproval visibility rule:\n- If a HITL approval request is raised for a tier that has already resolved Persona/runtime state, `hitl.approval_requested` SHOULD include the current tier's `persona_runtime_snapshot` so approval UI and replay can display what the user is approving.\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 2.3 redb: schema, migrations, key patterns",
+          "content_markdown": "#### Persona resolution persistence contract\n\nredb MUST persist the user-visible Persona-resolution state that the GUI exposes.\n\nMinimum keys / records:\n- `config:chat.persona`\n  - `mode` (`manual | auto | hybrid`)\n  - optional `manual_persona`\n  - optional `locked_persona`\n  - optional per-thread default override policy\n- `config:interview.persona`\n  - `mode`\n  - `stage_persona_overrides`\n  - `phase_primary_personas`\n  - `phase_secondary_personas`\n  - optional per-stage platform/model overrides\n- `config:builder.persona`\n  - `mode`\n  - `stage_personas`\n  - `review_pass_personas`\n  - optional per-stage platform/model overrides\n  - optional next-run explicit override\n- `config:orchestrator.persona`\n  - `mode`\n  - `tier_personas`\n  - `operation_frame_personas`\n  - optional per-tier platform/model overrides\n  - optional next-run explicit override\n- `thread_state:{thread_id}:persona_override`\n  - `requested_persona`\n  - `scope` (`turn | session | run | task | subagent`)\n  - `owner_id`\n  - `selection_source`\n  - `created_seq`\n  - optional `expires_after_seq`\n  - optional `cleared_seq`\n\nRules:\n- GUI controls MUST read/write these records rather than inventing surface-local state.\n- Session-scoped and task-scoped natural-language Persona overrides MUST survive restart if they were active before shutdown.\n- Replay from seglog remains canonical; redb stores the current projected state for fast restore.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 10.4.2 Derived control rule: `talkativeness`",
+          "content_markdown": "### 10.4.3 Canonical capability snapshot source\n\nThe Provider Persona Capability Matrix is not prose-only. GUI disclosure and runtime filtering MUST resolve support state from one canonical machine-readable snapshot contract.\n\nCanonical snapshot shape:\n```json\n{\n  \"provider_id\": \"cursor\",\n  \"transport\": \"CliBridge\",\n  \"model_id\": \"anthropic/claude-sonnet-4\",\n  \"variant\": null,\n  \"controls\": {\n    \"persona_prompt_body\": {\n      \"state\": \"supported\",\n      \"reason\": \"provider accepts system/rules prompt injection\",\n      \"source\": \"documented\"\n    },\n    \"persona_reasoning_effort\": {\n      \"state\": \"unsupported\",\n      \"reason\": \"transport does not expose an effort knob\",\n      \"source\": \"documented\"\n    }\n  }\n}\n```\n\nRules:\n- The canonical effective support state for a run is the intersection of transport support, model metadata, and variant/runtime-path constraints.\n- Both the runtime filtering stage and the Persona editor MUST call the same resolver to obtain this snapshot.\n- A cached copy MAY be persisted for performance, but the cache is derivative; the canonical source is the shared capability resolver plus its provider/model metadata inputs.\n- Every control disclosure shown to the user MUST be derivable from this snapshot without ad hoc UI-only logic.\n- `source` MUST be one of `documented`, `empirical`, or `inferred` so future verification work can distinguish hard facts from provisional assumptions.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Personas.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 10.7 New built-in Personas that MUST be fully defined",
+          "content_markdown": "### 10.7.1 Canonical built-in Persona minima\n\nUntil the full built-in `PERSONA.md` files are published, the following minima are normative and MUST be preserved by implementation:\n\n| Persona ID | Primary job | Default mode | Default talkativeness | Tool stance | Primary auto-selection cues |\n|---|---|---|---|---|---|\n| `collaborator` | User-facing clarification, planning, tradeoff discussion | `regular` | `talk_more` | Prefer questions, synthesis, and lightweight inspection before execution | ambiguity, intake, planning, conversation-heavy work |\n| `general-purpose` | Broad fallback execution Persona | `regular` | `model_default` | Balanced; no special tool bias beyond Permissions | final fallback when no better Persona resolves |\n| `explorer` | Read-oriented repository and artifact investigation | `regular` | `talk_a_little_less` | Prefer read/search/inspect tools; avoid edits unless explicitly requested | repo discovery, read-only investigation, tracing |\n| `researcher` | Focused external research and synthesis | `regular` | `talk_more` | Prefer retrieval/research flows and synthesis over code execution | web/source gathering, factual comparison |\n| `deep-researcher` | Broader or multi-source research with heavier synthesis | `regular` | `talk_more` | Same as `researcher`, but for deeper/more expensive synthesis | broad research asks, deeper evidence gathering |\n| `technical-writer` | Human-readable documentation and structured drafting | `regular` | `talk_a_little_more` | Prefer document-editing and summarization flows | drafting specs, docs, handoff artifacts |\n| `requirements-quality-reviewer` | Requirements completeness and ambiguity review | `regular` | `talk_a_little_less` | Review-oriented; should not silently become the drafting Persona | requirements QA, acceptance coverage review |\n| `security-engineer` | Implementation-focused security work | `regular` | `model_default` | Execution-oriented security remediation | security fixes, hardening implementation |\n| `security-auditor` | Security review and findings generation | `regular` | `talk_a_little_less` | Audit/review-oriented; prefer evidence before remediation | security audits, threat/risk review |\n| `devops-engineer` | Deployment, infra, CI/CD, operations implementation | `regular` | `model_default` | Execution-oriented infra/tooling work | CI/CD, deploy, infra automation |\n| `sre` | Reliability, production-readiness, operational validation | `regular` | `talk_a_little_less` | Verification and reliability review over feature drafting | production-readiness, incident/risk validation |\n\nImplementation rule:\n- Built-in `PERSONA.md` files shipped by Puppet Master MUST match these minima.\n- Surface-specific mappings may refine *when* one of these Personas is chosen, but they MUST NOT redefine the Persona's core job or invert its tool stance.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Prompt_Pipeline.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 6.3 Natural-language Persona invocation in prompt assembly",
+          "content_markdown": "### 6.3.1 Invocation guardrails and ambiguity handling\n\nNatural-language Persona invocation MUST be conservative enough to avoid false positives.\n\nDetection scope:\n- Inspect only the latest user-authored freeform message content for the current surface.\n- Ignore quoted prior messages, pasted logs, code blocks, tool output, and file excerpts.\n- Do not resolve a Persona override from third-person discussion such as \"the explorer persona is useful here\" unless the utterance also contains an imperative/request pattern.\n\nRequired trigger patterns:\n- imperative/request forms such as `use`, `switch to`, `be`, `answer as`, `act as`, or `for this use`\n- the trigger must appear in the same clause/span as the matched Persona candidate\n\nMatch order (highest confidence first):\n1. exact canonical Persona ID\n2. exact display name\n3. exact alias\n4. normalized token match (case/punctuation/kebab normalization)\n5. fuzzy match only when there is exactly one clear winner after normalization\n\nAmbiguity rules:\n- If two or more candidates remain at the same confidence tier, the runtime MUST ask for clarification and MUST NOT apply an override speculatively.\n- If no candidate survives the guardrails, continue without override and do not emit `persona_selection_source = user_natural_language`.\n\nMigration/alias rule:\n- Legacy input such as `explore` MAY resolve as an alias to `explorer`, but persistence and UI display MUST always normalize to `explorer`.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/interview-subagent-integration.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### Requested/effective Interview contract",
+          "content_markdown": "### Requested/effective Interview contract\n\nInputs:\n- `requested_persona` (canonical Persona ID or `null`)\n- `stage`\n- `phase_id`\n- `provider/platform preferences`\n- `capability constraints`\n\nOutputs:\n- `effective_persona`\n- `persona_selection_source`\n- `selection_reason`\n- `persona_override_scope`\n- `persona_override_owner_id`\n- `effective_platform`\n- `effective_model`\n- `effective_variant` (when present)\n- `effective_reasoning_effort` (when present)\n- `effective_talkativeness` (when not `model_default`)\n- `applied_persona_controls[]`\n- `skipped_persona_controls[]`\n- `invocation_mode`\n\nPersist these values in runtime telemetry and expose them in the Interview UI/activity pane.\n\nMigration rule:\n- Older names such as `requested_persona_id` and `effective_persona_id` are backward-compatibility aliases only. They MUST be normalized to `requested_persona` and `effective_persona` before persistence, event emission, or UI binding.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### Tier-specific Persona defaults",
+          "content_markdown": "### Orchestrator Persona config contract\n\nOrchestrator MUST persist one canonical Persona-resolution config object separate from delegated-subagent registry data.\n\nMinimum fields:\n- `mode` (`manual | auto | hybrid`)\n- `tier_personas`\n  - `phase`\n  - `task`\n  - `subtask`\n  - `iteration`\n- `operation_frame_personas`\n  - `planning`\n  - `execution`\n  - `review`\n  - `verification`\n- optional per-tier platform/model overrides\n- optional next-run explicit override\n  - `requested_persona`\n  - optional `requested_platform`\n  - optional `requested_model`\n  - `expires_after_run_start` (bool)\n\nRules:\n- `tier_personas` expresses the default Persona per tier when no higher-precedence override wins.\n- `operation_frame_personas` refines same-tier switching without creating new tiers.\n- All configured Persona IDs MUST validate against `persona_registry`, not only `subagent_registry`.\n- Delegated child-run validation still uses `subagent_registry`; surface-level runtime selection uses `persona_registry`.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/chain-wizard-flexibility.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### Builder Persona config contract",
+          "content_markdown": "### Review-pass identifier contract\n\n`review_pass_personas` MUST use canonical ordinal keys:\n\n- `pass_1`\n- `pass_2`\n- `pass_3`\n- `pass_4`\n- `pass_5`\n\nRules:\n- Keys map to the numbered Multi-Pass Review passes configured for the Builder run.\n- If a configured run uses fewer passes than a stored key set, extra keys are ignored.\n- If a run uses more passes than are explicitly mapped, unmapped passes fall back to the deterministic reviewer-selection rules in \u00a75.6.\n- GUI labels may display `Pass 1`, `Pass 2`, etc., but persistence MUST use the canonical key names above.\n- `review_pass_personas` maps review passes only; the final synthesis/writer step remains governed by the Builder workflow and is not implicitly overwritten by reviewer-pass mappings.\n"
+        }
+      ]
+    }
+  ]
+}

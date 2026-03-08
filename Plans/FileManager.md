@@ -337,6 +337,26 @@ Implement in roughly this order so that contracts and single sources of truth ex
 
 ### 8.2 HTML in browser and hot reload
 
+### 8.2A Rewrite normalization for HTML/browser preview (2026-03-08)
+
+For rewrite implementation, the canonical contract is the unified rendering architecture in `Plans/newfeatures.md` §24.4A and `Plans/rewrite-tie-in-memo.md`.
+
+Normalization rules:
+- Full HTML preview uses the loopback workspace preview server: `http://127.0.0.1:<port>/preview/<project_id>/<document_id>/...`.
+- `file://` is not an MVP transport for file-backed HTML preview.
+- Canonical hot-reload debounce is `app.preview.hot_reload_debounce_ms` with default `500`.
+- Browser capacity applies to in-shell browser tabs only; detached preview/browser windows are outside that cap.
+- Detached preview/browser windows are first-class behavior, not an error fallback.
+- Click-to-context payload shape, truncation, and capture limits for browser-class surfaces are owned by `Plans/newfeatures.md` §15.18 and `Plans/assistant-chat-design.md` §28.4A; local summary text in this file must not redefine those values.
+
+Fallback order:
+1. embedded browser/runtime path when the current platform adapter supports it
+2. detached preview/browser window using the same logical preview subject and, when possible, the same `preview_session_id`
+3. explicit degraded error state
+
+Supersession rule:
+- Any earlier `file://`, `local HTTP server`, `400 ms`, `max browser instances`, or LRU browser-instance reuse language in this file is pre-normalization text and MUST NOT override the rewrite rendering contract above.
+
 - **Open HTML in browser:** When user opens an HTML file, app can open it in system or embedded browser (or "Open in browser" / "Preview" action). Use file: URL or local HTTP server so relative paths resolve.
 - **Edit + hot reload:** User opens HTML in editor; optionally preview in browser. When user saves the HTML file or any **linked** file, browser view refreshes automatically after a debounce. **Linked files:** Files that trigger refresh are the HTML file itself and any resource referenced by it (e.g. `<link href="...">`, `<script src="...">`) that lie under the project or the same directory; implementation may use a simple same-dir + referenced-path rule. **Debounce:** **400 ms** default (per file, per preview instance); configurable in Settings → Editor or Developer (e.g. 100-2000 ms); persist in redb. Rapid saves result in one refresh after the last save within the window. Tight loop: edit → Save → see result in browser.
 - **Scope:** One or more HTML files per project; embedded vs system browser is implementation choice. Local resources only; no remote deployment in MVP.
@@ -353,6 +373,16 @@ When viewing a local HTML file in the built-in browser (with or without hot relo
 ---
 
 ## 9. Tabs: Editor, Terminal, Browser
+
+### 9A. Browser tab and detached preview normalization (2026-03-08)
+
+Browser-capacity behavior in this section predates the rewrite rendering addendum and is normalized as follows:
+
+- `max browser tabs` refers only to in-shell Browser-tab capacity.
+- Detached preview/browser windows are outside the in-shell browser-tab cap.
+- The product MUST NOT recycle or retarget an existing preview subject solely because the in-shell browser-tab cap has been reached.
+- If in-shell capacity is exhausted, the UI may offer detached-open or explicit user-directed re-use of an existing browser tab, but it MUST NOT silently change the underlying preview subject identity.
+- Preview/browser-tab capacity settings and detached-window behavior must align with `Plans/newfeatures.md` §24.4A and `Plans/FinalGUISpec.md` §7.20.
 
 **Done when:** Editor tabs per §2; terminal tabs with pin semantics; browser instances capped and over-cap policy defined. **Max browser instances:** Redb key e.g. `app.editor.max_browser_instances` (redb `settings` namespace; app-level); AutoDecision: default 3. **Settings:** Max browser previews: Settings → Editor or Developer; range 1-10; persist in redb. Terminal tab limit: AutoDecision: default 8; key `app.terminal.max_tabs` (redb `settings` namespace; app-level). **Pin semantics:** AutoDecision: terminal pin matches editor pin (pinned excluded from "Close others" and LRU close when a terminal tab cap exists).
 
@@ -956,6 +986,17 @@ Minimum per-document UI state:
 - `scroll_sync_enabled`
 
 ### 14.4 Source/preview edit contract
+
+#### 14.4A Shared-buffer preview mutation rules (2026-03-08)
+
+Successful preview edits use the same authoritative document pipeline as normal source editing.
+
+Rules:
+- A successful preview action resolves to a bounded text patch against the current source buffer.
+- The patch is applied through the shared buffer model used by File Editor and Embedded Document Pane.
+- Successful preview edits update dirty state, undo/redo history, and the current `source_revision` before preview re-render.
+- Preview actions MUST NOT write directly to disk and MUST NOT bypass the normal save path.
+- `ambiguous_mapping`, `unsupported_region`, and `rejected_stale_revision` outcomes MUST remain non-mutating and focus/open source at the mapped region when possible.
 
 Source remains authoritative.
 

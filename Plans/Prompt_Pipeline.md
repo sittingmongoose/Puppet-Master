@@ -49,6 +49,19 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/FileSafe.md
 
 ### 1.2 Stage ordering (canonical)
 
+### 1.2A Structured attachment normalization for browser element context
+
+Before final conversation payload emission, the prompt pipeline MUST normalize structured user attachments created by the chat/composer surface.
+
+For `browser_element_context` attachments:
+- normalization occurs after context compilation and before final conversation serialization
+- the structured attachment is serialized before the user's freeform message text
+- bounded fields are serialized first: `tagName`, `id`, `className`, `textContent`, `role`, `rect`, `parentPath`
+- optional truncated HTML is included only if still within attachment budget
+- attachment metadata MUST record when truncation occurred
+
+This keeps browser-element context deterministic across chat, browser preview, and prompt assembly implementations.
+
 <a id="ASSEMBLY-PIPELINE"></a>
 
 The prompt MUST be assembled in this stage order:
@@ -237,6 +250,32 @@ Required lifecycle rules:
 If a scoped override no longer has a valid owner object, it MUST be discarded before resolution and recorded as expired rather than silently reused.
 
 ### 6.3 Natural-language Persona invocation in prompt assembly
+### 6.3.1 Invocation guardrails and ambiguity handling
+
+Natural-language Persona invocation MUST be conservative enough to avoid false positives.
+
+Detection scope:
+- Inspect only the latest user-authored freeform message content for the current surface.
+- Ignore quoted prior messages, pasted logs, code blocks, tool output, and file excerpts.
+- Do not resolve a Persona override from third-person discussion such as "the explorer persona is useful here" unless the utterance also contains an imperative/request pattern.
+
+Required trigger patterns:
+- imperative/request forms such as `use`, `switch to`, `be`, `answer as`, `act as`, or `for this use`
+- the trigger must appear in the same clause/span as the matched Persona candidate
+
+Match order (highest confidence first):
+1. exact canonical Persona ID
+2. exact display name
+3. exact alias
+4. normalized token match (case/punctuation/kebab normalization)
+5. fuzzy match only when there is exactly one clear winner after normalization
+
+Ambiguity rules:
+- If two or more candidates remain at the same confidence tier, the runtime MUST ask for clarification and MUST NOT apply an override speculatively.
+- If no candidate survives the guardrails, continue without override and do not emit `persona_selection_source = user_natural_language`.
+
+Migration/alias rule:
+- Legacy input such as `explore` MAY resolve as an alias to `explorer`, but persistence and UI display MUST always normalize to `explorer`.
 
 Before Persona auto resolution completes, the pipeline must inspect the current user instruction/message for natural-language Persona requests.
 

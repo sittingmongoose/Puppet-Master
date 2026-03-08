@@ -112,6 +112,45 @@ This addendum locks the rewrite-level rendering contract for Markdown, Mermaid, 
 
 ### Preview session contract
 
+### Generated artifact identity and open-source contract
+
+Not every previewable source has a stable workspace path. The rendering system therefore distinguishes preview subjects as either document-backed or artifact-backed.
+
+#### Preview subject classes
+- `doc:<document_id>` — workspace file or other persistent project document
+- `artifact:<artifact_id>` — previewable content without a stable workspace path at creation time
+
+#### Required artifact-backed cases
+`artifact_id` is REQUIRED for:
+- chat message Markdown/Mermaid blocks
+- assistant-created unsaved documents
+- planning-document drafts that exist before file persist
+- generated review/inspection documents opened from chat or document panes
+
+#### Minimum artifact metadata
+- `artifact_id`
+- `artifact_kind` (`chat_message_block`, `assistant_draft_document`, `planning_draft`, `generated_doc`)
+- `source_kind`
+- `origin_surface`
+- `thread_id` when chat-backed
+- `message_id` when message-backed
+- `source_revision`
+- optional `backing_document_id`
+- optional `last_saved_path`
+
+#### Canonical join key
+Storage and runtime projectors may derive `preview_subject_id = doc:<document_id>` or `artifact:<artifact_id>` as the stable join key for restore, UI state, and audit summaries.
+
+#### `open_source` rules
+- `doc:*` opens the real workspace buffer/file.
+- `artifact:*` opens a transient source buffer with URI `generated://<artifact_id>`.
+- A transient `generated://` buffer is authoritative for user inspection/editing until the user explicitly saves or inserts it into a workspace file.
+- `open_source` for message-backed Mermaid/Markdown MUST NOT silently invent a workspace file on disk.
+
+#### Save/link rules
+- `Save As` or `Insert into file` creates the first stable workspace path for an artifact-backed source.
+- After first persist, runtime state records the linkage from `artifact_id` to `document_id`, but the original `artifact_id` remains valid for audit/history.
+
 #### PreviewSession lifecycle and identity contract
 
 `PreviewSession` is a durable runtime contract, not just a bag of fields.
@@ -171,6 +210,49 @@ This state model is shared so that reload, export, click-to-context, detached-op
 
 ### Transport and trust split
 
+#### Generated preview runtime contract
+
+Generated Markdown/Mermaid/read-only previews share one internal runtime contract.
+
+**Internal origin**
+- Canonical generated-preview origin: `pm-preview://session/<preview_session_id>/`
+- Generated preview assets are app-bundled or app-served only; they are not loaded from arbitrary remote origins.
+
+**Bootstrap and CSP**
+- Generated preview pages MUST ship with a restrictive CSP that allows only the app-controlled preview assets required for rendering.
+- Generated preview pages MUST NOT enable arbitrary remote script execution.
+- Generated preview pages MUST NOT reuse workspace-browser cookies/storage by default.
+
+**Sanitization**
+- Markdown-derived HTML MUST be sanitized before it reaches the preview runtime.
+- Sanitization MUST preserve only the metadata attributes required for source mapping and preview actions:
+  - `data-pm-node-id`
+  - `data-pm-block-kind`
+  - `data-pm-source-start`
+  - `data-pm-source-end`
+  - `data-pm-parse-revision`
+  - `data-pm-capabilities`
+
+**Preview bridge allowlist**
+The generated-preview bridge is narrow by design. Allowed bridge actions in v1:
+- `open_source`
+- `open_detached`
+- `request_edit`
+- `export_svg`
+- `export_png`
+- `copy_svg`
+- `copy_image`
+
+No other host command family is implicitly available to generated previews.
+
+#### Canonical rendering stack
+To keep implementations aligned, the rewrite uses these canonical libraries unless a later lock section supersedes them:
+- Markdown parse/mapping: `pulldown-cmark`
+- Rendered code highlighting: `syntect`
+- Generated HTML sanitization: `ammonia`
+- Mermaid validation: Mermaid parse/detect-type validation before render
+- SVG/PNG export pipeline: `resvg` + `usvg` + `tiny-skia`
+
 - **Full HTML/browser mode** uses a loopback localhost preview server rooted to the workspace/project context.
 - **Generated Markdown/Mermaid/read-only previews** use an internal preview origin/route controlled by the app.
 - `WebViewBuilder::with_html` is not the primary preview transport.
@@ -218,6 +300,36 @@ The rendering system must define runtime expectations per platform.
 ### Source/preview mapping and edit contract
 
 #### Preview action protocol v1
+
+#### Operation payload schemas and mutation pipeline
+
+All successful preview mutations resolve to canonical text patches against the same shared buffer model used by File Editor.
+
+**Operation payloads**
+- `toggle_checkbox` -> `{ target_state?: boolean }`
+- `edit_heading_text` -> `{ replacement_text }`
+- `edit_list_item_text` -> `{ replacement_text }`
+- `set_link_target` -> `{ href, title? }`
+- `set_inline_format` -> `{ format: "bold" | "italic" | "code", enable }`
+- `replace_mermaid_block` -> `{ replacement_source }`
+
+**Patch rules**
+- The runtime MUST resolve `node_id` against the current parse tree for the provided `parse_revision`.
+- The runtime MUST validate `source_revision` before patch application.
+- The resulting patch MUST be constrained to the mapped source span for that node or block.
+- Requests MUST fail with `ambiguous_mapping` when the requested operation would require modifying text outside the mapped node span.
+- Requests MUST fail with `unsupported_region` for raw HTML regions, malformed Markdown regions, unknown extensions, and opaque fenced content.
+
+**Shared-buffer integration**
+- Successful preview edits apply through the same in-memory buffer/update path as File Editor.
+- Successful preview edits MUST update dirty state, undo/redo history, and downstream preview re-render using the existing editor/document pipeline.
+- Preview actions MUST NOT write directly to disk and MUST NOT bypass the normal save path.
+- Each successful preview action creates one undo step unless the host editor later adds explicit coalescing rules.
+
+**UI outcomes**
+- On `applied_patch`, the source buffer and rendered preview update to the new `source_revision`.
+- On `rejected_stale_revision`, `ambiguous_mapping`, or `unsupported_region`, the UI focuses source at the mapped region when possible and shows a deterministic user-facing reason.
+- File Editor preview and Embedded Document Pane remain the only mutation-capable preview surfaces in v1 unless another surface is explicitly wired to the same validation path.
 
 The source/preview edit contract requires one shared action protocol across chat, editor preview, and embedded document panes.
 

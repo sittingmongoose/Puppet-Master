@@ -7892,6 +7892,37 @@ The orchestrator tier model remains:
 Resolved reminder: **Iteration** remains the lowest tier. Persona switching should not introduce new tiers.
 
 ### Tier-specific Persona defaults
+### Orchestrator Persona config contract
+
+Orchestrator MUST persist one canonical Persona-resolution config object separate from delegated-subagent registry data.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Personas.md
+
+Minimum fields:
+- `mode` (`manual | auto | hybrid`)
+- `tier_personas`
+  - `phase`
+  - `task`
+  - `subtask`
+  - `iteration`
+- `operation_frame_personas`
+  - `planning`
+  - `execution`
+  - `review`
+  - `verification`
+- optional per-tier platform/model overrides
+- optional next-run explicit override
+  - `requested_persona`
+  - optional `requested_platform`
+  - optional `requested_model`
+  - `expires_after_run_start` (bool)
+
+Rules:
+- `tier_personas` expresses the default Persona per tier when no higher-precedence override wins.
+- `operation_frame_personas` refines same-tier switching without creating new tiers.
+- All configured Persona IDs MUST validate against `persona_registry`, not only `subagent_registry`.
+  ContractRef: ContractName:Plans/Personas.md
+- Delegated child-run validation still uses `subagent_registry`; surface-level runtime selection uses `persona_registry`.
 
 The orchestrator must support Persona defaults and/or auto Persona resolution per tier.
 

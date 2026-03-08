@@ -287,6 +287,27 @@ ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
 
 ## 7. Deterministic defaults
 
+### 7A. Preview/browser trust-tier capability matrix (2026-03-08)
+
+Preview/browser trust tiers are runtime capability gates. They do not replace tool permissions; they constrain what preview surfaces themselves are allowed to do.
+
+| Capability | `generated_restricted` | `workspace_preview` | `external_browse` |
+|---|---|---|---|
+| App-bundled JS required for rendering | allow | allow | allow |
+| Arbitrary remote network fetches from page content | deny | deny unless user explicitly navigated to allowed workspace preview origin | user-driven only |
+| Local asset loading from active workspace preview root | deny | allow | deny by default |
+| Cookies / local storage reuse | deny | allow, project-scoped only | separate store from workspace preview |
+| Preview mutation bridge (`request_edit`) | allow only through narrow v1 preview bridge | deny by default | deny |
+| Open source / export bridge | allow | allow when subject is workspace-backed | deny unless the page is a workspace preview |
+| Inspect / capture element context | deny | allow | allow, user-triggered only |
+| DevTools | deny | allow when user explicitly opens DevTools | allow when user explicitly opens DevTools |
+| Arbitrary host/file API access | deny | deny | deny |
+
+Rules:
+- `generated_restricted` and `workspace_preview` MUST NOT share storage/cookies by default.
+- `external_browse` MUST NOT inherit source-mutation privileges from workspace preview.
+- A GUI toggle or browser feature MUST NOT expand trust-tier capabilities beyond this matrix without an explicit plan update.
+
 <a id="DEFAULTS"></a>
 
 When no rule matches at any precedence layer (§2.4), the following defaults apply. This table is the single source of truth for default permissions.
