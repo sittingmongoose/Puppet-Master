@@ -164,21 +164,32 @@ ContractRef: ContractName:Plans/Run_Graph_View.md#17, ContractName:Plans/Contrac
 ### 2.5 Orchestrator page commands
 #### 2.5A Containers & Registry / Docker Manage commands
 
-These IDs are required by `Plans/FinalGUISpec.md` §7.4.8 / §7.4.8A and `Plans/Containers_Registry_and_Unraid.md`.
+These rows are authoritative for Docker/Unraid flows and supersede any duplicate Docker/Unraid rows elsewhere in §2.5.
 
 ##### Deterministic ID and fallback rules
 
 - `preview_session_id` is a UUIDv7 created when `cmd.orchestrator.preview_open` starts a preview. If omitted later, resolve to the current active preview for the same `project_id`; if none exists, fail with `reason_code: no_active_preview`.
 - `publish_result_id` is a UUIDv7 created by `docker.publish.completed`. If omitted, resolve to the most recent successful publish for the same `project_id`; if none exists, fail with `reason_code: no_publish_result`.
-- `template_repo_id` is the stable string `unraid-template::<project_id>`. If omitted, resolve to the configured template repo for the same `project_id`; if none exists, fail with `reason_code: no_template_repo`.
+- `template_repo_id` is the stable string `unraid-template::<project_id>` when managed publishing is configured. When generation ran without a managed repo, `template_repo_id` remains unset and any command that requires it MUST fail with `reason_code: no_template_repo`.
+  ContractRef: UICommand:cmd.docker.apply_shared_ca_profile, UICommand:cmd.orchestrator.push_unraid_template_repo, UICommand:cmd.orchestrator.open_unraid_template_repo, ContractName:Plans/storage-plan.md
 
-##### Docker Manage surface wiring
+##### Normative override for `cmd.orchestrator.build_run`
 
-- Docker Manage **Build** dispatches `cmd.orchestrator.build_run { publish: false }`.
-- Docker Manage **Run / Preview** dispatches `cmd.orchestrator.preview_open { mode: "docker" }`.
-- Docker Manage **Stop / Teardown** dispatches `cmd.orchestrator.preview_stop { preview_session_id? }`.
-- Docker Manage **Push image** dispatches `cmd.orchestrator.push_image`.
-- `push_policy = after_build` dispatches `cmd.orchestrator.push_image` only after a successful `cmd.orchestrator.build_run` result exists; it does not change `build_run` into a remote publish command.
+- For Docker-related flows, the canonical args schema is `{ profile? }`.
+- The legacy `publish` arg is deprecated and MUST NOT trigger remote image push, DockerHub repository creation, Unraid template generation, or template-repo push.
+  ContractRef: UICommand:cmd.orchestrator.build_run, UICommand:cmd.orchestrator.push_image, ContractName:Plans/Containers_Registry_and_Unraid.md
+- If a caller supplies `publish: true` in a Docker-related flow, the runtime MUST either reject the command with `reason_code: publish_arg_deprecated` or ignore the field while surfacing a warning; it MUST NOT reinterpret the command as publish approval.
+  ContractRef: UICommand:cmd.orchestrator.build_run, ContractName:Plans/Permissions_System.md, ContractName:Plans/Containers_Registry_and_Unraid.md
+
+##### Template-repo setup semantic rules
+
+- `mode: "create_new", provider: "github"` requires `github_api` auth and `external_publish_side_effect` approval before remote repo creation.
+- `mode: "create_new", provider: "local_only"` creates only a local managed repo and leaves `remote_url` unset.
+- `mode: "create_new", provider: "other_git"` is invalid; use `select_existing`.
+- `mode: "select_existing"` may target `local_only` or `other_git`; it MUST validate layout, branch, migration, and dirty-state rules before enabling managed publishing.
+  ContractRef: UICommand:cmd.docker.template_repo_setup, ContractName:Plans/storage-plan.md
+- The approval payload for remote repo creation MUST show provider, owner/namespace, repo name, visibility, default branch, and local working-copy path.
+  ContractRef: UICommand:cmd.docker.template_repo_setup, ContractName:Plans/Permissions_System.md
 
 ##### Command catalog
 
@@ -187,17 +198,13 @@ These IDs are required by `Plans/FinalGUISpec.md` §7.4.8 / §7.4.8A and `Plans/
 | `cmd.docker.save_pat` | `{ provider?: "dockerhub", pat: string }` | `docker.auth.pat.saved` or `docker.auth.failed` | Settings > Advanced, Docker Manage |
 | `cmd.docker.browser_login` | `{ provider?: "dockerhub" }` | `docker.auth.browser_login.started`, `docker.auth.browser_login.device_code_issued`, zero or more `docker.auth.browser_login.polling`, terminal: `docker.auth.capability_validated` or `docker.auth.browser_login.cancelled` or `docker.auth.browser_login.timed_out` or `docker.auth.failed` | Settings > Advanced, Docker Manage |
 | `cmd.docker.validate_auth` | `{ provider?: "dockerhub" }` | `docker.auth.capability_validated` or `docker.auth.failed` | Settings > Advanced, Docker Manage |
-| `cmd.docker.clear_credentials` | `{ provider?: "dockerhub", scope?: "browser" | "pat" | "all" }` | `docker.auth.cleared` | Settings > Advanced, Docker Manage |
+| `cmd.docker.clear_credentials` | `{ provider?: "dockerhub", scope?: "browser" \| "pat" \| "all" }` | `docker.auth.cleared` | Settings > Advanced, Docker Manage |
 | `cmd.docker.refresh_repositories` | `{ namespace?: string }` | `docker.repositories.refreshed` or `docker.repositories.refresh_failed` | Settings > Advanced, Docker Manage |
-| `cmd.docker.create_repository` | `{ namespace: string, repository: string, privacy: "private" | "public" }` | `docker.repository.create.confirmation_requested` | Settings > Advanced, Docker Manage |
-| `cmd.docker.create_repository.confirm` | `{ namespace: string, repository: string, privacy: "private" | "public" }` | `docker.repository.created` or `docker.repository.create_failed` | Settings > Advanced, Docker Manage |
+| `cmd.docker.create_repository` | `{ namespace: string, repository: string, privacy: "private" \| "public" }` | `docker.repository.create.confirmation_requested` | Settings > Advanced, Docker Manage |
+| `cmd.docker.create_repository.confirm` | `{ namespace: string, repository: string, privacy: "private" \| "public" }` | `docker.repository.created` or `docker.repository.create_failed` | Settings > Advanced, Docker Manage |
 | `cmd.docker.create_repository.cancel` | `{ namespace: string, repository: string }` | `docker.repository.create.cancelled` | Settings > Advanced, Docker Manage |
-| `cmd.docker.template_repo_setup` | `{ mode: "create_new" | "select_existing", provider?: "github" | "local_only" | "other_git", repo_name?: string, repo_path?: string, remote_url?: string, branch?: string, local_working_copy_path?: string, maintainer_slug?: string, adopt_dirty_repo?: bool, allow_layout_migration?: bool }` | `unraid.template_repo.validated`, `unraid.template_repo.validation_failed`, `unraid.template_repo.migration.confirmation_requested`, `unraid.template_repo.adoption.confirmation_requested`, `unraid.template_repo.created`, or `unraid.template_repo.setup.blocked` | Settings > Advanced, Docker Manage |
-
-##### Additional rows required in §2.5 Orchestrator page commands
-
-| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
-|---|---|---|---|
+| `cmd.docker.template_repo_setup` | `{ mode: "create_new" \| "select_existing", provider: "github" \| "local_only" \| "other_git", repo_name?: string, repo_path?: string, remote_url?: string, visibility?: "public" \| "private", branch?: string, local_working_copy_path?: string, maintainer_slug?: string, adopt_dirty_repo?: bool, allow_layout_migration?: bool }` | `unraid.template_repo.migration.confirmation_requested`, `unraid.template_repo.adoption.confirmation_requested`, `unraid.template_repo.created`, `unraid.template_repo.validated`, `unraid.template_repo.validation_failed`, or `unraid.template_repo.setup.blocked` | Settings > Advanced, Docker Manage |
+| `cmd.docker.apply_shared_ca_profile` | `{ template_repo_id?: string }` | `unraid.ca_profile.projection.started`, `unraid.ca_profile.projection.completed`, `unraid.ca_profile.projection.failed`, or `unraid.ca_profile.projection.blocked` | Settings > Advanced, Docker Manage |
 | `cmd.orchestrator.push_image` | `{ namespace?: string, repository?: string, tag_template?: string }` | `docker.publish.started`, `docker.publish.completed`, `docker.publish.failed`, or `docker.publish.blocked` | Orchestrator page, Dashboard, Docker Manage |
 | `cmd.orchestrator.open_running_container` | `{ preview_session_id?: string, url?: string }` | no persisted domain event (external open action) | Orchestrator page, Dashboard, Docker Manage |
 | `cmd.orchestrator.open_container_logs` | `{ preview_session_id?: string }` | no persisted domain event (navigation/open action) | Orchestrator page, Dashboard, Docker Manage |

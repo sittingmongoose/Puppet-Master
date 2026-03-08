@@ -619,6 +619,9 @@ Covered operations include:
 
 ### 12A.2 Behavior
 
+- `push_policy = after_build` does not satisfy the “exact remote side effect requested” rule by itself. A Build click remains approval for local build only; the later auto-dispatched image push still requires `external_publish_side_effect` evaluation at the time it is about to run.
+- The same rule applies to follow-on managed template-repo creation and push steps: they are never implicitly approved by earlier local-only actions or by the existence of enabled defaults.
+
 - Default action: `ask`
 - This guard is **non-bypassable**
 - `yolo` mode MUST NOT auto-allow this guard

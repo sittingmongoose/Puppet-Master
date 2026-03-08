@@ -164,6 +164,24 @@ PAT support remains mandatory even though browser login is supported.
 If auth expires during image push, Puppet Master MUST emit `docker.publish.failed` with `reason_code: auth_expired`, preserve the local build result, and surface a re-auth + retry CTA without forcing a rebuild.
 
 ### Requested vs effective auth state
+#### Canonical DockerHub effective capability enum
+
+`effective_capabilities[]` is a closed enum for the first implementation:
+
+- `namespaces:list`
+- `repositories:list`
+- `repositories:create`
+- `images:push`
+- `repositories:read_private`
+
+Surface gating rules:
+- Namespace discovery requires `namespaces:list`.
+- Repository discovery / refresh requires `repositories:list`.
+- Create Repository requires `repositories:create`.
+- Push Image requires `images:push`.
+- Validation of a private target repository requires `repositories:read_private` or a successful push-capable validation path.
+- If a surface requires a capability the effective set does not contain, the control MUST remain visible but disabled, with inline explanation that cites the missing capability and `degraded_reason` when present.
+
 Puppet Master must model requested auth mode separately from effective capability.
 
 Required state concepts:
@@ -308,6 +326,22 @@ If `cmd.orchestrator.push_image` resolves a missing target repository:
 
 #### Tag template resolution contract
 
+#### Auto-push approval and canonical publish-reference contract
+
+Approval rules:
+- `push_policy = after_build` does not grant standing approval for remote side effects.
+- Clicking **Build** approves only local build execution.
+- When a successful build reaches the auto-dispatch point, Puppet Master MUST evaluate `external_publish_side_effect` for `cmd.orchestrator.push_image`.
+- If publish approval is not satisfied at that point, Puppet Master MUST emit `docker.publish.blocked` with `blocked_step: push_image`, preserve the local build result, and surface **Push image** as the recovery CTA.
+- DockerHub repository creation and managed-template remote repo create/push remain separately approved side effects even when `push_policy = after_build` is enabled.
+
+Canonical template source image selection:
+- If the project sets `primary_publish_tag`, use it.
+- Otherwise use the first tag emitted by the resolved tag-template list.
+- Otherwise fall back to the lexicographically smallest tag only for legacy results that lack ordering metadata.
+- If `docker_publish_result.digests[]` contains a manifest-list digest, that digest is the canonical `image_digest`; otherwise use the single pushed digest.
+- The generated application template MUST use `<Repository>` = `<namespace>/<repository>:<primary_publish_tag>`.
+
 | Variable | Resolution source | Format | Failure behavior |
 |---|---|---|---|
 | `{commit}` | HEAD commit of the active project repo | first 12 lowercase hex chars | block publish if the template references `{commit}` and no HEAD commit exists |
@@ -414,24 +448,52 @@ Required behavior:
 #### Known-field registry and XML mapping (first implementation)
 #### XML emission minima for first implementation
 
-The first implementation MUST document and preserve one deterministic emitted shape.
+The first implementation emits application templates with one canonical root shape:
 
-Minimum emitted-XML contract:
-- define the root element name and required root attributes/version
-- define canonical child-element ordering for known emitted fields
-- define whether text fields emit plain text vs CDATA and when normalization occurs
-- define how comments, unknown elements, unknown attributes, and unrecognized ordering are preserved on round-trip update
+```xml
+<Container version="2">
+  <Name>Example App</Name>
+  <Repository>namespace/repository:tag</Repository>
+  <Registry>https://registry-1.docker.io</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <WebUI>http://[IP]:[PORT:8080]</WebUI>
+  <Support>https://example.invalid/support</Support>
+  <Overview><![CDATA[Markdown or HTML-safe overview text]]></Overview>
+  <Category>Tools:Utilities</Category>
+  <Icon>assets/maintainer/icon.png</Icon>
+  <Config ... />
+</Container>
+```
 
-`Config` emission minima:
-- every emitted `<Config ...>` MUST define the minimum required attribute set for its type
-- the spec MUST explicitly map normalized fields into those attributes for:
-  - `Port`
-  - `Path`
-  - `Variable`
-  - `Device`
-- when a source runtime/config item cannot be mapped safely into the required attribute set, Puppet Master MUST preserve the existing XML and mark the result `needs_review` rather than inventing defaults silently
+Canonical rules:
+- Root element is exactly `<Container version="2">`.
+- Known child elements emit in this order: `Name`, `Repository`, `Registry`, `Network`, `MyIP`, `WebUI`, `Support`, `Overview`, `Category`, `Icon`, then repeated `Config`.
+- `Overview` emits as CDATA.
+- All other known text nodes emit as escaped text.
+- Optional known elements are omitted when empty.
+- Unknown elements, unknown attributes, and XML comments from an existing template MUST be preserved verbatim and re-emitted after the last known sibling in their original relative order unless the user explicitly removes them.
+- Existing unknown root attributes MUST be preserved verbatim on round-trip update.
 
-The first implementation recognizes the fields below as the canonical known-field set. Any other element or attribute encountered in existing XML is an **unknown field** and MUST be preserved verbatim in round-trip output unless the user explicitly removes it.
+`Config` type mapping for first implementation:
+
+| Normalized field | Emitted `Config` shape | Required attributes |
+|---|---|---|
+| Port mapping | `<Config Type="Port" ... />` | `Name`, `Target`, `Default`, `Mode`, `Display`, `Required`, `Mask="false"` |
+| Path / bind mount | `<Config Type="Path" ... />` | `Name`, `Target`, `Default`, `Display`, `Required`, `Mask="false"` |
+| Environment variable | `<Config Type="Variable" ... />` | `Name`, `Target`, `Default`, `Display`, `Required`, `Mask` |
+| Device mapping | `<Config Type="Device" ... />` | `Name`, `Target`, `Default`, `Display`, `Required`, `Mask="false"` |
+
+Attribute mapping rules:
+- `Name` = stable user-visible label; fall back to `Target` when no label exists.
+- `Target` = container-side port/path/variable/device identifier.
+- `Default` = host-side or default value.
+- `Display` = `always` for first implementation unless hidden by explicit user choice.
+- `Required` = `true` only when the value is mandatory for a successful container run.
+- `Mask` = `true` only for secret environment variables; otherwise `false`.
+- `Mode` is required only for `Type="Port"` and is exactly `tcp` or `udp`.
+
+If Puppet Master cannot map a source item into the required attribute set without inventing values, it MUST preserve the prior XML unchanged for that item and mark the result `needs_review`.
 
 ##### Application template XML
 
@@ -442,17 +504,10 @@ The first implementation recognizes the fields below as the canonical known-fiel
 | `registry_host` | `<Registry>` text | No | Yes |
 | `web_ui_url` | `<WebUI>` text | No | No |
 | `support_url` | `<Support>` text | No | Yes |
-| `overview_markdown` | `<Overview>` text or CDATA | No | Yes |
+| `overview_markdown` | `<Overview>` CDATA | No | Yes |
 | `icon_source` | `<Icon>` text | No | Yes |
 | `category_labels[]` | `<Category>` text | No | Yes |
-| `config_items[]` | repeated `<Config ...>` elements | No | No |
-
-##### `Config` type mapping
-
-- port exposure -> `<Config Type="Port" ...>`
-- bind/path mapping -> `<Config Type="Path" ...>`
-- environment variable -> `<Config Type="Variable" ...>`
-- device mapping -> `<Config Type="Device" ...>`
+| `config_items[]` | repeated `<Config ... />` elements | No | No |
 
 ##### `ca_profile.xml` recognized fields
 
@@ -463,9 +518,25 @@ The first implementation recognizes the fields below as the canonical known-fiel
 | `support_url` | `<Support>` | Yes |
 | `icon_source` | `<Icon>` | Yes |
 
-If the upstream Community Applications schema later adds mandatory fields that Puppet Master must author directly, those fields MUST be added to this known-field registry before implementation expands the generator.
-
 ### Distribution model
+### Unmanaged generation target contract
+
+If `Generate/Update Unraid XML after successful publish` is enabled but managed template-repo handling is disabled, unconfigured, or invalid, Puppet Master MUST still generate a local artifact set under:
+
+`.puppet-master/generated/unraid/<project_id>/<publish_result_id>/`
+
+Required output:
+- `template/<maintainer_slug>/<project_slug>.xml`
+- `template/ca_profile.xml` when the active profile is projected into the result
+- `template/assets/maintainer/**` for repo-managed uploaded assets referenced by the result
+
+In this mode:
+- `unraid.template.generation.completed` still fires
+- `template_repo_id` is `null`
+- `commit_status` is `not_attempted`
+- `push_status` is `not_attempted`
+- UI copy MUST describe the result as **generated locally / not attached to a managed repo**
+
 The default distribution target for generated Unraid XML is a separate Unraid template repository / Community Applications-friendly template location. The main application repository may still be offered as an optional export target, but it is not the primary default.
 
 Rationale that must be preserved in docs:
