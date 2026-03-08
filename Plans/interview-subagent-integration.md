@@ -2845,24 +2845,33 @@ ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/orchestrator-sub
 ### Requested/effective Interview contract
 
 Inputs:
-- `requested_persona_id`
+- `requested_persona` (canonical Persona ID or `null`)
 - `stage`
 - `phase_id`
 - `provider/platform preferences`
 - `capability constraints`
 
 Outputs:
-- `effective_persona_id`
+- `effective_persona`
 - `persona_selection_source`
 - `selection_reason`
+- `persona_override_scope`
+- `persona_override_owner_id`
 - `effective_platform`
 - `effective_model`
 - `effective_variant` (when present)
+- `effective_reasoning_effort` (when present)
+- `effective_talkativeness` (when not `model_default`)
 - `applied_persona_controls[]`
 - `skipped_persona_controls[]`
 - `invocation_mode`
 
 Persist these values in runtime telemetry and expose them in the Interview UI/activity pane.
+
+Migration rule:
+- Older names such as `requested_persona_id` and `effective_persona_id` are backward-compatibility aliases only. They MUST be normalized to `requested_persona` and `effective_persona` before persistence, event emission, or UI binding.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Personas.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 ### Interoperability note for provider-native formats
 

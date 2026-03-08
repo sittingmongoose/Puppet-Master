@@ -1,19 +1,19 @@
 {
-  "run_id": "rewrite-20260308-043312-markdown-mermaid-rendering-architecture-audit-packet",
+  "run_id": "rewrite-20260308-010858-persona-runtime-audit-gap-closure",
   "changed_files": [
     "Plans/.evidence/plan-sharding-2026-03-08/evidence.json",
     "Plans/.evidence/plan-sharding-2026-03-08/reports/chain-wizard-flexibility.reconstruct.sha256.txt",
+    "Plans/.evidence/plan-sharding-2026-03-08/reports/commands.txt",
     "Plans/.evidence/plan-sharding-2026-03-08/reports/interview-subagent-integration.reconstruct.sha256.txt",
     "Plans/.evidence/plan-sharding-2026-03-08/reports/orchestrator-subagent-integration.reconstruct.sha256.txt",
     "Plans/.evidence/plan-sharding-2026-03-08/reports/storage-plan.reconstruct.sha256.txt",
     "Plans/.pipeline/change_manifest.json",
     "Plans/.pipeline/research_packet.json",
+    "Plans/.pipeline/verifier_exit_code.txt",
+    "Plans/.pipeline/verifier_report.txt",
     "Plans/Contracts_V0.md",
     "Plans/DRY_Rules.md",
-    "Plans/FileManager.md",
-    "Plans/FinalGUISpec.md",
     "Plans/Models_System.md",
-    "Plans/Permissions_System.md",
     "Plans/Personas.md",
     "Plans/Prompt_Pipeline.md",
     "Plans/Spec_Lock.json",
@@ -25,19 +25,16 @@
     "Plans/_shards/orchestrator-subagent-integration/manifest.json",
     "Plans/_shards/storage-plan/05-2-how-were-going-to-do-it.md",
     "Plans/_shards/storage-plan/manifest.json",
-    "Plans/assistant-chat-design.md",
     "Plans/auto_decisions.jsonl",
     "Plans/chain-wizard-flexibility.md",
     "Plans/interview-subagent-integration.md",
     "Plans/orchestrator-subagent-integration.md",
-    "Plans/rewrite-tie-in-memo.md",
     "Plans/storage-plan.md"
   ],
   "untracked_files": [
     "Plans/.pipeline/runs/rewrite-20260308-010858-persona-runtime-audit-gap-closure/change_manifest.json",
     "Plans/.pipeline/runs/rewrite-20260308-010858-persona-runtime-audit-gap-closure/research_packet.json",
     "Plans/.pipeline/runs/rewrite-20260308-010858-persona-runtime-audit-gap-closure/verifier_exit_code.txt",
-    "Plans/.pipeline/runs/rewrite-20260308-010858-persona-runtime-audit-gap-closure/verifier_report.txt",
-    "Plans/.pipeline/runs/rewrite-20260308-043312-markdown-mermaid-rendering-architecture-audit-packet/research_packet.json"
+    "Plans/.pipeline/runs/rewrite-20260308-010858-persona-runtime-audit-gap-closure/verifier_report.txt"
   ]
 }

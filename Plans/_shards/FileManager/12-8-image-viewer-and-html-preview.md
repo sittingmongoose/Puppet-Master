@@ -10,6 +10,26 @@
 
 ### 8.2 HTML in browser and hot reload
 
+### 8.2A Rewrite normalization for HTML/browser preview (2026-03-08)
+
+For rewrite implementation, the canonical contract is the unified rendering architecture in `Plans/newfeatures.md` §24.4A and `Plans/rewrite-tie-in-memo.md`.
+
+Normalization rules:
+- Full HTML preview uses the loopback workspace preview server: `http://127.0.0.1:<port>/preview/<project_id>/<document_id>/...`.
+- `file://` is not an MVP transport for file-backed HTML preview.
+- Canonical hot-reload debounce is `app.preview.hot_reload_debounce_ms` with default `500`.
+- Browser capacity applies to in-shell browser tabs only; detached preview/browser windows are outside that cap.
+- Detached preview/browser windows are first-class behavior, not an error fallback.
+- Click-to-context payload shape, truncation, and capture limits for browser-class surfaces are owned by `Plans/newfeatures.md` §15.18 and `Plans/assistant-chat-design.md` §28.4A; local summary text in this file must not redefine those values.
+
+Fallback order:
+1. embedded browser/runtime path when the current platform adapter supports it
+2. detached preview/browser window using the same logical preview subject and, when possible, the same `preview_session_id`
+3. explicit degraded error state
+
+Supersession rule:
+- Any earlier `file://`, `local HTTP server`, `400 ms`, `max browser instances`, or LRU browser-instance reuse language in this file is pre-normalization text and MUST NOT override the rewrite rendering contract above.
+
 - **Open HTML in browser:** When user opens an HTML file, app can open it in system or embedded browser (or "Open in browser" / "Preview" action). Use file: URL or local HTTP server so relative paths resolve.
 - **Edit + hot reload:** User opens HTML in editor; optionally preview in browser. When user saves the HTML file or any **linked** file, browser view refreshes automatically after a debounce. **Linked files:** Files that trigger refresh are the HTML file itself and any resource referenced by it (e.g. `<link href="...">`, `<script src="...">`) that lie under the project or the same directory; implementation may use a simple same-dir + referenced-path rule. **Debounce:** **400 ms** default (per file, per preview instance); configurable in Settings → Editor or Developer (e.g. 100-2000 ms); persist in redb. Rapid saves result in one refresh after the last save within the window. Tight loop: edit → Save → see result in browser.
 - **Scope:** One or more HTML files per project; embedded vs system browser is implementation choice. Local resources only; no remote deployment in MVP.

@@ -105,6 +105,23 @@ ContractRef: Gate:GATE-009, ContractName:Plans/Progression_Gates.md#GATE-009
 
 ---
 
+## 7.1 Packet-fidelity semantic matching
+Packet-fidelity checks used by VERIFIER packet preflight and SCRIBE self-check MUST ignore standalone lines whose trimmed text starts with `ContractRef:` on both the packet-text side and the file-text side before substring matching.
+
+Required matching order:
+1. Strip standalone `ContractRef:` lines from both texts.
+2. Convert CRLF to LF.
+3. Trim trailing whitespace per line.
+4. Collapse runs of spaces/tabs to a single space.
+5. Collapse 3+ blank lines to 2 blank lines.
+6. Perform substring matching on the normalized texts.
+
+This semantic matching rule exists only for packet-fidelity/self-check comparisons and MUST NOT weaken ContractRef enforcement in run-gates or any other plan-quality gate.
+
+ContractRef: Primitive:DRYRules, Gate:GATE-009, PolicyRule:Decision_Policy.md§2
+
+---
+
 ## 8. Reference style
 - Prefer referencing canonical files/anchors over inline duplication.
 - Prefer stable anchors (`<a id="..."></a>`) for cross-doc links when heading slugging could change.

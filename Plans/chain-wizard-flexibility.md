@@ -1632,6 +1632,24 @@ Additional rules:
 - Automatic resolution may return only IDs valid in `persona_registry` (`Plans/Personas.md` §7).
 
 ### Builder Persona config contract
+### Review-pass identifier contract
+
+`review_pass_personas` MUST use canonical ordinal keys:
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md#17.8
+
+- `pass_1`
+- `pass_2`
+- `pass_3`
+- `pass_4`
+- `pass_5`
+
+Rules:
+- Keys map to the numbered Multi-Pass Review passes configured for the Builder run.
+- If a configured run uses fewer passes than a stored key set, extra keys are ignored.
+- If a run uses more passes than are explicitly mapped, unmapped passes fall back to the deterministic reviewer-selection rules in §5.6.
+- GUI labels may display `Pass 1`, `Pass 2`, etc., but persistence MUST use the canonical key names above.
+- `review_pass_personas` maps review passes only; the final synthesis/writer step remains governed by the Builder workflow and is not implicitly overwritten by reviewer-pass mappings.
 
 Builder Persona settings MUST persist a canonical config object with at least:
 

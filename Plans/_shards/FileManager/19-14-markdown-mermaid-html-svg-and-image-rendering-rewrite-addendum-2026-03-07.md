@@ -56,6 +56,17 @@ Minimum per-document UI state:
 
 ### 14.4 Source/preview edit contract
 
+#### 14.4A Shared-buffer preview mutation rules (2026-03-08)
+
+Successful preview edits use the same authoritative document pipeline as normal source editing.
+
+Rules:
+- A successful preview action resolves to a bounded text patch against the current source buffer.
+- The patch is applied through the shared buffer model used by File Editor and Embedded Document Pane.
+- Successful preview edits update dirty state, undo/redo history, and the current `source_revision` before preview re-render.
+- Preview actions MUST NOT write directly to disk and MUST NOT bypass the normal save path.
+- `ambiguous_mapping`, `unsupported_region`, and `rejected_stale_revision` outcomes MUST remain non-mutating and focus/open source at the mapped region when possible.
+
 Source remains authoritative.
 
 Preview editing rules:

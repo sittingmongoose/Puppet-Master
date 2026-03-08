@@ -1531,6 +1531,32 @@ Applies to:
 
 ### 28.2 Canonical model
 
+### 28.2A Chat/planning artifact source model (2026-03-08)
+
+Chat/planning rendering needs one explicit source model for non-file content.
+
+**Artifact classes**
+- `chat_message_block` — renderable Markdown/Mermaid originating from a chat message
+- `assistant_draft_document` — assistant-created document not yet saved to a workspace path
+- `planning_draft` — planning document content created before first persist
+- `persisted_planning_document` — planning content with a real workspace file path
+
+**Planning surfaces in scope**
+- plan-mode output previews shown in chat/document workflows
+- assistant-created documents opened from chat
+- planning drafts and persisted planning documents shown in preview-capable document panes
+- future Deep Plan Mode previews, when present, following the same canonical-source rules
+
+**Source behavior**
+- `persisted_planning_document` opens its real workspace file on `open_source`.
+- Non-file artifact classes open a transient `generated://<artifact_id>` source buffer on `open_source`.
+- Transient source buffers MUST show provenance (`from chat message`, `from planning draft`, etc.).
+- Exporting or opening source from chat/planning content MUST NOT silently create workspace files.
+- Explicit user actions such as `Save As` or `Insert into file` create the first workspace-backed document for a non-file artifact.
+
+**Mutation scope**
+- Chat/planning render surfaces remain non-destructive until they are wired to the same validated preview-action pipeline used by File Editor and Embedded Document Pane.
+
 - Chat and planning surfaces may render Markdown richly, but canonical saved/editable artifacts remain source text.
 - Mermaid remains canonical as fenced `mermaid` code blocks or `.mmd` text.
 - The assistant may create Mermaid diagrams, but it creates text artifacts, not hidden binary/graph models.

@@ -1235,6 +1235,26 @@ Typing `/` in the chat input shows an autocomplete popup listing available comma
 
 ### 7.18 File Editor (NEW)
 
+#### Rendering preview/export and detached-window UX contract (2026-03-08)
+
+**Mermaid export UI**
+- Mermaid-capable preview surfaces expose `Export` actions for `SVG`, `PNG`, `Copy SVG`, and `Copy image`.
+- `Export` opens a dialog or popover that includes:
+  - destination path
+  - format
+  - theme (`current app theme` default, explicit override allowed)
+  - background mode
+  - overwrite behavior summary
+- The export confirmation UI MUST show the final filename before write.
+- Export failures and clipboard failures MUST surface a visible inline or toast error.
+
+**Detached preview/browser windows**
+- Detached windows are modeless and owned by the app session.
+- Closing the main app closes detached preview/browser windows after preview intent has been persisted.
+- Closing a detached preview window updates the owning surface state but does not delete the underlying preview subject.
+- `Detach` followed by `Reattach` keeps the same `preview_session_id` unless platform fallback forced a transport restart.
+- When the product falls back from embedded to detached mode automatically, the UI MUST show that this is a platform/runtime fallback, not a content error.
+
 **Location:** Primary content (between File Manager and Dashboard)
 
 IDE-style editor with:
@@ -1364,6 +1384,17 @@ Read-only, chat-like pane showing streaming agent output during document generat
 
 ### 7.19.1 Embedded Document Pane (NEW)
 
+#### Rendering-subject scope for embedded documents (2026-03-08)
+
+The Embedded Document Pane may host either document-backed or artifact-backed renderable content.
+
+Rules:
+- Workspace-backed documents use `doc:<document_id>` as the preview subject.
+- Planning drafts, assistant-created unsaved documents, and other non-file artifacts use `artifact:<artifact_id>` until first persist.
+- Artifact-backed content may open source in a transient `generated://<artifact_id>` buffer.
+- The pane may issue v1 structured preview edits only when the underlying subject is backed by a mutable shared buffer or a validated transient source buffer using the same preview-action pipeline.
+- Review/inspection surfaces that are not yet wired to the validated preview-action path remain non-destructive even when they render Markdown/Mermaid richly.
+
 **Purpose:** The Embedded Document Pane supports live, multi-document preview during doc generation (Requirements Doc Builder + Interviewer) and provides inline notes + targeted resubmits for cheap iteration.
 
 **Non-goal (explicit):** No "suggested change / patch apply" mode. Notes are plain instructions/questions; agent edits normally.
@@ -1463,6 +1494,22 @@ Default prefix/suffix length: 32 chars (clamped).
 - Multi-Pass Review cannot start until all docs are Approved/Done and notes resolved; it runs once by default and ends in a single Accept/Reject/Edit gate.
 
 ### 7.20 Bottom Panel (NEW)
+
+#### Browser normalization against unified rendering contract (2026-03-08)
+
+The Browser tab MUST follow the unified rendering contract in `Plans/newfeatures.md` §24.4A and `Plans/rewrite-tie-in-memo.md`.
+
+Rules:
+- The Browser tab is the primary in-shell host for `workspace_preview` and optional `external_browse`.
+- Embedded hosting is an optimization; detached preview/browser windows remain the only guaranteed cross-platform path.
+- If embedded attach fails or is unsupported on the current platform, the UI MUST switch to detached-open using the same logical preview subject and show explicit detached-state UI rather than a blank pane.
+- Browser-tab capacity applies only to in-shell tabs. Detached preview/browser windows do not consume browser-tab capacity.
+- Inspect/capture schema, truncation, and rate limits MUST follow `Plans/newfeatures.md` §15.18 and `Plans/assistant-chat-design.md` §28.4A; local shorthand in this section MUST NOT redefine those limits.
+
+Required detached-state UI:
+- show current state badge: `embedded`, `detached`, `degraded`, or `error`
+- offer `Focus detached window` and `Reattach when supported`
+- preserve navigation state and `preview_session_id` unless a transport restart is explicitly required by platform fallback
 
 **Location:** Below primary content, collapsible
 
