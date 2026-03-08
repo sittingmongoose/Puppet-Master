@@ -2818,293 +2818,57 @@ impl InterviewOrchestrator {
 
 ## Platform-Specific Subagent Invocation
 
-Normative rule: Interview resolves an **effective Persona** first, then routes through the Provider facade / platform runner. Platform-specific prompt syntax or agent-export files are implementation details behind that facade. The Interview runtime MUST NOT require provider-native agent files to exist in the target project in order to run.
+Normative rule: Interview resolves an **effective Persona** first, then invokes the Provider facade / platform runner using the canonical requested/effective resolution record. Provider-native prompt syntax, exported agent files, or platform-specific delegation syntax are implementation details behind that facade and are **not** the canonical Interview runtime contract.
 
-ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Models_System.md, ContractName:Plans/orchestrator-subagent-integration.md
+The Interview runtime MUST NOT require provider-native agent files or provider-native `/subagent` / `/agent` prompt syntax in order to execute.
 
-Requested/effective contract:
-- Inputs: `requested_persona_id`, stage, phase_id, provider/platform preferences, capability constraints.
-- Outputs: `effective_persona_id`, `provider`, `model`, `selection_reason`, `invocation_mode`.
-- Persist these values in runtime telemetry and expose them in the Interview UI/activity pane.
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Models_System.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/orchestrator-subagent-integration.md
 
-### Recent Release Notes (February 2026)
+### Interview Persona config contract
 
-#### Cursor CLI (v2.5 - Feb 17, 2026)
-- **Async Subagents:** Subagents can run asynchronously, parent agent continues working
-- **Subagent Trees:** Subagents can spawn their own subagents
-- **Performance:** Lower latency, better streaming feedback
-- **Known Issue:** `/subagent-name` syntax currently broken in CLI (works in editor)
+Interview MUST persist Persona settings separately from legacy provider-native subagent interoperability details.
 
-**Invocation Method:**
-```bash
-# Syntax: /subagent-name <task>
-# Example in prompt:
-"/product-manager Research target users for this feature"
-```
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/FinalGUISpec.md#17.8, ContractName:Plans/orchestrator-subagent-integration.md
 
-**Implementation:**
-```rust
-// Cursor subagent invocation
-fn invoke_cursor_subagent(
-    subagent_name: &str,
-    task: &str,
-    platform: Platform,
-) -> String {
-    format!("/{} {}", subagent_name, task)
-}
-```
+Required fields:
+- `mode` (`manual | auto | hybrid`)
+- `stage_persona_overrides` (map of `questioning | research | validation | drafting | review` -> Persona ID)
+- `phase_primary_personas` (map of phase_id -> Persona ID)
+- `phase_secondary_personas` (map of phase_id -> ordered Persona IDs)
+- optional per-stage platform/model overrides
+- optional next-run explicit override
 
-#### Codex CLI (v0.104.0 - Feb 18, 2026)
-- **Protocol Updates:** Distinct approval IDs for command approvals to support multiple approvals within single shell command execution
-- **App-Server v2:** Emits notifications when threads are archived/unarchived, enabling clients to react without polling
-- **WebSocket Proxy:** Added `WS_PROXY`/`WSS_PROXY` environment support (including lowercase variants) for websocket proxying
-- **Multi-Agent Roles:** Customizable via config (from 0.102.0)
-- **MCP Server:** Codex exposed as MCP server for multi-agent workflows
-- **Bug Fixes:** Reduced false-positive safety-check downgrade behavior, fixed Ctrl+C/Ctrl+D in cwd-change prompt
+If older config names such as `phase_subagents` / `phase_secondary_subagents` are retained for migration/backward compatibility, their values MUST be interpreted as canonical Persona IDs, not as provider-native command names.
 
-**Invocation Method:**
-Codex uses MCP (Model Context Protocol) server tools:
-- `codex` tool - Creates new Codex session
-- `codex-reply` tool - Continues existing session
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/orchestrator-subagent-integration.md
 
-**Implementation:**
-```rust
-// Codex subagent invocation via MCP
-fn invoke_codex_subagent(
-    subagent_name: &str,
-    task: &str,
-) -> ExecutionRequest {
-    // Codex subagents are invoked via MCP server tools
-    // Requires running: codex mcp-server
-    ExecutionRequest::new(
-        Platform::Codex,
-        "default".to_string(),
-        format!(
-            r#"Use the {} agent to: {}"#,
-            subagent_name, task
-        ),
-        // ... working_dir ...
-    )
-}
-```
+### Requested/effective Interview contract
 
-#### Claude Code CLI (v2.1.45 - Feb 17-18, 2026)
-- **Agent Teams Fix:** Fixed skills invoked by subagents appearing in main session
-- **Bedrock/Vertex Support:** Fixed Agent Teams teammates failing on Bedrock, Vertex, Foundry
-- **Performance:** Improved memory usage, startup performance
+Inputs:
+- `requested_persona_id`
+- `stage`
+- `phase_id`
+- `provider/platform preferences`
+- `capability constraints`
 
-**Invocation Methods:**
+Outputs:
+- `effective_persona_id`
+- `persona_selection_source`
+- `selection_reason`
+- `effective_platform`
+- `effective_model`
+- `effective_variant` (when present)
+- `applied_persona_controls[]`
+- `skipped_persona_controls[]`
+- `invocation_mode`
 
-**Method 1: --agents JSON flag (Dynamic)**
-```bash
-claude --agents '{
-  "product-manager": {
-    "description": "Product strategy expert",
-    "prompt": "You are a product manager..."
-  }
-}' -p "Research target users"
-```
+Persist these values in runtime telemetry and expose them in the Interview UI/activity pane.
 
-**Method 2: Automatic invocation (File-based)**
-Subagents defined in `.claude/agents/*.md` are automatically invoked when task matches description.
+### Interoperability note for provider-native formats
 
-**Implementation:**
-```rust
-// Claude Code subagent invocation
-fn invoke_claude_subagent(
-    subagent_name: &str,
-    task: &str,
-    subagent_defs: &HashMap<String, SubagentDef>,
-) -> Vec<String> {
-    // Option 1: Use --agents flag with JSON
-    let mut args = vec!["--agents".to_string()];
-    let agents_json = serde_json::json!({
-        subagent_name: subagent_defs.get(subagent_name)
-    });
-    args.push(agents_json.to_string());
-    args.push("-p".to_string());
-    args.push(format!("{}", task));
-    args
-    
-    // Option 2: Rely on automatic invocation based on description
-    // Just include subagent name in prompt naturally
-}
-```
+Provider-native agent exports or prompt syntaxes MAY exist as optional interoperability layers only. They MUST be generated from the canonical effective Persona/runtime selection after resolution, and they MUST NOT become a second source of truth for Interview selection behavior.
 
-#### Gemini (direct-provider)
-Gemini is a **Direct-provider** in Puppet Master: it is used as a model provider via the Google Gemini API, not as a CLI-bridged platform.
-
-**Invocation method:** Puppet Master subagents are internal/orchestrator-level. The Gemini provider receives the final prompt produced by the orchestrator; there are no provider-native agent directories and no provider-specific subagent flags.
-
-**Configuration:**
-- Google Gemini API key (Settings)
-- Model selection in Settings (and Media toggles/models per `Plans/Media_Generation_and_Capabilities.md`)
-
-#### GitHub Copilot CLI (v0.0.411 - Feb 17, 2026)
-**Latest Stable:** v0.0.411 (Feb 17, 2026)  
-**Pre-release:** v0.0.412-1 (Feb 18, 2026)
-
-- **Fleets Feature:** `/fleet` command for parallel subagents (now available to all users in v0.0.411)
-- **Delegation:** `/delegate` for background tasks
-- **Custom Agents:** `/agent AGENT-NAME` for explicit invocation
-- **Autopilot Mode:** Now available to all users (v0.0.411)
-- **SDK APIs:** Added for plan mode, autopilot, fleet, and workspace files
-- **Cross-Session Memory:** Ask about past work, files, and PRs across sessions (experimental, v0.0.412)
-- **Memory Improvements:** Reduced memory usage in alt-screen mode during long sessions
-
-**Invocation Methods:**
-
-**Method 1: /fleet (Parallel subagents)**
-```bash
-copilot -p "/fleet Implement authentication system"
-```
-
-**Method 2: /delegate (Background task)**
-```bash
-copilot -p "/delegate Review security implementation"
-```
-
-**Method 3: /agent (Explicit invocation)**
-```bash
-copilot -p "/agent security-auditor Review authentication code"
-```
-
-**Implementation:**
-```rust
-// Copilot subagent invocation
-fn invoke_copilot_subagent(
-    subagent_name: &str,
-    task: &str,
-    invocation_type: CopilotInvocationType,
-) -> String {
-    match invocation_type {
-        CopilotInvocationType::Fleet => {
-            format!("/fleet {}", task)
-        }
-        CopilotInvocationType::Delegate => {
-            format!("/delegate {}", task)
-        }
-        CopilotInvocationType::Explicit => {
-            format!("/agent {} {}", subagent_name, task)
-        }
-    }
-}
-
-enum CopilotInvocationType {
-    Fleet,      // Parallel subagents
-    Delegate,   // Background task
-    Explicit,   // Explicit agent name
-}
-```
-
-### Platform-Specific Invocation Wrapper
-
-Create unified interface for platform-specific invocation:
-
-```rust
-// src/interview/subagent_invoker.rs
-
-use crate::types::Platform;
-
-pub struct SubagentInvoker;
-
-impl SubagentInvoker {
-    /// Invokes a subagent using platform-specific syntax
-    // DRY:FN:invoke_subagent — Build platform-specific subagent invocation prompt
-    // DRY REQUIREMENT: MUST use platform_specs::get_subagent_invocation_format() — NEVER hardcode platform-specific invocation formats
-    pub fn invoke_subagent(
-        platform: Platform,
-        subagent_name: &str,
-        task: &str,
-        context: &SubagentContext,
-    ) -> String {
-        // DRY: Use platform_specs to get subagent invocation format (DRY:DATA:platform_specs)
-        // DO NOT use match statements like: match platform { Platform::Cursor => format!("/{} {}", ...), ... }
-        let invocation_format = platform_specs::get_subagent_invocation_format(platform)
-            .unwrap_or_else(|| {
-                // Fallback: use generic format if platform_specs doesn't have specific format
-                format!("As {}, {}", subagent_name, task)
-            });
-        
-        // Format invocation using platform-specific format from platform_specs
-        invocation_format
-            .replace("{subagent}", subagent_name)
-            .replace("{task}", task)
-            // Handle platform-specific context (e.g., Copilot fleet/delegate)
-            .replace("{context}", &format_context_for_platform(platform, context))
-                    }
-                }
-            }
-        }
-    }
-}
-
-pub struct SubagentContext {
-    pub use_dynamic_agents: bool,
-    pub copilot_invocation_type: Option<CopilotInvocationType>,
-}
-
-pub enum CopilotInvocationType {
-    Fleet,
-    Delegate,
-    Explicit,
-}
-```
-
-ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
-
-## Updated Configuration
-
-Add platform-specific invocation settings:
-
-```rust
-pub struct SubagentConfig {
-    // ... existing fields ...
-    
-    /// Platform-specific invocation settings
-    pub platform_settings: HashMap<Platform, PlatformSubagentSettings>,
-}
-
-pub struct PlatformSubagentSettings {
-    /// For Claude: Use --agents flag vs automatic invocation
-    pub use_dynamic_agents: bool,
-    /// For Copilot: Preferred invocation type
-    pub copilot_invocation_type: Option<CopilotInvocationType>,
-}
-```
-
-## Updated Considerations
-
-1. **Subagent File Management:** 
-   - Import provider-native seed files into canonical Persona storage when needed
-   - Export provider-native files only as an optional interoperability feature
-   - Handle platform-specific file format differences without treating exported files as SSOT
-
-2. **Platform Support:**
-   - **Cursor:** `/subagent-name` syntax (broken in CLI as of Feb 2026, works in editor)
-   - **Codex:** MCP server tools or natural language
-   - **Claude Code:** `--agents` JSON flag or automatic file-based invocation
-   - **Gemini:** Direct-provider model invocation (no CLI flags or local config files)
-   - **GitHub Copilot:** `/fleet`, `/delegate`, or `/agent` commands
-
-3. **Recent Changes (as of Feb 18, 2026):**
-   - **Cursor 2.5 (Feb 17):** Async subagents, subagent trees, plugins marketplace
-   - **Codex 0.104.0 (Feb 18):** Distinct approval IDs, thread archive notifications, websocket proxy support
-   - **Claude Code 2.1.45 (Feb 17-18):** Agent Teams fixes, Sonnet 4.6 support, performance improvements
-    - **Gemini:** Model catalog/capability availability may change; verify at implementation time
-   - **Copilot 0.0.411 (Feb 17):** Fleets/autopilot available to all users, SDK APIs, memory improvements
-   - **Note:** Versions are changing rapidly - verify latest versions before implementation
-
-4. **Error Handling:**
-   - Graceful fallback when subagents unavailable
-   - Platform-specific error detection (e.g., Cursor CLI limitation)
-   - Fallback to direct platform invocation without subagents
-
-5. **Cost & Performance:**
-   - Multiple subagent invocations increase token usage
-   - Async subagents (Cursor 2.5) reduce latency
-   - Platform-specific optimizations (e.g., Copilot fleets for parallel work)
-
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Personas.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 ## Platform-Specific Limitations & Workarounds
 

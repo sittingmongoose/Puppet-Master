@@ -139,6 +139,30 @@ Puppet Master must support both of these DockerHub authentication paths:
 
 PAT support remains mandatory even though browser login is supported.
 
+### Browser/device login execution contract
+
+- `cmd.docker.browser_login` MUST launch the DockerHub browser/device login flow and immediately emit `docker.auth.browser_login.started`.
+- When the device/browser flow is initialized, Puppet Master MUST emit `docker.auth.browser_login.device_code_issued` with `verification_uri`, `user_code`, and `expires_in_seconds`.
+- While awaiting completion, Puppet Master MUST emit `docker.auth.browser_login.polling` every 5 seconds until a terminal outcome occurs.
+- Terminal outcomes are exactly one of:
+  - `docker.auth.capability_validated`
+  - `docker.auth.browser_login.cancelled`
+  - `docker.auth.browser_login.timed_out`
+  - `docker.auth.failed`
+- PAT entry MUST be written through `cmd.docker.save_pat`; PAT format MAY fail locally before network validation runs.
+
+### Credential storage precedence and scope
+
+- Browser-login credentials MUST be read from Docker's credential-helper / `~/.docker/config.json` chain.
+- PAT credentials MUST be read from the OS credential store only.
+- DockerHub credentials are **global per OS user account**.
+- `requested_auth_mode`, selected namespace/repository, and last validation snapshot remain **project-scoped UI state**.
+- Clearing credentials MUST declare whether the action clears browser-login credentials, PAT credentials, or both.
+
+### Auth-expiry failure rule
+
+If auth expires during image push, Puppet Master MUST emit `docker.publish.failed` with `reason_code: auth_expired`, preserve the local build result, and surface a re-auth + retry CTA without forcing a rebuild.
+
 ### Requested vs effective auth state
 Puppet Master must model requested auth mode separately from effective capability.
 
@@ -194,6 +218,17 @@ If the selected DockerHub repository does not exist:
   - privacy
 - the confirmation step is mandatory and cannot be bypassed by YOLO modes, agent autonomy, or any other fast-path setting
 
+#### Repository creation confirmation flow
+
+Repository creation is a two-step flow:
+
+1. `cmd.docker.create_repository` validates the proposed namespace/repository/privacy tuple and emits `docker.repository.create.confirmation_requested`.
+2. The confirmation modal shows namespace, repository name, privacy, and the private-by-default notice.
+3. Confirm dispatches `cmd.docker.create_repository.confirm`.
+4. Cancel dispatches `cmd.docker.create_repository.cancel`.
+
+This confirmation is distinct from image-push approval. Approving an image push MUST NOT implicitly approve creation of a missing DockerHub repository.
+
 ### Default repository privacy
 - default privacy for newly created repositories: private
 - the confirmation dialog must make this default explicit
@@ -218,6 +253,17 @@ Required actions:
 - inspect health status
 - show resolved access URL/port if one exists
 
+#### Runtime access URL resolution
+
+Access URL resolution order is:
+
+1. explicit user override for this project
+2. first published host-port mapping from compose / container inspect, preferring ports `443`, `80`, `3000`, `8080`, then the next published port
+3. known web-UI metadata/label if present
+4. no access URL
+
+When no access URL is available, Docker Manage MUST show `No direct access URL detected` and disable the open action rather than guessing.
+
 ### Publish flow
 - publish uses DockerHub-targeted image tags and namespace/repository selection
 - push policy remains `manual` by default with optional `after_build`
@@ -229,6 +275,20 @@ Required actions:
   - platform list
   - sanitized logs path
 
+#### Tag template resolution contract
+
+| Variable | Resolution source | Format | Failure behavior |
+|---|---|---|---|
+| `{commit}` | HEAD commit of the active project repo | first 12 lowercase hex chars | block publish if the template references `{commit}` and no HEAD commit exists |
+| `{version}` | detected canonical project version (`Cargo.toml`, `package.json`, then explicit user override) | lowercase value after Docker-tag sanitization | block publish if unresolved and no user override exists |
+| `{timestamp}` | UTC publish-start time | `YYYYMMDD-HHMMSSZ` | never fails |
+
+- Tag templates MAY combine literals and multiple variables.
+- After substitution, tags MUST be lowercased.
+- Characters outside `[a-z0-9_.-]` MUST be replaced with `-`.
+- Consecutive `-` MUST be collapsed.
+- An empty post-sanitization tag is invalid and MUST block publish with explicit remediation text.
+
 ### Post-publish follow-on flow
 After successful image publishing:
 1. if `Generate/Update Unraid XML after successful publish` is enabled, generate or update the Unraid XML
@@ -238,6 +298,111 @@ After successful image publishing:
 5. present a one-click push action from the UI
 
 ## Unraid XML generation and distribution model
+
+### Canonical generated-artifact contract
+
+The managed Unraid flow produces three artifact classes:
+
+1. **Application template XML** at `<maintainer_slug>/<project_slug>.xml`
+2. **Maintainer profile XML** at `ca_profile.xml`
+3. **Repo-managed image assets** under `assets/maintainer/` when the user uploads images instead of referencing external URLs
+
+#### Artifact input provenance
+
+| Canonical PM field | Primary source | Fallback / user override | Required for auto-commit | Required for auto-push |
+|---|---|---|---|---|
+| `project_slug` | Project identity | User override in template settings | Yes | Yes |
+| `display_name` | Project display name | User override | Yes | Yes |
+| `image_ref` | `docker_publish_result` (`namespace/repository:tag`) | None | Yes | Yes |
+| `image_digest` | `docker_publish_result.digest[]` | None | No | No |
+| `registry_host` | `docker_publish_result.registry_host` | None | Yes | Yes |
+| `web_ui_url` | Resolved preview/runtime access URL | User-entered URL override | No | No |
+| `support_url` | Project support/docs URL | User-entered maintainer URL | No | Yes |
+| `overview_markdown` | Project summary / README excerpt / prior template content | User-edited value | No | Yes |
+| `icon_source` | Repo-managed uploaded asset or external URL | User choice | No | Yes |
+| `category_labels[]` | Project metadata / prior template content | User-edited value | No | Yes |
+| `config_items[]` | Compose/runtime config + prior template content | User-edited value | No | No |
+| `maintainer_slug` | DockerHub namespace by default | User override | Yes | Yes |
+| `maintainer_profile` | Shared or per-project `ca_profile` state | None | Yes | Yes |
+
+#### App-template minimum contract
+
+The first implementation MUST support, at minimum, deterministic generation and round-trip update of these conceptual fields:
+
+- display name
+- image reference
+- registry host
+- overview/description content
+- support URL
+- web UI URL when present
+- icon/image source
+- category labels
+- config entries derived from ports / volumes / environment / path mappings
+- maintainer slug and owning template path
+
+Implementation rule:
+- Puppet Master MAY use an internal normalized model rather than hard-coding UI logic directly to raw XML tags.
+- However, the normalized model MUST map 1:1 to emitted XML content and MUST be documented.
+- Unknown fields present in an existing template MUST be preserved on update unless the user explicitly removes them.
+
+#### `ca_profile.xml` round-trip rule
+
+`ca_profile.xml` editing is a **round-trip** contract, not a one-way generator.
+
+Required behavior:
+- Puppet Master MUST parse existing `ca_profile.xml` into a normalized editor model.
+- The editor model MUST preserve all existing fields, including fields the current UI does not yet expose individually.
+- The first implementation MUST expose editable controls for, at minimum:
+  - maintainer display name
+  - maintainer slug
+  - overview/about text
+  - support URL
+  - icon/image source
+- When the user uploads an image, Puppet Master MUST copy it into the managed template repo by default and rewrite the profile to reference that repo-managed asset.
+- When the user selects external URL mode, Puppet Master MUST preserve the external URL exactly as entered.
+
+#### Validation and review rules
+
+- A successful Docker publish is required before Puppet Master may treat `image_ref` as final for generated template output.
+- Missing `support_url`, `overview_markdown`, or `icon_source` MUST mark the generated result as `needs_review`.
+- `needs_review` MUST NOT block local save or local auto-commit, but it MUST block auto-push and MUST surface a visible warning in Docker Manage.
+- If Puppet Master updates an existing template and cannot map a field safely, it MUST preserve the existing field and mark the template result as `needs_review` rather than dropping data silently.
+
+#### Known-field registry and XML mapping (first implementation)
+
+The first implementation recognizes the fields below as the canonical known-field set. Any other element or attribute encountered in existing XML is an **unknown field** and MUST be preserved verbatim in round-trip output unless the user explicitly removes it.
+
+##### Application template XML
+
+| Normalized field | XML element / shape | Required for local save | Required for auto-push |
+|---|---|---|---|
+| `display_name` | `<Name>` text | Yes | Yes |
+| `image_ref` | `<Repository>` text | Yes | Yes |
+| `registry_host` | `<Registry>` text | No | Yes |
+| `web_ui_url` | `<WebUI>` text | No | No |
+| `support_url` | `<Support>` text | No | Yes |
+| `overview_markdown` | `<Overview>` text or CDATA | No | Yes |
+| `icon_source` | `<Icon>` text | No | Yes |
+| `category_labels[]` | `<Category>` text | No | Yes |
+| `config_items[]` | repeated `<Config ...>` elements | No | No |
+
+##### `Config` type mapping
+
+- port exposure -> `<Config Type="Port" ...>`
+- bind/path mapping -> `<Config Type="Path" ...>`
+- environment variable -> `<Config Type="Variable" ...>`
+- device mapping -> `<Config Type="Device" ...>`
+
+##### `ca_profile.xml` recognized fields
+
+| Normalized field | XML element | Required for auto-push |
+|---|---|---|
+| `display_name` | `<Name>` | Yes |
+| `overview_markdown` | `<Overview>` | Yes |
+| `support_url` | `<Support>` | Yes |
+| `icon_source` | `<Icon>` | Yes |
+
+If the upstream Community Applications schema later adds mandatory fields that Puppet Master must author directly, those fields MUST be added to this known-field registry before implementation expands the generator.
 
 ### Distribution model
 The default distribution target for generated Unraid XML is a separate Unraid template repository / Community Applications-friendly template location. The main application repository may still be offered as an optional export target, but it is not the primary default.
@@ -257,6 +422,96 @@ Rationale that must be preserved in docs:
 - the user can disable managed template-repo handling in settings
 
 ## Unraid template repository setup, layout, and publishing
+
+### Managed template-repo identity and lifecycle contract
+
+#### Default identity rules
+
+When the user chooses **create new template repo**, Puppet Master defaults to:
+
+- **repo name:** `<project_slug>-unraid-template`
+- **default branch:** `main`
+- **local managed working copy:** `.puppet-master/unraid-template-repos/<project_id>/`
+- **template path inside repo:** `<maintainer_slug>/<project_slug>.xml`
+- **maintainer profile path:** `ca_profile.xml`
+
+The user may override repo name, branch, local path, and maintainer slug during setup.
+
+#### Existing-repo selection validation
+
+When the user chooses **select existing template repo**, Puppet Master MUST validate:
+
+1. the path/repo is reachable
+2. the repo root is writable locally
+3. the selected branch exists or can be created explicitly
+4. the repo either already matches the required layout or can be migrated with explicit user confirmation
+5. the repo does not contain uncommitted unrelated changes unless the user explicitly adopts the repo in its current state
+
+If validation fails, Puppet Master MUST keep managed publishing disabled for that project and show the exact failing condition.
+
+#### Template-repo status enum
+
+The template-repo status row MUST use one canonical state model:
+
+| State | Meaning | User-visible consequence |
+|---|---|---|
+| `unconfigured` | Managed publishing enabled but no repo has been set up yet | Show setup CTA |
+| `config_invalid` | Repo/path/branch settings exist but validation failed | Block publish follow-on push; show remediation |
+| `clean` | Repo is configured and has no pending local changes | Ready for next generation/update |
+| `dirty_uncommitted` | Managed files changed locally and are not yet committed | Auto-commit may run if changes are PM-owned and safe |
+| `committed_local_only` | Latest managed change is committed locally but not yet pushed | Show one-click push CTA |
+| `push_in_progress` | Remote push is running | Disable duplicate push actions |
+| `push_failed` | Remote push failed after local commit | Preserve local commit; show retry CTA and error |
+| `diverged_remote` | Remote branch changed or local branch is behind/ahead unexpectedly | Block auto-push; require review/reconcile |
+| `needs_review` | Generated template/profile content is incomplete or review-blocked | Allow local inspection/editing; block auto-push |
+
+#### Transition rules
+
+- After successful image publish, Puppet Master generates or updates the managed XML artifacts.
+- If managed publishing is enabled and validation passes, Puppet Master MAY auto-commit the change by default.
+- `needs_review` is entered when required review fields are missing (`support_url`, `overview_markdown`, `icon_source`) or when existing XML cannot be mapped safely without preserving passthrough content.
+- `needs_review` is cleared only when a regeneration pass or explicit user save produces a template/profile with all review-required fields present and no unmapped-field warning remains.
+- When `needs_review` clears, the next state is:
+  - `dirty_uncommitted` if managed files changed locally
+  - `clean` if no local managed diff remains
+- PM-owned paths are exactly:
+  - `ca_profile.xml`
+  - `<maintainer_slug>/<project_slug>.xml`
+  - `assets/maintainer/**` written in the current generation pass
+- Auto-commit is allowed only when the working-tree diff is fully contained within the PM-owned path set for the current generation pass.
+- Any unrelated tracked or untracked file change blocks auto-commit and surfaces a `Review repo state` CTA.
+- Auto-commit MUST stop and surface review instead of committing when:
+  - repo status is `config_invalid`, `diverged_remote`, or `needs_review`
+  - unrelated uncommitted files exist in the repo
+  - required managed paths cannot be updated deterministically
+- A successful local auto-commit transitions the repo to `committed_local_only`.
+- One-click push transitions `committed_local_only -> push_in_progress -> clean` on success.
+- A failed push transitions `push_in_progress -> push_failed` and MUST preserve the local commit for retry.
+- `diverged_remote` exits only after the user resolves the branch divergence externally or through a future dedicated reconcile flow and Puppet Master re-validates the repo state.
+
+`commit_status` enum:
+- `not_attempted`
+- `committed`
+- `skipped_review_required`
+- `skipped_unrelated_changes`
+- `failed`
+
+`push_status` enum:
+- `not_attempted`
+- `skipped_auto_push_disabled`
+- `push_in_progress`
+- `completed`
+- `failed`
+
+#### Dirty-repo safety rule
+
+If the selected repo already contains unrelated local modifications, Puppet Master MUST NOT silently fold managed template changes into that worktree state. It MUST require one of:
+
+- user cleans the repo first
+- user explicitly adopts the dirty repo state
+- user switches to a different managed repo path
+
+This prevents the managed workflow from mutating unrelated maintainer work without review.
 
 ### Setup flow
 When managed Unraid template-repo publishing is enabled and no template repo is configured yet, Puppet Master must offer both:

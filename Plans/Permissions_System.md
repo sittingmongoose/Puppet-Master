@@ -199,6 +199,22 @@ ContractRef: PolicyRule:Decision_Policy.md§2
 
 **Configurable:** The action (`allow`, `ask`, `deny`) and the allowlist are configurable via the `external_directory` permission key and its `allowlist` sub-key.
 
+### 4.3 `external_publish_side_effect`
+
+**Trigger:** A run attempts a remote side effect that changes DockerHub publication state or managed Unraid template-repo remote state.
+
+Covered operations:
+- DockerHub repository creation
+- DockerHub image push when initiated by an agent/autonomous flow rather than a direct user click
+- creation of a managed remote template repository
+- remote push of the managed Unraid template repository
+
+**Default action:** `ask`
+
+**Behavior:** This guard is **non-bypassable**. `yolo` mode, session-scoped `always` approvals, and generic prior allows MUST NOT suppress it. A direct user click approves only the exact remote side effect named by that clicked control. If one UI flow chains multiple remote side effects, Puppet Master MUST present a separate approval step for each remote side effect in execution order.
+
+**Failure presentation:** When blocked or rejected, the runtime MUST surface an error object that identifies the blocked remote step, the guard name, and the exact recovery options available from the current surface. Docker Manage and orchestrator surfaces MUST show the blocking reason inline; autonomous/chat-driven flows MUST also surface the block in chat/evidence output.
+
 ---
 
 ## 5. Tool permission keys
@@ -303,6 +319,7 @@ ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Tools.md
 | `todowrite` | `allow` | State write (subagent: `deny`) |
 | `external_directory` | `ask` | Paths outside project roots |
 | `doom_loop` | `ask` | Identical repeated calls |
+| `external_publish_side_effect` | `ask` | Remote publication and remote repo mutation require explicit approval even in fast/autonomous modes |
 | *(any unknown tool)* | `ask` | Safe default for new/MCP tools |
 
 ### 7.1 Default `.env` deny rules
@@ -328,19 +345,19 @@ ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
 
 <a id="RESOLUTION"></a>
 
-The policy engine evaluates permission for a single tool invocation using the following deterministic algorithm. Steps are executed in order; the first step that produces a result terminates the algorithm.
+The policy engine evaluates permission for a single tool invocation using the following deterministic algorithm. Steps are executed in order; the first step that produces a result terminates the algorithm unless a special guard later applies a more restrictive outcome.
 
 Rule: Given identical inputs (tool name, invocation context, config, mode, session state), the algorithm MUST always produce the same result.
 
 ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3
 
-1. **Mode override:** If the run mode is `yolo`, return `allow`. If the run mode is `ask` or `plan`, and the tool is mutating (`edit`, `bash`, `task`, `webfetch`, `websearch`, `repo.import`, `media.generate`, `todowrite`), return `deny`.
-2. **Session cache (Assistant only):** If this tool+context matches a session-scoped `allow` rule (from prior `always` responses), return `allow`.
+1. **Mode override:** If the run mode is `yolo`, return `allow` for tool-permission evaluation only. Non-bypassable special guards are still evaluated in step 7 and may still require approval. If the run mode is `ask` or `plan`, and the tool is mutating (`edit`, `bash`, `task`, `webfetch`, `websearch`, `repo.import`, `media.generate`, `todowrite`), return `deny`.
+2. **Session cache (Assistant only):** If this tool+context matches a session-scoped `allow` rule (from prior `always` responses), return `allow`, except that session-scoped allows MUST NOT suppress non-bypassable special guards.
 3. **Persona overrides:** If the active Persona has a `default_permissions_profile` that contains a matching rule for this tool+context, use it.
 4. **Project-level rules:** If `.puppet-master/permissions.toml` in the active project contains a matching rule, use it.
 5. **Global-level rules:** If `~/.config/puppet-master/permissions.toml` contains a matching rule, use it.
 6. **Defaults:** Use the default from §7 (including §7.1 granular defaults for `read`).
-7. **Special guards:** After steps 1–6, additionally evaluate `external_directory` (§4.2) and `doom_loop` (§4.1). If a guard triggers and its action is more restrictive than the result from steps 1–6 (`deny` > `ask` > `allow`), the guard's action wins.
+7. **Special guards:** After steps 1–6, additionally evaluate `external_directory` (§4.2), `doom_loop` (§4.1), and `external_publish_side_effect` (§4.3). If a guard triggers and its action is more restrictive than the result from steps 1–6 (`deny` > `ask` > `allow`), the guard action wins. `external_publish_side_effect` is non-bypassable and cannot be satisfied by a generic prior allow; it requires approval scoped to the exact remote side effect being attempted.
 
 **Post-resolution:** If the result is `allow` (or `ask` approved), FileSafe guards (`Plans/FileSafe.md`) are evaluated as a separate layer. A tool may be permission-allowed but FileSafe-blocked.
 
@@ -391,6 +408,7 @@ webfetch = "allow"
 [guards]
 doom_loop = "ask"
 external_directory = "ask"
+external_publish_side_effect = "ask"
 
 # External directory allowlist
 [guards.external_directory]
@@ -563,3 +581,54 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Progre
 ---
 
 *Document created for planning only; no code changes.*
+## 12A. DockerHub / Unraid remote-side-effect guard addendum
+
+This addendum extends §§4, 5, and 7 for DockerHub publication and managed Unraid template-repo flows.
+
+### 12A.1 `external_publish_side_effect`
+
+`external_publish_side_effect` is a special guard for remote side effects that change publication visibility, remote repository state, or remote distribution state.
+
+Covered operations include:
+
+- DockerHub repository creation
+- DockerHub image push when initiated by an agent/autonomous flow rather than a direct user click
+- creation of a managed remote template repo
+- remote push of the managed Unraid template repo
+
+### 12A.2 Behavior
+
+- Default action: `ask`
+- This guard is **non-bypassable**
+- `yolo` mode MUST NOT auto-allow this guard
+- Session-scoped `always` approvals MUST NOT suppress this guard globally
+- A direct user click on the exact publish/create/push button counts as approval for **that one requested side effect only**
+- Follow-on side effects still require their own approval when they were not part of the same direct user action
+
+Example:
+- Clicking **Push image** may approve the image push itself
+- It does **not** auto-approve creating a missing DockerHub repo if the repo does not already exist
+- It does **not** auto-approve pushing the managed Unraid template repo unless that was the exact user action requested
+
+### 12A.3 Failure behavior
+
+When the guard is rejected:
+
+- local build results remain intact
+- local template generation/editing remains intact
+- remote side effects do not execute
+- the agent/runtime MUST surface a corrected error describing which remote step was blocked
+
+### 12A.4 Canonical key/default additions
+
+Add the following entry to the §5 tool/special-guard key list:
+
+| Key | Category | Scope | Notes |
+|---|---|---|---|
+| `external_publish_side_effect` | Guard | Remote publication and remote repo mutation | Non-bypassable ask for DockerHub/Unraid remote side effects |
+
+Add the following entry to the §7 defaults table:
+
+| Key | Default | Rationale |
+|---|---|---|
+| `external_publish_side_effect` | `ask` | Remote publication and repo creation can change privacy/distribution state and require explicit approval |

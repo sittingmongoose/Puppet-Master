@@ -1,0 +1,239 @@
+{
+  "schema_id": "pm.pipeline.research_packet.v1",
+  "run_id": "rewrite-20260307-222041-dockerhub-docker-management-and-unraid-template-publishing-audit-gaps",
+  "created_at_utc": "2026-03-07T22:20:41Z",
+  "topic": "DockerHub, Docker management, and Unraid template publishing audit gaps",
+  "objective": "Capture the buildability and spec-completeness audit for DockerHub image publishing, contextual Docker management, and Unraid template publishing so follow-up plan rewrites can repair the missing contracts, resolve contradictions, and make the feature implementation-deterministic across GUI, orchestration, permissions, persistence, and generated artifacts.",
+  "decisions": [
+    {
+      "id": "audit-scope-primary-docs",
+      "topic": "Audit coverage",
+      "choice": "Treat Plans/Containers_Registry_and_Unraid.md as the primary SSOT under audit, and read the connected contracts in FinalGUISpec.md, newtools.md, Orchestrator_Page.md, feature-list.md, GUI_Rebuild_Requirements_Checklist.md, 00-plans-index.md, UI_Command_Catalog.md, storage-plan.md, and Permissions_System.md for cross-doc buildability.",
+      "rationale": "The risk is cross-surface inconsistency, not local wording quality inside a single plan."
+    },
+    {
+      "id": "no-new-plans-required",
+      "topic": "Repair strategy",
+      "choice": "Fix the DockerHub/Unraid buildability gaps by updating existing canonical plan docs rather than creating new planning files.",
+      "rationale": "The feature already has an SSOT; the missing work is contract completion and cross-doc wiring."
+    },
+    {
+      "id": "artifact-contract-required",
+      "topic": "Generated artifact specification",
+      "choice": "Add an explicit generated-artifact contract covering application template XML, ca_profile.xml, and repo-managed asset handling.",
+      "rationale": "Auto-generation is currently promised, but the actual artifact model is too vague for deterministic implementation."
+    },
+    {
+      "id": "artifact-provenance-table",
+      "topic": "Artifact input provenance",
+      "choice": "Document a provenance table that maps each important generated-template field to its primary source, fallback override, and whether it is required for auto-commit or auto-push.",
+      "rationale": "Implementers need a deterministic source-of-truth for each generated value."
+    },
+    {
+      "id": "app-template-minimum-fields",
+      "topic": "Application template minimum surface",
+      "choice": "Require the first implementation to support deterministic generation and round-trip update for display name, image reference, registry host, overview content, support URL, web UI URL, icon source, category labels, config entries, maintainer slug, and template path ownership.",
+      "rationale": "Without a minimum field set, multiple implementers will generate materially different templates."
+    },
+    {
+      "id": "unknown-field-preservation",
+      "topic": "Round-trip preservation",
+      "choice": "Unknown or currently unmapped fields in existing Unraid template XML and ca_profile.xml must be preserved on update unless the user explicitly removes them.",
+      "rationale": "The managed workflow should not silently destroy maintainer-authored data."
+    },
+    {
+      "id": "ca-profile-roundtrip-editor",
+      "topic": "ca_profile.xml editing model",
+      "choice": "Treat ca_profile.xml editing as a round-trip parser/editor contract, not a one-way generator, and require a normalized editor model that can preserve fields beyond the initial UI subset.",
+      "rationale": "The plan already says all fields are editable; that requires a preservation model, not just a bootstrap generator."
+    },
+    {
+      "id": "needs-review-gating",
+      "topic": "Review-state gating",
+      "choice": "Missing public-facing metadata such as support URL, overview text, or icon source should mark generated results as needs_review, allow local save and local auto-commit, but block auto-push until review is resolved.",
+      "rationale": "This preserves workflow speed without allowing incomplete public metadata to publish by default."
+    },
+    {
+      "id": "managed-template-repo-lifecycle",
+      "topic": "Managed template repository workflow",
+      "choice": "Add a template-repo lifecycle contract with repo identity defaults, local working-copy defaults, existing-repo validation rules, a canonical status enum, and explicit transition rules.",
+      "rationale": "Managed publishing by default requires a full lifecycle model, not just a couple of toggles."
+    },
+    {
+      "id": "template-repo-default-identity",
+      "topic": "Template repo identity defaults",
+      "choice": "Default create-new setup to repo name <project_slug>-unraid-template, branch main, local managed copy under .puppet-master/unraid-template-repos/<project_id>/, template path <maintainer_slug>/<project_slug>.xml, and maintainer profile path ca_profile.xml.",
+      "rationale": "Creation flow and persistence need concrete defaults to be testable and reproducible."
+    },
+    {
+      "id": "template-repo-status-model",
+      "topic": "Template repo status row",
+      "choice": "Use one canonical status model: unconfigured, config_invalid, clean, dirty_uncommitted, committed_local_only, push_in_progress, push_failed, diverged_remote, and needs_review.",
+      "rationale": "The UI already promises status, but state transitions are otherwise underspecified."
+    },
+    {
+      "id": "dirty-repo-protection",
+      "topic": "Dirty worktree safety",
+      "choice": "Managed template updates must not silently merge into unrelated dirty repo state; the user must clean the repo, explicitly adopt the dirty state, or choose a different managed repo path.",
+      "rationale": "Managed repo automation should not mutate unrelated maintainer work without consent."
+    },
+    {
+      "id": "replace-pat-only-gui-contract",
+      "topic": "FinalGUISpec consistency",
+      "choice": "Replace the current PAT-only Settings > Advanced > Containers & Registry section with a full dual-auth, repository-management, template-repo, and ca_profile contract.",
+      "rationale": "The older base section currently contradicts the newer canonical DockerHub/Unraid SSOT."
+    },
+    {
+      "id": "newtools-override-pat-only-contract",
+      "topic": "newtools consistency",
+      "choice": "Treat the DockerHub/Unraid addendum as a normative override wherever \u00a714.7 still reads as a PAT-only auth contract, and add the missing doctor checks and result payload minima.",
+      "rationale": "Execution/preflight docs must align with the feature SSOT or implementation will drift."
+    },
+    {
+      "id": "doctor-check-expansion",
+      "topic": "Doctor/preflight coverage",
+      "choice": "Canonical DockerHub/Unraid doctor checks must include Buildx readiness, requested-auth-to-effective-capability validation, repository access, template-repo validity, and ca_profile review readiness.",
+      "rationale": "The runtime flow cannot be reliably blocked or remediated without these explicit checks."
+    },
+    {
+      "id": "result-payload-minima",
+      "topic": "Evidence/result contract",
+      "choice": "Define payload minima for docker_auth_result, docker_publish_result, and unraid_template_result, including capability state, account identity, publish digests/tags/platforms, template paths, commit/push status, and review state.",
+      "rationale": "GUI, orchestration, and evidence all depend on stable structured outputs."
+    },
+    {
+      "id": "ui-command-catalog-required",
+      "topic": "Stable command wiring",
+      "choice": "Update UI_Command_Catalog.md with Docker/Unraid command IDs for browser login, auth validation, clearing credentials, repository refresh/create, template-repo setup, image push, template update, template-repo push, and related open actions.",
+      "rationale": "The feature adds UI actions across multiple surfaces, but the stable command catalog is currently missing the required entries."
+    },
+    {
+      "id": "expected-events-required",
+      "topic": "Event naming for UI commands",
+      "choice": "Each new Docker/Unraid command must declare expected event names such as docker.auth.capability_validated, docker.repository.created, docker.publish.completed, unraid.template.generation.completed, and unraid.template_repo.push.completed/failed.",
+      "rationale": "Without expected events, wiring matrices and persistence/event verification cannot be deterministic."
+    },
+    {
+      "id": "storage-scope-split",
+      "topic": "Persistence scoping",
+      "choice": "Split DockerHub/Unraid persistence into secret material in OS credential storage only, global defaults in redb, project state in redb, and auth/publish/template transitions in seglog.",
+      "rationale": "The feature spans both shared and per-project state, and secrets must remain out of redb and evidence."
+    },
+    {
+      "id": "required-redb-keys",
+      "topic": "Persistent state contract",
+      "choice": "Add redb keys for settings.containers_registry.v1, docker.project_state.{project_id}, unraid.template_repo.{project_id}, unraid.ca_profile.shared, and unraid.ca_profile.project.{project_id}.",
+      "rationale": "The current state model is named, but not persistently wired."
+    },
+    {
+      "id": "seglog-event-families",
+      "topic": "Seglog event contract",
+      "choice": "Add event families for Docker auth validation/failure, repository creation, publish started/completed/failed, template generation completed/failed, and template repo push completed/failed.",
+      "rationale": "Cross-surface state restoration and auditability require explicit event families."
+    },
+    {
+      "id": "auth-snapshots-advisory",
+      "topic": "Restore semantics",
+      "choice": "Persisted effective auth snapshots may be restored for display, but they are advisory until revalidated against the provider.",
+      "rationale": "This avoids stale UI state being treated as current capability."
+    },
+    {
+      "id": "non-bypassable-remote-side-effect-guard",
+      "topic": "Permissions safety rule",
+      "choice": "Add a special guard named external_publish_side_effect for DockerHub repo creation, agent-initiated image push, managed remote template-repo creation, and managed template-repo push. Default: ask. This guard is non-bypassable and yolo mode must not auto-allow it.",
+      "rationale": "The feature SSOT says repo creation cannot be auto-approved, but the current permissions contract would otherwise allow YOLO/autonomous fast paths."
+    },
+    {
+      "id": "direct-click-approval-scope",
+      "topic": "Approval semantics",
+      "choice": "A direct user click only approves the exact remote side effect requested by that button and does not automatically approve follow-on remote side effects such as missing-repo creation or template-repo push.",
+      "rationale": "This keeps user intent precise and prevents accidental chained publication."
+    },
+    {
+      "id": "no-prohibited-doc-targets",
+      "topic": "Edit target boundaries",
+      "choice": "Do not propose edits to Plans/_shards/**, Plans/.evidence/**, Plans/Spec_Lock.json, or Plans/auto_decisions.jsonl in this packet.",
+      "rationale": "The repair work belongs in canonical source docs only."
+    }
+  ],
+  "doc_intents": [
+    {
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "## Unraid XML generation and distribution model",
+          "content_markdown": "### Canonical generated-artifact contract\n\nThe managed Unraid flow produces three artifact classes:\n\n1. **Application template XML** at `<maintainer_slug>/<project_slug>.xml`\n2. **Maintainer profile XML** at `ca_profile.xml`\n3. **Repo-managed image assets** under `assets/maintainer/` when the user uploads images instead of referencing external URLs\n\n#### Artifact input provenance\n\n| Canonical PM field | Primary source | Fallback / user override | Required for auto-commit | Required for auto-push |\n|---|---|---|---|---|\n| `project_slug` | Project identity | User override in template settings | Yes | Yes |\n| `display_name` | Project display name | User override | Yes | Yes |\n| `image_ref` | `docker_publish_result` (`namespace/repository:tag`) | None | Yes | Yes |\n| `image_digest` | `docker_publish_result.digest[]` | None | No | No |\n| `registry_host` | `docker_publish_result.registry_host` | None | Yes | Yes |\n| `web_ui_url` | Resolved preview/runtime access URL | User-entered URL override | No | No |\n| `support_url` | Project support/docs URL | User-entered maintainer URL | No | Yes |\n| `overview_markdown` | Project summary / README excerpt / prior template content | User-edited value | No | Yes |\n| `icon_source` | Repo-managed uploaded asset or external URL | User choice | No | Yes |\n| `category_labels[]` | Project metadata / prior template content | User-edited value | No | Yes |\n| `config_items[]` | Compose/runtime config + prior template content | User-edited value | No | No |\n| `maintainer_slug` | DockerHub namespace by default | User override | Yes | Yes |\n| `maintainer_profile` | Shared or per-project `ca_profile` state | None | Yes | Yes |\n\n#### App-template minimum contract\n\nThe first implementation MUST support, at minimum, deterministic generation and round-trip update of these conceptual fields:\n\n- display name\n- image reference\n- registry host\n- overview/description content\n- support URL\n- web UI URL when present\n- icon/image source\n- category labels\n- config entries derived from ports / volumes / environment / path mappings\n- maintainer slug and owning template path\n\nImplementation rule:\n- Puppet Master MAY use an internal normalized model rather than hard-coding UI logic directly to raw XML tags.\n- However, the normalized model MUST map 1:1 to emitted XML content and MUST be documented.\n- Unknown fields present in an existing template MUST be preserved on update unless the user explicitly removes them.\n\n#### `ca_profile.xml` round-trip rule\n\n`ca_profile.xml` editing is a **round-trip** contract, not a one-way generator.\n\nRequired behavior:\n- Puppet Master MUST parse existing `ca_profile.xml` into a normalized editor model.\n- The editor model MUST preserve all existing fields, including fields the current UI does not yet expose individually.\n- The first implementation MUST expose editable controls for, at minimum:\n  - maintainer display name\n  - maintainer slug\n  - overview/about text\n  - support URL\n  - icon/image source\n- When the user uploads an image, Puppet Master MUST copy it into the managed template repo by default and rewrite the profile to reference that repo-managed asset.\n- When the user selects external URL mode, Puppet Master MUST preserve the external URL exactly as entered.\n\n#### Validation and review rules\n\n- A successful Docker publish is required before Puppet Master may treat `image_ref` as final for generated template output.\n- Missing `support_url`, `overview_markdown`, or `icon_source` MUST mark the generated result as `needs_review`.\n- `needs_review` MUST NOT block local save or local auto-commit, but it MUST block auto-push and MUST surface a visible warning in Docker Manage.\n- If Puppet Master updates an existing template and cannot map a field safely, it MUST preserve the existing field and mark the template result as `needs_review` rather than dropping data silently.\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "## Unraid template repository setup, layout, and publishing",
+          "content_markdown": "### Managed template-repo identity and lifecycle contract\n\n#### Default identity rules\n\nWhen the user chooses **create new template repo**, Puppet Master defaults to:\n\n- **repo name:** `<project_slug>-unraid-template`\n- **default branch:** `main`\n- **local managed working copy:** `.puppet-master/unraid-template-repos/<project_id>/`\n- **template path inside repo:** `<maintainer_slug>/<project_slug>.xml`\n- **maintainer profile path:** `ca_profile.xml`\n\nThe user may override repo name, branch, local path, and maintainer slug during setup.\n\n#### Existing-repo selection validation\n\nWhen the user chooses **select existing template repo**, Puppet Master MUST validate:\n\n1. the path/repo is reachable\n2. the repo root is writable locally\n3. the selected branch exists or can be created explicitly\n4. the repo either already matches the required layout or can be migrated with explicit user confirmation\n5. the repo does not contain uncommitted unrelated changes unless the user explicitly adopts the repo in its current state\n\nIf validation fails, Puppet Master MUST keep managed publishing disabled for that project and show the exact failing condition.\n\n#### Template-repo status enum\n\nThe template-repo status row MUST use one canonical state model:\n\n| State | Meaning | User-visible consequence |\n|---|---|---|\n| `unconfigured` | Managed publishing enabled but no repo has been set up yet | Show setup CTA |\n| `config_invalid` | Repo/path/branch settings exist but validation failed | Block publish follow-on push; show remediation |\n| `clean` | Repo is configured and has no pending local changes | Ready for next generation/update |\n| `dirty_uncommitted` | Managed files changed locally and are not yet committed | Auto-commit may run if changes are PM-owned and safe |\n| `committed_local_only` | Latest managed change is committed locally but not yet pushed | Show one-click push CTA |\n| `push_in_progress` | Remote push is running | Disable duplicate push actions |\n| `push_failed` | Remote push failed after local commit | Preserve local commit; show retry CTA and error |\n| `diverged_remote` | Remote branch changed or local branch is behind/ahead unexpectedly | Block auto-push; require review/reconcile |\n| `needs_review` | Generated template/profile content is incomplete or review-blocked | Allow local inspection/editing; block auto-push |\n\n#### Transition rules\n\n- After successful image publish, Puppet Master generates/updates the managed XML artifacts.\n- If managed publishing is enabled and validation passes, Puppet Master MAY auto-commit the change by default.\n- Auto-commit MUST stop and surface review instead of committing when:\n  - repo status is `config_invalid`, `diverged_remote`, or `needs_review`\n  - unrelated uncommitted files exist in the repo\n  - required managed paths cannot be updated deterministically\n- A successful local auto-commit transitions the repo to `committed_local_only`.\n- One-click push transitions `committed_local_only -> push_in_progress -> clean` on success.\n- A failed push transitions `push_in_progress -> push_failed` and MUST preserve the local commit for retry.\n\n#### Dirty-repo safety rule\n\nIf the selected repo already contains unrelated local modifications, Puppet Master MUST NOT silently fold managed template changes into that worktree state. It MUST require one of:\n\n- user cleans the repo first\n- user explicitly adopts the dirty repo state\n- user switches to a different managed repo path\n\nThis prevents the managed workflow from mutating unrelated maintainer work without review.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "**\u00a77.4.8 Containers & Registry (Advanced tab):**",
+          "content_markdown": "**\u00a77.4.8 Containers & Registry (Advanced tab):**\n\nAdd a collapsible **Containers & Registry** card in Settings > Advanced for local container runtime, DockerHub publishing, and managed Unraid template defaults.\n\n- **Runtime controls:** runtime selector (`docker` default), Docker binary path override, compose file path input with Browse/Auto-detect actions, compose project-name strategy (`auto`, `fixed`, `hash-based`), build context path, Dockerfile path, target stage, and target platforms / Buildx readiness.\n- **DockerHub auth controls:** browser/device login action, PAT entry, helper text stating PAT is recommended, link/explainer for obtaining a PAT, stored-auth status, validated account/namespace summary, validate action, clear/remove credentials action, and requested-auth-mode vs effective-capability presentation.\n- **Repository controls:** namespace selector, repository selector, refresh action, create-repository action, tag-template defaults (`{commit}`, `{version}`, `{timestamp}`), and push policy (`manual` default; optional `after_build`).\n- **Create-repository safety:** the create-repository confirmation dialog MUST show namespace, repository name, and privacy; privacy defaults to private and MUST be visibly labeled as the default. This confirmation is non-bypassable.\n- **Unraid controls:** `Generate/Update Unraid XML after successful publish` toggle (default enabled), `Manage Unraid template repository` toggle (default enabled), template repo path/remote/branch settings, setup flow (create-new vs select-existing), auto-push toggle (default disabled), one-click push action, and template-repo status row.\n- **Docker Manage visibility:** include a setting named exactly `Hide Docker Manage when not used in Project.` Default: enabled.\n- **`ca_profile.xml` controls:** scope selector (shared cross-project default vs per-project override), full edit surface, icon/image mode (repo-managed upload vs external URL), and warning state when the profile was auto-generated and still needs review.\n\n**Validation behavior:** `Validate Docker configuration` MUST run inline preflight for Docker reachability, compose validity, Buildx readiness, requested-auth to effective-capability validation, selected repository access, managed template-repo validity (when enabled), and `ca_profile.xml` readiness. Failing checks block the relevant Preview/Build/Push entry points and surface explicit remediation text in the card.\n\n**Persistence behavior:** shared container defaults persist globally; project-specific selection state (namespace/repository/tag policy, template repo state, Docker Manage visibility state, and `ca_profile` scope selection) persists per project. Secrets persist only in OS credential storage.\n\nContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md#147a-dockerhub-browser-auth-repository-management-and-unraid-publishing-addendum, ContractName:Plans/Permissions_System.md\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/newtools.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 14.7A DockerHub browser auth, repository management, and Unraid publishing addendum",
+          "content_markdown": "#### Normative override for \u00a714.7\n\nThis subsection is authoritative wherever \u00a714.7 still reads like a PAT-only contract.\n\n- Supported `requested_auth_mode` values are at least `browser` and `pat`.\n- Validation MUST resolve requested auth into:\n  - `effective_auth_provider_state`\n  - `effective_capabilities[]`\n  - validated account identity\n  - degraded reason when capability is partial\n- Namespace/repository discovery and repository creation MUST use the validated effective capability set; the app MUST NOT assume browser login or PAT implies full management access.\n- If publish is requested and the target repository does not exist, repository creation MUST be guarded by an explicit confirmation that shows namespace, repository, and privacy. This confirmation is mandatory and cannot be bypassed by YOLO/autonomy behavior.\n- Successful publish produces `docker_publish_result`; successful follow-on XML generation / template repo update produces `unraid_template_result`.\n\n#### Canonical doctor / preflight additions for DockerHub + Unraid\n\n| Check ID | Scope | Required signal | Failure behavior |\n|---|---|---|---|\n| `doctor.docker.buildx` | docker build | Buildx reachable and usable for the selected build path | Block container build/publish; show remediation |\n| `doctor.dockerhub.auth.capability` | docker auth | Requested auth validates into effective capability set and account identity | Block repo browsing/creation/publish; show degraded reason |\n| `doctor.dockerhub.repo.access` | docker publish | Selected namespace/repository can be read or created as required | Block publish; preserve local build result |\n| `doctor.unraid.template-repo` | unraid managed publishing | Template repo path/remote/branch settings validate and working copy state is safe | Block managed follow-on push/update; keep local publish result |\n| `doctor.unraid.ca-profile` | unraid maintainer metadata | `ca_profile.xml` exists or can be generated and any missing public metadata is surfaced as review-required | Allow local generation with warning; block auto-push while review is required |\n\n#### Result payload minima\n\n- `docker_auth_result` MUST include: `requested_auth_mode`, `effective_auth_provider_state`, `effective_capabilities[]`, `effective_account_identity`, `last_validation_timestamp`, `last_validation_host`, `degraded_reason?`\n- `docker_publish_result` MUST include: `registry_host`, `namespace`, `repository`, `tags[]`, `digests[]`, `platforms[]`, `sanitized_logs_path`\n- `unraid_template_result` MUST include: `template_xml_path`, `template_repo_id`, `maintainer_slug`, `commit_status`, `push_status`, `ca_profile_state`, `review_state`\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 2.5 Orchestrator page commands",
+          "content_markdown": "#### 2.5A Containers & Registry / Docker Manage commands\n\nThese IDs are required by `Plans/FinalGUISpec.md` \u00a77.4.8 / \u00a77.4.8A and `Plans/Containers_Registry_and_Unraid.md`.\n\n| Command ID | Args schema (keys only) | Expected events | Affected surfaces |\n|---|---|---|---|\n| `cmd.docker.browser_login` | `{ provider?: \"dockerhub\" }` | `docker.auth.browser_login.started`, `docker.auth.capability_validated` or `docker.auth.failed` | Settings > Advanced, Docker Manage |\n| `cmd.docker.validate_auth` | `{ provider?: \"dockerhub\" }` | `docker.auth.capability_validated` or `docker.auth.failed` | Settings > Advanced, Docker Manage |\n| `cmd.docker.clear_credentials` | `{ provider?: \"dockerhub\" }` | `docker.auth.cleared` | Settings > Advanced, Docker Manage |\n| `cmd.docker.refresh_repositories` | `{ namespace?: string }` | `docker.repositories.refreshed` or `docker.repositories.refresh_failed` | Settings > Advanced, Docker Manage |\n| `cmd.docker.create_repository` | `{ namespace: string, repository: string, privacy: \"private\" | \"public\" }` | `docker.repository.create.confirmation_requested`, `docker.repository.created` or `docker.repository.create_failed` | Settings > Advanced, Docker Manage |\n| `cmd.docker.template_repo_setup` | `{ mode: \"create_new\" | \"select_existing\", repo_path?: string, remote_url?: string, branch?: string }` | `unraid.template_repo.validated` or `unraid.template_repo.validation_failed` | Settings > Advanced, Docker Manage |\n\n#### Additional rows required in \u00a72.5 Orchestrator page commands\n\n| Command ID | Args schema (keys only) | Expected events | Affected surfaces |\n|---|---|---|---|\n| `cmd.orchestrator.push_image` | `{ namespace?: string, repository?: string, tag_template?: string }` | `docker.publish.started`, `docker.publish.completed` or `docker.publish.failed` | Orchestrator page, Dashboard, Docker Manage |\n| `cmd.orchestrator.open_running_container` | `{ preview_session_id?: string, url?: string }` | no persisted domain event (external open action) | Orchestrator page, Dashboard, Docker Manage |\n| `cmd.orchestrator.open_container_logs` | `{ preview_session_id?: string }` | no persisted domain event (navigation/open action) | Orchestrator page, Dashboard, Docker Manage |\n| `cmd.orchestrator.update_unraid_template` | `{ publish_result_id?: string }` | `unraid.template.generation.started`, `unraid.template.generation.completed` or `unraid.template.generation.failed` | Orchestrator page, Docker Manage |\n| `cmd.orchestrator.push_unraid_template_repo` | `{ template_repo_id?: string }` | `unraid.template_repo.push.started`, `unraid.template_repo.push.completed` or `unraid.template_repo.push.failed` | Orchestrator page, Docker Manage |\n| `cmd.orchestrator.open_unraid_template_repo` | `{ template_repo_id?: string }` | no persisted domain event (external open action) | Orchestrator page, Docker Manage |\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 2.3 redb: schema, migrations, key patterns",
+          "content_markdown": "#### Additions: Container publish / DockerHub / Unraid persistence contract\n\nThis addendum defines the minimum persistence contract required so Settings, Docker Manage, Orchestrator, and post-publish flows restore the same state.\n\n##### Scope split\n\n| Scope | Store | What belongs here |\n|---|---|---|\n| Secret | OS credential store only | DockerHub PATs, browser-login derived credentials, credential-helper references |\n| Global app state | redb | Shared container defaults, `Hide Docker Manage when not used in Project.`, shared `ca_profile` draft/profile state |\n| Project state | redb | Selected namespace/repository/tag template, push policy, last validation snapshot (non-secret), Docker Manage surface state, template repo config/status, per-project `ca_profile` override |\n| Event ledger | seglog | Auth validation, repo create, publish, template generation, template repo push state transitions |\n\n##### Required redb keys\n\n- `settings.containers_registry.v1` -> global container defaults (runtime selector, binary path, compose defaults, push-policy default, Docker Manage visibility setting)\n- `docker.project_state.{project_id}` -> `{ requested_auth_mode, effective_auth_snapshot, selected_namespace, selected_repository, tag_template, push_policy, last_validation_timestamp, last_used_docker_surface_state }`\n- `unraid.template_repo.{project_id}` -> `{ enabled, repo_path, remote_url, branch, maintainer_slug, status, last_commit_oid?, last_push_ts?, review_state }`\n- `unraid.ca_profile.shared` -> shared maintainer profile model\n- `unraid.ca_profile.project.{project_id}` -> per-project override model when project scope is enabled\n\n##### Required seglog event families\n\n| Event type | Minimum payload |\n|---|---|\n| `docker.auth.capability_validated` | `project_id`, `requested_auth_mode`, `effective_auth_provider_state`, `effective_capabilities[]`, `effective_account_identity`, `degraded_reason?` |\n| `docker.auth.failed` | `project_id`, `requested_auth_mode`, `reason_code`, `message` |\n| `docker.repository.created` | `project_id`, `namespace`, `repository`, `privacy` |\n| `docker.publish.started` | `project_id`, `namespace`, `repository`, `tags[]` |\n| `docker.publish.completed` | `project_id`, `publish_result_id`, `registry_host`, `namespace`, `repository`, `tags[]`, `digests[]`, `platforms[]` |\n| `docker.publish.failed` | `project_id`, `namespace`, `repository`, `reason_code`, `message` |\n| `unraid.template.generation.completed` | `project_id`, `template_xml_path`, `template_repo_id`, `review_state`, `ca_profile_state` |\n| `unraid.template.generation.failed` | `project_id`, `template_repo_id?`, `reason_code`, `message` |\n| `unraid.template_repo.push.completed` | `project_id`, `template_repo_id`, `branch`, `remote_url`, `commit_oid` |\n| `unraid.template_repo.push.failed` | `project_id`, `template_repo_id`, `branch`, `reason_code`, `message` |\n\n##### Restore rules\n\n- Effective auth capability snapshots MAY be restored for UI display, but they are advisory until revalidated.\n- Secret material MUST NOT be mirrored into redb or seglog.\n- Template repo status MUST be recomputed from the working copy on project open and then reconciled with the last persisted snapshot.\n- Shared `ca_profile` state is the default source unless the project explicitly enables per-project override.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "## 12A. DockerHub / Unraid remote-side-effect guard addendum\n\nThis addendum extends \u00a7\u00a74, 5, and 7 for DockerHub publication and managed Unraid template-repo flows.\n\n### 12A.1 `external_publish_side_effect`\n\n`external_publish_side_effect` is a special guard for remote side effects that change publication visibility, remote repository state, or remote distribution state.\n\nCovered operations include:\n\n- DockerHub repository creation\n- DockerHub image push when initiated by an agent/autonomous flow rather than a direct user click\n- creation of a managed remote template repo\n- remote push of the managed Unraid template repo\n\n### 12A.2 Behavior\n\n- Default action: `ask`\n- This guard is **non-bypassable**\n- `yolo` mode MUST NOT auto-allow this guard\n- Session-scoped `always` approvals MUST NOT suppress this guard globally\n- A direct user click on the exact publish/create/push button counts as approval for **that one requested side effect only**\n- Follow-on side effects still require their own approval when they were not part of the same direct user action\n\nExample:\n- Clicking **Push image** may approve the image push itself\n- It does **not** auto-approve creating a missing DockerHub repo if the repo does not already exist\n- It does **not** auto-approve pushing the managed Unraid template repo unless that was the exact user action requested\n\n### 12A.3 Failure behavior\n\nWhen the guard is rejected:\n\n- local build results remain intact\n- local template generation/editing remains intact\n- remote side effects do not execute\n- the agent/runtime MUST surface a corrected error describing which remote step was blocked\n\n### 12A.4 Canonical key/default additions\n\nAdd the following entry to the \u00a75 tool/special-guard key list:\n\n| Key | Category | Scope | Notes |\n|---|---|---|---|\n| `external_publish_side_effect` | Guard | Remote publication and remote repo mutation | Non-bypassable ask for DockerHub/Unraid remote side effects |\n\nAdd the following entry to the \u00a77 defaults table:\n\n| Key | Default | Rationale |\n|---|---|---|\n| `external_publish_side_effect` | `ask` | Remote publication and repo creation can change privacy/distribution state and require explicit approval |\n"
+        }
+      ]
+    }
+  ]
+}

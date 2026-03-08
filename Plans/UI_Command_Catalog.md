@@ -162,6 +162,45 @@ ContractRef: ContractName:Plans/Run_Graph_View.md#17, ContractName:Plans/Contrac
 ---
 
 ### 2.5 Orchestrator page commands
+#### 2.5A Containers & Registry / Docker Manage commands
+
+These IDs are required by `Plans/FinalGUISpec.md` §7.4.8 / §7.4.8A and `Plans/Containers_Registry_and_Unraid.md`.
+
+##### Deterministic ID and fallback rules
+
+- `preview_session_id` is a UUIDv7 created when `cmd.orchestrator.preview_open` starts a preview. If omitted later, resolve to the current active preview for the same `project_id`; if none exists, fail with `reason_code: no_active_preview`.
+- `publish_result_id` is a UUIDv7 created by `docker.publish.completed`. If omitted, resolve to the most recent successful publish for the same `project_id`; if none exists, fail with `reason_code: no_publish_result`.
+- `template_repo_id` is the stable string `unraid-template::<project_id>`. If omitted, resolve to the configured template repo for the same `project_id`; if none exists, fail with `reason_code: no_template_repo`.
+
+##### Docker Manage surface wiring
+
+- Docker Manage **Build** dispatches `cmd.orchestrator.build_run { publish: false }`.
+- Docker Manage **Run / Preview** dispatches `cmd.orchestrator.preview_open { mode: "docker" }`.
+- Docker Manage **Stop / Teardown** dispatches `cmd.orchestrator.preview_stop { preview_session_id? }`.
+
+| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
+|---|---|---|---|
+| `cmd.docker.save_pat` | `{ provider?: "dockerhub", pat: string }` | `docker.auth.pat.saved` or `docker.auth.failed` | Settings > Advanced, Docker Manage |
+| `cmd.docker.browser_login` | `{ provider?: "dockerhub" }` | `docker.auth.browser_login.started`, `docker.auth.browser_login.device_code_issued`, zero or more `docker.auth.browser_login.polling`, terminal: `docker.auth.capability_validated` or `docker.auth.browser_login.cancelled` or `docker.auth.browser_login.timed_out` or `docker.auth.failed` | Settings > Advanced, Docker Manage |
+| `cmd.docker.validate_auth` | `{ provider?: "dockerhub" }` | `docker.auth.capability_validated` or `docker.auth.failed` | Settings > Advanced, Docker Manage |
+| `cmd.docker.clear_credentials` | `{ provider?: "dockerhub", scope?: "browser" | "pat" | "all" }` | `docker.auth.cleared` | Settings > Advanced, Docker Manage |
+| `cmd.docker.refresh_repositories` | `{ namespace?: string }` | `docker.repositories.refreshed` or `docker.repositories.refresh_failed` | Settings > Advanced, Docker Manage |
+| `cmd.docker.create_repository` | `{ namespace: string, repository: string, privacy: "private" | "public" }` | `docker.repository.create.confirmation_requested` | Settings > Advanced, Docker Manage |
+| `cmd.docker.create_repository.confirm` | `{ namespace: string, repository: string, privacy: "private" | "public" }` | `docker.repository.created` or `docker.repository.create_failed` | Settings > Advanced, Docker Manage |
+| `cmd.docker.create_repository.cancel` | `{ namespace: string, repository: string }` | `docker.repository.create.cancelled` | Settings > Advanced, Docker Manage |
+| `cmd.docker.template_repo_setup` | `{ mode: "create_new" | "select_existing", repo_path?: string, remote_url?: string, branch?: string }` | `unraid.template_repo.validated` or `unraid.template_repo.validation_failed` | Settings > Advanced, Docker Manage |
+
+#### Additional rows required in §2.5 Orchestrator page commands
+
+| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
+|---|---|---|---|
+| `cmd.orchestrator.push_image` | `{ namespace?: string, repository?: string, tag_template?: string }` | `docker.publish.started`, `docker.publish.completed` or `docker.publish.failed` | Orchestrator page, Dashboard, Docker Manage |
+| `cmd.orchestrator.open_running_container` | `{ preview_session_id?: string, url?: string }` | no persisted domain event (external open action) | Orchestrator page, Dashboard, Docker Manage |
+| `cmd.orchestrator.open_container_logs` | `{ preview_session_id?: string }` | no persisted domain event (navigation/open action) | Orchestrator page, Dashboard, Docker Manage |
+| `cmd.orchestrator.update_unraid_template` | `{ publish_result_id?: string }` | `unraid.template.generation.started`, `unraid.template.generation.completed` or `unraid.template.generation.failed` | Orchestrator page, Docker Manage |
+| `cmd.orchestrator.push_unraid_template_repo` | `{ template_repo_id?: string }` | `unraid.template_repo.push.started`, `unraid.template_repo.push.completed` or `unraid.template_repo.push.failed` | Orchestrator page, Docker Manage |
+| `cmd.orchestrator.open_unraid_template_repo` | `{ template_repo_id?: string }` | no persisted domain event (external open action) | Orchestrator page, Docker Manage |
+
 These IDs are required by `Plans/Orchestrator_Page.md`.
 
 | Command ID | Args schema (keys only) | Expected events | Affected surfaces |

@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.evidence.schema.v1",
   "evidence_id": "plan-sharding-2026-03-07",
-  "created_at_utc": "2026-03-07T21:49:53.236961+00:00",
+  "created_at_utc": "2026-03-07T23:30:45.581868+00:00",
   "node": {
     "node_id": "plan-sharding"
   },
@@ -17,7 +17,7 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py run-gates",
-      "exit_code": 0
+      "exit_code": 1
     }
   ],
   "tool_calls": [
@@ -348,10 +348,6 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/00-plans-index.md",
-      "change_type": "modified"
-    },
-    {
       "path": "Plans/_shards/FileManager/00-index.md",
       "change_type": "modified"
     },
@@ -425,6 +421,10 @@
     },
     {
       "path": "Plans/_shards/FileManager/18-13-git-status-integration.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/FileManager/19-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md",
       "change_type": "modified"
     },
     {
@@ -629,6 +629,10 @@
     },
     {
       "path": "Plans/_shards/FinalGUISpec/24-17-persona-editor-compatibility-disclosure-and-surface-level-persona-controls-2026-03-06.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/25-rendering-surface-addendum-2026-03-07.md",
       "change_type": "modified"
     },
     {
@@ -1300,6 +1304,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/assistant-chat-design/33-28-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces-2026-03-07.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/assistant-chat-design/manifest.json",
       "change_type": "modified"
     },
@@ -1420,6 +1428,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/feature-list/04-part-1a-markdown-mermaid-and-unified-rendering-addendum-2026-03-07.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/feature-list/manifest.json",
       "change_type": "modified"
     },
@@ -1512,31 +1524,23 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/interview-subagent-integration/22-updated-configuration.md",
+      "path": "Plans/_shards/interview-subagent-integration/22-platform-specific-limitations-workarounds.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/interview-subagent-integration/23-updated-considerations.md",
+      "path": "Plans/_shards/interview-subagent-integration/23-testing-strategy.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/interview-subagent-integration/24-platform-specific-limitations-workarounds.md",
+      "path": "Plans/_shards/interview-subagent-integration/24-user-project-output-contract-sharded-plan-graph-canonical.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/interview-subagent-integration/25-testing-strategy.md",
+      "path": "Plans/_shards/interview-subagent-integration/25-change-summary-2.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/interview-subagent-integration/26-user-project-output-contract-sharded-plan-graph-canonical.md",
-      "change_type": "modified"
-    },
-    {
-      "path": "Plans/_shards/interview-subagent-integration/27-change-summary-2.md",
-      "change_type": "modified"
-    },
-    {
-      "path": "Plans/_shards/interview-subagent-integration/28-persona-stage-strategy-addendum-2026-03-06.md",
+      "path": "Plans/_shards/interview-subagent-integration/26-persona-stage-strategy-addendum-2026-03-06.md",
       "change_type": "modified"
     },
     {
@@ -1657,6 +1661,10 @@
     },
     {
       "path": "Plans/_shards/newfeatures/28-23-gaps-and-potential-issues.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/newfeatures/29-24-unified-markdown-mermaid-html-and-image-rendering-architecture-2026-03-07.md",
       "change_type": "modified"
     },
     {

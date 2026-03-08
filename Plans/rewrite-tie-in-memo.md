@@ -94,3 +94,104 @@ This project is moving to a single, deterministic "agent loop" architecture wher
 ## Suggested "single source of truth" rule for the rewrite
 
 - Provider contracts, unified event model, tool registry, and patch pipeline should be specified in one canonical plan (or one canonical spec section), and other plans should reference it instead of re-describing it
+
+## Unified Document/Media Rendering Contract (2026-03-07)
+
+This addendum locks the rewrite-level rendering contract for Markdown, Mermaid, HTML, SVG, and image viewing.
+
+### Locked architecture
+
+- The rewrite uses a **Slint shell + native Rust document core + isolated preview/browser runtime** split.
+- The architecture is **unified across chat, file editor, embedded document panes, detached preview windows, and browser surfaces**. Do not create separate ad-hoc rendering stacks for Markdown preview, Mermaid preview, and HTML preview.
+- The canonical saved artifact remains source text or file bytes:
+  - Markdown is canonical as Markdown text.
+  - Mermaid is canonical as fenced `mermaid` Markdown blocks or `.mmd` text.
+  - HTML remains canonical as HTML source files.
+  - Images remain canonical as image files.
+- Rendered DOM/SVG/preview state is a projection and must never become the hidden source of truth.
+
+### Preview session contract
+
+All rendered surfaces use a shared **PreviewSession** model. Minimum state:
+
+- `preview_session_id`
+- `document_id` or `artifact_id`
+- `source_kind` (`markdown`, `mermaid`, `html`, `svg`, `image`, `generated_doc`, `browser_page`)
+- `trust_tier` (`generated_restricted`, `workspace_browser`)
+- `transport_mode` (`internal_preview_origin`, `localhost_browser_preview`, `native_image_surface`)
+- `source_revision`
+- `preview_revision`
+- `attached_surface` (`chat_card`, `editor_preview`, `embedded_doc_pane`, `bottom_panel_browser`, `detached_window`)
+- `capabilities` (for example: `can_export_svg`, `can_export_png`, `can_reload`, `can_open_source`, `can_request_structured_edit`, `can_click_to_context`)
+
+This state model is shared so that reload, export, click-to-context, detached-open, and source navigation do not diverge by surface.
+
+### Transport and trust split
+
+- **Full HTML/browser mode** uses a loopback localhost preview server rooted to the workspace/project context.
+- **Generated Markdown/Mermaid/read-only previews** use an internal preview origin/route controlled by the app.
+- `WebViewBuilder::with_html` is not the primary preview transport.
+- Generated previews are in a **restricted trust tier**:
+  - sanitize generated HTML before it reaches the preview runtime
+  - keep JavaScript minimal and preview-runtime-specific
+  - do not allow arbitrary file access or arbitrary network behavior as part of the preview contract
+- Full HTML/browser mode is a **separate trust tier** and must not inherit source-mutation privileges by default.
+
+### Platform contract
+
+- **Detached preview/browser windows are first-class and are the only cross-platform guaranteed path.**
+- Embedded webviews are an optimization only and may be enabled where the platform adapter proves robust.
+- Linux Wayland must not be blocked on raw child-webview embedding. Detached-first or GTK-bridged behavior is acceptable behind the same abstraction.
+- Linux support must explicitly own:
+  - GTK initialization
+  - GTK/WebKit event-loop advancement rules
+  - runtime dependency/install contract
+  - failure and degraded-mode UX when preview runtime requirements are unavailable
+- Do not assume hidden pre-created preview panes are available on Wayland.
+
+### Source/preview mapping and edit contract
+
+Preview interactions must route through a validated mapping contract instead of directly mutating the rendered DOM.
+
+Minimum mapping entities:
+
+- **RenderedBlockRef**
+  - `node_id`
+  - `block_kind`
+  - `source_start`
+  - `source_end`
+  - `parse_revision`
+  - `capabilities`
+- **PreviewActionRequest**
+  - `preview_session_id`
+  - `node_id`
+  - `parse_revision`
+  - `operation`
+  - `payload`
+- **PreviewActionResult**
+  - `applied_patch`
+  - `rejected_stale_revision`
+  - `fallback_focus_source`
+  - `error`
+
+Rules:
+
+- Source text remains canonical.
+- Preview edits are allowed only through **whitelisted structured commands** that map to known source spans or fenced diagram blocks.
+- If an action cannot be reversed into a confident source patch, the system must focus/open source editing at the exact mapped block instead of mutating preview state.
+- Raw HTML regions, malformed/unknown syntax, and opaque fenced content remain source-centric.
+
+### Markdown/Mermaid contract
+
+- Use a Rust Markdown parser/mapping pipeline as the canonical Markdown source analysis layer.
+- Generated Markdown preview HTML is sanitized before display.
+- Mermaid is detected from fenced `mermaid` blocks and `.mmd` files, validated before render, and rendered natively in preview surfaces.
+- Mermaid uses text as the canonical artifact; do not introduce a hidden second diagram object model.
+- SVG is the canonical Mermaid render/export artifact; PNG is derived from SVG rasterization.
+
+### Non-goals and prohibitions
+
+- No requirement that embedded browser panes work identically on every platform.
+- No requirement that preview-mode editing becomes arbitrary WYSIWYG DOM editing.
+- No hidden diagram state that can drift from `.md` or `.mmd` source.
+- No full-privilege host bridge shared between generated preview content and arbitrary workspace HTML.
