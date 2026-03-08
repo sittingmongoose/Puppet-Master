@@ -141,6 +141,41 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/
 
 ### 2.3 redb: schema, migrations, key patterns
 
+#### Additions: Preview session + browser rendering persistence contract
+
+Preview/browser rendering requires both durable UI state and replayable lifecycle events.
+
+**Required seglog event types**
+- `preview.session.created`
+- `preview.session.state_changed`
+- `preview.session.attached`
+- `preview.session.detached`
+- `preview.session.closed`
+- `preview.session.reloaded`
+- `preview.session.exported`
+- `preview.action.requested`
+- `preview.action.completed`
+- `browser.element_captured`
+
+**Minimum event payloads**
+- `preview.session.*`: `project_id`, `preview_session_id`, `document_id` or `artifact_id`, `source_kind`, `trust_tier`, `transport_mode`, `attached_surface`, `source_revision`, optional `error_code`
+- `preview.action.*`: `project_id`, `preview_session_id`, `node_id`, `operation`, `result_code`, optional `patch_summary`
+- `browser.element_captured`: `project_id`, optional `thread_id`, optional `preview_session_id`, `origin_kind`, `page_url`, `capture_id`, bounded summary payload
+
+**Recommended redb placement**
+- `preview_state.v1:{project_id}:{document_id}` -> JSON `{ preview_mode, last_preview_session_id, last_attached_surface, trust_tier, export_preferences, scroll_sync_enabled, last_error }`
+- `browser_state.v1:{project_id}` -> JSON `{ tabs, history, bookmarks, last_selected_tab, inspect_mode_defaults }`
+- `browser_state_external.v1` -> JSON `{ history, bookmarks }` for optional user-opened external browsing that is not workspace-scoped
+- `preview_exports.v1:{project_id}` -> JSON `{ last_directory, last_format, last_theme, last_background }`
+
+**Partitioning rule**
+- Workspace preview/browser state MUST be partitioned per project.
+- External browsing state, if supported, MUST NOT share cookies/history/storage with workspace preview state by default.
+
+**Restore rule**
+- redb restores browser/preview UI intent and recent state.
+- seglog remains the canonical source for lifecycle/audit history.
+
 #### Additions: Container publish / DockerHub / Unraid persistence contract
 
 This addendum defines the minimum persistence contract required so Settings, Docker Manage, Orchestrator, and post-publish flows restore the same state.
@@ -196,6 +231,48 @@ This addendum defines the minimum persistence contract required so Settings, Doc
 | `unraid.template_repo.push.failed` | `project_id`, `template_repo_id`, `branch`, `reason_code`, `message` |
 
 ##### Restore rules
+##### Shared `ca_profile` projection contract
+
+`unraid.ca_profile.shared` is the canonical editable source-of-truth when a project has not enabled per-project override.
+
+Projection rules:
+- Shared-profile edits do **not** eagerly mutate every managed template repository in the background.
+- Projection into a specific project repo occurs only when that project runs `Generate/Update Unraid Template` or the user explicitly chooses `Apply shared profile to this repo`.
+- Projection may update only Puppet-Master-owned paths for that project:
+  - `ca_profile.xml`
+  - `assets/maintainer/**` written for that projection pass
+- If the target repo is dirty, diverged, or review-blocked, Puppet Master MUST preserve the shared source model, mark the project repo state accordingly, and avoid silent mutation.
+
+##### Canonical blocked-event payload minima
+
+Blocked outcomes are distinct from runtime failures.
+
+Minimum blocked payload:
+- `project_id`
+- `blocked_step`
+- `reason_code`
+- `guard_name?`
+- `recovery_options[]`
+
+Required blocked event families:
+- `docker.publish.blocked`
+- `unraid.template.generation.blocked`
+- `unraid.template_repo.push.blocked`
+- `unraid.template_repo.setup.blocked`
+
+##### Canonical enum binding
+
+`TemplateRepoStatus` is exactly:
+
+- `unconfigured`
+- `config_invalid`
+- `clean`
+- `dirty_uncommitted`
+- `committed_local_only`
+- `push_in_progress`
+- `push_failed`
+- `diverged_remote`
+- `needs_review`
 
 - Effective auth capability snapshots MAY be restored for UI display, but they are advisory until revalidated.
 - Secret material MUST NOT be mirrored into redb or seglog.

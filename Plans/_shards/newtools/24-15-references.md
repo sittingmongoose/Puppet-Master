@@ -39,6 +39,16 @@
 - **[DOCKER6] Docker VS Code extension (reference patterns only):** https://github.com/docker/vscode-extension
 
 ### 14.7A DockerHub browser auth, repository management, and Unraid publishing addendum
+#### Validation and side-effect boundary matrix
+
+This subsection is authoritative for Build vs Push vs Unraid follow-on behavior.
+
+- `doctor.docker.engine`, `doctor.docker.compose`, `doctor.docker.buildx`, and `doctor.dockerhub.auth.capability` block local Docker build/publish entry points when failing.
+- `doctor.dockerhub.repo.access` blocks remote image push when the selected namespace/repository cannot be read or created as required.
+- `doctor.unraid.template-repo` does **not** block local Docker image push; it blocks only managed template-repo update / commit / push stages.
+- `doctor.unraid.ca-profile` in `needs_review` state does **not** block local Docker image push; it blocks auto-push of the managed template repo and requires visible remediation.
+- `push_policy = after_build` MUST dispatch `cmd.orchestrator.push_image` as a separate remote side-effect step after a successful local build result exists.
+- Permission-guard or confirmation blocks MUST resolve to `*.blocked` outcomes, not `*.failed`, so runtime failure remains distinct from intentional non-execution.
 
 #### Normative override for §14.7
 

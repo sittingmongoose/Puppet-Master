@@ -34,6 +34,49 @@ Instead, use one rendering family with:
 
 ### 24.4 Transport split
 
+### 24.4A Browser surface modes and HTML preview transport normalization
+
+The product uses two browser-capable modes with different authority.
+
+#### A) `workspace_preview`
+This is the canonical mode for file-backed HTML preview and browser-faithful workspace rendering.
+
+Rules:
+- Backed by the loopback preview server.
+- Rooted to the active project/workspace.
+- Relative assets resolve through the preview server, not `file://`.
+- Click-to-context is supported here.
+- Agent-initiated navigation/reload is allowed only within the active workspace preview origin.
+- Source-mutation privileges are still separate from browser rendering privileges.
+
+#### B) `external_browse`
+This is an optional user convenience mode for manually opened HTTP/HTTPS pages.
+
+Rules:
+- It is not the canonical path for project rendering.
+- It does not imply source-edit privileges, preview editing, or workspace mutation.
+- If click-to-context is enabled here, it remains user-triggered only.
+- Agent automation for external browsing is out of scope unless a separate tool/capability contract is added later.
+
+#### HTML preview server contract
+- Canonical transport: `http://127.0.0.1:<port>/preview/<project_id>/<document_id>/...`
+- Canonical preview origin is loopback localhost.
+- `file://` is not an MVP transport for full HTML preview.
+- `WebViewBuilder::with_html` is prohibited as the primary transport for file-backed HTML preview.
+- Generated Markdown/Mermaid previews continue to use the internal preview origin/route and must not share the workspace HTML trust tier.
+
+#### Fallback order
+1. embedded browser/runtime path when supported
+2. detached preview/browser window using the same preview session and origin contract
+3. explicit degraded error state
+
+A static screenshot is not an acceptable steady-state replacement for HTML/browser functionality.
+
+#### Normalized defaults
+- Canonical hot-reload debounce: `app.preview.hot_reload_debounce_ms = 500`
+- Browser tab capacity applies to in-shell browser tabs; detached windows are outside that cap
+- Any earlier `browser instances` language should be treated as pre-normalization text and aligned to this section
+
 - Use localhost preview for file-backed HTML/browser mode.
 - Use an internal preview origin/route for generated Markdown/Mermaid/read-only previews.
 - Do not use `with_html` as the main transport contract.

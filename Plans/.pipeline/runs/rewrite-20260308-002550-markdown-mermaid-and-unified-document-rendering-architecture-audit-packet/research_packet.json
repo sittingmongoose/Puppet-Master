@@ -1,0 +1,161 @@
+{
+  "schema_id": "puppet-master.research-packet.v1",
+  "run_id": "rewrite-20260308-002550-markdown-mermaid-and-unified-document-rendering-architecture-audit-packet",
+  "created_at_utc": "2026-03-08T00:25:50Z",
+  "topic": "Markdown, Mermaid, and unified document rendering architecture audit packet",
+  "objective": "Capture the completed buildability/spec-completeness audit for the markdown, Mermaid, HTML, SVG, image, and browser rendering architecture so the rewrite plans can be updated with the missing operational contracts, normalized defaults, and cross-surface rules needed for deterministic implementation.",
+  "decisions": [
+    {
+      "id": "preview-session-operational-contract-required",
+      "topic": "PreviewSession completion criteria",
+      "choice": "Treat PreviewSession as a lifecycle and identity contract with explicit states, persistence, events, and command coverage, not just a shared field list.",
+      "rationale": "The unified rendering architecture depends on one cross-surface session model for chat, file editor, embedded document panes, browser tabs, and detached windows. Without lifecycle rules and storage/command wiring, each surface can drift into a separate implementation."
+    },
+    {
+      "id": "browser-inspection-default",
+      "topic": "Browser capability boundary",
+      "choice": "Default the browser surface to user-driven browsing and click-to-context inspection; agent browser automation remains out of scope unless added later as a separate capability/tool contract.",
+      "rationale": "The current plans conflict between read-only browser inspection and agent-driven click/type/scroll behavior. Locking an inspection-first default prevents trust, permissions, and UI semantics from diverging during implementation."
+    },
+    {
+      "id": "workspace-preview-vs-external-browse",
+      "topic": "Browser surface split",
+      "choice": "Separate browser-capable surfaces into workspace_preview and external_browse modes with different trust, storage, and feature expectations.",
+      "rationale": "File-backed HTML preview and arbitrary external browsing are materially different products. Explicitly splitting them avoids accidental privilege sharing, cookie/history mixing, and ambiguous click-to-context behavior."
+    },
+    {
+      "id": "localhost-preview-canonical",
+      "topic": "HTML preview transport",
+      "choice": "Use a loopback localhost preview origin as the canonical transport for file-backed HTML/browser preview; do not use file URLs or with_html as the primary contract.",
+      "rationale": "Loopback preview is the only path that cleanly supports relative assets, browser-faithful navigation, script semantics, and hot reload. Leaving file:// or with_html as co-equal options would keep the transport spec ambiguous and unsafe."
+    },
+    {
+      "id": "element-context-attachment-required",
+      "topic": "Click-to-context chat ingestion",
+      "choice": "Represent captured browser element context as a typed browser_element_context attachment that is visible in the composer/thread and participates in prompt assembly deterministically.",
+      "rationale": "The browser-side capture schema already exists, but the chat-side contract was still missing. A typed attachment closes the integration gap between preview capture, thread history, persistence, and model input."
+    },
+    {
+      "id": "preview-action-protocol-v1",
+      "topic": "Structured preview edits",
+      "choice": "Define a shared PreviewActionRequest/PreviewActionResult protocol with an explicit v1 operation whitelist, revision checks, result codes, and audit events.",
+      "rationale": "The plans correctly prohibit freeform DOM editing, but they were still too abstract to implement. A shared action protocol keeps editor preview, embedded document panes, and future chat/planning actions aligned."
+    },
+    {
+      "id": "mermaid-export-contract-shared",
+      "topic": "Mermaid export behavior",
+      "choice": "Use one shared Mermaid export artifact contract across chat, editor, planning, and detached diagram surfaces, covering destination, naming, overwrite rules, theme, background, and clipboard parity.",
+      "rationale": "Export was treated as a first-class action but lacked deterministic artifact rules. A shared contract prevents each surface from inventing different save locations, naming schemes, or theme semantics."
+    },
+    {
+      "id": "platform-runtime-matrix-required",
+      "topic": "Runtime and fallback obligations",
+      "choice": "Add an explicit platform runtime matrix for Windows, macOS, Linux X11, and Linux Wayland, including doctor checks and degraded-mode UX.",
+      "rationale": "The architectural packet already says Linux/Wayland cannot be blocked on embedding, but the runtime obligations were not fully specified. A platform matrix makes detached-first guarantees and failure UX implementable rather than aspirational."
+    },
+    {
+      "id": "rendering-command-catalog-expansion",
+      "topic": "UI command coverage",
+      "choice": "Add canonical cmd.preview.* and cmd.browser.* command IDs for open, close, detach, reattach, reload, open source, structured edit, export, copy, inspect toggle, and element capture.",
+      "rationale": "The UI command catalog currently covers orchestrator previews but not the new shared rendering system. Command-level coverage is necessary so GUI surfaces, storage events, and acceptance wiring all refer to the same actions."
+    },
+    {
+      "id": "workspace-browser-state-per-project",
+      "topic": "Browser and preview persistence partitioning",
+      "choice": "Persist workspace preview/browser state per project, and keep optional external browsing state separate by default.",
+      "rationale": "FinalGUISpec already states that browser cookies/storage are scoped per project, but the storage plan still had a global browser_state key. Partitioning prevents the persistence model from contradicting the trust model."
+    },
+    {
+      "id": "normalized-rendering-defaults",
+      "topic": "Default and capacity normalization",
+      "choice": "Normalize the canonical hot reload debounce to 500 ms and treat browser tab capacity as an in-shell tab limit, with detached windows outside that cap.",
+      "rationale": "The touched docs still drift between 400 ms and 500 ms debounce defaults and between browser instances vs browser tabs. A normalized default avoids config-key and UX divergence during implementation."
+    }
+  ],
+  "doc_intents": [
+    {
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### Preview session contract",
+          "content_markdown": "#### PreviewSession lifecycle and identity contract\n\n`PreviewSession` is a durable runtime contract, not just a bag of fields.\n\n**Lifecycle states**\n- `created`\n- `loading`\n- `ready`\n- `stale`\n- `degraded`\n- `error`\n- `closed`\n\n**Identity rules**\n- Moving the same document between inline preview, split preview, browser tab, and detached window keeps the same `preview_session_id` when all of the following remain unchanged:\n  - `document_id` or `artifact_id`\n  - `source_revision`\n  - `trust_tier`\n  - `transport_mode`\n- A new `preview_session_id` MUST be created when any of those change.\n- Detaching is an attachment change, not a new session, unless the platform fallback requires a transport restart.\n\n**Attachment rules**\n- A single `PreviewSession` MAY be visible in multiple read-only surfaces at the same time.\n- Only one attachment may hold mutation-capable focus at a time.\n- `attached_surface` is the currently focused attachment; additional viewers are tracked as secondary attachments in runtime state.\n\n**Required transitions**\n- `created -> loading -> ready`\n- `ready -> stale` when source revision changes\n- `stale -> loading -> ready` on successful reload\n- `ready -> degraded` when the preferred embedded path fails but detached/native fallback still works\n- `loading|ready|stale -> error` when preview generation or runtime startup fails without a usable fallback\n- any non-closed state -> `closed` on explicit close or document disposal\n\n**Persistence and audit expectations**\n- The app MUST persist enough state to restore the user's last preview mode, last successful attachment target, and last visible preview error per document.\n- The app MUST NOT persist live DOM state or browser storage as part of `PreviewSession` state.\n- Preview lifecycle changes MUST emit canonical events in storage-plan.md and be invocable through canonical UI commands in UI_Command_Catalog.md.\n\n**Minimum restore rule**\n- On restart, the product restores preview intent (`none`, `inline`, `split`, `browser_tab`, `detached`) and reconstructs a new live runtime session as needed; it does not attempt to deserialize an old live webview.\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### Source/preview mapping and edit contract",
+          "content_markdown": "#### Preview action protocol v1\n\nThe source/preview edit contract requires one shared action protocol across chat, editor preview, and embedded document panes.\n\n**Allowed `operation` values in v1**\n- `toggle_checkbox`\n- `edit_heading_text`\n- `edit_list_item_text`\n- `set_link_target`\n- `set_inline_format`\n- `replace_mermaid_block`\n- `open_source`\n- `open_detached`\n\nOperations outside this whitelist MUST return a non-mutating result and focus/open source when appropriate.\n\n**Request rules**\n- `PreviewActionRequest` MUST include `preview_session_id`, `node_id`, `parse_revision`, `operation`, and `payload`.\n- Mutating requests MUST also validate the current `source_revision` before applying a patch.\n- Requests from stale preview state MUST NOT be auto-rebased silently.\n\n**Result codes**\n- `applied_patch`\n- `rejected_stale_revision`\n- `unsupported_region`\n- `ambiguous_mapping`\n- `permission_denied`\n- `fallback_focus_source`\n- `render_error`\n\n**Deterministic fallback**\n- `ambiguous_mapping`, `unsupported_region`, and `rejected_stale_revision` MUST never mutate rendered DOM state.\n- Those outcomes MUST move focus to source at the mapped region when possible.\n\n**Audit**\n- Every request emits `preview.action.requested`.\n- Every terminal outcome emits `preview.action.completed` with `result_code`.\n- Patch summaries should be recorded in bounded form for audit/history, not as unbounded raw document bodies.\n\n**Surface scope**\n- File Editor preview and Embedded Document Pane may issue v1 preview actions.\n- Chat and planning surfaces may issue only non-destructive actions until their attachment/edit flow is explicitly wired to the same validation path.\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### Platform contract",
+          "content_markdown": "#### Platform runtime matrix and degraded-mode UX\n\nThe rendering system must define runtime expectations per platform.\n\n| Platform | Embedded browser status | Guaranteed path | Runtime dependency | Required degraded UX |\n|---|---|---|---|---|\n| Windows | Supported when WebView2 is available | Detached browser/preview window | WebView2 runtime | Show explicit missing-WebView2 state with remediation; offer detached retry if embedded attach fails |\n| macOS | Supported through native webview stack | Detached browser/preview window | System webview runtime | Show explicit startup error and keep source/native surfaces usable |\n| Linux X11 | Embedded path may be supported | Detached browser/preview window | GTK/WebKitGTK runtime | Show missing-runtime remediation; do not leave a blank embedded pane |\n| Linux Wayland | Detached-first; embedding is optional/adapter-specific | Detached browser/preview window | GTK/WebKitGTK runtime plus any adapter bridge requirements | Prefer detached immediately; do not assume hidden/precreated embedded panes |\n\n**Required doctor/preflight checks**\n- browser runtime available\n- preview server startable\n- Linux GTK/WebKit prerequisites present where applicable\n- detached-window fallback path healthy\n\n**Required degraded behavior**\n- Generated Markdown/Mermaid preview failure must keep source usable.\n- HTML/browser embedding failure must attempt detached fallback before declaring the feature unavailable.\n- Missing runtime states must use explicit user-facing copy and remediation guidance.\n- Blank panes and screenshot-only substitution are not acceptable steady-state fallback behavior for browser-class surfaces.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 2.3 redb: schema, migrations, key patterns",
+          "content_markdown": "#### Additions: Preview session + browser rendering persistence contract\n\nPreview/browser rendering requires both durable UI state and replayable lifecycle events.\n\n**Required seglog event types**\n- `preview.session.created`\n- `preview.session.state_changed`\n- `preview.session.attached`\n- `preview.session.detached`\n- `preview.session.closed`\n- `preview.session.reloaded`\n- `preview.session.exported`\n- `preview.action.requested`\n- `preview.action.completed`\n- `browser.element_captured`\n\n**Minimum event payloads**\n- `preview.session.*`: `project_id`, `preview_session_id`, `document_id` or `artifact_id`, `source_kind`, `trust_tier`, `transport_mode`, `attached_surface`, `source_revision`, optional `error_code`\n- `preview.action.*`: `project_id`, `preview_session_id`, `node_id`, `operation`, `result_code`, optional `patch_summary`\n- `browser.element_captured`: `project_id`, optional `thread_id`, optional `preview_session_id`, `origin_kind`, `page_url`, `capture_id`, bounded summary payload\n\n**Recommended redb placement**\n- `preview_state.v1:{project_id}:{document_id}` -> JSON `{ preview_mode, last_preview_session_id, last_attached_surface, trust_tier, export_preferences, scroll_sync_enabled, last_error }`\n- `browser_state.v1:{project_id}` -> JSON `{ tabs, history, bookmarks, last_selected_tab, inspect_mode_defaults }`\n- `browser_state_external.v1` -> JSON `{ history, bookmarks }` for optional user-opened external browsing that is not workspace-scoped\n- `preview_exports.v1:{project_id}` -> JSON `{ last_directory, last_format, last_theme, last_background }`\n\n**Partitioning rule**\n- Workspace preview/browser state MUST be partitioned per project.\n- External browsing state, if supported, MUST NOT share cookies/history/storage with workspace preview state by default.\n\n**Restore rule**\n- redb restores browser/preview UI intent and recent state.\n- seglog remains the canonical source for lifecycle/audit history.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 2.6 Chat context usage commands",
+          "content_markdown": "### 2.6A Render / browser preview commands\n\nThese IDs are required by rewrite-tie-in-memo.md, FileManager.md, FinalGUISpec.md, and assistant-chat-design.md for unified rendering surfaces.\n\n| Command ID | Args schema (keys only) | Expected events | Affected surfaces |\n|---|---|---|---|\n| `cmd.preview.open` | `{ document_id?, artifact_id?, path?, mode, preferred_surface? }` | `preview.session.created`, `preview.session.attached` | File Editor, Chat, Embedded Document Pane, Browser tab |\n| `cmd.preview.close` | `{ preview_session_id }` | `preview.session.closed` | File Editor, Browser tab, Detached preview |\n| `cmd.preview.detach` | `{ preview_session_id }` | `preview.session.detached`, `preview.session.attached` | File Editor, Browser tab, Embedded Document Pane |\n| `cmd.preview.reattach` | `{ preview_session_id, target_surface }` | `preview.session.attached` | File Editor, Browser tab |\n| `cmd.preview.reload` | `{ preview_session_id, reason? }` | `preview.session.reloaded` or `preview.session.state_changed` | File Editor, Browser tab, Detached preview |\n| `cmd.preview.open_source` | `{ preview_session_id, node_id? }` | no persisted domain event (navigation/focus update) | File Editor, Chat, Embedded Document Pane |\n| `cmd.preview.request_edit` | `{ preview_session_id, node_id, operation, payload }` | `preview.action.requested`, `preview.action.completed` | File Editor, Embedded Document Pane, eligible Chat/Planning surfaces |\n| `cmd.preview.export_svg` | `{ preview_session_id, node_id?, destination? }` | `preview.session.exported` | File Editor, Chat, Embedded Document Pane |\n| `cmd.preview.export_png` | `{ preview_session_id, node_id?, destination? }` | `preview.session.exported` | File Editor, Chat, Embedded Document Pane |\n| `cmd.preview.copy_svg` | `{ preview_session_id, node_id? }` | `preview.session.exported` | File Editor, Chat, Embedded Document Pane |\n| `cmd.preview.copy_image` | `{ preview_session_id, node_id? }` | `preview.session.exported` | File Editor, Chat, Embedded Document Pane |\n| `cmd.browser.inspect_toggle` | `{ preview_session_id?, enabled }` | no persisted domain event (UI state update) | Browser tab, Detached browser |\n| `cmd.browser.capture_element` | `{ preview_session_id?, capture_mode }` | `browser.element_captured` | Browser tab, Detached browser |\n\nContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/newfeatures.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 24.4 Transport split",
+          "content_markdown": "### 24.4A Browser surface modes and HTML preview transport normalization\n\nThe product uses two browser-capable modes with different authority.\n\n#### A) `workspace_preview`\nThis is the canonical mode for file-backed HTML preview and browser-faithful workspace rendering.\n\nRules:\n- Backed by the loopback preview server.\n- Rooted to the active project/workspace.\n- Relative assets resolve through the preview server, not `file://`.\n- Click-to-context is supported here.\n- Agent-initiated navigation/reload is allowed only within the active workspace preview origin.\n- Source-mutation privileges are still separate from browser rendering privileges.\n\n#### B) `external_browse`\nThis is an optional user convenience mode for manually opened HTTP/HTTPS pages.\n\nRules:\n- It is not the canonical path for project rendering.\n- It does not imply source-edit privileges, preview editing, or workspace mutation.\n- If click-to-context is enabled here, it remains user-triggered only.\n- Agent automation for external browsing is out of scope unless a separate tool/capability contract is added later.\n\n#### HTML preview server contract\n- Canonical transport: `http://127.0.0.1:<port>/preview/<project_id>/<document_id>/...`\n- Canonical preview origin is loopback localhost.\n- `file://` is not an MVP transport for full HTML preview.\n- `WebViewBuilder::with_html` is prohibited as the primary transport for file-backed HTML preview.\n- Generated Markdown/Mermaid previews continue to use the internal preview origin/route and must not share the workspace HTML trust tier.\n\n#### Fallback order\n1. embedded browser/runtime path when supported\n2. detached preview/browser window using the same preview session and origin contract\n3. explicit degraded error state\n\nA static screenshot is not an acceptable steady-state replacement for HTML/browser functionality.\n\n#### Normalized defaults\n- Canonical hot-reload debounce: `app.preview.hot_reload_debounce_ms = 500`\n- Browser tab capacity applies to in-shell browser tabs; detached windows are outside that cap\n- Any earlier `browser instances` language should be treated as pre-normalization text and aligned to this section\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 28.4 Allowed user actions on rendered chat/planning content",
+          "content_markdown": "### 28.4A Element-context attachment contract\n\nWhen browser or HTML preview capture sends element context into chat, the thread uses one canonical typed attachment:\n\n- `attachment_type = browser_element_context`\n\n**Required fields**\n- `attachment_id`\n- `schema_version`\n- `origin_kind` (`workspace_preview`, `external_browse`)\n- `preview_session_id` (required for workspace preview when available)\n- `page_url`\n- `page_title` (optional)\n- `captured_at`\n- `capture_reason` (`user_click`, `user_keyboard`)\n- `payload` (the bounded element-context schema from newfeatures.md section 15.18)\n\n**Composer behavior**\n- A capture creates a pending composer chip/card immediately visible to the user.\n- The chip is attached to the next submitted user message by default.\n- The user may remove the chip before send.\n- Capturing an element MUST NOT silently inject a hidden message into the thread.\n\n**Prompt assembly**\n- `browser_element_context` is serialized as a structured attachment before the user's freeform message text.\n- Prompt assembly MUST use bounded fields first (`tagName`, `id`, `className`, `textContent`, `role`, `rect`, `parentPath`) and include truncated optional HTML only when still within budget.\n- If truncation occurs, the attachment metadata must include that truncation occurred.\n\n**Persistence and search**\n- The attachment persists as part of the submitted user message record.\n- Search/indexing should store summary fields only; do not index unbounded raw HTML.\n- Secrets scrubbing and storage rules from storage-plan.md still apply before persistence.\n\n**Audit behavior**\n- Captures must be visible in thread history as user-supplied context, not hidden system state.\n- The thread audit view should show capture source (`workspace_preview` vs `external_browse`) and page URL/title when available.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/FileManager.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 14.5 Mermaid authoring and export",
+          "content_markdown": "### 14.5A Mermaid export artifact contract\n\nAll Mermaid export actions use one shared export contract regardless of whether the request originates from chat, file preview, planning preview, or a detached diagram window.\n\n**Destination behavior**\n- On first export in a project, the user chooses the destination path explicitly.\n- Subsequent exports default to the last-used export directory for that project unless the user overrides it.\n- Chat-originated diagrams without a stable source path use `diagram` as the base filename.\n\n**Filename template**\n- SVG: `<base_name>.mermaid.<yyyyMMdd-HHmmss>.svg`\n- PNG: `<base_name>.mermaid.<yyyyMMdd-HHmmss>.png`\n\n**Overwrite behavior**\n- Default behavior is `ask_before_overwrite`.\n- Silent overwrite is not allowed as the default.\n\n**Render determinism**\n- SVG is the canonical export snapshot.\n- PNG is rasterized from that exact SVG snapshot.\n- Export metadata MUST record:\n  - source path or artifact id\n  - source revision\n  - diagram node id (when available)\n  - export format\n  - export theme\n  - export background mode\n\n**Theme/background**\n- Default export theme is the current app theme.\n- The export UI must allow an explicit theme override.\n- When a non-default theme is chosen, that choice must be visible in the export metadata and user-facing confirmation.\n\n**Clipboard parity**\n- `copy SVG` and `copy image` use the same snapshot contract as file export.\n- Clipboard failures must surface a visible error instead of silently degrading.\n\n**Audit**\n- Export and copy actions emit the same canonical preview export event family defined in storage-plan.md.\n"
+        }
+      ]
+    }
+  ]
+}

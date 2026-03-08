@@ -460,9 +460,33 @@ Add a collapsible **Containers & Registry** card in Settings > Advanced for loca
 - **Docker Manage visibility:** include a setting named exactly `Hide Docker Manage when not used in Project.` Default: enabled.
 - **`ca_profile.xml` controls:** scope selector (shared cross-project default vs per-project override), full edit surface, icon/image mode (repo-managed upload vs external URL), and warning state when the profile was auto-generated and still needs review.
 
-**Validation behavior:** `Validate Docker configuration` MUST run inline preflight for Docker reachability, compose validity, Buildx readiness, requested-auth to effective-capability validation, selected repository access, managed template-repo validity (when enabled), and `ca_profile.xml` readiness. Failing checks block the relevant Preview/Build/Push entry points and surface explicit remediation text in the card.
+**Validation behavior:** `Validate Docker configuration` MUST run inline preflight for Docker reachability, compose validity, Buildx readiness, requested-auth to effective-capability validation, selected repository access, managed template-repo validity (when enabled), and `ca_profile.xml` readiness.
 
-**Persistence behavior:** shared container defaults persist globally; project-specific selection state (namespace/repository/tag policy, template repo state, Docker Manage visibility state, and `ca_profile` scope selection) persists per project. Secrets persist only in OS credential storage.
+Normative blocking matrix:
+- Failures in Docker reachability / compose validity / Buildx readiness block Docker Build, Run/Preview, and Push entry points.
+- Failures in DockerHub auth/repository-access block image-push entry points, but do not invalidate an already completed local build result.
+- Managed template-repo validation failure (`unconfigured`, `config_invalid`, `diverged_remote`) does **not** block Docker image push; it blocks managed template update / auto-commit / template push actions and shows explicit remediation inline.
+- `ca_profile.xml` review-required state does **not** block Docker image push; it blocks template auto-push and shows explicit review messaging inline.
+- When a remote side effect is blocked by policy or confirmation requirements, the surface MUST present that outcome as **blocked** rather than **failed**, preserving any local build/publish result that already exists.
+
+**Persistence behavior:** shared container defaults persist globally; project-specific Docker state persists per project.
+
+Canonical scope split:
+- Global app state:
+  - runtime defaults
+  - compose defaults
+  - default push policy
+  - `Hide Docker Manage when not used in Project.`
+  - shared `ca_profile` source model
+- Project state:
+  - requested auth mode
+  - selected namespace/repository/tag policy
+  - last validation snapshot (non-secret)
+  - template repo config/status
+  - Docker Manage dock/tab/expanded-panel state
+  - per-project `ca_profile` override state when override is enabled
+
+Secrets persist only in OS credential storage or Docker credential-helper storage, never in redb.
 
 ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md#147a-dockerhub-browser-auth-repository-management-and-unraid-publishing-addendum, ContractName:Plans/Permissions_System.md
 **§7.4.9 CI / GitHub Actions (Advanced tab):**

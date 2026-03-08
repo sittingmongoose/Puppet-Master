@@ -75,6 +75,46 @@ Preview editing rules:
 
 ### 14.5 Mermaid authoring and export
 
+### 14.5A Mermaid export artifact contract
+
+All Mermaid export actions use one shared export contract regardless of whether the request originates from chat, file preview, planning preview, or a detached diagram window.
+
+**Destination behavior**
+- On first export in a project, the user chooses the destination path explicitly.
+- Subsequent exports default to the last-used export directory for that project unless the user overrides it.
+- Chat-originated diagrams without a stable source path use `diagram` as the base filename.
+
+**Filename template**
+- SVG: `<base_name>.mermaid.<yyyyMMdd-HHmmss>.svg`
+- PNG: `<base_name>.mermaid.<yyyyMMdd-HHmmss>.png`
+
+**Overwrite behavior**
+- Default behavior is `ask_before_overwrite`.
+- Silent overwrite is not allowed as the default.
+
+**Render determinism**
+- SVG is the canonical export snapshot.
+- PNG is rasterized from that exact SVG snapshot.
+- Export metadata MUST record:
+  - source path or artifact id
+  - source revision
+  - diagram node id (when available)
+  - export format
+  - export theme
+  - export background mode
+
+**Theme/background**
+- Default export theme is the current app theme.
+- The export UI must allow an explicit theme override.
+- When a non-default theme is chosen, that choice must be visible in the export metadata and user-facing confirmation.
+
+**Clipboard parity**
+- `copy SVG` and `copy image` use the same snapshot contract as file export.
+- Clipboard failures must surface a visible error instead of silently degrading.
+
+**Audit**
+- Export and copy actions emit the same canonical preview export event family defined in storage-plan.md.
+
 Mermaid behavior in the editor/file manager:
 
 - Canonical Mermaid source lives in `.mmd` or fenced `mermaid` code blocks.
