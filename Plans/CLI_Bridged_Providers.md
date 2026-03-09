@@ -643,3 +643,19 @@ Rules:
 - transport reconnect logic may reconnect only to observe an already-submitted attempt; it MUST NOT silently resubmit prompts or mutate retry counters
 - provider signals MUST normalize to canonical `failure_class` / `blocked_reason_code` values before orchestration or UI consumes them
 - prerequisite resolution from provider/auth layers MUST surface a canonical scheduler wake rather than staying provider-local
+## Bridged Provider Runtime Attempt and Retry Ownership Consolidation Addendum (2026-03-09)
+
+Bridged providers MUST preserve canonical runtime identity and MUST NOT hide retry semantics.
+
+### Required preserved fields
+- `run_id`, `thread_id`, `node_id`, `attempt_id`
+- requested/effective provider-model identifiers
+- requested/effective permission snapshot identifiers when relevant
+- `replan_generation`
+- `safe_point_id?`
+- remediation lineage identifiers when present
+
+### Required mapping rules
+- provider signals normalize into canonical `failure_class` / `blocked_reason_code` values before orchestration or UI consumes them
+- reconnect logic may observe an already-submitted attempt, but MUST NOT silently resubmit prompts or mutate retry counters outside runtime control
+- prerequisite resolution discovered in provider/auth layers MUST surface canonical runtime wake behavior rather than staying provider-local

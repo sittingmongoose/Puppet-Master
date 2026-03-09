@@ -782,3 +782,12 @@ Runtime-facing rules:
 - runtime-facing blocked payloads MUST use canonical `blocked_reason_code` plus `allowed_action_ids[]`
 - domain-specific `reason_code` values MAY remain internal detail, but they MUST map into canonical runtime taxonomy at shared surfaces
 - auth recovery alone does not auto-resubmit a blocked remote side effect; explicit resume/retry remains required
+## Remote Side-Effect Blocked Payload Consolidation Addendum (2026-03-09)
+
+Container publish and Unraid remote-side-effect flows remain the reference pattern for blocked remote mutation, but must use canonical runtime payload names.
+
+### Required runtime-facing rules
+- preserve completed local work whenever remote publish/creation steps are blocked
+- runtime-facing blocked payloads MUST use canonical `blocked_reason_code` plus `allowed_action_ids[]`
+- domain-specific `reason_code` values MAY remain internal detail, but MUST map into canonical runtime taxonomy at shared surfaces
+- auth recovery alone does not auto-resubmit a blocked remote side effect; explicit runtime resume/retry remains required

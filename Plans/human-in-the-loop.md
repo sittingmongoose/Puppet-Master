@@ -246,3 +246,30 @@ Rules:
 - when a valid safe point exists for a mutation-capable attempt, the default rerun affordance is `Retry from safe point`
 - if no valid safe point exists or policy forbids restore, the explicit alternative is `Start fresh attempt`
 - `Skip` remains a separate graph policy action and never masquerades as success
+## HITL Recovery Action Family Consolidation Addendum (2026-03-09)
+
+HITL surfaces MUST use the canonical runtime action families and labels.
+
+### Canonical visible labels
+- `Approve`
+- `Decline`
+- `Retry from safe point`
+- `Start fresh attempt`
+- `Resume after prerequisite`
+- `Replan`
+- `Skip node`
+- `Abort run`
+
+`Reject`, `Deny`, and other variants may remain internal or domain-specific copy, but they MUST map back to the canonical action families above.
+
+### Waiting approval semantics
+- pending approval is `blocked_reason_code = waiting_approval`
+- approval resolution emits `node.prerequisite_resolved`
+- scheduler reevaluation happens in the same wake cycle
+
+### Re-run after decline
+After decline/reject, the surface MUST choose among:
+- `Retry from safe point` when a valid safe point exists and policy allows restore
+- `Start fresh attempt` when no valid safe point exists or policy forbids restore
+- `Replan` when the canonical classification is `replan_required`
+- `Skip node` only when the node contract explicitly allows skip without violating graph integrity

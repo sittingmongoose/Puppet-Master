@@ -339,3 +339,15 @@ Clarify ownership boundaries:
 - GUI/view docs own rendering and interaction, not alternate semantics
 - provider/auth/tool docs own mapping into runtime taxonomy, not parallel retry models
 - `Plans/Glossary.md` owns canonical terminology for runtime recovery and queue analysis terms
+## Runtime Packet Ownership and Precedence Consolidation Addendum (2026-03-09)
+
+For runtime scheduler / recovery topics, conflict resolution is:
+1. `Plans/Contracts_V0.md` owns canonical event names, enum families, identity fields, and canonical blocked payload field names
+2. `Plans/Executor_Protocol.md` owns readiness, score terms, dispatch ordering, attempt lifecycle semantics, and graph-lock behavior
+3. `Plans/storage-plan.md` owns persistence/projection shape, immutable-history rules, and restart reconciliation behavior
+4. GUI/view docs own rendering and interaction only
+5. provider/tool/auth docs own mapping into the canonical runtime taxonomy only
+6. `Plans/Crosswalk.md` and `Plans/Glossary.md` may summarize but MUST NOT redefine runtime event names, enum values, or identity rules
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
+
+If wording differs, the owning doc above wins.

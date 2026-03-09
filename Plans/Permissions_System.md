@@ -720,3 +720,25 @@ When a blocked permission outcome is resolved by policy edit, approval, or mode 
 - keep the prior attempt snapshot immutable
 
 Permission-related blocked outcomes MUST carry the exact blocking rule or permission key plus any metadata needed to bind the prerequisite-specific UI command.
+## Permission Blocked Outcome and Prerequisite Wake Consolidation Addendum (2026-03-09)
+
+Permission-related runtime blocking MUST use canonical blocked semantics.
+
+### Required permission-block payload fields
+- requested permission state
+- effective permission state
+- permission snapshot identifier
+- exact blocking rule or permission key
+- whether the current mode could have asked the user
+- canonical `blocked_reason_code`
+- canonical `allowed_action_ids[]`
+
+### Multi-prerequisite rule
+If more than one prerequisite is outstanding, the blocked payload MUST surface the active gating reason plus metadata for the remaining unresolved prerequisites. A satisfied auth prerequisite does not silently clear an unresolved approval or policy prerequisite.
+
+### Same-cycle resolution rule
+When policy edit, approval, or mode change satisfies a permission prerequisite:
+- emit `node.prerequisite_resolved`
+- reevaluate readiness in the same scheduler wake cycle
+- create a new attempt snapshot using the new requested/effective permission state
+- keep prior snapshots immutable

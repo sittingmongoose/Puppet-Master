@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/Run_Graph_View.md",
-  "source_sha256": "2fb76f464d3f6d164777c1789ca362730cc7994d95877b2df9e61bb2d759359b",
+  "source_sha256": "0d7d2712ee1a276c6bdc0c2416667f240a7cf23eead5cbf94cb71ef578a468c7",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -174,6 +174,13 @@
       "end_line": 1207,
       "segment_sha256": "3e7b749997aa970eba8673ab8aa6374b83a6b322fa875e1c0a77114bdd277de6",
       "heading": "## Queue Analysis / Attempt Lineage Reconciliation Addendum (2026-03-09)"
+    },
+    {
+      "dest_path": "Plans/_shards/Run_Graph_View/25-attempt-centric-runtime-recovery-ui-reconciliation-addendum-2026-03-09.md",
+      "start_line": 1208,
+      "end_line": 1249,
+      "segment_sha256": "9334aae079b6eb777ef35aa2ce6a59c7f752510d0e583f2bcbd66a235007836d",
+      "heading": "## Attempt-Centric Runtime Recovery UI Reconciliation Addendum (2026-03-09)"
     }
   ]
 }

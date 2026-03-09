@@ -460,3 +460,26 @@ Rules:
 - retry, prerequisite-resumed work, and safe-point-restored reruns create new handoff bundles keyed by new `attempt_id` values
 - new bundles MUST preserve lineage references (`safe_point_id`, remediation lineage, generation, requested/effective snapshots)
 - prompt assembly MUST NOT become an alternate source of truth for blocked or retry state; canonical truth remains in events/projections
+## Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)
+
+Prompt assembly and provider invocation MUST preserve the runtime attempt contract without becoming an alternate source of truth.
+
+### Required immutable handoff bundle
+- `run_id`, `thread_id`, `node_id`, `attempt_id`
+- `scheduler_pass_id`
+- requested/effective persona/runtime state already defined elsewhere
+- requested/effective model identifiers
+- requested/effective permission snapshot identifiers
+- active `replan_generation`
+- `mutation_capable`
+- `safe_point_id?`
+- remediation lineage identifiers when present
+
+### Optional but preserved classification metadata
+When already known before invocation, preserve:
+- latest `blocked_reason_code?`
+- latest `failure_class?`
+- relevant wake reason for resumed work
+
+### Immutability rule
+Once an attempt starts, its handoff bundle is immutable. Retry, prerequisite-resume, remediation rerun, and safe-point-restored rerun all create new handoff bundles keyed by new `attempt_id` values.

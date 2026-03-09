@@ -681,3 +681,33 @@ The Orchestrator page owns run-wide scheduler and recovery summaries.
 - ready-but-unselected rows MUST show `non_selected_reason` and score breakdown
 - blocked rows MUST show only the currently valid `allowed_action_ids[]`
 - newly-ready rows MUST identify the wake reason and, when applicable, the directly satisfied dependency
+## Runtime Recovery Surface Layout and Navigation Reconciliation Addendum (2026-03-09)
+
+The Orchestrator page owns run-wide recovery, queue-analysis, and remediation surfaces.
+
+### Progress tab required widgets
+1. queue-analysis summary widget
+2. scheduler pass history widget
+3. blocked work list grouped by `blocked_reason_code`
+4. newly-ready-in-this-pass list
+5. remediation lineage list
+6. safe-point restore history list
+
+### Default layout
+- top row: queue-analysis summary + blocked counts
+- middle left: blocked work list
+- middle right: scheduler pass history
+- bottom left: remediation lineage
+- bottom right: safe-point restore history
+
+### Navigation rules
+- selecting a scheduler pass opens the corresponding node/attempt details
+- selecting a blocked row pivots to the current attempt when present
+- selecting remediation lineage opens parent attempt first, then child attempts
+- History and Evidence tabs MUST support filtering by `attempt_id`
+
+### Empty-state rule
+Recovery widgets MUST render explanatory empty states instead of disappearing when no data exists yet.
+
+### Action rule
+Blocked rows show only the canonical `allowed_action_ids[]` that are currently valid. Disabled or unavailable actions must be explained, not hidden as if they never existed.

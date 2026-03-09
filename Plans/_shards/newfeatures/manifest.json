@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/newfeatures.md",
-  "source_sha256": "6905e46a9f7facd8a9368ec27d72a3d7a602bc2e1209a27848279549e76af1a9",
+  "source_sha256": "ae47b399af0e53c731339994d91e018c5faa7355cf1674f083d4c329189f7774",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -223,6 +223,13 @@
       "end_line": 1543,
       "segment_sha256": "a47e837ee15f17eebea5e50d5b6d5444aa17d3f8f2d4a3c210c6d03e04628e23",
       "heading": "## User-Facing Recovery Semantics Addendum (2026-03-09)"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/32-user-facing-runtime-recovery-semantics-consolidation-addendum-2026-03-09.md",
+      "start_line": 1544,
+      "end_line": 1555,
+      "segment_sha256": "b3e3deddc9fd74cc529061c749b2d39419ffea9f7e505ce1ab63591b773632f6",
+      "heading": "## User-Facing Runtime Recovery Semantics Consolidation Addendum (2026-03-09)"
     }
   ]
 }

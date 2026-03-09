@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/assistant-chat-design.md",
-  "source_sha256": "b4e6ae6c79524250b277e58617257eaa4b19f619ab72e1ec3632f4528c2caac2",
+  "source_sha256": "7a37cd9facc589db619466f6f7f49fee4c63f24230bb9d9afeeb1a89f2413528",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -265,6 +265,13 @@
       "end_line": 2081,
       "segment_sha256": "1188729188e6a361cd55748b8ab469f607d6e1eb474ffa37b0e6749cd5304a9d",
       "heading": "## Blocked Thread Message and Persistence Reconciliation Addendum (2026-03-09)"
+    },
+    {
+      "dest_path": "Plans/_shards/assistant-chat-design/38-thread-blocked-state-multiplicity-and-action-rendering-consolidation-addendum-2026-03-09.md",
+      "start_line": 2082,
+      "end_line": 2104,
+      "segment_sha256": "9825b4e84f1847760a8e43fd1fe60616c73ca4d61d0b2fdeec6361033a548119",
+      "heading": "## Thread Blocked-State Multiplicity and Action Rendering Consolidation Addendum (2026-03-09)"
     }
   ]
 }
