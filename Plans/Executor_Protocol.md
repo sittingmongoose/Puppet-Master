@@ -501,6 +501,18 @@ Remote approval without local mutation is not mutation-capable by itself.
 Mutation-capable attempts and remediation apply steps MUST persist a safe point before execution begins.
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Provider_OpenCode.md
 
+#### Classification responsibility
+
+The **tool registry** is the single source of truth for `mutation_capable` classification.
+
+1. Each tool definition in the tool registry MUST include a `mutation_capable: bool` field.
+2. Default is `false`; tool authors opt in explicitly.
+3. The **node planner** propagates `mutation_capable` from the tool registry to the node's plan record at graph-build time.
+4. The **scheduler** reads `mutation_capable` from the node's plan record when deciding whether to create a safe point before an attempt.
+5. Runtime override: if the orchestrator detects a mutation-capable sub-operation not declared in the tool registry (e.g., dynamic tool invocation), it MUST set `mutation_capable = true` on the attempt record before execution begins.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
 ### Same-cycle prerequisite wake ordering
 When a prerequisite is satisfied in a way that can unblock work:
 1. emit `node.prerequisite_resolved`
@@ -534,3 +546,44 @@ After graph lock, degraded flat execution is forbidden and invalid graph structu
 - prerequisite resolution, unblocking, and scheduling happen in one ordered wake cycle
 - remediation children are executable runtime entities with explicit lineage
 - graph lock is precise enough to prevent hidden post-lock degradation
+
+## Counter Relationships and Event Ordering Addendum
+
+### Counter relationships
+
+```
+attempt_count = automatic_retry_count
+             + prerequisite_resume_count
+             + manual_resume_count
+             + remediation_retry_count
+             + 1 (initial attempt)
+```
+
+- `attempt_count` is the total number of attempts for a node across all causes.
+- Each sub-counter tracks attempts triggered by a specific cause.
+- The sum of all sub-counters plus the initial attempt MUST equal `attempt_count`.
+- Each sub-counter increments at attempt start, not at completion.
+- Independent policy counters MUST NOT be inferred by subtracting from `attempt_count`.
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### Event ordering guarantees
+
+1. **Per-node sequential**: All events for a given `node_id` MUST be processed in emission order. The event bus MUST NOT reorder events within a single node's event stream.
+2. **Cross-node eventual**: Events from different nodes have no guaranteed relative order. Consumers MUST be idempotent and tolerate out-of-order delivery across nodes.
+3. **Deduplication**: The event bus MUST deduplicate events by `(event_name, node_id, attempt_id, ts)` tuple. Duplicate deliveries are silently dropped.
+4. **Wakeup coalescing**: Multiple wakeup triggers arriving within a single scheduler pass window are coalesced into one scheduler pass. The `wake_reason` for the pass records the first trigger; additional triggers are logged but do not cause additional passes.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
+
+### Replan generation lifecycle
+
+`replan_generation` is a per-run monotonic `u32` counter starting at `0` for the initial graph.
+
+- Increments by exactly 1 each time a replan is applied and the canonical graph is updated via `run.graph_canonical_locked`.
+- A replan is defined as any structural change to the canonical graph (adding/removing/reordering nodes or edges).
+- Attempts, safe points, and blocked projections created under generation N become stale when generation increments to N+1.
+- Stale attempts remain queryable for audit but are never resumable.
+- There is no practical maximum value.
+
+ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md

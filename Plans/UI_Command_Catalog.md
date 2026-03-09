@@ -443,3 +443,28 @@ Additional canonical navigation commands:
 ### Alias rule
 Legacy `cmd.graph.retry_node`, `cmd.orchestrator.retry_node`, and similar node/tier-centric recovery ids MUST map to the canonical `cmd.runtime.*` commands above and MUST NOT carry divergent semantics.
 ContractRef: ContractName:Plans/Contracts_V0.md#UICommand, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FinalGUISpec.md
+
+## Blocked-State Recovery Command Definitions Addendum
+
+### Recovery commands
+
+The following commands MUST have full definitions in the UI Command Catalog to support blocked-state recovery UI:
+
+ContractRef: ContractName:Plans/Contracts_V0.md, UICommand:cmd.runtime.approve, ContractName:Plans/Wiring_Matrix.md
+
+| Command ID | Args schema | Expected events | Affected surfaces | Acceptance check |
+|-----------|-------------|----------------|-------------------|------------------|
+| `cmd.runtime.approve` | `{ node_id, attempt_id, blocked_reason_code }` | `node.unblocked`, `attempt.started` | Run Graph View, Dashboard, Thread | Node transitions from blocked to running |
+| `cmd.runtime.decline` | `{ node_id, attempt_id }` | `node.blocked` (remains blocked with `user_declined`) | Run Graph View, Dashboard, Thread | Node blocked_reason_code updated |
+| `cmd.runtime.retry_now` | `{ node_id, attempt_id? }` | `attempt.started` | Run Graph View, Dashboard | New attempt begins for node |
+| `cmd.runtime.resume_after_prerequisite` | `{ node_id, prerequisite_type }` | `node.unblocked`, `scheduler.pass` | Run Graph View, Dashboard | Scheduler wakeup includes node |
+| `cmd.runtime.restore_safe_point_then_retry` | `{ node_id, safe_point_id }` | `safe_point.restored`, `attempt.started` | Run Graph View | Restore completes, new attempt begins |
+| `cmd.runtime.start_fresh_attempt` | `{ node_id }` | `attempt.started` | Run Graph View | Fresh attempt with no safe-point restore |
+| `cmd.runtime.replan` | `{ node_id? }` | `run.graph_canonical_locked` (new generation) | Run Graph View, Dashboard | replan_generation increments |
+| `cmd.runtime.skip_node` | `{ node_id }` | `node.skipped` | Run Graph View | Node marked skipped, dependents notified |
+| `cmd.runtime.abort_node` | `{ node_id }` | `node.aborted` | Run Graph View | Node marked permanently failed |
+| `cmd.runtime.abort_run` | `{ run_id }` | `run.aborted` | Dashboard, Run Graph View | Entire run terminates |
+
+All blocked-state recovery action buttons in the UI MUST map to one of these commands via `allowed_action_ids[]`.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FinalGUISpec.md

@@ -145,3 +145,18 @@ Canonical terms:
 - **Graph canonical lock** -- runtime boundary after which degraded draft decomposition fallback is forbidden
 - **attention_required** -- clarification or review is needed but the current flow can still continue inside the current surface
 - **blocked** -- execution cannot continue automatically until a prerequisite changes or new explicit user input arrives
+
+## Runtime Scheduler Audit Terminology Addendum
+
+The following canonical terms are added to the glossary:
+
+- **mutation_capable** -- boolean flag indicating that a tool or attempt may modify workspace/project state (file writes, deletes, renames, destructive git ops, or external side effects) and therefore requires safe-point creation before execution. Classified by the tool registry and propagated to the node plan record.
+- **attempt_terminal_state** -- the final state an attempt record reaches; one of `completed_success`, `completed_failed`, `interrupted_by_restart`, or `stale_historical`. Terminal states are irreversible.
+- **restore_outcome** -- the result of a safe-point restore operation; one of `restored_clean`, `restored_with_conflicts`, `restore_failed`, or `restore_skipped`. Required field in the `safe_point.restored` event.
+- **blocked_sequence** -- per-node monotonic counter that increments each time the node enters a new blocked episode (requires an unblocked transition between episodes). Used as a key component in `blocked_projection` storage records.
+- **permission_snapshot** -- immutable capture of resolved permission state at attempt start. Stored as part of the `attempt_record` for auditability. Created at `attempt.started` emission.
+- **detail_ref** -- structured reference string with format `{type}:{id}` (types: `evidence`, `artifact`, `log_range`, `storage_key`) used in blocked projections and remediation records to link to detailed context.
+- **remediation_ceiling_exceeded** -- blocked_reason_code indicating the remediation generation count has reached the configured ceiling (default 3). No further automatic remediation is permitted.
+- **validation_blocked** -- blocked_reason_code indicating tool output failed post-execution validation. Recovery requires fixing the validation rule or tool output.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md

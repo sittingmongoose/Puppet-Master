@@ -543,20 +543,25 @@ Add the following event families to the canonical contract set.
 
 ### 1. Scheduler analysis and readiness events
 
-#### `run.scheduler_analysis`
-Emitted for every authoritative scheduling pass before dispatch.
+#### `scheduler.pass`
+
+> **Migration note:** `run.scheduler_analysis` is a deprecated legacy alias for this event. New producers MUST emit `scheduler.pass`. Consumers SHOULD accept both during migration.
+
+ContractRef: EventType:scheduler.pass, ContractName:Plans/Executor_Protocol.md
 
 Minimum payload:
+- `scheduler_pass_id` (canonical identity -- `analysis_id` is a legacy alias)
 - `run_id`
-- `analysis_id`
+- `thread_id`
+- `replan_generation`
 - `wake_reason`
 - `available_slots`
-- `ready_nodes[]`: `{ node_id, scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, selected, non_selected_reason? }`
-- `selected_nodes[]`
-- `blocked_summary`: counts by `blocked_reason_code`
-- `backoff_summary`: counts by active backoff class
-- `replan_generation`
+- `ready_nodes[]`
+- `selected_nodes[]` with per-node `{ node_id, score_tuple, lane }`
+- `non_selected_nodes[]` with per-node `{ node_id, non_selected_reason }`
 - `ts`
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
 
 #### `run.node_ready`
 Minimum payload:
@@ -566,23 +571,39 @@ Minimum payload:
 - `wake_reason`
 - `replan_generation`
 
-#### `run.node_blocked`
+#### `node.blocked`
+
+> **Migration note:** `run.node_blocked` is a deprecated legacy alias for this event. New producers MUST emit `node.blocked`.
+
+ContractRef: EventType:node.blocked, ContractName:Plans/Executor_Protocol.md
+
 Minimum payload:
 - `run_id`
 - `node_id`
+- `attempt_id?`
 - `blocked_reason_code`
-- `failure_class?`
+- `blocked_sequence`
+- `allowed_action_ids[]`
+- `preserved_local_work`
 - `detail_ref?`
-- `recovery_options[]`
+- `failure_class?` (only when the block originated from a classified outcome)
 - `ts`
 
-#### `run.node_unblocked`
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
+
+#### `node.unblocked`
+
+> **Migration note:** `run.node_unblocked` is a deprecated legacy alias for this event. New producers MUST emit `node.unblocked`.
+
 Minimum payload:
 - `run_id`
 - `node_id`
-- `prior_blocked_reason_code`
-- `wake_reason`
+- `attempt_id?`
+- `blocked_sequence`
+- `resolution` (the action that resolved the block)
 - `ts`
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
 
 ### 2. Retry/backoff events
 
@@ -636,29 +657,51 @@ Minimum payload:
 - `restore_outcome`
 - `ts`
 
+#### `restore_outcome` enum
+
+Canonical values for the `restore_outcome` field in `safe_point.restored` events:
+
+| Value | Meaning |
+|-------|---------|  
+| `restored_clean` | All files and state restored to safe-point snapshot without conflicts. |
+| `restored_with_conflicts` | Restore completed but one or more files had merge conflicts requiring resolution. |
+| `restore_failed` | Restore could not be applied; original state preserved. |
+| `restore_skipped` | Restore was requested but determined unnecessary (state already matches safe-point). |
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
+
 ### 4. Remediation lineage events
 
-#### `run.remediation_started`
+#### `remediation.spawned`
+
+> **Migration note:** `run.remediation_started` is a deprecated legacy alias for this event. New producers MUST emit `remediation.spawned`.
+
+ContractRef: EventType:remediation.spawned, ContractName:Plans/Executor_Protocol.md
+
 Minimum payload:
 - `run_id`
 - `node_id`
 - `remediation_root_id`
-- `remediation_parent_attempt_id`
-- `generation`
-- `origin_failure_event_id`
-- `finding_ids[]`
+- `child_attempt_id`
+- `remediation_generation`
+- `parent_failure_class`
 - `ts`
 
-#### `run.remediation_completed`
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
+
+#### `remediation.resolved`
+
+> **Migration note:** `run.remediation_completed` is a deprecated legacy alias for this event. New producers MUST emit `remediation.resolved`.
+
 Minimum payload:
 - `run_id`
 - `node_id`
 - `remediation_root_id`
-- `generation`
-- `outcome`
-- `superseded_attempt_id?`
-- `resolution_summary_ref?`
+- `child_attempt_id`
+- `resolution` (`success` | `failed` | `ceiling_exceeded`)
 - `ts`
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
 
 ### 5. Degradation / integrity events
 
@@ -824,6 +867,42 @@ Rules:
 - blocked outcomes that originate from a classified failed attempt MAY retain both `failure_class` and `blocked_reason_code`
 - blocked outcomes are not retryable by default; retryability comes from the shared matrix plus current prerequisites
 
+Additional canonical values not yet in the enum above:
+
+| Value | Meaning |
+|-------|---------|  
+| `validation_blocked` | Tool output failed post-execution validation (schema check, safety scan, or constraint check). Recovery: fix validation rule or tool output. |
+| `remediation_ceiling_exceeded` | Remediation generation count has reached the configured ceiling. No further automatic remediation is permitted. Recovery: replan, manual fix, or abort node. |
+
+#### `plugin_hook_blocked` definition
+
+`plugin_hook_blocked` is triggered when a plugin hook returns `Block` for a hook that affects execution flow.
+
+**Triggering hooks** (execution-affecting):
+- `pre_tool_invoke`
+- `pre_attempt_start`
+- `pre_node_dispatch`
+
+**Non-triggering hooks** (observation-only -- cannot block):
+- `post_tool_invoke`
+- `post_attempt_complete`
+- All session/message/compaction/shell hooks
+
+**Required metadata in blocked payload:**
+- `plugin_id` -- which plugin issued the block
+- `hook_name` -- which hook returned Block
+- `block_reason` -- freetext reason string from the plugin
+
+**Valid `allowed_action_ids[]` for plugin blocks:**
+- `approve` -- override block for this attempt only
+- `decline` -- accept block, node enters blocked state
+- `retry_now` -- re-invoke the hook (plugin may have been updated)
+- `skip_node` -- skip node if graph allows
+
+Plugin hooks MUST NOT invent plugin-private retry or recovery semantics that bypass scheduler observability or canonical taxonomy.
+
+ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Executor_Protocol.md
+
 #### `wake_reason`
 Allowed values:
 - `node_completed`
@@ -862,6 +941,38 @@ Allowed values:
 - `skip_node`
 - `abort_run`
 - `open_details`
+
+#### `attempt_terminal_state`
+
+Canonical values:
+
+| Value | Meaning |
+|-------|---------|  
+| `completed_success` | Attempt finished and passed verification. |
+| `completed_failed` | Attempt finished but failed verification or was rejected. |
+| `interrupted_by_restart` | Attempt was in progress when the process restarted; classified on recovery. |
+| `stale_historical` | Attempt belongs to a prior replan generation and has been superseded by newer attempts. |
+
+An attempt record MUST transition to exactly one of these values and MUST NOT transition away from a terminal state.
+
+`stale_historical` is applied when: (1) `replan_generation` increments and the attempt belongs to a prior generation, OR (2) the run session is re-opened after dormancy and the attempt was in a non-terminal state with no safe point to resume from.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
+
+#### `detail_ref` format
+
+`detail_ref` is a structured string with format `{type}:{id}` where type is one of:
+
+| Type | Meaning | Example |
+|------|---------|---------|  
+| `evidence` | Reference to an evidence record | `evidence:ev-abc123` |
+| `artifact` | Reference to a build/output artifact | `artifact:art-def456` |
+| `log_range` | Reference to a segment log range | `log_range:seg-789:100-200` |
+| `storage_key` | Reference to a redb storage key | `storage_key:attempt.run1.node2.att3` |
+
+The type prefix enables consumers to resolve the reference to the correct storage backend.
+
+ContractRef: ContractName:Plans/storage-plan.md
 
 ### Identity rules
 - `scheduler_pass_id` is the canonical identity for queue-analysis passes

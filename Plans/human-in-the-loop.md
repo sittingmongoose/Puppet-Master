@@ -273,3 +273,15 @@ After decline/reject, the surface MUST choose among:
 - `Start fresh attempt` when no valid safe point exists or policy forbids restore
 - `Replan` when the canonical classification is `replan_required`
 - `Skip node` only when the node contract explicitly allows skip without violating graph integrity
+
+## HITL Field Name Correction Addendum
+
+### Canonical field name
+
+All references to `allowed_actions[]` in this document are replaced by the canonical runtime field name `allowed_action_ids[]`.
+
+- The HITL request contract (§Canonical HITL request contract) field `allowed_actions[]` is canonically `allowed_action_ids[]`.
+- The redb persistence shape (§storage persistence) field `allowed_actions` is canonically `allowed_action_ids`.
+- `allowed_actions[]` is a deprecated shared-surface name per Plans/Contracts_V0.md and MUST NOT be used in new HITL contracts or storage schemas.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md

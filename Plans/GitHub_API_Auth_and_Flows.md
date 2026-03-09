@@ -589,3 +589,27 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_
 
 Auth recovery MUST NOT auto-resubmit a blocked remote side effect without the canonical runtime resume/retry action.
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/GitHub_Integration.md
+
+## Auth Expired Mid-Attempt Recovery Addendum
+
+### Mid-attempt token expiry
+
+If `auth_expired` occurs during a running attempt (not just pre-attempt):
+
+1. The attempt MUST pause execution at the current safe point (or create one if `mutation_capable` and none exists).
+2. All completed local work MUST be preserved (`preserved_local_work: true`).
+3. The runtime emits `attempt.paused` with `failure_class: auth_expired`.
+4. The node enters blocked state with `blocked_reason_code: auth_expired`.
+5. The provider/auth layer MUST NOT attempt silent re-authentication or hidden token refresh during the attempt -- this is handled by the runtime blocked/recovery flow.
+
+ContractRef: EventType:attempt.paused, EventType:node.blocked, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
+### Recovery after auth refresh
+
+On auth recovery (user completes device-code flow or token refresh succeeds):
+
+1. The auth layer emits `auth.recovered` which maps to `wake_reason: auth_recovered`.
+2. The scheduler runs a wakeup pass and transitions the node from blocked to runnable.
+3. The attempt resumes from the safe point rather than restarting from scratch.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md

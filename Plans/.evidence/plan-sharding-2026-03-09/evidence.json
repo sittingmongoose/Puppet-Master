@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.evidence.schema.v1",
   "evidence_id": "plan-sharding-2026-03-09",
-  "created_at_utc": "2026-03-09T11:52:14.948416+00:00",
+  "created_at_utc": "2026-03-09T15:07:29.512290+00:00",
   "node": {
     "node_id": "plan-sharding"
   },
@@ -684,6 +684,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/FinalGUISpec/31-blocked-state-visual-distinction-and-recovery-ux-addendum.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/FinalGUISpec/manifest.json",
       "change_type": "modified"
     },
@@ -1132,6 +1136,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/Run_Graph_View/26-blocked-state-rendering-and-recovery-addendum.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/Run_Graph_View/manifest.json",
       "change_type": "modified"
     },
@@ -1213,6 +1221,10 @@
     },
     {
       "path": "Plans/_shards/Tools/19-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-03-09.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/Tools/20-tool-field-name-and-taxonomy-alignment-addendum.md",
       "change_type": "modified"
     },
     {
@@ -1464,6 +1476,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/assistant-chat-design/39-concurrent-blocked-episodes-and-enum-alignment-addendum.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/assistant-chat-design/manifest.json",
       "change_type": "modified"
     },
@@ -1581,6 +1597,10 @@
     },
     {
       "path": "Plans/_shards/chain-wizard-flexibility/28-wizard-escalation-degradation-and-blocked-state-consolidation-addendum-2026-03-09.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/chain-wizard-flexibility/29-wizard-status-enum-correction-addendum.md",
       "change_type": "modified"
     },
     {
@@ -1888,6 +1908,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/newfeatures/33-safe-point-restore-point-crash-recovery-alignment-addendum.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/newfeatures/manifest.json",
       "change_type": "modified"
     },
@@ -2148,6 +2172,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/orchestrator-subagent-integration/38-runtime-enum-and-counter-alignment-addendum.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/orchestrator-subagent-integration/manifest.json",
       "change_type": "modified"
     },
@@ -2217,6 +2245,10 @@
     },
     {
       "path": "Plans/_shards/storage-plan/16-runtime-recovery-persistence-and-restart-reconciliation-addendum-2026-03-09.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/17-permission-snapshot-storage-and-safe-point-namespace-addendum.md",
       "change_type": "modified"
     },
     {
