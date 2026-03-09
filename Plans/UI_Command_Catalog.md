@@ -420,30 +420,58 @@ Legacy retry-node style command ids MUST be treated as deprecated aliases of att
 ContractRef: UICommand:cmd.orchestrator.retry_attempt, UICommand:cmd.orchestrator.restore_safe_point_then_retry, ContractName:Plans/Contracts_V0.md
 ## Canonical Runtime Recovery Command Consolidation Addendum (2026-03-09)
 
-Canonical runtime recovery commands use one surface-agnostic namespace. Older `cmd.graph.*` and `cmd.orchestrator.*` retry-node style ids are deprecated aliases only.
+Canonical recovery commands use one shared namespace: `cmd.runtime.*`.
+Legacy `cmd.graph.*` and `cmd.orchestrator.*` recovery IDs are deprecated aliases only.
 
-| `allowed_action_id` | canonical command id | minimum payload |
+| `allowed_action_id` | canonical command id | minimum args |
 |---|---|---|
-| `approve` | `cmd.runtime.approve_blocked` | `run_id`, `node_id`, `attempt_id?`, request identity |
-| `decline` | `cmd.runtime.decline_blocked` | `run_id`, `node_id`, `attempt_id?`, request identity |
-| `retry_now` | `cmd.runtime.retry_attempt` | `run_id`, `node_id`, `attempt_id` |
-| `restore_safe_point_then_retry` | `cmd.runtime.restore_safe_point_then_retry` | `run_id`, `node_id`, `attempt_id`, `safe_point_id` |
-| `start_fresh_attempt` | `cmd.runtime.start_fresh_attempt` | `run_id`, `node_id`, `attempt_id` |
-| `resume_after_prerequisite` | `cmd.runtime.resume_after_prerequisite` | `run_id`, `node_id`, `attempt_id?`, `blocked_reason_code` |
-| `replan` | `cmd.runtime.replan_attempt` | `run_id`, `node_id`, `attempt_id?` |
-| `skip_node` | `cmd.runtime.skip_attempt` | `run_id`, `node_id`, `attempt_id?` |
-| `abort_run` | `cmd.runtime.abort_run` | `run_id` |
-| `open_details` | `cmd.runtime.open_attempt_details` | `run_id`, `node_id`, `attempt_id?` |
+| `approve` | `cmd.runtime.approve` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
+| `decline` | `cmd.runtime.decline` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
+| `retry_now` | `cmd.runtime.retry_now` | `{ run_id, node_id, attempt_id }` |
+| `resume_after_prerequisite` | `cmd.runtime.resume_after_prerequisite` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
+| `restore_safe_point_then_retry` | `cmd.runtime.restore_safe_point_then_retry` | `{ run_id, node_id, attempt_id, safe_point_id }` |
+| `start_fresh_attempt` | `cmd.runtime.start_fresh_attempt` | `{ run_id, node_id, attempt_id? }` |
+| `replan` | `cmd.runtime.replan` | `{ run_id, node_id, attempt_id? }` |
+| `skip_node` | `cmd.runtime.skip_node` | `{ run_id, node_id, attempt_id? }` |
+| `abort_run` | `cmd.runtime.abort_run` | `{ run_id }` |
+| `open_details` | `cmd.runtime.open_attempt_details` | `{ run_id, node_id, attempt_id? }` |
 
-Additional canonical navigation commands:
-- `cmd.runtime.open_queue_analysis` -> `run_id`, `scheduler_pass_id`
-- `cmd.runtime.open_remediation_lineage` -> `run_id`, `remediation_root_id`
-- `cmd.runtime.open_safe_point_history` -> `run_id`, `safe_point_id?`
+### Navigation commands
+- `cmd.runtime.open_queue_analysis` -> `{ run_id, scheduler_pass_id }`
+- `cmd.runtime.open_remediation_lineage` -> `{ run_id, remediation_root_id }`
+- `cmd.runtime.open_safe_point_history` -> `{ run_id, safe_point_id? }`
 
-### Alias rule
-Legacy `cmd.graph.retry_node`, `cmd.orchestrator.retry_node`, and similar node/tier-centric recovery ids MUST map to the canonical `cmd.runtime.*` commands above and MUST NOT carry divergent semantics.
-ContractRef: ContractName:Plans/Contracts_V0.md#UICommand, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FinalGUISpec.md
+### Pre-attempt blocked rule
+When a blocked episode exists before any attempt is created, recovery targets `blocked_sequence` directly and MUST NOT fabricate an `attempt_id`.
 
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+## Canonical Runtime Recovery Command Consolidation
+
+Canonical recovery commands use one shared namespace: `cmd.runtime.*`.
+Legacy `cmd.graph.*` and `cmd.orchestrator.*` recovery IDs are deprecated aliases only.
+
+| `allowed_action_id` | canonical command id | minimum args |
+|---|---|---|
+| `approve` | `cmd.runtime.approve` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
+| `decline` | `cmd.runtime.decline` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
+| `retry_now` | `cmd.runtime.retry_now` | `{ run_id, node_id, attempt_id }` |
+| `resume_after_prerequisite` | `cmd.runtime.resume_after_prerequisite` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
+| `restore_safe_point_then_retry` | `cmd.runtime.restore_safe_point_then_retry` | `{ run_id, node_id, attempt_id, safe_point_id }` |
+| `start_fresh_attempt` | `cmd.runtime.start_fresh_attempt` | `{ run_id, node_id, attempt_id? }` |
+| `replan` | `cmd.runtime.replan` | `{ run_id, node_id, attempt_id? }` |
+| `skip_node` | `cmd.runtime.skip_node` | `{ run_id, node_id, attempt_id? }` |
+| `abort_run` | `cmd.runtime.abort_run` | `{ run_id }` |
+| `open_details` | `cmd.runtime.open_attempt_details` | `{ run_id, node_id, attempt_id? }` |
+
+### Navigation commands
+- `cmd.runtime.open_queue_analysis` -> `{ run_id, scheduler_pass_id }`
+- `cmd.runtime.open_remediation_lineage` -> `{ run_id, remediation_root_id }`
+- `cmd.runtime.open_safe_point_history` -> `{ run_id, safe_point_id? }`
+
+### Pre-attempt blocked rule
+When a blocked episode exists before any attempt is created, recovery targets `blocked_sequence` directly and MUST NOT fabricate an `attempt_id`.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
 ## Blocked-State Recovery Command Definitions Addendum
 
 ### Recovery commands

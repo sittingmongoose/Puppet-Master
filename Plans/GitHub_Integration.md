@@ -1252,9 +1252,37 @@ Rules:
 - blocked recovery surfaces must use canonical runtime action families and preserve local generated artifacts while remote steps remain blocked
 ## Deferred GitHub Flow Blocked Identity Consolidation Addendum (2026-03-09)
 
-Deferred or GitHub-seeded wizard/runtime flows MUST preserve blocked recovery identity.
+Deferred GitHub launch and resume flows MUST persist a binding record containing:
+- `wizard_id?`
+- `thread_id?`
+- `run_id?`
+- `node_id?`
+- `attempt_id?`
+- deferred payload ref
+- `blocked_sequence?`
+- `replan_generation?`
+- clearing status
 
-### Required rules
-- if a GitHub-seeded wizard becomes blocked, resume returns to the same wizard instance/context rather than a fresh blank flow
-- if the blocked state is tied to a runtime node/attempt, the deferred GitHub context remains linked to that originating node/attempt
-- blocked recovery surfaces use canonical runtime action families and preserve local generated artifacts while remote steps remain blocked
+Rules:
+- the binding is created before handing control to deferred GitHub auth/import/launch flows
+- if the deferred flow blocks, the runtime blocked episode references this binding
+- the binding is cleared only when the deferred flow completes successfully, the owning blocked episode is abandoned, or the wizard/run context is cancelled or superseded
+- approval or auth resolution wakes the scheduler/event consumer immediately; it is not a polling loop
+## Deferred GitHub Recovery Binding
+
+Deferred GitHub launch and resume flows MUST persist a binding record containing:
+- `wizard_id?`
+- `thread_id?`
+- `run_id?`
+- `node_id?`
+- `attempt_id?`
+- deferred payload ref
+- `blocked_sequence?`
+- `replan_generation?`
+- clearing status
+
+Rules:
+- the binding is created before handing control to deferred GitHub auth/import/launch flows
+- if the deferred flow blocks, the runtime blocked episode references this binding
+- the binding is cleared only when the deferred flow completes successfully, the owning blocked episode is abandoned, or the wizard/run context is cancelled or superseded
+- approval or auth resolution wakes the scheduler/event consumer immediately; it is not a polling loop

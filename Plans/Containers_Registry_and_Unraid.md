@@ -794,8 +794,23 @@ Container publish and Unraid remote-side-effect flows remain the reference patte
 
 ## Container Blocked-Payload Field Name Correction Addendum
 
-All references to `recovery_options[]` in this document are replaced by the canonical runtime field name `allowed_action_ids[]`.
+Container publish and similar remote side-effect examples are reference patterns only.
 
-The deprecated name `recovery_options[]` MUST NOT be used in new blocked payloads or container publishing contracts. This aligns with Plans/Contracts_V0.md which declares `recovery_options[]` and `allowed_actions[]` as deprecated shared-surface names.
+Canonical runtime-facing blocked payload shape:
+- `blocked_reason_code`
+- ordered `allowed_action_ids[]`
+- `preserved_local_work`
+- `detail_ref?`
 
-ContractRef: ContractName:Plans/Contracts_V0.md
+Legacy fields such as `reason_code` and `recovery_options[]` are non-canonical and MUST NOT be copied into new shared runtime contracts.
+## Remote Side-Effect Blocked Payload Normalization
+
+Container publish and similar remote side-effect examples are reference patterns only.
+
+Canonical runtime-facing blocked payload shape:
+- `blocked_reason_code`
+- ordered `allowed_action_ids[]`
+- `preserved_local_work`
+- `detail_ref?`
+
+Legacy fields such as `reason_code` and `recovery_options[]` are non-canonical and MUST NOT be copied into new shared runtime contracts.

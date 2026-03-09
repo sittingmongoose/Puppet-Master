@@ -425,128 +425,108 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Progression_
 Every retry, resume-after-prerequisite, or safe-point-restored rerun creates a new `attempt_id`. Prior attempts remain immutable historical records.
 ## Unified Runtime Scheduler and Attempt Lifecycle Reconciliation Addendum (2026-03-09)
 
-This section supersedes any earlier wording that makes single-node lexical dispatch canonical.
+This section supersedes earlier lexical-dispatch, attempt-reuse, and mixed blocked/failure wording in this file.
 
-### Canonical scheduler pass
-For the active `replan_generation`, the executor MUST:
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/orchestrator-subagent-integration.md
-1. ingest the triggering runtime event or startup reconciliation result
-2. apply prerequisite-resolution, blocked-state, backoff, and generation updates
-3. recompute readiness for all directly affected candidates and any other candidates needed to build the global ready set
-4. compute canonical score terms for every ready candidate
-5. emit `scheduler.pass`
-6. create new attempts for selected work
-7. emit `attempt.started`
-8. begin execution
+### Scheduler selection
+- Canonical dispatch uses the scored ready-set tuple `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`.
+- Lexicographic `node_id` ordering is only the final tiebreak and MUST NOT remain the active standalone scheduler rule.
+- Slot shortage produces `non_selected_reason = capacity_deferred`; it does not create blocked state.
 
-Earlier wording that selects the lexicographically smallest `node_id` as the canonical dispatch rule is non-normative.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md
 
-### Score tuple definitions
-Canonical score tuple: `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`.
+### Wake reasons and coalescing
+Canonical `wake_reason` values are:
+- `node_completed`
+- `verification_completed`
+- `approval_resolved`
+- `clarification_resolved`
+- `auth_recovered`
+- `backoff_expired`
+- `remediation_completed`
+- `replan_applied`
+- `restore_completed`
+- `capacity_changed`
+- `startup_recovered`
+- `watchdog_recheck`
 
-Required definitions:
-- `scheduler_lane = remediation` only for remediation child execution
-- `scheduler_lane = unblocker` only when successful completion would increase the active ready set for other canonical nodes in the active generation
-- `scheduler_lane = normal` otherwise
-- `manual_priority` is an integer `0..100`, default `50`, persisted per canonical node per generation, and changes only through an explicit planner/runtime write
-- `transitive_unblock_count` counts unique blocked canonical descendants in the active generation that would become ready if the node completed successfully now and all their other blockers are already satisfied
-- non-canonical remediation children are excluded from `transitive_unblock_count`
-- `ready_since_utc` is reset whenever the node leaves the ready set for any reason
-- `node_id` is the final deterministic tiebreak only
+If multiple triggers coalesce into one scheduler pass, persist the first as `wake_reason` and the rest as `secondary_wake_reasons[]`.
 
-### Capacity and selection
-`available_slots` MUST be derived from one deterministic runtime view that combines:
-ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Graph_View.md
-- run-level concurrency ceiling
-- active lane / pool ceilings
-- provider/resource saturation
-- remediation reservations when configured
-
-Lack of free slots is `non_selected_reason = capacity_deferred`, not a blocked outcome.
-
-### Node and attempt state interaction
-Node lifecycle remains the graph-progress contract. Attempt state carries execution overlays.
-
-Required attempt states:
-- `starting`
-- `running`
-- `blocked`
-- `backoff_pending`
-- `restore_pending`
-- `remediation_child_running`
-- `completed_success`
-- `completed_failed`
-- `interrupted_by_restart`
-- `stale_historical`
-
-Readiness MUST consult both node lifecycle state and current attempt/block projections.
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md
+### Outcome families
+- `failure_class` is only for classified attempt outcomes.
+- `blocked_reason_code` is only for unresolved prerequisites or intentionally prevented work.
+- A blocked episode may carry `failure_class?` only when a failed attempt produced the blocked state.
 
 ### Attempt identity
-- every dispatch creates a new `attempt_id`
-- once created, an `attempt_id` is never reused
-- blocked outcomes may omit `attempt_id` only when execution was stopped before attempt creation
-- prerequisite-resumed work, manual retry, remediation retry, and restore-before-rerun always create new attempts
-- every `attempt.started` MUST carry `scheduler_pass_id`, requested/effective snapshot identifiers, `replan_generation`, and any safe-point/remediation lineage identifiers
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+- Every dispatch creates a new `attempt_id`.
+- Retry, prerequisite resume, remediation rerun, and safe-point-restored rerun always create new attempts.
+- Prior attempts remain immutable history.
 
-### Mutation-capable classifier and safe points
-`mutation_capable = true` when the attempt may:
-- modify project or worktree files
-- mutate local runtime-managed artifacts/state that must be restorable for deterministic rerun
-- apply remediation output to a previously generated workspace
+### Mutation capability and safe points
+- `mutation_capable` is sourced from the tool registry and propagated into the node plan record.
+- Mutation-capable attempts create a safe point before execution unless policy explicitly says the attempt is non-mutating despite tool capability.
+- `requires_safe_point_restore = true` on a blocked payload overrides generic rerun defaults.
 
-Remote approval without local mutation is not mutation-capable by itself.
+### Capacity inputs
+`available_slots` comes from one deterministic runtime view that combines run ceiling, lane ceilings, provider/resource saturation, remediation reservations, and worktree isolation constraints.
 
-Mutation-capable attempts and remediation apply steps MUST persist a safe point before execution begins.
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Provider_OpenCode.md
+### Run-level deferred rule
+- If any node is runnable, the run remains active.
+- If no node is runnable and blocked/backoff/prerequisite-waiting work exists, the run is deferred/waiting rather than terminal.
+- The next prerequisite resolution, backoff expiry, restore completion, remediation completion, or capacity change MUST wake the scheduler.
 
-#### Classification responsibility
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+## Canonical Runtime Scheduler and Attempt Lifecycle
 
-The **tool registry** is the single source of truth for `mutation_capable` classification.
+This section supersedes earlier lexical-dispatch, attempt-reuse, and mixed blocked/failure wording in this file.
 
-1. Each tool definition in the tool registry MUST include a `mutation_capable: bool` field.
-2. Default is `false`; tool authors opt in explicitly.
-3. The **node planner** propagates `mutation_capable` from the tool registry to the node's plan record at graph-build time.
-4. The **scheduler** reads `mutation_capable` from the node's plan record when deciding whether to create a safe point before an attempt.
-5. Runtime override: if the orchestrator detects a mutation-capable sub-operation not declared in the tool registry (e.g., dynamic tool invocation), it MUST set `mutation_capable = true` on the attempt record before execution begins.
+### Scheduler selection
+- Canonical dispatch uses the scored ready-set tuple `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`.
+- Lexicographic `node_id` ordering is only the final tiebreak and MUST NOT remain the active standalone scheduler rule.
+- Slot shortage produces `non_selected_reason = capacity_deferred`; it does not create blocked state.
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md
 
-### Same-cycle prerequisite wake ordering
-When a prerequisite is satisfied in a way that can unblock work:
-1. emit `node.prerequisite_resolved`
-2. update blocked projections
-3. emit `node.unblocked` for any cleared blocked episode
-4. run the scheduler pass in the same wake cycle
+### Wake reasons and coalescing
+Canonical `wake_reason` values are:
+- `node_completed`
+- `verification_completed`
+- `approval_resolved`
+- `clarification_resolved`
+- `auth_recovered`
+- `backoff_expired`
+- `remediation_completed`
+- `replan_applied`
+- `restore_completed`
+- `capacity_changed`
+- `startup_recovered`
+- `watchdog_recheck`
 
-### Remediation child execution
-Remediation is a runnable child attempt with its own `attempt_id` and `remediation_root_id`.
+If multiple triggers coalesce into one scheduler pass, persist the first as `wake_reason` and the rest as `secondary_wake_reasons[]`.
 
-Required rules:
-- remediation child execution is not a canonical graph node unless a replan changes canonical scope
-- while remediation child execution is active, the parent node is non-ready and non-terminal
-- remediation children participate in `scheduler_lane = remediation`
-- on successful remediation resolution, any parent rerun is a new attempt governed by the canonical matrix, not a reuse of the failed attempt
+### Outcome families
+- `failure_class` is only for classified attempt outcomes.
+- `blocked_reason_code` is only for unresolved prerequisites or intentionally prevented work.
+- A blocked episode may carry `failure_class?` only when a failed attempt produced the blocked state.
 
-### Graph-lock boundary
-`run.graph_canonical_locked` MUST be emitted only after:
-ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md
-- canonical graph structure validation passes
-- blocker references are resolved
-- active `replan_generation` is committed
-- any allowed pre-lock decomposition degradation event has already been persisted
+### Attempt identity
+- Every dispatch creates a new `attempt_id`.
+- Retry, prerequisite resume, remediation rerun, and safe-point-restored rerun always create new attempts.
+- Prior attempts remain immutable history.
 
-After graph lock, degraded flat execution is forbidden and invalid graph structure is `failure_class = graph_integrity`.
+### Mutation capability and safe points
+- `mutation_capable` is sourced from the tool registry and propagated into the node plan record.
+- Mutation-capable attempts create a safe point before execution unless policy explicitly says the attempt is non-mutating despite tool capability.
+- `requires_safe_point_restore = true` on a blocked payload overrides generic rerun defaults.
 
-### Acceptance criteria
-- canonical dispatch is scored, capacity-aware, and parallelizable
-- attempt identity is immutable and per-dispatch
-- safe-point creation depends on the explicit mutation-capable classifier
-- prerequisite resolution, unblocking, and scheduling happen in one ordered wake cycle
-- remediation children are executable runtime entities with explicit lineage
-- graph lock is precise enough to prevent hidden post-lock degradation
+### Capacity inputs
+`available_slots` comes from one deterministic runtime view that combines run ceiling, lane ceilings, provider/resource saturation, remediation reservations, and worktree isolation constraints.
 
+### Run-level deferred rule
+- If any node is runnable, the run remains active.
+- If no node is runnable and blocked/backoff/prerequisite-waiting work exists, the run is deferred/waiting rather than terminal.
+- The next prerequisite resolution, backoff expiry, restore completion, remediation completion, or capacity change MUST wake the scheduler.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 ## Counter Relationships and Event Ordering Addendum
 
 ### Counter relationships

@@ -303,48 +303,45 @@ Where higher-precedence sources do not decide, use these defaults:
 ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
 ## Canonical Runtime Recovery Matrix and Counter Policy Addendum (2026-03-09)
 
-This section is the normative owner of retry, backoff, remediation, and escalation policy.
+This section defines canonical Runtime Recovery Matrix Completion.
 
+### Additional blocked rows
 | classifier family | classifier | automatic next step | counter family | backoff | requires safe-point restore | remediation | terminal / escalation |
 |---|---|---|---|---|---|---|---|
-| `failure_class` | `provider_transient` | auto retry | `automatic_retry_count` | `1s, 5s, 15s` | no | no | fail after ceiling |
-| `failure_class` | `structured_output_invalid` | one format retry | `automatic_retry_count` | none | no | optional after failed format retry | escalate after failed format retry |
-| `failure_class` | `verification_failed` | no blind retry | `remediation_retry_count` | none | yes | yes | pause after remediation ceiling |
-| `failure_class` | `reviewer_findings` | no blind retry | `remediation_retry_count` | none | yes | yes | pause after remediation ceiling |
-| `failure_class` | `storage_io` | no automatic retry | none | none | no | no | terminal failure |
-| `failure_class` | `graph_integrity` | no automatic retry | none | none | no | no | terminal failure / repair required |
-| `blocked_reason_code` | `permission_denied` | wait for prerequisite change | `prerequisite_resume_count` | none | no | no | remain blocked |
-| `blocked_reason_code` | `user_declined` | wait for explicit user action | `manual_resume_count` | none | no | no | remain blocked |
-| `blocked_reason_code` | `headless_ask_denied` | wait for mode or prerequisite change | `prerequisite_resume_count` | none | no | no | remain blocked |
-| `blocked_reason_code` | `filesafe_blocked` | wait for policy or prerequisite change | `prerequisite_resume_count` | none | policy-driven | no | remain blocked |
-| `blocked_reason_code` | `external_side_effect_blocked` | wait for explicit approve / decline | `prerequisite_resume_count` | none | no | no | remain blocked |
-| `blocked_reason_code` | `auth_expired` | wait for auth recovery | `prerequisite_resume_count` | none | no | no | remain blocked |
-| `blocked_reason_code` | `replan_required` | replan instead of retry | none | none | no | no | remain blocked |
-| `blocked_reason_code` | `waiting_approval` | wait for approval resolution | `prerequisite_resume_count` | none | no | no | remain blocked |
-| `blocked_reason_code` | `clarification_blocked` | wait for new explicit user input | `manual_resume_count` | none | no | no | remain blocked |
+| `blocked_reason_code` | `validation_blocked` | wait for corrected input or explicit user action | `manual_resume_count` | none | no | optional | remain blocked |
+| `blocked_reason_code` | `remediation_ceiling_exceeded` | no automatic retry | none | none | no | no | remain blocked until replan, manual fix, or abort |
+| `blocked_reason_code` | `worktree_conflict` | wait for conflict resolution | `manual_resume_count` | none | maybe | no | remain blocked |
+| `blocked_reason_code` | `dirty_worktree` | wait for cleanup or restore action | `manual_resume_count` | none | maybe | no | remain blocked |
+| `blocked_reason_code` | `plugin_hook_blocked` | wait for hook resolution or explicit override action | `manual_resume_count` | none | no | no | remain blocked |
 
-### Counter policy
-- retry ceilings apply only to the counter family named in the matrix
-- prerequisite-resolution resumes MUST NOT consume automatic retry budget
-- manual fresh-attempt actions MUST increment `manual_resume_count` and `attempt_count` but not `automatic_retry_count`
-- remediation generations MUST be counted independently from automatic transport/provider retries
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+### Timeout normalization
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
+`tool_outcome = timed_out` MUST first normalize to `failure_class = provider_transient`, then follow the canonical provider-transient row.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
 
-### Global defaults
-- event-driven scheduling is the default correctness path
-- watchdog polling is defensive only
-- hidden provider-local retries are forbidden
-- blocked outcomes preserve completed local work by default when execution stopped because a prerequisite or remote side effect was unresolved
-- pre-lock draft decomposition may degrade only before graph lock and only with explicit evidence
+### Field-level override
+When a blocked payload sets `requires_safe_point_restore = true`, that field overrides the row-default rerun path.
 
-### Additional recovery matrix rows
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
 
-The following tool outcomes were missing from the recovery matrix and are added:
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
+## Canonical Runtime Recovery Matrix Completion
 
-| Source | Value | Automatic action | Counter | Backoff | Remediation eligible | User-visible | Terminal condition |
-|--------|-------|-----------------|---------|---------|---------------------|-------------|-------------------|
-| `tool_outcome` | `cancelled` | no retry | `attempt_count` | none | no | yes | mark node as `user_declined`; surface in blocked notice |
-| `tool_outcome` | `timed_out` | up to 2 retries with 2x backoff | `automatic_retry_count` | exponential (base 30 s, cap 5 min) | no | yes | after retries exhausted, `blocked` with `provider_transient` |
-| `tool_outcome` | `post_scan_failure` | no blind retry | `attempt_count` | none | yes | yes | treat as `verification_failed`; enter remediation |
+### Additional blocked rows
+| classifier family | classifier | automatic next step | counter family | backoff | requires safe-point restore | remediation | terminal / escalation |
+|---|---|---|---|---|---|---|---|
+| `blocked_reason_code` | `validation_blocked` | wait for corrected input or explicit user action | `manual_resume_count` | none | no | optional | remain blocked |
+| `blocked_reason_code` | `remediation_ceiling_exceeded` | no automatic retry | none | none | no | no | remain blocked until replan, manual fix, or abort |
+| `blocked_reason_code` | `worktree_conflict` | wait for conflict resolution | `manual_resume_count` | none | maybe | no | remain blocked |
+| `blocked_reason_code` | `dirty_worktree` | wait for cleanup or restore action | `manual_resume_count` | none | maybe | no | remain blocked |
+| `blocked_reason_code` | `plugin_hook_blocked` | wait for hook resolution or explicit override action | `manual_resume_count` | none | no | no | remain blocked |
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+### Timeout normalization
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
+`tool_outcome = timed_out` MUST first normalize to `failure_class = provider_transient`, then follow the canonical provider-transient row.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
+
+### Field-level override
+When a blocked payload sets `requires_safe_point_restore = true`, that field overrides the row-default rerun path.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md

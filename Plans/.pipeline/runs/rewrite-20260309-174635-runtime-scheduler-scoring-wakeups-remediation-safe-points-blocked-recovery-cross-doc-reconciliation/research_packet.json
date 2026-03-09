@@ -1,0 +1,514 @@
+{
+  "schema_id": "puppet-master-research-packet-v1",
+  "run_id": "rewrite-20260309-174635-runtime-scheduler-scoring-wakeups-remediation-safe-points-blocked-recovery-cross-doc-reconciliation",
+  "created_at_utc": "2026-03-09T17:46:35Z",
+  "topic": "Runtime scheduler scoring, wakeups, remediation, safe points, blocked recovery, and cross-doc reconciliation packetization",
+  "objective": "Emit a packetization-ready, non-drifting rewrite packet for the runtime scheduler scoring / wakeup / remediation / safe-point / blocked-recovery feature cluster. The packet must close the full MUST CHANGE and MUST RECONCILE doc set established by the audit and reconciliation passes, replace stale canonical sections where they still conflict, preserve canonical ownership boundaries across runtime/storage/policy/UI/chat/wizard/provider docs, and carry enough ready-to-insert markdown that no primary rule, state, contract, counter, identity, UI behavior, fallback, or lifecycle decision is lost in handoff.",
+  "decisions": [
+    {
+      "id": "canonical-runtime-event-names",
+      "decision": "Canonical runtime event names use dot-namespaced forms (`scheduler.pass`, `node.ready`, `node.blocked`, `node.unblocked`, `safe_point.created`, `safe_point.restored`, `remediation.spawned`, `remediation.resolved`). Legacy `run.*` names are aliases only and MUST NOT remain the prescriptive schema headings.",
+      "rationale": "The same feature is currently specified under multiple event names, which lets downstream docs keep drifting while still appearing compliant."
+    },
+    {
+      "id": "scheduler-pass-id-is-canonical",
+      "decision": "`scheduler_pass_id` is the sole canonical queue-analysis identity. `analysis_id` is a legacy alias only and, when present, MUST equal `scheduler_pass_id` exactly.",
+      "rationale": "Queue-analysis wiring, navigation, artifacts, and storage still drift if both names remain normatively live."
+    },
+    {
+      "id": "allowed-action-ids-sole-canonical-name",
+      "decision": "`allowed_action_ids[]` is the sole canonical runtime field name for recovery actions. `allowed_actions[]` and `recovery_options[]` are deprecated aliases only and MUST NOT appear in new prescriptive schemas, storage shapes, or UI contracts.",
+      "rationale": "This is the highest-frequency field-name drift across runtime, HITL, permissions, tools, and external side-effect docs."
+    },
+    {
+      "id": "blocked-vs-failure-classifier-split",
+      "decision": "`failure_class` is only for classified attempt outcomes. `blocked_reason_code` is only for unresolved prerequisites or intentionally prevented work. A blocked payload may carry `failure_class?` only when a failed attempt produced a follow-on blocked state.",
+      "rationale": "Several policy and consumer docs still model blocked reasons as failure classes, which breaks recovery routing."
+    },
+    {
+      "id": "closed-blocked-reason-enum",
+      "decision": "The canonical `blocked_reason_code` enum includes `validation_blocked` and `remediation_ceiling_exceeded` in addition to permission, FileSafe, auth, replan, approval, clarification, worktree, dirty-worktree, plugin-hook, and external-side-effect blocked reasons.",
+      "rationale": "Tools, chat, and remediation UI already depend on these values; the owner enum must be genuinely closed."
+    },
+    {
+      "id": "attempt-identity-always-new",
+      "decision": "Every dispatch creates a new runtime `attempt_id`. Retry, prerequisite-resume, remediation rerun, and safe-point-restored rerun always create new attempts. Upstream session continuity uses a separate `provider_attempt_ref?` field.",
+      "rationale": "Attempt reuse versus always-new identity is one of the biggest remaining implementation ambiguities."
+    },
+    {
+      "id": "blocked-sequence-is-episode-identity",
+      "decision": "`blocked_sequence` is a per-node monotonic episode counter. It increments only when the node leaves blocked state and later enters a new blocked episode. Changing blocked reason during a continuous blocked episode does not increment it.",
+      "rationale": "UI, storage, and chat all need one stable blocked-episode identity, including pre-attempt blocks."
+    },
+    {
+      "id": "requires-safe-point-restore-override",
+      "decision": "`requires_safe_point_restore = true` overrides generic matrix defaults and makes `restore_safe_point_then_retry` the only legal rerun path for that blocked episode.",
+      "rationale": "FileSafe and similar mutation-sensitive paths need an explicit field-level override rather than implicit inference."
+    },
+    {
+      "id": "manual-priority-and-score-tuple",
+      "decision": "Canonical scheduler selection uses `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`. `manual_priority` is persisted per canonical node per `replan_generation`, default `50`, and changes only through explicit planner/runtime writes.",
+      "rationale": "The scheduler is not deterministic unless the score tuple and `manual_priority` ownership are singular."
+    },
+    {
+      "id": "wake-reasons-and-coalescing",
+      "decision": "Scheduler passes persist a primary `wake_reason` plus `secondary_wake_reasons[]` when multiple triggers coalesce. Wake reasons cover completion, verification, approval, clarification, auth recovery, backoff expiry, remediation completion, replan application, restore completion, capacity changes, startup recovery, and watchdog recheck.",
+      "rationale": "Queue-analysis explanation is underspecified whenever several unblock causes land in one pass."
+    },
+    {
+      "id": "run-deferred-semantics",
+      "decision": "A run remains active if any node is runnable. If no node is runnable but blocked/backoff/prerequisite-waiting work exists, the run is deferred/waiting rather than terminal. Terminal completion requires no runnable, no blocked, no backoff, and no unresolved prerequisite work.",
+      "rationale": "Run-level completion versus waiting semantics are still underdefined and can cause wrong terminal states."
+    },
+    {
+      "id": "timeout-normalization",
+      "decision": "`tool_outcome = timed_out` first normalizes to `failure_class = provider_transient`, then follows the canonical provider-transient retry/backoff row. Timeout exhaustion does not invent a second blocked taxonomy.",
+      "rationale": "Decision policy drift currently mixes timeout behavior across failure and blocked families."
+    },
+    {
+      "id": "wizard-blocked-is-canonical",
+      "decision": "`blocked` is a canonical `wizard_status` value. Wizard blocked state persists `wizard_step`, `blocked_reason_code`, `clarification_round_count`, `report_ref`, `resume_url?`, degradation state, `replan_generation?`, and attempted recovery actions. It clears only on materially new input, true prerequisite resolution, new replan generation, or cancellation.",
+      "rationale": "Wizard blocked behavior is described richly in prose but still missing from the canonical enum and reset rules."
+    },
+    {
+      "id": "thread-blocked-precedence",
+      "decision": "Thread UI treats wizard-blocked and node-blocked as separate persisted episodes. Precedence is: active node-blocked episode for the visible runtime context, then active wizard-blocked episode, then active `attention_required` clarification, then historical blocked episodes.",
+      "rationale": "Chat and dashboard surfaces otherwise collapse distinct paused states into one ambiguous badge."
+    },
+    {
+      "id": "degraded-draft-boundary",
+      "decision": "`plan.decomposition_degraded` is a pre-lock planning state only. UI and artifact copy MUST NOT imply silent degraded canonical execution after graph lock.",
+      "rationale": "Several later GUI sections overstate degraded execution semantics and blur the planning/runtime boundary."
+    },
+    {
+      "id": "all-nodes-blocked-gating",
+      "decision": "Until owner runtime contracts deliberately define `run.all_nodes_blocked_warning` and `run.auto_paused`, GUI surfaces may derive all-blocked warnings from existing projections but MUST NOT specify those undeclared runtime events as canonical.",
+      "rationale": "The all-nodes-blocked circuit-breaker exists in GUI prose but not in owner contracts, storage, or policy."
+    },
+    {
+      "id": "permission-snapshot-immutability",
+      "decision": "Attempts persist immutable requested/effective model and permission snapshot identifiers at attempt start. The prompt handoff bundle and provider envelope use the same immutable runtime correlation data for a given attempt.",
+      "rationale": "Snapshot propagation and handoff identity still drift between runtime, storage, prompt assembly, and providers."
+    },
+    {
+      "id": "filesafe-shared-vs-local-actions",
+      "decision": "Shared runtime action IDs remain the canonical recovery families. FileSafe-specific labels such as “Approve and add to allowlist” or “Edit and retry” are domain-local affordances layered on top of shared actions and metadata unless the global action enum explicitly adopts them.",
+      "rationale": "FileSafe is still the main source of action-family drift."
+    },
+    {
+      "id": "counter-family-rule",
+      "decision": "`attempt_count` is total attempts ever started for the node in the run. `automatic_retry_count`, `prerequisite_resume_count`, `manual_resume_count`, and `remediation_retry_count` are independent policy counters. `retry_count` is a derived display field only and MUST NOT drive policy.",
+      "rationale": "The current planning set still lets several incompatible interpretations of retry counters coexist."
+    },
+    {
+      "id": "safe-point-and-restore-namespaces",
+      "decision": "Runtime safe points and user-facing restore points are distinct concepts with distinct storage namespaces and identities. Safe points are scoped to run/node/attempt recovery; restore points are project-scoped user history.",
+      "rationale": "Safe-point history, restart recovery, and user rollback language remain easy to conflate unless the boundary is explicit."
+    }
+  ],
+  "doc_intents": [
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- scheduler selection, wake reasons, attempt identity, capacity inputs, mutation/safe-point behavior, and run deferred semantics remain normatively stale or fragmented.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Unified Runtime Scheduler and Attempt Lifecycle Reconciliation Addendum (2026-03-09)",
+          "content_markdown": "## Canonical Runtime Scheduler and Attempt Lifecycle\n\nThis section supersedes earlier lexical-dispatch, attempt-reuse, and mixed blocked/failure wording in this file.\n\n### Scheduler selection\n- Canonical dispatch uses the scored ready-set tuple `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`.\n- Lexicographic `node_id` ordering is only the final tiebreak and MUST NOT remain the active standalone scheduler rule.\n- Slot shortage produces `non_selected_reason = capacity_deferred`; it does not create blocked state.\n\n### Wake reasons and coalescing\nCanonical `wake_reason` values are:\n- `node_completed`\n- `verification_completed`\n- `approval_resolved`\n- `clarification_resolved`\n- `auth_recovered`\n- `backoff_expired`\n- `remediation_completed`\n- `replan_applied`\n- `restore_completed`\n- `capacity_changed`\n- `startup_recovered`\n- `watchdog_recheck`\n\nIf multiple triggers coalesce into one scheduler pass, persist the first as `wake_reason` and the rest as `secondary_wake_reasons[]`.\n\n### Outcome families\n- `failure_class` is only for classified attempt outcomes.\n- `blocked_reason_code` is only for unresolved prerequisites or intentionally prevented work.\n- A blocked episode may carry `failure_class?` only when a failed attempt produced the blocked state.\n\n### Attempt identity\n- Every dispatch creates a new `attempt_id`.\n- Retry, prerequisite resume, remediation rerun, and safe-point-restored rerun always create new attempts.\n- Prior attempts remain immutable history.\n\n### Mutation capability and safe points\n- `mutation_capable` is sourced from the tool registry and propagated into the node plan record.\n- Mutation-capable attempts create a safe point before execution unless policy explicitly says the attempt is non-mutating despite tool capability.\n- `requires_safe_point_restore = true` on a blocked payload overrides generic rerun defaults.\n\n### Capacity inputs\n`available_slots` comes from one deterministic runtime view that combines run ceiling, lane ceilings, provider/resource saturation, remediation reservations, and worktree isolation constraints.\n\n### Run-level deferred rule\n- If any node is runnable, the run remains active.\n- If no node is runnable and blocked/backoff/prerequisite-waiting work exists, the run is deferred/waiting rather than terminal.\n- The next prerequisite resolution, backoff expiry, restore completion, remediation completion, or capacity change MUST wake the scheduler.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- runtime event names, enum families, blocked payload, scheduler pass schema, safe-point/remediation contracts, wizard blocked schema, and clarification transition targeting are core SSOT.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Canonical Runtime Event, Outcome, and Action Contract Reconciliation Addendum (2026-03-09)",
+          "content_markdown": "## Canonical Runtime Event, Enum, and Payload Consolidation\n\nThis section supersedes packet-era naming and field drift wherever conflicts remain.\n\n### Canonical event names\n| canonical event | legacy alias | canonical identity |\n|---|---|---|\n| `scheduler.pass` | `run.scheduler_analysis` | `run_id`, `scheduler_pass_id` |\n| `node.ready` | `run.node_ready` | `run_id`, `node_id`, `ready_since_utc` |\n| `node.blocked` | `run.node_blocked` | `run_id`, `node_id`, `blocked_sequence`, `attempt_id?` |\n| `node.unblocked` | `run.node_unblocked` | `run_id`, `node_id`, `blocked_sequence`, `attempt_id?` |\n| `safe_point.created` | none | `safe_point_id` |\n| `safe_point.restored` | none | `safe_point_id`, `restore_sequence` |\n| `remediation.spawned` | `run.remediation_started` | `remediation_root_id`, `child_attempt_id` |\n| `remediation.resolved` | `run.remediation_completed` | `remediation_root_id`, `child_attempt_id` |\n\n### Canonical enum families\n`failure_class`:\n- `provider_transient`\n- `structured_output_invalid`\n- `verification_failed`\n- `reviewer_findings`\n- `storage_io`\n- `graph_integrity`\n\n`blocked_reason_code`:\n- `permission_denied`\n- `user_declined`\n- `headless_ask_denied`\n- `filesafe_blocked`\n- `external_side_effect_blocked`\n- `auth_expired`\n- `replan_required`\n- `waiting_approval`\n- `clarification_blocked`\n- `worktree_conflict`\n- `dirty_worktree`\n- `plugin_hook_blocked`\n- `validation_blocked`\n- `remediation_ceiling_exceeded`\n\n### Canonical blocked payload\nEvery runtime-facing blocked event or projection MUST expose:\n- `blocked_reason_code`\n- ordered `allowed_action_ids[]`\n- `preserved_local_work`\n- `requires_safe_point_restore?`\n- prerequisite metadata needed to bind the recovery command\n- `failure_class?`\n- `detail_ref?` in `{type}:{id}` form\n\n`allowed_actions[]` and `recovery_options[]` are deprecated aliases only and MUST NOT appear in new canonical schemas.\n\n### `scheduler.pass`\nRequired fields:\n- `scheduler_pass_id`\n- `run_id`\n- `thread_id?`\n- `replan_generation`\n- `wake_reason`\n- `secondary_wake_reasons[]`\n- `available_slots`\n- `ready_nodes[]`\n- `selected_nodes[]` including `selected_at_utc`\n- `non_selected[]`\n- `newly_ready_nodes[]`\n- `capacity_summary`\n- `analysis_id?` only as a legacy alias where `analysis_id = scheduler_pass_id`\n\nEach `newly_ready_nodes[]` entry SHOULD include `source_node_id?` and `source_dependency_ref?` when known.\n\n### Safe points and remediation\n`safe_point.created` carries `safe_point_id`, `source_attempt_id`, `run_id`, `node_id`, `replan_generation`, `baseline_ref`, and `creation_reason`.\n\n`safe_point.restored` carries `safe_point_id`, `source_attempt_id`, `resulting_attempt_id?`, `restore_sequence`, `restore_outcome`, and `detail_ref?`.\n\n`remediation.spawned` carries `remediation_root_id`, `remediation_generation`, `parent_attempt_id`, `child_attempt_id`, `finding_refs[]`, and `replan_generation`.\n\n`remediation.resolved` carries `remediation_root_id`, `remediation_generation`, `child_attempt_id`, `resolution` (`fixed`, `superseded`, `abandoned`, `replan_required`), and `detail_ref?`.\n\n### Wizard clarification and blocked contracts\n`wizard.blocked` MUST carry `wizard_id`, `wizard_step`, `thread_id?`, `blocked_reason_code`, `clarification_round_count`, `report_ref`, `resume_url?`, `decomposition_degraded`, `degradation_reason?`, `replan_generation?`, `attempted_recovery_action_ids[]`, and `ts`.\n\n`requirements.clarification_requested` MUST carry `wizard_id`, `wizard_step`, `thread_id`, `question_ids[]`, `report_ref`, and `state_transition_target` with value `attention_required` or `blocked`.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- runtime persistence keys, blocked episode identity, retry counters, wizard runtime state, restore history, snapshot IDs, and report refs are still multiply defined.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)",
+          "content_markdown": "## Runtime Recovery Persistence Consolidation\n\n### Canonical keys\n- `scheduler_pass_record`: key = `run_id`, `scheduler_pass_id`\n- `blocked_projection`: key = `run_id`, `node_id`, `blocked_sequence`\n- `attempt_id?` and `thread_id?` are fields on `blocked_projection`, not primary-key components\n- `wizard_runtime_state`: key = `wizard_id`\n- `safe_point_restore_record`: key = `safe_point_id`, `restore_sequence`\n\n### Canonical records\n1. `attempt_record`\n   - key: `run_id`, `node_id`, `attempt_id`\n   - fields include `scheduler_pass_id`, requested/effective model snapshot ids, requested/effective permission snapshot ids, `replan_generation`, `mutation_capable`, `safe_point_id?`, `provider_attempt_ref?`, remediation lineage refs, terminal state, and independent counter-family fields\n2. `scheduler_pass_record`\n   - fields include `wake_reason`, `secondary_wake_reasons[]`, full score breakdowns, `selected_at_utc`, and `newly_ready_nodes[]`\n3. `blocked_projection`\n   - fields include `blocked_reason_code`, `allowed_action_ids[]`, `preserved_local_work`, `requires_safe_point_restore?`, prerequisite metadata, `failure_class?`, `detail_ref?`, `attempt_id?`, and `thread_id?`\n4. `safe_point_record`\n   - key: `safe_point_id`\n   - safe-point namespace is runtime-internal and distinct from user-facing restore-point storage\n5. `safe_point_restore_record`\n   - append-only restore history; never last-write-wins\n6. `remediation_lineage_record`\n   - key: `remediation_root_id`\n7. `thread_blocked_notice`\n   - key: `thread_id`, `blocked_sequence`\n   - fields include `node_id?`, `attempt_id?`, active blocked metadata, `message_id`, and `resume_url?`\n8. `wizard_runtime_state`\n   - fields include `wizard_status`, `wizard_step`, `blocked_reason_code?`, `clarification_round_count`, `report_ref?`, `resume_url?`, `decomposition_degraded`, `degradation_reason?`, and `replan_generation?`\n\n### Counter rule\n- `attempt_count` is total started attempts for the node in the run.\n- `automatic_retry_count`, `prerequisite_resume_count`, `manual_resume_count`, and `remediation_retry_count` remain independent stored counters.\n- `retry_count` is a derived display value only and MUST NOT drive policy.\n\n### Restart and stale history\nAttempts from older `replan_generation` values, or in-flight attempts that cannot resume after restart, transition to `stale_historical` and remain queryable but never resumable.\n\n### Report identity rule\nCanonical persisted references use `*_ref` fields. Raw `*_path` wording is compatibility-only.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Decision_Policy.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- the recovery matrix is missing canonical blocked reasons and still leaves timeout handling ambiguous.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Canonical Runtime Recovery Matrix and Counter Policy Addendum (2026-03-09)",
+          "content_markdown": "## Canonical Runtime Recovery Matrix Completion\n\n### Additional blocked rows\n| classifier family | classifier | automatic next step | counter family | backoff | requires safe-point restore | remediation | terminal / escalation |\n|---|---|---|---|---|---|---|---|\n| `blocked_reason_code` | `validation_blocked` | wait for corrected input or explicit user action | `manual_resume_count` | none | no | optional | remain blocked |\n| `blocked_reason_code` | `remediation_ceiling_exceeded` | no automatic retry | none | none | no | no | remain blocked until replan, manual fix, or abort |\n| `blocked_reason_code` | `worktree_conflict` | wait for conflict resolution | `manual_resume_count` | none | maybe | no | remain blocked |\n| `blocked_reason_code` | `dirty_worktree` | wait for cleanup or restore action | `manual_resume_count` | none | maybe | no | remain blocked |\n| `blocked_reason_code` | `plugin_hook_blocked` | wait for hook resolution or explicit override action | `manual_resume_count` | none | no | no | remain blocked |\n\n### Timeout normalization\n`tool_outcome = timed_out` MUST first normalize to `failure_class = provider_transient`, then follow the canonical provider-transient row.\n\n### Field-level override\nWhen a blocked payload sets `requires_safe_point_restore = true`, that field overrides the row-default rerun path.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- blocked recovery commands and queue-analysis navigation still drift across multiple canonical IDs and payload shapes.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Canonical Runtime Recovery Command Consolidation Addendum (2026-03-09)",
+          "content_markdown": "## Canonical Runtime Recovery Command Consolidation\n\nCanonical recovery commands use one shared namespace: `cmd.runtime.*`.\nLegacy `cmd.graph.*` and `cmd.orchestrator.*` recovery IDs are deprecated aliases only.\n\n| `allowed_action_id` | canonical command id | minimum args |\n|---|---|---|\n| `approve` | `cmd.runtime.approve` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |\n| `decline` | `cmd.runtime.decline` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |\n| `retry_now` | `cmd.runtime.retry_now` | `{ run_id, node_id, attempt_id }` |\n| `resume_after_prerequisite` | `cmd.runtime.resume_after_prerequisite` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |\n| `restore_safe_point_then_retry` | `cmd.runtime.restore_safe_point_then_retry` | `{ run_id, node_id, attempt_id, safe_point_id }` |\n| `start_fresh_attempt` | `cmd.runtime.start_fresh_attempt` | `{ run_id, node_id, attempt_id? }` |\n| `replan` | `cmd.runtime.replan` | `{ run_id, node_id, attempt_id? }` |\n| `skip_node` | `cmd.runtime.skip_node` | `{ run_id, node_id, attempt_id? }` |\n| `abort_run` | `cmd.runtime.abort_run` | `{ run_id }` |\n| `open_details` | `cmd.runtime.open_attempt_details` | `{ run_id, node_id, attempt_id? }` |\n\n### Navigation commands\n- `cmd.runtime.open_queue_analysis` -> `{ run_id, scheduler_pass_id }`\n- `cmd.runtime.open_remediation_lineage` -> `{ run_id, remediation_root_id }`\n- `cmd.runtime.open_safe_point_history` -> `{ run_id, safe_point_id? }`\n\n### Pre-attempt blocked rule\nWhen a blocked episode exists before any attempt is created, recovery targets `blocked_sequence` directly and MUST NOT fabricate an `attempt_id`.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Run_Graph_View.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- queue-analysis identity, blocked rendering, remediation-ceiling behavior, pre-attempt blocked targeting, and node-state vocabulary must align with runtime SSOT.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Attempt-Centric Runtime Recovery UI Reconciliation Addendum (2026-03-09)",
+          "content_markdown": "## Runtime Scheduler / Blocked View Contract\n\nRun Graph is a consumer of canonical runtime contracts and MUST NOT invent alternate state families.\n\nRequired rules:\n- queue-analysis links use `scheduler_pass_id`\n- pass-history rows may show `selected_at_utc`, score breakdown, and `newly_ready_nodes[]` only when present in canonical scheduler-pass records\n- blocked node lists sort by `blocked_sequence` descending within the active view\n- pre-attempt blocked episodes bind recovery to `blocked_sequence`, not a fabricated `attempt_id`\n- node surfaces use canonical blocked reasons; `attention_required` is not a node runtime state\n- remediation ceiling surfaces show a persistent blocked state with recovery actions driven by canonical commands and visible remediation lineage\n- safe-point history links open by `safe_point_id`, not by loose attempt-only heuristics\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- orchestrator queue-analysis, blocked rows, and recovery navigation still depend on underdefined scheduler/pass and command semantics.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Runtime Recovery Surface Layout and Navigation Reconciliation Addendum (2026-03-09)",
+          "content_markdown": "## Orchestrator Runtime Recovery Contract\n\nThe Orchestrator page is a consumer of canonical runtime contracts.\n\nRules:\n- queue-analysis navigation uses `scheduler_pass_id`\n- blocked rows show only currently valid `allowed_action_ids[]`; unavailable actions are explained rather than silently omitted\n- newly-ready rows may show direct prerequisite/source context only when canonical `scheduler.pass` data includes it\n- recovery actions use canonical `cmd.runtime.*` commands\n- node surfaces use canonical blocked reasons; `attention_required` is not a node runtime state\n- pre-attempt blocked episodes bind recovery to `blocked_sequence`\n- remediation, safe-point, and queue-analysis pivots open by canonical identity (`remediation_root_id`, `safe_point_id`, `scheduler_pass_id`)\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Run_Modes.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- run outcome semantics and headless blocked discovery still need explicit alignment with runtime blocked/deferred behavior.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Runtime Mode Interaction with Blocked Recovery Consolidation Addendum (2026-03-09)",
+          "content_markdown": "## Deferred / Waiting Run Mode Semantics\n\n### Run-level state\n- A run remains active if any node is runnable.\n- If no node is runnable and blocked/backoff/prerequisite-waiting work exists, the run is deferred/waiting rather than terminal.\n- Terminal completion requires no runnable, no blocked, no backoff, and no unresolved prerequisite work.\n\n### Headless blocked discovery\nWhen `headless_ask_denied` blocks work in a non-interactive mode:\n- emit a blocked notice with `blocked_reason_code: headless_ask_denied`\n- surface blocked node count in CLI/log status summaries\n- surface a dashboard badge if a UI session is attached\n- include the exact permission or approval that could not be presented interactively\n\n### Safe-point applicability\nRun modes do not redefine `mutation_capable`. They only determine whether mutation-capable attempts may occur and therefore whether safe points are relevant in that mode.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- thread-state lifecycle, blocked multiplicity, and action rendering still drift from runtime blocked semantics.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Thread Blocked-State Multiplicity and Action Rendering Consolidation Addendum (2026-03-09)",
+          "content_markdown": "## Unified Thread Blocked-State Lifecycle\n\nCanonical thread states:\n- `active`\n- `attention_required`\n- `blocked`\n- `completed`\n- `failed`\n\nRules:\n- `attention_required` means the active flow can continue inside the same clarification or review loop.\n- `blocked` means automation cannot continue until a prerequisite changes or a new explicit recovery action occurs.\n- wizard-blocked and node-blocked episodes are distinct persisted episodes and MUST NOT be collapsed into one mutable thread flag.\n\n### Precedence\n1. active node-blocked episode for the visible runtime context\n2. active wizard-blocked episode\n3. active `attention_required` clarification\n4. historical blocked episodes\n\n### Multi-episode display\n- thread selector shows the highest-severity active badge\n- when more than one blocked episode is active, show a count badge\n- resolving one blocked episode updates only that episode; others remain active\n- action buttons are rendered from canonical `allowed_action_ids[]` plus blocked metadata and MUST NOT invent thread-local recovery semantics\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- dashboard, thread selector, blocked/recovery UX, FileSafe persistence, degraded-draft messaging, and all-nodes-blocked behavior still require one unified UI contract.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)",
+          "content_markdown": "## Blocked / Recovery GUI Reconciliation\n\n### Dashboard Action Required\nRender Action Required whenever one or more of the following exists:\n- `wizard_blocked`\n- `wizard_attention_required`\n- active runtime blocked episode\n- active approval gate\n\nPriority order:\n`wizard_blocked > active runtime blocked > approval > wizard_attention_required > interrupted > rate_limit > warnings`\n\n### Thread and run status taxonomy\nVisible statuses MUST distinguish:\n- `idle`\n- `running`\n- `queued`\n- `attention_required`\n- `blocked`\n- `retrying_backoff`\n- `remediation`\n- `failed`\n\nCanonical visual distinction:\n- `attention_required` uses amber styling with “Needs input” copy\n- `blocked` uses red styling with “Blocked” copy\n- `waiting_approval` uses blue approval styling\n\n### Scope rule\nNode-level blocked state does not imply run-global pause. Unrelated runnable work may continue.\n\n### FileSafe rendering\nA FileSafe block is a persistent blocked episode until the underlying runtime block resolves. It MUST NOT auto-dismiss while still active.\n\n### Degraded draft warning\nDecomposition degradation is a pre-lock planning state only. GUI copy MUST NOT imply silent degraded canonical execution after graph lock.\n\n### All-nodes-blocked gating\nUntil owner runtime contracts define dedicated all-blocked events, GUI surfaces MAY derive all-blocked banners from current projections but MUST NOT treat undeclared runtime events as canonical.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/chain-wizard-flexibility.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- wizard blocked status, blocked fields, degradation state, and blocked-clear rules must be canonicalized instead of remaining append-only.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Wizard Escalation Degradation and Blocked-State Consolidation Addendum (2026-03-09)",
+          "content_markdown": "## Canonical Wizard Blocked Lifecycle\n\n### Canonical `wizard_status`\nAllowed values:\n- `setup`\n- `requirements`\n- `interview`\n- `validating`\n- `attention_required`\n- `blocked`\n- `ready_to_execute`\n- `complete`\n- `cancelled`\n\n### Canonical blocked state\nA wizard blocked record MUST persist:\n- `wizard_id`\n- `wizard_step`\n- `blocked_reason_code`\n- `clarification_round_count`\n- `report_ref`\n- `resume_url?`\n- `decomposition_degraded`\n- `degradation_reason?`\n- `replan_generation?`\n- `attempted_recovery_action_ids[]`\n\n### Blocked clear rule\nA wizard leaves `blocked` only when:\n- materially new user input creates a new issue set\n- the external prerequisite named by `blocked_reason_code` is actually resolved\n- a new `replan_generation` begins for the wizard context\n- the wizard is cancelled\n\nReopening the same blocked wizard without one of those changes does not clear blocked state and does not reset `clarification_round_count`.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/human-in-the-loop.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- HITL request and storage examples still use deprecated `allowed_actions[]` as normative contract fields.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## HITL Field Name Correction Addendum",
+          "content_markdown": "## Canonical HITL Request and Persistence Correction\n\nCanonical HITL requests and stored HITL state use `allowed_action_ids[]`, not `allowed_actions[]`.\n\nRequired fields:\n- `request_id`\n- `run_id`\n- `tier_id`\n- `tier_type`\n- `request_kind`\n- `message`\n- ordered `allowed_action_ids[]`\n- `status`\n- timestamps and rationale when applicable\n\nOlder `allowed_actions` wording is deprecated and MUST NOT appear in new HITL contracts, examples, or persistence shapes.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/FileSafe.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- FileSafe blocked payload fields, shared-vs-local action mapping, restore-before-rerun semantics, and persistence must be reconciled.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)",
+          "content_markdown": "## FileSafe Action Mapping and Persistence\n\n### Shared runtime fields\nFileSafe blocked payloads MUST use the canonical blocked payload:\n- `blocked_reason_code = filesafe_blocked`\n- `allowed_action_ids[]`\n- `preserved_local_work`\n- `requires_safe_point_restore?`\n- `detail_ref?`\n\n### Shared vs local actions\nShared runtime action IDs remain the canonical recovery families. Labels such as `Approve and add to allowlist` and `Edit and retry` are FileSafe-local affordances layered on top of shared actions and metadata. They are not new shared runtime action IDs unless the global action enum explicitly adopts them.\n\n### Restore override\nWhen `requires_safe_point_restore = true`, the only legal rerun path is `restore_safe_point_then_retry`.\n\n### Persistence\nA FileSafe block is a persistent blocked runtime episode until resolved or superseded.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- the bridged-provider request envelope still lacks the immutable runtime correlation fields required by retries, blocked recovery, and audit.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Bridged Provider Runtime Attempt and Retry Ownership Consolidation Addendum (2026-03-09)",
+          "content_markdown": "## Runtime Attempt Correlation Envelope\n\n`ProviderRequestEnvelope` MUST include:\n- `run_id`\n- `node_id`\n- `attempt_id`\n- `scheduler_pass_id`\n- `replan_generation`\n- `mutation_capable`\n- `permission_snapshot_id`\n- `model_snapshot_id`\n- `safe_point_id?`\n- `remediation_root_id?`\n- `remediation_parent_attempt_id?`\n\nRules:\n- the prompt pipeline and provider envelope use the same immutable handoff bundle for a given attempt\n- reconnect logic may observe an in-flight attempt but MUST NOT silently resubmit it\n- any retry, prerequisite resume, remediation rerun, or restore-before-rerun uses a new envelope with a new `attempt_id`\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- provider/session continuity must be reconciled against always-new runtime attempt identity.",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "## Runtime Attempt Identity vs Provider Continuity (2026-03-09)\n\nRuntime `attempt_id` is Puppet Master's per-dispatch identity.\n\nRules:\n- retries, prerequisite resumes, remediation reruns, and restore-before-reruns always create a new runtime `attempt_id`\n- upstream provider/session continuity uses a separate `provider_attempt_ref?`\n- provider/session IDs MUST NOT be reused as runtime `attempt_id`\n- reconnect flows may observe or resume streaming for the same runtime attempt but MUST NOT create hidden provider-local retry identity\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/GitHub_Integration.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- deferred GitHub flows still lack canonical blocked/recovery identity binding across wizard, thread, run, node, and attempt context.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Deferred GitHub Flow Blocked Identity Consolidation Addendum (2026-03-09)",
+          "content_markdown": "## Deferred GitHub Recovery Binding\n\nDeferred GitHub launch and resume flows MUST persist a binding record containing:\n- `wizard_id?`\n- `thread_id?`\n- `run_id?`\n- `node_id?`\n- `attempt_id?`\n- deferred payload ref\n- `blocked_sequence?`\n- `replan_generation?`\n- clearing status\n\nRules:\n- the binding is created before handing control to deferred GitHub auth/import/launch flows\n- if the deferred flow blocks, the runtime blocked episode references this binding\n- the binding is cleared only when the deferred flow completes successfully, the owning blocked episode is abandoned, or the wizard/run context is cancelled or superseded\n- approval or auth resolution wakes the scheduler/event consumer immediately; it is not a polling loop\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Crosswalk.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- owner boundaries and precedence across runtime, storage, UI, wizard, and packet-era terminology must be explicit before packetization.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Runtime Packet Ownership and Precedence Consolidation Addendum (2026-03-09)",
+          "content_markdown": "## Runtime Scheduler / Recovery Ownership and Precedence\n\nCanonical ownership:\n- runtime lifecycle and scheduling: `Plans/Executor_Protocol.md`\n- runtime events, enums, and payloads: `Plans/Contracts_V0.md`\n- persistence and restart recovery: `Plans/storage-plan.md`\n- deterministic recovery defaults: `Plans/Decision_Policy.md`\n- runtime command IDs: `Plans/UI_Command_Catalog.md`\n- chat, GUI, run graph, orchestrator, and wizard surfaces are consumers of the contracts above\n\nPrecedence rules:\n- legacy packet-era names such as `analysis_id`, `run.scheduler_analysis`, `allowed_actions[]`, and `recovery_options[]` are compatibility terms only\n- when a consumer doc conflicts with the owner docs above, the owner docs win\n- stale canonical text must be replaced or retired, not preserved by later additive notes alone\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Project_Output_Artifacts.md",
+      "intent": "update",
+      "why": "MUST CHANGE -- queue-analysis, blocked, safe-point, remediation, and degraded-draft artifacts need identity and lineage aligned with the reconciled contracts.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Runtime Recovery Artifact Identity and Scope Consolidation Addendum (2026-03-09)",
+          "content_markdown": "## Runtime Recovery Artifact Identity and Scope\n\nRequired artifact rules:\n- queue-analysis artifacts are keyed by `scheduler_pass_id`\n- blocked outcome artifacts include `blocked_reason_code`, ordered `allowed_action_ids[]`, `preserved_local_work`, and `detail_ref?`\n- remediation artifacts are keyed by `remediation_root_id`\n- safe-point restore artifacts are keyed by `safe_point_id` and `restore_sequence`\n- degraded draft planning artifacts retain lineage to the eventual graph-lock artifact and resulting `replan_generation`\n\nLegacy `analysis_id` may appear only as a compatibility alias where it exactly equals `scheduler_pass_id`.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "intent": "update",
+      "why": "MUST RECONCILE -- producer/consumer ownership for runtime recovery events and commands must be updated so implementation wiring is explicit.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Canonical Runtime Producer Consumer and Action Wiring Reconciliation Addendum (2026-03-09)",
+          "content_markdown": "## Runtime Recovery Producer / Consumer Wiring\n\nAdd canonical rows for:\n- `node.ready`\n- `scheduler.pass`\n- `node.blocked`\n- `node.unblocked`\n- `safe_point.created`\n- `safe_point.restored`\n- `remediation.spawned`\n- `remediation.resolved`\n\nEach row MUST identify:\n- producer\n- persisted record\n- UI consumers\n- policy consumers\n- replay/recovery expectations\n- command surfaces that act on the resulting state\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Prompt_Pipeline.md",
+      "intent": "update",
+      "why": "MUST RECONCILE -- prompt handoff metadata must match the immutable runtime correlation bundle used by attempts and providers.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)",
+          "content_markdown": "## Runtime Attempt Snapshot and Handoff Bundle\n\nThe prompt pipeline MUST emit the same immutable runtime handoff bundle used by the provider envelope.\n\nRequired fields:\n- `run_id`\n- `node_id`\n- `attempt_id`\n- `scheduler_pass_id`\n- `replan_generation`\n- requested/effective model snapshot ids\n- requested/effective permission snapshot ids\n- `mutation_capable`\n- `safe_point_id?`\n- remediation lineage refs when present\n\nRules:\n- snapshots are captured at attempt start and are immutable for that attempt\n- retry/resume/rerun flows always create a new handoff bundle with a new `attempt_id`\n- downstream providers and consumers MUST NOT infer missing runtime identity from prompt text alone\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "intent": "update",
+      "why": "MUST RECONCILE -- permissions-driven blocked flows still need canonical blocked payload naming, permission snapshot propagation, and event-driven wake semantics.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Permission Blocked Outcome and Prerequisite Wake Consolidation Addendum (2026-03-09)",
+          "content_markdown": "## Permission Snapshot and Wakeup Chain\n\n### Canonical blocked payload fields\nPermissions-driven blocked flows MUST use the canonical runtime blocked payload:\n- `blocked_reason_code`\n- `allowed_action_ids[]`\n- `preserved_local_work`\n- `requires_safe_point_restore?`\n- prerequisite metadata\n- `detail_ref?`\n\n### Permission snapshot propagation\nAttempt start captures immutable requested/effective permission snapshot identifiers. The full snapshot is stored with the attempt record; downstream consumers carry only the stable IDs unless they need the resolved map.\n\n### Wakeup chain\nWhen approval or permission prerequisites resolve:\n1. emit the prerequisite-resolution event with the blocked target identity\n2. deliver it to the scheduler immediately\n3. wake the scheduler with the appropriate `wake_reason`\n4. recompute readiness without polling\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Tools.md",
+      "intent": "update",
+      "why": "MUST RECONCILE -- tool-originated blocked states must stop drifting on field names, blocked enums, and mutation classification ownership.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Tool Field Name and Taxonomy Alignment Addendum",
+          "content_markdown": "## Tool Field Name and Taxonomy Alignment\n\n### Field name correction\nTool-originated blocked payloads use `allowed_action_ids[]` only. Deprecated names MUST NOT appear in new tool contracts.\n\n### Canonical blocked reasons\nTool-denial or post-validation paths use the canonical `blocked_reason_code` family, including `validation_blocked` when post-execution validation fails.\n\n### Mutation capability ownership\nEach tool definition MUST include `mutation_capable: bool` (default `false`). This is the source of truth propagated into node planning and safe-point decisions.\n\n### Recovery contract\nTool-originated blocked paths MUST NOT invent parallel action schemas or tool-private retry categories outside the canonical runtime contract.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Plugins_System.md",
+      "intent": "update",
+      "why": "MUST RECONCILE -- plugin-hook blocking remains drift-prone unless its trigger conditions, metadata, and valid action families are closed here.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Plugin Hook Blocked Specification Addendum",
+          "content_markdown": "## Plugin Hook Blocked Specification\n\n### Hooks that may block execution\nOnly execution-flow hooks may trigger `plugin_hook_blocked`:\n- `pre_tool_invoke`\n- `pre_attempt_start`\n- `pre_node_dispatch`\n\nObservation-only hooks such as `post_tool_invoke` and `post_attempt_complete` cannot create `plugin_hook_blocked`.\n\n### Required metadata\nPlugin-blocked payloads MUST include:\n- `blocked_reason_code: plugin_hook_blocked`\n- `plugin_id`\n- `hook_name`\n- `block_reason`\n- canonical `allowed_action_ids[]`\n- `preserved_local_work`\n\n### Recovery scope\nPlugins MUST NOT invent plugin-private runtime recovery semantics. They reuse canonical action families and runtime commands.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "intent": "update",
+      "why": "MUST RECONCILE -- remote-side-effect examples still risk reintroducing old blocked payload names and action shapes.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Container Blocked-Payload Field Name Correction Addendum",
+          "content_markdown": "## Remote Side-Effect Blocked Payload Normalization\n\nContainer publish and similar remote side-effect examples are reference patterns only.\n\nCanonical runtime-facing blocked payload shape:\n- `blocked_reason_code`\n- ordered `allowed_action_ids[]`\n- `preserved_local_work`\n- `detail_ref?`\n\nLegacy fields such as `reason_code` and `recovery_options[]` are non-canonical and MUST NOT be copied into new shared runtime contracts.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Progression_Gates.md",
+      "intent": "update",
+      "why": "MUST RECONCILE -- verification gates must reflect the final canonical terminology and should fail on stale prescriptive sections, not just deprecated tokens.",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "## Runtime Recovery Canonicalization Gate Addendum\n\nThe runtime recovery sweep MUST fail if any doc:\n- uses `allowed_actions[]` or `recovery_options[]` in a prescriptive runtime-facing context\n- uses `analysis_id` as canonical queue-analysis identity instead of `scheduler_pass_id`\n- leaves stale canonical text in owner docs while only appending a contradictory later note\n- treats blocked reasons as `failure_class` values in runtime policy or consumer contracts\n\nAccept deprecated names only inside deprecation notices, migration notes, or gate rules that detect them as defects.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Glossary.md",
+      "intent": "update",
+      "why": "MUST RECONCILE -- the reconciled feature depends on canonical terminology staying centralized and drift-resistant.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Runtime Scheduler Audit Terminology Addendum",
+          "content_markdown": "## Runtime Scheduler Audit Terminology Addendum\n\nAdd or normalize the following canonical terms:\n- **Scheduler pass ID** -- canonical identity for queue-analysis passes; legacy `analysis_id` is alias-only\n- **blocked_sequence** -- per-node monotonic blocked-episode counter\n- **validation_blocked** -- blocked reason for post-execution validation failure\n- **remediation_ceiling_exceeded** -- blocked reason indicating remediation ceiling reached\n- **provider_attempt_ref** -- upstream provider/session identity distinct from runtime `attempt_id`\n- **detail_ref** -- structured `{type}:{id}` reference used by blocked/remediation/safe-point records\n- **thread_blocked_notice** -- persisted thread-scoped projection for one blocked episode\n- **wizard blocked** -- canonical wizard state where automation cannot continue until prerequisite resolution or new explicit input\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "intent": "update",
+      "why": "MUST RECONCILE -- the orchestrator consumer contract still mirrors stale runtime semantics unless it is reduced to the canonical runtime contract.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Runtime Enum and Counter Alignment Addendum",
+          "content_markdown": "## Runtime Consumer Alignment\n\nThe orchestrator is a consumer of canonical runtime contracts and MUST NOT redefine them locally.\n\nRequired rules:\n- use `failure_class` only for classified attempt outcomes\n- use `blocked_reason_code` only for unresolved prerequisites or intentionally prevented work\n- preserve ordered `allowed_action_ids[]` exactly as emitted by runtime contracts\n- treat slot shortage as `capacity_deferred`, not blocked\n- create a new `attempt_id` for every retry, prerequisite resume, remediation rerun, or safe-point-restored rerun\n- respect the independent counter-family model; `retry_count` is display-only\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "intent": "update",
+      "why": "MUST RECONCILE -- requested/effective model selection and retry ownership still need clean separation from blocked/recovery semantics.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Model Selection Versus Runtime Retry Ownership Consolidation Addendum (2026-03-09)",
+          "content_markdown": "## Requested / Effective Model Snapshot Alignment\n\nModel selection and retry ownership remain separate concerns.\n\nRules:\n- attempt start persists stable requested/effective model snapshot identifiers\n- retries and resumes do not silently change model identity unless the canonical runtime policy explicitly creates a new attempt with new snapshot IDs\n- model fallback behavior MUST NOT rewrite blocked reason or retry classification semantics\n- UI and artifact surfaces read model snapshot IDs from attempt records rather than inferring them from provider names alone\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/WorktreeGitImprovement.md",
+      "intent": "update",
+      "why": "MUST RECONCILE -- worktree conflict and dirty-worktree blocked semantics intersect safe-point restore and recovery behavior directly.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Runtime Worktree Conflict Detection and Recovery Consolidation Addendum (2026-03-09)",
+          "content_markdown": "## Worktree Conflict and Dirty-Worktree Runtime Alignment\n\nCanonical blocked reasons for this domain are `worktree_conflict` and `dirty_worktree`.\n\nRequired rules:\n- blocked payloads use canonical blocked fields and ordered `allowed_action_ids[]`\n- recovery may require safe-point restore when the runtime marks `requires_safe_point_restore = true`\n- clearing the underlying worktree issue resolves the blocked prerequisite; it does not fabricate a new failure class\n- worktree conflict resolution must preserve lineage to the blocked episode and any affected safe point\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/FileManager.md",
+      "intent": "update",
+      "why": "MUST RECONCILE -- artifact opening/navigation needs to use the reconciled runtime identities rather than drifting aliases.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)",
+          "content_markdown": "## Runtime Artifact Open-by-Identity Contract\n\nArtifact-opening surfaces use canonical runtime identities only.\n\nRules:\n- queue-analysis opens by `scheduler_pass_id`\n- remediation details open by `remediation_root_id`\n- safe-point history opens by `safe_point_id`\n- blocked-detail pivots resolve through `detail_ref`\n- legacy `analysis_id` may be accepted only as an alias equal to `scheduler_pass_id`\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/interview-subagent-integration.md",
+      "intent": "update",
+      "why": "MUST RECONCILE -- planning/interview validation, blocked escalation, and degraded draft handoff must align with runtime wizard blocked semantics.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Planning-to-Runtime Blocked and Degraded Handoff Consolidation Addendum (2026-03-09)",
+          "content_markdown": "## Planning-to-Runtime Blocked and Degraded Handoff\n\nWhen interview or planning validation escalates beyond ordinary clarification:\n- the wizard may transition from `attention_required` to canonical `blocked`\n- the transition carries `wizard_step`, `blocked_reason_code`, `clarification_round_count`, `report_ref`, and `replan_generation?`\n- degraded draft decomposition remains a pre-lock planning state and retains lineage into later runtime graph lock artifacts\n- downstream runtime consumers MUST NOT collapse wizard blocked state back into generic `attention_required`\n"
+        }
+      ]
+    }
+  ]
+}

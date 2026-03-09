@@ -148,15 +148,23 @@ Canonical terms:
 
 ## Runtime Scheduler Audit Terminology Addendum
 
-The following canonical terms are added to the glossary:
+Add or normalize the following canonical terms:
+- **Scheduler pass ID** -- canonical identity for queue-analysis passes; legacy `analysis_id` is alias-only
+- **blocked_sequence** -- per-node monotonic blocked-episode counter
+- **validation_blocked** -- blocked reason for post-execution validation failure
+- **remediation_ceiling_exceeded** -- blocked reason indicating remediation ceiling reached
+- **provider_attempt_ref** -- upstream provider/session identity distinct from runtime `attempt_id`
+- **detail_ref** -- structured `{type}:{id}` reference used by blocked/remediation/safe-point records
+- **thread_blocked_notice** -- persisted thread-scoped projection for one blocked episode
+- **wizard blocked** -- canonical wizard state where automation cannot continue until prerequisite resolution or new explicit input
+## Runtime Scheduler Audit Terminology Addendum
 
-- **mutation_capable** -- boolean flag indicating that a tool or attempt may modify workspace/project state (file writes, deletes, renames, destructive git ops, or external side effects) and therefore requires safe-point creation before execution. Classified by the tool registry and propagated to the node plan record.
-- **attempt_terminal_state** -- the final state an attempt record reaches; one of `completed_success`, `completed_failed`, `interrupted_by_restart`, or `stale_historical`. Terminal states are irreversible.
-- **restore_outcome** -- the result of a safe-point restore operation; one of `restored_clean`, `restored_with_conflicts`, `restore_failed`, or `restore_skipped`. Required field in the `safe_point.restored` event.
-- **blocked_sequence** -- per-node monotonic counter that increments each time the node enters a new blocked episode (requires an unblocked transition between episodes). Used as a key component in `blocked_projection` storage records.
-- **permission_snapshot** -- immutable capture of resolved permission state at attempt start. Stored as part of the `attempt_record` for auditability. Created at `attempt.started` emission.
-- **detail_ref** -- structured reference string with format `{type}:{id}` (types: `evidence`, `artifact`, `log_range`, `storage_key`) used in blocked projections and remediation records to link to detailed context.
-- **remediation_ceiling_exceeded** -- blocked_reason_code indicating the remediation generation count has reached the configured ceiling (default 3). No further automatic remediation is permitted.
-- **validation_blocked** -- blocked_reason_code indicating tool output failed post-execution validation. Recovery requires fixing the validation rule or tool output.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
+Add or normalize the following canonical terms:
+- **Scheduler pass ID** -- canonical identity for queue-analysis passes; legacy `analysis_id` is alias-only
+- **blocked_sequence** -- per-node monotonic blocked-episode counter
+- **validation_blocked** -- blocked reason for post-execution validation failure
+- **remediation_ceiling_exceeded** -- blocked reason indicating remediation ceiling reached
+- **provider_attempt_ref** -- upstream provider/session identity distinct from runtime `attempt_id`
+- **detail_ref** -- structured `{type}:{id}` reference used by blocked/remediation/safe-point records
+- **thread_blocked_notice** -- persisted thread-scoped projection for one blocked episode
+- **wizard blocked** -- canonical wizard state where automation cannot continue until prerequisite resolution or new explicit input

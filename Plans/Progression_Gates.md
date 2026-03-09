@@ -490,3 +490,27 @@ The gate rule MUST:
 3. Verify that `allowed_action_ids[]` is used in all canonical blocked payloads, HITL contracts, FileSafe contracts, and container publishing contracts.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/DRY_Rules.md
+
+## Runtime Recovery Canonicalization Gate Addendum
+
+The runtime recovery sweep MUST fail if any doc:
+- uses `allowed_actions[]` or `recovery_options[]` in a prescriptive runtime-facing context
+- uses `analysis_id` as canonical queue-analysis identity instead of `scheduler_pass_id`
+- leaves stale canonical text in owner docs while only appending a contradictory later note
+- treats blocked reasons as `failure_class` values in runtime policy or consumer contracts
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Crosswalk.md
+
+Accept deprecated names only inside deprecation notices, migration notes, or gate rules that detect them as defects.
+
+## Runtime Recovery Canonicalization Gate Addendum
+
+The runtime recovery sweep MUST fail if any doc:
+- uses `allowed_actions[]` or `recovery_options[]` in a prescriptive runtime-facing context
+- uses `analysis_id` as canonical queue-analysis identity instead of `scheduler_pass_id`
+- leaves stale canonical text in owner docs while only appending a contradictory later note
+- treats blocked reasons as `failure_class` values in runtime policy or consumer contracts
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Crosswalk.md
+
+Accept deprecated names only inside deprecation notices, migration notes, or gate rules that detect them as defects.

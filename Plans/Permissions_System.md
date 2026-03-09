@@ -722,27 +722,46 @@ When a blocked permission outcome is resolved by policy edit, approval, or mode 
 Permission-related blocked outcomes MUST carry the exact blocking rule or permission key plus any metadata needed to bind the prerequisite-specific UI command.
 ## Permission Blocked Outcome and Prerequisite Wake Consolidation Addendum (2026-03-09)
 
-Permission-related runtime blocking MUST use canonical blocked semantics.
+This section defines permission Snapshot and Wakeup Chain.
 
-### Required permission-block payload fields
-- requested permission state
-- effective permission state
-- permission snapshot identifier
-- exact blocking rule or permission key
-- whether the current mode could have asked the user
-- canonical `blocked_reason_code`
-- canonical `allowed_action_ids[]`
+### Canonical blocked payload fields
+Permissions-driven blocked flows MUST use the canonical runtime blocked payload:
+- `blocked_reason_code`
+- `allowed_action_ids[]`
+- `preserved_local_work`
+- `requires_safe_point_restore?`
+- prerequisite metadata
+- `detail_ref?`
 
-### Multi-prerequisite rule
-If more than one prerequisite is outstanding, the blocked payload MUST surface the active gating reason plus metadata for the remaining unresolved prerequisites. A satisfied auth prerequisite does not silently clear an unresolved approval or policy prerequisite.
+### Permission snapshot propagation
+Attempt start captures immutable requested/effective permission snapshot identifiers. The full snapshot is stored with the attempt record; downstream consumers carry only the stable IDs unless they need the resolved map.
 
-### Same-cycle resolution rule
-When policy edit, approval, or mode change satisfies a permission prerequisite:
-- emit `node.prerequisite_resolved`
-- reevaluate readiness in the same scheduler wake cycle
-- create a new attempt snapshot using the new requested/effective permission state
-- keep prior snapshots immutable
+### Wakeup chain
+When approval or permission prerequisites resolve:
+1. emit the prerequisite-resolution event with the blocked target identity
+2. deliver it to the scheduler immediately
+3. wake the scheduler with the appropriate `wake_reason`
+4. recompute readiness without polling
+## Permission Snapshot and Wakeup Chain
 
+### Canonical blocked payload fields
+Permissions-driven blocked flows MUST use the canonical runtime blocked payload:
+- `blocked_reason_code`
+- `allowed_action_ids[]`
+- `preserved_local_work`
+- `requires_safe_point_restore?`
+- prerequisite metadata
+- `detail_ref?`
+
+### Permission snapshot propagation
+Attempt start captures immutable requested/effective permission snapshot identifiers. The full snapshot is stored with the attempt record; downstream consumers carry only the stable IDs unless they need the resolved map.
+
+### Wakeup chain
+When approval or permission prerequisites resolve:
+1. emit the prerequisite-resolution event with the blocked target identity
+2. deliver it to the scheduler immediately
+3. wake the scheduler with the appropriate `wake_reason`
+4. recompute readiness without polling
 ## Permission Snapshot and Wakeup Chain Addendum
 
 ### Field name correction

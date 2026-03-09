@@ -246,32 +246,39 @@ The wiring matrix MUST use the canonical runtime names and identities from `Plan
 Recovery UI handlers MUST be keyed by canonical `allowed_action_id` families and then bind any domain-specific command ids using the blocked payload metadata.
 ## Canonical Runtime Producer Consumer and Action Wiring Reconciliation Addendum (2026-03-09)
 
-Minimum required runtime wiring rows:
+Add canonical rows for:
+- `node.ready`
+- `scheduler.pass`
+- `node.blocked`
+- `node.unblocked`
+- `safe_point.created`
+- `safe_point.restored`
+- `remediation.spawned`
+- `remediation.resolved`
 
-- producer: scheduler/executor
-  - canonical event: `scheduler.pass`
-  - identity: `scheduler_pass_id`
-  - consumers: storage pass projection, Run Graph, Orchestrator Page, artifacts/evidence surfaces
+Each row MUST identify:
+- producer
+- persisted record
+- UI consumers
+- policy consumers
+- replay/recovery expectations
+- command surfaces that act on the resulting state
+## Runtime Recovery Producer / Consumer Wiring
 
-- producer: executor/runtime gate resolvers
-  - canonical events: `node.prerequisite_resolved`, `node.unblocked`, `node.blocked`
-  - consumers: blocked projections, chat banners, dashboard cards, run graph, orchestrator blocked lists
+Add canonical rows for:
+- `node.ready`
+- `scheduler.pass`
+- `node.blocked`
+- `node.unblocked`
+- `safe_point.created`
+- `safe_point.restored`
+- `remediation.spawned`
+- `remediation.resolved`
 
-- producer: dispatcher
-  - canonical events: `attempt.started`, `attempt.completed`
-  - consumers: attempt storage, run graph detail, orchestrator history/evidence pivots, runtime artifact navigation
-
-- producer: safe-point manager
-  - canonical events: `safe_point.created`, `safe_point.restored`
-  - consumers: recovery logic, safe-point history surfaces, artifact navigation
-
-- producer: remediation controller
-  - canonical events: `remediation.spawned`, `remediation.resolved`
-  - consumers: remediation lineage storage, run graph, orchestrator, evidence/artifact views
-
-- producer: graph builder / replan reconciler
-  - canonical events: `plan.decomposition_degraded`, `run.graph_canonical_locked`, `run.graph_integrity_failed`
-  - consumers: wizard/interview recovery surfaces, executor admission logic, progression gates
-
-### Command wiring rule
-Recovery UI handlers MUST be keyed by canonical `allowed_action_id` families and the canonical `cmd.runtime.*` command ids from `Plans/UI_Command_Catalog.md`. Surface-local aliases may remain only as deprecated compatibility shims.
+Each row MUST identify:
+- producer
+- persisted record
+- UI consumers
+- policy consumers
+- replay/recovery expectations
+- command surfaces that act on the resulting state

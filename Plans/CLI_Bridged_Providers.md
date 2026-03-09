@@ -645,17 +645,39 @@ Rules:
 - prerequisite resolution from provider/auth layers MUST surface a canonical scheduler wake rather than staying provider-local
 ## Bridged Provider Runtime Attempt and Retry Ownership Consolidation Addendum (2026-03-09)
 
-Bridged providers MUST preserve canonical runtime identity and MUST NOT hide retry semantics.
-
-### Required preserved fields
-- `run_id`, `thread_id`, `node_id`, `attempt_id`
-- requested/effective provider-model identifiers
-- requested/effective permission snapshot identifiers when relevant
+`ProviderRequestEnvelope` MUST include:
+- `run_id`
+- `node_id`
+- `attempt_id`
+- `scheduler_pass_id`
 - `replan_generation`
+- `mutation_capable`
+- `permission_snapshot_id`
+- `model_snapshot_id`
 - `safe_point_id?`
-- remediation lineage identifiers when present
+- `remediation_root_id?`
+- `remediation_parent_attempt_id?`
 
-### Required mapping rules
-- provider signals normalize into canonical `failure_class` / `blocked_reason_code` values before orchestration or UI consumes them
-- reconnect logic may observe an already-submitted attempt, but MUST NOT silently resubmit prompts or mutate retry counters outside runtime control
-- prerequisite resolution discovered in provider/auth layers MUST surface canonical runtime wake behavior rather than staying provider-local
+Rules:
+- the prompt pipeline and provider envelope use the same immutable handoff bundle for a given attempt
+- reconnect logic may observe an in-flight attempt but MUST NOT silently resubmit it
+- any retry, prerequisite resume, remediation rerun, or restore-before-rerun uses a new envelope with a new `attempt_id`
+## Runtime Attempt Correlation Envelope
+
+`ProviderRequestEnvelope` MUST include:
+- `run_id`
+- `node_id`
+- `attempt_id`
+- `scheduler_pass_id`
+- `replan_generation`
+- `mutation_capable`
+- `permission_snapshot_id`
+- `model_snapshot_id`
+- `safe_point_id?`
+- `remediation_root_id?`
+- `remediation_parent_attempt_id?`
+
+Rules:
+- the prompt pipeline and provider envelope use the same immutable handoff bundle for a given attempt
+- reconnect logic may observe an in-flight attempt but MUST NOT silently resubmit it
+- any retry, prerequisite resume, remediation rerun, or restore-before-rerun uses a new envelope with a new `attempt_id`

@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.evidence.schema.v1",
   "evidence_id": "plan-sharding-2026-03-09",
-  "created_at_utc": "2026-03-09T15:07:29.512290+00:00",
+  "created_at_utc": "2026-03-09T20:46:26.227229+00:00",
   "node": {
     "node_id": "plan-sharding"
   },
@@ -440,6 +440,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/FileManager/23-runtime-artifact-open-by-identity-contract.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/FileManager/manifest.json",
       "change_type": "modified"
     },
@@ -553,6 +557,10 @@
     },
     {
       "path": "Plans/_shards/FileSafe/27-filesafe-runtime-blocked-and-restore-override-consolidation-addendum-2026-03-09.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/28-filesafe-action-mapping-and-persistence.md",
       "change_type": "modified"
     },
     {
@@ -684,7 +692,11 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/FinalGUISpec/31-blocked-state-visual-distinction-and-recovery-ux-addendum.md",
+      "path": "Plans/_shards/FinalGUISpec/31-blocked-recovery-gui-reconciliation.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/32-blocked-state-visual-distinction-and-recovery-ux-addendum.md",
       "change_type": "modified"
     },
     {
@@ -757,6 +769,10 @@
     },
     {
       "path": "Plans/_shards/GitHub_Integration/16-deferred-github-flow-blocked-identity-consolidation-addendum-2026-03-09.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/GitHub_Integration/17-deferred-github-recovery-binding.md",
       "change_type": "modified"
     },
     {
@@ -1028,6 +1044,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/Project_Output_Artifacts/20-runtime-recovery-artifact-identity-and-scope.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/Project_Output_Artifacts/manifest.json",
       "change_type": "modified"
     },
@@ -1136,7 +1156,11 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/26-blocked-state-rendering-and-recovery-addendum.md",
+      "path": "Plans/_shards/Run_Graph_View/26-runtime-scheduler-blocked-view-contract.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/Run_Graph_View/27-blocked-state-rendering-and-recovery-addendum.md",
       "change_type": "modified"
     },
     {
@@ -1228,6 +1252,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/Tools/21-tool-field-name-and-taxonomy-alignment.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/Tools/manifest.json",
       "change_type": "modified"
     },
@@ -1313,6 +1341,10 @@
     },
     {
       "path": "Plans/_shards/WorktreeGitImprovement/20-runtime-worktree-conflict-detection-and-recovery-consolidation-addendum-2026-03-09.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/WorktreeGitImprovement/21-worktree-conflict-and-dirty-worktree-runtime-alignment.md",
       "change_type": "modified"
     },
     {
@@ -1476,7 +1508,11 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/39-concurrent-blocked-episodes-and-enum-alignment-addendum.md",
+      "path": "Plans/_shards/assistant-chat-design/39-unified-thread-blocked-state-lifecycle.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/40-concurrent-blocked-episodes-and-enum-alignment-addendum.md",
       "change_type": "modified"
     },
     {
@@ -1600,7 +1636,11 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/chain-wizard-flexibility/29-wizard-status-enum-correction-addendum.md",
+      "path": "Plans/_shards/chain-wizard-flexibility/29-canonical-wizard-blocked-lifecycle.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/chain-wizard-flexibility/30-wizard-status-enum-correction-addendum.md",
       "change_type": "modified"
     },
     {
@@ -1769,6 +1809,10 @@
     },
     {
       "path": "Plans/_shards/interview-subagent-integration/30-planning-to-runtime-blocked-and-degraded-handoff-consolidation-addendum-2026-03-09.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/31-planning-to-runtime-blocked-and-degraded-handoff.md",
       "change_type": "modified"
     },
     {
@@ -2176,6 +2220,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/orchestrator-subagent-integration/39-runtime-consumer-alignment.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/orchestrator-subagent-integration/manifest.json",
       "change_type": "modified"
     },
@@ -2248,7 +2296,11 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/storage-plan/17-permission-snapshot-storage-and-safe-point-namespace-addendum.md",
+      "path": "Plans/_shards/storage-plan/17-runtime-recovery-persistence-consolidation.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/18-permission-snapshot-storage-and-safe-point-namespace-addendum.md",
       "change_type": "modified"
     },
     {

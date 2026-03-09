@@ -528,37 +528,45 @@ Plugin-driven blocking that affects execution MUST map into the canonical runtim
 
 ## Plugin Hook Blocked Specification Addendum
 
-### Which hooks can block execution
+This section defines plugin Hook Blocked Specification.
 
-Only hooks that affect execution flow can trigger `plugin_hook_blocked`:
+### Hooks that may block execution
+Only execution-flow hooks may trigger `plugin_hook_blocked`:
+- `pre_tool_invoke`
+- `pre_attempt_start`
+- `pre_node_dispatch`
 
-| Hook | Can block? | Rationale |
-|------|-----------|-----------|  
-| `pre_tool_invoke` | Yes | Runs before tool execution; block prevents the tool call. |
-| `pre_attempt_start` | Yes | Runs before attempt begins; block prevents the attempt. |
-| `pre_node_dispatch` | Yes | Runs before node dispatch; block prevents scheduling. |
-| `post_tool_invoke` | No | Observation-only; tool already executed. |
-| `post_attempt_complete` | No | Observation-only; attempt already completed. |
-| All session/message/compaction/shell hooks | No | Do not affect node execution flow. |
+Observation-only hooks such as `post_tool_invoke` and `post_attempt_complete` cannot create `plugin_hook_blocked`.
 
-### Block payload metadata
-
-When a plugin hook returns `Block`, the runtime blocked payload MUST include:
-
+### Required metadata
+Plugin-blocked payloads MUST include:
 - `blocked_reason_code: plugin_hook_blocked`
-- `plugin_id` -- which plugin issued the block
-- `hook_name` -- which hook returned Block (e.g., `pre_tool_invoke`)
-- `block_reason` -- freetext reason string provided by the plugin
-- `allowed_action_ids[]` -- one or more of: `approve`, `decline`, `retry_now`, `skip_node`
-- `preserved_local_work` -- boolean
+- `plugin_id`
+- `hook_name`
+- `block_reason`
+- canonical `allowed_action_ids[]`
+- `preserved_local_work`
 
-### Valid recovery actions
+### Recovery scope
+Plugins MUST NOT invent plugin-private runtime recovery semantics. They reuse canonical action families and runtime commands.
+## Plugin Hook Blocked Specification
 
-| `allowed_action_ids[]` value | Effect |
-|-----------------------------|--------|  
-| `approve` | Override block for this attempt only; continue execution. |
-| `decline` | Accept block; node enters `blocked` state. |
-| `retry_now` | Re-invoke the hook (plugin may have been updated or reconfigured). |
-| `skip_node` | Skip this node if the graph allows. |
+### Hooks that may block execution
+Only execution-flow hooks may trigger `plugin_hook_blocked`:
+- `pre_tool_invoke`
+- `pre_attempt_start`
+- `pre_node_dispatch`
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+Observation-only hooks such as `post_tool_invoke` and `post_attempt_complete` cannot create `plugin_hook_blocked`.
+
+### Required metadata
+Plugin-blocked payloads MUST include:
+- `blocked_reason_code: plugin_hook_blocked`
+- `plugin_id`
+- `hook_name`
+- `block_reason`
+- canonical `allowed_action_ids[]`
+- `preserved_local_work`
+
+### Recovery scope
+Plugins MUST NOT invent plugin-private runtime recovery semantics. They reuse canonical action families and runtime commands.
