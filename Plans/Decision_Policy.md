@@ -301,3 +301,38 @@ Where higher-precedence sources do not decide, use these defaults:
 - blocked outcomes preserve completed local work by default when execution stopped because a prerequisite or remote side effect was unresolved
 - prerequisite resolution always creates a new attempt snapshot rather than mutating an old one in place
 ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+## Canonical Runtime Recovery Matrix and Counter Policy Addendum (2026-03-09)
+
+This section is the normative owner of retry, backoff, remediation, and escalation policy.
+
+| classifier family | classifier | automatic next step | counter family | backoff | requires safe-point restore | remediation | terminal / escalation |
+|---|---|---|---|---|---|---|---|
+| `failure_class` | `provider_transient` | auto retry | `automatic_retry_count` | `1s, 5s, 15s` | no | no | fail after ceiling |
+| `failure_class` | `structured_output_invalid` | one format retry | `automatic_retry_count` | none | no | optional after failed format retry | escalate after failed format retry |
+| `failure_class` | `verification_failed` | no blind retry | `remediation_retry_count` | none | yes | yes | pause after remediation ceiling |
+| `failure_class` | `reviewer_findings` | no blind retry | `remediation_retry_count` | none | yes | yes | pause after remediation ceiling |
+| `failure_class` | `storage_io` | no automatic retry | none | none | no | no | terminal failure |
+| `failure_class` | `graph_integrity` | no automatic retry | none | none | no | no | terminal failure / repair required |
+| `blocked_reason_code` | `permission_denied` | wait for prerequisite change | `prerequisite_resume_count` | none | no | no | remain blocked |
+| `blocked_reason_code` | `user_declined` | wait for explicit user action | `manual_resume_count` | none | no | no | remain blocked |
+| `blocked_reason_code` | `headless_ask_denied` | wait for mode or prerequisite change | `prerequisite_resume_count` | none | no | no | remain blocked |
+| `blocked_reason_code` | `filesafe_blocked` | wait for policy or prerequisite change | `prerequisite_resume_count` | none | policy-driven | no | remain blocked |
+| `blocked_reason_code` | `external_side_effect_blocked` | wait for explicit approve / decline | `prerequisite_resume_count` | none | no | no | remain blocked |
+| `blocked_reason_code` | `auth_expired` | wait for auth recovery | `prerequisite_resume_count` | none | no | no | remain blocked |
+| `blocked_reason_code` | `replan_required` | replan instead of retry | none | none | no | no | remain blocked |
+| `blocked_reason_code` | `waiting_approval` | wait for approval resolution | `prerequisite_resume_count` | none | no | no | remain blocked |
+| `blocked_reason_code` | `clarification_blocked` | wait for new explicit user input | `manual_resume_count` | none | no | no | remain blocked |
+
+### Counter policy
+- retry ceilings apply only to the counter family named in the matrix
+- prerequisite-resolution resumes MUST NOT consume automatic retry budget
+- manual fresh-attempt actions MUST increment `manual_resume_count` and `attempt_count` but not `automatic_retry_count`
+- remediation generations MUST be counted independently from automatic transport/provider retries
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+### Global defaults
+- event-driven scheduling is the default correctness path
+- watchdog polling is defensive only
+- hidden provider-local retries are forbidden
+- blocked outcomes preserve completed local work by default when execution stopped because a prerequisite or remote side effect was unresolved
+- pre-lock draft decomposition may degrade only before graph lock and only with explicit evidence

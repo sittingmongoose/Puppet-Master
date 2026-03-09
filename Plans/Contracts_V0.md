@@ -896,3 +896,149 @@ Every canonical blocked event/path MUST expose:
 - `failure_class?`
 - `detail_ref?`
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md
+## Canonical Runtime Event, Outcome, and Action Contract Reconciliation Addendum (2026-03-09)
+
+### Canonical runtime names
+New runtime producers MUST emit canonical names. Legacy aliases MAY be accepted only at compatibility boundaries.
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
+
+| Canonical event | Legacy alias | Canonical identity |
+|---|---|---|
+| `scheduler.pass` | `run.scheduler_analysis` | `scheduler_pass_id` |
+| `node.blocked` | `run.node_blocked` | `run_id`, `node_id`, `attempt_id?`, `blocked_sequence` |
+| `node.unblocked` | `run.node_unblocked` | `run_id`, `node_id`, `attempt_id?`, `blocked_sequence` |
+| `remediation.spawned` | `run.remediation_started` | `remediation_root_id`, `child_attempt_id` |
+| `remediation.resolved` | `run.remediation_completed` | `remediation_root_id`, `child_attempt_id` |
+
+### Canonical outcome taxonomy
+`failure_class` is for classified attempt outcomes only:
+- `provider_transient`
+- `structured_output_invalid`
+- `verification_failed`
+- `reviewer_findings`
+- `storage_io`
+- `graph_integrity`
+
+`blocked_reason_code` is for unresolved prerequisites or intentionally prevented work:
+- `permission_denied`
+- `user_declined`
+- `headless_ask_denied`
+- `filesafe_blocked`
+- `external_side_effect_blocked`
+- `auth_expired`
+- `replan_required`
+- `waiting_approval`
+- `clarification_blocked`
+- `worktree_conflict`
+- `dirty_worktree`
+- `plugin_hook_blocked`
+
+### Canonical blocked payload
+Every runtime-facing blocked path MUST expose:
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/UI_Command_Catalog.md
+- `blocked_reason_code`
+- `allowed_action_ids[]`
+- `preserved_local_work`
+- `detail_ref?`
+- prerequisite metadata needed to bind the specific recovery action
+- `failure_class?` only when the blocked state originated from a classified attempt outcome
+
+`recovery_options[]` and `allowed_actions[]` are deprecated shared-surface names and MUST NOT be introduced as new canonical runtime fields.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
+
+### Canonical scheduler pass
+`scheduler.pass` MUST carry:
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md
+- `scheduler_pass_id`
+- `run_id`
+- `thread_id`
+- `replan_generation`
+- `wake_reason`
+- `available_slots`
+- `ready_nodes[]` with full score breakdown terms
+- `selected_nodes[]`
+- `non_selected[]` with canonical `non_selected_reason`
+- capacity summary
+- `analysis_id?` only as a legacy alias where `analysis_id = scheduler_pass_id`
+
+### Canonical attempt contract
+`attempt.started` MUST carry:
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md
+- `run_id`, `thread_id`, `node_id`, `attempt_id`
+- `scheduler_pass_id`
+- requested/effective model snapshot identifiers
+- requested/effective permission snapshot identifiers
+- `replan_generation`
+- `mutation_capable`
+- `safe_point_id?`
+- remediation lineage identifiers when present
+
+`attempt.completed` MUST carry:
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Project_Output_Artifacts.md
+- `run_id`, `thread_id`, `node_id`, `attempt_id`
+- terminal state enum
+- `failure_class?`
+- all counter fields relevant to the canonical matrix
+- verification/reviewer result refs when applicable
+- resulting lineage/resolution refs when applicable
+
+### Canonical prerequisite resolution order
+When a prerequisite clears for previously blocked work:
+1. emit `node.prerequisite_resolved`
+2. update blocked projections
+3. emit `node.unblocked` if a blocked episode ended
+4. emit `scheduler.pass` for the resulting wake cycle
+
+### Safe-point contract
+`safe_point.created` MUST carry:
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileManager.md
+- `safe_point_id`
+- `source_attempt_id`
+- `run_id`, `node_id`
+- `replan_generation`
+- baseline refs
+- creation reason
+
+`safe_point.restored` MUST carry:
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Project_Output_Artifacts.md
+- `safe_point_id`
+- `source_attempt_id`
+- `resulting_attempt_id?`
+- restore outcome enum
+- restore detail ref when applicable
+
+### Remediation contract
+`remediation.spawned` MUST carry:
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Project_Output_Artifacts.md
+- `remediation_root_id`
+- `remediation_generation`
+- `parent_attempt_id`
+- `child_attempt_id`
+- finding / issue refs
+- active `replan_generation`
+
+`remediation.resolved` MUST carry:
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Project_Output_Artifacts.md
+- `remediation_root_id`
+- `remediation_generation`
+- `child_attempt_id`
+- resolution enum (`fixed`, `superseded`, `abandoned`, `replan_required`)
+- resolution detail ref
+
+### Canonical wake reasons
+Required values:
+- `run_started`
+- `startup_recovered`
+- `node_completed`
+- `verification_completed`
+- `approval_resolved`
+- `clarification_resolved`
+- `permission_changed`
+- `auth_recovered`
+- `backoff_expired`
+- `remediation_completed`
+- `restore_completed`
+- `replan_applied`
+- `capacity_changed`
+- `manual_wakeup`
+- `watchdog_recheck`

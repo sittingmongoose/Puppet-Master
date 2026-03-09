@@ -1,0 +1,233 @@
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║           STORAGE / STATE / COMMAND SUBAUDIT FINDINGS SUMMARY                 ║
+║                              2026-03-09                                       ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ CRITICAL FINDINGS REQUIRING IMMEDIATE ACTION                                  │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+  🚫 BLOCKER-1: SafePoint Restore Outcome Enum — UNDEFINED
+  ═══════════════════════════════════════════════════════════
+  Location: Contracts_V0.md:1007
+  Impact:   Cannot implement safe_point.restored events
+  Effort:   2 hours
+  
+  Fix: Add enum definition with values like:
+       RestoredOk, RestoreFailed, PartialRestore, StateConflict
+
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ Contracts_V0.md:1007                                                    │
+  │                                                                         │
+  │   safe_point.restored MUST carry:                                      │
+  │   - safe_point_id                                                      │
+  │   - restore outcome enum  ◄── VALUES MISSING!                         │
+  │   - restore detail ref                                                 │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+  ─────────────────────────────────────────────────────────────────────────────
+
+  🚫 BLOCKER-2: Attempt Terminal State Enum — INCOMPLETE
+  ══════════════════════════════════════════════════════════
+  Location: Contracts_V0.md:979
+  Impact:   Cannot validate attempt lifecycle
+  Effort:   2 hours
+  
+  Fix: Define complete enum with values like:
+       Success, Failed, Cancelled, InterruptedByRestart, Superseded
+
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ Contracts_V0.md:979                                                     │
+  │                                                                         │
+  │   attempt.completed MUST carry:                                        │
+  │   - terminal state enum  ◄── NO CANONICAL VALUE SET!                  │
+  │   - failure_class?                                                     │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ HIGH-PRIORITY GAPS (WILL CAUSE RUNTIME BUGS)                                  │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+  ⚠️  HIGH-3: Counter Semantics Relationship — UNSPECIFIED
+  ═══════════════════════════════════════════════════════════
+  Location: storage-plan.md:1066-1071
+  Impact:   Audit trail verification breaks
+  Effort:   4 hours
+  
+  Question: Do automatic_retry + prerequisite_resume + manual_resume +
+            remediation_retry = retry_count?
+
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ storage-plan.md:1066-1071                                               │
+  │                                                                         │
+  │   Counter families:                                                    │
+  │   - attempt_count                                                      │
+  │   - automatic_retry_count                                              │
+  │   - prerequisite_resume_count                                          │
+  │   - manual_resume_count                                                │
+  │   - remediation_retry_count                                            │
+  │                                                                         │
+  │   "independent policy counters" ◄── HOW DO THEY RELATE?               │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+  ─────────────────────────────────────────────────────────────────────────────
+
+  ⚠️  HIGH-4: blocked_sequence Edge Case — AMBIGUOUS
+  ═════════════════════════════════════════════════════
+  Location: storage-plan.md:1074
+  Impact:   Projection keying breaks, UI counts wrong
+  Effort:   2 hours
+  
+  Scenario: Node blocked with permission_denied, then changes to
+            filesafe_blocked WITHOUT unblocking in between.
+            
+  Question: Same episode or new episode?
+
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ State Transition:                                                       │
+  │                                                                         │
+  │   [unblocked] ──┐                                                       │
+  │                 ↓                                                       │
+  │   [blocked: permission_denied] blocked_sequence = 5                    │
+  │                 │                                                       │
+  │                 │ (no unblock)                                          │
+  │                 ↓                                                       │
+  │   [blocked: filesafe_blocked]  blocked_sequence = 5 or 6?  ◄── ???   │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+  ─────────────────────────────────────────────────────────────────────────────
+
+  ⚠️  HIGH-5: Event Ordering Guarantees — MISSING
+  ═══════════════════════════════════════════════════
+  Location: storage-plan.md (throughout)
+  Impact:   Race conditions, non-deterministic replay
+  Effort:   6 hours
+  
+  Questions:
+  - Can events from different producers arrive out of order?
+  - How does projector handle concurrent event streams?
+  - What happens-before guarantees exist?
+
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │ Producer 1 (Executor):                                                  │
+  │   ├─ attempt.started    (t=100)                                         │
+  │   └─ attempt.completed  (t=150)                                         │
+  │                                                                         │
+  │ Producer 2 (Scheduler):                                                 │
+  │   └─ scheduler.pass     (t=125)                                         │
+  │                                                                         │
+  │ Seglog sees: [started, pass, completed]? or [pass, started, completed]?│
+  │                                                                         │
+  │ Projector guarantees: ◄── NOT SPECIFIED!                               │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ MEDIUM-PRIORITY ISSUES (EDGE CASE FAILURES)                                   │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+  🟡 MEDIUM-6: Wizard Checkpoint Schema — NOT FORMALIZED (4h)
+  🟡 MEDIUM-7: replan_generation Lifecycle — SCATTERED (4h)
+  🟡 MEDIUM-8: interrupted_by_restart — CLASSIFICATION UNCLEAR (2h)
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ LOW-PRIORITY ISSUES (QUALITY OF LIFE)                                         │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+  🔵 LOW-9:  detail_ref Format — UNDEFINED (2h)
+  🔵 LOW-10: safe_point Namespace — MISSING FROM SCHEMA (1h)
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ EFFORT SUMMARY                                                                │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+  Total Findings:     10
+  Total Effort:       ~27 hours (2-3 person-days)
+  
+  By Severity:
+    BLOCKER:  2 findings,  4 hours  ◄── MUST FIX BEFORE IMPLEMENTATION
+    HIGH:     3 findings, 12 hours  ◄── WILL CAUSE RUNTIME BUGS
+    MEDIUM:   3 findings, 10 hours
+    LOW:      2 findings,  3 hours
+
+  Priority Effort:
+    P0 (Today):       4 hours  (Blockers)
+    P1 (This Week):  12 hours  (High-priority)
+    P2 (Next Sprint): 10 hours  (Medium-priority)
+    P3 (Backlog):      3 hours  (Low-priority)
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ FILES REQUIRING UPDATES                                                       │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+  📄 Plans/Contracts_V0.md
+     - Add SafePoint restore outcome enum (BLOCKER-1)
+     - Add Attempt terminal state enum (BLOCKER-2)
+     - Add detail_ref format spec (LOW-9)
+
+  📄 Plans/storage-plan.md
+     - Add counter relationship matrix (HIGH-3)
+     - Add blocked_sequence edge case semantics (HIGH-4)
+     - Add event ordering guarantees (HIGH-5)
+     - Add safe_point namespace to redb schema (LOW-10)
+     - Add wizard checkpoint schema integration (MEDIUM-6)
+
+  📄 Plans/Executor_Protocol.md
+     - Add replan_generation lifecycle definition (MEDIUM-7)
+     - Clarify interrupted_by_restart classification (MEDIUM-8)
+
+  📄 Plans/chain-wizard-flexibility.md
+     - Add wizard checkpoint schema formalization (MEDIUM-6)
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ RISK ASSESSMENT                                                               │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+  WITHOUT FIXES:
+    ❌ Implementation blocked on 2 critical enums
+    ❌ Runtime bugs in counter tracking and audit trails
+    ❌ Non-deterministic behavior in concurrent scenarios
+    ❌ Fragile recovery after restarts
+    ❌ User confusion from inconsistent blocked episode counts
+
+  WITH FIXES:
+    ✅ Clear implementation path
+    ✅ Auditable counter semantics
+    ✅ Deterministic event ordering
+    ✅ Robust recovery contracts
+    ✅ Consistent user experience
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ NEXT STEPS                                                                    │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+  1. TODAY:
+     ├─ Add SafePoint restore outcome enum to Contracts_V0.md
+     └─ Add Attempt terminal state enum to Contracts_V0.md
+
+  2. THIS WEEK:
+     ├─ Document counter relationship semantics in storage-plan.md
+     ├─ Clarify blocked_sequence edge case rules
+     └─ Add event ordering guarantees
+
+  3. NEXT SPRINT:
+     ├─ Formalize wizard checkpoint schema
+     ├─ Document replan_generation lifecycle
+     └─ Classify interrupted_by_restart
+
+  4. STRUCTURAL IMPROVEMENTS:
+     ├─ Create Plans/Enumerations.md (enum registry)
+     ├─ Add counter relationship matrix
+     └─ Define reference format standards
+
+┌───────────────────────────────────────────────────────────────────────────────┐
+│ DETAILED REPORTS                                                              │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+  📊 Full Report:         STORAGE_STATE_COMMAND_AUDIT_REPORT.md
+  📋 Executive Summary:   STORAGE_AUDIT_EXECUTIVE_SUMMARY.md
+  ☑️  Implementer Checklist: STORAGE_GAPS_IMPLEMENTER_CHECKLIST.md
+  📐 Visual Summary:      STORAGE_AUDIT_FINDINGS_SUMMARY.txt (this file)
+
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║ SIGN-OFF REQUIRED: Architect, Storage Lead, Runtime Lead                     ║
+╚═══════════════════════════════════════════════════════════════════════════════╝

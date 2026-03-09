@@ -448,3 +448,13 @@ Rules:
 - a later mode change may satisfy the prerequisite, but it does not rewrite the original blocked classification
 - mode change plus prerequisite resolution creates a new attempt snapshot rather than mutating the blocked attempt
 - if policy requires restore-before-rerun, mode change alone is insufficient; the safe-point restore requirement still applies
+## Runtime Mode Interaction with Blocked Recovery Consolidation Addendum (2026-03-09)
+
+Execution mode changes what can be shown immediately, but does not redefine runtime classification.
+
+### Canonical rules
+- headless or non-interactive inability to present a required approval/auth/clarification prompt yields the appropriate blocked reason (`headless_ask_denied` or other canonical blocked reason)
+- a later mode change may satisfy a prerequisite, but it does not rewrite the original blocked classification
+- prerequisite resolution after a mode change creates a new attempt snapshot rather than mutating the blocked attempt
+- if policy requires restore-before-rerun, mode change alone is insufficient; the safe-point restore requirement still applies
+- blocked outcomes do not consume automatic retry budget unless the canonical matrix explicitly says otherwise

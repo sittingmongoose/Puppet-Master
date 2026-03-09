@@ -682,3 +682,17 @@ Rules:
 - model/provider fallback may change the effective model only through the shared selection contract before execution begins
 - runtime retries, remediation, and prerequisite-resumed work always occur as new attempts with new attempt snapshots
 - providers/adapters must not hide model-local retry loops inside an already-running attempt
+## Model Selection Versus Runtime Retry Ownership Consolidation Addendum (2026-03-09)
+
+Requested/effective model selection remains separate from runtime retry policy.
+
+### Ownership split
+- model/provider fallback may change the effective model only through the shared selection contract before execution begins
+- runtime policy owns retries, remediation, blocked outcomes, and prerequisite-resumed work after a classified outcome exists
+- providers/adapters MUST NOT hide model-local retry loops inside an already-running attempt
+
+### Required snapshots
+Every attempt MUST retain requested and effective model/provider identifiers so blocked or failed attempts remain explainable after replay or audit.
+
+### Supersession rule
+Any older wording authorizing provider-local automatic retries is superseded by this packet and should be interpreted as signal classification or provider transport handling only, not as independent resubmission authority.

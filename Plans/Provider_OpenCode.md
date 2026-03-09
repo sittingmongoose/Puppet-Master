@@ -556,3 +556,20 @@ Rules:
 - OpenCode reconnect logic may observe an existing attempt, but it MUST NOT silently resubmit prompts or reset attempt identity
 - OpenCode-specific auth, transient, structured-output, and tool-denial signals MUST normalize into canonical `blocked_reason_code` / `failure_class` values before orchestration or UI consumes them
 - prerequisite resolution after auth or permission recovery MUST surface a canonical scheduler wake and create a new attempt snapshot rather than mutating the blocked attempt in place
+## OpenCode Runtime Attempt Safe-Point and Retry Consolidation Addendum (2026-03-09)
+
+OpenCode integrations MUST follow the canonical runtime packet rather than inventing provider-local recovery behavior.
+
+### Required OpenCode runtime fields
+- `run_id`, `thread_id`, `node_id`, `attempt_id`
+- requested/effective model identifiers
+- requested/effective permission snapshot identifiers when relevant
+- `replan_generation`
+- `mutation_capable`
+- `safe_point_id?`
+- remediation lineage identifiers when present
+
+### Required rules
+- a `safe_point_id` created before a mutation-capable OpenCode attempt remains attached across the entire request/stream lifecycle
+- reconnect/stream recovery may observe an in-flight attempt but MUST NOT silently resubmit or reclassify it outside runtime control
+- any OpenCode-local retry wording is superseded by canonical runtime retry ownership

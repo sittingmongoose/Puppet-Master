@@ -133,3 +133,15 @@ Add the following canonical terms:
 - **Prerequisite-resolved wake** -- the runtime wake caused by a prerequisite becoming satisfied (approval, clarification, permission, auth, replan, or worktree resolution)
 - **Plugin hook blocked** -- a blocked runtime outcome caused by a plugin hook preventing progress; it is not a plugin-private warning path
 - **Worktree conflict** -- a blocked runtime condition where worktree overlap, merge risk, or dirty baseline forbids safe dispatch or restore
+## Runtime Scheduler Recovery Terminology Consolidation Addendum (2026-03-09)
+
+Canonical terms:
+- **Scheduler pass ID** -- canonical identity for one queue-analysis pass; legacy `analysis_id` is an alias only
+- **Allowed action ID** -- canonical machine-readable runtime recovery action family exposed by blocked or recovery state
+- **Blocked outcome** -- non-executed or externally prevented outcome that preserves work and exposes recovery actions instead of being treated as a generic failure
+- **Safe point** -- runtime-internal recovery anchor created before mutation-capable execution or remediation apply
+- **Restore point** -- user-facing history checkpoint distinct from runtime safe points
+- **Stale attempt** -- historical attempt from an older generation or superseded recovery branch that remains queryable but not resumable
+- **Graph canonical lock** -- runtime boundary after which degraded draft decomposition fallback is forbidden
+- **attention_required** -- clarification or review is needed but the current flow can still continue inside the current surface
+- **blocked** -- execution cannot continue automatically until a prerequisite changes or new explicit user input arrives

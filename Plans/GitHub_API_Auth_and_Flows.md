@@ -567,3 +567,25 @@ Rules:
 - rerun after auth recovery occurs as a new attempt snapshot; previously blocked attempts remain immutable history
 - auth recovery does not auto-resubmit a blocked side effect without the canonical runtime resume/retry action
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md
+## GitHub API Auth Recovery Runtime Consolidation Addendum (2026-03-09)
+
+GitHub API auth recovery is part of the shared runtime model.
+
+### Canonical mappings
+- missing/expired/revoked token -> `blocked_reason_code = auth_expired`
+- missing required scopes -> `blocked_reason_code = auth_expired` plus `missing_scopes[]`
+- user cancels auth flow -> `blocked_reason_code = user_declined`
+- headless mode cannot show auth prompt -> `blocked_reason_code = headless_ask_denied`
+- transient GitHub outage / rate limiting / network failure -> `failure_class = provider_transient`
+- unresolved remote-side-effect approval -> `blocked_reason_code = external_side_effect_blocked`
+
+### Attempt-scoped recovery
+Successful reconnect/scope upgrade MUST:
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Run_Modes.md
+- bind back to the originating blocked attempt or blocked node episode
+- emit `node.prerequisite_resolved`
+- reevaluate affected blocked work in the same scheduler cycle
+- require a new attempt snapshot for resumed work
+
+Auth recovery MUST NOT auto-resubmit a blocked remote side effect without the canonical runtime resume/retry action.
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/GitHub_Integration.md
