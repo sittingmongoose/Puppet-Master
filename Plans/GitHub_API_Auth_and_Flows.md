@@ -486,3 +486,59 @@ When a Puppet Master project runs on an SSH remote dev server (see `Plans/GitHub
 - The `github_api` and `copilot_github` realm split (§auth-realm-split above) applies identically in SSH remote mode. ContractRef: Plans/GitHub_API_Auth_and_Flows.md §auth-realm-split
 
 ContractRef: Plans/GitHub_Integration.md §C, Plans/Architecture_Invariants.md#INV-002, Plans/DRY_Rules.md
+
+## Runtime Auth-Blocked Recovery Addendum (2026-03-09)
+
+This addendum aligns GitHub API auth flows with the runtime scheduler, blocked-state, retry, and recovery model.
+
+### 1. Canonical runtime mapping for GitHub API operations
+
+Whenever a node, workflow step, or hosted-operation action cannot proceed because the `github_api` realm is unavailable or requires new user interaction, the runtime MUST classify the condition using the shared blocked/failure taxonomy instead of treating it as an opaque provider error.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#AuthEvent, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md
+
+Required mappings:
+
+| GitHub condition | Canonical runtime classification | Retry / scheduler behavior | Required recovery affordance |
+|---|---|---|---|
+| Missing token, expired token, revoked token, or token that no longer validates against `GET /user` | `blocked_reason_code = auth_expired` and matching runtime failure classification | Do not auto-resubmit the blocked side-effect. Preserve completed local work, emit blocked state, and wait for auth recovery. | `Connect GitHub` / re-auth for realm `github_api`, then explicit resume/retry |
+| Missing required scopes for the pending operation | `blocked_reason_code = auth_expired` with `missing_scopes[]` attached to the blocked/auth payload | Do not downgrade to generic permission failure. The runtime waits for a new token/scope grant and then reevaluates the blocked node. | Re-auth with required scopes; show exact missing scopes |
+| User cancels or denies device-code authorization | `blocked_reason_code = user_declined` | No automatic retry. The runtime remains blocked until the user explicitly retries or changes plan intent. | Retry auth flow or abandon the blocked GitHub action |
+| Headless/autonomous execution reaches a GitHub auth prompt it cannot show | `blocked_reason_code = headless_ask_denied` with `auth_realm = github_api` | No hidden browser launch or background interactive loop is allowed. The scheduler leaves the node blocked. | Resume in an interactive mode or provide valid credentials before rerun |
+| Token valid but GitHub API request fails due to transient 5xx / outage / rate limiting / network loss | `failure_class = provider_transient` | Runtime retry/backoff policy applies. The provider/auth layer MUST NOT invent a separate retry loop. | Automatic retry per canonical matrix; escalate only when retry policy exhausts |
+| Operation also requires user approval for remote side effects (repo create, fork, PR create, publish-like action) and approval is not yet granted | `blocked_reason_code = external_side_effect_blocked` | Auth success alone does not clear the block. The node remains blocked until the side-effect approval is explicitly resolved. | Explicit approve/decline action, then reevaluate |
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Permissions_System.md
+
+### 2. Event and wakeup integration
+
+GitHub auth events are not sufficient on their own; they must integrate with the runtime blocked-state model.
+
+Required rules:
+- A GitHub auth problem that prevents execution MUST surface as the canonical blocked-state event/path for the affected node or run, with `auth_realm = github_api` and exact recovery options.
+- A successful reconnect, re-auth, or scope upgrade MUST trigger the canonical scheduler wake-reason for auth recovery defined in `Plans/Contracts_V0.md` and the scheduler MUST reevaluate affected blocked nodes immediately.
+- A failed or cancelled re-auth attempt MUST preserve the blocked node state and MUST NOT silently clear the block.
+- If a GitHub operation had already completed local preparation (for example worktree state or local git steps), that local work remains preserved; the blocked state covers only the pending hosted side effect.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#AuthEvent, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Graph_View.md
+
+### 3. UI and command-surface alignment
+
+The GitHub connect/disconnect commands remain the initiation surfaces for auth, but runtime recovery MUST be visible from blocked-state surfaces.
+
+Required UI behavior:
+- Blocked-node and blocked-thread surfaces MUST show that the unresolved dependency is `GitHub API authentication` rather than a generic provider failure.
+- Recovery actions MUST include the canonical GitHub connect/re-auth action plus the relevant runtime retry/resume action after auth succeeds.
+- Headless or ask-disabled runs MUST show why the auth flow could not proceed automatically and MUST not imply that a silent background retry is still pending.
+- Missing-scope blocks MUST display the required scopes in user-facing recovery UI so the user understands why reconnection is needed.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+### 4. Storage and secrecy constraints during recovery
+
+Auth-blocked recovery MUST preserve the existing secrecy contract:
+- tokens remain only in the OS credential store
+- seglog/redb/Tantivy and evidence bundles may persist auth state, realm, missing scopes, fingerprint, and blocked metadata, but never raw credentials
+- auth recovery state changes must be replayable from canonical events without reconstructing secrets from runtime storage
+
+ContractRef: ContractName:Plans/Contracts_V0.md#AuthEvent, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_Integration.md, PolicyRule:no_secrets_in_storage
