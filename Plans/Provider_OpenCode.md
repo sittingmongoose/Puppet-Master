@@ -535,3 +535,15 @@ Required declarations:
 If OpenCode or the selected upstream model does not support a requested runtime control, Puppet Master MUST record the control as unsupported/skipped in effective runtime state rather than silently ignoring it.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.md, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+## OpenCode Attempt Correlation / Retry Alignment Addendum (2026-03-09)
+
+The OpenCode adapter must participate in the shared runtime packet without provider-local drift.
+
+### Required correlation fields
+Preserve `run_id`, `thread_id`, `node_id`, `attempt_id`, retry count, `safe_point_id` when present, `remediation_root_id`, `remediation_parent_attempt_id`, `remediation_generation`, `replan_generation`, requested/effective model IDs, and permission snapshot identifier.
+
+### Hidden retry prohibition
+OpenCode transport reconnect logic may reconnect only to observe an already-submitted attempt. It MUST NOT silently resubmit prompts, reset attempt identity, or invent provider-local fallback loops.
+
+### Mapping rule
+OpenCode-specific auth, transient, structured-output, and tool-denial signals MUST be normalized into canonical runtime `blocked_reason_code` / `failure_class` values before orchestration or UI consumes them.

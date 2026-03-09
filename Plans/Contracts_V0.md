@@ -704,3 +704,75 @@ Minimum payload:
 - All UI and storage projections added by this packet derive from these events or fields normatively referenced by them.
 - `safe_point.*` events are runtime-internal recovery records and are distinct from user-facing `restore_point.*` / `rollback.*` contracts.
 - `plan.decomposition_degraded` is allowed only before canonical graph lock.
+## Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)
+
+Add the following canonical runtime event families and required fields.
+
+### `scheduler.pass`
+Required fields:
+- `run_id`
+- `thread_id`
+- `replan_generation`
+- `wake_reason`
+- `available_slots`
+- `ready_nodes[]` with score breakdown terms
+- `selected_nodes[]`
+- `non_selected[]` with `non_selected_reason`
+- capacity summary
+
+### `attempt.started`
+Required fields:
+- `run_id`, `thread_id`, `node_id`, `attempt_id`
+- `scheduler_lane`
+- effective requested/effective model snapshot
+- effective permission snapshot identifier
+- `safe_point_id` when present
+- `remediation_root_id` / `remediation_parent_attempt_id` when present
+- `replan_generation`
+
+### `attempt.completed`
+Required fields:
+- `run_id`, `thread_id`, `node_id`, `attempt_id`
+- terminal state
+- `failure_class` or success marker
+- retry count and backoff metadata
+- verification / reviewer result references when relevant
+- resolved lineage identifiers
+
+### `node.blocked`
+Required fields:
+- `run_id`, `thread_id`, `node_id`, `attempt_id` if an attempt existed
+- `blocked_reason_code`
+- `failure_class` when the blocked state originated from a classified outcome
+- `allowed_actions[]`
+- `auth_realm`, `missing_scopes[]`, or side-effect metadata when relevant
+- whether local work was preserved
+
+### `safe_point.created` and `safe_point.restored`
+Required fields:
+- `safe_point_id`
+- `run_id`, `node_id`, `attempt_id`
+- workspace / worktree reference
+- `replan_generation`
+- reason for creation or restore
+- restore result
+
+### `remediation.spawned` and `remediation.resolved`
+Required fields:
+- `remediation_root_id`
+- `remediation_parent_attempt_id`
+- child `attempt_id`
+- finding / issue references
+- `remediation_generation`
+- resolution enum (`fixed`, `superseded`, `abandoned`, `replan_required`)
+
+### `tool.denied` alignment
+`tool.denied` MUST carry canonical runtime mapping fields when the denial affects scheduler state:
+ContractRef: EventType:tool.denied, ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md
+- `blocked_reason_code`
+- `failure_class`
+- `allowed_actions[]`
+- `headless_denied` boolean
+- effective permission snapshot identifier
+
+All of the above are canonical contract fields, not UI-only projection conveniences.

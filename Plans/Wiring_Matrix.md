@@ -208,3 +208,13 @@ Add the following producer -> consumer paths to the wiring matrix.
 - producer: draft decomposition/planning pipeline
 - canonical event: `plan.decomposition_degraded`
 - consumers: wizard/interview planning UI, storage projections, audit/debug surfaces
+## Runtime Recovery Wiring Addendum (2026-03-09)
+
+The wiring matrix MUST contain explicit producers, handlers, and projection consumers for the runtime packet.
+
+### Minimum required rows
+- runtime event producers for `scheduler.pass`, `attempt.started`, `attempt.completed`, `node.blocked`, `safe_point.created`, `safe_point.restored`, `remediation.spawned`, and `remediation.resolved`
+- projection consumers feeding run graph, orchestrator summaries, chat banners, and history/evidence tabs
+- UI command handlers for queue-analysis open, attempt details open, blocked resume, retry, safe-point restore-and-retry, and remediation lineage open
+
+The matrix must make it possible to trace every new packet field from producer to UI consumer.

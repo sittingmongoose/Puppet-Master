@@ -542,3 +542,17 @@ Auth-blocked recovery MUST preserve the existing secrecy contract:
 - auth recovery state changes must be replayable from canonical events without reconstructing secrets from runtime storage
 
 ContractRef: ContractName:Plans/Contracts_V0.md#AuthEvent, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_Integration.md, PolicyRule:no_secrets_in_storage
+## Runtime Auth-Blocked Recovery Reconciliation Addendum (2026-03-09)
+
+This packet confirms GitHub auth behavior as part of the shared runtime model.
+
+### Canonical mappings
+- missing / expired / revoked token -> `blocked_reason_code = auth_expired`
+- missing required scopes -> `blocked_reason_code = auth_expired` plus `missing_scopes[]`
+- user cancels auth flow -> `blocked_reason_code = user_declined`
+- headless mode cannot show auth prompt -> `blocked_reason_code = headless_ask_denied`
+- transient GitHub API outage / rate limiting / network failure -> `failure_class = provider_transient`
+- separate remote-side-effect approval still required -> `blocked_reason_code = external_side_effect_blocked`
+
+### Recovery rule
+Auth recovery does not automatically resubmit blocked side effects. Completed local work is preserved, the blocked node remains inspectable, and rerun/resume occurs only through the canonical runtime action after prerequisites are satisfied.

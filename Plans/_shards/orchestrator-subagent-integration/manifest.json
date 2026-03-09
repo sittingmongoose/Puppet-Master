@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/orchestrator-subagent-integration.md",
-  "source_sha256": "83f05f21d105081fef86ab5145617f1ccf34990cf68d7ebe3edc0a27d4fa9928",
+  "source_sha256": "3fad1587e0a0eb3f95f72f1109e2754c7fd94865a1f78c9ddfc3da5e99ffdb6c",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -244,6 +244,13 @@
       "end_line": 8131,
       "segment_sha256": "82675a8920f2a5de7080fc90a0db0a866e4c4326c33b4b3cfc3999f971d11b3b",
       "heading": "## Runtime Scheduler, Parallelism, and Remediation Addendum (2026-03-08)"
+    },
+    {
+      "dest_path": "Plans/_shards/orchestrator-subagent-integration/35-runtime-scheduler-consumer-subagent-reconciliation-addendum-2026-03-09.md",
+      "start_line": 8132,
+      "end_line": 8171,
+      "segment_sha256": "6ebaa206d91d026cf131d6c25551c129a1baad370c9764dcdb5044e94e843b4b",
+      "heading": "## Runtime Scheduler Consumer / Subagent Reconciliation Addendum (2026-03-09)"
     }
   ]
 }

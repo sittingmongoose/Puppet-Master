@@ -153,3 +153,11 @@ Update index summaries and cross-references after applying this packet so the fo
 - `assistant-chat-design.md`
 - `Permissions_System.md`
 - `FileSafe.md`
+## Runtime Scheduler / Recovery Index Alignment Addendum (2026-03-09)
+
+Update index descriptions so readers can find the owning docs for:
+- scheduler semantics and queue analysis
+- event/contracts and storage for attempts, safe points, and remediation lineage
+- blocked-state UX and recovery actions
+- provider/auth/permission mappings into runtime taxonomy
+- glossary ownership for new runtime terms

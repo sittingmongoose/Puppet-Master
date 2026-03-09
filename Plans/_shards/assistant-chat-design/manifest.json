@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/assistant-chat-design.md",
-  "source_sha256": "547ac44fb6c5de6f1aeff262108c169a343f4ddec04fd3177bd1c40c4fd61bc1",
+  "source_sha256": "cbf5405e91908fe1c09efd3f948d9280dbb21e2fd8d79002b6f9cc72f9628466",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -251,6 +251,13 @@
       "end_line": 2029,
       "segment_sha256": "711ef8bc598e2ad4a44a9deb4addb1f8d50f01e39a2345b664aa3556e0cf404b",
       "heading": "## blocked Thread State and Recovery Addendum (2026-03-08)"
+    },
+    {
+      "dest_path": "Plans/_shards/assistant-chat-design/36-runtime-blocked-recovery-thread-state-addendum-2026-03-09.md",
+      "start_line": 2030,
+      "end_line": 2055,
+      "segment_sha256": "490db90bd6e5a768b986b9420fa35e4c4505b4319935a9fb0b502826bd77ea6e",
+      "heading": "## Runtime Blocked / Recovery Thread-State Addendum (2026-03-09)"
     }
   ]
 }

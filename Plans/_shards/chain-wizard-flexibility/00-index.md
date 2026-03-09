@@ -31,3 +31,4 @@ Canonical source: [Plans/chain-wizard-flexibility.md](../../chain-wizard-flexibi
 - [23-requirements-builder-persona-strategy-addendum-2026-03-06.md](23-requirements-builder-persona-strategy-addendum-2026-03-06.md) — ## Requirements Builder Persona Strategy Addendum (2026-03-06)
 - [24-17-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md](24-17-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md) — ## 17. Assistant / Deep Plan Escalation into Chain Wizard (2026-03-08)
 - [25-clarification-escalation-and-draft-decomposition-addendum-2026-03-08.md](25-clarification-escalation-and-draft-decomposition-addendum-2026-03-08.md) — ## Clarification Escalation and Draft Decomposition Addendum (2026-03-08)
+- [26-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-03-09.md](26-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-03-09.md) — ## Draft Decomposition Fallback / Wizard Blocked-State Addendum (2026-03-09)

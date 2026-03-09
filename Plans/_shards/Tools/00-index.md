@@ -22,3 +22,4 @@ Canonical source: [Plans/Tools.md](../../Tools.md)
 - [14-12-implementation-checklist-ordered-for-implementation-plan.md](14-12-implementation-checklist-ordered-for-implementation-plan.md) — ## 12. Implementation checklist (ordered for implementation plan)
 - [15-13-references.md](15-13-references.md) — ## 13. References
 - [16-tool-policy-outcome-taxonomy-addendum-2026-03-08.md](16-tool-policy-outcome-taxonomy-addendum-2026-03-08.md) — ## Tool Policy Outcome Taxonomy Addendum (2026-03-08)
+- [17-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md](17-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md) — ## Tool Denial / Runtime Taxonomy Alignment Addendum (2026-03-09)

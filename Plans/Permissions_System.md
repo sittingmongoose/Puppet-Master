@@ -691,3 +691,23 @@ Required rule:
 - Permission denials integrate cleanly with runtime blocked outcomes.
 - Recovery options are explicit.
 - Remote side-effect blocks remain non-bypassable and non-ambiguous.
+## Runtime Blocked Permissions / Snapshot Addendum (2026-03-09)
+
+Permission resolution must remain explainable at attempt granularity.
+
+### Required runtime fields
+Permission-related blocked outcomes MUST record:
+- requested permission state
+- effective permission state
+- permission snapshot identifier
+- the exact permission key or rule that caused the block
+- whether the current mode could have asked the user
+
+### Headless ask rule
+If the mode cannot present a required approval interaction, the result is `blocked_reason_code = headless_ask_denied`. This is a blocked outcome, not a generic permission failure.
+
+### External side-effect rule
+`external_publish_side_effect` and equivalent remote-mutation gates MUST remain blocked until explicitly approved or declined. Auth success alone does not clear that block.
+
+### Retry rule
+A permission-related blocked outcome may be reevaluated only after a real prerequisite change: policy edit, approval, mode change, or explicit user action.

@@ -28,3 +28,4 @@ Canonical source: [Plans/Run_Graph_View.md](../../Run_Graph_View.md)
 - [20-18-acceptance-criteria.md](20-18-acceptance-criteria.md) — ## 18. Acceptance Criteria
 - [21-19-references.md](21-19-references.md) — ## 19. References
 - [22-scheduler-analysis-and-remediation-visibility-addendum-2026-03-08.md](22-scheduler-analysis-and-remediation-visibility-addendum-2026-03-08.md) — ## Scheduler Analysis and Remediation Visibility Addendum (2026-03-08)
+- [23-queue-analysis-attempt-lineage-ui-addendum-2026-03-09.md](23-queue-analysis-attempt-lineage-ui-addendum-2026-03-09.md) — ## Queue Analysis / Attempt Lineage UI Addendum (2026-03-09)

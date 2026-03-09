@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/newfeatures.md",
-  "source_sha256": "e45cac6f55b16c871712915d577acc5fdcfcf47c506b2fed84751bcdbb309c85",
+  "source_sha256": "6905e46a9f7facd8a9368ec27d72a3d7a602bc2e1209a27848279549e76af1a9",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -216,6 +216,13 @@
       "end_line": 1534,
       "segment_sha256": "1bbf9aa1df791f0fa427aa351c746e403ea8afc1567828605be030682ecc5c81",
       "heading": "## Runtime Safe-Point Clarification Addendum (2026-03-08)"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/31-user-facing-recovery-semantics-addendum-2026-03-09.md",
+      "start_line": 1535,
+      "end_line": 1543,
+      "segment_sha256": "a47e837ee15f17eebea5e50d5b6d5444aa17d3f8f2d4a3c210c6d03e04628e23",
+      "heading": "## User-Facing Recovery Semantics Addendum (2026-03-09)"
     }
   ]
 }

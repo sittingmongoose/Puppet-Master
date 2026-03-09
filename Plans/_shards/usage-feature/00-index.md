@@ -26,3 +26,4 @@ Canonical source: [Plans/usage-feature.md](../../usage-feature.md)
 - [18-version-history.md](18-version-history.md) — ## Version History
 - [19-widget-composed-page-layout-addendum-2026-02-23.md](19-widget-composed-page-layout-addendum-2026-02-23.md) — ## Widget-Composed Page Layout (Addendum -- 2026-02-23)
 - [20-scheduler-blocked-usage-observability-addendum-2026-03-08.md](20-scheduler-blocked-usage-observability-addendum-2026-03-08.md) — ## Scheduler / blocked Usage Observability Addendum (2026-03-08)
+- [21-runtime-scheduler-recovery-observability-addendum-2026-03-09.md](21-runtime-scheduler-recovery-observability-addendum-2026-03-09.md) — ## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)

@@ -110,3 +110,16 @@ ContractRef: Primitive:SessionStore, ContractName:Plans/storage-plan.md, PolicyR
 - `Plans/Architecture_Invariants.md`
 - `Plans/Contracts_V0.md`
 - `Plans/Spec_Lock.json`
+## Runtime Scheduler / Recovery Terminology Addendum (2026-03-09)
+
+Confirm or add the following canonical terms:
+- **attempt_id** -- the stable identity for one execution attempt of a node or remediation child
+- **queue analysis** -- the scheduler-pass record describing ready nodes, selected nodes, score breakdowns, and non-selected reasons
+- **wake reason** -- the canonical trigger for rerunning queue analysis
+- **blocked outcome** -- a non-executed or externally prevented outcome that preserves work and exposes recovery actions instead of being treated as a generic failure
+- **safe point** -- runtime-internal recovery anchor created before mutation-capable execution or remediation apply
+- **restore point** -- user-facing history checkpoint distinct from safe points
+- **remediation lineage** -- the parent/child chain connecting an originating failed attempt to automatic fix attempts and final resolution
+- **graph lock** -- the boundary after which canonical graph integrity failures must not silently degrade to flat execution
+
+Glossary definitions must match the packet's executor, storage, UI, and provider usage exactly.

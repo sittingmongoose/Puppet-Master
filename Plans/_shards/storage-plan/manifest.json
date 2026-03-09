@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/storage-plan.md",
-  "source_sha256": "ed50da2c15d8dadd8d68119736db8dbd201a0a917349f7bacb23498f3cd2bfa9",
+  "source_sha256": "e0a3b4c4c2690766f296c551f662512ff8eb4f81de16c1f425c5cc036a480572",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -97,6 +97,13 @@
       "end_line": 981,
       "segment_sha256": "cfbd0b3b516d58b03964b193e73add73fe422af390ac43486d4bcdf13193d565",
       "heading": "## Scheduler Runtime, Safe-Point, and Remediation Storage Addendum (2026-03-08)"
+    },
+    {
+      "dest_path": "Plans/_shards/storage-plan/14-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-03-09.md",
+      "start_line": 982,
+      "end_line": 1012,
+      "segment_sha256": "edebec58049396748d4f947e168583662ffac09af488056b0b58a1e6878046bc",
+      "heading": "## Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)"
     }
   ]
 }

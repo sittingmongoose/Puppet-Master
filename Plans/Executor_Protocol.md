@@ -310,3 +310,50 @@ ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/Decisio
 - Safe points exist before risky execution.
 - Retry behavior is class-driven, not generic.
 - Canonical graph integrity failures do not silently degrade.
+## Runtime Scheduler / Recovery Reconciliation Addendum (2026-03-09)
+
+This addendum is normative and supersedes any earlier pure-lexicographic dispatch wording where they conflict.
+
+### Canonical scheduler pass
+The executor MUST process scheduling as a deterministic pass with these steps:
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+1. refresh candidate runtime state for the active `replan_generation`
+2. recompute readiness, blocked state, and backoff state
+3. recompute lane and score terms for every ready candidate
+4. select up to available capacity
+5. emit queue-analysis state before dispatch
+6. dispatch selected attempts
+
+### Readiness contract
+A node is ready only when all blockers are satisfied, the generation is current, the node is not blocked, the node is not in backoff, and capacity rules permit dispatch in its lane. Nodes blocked by permission denial, FileSafe, auth refresh, user confirmation, or replan-required state are not ready.
+
+### Score tuple
+The canonical selection tuple is `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`.
+- `scheduler_lane` order: `remediation > unblocker > normal`
+- higher `manual_priority` wins
+- higher `transitive_unblock_count` wins
+- older `ready_since_utc` wins
+- `node_id` is the final tiebreak only
+
+No critical-path term is part of MVP selection.
+
+### Wakeup triggers
+Queue analysis MUST rerun on node completion, verification completion, approval resolution, clarification resolution, auth recovery, backoff expiry, remediation completion, restore completion, replan application, and capacity change. Polling is watchdog-only.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md
+
+### Blocked and retry behavior
+The executor MUST classify every non-success outcome before applying policy. Canonical values include `provider_transient`, `structured_output_invalid`, `verification_failed`, `reviewer_findings`, `permission_denied`, `user_declined`, `headless_ask_denied`, `filesafe_blocked`, `external_side_effect_blocked`, `auth_expired`, `storage_io`, `graph_integrity`, and `replan_required`.
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+Generic blind retry is forbidden. Retry, backoff, remediation, rollback-to-safe-point, and escalation all flow from the classified outcome.
+
+### Attempt identity and safe points
+Every dispatch creates or reuses a first-class `attempt_id`. Mutation-capable attempts and remediation apply steps MUST create a runtime `safe_point_id` before execution. Safe points are runtime recovery anchors only; they are not restore points.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
+
+### Remediation lineage
+Automatic fix cycles attach to a parent attempt using `remediation_root_id`, `remediation_parent_attempt_id`, `remediation_generation`, finding identifiers, and final resolution state. A new canonical graph node is created only when a replan changes canonical graph scope.
+
+### Degradation boundary
+Invalid pre-lock draft decomposition may degrade to deterministic flat draft sequencing with warning evidence. Invalid canonical graphs after graph lock are `graph_integrity` failures and MUST NOT silently degrade.
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Progression_Gates.md

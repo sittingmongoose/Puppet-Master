@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/usage-feature.md",
-  "source_sha256": "c6b80efd1ef9ac98aa2cd3fbfc6dec0bd1a1ebad9e895f6e72765aad36f69ecf",
+  "source_sha256": "75a53a735bec5ed687e519ea415a9bd160c4126366c3166c973600cc55716807",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -146,6 +146,13 @@
       "end_line": 602,
       "segment_sha256": "d442b0dc78744330db62e6f3538d85ed74ad7d8484cd4bf615fb29cba7a6d19a",
       "heading": "## Scheduler / blocked Usage Observability Addendum (2026-03-08)"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/21-runtime-scheduler-recovery-observability-addendum-2026-03-09.md",
+      "start_line": 603,
+      "end_line": 614,
+      "segment_sha256": "41c9f2661986c753ec05d6b03e80980d4de3de46299f233e1d83213c7fc9a6fd",
+      "heading": "## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)"
     }
   ]
 }

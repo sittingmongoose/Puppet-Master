@@ -11,3 +11,4 @@ Canonical source: [Plans/feature-list.md](../../feature-list.md)
 - [03-part-2-existing-codebase-features.md](03-part-2-existing-codebase-features.md) — ## Part 2 - Existing Codebase Features
 - [04-part-1a-markdown-mermaid-and-unified-rendering-addendum-2026-03-07.md](04-part-1a-markdown-mermaid-and-unified-rendering-addendum-2026-03-07.md) — ## Part 1A - Markdown, Mermaid, and Unified Rendering Addendum (2026-03-07)
 - [05-runtime-scheduler-and-recovery-features-addendum-2026-03-08.md](05-runtime-scheduler-and-recovery-features-addendum-2026-03-08.md) — ## Runtime Scheduler and Recovery Features Addendum (2026-03-08)
+- [06-runtime-scheduler-recovery-summary-refresh-addendum-2026-03-09.md](06-runtime-scheduler-recovery-summary-refresh-addendum-2026-03-09.md) — ## Runtime Scheduler / Recovery Summary Refresh Addendum (2026-03-09)

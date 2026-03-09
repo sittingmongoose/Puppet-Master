@@ -22,3 +22,4 @@ Canonical source: [Plans/Project_Output_Artifacts.md](../../Project_Output_Artif
 - [14-12-optional-derived-quickstartmd-contract-human-convenience-only.md](14-12-optional-derived-quickstartmd-contract-human-convenience-only.md) — ## 12. Optional derived `quickstart.md` contract (human convenience only)
 - [15-change-summary.md](15-change-summary.md) — ## Change Summary
 - [16-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md](16-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md) — ## Runtime Evidence and Degradation Artifact Addendum (2026-03-08)
+- [17-runtime-queue-analysis-recovery-artifact-addendum-2026-03-09.md](17-runtime-queue-analysis-recovery-artifact-addendum-2026-03-09.md) — ## Runtime Queue Analysis / Recovery Artifact Addendum (2026-03-09)

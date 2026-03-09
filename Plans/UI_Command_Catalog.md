@@ -377,3 +377,25 @@ Any existing wizard `attention_required` resume/view actions must have blocked-s
 
 - retry commands must not silently choose safe-point vs fresh-attempt behavior
 - blocked-state commands must carry enough identity to reopen the exact report/context
+## Runtime Recovery Command Catalog Addendum (2026-03-09)
+
+Add or reconcile the following canonical UI commands:
+- `cmd.graph.open_queue_analysis`
+- `cmd.graph.open_attempt_details`
+- `cmd.graph.retry_attempt`
+- `cmd.graph.resume_blocked`
+- `cmd.graph.restore_safe_point_then_retry`
+- `cmd.graph.open_remediation_lineage`
+- `cmd.orchestrator.filter_blocked_reason`
+- `cmd.orchestrator.open_safe_point_history`
+
+### Payload requirements
+Payloads must include enough identity to avoid ambiguity:
+- `run_id`
+- `thread_id` when relevant
+- `node_id`
+- `attempt_id` when an attempt exists
+- `safe_point_id` when acting on a restore/retry path
+- `blocked_reason_code` or `failure_class` when the action is classification-specific
+
+Duplicate or overlapping command rows must be merged so one command ID maps to one canonical meaning and payload shape.

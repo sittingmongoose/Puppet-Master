@@ -428,3 +428,14 @@ Rules:
 - Headless ask denial remains explicit and non-magical.
 - Blocked outcomes are excluded from write-thrash and retryable-provider ceilings.
 - Safe-point creation follows execution authority, not generic run existence.
+## Runtime Mode / Blocked Recovery Addendum (2026-03-09)
+
+Execution mode affects which recovery actions can be taken immediately, but mode does not redefine the underlying classification.
+
+### Mode rules
+- interactive modes may present auth, approval, and clarification actions directly
+- non-interactive/headless modes that cannot present a required action yield `blocked_reason_code = headless_ask_denied`
+- a later mode change may satisfy the prerequisite and allow resume, but it does not rewrite the original blocked classification
+
+### Safe-point rule
+If policy requires rollback before rerun, changing mode alone is insufficient; the safe-point restore requirement still applies.

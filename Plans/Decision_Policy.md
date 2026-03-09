@@ -279,3 +279,15 @@ Required distinction:
 - Canonical graph degradation is forbidden.
 - Intentional non-execution is modeled as blocked, not failed.
 - Wizard blocked escalation is policy-distinct from attention_required.
+## Runtime Scheduler / Recovery Deterministic Defaults Addendum (2026-03-09)
+
+Add these deterministic defaults:
+- scored event-driven scheduling is the default runtime model
+- watchdog polling is allowed only as a backup, not as primary correctness
+- no critical-path scheduler term in MVP
+- blind retry is forbidden
+- blocked outcomes preserve local work by default when a side effect was intentionally prevented or a prerequisite is missing
+- draft decomposition may degrade only before graph lock
+- canonical graph integrity failures do not degrade silently
+
+Where earlier policy prose is ambiguous, these defaults win.
