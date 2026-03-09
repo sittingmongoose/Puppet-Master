@@ -321,3 +321,12 @@ This packet requires an explicit terminology crosswalk:
 Required rule:
 - docs and implementations must not use these terms interchangeably
 - UI copy must preserve the distinction
+## Runtime Scheduler / Recovery Ownership Addendum (2026-03-09)
+
+Clarify doc ownership boundaries:
+- `Executor_Protocol.md` owns scheduler execution semantics and readiness rules
+- `Contracts_V0.md` owns event payload contracts
+- `storage-plan.md` owns persistence/projection contracts
+- `Run_Graph_View.md`, `Orchestrator_Page.md`, and `FinalGUISpec.md` own UI surfaces, not underlying runtime semantics
+- `Permissions_System.md`, `Tools.md`, `Models_System.md`, and provider docs own mapping into runtime classifications, not alternate retry logic
+- `Glossary.md` owns canonical terminology for safe point, restore point, blocked outcome, wake reason, queue analysis, and remediation lineage

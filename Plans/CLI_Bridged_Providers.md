@@ -611,3 +611,26 @@ Required fields when applicable:
 - Bridged-provider output is sufficient for runtime classification.
 - Retries/replays remain distinguishable in lineage.
 - Provider-local retry behavior does not bypass the shared runtime matrix.
+## Bridged Provider Runtime Classification Addendum (2026-03-09)
+
+Bridged providers must normalize transport/provider signals into canonical runtime semantics.
+
+### Required correlation fields
+For every bridged attempt preserve:
+- `run_id`
+- `thread_id`
+- `node_id`
+- `attempt_id`
+- requested/effective provider-model identifiers
+- permission snapshot identifier
+- `safe_point_id` when present
+- remediation lineage identifiers when present
+- `replan_generation`
+
+### Required signal mapping
+- provider auth challenge -> `blocked_reason_code = auth_expired`
+- interactive approval impossible in current mode -> `blocked_reason_code = headless_ask_denied`
+- transient transport/provider outage -> `failure_class = provider_transient`
+- provider-side malformed structured output -> `failure_class = structured_output_invalid`
+
+Adapters may reconnect to observe an already-submitted attempt, but they MUST NOT silently resubmit the prompt or mutate retry counters outside runtime control.

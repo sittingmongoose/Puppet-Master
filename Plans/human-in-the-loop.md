@@ -212,3 +212,27 @@ Abort terminates the run and preserves the full paused/rejected lineage.
 - Rerun semantics are explicit about safe-point vs fresh attempt.
 - Skip preserves lineage rather than masquerading as a passed attempt.
 - Abort preserves audit history.
+## Canonical Runtime Recovery Action Set Addendum (2026-03-09)
+
+HITL actions must be canonical across graph, orchestrator, and chat surfaces.
+
+### Allowed action families
+Depending on classification, the canonical action families are:
+- `approve`
+- `decline`
+- `retry_now`
+- `resume_after_prerequisite`
+- `skip_node`
+- `abort_run`
+- `replan`
+- `restore_safe_point_then_retry`
+
+### Action gating rules
+- `approve` / `decline` apply to external-side-effect gates and review approvals
+- `resume_after_prerequisite` applies to auth recovery, policy change, or other prerequisite fulfillment
+- `restore_safe_point_then_retry` is required when policy says rollback is needed before rerun
+- `skip_node` is legal only when the node contract explicitly permits skip without violating graph integrity
+- `replan` replaces retry when classification is `replan_required`
+
+### Consistency rule
+All surfaces MUST use the same action names, meanings, and enablement conditions. A surface may hide an action for layout reasons, but it MUST NOT rename or reinterpret it.

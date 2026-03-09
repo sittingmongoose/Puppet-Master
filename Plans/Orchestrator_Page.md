@@ -646,3 +646,21 @@ Scheduler and remediation widgets update from event/projection streams. Do not r
 - Recovery options are specific to the blocked/failure class.
 - Retry UI distinguishes safe-point retry from fresh attempt.
 - Scheduler/remediation widgets update without timer-driven correctness assumptions.
+## Runtime Recovery Surface Ownership Addendum (2026-03-09)
+
+The Orchestrator page owns the page-level recovery, queue-analysis, and remediation views that complement the node-level run graph.
+
+### Required surfaces
+- queue-analysis summary card for the latest scheduler pass
+- blocked work list grouped by `blocked_reason_code`
+- remediation lineage list showing parent attempt, child attempts, and resolution
+- safe-point restore history for the active run
+- quick filters for `blocked`, `attention_required`, `retrying`, and `remediation`
+
+### Surface boundaries
+- the run graph owns node-specific diagnostics
+- the Orchestrator page owns run-wide summaries, grouped queues, and bulk navigation between affected nodes/attempts
+- history/evidence tabs must be able to pivot by `attempt_id`
+
+### Fallback rule
+If the graph cannot yet render a full queue-analysis visualization, the page MUST still show a textual queue-analysis summary with wake reason, selected nodes, ready-but-unselected nodes, and capacity status. The packet does not allow queue-analysis to become UI-invisible.

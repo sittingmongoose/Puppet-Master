@@ -435,3 +435,19 @@ Rules:
 Acceptance criteria:
 - remediation/retry runs receive the lineage metadata needed to continue coherently
 - prompt assembly does not become the hidden source of truth; canonical truth remains in event/storage contracts
+## Attempt Snapshot / Runtime Correlation Addendum (2026-03-09)
+
+Prompt assembly and provider invocation handoff must preserve runtime correlation state.
+
+### Required handoff bundle
+Before provider invocation, the pipeline MUST assemble and retain:
+- requested/effective persona and runtime state already defined elsewhere
+- requested/effective model identifiers
+- effective permission snapshot identifier
+- `run_id`, `thread_id`, `node_id`, `attempt_id`
+- `replan_generation`
+- `safe_point_id` when present
+- remediation lineage fields when present
+
+### Stability rule
+Once an attempt starts, the persisted handoff bundle for that attempt is immutable. A later retry or resumed blocked attempt creates a new attempt snapshot rather than mutating the old one in place.

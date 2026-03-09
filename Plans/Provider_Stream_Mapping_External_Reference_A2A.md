@@ -300,3 +300,15 @@ Required behavior:
 Acceptance criteria:
 - A2A/provider normalization does not erase retry/remediation lineage
 - input-provided / resume events remain sufficient to wake blocked runtime flows deterministically
+## Stream Mapping / Wake Reason Alignment Addendum (2026-03-09)
+
+Provider stream mapping must expose the signals needed for event-driven scheduling.
+
+### Required mappings
+- provider completion -> scheduler wake reason for completion
+- input-required / approval-required -> blocked outcome with corresponding reason code
+- auth recovery event -> wake reason for auth recovery
+- backoff-expiry timer event -> wake reason for backoff expiry
+- remediation completion -> wake reason for remediation completion
+
+Stream adapters must preserve attempt identity so wakeups can be correlated to the correct attempt and node.

@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.evidence.schema.v1",
   "evidence_id": "plan-sharding-2026-03-09",
-  "created_at_utc": "2026-03-09T01:39:59.784927+00:00",
+  "created_at_utc": "2026-03-09T03:44:37.625089+00:00",
   "node": {
     "node_id": "plan-sharding"
   },
@@ -432,6 +432,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/FileManager/21-runtime-artifact-navigation-alignment-addendum-2026-03-09.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/FileManager/manifest.json",
       "change_type": "modified"
     },
@@ -533,6 +537,10 @@
     },
     {
       "path": "Plans/_shards/FileSafe/24-runtime-blocked-state-integration-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/25-filesafe-blocked-outcome-alignment-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
@@ -652,6 +660,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/FinalGUISpec/28-runtime-scheduler-blocked-state-gui-parity-addendum-2026-03-09.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/FinalGUISpec/manifest.json",
       "change_type": "modified"
     },
@@ -709,6 +721,10 @@
     },
     {
       "path": "Plans/_shards/GitHub_Integration/13-wizard-blocked-state-and-deferred-launch-reconciliation-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/GitHub_Integration/14-github-runtime-recovery-alignment-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
@@ -892,6 +908,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/MiscPlan/23-runtime-cleanup-recovery-preservation-addendum-2026-03-09.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/MiscPlan/manifest.json",
       "change_type": "modified"
     },
@@ -961,6 +981,10 @@
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/16-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/Project_Output_Artifacts/17-runtime-queue-analysis-recovery-artifact-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
@@ -1060,6 +1084,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/Run_Graph_View/23-queue-analysis-attempt-lineage-ui-addendum-2026-03-09.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/Run_Graph_View/manifest.json",
       "change_type": "modified"
     },
@@ -1129,6 +1157,10 @@
     },
     {
       "path": "Plans/_shards/Tools/16-tool-policy-outcome-taxonomy-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/Tools/17-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
@@ -1205,6 +1237,10 @@
     },
     {
       "path": "Plans/_shards/WorktreeGitImprovement/17-safe-point-and-retry-integration-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/WorktreeGitImprovement/18-safe-point-worktree-recovery-alignment-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
@@ -1356,6 +1392,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/assistant-chat-design/36-runtime-blocked-recovery-thread-state-addendum-2026-03-09.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/assistant-chat-design/manifest.json",
       "change_type": "modified"
     },
@@ -1464,6 +1504,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/chain-wizard-flexibility/26-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-03-09.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/chain-wizard-flexibility/manifest.json",
       "change_type": "modified"
     },
@@ -1489,6 +1533,10 @@
     },
     {
       "path": "Plans/_shards/feature-list/05-runtime-scheduler-and-recovery-features-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/feature-list/06-runtime-scheduler-recovery-summary-refresh-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
@@ -1605,6 +1653,10 @@
     },
     {
       "path": "Plans/_shards/interview-subagent-integration/27-interview-validation-remediation-and-blocked-state-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/28-interview-planning-recovery-alignment-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
@@ -1733,6 +1785,10 @@
     },
     {
       "path": "Plans/_shards/newfeatures/30-runtime-safe-point-clarification-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/newfeatures/31-user-facing-recovery-semantics-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
@@ -1984,6 +2040,10 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/orchestrator-subagent-integration/35-runtime-scheduler-consumer-subagent-reconciliation-addendum-2026-03-09.md",
+      "change_type": "modified"
+    },
+    {
       "path": "Plans/_shards/orchestrator-subagent-integration/manifest.json",
       "change_type": "modified"
     },
@@ -2041,6 +2101,10 @@
     },
     {
       "path": "Plans/_shards/storage-plan/13-scheduler-runtime-safe-point-and-remediation-storage-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/14-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
@@ -2129,6 +2193,10 @@
     },
     {
       "path": "Plans/_shards/usage-feature/20-scheduler-blocked-usage-observability-addendum-2026-03-08.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/21-runtime-scheduler-recovery-observability-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {

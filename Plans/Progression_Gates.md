@@ -447,3 +447,13 @@ Required verification checks:
 - all new scheduler/remediation GUI surfaces still follow the event-driven/no-polling rewrite rule
 
 This verification sweep is mandatory work, not an optional reminder.
+## Runtime Packet Verification Gate Addendum (2026-03-09)
+
+Progression gates for this feature set must confirm:
+- executor, contracts, storage, UI, and provider docs all use the same attempt / blocked / safe-point / remediation terminology
+- no remaining doc defines pure lexical dispatch as canonical runtime selection
+- blocked outcomes are not mislabeled as generic failures
+- draft decomposition fallback is scoped to pre-lock stages only
+- queue-analysis visibility exists in at least one canonical UI surface
+
+The gate should fail when any of the above are contradicted by packetized docs.

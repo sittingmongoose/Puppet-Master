@@ -764,3 +764,12 @@ Required alignment:
 - blocked payloads must continue to provide exact `reason_code` and `recovery_options[]`
 
 This document's stronger blocked-outcome pattern should be treated as the cross-runtime baseline rather than as a domain-specific exception.
+## External Publish Blocked-Outcome Alignment Addendum (2026-03-09)
+
+Container publish and registry flows must use the same blocked-outcome semantics as the runtime packet.
+
+### Required rules
+- auth expiry during publish blocks the publish path without discarding the completed local build result
+- remote-side-effect approval requirements remain blocked until explicitly resolved
+- re-auth alone does not auto-publish; the user must explicitly resume or retry through the canonical action
+- UI must explain when a local artifact exists but remote publish remains blocked
