@@ -123,3 +123,13 @@ Confirm or add the following canonical terms:
 - **graph lock** -- the boundary after which canonical graph integrity failures must not silently degrade to flat execution
 
 Glossary definitions must match the packet's executor, storage, UI, and provider usage exactly.
+## Runtime Packet Terminology Reconciliation Addendum (2026-03-09)
+
+Add the following canonical terms:
+- **Scheduler pass ID** -- the canonical identity for a queue-analysis pass; legacy `analysis_id` is an alias only
+- **Allowed action ID** -- the canonical runtime action family surfaced by blocked or recovery state (`approve`, `decline`, `retry_now`, `resume_after_prerequisite`, `restore_safe_point_then_retry`, `start_fresh_attempt`, `replan`, `skip_node`, `abort_run`, `open_details`)
+- **Graph canonical lock** -- the runtime boundary after which degraded draft decomposition fallback is forbidden
+- **Stale attempt** -- a historical attempt from an older generation or superseded recovery branch that remains queryable but is not resumable
+- **Prerequisite-resolved wake** -- the runtime wake caused by a prerequisite becoming satisfied (approval, clarification, permission, auth, replan, or worktree resolution)
+- **Plugin hook blocked** -- a blocked runtime outcome caused by a plugin hook preventing progress; it is not a plugin-private warning path
+- **Worktree conflict** -- a blocked runtime condition where worktree overlap, merge risk, or dirty baseline forbids safe dispatch or restore

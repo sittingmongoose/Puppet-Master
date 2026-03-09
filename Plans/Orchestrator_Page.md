@@ -664,3 +664,20 @@ The Orchestrator page owns the page-level recovery, queue-analysis, and remediat
 
 ### Fallback rule
 If the graph cannot yet render a full queue-analysis visualization, the page MUST still show a textual queue-analysis summary with wake reason, selected nodes, ready-but-unselected nodes, and capacity status. The packet does not allow queue-analysis to become UI-invisible.
+## Queue Analysis and Blocked Work Surface Reconciliation Addendum (2026-03-09)
+
+The Orchestrator page owns run-wide scheduler and recovery summaries.
+
+### Required surfaces
+- queue-analysis summary for the latest scheduler pass
+- scheduler pass history keyed by `scheduler_pass_id`
+- blocked work list grouped by `blocked_reason_code`
+- newly-ready-in-this-pass list showing direct cascade effects
+- remediation lineage list showing parent attempt, child attempts, and resolution
+- safe-point restore history for the active run
+
+### Interaction rules
+- clicking a queue-analysis row opens the corresponding node or attempt detail
+- ready-but-unselected rows MUST show `non_selected_reason` and score breakdown
+- blocked rows MUST show only the currently valid `allowed_action_ids[]`
+- newly-ready rows MUST identify the wake reason and, when applicable, the directly satisfied dependency

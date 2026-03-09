@@ -31,3 +31,4 @@ Canonical source: [Plans/FileSafe.md](../../FileSafe.md)
 - [23-17-implementation-order-and-dependencies.md](23-17-implementation-order-and-dependencies.md) — ## 17. Implementation Order and Dependencies
 - [24-runtime-blocked-state-integration-addendum-2026-03-08.md](24-runtime-blocked-state-integration-addendum-2026-03-08.md) — ## Runtime Blocked-State Integration Addendum (2026-03-08)
 - [25-filesafe-blocked-outcome-alignment-addendum-2026-03-09.md](25-filesafe-blocked-outcome-alignment-addendum-2026-03-09.md) — ## FileSafe Blocked Outcome Alignment Addendum (2026-03-09)
+- [26-filesafe-restore-before-rerun-reconciliation-addendum-2026-03-09.md](26-filesafe-restore-before-rerun-reconciliation-addendum-2026-03-09.md) — ## FileSafe Restore-Before-Rerun Reconciliation Addendum (2026-03-09)

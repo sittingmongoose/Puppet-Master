@@ -330,3 +330,12 @@ Clarify doc ownership boundaries:
 - `Run_Graph_View.md`, `Orchestrator_Page.md`, and `FinalGUISpec.md` own UI surfaces, not underlying runtime semantics
 - `Permissions_System.md`, `Tools.md`, `Models_System.md`, and provider docs own mapping into runtime classifications, not alternate retry logic
 - `Glossary.md` owns canonical terminology for safe point, restore point, blocked outcome, wake reason, queue analysis, and remediation lineage
+## Runtime Scheduler Ownership and Precedence Reconciliation Addendum (2026-03-09)
+
+Clarify ownership boundaries:
+- `Plans/Contracts_V0.md` owns canonical runtime event names, enum families, action families, and identity rules
+- `Plans/Executor_Protocol.md` owns scheduler execution semantics, readiness, score terms, and graph-lock behavior
+- `Plans/storage-plan.md` owns persistence/projection shape and immutable history rules
+- GUI/view docs own rendering and interaction, not alternate semantics
+- provider/auth/tool docs own mapping into runtime taxonomy, not parallel retry models
+- `Plans/Glossary.md` owns canonical terminology for runtime recovery and queue analysis terms

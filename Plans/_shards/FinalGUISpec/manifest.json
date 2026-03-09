@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/FinalGUISpec.md",
-  "source_sha256": "1833cebaac02aa2e86159fa150862c11fe80ef47e256132ccf504009f190ed40",
+  "source_sha256": "7628030d82f559a2e2dfecb65e7dff71ad64f62ea7ccfedcdbe0394e015ea5dc",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -202,6 +202,13 @@
       "end_line": 3568,
       "segment_sha256": "a50f46a8a9269e5f93601e7b9f0b83dbd49c35a821cde91dd59f9ed7a1fd6a3b",
       "heading": "## Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)"
+    },
+    {
+      "dest_path": "Plans/_shards/FinalGUISpec/29-runtime-blocked-queue-and-recovery-gui-reconciliation-addendum-2026-03-09.md",
+      "start_line": 3569,
+      "end_line": 3607,
+      "segment_sha256": "a896ba37ec2d3d1a66fcfd318c677354f28bd56a7e9ea94fa409e0437d929f87",
+      "heading": "## Runtime Blocked, Queue, and Recovery GUI Reconciliation Addendum (2026-03-09)"
     }
   ]
 }

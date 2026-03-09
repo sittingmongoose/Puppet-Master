@@ -2053,3 +2053,29 @@ When blocked, the chat thread MUST show:
 
 ### Resume semantics
 Resume/retry buttons in chat MUST map to canonical runtime actions. Chat MUST NOT invent thread-local resume paths that bypass scheduler classification, safe-point restore requirements, or external approval checks.
+## Blocked Thread Message and Persistence Reconciliation Addendum (2026-03-09)
+
+Add a dedicated blocked-state system message contract.
+
+### `blocked_notice` message
+Required fields:
+- `type = blocked_notice`
+- `thread_id`
+- `node_id?`
+- `attempt_id?`
+- `blocked_reason_code`
+- `explanation`
+- `allowed_action_ids[]`
+- `preserved_local_work`
+- `detail_ref?`
+- `resume_url?`
+
+### Persistence rules
+A blocked thread MUST persist:
+- latest `blocked_reason_code`
+- latest blocked message id
+- current attempt/node reference when available
+- `allowed_action_ids[]`
+- preserved-local-work flag
+
+Resume/retry controls in chat MUST map to canonical runtime actions rather than thread-local shortcuts.

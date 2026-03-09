@@ -20,3 +20,4 @@ Canonical source: [Plans/storage-plan.md](../../storage-plan.md)
 - [12-version-history.md](12-version-history.md) — ## Version history
 - [13-scheduler-runtime-safe-point-and-remediation-storage-addendum-2026-03-08.md](13-scheduler-runtime-safe-point-and-remediation-storage-addendum-2026-03-08.md) — ## Scheduler Runtime, Safe-Point, and Remediation Storage Addendum (2026-03-08)
 - [14-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-03-09.md](14-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-03-09.md) — ## Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)
+- [15-runtime-attempt-safe-point-queue-analysis-reconciliation-addendum-2026-03-09.md](15-runtime-attempt-safe-point-queue-analysis-reconciliation-addendum-2026-03-09.md) — ## Runtime Attempt / Safe Point / Queue Analysis Reconciliation Addendum (2026-03-09)

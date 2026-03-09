@@ -41,3 +41,4 @@ Canonical source: [Plans/orchestrator-subagent-integration.md](../../orchestrato
 - [33-persona-and-effective-runtime-resolution-addendum-2026-03-06.md](33-persona-and-effective-runtime-resolution-addendum-2026-03-06.md) — ## Persona and Effective Runtime Resolution Addendum (2026-03-06)
 - [34-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-08.md](34-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-08.md) — ## Runtime Scheduler, Parallelism, and Remediation Addendum (2026-03-08)
 - [35-runtime-scheduler-consumer-subagent-reconciliation-addendum-2026-03-09.md](35-runtime-scheduler-consumer-subagent-reconciliation-addendum-2026-03-09.md) — ## Runtime Scheduler Consumer / Subagent Reconciliation Addendum (2026-03-09)
+- [36-runtime-scheduler-consumer-reconciliation-addendum-2026-03-09.md](36-runtime-scheduler-consumer-reconciliation-addendum-2026-03-09.md) — ## Runtime Scheduler Consumer Reconciliation Addendum (2026-03-09)

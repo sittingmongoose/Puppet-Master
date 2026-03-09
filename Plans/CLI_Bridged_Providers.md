@@ -634,3 +634,12 @@ For every bridged attempt preserve:
 - provider-side malformed structured output -> `failure_class = structured_output_invalid`
 
 Adapters may reconnect to observe an already-submitted attempt, but they MUST NOT silently resubmit the prompt or mutate retry counters outside runtime control.
+## Bridged Provider Runtime Reconciliation Addendum (2026-03-09)
+
+Bridged providers must preserve canonical runtime identity and taxonomy.
+
+Rules:
+- preserve `run_id`, `thread_id`, `node_id`, `attempt_id`, generation, snapshot ids, and lineage metadata across normalized output
+- transport reconnect logic may reconnect only to observe an already-submitted attempt; it MUST NOT silently resubmit prompts or mutate retry counters
+- provider signals MUST normalize to canonical `failure_class` / `blocked_reason_code` values before orchestration or UI consumes them
+- prerequisite resolution from provider/auth layers MUST surface a canonical scheduler wake rather than staying provider-local

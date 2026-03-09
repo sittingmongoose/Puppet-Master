@@ -24,3 +24,4 @@ Canonical source: [Plans/WorktreeGitImprovement.md](../../WorktreeGitImprovement
 - [16-8-references.md](16-8-references.md) — ## 8. References
 - [17-safe-point-and-retry-integration-addendum-2026-03-08.md](17-safe-point-and-retry-integration-addendum-2026-03-08.md) — ## Safe-Point and Retry Integration Addendum (2026-03-08)
 - [18-safe-point-worktree-recovery-alignment-addendum-2026-03-09.md](18-safe-point-worktree-recovery-alignment-addendum-2026-03-09.md) — ## Safe Point / Worktree Recovery Alignment Addendum (2026-03-09)
+- [19-runtime-worktree-conflict-reconciliation-addendum-2026-03-09.md](19-runtime-worktree-conflict-reconciliation-addendum-2026-03-09.md) — ## Runtime Worktree Conflict Reconciliation Addendum (2026-03-09)

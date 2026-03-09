@@ -29,3 +29,4 @@ Canonical source: [Plans/Run_Graph_View.md](../../Run_Graph_View.md)
 - [21-19-references.md](21-19-references.md) — ## 19. References
 - [22-scheduler-analysis-and-remediation-visibility-addendum-2026-03-08.md](22-scheduler-analysis-and-remediation-visibility-addendum-2026-03-08.md) — ## Scheduler Analysis and Remediation Visibility Addendum (2026-03-08)
 - [23-queue-analysis-attempt-lineage-ui-addendum-2026-03-09.md](23-queue-analysis-attempt-lineage-ui-addendum-2026-03-09.md) — ## Queue Analysis / Attempt Lineage UI Addendum (2026-03-09)
+- [24-queue-analysis-attempt-lineage-reconciliation-addendum-2026-03-09.md](24-queue-analysis-attempt-lineage-reconciliation-addendum-2026-03-09.md) — ## Queue Analysis / Attempt Lineage Reconciliation Addendum (2026-03-09)

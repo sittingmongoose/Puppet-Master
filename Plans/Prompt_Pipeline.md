@@ -451,3 +451,12 @@ Before provider invocation, the pipeline MUST assemble and retain:
 
 ### Stability rule
 Once an attempt starts, the persisted handoff bundle for that attempt is immutable. A later retry or resumed blocked attempt creates a new attempt snapshot rather than mutating the old one in place.
+## Attempt Snapshot Reconciliation Addendum (2026-03-09)
+
+Prompt assembly and provider handoff MUST preserve runtime attempt identity without mutating prior attempts.
+
+Rules:
+- once an attempt starts, its handoff bundle is immutable
+- retry, prerequisite-resumed work, and safe-point-restored reruns create new handoff bundles keyed by new `attempt_id` values
+- new bundles MUST preserve lineage references (`safe_point_id`, remediation lineage, generation, requested/effective snapshots)
+- prompt assembly MUST NOT become an alternate source of truth for blocked or retry state; canonical truth remains in events/projections

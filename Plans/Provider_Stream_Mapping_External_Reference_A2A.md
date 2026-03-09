@@ -312,3 +312,16 @@ Provider stream mapping must expose the signals needed for event-driven scheduli
 - remediation completion -> wake reason for remediation completion
 
 Stream adapters must preserve attempt identity so wakeups can be correlated to the correct attempt and node.
+## Stream Mapping / Wake Reconciliation Addendum (2026-03-09)
+
+Provider stream normalization must preserve canonical runtime wake and lineage behavior.
+
+Required mappings:
+- completion -> `wake_reason = node_completed` or `verification_completed` as applicable
+- approval/input resolution -> `wake_reason = approval_resolved` or `clarification_resolved`
+- auth recovery -> `wake_reason = auth_recovered`
+- backoff expiry -> `wake_reason = backoff_expired`
+- remediation completion -> `wake_reason = remediation_completed`
+- replan application -> `wake_reason = replan_applied`
+
+Normalized streams MUST preserve `attempt_id` across reconnect/observe-only flows.

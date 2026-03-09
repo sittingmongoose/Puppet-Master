@@ -357,3 +357,69 @@ Automatic fix cycles attach to a parent attempt using `remediation_root_id`, `re
 ### Degradation boundary
 Invalid pre-lock draft decomposition may degrade to deterministic flat draft sequencing with warning evidence. Invalid canonical graphs after graph lock are `graph_integrity` failures and MUST NOT silently degrade.
 ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Progression_Gates.md
+## Canonical Runtime Scheduler Reconciliation Addendum (2026-03-09)
+
+This addendum is normative and supersedes earlier pure-lexicographic readiness and dispatch wording wherever conflicting.
+
+### Canonical readiness
+A node is ready only when all of the following are true:
+1. lifecycle state is ready-eligible for dispatch
+2. every blocker resolves to an existing canonical node in the active graph
+3. every resolved blocker is in a dependency-satisfying state
+4. the node is not in active backoff
+5. the node is not blocked by any active runtime projection
+6. the node's `replan_generation` matches the active run generation
+7. no worktree/conflict rule forbids dispatch
+8. lane/pool capacity permits dispatch
+
+Invalid blocker IDs are `graph_integrity` problems and keep the node non-ready.
+
+### Node lifecycle versus runtime overlays
+- node lifecycle remains the graph-progress contract
+- blocked/backoff/retrying/remediation/waiting-approval remain runtime attempt or projection states rather than replacement node statuses
+- readiness MUST consult both lifecycle state and current runtime overlays
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+### Canonical score term definitions
+The canonical score tuple is `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`.
+
+Rules:
+- `scheduler_lane = remediation` only for remediation lineage work
+- `scheduler_lane = unblocker` when successful completion would increase the ready set for other nodes in the active generation
+- `scheduler_lane = normal` otherwise
+- `manual_priority` is an integer `0..100`; default `50`; higher wins
+- `transitive_unblock_count` counts currently blocked descendants in the active generation that would become ready if this node completed successfully now; invalid/cyclic relationships are excluded
+- `ready_since_utc` is reset whenever the node leaves the ready set for any reason and is retained only while the node stays continuously ready
+- `node_id` is the final tiebreak only
+
+### Capacity-aware dispatch cycle
+For each scheduler wake:
+1. refresh candidate runtime state
+2. recompute readiness and score terms
+3. synchronously reevaluate directly affected dependents for the current wake
+4. build the global ready set
+5. emit queue-analysis observability keyed by `scheduler_pass_id`
+6. select up to `available_slots` in canonical score order
+7. dispatch selected attempts
+
+### Blocked-to-runnable cascade timing
+When a dependency completes or a blocking condition clears:
+- direct dependents are reevaluated synchronously in the same wake cycle
+- newly ready nodes enter the same ready set before dispatch completes
+- no extra scheduler pass is required just to notice a direct unblock
+
+### Class-driven next-step rules
+- pure capacity shortage is `non_selected_reason = capacity_deferred`, not a blocked state
+- worktree merge/conflict or dirty-baseline problems block dispatch using `blocked_reason_code = worktree_conflict` or `dirty_worktree`
+- `filesafe_blocked` is not retryable by default; if FileSafe declares `requires_safe_point_restore = true`, restore-before-rerun is mandatory even when generic matrix defaults would not normally roll back that class
+
+### Graph-lock boundary
+Draft decomposition fallback is allowed only before `run.graph_canonical_locked`.
+After that event:
+- invalid canonical graph structure is `graph_integrity`
+- execution MUST stop accepting new dispatches
+- no silent flattening or degraded canonical execution is allowed
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/chain-wizard-flexibility.md
+
+### Attempt identity rule
+Every retry, resume-after-prerequisite, or safe-point-restored rerun creates a new `attempt_id`. Prior attempts remain immutable historical records.

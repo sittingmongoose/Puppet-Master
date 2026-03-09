@@ -23,3 +23,4 @@ Canonical source: [Plans/Tools.md](../../Tools.md)
 - [15-13-references.md](15-13-references.md) — ## 13. References
 - [16-tool-policy-outcome-taxonomy-addendum-2026-03-08.md](16-tool-policy-outcome-taxonomy-addendum-2026-03-08.md) — ## Tool Policy Outcome Taxonomy Addendum (2026-03-08)
 - [17-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md](17-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md) — ## Tool Denial / Runtime Taxonomy Alignment Addendum (2026-03-09)
+- [18-tool-denial-and-runtime-action-reconciliation-addendum-2026-03-09.md](18-tool-denial-and-runtime-action-reconciliation-addendum-2026-03-09.md) — ## Tool Denial and Runtime Action Reconciliation Addendum (2026-03-09)

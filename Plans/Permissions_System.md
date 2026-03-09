@@ -711,3 +711,12 @@ If the mode cannot present a required approval interaction, the result is `block
 
 ### Retry rule
 A permission-related blocked outcome may be reevaluated only after a real prerequisite change: policy edit, approval, mode change, or explicit user action.
+## Permission Prerequisite Wake and Snapshot Reconciliation Addendum (2026-03-09)
+
+When a blocked permission outcome is resolved by policy edit, approval, or mode change:
+- emit `node.prerequisite_resolved`
+- reevaluate readiness in the same scheduler wake cycle
+- create a new attempt snapshot using the new requested/effective permission state
+- keep the prior attempt snapshot immutable
+
+Permission-related blocked outcomes MUST carry the exact blocking rule or permission key plus any metadata needed to bind the prerequisite-specific UI command.

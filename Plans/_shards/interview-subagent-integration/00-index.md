@@ -34,3 +34,4 @@ Canonical source: [Plans/interview-subagent-integration.md](../../interview-suba
 - [26-persona-stage-strategy-addendum-2026-03-06.md](26-persona-stage-strategy-addendum-2026-03-06.md) — ## Persona Stage Strategy Addendum (2026-03-06)
 - [27-interview-validation-remediation-and-blocked-state-addendum-2026-03-08.md](27-interview-validation-remediation-and-blocked-state-addendum-2026-03-08.md) — ## Interview Validation, Remediation, and Blocked-State Addendum (2026-03-08)
 - [28-interview-planning-recovery-alignment-addendum-2026-03-09.md](28-interview-planning-recovery-alignment-addendum-2026-03-09.md) — ## Interview / Planning Recovery Alignment Addendum (2026-03-09)
+- [29-interview-blocked-degradation-handoff-reconciliation-addendum-2026-03-09.md](29-interview-blocked-degradation-handoff-reconciliation-addendum-2026-03-09.md) — ## Interview Blocked / Degradation Handoff Reconciliation Addendum (2026-03-09)

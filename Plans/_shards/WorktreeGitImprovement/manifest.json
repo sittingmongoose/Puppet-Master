@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/WorktreeGitImprovement.md",
-  "source_sha256": "2ca3761b68bab597ce9889b398d337478954876b373880360e6557705059f2d7",
+  "source_sha256": "8f11b8dcb9fabb6a83469d4976f4463aab37f5dabb2b1d6f21b1bf4b443cd047",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -132,6 +132,13 @@
       "end_line": 1050,
       "segment_sha256": "50ad5cd10d514fe2b98fbc55a915366fb17b480564c985d536aa023f120e2969",
       "heading": "## Safe Point / Worktree Recovery Alignment Addendum (2026-03-09)"
+    },
+    {
+      "dest_path": "Plans/_shards/WorktreeGitImprovement/19-runtime-worktree-conflict-reconciliation-addendum-2026-03-09.md",
+      "start_line": 1051,
+      "end_line": 1061,
+      "segment_sha256": "5157ec610d7ca8677f3cd4495646f06591c8df4c5be591877354b62ea080f0b6",
+      "heading": "## Runtime Worktree Conflict Reconciliation Addendum (2026-03-09)"
     }
   ]
 }
