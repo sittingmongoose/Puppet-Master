@@ -10,3 +10,4 @@ Any user-facing summary of this feature set MUST explain:
 - degraded draft fallback only before graph lock
 
 User-facing recovery copy MUST NOT collapse runtime safe-point recovery into history rewind/restore-point language.
+

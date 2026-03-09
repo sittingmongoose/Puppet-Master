@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/orchestrator-subagent-integration.md",
-  "source_sha256": "a6c5d0e4f0f46cfd170277475f675429c7c7494a96997ee688e954153bf4815c",
+  "source_sha256": "86c5e824838d9eb1a91814aeb070a80589937badd16680926d9742a2b27bdac5",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -262,9 +262,16 @@
     {
       "dest_path": "Plans/_shards/orchestrator-subagent-integration/37-orchestrator-runtime-consumer-and-remediation-execution-reconciliation-addendum-2026-03-09.md",
       "start_line": 8187,
-      "end_line": 8210,
-      "segment_sha256": "bd0dee338773b8909f2f81d817be2728603eb3dda01eab06438c9865ed4669a3",
+      "end_line": 8211,
+      "segment_sha256": "071b41c01831178c140c2f668f3cdf5a22f3d91672ee260508fb80a5e2a52957",
       "heading": "## Orchestrator Runtime Consumer and Remediation Execution Reconciliation Addendum (2026-03-09)"
+    },
+    {
+      "dest_path": "Plans/_shards/orchestrator-subagent-integration/38-runtime-enum-and-counter-alignment-addendum.md",
+      "start_line": 8212,
+      "end_line": 8236,
+      "segment_sha256": "d9f4dbb28a83fd3963b61564851516c8f939af5f388f6e499e218d18ab31c818",
+      "heading": "## Runtime Enum and Counter Alignment Addendum"
     }
   ]
 }

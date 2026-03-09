@@ -22,3 +22,4 @@ Required rules:
 ### Same-cycle scheduling
 Newly unblocked canonical nodes and remediation children that become runnable in a wake cycle MUST be considered before that wake cycle ends. Orchestrator projections MUST update from committed runtime events/projections rather than timer polling.
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md
+

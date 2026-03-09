@@ -525,3 +525,40 @@ Plugin-driven blocking that affects execution MUST map into the canonical runtim
 - `plugin.hook.blocked` that stops execution maps to `blocked_reason_code = plugin_hook_blocked`
 - runtime-facing plugin-blocked payloads MUST expose canonical `allowed_action_ids[]`, prerequisite metadata, and `preserved_local_work` when relevant
 - plugin hooks MUST NOT invent plugin-private retry or recovery semantics that bypass scheduler observability or canonical taxonomy
+
+## Plugin Hook Blocked Specification Addendum
+
+### Which hooks can block execution
+
+Only hooks that affect execution flow can trigger `plugin_hook_blocked`:
+
+| Hook | Can block? | Rationale |
+|------|-----------|-----------|  
+| `pre_tool_invoke` | Yes | Runs before tool execution; block prevents the tool call. |
+| `pre_attempt_start` | Yes | Runs before attempt begins; block prevents the attempt. |
+| `pre_node_dispatch` | Yes | Runs before node dispatch; block prevents scheduling. |
+| `post_tool_invoke` | No | Observation-only; tool already executed. |
+| `post_attempt_complete` | No | Observation-only; attempt already completed. |
+| All session/message/compaction/shell hooks | No | Do not affect node execution flow. |
+
+### Block payload metadata
+
+When a plugin hook returns `Block`, the runtime blocked payload MUST include:
+
+- `blocked_reason_code: plugin_hook_blocked`
+- `plugin_id` -- which plugin issued the block
+- `hook_name` -- which hook returned Block (e.g., `pre_tool_invoke`)
+- `block_reason` -- freetext reason string provided by the plugin
+- `allowed_action_ids[]` -- one or more of: `approve`, `decline`, `retry_now`, `skip_node`
+- `preserved_local_work` -- boolean
+
+### Valid recovery actions
+
+| `allowed_action_ids[]` value | Effect |
+|-----------------------------|--------|  
+| `approve` | Override block for this attempt only; continue execution. |
+| `decline` | Accept block; node enters `blocked` state. |
+| `retry_now` | Re-invoke the hook (plugin may have been updated or reconfigured). |
+| `skip_node` | Skip this node if the graph allows. |
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md

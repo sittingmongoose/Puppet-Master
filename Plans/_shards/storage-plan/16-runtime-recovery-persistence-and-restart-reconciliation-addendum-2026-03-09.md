@@ -26,6 +26,15 @@ Store all of the following explicitly:
 ### `blocked_sequence` semantics
 `blocked_sequence` is a per-node monotonic counter incremented each time the node enters a new blocked episode after not being blocked.
 
+`blocked_sequence` is a per-node monotonic counter that increments each time the node enters a NEW blocked episode.
+
+- A blocked episode begins when a node transitions from a non-blocked state to any `blocked_reason_code`.
+- If the `blocked_reason_code` changes while the node remains continuously blocked (e.g., `permission_denied` changes to `auth_expired` without a `node.unblocked` event in between), this is the SAME episode and `blocked_sequence` does NOT increment.
+- A new episode (and increment) requires a `node.unblocked` transition followed by a new `node.blocked` transition.
+- The counter starts at 1 for the first blocked episode and never resets within a run.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+
 ### Required fields
 `attempt_record` MUST include:
 - attempt state enum
@@ -85,3 +94,4 @@ On restart the runtime MUST:
 - remediation lineage metadata MUST survive until the parent lineage reaches terminal resolution
 - queue-analysis history is append-only and keyed by `scheduler_pass_id`
 - attempts from older generations remain queryable but are labeled stale and are never resumable
+

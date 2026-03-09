@@ -40,3 +40,4 @@ The selected node detail MUST expose a queue-analysis link bound to the latest r
 
 ### Confirmation rules
 `Start fresh attempt`, `Skip`, and `Abort` require confirmation when local work would be discarded, the blocked state is resumable, or the action is irreversible at run scope.
+

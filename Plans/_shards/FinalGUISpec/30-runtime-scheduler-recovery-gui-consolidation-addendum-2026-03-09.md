@@ -45,3 +45,4 @@ Dashboard, Run Graph, Orchestrator, and chat surfaces MUST all expose:
 - `Retry from safe point` and `Start fresh attempt` MUST be distinct visible choices when both are legal
 - if no valid safe point exists, `Retry from safe point` is disabled with an explanation
 - `Skip` and `Abort` require explicit confirmation copy when they discard resumable work or alter run scope irreversibly
+

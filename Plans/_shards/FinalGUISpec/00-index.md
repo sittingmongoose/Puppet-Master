@@ -36,3 +36,4 @@ Canonical source: [Plans/FinalGUISpec.md](../../FinalGUISpec.md)
 - [28-runtime-scheduler-blocked-state-gui-parity-addendum-2026-03-09.md](28-runtime-scheduler-blocked-state-gui-parity-addendum-2026-03-09.md) — ## Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)
 - [29-runtime-blocked-queue-and-recovery-gui-reconciliation-addendum-2026-03-09.md](29-runtime-blocked-queue-and-recovery-gui-reconciliation-addendum-2026-03-09.md) — ## Runtime Blocked, Queue, and Recovery GUI Reconciliation Addendum (2026-03-09)
 - [30-runtime-scheduler-recovery-gui-consolidation-addendum-2026-03-09.md](30-runtime-scheduler-recovery-gui-consolidation-addendum-2026-03-09.md) — ## Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)
+- [31-blocked-state-visual-distinction-and-recovery-ux-addendum.md](31-blocked-state-visual-distinction-and-recovery-ux-addendum.md) — ## Blocked-State Visual Distinction and Recovery UX Addendum

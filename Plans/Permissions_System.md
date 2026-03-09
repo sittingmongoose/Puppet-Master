@@ -742,3 +742,50 @@ When policy edit, approval, or mode change satisfies a permission prerequisite:
 - reevaluate readiness in the same scheduler wake cycle
 - create a new attempt snapshot using the new requested/effective permission state
 - keep prior snapshots immutable
+
+## Permission Snapshot and Wakeup Chain Addendum
+
+### Field name correction
+
+All references to `recovery_options[]` in this document are replaced by the canonical field name `allowed_action_ids[]`. The deprecated name MUST NOT be used in new content.
+
+### Permission snapshot contract
+
+A permission snapshot captures the resolved permission state at attempt start for auditability and immutability.
+
+**Schema:**
+```json
+{
+  "snapshot_id": "uuid",
+  "attempt_id": "uuid",
+  "node_id": "uuid",
+  "captured_at": "ISO-8601 timestamp",
+  "resolved_permissions": {
+    "<permission_key>": {
+      "resolution": "allow | deny | ask",
+      "source": "preset | project | user_override | session",
+      "effective_value": true
+    }
+  }
+}
+```
+
+**Rules:**
+1. Created at `attempt.started` emission, before any tool invocation.
+2. Immutable after creation -- permission changes during the attempt do NOT retroactively modify the snapshot.
+3. Stored as part of the `attempt_record` in `Plans/storage-plan.md` (field: `permission_snapshot`).
+4. Used for audit trail and for determining whether a permission change requires attempt restart.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### External side-effect wakeup chain
+
+When HITL approval resolves an `external_side_effect_blocked` state:
+
+1. The approval handler MUST emit a `prerequisite_resolved` event with `wake_reason: approval_resolved` and the `node_id` / `attempt_id` of the blocked node.
+2. The event bus delivers this to the scheduler.
+3. The scheduler runs a wakeup pass and transitions the node from blocked to runnable.
+
+This is an immediate event-driven wakeup, not polling-based.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md

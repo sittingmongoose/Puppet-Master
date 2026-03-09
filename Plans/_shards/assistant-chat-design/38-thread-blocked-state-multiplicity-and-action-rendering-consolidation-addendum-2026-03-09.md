@@ -21,3 +21,4 @@ A blocked thread MUST persist:
 
 ### Action rendering rule
 Chat buttons are rendered from canonical `allowed_action_ids[]` plus blocked metadata. Chat MUST NOT invent thread-local recovery actions that bypass scheduler classification, safe-point requirements, or prerequisite checks.
+

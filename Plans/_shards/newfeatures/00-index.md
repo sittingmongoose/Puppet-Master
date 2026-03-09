@@ -38,3 +38,4 @@ Canonical source: [Plans/newfeatures.md](../../newfeatures.md)
 - [30-runtime-safe-point-clarification-addendum-2026-03-08.md](30-runtime-safe-point-clarification-addendum-2026-03-08.md) — ## Runtime Safe-Point Clarification Addendum (2026-03-08)
 - [31-user-facing-recovery-semantics-addendum-2026-03-09.md](31-user-facing-recovery-semantics-addendum-2026-03-09.md) — ## User-Facing Recovery Semantics Addendum (2026-03-09)
 - [32-user-facing-runtime-recovery-semantics-consolidation-addendum-2026-03-09.md](32-user-facing-runtime-recovery-semantics-consolidation-addendum-2026-03-09.md) — ## User-Facing Runtime Recovery Semantics Consolidation Addendum (2026-03-09)
+- [33-safe-point-restore-point-crash-recovery-alignment-addendum.md](33-safe-point-restore-point-crash-recovery-alignment-addendum.md) — ## Safe Point / Restore Point / Crash Recovery Alignment Addendum

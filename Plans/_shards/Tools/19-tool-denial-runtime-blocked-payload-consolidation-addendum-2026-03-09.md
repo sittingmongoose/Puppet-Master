@@ -19,3 +19,4 @@ Runtime-facing denial paths MUST expose:
 
 ### No success-shaped fallback rule
 Tools MUST NOT convert denied work into success-shaped or generic-failure fallbacks. The blocked state must remain inspectable so scheduler, chat, and GUI surfaces can render the correct recovery path.
+

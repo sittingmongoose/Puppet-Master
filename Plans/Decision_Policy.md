@@ -336,3 +336,15 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contrac
 - hidden provider-local retries are forbidden
 - blocked outcomes preserve completed local work by default when execution stopped because a prerequisite or remote side effect was unresolved
 - pre-lock draft decomposition may degrade only before graph lock and only with explicit evidence
+
+### Additional recovery matrix rows
+
+The following tool outcomes were missing from the recovery matrix and are added:
+
+| Source | Value | Automatic action | Counter | Backoff | Remediation eligible | User-visible | Terminal condition |
+|--------|-------|-----------------|---------|---------|---------------------|-------------|-------------------|
+| `tool_outcome` | `cancelled` | no retry | `attempt_count` | none | no | yes | mark node as `user_declined`; surface in blocked notice |
+| `tool_outcome` | `timed_out` | up to 2 retries with 2x backoff | `automatic_retry_count` | exponential (base 30 s, cap 5 min) | no | yes | after retries exhausted, `blocked` with `provider_transient` |
+| `tool_outcome` | `post_scan_failure` | no blind retry | `attempt_count` | none | yes | yes | treat as `verification_failed`; enter remediation |
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md

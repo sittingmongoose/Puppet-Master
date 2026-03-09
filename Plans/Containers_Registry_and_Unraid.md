@@ -791,3 +791,11 @@ Container publish and Unraid remote-side-effect flows remain the reference patte
 - runtime-facing blocked payloads MUST use canonical `blocked_reason_code` plus `allowed_action_ids[]`
 - domain-specific `reason_code` values MAY remain internal detail, but MUST map into canonical runtime taxonomy at shared surfaces
 - auth recovery alone does not auto-resubmit a blocked remote side effect; explicit runtime resume/retry remains required
+
+## Container Blocked-Payload Field Name Correction Addendum
+
+All references to `recovery_options[]` in this document are replaced by the canonical runtime field name `allowed_action_ids[]`.
+
+The deprecated name `recovery_options[]` MUST NOT be used in new blocked payloads or container publishing contracts. This aligns with Plans/Contracts_V0.md which declares `recovery_options[]` and `allowed_actions[]` as deprecated shared-surface names.
+
+ContractRef: ContractName:Plans/Contracts_V0.md

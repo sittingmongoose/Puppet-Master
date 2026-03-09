@@ -32,3 +32,4 @@ Persist together:
 ### Degraded draft visibility
 If draft decomposition degrades before graph lock, the wizard MUST keep that degraded state visible until a valid non-degraded canonical graph replaces it or the wizard is cancelled.
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Project_Output_Artifacts.md
+

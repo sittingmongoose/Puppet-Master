@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/storage-plan.md",
-  "source_sha256": "f47b66a8cba07ac941f6086ae92492a2e76a67e748d70429de4c7153b7168713",
+  "source_sha256": "e474a35e90f29f82f050eeec0fbd28880804dcbfe468eb77ef35048b1084a031",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -94,30 +94,37 @@
     {
       "dest_path": "Plans/_shards/storage-plan/13-scheduler-runtime-safe-point-and-remediation-storage-addendum-2026-03-08.md",
       "start_line": 881,
-      "end_line": 981,
-      "segment_sha256": "cfbd0b3b516d58b03964b193e73add73fe422af390ac43486d4bcdf13193d565",
+      "end_line": 913,
+      "segment_sha256": "d39cc3d53f625436a541ffeed807fc382444e94f8234a7b232a65e9a759c613b",
       "heading": "## Scheduler Runtime, Safe-Point, and Remediation Storage Addendum (2026-03-08)"
     },
     {
       "dest_path": "Plans/_shards/storage-plan/14-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-03-09.md",
-      "start_line": 982,
-      "end_line": 1012,
+      "start_line": 914,
+      "end_line": 944,
       "segment_sha256": "edebec58049396748d4f947e168583662ffac09af488056b0b58a1e6878046bc",
       "heading": "## Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/storage-plan/15-runtime-attempt-safe-point-queue-analysis-reconciliation-addendum-2026-03-09.md",
-      "start_line": 1013,
-      "end_line": 1047,
+      "start_line": 945,
+      "end_line": 979,
       "segment_sha256": "c16eb9cfb3ac5dcbf1f9efed16b6b198b62f93500046d4132332c53a7a460f3b",
       "heading": "## Runtime Attempt / Safe Point / Queue Analysis Reconciliation Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/storage-plan/16-runtime-recovery-persistence-and-restart-reconciliation-addendum-2026-03-09.md",
-      "start_line": 1048,
-      "end_line": 1134,
-      "segment_sha256": "84185d5e9e03d9434bb8764f0f063b230a59dbf3b6158e048fb60228cbb1870b",
+      "start_line": 980,
+      "end_line": 1076,
+      "segment_sha256": "9714f3f73cae86d1b45ee5bd7a4adee40b0029fdd6eb5b909e6f54adbd1748d4",
       "heading": "## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)"
+    },
+    {
+      "dest_path": "Plans/_shards/storage-plan/17-permission-snapshot-storage-and-safe-point-namespace-addendum.md",
+      "start_line": 1077,
+      "end_line": 1116,
+      "segment_sha256": "84f01c57aa1dd038653111497d802d81e056ac99706565d5ff4f5d93f4942acf",
+      "heading": "## Permission Snapshot Storage and Safe-Point Namespace Addendum"
     }
   ]
 }

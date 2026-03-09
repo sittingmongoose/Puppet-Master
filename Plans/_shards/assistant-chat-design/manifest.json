@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/assistant-chat-design.md",
-  "source_sha256": "7a37cd9facc589db619466f6f7f49fee4c63f24230bb9d9afeeb1a89f2413528",
+  "source_sha256": "cdb994a3b68ddf2484a3c1b5f3e54a5e1aa312024233271af9ee685f66761cd1",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -269,9 +269,16 @@
     {
       "dest_path": "Plans/_shards/assistant-chat-design/38-thread-blocked-state-multiplicity-and-action-rendering-consolidation-addendum-2026-03-09.md",
       "start_line": 2082,
-      "end_line": 2104,
-      "segment_sha256": "9825b4e84f1847760a8e43fd1fe60616c73ca4d61d0b2fdeec6361033a548119",
+      "end_line": 2105,
+      "segment_sha256": "1c0b18a14c7e23a7314cb042654bfc664585a92416f1caefe8c3b1298073eed6",
       "heading": "## Thread Blocked-State Multiplicity and Action Rendering Consolidation Addendum (2026-03-09)"
+    },
+    {
+      "dest_path": "Plans/_shards/assistant-chat-design/39-concurrent-blocked-episodes-and-enum-alignment-addendum.md",
+      "start_line": 2106,
+      "end_line": 2124,
+      "segment_sha256": "59f97455b30adbe91793607bdde39ea2eb33044a3f6a6a1aa517a026be734bba",
+      "heading": "## Concurrent Blocked Episodes and Enum Alignment Addendum"
     }
   ]
 }

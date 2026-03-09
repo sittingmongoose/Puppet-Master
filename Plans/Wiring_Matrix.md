@@ -184,15 +184,18 @@ ContractRef: Gate:GATE-010, Invariant:INV-011, Invariant:INV-012, SchemaID:Wirin
 Add the following producer -> consumer paths to the wiring matrix.
 
 ### 1. Scheduler analysis
+
+- canonical event: `scheduler.pass` (legacy alias: `run.scheduler_analysis`)
 - producer: executor/orchestrator scheduler pass
-- canonical event: `run.scheduler_analysis`
-- storage projection: `runs.scheduler_analysis.*`
-- consumers: Run Graph, Orchestrator Page, Assistant status surfaces, analytics/debug surfaces
+- consumers: Run Graph View queue-analysis panel, storage `scheduler_pass_record` projection, usage/analytics dashboard
+- storage projection: `scheduler_pass.{run_id}.{scheduler_pass_id}`
 
 ### 2. Blocked/unblocked
-- producer: executor/orchestrator / permission / FileSafe / auth / wizard systems
-- canonical events: `run.node_blocked`, `run.node_unblocked`, `wizard.blocked`, `wizard.unblocked`
-- consumers: Dashboard cards, Assistant thread badges/messages, Orchestrator Page, Run Graph
+
+- canonical events: `node.blocked`, `node.unblocked`, `wizard.blocked`, `wizard.unblocked` (legacy aliases: `run.node_blocked`, `run.node_unblocked`)
+- producer: executor/orchestrator blocked-state manager
+- consumers: Run Graph View node badge/detail, assistant-chat blocked_notice, dashboard blocked-count badge, storage `blocked_projection`
+- storage projection: `blocked_projection.{run_id}.{node_id}.{blocked_sequence}`
 
 ### 3. Safe points
 - producer: mutation-capable attempt dispatcher / retry controller
@@ -200,9 +203,11 @@ Add the following producer -> consumer paths to the wiring matrix.
 - consumers: runtime recovery logic, Run Graph detail panel, audit/debug surfaces
 
 ### 4. Remediation lineage
-- producer: verifier/reviewer remediation controller
-- canonical events: `run.remediation_started`, `run.remediation_completed`
-- consumers: Run Graph, Orchestrator Page, Assistant summaries, storage projections
+
+- canonical events: `remediation.spawned`, `remediation.resolved` (legacy aliases: `run.remediation_started`, `run.remediation_completed`)
+- producer: executor/orchestrator remediation manager
+- consumers: Run Graph View remediation lineage tree, storage `remediation_lineage_record`, dashboard remediation badge
+- storage projection: `remediation.{run_id}.{remediation_root_id}`
 
 ### 5. Degradation evidence
 - producer: draft decomposition/planning pipeline

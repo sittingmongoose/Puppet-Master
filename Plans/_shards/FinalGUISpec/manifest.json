@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/FinalGUISpec.md",
-  "source_sha256": "f878beffe6d5cbcd605c24ea9e999be0f33bd2806e913bbc4dc28ed18b69fe97",
+  "source_sha256": "2e30fdd43dd95fa5e68006e5ef6635f77d92bd0cba5571d8521fe1fb78cbcf34",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -213,9 +213,16 @@
     {
       "dest_path": "Plans/_shards/FinalGUISpec/30-runtime-scheduler-recovery-gui-consolidation-addendum-2026-03-09.md",
       "start_line": 3608,
-      "end_line": 3654,
-      "segment_sha256": "3f4de5f5765377518dc66d2f9efce50aeecfdaeca1b950232c537d76d5912436",
+      "end_line": 3655,
+      "segment_sha256": "8d2a41498050875df44be7a54d0572645819a5c8278e99f178da5e17abfca47d",
       "heading": "## Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)"
+    },
+    {
+      "dest_path": "Plans/_shards/FinalGUISpec/31-blocked-state-visual-distinction-and-recovery-ux-addendum.md",
+      "start_line": 3656,
+      "end_line": 3717,
+      "segment_sha256": "f77ee6aaceaaab84fc9c29cd7dfc372d5c9c51247a03fd1aa0e9df9b40ffa922",
+      "heading": "## Blocked-State Visual Distinction and Recovery UX Addendum"
     }
   ]
 }
