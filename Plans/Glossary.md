@@ -28,6 +28,29 @@ ContractRef: Invariant:INV-010
 ---
 
 ## 2. Core terms
+
+### Runtime orchestration and recovery terms
+- **Scheduler pass** -- one deterministic queue-analysis and dispatch cycle. Each pass refreshes readiness, blocked/backoff state, available capacity, score breakdowns, and selected nodes before dispatching work.
+- **Ready set** -- the full set of nodes that are currently dispatch-eligible after dependency checks, blocker checks, backoff checks, generation validity checks, and capacity-lane eligibility checks have been applied.
+- **Scheduler lane** -- the canonical dispatch class used as the first scheduler score term. MVP lane order is `remediation > unblocker > normal`.
+- **Scheduler score tuple** -- the ordered selection tuple `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)` used to choose ready nodes deterministically.
+- **Wake reason** -- the canonical reason queue analysis reran. Examples include node completion, approval resolution, clarification resolution, backoff expiry, remediation completion, replan patch application, restore/recovery completion, auth recovery, and capacity changes.
+- **Queue analysis** -- the emitted runtime/projection record for one scheduler pass. It includes the ready set, selected nodes, score breakdowns, capacity state, and `non_selected_reason` for ready nodes that were not dispatched.
+- **Blocked** -- a canonical runtime, node, or thread state meaning execution cannot continue automatically until an external condition is resolved. `blocked` is not a synonym for `failed`.
+- **attention_required** -- a canonical state meaning clarification or user review is required but the current flow is still active. It is distinct from `blocked`; repeated unresolved clarification escalation eventually becomes `blocked`.
+- **Blocked reason code** -- the canonical explanation for why a node/thread/run is blocked, such as `permission_denied`, `user_declined`, `headless_ask_denied`, `filesafe_blocked`, `external_side_effect_blocked`, `auth_expired`, or `replan_required`.
+- **Failure class** -- the canonical classification of an attempt outcome used to drive retry, backoff, remediation, escalation, and user recovery behavior.
+- **Blocked outcome** -- an intentionally non-executed or externally prevented outcome that preserves completed local work and surfaces recovery options instead of being treated as a generic execution failure.
+- **Safe point** -- a runtime-internal recovery anchor created before mutation-capable attempts and remediation apply steps. Safe points preserve the pre-attempt baseline needed for deterministic retry/recovery.
+- **Restore point** -- a user-facing history or rewind checkpoint. Restore points are distinct from runtime safe points and must not be conflated with scheduler recovery.
+- **Remediation lineage** -- the canonical parent/child lineage that connects a failed attempt to automatic fix attempts, findings, superseded attempts, and final resolution.
+- **Remediation child** -- a runtime child attempt spawned to fix or verify a specific failed parent attempt. It is not a loose task-board item.
+- **Replan generation** -- the monotonic identifier for the active canonical graph/spec generation. Runtime attempts, safe points, and recovery decisions must be checked against the active generation.
+- **Graph lock** -- the boundary after which the canonical graph is fixed. Graceful draft-decomposition degradation is allowed only before graph lock; post-lock integrity failures must not silently degrade.
+- **Non-selected reason** -- the canonical reason a ready node was not dispatched in a scheduler pass, such as lower score, capacity exhaustion, lane reservation, or equivalent deterministic queue policy.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Run_Graph_View.md
+
 - **Session** -- user-facing term for one interactive run context.
   - Note: persisted events may contain a field named `thread_id` for correlation, but user-facing text MUST say "Session".
 - **Provider** -- an external AI platform integration (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini).

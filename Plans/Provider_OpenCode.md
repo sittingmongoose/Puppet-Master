@@ -466,3 +466,72 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 - `puppet-master-rs/src/platforms/platform_specs.rs` (platform specs SSOT)
 - OpenCode server docs: https://opencode.ai/docs/server/
 - OpenCode repository: https://github.com/anomalyco/opencode
+
+## Runtime Retry / Blocked-State Alignment Addendum (2026-03-09)
+
+This addendum aligns the OpenCode transport with the canonical runtime scheduler, retry taxonomy, safe-point contract, and remediation-lineage model.
+
+### 1. Required runtime correlation fields
+
+OpenCode remains a server-bridged provider, but each OpenCode-backed attempt MUST preserve the same runtime lineage and retry metadata carried by the shared provider contract.
+
+Required correlation fields for each request/attempt context:
+- `run_id`
+- `thread_id`
+- `node_id`
+- `attempt_id`
+- `retry_count`
+- `safe_point_id` when the attempt is mutation-capable or restoration-sensitive
+- `remediation_root_id` when the attempt belongs to remediation lineage
+- `remediation_parent_attempt_id`
+- `remediation_generation`
+- `replan_generation`
+- resolved provider/model identifiers
+- tool/permission policy snapshot identifier or equivalent correlation handle
+
+If a field is not transmitted directly to an OpenCode HTTP endpoint, the adapter MUST still preserve it in local correlation state and attach it to normalized provider events, storage records, and retry/recovery decisions.
+
+### 2. Hidden retry prohibition
+
+The OpenCode adapter MUST NOT perform hidden prompt retries that bypass the runtime retry matrix.
+
+Required rules:
+- Once a prompt/request has been accepted for execution, any retry decision MUST round-trip through the canonical runtime scheduler and failure taxonomy.
+- Transport reconnect logic for SSE or HTTP may reconnect only to observe the fate of the already-submitted attempt; it MUST NOT resubmit the prompt implicitly.
+- OpenCode-specific connection recovery MUST NOT reset `attempt_id`, `retry_count`, `safe_point_id`, or remediation lineage.
+- Provider/model fallback remains governed by the shared model-selection contract; the OpenCode adapter MUST NOT invent a provider-local fallback loop.
+
+### 3. Canonical failure and blocked mapping
+
+OpenCode-specific signals MUST collapse into the shared runtime taxonomy before they reach orchestration or UI layers.
+
+| OpenCode / server condition | Canonical runtime classification | Required behavior |
+|---|---|---|
+| `401` / invalid server credentials / server auth expiry for the OpenCode server realm | `blocked_reason_code = auth_expired` (server realm) | Surface blocked recovery; require credential refresh before explicit retry |
+| Upstream provider auth challenge or expired provider session reported by OpenCode | `blocked_reason_code = auth_expired` (provider realm) | Preserve blocked node/thread state and wait for auth recovery |
+| Timeout, connection refused, transient SSE disconnect after submission, HTTP 5xx, provider outage, or rate limiting | `failure_class = provider_transient` | Runtime retry/backoff policy applies; no OpenCode-local retry policy may override it |
+| Malformed structured output, missing required JSON shape, or incomplete normalized tool payload | `failure_class = structured_output_invalid` | Route into structured-output remediation / retry policy |
+| Tool-policy refusal, permission denial, FileSafe denial, or external side-effect approval block surfaced through OpenCode-mediated work | Preserve the already-determined canonical runtime class (`permission_denied`, `filesafe_blocked`, `external_side_effect_blocked`, etc.) | The adapter MUST NOT collapse these to generic `error` or `provider_failed` |
+
+### 4. Safe points and remediation lineage
+
+OpenCode transport state MUST remain compatible with runtime recovery:
+- `safe_point_id` created before a mutation-capable attempt remains attached across the entire OpenCode request/stream lifecycle
+- a remediation child spawned after a failed OpenCode-backed attempt MUST keep parent/child lineage fields stable across retries
+- if recovery restores a safe point before rerun, the next OpenCode attempt uses a new `attempt_id` but preserves lineage references to the restored parent context
+- replan invalidation MUST be checked before rerunning a blocked or retried OpenCode attempt; stale attempts from an older `replan_generation` must not resume silently
+
+### 5. Capability and control reporting
+
+OpenCode capability reporting MUST stay consistent with the shared provider contract.
+
+Required declarations:
+- transport class = server-bridged HTTP/SSE
+- supports streaming normalized events
+- supports tool use only through the canonical tool-policy snapshot
+- uses split auth realms (server credentials vs upstream provider auth)
+- performs no hidden runtime retries
+
+If OpenCode or the selected upstream model does not support a requested runtime control, Puppet Master MUST record the control as unsupported/skipped in effective runtime state rather than silently ignoring it.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.md, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
