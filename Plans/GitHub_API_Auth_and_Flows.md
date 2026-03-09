@@ -556,3 +556,14 @@ This packet confirms GitHub auth behavior as part of the shared runtime model.
 
 ### Recovery rule
 Auth recovery does not automatically resubmit blocked side effects. Completed local work is preserved, the blocked node remains inspectable, and rerun/resume occurs only through the canonical runtime action after prerequisites are satisfied.
+## GitHub Runtime Auth Recovery Reconciliation Addendum (2026-03-09)
+
+GitHub API auth recovery must follow the canonical runtime packet.
+
+Rules:
+- auth-blocked GitHub operations remain blocked with `blocked_reason_code = auth_expired`, `user_declined`, `headless_ask_denied`, or `external_side_effect_blocked` as applicable
+- blocked payloads MUST expose canonical runtime action families plus the GitHub-specific metadata needed to bind connect/re-auth commands (`auth_realm`, `missing_scopes[]`)
+- successful reconnect/scope-upgrade emits a canonical prerequisite-resolved wake and reevaluates affected blocked nodes in the same scheduler cycle
+- rerun after auth recovery occurs as a new attempt snapshot; previously blocked attempts remain immutable history
+- auth recovery does not auto-resubmit a blocked side effect without the canonical runtime resume/retry action
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md

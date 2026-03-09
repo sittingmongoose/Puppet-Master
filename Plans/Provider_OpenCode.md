@@ -547,3 +547,12 @@ OpenCode transport reconnect logic may reconnect only to observe an already-subm
 
 ### Mapping rule
 OpenCode-specific auth, transient, structured-output, and tool-denial signals MUST be normalized into canonical runtime `blocked_reason_code` / `failure_class` values before orchestration or UI consumes them.
+## OpenCode Runtime Packet Reconciliation Addendum (2026-03-09)
+
+OpenCode-specific runtime behavior must remain aligned with the canonical runtime packet.
+
+Rules:
+- preserve canonical runtime identity (`run_id`, `thread_id`, `node_id`, `attempt_id`, generation, snapshot ids, safe point and remediation lineage) across request/stream lifecycle
+- OpenCode reconnect logic may observe an existing attempt, but it MUST NOT silently resubmit prompts or reset attempt identity
+- OpenCode-specific auth, transient, structured-output, and tool-denial signals MUST normalize into canonical `blocked_reason_code` / `failure_class` values before orchestration or UI consumes them
+- prerequisite resolution after auth or permission recovery MUST surface a canonical scheduler wake and create a new attempt snapshot rather than mutating the blocked attempt in place

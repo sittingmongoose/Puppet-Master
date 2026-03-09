@@ -218,3 +218,24 @@ The wiring matrix MUST contain explicit producers, handlers, and projection cons
 - UI command handlers for queue-analysis open, attempt details open, blocked resume, retry, safe-point restore-and-retry, and remediation lineage open
 
 The matrix must make it possible to trace every new packet field from producer to UI consumer.
+## Canonical Runtime Event Wiring Reconciliation Addendum (2026-03-09)
+
+The wiring matrix MUST use the canonical runtime names and identities from `Plans/Contracts_V0.md`.
+
+### Minimum required rows
+- producer: scheduler/executor
+  - canonical event: `scheduler.pass`
+  - identity: `scheduler_pass_id`
+  - consumers: storage pass projection, Run Graph, Orchestrator Page, analytics/debug surfaces
+- producer: executor/orchestrator/auth/permissions/HITL/FileSafe/worktree/plugins
+  - canonical events: `node.blocked`, `node.unblocked`, `node.prerequisite_resolved`
+  - consumers: blocked projections, Run Graph, Orchestrator Page, assistant thread/banner surfaces
+- producer: remediation controller
+  - canonical events: `remediation.spawned`, `remediation.resolved`
+  - consumers: remediation lineage storage, Run Graph, Orchestrator Page, artifacts/evidence views
+- producer: graph builder / replan reconciler
+  - canonical events: `run.graph_canonical_locked`, `run.graph_integrity_failed`
+  - consumers: executor admission logic, progression gates, blocked/replan surfaces
+
+### UI command handler rule
+Recovery UI handlers MUST be keyed by canonical `allowed_action_id` families and then bind any domain-specific command ids using the blocked payload metadata.

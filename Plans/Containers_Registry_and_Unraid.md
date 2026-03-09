@@ -773,3 +773,12 @@ Container publish and registry flows must use the same blocked-outcome semantics
 - remote-side-effect approval requirements remain blocked until explicitly resolved
 - re-auth alone does not auto-publish; the user must explicitly resume or retry through the canonical action
 - UI must explain when a local artifact exists but remote publish remains blocked
+## Shared Blocked-Outcome Action Reconciliation Addendum (2026-03-09)
+
+This document remains the reference pattern for blocked remote side effects.
+
+Runtime-facing rules:
+- preserve completed local work whenever remote publish/creation steps are blocked
+- runtime-facing blocked payloads MUST use canonical `blocked_reason_code` plus `allowed_action_ids[]`
+- domain-specific `reason_code` values MAY remain internal detail, but they MUST map into canonical runtime taxonomy at shared surfaces
+- auth recovery alone does not auto-resubmit a blocked remote side effect; explicit resume/retry remains required

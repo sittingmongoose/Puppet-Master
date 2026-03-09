@@ -776,3 +776,123 @@ ContractRef: EventType:tool.denied, ContractName:Plans/Tools.md, ContractName:Pl
 - effective permission snapshot identifier
 
 All of the above are canonical contract fields, not UI-only projection conveniences.
+## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)
+
+This section is normative and supersedes earlier runtime packet wording wherever conflicting.
+
+### Event-name precedence
+| Canonical event | Legacy alias | Rule |
+|---|---|---|
+| `scheduler.pass` | `run.scheduler_analysis` | `scheduler.pass` is canonical. Legacy aliases MAY be emitted only for compatibility and MUST carry identical identity and meaning. |
+| `node.blocked` | `run.node_blocked` | `node.blocked` is canonical. |
+| `node.unblocked` | `run.node_unblocked` | `node.unblocked` is canonical. |
+| `remediation.spawned` | `run.remediation_started` | `remediation.spawned` is canonical. |
+| `remediation.resolved` | `run.remediation_completed` | `remediation.resolved` is canonical. |
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+
+### Canonical enum families
+#### `failure_class`
+Use `failure_class` only for classified attempt outcomes that drive retry, remediation, escalation, or terminal failure policy.
+
+Allowed values:
+- `provider_transient`
+- `structured_output_invalid`
+- `verification_failed`
+- `reviewer_findings`
+- `storage_io`
+- `graph_integrity`
+
+#### `blocked_reason_code`
+Use `blocked_reason_code` when execution cannot continue automatically until a prerequisite changes or a user/operator action occurs.
+
+Allowed values:
+- `permission_denied`
+- `user_declined`
+- `headless_ask_denied`
+- `filesafe_blocked`
+- `external_side_effect_blocked`
+- `auth_expired`
+- `replan_required`
+- `waiting_approval`
+- `clarification_blocked`
+- `worktree_conflict`
+- `dirty_worktree`
+- `plugin_hook_blocked`
+
+Rules:
+- pure blocked outcomes MAY set `failure_class = null`
+- blocked outcomes that originate from a classified failed attempt MAY retain both `failure_class` and `blocked_reason_code`
+- blocked outcomes are not retryable by default; retryability comes from the shared matrix plus current prerequisites
+
+#### `wake_reason`
+Allowed values:
+- `node_completed`
+- `verification_completed`
+- `approval_resolved`
+- `clarification_resolved`
+- `permission_changed`
+- `auth_recovered`
+- `backoff_expired`
+- `remediation_completed`
+- `restore_completed`
+- `replan_applied`
+- `capacity_changed`
+- `manual_wakeup`
+- `watchdog_recheck`
+
+#### `non_selected_reason`
+Allowed values:
+- `lower_score`
+- `lane_reservation`
+- `capacity_deferred`
+- `worktree_conflict`
+- `already_running_in_pool`
+- `generation_stale`
+- `blocked_during_pass`
+
+#### `allowed_action_id`
+Allowed values:
+- `approve`
+- `decline`
+- `retry_now`
+- `resume_after_prerequisite`
+- `restore_safe_point_then_retry`
+- `start_fresh_attempt`
+- `replan`
+- `skip_node`
+- `abort_run`
+- `open_details`
+
+### Identity rules
+- `scheduler_pass_id` is the canonical identity for queue-analysis passes
+- `analysis_id` is a legacy alias; when present it MUST equal `scheduler_pass_id`
+- every dispatch attempt receives a new `attempt_id`
+- retries, prerequisite-resumed work, and safe-point-restored reruns create new `attempt_id` values rather than mutating prior attempts in place
+- previous attempt records remain immutable history
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Graph_View.md
+
+### Required canonical events
+#### `run.graph_canonical_locked`
+Required fields:
+- `run_id`
+- `replan_generation`
+- `ts`
+
+#### `node.prerequisite_resolved`
+Required fields:
+- `run_id`
+- `node_id`
+- `attempt_id?`
+- `resolution_kind` (`approval`, `clarification`, `permission`, `auth`, `replan`, `worktree`, `other`)
+- `prior_blocked_reason_code`
+- `ts`
+
+### Blocking payload rule
+Every canonical blocked event/path MUST expose:
+- `blocked_reason_code`
+- `allowed_action_ids[]`
+- prerequisite metadata needed to bind domain-specific commands (for example `auth_realm`, `missing_scopes[]`, guard/rule identifiers, report refs)
+- `preserved_local_work`
+- `failure_class?`
+- `detail_ref?`
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md

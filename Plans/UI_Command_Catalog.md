@@ -399,3 +399,22 @@ Payloads must include enough identity to avoid ambiguity:
 - `blocked_reason_code` or `failure_class` when the action is classification-specific
 
 Duplicate or overlapping command rows must be merged so one command ID maps to one canonical meaning and payload shape.
+## Runtime Recovery Action Mapping Reconciliation Addendum (2026-03-09)
+
+Canonical runtime recovery actions map to canonical command ids.
+
+| `allowed_action_id` | graph command family | orchestrator command family | minimum payload |
+|---|---|---|---|
+| `approve` | approval command | approval command | `run_id`, `node_id`, `attempt_id?`, request identity |
+| `decline` | decline command | decline command | `run_id`, `node_id`, `attempt_id?`, request identity |
+| `retry_now` | retry-attempt command | retry-attempt command | `run_id`, `node_id`, `attempt_id` |
+| `restore_safe_point_then_retry` | restore-and-retry command | restore-and-retry command | `run_id`, `node_id`, `attempt_id`, `safe_point_id` |
+| `start_fresh_attempt` | fresh-attempt command | fresh-attempt command | `run_id`, `node_id`, `attempt_id` |
+| `resume_after_prerequisite` | resume-blocked command | resume-blocked command | `run_id`, `node_id`, `attempt_id?`, `blocked_reason_code` |
+| `replan` | replan command | replan command | `run_id`, `node_id`, `attempt_id?` |
+| `skip_node` | skip-node command | skip-node command | `run_id`, `node_id`, `attempt_id?` |
+| `abort_run` | abort-run command | abort-run command | `run_id` |
+| `open_details` | open-details command | open-details command | `run_id`, `node_id`, `attempt_id?` |
+
+Legacy retry-node style command ids MUST be treated as deprecated aliases of attempt-centric commands.
+ContractRef: UICommand:cmd.orchestrator.retry_attempt, UICommand:cmd.orchestrator.restore_safe_point_then_retry, ContractName:Plans/Contracts_V0.md

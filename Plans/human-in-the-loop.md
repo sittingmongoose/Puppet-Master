@@ -236,3 +236,13 @@ Depending on classification, the canonical action families are:
 
 ### Consistency rule
 All surfaces MUST use the same action names, meanings, and enablement conditions. A surface may hide an action for layout reasons, but it MUST NOT rename or reinterpret it.
+## Canonical Recovery Action Reconciliation Addendum (2026-03-09)
+
+HITL actions must use the same runtime action families as graph/orchestrator/chat surfaces.
+
+Rules:
+- waiting for approval is a blocked state with `blocked_reason_code = waiting_approval`
+- approval resolution emits `node.prerequisite_resolved` and wakes scheduling in the same cycle
+- when a valid safe point exists for a mutation-capable attempt, the default rerun affordance is `Retry from safe point`
+- if no valid safe point exists or policy forbids restore, the explicit alternative is `Start fresh attempt`
+- `Skip` remains a separate graph policy action and never masquerades as success

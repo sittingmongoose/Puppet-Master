@@ -966,3 +966,11 @@ Summary-level feature bullets must be refreshed to describe:
 - pre-lock-only draft decomposition fallback
 
 Remove or revise any summary phrasing that implies pure lexical scheduling or generic retry behavior.
+## Runtime Scheduler / Recovery Summary Reconciliation Addendum (2026-03-09)
+
+Summary bullets for executor/runtime behavior MUST say:
+- deterministic scored ready-set scheduler rather than pure lexical dispatch
+- event-driven queue-analysis passes keyed by canonical pass identity
+- blocked outcomes with explicit recovery actions rather than generic failures
+- safe-point-backed recovery distinct from user-facing restore points
+- pre-lock-only draft decomposition fallback and post-lock graph-integrity stop behavior
