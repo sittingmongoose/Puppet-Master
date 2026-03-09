@@ -34,4 +34,5 @@ Canonical source: [Plans/chain-wizard-flexibility.md](../../chain-wizard-flexibi
 - [26-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-03-09.md](26-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-03-09.md) — ## Draft Decomposition Fallback / Wizard Blocked-State Addendum (2026-03-09)
 - [27-canonical-wizard-blocked-state-reconciliation-addendum-2026-03-09.md](27-canonical-wizard-blocked-state-reconciliation-addendum-2026-03-09.md) — ## Canonical Wizard Blocked-State Reconciliation Addendum (2026-03-09)
 - [28-wizard-escalation-degradation-and-blocked-state-consolidation-addendum-2026-03-09.md](28-wizard-escalation-degradation-and-blocked-state-consolidation-addendum-2026-03-09.md) — ## Wizard Escalation Degradation and Blocked-State Consolidation Addendum (2026-03-09)
-- [29-wizard-status-enum-correction-addendum.md](29-wizard-status-enum-correction-addendum.md) — ## Wizard Status Enum Correction Addendum
+- [29-canonical-wizard-blocked-lifecycle.md](29-canonical-wizard-blocked-lifecycle.md) — ## Canonical Wizard Blocked Lifecycle
+- [30-wizard-status-enum-correction-addendum.md](30-wizard-status-enum-correction-addendum.md) — ## Wizard Status Enum Correction Addendum

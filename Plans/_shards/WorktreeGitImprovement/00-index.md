@@ -26,3 +26,4 @@ Canonical source: [Plans/WorktreeGitImprovement.md](../../WorktreeGitImprovement
 - [18-safe-point-worktree-recovery-alignment-addendum-2026-03-09.md](18-safe-point-worktree-recovery-alignment-addendum-2026-03-09.md) — ## Safe Point / Worktree Recovery Alignment Addendum (2026-03-09)
 - [19-runtime-worktree-conflict-reconciliation-addendum-2026-03-09.md](19-runtime-worktree-conflict-reconciliation-addendum-2026-03-09.md) — ## Runtime Worktree Conflict Reconciliation Addendum (2026-03-09)
 - [20-runtime-worktree-conflict-detection-and-recovery-consolidation-addendum-2026-03-09.md](20-runtime-worktree-conflict-detection-and-recovery-consolidation-addendum-2026-03-09.md) — ## Runtime Worktree Conflict Detection and Recovery Consolidation Addendum (2026-03-09)
+- [21-worktree-conflict-and-dirty-worktree-runtime-alignment.md](21-worktree-conflict-and-dirty-worktree-runtime-alignment.md) — ## Worktree Conflict and Dirty-Worktree Runtime Alignment

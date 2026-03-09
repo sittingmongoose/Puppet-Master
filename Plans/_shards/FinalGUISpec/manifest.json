@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/FinalGUISpec.md",
-  "source_sha256": "2e30fdd43dd95fa5e68006e5ef6635f77d92bd0cba5571d8521fe1fb78cbcf34",
+  "source_sha256": "3bf40506124838d176392d0c11388ea08e48420441d276d22fff9c5fac9c451c",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -213,14 +213,21 @@
     {
       "dest_path": "Plans/_shards/FinalGUISpec/30-runtime-scheduler-recovery-gui-consolidation-addendum-2026-03-09.md",
       "start_line": 3608,
-      "end_line": 3655,
-      "segment_sha256": "8d2a41498050875df44be7a54d0572645819a5c8278e99f178da5e17abfca47d",
+      "end_line": 3648,
+      "segment_sha256": "1e39ffb0adb7460f78d512b3b922bacb8b2b965226dbf9619be37babae65d576",
       "heading": "## Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)"
     },
     {
-      "dest_path": "Plans/_shards/FinalGUISpec/31-blocked-state-visual-distinction-and-recovery-ux-addendum.md",
-      "start_line": 3656,
-      "end_line": 3717,
+      "dest_path": "Plans/_shards/FinalGUISpec/31-blocked-recovery-gui-reconciliation.md",
+      "start_line": 3649,
+      "end_line": 3687,
+      "segment_sha256": "4e80d1d2fc1f8510adcd5371d408c05d7588a13f19746f2eaa207d1430e1ca03",
+      "heading": "## Blocked / Recovery GUI Reconciliation"
+    },
+    {
+      "dest_path": "Plans/_shards/FinalGUISpec/32-blocked-state-visual-distinction-and-recovery-ux-addendum.md",
+      "start_line": 3688,
+      "end_line": 3749,
       "segment_sha256": "f77ee6aaceaaab84fc9c29cd7dfc372d5c9c51247a03fd1aa0e9df9b40ffa922",
       "heading": "## Blocked-State Visual Distinction and Recovery UX Addendum"
     }

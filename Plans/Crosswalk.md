@@ -341,13 +341,29 @@ Clarify ownership boundaries:
 - `Plans/Glossary.md` owns canonical terminology for runtime recovery and queue analysis terms
 ## Runtime Packet Ownership and Precedence Consolidation Addendum (2026-03-09)
 
-For runtime scheduler / recovery topics, conflict resolution is:
-1. `Plans/Contracts_V0.md` owns canonical event names, enum families, identity fields, and canonical blocked payload field names
-2. `Plans/Executor_Protocol.md` owns readiness, score terms, dispatch ordering, attempt lifecycle semantics, and graph-lock behavior
-3. `Plans/storage-plan.md` owns persistence/projection shape, immutable-history rules, and restart reconciliation behavior
-4. GUI/view docs own rendering and interaction only
-5. provider/tool/auth docs own mapping into the canonical runtime taxonomy only
-6. `Plans/Crosswalk.md` and `Plans/Glossary.md` may summarize but MUST NOT redefine runtime event names, enum values, or identity rules
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
+Canonical ownership:
+- runtime lifecycle and scheduling: `Plans/Executor_Protocol.md`
+- runtime events, enums, and payloads: `Plans/Contracts_V0.md`
+- persistence and restart recovery: `Plans/storage-plan.md`
+- deterministic recovery defaults: `Plans/Decision_Policy.md`
+- runtime command IDs: `Plans/UI_Command_Catalog.md`
+- chat, GUI, run graph, orchestrator, and wizard surfaces are consumers of the contracts above
 
-If wording differs, the owning doc above wins.
+Precedence rules:
+- legacy packet-era names such as `analysis_id`, `run.scheduler_analysis`, `allowed_actions[]`, and `recovery_options[]` are compatibility terms only
+- when a consumer doc conflicts with the owner docs above, the owner docs win
+- stale canonical text must be replaced or retired, not preserved by later additive notes alone
+## Runtime Scheduler / Recovery Ownership and Precedence
+
+Canonical ownership:
+- runtime lifecycle and scheduling: `Plans/Executor_Protocol.md`
+- runtime events, enums, and payloads: `Plans/Contracts_V0.md`
+- persistence and restart recovery: `Plans/storage-plan.md`
+- deterministic recovery defaults: `Plans/Decision_Policy.md`
+- runtime command IDs: `Plans/UI_Command_Catalog.md`
+- chat, GUI, run graph, orchestrator, and wizard surfaces are consumers of the contracts above
+
+Precedence rules:
+- legacy packet-era names such as `analysis_id`, `run.scheduler_analysis`, `allowed_actions[]`, and `recovery_options[]` are compatibility terms only
+- when a consumer doc conflicts with the owner docs above, the owner docs win
+- stale canonical text must be replaced or retired, not preserved by later additive notes alone

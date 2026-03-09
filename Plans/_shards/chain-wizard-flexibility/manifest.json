@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/chain-wizard-flexibility.md",
-  "source_sha256": "3fd3d79758702f865f052d3c3b1733e09f519833f26ded36cc7e30a79e74aa7f",
+  "source_sha256": "14fbaeee04c060438685f6fabb56632a49f804d267d45b725868b1da53a1dce7",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -199,14 +199,21 @@
     {
       "dest_path": "Plans/_shards/chain-wizard-flexibility/28-wizard-escalation-degradation-and-blocked-state-consolidation-addendum-2026-03-09.md",
       "start_line": 1982,
-      "end_line": 2016,
-      "segment_sha256": "1630a294dbc9840c7b61d2d295a36ffd1a6e32ab702f7aa3666dd3f80f74f2d8",
+      "end_line": 2024,
+      "segment_sha256": "4df0137213701bde8963bd21cd558a2bdf78069635944016cf8caac0d4522319",
       "heading": "## Wizard Escalation Degradation and Blocked-State Consolidation Addendum (2026-03-09)"
     },
     {
-      "dest_path": "Plans/_shards/chain-wizard-flexibility/29-wizard-status-enum-correction-addendum.md",
-      "start_line": 2017,
-      "end_line": 2039,
+      "dest_path": "Plans/_shards/chain-wizard-flexibility/29-canonical-wizard-blocked-lifecycle.md",
+      "start_line": 2025,
+      "end_line": 2063,
+      "segment_sha256": "1d17e671816e67d4bdfcfe259988726a943206e9aeb4d24e711738d16c7192b1",
+      "heading": "## Canonical Wizard Blocked Lifecycle"
+    },
+    {
+      "dest_path": "Plans/_shards/chain-wizard-flexibility/30-wizard-status-enum-correction-addendum.md",
+      "start_line": 2064,
+      "end_line": 2086,
       "segment_sha256": "4c76b22c2317e9b2fb770862d9014657599d1da3634a25ed92472dccd0dba5a5",
       "heading": "## Wizard Status Enum Correction Addendum"
     }

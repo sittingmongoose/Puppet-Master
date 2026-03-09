@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/Run_Graph_View.md",
-  "source_sha256": "7576dad953707aa34b291adbb74de095092bb553c196fee31b25f56d208031bd",
+  "source_sha256": "ca675977dfc7dc19dfc3d7438d06c1c608bb296c1198f8cd922342a60e085daf",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -178,14 +178,21 @@
     {
       "dest_path": "Plans/_shards/Run_Graph_View/25-attempt-centric-runtime-recovery-ui-reconciliation-addendum-2026-03-09.md",
       "start_line": 1208,
-      "end_line": 1250,
-      "segment_sha256": "5653ec144d52ea99da661b060eaa3e3fa4199a525964dca2b50d66dc88de2f3e",
+      "end_line": 1219,
+      "segment_sha256": "a309e5ea614d06a0bcb308a3019012e776a2aca42529ca3fbfdc1d7a84c2c40d",
       "heading": "## Attempt-Centric Runtime Recovery UI Reconciliation Addendum (2026-03-09)"
     },
     {
-      "dest_path": "Plans/_shards/Run_Graph_View/26-blocked-state-rendering-and-recovery-addendum.md",
-      "start_line": 1251,
-      "end_line": 1288,
+      "dest_path": "Plans/_shards/Run_Graph_View/26-runtime-scheduler-blocked-view-contract.md",
+      "start_line": 1220,
+      "end_line": 1231,
+      "segment_sha256": "16c0e4cb7275cd00b2b269121be8d9e59a013154cc509a25a26fcbab6d66e7f4",
+      "heading": "## Runtime Scheduler / Blocked View Contract"
+    },
+    {
+      "dest_path": "Plans/_shards/Run_Graph_View/27-blocked-state-rendering-and-recovery-addendum.md",
+      "start_line": 1232,
+      "end_line": 1269,
       "segment_sha256": "ef75f5b21d5ad5342f860a4e98e5b5bb0d0b1c79eb5f0130fb6a8b9646a0df3e",
       "heading": "## Blocked-State Rendering and Recovery Addendum"
     }

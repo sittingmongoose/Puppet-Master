@@ -36,3 +36,4 @@ Canonical source: [Plans/interview-subagent-integration.md](../../interview-suba
 - [28-interview-planning-recovery-alignment-addendum-2026-03-09.md](28-interview-planning-recovery-alignment-addendum-2026-03-09.md) — ## Interview / Planning Recovery Alignment Addendum (2026-03-09)
 - [29-interview-blocked-degradation-handoff-reconciliation-addendum-2026-03-09.md](29-interview-blocked-degradation-handoff-reconciliation-addendum-2026-03-09.md) — ## Interview Blocked / Degradation Handoff Reconciliation Addendum (2026-03-09)
 - [30-planning-to-runtime-blocked-and-degraded-handoff-consolidation-addendum-2026-03-09.md](30-planning-to-runtime-blocked-and-degraded-handoff-consolidation-addendum-2026-03-09.md) — ## Planning-to-Runtime Blocked and Degraded Handoff Consolidation Addendum (2026-03-09)
+- [31-planning-to-runtime-blocked-and-degraded-handoff.md](31-planning-to-runtime-blocked-and-degraded-handoff.md) — ## Planning-to-Runtime Blocked and Degraded Handoff

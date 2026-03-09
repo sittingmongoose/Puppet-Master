@@ -683,31 +683,25 @@ The Orchestrator page owns run-wide scheduler and recovery summaries.
 - newly-ready rows MUST identify the wake reason and, when applicable, the directly satisfied dependency
 ## Runtime Recovery Surface Layout and Navigation Reconciliation Addendum (2026-03-09)
 
-The Orchestrator page owns run-wide recovery, queue-analysis, and remediation surfaces.
+The Orchestrator page is a consumer of canonical runtime contracts.
 
-### Progress tab required widgets
-1. queue-analysis summary widget
-2. scheduler pass history widget
-3. blocked work list grouped by `blocked_reason_code`
-4. newly-ready-in-this-pass list
-5. remediation lineage list
-6. safe-point restore history list
+Rules:
+- queue-analysis navigation uses `scheduler_pass_id`
+- blocked rows show only currently valid `allowed_action_ids[]`; unavailable actions are explained rather than silently omitted
+- newly-ready rows may show direct prerequisite/source context only when canonical `scheduler.pass` data includes it
+- recovery actions use canonical `cmd.runtime.*` commands
+- node surfaces use canonical blocked reasons; `attention_required` is not a node runtime state
+- pre-attempt blocked episodes bind recovery to `blocked_sequence`
+- remediation, safe-point, and queue-analysis pivots open by canonical identity (`remediation_root_id`, `safe_point_id`, `scheduler_pass_id`)
+## Orchestrator Runtime Recovery Contract
 
-### Default layout
-- top row: queue-analysis summary + blocked counts
-- middle left: blocked work list
-- middle right: scheduler pass history
-- bottom left: remediation lineage
-- bottom right: safe-point restore history
+The Orchestrator page is a consumer of canonical runtime contracts.
 
-### Navigation rules
-- selecting a scheduler pass opens the corresponding node/attempt details
-- selecting a blocked row pivots to the current attempt when present
-- selecting remediation lineage opens parent attempt first, then child attempts
-- History and Evidence tabs MUST support filtering by `attempt_id`
-
-### Empty-state rule
-Recovery widgets MUST render explanatory empty states instead of disappearing when no data exists yet.
-
-### Action rule
-Blocked rows show only the canonical `allowed_action_ids[]` that are currently valid. Disabled or unavailable actions must be explained, not hidden as if they never existed.
+Rules:
+- queue-analysis navigation uses `scheduler_pass_id`
+- blocked rows show only currently valid `allowed_action_ids[]`; unavailable actions are explained rather than silently omitted
+- newly-ready rows may show direct prerequisite/source context only when canonical `scheduler.pass` data includes it
+- recovery actions use canonical `cmd.runtime.*` commands
+- node surfaces use canonical blocked reasons; `attention_required` is not a node runtime state
+- pre-attempt blocked episodes bind recovery to `blocked_sequence`
+- remediation, safe-point, and queue-analysis pivots open by canonical identity (`remediation_root_id`, `safe_point_id`, `scheduler_pass_id`)

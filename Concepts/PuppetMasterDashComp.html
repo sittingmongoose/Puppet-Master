@@ -1,0 +1,3305 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="retro-dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Puppet Master - Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --xs: 2px;
+      --sm: 4px;
+      --md: 8px;
+      --lg: 12px;
+      --xl: 16px;
+      --border-width: 2px;
+      --border-radius: 0px;
+      --display-font: 'Orbitron', sans-serif;
+      --body-font: 'Rajdhani', sans-serif;
+      --base-font-size: 14px;
+      --grid-gap: 24px;
+    }
+
+    [data-theme="retro-dark"] {
+      --background: #1A1A1A;
+      --surface: #1A1A1A;
+      --surface-elevated: #252525;
+      --text-primary: #E0E0E0;
+      --text-secondary: #888888;
+      --text-muted: #666666;
+      --border: #E0E0E0;
+      --border-light: #333333;
+      --accent-blue: #0047AB;
+      --accent-magenta: #FF1493;
+      --accent-lime: #00FF41;
+      --accent-orange: #FF7F27;
+      --graph-pending: #6C757D;
+      --graph-running: #FF9800;
+      --graph-passed: #4CAF50;
+      --graph-failed: #F44336;
+      --graph-planning: #2196F3;
+      --graph-gating: #9C27B0;
+      --shadow: 4px 4px 0 #E0E0E0;
+      --display-font: 'Orbitron', sans-serif;
+      --body-font: 'Rajdhani', sans-serif;
+      --border-radius: 0px;
+      --border-width: 3px;
+      --grid-gap: 24px;
+    }
+
+    [data-theme="retro-light"] {
+      --background: #F5F0E8;
+      --surface: #F5F0E8;
+      --surface-elevated: #FDFBF7;
+      --text-primary: #1A1A1A;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --border: #1A1A1A;
+      --border-light: #E5DFD6;
+      --accent-blue: #0047AB;
+      --accent-magenta: #FF1493;
+      --accent-lime: #00FF41;
+      --accent-orange: #FF7F27;
+      --graph-pending: #ADB5BD;
+      --graph-running: #FFB74D;
+      --graph-passed: #66BB6A;
+      --graph-failed: #EF5350;
+      --graph-planning: #42A5F5;
+      --graph-gating: #AB47BC;
+      --shadow: 4px 4px 0 #1A1A1A;
+      --display-font: 'Orbitron', sans-serif;
+      --body-font: 'Rajdhani', sans-serif;
+      --border-radius: 0px;
+      --border-width: 3px;
+      --grid-gap: 24px;
+    }
+
+    [data-theme="basic-light"] {
+      --background: #F5F3F0;
+      --surface: #FDFCFA;
+      --surface-elevated: #FFFFFF;
+      --text-primary: #1A1A1A;
+      --text-secondary: #616161;
+      --text-muted: #9CA3AF;
+      --border: #D8D4CF;
+      --border-light: #EDE9E6;
+      --accent-blue: #1565C0;
+      --accent-magenta: #C41170;
+      --accent-lime: #0D7A3C;
+      --accent-orange: #C45D00;
+      --graph-pending: #ADB5BD;
+      --graph-running: #FF9800;
+      --graph-passed: #4CAF50;
+      --graph-failed: #F44336;
+      --graph-planning: #2196F3;
+      --graph-gating: #9C27B0;
+      --shadow: none;
+      --display-font: 'Inter', system-ui, sans-serif;
+      --body-font: 'Inter', system-ui, sans-serif;
+      --border-radius: 4px;
+      --border-width: 1px;
+      --grid-gap: 24px;
+    }
+
+    [data-theme="basic-dark"] {
+      --background: #121212;
+      --surface: #1E1E1E;
+      --surface-elevated: #2D2D2D;
+      --text-primary: #E8E8E8;
+      --text-secondary: #A0A0A0;
+      --text-muted: #6B7280;
+      --border: #424242;
+      --border-light: #333333;
+      --accent-blue: #64B5F6;
+      --accent-magenta: #FF69B4;
+      --accent-lime: #3DD68C;
+      --accent-orange: #FFA347;
+      --graph-pending: #6C757D;
+      --graph-running: #FF9800;
+      --graph-passed: #4CAF50;
+      --graph-failed: #F44336;
+      --graph-planning: #2196F3;
+      --graph-gating: #9C27B0;
+      --shadow: none;
+      --display-font: 'Inter', system-ui, sans-serif;
+      --body-font: 'Inter', system-ui, sans-serif;
+      --border-radius: 4px;
+      --border-width: 1px;
+      --grid-gap: 24px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; font-family: var(--body-font); font-size: var(--base-font-size); color: var(--text-primary); background: var(--background); }
+    button:focus-visible, .title-bar .page-tabs .page-tab:focus-visible, .orch-tab:focus-visible,
+    input:focus-visible, select:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--accent-blue);
+      outline-offset: 2px;
+    }
+    [data-theme="retro-dark"] button:focus-visible, [data-theme="retro-dark"] .page-tab:focus-visible,
+    [data-theme="retro-dark"] .orch-tab:focus-visible, [data-theme="retro-dark"] input:focus-visible,
+    [data-theme="retro-dark"] select:focus-visible, [data-theme="retro-dark"] textarea:focus-visible {
+      outline-color: var(--accent-lime);
+    }
+
+    .app-shell {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .title-bar {
+      height: 28px;
+      min-height: 28px;
+      background: var(--surface);
+      border-bottom: var(--border-width) solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--md);
+      gap: var(--lg);
+      font-family: var(--display-font);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .title-bar .app-name { color: var(--text-primary); }
+    .title-bar .project-dropdown {
+      display: flex;
+      align-items: center;
+      gap: var(--xs);
+      padding: 2px var(--sm);
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-family: var(--body-font);
+      font-size: 13px;
+    }
+    .title-bar .title-spacer { flex: 1; }
+    .title-bar .page-tabs {
+      display: flex;
+      align-items: center;
+      gap: var(--sm);
+      margin-left: 3rem;
+      font-size: 12px;
+    }
+    .title-bar .page-tabs .page-tab {
+      padding: var(--xs) var(--md);
+      cursor: pointer;
+      color: var(--text-secondary);
+      border: var(--border-width) solid transparent;
+    }
+    .title-bar .page-tabs .page-tab:hover { color: var(--text-primary); }
+    .title-bar .page-tabs .page-tab.active {
+      background: var(--accent-lime);
+      color: #1A1A1A;
+      border-color: var(--border);
+    }
+    [data-theme="basic-light"] .title-bar .page-tabs .page-tab.active,
+    [data-theme="basic-dark"] .title-bar .page-tabs .page-tab.active {
+      background: var(--accent-blue);
+      color: var(--surface);
+      border-color: transparent;
+    }
+    .title-bar .search-bar {
+      width: 200px;
+      max-width: 240px;
+      padding: 2px var(--md);
+      font-size: 12px;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      color: var(--text-primary);
+    }
+    .title-bar .search-bar::placeholder { color: var(--text-muted); }
+    .title-bar .theme-select {
+      padding: 2px var(--sm);
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      color: var(--text-primary);
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .main-area {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+    }
+    .primary-content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .page {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .page.active {
+      display: flex;
+    }
+    .page-dashboard {
+      flex-direction: row;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .page-dashboard.active {
+      display: flex;
+    }
+    .stub-page {
+      padding: var(--xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--md);
+    }
+    .stub-title {
+      font-family: var(--display-font);
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+    .stub-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .center-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+    }
+    .center-row {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+    }
+    .chat-panel { margin-left: auto; align-self: stretch; }
+
+    .left-panel {
+      display: flex;
+      background: var(--surface-alt, var(--surface));
+      border-right: var(--border-width) solid var(--border);
+    }
+    [data-theme="retro-dark"] .left-panel,
+    [data-theme="retro-light"] .left-panel {
+      --surface-alt: #0c0c0c;
+    }
+    [data-theme="retro-light"] .left-panel { --surface-alt: #EBE5DC; }
+    [data-theme="basic-light"] .left-panel { --surface-alt: #EDE9E6; }
+    [data-theme="basic-dark"] .left-panel { --surface-alt: #1A1A1A; }
+
+    .activity-bar {
+      width: 72px;
+      min-width: 72px;
+      background: var(--surface-alt, var(--surface));
+      border-right: var(--border-width) solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: var(--md) 0;
+      gap: var(--sm);
+      transition: width 0.2s ease;
+    }
+    .activity-bar.collapsed {
+      width: 36px;
+      min-width: 36px;
+    }
+    .activity-bar.collapsed .icon .icon-label { display: none; }
+    .activity-bar .icon .icon-label { font-size: 9px; }
+    .activity-bar .icon {
+      width: 100%;
+      padding: var(--xs) 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      position: relative;
+      border-radius: var(--border-radius);
+      font-family: var(--display-font);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .activity-bar .icon .symbol { font-size: 14px; font-family: inherit; }
+    .activity-bar .icon:hover { color: var(--text-primary); }
+    .activity-bar .icon.active {
+      color: var(--accent-lime);
+    }
+    [data-theme="retro-dark"] .activity-bar .icon.active { color: var(--accent-lime); }
+    [data-theme="retro-light"] .activity-bar .icon.active { color: var(--accent-lime); }
+    .activity-bar .icon.active::before {
+      content: '';
+      position: absolute;
+      left: -6px;
+      top: 4px;
+      bottom: 4px;
+      width: 3px;
+      background: var(--accent-lime);
+      border-radius: 0 2px 2px 0;
+    }
+    .activity-bar-toggle {
+      margin-top: auto;
+      padding: var(--xs) var(--sm);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .activity-bar-toggle:hover { color: var(--text-primary); }
+
+    .files-panel {
+      width: 260px;
+      min-width: 200px;
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-top: none;
+      border-bottom: none;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      margin: var(--sm) var(--sm) var(--sm) 0;
+      box-shadow: var(--shadow);
+    }
+    [data-theme="basic-light"] .files-panel,
+    [data-theme="basic-dark"] .files-panel {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .files-panel.hidden { display: none; }
+    .files-panel-header {
+      padding: var(--md);
+      font-family: var(--display-font);
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 1px;
+      border-bottom: var(--border-width) solid var(--border);
+      background: var(--surface-elevated);
+      border-left: 4px solid var(--accent-lime);
+    }
+    [data-theme="basic-light"] .files-panel-header,
+    [data-theme="basic-dark"] .files-panel-header {
+      border-left-color: var(--accent-blue);
+    }
+
+    .content-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .primary-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+      padding: var(--md);
+    }
+
+    .dashboard-header {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--sm);
+      margin-bottom: var(--sm);
+    }
+    .add-widget-btn, .customize-widgets-btn {
+      padding: var(--xs) var(--md);
+      font-size: 11px;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      color: var(--text-primary);
+    }
+    .add-widget-btn:hover, .customize-widgets-btn:hover {
+      background: var(--accent-lime);
+      color: #1A1A1A;
+    }
+    [data-theme="basic-light"] .add-widget-btn:hover,
+    [data-theme="basic-dark"] .add-widget-btn:hover,
+    [data-theme="basic-light"] .customize-widgets-btn:hover,
+    [data-theme="basic-dark"] .customize-widgets-btn:hover {
+      background: var(--accent-blue);
+      color: var(--surface);
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--grid-gap, 24px);
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .widget-card {
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      padding: var(--md);
+      position: relative;
+      box-shadow: var(--shadow);
+      min-height: 80px;
+    }
+    [data-theme="basic-light"] .widget-card,
+    [data-theme="basic-dark"] .widget-card {
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .widget-card .drag-handle {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 12px;
+      height: 12px;
+      opacity: 0.5;
+      cursor: grab;
+      background: repeating-linear-gradient(90deg, var(--text-muted), var(--text-muted) 2px, transparent 2px, transparent 4px),
+                  repeating-linear-gradient(0deg, var(--text-muted), var(--text-muted) 2px, transparent 2px, transparent 4px);
+    }
+    .widget-card .widget-title {
+      font-weight: 600;
+      font-size: 12px;
+      margin-bottom: var(--sm);
+      padding-left: 20px;
+    }
+    .widget-card.cta-card {
+      border-left: 4px solid var(--accent-orange);
+      background: var(--surface-elevated);
+    }
+    .widget-card.error-card {
+      border-left: 4px solid var(--accent-magenta);
+      background: var(--surface-elevated);
+    }
+
+    .orchestrator-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sm);
+      margin-top: var(--sm);
+    }
+    .orchestrator-buttons button {
+      padding: 4px var(--md);
+      font-size: 11px;
+      font-family: var(--body-font);
+      font-weight: 600;
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      background: var(--surface-elevated);
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+    .orchestrator-buttons button.primary {
+      background: var(--accent-lime);
+      color: #1A1A1A;
+      border-color: var(--border);
+    }
+    [data-theme="retro-dark"] .orchestrator-buttons button.primary { border-color: #1A1A1A; }
+    .orchestrator-buttons button.kill-btn { color: var(--accent-magenta); }
+    .preview-build-strip {
+      margin-top: var(--sm);
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+    .preview-build-strip a { color: var(--accent-lime); cursor: pointer; }
+    [data-theme="basic-light"] .preview-build-strip a,
+    [data-theme="basic-dark"] .preview-build-strip a { color: var(--accent-blue); }
+    .widget-card .subagent-indicator { font-size: 10px; color: var(--text-muted); margin-top: var(--xs); }
+
+    .status-badge {
+      display: inline-block;
+      padding: 2px var(--sm);
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: var(--border-radius);
+      background: var(--accent-lime);
+      color: var(--background);
+    }
+    .status-badge.idle { background: var(--text-muted); }
+    .status-badge.paused { background: var(--accent-orange); }
+    .status-badge.error { background: var(--accent-magenta); }
+
+    .progress-bar {
+      height: 4px;
+      background: var(--border-light);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      margin: var(--xs) 0;
+    }
+    .progress-bar .fill {
+      height: 100%;
+      background: var(--accent-lime);
+      transition: width 0.2s;
+    }
+    [data-theme="basic-light"] .progress-bar .fill,
+    [data-theme="basic-dark"] .progress-bar .fill { background: var(--accent-blue); }
+
+    .donut-row {
+      display: flex;
+      gap: var(--md);
+      flex-wrap: wrap;
+    }
+    .donut-mini {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 3px solid var(--border-light);
+      border-top-color: var(--accent-blue);
+      transform: rotate(-90deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      transform: rotate(0deg);
+    }
+    .donut-mini .inner { transform: rotate(90deg); }
+
+    .terminal-output {
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 12px;
+      background: #0d1117;
+      color: var(--accent-lime);
+      padding: var(--md);
+      border-radius: var(--border-radius);
+      max-height: 120px;
+      overflow-y: auto;
+    }
+    .terminal-output .line { margin: 2px 0; }
+    .terminal-output .line.stderr { color: var(--accent-magenta); }
+    .terminal-output .line.info { color: var(--accent-orange); }
+
+    .chat-panel {
+      width: 420px;
+      min-width: 320px;
+      max-width: 520px;
+      background: var(--surface);
+      border-left: var(--border-width) solid var(--border);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .chat-panel.hidden { display: none; }
+
+    .chat-panel-header {
+      display: flex;
+      align-items: center;
+      padding: var(--md);
+      border-bottom: var(--border-width) solid var(--border);
+    }
+    .chat-panel-header .title { font-weight: 600; flex: 1; }
+    .chat-panel-header .panel-actions {
+      display: flex;
+      gap: var(--xs);
+    }
+    .chat-panel-header .panel-actions button {
+      width: 24px;
+      height: 24px;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .chat-panel-header .panel-actions button:hover { color: var(--text-primary); }
+
+    .chat-body {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .chat-thread-sidebar {
+      width: 180px;
+      min-width: 140px;
+      background: var(--surface-elevated);
+      border-right: var(--border-width) solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .chat-thread-sidebar .sidebar-title {
+      padding: var(--md);
+      font-weight: 600;
+      font-size: 12px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .chat-thread-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--sm);
+    }
+    .chat-thread-item {
+      padding: var(--md);
+      margin-bottom: var(--sm);
+      cursor: pointer;
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      font-size: 12px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    [data-theme="basic-light"] .chat-thread-item,
+    [data-theme="basic-dark"] .chat-thread-item { box-shadow: none; }
+    .chat-thread-item:hover { background: var(--surface-elevated); }
+    .chat-thread-item.active {
+      background: var(--accent-lime);
+      color: #1A1A1A;
+      border-color: var(--border);
+    }
+    [data-theme="retro-dark"] .chat-thread-item.active { border-color: #1A1A1A; }
+
+    .chat-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .chat-modes {
+      display: flex;
+      padding: var(--sm) var(--md);
+      gap: var(--xs);
+      border-bottom: 1px solid var(--border-light);
+      font-size: 12px;
+    }
+    .chat-modes .mode {
+      padding: 4px var(--md);
+      cursor: pointer;
+      color: var(--text-secondary);
+      border-radius: var(--border-radius);
+    }
+    .chat-modes .mode.active {
+      background: var(--accent-lime);
+      color: #1A1A1A;
+    }
+    [data-theme="retro-dark"] .chat-modes .mode.active { border: 2px solid #1A1A1A; }
+
+    .chat-new-thread-btn {
+      padding: var(--sm) var(--md);
+      margin: var(--sm);
+      font-size: 12px;
+      background: var(--accent-lime);
+      color: #1A1A1A;
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .message-stream {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--md);
+    }
+    .message {
+      max-width: 90%;
+      padding: var(--md);
+      border-radius: var(--border-radius);
+      font-size: 13px;
+    }
+    .message.assistant {
+      align-self: flex-start;
+      background: var(--surface-elevated);
+      border-left: 2px solid var(--accent-lime);
+    }
+    .message.user {
+      align-self: flex-end;
+      background: var(--accent-lime);
+      color: #1A1A1A;
+      border: var(--border-width) solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    [data-theme="basic-light"] .message.user,
+    [data-theme="basic-dark"] .message.user {
+      background: var(--accent-blue);
+      color: var(--surface);
+      border: none;
+      box-shadow: none;
+    }
+
+    .chat-input-area {
+      padding: var(--md);
+      border-top: var(--border-width) solid var(--border);
+    }
+    .chat-input-area textarea {
+      width: 100%;
+      min-height: 48px;
+      max-height: 120px;
+      padding: var(--md);
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      color: var(--text-primary);
+      font-family: var(--body-font);
+      font-size: 13px;
+      resize: vertical;
+    }
+    .chat-input-area .input-row {
+      display: flex;
+      align-items: center;
+      gap: var(--sm);
+      margin-top: var(--sm);
+    }
+    .chat-input-area .input-row button {
+      padding: 4px var(--md);
+      font-size: 12px;
+      background: var(--accent-lime);
+      color: #1A1A1A;
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      cursor: pointer;
+    }
+    .chat-input-area .input-row .at-btn, .chat-input-area .input-row .attach-btn {
+      background: var(--surface-elevated);
+      color: var(--text-primary);
+      border: var(--border-width) solid var(--border);
+    }
+
+    .chat-queue-area {
+      padding: var(--sm) var(--md);
+      margin: 0 var(--md);
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: var(--border-radius);
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+    .chat-queue-area .queue-item {
+      display: flex;
+      align-items: center;
+      gap: var(--sm);
+      padding: var(--xs) 0;
+    }
+    .chat-queue-area .queue-item .truncate {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 280px;
+    }
+    .chat-queue-area .queue-item .actions {
+      display: flex;
+      gap: var(--xs);
+    }
+    .chat-queue-area .queue-item .actions a {
+      color: var(--accent-lime);
+      cursor: pointer;
+      font-size: 10px;
+    }
+    [data-theme="basic-light"] .chat-queue-area .queue-item .actions a,
+    [data-theme="basic-dark"] .chat-queue-area .queue-item .actions a { color: var(--accent-blue); }
+
+    .chat-footer {
+      height: 20px;
+      min-height: 20px;
+      padding: 0 var(--md);
+      font-size: 10px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: var(--md);
+      border-top: 1px solid var(--border-light);
+    }
+    .chat-footer select {
+      padding: 0 var(--xs);
+      font-size: 10px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: var(--border-radius);
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+    .chat-footer .context-usage {
+      display: flex;
+      align-items: center;
+      gap: var(--xs);
+    }
+    .chat-footer .context-progress {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+    }
+    .chat-footer .context-progress.filled { background: var(--accent-lime); }
+    [data-theme="basic-light"] .chat-footer .context-progress.filled,
+    [data-theme="basic-dark"] .chat-footer .context-progress.filled { background: var(--accent-blue); }
+    .chat-footer a { color: var(--text-secondary); text-decoration: none; cursor: pointer; }
+    .chat-footer a:hover { color: var(--text-primary); }
+
+    .message-block {
+      margin-top: var(--sm);
+      font-size: 11px;
+      border-left: 2px solid var(--accent-lime);
+      padding-left: var(--sm);
+    }
+    [data-theme="basic-light"] .message-block,
+    [data-theme="basic-dark"] .message-block { border-left-color: var(--accent-blue); }
+    .message-block.collapsed .block-body { display: none; }
+    .message-block .block-header {
+      cursor: pointer;
+      color: var(--text-secondary);
+    }
+    .message-block .block-header:hover { color: var(--text-primary); }
+    .message-block.collapsed .block-header::before { content: '[+] '; }
+    .message-block:not(.collapsed) .block-header::before { content: '[-] '; }
+    .message-block .block-body { margin-top: var(--xs); }
+    .message-block .block-body pre {
+      font-size: 10px;
+      background: var(--surface);
+      padding: var(--sm);
+      border-radius: var(--border-radius);
+      overflow-x: auto;
+    }
+    .message-files-touched {
+      margin-top: var(--sm);
+      font-size: 10px;
+      font-family: 'Consolas', monospace;
+      color: var(--text-secondary);
+    }
+    .message-files-touched a { color: var(--accent-lime); cursor: pointer; }
+    [data-theme="basic-light"] .message-files-touched a,
+    [data-theme="basic-dark"] .message-files-touched a { color: var(--accent-blue); }
+    .message-revert { margin-left: var(--md); font-size: 10px; color: var(--text-muted); cursor: pointer; }
+    .message-revert:hover { color: var(--text-primary); }
+    .plan-card {
+      margin-bottom: var(--md);
+      padding: var(--md);
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    .plan-card .plan-title { font-weight: 700; font-size: 12px; margin-bottom: var(--sm); }
+    .plan-card .plan-outline { font-size: 11px; }
+    .plan-card .plan-outline li { margin: var(--xs) 0; }
+    .steer-queue-toggle { font-size: 10px; color: var(--text-secondary); }
+    .steer-queue-toggle span.active { color: var(--accent-lime); font-weight: 600; }
+    [data-theme="basic-light"] .steer-queue-toggle span.active,
+    [data-theme="basic-dark"] .steer-queue-toggle span.active { color: var(--accent-blue); }
+    .subagent-indicator { font-size: 10px; color: var(--text-muted); padding: 0 var(--md); margin-top: var(--xs); }
+
+    .files-panel .files-search {
+      padding: var(--md);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .files-search input {
+      width: 100%;
+      padding: var(--sm) var(--md);
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      color: var(--text-primary);
+      font-size: 12px;
+    }
+    .file-tree {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--md);
+      font-size: 13px;
+    }
+    .file-tree .folder, .file-tree .file {
+      padding: 2px 0;
+      padding-left: var(--lg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--sm);
+    }
+    .file-tree .folder { font-weight: 500; }
+    .file-tree .file .git-status {
+      margin-left: auto;
+      font-size: 10px;
+      color: var(--accent-orange);
+    }
+    .file-tree .file .git-status.added { color: var(--accent-lime); }
+    .files-status {
+      padding: var(--sm) var(--md);
+      font-size: 11px;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-light);
+    }
+
+    .bottom-panel {
+      height: 160px;
+      min-height: 24px;
+      background: var(--surface);
+      border-top: var(--border-width) solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+    .bottom-panel.collapsed {
+      height: 24px;
+      min-height: 24px;
+    }
+    .bottom-panel.collapsed .bottom-tabs-content { display: none; }
+
+    .bottom-tabs {
+      height: 24px;
+      min-height: 24px;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--md);
+      gap: var(--md);
+      border-bottom: var(--border-width) solid var(--border);
+      font-size: 12px;
+    }
+    .bottom-tabs-left { display: flex; flex: 1; gap: var(--md); align-items: center; }
+    .bottom-tabs-right { display: flex; gap: var(--sm); align-items: center; }
+    .bottom-tabs-right select {
+      padding: 2px var(--sm);
+      font-size: 10px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: var(--border-radius);
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+    .bottom-tabs .tab {
+      padding: 0 var(--sm);
+      cursor: pointer;
+      color: var(--text-secondary);
+    }
+    .bottom-tabs .tab.active { color: var(--accent-lime); }
+    [data-theme="basic-light"] .bottom-tabs .tab.active,
+    [data-theme="basic-dark"] .bottom-tabs .tab.active { color: var(--accent-blue); }
+    .bottom-tabs .collapse-btn {
+      margin-left: auto;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .bottom-tabs-content {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .terminal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      flex: 1;
+      min-height: 0;
+      gap: 1px;
+      background: var(--border);
+    }
+    .terminal-pane {
+      min-width: 0;
+      min-height: 0;
+      overflow-y: auto;
+      padding: var(--md);
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 11px;
+      background: #0d1117;
+      color: var(--accent-lime);
+    }
+    .terminal-pane:nth-child(1) { color: var(--accent-lime); }
+    .terminal-pane:nth-child(2) { color: var(--accent-magenta); }
+    .terminal-pane:nth-child(3) { color: var(--accent-orange); }
+    .terminal-pane:nth-child(4) { color: var(--text-secondary); }
+    .bottom-tabs-content .line,
+    .terminal-pane .line { margin: 2px 0; }
+    .bottom-tabs-content .line.stderr,
+    .terminal-pane .line.stderr { color: var(--accent-magenta); }
+    .bottom-tabs-content .line.info,
+    .terminal-pane .line.info { color: var(--accent-orange); }
+
+    .status-bar {
+      height: 24px;
+      min-height: 24px;
+      background: var(--surface);
+      border-top: var(--border-width) solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--md);
+      font-size: 11px;
+      color: var(--text-secondary);
+      gap: var(--md);
+    }
+    .status-bar .status-sep { color: var(--text-muted); margin: 0 var(--xs); }
+    .status-bar .status-root,
+    .status-bar .status-git,
+    .status-bar .status-commit { cursor: pointer; }
+    .status-bar .status-root:hover,
+    .status-bar .status-git:hover,
+    .status-bar .status-commit:hover { color: var(--text-primary); }
+    .status-bar .status-menu-btn {
+      padding: 0 var(--sm);
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 12px;
+      position: relative;
+    }
+    .status-bar .status-menu-btn:hover { color: var(--text-primary); }
+    .status-menu-wrap { position: relative; }
+    .status-bar .status-menu-dropdown {
+      display: none;
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      margin-bottom: 2px;
+      min-width: 220px;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: var(--md);
+      font-size: 11px;
+      z-index: 1000;
+    }
+    .status-bar .status-menu-dropdown.visible { display: block; }
+    .status-menu-dropdown .menu-section { margin-bottom: var(--md); }
+    .status-menu-dropdown .menu-section:last-child { margin-bottom: 0; }
+    .status-menu-dropdown .menu-section-title { font-weight: 600; margin-bottom: var(--xs); }
+    .status-menu-dropdown .menu-section-content { color: var(--text-secondary); }
+
+    .floating-chat {
+      position: fixed;
+      top: 100px;
+      right: 40px;
+      width: 520px;
+      height: 560px;
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+    }
+    [data-theme="basic-light"] .floating-chat,
+    [data-theme="basic-dark"] .floating-chat {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .floating-chat.visible { display: flex; }
+    .floating-chat .float-title {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--md);
+      background: var(--surface-elevated);
+      border-bottom: var(--border-width) solid var(--border);
+      cursor: move;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .floating-chat .float-title .close-float {
+      margin-left: auto;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .floating-chat .float-content {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pixel-grid {
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 9999;
+    }
+    [data-theme="retro-dark"] .pixel-grid {
+      background-image:
+        linear-gradient(rgba(224,224,224,0.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(224,224,224,0.09) 1px, transparent 1px);
+      background-size: 3px 3px;
+    }
+    [data-theme="retro-light"] .pixel-grid {
+      background-image:
+        linear-gradient(rgba(26,26,26,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,26,26,0.045) 1px, transparent 1px);
+      background-size: 3px 3px;
+    }
+    [data-theme="basic-light"] .pixel-grid,
+    [data-theme="basic-dark"] .pixel-grid { display: none; }
+
+    .dashboard-view {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+    }
+    .editor-view {
+      width: 50%;
+      min-width: 280px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      border-right: var(--border-width) solid var(--border);
+      margin-right: var(--md);
+      padding-right: var(--md);
+    }
+    .editor-tabs {
+      display: flex;
+      padding: var(--xs) var(--md) 0;
+      gap: 2px;
+      border-bottom: var(--border-width) solid var(--border);
+    }
+    .editor-tabs .tab {
+      padding: var(--xs) var(--md);
+      font-size: 11px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      border: var(--border-width) solid transparent;
+      border-bottom: none;
+      margin-bottom: -2px;
+    }
+    .editor-tabs .tab.active {
+      color: var(--text-primary);
+      background: var(--surface);
+      border-color: var(--border);
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+    .editor-tabs .tab .dot { color: var(--accent-orange); }
+    .editor-area {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+    .editor-gutter {
+      padding: var(--md) var(--sm);
+      font-family: 'Consolas', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: right;
+      border-right: 1px solid var(--border-light);
+    }
+    .editor-code {
+      flex: 1;
+      padding: var(--md);
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 13px;
+      overflow: auto;
+      white-space: pre;
+    }
+
+    .page-wizard {
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .page-wizard.active { display: flex; }
+    .wizard-layout {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      gap: var(--xl);
+      padding: var(--md);
+    }
+    .wizard-steps {
+      width: 180px;
+      min-width: 180px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--xs);
+      padding: var(--md);
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      font-family: var(--body-font);
+      font-size: 12px;
+      overflow-y: auto;
+    }
+    .wizard-steps .wizard-step {
+      padding: var(--sm) var(--md);
+      cursor: pointer;
+      color: var(--text-secondary);
+      border-left: 3px solid transparent;
+    }
+    .wizard-steps .wizard-step:hover { color: var(--text-primary); }
+    .wizard-steps .wizard-step.active {
+      color: var(--text-primary);
+      border-left-color: var(--accent-lime);
+      background: var(--surface);
+    }
+    [data-theme="basic-light"] .wizard-steps .wizard-step.active,
+    [data-theme="basic-dark"] .wizard-steps .wizard-step.active {
+      border-left-color: var(--accent-blue);
+    }
+    .wizard-steps .wizard-step.complete { color: var(--accent-lime); }
+    .wizard-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: auto;
+    }
+    .wizard-step-header {
+      font-family: var(--display-font);
+      font-size: 14px;
+      margin-bottom: var(--lg);
+      color: var(--text-primary);
+    }
+    .wizard-step-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--lg);
+    }
+    .wizard-intent-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--md);
+    }
+    .wizard-intent-card {
+      padding: var(--lg);
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .wizard-intent-card:hover { color: var(--text-primary); }
+    .wizard-intent-card.active {
+      background: var(--accent-lime);
+      color: #1A1A1A;
+      border-color: var(--border);
+    }
+    [data-theme="basic-light"] .wizard-intent-card.active,
+    [data-theme="basic-dark"] .wizard-intent-card.active {
+      background: var(--accent-blue);
+      color: var(--surface);
+    }
+    .wizard-fields {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sm);
+      max-width: 400px;
+    }
+    .wizard-fields label { font-size: 12px; color: var(--text-secondary); }
+    .wizard-input, .wizard-select {
+      padding: var(--sm) var(--md);
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      color: var(--text-primary);
+      font-family: var(--body-font);
+      font-size: 13px;
+    }
+    .wizard-sub-fields {
+      display: flex;
+      flex-direction: column;
+      gap: var(--xs);
+      margin-left: var(--lg);
+    }
+    .wizard-panes {
+      width: 280px;
+      min-width: 240px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--md);
+      overflow: hidden;
+    }
+    .wizard-doc-pane {
+      flex: 0 0 160px;
+      display: flex;
+      flex-direction: column;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      overflow: hidden;
+    }
+    .wizard-pane-title {
+      padding: var(--sm) var(--md);
+      font-family: var(--display-font);
+      font-size: 11px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-secondary);
+    }
+    .wizard-doc-content {
+      flex: 1;
+      padding: var(--md);
+      font-size: 11px;
+      color: var(--text-muted);
+      overflow: auto;
+    }
+    .wizard-activity {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 120px;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      overflow: hidden;
+    }
+    .wizard-progress-strip {
+      display: flex;
+      align-items: center;
+      gap: var(--md);
+      padding: var(--xs) var(--md);
+      border-bottom: 1px solid var(--border-light);
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+    .wizard-progress-bar {
+      flex: 1;
+      height: 6px;
+      background: var(--border-light);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+    }
+    .wizard-progress-fill {
+      height: 100%;
+      background: var(--accent-lime);
+      transition: width 0.2s ease;
+    }
+    [data-theme="basic-light"] .wizard-progress-fill,
+    [data-theme="basic-dark"] .wizard-progress-fill { background: var(--accent-blue); }
+    .wizard-activity-log {
+      flex: 1;
+      padding: var(--md);
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+      overflow: auto;
+    }
+    .wizard-log-line { margin-bottom: 2px; }
+    .wizard-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--md) var(--lg);
+      border-top: var(--border-width) solid var(--border);
+      background: var(--surface-elevated);
+      gap: var(--md);
+    }
+    .wizard-footer-left, .wizard-footer-right {
+      display: flex;
+      align-items: center;
+      gap: var(--sm);
+    }
+    .wizard-btn {
+      padding: var(--sm) var(--md);
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      color: var(--text-primary);
+      font-family: var(--body-font);
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .wizard-btn:hover:not(:disabled) { background: var(--surface-elevated); }
+    .wizard-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .wizard-btn.primary {
+      background: var(--accent-lime);
+      color: #1A1A1A;
+      border-color: var(--border);
+    }
+    [data-theme="basic-light"] .wizard-btn.primary,
+    [data-theme="basic-dark"] .wizard-btn.primary {
+      background: var(--accent-blue);
+      color: var(--surface);
+    }
+    .wizard-status-pill {
+      padding: var(--xs) var(--sm);
+      font-size: 11px;
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      color: var(--text-secondary);
+    }
+
+    .page-orchestrator {
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .page-orchestrator.active { display: flex; }
+    .orch-header {
+      display: flex;
+      align-items: center;
+      gap: var(--md);
+      height: 32px;
+      min-height: 32px;
+      padding: 0 var(--lg);
+      border-bottom: var(--border-width) solid var(--border);
+      background: var(--surface-elevated);
+      font-family: var(--display-font);
+    }
+    .orch-title { font-size: 14px; font-weight: 700; color: var(--text-primary); }
+    .orch-status-badge {
+      padding: var(--xs) var(--sm);
+      font-size: 11px;
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      color: var(--text-secondary);
+    }
+    .orch-elapsed { font-size: 12px; color: var(--text-muted); }
+    .orch-tabs {
+      display: flex;
+      align-items: center;
+      gap: var(--xs);
+      height: 36px;
+      min-height: 36px;
+      padding: 0 var(--md);
+      border-bottom: var(--border-width) solid var(--border);
+      background: var(--surface);
+      font-size: 12px;
+    }
+    .orch-tab {
+      padding: var(--sm) var(--md);
+      cursor: pointer;
+      color: var(--text-secondary);
+      border-bottom: 3px solid transparent;
+    }
+    .orch-tab:hover { color: var(--text-primary); }
+    .orch-tab.active {
+      color: var(--text-primary);
+      font-weight: 600;
+      border-bottom-color: var(--accent-lime);
+    }
+    [data-theme="basic-light"] .orch-tab.active,
+    [data-theme="basic-dark"] .orch-tab.active { border-bottom-color: var(--accent-blue); }
+    .orch-tab-badge {
+      margin-left: var(--xs);
+      font-size: 10px;
+      font-weight: normal;
+      color: var(--text-muted);
+    }
+    .orch-tab-badge-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-orange);
+      margin-left: var(--xs);
+      vertical-align: middle;
+    }
+    .orch-content {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .orch-tab-content {
+      display: none;
+      height: 100%;
+      padding: var(--md);
+      overflow: auto;
+    }
+    .orch-tab-content.active {
+      display: block;
+    }
+    .orch-progress-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--md);
+    }
+    .orch-progress-row { display: flex; align-items: center; gap: var(--sm); margin-bottom: var(--xs); }
+    .orch-progress-row:last-child { margin-bottom: 0; }
+    .orch-progress-label { font-size: 11px; min-width: 5em; color: var(--text-secondary); }
+    .orch-cta-list { font-size: 11px; }
+    .orch-cta-item { padding: var(--xs) 0; }
+    .orch-cta-muted { color: var(--text-muted); }
+    .orch-terminal-clear { float: right; font-size: 11px; padding: 2px var(--sm); margin: -2px 0 0 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--border-radius); cursor: pointer; color: var(--text-secondary); }
+    .orch-terminal-clear:hover { color: var(--text-primary); }
+    .terminal-output .line-info { color: var(--accent-orange); }
+    .terminal-output .line-ok { color: var(--accent-lime); }
+    .terminal-output .line-muted { color: var(--text-muted); }
+    [data-theme="basic-light"] .terminal-output .line-ok, [data-theme="basic-dark"] .terminal-output .line-ok { color: var(--accent-lime); }
+    .orch-prose-toolbar { margin-bottom: var(--sm); }
+    .orch-prose-toggle { font-size: 11px; padding: 2px var(--sm); margin-right: var(--xs); background: var(--surface); border: 1px solid var(--border); border-radius: var(--border-radius); cursor: pointer; color: var(--text-secondary); }
+    .orch-prose-toggle.active, .orch-prose-toggle[aria-pressed="true"] { background: var(--surface-elevated); color: var(--text-primary); }
+    .orch-prose-list { font-size: 12px; }
+    .orch-prose-block { margin-bottom: var(--xs); border: 1px solid var(--border-light); border-radius: var(--border-radius); }
+    .orch-prose-block-head { width: 100%; padding: var(--sm) var(--md); text-align: left; background: var(--surface-elevated); border: none; border-radius: var(--border-radius); cursor: pointer; font-size: 12px; color: var(--text-primary); display: flex; align-items: center; flex-wrap: wrap; gap: var(--xs); }
+    .orch-prose-block-head::before { content: '\u25BC'; font-size: 10px; }
+    .orch-prose-block.collapsed .orch-prose-block-head::before { content: '\u25B6'; }
+    .orch-prose-block-body { padding: var(--sm) var(--md); border-top: 1px solid var(--border-light); }
+    .orch-prose-block.collapsed .orch-prose-block-body { display: none; }
+    .orch-prose-badge { font-size: 10px; padding: 1px var(--xs); border-radius: var(--border-radius); }
+    .orch-prose-passed { background: var(--graph-passed); color: #1A1A1A; }
+    .orch-prose-failed { background: var(--graph-failed); color: #fff; }
+    .orch-prose-dur { margin-left: auto; color: var(--text-muted); font-size: 11px; }
+    .orch-prose-meta { font-size: 11px; color: var(--text-muted); margin-top: var(--xs); }
+    .orch-card {
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      padding: var(--md);
+      min-height: 60px;
+    }
+    .orch-card .orch-card-title {
+      font-weight: 600;
+      font-size: 12px;
+      margin-bottom: var(--sm);
+      color: var(--text-primary);
+    }
+    .orch-card .orchestrator-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--xs);
+      margin: var(--sm) 0;
+    }
+    .orch-card .orchestrator-buttons button {
+      padding: var(--xs) var(--sm);
+      font-size: 10px;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+    .orch-card .orchestrator-buttons button.primary { background: var(--accent-lime); color: #1A1A1A; }
+    .orch-card .preview-build-strip {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .orch-card .preview-build-strip a { color: var(--accent-blue); }
+    .orch-tier-tree {
+      font-size: 13px;
+      padding: var(--md) 0;
+    }
+    .orch-tier-node {
+      display: flex;
+      align-items: center;
+      gap: var(--sm);
+      padding: var(--xs) var(--md);
+      cursor: pointer;
+      color: var(--text-secondary);
+    }
+    .orch-tier-node:hover { color: var(--text-primary); background: var(--surface-elevated); }
+    .orch-tier-toggle { width: 1em; color: var(--text-muted); }
+    .orch-tier-label { flex: 1; }
+    .orch-tier-progress { font-size: 10px; color: var(--text-muted); margin-left: var(--xs); }
+    .orch-tier-iter { font-size: 10px; color: var(--text-muted); margin-left: var(--xs); }
+    .orch-tier-badge {
+      font-size: 10px;
+      padding: 2px var(--xs);
+      background: var(--surface-elevated);
+      border-radius: var(--border-radius);
+      color: var(--text-muted);
+    }
+    .orch-tier-children { margin-left: var(--lg); }
+    .orch-tier-group { margin-bottom: var(--xs); }
+    .orch-tier-node.selected { background: var(--accent-lime); color: #1A1A1A; }
+    [data-theme="basic-light"] .orch-tier-node.selected,
+    [data-theme="basic-dark"] .orch-tier-node.selected { background: var(--accent-blue); color: var(--surface); }
+    .orch-tier-detail-meta { font-size: 11px; color: var(--text-muted); margin-top: var(--sm); }
+    .orch-tier-link { color: var(--accent-blue); }
+    [data-theme="retro-dark"] .orch-tier-link, [data-theme="retro-light"] .orch-tier-link { color: var(--accent-lime); }
+    .orch-tiers-layout {
+      display: flex;
+      flex-direction: column;
+      gap: var(--md);
+      height: 100%;
+      min-height: 0;
+    }
+    .orch-tiers-main { display: flex; gap: var(--xl); flex: 1; min-height: 0; }
+    .orch-tiers-main .orch-tier-tree { flex: 1; min-width: 0; overflow: auto; }
+    .orch-tier-detail {
+      width: 280px;
+      min-width: 240px;
+      display: flex;
+      flex-direction: column;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      overflow: hidden;
+    }
+    .orch-tier-detail-title {
+      padding: var(--sm) var(--md);
+      font-size: 11px;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-secondary);
+    }
+    .orch-tier-detail-body {
+      flex: 1;
+      padding: var(--md);
+      font-size: 12px;
+      color: var(--text-secondary);
+      overflow: auto;
+    }
+    .orch-tier-detail-body p { margin-bottom: var(--sm); }
+    .orch-node-graph-wrap { height: 100%; min-height: 200px; }
+    .orch-dag-preview {
+      padding: var(--md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--lg);
+    }
+    .orch-dag-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .orch-dag {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--sm);
+    }
+    .orch-dag-node {
+      padding: var(--sm) var(--md);
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      font-size: 12px;
+      color: var(--text-primary);
+    }
+    .orch-dag-edge {
+      width: 2px;
+      height: 16px;
+      background: var(--border);
+    }
+    .orch-dag-row {
+      display: flex;
+      gap: var(--lg);
+    }
+    .orch-evidence-layout {
+      display: flex;
+      gap: var(--xl);
+      height: 100%;
+      min-height: 200px;
+    }
+    .orch-evidence-main { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden; }
+    .orch-toolbar {
+      display: flex;
+      gap: var(--md);
+      margin-bottom: var(--md);
+      align-items: center;
+    }
+    .orch-filter, .orch-search {
+      padding: var(--xs) var(--sm);
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      color: var(--text-primary);
+      font-size: 12px;
+    }
+    .orch-search { flex: 1; max-width: 200px; }
+    .orch-evidence-detail {
+      width: 260px;
+      min-width: 220px;
+      display: flex;
+      flex-direction: column;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      overflow: hidden;
+    }
+    .orch-evidence-detail-body {
+      flex: 1;
+      padding: var(--md);
+      min-height: 60px;
+      font-size: 12px;
+      color: var(--text-muted);
+      overflow: auto;
+    }
+    .orch-evidence-detail-actions {
+      padding: var(--sm) var(--md);
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      gap: var(--sm);
+      flex-wrap: wrap;
+    }
+    .orch-evidence-row { cursor: pointer; }
+    .orch-evidence-row:hover { background: var(--surface-elevated); }
+    .orch-evidence-row.selected { background: var(--surface-elevated); border-left: 3px solid var(--accent-lime); }
+    .orch-history-row { cursor: pointer; }
+    .orch-history-row:hover { background: var(--surface-elevated); }
+    .orch-history-toolbar span, .orch-ledger-toolbar span { font-size: 12px; color: var(--text-secondary); }
+    .orch-ledger-usage-link { font-size: 12px; color: var(--accent-blue); }
+    [data-theme="retro-dark"] .orch-ledger-usage-link, [data-theme="retro-light"] .orch-ledger-usage-link { color: var(--accent-lime); }
+    .orch-ledger-footer { background: var(--surface-elevated); font-weight: 600; }
+    .orch-ledger-footer td { padding: var(--sm) var(--md); border: 1px solid var(--border-light); }
+    .orch-node-graph-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--lg);
+      height: 100%;
+      min-height: 200px;
+      color: var(--text-secondary);
+    }
+    .orch-node-graph-wrap { height: 100%; min-height: 200px; display: flex; flex-direction: column; overflow: hidden; }
+    .orch-rungraph-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--lg);
+      flex: 1;
+      min-height: 200px;
+      color: var(--text-secondary);
+    }
+    .orch-rungraph-full {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .orch-rungraph-topbar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--sm);
+      height: 60px;
+      min-height: 60px;
+      padding: 0 var(--md);
+      border-bottom: var(--border-width) solid var(--border);
+      background: var(--surface-elevated);
+      font-size: 11px;
+    }
+    .orch-rungraph-runid { font-family: var(--body-font); color: var(--text-primary); cursor: pointer; }
+    .orch-rungraph-date, .orch-rungraph-times, .orch-rungraph-elapsed { color: var(--text-muted); }
+    .orch-rungraph-status-badge {
+      padding: 2px var(--xs);
+      background: var(--graph-running);
+      color: #1A1A1A;
+      border-radius: var(--border-radius);
+    }
+    .orch-rungraph-counts { color: var(--text-secondary); }
+    .orch-rungraph-layout, .orch-rungraph-filter {
+      padding: 2px var(--xs);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--border-radius);
+      color: var(--text-primary);
+      font-size: 11px;
+    }
+    .orch-rungraph-zoom, .orch-rungraph-fit {
+      width: 24px;
+      height: 22px;
+      padding: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--border-radius);
+      color: var(--text-primary);
+      font-size: 14px;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .orch-rungraph-fit { width: auto; padding: 0 var(--sm); }
+    .orch-rungraph-zoom-pct { color: var(--text-muted); min-width: 2.5em; }
+    .orch-rungraph-toggles { display: inline-flex; gap: var(--xs); }
+    .orch-rungraph-toggle { font-size: 10px; padding: 2px var(--sm); background: var(--surface); border: 1px solid var(--border); border-radius: var(--border-radius); color: var(--text-secondary); cursor: pointer; }
+    .orch-rungraph-toggle:hover { color: var(--text-primary); }
+    .orch-rungraph-quickfilters { display: flex; flex-wrap: wrap; gap: var(--xs); padding: var(--xs) var(--sm); border-bottom: 1px solid var(--border-light); }
+    .orch-rungraph-qf { font-size: 10px; padding: 2px var(--sm); background: var(--surface); border: 1px solid var(--border); border-radius: var(--border-radius); color: var(--text-secondary); cursor: pointer; }
+    .orch-rungraph-qf:hover { color: var(--text-primary); }
+    .orch-rungraph-search {
+      width: 120px;
+      padding: 2px var(--sm);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--border-radius);
+      color: var(--text-primary);
+      font-size: 11px;
+    }
+    .orch-rungraph-topbar-footer { padding: var(--xs) var(--md); border-top: 1px solid var(--border-light); }
+    .orch-rungraph-body {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .orch-rungraph-left {
+      width: 60%;
+      min-width: 400px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      border-right: var(--border-width) solid var(--border);
+    }
+    .orch-rungraph-canvas {
+      flex: 1;
+      position: relative;
+      overflow: auto;
+      background: var(--surface);
+      background-image: radial-gradient(circle at 8px 8px, var(--border-light) 1px, transparent 1px);
+      background-size: 16px 16px;
+      transform-origin: 0 0;
+    }
+    .orch-rungraph-graph-content {
+      position: relative;
+      width: 620px;
+      height: 260px;
+      flex-shrink: 0;
+    }
+    .orch-rungraph-edges {
+      position: absolute;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+    }
+    .orch-rungraph-node {
+      position: absolute;
+      width: 160px;
+      height: 48px;
+      box-sizing: border-box;
+      padding: var(--xs) var(--sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border: 2px solid;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-size: 11px;
+    }
+    .orch-rungraph-node.graph-pending { background: var(--graph-pending); color: #fff; border-color: var(--graph-pending); }
+    .orch-rungraph-node.graph-running { background: var(--graph-running); color: #1A1A1A; border-color: var(--graph-running); }
+    .orch-rungraph-node.graph-passed { background: var(--graph-passed); color: #1A1A1A; border-color: var(--graph-passed); }
+    .orch-rungraph-node.graph-failed { background: var(--graph-failed); color: #fff; border-color: var(--graph-failed); }
+    .orch-rungraph-node.selected { border-width: 4px; border-color: var(--accent-lime); }
+    [data-theme="basic-light"] .orch-rungraph-node.selected,
+    [data-theme="basic-dark"] .orch-rungraph-node.selected { border-color: var(--accent-blue); }
+    .orch-rungraph-node-line1 { display: block; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 18ch; line-height: 1.2; }
+    .orch-rungraph-node-line2 { display: block; font-size: 10px; opacity: 0.85; }
+    .orch-rungraph-node-line3 { display: flex; align-items: center; gap: 4px; font-size: 10px; opacity: 0.9; flex-wrap: nowrap; }
+    .orch-rungraph-node-type { font-weight: 600; }
+    .orch-rungraph-node-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 18ch; }
+    .orch-rungraph-node-state, .orch-rungraph-node-meta { font-size: 10px; opacity: 0.9; }
+    .orch-rungraph-node-state-icon { width: 10px; height: 10px; flex-shrink: 0; background-size: contain; background-repeat: no-repeat; background-position: center; }
+    .orch-state-passed { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path fill="%231a1a1a" d="M10 3L4.5 8.5 2 6"/></svg>'); }
+    .orch-state-running { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><circle fill="%231a1a1a" cx="6" cy="6" r="2"/></svg>'); }
+    .orch-state-pending { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><circle fill="%23fff" cx="6" cy="6" r="1.5"/></svg>'); }
+    .orch-state-failed { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path fill="%23fff" d="M2 2l8 8M10 2L2 10"/></svg>'); }
+    .orch-rungraph-node { position: relative; }
+    .orch-rungraph-node-badge, .orch-rungraph-node-hitl, .orch-rungraph-node-blocked { position: absolute; }
+    .orch-rungraph-node-attempt { top: 2px; right: 4px; width: 14px; height: 14px; border-radius: 50%; background: rgba(0,0,0,0.4); color: #fff; font-size: 9px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
+    .orch-rungraph-node-hitl { top: 4px; left: 4px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-orange); animation: orch-hitl-pulse 1.2s ease-in-out infinite; }
+    .orch-rungraph-node-blocked { top: 4px; left: 4px; width: 12px; height: 12px; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="%23666"><path d="M8 1a3.5 3.5 0 0 1 3.5 3.5v1.5h.5a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h.5V4.5A3.5 3.5 0 0 1 8 1z"/></svg>') center/contain no-repeat; }
+    @keyframes orch-hitl-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.2); } }
+    .orch-rungraph-canvas { position: relative; }
+    .orch-rungraph-zoom-indicator { position: absolute; bottom: var(--xs); right: var(--xs); font-size: 10px; color: var(--text-muted); background: var(--surface-elevated); padding: 2px 6px; border-radius: var(--border-radius); z-index: 2; }
+    .orch-rungraph-minimap {
+      position: absolute;
+      bottom: var(--md);
+      left: var(--md);
+      width: 150px;
+      height: 100px;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+    }
+    .orch-rungraph-minimap-nodes { position: absolute; inset: 0; pointer-events: none; }
+    .orch-rungraph-minimap-dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      transform: translate(-50%, -50%);
+    }
+    .orch-rungraph-minimap-dot.graph-pending { background: var(--graph-pending); }
+    .orch-rungraph-minimap-dot.graph-running { background: var(--graph-running); }
+    .orch-rungraph-minimap-dot.graph-passed { background: var(--graph-passed); }
+    .orch-rungraph-minimap-dot.graph-failed { background: var(--graph-failed); }
+    .orch-rungraph-minimap-viewport {
+      position: absolute;
+      left: 15%;
+      top: 20%;
+      width: 40%;
+      height: 45%;
+      border: 2px solid var(--accent-lime);
+      background: rgba(0,255,65,0.1);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .orch-rungraph-right {
+      width: 40%;
+      min-width: 280px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .orch-rungraph-table-wrap {
+      flex: 0 0 40%;
+      min-height: 120px;
+      overflow: auto;
+      border-bottom: var(--border-width) solid var(--border);
+    }
+    .orch-rungraph-table { font-size: 11px; }
+    .orch-rungraph-table th, .orch-rungraph-table td { padding: var(--xs) var(--sm); }
+    .orch-rungraph-row { cursor: pointer; }
+    .orch-rungraph-row:hover { background: var(--surface-elevated); }
+    .orch-rungraph-row.selected { background: var(--surface-elevated); border-left: 3px solid var(--accent-lime); }
+    .orch-rungraph-detail {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: var(--surface-elevated);
+    }
+    .orch-rungraph-no-selection { color: var(--text-muted); font-style: italic; padding: var(--sm); }
+    .orch-rungraph-detail-title {
+      padding: var(--sm) var(--md);
+      font-size: 11px;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-secondary);
+    }
+    .orch-rungraph-detail-body {
+      flex: 1;
+      overflow: auto;
+      padding: var(--md);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .orch-rungraph-detail-section { margin-bottom: var(--md); }
+    .orch-rungraph-detail-section-head {
+      width: 100%;
+      text-align: left;
+      padding: var(--xs) var(--sm);
+      font-weight: 600;
+      font-size: 11px;
+      color: var(--text-primary);
+      margin-bottom: 0;
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--xs);
+    }
+    .orch-rungraph-detail-section-head::before { content: '\u25BC'; font-size: 10px; }
+    .orch-rungraph-detail-section.collapsed .orch-rungraph-detail-section-head::before { content: '\u25B6'; }
+    .orch-rungraph-detail-section-body { padding: var(--sm) var(--md); border: 1px solid var(--border-light); border-top: none; border-radius: 0 0 var(--border-radius) var(--border-radius); }
+    .orch-rungraph-detail-section.collapsed .orch-rungraph-detail-section-body { display: none; }
+    .orch-rungraph-detail-section-body p { margin-bottom: var(--xs); }
+    .orch-rungraph-usage-link { font-size: 12px; color: var(--accent-blue); }
+    .orch-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .orch-table th,
+    .orch-table td {
+      padding: var(--sm) var(--md);
+      border: 1px solid var(--border-light);
+      text-align: left;
+    }
+    .orch-table th {
+      background: var(--surface-elevated);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .orch-table td { color: var(--text-secondary); }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="title-bar">
+      <span class="app-name">Puppet Master</span>
+      <div class="project-dropdown">
+        <span>puppet-master-rs</span>
+        <span>&#9660;</span>
+      </div>
+      <nav class="page-tabs">
+        <span class="page-tab active" tabindex="0" data-page="dashboard">Dashboard</span>
+        <span class="page-tab" tabindex="0" data-page="projects">Projects</span>
+        <span class="page-tab" tabindex="0" data-page="wizard">Wizard</span>
+        <span class="page-tab" tabindex="0" data-page="orchestrator">Orchestrator</span>
+        <span class="page-tab" tabindex="0" data-page="usage">Usage</span>
+        <span class="page-tab" tabindex="0" data-page="settings">Settings</span>
+      </nav>
+      <div class="title-spacer"></div>
+      <input type="text" class="search-bar" placeholder="Search files, commands, settings...">
+      <select class="theme-select" id="themeSelect">
+        <option value="retro-dark">Retro Dark</option>
+        <option value="retro-light">Retro Light</option>
+        <option value="basic-light">Basic Light</option>
+        <option value="basic-dark">Basic Dark</option>
+      </select>
+    </header>
+
+    <div class="main-area">
+      <div class="left-panel">
+        <nav class="activity-bar collapsed" id="activityBar">
+          <div class="icon active" title="Home"><span class="symbol">[H]</span><span class="icon-label">HOME</span></div>
+          <div class="icon" title="Run"><span class="symbol">[R]</span><span class="icon-label">RUN</span></div>
+          <div class="icon" title="Github Actions"><span class="symbol">[G]</span><span class="icon-label">GITHUB</span></div>
+          <div class="icon" title="Docker"><span class="symbol">[D]</span><span class="icon-label">DOCKER</span></div>
+          <div class="icon" title="Source Control"><span class="symbol">[S]</span><span class="icon-label">SOURCE</span></div>
+          <div class="icon" title="Chat"><span class="symbol">#</span><span class="icon-label">CHAT</span></div>
+          <div class="icon" title="Files"><span class="symbol">[]</span><span class="icon-label">FILES</span></div>
+          <button class="activity-bar-toggle" id="activityBarToggle" title="Expand/Collapse">&gt;</button>
+        </nav>
+
+        <aside class="files-panel" id="filesPanel">
+        <div class="files-panel-header">
+          <span class="files-title">FILES</span>
+        </div>
+        <div class="files-search">
+          <input type="text" placeholder="Search files...">
+        </div>
+        <div class="file-tree">
+          <div class="folder">▼ src/</div>
+          <div class="file" data-open="app.rs">  app.rs <span class="git-status">M</span></div>
+          <div class="file" data-open="main.rs">  main.rs</div>
+          <div class="folder">  ▼ views/</div>
+          <div class="file">    dashboard.rs</div>
+          <div class="file">    config.rs <span class="git-status added">A</span></div>
+          <div class="folder">▼ tests/</div>
+          <div class="file">  integration.rs</div>
+          <div class="file">Cargo.toml</div>
+          <div class="file">README.md</div>
+        </div>
+        <div class="files-status">42 files | 3 modified | main up2</div>
+        </aside>
+      </div>
+
+      <div class="center-column">
+        <div class="center-row">
+          <div class="content-wrapper">
+            <main class="primary-content">
+          <div class="page page-dashboard active">
+          <div class="editor-view" id="editorView">
+            <div class="editor-tabs">
+              <span class="tab active">app.rs <span class="dot">*</span></span>
+              <span class="tab">main.rs</span>
+            </div>
+            <div class="editor-area">
+              <div class="editor-gutter">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10</div>
+              <div class="editor-code">fn main() {
+    let app = App::new();
+    app.run().unwrap();
+}
+
+pub struct Dashboard {
+    widgets: Vec&lt;Widget&gt;,
+}
+
+impl Dashboard {
+    pub fn new() -&gt; Self {
+        Self { widgets: vec![] }
+    }
+}</div>
+            </div>
+          </div>
+          <div class="dashboard-view" id="dashboardView">
+          <div class="dashboard-header">
+            <button class="add-widget-btn">Add widget</button>
+            <button class="customize-widgets-btn">Customize</button>
+          </div>
+          <div class="dashboard-grid">
+            <div class="widget-card">
+              <div class="drag-handle"></div>
+              <div class="widget-title">Orchestrator Status</div>
+              <span class="status-badge">Running</span>
+              <div class="orchestrator-buttons">
+                <button>START</button>
+                <button class="primary">PAUSE</button>
+                <button>RESUME</button>
+                <button>STOP</button>
+                <button>RESET</button>
+                <button>PREVIEW</button>
+                <button>BUILD</button>
+                <button class="kill-btn">Kill</button>
+              </div>
+              <div class="preview-build-strip">
+                <span>Preview: running</span>
+                <a href="#">Open preview</a>
+                <span>|</span>
+                <span>Build: success</span>
+                <a href="#">Open artifact</a>
+              </div>
+            </div>
+            <div class="widget-card">
+              <div class="drag-handle"></div>
+              <div class="widget-title">Current Task</div>
+              <div style="font-size: 12px;">
+                <div>Tier: Phase 2 / Task 3</div>
+                <div>Item: Implement dashboard widgets</div>
+                <div>Platform: Claude Code | Model: sonnet-4.5</div>
+                <div class="subagent-indicator">> 2 subagents active</div>
+              </div>
+            </div>
+            <div class="widget-card" style="grid-column: span 2;">
+              <div class="drag-handle"></div>
+              <div class="widget-title">Progress</div>
+              <div style="margin-top: var(--sm);">
+                <div style="font-size: 11px;">Phase</div>
+                <div class="progress-bar"><div class="fill" style="width: 66%"></div></div>
+                <div style="font-size: 11px;">Task</div>
+                <div class="progress-bar"><div class="fill" style="width: 40%"></div></div>
+                <div style="font-size: 11px;">Subtask</div>
+                <div class="progress-bar"><div class="fill" style="width: 80%"></div></div>
+              </div>
+            </div>
+            <div class="widget-card">
+              <div class="drag-handle"></div>
+              <div class="widget-title">Budgets</div>
+              <div class="donut-row">
+                <div class="donut-mini" style="border-top-color: var(--accent-blue);"><span class="inner">45%</span></div>
+                <div class="donut-mini" style="border-top-color: var(--accent-lime);"><span class="inner">12%</span></div>
+                <div class="donut-mini" style="border-top-color: var(--accent-orange);"><span class="inner">78%</span></div>
+              </div>
+              <div style="font-size: 10px; margin-top: var(--xs);">Claude | Codex | Gemini</div>
+            </div>
+            <div class="widget-card cta-card">
+              <div class="drag-handle"></div>
+              <div class="widget-title">⚠ Requirements Need Your Input</div>
+              <div style="font-size: 12px; margin-bottom: var(--md);">3 questions need answers before this wizard can proceed.</div>
+              <button class="primary" style="margin-right: var(--sm);">Resume Wizard</button>
+              <button>View in Thread</button>
+            </div>
+            <div class="widget-card">
+              <div class="drag-handle"></div>
+              <div class="widget-title">Terminal Output</div>
+              <div class="terminal-output">
+                <div class="line">$ cargo build</div>
+                <div class="line">   Compiling puppet-master v0.1.0</div>
+                <div class="line">   Compiling slint v1.5.1</div>
+                <div class="line stderr">error[E0433]: unresolved import `slint`</div>
+                <div class="line info">  --> src/main.rs:12:5</div>
+              </div>
+            </div>
+            <div class="widget-card">
+              <div class="drag-handle"></div>
+              <div class="widget-title">Interview Panel</div>
+              <div style="font-size: 12px;">
+                <div>Phase: Validate (2/5)</div>
+                <div class="progress-bar" style="margin-top: var(--sm);"><div class="fill" style="width: 40%"></div></div>
+              </div>
+            </div>
+            <div class="widget-card error-card">
+              <div class="drag-handle"></div>
+              <div class="widget-title">Error Display</div>
+              <div style="font-size: 12px; color: var(--accent-magenta);">Build failed: unresolved import</div>
+              <button style="margin-top: var(--sm);">Retry</button>
+            </div>
+            <div class="widget-card">
+              <div class="drag-handle"></div>
+              <div class="widget-title">Platform Quota</div>
+              <div style="font-size: 12px;">
+                <div>Codex: 2/5 crews, 45/100 quota</div>
+                <div>Claude: 1/3 crews, 12/50 quota</div>
+              </div>
+            </div>
+            <div class="widget-card background-runs-card">
+              <div class="drag-handle"></div>
+              <div class="widget-title">Background Runs</div>
+              <div style="font-size: 11px; color: var(--text-muted);">0 active</div>
+            </div>
+          </div>
+          </div>
+          </div>
+          <div class="page page-projects">
+            <div class="stub-page">
+              <h2 class="stub-title">Projects</h2>
+              <p class="stub-desc">Project list, open folder, new project. Will map to spec.</p>
+            </div>
+          </div>
+          <div class="page page-wizard">
+            <div class="wizard-layout">
+              <div class="wizard-steps">
+                <div class="wizard-step active" data-step="0">0. Project Setup</div>
+                <div class="wizard-step" data-step="1">1. Dependency Install</div>
+                <div class="wizard-step" data-step="2">2. Quick Interview Config</div>
+                <div class="wizard-step" data-step="3">3. PRD Generation</div>
+                <div class="wizard-step" data-step="4">4. Tier Config</div>
+                <div class="wizard-step" data-step="5">5. Tier Planning</div>
+                <div class="wizard-step" data-step="6">6–8. Tiers</div>
+                <div class="wizard-step" data-step="9">9. Final Review & Init</div>
+              </div>
+              <div class="wizard-main">
+                <div class="wizard-step-header" id="wizardStepHeader">Step 0 of 9 – Project Setup</div>
+                <div class="wizard-step-content">
+                  <div class="wizard-intent-cards">
+                    <div class="wizard-intent-card active">New project</div>
+                    <div class="wizard-intent-card">Fork & evolve</div>
+                    <div class="wizard-intent-card">Enhance</div>
+                    <div class="wizard-intent-card">Contribute PR</div>
+                  </div>
+                  <div class="wizard-fields">
+                    <label>Project path</label>
+                    <input type="text" class="wizard-input" placeholder="/path/to/project">
+                    <label><input type="checkbox"> Create GitHub repo</label>
+                    <div class="wizard-sub-fields">
+                      <label>Repo name</label>
+                      <input type="text" class="wizard-input" placeholder="project-name">
+                      <label>Visibility</label>
+                      <select class="wizard-select"><option>Public</option><option>Private</option></select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="wizard-panes">
+                <div class="wizard-doc-pane">
+                  <div class="wizard-pane-title">Requirements preview</div>
+                  <div class="wizard-doc-content">Upload files or use the Builder to generate requirements. Preview will appear here.</div>
+                </div>
+                <div class="wizard-activity">
+                  <div class="wizard-progress-strip">
+                    <span class="wizard-progress-label">Idle</span>
+                    <div class="wizard-progress-bar"><div class="wizard-progress-fill" style="width: 0%"></div></div>
+                  </div>
+                  <div class="wizard-activity-log">
+                    <div class="wizard-log-line">[Ready] Chain Wizard – Step 0</div>
+                    <div class="wizard-log-line">[Info] Select intent and project path to continue.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wizard-footer">
+              <div class="wizard-footer-left">
+                <button class="wizard-btn" id="wizardBack">Back</button>
+                <button class="wizard-btn primary" id="wizardNext">Next</button>
+                <button class="wizard-btn" id="wizardCancel">Cancel</button>
+              </div>
+              <div class="wizard-footer-right">
+                <button class="wizard-btn" id="wizardPause" disabled>Pause</button>
+                <button class="wizard-btn" id="wizardResume" disabled>Resume</button>
+                <span class="wizard-status-pill" id="wizardStatusPill">Idle</span>
+              </div>
+            </div>
+          </div>
+          <div class="page page-orchestrator">
+            <div class="orch-header">
+              <span class="orch-title">Orchestrator</span>
+              <span class="orch-status-badge">Idle</span>
+              <span class="orch-elapsed">0:00</span>
+            </div>
+            <div class="orch-tabs">
+              <span class="orch-tab active" tabindex="0" data-tab="progress">Progress<span class="orch-tab-badge" id="orchTabBadgeProgress" aria-hidden="true">(0)</span></span>
+              <span class="orch-tab" tabindex="0" data-tab="tiers">Tiers</span>
+              <span class="orch-tab" tabindex="0" data-tab="node_graph">Node Graph Display<span class="orch-tab-badge orch-tab-badge-dot" id="orchTabBadgeNodeGraph" aria-hidden="true" title="HITL pending" style="display: none;"></span></span>
+              <span class="orch-tab" tabindex="0" data-tab="evidence">Evidence<span class="orch-tab-badge" id="orchTabBadgeEvidence" aria-hidden="true">0</span></span>
+              <span class="orch-tab" tabindex="0" data-tab="history">History</span>
+              <span class="orch-tab" tabindex="0" data-tab="ledger">Ledger</span>
+            </div>
+            <div class="orch-content">
+              <div class="orch-tab-content active" data-tab="progress">
+                <div class="orch-progress-grid">
+                  <div class="orch-card">
+                    <div class="orch-card-title">Orchestrator Status</div>
+                    <span class="status-badge">Idle</span>
+                    <div class="orchestrator-buttons">
+                      <button>START</button>
+                      <button class="primary">PAUSE</button>
+                      <button>RESUME</button>
+                      <button>STOP</button>
+                      <button>RESET</button>
+                      <button>PREVIEW</button>
+                      <button>BUILD</button>
+                    </div>
+                    <div class="preview-build-strip">
+                      <span>Preview: stopped</span>
+                      <a href="#">Open preview</a>
+                      <span>|</span>
+                      <span>Build: —</span>
+                      <a href="#">Open artifact</a>
+                    </div>
+                  </div>
+                  <div class="orch-card">
+                    <div class="orch-card-title">Current Task</div>
+                    <div style="font-size: 12px;">
+                      <div>Phase 2 / Task 3</div>
+                      <div>Item: Implement dashboard widgets</div>
+                      <div>Platform: Claude Code | Model: sonnet-4.5</div>
+                      <div class="subagent-indicator">&gt; 2 subagents active</div>
+                    </div>
+                  </div>
+                  <div class="orch-card" style="grid-column: span 2;">
+                    <div class="orch-card-title">Progress</div>
+                    <div class="orch-progress-row"><span class="orch-progress-label">2/3 Phase</span><div class="progress-bar"><div class="fill" style="width: 66%"></div></div></div>
+                    <div class="orch-progress-row"><span class="orch-progress-label">4/10 Task</span><div class="progress-bar"><div class="fill" style="width: 40%"></div></div></div>
+                    <div class="orch-progress-row"><span class="orch-progress-label">8/10 Subtask</span><div class="progress-bar"><div class="fill" style="width: 80%"></div></div></div>
+                  </div>
+                  <div class="orch-card">
+                    <div class="orch-card-title">Calls to Action</div>
+                    <div class="orch-cta-list">
+                      <div class="orch-cta-item orch-cta-muted">No HITL pending</div>
+                      <div class="orch-cta-item orch-cta-muted">Run active — no rate limits</div>
+                    </div>
+                  </div>
+                  <div class="orch-card">
+                    <div class="orch-card-title">Agent Terminal<button type="button" class="orch-terminal-clear" title="Clear output">Clear</button></div>
+                    <div class="terminal-output" id="orchTerminalOutput">
+                      <div class="line line-info">[INFO] Agent: Phase 2 Task 3</div>
+                      <div class="line line-ok">[OK] Reading src/auth/mod.rs</div>
+                      <div class="line line-ok">[OK] 48 lines analyzed</div>
+                    </div>
+                  </div>
+                  <div class="orch-card" style="grid-column: span 2;">
+                    <div class="orch-card-title">Completed Prose</div>
+                    <div class="orch-prose-toolbar">
+                      <button type="button" class="orch-prose-toggle active" data-prose="recent" aria-pressed="true">Show recent</button>
+                      <button type="button" class="orch-prose-toggle" data-prose="all" aria-pressed="false">Show all</button>
+                    </div>
+                    <div class="orch-prose-list">
+                      <div class="orch-prose-block expanded" data-prose-block>
+                        <button type="button" class="orch-prose-block-head" aria-expanded="true"><span class="orch-prose-badge orch-prose-passed">Passed</span> Phase 1: Project Setup <span class="orch-prose-dur">2m 34s</span></button>
+                        <div class="orch-prose-block-body"><p>Completed the initial project scaffolding. Created the Cargo workspace with three crates (core, cli, gui). Set up CI configuration and installed dependencies.</p><p class="orch-prose-meta">4 files created, 2 files modified.</p></div>
+                      </div>
+                      <div class="orch-prose-block expanded" data-prose-block>
+                        <button type="button" class="orch-prose-block-head" aria-expanded="true"><span class="orch-prose-badge orch-prose-passed">Passed</span> Task 1.1: Scaffold core <span class="orch-prose-dur">1m 12s</span></button>
+                        <div class="orch-prose-block-body"><p>Added core library with tier types and event types. Unit tests passing.</p><p class="orch-prose-meta">2 files created.</p></div>
+                      </div>
+                      <div class="orch-prose-block expanded" data-prose-block>
+                        <button type="button" class="orch-prose-block-head" aria-expanded="true"><span class="orch-prose-badge orch-prose-failed">Failed</span> Task 2.1: Integration gate <span class="orch-prose-dur">0m 45s</span></button>
+                        <div class="orch-prose-block-body"><p>Gate failed: 1 acceptance check did not pass. See evidence for details.</p><p class="orch-prose-meta">0 files modified.</p></div>
+                      </div>
+                      <div class="orch-prose-block collapsed" data-prose-block>
+                        <button type="button" class="orch-prose-block-head" aria-expanded="false"><span class="orch-prose-badge orch-prose-passed">Passed</span> Subtask 1.1.1 <span class="orch-prose-dur">0m 22s</span></button>
+                        <div class="orch-prose-block-body"><p>Subtask completed in 0m 22s.</p></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="orch-tab-content" data-tab="tiers">
+                <div class="orch-tiers-layout">
+                  <div class="orch-tiers-toolbar orch-toolbar">
+                    <select class="orch-filter" aria-label="Expand depth"><option>Expand: 1 level</option><option>Expand: 2 levels</option><option>Expand: 3 levels</option><option>Expand: All</option></select>
+                    <select class="orch-filter" aria-label="Filter by state"><option>State: All</option><option>Running</option><option>Done</option><option>Pending</option></select>
+                  </div>
+                  <div class="orch-tiers-main">
+                  <div class="orch-tier-tree">
+                    <div class="orch-tier-group">
+                      <div class="orch-tier-node expanded" data-tier="1">
+                        <span class="orch-tier-toggle">▼</span>
+                        <span class="orch-tier-label">Phase 1</span>
+                        <span class="orch-tier-progress">3/3</span>
+                        <span class="orch-tier-iter">1 iter</span>
+                        <span class="orch-tier-badge">Done</span>
+                      </div>
+                      <div class="orch-tier-children">
+                        <div class="orch-tier-group">
+                          <div class="orch-tier-node expanded" data-tier="1.1">
+                            <span class="orch-tier-toggle">▼</span>
+                            <span class="orch-tier-label">Task 1.1</span>
+                            <span class="orch-tier-progress">2/2</span>
+                            <span class="orch-tier-iter">1 iter</span>
+                            <span class="orch-tier-badge">Done</span>
+                          </div>
+                          <div class="orch-tier-children">
+                            <div class="orch-tier-node" data-tier="1.1.1">
+                              <span class="orch-tier-toggle">▶</span>
+                              <span class="orch-tier-label">Subtask 1.1.1</span>
+                              <span class="orch-tier-badge">Done</span>
+                            </div>
+                            <div class="orch-tier-node" data-tier="1.1.2">
+                              <span class="orch-tier-toggle">▶</span>
+                              <span class="orch-tier-label">Subtask 1.1.2</span>
+                              <span class="orch-tier-badge">Done</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="orch-tier-node" data-tier="1.2">
+                          <span class="orch-tier-toggle">▶</span>
+                          <span class="orch-tier-label">Task 1.2</span>
+                          <span class="orch-tier-badge">Done</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="orch-tier-group">
+                      <div class="orch-tier-node expanded" data-tier="2">
+                        <span class="orch-tier-toggle">▼</span>
+                        <span class="orch-tier-label">Phase 2</span>
+                        <span class="orch-tier-progress">1/3</span>
+                        <span class="orch-tier-iter">1 iter</span>
+                        <span class="orch-tier-badge">Running</span>
+                      </div>
+                      <div class="orch-tier-children">
+                        <div class="orch-tier-node expanded" data-tier="2.1">
+                          <span class="orch-tier-toggle">▼</span>
+                          <span class="orch-tier-label">Task 2.1</span>
+                          <span class="orch-tier-progress">1/1</span>
+                          <span class="orch-tier-iter">1 iter</span>
+                          <span class="orch-tier-badge">Done</span>
+                        </div>
+                        <div class="orch-tier-children">
+                          <div class="orch-tier-node" data-tier="2.1.1">
+                            <span class="orch-tier-toggle">▶</span>
+                            <span class="orch-tier-label">Subtask 2.1.1</span>
+                            <span class="orch-tier-badge">Done</span>
+                          </div>
+                        </div>
+                        <div class="orch-tier-node selected" data-tier="2.2">
+                          <span class="orch-tier-toggle">▶</span>
+                          <span class="orch-tier-label">Task 2.2</span>
+                          <span class="orch-tier-progress">0/1</span>
+                          <span class="orch-tier-iter">1 iter</span>
+                          <span class="orch-tier-badge">Running</span>
+                        </div>
+                        <div class="orch-tier-node" data-tier="2.3">
+                          <span class="orch-tier-toggle">▶</span>
+                          <span class="orch-tier-label">Task 2.3</span>
+                          <span class="orch-tier-badge">Pending</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="orch-tier-detail">
+                    <div class="orch-tier-detail-title">Node detail</div>
+                    <div class="orch-tier-detail-body" id="orchTierDetailBody">
+                      <p><strong>Task 2.2</strong></p>
+                      <p>Implement dashboard widgets. Platform: Claude Code, Model: sonnet-4.5.</p>
+                      <p>Acceptance criteria: Widgets render; state updates on run.</p>
+                      <p class="orch-tier-detail-meta">Evidence: <a href="#" class="orch-tier-link">GateReport 2.2 (10:38)</a></p>
+                      <p class="orch-tier-detail-meta">Iteration: 1 (current)</p>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="orch-tab-content" data-tab="node_graph">
+                <div class="orch-node-graph-wrap">
+                  <div class="orch-rungraph-empty" id="orchGraphPlaceholder">
+                    <p>No active run. Start an orchestrator run to see the graph.</p>
+                    <button class="wizard-btn primary" id="orchGraphStartBtn">Start Run</button>
+                  </div>
+                  <div class="orch-rungraph-full" id="orchDagPreview" style="display: none;">
+                    <div class="orch-rungraph-topbar">
+                      <span class="orch-rungraph-runid" title="Copy Run ID">run-abc12ef</span>
+                      <span class="orch-rungraph-date">2026-03-09</span>
+                      <span class="orch-rungraph-status-badge">Running</span>
+                      <span class="orch-rungraph-times">10:32 — —</span>
+                      <span class="orch-rungraph-elapsed">12m 34s</span>
+                      <span class="orch-rungraph-counts">5 passed, 2 running, 1 failed</span>
+                      <select class="orch-rungraph-layout" title="Layout preset" aria-label="Layout preset">
+                        <option>Layered L-R</option>
+                        <option>Layered T-B</option>
+                        <option>Compact</option>
+                        <option>Grouped by Phase</option>
+                        <option>Critical Path</option>
+                      </select>
+                      <button type="button" class="orch-rungraph-zoom" title="Zoom in">+</button>
+                      <button type="button" class="orch-rungraph-zoom" title="Zoom out">−</button>
+                      <button type="button" class="orch-rungraph-fit" title="Fit to screen">Fit</button>
+                      <span class="orch-rungraph-zoom-pct" id="orchGraphZoomPct">100%</span>
+                      <select class="orch-rungraph-filter" aria-label="Filter by state"><option>State: All</option><option>Running</option><option>Passed</option><option>Failed</option></select>
+                      <input type="text" class="orch-rungraph-search" placeholder="Search nodes..." aria-label="Search nodes">
+                      <span class="orch-rungraph-toggles">
+                        <button type="button" class="orch-rungraph-toggle" title="Hide completed nodes" aria-label="Hide completed nodes">Hide completed</button>
+                        <button type="button" class="orch-rungraph-toggle" title="Show blocked only" aria-label="Show blocked nodes only">Blocked only</button>
+                      </span>
+                    </div>
+                    <div class="orch-rungraph-body">
+                      <div class="orch-rungraph-left">
+                        <div class="orch-rungraph-canvas" id="orchGraphCanvas">
+                          <span class="orch-rungraph-zoom-indicator" id="orchGraphZoomIndicator" aria-live="polite">100%</span>
+                          <div class="orch-rungraph-graph-content">
+                            <svg class="orch-rungraph-edges" id="orchGraphEdges" width="620" height="260" viewBox="0 0 620 260" aria-hidden="true">
+                              <defs>
+                                <marker id="rungraph-arrow-passed" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="var(--graph-passed)"/></marker>
+                                <marker id="rungraph-arrow-running" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="var(--graph-running)"/></marker>
+                              </defs>
+                              <path d="M 104 72 L 104 96 L 300 96 L 300 24" fill="none" stroke="var(--graph-passed)" stroke-width="2" marker-end="url(#rungraph-arrow-passed)"/>
+                              <path d="M 300 72 L 300 60 L 398 60 L 398 24 L 416 24" fill="none" stroke="var(--graph-running)" stroke-width="2" marker-end="url(#rungraph-arrow-running)"/>
+                              <path d="M 300 72 L 300 144 L 398 144 L 398 96 L 416 96" fill="none" stroke="var(--graph-running)" stroke-width="2" marker-end="url(#rungraph-arrow-running)"/>
+                              <path d="M 300 72 L 300 188 L 398 188 L 398 168 L 416 168" fill="none" stroke="var(--graph-running)" stroke-width="2" marker-end="url(#rungraph-arrow-running)"/>
+                            </svg>
+                            <div class="orch-rungraph-node graph-passed" data-node-id="1" style="left:24px;top:24px;" title="Phase 1"><span class="orch-rungraph-node-line1 orch-rungraph-node-title">Phase 1</span><span class="orch-rungraph-node-line2 orch-rungraph-node-type">Phase</span><span class="orch-rungraph-node-line3"><span class="orch-rungraph-node-state-icon orch-state-passed" aria-hidden="true"></span><span class="orch-rungraph-node-state">Passed</span><span class="orch-rungraph-node-meta">1m 20s</span></span></div>
+                            <div class="orch-rungraph-node graph-running" data-node-id="2" style="left:220px;top:24px;" title="Phase 2"><span class="orch-rungraph-node-line1 orch-rungraph-node-title">Phase 2</span><span class="orch-rungraph-node-line2 orch-rungraph-node-type">Phase</span><span class="orch-rungraph-node-line3"><span class="orch-rungraph-node-state-icon orch-state-running" aria-hidden="true"></span><span class="orch-rungraph-node-state">Running</span><span class="orch-rungraph-node-meta">0m 45s</span></span></div>
+                            <div class="orch-rungraph-node graph-passed" data-node-id="2.1" style="left:416px;top:24px;" title="Task 2.1"><span class="orch-rungraph-node-badge orch-rungraph-node-attempt" title="Attempts">2</span><span class="orch-rungraph-node-line1 orch-rungraph-node-title">Task 2.1</span><span class="orch-rungraph-node-line2 orch-rungraph-node-type">Task</span><span class="orch-rungraph-node-line3"><span class="orch-rungraph-node-state-icon orch-state-passed" aria-hidden="true"></span><span class="orch-rungraph-node-state">Passed</span><span class="orch-rungraph-node-meta">0m 22s</span></span></div>
+                            <div class="orch-rungraph-node graph-running selected" data-node-id="2.2" style="left:416px;top:96px;" title="Task 2.2"><span class="orch-rungraph-node-hitl" title="HITL pending"></span><span class="orch-rungraph-node-line1 orch-rungraph-node-title">Task 2.2</span><span class="orch-rungraph-node-line2 orch-rungraph-node-type">Task</span><span class="orch-rungraph-node-line3"><span class="orch-rungraph-node-state-icon orch-state-running" aria-hidden="true"></span><span class="orch-rungraph-node-state">Running</span><span class="orch-rungraph-node-meta">—</span></span></div>
+                            <div class="orch-rungraph-node graph-pending" data-node-id="2.3" style="left:416px;top:168px;" title="Task 2.3"><span class="orch-rungraph-node-blocked" title="Blocked"></span><span class="orch-rungraph-node-line1 orch-rungraph-node-title">Task 2.3</span><span class="orch-rungraph-node-line2 orch-rungraph-node-type">Task</span><span class="orch-rungraph-node-line3"><span class="orch-rungraph-node-state-icon orch-state-pending" aria-hidden="true"></span><span class="orch-rungraph-node-state">Pending</span><span class="orch-rungraph-node-meta">—</span></span></div>
+                          </div>
+                        </div>
+                        <div class="orch-rungraph-minimap" id="orchGraphMinimap" title="Minimap: click to pan">
+                          <div class="orch-rungraph-minimap-nodes" aria-hidden="true">
+                            <span class="orch-rungraph-minimap-dot graph-passed" style="left:40%;top:8%;" title="1"></span>
+                            <span class="orch-rungraph-minimap-dot graph-running" style="left:40%;top:38%;" title="2"></span>
+                            <span class="orch-rungraph-minimap-dot graph-passed" style="left:12%;top:68%;" title="2.1"></span>
+                            <span class="orch-rungraph-minimap-dot graph-running" style="left:40%;top:68%;" title="2.2"></span>
+                            <span class="orch-rungraph-minimap-dot graph-pending" style="left:68%;top:68%;" title="2.3"></span>
+                          </div>
+                          <div class="orch-rungraph-minimap-viewport" id="orchGraphMinimapViewport"></div>
+                        </div>
+                      </div>
+                      <div class="orch-rungraph-right">
+                        <div class="orch-rungraph-quickfilters">
+                          <button type="button" class="orch-rungraph-qf" data-qf="failed">Failed</button>
+                          <button type="button" class="orch-rungraph-qf" data-qf="blocked">Blocked</button>
+                          <button type="button" class="orch-rungraph-qf" data-qf="running">Running</button>
+                          <button type="button" class="orch-rungraph-qf" data-qf="approval">Needs Approval</button>
+                          <button type="button" class="orch-rungraph-qf" data-qf="upstream">Upstream Failed</button>
+                        </div>
+                        <div class="orch-rungraph-table-wrap">
+                          <table class="orch-table orch-rungraph-table">
+                            <thead><tr><th>Name</th><th>Type</th><th>State</th><th>Start</th><th>End</th><th>Duration</th><th>Tries</th><th>Verification</th><th>Blocked</th></tr></thead>
+                            <tbody>
+                              <tr class="orch-rungraph-row" data-node-id="1"><td>1 Phase 1</td><td>Phase</td><td>Passed</td><td>10:32</td><td>10:33</td><td>1m 20s</td><td>1</td><td>Passed</td><td>—</td></tr>
+                              <tr class="orch-rungraph-row" data-node-id="2"><td>2 Phase 2</td><td>Phase</td><td>Running</td><td>10:33</td><td>—</td><td>0m 45s</td><td>1</td><td>—</td><td>—</td></tr>
+                              <tr class="orch-rungraph-row" data-node-id="2.1"><td>2.1 Task 2.1</td><td>Task</td><td>Passed</td><td>10:34</td><td>10:34</td><td>0m 22s</td><td>1</td><td>Passed</td><td>—</td></tr>
+                              <tr class="orch-rungraph-row selected" data-node-id="2.2"><td>2.2 Task 2.2</td><td>Task</td><td>Running</td><td>10:35</td><td>—</td><td>—</td><td>1</td><td>Pending</td><td>—</td></tr>
+                              <tr class="orch-rungraph-row" data-node-id="2.3"><td>2.3 Task 2.3</td><td>Task</td><td>Pending</td><td>—</td><td>—</td><td>—</td><td>0</td><td>—</td><td>—</td></tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="orch-rungraph-detail">
+                          <div class="orch-rungraph-detail-title">Node detail</div>
+                          <div class="orch-rungraph-detail-body" id="orchGraphDetailBody">
+                            <div class="orch-rungraph-detail-section" data-section>
+                              <button type="button" class="orch-rungraph-detail-section-head" aria-expanded="true">C1 Node summary</button>
+                              <div class="orch-rungraph-detail-section-body"><p><strong>2.2</strong> Task 2.2</p><p>Objective: Implement dashboard widgets.</p><p>Run date: 2026-03-09 · State: Running · Start: 10:35 · End: — · Elapsed: — · Attempts: 1</p><p>Injected context: AGENTS.md 2.1k; parent summary 0.5k.</p><p>Blocked reason: —</p><p>HITL Status: No HITL request</p></div>
+                            </div>
+                            <div class="orch-rungraph-detail-section collapsed" data-section>
+                              <button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C2 Plan Mapping</button>
+                              <div class="orch-rungraph-detail-section-body"><p>Breadcrumb: Phase 2 &gt; Task 2.2</p><p>Section: Dashboard widgets</p><p>Excerpt: Implement dashboard widgets; state updates on run.</p><button type="button" class="wizard-btn">Open plan at section</button> <button type="button" class="wizard-btn">Copy plan reference</button></div>
+                            </div>
+                            <div class="orch-rungraph-detail-section collapsed" data-section>
+                              <button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C3 Worker Activity</button>
+                              <div class="orch-rungraph-detail-section-body"><p>Worker: rust-engineer · Claude Code / sonnet-4.5</p><p>Progress: (stream would appear here)</p><p>Tool calls: read_file, run_terminal_cmd</p><p>Files changed: src/dashboard.rs +12 -2</p><p>Evidence produced: GateReport 2.2</p></div>
+                            </div>
+                            <div class="orch-rungraph-detail-section collapsed" data-section>
+                              <button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C4 Verifier Activity</button>
+                              <div class="orch-rungraph-detail-section-body"><p>Verifier: qa-expert · Claude Code</p><p>Start: — · End: — · Elapsed: —</p><p>Acceptance checks: (pending)</p><p>Final verdict: —</p></div>
+                            </div>
+                            <div class="orch-rungraph-detail-section collapsed" data-section>
+                              <button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C5 Model, Tokens, Usage</button>
+                              <div class="orch-rungraph-detail-section-body"><p>Worker model: sonnet-4.5 · Verifier: —</p><p>Tokens: in 1,020 / out 220 / reasoning 0</p><p>Cost: $0.02</p><a href="#" class="orch-rungraph-usage-link">View in Usage</a></div>
+                            </div>
+                            <div class="orch-rungraph-detail-section collapsed" data-section>
+                              <button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C6 HITL Controls</button>
+                              <div class="orch-rungraph-detail-section-body"><p>No pending approvals for this node.</p></div>
+                            </div>
+                            <div class="orch-rungraph-detail-section collapsed" data-section>
+                              <button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C7 Dependencies</button>
+                              <div class="orch-rungraph-detail-section-body"><p>Upstream: 2 (Phase 2) — click to select</p><p>Downstream: —</p></div>
+                            </div>
+                            <div class="orch-rungraph-detail-section collapsed" data-section>
+                              <button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C8 Logs &amp; Events</button>
+                              <div class="orch-rungraph-detail-section-body"><p>Event IDs: evt-2.2-001, evt-2.2-002</p><p>run_id: run-abc12ef · tier_id: 2.2</p><a href="#">Raw log</a><p>Event timeline: (expandable list)</p></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="orch-rungraph-topbar-footer">
+                      <button type="button" class="wizard-btn" id="orchDagResetBtn">Reset (no run)</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="orch-tab-content" data-tab="evidence">
+                <div class="orch-evidence-layout">
+                  <div class="orch-evidence-main">
+                    <div class="orch-toolbar">
+                      <select class="orch-filter" aria-label="Filter by type"><option>Type: All</option><option>TestLog</option><option>Screenshot</option><option>BrowserTrace</option><option>FileSnapshot</option><option>Metric</option><option>GateReport</option><option>CommandOutput</option></select>
+                      <input type="text" class="orch-search" placeholder="Search evidence..." aria-label="Search evidence">
+                    </div>
+                    <table class="orch-table orch-evidence-table">
+                      <thead>
+                        <tr><th>Type</th><th>Tier</th><th>Timestamp</th><th>Description</th></tr>
+                      </thead>
+                      <tbody>
+                        <tr class="orch-evidence-row" data-type="TestLog" data-desc="Unit tests passed"><td>TestLog</td><td>1.1.1</td><td>10:32</td><td>Unit tests passed</td></tr>
+                        <tr class="orch-evidence-row" data-type="Screenshot" data-desc="Dashboard capture"><td>Screenshot</td><td>2.1</td><td>10:35</td><td>Dashboard capture</td></tr>
+                        <tr class="orch-evidence-row" data-type="GateReport" data-desc="Phase 2 gate"><td>GateReport</td><td>2.2</td><td>10:38</td><td>Phase 2 gate</td></tr>
+                        <tr class="orch-evidence-row" data-type="CommandOutput" data-desc="Command output"><td>CommandOutput</td><td>2.1.1</td><td>10:34</td><td>cargo test</td></tr>
+                        <tr class="orch-evidence-row" data-type="FileSnapshot" data-desc="File snapshot"><td>FileSnapshot</td><td>2.2</td><td>10:37</td><td>src/dashboard.rs</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="orch-evidence-detail">
+                    <div class="orch-tier-detail-title">Preview</div>
+                    <div class="orch-evidence-detail-body" id="orchEvidenceDetailBody">Select an evidence item.</div>
+                    <div class="orch-evidence-detail-actions">
+                      <button type="button" class="wizard-btn" title="Open in Editor">Open in Editor</button>
+                      <button type="button" class="wizard-btn" title="Copy">Copy</button>
+                      <button type="button" class="wizard-btn" title="Export">Export</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="orch-tab-content" data-tab="history">
+                <div class="orch-history-toolbar orch-toolbar">
+                  <span>Last 7 days</span>
+                  <select class="orch-filter" aria-label="Filter by status"><option>Status: All</option><option>Complete</option><option>Failed</option><option>Running</option></select>
+                  <button type="button" class="wizard-btn" title="View Graph">View Graph</button>
+                  <button type="button" class="wizard-btn" title="View Evidence">View Evidence</button>
+                  <button type="button" class="wizard-btn" title="Delete Run">Delete Run</button>
+                </div>
+                <table class="orch-table orch-history-table">
+                  <thead>
+                    <tr><th>Run ID</th><th>PRD name</th><th>Status</th><th>Start</th><th>End</th><th>Duration</th><th>Nodes</th><th>Pass/Fail</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr class="orch-history-row" data-run-id="run-abc12ef"><td>run-abc12ef</td><td>—</td><td>Complete</td><td>10:43</td><td>10:45</td><td>2m 34s</td><td>8</td><td>7/8</td></tr>
+                    <tr class="orch-history-row" data-run-id="run-def34ab"><td>run-def34ab</td><td>—</td><td>Complete</td><td>16:18</td><td>16:20</td><td>1m 12s</td><td>5</td><td>5/5</td></tr>
+                    <tr class="orch-history-row" data-run-id="run-ghi56cd"><td>run-ghi56cd</td><td>—</td><td>Failed</td><td>14:01</td><td>14:02</td><td>0m 45s</td><td>6</td><td>4/6</td></tr>
+                    <tr class="orch-history-row" data-run-id="run-jkl78ef"><td>run-jkl78ef</td><td>—</td><td>Complete</td><td>09:58</td><td>10:01</td><td>3m 01s</td><td>10</td><td>10/10</td></tr>
+                    <tr class="orch-history-row" data-run-id="run-mno90gh"><td>run-mno90gh</td><td>—</td><td>Cancelled</td><td>11:00</td><td>11:00</td><td>0m 12s</td><td>3</td><td>0/3</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="orch-tab-content" data-tab="ledger">
+                <div class="orch-ledger-toolbar orch-toolbar">
+                  <span>Window: 5h</span>
+                  <select class="orch-filter" aria-label="Filter by event type"><option>Event: All</option><option>Completion</option><option>Tool</option></select>
+                  <select class="orch-filter" aria-label="Filter by platform"><option>Platform: All</option><option>Claude</option><option>Codex</option><option>Gemini</option></select>
+                  <a href="#" class="orch-ledger-usage-link">View in Usage</a>
+                  <button type="button" class="wizard-btn" title="Export CSV">Export CSV</button>
+                  <button type="button" class="wizard-btn" title="Export JSON">Export JSON</button>
+                </div>
+                <table class="orch-table orch-ledger-table">
+                  <thead>
+                    <tr><th>Timestamp</th><th>Event type</th><th>Tier ID</th><th>Platform</th><th>Model</th><th>Input</th><th>Output</th><th>Reasoning</th><th>Cost ($)</th><th>Duration (ms)</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>10:35:01</td><td>Completion</td><td>2.2</td><td>Claude</td><td>sonnet-4</td><td>1,020</td><td>220</td><td>0</td><td>0.02</td><td>2100</td></tr>
+                    <tr><td>10:34:45</td><td>Completion</td><td>2.1</td><td>Codex</td><td>—</td><td>650</td><td>240</td><td>0</td><td>0.01</td><td>1500</td></tr>
+                    <tr><td>10:34:30</td><td>Completion</td><td>2.1.1</td><td>Claude</td><td>sonnet-4</td><td>1,800</td><td>300</td><td>0</td><td>0.03</td><td>3200</td></tr>
+                    <tr><td>10:35:10</td><td>Tool: read_file</td><td>2.2</td><td>Claude</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>100</td></tr>
+                    <tr><td>10:32:00</td><td>Completion</td><td>1.1.1</td><td>Gemini</td><td>—</td><td>400</td><td>160</td><td>0</td><td>0.01</td><td>1000</td></tr>
+                  </tbody>
+                  <tfoot class="orch-ledger-footer">
+                    <tr><td colspan="5"><strong>Total</strong></td><td>3,870</td><td>920</td><td>0</td><td>0.07</td><td>7,900</td></tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="page page-usage">
+            <div class="stub-page">
+              <h2 class="stub-title">Usage</h2>
+              <p class="stub-desc">Usage, metrics, evidence, history. Will map to spec.</p>
+            </div>
+          </div>
+          <div class="page page-settings">
+            <div class="stub-page">
+              <h2 class="stub-title">Settings</h2>
+              <p class="stub-desc">App settings, config, login, doctor. Will map to spec.</p>
+            </div>
+          </div>
+        </main>
+          </div>
+        </div>
+
+        <div class="bottom-panel" id="bottomPanel">
+          <div class="bottom-tabs">
+            <div class="bottom-tabs-left">
+              <span class="tab active">Terminal</span>
+              <span class="tab">Problems</span>
+              <span class="tab">Output</span>
+              <span class="tab">Ports</span>
+              <span class="tab">Browser</span>
+              <span class="tab">Debug</span>
+            </div>
+            <div class="bottom-tabs-right">
+              <select id="terminalGroupSelect" title="Terminal group">
+                <option value="build">Build & Test</option>
+                <option value="logs">Logs</option>
+                <option value="shell">Shell</option>
+              </select>
+              <button class="collapse-btn" id="collapseBottom">&#9660;</button>
+            </div>
+          </div>
+          <div class="bottom-tabs-content">
+            <div class="terminal-grid" data-group="build">
+              <div class="terminal-pane">
+                <div class="line">$ cargo build</div>
+                <div class="line">   Compiling puppet-master v0.1.0</div>
+                <div class="line">   Compiling slint v1.5.1</div>
+                <div class="line stderr">error[E0433]: unresolved import `slint`</div>
+                <div class="line info">  --> src/main.rs:12:5</div>
+              </div>
+              <div class="terminal-pane">
+                <div class="line">$ cargo test</div>
+                <div class="line">running 3 tests</div>
+                <div class="line">test tests::integration::basic ... ok</div>
+                <div class="line info">test result: ok. 3 passed</div>
+              </div>
+              <div class="terminal-pane">
+                <div class="line">[INFO] Agent: Phase 2 Task 3</div>
+                <div class="line">[OK] Reading src/auth/mod.rs</div>
+                <div class="line">[OK] 48 lines analyzed</div>
+              </div>
+              <div class="terminal-pane">
+                <div class="line">$ git log --oneline -2</div>
+                <div class="line">a3f2c1d feat: add auth handler</div>
+                <div class="line">b7e4a09 refactor: provider trait</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="chat-panel" id="chatPanel">
+          <div class="chat-panel-header">
+            <span class="title">Chat</span>
+            <div class="panel-actions">
+              <button title="Pop out" id="popOutBtn">⧉</button>
+              <button title="Close" id="closeChatBtn">×</button>
+            </div>
+          </div>
+          <div class="chat-body">
+            <div class="chat-thread-sidebar">
+              <div class="sidebar-title">HISTORY</div>
+              <div class="chat-thread-list">
+                <div class="chat-thread-item active">Project X Plan</div>
+                <div class="chat-thread-item">Ideas</div>
+                <div class="chat-thread-item">Code Review</div>
+                <div class="chat-thread-item">Meeting Notes</div>
+                <div class="chat-thread-item">New Feature</div>
+              </div>
+              <button class="chat-new-thread-btn">+ NEW THREAD</button>
+            </div>
+            <div class="chat-main">
+              <div class="chat-modes">
+                <span class="mode active" data-mode="ask">Ask</span>
+                <span class="mode" data-mode="plan">Plan</span>
+                <span class="mode" data-mode="interview">Interview</span>
+                <span class="mode" data-mode="brainstorm">BrainStorm</span>
+                <span class="mode" data-mode="crew">Crew</span>
+              </div>
+              <div class="plan-card" id="planCard" style="display: none;">
+                <div class="plan-title">Plan</div>
+                <ul class="plan-outline">
+                  <li><input type="checkbox"> Phase 1: Setup</li>
+                  <li><input type="checkbox" checked> Phase 2: Dashboard widgets</li>
+                  <li><input type="checkbox"> Phase 3: Integration</li>
+                </ul>
+              </div>
+              <div class="message-stream">
+                <div class="message assistant">
+                  I've analyzed the requirements. The dashboard should include orchestrator status, current task, progress bars, and budget donuts. Shall I proceed with implementation?
+                  <div class="message-block collapsed">
+                    <div class="block-header">thinking</div>
+                    <div class="block-body">Reasoning about widget layout and spec alignment...</div>
+                  </div>
+                  <div class="message-block collapsed">
+                    <div class="block-header">Ran: cargo test</div>
+                    <div class="block-body"><pre>$ cargo test
+running 3 tests
+test tests::integration::basic ... ok
+test result: ok. 3 passed</pre></div>
+                  </div>
+                  <div class="message-files-touched">app.rs +2 -1</div>
+                  <span class="message-revert">Revert</span>
+                </div>
+                <div class="message user">
+                  Yes, implement the full layout per the spec.
+                </div>
+              </div>
+              <div class="chat-queue-area">
+                <div class="queue-item">
+                  <span class="truncate">Implement dashboard widgets with orchestrator status...</span>
+                  <span class="actions"><a>[edit]</a> <a>[send now]</a> <a>[remove]</a></span>
+                </div>
+              </div>
+              <div class="chat-input-area">
+                <textarea placeholder="Type a message..."></textarea>
+                <div class="input-row">
+                  <button class="at-btn">@</button>
+                  <button class="attach-btn">Attach</button>
+                  <span class="steer-queue-toggle"><span class="active">Steer</span> / <span>Queue</span></span>
+                  <button>SEND</button>
+                </div>
+                <div class="subagent-indicator">&gt; 2 subagents working</div>
+              </div>
+              <div class="chat-footer">
+                <select><option>Claude Code</option><option>Cursor</option><option>Codex</option></select>
+                <select><option>sonnet-4.5</option><option>opus</option></select>
+                <select><option>Low</option><option>Medium</option><option>High</option></select>
+                <select><option>Media</option><option>Image</option><option>Video</option></select>
+                <span class="context-usage">42k/128k <span class="context-progress filled"></span></span>
+                <a>3 problems</a>
+              </div>
+            </div>
+          </div>
+        </aside>
+    </div>
+
+    <footer class="status-bar">
+      <div class="status-menu-wrap">
+        <button class="status-menu-btn" id="statusMenuBtn" title="Status">[i]</button>
+        <div class="status-menu-dropdown" id="statusMenuDropdown">
+          <div class="menu-section">
+            <div class="menu-section-title">Active server</div>
+            <div class="menu-section-content">Coming soon</div>
+          </div>
+          <div class="menu-section">
+            <div class="menu-section-title">MCPs</div>
+            <div class="menu-section-content">puppet-master: 2 MCPs configured</div>
+          </div>
+          <div class="menu-section">
+            <div class="menu-section-title">LSPs</div>
+            <div class="menu-section-content">rust-analyzer: Ready</div>
+          </div>
+          <div class="menu-section">
+            <div class="menu-section-title">Plugins</div>
+            <div class="menu-section-content">3 loaded, 1 enabled</div>
+          </div>
+        </div>
+      </div>
+      <span class="status-sep">|</span>
+      <span class="status-root" title="Root folder">~/projects/puppet-master</span>
+      <span class="status-sep">|</span>
+      <span class="status-git">main</span>
+      <span class="status-sync">Up to date</span>
+      <span class="status-commit">abc12ef</span>
+      <span class="status-sep">|</span>
+      <span class="status-ssh">SSH: dev-server 45ms</span>
+      <span class="status-ssh-rate">In: 12 KB/s | Out: 4 KB/s</span>
+      <span class="status-sep">|</span>
+      <span class="status-snapshot">Last snapshot: 10m ago</span>
+    </footer>
+  </div>
+
+  <div class="floating-chat" id="floatingChat">
+    <div class="float-title" id="floatDrag">
+      Chat - Puppet Master
+      <button class="close-float" id="closeFloat">×</button>
+    </div>
+    <div class="float-content">
+      <div class="chat-body">
+        <div class="chat-thread-sidebar">
+          <div class="sidebar-title">HISTORY</div>
+          <div class="chat-thread-list">
+            <div class="chat-thread-item active">Project X Plan</div>
+            <div class="chat-thread-item">Ideas</div>
+            <div class="chat-thread-item">Code Review</div>
+          </div>
+          <button class="chat-new-thread-btn">+ NEW</button>
+        </div>
+        <div class="chat-main">
+          <div class="chat-modes">
+            <span class="mode active" data-mode="ask">Ask</span>
+            <span class="mode" data-mode="plan">Plan</span>
+            <span class="mode" data-mode="interview">Interview</span>
+            <span class="mode" data-mode="brainstorm">BrainStorm</span>
+            <span class="mode" data-mode="crew">Crew</span>
+          </div>
+          <div class="plan-card" id="planCardFloat" style="display: none;">
+            <div class="plan-title">Plan</div>
+            <ul class="plan-outline">
+              <li><input type="checkbox"> Phase 1: Setup</li>
+              <li><input type="checkbox" checked> Phase 2: Dashboard widgets</li>
+            </ul>
+          </div>
+          <div class="message-stream">
+            <div class="message assistant">I've analyzed the requirements. The dashboard should include orchestrator status, current task, progress bars, and budget donuts.</div>
+            <div class="message user">Yes, implement the full layout per the spec.</div>
+          </div>
+          <div class="chat-input-area">
+            <textarea placeholder="Type a message..."></textarea>
+            <div class="input-row">
+              <button class="at-btn">@</button>
+              <button class="attach-btn">Attach</button>
+              <span class="steer-queue-toggle"><span class="active">Steer</span> / <span>Queue</span></span>
+              <button>SEND</button>
+            </div>
+          </div>
+          <div class="chat-footer">
+            <select><option>Claude Code</option></select>
+            <select><option>sonnet-4.5</option></select>
+            <span class="context-usage">42k/128k</span>
+            <a>3 problems</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pixel-grid" id="pixelGrid"></div>
+
+  <script>
+    let chatDetached = false;
+    document.getElementById('themeSelect').addEventListener('change', function() {
+      document.documentElement.setAttribute('data-theme', this.value);
+    });
+
+    document.querySelectorAll('.page-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var pageId = this.getAttribute('data-page');
+        if (!pageId) return;
+        document.querySelectorAll('.page-tab').forEach(function(t) { t.classList.remove('active'); });
+        this.classList.add('active');
+        document.querySelectorAll('.primary-content .page').forEach(function(p) {
+          p.classList.toggle('active', p.classList.contains('page-' + pageId));
+        });
+      });
+    });
+
+    var wizardStepLabels = {
+      '0': 'Step 0 of 9 – Project Setup',
+      '1': 'Step 1 of 9 – Dependency Install',
+      '2': 'Step 2 of 9 – Quick Interview Config',
+      '3': 'Step 3 of 9 – PRD Generation',
+      '4': 'Step 4 of 9 – Tier Config',
+      '5': 'Step 5 of 9 – Tier Planning',
+      '6': 'Step 6–8 of 9 – Tiers',
+      '9': 'Step 9 of 9 – Final Review & Init'
+    };
+    document.querySelectorAll('.wizard-steps .wizard-step').forEach(function(stepEl) {
+      stepEl.addEventListener('click', function() {
+        var step = this.getAttribute('data-step');
+        document.querySelectorAll('.wizard-steps .wizard-step').forEach(function(s) {
+          s.classList.remove('active');
+          s.classList.toggle('complete', parseInt(s.getAttribute('data-step'), 10) < parseInt(step, 10));
+        });
+        this.classList.add('active');
+        var header = document.getElementById('wizardStepHeader');
+        if (header && wizardStepLabels[step]) header.textContent = wizardStepLabels[step];
+      });
+    });
+    document.querySelectorAll('.wizard-intent-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        document.querySelectorAll('.wizard-intent-card').forEach(function(c) { c.classList.remove('active'); });
+        this.classList.add('active');
+      });
+    });
+
+    function switchOrchTab(container, tabId) {
+      if (!container || !tabId) return;
+      container.querySelectorAll('.orch-tab').forEach(function(t) {
+        t.classList.toggle('active', t.getAttribute('data-tab') === tabId);
+      });
+      container.querySelectorAll('.orch-tab-content').forEach(function(c) {
+        c.classList.toggle('active', c.getAttribute('data-tab') === tabId);
+      });
+    }
+    document.querySelectorAll('.orch-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var tabId = this.getAttribute('data-tab');
+        var container = this.closest('.page-orchestrator');
+        if (container && tabId) switchOrchTab(container, tabId);
+      });
+    });
+    var orchTerminalClear = document.querySelector('.orch-terminal-clear');
+    if (orchTerminalClear && document.getElementById('orchTerminalOutput')) {
+      orchTerminalClear.addEventListener('click', function() {
+        var out = document.getElementById('orchTerminalOutput');
+        if (out) out.innerHTML = '<div class="line line-muted">[Cleared]</div>';
+      });
+    }
+    (function() {
+      var list = document.querySelector('.orch-prose-list');
+      if (list) {
+        list.querySelectorAll('.orch-prose-block').forEach(function(block, i) { if (i >= 3) block.style.display = 'none'; });
+        list.querySelectorAll('.orch-prose-toggle').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var isRecent = this.getAttribute('data-prose') === 'recent';
+            list.querySelectorAll('.orch-prose-toggle').forEach(function(b) { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+            this.classList.add('active'); this.setAttribute('aria-pressed', 'true');
+            list.querySelectorAll('.orch-prose-block').forEach(function(block, i) {
+              block.style.display = isRecent && i >= 3 ? 'none' : '';
+            });
+          });
+        });
+      }
+    })();
+    document.querySelectorAll('.orch-prose-block-head').forEach(function(head) {
+      head.addEventListener('click', function() {
+        var block = this.closest('.orch-prose-block');
+        if (!block) return;
+        var collapsed = block.classList.toggle('collapsed');
+        this.setAttribute('aria-expanded', !collapsed);
+      });
+    });
+    var orchPage = document.querySelector('.page.page-orchestrator');
+    if (orchPage) {
+      var orchTabIds = ['progress', 'tiers', 'node_graph', 'evidence', 'history', 'ledger'];
+      orchPage.addEventListener('keydown', function(e) {
+        if (!orchPage.classList.contains('active')) return;
+        if (e.ctrlKey && e.key === 'Tab') {
+          e.preventDefault();
+          var tabs = orchPage.querySelectorAll('.orch-tab');
+          var idx = -1;
+          tabs.forEach(function(t, i) { if (t.classList.contains('active')) idx = i; });
+          idx = e.shiftKey ? (idx <= 0 ? tabs.length - 1 : idx - 1) : (idx < 0 || idx >= tabs.length - 1 ? 0 : idx + 1);
+          switchOrchTab(orchPage, tabs[idx].getAttribute('data-tab'));
+        } else if (e.altKey && e.key >= '1' && e.key <= '6') {
+          e.preventDefault();
+          var i = parseInt(e.key, 10) - 1;
+          if (orchTabIds[i]) switchOrchTab(orchPage, orchTabIds[i]);
+        }
+      });
+    }
+
+    document.querySelectorAll('.orch-tier-toggle').forEach(function(toggle) {
+      toggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var node = this.closest('.orch-tier-node');
+        if (!node) return;
+        var wasExpanded = node.classList.contains('expanded');
+        node.classList.toggle('expanded', !wasExpanded);
+        this.textContent = wasExpanded ? '\u25B6' : '\u25BC';
+      });
+    });
+    document.querySelectorAll('.orch-tier-node').forEach(function(node) {
+      node.addEventListener('click', function(e) {
+        if (e.target.classList.contains('orch-tier-toggle')) return;
+        var tree = this.closest('.orch-tier-tree');
+        if (tree) tree.querySelectorAll('.orch-tier-node').forEach(function(n) { n.classList.remove('selected'); });
+        this.classList.add('selected');
+        var detail = document.getElementById('orchTierDetailBody');
+        if (detail) {
+          var label = this.querySelector('.orch-tier-label')?.textContent || 'Node';
+          var tier = this.getAttribute('data-tier') || '';
+          var evidenceHtml = tier === '2.2' ? 'Evidence: <a href="#" class="orch-tier-link">GateReport 2.2 (10:38)</a>' : 'Evidence: (none)';
+          detail.innerHTML = '<p><strong>' + label + '</strong></p><p>Platform: Claude Code. Acceptance criteria: see spec.</p><p class="orch-tier-detail-meta">' + evidenceHtml + '</p><p class="orch-tier-detail-meta">Iteration: 1</p>';
+        }
+      });
+    });
+
+    var orchGraphPlaceholder = document.getElementById('orchGraphPlaceholder');
+    var orchDagPreview = document.getElementById('orchDagPreview');
+    if (document.getElementById('orchGraphStartBtn')) {
+      document.getElementById('orchGraphStartBtn').addEventListener('click', function() {
+        if (orchGraphPlaceholder) orchGraphPlaceholder.style.display = 'none';
+        if (orchDagPreview) orchDagPreview.style.display = 'flex';
+      });
+    }
+    if (document.getElementById('orchDagResetBtn')) {
+      document.getElementById('orchDagResetBtn').addEventListener('click', function() {
+        if (orchGraphPlaceholder) orchGraphPlaceholder.style.display = 'flex';
+        if (orchDagPreview) orchDagPreview.style.display = 'none';
+      });
+    }
+    (function() {
+      var canvas = document.getElementById('orchGraphCanvas');
+      var zoomPctEl = document.getElementById('orchGraphZoomPct');
+      var zoomIndicatorEl = document.getElementById('orchGraphZoomIndicator');
+      var graphScale = 1;
+      function setGraphZoom(scale) {
+        graphScale = Math.max(0.5, Math.min(2, scale));
+        if (canvas) canvas.style.transform = 'scale(' + graphScale + ')';
+        var pct = Math.round(graphScale * 100) + '%';
+        if (zoomPctEl) zoomPctEl.textContent = pct;
+        if (zoomIndicatorEl) zoomIndicatorEl.textContent = pct;
+      }
+      var orchGraphDetailBody = document.getElementById('orchGraphDetailBody');
+    if (orchGraphDetailBody) {
+      orchGraphDetailBody.addEventListener('click', function(e) {
+        var btn = e.target.closest('.orch-rungraph-detail-section-head');
+        if (!btn) return;
+        var section = btn.closest('.orch-rungraph-detail-section');
+        if (!section) return;
+        section.classList.toggle('collapsed');
+        btn.setAttribute('aria-expanded', section.classList.contains('collapsed') ? 'false' : 'true');
+      });
+    }
+    function buildNodeDetailHtml(id, title, type, state) {
+      var c1 = '<div class="orch-rungraph-detail-section" data-section"><button type="button" class="orch-rungraph-detail-section-head" aria-expanded="true">C1 Node summary</button><div class="orch-rungraph-detail-section-body"><p><strong>' + id + '</strong> ' + title + '</p><p>Type: ' + type + ' · State: ' + state + '</p><p>Run date: 2026-03-09 · Attempts: 1 · HITL Status: No HITL request</p></div></div>';
+      var c2 = '<div class="orch-rungraph-detail-section collapsed" data-section"><button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C2 Plan Mapping</button><div class="orch-rungraph-detail-section-body"><p>Breadcrumb: Phase 2 &gt; Task ' + id + '</p><button type="button" class="wizard-btn">Open plan at section</button> <button type="button" class="wizard-btn">Copy plan reference</button></div></div>';
+      var c3 = '<div class="orch-rungraph-detail-section collapsed" data-section"><button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C3 Worker Activity</button><div class="orch-rungraph-detail-section-body"><p>Claude Code / sonnet-4.5</p></div></div>';
+      var c4 = '<div class="orch-rungraph-detail-section collapsed" data-section"><button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C4 Verifier Activity</button><div class="orch-rungraph-detail-section-body"><p>Verifier: — · Final verdict: —</p></div></div>';
+      var c5 = '<div class="orch-rungraph-detail-section collapsed" data-section"><button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C5 Model, Tokens, Usage</button><div class="orch-rungraph-detail-section-body"><p>Worker model: sonnet-4.5 · Cost: $0.02</p><a href="#" class="orch-rungraph-usage-link">View in Usage</a></div></div>';
+      var c6 = '<div class="orch-rungraph-detail-section collapsed" data-section"><button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C6 HITL Controls</button><div class="orch-rungraph-detail-section-body"><p>No pending approvals for this node.</p></div></div>';
+      var c7 = '<div class="orch-rungraph-detail-section collapsed" data-section"><button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C7 Dependencies</button><div class="orch-rungraph-detail-section-body"><p>Upstream: 2 (Phase 2)</p><p>Downstream: —</p></div></div>';
+      var c8 = '<div class="orch-rungraph-detail-section collapsed" data-section"><button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C8 Logs &amp; Events</button><div class="orch-rungraph-detail-section-body"><p>run_id: run-abc12ef · tier_id: ' + id + '</p><a href="#">Raw log</a></div></div>';
+      return c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8;
+    }
+    if (orchDagPreview) {
+        orchDagPreview.querySelectorAll('.orch-rungraph-node').forEach(function(node) {
+          node.addEventListener('click', function() {
+            var id = this.getAttribute('data-node-id');
+            orchDagPreview.querySelectorAll('.orch-rungraph-node').forEach(function(n) { n.classList.remove('selected'); });
+            orchDagPreview.querySelectorAll('.orch-rungraph-row').forEach(function(r) { r.classList.remove('selected'); });
+            this.classList.add('selected');
+            var row = orchDagPreview.querySelector('.orch-rungraph-row[data-node-id="' + id + '"]');
+            if (row) { row.classList.add('selected'); row.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+            var detail = document.getElementById('orchGraphDetailBody');
+            if (detail) {
+              var title = (this.querySelector('.orch-rungraph-node-title') || {}).textContent || id;
+              var type = (this.querySelector('.orch-rungraph-node-type') || {}).textContent || 'Node';
+              var state = (this.querySelector('.orch-rungraph-node-state') || {}).textContent || '—';
+              detail.innerHTML = buildNodeDetailHtml(id, title, type, state);
+            }
+          });
+        });
+        orchDagPreview.querySelectorAll('.orch-rungraph-row').forEach(function(row) {
+          row.addEventListener('click', function() {
+            var id = this.getAttribute('data-node-id');
+            orchDagPreview.querySelectorAll('.orch-rungraph-node').forEach(function(n) { n.classList.remove('selected'); });
+            orchDagPreview.querySelectorAll('.orch-rungraph-row').forEach(function(r) { r.classList.remove('selected'); });
+            this.classList.add('selected');
+            var node = orchDagPreview.querySelector('.orch-rungraph-node[data-node-id="' + id + '"]');
+            if (node) node.classList.add('selected');
+            var detail = document.getElementById('orchGraphDetailBody');
+            if (detail) {
+              var nameCell = (this.cells && this.cells[0]) ? this.cells[0].textContent : id;
+              var type = (this.cells && this.cells[1]) ? this.cells[1].textContent : '—';
+              var state = (this.cells && this.cells[2]) ? this.cells[2].textContent : '—';
+              detail.innerHTML = buildNodeDetailHtml(id, nameCell, type, state);
+            }
+          });
+        });
+        if (canvas) {
+          canvas.addEventListener('click', function(e) {
+            if (e.target.closest('.orch-rungraph-node')) return;
+            orchDagPreview.querySelectorAll('.orch-rungraph-node').forEach(function(n) { n.classList.remove('selected'); });
+            orchDagPreview.querySelectorAll('.orch-rungraph-row').forEach(function(r) { r.classList.remove('selected'); });
+            var detail = document.getElementById('orchGraphDetailBody');
+            if (detail) detail.innerHTML = '<p class="orch-rungraph-no-selection" id="orchGraphNoSelection">No node selected.</p>';
+          });
+        }
+        var zoomBtns = orchDagPreview.querySelectorAll('.orch-rungraph-zoom');
+        if (zoomBtns[0]) zoomBtns[0].addEventListener('click', function() { setGraphZoom(graphScale * 1.2); });
+        if (zoomBtns[1]) zoomBtns[1].addEventListener('click', function() { setGraphZoom(graphScale / 1.2); });
+        var fitBtn = orchDagPreview.querySelector('.orch-rungraph-fit');
+        if (fitBtn) fitBtn.addEventListener('click', function() { setGraphZoom(1); });
+      }
+    })();
+
+    document.querySelectorAll('.orch-history-row').forEach(function(row) {
+      row.addEventListener('click', function() {
+        var runId = this.getAttribute('data-run-id');
+        var orchPage = document.querySelector('.page.page-orchestrator');
+        if (orchPage && runId) {
+          switchOrchTab(orchPage, 'node_graph');
+          var ph = document.getElementById('orchGraphPlaceholder');
+          var prev = document.getElementById('orchDagPreview');
+          if (ph && prev) { ph.style.display = 'none'; prev.style.display = 'flex'; }
+        }
+      });
+    });
+    document.querySelectorAll('.orch-evidence-row').forEach(function(row) {
+      row.addEventListener('click', function() {
+        var tbody = this.closest('tbody');
+        if (tbody) tbody.querySelectorAll('.orch-evidence-row').forEach(function(r) { r.classList.remove('selected'); });
+        this.classList.add('selected');
+        var detail = document.getElementById('orchEvidenceDetailBody');
+        if (detail) {
+          var type = this.getAttribute('data-type') || '';
+          var desc = this.getAttribute('data-desc') || this.cells[3]?.textContent || '';
+          var typePreview = type === 'Screenshot' ? 'Screenshot: image would display here.' : type === 'FileSnapshot' ? 'File snapshot: diff view would display here.' : type === 'GateReport' ? 'Gate report: pass/fail checklist would display here.' : desc;
+          detail.textContent = typePreview;
+        }
+      });
+    });
+
+    const chatPanel = document.getElementById('chatPanel');
+    const filesPanel = document.getElementById('filesPanel');
+    const floatingChat = document.getElementById('floatingChat');
+
+    document.querySelector('.activity-bar .icon[title="Chat"]').addEventListener('click', function() {
+      if (chatDetached) return;
+      chatPanel.classList.toggle('hidden');
+    });
+    document.querySelector('.activity-bar .icon[title="Files"]').addEventListener('click', function() {
+      filesPanel.classList.toggle('hidden');
+    });
+    document.getElementById('activityBarToggle').addEventListener('click', function() {
+      var bar = document.getElementById('activityBar');
+      bar.classList.toggle('collapsed');
+      this.innerHTML = bar.classList.contains('collapsed') ? '&gt;' : '&lt;';
+    });
+    document.getElementById('terminalGroupSelect').addEventListener('change', function() {
+      var g = this.value;
+      var grid = document.querySelector('.terminal-grid');
+      if (grid) grid.setAttribute('data-group', g);
+    });
+
+    document.querySelectorAll('.chat-modes .mode').forEach(function(m) {
+      m.addEventListener('click', function() {
+        const chatMain = m.closest('.chat-main');
+        chatMain.querySelectorAll('.mode').forEach(x => x.classList.remove('active'));
+        m.classList.add('active');
+        const planCard = chatMain.querySelector('.plan-card');
+        if (planCard) planCard.style.display = m.dataset.mode === 'plan' ? 'block' : 'none';
+      });
+    });
+    document.querySelectorAll('.message-stream').forEach(function(stream) {
+      stream.addEventListener('click', function(e) {
+        const header = e.target.closest('.block-header');
+        if (header) {
+          const block = header.closest('.message-block');
+          if (block) block.classList.toggle('collapsed');
+        }
+      });
+    });
+
+    document.getElementById('closeChatBtn').addEventListener('click', function() {
+      if (!chatDetached) chatPanel.classList.add('hidden');
+    });
+
+    document.getElementById('popOutBtn').addEventListener('click', function() {
+      chatDetached = !chatDetached;
+      if (chatDetached) {
+        chatPanel.classList.add('hidden');
+        floatingChat.classList.add('visible');
+      } else {
+        chatPanel.classList.remove('hidden');
+        floatingChat.classList.remove('visible');
+      }
+    });
+
+    document.getElementById('closeFloat').addEventListener('click', function() {
+      chatDetached = false;
+      chatPanel.classList.remove('hidden');
+      floatingChat.classList.remove('visible');
+    });
+
+    let isDragging = false;
+    let startX, startY, startLeft, startTop;
+    const floatTitle = document.getElementById('floatDrag');
+
+    floatTitle.addEventListener('mousedown', function(e) {
+      if (e.target.classList.contains('close-float')) return;
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      startLeft = floatingChat.offsetLeft;
+      startTop = floatingChat.offsetTop;
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      floatingChat.style.left = (startLeft + e.clientX - startX) + 'px';
+      floatingChat.style.top = (startTop + e.clientY - startY) + 'px';
+    });
+
+    document.addEventListener('mouseup', function() {
+      isDragging = false;
+    });
+
+    document.getElementById('collapseBottom').addEventListener('click', function() {
+      document.getElementById('bottomPanel').classList.toggle('collapsed');
+      this.textContent = document.getElementById('bottomPanel').classList.contains('collapsed') ? '▲' : '▼';
+    });
+
+    document.querySelectorAll('.file-tree .file').forEach(file => {
+      file.addEventListener('click', function() {
+        // File opened
+      });
+    });
+
+    document.querySelector('.activity-bar .icon:first-child').addEventListener('click', function() {
+      // Home view
+    });
+
+    document.getElementById('statusMenuBtn').addEventListener('click', function(e) {
+      e.stopPropagation();
+      document.getElementById('statusMenuDropdown').classList.toggle('visible');
+    });
+    document.addEventListener('click', function() {
+      document.getElementById('statusMenuDropdown').classList.remove('visible');
+    });
+    document.querySelectorAll('.chat-thread-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.querySelectorAll('.chat-thread-item').forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

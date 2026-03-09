@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/FileSafe.md",
-  "source_sha256": "c950bacb505eae3b8121200720122346fcb099c65daad0ae0821fd9bcf2660a7",
+  "source_sha256": "f5e834505673a06eb68bb8d9748c6bd2c03de7da8e8f5712483e206b6785fb03",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -192,9 +192,16 @@
     {
       "dest_path": "Plans/_shards/FileSafe/27-filesafe-runtime-blocked-and-restore-override-consolidation-addendum-2026-03-09.md",
       "start_line": 2748,
-      "end_line": 2785,
-      "segment_sha256": "8d23a9404fcb8f22061a3d0cf7e9429073c25d26c79daf0c10db170482e0c89a",
+      "end_line": 2767,
+      "segment_sha256": "61f63ec6850859c8b45197b551f06a05db1e203ba5250ff549ea56da7b7b53f0",
       "heading": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)"
+    },
+    {
+      "dest_path": "Plans/_shards/FileSafe/28-filesafe-action-mapping-and-persistence.md",
+      "start_line": 2768,
+      "end_line": 2785,
+      "segment_sha256": "671ee89b2dfaf28ea2a9084528d31f043e9d8b0f8d802cb46d768c4d622c0640",
+      "heading": "## FileSafe Action Mapping and Persistence"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/storage-plan.md",
-  "source_sha256": "e474a35e90f29f82f050eeec0fbd28880804dcbfe468eb77ef35048b1084a031",
+  "source_sha256": "7fad10b28a58fc12c1796c36f5e89949e2cf19daf5159949f637bf3bbb3b2619",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -115,14 +115,21 @@
     {
       "dest_path": "Plans/_shards/storage-plan/16-runtime-recovery-persistence-and-restart-reconciliation-addendum-2026-03-09.md",
       "start_line": 980,
-      "end_line": 1076,
-      "segment_sha256": "9714f3f73cae86d1b45ee5bd7a4adee40b0029fdd6eb5b909e6f54adbd1748d4",
+      "end_line": 1021,
+      "segment_sha256": "ce8838681126fd1ba63327730f8f22aa41ccf92bba4636f663fcf3699af66fd1",
       "heading": "## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)"
     },
     {
-      "dest_path": "Plans/_shards/storage-plan/17-permission-snapshot-storage-and-safe-point-namespace-addendum.md",
-      "start_line": 1077,
-      "end_line": 1116,
+      "dest_path": "Plans/_shards/storage-plan/17-runtime-recovery-persistence-consolidation.md",
+      "start_line": 1022,
+      "end_line": 1061,
+      "segment_sha256": "d03f255333df22313a0240ad45c6b2b504f3d2e69c08830d6ee8080de8164487",
+      "heading": "## Runtime Recovery Persistence Consolidation"
+    },
+    {
+      "dest_path": "Plans/_shards/storage-plan/18-permission-snapshot-storage-and-safe-point-namespace-addendum.md",
+      "start_line": 1062,
+      "end_line": 1101,
       "segment_sha256": "84f01c57aa1dd038653111497d802d81e056ac99706565d5ff4f5d93f4942acf",
       "heading": "## Permission Snapshot Storage and Safe-Point Namespace Addendum"
     }

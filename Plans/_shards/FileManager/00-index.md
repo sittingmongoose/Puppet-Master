@@ -28,3 +28,4 @@ Canonical source: [Plans/FileManager.md](../../FileManager.md)
 - [20-runtime-artifact-opening-and-recovery-panel-addendum-2026-03-08.md](20-runtime-artifact-opening-and-recovery-panel-addendum-2026-03-08.md) — ## Runtime Artifact Opening and Recovery Panel Addendum (2026-03-08)
 - [21-runtime-artifact-navigation-alignment-addendum-2026-03-09.md](21-runtime-artifact-navigation-alignment-addendum-2026-03-09.md) — ## Runtime Artifact Navigation Alignment Addendum (2026-03-09)
 - [22-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md](22-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md) — ## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)
+- [23-runtime-artifact-open-by-identity-contract.md](23-runtime-artifact-open-by-identity-contract.md) — ## Runtime Artifact Open-by-Identity Contract

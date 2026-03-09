@@ -22,3 +22,4 @@ Canonical source: [Plans/GitHub_Integration.md](../../GitHub_Integration.md)
 - [14-github-runtime-recovery-alignment-addendum-2026-03-09.md](14-github-runtime-recovery-alignment-addendum-2026-03-09.md) — ## GitHub Runtime Recovery Alignment Addendum (2026-03-09)
 - [15-deferred-github-flow-recovery-reconciliation-addendum-2026-03-09.md](15-deferred-github-flow-recovery-reconciliation-addendum-2026-03-09.md) — ## Deferred GitHub Flow Recovery Reconciliation Addendum (2026-03-09)
 - [16-deferred-github-flow-blocked-identity-consolidation-addendum-2026-03-09.md](16-deferred-github-flow-blocked-identity-consolidation-addendum-2026-03-09.md) — ## Deferred GitHub Flow Blocked Identity Consolidation Addendum (2026-03-09)
+- [17-deferred-github-recovery-binding.md](17-deferred-github-recovery-binding.md) — ## Deferred GitHub Recovery Binding

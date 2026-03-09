@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/orchestrator-subagent-integration.md",
-  "source_sha256": "86c5e824838d9eb1a91814aeb070a80589937badd16680926d9742a2b27bdac5",
+  "source_sha256": "27ed4f1499c85416a631afd554e9a9dde8f42b72b0c1ab667953095772b8496f",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -269,9 +269,16 @@
     {
       "dest_path": "Plans/_shards/orchestrator-subagent-integration/38-runtime-enum-and-counter-alignment-addendum.md",
       "start_line": 8212,
-      "end_line": 8236,
-      "segment_sha256": "d9f4dbb28a83fd3963b61564851516c8f939af5f388f6e499e218d18ab31c818",
+      "end_line": 8224,
+      "segment_sha256": "05b40da845ed24a1ed40fdb5f6228555eb5fcafe55b0dea770727adf9fe5d3bb",
       "heading": "## Runtime Enum and Counter Alignment Addendum"
+    },
+    {
+      "dest_path": "Plans/_shards/orchestrator-subagent-integration/39-runtime-consumer-alignment.md",
+      "start_line": 8225,
+      "end_line": 8237,
+      "segment_sha256": "e9f4e7deac9aa2951df13f02a4ae8f7d77df0e218a5d4cafcbc287ad5685e963",
+      "heading": "## Runtime Consumer Alignment"
     }
   ]
 }

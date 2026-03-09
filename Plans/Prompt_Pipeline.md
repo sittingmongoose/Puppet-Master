@@ -462,24 +462,41 @@ Rules:
 - prompt assembly MUST NOT become an alternate source of truth for blocked or retry state; canonical truth remains in events/projections
 ## Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)
 
-Prompt assembly and provider invocation MUST preserve the runtime attempt contract without becoming an alternate source of truth.
+The prompt pipeline MUST emit the same immutable runtime handoff bundle used by the provider envelope.
 
-### Required immutable handoff bundle
-- `run_id`, `thread_id`, `node_id`, `attempt_id`
+Required fields:
+- `run_id`
+- `node_id`
+- `attempt_id`
 - `scheduler_pass_id`
-- requested/effective persona/runtime state already defined elsewhere
-- requested/effective model identifiers
-- requested/effective permission snapshot identifiers
-- active `replan_generation`
+- `replan_generation`
+- requested/effective model snapshot ids
+- requested/effective permission snapshot ids
 - `mutation_capable`
 - `safe_point_id?`
-- remediation lineage identifiers when present
+- remediation lineage refs when present
 
-### Optional but preserved classification metadata
-When already known before invocation, preserve:
-- latest `blocked_reason_code?`
-- latest `failure_class?`
-- relevant wake reason for resumed work
+Rules:
+- snapshots are captured at attempt start and are immutable for that attempt
+- retry/resume/rerun flows always create a new handoff bundle with a new `attempt_id`
+- downstream providers and consumers MUST NOT infer missing runtime identity from prompt text alone
+## Runtime Attempt Snapshot and Handoff Bundle
 
-### Immutability rule
-Once an attempt starts, its handoff bundle is immutable. Retry, prerequisite-resume, remediation rerun, and safe-point-restored rerun all create new handoff bundles keyed by new `attempt_id` values.
+The prompt pipeline MUST emit the same immutable runtime handoff bundle used by the provider envelope.
+
+Required fields:
+- `run_id`
+- `node_id`
+- `attempt_id`
+- `scheduler_pass_id`
+- `replan_generation`
+- requested/effective model snapshot ids
+- requested/effective permission snapshot ids
+- `mutation_capable`
+- `safe_point_id?`
+- remediation lineage refs when present
+
+Rules:
+- snapshots are captured at attempt start and are immutable for that attempt
+- retry/resume/rerun flows always create a new handoff bundle with a new `attempt_id`
+- downstream providers and consumers MUST NOT infer missing runtime identity from prompt text alone

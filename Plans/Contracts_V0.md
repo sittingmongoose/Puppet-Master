@@ -787,7 +787,7 @@ Required fields:
 - `run_id`, `thread_id`, `node_id`, `attempt_id` if an attempt existed
 - `blocked_reason_code`
 - `failure_class` when the blocked state originated from a classified outcome
-- `allowed_actions[]`
+- ordered `allowed_action_ids[]`
 - `auth_realm`, `missing_scopes[]`, or side-effect metadata when relevant
 - whether local work was preserved
 
@@ -814,7 +814,7 @@ Required fields:
 ContractRef: EventType:tool.denied, ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md
 - `blocked_reason_code`
 - `failure_class`
-- `allowed_actions[]`
+- ordered `allowed_action_ids[]`
 - `headless_denied` boolean
 - effective permission snapshot identifier
 
@@ -1009,20 +1009,22 @@ Every canonical blocked event/path MUST expose:
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md
 ## Canonical Runtime Event, Outcome, and Action Contract Reconciliation Addendum (2026-03-09)
 
-### Canonical runtime names
-New runtime producers MUST emit canonical names. Legacy aliases MAY be accepted only at compatibility boundaries.
-ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
+This section supersedes packet-era naming and field drift wherever conflicts remain.
 
-| Canonical event | Legacy alias | Canonical identity |
+### Canonical event names
+| canonical event | legacy alias | canonical identity |
 |---|---|---|
-| `scheduler.pass` | `run.scheduler_analysis` | `scheduler_pass_id` |
-| `node.blocked` | `run.node_blocked` | `run_id`, `node_id`, `attempt_id?`, `blocked_sequence` |
-| `node.unblocked` | `run.node_unblocked` | `run_id`, `node_id`, `attempt_id?`, `blocked_sequence` |
+| `scheduler.pass` | `run.scheduler_analysis` | `run_id`, `scheduler_pass_id` |
+| `node.ready` | `run.node_ready` | `run_id`, `node_id`, `ready_since_utc` |
+| `node.blocked` | `run.node_blocked` | `run_id`, `node_id`, `blocked_sequence`, `attempt_id?` |
+| `node.unblocked` | `run.node_unblocked` | `run_id`, `node_id`, `blocked_sequence`, `attempt_id?` |
+| `safe_point.created` | none | `safe_point_id` |
+| `safe_point.restored` | none | `safe_point_id`, `restore_sequence` |
 | `remediation.spawned` | `run.remediation_started` | `remediation_root_id`, `child_attempt_id` |
 | `remediation.resolved` | `run.remediation_completed` | `remediation_root_id`, `child_attempt_id` |
 
-### Canonical outcome taxonomy
-`failure_class` is for classified attempt outcomes only:
+### Canonical enum families
+`failure_class`:
 - `provider_transient`
 - `structured_output_invalid`
 - `verification_failed`
@@ -1030,7 +1032,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/
 - `storage_io`
 - `graph_integrity`
 
-`blocked_reason_code` is for unresolved prerequisites or intentionally prevented work:
+`blocked_reason_code`:
 - `permission_denied`
 - `user_declined`
 - `headless_ask_denied`
@@ -1043,113 +1045,147 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/
 - `worktree_conflict`
 - `dirty_worktree`
 - `plugin_hook_blocked`
+- `validation_blocked`
+- `remediation_ceiling_exceeded`
 
 ### Canonical blocked payload
-Every runtime-facing blocked path MUST expose:
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/UI_Command_Catalog.md
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+Every runtime-facing blocked event or projection MUST expose:
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 - `blocked_reason_code`
-- `allowed_action_ids[]`
+- ordered `allowed_action_ids[]`
 - `preserved_local_work`
-- `detail_ref?`
-- prerequisite metadata needed to bind the specific recovery action
-- `failure_class?` only when the blocked state originated from a classified attempt outcome
+- `requires_safe_point_restore?`
+- prerequisite metadata needed to bind the recovery command
+- `failure_class?`
+- `detail_ref?` in `{type}:{id}` form
 
-`recovery_options[]` and `allowed_actions[]` are deprecated shared-surface names and MUST NOT be introduced as new canonical runtime fields.
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
+Legacy pre-reconciliation blocked-action field names are deprecated aliases only and MUST NOT appear in new canonical schemas.
 
-### Canonical scheduler pass
-`scheduler.pass` MUST carry:
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+
+### `scheduler.pass`
+Required fields:
 - `scheduler_pass_id`
 - `run_id`
-- `thread_id`
+- `thread_id?`
 - `replan_generation`
 - `wake_reason`
+- `secondary_wake_reasons[]`
 - `available_slots`
-- `ready_nodes[]` with full score breakdown terms
-- `selected_nodes[]`
-- `non_selected[]` with canonical `non_selected_reason`
-- capacity summary
+- `ready_nodes[]`
+- `selected_nodes[]` including `selected_at_utc`
+- `non_selected[]`
+- `newly_ready_nodes[]`
+- `capacity_summary`
 - `analysis_id?` only as a legacy alias where `analysis_id = scheduler_pass_id`
 
-### Canonical attempt contract
-`attempt.started` MUST carry:
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md
-- `run_id`, `thread_id`, `node_id`, `attempt_id`
-- `scheduler_pass_id`
-- requested/effective model snapshot identifiers
-- requested/effective permission snapshot identifiers
-- `replan_generation`
-- `mutation_capable`
-- `safe_point_id?`
-- remediation lineage identifiers when present
+Each `newly_ready_nodes[]` entry SHOULD include `source_node_id?` and `source_dependency_ref?` when known.
 
-`attempt.completed` MUST carry:
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Project_Output_Artifacts.md
-- `run_id`, `thread_id`, `node_id`, `attempt_id`
-- terminal state enum
+### Safe points and remediation
+`safe_point.created` carries `safe_point_id`, `source_attempt_id`, `run_id`, `node_id`, `replan_generation`, `baseline_ref`, and `creation_reason`.
+
+`safe_point.restored` carries `safe_point_id`, `source_attempt_id`, `resulting_attempt_id?`, `restore_sequence`, `restore_outcome`, and `detail_ref?`.
+
+`remediation.spawned` carries `remediation_root_id`, `remediation_generation`, `parent_attempt_id`, `child_attempt_id`, `finding_refs[]`, and `replan_generation`.
+
+`remediation.resolved` carries `remediation_root_id`, `remediation_generation`, `child_attempt_id`, `resolution` (`fixed`, `superseded`, `abandoned`, `replan_required`), and `detail_ref?`.
+
+### Wizard clarification and blocked contracts
+`wizard.blocked` MUST carry `wizard_id`, `wizard_step`, `thread_id?`, `blocked_reason_code`, `clarification_round_count`, `report_ref`, `resume_url?`, `decomposition_degraded`, `degradation_reason?`, `replan_generation?`, `attempted_recovery_action_ids[]`, and `ts`.
+
+`requirements.clarification_requested` MUST carry `wizard_id`, `wizard_step`, `thread_id`, `question_ids[]`, `report_ref`, and `state_transition_target` with value `attention_required` or `blocked`.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/storage-plan.md
+## Canonical Runtime Event, Enum, and Payload Consolidation
+
+This section supersedes packet-era naming and field drift wherever conflicts remain.
+
+### Canonical event names
+| canonical event | legacy alias | canonical identity |
+|---|---|---|
+| `scheduler.pass` | `run.scheduler_analysis` | `run_id`, `scheduler_pass_id` |
+| `node.ready` | `run.node_ready` | `run_id`, `node_id`, `ready_since_utc` |
+| `node.blocked` | `run.node_blocked` | `run_id`, `node_id`, `blocked_sequence`, `attempt_id?` |
+| `node.unblocked` | `run.node_unblocked` | `run_id`, `node_id`, `blocked_sequence`, `attempt_id?` |
+| `safe_point.created` | none | `safe_point_id` |
+| `safe_point.restored` | none | `safe_point_id`, `restore_sequence` |
+| `remediation.spawned` | `run.remediation_started` | `remediation_root_id`, `child_attempt_id` |
+| `remediation.resolved` | `run.remediation_completed` | `remediation_root_id`, `child_attempt_id` |
+
+### Canonical enum families
+`failure_class`:
+- `provider_transient`
+- `structured_output_invalid`
+- `verification_failed`
+- `reviewer_findings`
+- `storage_io`
+- `graph_integrity`
+
+`blocked_reason_code`:
+- `permission_denied`
+- `user_declined`
+- `headless_ask_denied`
+- `filesafe_blocked`
+- `external_side_effect_blocked`
+- `auth_expired`
+- `replan_required`
+- `waiting_approval`
+- `clarification_blocked`
+- `worktree_conflict`
+- `dirty_worktree`
+- `plugin_hook_blocked`
+- `validation_blocked`
+- `remediation_ceiling_exceeded`
+
+### Canonical blocked payload
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+Every runtime-facing blocked event or projection MUST expose:
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+- `blocked_reason_code`
+- ordered `allowed_action_ids[]`
+- `preserved_local_work`
+- `requires_safe_point_restore?`
+- prerequisite metadata needed to bind the recovery command
 - `failure_class?`
-- all counter fields relevant to the canonical matrix
-- verification/reviewer result refs when applicable
-- resulting lineage/resolution refs when applicable
+- `detail_ref?` in `{type}:{id}` form
 
-### Canonical prerequisite resolution order
-When a prerequisite clears for previously blocked work:
-1. emit `node.prerequisite_resolved`
-2. update blocked projections
-3. emit `node.unblocked` if a blocked episode ended
-4. emit `scheduler.pass` for the resulting wake cycle
+Legacy pre-reconciliation blocked-action field names are deprecated aliases only and MUST NOT appear in new canonical schemas.
 
-### Safe-point contract
-`safe_point.created` MUST carry:
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileManager.md
-- `safe_point_id`
-- `source_attempt_id`
-- `run_id`, `node_id`
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+
+### `scheduler.pass`
+Required fields:
+- `scheduler_pass_id`
+- `run_id`
+- `thread_id?`
 - `replan_generation`
-- baseline refs
-- creation reason
+- `wake_reason`
+- `secondary_wake_reasons[]`
+- `available_slots`
+- `ready_nodes[]`
+- `selected_nodes[]` including `selected_at_utc`
+- `non_selected[]`
+- `newly_ready_nodes[]`
+- `capacity_summary`
+- `analysis_id?` only as a legacy alias where `analysis_id = scheduler_pass_id`
 
-`safe_point.restored` MUST carry:
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Project_Output_Artifacts.md
-- `safe_point_id`
-- `source_attempt_id`
-- `resulting_attempt_id?`
-- restore outcome enum
-- restore detail ref when applicable
+Each `newly_ready_nodes[]` entry SHOULD include `source_node_id?` and `source_dependency_ref?` when known.
 
-### Remediation contract
-`remediation.spawned` MUST carry:
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Project_Output_Artifacts.md
-- `remediation_root_id`
-- `remediation_generation`
-- `parent_attempt_id`
-- `child_attempt_id`
-- finding / issue refs
-- active `replan_generation`
+### Safe points and remediation
+`safe_point.created` carries `safe_point_id`, `source_attempt_id`, `run_id`, `node_id`, `replan_generation`, `baseline_ref`, and `creation_reason`.
 
-`remediation.resolved` MUST carry:
-ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Project_Output_Artifacts.md
-- `remediation_root_id`
-- `remediation_generation`
-- `child_attempt_id`
-- resolution enum (`fixed`, `superseded`, `abandoned`, `replan_required`)
-- resolution detail ref
+`safe_point.restored` carries `safe_point_id`, `source_attempt_id`, `resulting_attempt_id?`, `restore_sequence`, `restore_outcome`, and `detail_ref?`.
 
-### Canonical wake reasons
-Required values:
-- `run_started`
-- `startup_recovered`
-- `node_completed`
-- `verification_completed`
-- `approval_resolved`
-- `clarification_resolved`
-- `permission_changed`
-- `auth_recovered`
-- `backoff_expired`
-- `remediation_completed`
-- `restore_completed`
-- `replan_applied`
-- `capacity_changed`
-- `manual_wakeup`
-- `watchdog_recheck`
+`remediation.spawned` carries `remediation_root_id`, `remediation_generation`, `parent_attempt_id`, `child_attempt_id`, `finding_refs[]`, and `replan_generation`.
+
+`remediation.resolved` carries `remediation_root_id`, `remediation_generation`, `child_attempt_id`, `resolution` (`fixed`, `superseded`, `abandoned`, `replan_required`), and `detail_ref?`.
+
+### Wizard clarification and blocked contracts
+`wizard.blocked` MUST carry `wizard_id`, `wizard_step`, `thread_id?`, `blocked_reason_code`, `clarification_round_count`, `report_ref`, `resume_url?`, `decomposition_degraded`, `degradation_reason?`, `replan_generation?`, `attempted_recovery_action_ids[]`, and `ts`.
+
+`requirements.clarification_requested` MUST carry `wizard_id`, `wizard_step`, `thread_id`, `question_ids[]`, `report_ref`, and `state_transition_target` with value `attention_required` or `blocked`.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/storage-plan.md

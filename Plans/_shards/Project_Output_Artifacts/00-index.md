@@ -25,3 +25,4 @@ Canonical source: [Plans/Project_Output_Artifacts.md](../../Project_Output_Artif
 - [17-runtime-queue-analysis-recovery-artifact-addendum-2026-03-09.md](17-runtime-queue-analysis-recovery-artifact-addendum-2026-03-09.md) — ## Runtime Queue Analysis / Recovery Artifact Addendum (2026-03-09)
 - [18-runtime-artifact-identity-reconciliation-addendum-2026-03-09.md](18-runtime-artifact-identity-reconciliation-addendum-2026-03-09.md) — ## Runtime Artifact Identity Reconciliation Addendum (2026-03-09)
 - [19-runtime-recovery-artifact-identity-and-scope-consolidation-addendum-2026-03-09.md](19-runtime-recovery-artifact-identity-and-scope-consolidation-addendum-2026-03-09.md) — ## Runtime Recovery Artifact Identity and Scope Consolidation Addendum (2026-03-09)
+- [20-runtime-recovery-artifact-identity-and-scope.md](20-runtime-recovery-artifact-identity-and-scope.md) — ## Runtime Recovery Artifact Identity and Scope

@@ -450,15 +450,38 @@ Rules:
 - if policy requires restore-before-rerun, mode change alone is insufficient; the safe-point restore requirement still applies
 ## Runtime Mode Interaction with Blocked Recovery Consolidation Addendum (2026-03-09)
 
-Execution mode changes what can be shown immediately, but does not redefine runtime classification.
+This section defines deferred / Waiting Run Mode Semantics.
 
-### Canonical rules
-- headless or non-interactive inability to present a required approval/auth/clarification prompt yields the appropriate blocked reason (`headless_ask_denied` or other canonical blocked reason)
-- a later mode change may satisfy a prerequisite, but it does not rewrite the original blocked classification
-- prerequisite resolution after a mode change creates a new attempt snapshot rather than mutating the blocked attempt
-- if policy requires restore-before-rerun, mode change alone is insufficient; the safe-point restore requirement still applies
-- blocked outcomes do not consume automatic retry budget unless the canonical matrix explicitly says otherwise
+### Run-level state
+- A run remains active if any node is runnable.
+- If no node is runnable and blocked/backoff/prerequisite-waiting work exists, the run is deferred/waiting rather than terminal.
+- Terminal completion requires no runnable, no blocked, no backoff, and no unresolved prerequisite work.
 
+### Headless blocked discovery
+When `headless_ask_denied` blocks work in a non-interactive mode:
+- emit a blocked notice with `blocked_reason_code: headless_ask_denied`
+- surface blocked node count in CLI/log status summaries
+- surface a dashboard badge if a UI session is attached
+- include the exact permission or approval that could not be presented interactively
+
+### Safe-point applicability
+Run modes do not redefine `mutation_capable`. They only determine whether mutation-capable attempts may occur and therefore whether safe points are relevant in that mode.
+## Deferred / Waiting Run Mode Semantics
+
+### Run-level state
+- A run remains active if any node is runnable.
+- If no node is runnable and blocked/backoff/prerequisite-waiting work exists, the run is deferred/waiting rather than terminal.
+- Terminal completion requires no runnable, no blocked, no backoff, and no unresolved prerequisite work.
+
+### Headless blocked discovery
+When `headless_ask_denied` blocks work in a non-interactive mode:
+- emit a blocked notice with `blocked_reason_code: headless_ask_denied`
+- surface blocked node count in CLI/log status summaries
+- surface a dashboard badge if a UI session is attached
+- include the exact permission or approval that could not be presented interactively
+
+### Safe-point applicability
+Run modes do not redefine `mutation_capable`. They only determine whether mutation-capable attempts may occur and therefore whether safe points are relevant in that mode.
 ## Headless Blocked Discovery and Mutation Classifier Alignment Addendum
 
 ### Headless `headless_ask_denied` discovery

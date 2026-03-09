@@ -1981,39 +1981,86 @@ Persist:
 - active `replan_generation`
 ## Wizard Escalation Degradation and Blocked-State Consolidation Addendum (2026-03-09)
 
-### Canonical clarification escalation
-Remain in `attention_required` while the current issue set can still be resolved within the current flow.
+This section defines canonical Wizard Blocked Lifecycle.
 
-Escalate to `blocked` when either:
-- `clarification_round_count >= 3` for the active issue set and step, or
-- the next required action cannot be completed inside the current flow
+### Canonical `wizard_status`
+Allowed values:
+- `setup`
+- `requirements`
+- `interview`
+- `validating`
+- `attention_required`
+- `blocked`
+- `ready_to_execute`
+- `complete`
+- `cancelled`
 
-Use `blocked_reason_code = clarification_blocked` for blocked state caused by exhausted clarification.
-
-### Round-count reset rules
-Reset `clarification_round_count` only when:
-- a materially new issue set is generated
-- the wizard advances to a new step
-- a new `replan_generation` begins
-
-Reopening the same blocked wizard without a new issue set does not reset the count.
-
-### Persisted blocked/degraded fields
-Persist together:
+### Canonical blocked state
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+A wizard blocked record MUST persist:
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+- `wizard_id`
+- `wizard_step`
 - `blocked_reason_code`
-- `attention_required_reason?`
 - `clarification_round_count`
-- `latest_quality_report_ref`
-- `resume_url`
-- `attempted_recovery_action_ids[]`
+- `report_ref`
+- `resume_url?`
 - `decomposition_degraded`
-- `degradation_reason`
-- active `replan_generation`
+- `degradation_reason?`
+- `replan_generation?`
+- `attempted_recovery_action_ids[]`
 
-### Degraded draft visibility
-If draft decomposition degrades before graph lock, the wizard MUST keep that degraded state visible until a valid non-degraded canonical graph replaces it or the wizard is cancelled.
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Project_Output_Artifacts.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+### Blocked clear rule
+A wizard leaves `blocked` only when:
+- materially new user input creates a new issue set
+- the external prerequisite named by `blocked_reason_code` is actually resolved
+- a new `replan_generation` begins for the wizard context
+- the wizard is cancelled
+
+Reopening the same blocked wizard without one of those changes does not clear blocked state and does not reset `clarification_round_count`.
+## Canonical Wizard Blocked Lifecycle
+
+### Canonical `wizard_status`
+Allowed values:
+- `setup`
+- `requirements`
+- `interview`
+- `validating`
+- `attention_required`
+- `blocked`
+- `ready_to_execute`
+- `complete`
+- `cancelled`
+
+### Canonical blocked state
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+A wizard blocked record MUST persist:
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+- `wizard_id`
+- `wizard_step`
+- `blocked_reason_code`
+- `clarification_round_count`
+- `report_ref`
+- `resume_url?`
+- `decomposition_degraded`
+- `degradation_reason?`
+- `replan_generation?`
+- `attempted_recovery_action_ids[]`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+### Blocked clear rule
+A wizard leaves `blocked` only when:
+- materially new user input creates a new issue set
+- the external prerequisite named by `blocked_reason_code` is actually resolved
+- a new `replan_generation` begins for the wizard context
+- the wizard is cancelled
+
+Reopening the same blocked wizard without one of those changes does not clear blocked state and does not reset `clarification_round_count`.
 ## Wizard Status Enum Correction Addendum
 
 ### Canonical `wizard_status` enum

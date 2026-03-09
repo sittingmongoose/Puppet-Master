@@ -276,12 +276,33 @@ After decline/reject, the surface MUST choose among:
 
 ## HITL Field Name Correction Addendum
 
-### Canonical field name
+Canonical HITL requests and stored HITL state use `allowed_action_ids[]`, not `allowed_actions[]`.
 
-All references to `allowed_actions[]` in this document are replaced by the canonical runtime field name `allowed_action_ids[]`.
+Required fields:
+- `request_id`
+- `run_id`
+- `tier_id`
+- `tier_type`
+- `request_kind`
+- `message`
+- ordered `allowed_action_ids[]`
+- `status`
+- timestamps and rationale when applicable
 
-- The HITL request contract (§Canonical HITL request contract) field `allowed_actions[]` is canonically `allowed_action_ids[]`.
-- The redb persistence shape (§storage persistence) field `allowed_actions` is canonically `allowed_action_ids`.
-- `allowed_actions[]` is a deprecated shared-surface name per Plans/Contracts_V0.md and MUST NOT be used in new HITL contracts or storage schemas.
+Older `allowed_actions` wording is deprecated and MUST NOT appear in new HITL contracts, examples, or persistence shapes.
+## Canonical HITL Request and Persistence Correction
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+Canonical HITL requests and stored HITL state use `allowed_action_ids[]`, not `allowed_actions[]`.
+
+Required fields:
+- `request_id`
+- `run_id`
+- `tier_id`
+- `tier_type`
+- `request_kind`
+- `message`
+- ordered `allowed_action_ids[]`
+- `status`
+- timestamps and rationale when applicable
+
+Older `allowed_actions` wording is deprecated and MUST NOT appear in new HITL contracts, examples, or persistence shapes.

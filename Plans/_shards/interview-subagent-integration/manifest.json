@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/interview-subagent-integration.md",
-  "source_sha256": "f6333174ac6f81103ba24c38f4dbd40d103d1c49d372cff46ea0f9d9174926c0",
+  "source_sha256": "d777a40f355c445ca0ef76f75226171d54e382c8a71c47ea7277a8f62245ef5d",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -213,9 +213,16 @@
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/30-planning-to-runtime-blocked-and-degraded-handoff-consolidation-addendum-2026-03-09.md",
       "start_line": 3208,
-      "end_line": 3227,
-      "segment_sha256": "e125653297df4945624ccf421c8e0214ca58eb9fae051e52609de21cf727d7a6",
+      "end_line": 3216,
+      "segment_sha256": "fb6cc7773983164c74284ac885a4b641428cc9e5d42ba33cadc28acd5a85d8be",
       "heading": "## Planning-to-Runtime Blocked and Degraded Handoff Consolidation Addendum (2026-03-09)"
+    },
+    {
+      "dest_path": "Plans/_shards/interview-subagent-integration/31-planning-to-runtime-blocked-and-degraded-handoff.md",
+      "start_line": 3217,
+      "end_line": 3225,
+      "segment_sha256": "7ccf5225c959374e46dc80613969eb655d45e42c07a0904756cdbb6a9d4fb47d",
+      "heading": "## Planning-to-Runtime Blocked and Degraded Handoff"
     }
   ]
 }
