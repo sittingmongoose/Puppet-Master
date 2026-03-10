@@ -942,47 +942,17 @@ Reference additions for rewrite planning:
 - Preview-mode edits are limited to validated structured commands and otherwise fall back to source editing.
 - Planning documents, including future Deep Plan Mode surfaces, use the same Markdown/Mermaid pipeline and canonical-source rules.
 
-## Runtime Scheduler and Recovery Features Addendum (2026-03-08)
-
-Add or revise feature bullets to include:
-- deterministic scored ready-set scheduler
-- queue analysis / scheduler observability
-- event-driven scheduler wakeups
-- blocked-to-runnable cascade
-- explicit runtime fields for retry/blocking/remediation/safe points
-- runtime safe points before risky execution
-- remediation child lineage with stable finding IDs
-- shared failure-class retry/backoff policy
-- draft decomposition degradation before canonical lock only
-- distinct `attention_required` vs `blocked` wizard/thread/dashboard states
-## Runtime Scheduler / Recovery Summary Refresh Addendum (2026-03-09)
-
-Summary-level feature bullets must be refreshed to describe:
-- deterministic scored scheduling
-- event-driven wakeups
-- first-class attempt lineage
-- safe-point backed recovery
-- blocked outcomes with explicit recovery paths
-- pre-lock-only draft decomposition fallback
-
-Remove or revise any summary phrasing that implies pure lexical scheduling or generic retry behavior.
-## Runtime Scheduler / Recovery Summary Reconciliation Addendum (2026-03-09)
-
-Summary bullets for executor/runtime behavior MUST say:
-- deterministic scored ready-set scheduler rather than pure lexical dispatch
-- event-driven queue-analysis passes keyed by canonical pass identity
-- blocked outcomes with explicit recovery actions rather than generic failures
-- safe-point-backed recovery distinct from user-facing restore points
-- pre-lock-only draft decomposition fallback and post-lock graph-integrity stop behavior
 ## Runtime Scheduler Recovery Summary Consolidation Addendum (2026-03-09)
 
 Summary bullets for this feature family MUST say:
 - deterministic scored ready-set scheduling instead of pure lexical dispatch
-- queue-analysis passes keyed by `scheduler_pass_id`
-- immutable attempt lineage with new `attempt_id` per dispatch
-- blocked outcomes with explicit recovery actions instead of generic failures
+- event-driven queue-analysis passes keyed by `scheduler_pass_id`
+- immutable attempt lineage with new `attempt_id` per dispatch and explicit runtime fields for retry/blocking/remediation/safe points
+- blocked outcomes with explicit recovery actions instead of generic failures, with distinct `attention_required` vs `blocked` wizard/thread/dashboard states
 - safe-point-backed recovery distinct from user-facing restore points
-- remediation child execution with explicit lineage
+- remediation child execution with explicit lineage and shared failure-class retry/backoff policy
 - pre-lock-only draft decomposition fallback and post-lock graph-integrity stop behavior
 
 Remove or revise older summary phrasing that implies lexical dispatch, node-centric retry commands, or `attention_required` as the only paused clarification state.
+
+**Artifacts panel and panels (from GUI/Artifacts/Usage scope):** Artifacts panel (runtime artifacts, 19 types, cost_usage, Show in Ledger/Usage); side-panel toggling for Git, Docker, Unraid, Artifacts, Chat, Files (single slot, last-click wins); layout save per project; OpenCode-style usage-on-message reference; AI in Git; multi-repo source control (or explicit deferral).

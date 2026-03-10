@@ -497,3 +497,6 @@ ContractRef: Primitive:UICommand (Plans/Contracts_V0.md#UICommand), ContractName
 | Plans/human-in-the-loop.md | HITL approval events and policy |
 | Plans/Run_Graph_View.md | Node Graph Display (NOT a widget) |
 | Plans/Orchestrator_Page.md | Orchestrator 6-tab structure, per-tab default layouts |
+
+
+**Artifacts panel and Show in Ledger/Usage:** The Artifacts panel (Plans/Runtime_Artifacts_Panel.md) offers "Show in Ledger" and "Show in Usage" for cost_usage items. Those actions navigate to the Usage page or Ledger view, which are composed from the widgets in this document (e.g. widget.ledger_table for event-level usage). Implementation must ensure the linkage (e.g. filter by run_id/thread_id or usage_event_id) is consistent so the target view shows the correct canonical usage.event. See Plans/usage-feature.md for the single coherent schema.

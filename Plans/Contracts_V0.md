@@ -1099,6 +1099,9 @@ Each `newly_ready_nodes[]` entry SHOULD include `source_node_id?` and `source_de
 `requirements.clarification_requested` MUST carry `wizard_id`, `wizard_step`, `thread_id`, `question_ids[]`, `report_ref`, and `state_transition_target` with value `attention_required` or `blocked`.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/storage-plan.md
+
+
+**runtime_artifact.* events:** Payload schemas for runtime_artifact.* events are defined in Plans/storage-plan.md and Plans/Runtime_Artifacts_Panel.md; this document does not define the 19 payloads. For task_id: present in payload when the run has task/subtask granularity; otherwise omit (deterministic rule).
 ## Canonical Runtime Event, Enum, and Payload Consolidation
 
 This section supersedes packet-era naming and field drift wherever conflicts remain.

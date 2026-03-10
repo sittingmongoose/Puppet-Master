@@ -453,6 +453,40 @@ Required blocked event families:
 
 ##### Canonical enum binding
 
+
+#### Additions: Runtime Artifacts (GUI panel) event types and index
+
+**Scope:** Agent-run outputs displayed in the Artifacts panel (see Plans/Runtime_Artifacts_Panel.md). Distinct from Project Plan Package artifacts (Plans/Project_Output_Artifacts.md).
+
+**Seglog event types (one per artifact type):** Each event uses the standard EventRecord envelope (schema, ts, seq, type, run_id, thread_id, payload). The `type` value is one of:
+- `runtime_artifact.code_diff`
+- `runtime_artifact.implementation_plan`
+- `runtime_artifact.reasoning_summary`
+- `runtime_artifact.validation_test`
+- `runtime_artifact.screenshot`
+- `runtime_artifact.evidence`
+- `runtime_artifact.document`
+- `runtime_artifact.restore_point`
+- `runtime_artifact.browser_recording`
+- `runtime_artifact.tool_llm_trace`
+- `runtime_artifact.context_snapshot`
+- `runtime_artifact.cost_usage`
+- `runtime_artifact.hitl_approval`
+- `runtime_artifact.failed_attempts`
+- `runtime_artifact.subagent_lineage`
+- `runtime_artifact.before_after_snapshot`
+- `runtime_artifact.suggested_next_steps`
+- `runtime_artifact.api_web_call`
+- `runtime_artifact.artifact_version`
+
+**redb key:** `artifacts_index:v1:{project_id}` (per-project only). Value: index structure for the project's runtime artifacts (e.g. list or map of artifact_id to metadata for UI listing/filtering).
+
+**Projector:** A projector (or equivalent) reads seglog events whose `type` starts with `runtime_artifact.` and writes/updates the per-project `artifacts_index:v1:{project_id}`. No `payload.artifact_type` discriminator; type is given by event `type`.
+
+**cost_usage alignment:** The payload of `runtime_artifact.cost_usage` events MUST align with the canonical `usage.event` schema (tokens_in, tokens_out, reasoning_tokens, cost, platform/provider, model, etc.). Canonical usage remains `usage.event`; cost_usage is an attribution record that references the same pipeline. Ledger and Usage page consume the same data.
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/usage-feature.md, PolicyRule:Decision_Policy.md§2
+
 `TemplateRepoStatus` is exactly:
 
 - `unconfigured`

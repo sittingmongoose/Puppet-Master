@@ -86,6 +86,12 @@ The existing `Containers & Registry` settings area remains the primary configura
   - notice when the file was auto-generated and still needs review/configuration
 
 ### 2. Contextual Docker Manage surface
+
+
+Docker Manage (and Unraid) are exposed via the **side panel** (or primary content) per Plans/FinalGUISpec.md §4 / §5 / §7. Placement and "Hide when not used in Project" align with the shell. When the project is Docker-related, the Docker icon in the activity bar shows this panel in the single side-panel slot (last-click wins).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md
+
 Puppet Master must provide a first-class Docker management GUI surface that appears when a Docker-related project is in use. It may be implemented as a dedicated page, dockable panel, or another canonical GUI surface, but it must behave as a first-class management UI rather than a hidden advanced-only setting.
 
 The surface must include:

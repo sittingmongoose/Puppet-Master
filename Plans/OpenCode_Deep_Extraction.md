@@ -710,3 +710,6 @@ Each topic below lists 1-5 specific points where Puppet Master's implementation 
 
 ### 10.6 Notable process docs (UI blocker/orchestrator pattern)
 - Session composer "blocker" orchestrator pattern (question/permission blocks prompt input): `specs/session-composer-refactor-plan.md` and `packages/app/src/pages/session/composer/*`
+
+
+**Usage pipeline:** Usage collection and storage (message-level usage, getUsage-style normalization, processor finish-step) are covered by Plans/usage-feature.md as SSOT. Future extraction should reference that plan so usage pipeline terminology does not duplicate or contradict.

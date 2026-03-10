@@ -78,6 +78,7 @@ See: `Plans/rewrite-tie-in-memo.md`.
 | `OpenCode_Deep_Extraction.md` | OpenCode pattern extraction procedure + known-good baseline | Provenance doc for extracting upstream patterns and mapping them into Puppet Master SSOT docs. Covers 8 subsystems (run modes, agents, permissions, commands, formatters, skills, plugins, models) with file pointers, behavior summaries, SSOT mapping table (§8), and delta hooks (§9). |
 | `Decision_Log.md` | Decisions made during plan updates | Records decisions not captured in `auto_decisions.jsonl`; timestamped and final. |
 | `usage-feature.md` | Usage UX + dashboards | Treat usage as projections/rollups over event ledger; **per-thread usage in chat** (context circle, hover tooltip, thread Usage tab) per §5 (OpenCode-style). Widget-composed page addendum (2026-02-23). |
+| `Runtime_Artifacts_Panel.md` | Artifacts panel (runtime artifacts) | Canonical for 19 artifact types, seglog `runtime_artifact.*`, redb `artifacts_index:v1:{project_id}`, cost_usage, Show in Ledger/Usage, browser recordings, and JSON schemas. Distinct from Project Plan Package (`Project_Output_Artifacts.md`). |
 | `newfeatures.md` | Feature ideas + patterns | Treat Iced references as legacy examples; no SQLite (storage is seglog/redb/Tantivy); rewrite anchors are Provider/event-store/tool-policy |
 | `Widget_System.md` | Cross-cutting widget catalog, grid layout, add-widget flow | Canonical for portable page widgets, grid-based resizing, layout persistence. Referenced by Dashboard, Usage, Orchestrator pages. Single widget catalog shared across all widget-composed surfaces. |
 | `Run_Graph_View.md` | Node Graph Display (Airflow-style DAG view) | Canonical for the full-page graph visualization tab on the Orchestrator page. NOT a portable widget. Includes Slint implementation guide, data model contract, 5 layout presets, 8-section detail panel, HITL controls, performance targets (500 nodes). |
@@ -153,7 +154,7 @@ Update index summaries and cross-references after applying this packet so the fo
 - `assistant-chat-design.md`
 - `Permissions_System.md`
 - `FileSafe.md`
-## Runtime Scheduler / Recovery Index Alignment Addendum (2026-03-09)
+## Runtime Packet Index Coverage Consolidation Addendum (2026-03-09)
 
 Update index descriptions so readers can find the owning docs for:
 - scheduler semantics and queue analysis
@@ -161,7 +162,6 @@ Update index descriptions so readers can find the owning docs for:
 - blocked-state UX and recovery actions
 - provider/auth/permission mappings into runtime taxonomy
 - glossary ownership for new runtime terms
-## Runtime Packet Index Coverage Consolidation Addendum (2026-03-09)
 
 Index descriptions for this packet MUST point readers to:
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Glossary.md
@@ -171,3 +171,8 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Pro
 - `Plans/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, and `Plans/FinalGUISpec.md` for rendering and interaction
 - `Plans/chain-wizard-flexibility.md`, `Plans/assistant-chat-design.md`, and `Plans/interview-subagent-integration.md` for paused/degraded planning-state semantics
 - `Plans/Glossary.md` for canonical runtime terminology
+
+<!--
+**Plan map registration:** Add the following row to the Plan map table (## Plan map):
+| `Runtime_Artifacts_Panel.md` | Artifacts panel (runtime artifacts) | Canonical for 19 artifact types, seglog runtime_artifact.*, redb artifacts_index:v1:{project_id}, cost_usage, Show in Ledger/Usage, browser recordings, JSON schemas. Distinct from Project Plan Package (Project_Output_Artifacts.md). |
+-->
