@@ -1112,46 +1112,26 @@ Required fallback rules:
 - Image files render natively and can detach/open without going through the browser runtime.
 - Preview actions either apply validated text patches or deterministically fall back to source focus.
 
-## Runtime Artifact Opening and Recovery Panel Addendum (2026-03-08)
+## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)
 
-File-opening behavior should support the new runtime artifacts and reports produced by scheduler/remediation flows.
+File/artifact browsing must support the new runtime artifacts and reports produced by scheduler/remediation flows while preserving canonical runtime identity.
 
-Required support:
+### Required support
 - open scheduler analysis exports/reports when materialized
 - open remediation reports/details when materialized
 - open degradation reports when materialized
 - open generated non-repo drafts without treating them as normal workspace files
 
-Required UI rule:
-- runtime reports opened from Dashboard/Assistant/Orchestrator surfaces must preserve identity and not silently redirect to unrelated files
-## Runtime Artifact Navigation Alignment Addendum (2026-03-09)
-
-File/artifact browsing must support the new runtime entities.
-
 ### Required navigation targets
-- queue-analysis snapshots
-- attempt-scoped evidence and reports
-- safe-point manifests / restore logs
-- remediation lineage summaries
-
-UI and file browsing affordances must use stable identities (`attempt_id`, `safe_point_id`, `remediation_root_id`) rather than ambiguous node-only labels.
-## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)
-
-Artifact-opening surfaces use canonical runtime identities only.
+- queue-analysis snapshots by `scheduler_pass_id`
+- attempt-scoped evidence and reports by stable `attempt_id`
+- safe-point manifests / restore logs by `safe_point_id`
+- remediation lineage summaries by `remediation_root_id`
+- blocked-detail pivots through `detail_ref`
 
 Rules:
-- queue-analysis opens by `scheduler_pass_id`
-- remediation details open by `remediation_root_id`
-- safe-point history opens by `safe_point_id`
-- blocked-detail pivots resolve through `detail_ref`
+- runtime reports opened from Dashboard/Assistant/Orchestrator surfaces must preserve identity and not silently redirect to unrelated files
+- UI and file browsing affordances must use stable identities (`attempt_id`, `safe_point_id`, `remediation_root_id`) rather than ambiguous node-only labels
 - legacy `analysis_id` may be accepted only as an alias equal to `scheduler_pass_id`
-## Runtime Artifact Open-by-Identity Contract
 
-Artifact-opening surfaces use canonical runtime identities only.
-
-Rules:
-- queue-analysis opens by `scheduler_pass_id`
-- remediation details open by `remediation_root_id`
-- safe-point history opens by `safe_point_id`
-- blocked-detail pivots resolve through `detail_ref`
-- legacy `analysis_id` may be accepted only as an alias equal to `scheduler_pass_id`
+**Runtime Artifacts alignment:** Open by artifact identity and the Artifacts panel MUST align with Plans/Runtime_Artifacts_Panel.md (artifacts_index:v1:{project_id}, 19 artifact types, navigation).

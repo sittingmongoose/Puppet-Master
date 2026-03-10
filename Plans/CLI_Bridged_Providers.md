@@ -611,9 +611,9 @@ Required fields when applicable:
 - Bridged-provider output is sufficient for runtime classification.
 - Retries/replays remain distinguishable in lineage.
 - Provider-local retry behavior does not bypass the shared runtime matrix.
-## Bridged Provider Runtime Classification Addendum (2026-03-09)
+## Bridged Provider Runtime Reconciliation Addendum (2026-03-09)
 
-Bridged providers must normalize transport/provider signals into canonical runtime semantics.
+Bridged providers must preserve canonical runtime identity and taxonomy.
 
 ### Required correlation fields
 For every bridged attempt preserve:
@@ -622,8 +622,8 @@ For every bridged attempt preserve:
 - `node_id`
 - `attempt_id`
 - requested/effective provider-model identifiers
-- permission snapshot identifier
-- `safe_point_id` when present
+- `permission_snapshot_id`
+- `safe_point_id?`
 - remediation lineage identifiers when present
 - `replan_generation`
 
@@ -633,51 +633,27 @@ For every bridged attempt preserve:
 - transient transport/provider outage -> `failure_class = provider_transient`
 - provider-side malformed structured output -> `failure_class = structured_output_invalid`
 
-Adapters may reconnect to observe an already-submitted attempt, but they MUST NOT silently resubmit the prompt or mutate retry counters outside runtime control.
-## Bridged Provider Runtime Reconciliation Addendum (2026-03-09)
+### Runtime attempt correlation envelope
 
-Bridged providers must preserve canonical runtime identity and taxonomy.
+`ProviderRequestEnvelope` MUST include:
+- `run_id`
+- `node_id`
+- `attempt_id`
+- `scheduler_pass_id`
+- `replan_generation`
+- `mutation_capable`
+- `permission_snapshot_id`
+- `model_snapshot_id`
+- `safe_point_id?`
+- `remediation_root_id?`
+- `remediation_parent_attempt_id?`
 
 Rules:
 - preserve `run_id`, `thread_id`, `node_id`, `attempt_id`, generation, snapshot ids, and lineage metadata across normalized output
 - transport reconnect logic may reconnect only to observe an already-submitted attempt; it MUST NOT silently resubmit prompts or mutate retry counters
 - provider signals MUST normalize to canonical `failure_class` / `blocked_reason_code` values before orchestration or UI consumes them
 - prerequisite resolution from provider/auth layers MUST surface a canonical scheduler wake rather than staying provider-local
-## Bridged Provider Runtime Attempt and Retry Ownership Consolidation Addendum (2026-03-09)
-
-`ProviderRequestEnvelope` MUST include:
-- `run_id`
-- `node_id`
-- `attempt_id`
-- `scheduler_pass_id`
-- `replan_generation`
-- `mutation_capable`
-- `permission_snapshot_id`
-- `model_snapshot_id`
-- `safe_point_id?`
-- `remediation_root_id?`
-- `remediation_parent_attempt_id?`
-
-Rules:
 - the prompt pipeline and provider envelope use the same immutable handoff bundle for a given attempt
-- reconnect logic may observe an in-flight attempt but MUST NOT silently resubmit it
 - any retry, prerequisite resume, remediation rerun, or restore-before-rerun uses a new envelope with a new `attempt_id`
-## Runtime Attempt Correlation Envelope
 
-`ProviderRequestEnvelope` MUST include:
-- `run_id`
-- `node_id`
-- `attempt_id`
-- `scheduler_pass_id`
-- `replan_generation`
-- `mutation_capable`
-- `permission_snapshot_id`
-- `model_snapshot_id`
-- `safe_point_id?`
-- `remediation_root_id?`
-- `remediation_parent_attempt_id?`
-
-Rules:
-- the prompt pipeline and provider envelope use the same immutable handoff bundle for a given attempt
-- reconnect logic may observe an in-flight attempt but MUST NOT silently resubmit it
-- any retry, prerequisite resume, remediation rerun, or restore-before-rerun uses a new envelope with a new `attempt_id`
+**Usage on message/turn and cost_usage:** Usage may be stored on message/turn for per-thread display. The cost_usage runtime artifact (Plans/Runtime_Artifacts_Panel.md) reuses the same canonical schema as usage.event; there is no second canonical store.

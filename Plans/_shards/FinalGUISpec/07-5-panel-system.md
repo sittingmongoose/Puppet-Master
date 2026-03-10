@@ -2,6 +2,9 @@
 
 ### 5.1 Detachable Panels
 
+
+**Panels that can occupy the side panel (one at a time; last-click wins):** Chat, File Manager, Git (GitHub), Docker Manage, Source Control, Unraid, Artifacts. See §4.1 Activity Bar for which activity bar icon shows which panel. Each of these panels supports detach/re-dock as below.
+
 The following panels support detach/re-dock:
 - **Chat panel**
 - **File Manager panel**
@@ -68,6 +71,9 @@ Three-signal system for panel detach discovery:
 3. **First-run hint (one-time):** On first use of Chat or File Manager, inline banner: "This panel can be popped out into its own window. [Try it] [Dismiss]." Dismissed permanently after first interaction.
 
 ### 5.7 Panel Persistence
+
+
+**Layout persistence per project:** Panel dock state (docked side and width, or floating position/size), **activity bar icon order**, and **which panel was last visible** are persisted **per project** in redb (e.g. under keys scoped by `project_id`). Restored on startup and when switching projects. If a floating window was on a monitor no longer connected, fall back to docked state.
 
 Panel dock state (docked side and width, or floating position/size) persisted in redb under `layout:v1` key. Restored on startup and after theme restart. If a floating window was on a monitor no longer connected, fall back to docked state.
 

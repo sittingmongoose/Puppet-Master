@@ -1,5 +1,12 @@
 ## A. Git Panel (IDE Surface)
 
+
+The Git panel is exposed via the **side panel** (or primary content) per Plans/FinalGUISpec.md §4 / §5 / §7. Placement and toggling are deterministic from the activity bar (single slot, last-click wins).
+
+**Scope (AI in Git / multi-repo):** AI in Git (e.g. AI-assisted commit messages, suggestions) and multi-repo source control are in scope; see Plans/feature-list.md. Either add to this doc in a later pass or explicitly defer with a pointer.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md
+
 The Git Panel is the IDE-integrated surface for all local and remote Git operations.
 It is a first-class panel in the Puppet Master UI; it MUST dispatch `UICommand` IDs
 for all user-initiated actions and MUST NOT execute Git business logic directly.

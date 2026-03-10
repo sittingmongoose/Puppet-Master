@@ -226,25 +226,34 @@ Primary content: 1280 - 48 - 48 = 1184px wide
 
 ### 4.1 Activity Bar
 
-Left edge, 48px wide. A vertical strip of 6 icons, each representing a group of related functionality.
+Left edge, 48px wide. A vertical strip of icons, each representing a panel or group. **There is no Home icon on the activity bar;** main app navigation (Dashboard, Projects, etc.) stays in the title bar / primary content.
 
-| Icon | Group | Pages | Default Page |
-|------|-------|-------|-------------|
-| Home | Home | Dashboard, Projects | Dashboard |
-| Play | Run | Wizard, Interview, Tiers | Wizard |
-| Sliders | Settings | Settings (unified: old Config + old Settings + Login + Doctor) | Settings |
-| Chart | Data | Usage, Metrics, Evidence, History, Ledger, Memory, Coverage | Usage |
-| Chat | Chat | (toggles Chat tab in side panel) | -- |
-| Folder | Files | (toggles Files tab in side panel) | -- |
+| Icon | Panel / group | Behavior |
+|------|----------------|----------|
+| Play | Run & Debug | Toggles Run & Debug panel in side panel (DAP-based debugging; see §7.20) |
+| Git / branch | Git (GitHub) | Toggles Git panel in side panel (repo/branch/diff/operations; see Plans/GitHub_Integration.md §A) |
+| Docker | Docker | Toggles Docker Manage panel in side panel when project is Docker-related (see Plans/Containers_Registry_and_Unraid.md) |
+| Source control | Source Control | Toggles Source Control panel in side panel (multi-repo; Git-focused) |
+| Unraid | Unraid | Toggles Unraid template panel in side panel when project has Unraid template workflow |
+| Box/archive | Artifacts | Toggles Artifacts panel in side panel (runtime artifacts; see Plans/Runtime_Artifacts_Panel.md) |
+| Chat | Chat | Toggles Chat tab in side panel |
+| Folder | Files | Toggles File Manager panel in side panel |
+| Sliders | Settings | Settings (unified) in primary content |
+| Chart | Data | Usage, Metrics, Evidence, etc. in primary content; default **Usage** |
+
+**Single side-panel slot, last-click wins:** Only one side panel is visible at a time. Clicking an activity bar icon **replaces** the current panel content with that icon's panel. The most recently clicked icon's panel is shown.
 
 **Behavior:**
-- **Single click** on an activity bar icon navigates to the group's default page.
-- **Long press or right-click** opens a popover sub-menu listing all pages in that group.
-- **Active indicator:** 3px vertical accent stripe on the left edge of the active group's icon.
-- Chat and Files icons toggle their respective side panels open/closed (they do not navigate to a page in primary content).
+- **Single click** on an activity bar icon shows that panel in the side panel slot (replacing whatever was there).
+- **Long press or right-click** on a group icon (e.g. Data) opens a popover sub-menu listing pages in that group; Run & Debug / Git / Docker / Source Control / Unraid / Artifacts / Chat / Files each occupy the side panel when clicked.
+- **Active indicator:** 3px vertical accent stripe on the left edge of the active icon.
 - Icons are 24x24px, outlined, using `Theme.text-primary` with the active icon using `Theme.accent-blue`.
 
-**Activity bar reordering:** Icons can be dragged up/down to reorder. A separator line can be placed between primary and secondary groups. Order is persisted in redb.
+**Activity bar reordering:** Icons can be dragged up/down to reorder. A separator line can be placed between primary and secondary groups. Order is persisted in redb **per project** (see §5.7).
+
+**Activity bar extensibility:** Extensions/plugins may add activity bar items. Drag-to-reorder applies to built-in and extension icons.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Runtime_Artifacts_Panel.md, PolicyRule:Decision_Policy.md§2
 
 ### 4.2 Command Palette
 
@@ -267,6 +276,9 @@ Left edge, 48px wide. A vertical strip of 6 icons, each representing a group of 
 At the top of the primary content area, a breadcrumb strip (20px) shows `Group > Page` (e.g., `Data > Ledger`). Breadcrumb items are clickable for quick navigation within the group.
 
 ### 4.4 Keyboard Shortcuts
+
+
+**Artifacts panel and side-panel toggling:** Any shortcuts for "Open Artifacts panel," "Toggle side panel," or switching between side-panel content (Git, Docker, Unraid, Artifacts, Chat, Files) MUST be registered in the shortcut registry and appear in Settings > Shortcuts. Activity bar icon clicks are the primary interaction; keyboard shortcuts are additive and must stay consistent with §4.1 and §5.
 
 **Tier 1 -- Essential (learn day one):**
 
@@ -314,6 +326,9 @@ At the top of the primary content area, a breadcrumb strip (20px) shows `Group >
 ## 5. Panel System
 
 ### 5.1 Detachable Panels
+
+
+**Panels that can occupy the side panel (one at a time; last-click wins):** Chat, File Manager, Git (GitHub), Docker Manage, Source Control, Unraid, Artifacts. See §4.1 Activity Bar for which activity bar icon shows which panel. Each of these panels supports detach/re-dock as below.
 
 The following panels support detach/re-dock:
 - **Chat panel**
@@ -381,6 +396,9 @@ Three-signal system for panel detach discovery:
 3. **First-run hint (one-time):** On first use of Chat or File Manager, inline banner: "This panel can be popped out into its own window. [Try it] [Dismiss]." Dismissed permanently after first interaction.
 
 ### 5.7 Panel Persistence
+
+
+**Layout persistence per project:** Panel dock state (docked side and width, or floating position/size), **activity bar icon order**, and **which panel was last visible** are persisted **per project** in redb (e.g. under keys scoped by `project_id`). Restored on startup and when switching projects. If a floating window was on a monitor no longer connected, fall back to docked state.
 
 Panel dock state (docked side and width, or floating position/size) persisted in redb under `layout:v1` key. Restored on startup and after theme restart. If a floating window was on a monitor no longer connected, fall back to docked state.
 
@@ -581,6 +599,9 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#13, ContractName:Plans/DRY_Rules
 ## 7. Views Specification
 
 ### 7.1 View Inventory (21 views/panels + 6 bottom panel tabs)
+
+
+| 21 | Artifacts | -- | Side panel | **NEW** (runtime artifacts: diffs, plans, evidence, browser recordings, cost_usage, etc.; see Plans/Runtime_Artifacts_Panel.md) |
 
 | # | View | Group | Type | Status |
 |---|------|-------|------|--------|

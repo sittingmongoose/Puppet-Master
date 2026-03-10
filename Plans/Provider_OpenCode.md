@@ -535,41 +535,28 @@ Required declarations:
 If OpenCode or the selected upstream model does not support a requested runtime control, Puppet Master MUST record the control as unsupported/skipped in effective runtime state rather than silently ignoring it.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.md, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
-## OpenCode Attempt Correlation / Retry Alignment Addendum (2026-03-09)
-
-The OpenCode adapter must participate in the shared runtime packet without provider-local drift.
-
-### Required correlation fields
-Preserve `run_id`, `thread_id`, `node_id`, `attempt_id`, retry count, `safe_point_id` when present, `remediation_root_id`, `remediation_parent_attempt_id`, `remediation_generation`, `replan_generation`, requested/effective model IDs, and permission snapshot identifier.
-
-### Hidden retry prohibition
-OpenCode transport reconnect logic may reconnect only to observe an already-submitted attempt. It MUST NOT silently resubmit prompts, reset attempt identity, or invent provider-local fallback loops.
-
-### Mapping rule
-OpenCode-specific auth, transient, structured-output, and tool-denial signals MUST be normalized into canonical runtime `blocked_reason_code` / `failure_class` values before orchestration or UI consumes them.
 ## OpenCode Runtime Packet Reconciliation Addendum (2026-03-09)
 
 OpenCode-specific runtime behavior must remain aligned with the canonical runtime packet.
 
-Rules:
-- preserve canonical runtime identity (`run_id`, `thread_id`, `node_id`, `attempt_id`, generation, snapshot ids, safe point and remediation lineage) across request/stream lifecycle
-- OpenCode reconnect logic may observe an existing attempt, but it MUST NOT silently resubmit prompts or reset attempt identity
-- OpenCode-specific auth, transient, structured-output, and tool-denial signals MUST normalize into canonical `blocked_reason_code` / `failure_class` values before orchestration or UI consumes them
-- prerequisite resolution after auth or permission recovery MUST surface a canonical scheduler wake and create a new attempt snapshot rather than mutating the blocked attempt in place
-## OpenCode Runtime Attempt Safe-Point and Retry Consolidation Addendum (2026-03-09)
-
-OpenCode integrations MUST follow the canonical runtime packet rather than inventing provider-local recovery behavior.
-
 ### Required OpenCode runtime fields
 - `run_id`, `thread_id`, `node_id`, `attempt_id`
+- retry count when present
 - requested/effective model identifiers
 - requested/effective permission snapshot identifiers when relevant
 - `replan_generation`
 - `mutation_capable`
 - `safe_point_id?`
-- remediation lineage identifiers when present
+- `remediation_root_id?`
+- `remediation_parent_attempt_id?`
+- `remediation_generation?`
 
 ### Required rules
+- preserve canonical runtime identity (`run_id`, `thread_id`, `node_id`, `attempt_id`, generation, snapshot ids, safe point, and remediation lineage) across the request/stream lifecycle
+- OpenCode transport reconnect logic may reconnect only to observe an existing attempt; it MUST NOT silently resubmit prompts, reset attempt identity, or invent provider-local fallback loops
+- OpenCode-specific auth, transient, structured-output, and tool-denial signals MUST normalize into canonical `blocked_reason_code` / `failure_class` values before orchestration or UI consumes them
+- prerequisite resolution after auth or permission recovery MUST surface a canonical scheduler wake and create a new attempt snapshot rather than mutating the blocked attempt in place
 - a `safe_point_id` created before a mutation-capable OpenCode attempt remains attached across the entire request/stream lifecycle
-- reconnect/stream recovery may observe an in-flight attempt but MUST NOT silently resubmit or reclassify it outside runtime control
 - any OpenCode-local retry wording is superseded by canonical runtime retry ownership
+
+**Usage and Ledger alignment:** OpenCode server returns message-level usage; the adapter maps it to normalized usage (same shape as usage.event). Persistence and Ledger/Usage consumption follow Plans/storage-plan.md and Plans/usage-feature.md. For implementers, the OpenCode product pipeline (Session.getUsage, processor finish-step) is the reference for how message metadata becomes stored usage; terminology should not drift.

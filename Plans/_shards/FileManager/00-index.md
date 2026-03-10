@@ -25,7 +25,4 @@ Canonical source: [Plans/FileManager.md](../../FileManager.md)
 - [17-verification-ai-executable.md](17-verification-ai-executable.md) — ## Verification (AI-executable)
 - [18-13-git-status-integration.md](18-13-git-status-integration.md) — ## 13. Git Status Integration
 - [19-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md](19-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md) — ## 14. Markdown, Mermaid, HTML, SVG, and Image Rendering (Rewrite Addendum -- 2026-03-07)
-- [20-runtime-artifact-opening-and-recovery-panel-addendum-2026-03-08.md](20-runtime-artifact-opening-and-recovery-panel-addendum-2026-03-08.md) — ## Runtime Artifact Opening and Recovery Panel Addendum (2026-03-08)
-- [21-runtime-artifact-navigation-alignment-addendum-2026-03-09.md](21-runtime-artifact-navigation-alignment-addendum-2026-03-09.md) — ## Runtime Artifact Navigation Alignment Addendum (2026-03-09)
-- [22-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md](22-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md) — ## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)
-- [23-runtime-artifact-open-by-identity-contract.md](23-runtime-artifact-open-by-identity-contract.md) — ## Runtime Artifact Open-by-Identity Contract
+- [20-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md](20-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md) — ## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)

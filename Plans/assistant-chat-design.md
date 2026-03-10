@@ -2148,3 +2148,6 @@ When multiple nodes are simultaneously blocked, each with its own `blocked_notic
 - `restore_outcome` values (`restored_clean`, `restored_with_conflicts`, `restore_failed`, `restore_skipped`) per Plans/Contracts_V0.md.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+
+**Artifacts panel and cost_usage:** Per-thread usage (context circle, thread Usage tab) aligns with the cost_usage runtime artifact. The Artifacts panel offers "Show in Ledger" and "Show in Usage" for cost_usage items; see Plans/usage-feature.md and Plans/Runtime_Artifacts_Panel.md.

@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/feature-list.md",
-  "source_sha256": "d9ebf7f75350f8cdc6569e8b38a1c24574d4a72d91254bfe20cb0a43c0ff6191",
+  "source_sha256": "f59ade96b0567d9c1d4a750dc890c8bcf427d54e038307e988534259caa5f563",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -36,31 +36,10 @@
       "heading": "## Part 1A - Markdown, Mermaid, and Unified Rendering Addendum (2026-03-07)"
     },
     {
-      "dest_path": "Plans/_shards/feature-list/05-runtime-scheduler-and-recovery-features-addendum-2026-03-08.md",
+      "dest_path": "Plans/_shards/feature-list/05-runtime-scheduler-recovery-summary-consolidation-addendum-2026-03-09.md",
       "start_line": 945,
-      "end_line": 957,
-      "segment_sha256": "fed9a717cc2e8c71f4151faf2bd42f9d4bd083e8623de8e84c9698cdb818b41c",
-      "heading": "## Runtime Scheduler and Recovery Features Addendum (2026-03-08)"
-    },
-    {
-      "dest_path": "Plans/_shards/feature-list/06-runtime-scheduler-recovery-summary-refresh-addendum-2026-03-09.md",
-      "start_line": 958,
-      "end_line": 968,
-      "segment_sha256": "2bb135e884487905145c09600644783c23e99834a6b0c400db27ac4a26d4a1bd",
-      "heading": "## Runtime Scheduler / Recovery Summary Refresh Addendum (2026-03-09)"
-    },
-    {
-      "dest_path": "Plans/_shards/feature-list/07-runtime-scheduler-recovery-summary-reconciliation-addendum-2026-03-09.md",
-      "start_line": 969,
-      "end_line": 976,
-      "segment_sha256": "09551858104e78412be969957ca0f353686e423227d5e1acbccf88eb14225829",
-      "heading": "## Runtime Scheduler / Recovery Summary Reconciliation Addendum (2026-03-09)"
-    },
-    {
-      "dest_path": "Plans/_shards/feature-list/08-runtime-scheduler-recovery-summary-consolidation-addendum-2026-03-09.md",
-      "start_line": 977,
-      "end_line": 988,
-      "segment_sha256": "7867c1b80d848dc585712e5b780ddc803a0b389a9b6fe5cdc0c5f0f23aa1566c",
+      "end_line": 958,
+      "segment_sha256": "2a12751d858eee97c0f744a572426038aeea333ddb4a1ea323f51f6a212f2903",
       "heading": "## Runtime Scheduler Recovery Summary Consolidation Addendum (2026-03-09)"
     }
   ]
