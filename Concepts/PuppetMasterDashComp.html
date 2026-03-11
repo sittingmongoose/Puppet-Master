@@ -2604,6 +2604,7 @@
       opacity: 0;
       animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
       view-transition-name: bento-card;
+      height: 100%;
     }
     [data-theme^="retro"] .bento-card {
       border-radius: 0;
@@ -2731,10 +2732,19 @@
 
     /* Option A: Bento Grid with Group Tabs */
     .settings-a-layout {
-      display: grid;
-      grid-template-columns: 220px 1fr;
+      display: flex;
       flex: 1;
       min-height: 0;
+    }
+    .settings-sidebar {
+      width: 220px;
+      min-width: 220px;
+      background: var(--surface-elevated);
+      border-right: 1px solid var(--border);
+      padding: var(--md) 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
     }
     .settings-search-bar {
       margin-bottom: var(--lg);
@@ -2815,6 +2825,9 @@
       background: var(--accent-lime);
       border-color: var(--accent-lime);
     }
+    [data-theme="retro-light"] input[type="checkbox"]:checked {
+      border-color: #1A1A1A;
+    }
     input[type="checkbox"]:checked::after {
       content: '';
       width: 4px;
@@ -2864,9 +2877,11 @@
       display: flex;
       flex-direction: column;
       transform: translateX(100%);
-      transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+      visibility: hidden;
+      transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), visibility 0.3s;
       z-index: 50;
       border-radius: 12px 0 0 12px;
+      overflow: hidden;
     }
     [data-theme^="retro"] .settings-inspector-panel {
       border-radius: 0;
@@ -2875,6 +2890,8 @@
     }
     .settings-inspector-panel.open {
       transform: translateX(0);
+      visibility: visible;
+      transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), visibility 0s;
     }
     .settings-inspector-panel .inspector-header {
       padding: var(--xl);
@@ -2916,6 +2933,23 @@
       flex-direction: column;
       gap: var(--md);
     }
+    .settings-inspector-panel .details-content label {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-primary);
+    }
+    .settings-inspector-panel .details-content label input[type="checkbox"] {
+      margin: 0;
+    }
+    .settings-inspector-panel .details-content label:not(:has(input[type="checkbox"])) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .settings-group-header {
       font-family: var(--display-font);
       font-size: 11px;
       font-weight: 700;
@@ -2962,11 +2996,11 @@
     }
     .bento-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      grid-auto-rows: min-content;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 500px));
+      justify-content: start;
       gap: var(--lg);
     }
-    .page-settings-a.active, .page-settings-b.active, .page-settings-c.active {
+    .page-settings.active {
       display: flex;
       animation: fadeIn 0.3s ease-in-out;
     }
@@ -3355,9 +3389,7 @@
         <span class="page-tab" tabindex="0" data-page="wizard">Wizard</span>
         <span class="page-tab" tabindex="0" data-page="orchestrator">Orchestrator</span>
         <span class="page-tab" tabindex="0" data-page="usage">Usage</span>
-        <span class="page-tab" tabindex="0" data-page="settings-a">Settings (A - Tabs)</span>
-        <span class="page-tab" tabindex="0" data-page="settings-b">Settings (B - Dashboard)</span>
-        <span class="page-tab" tabindex="0" data-page="settings-c">Settings (C - Masonry)</span>
+        <span class="page-tab" tabindex="0" data-page="settings">Settings</span>
       </nav>
       <div class="title-spacer"></div>
       <input type="text" class="search-bar" placeholder="Search files, commands, settings...">
@@ -4217,7 +4249,7 @@ impl Dashboard {
               <p class="stub-desc">Usage, metrics, evidence, history. Will map to spec.</p>
             </div>
           </div>
-          <div class="page page-settings-a">
+          <div class="page page-settings">
             <div class="settings-a-layout">
               <div class="settings-sidebar">
                 <a href="#a-all" class="settings-tab active" data-filter="all">All Settings</a>
@@ -4254,7 +4286,7 @@ impl Dashboard {
                 <div class="bento-grid">
                   <div class="settings-no-results">No matching settings found.</div>
                   <!-- General Card -->
-                  <div class="bento-card" data-inspector-view="general" data-category="core" style="animation: slideInLeft 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0ms forwards;">
+                  <div class="bento-card" data-inspector-view="general" data-category="core" style="animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg> General</div>
                     <div class="bento-desc">Core application appearance and behavior.</div>
                     <div class="bento-surface">
@@ -6016,15 +6048,15 @@ impl Dashboard {
         });
       });
 
-      document.querySelectorAll('.page-settings-a .settings-tab').forEach(tab => {
+      document.querySelectorAll('.page-settings .settings-tab').forEach(tab => {
           tab.addEventListener('click', function(e) {
               e.preventDefault();
               // Update active state in sidebar
-              document.querySelectorAll('.page-settings-a .settings-tab').forEach(t => t.classList.remove('active'));
+              document.querySelectorAll('.page-settings .settings-tab').forEach(t => t.classList.remove('active'));
               this.classList.add('active');
               
               const filter = this.getAttribute('data-filter');
-              const cards = document.querySelectorAll('.page-settings-a .bento-card');
+              const cards = document.querySelectorAll('.page-settings .bento-card');
               
               const applyFilter = () => {
                   cards.forEach(card => {
