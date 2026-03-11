@@ -20,9 +20,7 @@ Canonical source: [Plans/FileManager.md](../../FileManager.md)
 - [12-8-image-viewer-and-html-preview.md](12-8-image-viewer-and-html-preview.md) — ## 8. Image viewer and HTML preview
 - [13-9-tabs-editor-terminal-browser.md](13-9-tabs-editor-terminal-browser.md) — ## 9. Tabs: Editor, Terminal, Browser
 - [14-10-editor-enhancements-mvp.md](14-10-editor-enhancements-mvp.md) — ## 10. Editor enhancements (MVP)
-- [15-11-languageframework-presets.md](15-11-languageframework-presets.md) — ## 11. Language/framework presets
-- [16-12-gaps-potential-problems-and-enhancements.md](16-12-gaps-potential-problems-and-enhancements.md) — ## 12. Gaps, potential problems, and enhancements
-- [17-verification-ai-executable.md](17-verification-ai-executable.md) — ## Verification (AI-executable)
-- [18-13-git-status-integration.md](18-13-git-status-integration.md) — ## 13. Git Status Integration
-- [19-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md](19-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md) — ## 14. Markdown, Mermaid, HTML, SVG, and Image Rendering (Rewrite Addendum -- 2026-03-07)
-- [20-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md](20-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md) — ## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)
+- [15-verification-ai-executable.md](15-verification-ai-executable.md) — ## Verification (AI-executable)
+- [16-13-git-status-integration.md](16-13-git-status-integration.md) — ## 13. Git Status Integration
+- [17-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md](17-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md) — ## 14. Markdown, Mermaid, HTML, SVG, and Image Rendering (Rewrite Addendum -- 2026-03-07)
+- [18-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md](18-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md) — ## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)

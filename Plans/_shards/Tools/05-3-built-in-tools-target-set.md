@@ -86,6 +86,17 @@ So: **definition**, **hover**, **references** return results directly; **rename*
 **Optional LSP sub-operations (post-MVP):** `lsp.format` (textDocument/formatting, rangeFormatting) and `lsp.code_action` (textDocument/codeAction → workspace/applyEdit) can be added so agents can "format file X" or "apply quick fix"; both write buffers and should require **ask** (or user approval). See Plans/LSPSupport.md §9.1.
 
 ### 3.5 Per-tool semantics (I/O, errors, limits)
+### 3.5A `skill` tool runtime contract
+
+The `skill` tool is the canonical on-demand runtime skill access mechanism.
+
+Rules:
+- it resolves skills by canonical skill id from the registry
+- permission checks apply before returning skill content
+- it complements, but does not replace, context bundling performed by the context compiler
+- it does not require provider-native skill installation to function in MVP
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md
 
 #### 3.5.A Additional semantics: chatsearch / logs / repo import and codesearch multi-tier (MVP)
 

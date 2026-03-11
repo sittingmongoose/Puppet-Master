@@ -134,77 +134,70 @@ export component RunGraphView {
 ContractRef: ContractName:Plans/FinalGUISpec.md#14, ContractName:Plans/Contracts_V0.md
 
 ### 14.2 Rust View-Model Integration
+The Rust backend owns the canonical view-model state and all Slint callbacks for the Run Graph surface.
 
-The Rust backend MUST implement a view-model struct that holds the state and handles Slint callbacks.
+#### Required state
+`RunGraphViewModel` MUST own:
+- `run_meta`
+- canonical `nodes` and `edges` projection vectors
+- `layout_cache` keyed by `(graph_generation, preset)`
+- `view_state` containing zoom, pan, selection, and viewport bounds in graph coordinates
+- `visible_nodes` and `visible_edges` as the culling result used to populate Slint models
+- a weak `ui_handle`
 
-```rust
-struct RunGraphViewModel {
-    // State
-    run_meta: RunGraphMeta,
-    nodes: Vec<GraphNode>,
-    edges: Vec<GraphEdge>,
-    layout_cache: HashMap<(String, LayoutPreset), Vec<NodePosition>>,
-    view_state: ViewState, // zoom, pan, selection, viewport bounds
-    visible_nodes: Vec<usize>, // indices into `nodes` that intersect the viewport
-    visible_edges: Vec<usize>, // indices into `edges` with at least one endpoint visible
+#### `new(ui_handle, initial_tree)`
+`new(...)` MUST execute the following steps in order:
+1. Read the canonical plan/runtime tree in deterministic order. Stable ordering is tier order first, then lexical `node.id` within siblings when no stronger ordering exists.
+2. Build `GraphNode` projections, including plan mapping, state badges, runtime identity snapshot, usage references, and blocked metadata already required elsewhere in this document.
+3. Build `GraphEdge` projections from dependency lists without inventing implied edges.
+4. Compute the initial layout using Preset 1 (`Layered L-R`) unless a persisted preset is available.
+5. Restore persisted `view_state` when present; otherwise default to fit-to-screen, no selection, and a viewport centered on the graph root.
+6. Compute the visible subset using the viewport plus overscan.
+7. Push the initial visible models into Slint.
 
-    // Slint Handle
-    ui_handle: Weak<RunGraphView>,
-}
+`new(...)` MUST NOT leave layout, color, or visible-set computation as deferred `todo!()` behavior.
 
-impl RunGraphViewModel {
-    fn new(ui_handle: Weak<RunGraphView>, initial_tree: &TierTree) -> Self {
-        // 1. Convert TierTree nodes to Vec<GraphNode> projections
-        // 2. Build Vec<GraphEdge> from dependency lists
-        // 3. Compute initial layout (Layered L-R preset)
-        // 4. Compute initial viewport-visible subset
-        // 5. Push initial data to Slint model
-        // Return initialized struct
-        todo!()
-    }
+#### `on_event_batch(events)`
+Event updates are batched on a timer and processed on the Rust side. The batch handler MUST:
+- update only the affected `GraphNode` / `GraphEdge` fields per event type
+- mark the batch as structural only when nodes, dependencies, or graph generation change
+- recompute layout asynchronously only for structural batches
+- recompute the visible subset after any viewport, selection, state, or layout change
+- push row-level model mutations rather than replacing the full model whenever possible
 
-    /// Called when new events arrive via invoke_from_event_loop.
-    /// Events are batched at 16ms intervals by a timer; this processes the batch.
-    fn on_event_batch(&mut self, events: &[PuppetMasterEvent]) {
-        let mut structural_change = false;
-        for event in events {
-            match event {
-                // Update the specific GraphNode fields per section 12.2 mapping
-                // Set structural_change = true if new nodes/edges added
-                _ => { /* per-event-type update logic */ }
-            }
-        }
-        if structural_change {
-            self.recompute_layout_async(); // spawn_blocking
-        }
-        self.update_visible_set(); // re-filter nodes/edges by viewport
-        self.push_to_slint(); // ModelRc row-level updates, not full replacement
-    }
+#### `compute_layout(preset)`
+`compute_layout(...)` is normative, not illustrative.
 
-    fn compute_layout(&self, preset: LayoutPreset) -> Vec<NodePosition> {
-        // Runs on spawn_blocking thread.
-        // Implements Sugiyama (section 9.2) with deterministic tie-break rules.
-        // Returns calculated x/y/w/h for all nodes.
-        todo!()
-    }
+Preset behavior:
+- Presets 1 and 2 use the Sugiyama pipeline already defined in §9.2, including deterministic tie-break rules.
+- Preset 3 reuses the same layer assignment with reduced spacing and the compact spacing rules from §9.3.
+- Preset 4 groups task/subtask nodes inside their phase container bands using the grouping rules from §9.4.
+- Preset 5 reuses Layered L-R positioning plus deterministic critical-path emphasis from §9.5; it does not invent a separate layout algorithm.
 
-    /// Filters nodes/edges to those intersecting the current viewport.
-    /// Viewport = visible screen area in graph coordinates (accounting for zoom/pan).
-    /// Overscan buffer: 200px on each side.
-    fn update_visible_set(&mut self) {
-        // Recompute visible_nodes and visible_edges from view_state viewport bounds
-        // Push filtered model to Slint (only visible items in the repeater models)
-    }
+Common rules:
+- layout output is deterministic for the same graph generation and preset
+- ties are broken lexicographically by canonical node identity
+- layout runs off the UI thread
+- the cache key includes graph generation so stale positions are not reused after replans or structural edits
 
-    /// Resolves state-to-color mapping using theme tokens.
-    /// Called when building GraphNodeUI items for Slint.
-    fn resolve_node_color(&self, state: &TierState) -> (Color, Color) {
-        // Returns (state_color, border_color) from theme token lookup
-        todo!()
-    }
-}
-```
+#### `update_visible_set()`
+Viewport culling is required behavior.
+- Visibility is computed in graph coordinates after applying the current zoom and pan.
+- A node is visible when its bounding rectangle intersects the viewport expanded by an overscan buffer of 200px on each side.
+- An edge is visible when at least one endpoint is visible, or when its curve intersects the expanded viewport.
+- The Slint repeater models contain only the visible subset.
 
+#### `resolve_node_color(state)`
+Color resolution happens in Rust.
+- Node fill and border colors come from the state-to-theme-token table in §8.
+- Selected nodes use `Theme.accent` for the selected border treatment.
+- Edge color derives from the upstream node state at 60% opacity unless another explicit rule in this document overrides it.
+- Slint receives fully resolved colors; it does not perform state-to-token lookup logic itself.
+
+#### `push_to_slint()`
+`push_to_slint()` MUST use row-level updates where feasible. Full-vector replacement is reserved for structural changes that invalidate indices.
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
 ### 14.3 Performance Optimization in Slint
 
 1. **Viewport Culling**: The Rust view-model maintains the visible viewport bounds (in graph coordinates, accounting for zoom and pan). Only nodes whose bounding rectangles intersect the viewport (+ 200px overscan) are included in the `nodes` model passed to Slint. Similarly, only edges with at least one endpoint in the visible set are included in the `edges` model. When the user pans or zooms, the Rust view-model recomputes the visible set and updates the Slint models via `ModelRc` row-level mutations.

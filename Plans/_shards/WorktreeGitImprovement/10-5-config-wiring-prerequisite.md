@@ -15,6 +15,18 @@
 *(Other options for reference: Option A = single canonical YAML schema; Option C = two files. Not chosen.)*
 
 ### 5.3 Fields to wire (minimum)
+### 5.4 Execution-affecting projection completeness
+
+Option B remains the canonical run-start config projection path.
+
+Completeness rule:
+- any GUI setting that changes runtime behavior belongs in the run config snapshot built at start
+- interview execution-affecting settings and HITL tier toggles are part of this rule even when their owning feature plans define the detailed semantics
+- summaries in this document must reference the owning SSOTs rather than implying that GUI-only execution settings are acceptable
+
+This section extends the minimum-field list with the policy that execution-affecting settings are projected by class, not by ad hoc exception.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/human-in-the-loop.md
 
 - `enable_parallel_execution` ← `gui_config.advanced.execution.enable_parallel`
 - `enable_git` (if exposed in GUI) ← corresponding GUI field

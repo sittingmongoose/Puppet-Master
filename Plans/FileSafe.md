@@ -1939,20 +1939,25 @@ Implement role-specific context compiler and wire into platform runners.
 ---
 
 ### 14.6 Skill Bundling
+Skill bundling is the canonical MVP runtime delivery path for skills during context compilation.
 
-**Purpose:** When a plan references skills (e.g. in frontmatter like `skills_used: [bash-pro, rust-clippy]`), load those skill files once and embed them in the compiled context for Task/Iteration roles instead of loading the same files per task.
+Rules:
+- selected skills are resolved from the canonical skill registry
+- the context compiler decides which resolved skills to inline into the compiled context for the active run/tier
+- bundled skill content remains traceable to skill ids and registry metadata
+- on-demand lookup continues to use the `skill` tool; bundling does not eliminate tool-based access
+- provider-native directories or file formats remain import/export/interoperability inputs only
 
-**Behavior:**
+Bundling order:
+1. resolve allowed skill refs
+2. apply permissions and deny/allow filtering
+3. de-duplicate by canonical skill id
+4. bundle deterministic content in context-compiler order
+5. emit enough metadata for evidence/debugging to show which skills were injected
 
-- **Discovery:** When compiling context for Task or Iteration, if a plan path is provided, parse plan frontmatter for a list of skill names (e.g. `skills_used`).
-- **Resolution:** Resolve each name to a file path (e.g. `~/.cursor/skills/{name}/SKILL.md` or project-local `.cursor/skills/{name}/SKILL.md`). If missing, skip that skill and log.
-- **Bundling:** Read each skill file (subject to size limit if desired), then append a "## Skills Reference" section to the compiled context with the contents. One concatenation per phase, not per task.
-- **Saving:** `(num_tasks - 1) * skill_content_size` per plan (e.g. one skill × 3 tasks → ~2× content size saved).
+This section intentionally makes runtime bundling, not provider-native file placement, the MVP execution truth.
 
-**Config:** `context.skill_bundling` (default true).
-
----
-
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md
 ### 14.7 Token Savings and Context Configuration
 
 **Projected savings (illustrative):**

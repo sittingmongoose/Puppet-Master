@@ -171,6 +171,25 @@ Project management and switching. Shows project list with status indicators, cur
 - Tooltip on hover shows specific health details
 
 ### 7.4 Settings (Unified)
+### 7.4A LSP settings and override semantics
+
+The unified Settings surface exposes the canonical LSP configuration without redefining backend policy.
+
+Required GUI behavior:
+- show app-level LSP settings backed by `config.lsp`
+- show when a project-level override from `.puppet-master/lsp.json` is active
+- display the locked defaults from Plans/LSPSupport.md
+- make clear that project overrides replace app-level values according to the canonical merge rule rather than creating a third settings plane
+
+Required visible defaults:
+- `didChangeDebounceMs=100`
+- `hoverTimeoutMs=5000`
+- `completionTimeoutMs=5000`
+- `workspaceSymbolTimeoutMs=10000`
+- `hoverDelayMs=300`
+- `workspaceFolders` cap = 10 active roots
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md
 
 #### 7.4.R Retrieval & Search (Memory tab; project-scoped; complements Context Injection)
 

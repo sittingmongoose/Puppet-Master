@@ -1,35 +1,6 @@
 ## Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)
 
-This section defines blocked / Recovery GUI Reconciliation.
-
-### Dashboard Action Required
-Render Action Required whenever one or more of the following exists:
-- `wizard_blocked`
-- `wizard_attention_required`
-- active runtime blocked episode
-- active approval gate
-
-Priority order:
-`wizard_blocked > active runtime blocked > approval > wizard_attention_required > interrupted > rate_limit > warnings`
-
-### Thread and run status taxonomy
-Visible statuses MUST distinguish:
-- `idle`
-- `running`
-- `queued`
-- `attention_required`
-- `blocked`
-- `retrying_backoff`
-- `remediation`
-- `failed`
-
-Canonical visual distinction:
-- `attention_required` uses amber styling with “Needs input” copy
-- `blocked` uses red styling with “Blocked” copy
-- `waiting_approval` uses blue approval styling
-
-### Scope rule
-Node-level blocked state does not imply run-global pause. Unrelated runnable work may continue.
+This addendum retains GUI-specific recovery rules that supplement the canonical blocked/recovery section below.
 
 ### FileSafe rendering
 A FileSafe block is a persistent blocked episode until the underlying runtime block resolves. It MUST NOT auto-dismiss while still active.

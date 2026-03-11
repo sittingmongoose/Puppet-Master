@@ -111,6 +111,22 @@ pub struct NodePosition {
 ```
 
 ### 7.4 Relationship to Existing Structs
+### 7.5 Canonical upstream ownership for graph projections
+
+The Run Graph view consumes projections from canonical runtime and plan contracts. It MUST NOT invent source-of-truth values locally.
+
+| Graph surface | Canonical owner | Required fields |
+|---|---|---|
+| Plan Mapping (`C2`) | `TierNode` / plan graph contract | `breadcrumb`, `section_anchor`, `excerpt` |
+| Worker Activity (`C3`) | runtime event / attempt snapshot contract | `requested_persona_id`, `effective_persona_id`, `provider`, `model`, `attempt_id`, `session_id?` |
+| Verifier Activity (`C4`) | gate/reviewer event contract | `requested_persona_id`, `effective_persona_id`, `provider`, `model`, `gate_id?`, `attempt_id?` |
+| Model / Tokens / Usage (`C5`) | `UsageRecord` | `run_id`, `tier_id`, `attempt_id?`, `effective_platform`, `effective_model`, `input_tokens`, `output_tokens`, `total_tokens`, `estimated_cost?` |
+| HITL Controls (`C6`) | blocked projection / HITL request contract | `blocked_reason_code`, ordered `allowed_action_ids[]`, `blocked_sequence`, `preserved_local_work`, `requires_safe_point_restore?`, prerequisite metadata |
+| Completed/summary references | evidence contract | `summary`, `summary_kind`, `evidence_ref?`, `detail_ref?` |
+
+The graph detail pane MUST treat these as read-only projections. If a field is absent upstream, the gap belongs to the owner contract named above rather than to the Run Graph UI.
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md
 
 These projection structs are **computed from** existing backend structs:
 - `TierNode` (puppet-master-rs/src/core/tier_node.rs): provides id, tier_type, title, description, dependencies, state_machine.

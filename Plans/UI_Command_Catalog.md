@@ -347,9 +347,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Arti
 - `Plans/Wiring_Matrix.md`
 
 ## Canonical Runtime Recovery Command Consolidation (2026-03-09)
-
-Canonical recovery commands use one shared namespace: `cmd.runtime.*`.
-Legacy `cmd.graph.*` and `cmd.orchestrator.*` recovery IDs are deprecated aliases only.
+Canonical recovery commands use one shared namespace: `cmd.runtime.*`. Legacy recovery command namespaces are deprecated aliases only.
 
 | `allowed_action_id` | canonical command id | minimum args |
 |---|---|---|
@@ -370,28 +368,13 @@ Legacy `cmd.graph.*` and `cmd.orchestrator.*` recovery IDs are deprecated aliase
 - `cmd.runtime.open_safe_point_history` -> `{ run_id, safe_point_id? }`
 
 ### Pre-attempt blocked rule
-When a blocked episode exists before any attempt is created, recovery targets `blocked_sequence` directly and MUST NOT fabricate an `attempt_id`.
+When a blocked episode exists before any attempt is created, the recovery target is `blocked_sequence` and MUST NOT fabricate an `attempt_id`.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md
+
 ### Recovery command definitions
+All blocked-state recovery buttons and menu entries in GUI, chat, graph, and orchestrator surfaces MUST map from `allowed_action_ids[]` to one of the canonical runtime commands above.
 
-The following commands MUST have full definitions in the UI Command Catalog to support blocked-state recovery UI:
+No surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, UICommand:cmd.runtime.approve, ContractName:Plans/Wiring_Matrix.md
-
-| Command ID | Args schema | Expected events | Affected surfaces | Acceptance check |
-|-----------|-------------|----------------|-------------------|------------------|
-| `cmd.runtime.approve` | Canonical minimum args above + blocked/request identity as needed | `node.unblocked`, `attempt.started` | Run Graph View, Dashboard, Thread | Node transitions from blocked to running |
-| `cmd.runtime.decline` | Canonical minimum args above + blocked/request identity as needed | `node.blocked` (remains blocked with `user_declined`) | Run Graph View, Dashboard, Thread | Node blocked_reason_code updated |
-| `cmd.runtime.retry_now` | Canonical minimum args above | `attempt.started` | Run Graph View, Dashboard | New attempt begins for node |
-| `cmd.runtime.resume_after_prerequisite` | Canonical minimum args above + prerequisite metadata as needed | `node.unblocked`, `scheduler.pass` | Run Graph View, Dashboard | Scheduler wakeup includes node |
-| `cmd.runtime.restore_safe_point_then_retry` | Canonical minimum args above | `safe_point.restored`, `attempt.started` | Run Graph View | Restore completes, new attempt begins |
-| `cmd.runtime.start_fresh_attempt` | Canonical minimum args above | `attempt.started` | Run Graph View | Fresh attempt with no safe-point restore |
-| `cmd.runtime.replan` | Canonical minimum args above | `run.graph_canonical_locked` (new generation) | Run Graph View, Dashboard | replan_generation increments |
-| `cmd.runtime.skip_node` | Canonical minimum args above | `node.skipped` | Run Graph View | Node marked skipped, dependents notified |
-| `cmd.runtime.abort_node` | `{ node_id }` | `node.aborted` | Run Graph View | Node marked permanently failed |
-| `cmd.runtime.abort_run` | Canonical minimum args above | `run.aborted` | Dashboard, Run Graph View | Entire run terminates |
-
-All blocked-state recovery action buttons in the UI MUST map to one of these commands via `allowed_action_ids[]`.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FinalGUISpec.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/human-in-the-loop.md

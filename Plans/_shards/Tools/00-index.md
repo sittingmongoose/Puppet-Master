@@ -25,5 +25,4 @@ Canonical source: [Plans/Tools.md](../../Tools.md)
 - [17-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md](17-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md) — ## Tool Denial / Runtime Taxonomy Alignment Addendum (2026-03-09)
 - [18-tool-denial-and-runtime-action-reconciliation-addendum-2026-03-09.md](18-tool-denial-and-runtime-action-reconciliation-addendum-2026-03-09.md) — ## Tool Denial and Runtime Action Reconciliation Addendum (2026-03-09)
 - [19-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-03-09.md](19-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-03-09.md) — ## Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)
-- [20-tool-field-name-and-taxonomy-alignment-addendum.md](20-tool-field-name-and-taxonomy-alignment-addendum.md) — ## Tool Field Name and Taxonomy Alignment Addendum
-- [21-tool-field-name-and-taxonomy-alignment.md](21-tool-field-name-and-taxonomy-alignment.md) — ## Tool Field Name and Taxonomy Alignment
+- [20-tool-field-name-and-taxonomy-alignment.md](20-tool-field-name-and-taxonomy-alignment.md) — ## Tool Field Name and Taxonomy Alignment

@@ -200,6 +200,17 @@ So: **definition**, **hover**, **references** return results directly; **rename*
 **Optional LSP sub-operations (post-MVP):** `lsp.format` (textDocument/formatting, rangeFormatting) and `lsp.code_action` (textDocument/codeAction → workspace/applyEdit) can be added so agents can "format file X" or "apply quick fix"; both write buffers and should require **ask** (or user approval). See Plans/LSPSupport.md §9.1.
 
 ### 3.5 Per-tool semantics (I/O, errors, limits)
+### 3.5A `skill` tool runtime contract
+
+The `skill` tool is the canonical on-demand runtime skill access mechanism.
+
+Rules:
+- it resolves skills by canonical skill id from the registry
+- permission checks apply before returning skill content
+- it complements, but does not replace, context bundling performed by the context compiler
+- it does not require provider-native skill installation to function in MVP
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md
 
 #### 3.5.A Additional semantics: chatsearch / logs / repo import and codesearch multi-tier (MVP)
 
@@ -637,7 +648,7 @@ When a denial blocks progress, the tool event MUST include or map to:
 - `blocked_reason_code`
 - `failure_class` when applicable
 - effective permission snapshot identifier
-- `allowed_actions[]`
+- `allowed_action_ids[]`
 - `headless_denied` flag when the denial was caused by mode limitations
 - side-effect metadata when the denial concerns remote mutation
 
@@ -677,31 +688,22 @@ Runtime-facing denial paths MUST expose:
 ### No success-shaped fallback rule
 Tools MUST NOT convert denied work into success-shaped or generic-failure fallbacks. The blocked state must remain inspectable so scheduler, chat, and GUI surfaces can render the correct recovery path.
 
-## Tool Field Name and Taxonomy Alignment Addendum
-
-This section defines tool Field Name and Taxonomy Alignment.
-
-### Field name correction
-Tool-originated blocked payloads use `allowed_action_ids[]` only. Deprecated names MUST NOT appear in new tool contracts.
-
-### Canonical blocked reasons
-Tool-denial or post-validation paths use the canonical `blocked_reason_code` family, including `validation_blocked` when post-execution validation fails.
-
-### Mutation capability ownership
-Each tool definition MUST include `mutation_capable: bool` (default `false`). This is the source of truth propagated into node planning and safe-point decisions.
-
-### Recovery contract
-Tool-originated blocked paths MUST NOT invent parallel action schemas or tool-private retry categories outside the canonical runtime contract.
 ## Tool Field Name and Taxonomy Alignment
+Tool-originated blocked and denial paths align with the canonical runtime contract.
 
 ### Field name correction
 Tool-originated blocked payloads use `allowed_action_ids[]` only. Deprecated names MUST NOT appear in new tool contracts.
 
 ### Canonical blocked reasons
-Tool-denial or post-validation paths use the canonical `blocked_reason_code` family, including `validation_blocked` when post-execution validation fails.
+Tool-denial or post-validation paths use the shared `blocked_reason_code` family, including `validation_blocked` when post-execution validation fails.
 
 ### Mutation capability ownership
-Each tool definition MUST include `mutation_capable: bool` (default `false`). This is the source of truth propagated into node planning and safe-point decisions.
+Each tool definition MUST include `mutation_capable: bool` (default `false`). This remains the source of truth propagated into planning, safe-point, and recovery decisions.
 
 ### Recovery contract
-Tool-originated blocked paths MUST NOT invent parallel action schemas or tool-private retry categories outside the canonical runtime contract.
+Tool-originated blocked paths:
+- MUST NOT invent tool-private action arrays outside the canonical runtime action family
+- MUST preserve the blocked state rather than converting it into success-shaped fallback output
+- MUST carry prerequisite metadata needed to bind the exact recovery command
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileSafe.md

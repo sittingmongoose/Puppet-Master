@@ -102,41 +102,23 @@ ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:P
 **Current state:** `execute_iteration` calls `runner.execute(request)` directly (always CLI). `prepare_working_directory` and `cleanup_after_execution` wrap it. `run_with_cleanup` is used at call sites that call `runner.execute()` (research_engine, start_chain, app). §8.2.4 updated accordingly.
 
 ### 9.1.18 Unwired features, GUI gaps, and implementation status (sweep)
+Execution-affecting GUI settings must not remain GUI-only state.
 
-The following reflects a sweep of the codebase and plans. Use it to avoid missing wiring or GUI updates when implementing.
+Canonical rule:
+- Option B runtime config construction at run start is the execution path for interview, orchestrator, and related execution-affecting settings
+- any GUI field that changes runtime behavior must be projected into the run config snapshot
+- GUI-visible but runtime-ignored fields are defects, not acceptable interim behavior
 
-**Not yet implemented (MiscPlan / cleanup)**
+This includes, at minimum:
+- interview question-limit settings
+- interview architecture-confirmation and vision-provider settings
+- HITL tier toggles
+- other tier/orchestrator execution-affecting settings already listed in the owning plans
 
-- **Cleanup module:** No `src/cleanup/`; no `prepare_working_directory`, `cleanup_after_execution`, `run_git_clean_with_excludes`, or `run_with_cleanup`. All call sites still call `runner.execute()` (or SDK fallback) with no prepare/cleanup. Implement per §4 and §8.
-- **CleanupConfig / run config:** No `CleanupConfig` type; no cleanup or evidence section in the config the run uses. When implementing, add to the **run config** (Option B: build from gui_config at run start) so the orchestrator and other call sites receive cleanup settings.
-- **GUI -- Config → Advanced:** No "Workspace / Cleanup" subsection; no toggles for clean untracked, clean ignored, clear agent-output, evidence retention. Add per §7.5 and checklist 8.6.
-- **GUI -- Doctor:** No "Clean workspace now" button; no Workspace category. Doctor does not receive a project-path hint when run from the app (Worktree plan §7.2). Add button and project context per §7.5 and 8.6.2.
+Summary rule:
+MiscPlan should summarize these as references to the owning SSOTs rather than restating an open-ended “wire later” status once the canonical behavior is fixed elsewhere.
 
-**Unwired (run does not use GUI state)**
-
-- **Orchestrator run config:** The backend uses `ConfigManager::discover()` (no hint) and `get_config()` which loads **PuppetMasterConfig** from the **file**. The Config page saves **GuiConfig** to the same path. The two shapes differ (Worktree plan §5); the run does **not** receive `gui_config.advanced.execution.enable_parallel` or other GUI-only fields unless Option B (build run config from gui_config at run start) is implemented. So **enable_parallel**, branching, and (once added) cleanup toggles are **unwired** until Option B is in place.
-- **Interview:** When building `InterviewOrchestratorConfig` in app.rs, only **generate_initial_agents_md** and **generate_playwright_requirements** are passed from `gui_config.interview`. The following are **in the GUI** but **not** passed to the orchestrator: **require_architecture_confirmation**, **vision_provider**, **max_questions_per_phase**. **min_questions_per_phase** does not exist in GUI or in `InterviewOrchestratorConfig`. Phase definitions use hardcoded `min_questions: 3`, `max_questions: 8`. Wire these per Interview plan "GUI gaps: Interview tab" and orchestrator plan "Interviewer Enhancements and Config Wiring."
-
-**Shortcuts and Skills (§7.7-§7.11)**
-
-- **Shortcuts:** No `ShortcutAction`/`KeyBinding` or `default_shortcuts`; no `build_key_map` or key-event wiring; no Shortcuts tab or config. Implement per §7.7, §7.9, §8.8; resolve gaps in §7.11 (record flow, Slint wiring, serialization).
-- **Skills:** No `src/skills/`; no discovery, load_skill, or permissions; no Skills tab or config. Implement per §7.8, §7.10, §8.9; resolve gaps in §7.11 (deduplication rule, import semantics, no-project create, name-change on edit).
-
-**GUI changes required (summary)**
-
-| Plan / feature | GUI change |
-|----------------|------------|
-| **MiscPlan** | Config → Advanced: add "Workspace / Cleanup" subsection (toggles + optional evidence). Doctor: add "Clean workspace now" (and optional "Clean all worktrees"); resolve project path; disable when no project. |
-| **MiscPlan (Shortcuts)** | Config: add Shortcuts subsection/tab; list actions + bindings; Change / Reset; persist in GuiConfig. Wire key map at app level per §7.11. |
-| **MiscPlan (Skills)** | Config: add Skills subsection/tab; list discovered skills; Add / Edit / Remove / Permissions / Refresh; persist permissions in GuiConfig. |
-| **Worktree** | Branching tab: Enable Git, Auto PR, Branch strategy; fix/hide naming_pattern. Option B: run receives config built from gui_config so enable_parallel and branching take effect. |
-| **Interview** | Interview tab: add min_questions_per_phase; add "Unlimited" for max; wire require_architecture_confirmation, vision_provider, min/max into InterviewOrchestratorConfig when starting interview. |
-| **Orchestrator** | Tiers tab: plan mode global toggle, "Enable plan mode for all tiers" button; Subagents section. Single Save persists all (gui_config); Option B run-config build includes plan mode and subagents. |
-
-**Widgets and DRY**
-
-- All new GUI for cleanup, interview min/max, and branching must use existing widgets from `docs/gui-widget-catalog.md` (e.g. toggler, styled_button, styled_text_input, help_tooltip, confirm_modal). Run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` after changes. Tag new reusable widgets with `// DRY:WIDGET:`.
-
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/human-in-the-loop.md
 ### 9.1.19 Shortcuts: config load failure, key conflicts, and discoverability
 
 - **Config load failure:** If the shortcuts section of GuiConfig is corrupted or invalid at load time, the app must not crash. **Recommendation:** Fall back to empty overrides, log a warning, show toast "Shortcuts reset to defaults due to config error", and build key map from defaults only (§7.11, §8.8.7). Wire this at app startup and when opening Config → Shortcuts.
@@ -145,12 +127,17 @@ The following reflects a sweep of the codebase and plans. Use it to avoid missin
 - **Tooltip when key map not loaded:** Before the key map is built (e.g. config not yet loaded), show action label only or "(Loading...)" where shortcut labels appear; never show blank or "(undefined)" (§7.11).
 
 ### 9.1.21 Skills: discovery, permissions, and runner wiring
+Skills runtime behavior is canonicalized as registry discovery + permission filtering + context bundling + `skill` tool access.
 
-- **Discovery path order and portability:** Discovery path order is canonical (§7.10); any change (e.g. adding a path) can change which skill "wins" for a given name. **Recommendation:** Keep DRY:DATA:skill_search_paths as the single source of truth; document order in code and in AGENTS.md so implementers and users understand first-wins behavior. On Windows, path case and separators may affect discovery; first-wins deduplication should use consistent name comparison (e.g. normalize case for comparison if desired).
-- **Permission "ask" and runner wiring:** Until "ask" is implemented (§7.11), only allow/deny are active. When "ask" is added, the app must prompt the user at the point where the runner would load the skill (before or at run start); implementation must decide exact UI (modal vs toast) and persistence (e.g. "Always/Never for this skill").
-- **Per-provider skill delivery:** Runners must receive the allowed skill list in a form each provider understands. **Recommendation:** Implementation plan must list per provider (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini) how skill paths or content are passed (env var, prompt injection, tool); without this, Skills integration remains stubbed. See §7.10 "Discovery and platform_specs" and §8.9.6.
-- **Create/import overwrite and concurrent edit:** Creating a skill when the target directory already contains SKILL.md must not overwrite (§7.11); implementation must return a clear error. Concurrent edit on disk during in-app edit is an implementation must-decide (detect and prompt Reload/Overwrite/Cancel recommended).
+Implications:
+- there is no MVP requirement to define separate provider-native runtime delivery mechanisms per provider
+- runner wiring is responsible for preserving the canonical registry and tool behavior, not for translating every skill into provider-specific native packaging
+- provider-native skill files remain discovery/import/export/interoperability concerns only
+- permission checks apply before bundling and before on-demand `skill` tool access
 
+MiscPlan should therefore reference the primary SSOTs for runtime behavior rather than carrying a stale “implementation plan must list per provider” requirement.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md
 ### 9.1.22 Shortcuts and Skills: implementation summary
 
 **Known risks**

@@ -632,6 +632,20 @@ Auto mode MUST NOT be opaque. The system must always expose:
 - and whether the current effective Persona came from auto, explicit user request, config, or plan/tier assignment.
 
 ### 10.11 Effective Persona Resolution Record (cross-reference)
+### 10.11A Runtime identity surfaces
+
+Requested and effective persona/runtime identity must remain visible outside the prompt pipeline.
+
+Required runtime-facing fields for execution and UI surfaces:
+- `requested_persona_id`
+- `effective_persona_id`
+- `selection_reason`
+- `effective_platform`
+- `effective_model`
+
+These fields are consumed by Run Graph, Orchestrator, Interview, and chat blocked/recovery surfaces. They must come from the canonical runtime record rather than surface-local reconstruction.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/interview-subagent-integration.md
 
 This document declares the Persona-owned fields of the runtime selection record. The full cross-system record is defined jointly with `Plans/Models_System.md` and `Plans/Prompt_Pipeline.md`.
 

@@ -28,7 +28,7 @@ HITL pauses use one canonical request record:
 - `tier_type` (`phase | task | subtask`)
 - `request_kind = "tier_boundary_approval"`
 - `message`
-- ordered `allowed_actions[]`
+- ordered `allowed_action_ids[]`
 
 Canonical events are:
 - `hitl.approval_requested`
@@ -83,18 +83,32 @@ ContractRef: PolicyRule:Decision_Policy.md§4
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 ### GUI: Primary Place to Turn On and Configure HITL
+HITL is configured in the GUI and persisted in one canonical execution-affecting config block.
 
-HITL is a **setting in the GUI**. The user turns HITL on and configures **which tiers** it is enabled for from the application UI.
+Canonical config shape:
 
-- **Where:** Orchestrator settings, Wizard, or a dedicated Orchestrator/Dashboard settings area. One place so the user can enable HITL and choose phase / task / subtask without editing config files.
-- **Controls:** At least:
-  - A way to **enable HITL** (master toggle or implicit when any tier is on).
-  - **Per-tier toggles:** "Pause for human approval at phase completion," "... at task completion," "... at subtask completion." Each can be turned on or off independently.
-- **Persistence:** Selections are written to the same config the orchestrator uses (`hitl: { phase: bool, task: bool, subtask: bool }` in redb `config:gui.hitl`); GUI reads and writes that config. Use existing widget patterns per `docs/gui-widget-catalog.md` where applicable.
-- **Config (backend):** One structured block in the same config that holds tier/orchestrator settings. Exact key names and location to be decided at implementation time; GUI is the primary interface for changing them.
+```yaml
+hitl:
+  phase: false
+  task: false
+  subtask: false
+```
 
-## Behavior
+Rules:
+- this structure lives inside `GuiConfig`
+- it is persisted in redb at `config:gui.hitl`
+- GUI controls read and write this exact structure
+- Option B runtime config construction copies this structure unchanged into the run snapshot at run start
+- there is no second backend-only HITL key family for the same semantics
 
+UI requirements:
+- one visible place to enable or disable HITL per tier
+- phase/task/subtask toggles remain independent
+- execution-affecting changes apply to the next run without requiring a restart
+
+This section replaces any prior wording that left key names or config location to implementation-time choice.
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md
 ### Run-Loop Integration (Conceptual)
 
 1. Orchestrator runs as today: Phase → Task → Subtask → Iteration, with start/end verification at phase, task, and subtask per Plans/orchestrator-subagent-integration.md.
@@ -274,35 +288,34 @@ After decline/reject, the surface MUST choose among:
 - `Replan` when the canonical classification is `replan_required`
 - `Skip node` only when the node contract explicitly allows skip without violating graph integrity
 
-## HITL Field Name Correction Addendum
-
-Canonical HITL requests and stored HITL state use `allowed_action_ids[]`, not `allowed_actions[]`.
-
-Required fields:
-- `request_id`
-- `run_id`
-- `tier_id`
-- `tier_type`
-- `request_kind`
-- `message`
-- ordered `allowed_action_ids[]`
-- `status`
-- timestamps and rationale when applicable
-
-Older `allowed_actions` wording is deprecated and MUST NOT appear in new HITL contracts, examples, or persistence shapes.
 ## Canonical HITL Request and Persistence Correction
+This section is the canonical HITL request and persistence contract.
 
-Canonical HITL requests and stored HITL state use `allowed_action_ids[]`, not `allowed_actions[]`.
-
-Required fields:
-- `request_id`
-- `run_id`
-- `tier_id`
-- `tier_type`
-- `request_kind`
-- `message`
+### Canonical runtime-facing fields
+Every HITL request or blocked projection exposed to runtime-facing surfaces MUST use:
+- `blocked_reason_code`
 - ordered `allowed_action_ids[]`
-- `status`
-- timestamps and rationale when applicable
+- `blocked_sequence` where blocked episodes are enumerated
+- `preserved_local_work`
+- `requires_safe_point_restore?`
+- prerequisite metadata needed to bind the recovery action
+- `failure_class?` only when the blocked state originates from a classified failed attempt
+- `detail_ref?` when drill-down evidence or logs exist
 
-Older `allowed_actions` wording is deprecated and MUST NOT appear in new HITL contracts, examples, or persistence shapes.
+Deprecated field names such as `allowed_actions[]` are compatibility-only and MUST NOT appear in new canonical schemas.
+
+### Waiting approval semantics
+`waiting_approval` is a blocked/runtime overlay, not a replacement node lifecycle state.
+- nodes remain in their graph-progress lifecycle while the runtime overlay indicates approval is pending
+- GUI, chat, and scheduler surfaces render recovery state from the blocked projection rather than by mutating the canonical node lifecycle taxonomy
+
+### Action-family rules
+Visible labels may vary by surface, but they MUST bind to canonical `allowed_action_ids[]` and the shared runtime recovery commands.
+- approval and decline remain first-class actions
+- restart/fresh-attempt, safe-point restore, replan, skip, and abort behavior come from the same canonical runtime action set used elsewhere
+- HITL MUST NOT invent a parallel action schema that diverges from the runtime command catalog
+
+### Persistence rule
+HITL requests and blocked episodes persist as canonical blocked/runtime records so restoration after interruption returns the user to the same actionable state rather than a generic paused state.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Executor_Protocol.md

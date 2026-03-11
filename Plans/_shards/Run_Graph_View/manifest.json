@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/Run_Graph_View.md",
-  "source_sha256": "ca675977dfc7dc19dfc3d7438d06c1c608bb296c1198f8cd922342a60e085daf",
+  "source_sha256": "52c24159edaa786030f45180afb2e3a6bf691c73453685a7c08a20ef64539dad",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -66,133 +66,126 @@
     {
       "dest_path": "Plans/_shards/Run_Graph_View/09-7-data-model-contract-rust-structs.md",
       "start_line": 384,
-      "end_line": 512,
-      "segment_sha256": "5dfd29c384c830bae1780495a2d98fa8a79aea5ebc5a4a747a54fd3122c59081",
+      "end_line": 528,
+      "segment_sha256": "faf31ee0de87e311bc4c508c815cc1bfb89d2248ab9deeda5a520c7eb4f3e7c0",
       "heading": "## 7. Data Model Contract (Rust Structs)"
     },
     {
       "dest_path": "Plans/_shards/Run_Graph_View/10-8-state-to-color-mapping-theme-tokens.md",
-      "start_line": 513,
-      "end_line": 540,
+      "start_line": 529,
+      "end_line": 556,
       "segment_sha256": "3510b8d18fab0cef34a46454be9ca444ea6e0ea687606de1b51fe991592caed7",
       "heading": "## 8. State-to-Color Mapping (Theme Tokens)"
     },
     {
       "dest_path": "Plans/_shards/Run_Graph_View/11-9-dag-layout-algorithms-5-presets.md",
-      "start_line": 541,
-      "end_line": 608,
+      "start_line": 557,
+      "end_line": 624,
       "segment_sha256": "2b28828a9ec6630ba2479847925d3083fd27dbcc8a651c5365fef5cd54fadbdb",
       "heading": "## 9. DAG Layout Algorithms (5 Presets)"
     },
     {
       "dest_path": "Plans/_shards/Run_Graph_View/12-10-interactions.md",
-      "start_line": 609,
-      "end_line": 658,
+      "start_line": 625,
+      "end_line": 674,
       "segment_sha256": "ae90187c26f06126e6833d7a3d87d4c06b820c29ca9120ca0a44a43ffc133fb3",
       "heading": "## 10. Interactions"
     },
     {
       "dest_path": "Plans/_shards/Run_Graph_View/13-11-performance-requirements.md",
-      "start_line": 659,
-      "end_line": 681,
+      "start_line": 675,
+      "end_line": 697,
       "segment_sha256": "f230fabdec8ffcd4d12976f91ecf4a837d8b03b0d669af08a12816380af3cd95",
       "heading": "## 11. Performance Requirements"
     },
     {
       "dest_path": "Plans/_shards/Run_Graph_View/14-12-real-time-update-strategy.md",
-      "start_line": 682,
-      "end_line": 726,
+      "start_line": 698,
+      "end_line": 742,
       "segment_sha256": "18db2d62d890eb76b524c4e3b68e9fbb82c062424e12a0bb155ce93a098b452e",
       "heading": "## 12. Real-Time Update Strategy"
     },
     {
       "dest_path": "Plans/_shards/Run_Graph_View/15-13-theme-integration.md",
-      "start_line": 727,
-      "end_line": 741,
+      "start_line": 743,
+      "end_line": 757,
       "segment_sha256": "1b2770aedda9b10a7415a7dbdf688fa5e11710d87748ca0d0b2559f9cde19d13",
       "heading": "## 13. Theme Integration"
     },
     {
       "dest_path": "Plans/_shards/Run_Graph_View/16-14-slint-implementation-guide.md",
-      "start_line": 742,
-      "end_line": 960,
-      "segment_sha256": "8a702eb73b814d6b2b454dbd6b5212d8886b988256469a321f2d6e9fc7be1ced",
+      "start_line": 758,
+      "end_line": 969,
+      "segment_sha256": "be71d89b3dfb5898c88d87cb590e0188f76e9b0f2c4abdeda1b5b39c8eb392cf",
       "heading": "## 14. Slint Implementation Guide"
     },
     {
       "dest_path": "Plans/_shards/Run_Graph_View/17-15-accessibility.md",
-      "start_line": 961,
-      "end_line": 977,
+      "start_line": 970,
+      "end_line": 986,
       "segment_sha256": "7321a87cbc3f30dbe286f31f0d0ab8de8066d816cd09d88c99c162e5aaadc0c0",
       "heading": "## 15. Accessibility"
     },
     {
       "dest_path": "Plans/_shards/Run_Graph_View/18-16-persistence.md",
-      "start_line": 978,
-      "end_line": 991,
+      "start_line": 987,
+      "end_line": 1000,
       "segment_sha256": "f5546cb9320471dce4c366341d168dac20672f14535e1dbb2faef3459a3aff59",
       "heading": "## 16. Persistence"
     },
     {
       "dest_path": "Plans/_shards/Run_Graph_View/19-17-uicommand-ids.md",
-      "start_line": 992,
-      "end_line": 1013,
+      "start_line": 1001,
+      "end_line": 1022,
       "segment_sha256": "e05cf3e91caf614f4665054cd8f33412f17836d56b699ddb427b1b00042010c5",
       "heading": "## 17. UICommand IDs"
     },
     {
       "dest_path": "Plans/_shards/Run_Graph_View/20-18-acceptance-criteria.md",
-      "start_line": 1014,
-      "end_line": 1043,
+      "start_line": 1023,
+      "end_line": 1052,
       "segment_sha256": "4b8eaf91c0a46bd52b125111098092816b326d87b7a960bcb4cfdfb33ac8790b",
       "heading": "## 18. Acceptance Criteria"
     },
     {
       "dest_path": "Plans/_shards/Run_Graph_View/21-19-references.md",
-      "start_line": 1044,
-      "end_line": 1065,
+      "start_line": 1053,
+      "end_line": 1074,
       "segment_sha256": "4132016c5d97315d8f2e687e940e5efa1ec8c365096d915d1f002f91ab5579e1",
       "heading": "## 19. References"
     },
     {
       "dest_path": "Plans/_shards/Run_Graph_View/22-scheduler-analysis-and-remediation-visibility-addendum-2026-03-08.md",
-      "start_line": 1066,
-      "end_line": 1142,
+      "start_line": 1075,
+      "end_line": 1151,
       "segment_sha256": "bd22abb2c9c0c87377fe59a65c8678672487e306a39b7dc1ea396970335dfb44",
       "heading": "## Scheduler Analysis and Remediation Visibility Addendum (2026-03-08)"
     },
     {
       "dest_path": "Plans/_shards/Run_Graph_View/23-queue-analysis-attempt-lineage-ui-addendum-2026-03-09.md",
-      "start_line": 1143,
-      "end_line": 1188,
-      "segment_sha256": "ce9a6541db947bdf8825b81efdeaa695ff20152a67e2e5ed787e7ba44baf7079",
+      "start_line": 1152,
+      "end_line": 1197,
+      "segment_sha256": "72721b28828cfe18569667a2426db5532d87668c1c57d2abbdef39c0dc4ae020",
       "heading": "## Queue Analysis / Attempt Lineage UI Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/Run_Graph_View/24-queue-analysis-attempt-lineage-reconciliation-addendum-2026-03-09.md",
-      "start_line": 1189,
-      "end_line": 1207,
+      "start_line": 1198,
+      "end_line": 1216,
       "segment_sha256": "3e7b749997aa970eba8673ab8aa6374b83a6b322fa875e1c0a77114bdd277de6",
       "heading": "## Queue Analysis / Attempt Lineage Reconciliation Addendum (2026-03-09)"
     },
     {
-      "dest_path": "Plans/_shards/Run_Graph_View/25-attempt-centric-runtime-recovery-ui-reconciliation-addendum-2026-03-09.md",
-      "start_line": 1208,
-      "end_line": 1219,
-      "segment_sha256": "a309e5ea614d06a0bcb308a3019012e776a2aca42529ca3fbfdc1d7a84c2c40d",
-      "heading": "## Attempt-Centric Runtime Recovery UI Reconciliation Addendum (2026-03-09)"
-    },
-    {
-      "dest_path": "Plans/_shards/Run_Graph_View/26-runtime-scheduler-blocked-view-contract.md",
-      "start_line": 1220,
-      "end_line": 1231,
+      "dest_path": "Plans/_shards/Run_Graph_View/25-runtime-scheduler-blocked-view-contract.md",
+      "start_line": 1217,
+      "end_line": 1228,
       "segment_sha256": "16c0e4cb7275cd00b2b269121be8d9e59a013154cc509a25a26fcbab6d66e7f4",
       "heading": "## Runtime Scheduler / Blocked View Contract"
     },
     {
-      "dest_path": "Plans/_shards/Run_Graph_View/27-blocked-state-rendering-and-recovery-addendum.md",
-      "start_line": 1232,
-      "end_line": 1269,
+      "dest_path": "Plans/_shards/Run_Graph_View/26-blocked-state-rendering-and-recovery-addendum.md",
+      "start_line": 1229,
+      "end_line": 1266,
       "segment_sha256": "ef75f5b21d5ad5342f860a4e98e5b5bb0d0b1c79eb5f0130fb6a8b9646a0df3e",
       "heading": "## Blocked-State Rendering and Recovery Addendum"
     }

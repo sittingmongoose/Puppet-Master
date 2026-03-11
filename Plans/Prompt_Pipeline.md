@@ -48,6 +48,20 @@ The prompt pipeline consumes the following deterministic inputs:
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/FileSafe.md
 
 ### 1.2 Stage ordering (canonical)
+### 1.2B Skill resolution and runtime delivery
+
+Skill runtime delivery is part of prompt assembly and context compilation.
+
+Canonical order:
+1. resolve requested skill refs from the skill registry
+2. apply permission filtering
+3. de-duplicate by canonical skill id
+4. bundle selected skill content into compiled context when the compiler decides it is needed
+5. preserve on-demand access through the `skill` tool for later runtime lookup
+
+Provider-native skill directories and formats are not the canonical runtime delivery stage for MVP. They are discovery/import/export/interoperability inputs only.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md
 
 ### 1.2A Structured attachment normalization for browser element context
 

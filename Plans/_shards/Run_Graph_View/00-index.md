@@ -30,6 +30,5 @@ Canonical source: [Plans/Run_Graph_View.md](../../Run_Graph_View.md)
 - [22-scheduler-analysis-and-remediation-visibility-addendum-2026-03-08.md](22-scheduler-analysis-and-remediation-visibility-addendum-2026-03-08.md) — ## Scheduler Analysis and Remediation Visibility Addendum (2026-03-08)
 - [23-queue-analysis-attempt-lineage-ui-addendum-2026-03-09.md](23-queue-analysis-attempt-lineage-ui-addendum-2026-03-09.md) — ## Queue Analysis / Attempt Lineage UI Addendum (2026-03-09)
 - [24-queue-analysis-attempt-lineage-reconciliation-addendum-2026-03-09.md](24-queue-analysis-attempt-lineage-reconciliation-addendum-2026-03-09.md) — ## Queue Analysis / Attempt Lineage Reconciliation Addendum (2026-03-09)
-- [25-attempt-centric-runtime-recovery-ui-reconciliation-addendum-2026-03-09.md](25-attempt-centric-runtime-recovery-ui-reconciliation-addendum-2026-03-09.md) — ## Attempt-Centric Runtime Recovery UI Reconciliation Addendum (2026-03-09)
-- [26-runtime-scheduler-blocked-view-contract.md](26-runtime-scheduler-blocked-view-contract.md) — ## Runtime Scheduler / Blocked View Contract
-- [27-blocked-state-rendering-and-recovery-addendum.md](27-blocked-state-rendering-and-recovery-addendum.md) — ## Blocked-State Rendering and Recovery Addendum
+- [25-runtime-scheduler-blocked-view-contract.md](25-runtime-scheduler-blocked-view-contract.md) — ## Runtime Scheduler / Blocked View Contract
+- [26-blocked-state-rendering-and-recovery-addendum.md](26-blocked-state-rendering-and-recovery-addendum.md) — ## Blocked-State Rendering and Recovery Addendum

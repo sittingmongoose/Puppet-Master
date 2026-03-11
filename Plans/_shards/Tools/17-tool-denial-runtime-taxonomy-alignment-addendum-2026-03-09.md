@@ -7,7 +7,7 @@ When a denial blocks progress, the tool event MUST include or map to:
 - `blocked_reason_code`
 - `failure_class` when applicable
 - effective permission snapshot identifier
-- `allowed_actions[]`
+- `allowed_action_ids[]`
 - `headless_denied` flag when the denial was caused by mode limitations
 - side-effect metadata when the denial concerns remote mutation
 

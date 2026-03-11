@@ -375,11 +375,19 @@ A node is ready only when all of the following are true:
 Invalid blocker IDs are `graph_integrity` problems and keep the node non-ready.
 
 ### Node lifecycle versus runtime overlays
-- node lifecycle remains the graph-progress contract
-- blocked/backoff/retrying/remediation/waiting-approval remain runtime attempt or projection states rather than replacement node statuses
-- readiness MUST consult both lifecycle state and current runtime overlays
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/orchestrator-subagent-integration.md
+Node lifecycle remains the graph-progress contract.
 
+Runtime overlays include blocked, backoff, retrying, remediation, and waiting-approval states.
+
+Rules:
+- overlays do not replace canonical node lifecycle values
+- readiness consults both lifecycle state and active runtime overlays
+- `waiting_approval` is represented through blocked/runtime records rather than by mutating node lifecycle taxonomy
+- safe-point and remediation state likewise remain runtime overlays attached to attempts or blocked projections
+
+This preserves one stable lifecycle contract for planning/graph semantics while allowing runtime recovery behavior to remain richly observable.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/human-in-the-loop.md
 ### Canonical score term definitions
 The canonical score tuple is `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`.
 

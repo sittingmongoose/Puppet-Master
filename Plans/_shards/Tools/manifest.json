@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/Tools.md",
-  "source_sha256": "af4343ac54375e79bc1252d9859e4332173eb954157ee2e5788ab80c4275454c",
+  "source_sha256": "74576adbe1a9a520a6bbe11941f751b2bb14b3f9a5815845e9be81f653366cf2",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -38,120 +38,113 @@
     {
       "dest_path": "Plans/_shards/Tools/05-3-built-in-tools-target-set.md",
       "start_line": 115,
-      "end_line": 295,
-      "segment_sha256": "845c7a3d3910edace851104a12c379c99afbe800c5c3068c9b75e0d3b7fc734b",
+      "end_line": 306,
+      "segment_sha256": "e2c36b3c2a30379b33de13504dce578ca3690caec9c42fb96bd33b1d1c724d36",
       "heading": "## 3. Built-in tools (target set)"
     },
     {
       "dest_path": "Plans/_shards/Tools/06-4-custom-tools.md",
-      "start_line": 296,
-      "end_line": 322,
+      "start_line": 307,
+      "end_line": 333,
       "segment_sha256": "777860103ad5646d12aba158c9e41af7d1af4849e7420aefe197a35d185f36e8",
       "heading": "## 4. Custom tools"
     },
     {
       "dest_path": "Plans/_shards/Tools/07-5-mcp-integration-in-scope.md",
-      "start_line": 323,
-      "end_line": 344,
+      "start_line": 334,
+      "end_line": 355,
       "segment_sha256": "061feba506dbc898b6253d0042e9e6d93f949f4447d783d69f57cb698004cad7",
       "heading": "## 5. MCP integration (in scope)"
     },
     {
       "dest_path": "Plans/_shards/Tools/08-6-ways-to-add-tools-implementation-angles.md",
-      "start_line": 345,
-      "end_line": 362,
+      "start_line": 356,
+      "end_line": 373,
       "segment_sha256": "606b0e784a3467c79cea364c51d7922f0506681cce788dd823a260444f044a0c",
       "heading": "## 6. Ways to add tools (implementation angles)"
     },
     {
       "dest_path": "Plans/_shards/Tools/09-7-per-platform-mcp-and-tool-config-reference.md",
-      "start_line": 363,
-      "end_line": 379,
+      "start_line": 374,
+      "end_line": 390,
       "segment_sha256": "7e959d700434c4594d2ddaa321f1d7601d638c760cbb5cff44f9f093d69fe5a5",
       "heading": "## 7. Per-platform MCP and tool config (reference)"
     },
     {
       "dest_path": "Plans/_shards/Tools/10-8-implementation-details-and-technical-notes.md",
-      "start_line": 380,
-      "end_line": 437,
+      "start_line": 391,
+      "end_line": 448,
       "segment_sha256": "a23c05ebff0dbb22b65ba2316a8451be4446ddd11efcc441b094585cbbca6c08",
       "heading": "## 8. Implementation details and technical notes"
     },
     {
       "dest_path": "Plans/_shards/Tools/11-9-gaps-potential-problems-and-enhancements.md",
-      "start_line": 438,
-      "end_line": 478,
+      "start_line": 449,
+      "end_line": 489,
       "segment_sha256": "d0aba84c8eeab934c035ea480de76a84654daf51286b2f48008b970b7db51509",
       "heading": "## 9. Gaps, potential problems, and enhancements"
     },
     {
       "dest_path": "Plans/_shards/Tools/12-10-implementation-plan-permissions-spec-for-implementers.md",
-      "start_line": 479,
-      "end_line": 542,
+      "start_line": 490,
+      "end_line": 553,
       "segment_sha256": "e04cb35ecdfde0440a473dfa25baf165d981a7e1d0af6504de65ff835e6fd830",
       "heading": "## 10. Implementation plan: permissions (spec for implementers)"
     },
     {
       "dest_path": "Plans/_shards/Tools/13-11-relationship-to-other-plans.md",
-      "start_line": 543,
-      "end_line": 560,
+      "start_line": 554,
+      "end_line": 571,
       "segment_sha256": "7fb15bae629b2a53b23e343d53479ad6af8809ef83cdc200f82a1019636f8ef2",
       "heading": "## 11. Relationship to other plans"
     },
     {
       "dest_path": "Plans/_shards/Tools/14-12-implementation-checklist-ordered-for-implementation-plan.md",
-      "start_line": 561,
-      "end_line": 583,
+      "start_line": 572,
+      "end_line": 594,
       "segment_sha256": "41d56e6ba67fc58b429f56a0a9993496a18aa8fda40727608a786677dfc90014",
       "heading": "## 12. Implementation checklist (ordered for implementation plan)"
     },
     {
       "dest_path": "Plans/_shards/Tools/15-13-references.md",
-      "start_line": 584,
-      "end_line": 600,
+      "start_line": 595,
+      "end_line": 611,
       "segment_sha256": "1ae3794589e9f5c6df48c4dec8d3cabad38241f53c3016c7a9a4f2c4632e9529",
       "heading": "## 13. References"
     },
     {
       "dest_path": "Plans/_shards/Tools/16-tool-policy-outcome-taxonomy-addendum-2026-03-08.md",
-      "start_line": 601,
-      "end_line": 630,
+      "start_line": 612,
+      "end_line": 641,
       "segment_sha256": "aee87b965ebc8b4a1d83074b1e5334746baaa2154d0fd18c04c3aa67672de87f",
       "heading": "## Tool Policy Outcome Taxonomy Addendum (2026-03-08)"
     },
     {
       "dest_path": "Plans/_shards/Tools/17-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md",
-      "start_line": 631,
-      "end_line": 645,
-      "segment_sha256": "e2d63e7215e644ad265d37f02d5cf8150f9283a98784c9ba19aabdd31ce2895e",
+      "start_line": 642,
+      "end_line": 656,
+      "segment_sha256": "b7c58e1b876a47fab4b6ba183df9800ecb6a5b948f9007a1035ca8d2af6e103a",
       "heading": "## Tool Denial / Runtime Taxonomy Alignment Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/Tools/18-tool-denial-and-runtime-action-reconciliation-addendum-2026-03-09.md",
-      "start_line": 646,
-      "end_line": 657,
+      "start_line": 657,
+      "end_line": 668,
       "segment_sha256": "04096e19d57878f73361fefa6204bc3952d2e7cbebdc9f6048f258d28939b323",
       "heading": "## Tool Denial and Runtime Action Reconciliation Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/Tools/19-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-03-09.md",
-      "start_line": 658,
-      "end_line": 679,
+      "start_line": 669,
+      "end_line": 690,
       "segment_sha256": "35215765c041c323b90458b12963d016d139296c2bced14d3241e634776204e9",
       "heading": "## Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)"
     },
     {
-      "dest_path": "Plans/_shards/Tools/20-tool-field-name-and-taxonomy-alignment-addendum.md",
-      "start_line": 680,
-      "end_line": 694,
-      "segment_sha256": "da9b707cd44d9e3dc95df786593ca348585d8106b4c90f90640442900ded6c08",
-      "heading": "## Tool Field Name and Taxonomy Alignment Addendum"
-    },
-    {
-      "dest_path": "Plans/_shards/Tools/21-tool-field-name-and-taxonomy-alignment.md",
-      "start_line": 695,
-      "end_line": 707,
-      "segment_sha256": "a477cbd2a12715309629838bdf6ee28c7ad5515884f371d9916fcad32dbbd69f",
+      "dest_path": "Plans/_shards/Tools/20-tool-field-name-and-taxonomy-alignment.md",
+      "start_line": 691,
+      "end_line": 709,
+      "segment_sha256": "3e67654e2889872b82b3f29e9c6db99e89e43592cab2f8902d42c40e7d66af88",
       "heading": "## Tool Field Name and Taxonomy Alignment"
     }
   ]

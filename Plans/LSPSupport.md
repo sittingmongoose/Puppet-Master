@@ -694,20 +694,56 @@ Order for an agent to build a step-by-step implementation guide. Each phase has 
 ---
 
 ## 16. Open points and decisions for implementer
+This section closes the remaining implementation-time policy choices for MVP LSP behavior.
 
-The following should be decided at implementation time and documented in the implementation guide:
+### Canonical config location and precedence
+App-level configuration lives under `config.lsp`.
 
-- **Exact timeout values** (hover, completion, workspace symbol) and whether they are user-configurable in Settings.
-- **Debounce default** for didChange (100 ms recommended; range 50-200 ms).
-- **workspaceFolders cap** (10 recommended) and policy when cap exceeded (e.g. LRU by last open).
-- **Settings > LSP** is a dedicated tab under Settings (FinalGUISpec §7.4.2); no further location decision needed.
-- **Project-level LSP config:** File path and format (e.g. `.puppet-master/lsp.json`) and merge rules with app-level config.
-- **Completion trigger characters:** Use server-provided list from capability or default to all.
-- **Inlay hint refresh:** On every didChange (after debounce) vs. on visible range change only (performance vs. freshness).
-- **Code action apply path:** Exact integration point with FileSafe (e.g. same applyEdit entry as agent edits) and user confirmation for destructive actions.
+Project overrides live at `.puppet-master/lsp.json`.
 
----
+Merge order:
+1. app-level `config.lsp`
+2. project override `.puppet-master/lsp.json`
 
+Merge rules:
+- scalar keys override
+- object keys override by nested key
+- arrays replace rather than merge
+- absent keys inherit
+- server-specific settings resolve by server id first, then by language/filetype mapping only when no explicit server-id override exists
+
+### Locked defaults
+| Setting | Value |
+|---|---|
+| `didChangeDebounceMs` | `100` |
+| `hoverTimeoutMs` | `5000` |
+| `completionTimeoutMs` | `5000` |
+| `workspaceSymbolTimeoutMs` | `10000` |
+| `hoverDelayMs` | `300` |
+| `workspaceFolders` cap | `10` roots with at least one open document |
+
+### Trigger and refresh behavior
+- completion uses server-advertised trigger characters when provided
+- when a server does not advertise trigger characters, completion still supports normal typing plus explicit manual invocation
+- inlay hints refresh on document open and after debounced `didChange`
+- scroll-only refresh is not required for MVP
+- hover uses the canonical `hoverDelayMs` and `hoverTimeoutMs` values above
+
+### `workspaceFolders` policy
+Only roots containing at least one open document are included, up to the cap above. Overflow roots are excluded deterministically and MUST be visible in logs/evidence when exclusion affects behavior.
+
+### Apply-edit path
+`workspace/applyEdit`, rename, and code-action application use the same FileSafe-backed apply-edit path as other agent mutations.
+- multi-file edits are treated as multi-file mutations
+- destructive edits use the same safety and approval rules as any other file mutation path
+- LSP does not bypass FileSafe, tool policy, or blocked-state reporting
+
+### Virtual documents
+Chat/code-block virtual documents keep the existing virtual-document stance already defined in §14.7. This section does not reopen that decision.
+
+No core runtime LSP behavior remains implementation-defined after this section.
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
 ## Appendix: Implementation plan checklist (single ordered list for implementers)
 
 Use this as the **single, implementation-ready checklist** an agent can follow. Cross-references: §5.1 = LSP in the Chat Window; §9.1 = Additional enhancements (optional/recommended). FinalGUISpec §7.16 = Chat, §7.20 = Bottom Panel (Problems), §7.4.2 = Settings > LSP; FileManager §10.10, §12.1.4.

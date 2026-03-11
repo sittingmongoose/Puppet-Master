@@ -318,9 +318,9 @@ Backend components required so the Agent Skills GUI (§7.8) and skill-aware flow
 
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
 
-**Discovery and platform_specs:**
+**Discovery and runtime delivery:**
 
-- How runners receive skills must be explicitly tied to **platform_specs** (or a dedicated doc section referenced from AGENTS.md). **Implementation plan must list per provider (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini) how skill paths or content are passed** -- e.g. env var, prompt injection, or tool (e.g. `skill` tool). No implementation of runner wiring without this mapping.
+- Skills runtime behavior follows the canonical SSOT path: registry discovery, permission filtering, context bundling, and on-demand `skill` tool access. Provider-native formats remain discovery/import/export/interoperability inputs rather than a separate MVP runtime delivery matrix.
 
 **Error handling (backend):**
 
@@ -368,7 +368,7 @@ This subsection closes open decisions and documents gaps so an **implementation 
 | **"Import from path"** | **Decision:** **Copy into a discovery path.** "Import" means: user picks an existing folder containing `SKILL.md`; we copy that folder into a chosen discovery base (e.g. `.puppet-master/skills/<name>` or `~/.config/puppet-master/skills/<name>`). We do not persist arbitrary external paths (keeps discovery simple and portable). Validate name and frontmatter after copy. |
 | **Create skill when no project** | When no project is open (no project root), "Create new" skill: offer **global only** (e.g. `~/.config/puppet-master/skills/<name>`). Disable or hide "project" option when `project_root` is None. |
 | **Edit: name change in frontmatter** | **Decision:** **Name in frontmatter must match directory name.** On save, if user changes `name` in frontmatter so it no longer matches the dir name: (1) reject with validation error "Name must match folder name", or (2) offer "Rename folder" to rename dir to match (then save). Prefer (1) for v1 to avoid accidental renames. |
-| **How runners receive skills** | **Document per provider:** platform_specs (or orchestrator plan) should state for each provider how skills are passed (paths only vs full content; CLI env var vs prompt injection vs `skill` tool). **Implementation plan must list per provider (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini) how skill paths or content are passed (env, prompt, tool).** See §7.10 "Discovery and platform_specs" and §8.9.6. |
+| **How runners receive skills** | **Decision:** MVP runtime delivery uses the canonical registry + permission filter + context bundling + `skill` tool path. Provider-native formats may be documented as interoperability inputs, but implementation does not require a separate per-provider native runtime delivery matrix. |
 | **Tests** | Add unit tests: `discover_skills` (mock dirs, order and deduplication); `load_skill` (valid/invalid frontmatter, name validation, dir-name match); `resolve_skill_permission` (exact + wildcard, default allow). See §8.9.7. |
 
 **Required scope** (fleshed out below in §7.11.1 and §7.11.2)

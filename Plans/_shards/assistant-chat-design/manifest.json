@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/assistant-chat-design.md",
-  "source_sha256": "6003e90968088367b313fab40fa0f3da5f4e775fd393a54c4f83624637790ad4",
+  "source_sha256": "d86d075123f89248d6114fe30aba1cad85b0ce318817194c6222b7373d155317",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -276,14 +276,14 @@
     {
       "dest_path": "Plans/_shards/assistant-chat-design/39-unified-thread-blocked-state-lifecycle.md",
       "start_line": 2106,
-      "end_line": 2130,
-      "segment_sha256": "03d02b377d6d3b5eb4f11cf5d57ee9fa1b891e422dff6e21c11f48d77f245820",
+      "end_line": 2135,
+      "segment_sha256": "2e4fa56e2d3642d2486ee22771ff9021b0a7da1a264586f229fdb5547c901c61",
       "heading": "## Unified Thread Blocked-State Lifecycle"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/40-concurrent-blocked-episodes-and-enum-alignment-addendum.md",
-      "start_line": 2131,
-      "end_line": 2149,
+      "start_line": 2136,
+      "end_line": 2154,
       "segment_sha256": "59f97455b30adbe91793607bdde39ea2eb33044a3f6a6a1aa517a026be734bba",
       "heading": "## Concurrent Blocked Episodes and Enum Alignment Addendum"
     }

@@ -2104,7 +2104,6 @@ Rules:
 - resolving one blocked episode updates only that episode; others remain active
 - action buttons are rendered from canonical `allowed_action_ids[]` plus blocked metadata and MUST NOT invent thread-local recovery semantics
 ## Unified Thread Blocked-State Lifecycle
-
 Canonical thread states:
 - `active`
 - `attention_required`
@@ -2113,9 +2112,10 @@ Canonical thread states:
 - `failed`
 
 Rules:
-- `attention_required` means the active flow can continue inside the same clarification or review loop.
-- `blocked` means automation cannot continue until a prerequisite changes or a new explicit recovery action occurs.
-- wizard-blocked and node-blocked episodes are distinct persisted episodes and MUST NOT be collapsed into one mutable thread flag.
+- `attention_required` means the active flow can continue inside the same clarification or review loop
+- `blocked` means automation cannot continue until a prerequisite changes or a new explicit recovery action occurs
+- blocked episodes are persisted as distinct episodes and MUST NOT be collapsed into one mutable thread flag
+- thread-surface action buttons are rendered from ordered `allowed_action_ids[]` plus blocked metadata; chat does not invent thread-local recovery semantics
 
 ### Precedence
 1. active node-blocked episode for the visible runtime context
@@ -2124,10 +2124,15 @@ Rules:
 4. historical blocked episodes
 
 ### Multi-episode display
-- thread selector shows the highest-severity active badge
-- when more than one blocked episode is active, show a count badge
+- each `blocked_notice` renders as its own system message
+- a thread with multiple active blocked episodes shows the highest-severity active badge plus a count indicator
 - resolving one blocked episode updates only that episode; others remain active
-- action buttons are rendered from canonical `allowed_action_ids[]` plus blocked metadata and MUST NOT invent thread-local recovery semantics
+- `validation_blocked` and `remediation_ceiling_exceeded` are ordinary members of the canonical blocked taxonomy and render through the same blocked-notice contract
+
+### Persistence and restore rule
+Thread blocked notices persist enough identity to restore the same blocked surfaces and action set after restart or resume.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
 ## Concurrent Blocked Episodes and Enum Alignment Addendum
 
 ### Concurrent blocked episode rendering

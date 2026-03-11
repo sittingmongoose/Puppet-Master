@@ -28,13 +28,39 @@
   - When env vars are set, Usage can show provider-reported 5h/7d (or equivalent) where the platform supports it; when not set, we still show usage from `usage.jsonl`.
 
 ### Gap 3: Ledger vs. usage_tracker split
-**Desired:** Ledger, usage/event rows, cost_usage artifacts, 5h/7d rollups, and thread-scoped usage all reflect one coherent schema and attribution model.
+The canonical fix is a single normalized `UsageRecord` contract shared by Ledger, Usage, Run Graph, and Orchestrator surfaces.
 
-**Canonical resolution:** The system MUST use one coherent usage schema and attribution model across Ledger, `usage.event`, `usage.jsonl`, `runtime_artifact.cost_usage`, and 5h/7d rollups. Canonical field names MUST use `operation` for the normalized action name plus `tokens_in`, `tokens_out`, and `reasoning_tokens` for token accounting; legacy `action` plus aggregate `tokens` is compatibility-only wording and MUST NOT be introduced for new writes. The Ledger, 5h/7d aggregation, and Usage page all consume the same record shape without ad-hoc remapping between display rows and stored events.
+### Canonical UsageRecord fields
+Required fields:
+- `run_kind`
+- `run_id`
+- `tier_id`
+- `attempt_id?`
+- `thread_id?`
+- `effective_platform`
+- `effective_model`
+- `input_tokens`
+- `output_tokens`
+- `total_tokens`
+- `estimated_cost?`
+- timestamps sufficient for rollups and ordering
 
-**Acceptance signal:** A single usage event/cost payload can populate Ledger, Usage, cost_usage artifact detail, and rollups without per-surface translation logic beyond formatting.
+Optional but recommended attribution fields:
+- `provider_account_id?`
+- `usage_source_kind`
+- `currency?`
+- `prompt_cache_hit?` / similar optimization counters when available
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, PolicyRule:Decision_Policy.md§2
+### Ownership and consumption
+- Ledger reads normalized `UsageRecord` projections rather than ad hoc log parsing
+- Usage page rollups are derived from the same record family
+- Run Graph and Orchestrator aggregate by `tier_id` and `attempt_id?` from the same contract
+- Interview and orchestrator runs share the same schema; `run_kind` distinguishes workflow families without creating parallel usage systems
+
+### Rule
+There is one usage schema. Compatibility shims may ingest older sources, but new runtime surfaces MUST NOT define alternate token/model attribution records.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
 ### Gap 4: Quota/plan only from errors
 
 - **Current state**

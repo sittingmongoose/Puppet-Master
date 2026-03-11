@@ -10,7 +10,7 @@ Add the following to the graph node / detail payload contract:
 - `non_selected_reason`
 - `failure_class`
 - `blocked_reason_code`
-- `allowed_actions[]`
+- `allowed_action_ids[]`
 - `safe_point_id`
 - remediation lineage identifiers
 - `replan_generation`

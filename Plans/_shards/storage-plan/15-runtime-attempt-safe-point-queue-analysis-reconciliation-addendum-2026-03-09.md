@@ -2,24 +2,6 @@
 
 Storage and projections MUST persist the scheduler and recovery model without ambiguity.
 
-### Required logical records
-1. `attempt_record`
-   - keys: `run_id`, `node_id`, `attempt_id`
-   - fields: lifecycle state, `attempt_count`, `retry_count`, `failure_class?`, `blocked_reason_code?`, timestamps, requested/effective model snapshot identifiers, requested/effective permission snapshot identifiers, `safe_point_id?`, remediation lineage fields, `replan_generation`, stale/historical marker
-2. `safe_point_record`
-   - keys: `safe_point_id`
-   - fields: originating attempt, worktree/workspace refs, captured baseline refs, creation reason, restore result, generation
-3. `scheduler_pass_record`
-   - keys: `run_id`, `scheduler_pass_id`
-   - legacy alias: `analysis_id = scheduler_pass_id`
-   - fields: `wake_reason`, capacity summary, ready nodes with score terms, selected nodes, non-selected nodes with reason, pass timestamps
-4. `blocked_projection`
-   - keys: `run_id`, `node_id`, `attempt_id?`, `blocked_sequence`
-   - fields: `blocked_reason_code`, `allowed_action_ids[]`, prerequisite metadata, preserved-local-work flag, resolved-by ref when available
-5. `remediation_lineage_record`
-   - keys: `remediation_root_id`
-   - fields: parent attempt, child attempts, findings, generation, terminal resolution
-
 ### Counter semantics
 - `attempt_count` = total dispatch attempts for the node in the run, including the first attempt
 - `retry_count` = `attempt_count - 1`

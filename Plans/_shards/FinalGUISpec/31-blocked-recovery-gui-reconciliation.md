@@ -1,39 +1,24 @@
 ## Blocked / Recovery GUI Reconciliation
+This section is the canonical GUI summary for blocked and recovery surfaces.
 
 ### Dashboard Action Required
-Render Action Required whenever one or more of the following exists:
-- `wizard_blocked`
-- `wizard_attention_required`
-- active runtime blocked episode
-- active approval gate
-
-Priority order:
-`wizard_blocked > active runtime blocked > approval > wizard_attention_required > interrupted > rate_limit > warnings`
+Blocked and recovery UI binds to canonical blocked projections and HITL records.
+- blocked payloads use ordered `allowed_action_ids[]`
+- blocked episodes remain distinct when more than one is active
+- GUI labels may vary by surface, but command binding always resolves through the shared runtime command catalog
 
 ### Thread and run status taxonomy
-Visible statuses MUST distinguish:
-- `idle`
-- `running`
-- `queued`
-- `attention_required`
-- `blocked`
-- `retrying_backoff`
-- `remediation`
-- `failed`
-
-Canonical visual distinction:
-- `attention_required` uses amber styling with “Needs input” copy
-- `blocked` uses red styling with “Blocked” copy
-- `waiting_approval` uses blue approval styling
+`waiting_approval` and other blocked reasons are runtime overlays, not replacement run-graph lifecycle states.
+- lifecycle remains the graph-progress contract
+- blocked, backoff, retry, remediation, and approval-pending are rendered from runtime projections
+- requested vs effective persona/platform/model remains visible where runtime substitution occurred
 
 ### Scope rule
-Node-level blocked state does not imply run-global pause. Unrelated runnable work may continue.
+The GUI does not synthesize alternate blocked schemas, alternate action arrays, or alternate retry classes for specific surfaces.
 
-### FileSafe rendering
-A FileSafe block is a persistent blocked episode until the underlying runtime block resolves. It MUST NOT auto-dismiss while still active.
+### Visual distinction
+- blocked episodes are visually distinct from ordinary paused/idle states
+- multiple simultaneous blocked episodes show per-episode controls and a count summary where appropriate
+- remediation-ceiling-exceeded and validation-blocked use the same blocked-payload contract as other blocked episodes rather than bespoke one-off UI treatment
 
-### Degraded draft warning
-Decomposition degradation is a pre-lock planning state only. GUI copy MUST NOT imply silent degraded canonical execution after graph lock.
-
-### All-nodes-blocked gating
-Until owner runtime contracts define dedicated all-blocked events, GUI surfaces MAY derive all-blocked banners from current projections but MUST NOT treat undeclared runtime events as canonical.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
