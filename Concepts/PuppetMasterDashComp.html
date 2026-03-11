@@ -6,7 +6,7 @@
   <title>Puppet Master - Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Orbitron:wght@700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* --- REDESIGNED WIZARD & CHAT SYSTEM --- */
     /* --- REDESIGNED WIZARD & CHAT SYSTEM --- */
@@ -191,8 +191,8 @@
       --graph-planning: #2196F3;
       --graph-gating: #9C27B0;
       --shadow: none;
-      --display-font: 'Inter', system-ui, sans-serif;
-      --body-font: 'Inter', system-ui, sans-serif;
+      --display-font: 'Bricolage Grotesque', system-ui, sans-serif;
+      --body-font: 'Bricolage Grotesque', system-ui, sans-serif;
       --border-radius: 4px;
       --border-width: 1px;
       --grid-gap: 24px;
@@ -218,8 +218,8 @@
       --graph-planning: #2196F3;
       --graph-gating: #9C27B0;
       --shadow: none;
-      --display-font: 'Inter', system-ui, sans-serif;
-      --body-font: 'Inter', system-ui, sans-serif;
+      --display-font: 'Bricolage Grotesque', system-ui, sans-serif;
+      --body-font: 'Bricolage Grotesque', system-ui, sans-serif;
       --border-radius: 4px;
       --border-width: 1px;
       --grid-gap: 24px;
@@ -4022,30 +4022,32 @@ impl Dashboard {
           <div class="page page-settings-a">
             <div class="settings-a-layout">
               <div class="settings-sidebar">
+                <a href="#a-all" class="settings-tab active" data-filter="all">All Settings</a>
+
                 <div class="settings-group-header">Core <span class="badge">2</span></div>
-                <a href="#a-general" class="settings-tab active">General</a>
-                <a href="#a-branching" class="settings-tab">Tiers & Branching</a>
-                
+                <a href="#a-general" class="settings-tab" data-filter="core">General</a>
+                <a href="#a-branching" class="settings-tab" data-filter="core">Tiers & Branching</a>
+
                 <div class="settings-group-header">Features <span class="badge">5</span></div>
-                <a href="#a-memory" class="settings-tab">Memory & Context</a>
-                <a href="#a-models" class="settings-tab">Models & Media</a>
-                <a href="#a-security" class="settings-tab">Security & FileSafe</a>
-                <a href="#a-containers" class="settings-tab">Containers & Registry</a>
-                <a href="#a-interview" class="settings-tab">Interview & Orchestrator</a>
+                <a href="#a-memory" class="settings-tab" data-filter="features">Memory & Context</a>
+                <a href="#a-models" class="settings-tab" data-filter="features">Models & Media</a>
+                <a href="#a-security" class="settings-tab" data-filter="features">Security & FileSafe</a>
+                <a href="#a-containers" class="settings-tab" data-filter="features">Containers & Registry</a>
+                <a href="#a-interview" class="settings-tab" data-filter="features">Interview & Orchestrator</a>
 
                 <div class="settings-group-header">System <span class="badge">4</span></div>
-                <a href="#a-auth" class="settings-tab">Authentication & Accounts</a>
-                <a href="#a-health" class="settings-tab">Health & Doctor</a>
-                <a href="#a-permissions" class="settings-tab">Permissions & Rules</a>
-                <a href="#a-personas" class="settings-tab">Personas</a>
+                <a href="#a-auth" class="settings-tab" data-filter="system">Authentication & Accounts</a>
+                <a href="#a-health" class="settings-tab" data-filter="system">Health & Doctor</a>
+                <a href="#a-permissions" class="settings-tab" data-filter="system">Permissions & Rules</a>
+                <a href="#a-personas" class="settings-tab" data-filter="system">Personas</a>
 
                 <div class="settings-group-header">Extensions <span class="badge">3</span></div>
-                <a href="#a-plugins" class="settings-tab">Plugins & Skills</a>
-                <a href="#a-formatters" class="settings-tab">Formatters & LSP</a>
-                <a href="#a-commands" class="settings-tab">Commands & Shortcuts</a>
+                <a href="#a-plugins" class="settings-tab" data-filter="extensions">Plugins & Skills</a>
+                <a href="#a-formatters" class="settings-tab" data-filter="extensions">Formatters & LSP</a>
+                <a href="#a-commands" class="settings-tab" data-filter="extensions">Commands & Shortcuts</a>
 
                 <div class="settings-group-header">Editor <span class="badge">1</span></div>
-                <a href="#a-editor" class="settings-tab">Editor UX & File Manager</a>
+                <a href="#a-editor" class="settings-tab" data-filter="editor">Editor UX & File Manager</a>
               </div>
               <div class="settings-content">
                 <div class="settings-search-bar">
@@ -4054,7 +4056,7 @@ impl Dashboard {
                 <div class="bento-grid">
                   <div class="settings-no-results">No matching settings found.</div>
                   <!-- General Card -->
-                  <div class="bento-card" data-inspector-view="general">
+                  <div class="bento-card" data-inspector-view="general" data-category="core">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg> General</div>
                     <div class="bento-desc">Core application appearance and behavior.</div>
                     <div class="bento-surface">
@@ -4065,7 +4067,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 12 settings...</button>
                   </div>
                   <!-- Branching Card -->
-                  <div class="bento-card" data-inspector-view="branching">
+                  <div class="bento-card" data-inspector-view="branching" data-category="core">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg> Tiers & Branching</div>
                     <div class="bento-desc">Git operations and parallel execution rules.</div>
                     <div class="bento-surface">
@@ -4076,7 +4078,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 8 settings...</button>
                   </div>
                   <!-- Memory Card -->
-                  <div class="bento-card" data-inspector-view="memory">
+                  <div class="bento-card" data-inspector-view="memory" data-category="features">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5A3 3 0 0 0 13.6 4.4"/><path d="M6.401 6.5A3 3 0 0 1 10.4 4.4"/></svg> Memory & Context</div>
                     <div class="bento-desc">Context injection and retrieval budgets.</div>
                     <div class="bento-surface">
@@ -4087,7 +4089,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 14 settings...</button>
                   </div>
                   <!-- Models Card -->
-                  <div class="bento-card" data-inspector-view="models">
+                  <div class="bento-card" data-inspector-view="models" data-category="features">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg> Models & Media</div>
                     <div class="bento-desc">Global defaults and provider priorities.</div>
                     <div class="bento-surface">
@@ -4098,7 +4100,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 10 settings...</button>
                   </div>
                   <!-- Security Card -->
-                  <div class="bento-card" data-inspector-view="security">
+                  <div class="bento-card" data-inspector-view="security" data-category="features">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2-1 4-2 7-2 2.89 0 4.7 1 6.7 2a1 1 0 0 1 1 1z"/></svg> Security & FileSafe</div>
                     <div class="bento-desc">Control what the agent is allowed to execute and edit.</div>
                     <div class="bento-surface">
@@ -4109,7 +4111,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 8 settings...</button>
                   </div>
                   <!-- Containers Card -->
-                  <div class="bento-card" data-inspector-view="containers">
+                  <div class="bento-card" data-inspector-view="containers" data-category="features">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><line x1="16.5" x2="7.5" y1="9.4" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" x2="12" y1="22.08" y2="12"/></svg> Containers & Registry</div>
                     <div class="bento-desc">Docker runtime and Unraid publishing.</div>
                     <div class="bento-surface">
@@ -4120,7 +4122,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 15 settings...</button>
                   </div>
                   <!-- Interview Card -->
-                  <div class="bento-card" data-inspector-view="interview">
+                  <div class="bento-card" data-inspector-view="interview" data-category="features">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg> Interview & Orchestrator</div>
                     <div class="bento-desc">Multi-pass review and plan mode defaults.</div>
                     <div class="bento-surface">
@@ -4131,7 +4133,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 9 settings...</button>
                   </div>
                   <!-- Auth Card -->
-                  <div class="bento-card" data-inspector-view="auth">
+                  <div class="bento-card" data-inspector-view="auth" data-category="system">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg> Authentication & Accounts</div>
                     <div class="bento-desc">Manage provider logins and OAuth.</div>
                     <div class="bento-surface">
@@ -4142,7 +4144,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 6 settings...</button>
                   </div>
                   <!-- Health Card -->
-                  <div class="bento-card" data-inspector-view="health">
+                  <div class="bento-card" data-inspector-view="health" data-category="system">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Health & Doctor</div>
                     <div class="bento-desc">System diagnostics and workspace cleanup.</div>
                     <div class="bento-surface">
@@ -4152,7 +4154,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 5 settings...</button>
                   </div>
                   <!-- Permissions Card -->
-                  <div class="bento-card" data-inspector-view="permissions">
+                  <div class="bento-card" data-inspector-view="permissions" data-category="system">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Permissions & Rules</div>
                     <div class="bento-desc">Granular tool overrides and doom loop guards.</div>
                     <div class="bento-surface">
@@ -4162,7 +4164,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 18 settings...</button>
                   </div>
                   <!-- Personas Card -->
-                  <div class="bento-card" data-inspector-view="personas">
+                  <div class="bento-card" data-inspector-view="personas" data-category="system">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Personas</div>
                     <div class="bento-desc">Manage custom agent behaviors and prompts.</div>
                     <div class="bento-surface">
@@ -4172,7 +4174,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 11 settings...</button>
                   </div>
                   <!-- Plugins Card -->
-                  <div class="bento-card" data-inspector-view="plugins">
+                  <div class="bento-card" data-inspector-view="plugins" data-category="extensions">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.611c-.47.47-1.088.706-1.705.706s-1.233-.235-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18-.894-.527-.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568c-.47-.47-.706-1.087-.706-1.704s.235-1.233.706-1.704l1.611-1.611a.98.98 0 0 1 .837-.276c.47.07.802.48.968.925a2.501 2.501 0 1 0 3.214-3.214c-.446-.166-.855-.497-.925-.968a.979.979 0 0 1 .276-.837l1.61-1.611c.47-.47 1.088-.706 1.705-.706s1.233.235 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"/></svg> Plugins & Skills</div>
                     <div class="bento-desc">Extend capabilities with external code.</div>
                     <div class="bento-surface">
@@ -4182,7 +4184,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 8 settings...</button>
                   </div>
                   <!-- Formatters Card -->
-                  <div class="bento-card" data-inspector-view="formatters">
+                  <div class="bento-card" data-inspector-view="formatters" data-category="extensions">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M3 5h4"/><path d="M19 17v4"/><path d="M17 19h4"/></svg> Formatters & LSP</div>
                     <div class="bento-desc">Code intelligence and formatting rules.</div>
                     <div class="bento-surface">
@@ -4192,7 +4194,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 22 settings...</button>
                   </div>
                   <!-- Commands Card -->
-                  <div class="bento-card" data-inspector-view="commands">
+                  <div class="bento-card" data-inspector-view="commands" data-category="extensions">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><rect width="20" height="16" x="2" y="4" rx="2" ry="2"/><path d="M6 8h.01"/><path d="M10 8h.01"/><path d="M14 8h.01"/><path d="M18 8h.01"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/><path d="M7 16h10"/></svg> Commands & Shortcuts</div>
                     <div class="bento-desc">Custom slash commands and keybindings.</div>
                     <div class="bento-surface">
@@ -4202,7 +4204,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 16 settings...</button>
                   </div>
                   <!-- Editor Card -->
-                  <div class="bento-card" data-inspector-view="editor">
+                  <div class="bento-card" data-inspector-view="editor" data-category="editor">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Editor UX & File Manager</div>
                     <div class="bento-desc">Text editor behavior and file tree preferences.</div>
                     <div class="bento-surface">
@@ -4211,8 +4213,7 @@ impl Dashboard {
                       <label><input type="checkbox" checked> Hide ignored files</label>
                     </div>
                     <button class="bento-action">Configure 10 settings...</button>
-                  </div>
-                </div>
+                  </div>                </div>
               </div>
             </div>
           </div>
@@ -5765,6 +5766,44 @@ impl Dashboard {
             document.getElementById('floatingChat').style.display = 'flex';
         }
         if (e.target.closest('.returnToChatBtn')) window.switchToChatThread('thread4');
+
+        const iconBtn = e.target.closest('.activity-bar .icon');
+        if (iconBtn) {
+            document.querySelectorAll('.activity-bar .icon').forEach(i => i.classList.remove('active'));
+            iconBtn.classList.add('active');
+            
+            const title = iconBtn.getAttribute('title');
+            const filesPanel = document.getElementById('filesPanel');
+            const chatPanel = document.getElementById('chatPanel');
+            
+            if (title === 'Files') {
+                if (filesPanel) filesPanel.classList.toggle('hidden');
+                if (chatPanel) chatPanel.classList.add('hidden');
+            } else if (title === 'Chat') {
+                if (chatPanel) chatPanel.classList.toggle('hidden');
+                if (filesPanel) filesPanel.classList.add('hidden');
+            } else {
+                if (filesPanel) filesPanel.classList.add('hidden');
+                if (chatPanel) chatPanel.classList.add('hidden');
+            }
+        }
+        
+        const activityBarToggle = e.target.closest('#activityBarToggle');
+        if (activityBarToggle) {
+            const activityBar = document.getElementById('activityBar');
+            if (activityBar) {
+                activityBar.classList.toggle('collapsed');
+                activityBarToggle.textContent = activityBar.classList.contains('collapsed') ? '>' : '<';
+            }
+        }
+        
+        const collapseBottom = e.target.closest('#collapseBottom');
+        if (collapseBottom) {
+            const bottomPanel = document.getElementById('bottomPanel');
+            if (bottomPanel) {
+                bottomPanel.classList.toggle('collapsed');
+            }
+        }
       });
       
       document.querySelectorAll('.page-tab').forEach(function(tab) {
@@ -5777,6 +5816,64 @@ impl Dashboard {
             p.classList.toggle('active', p.classList.contains('page-' + pageId));
           });
         });
+      });
+
+      document.querySelectorAll('.page-settings-a .settings-tab').forEach(tab => {
+          tab.addEventListener('click', function(e) {
+              e.preventDefault();
+              // Update active state in sidebar
+              document.querySelectorAll('.page-settings-a .settings-tab').forEach(t => t.classList.remove('active'));
+              this.classList.add('active');
+              
+              const filter = this.getAttribute('data-filter');
+              const cards = document.querySelectorAll('.page-settings-a .bento-card');
+              
+              cards.forEach(card => {
+                  if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                      card.classList.remove('filtered-out');
+                  } else {
+                      card.classList.add('filtered-out');
+                  }
+              });
+          });
+      });
+
+      // Theme Switcher
+      const themeSelect = document.getElementById('themeSelect');
+      if (themeSelect) {
+          themeSelect.addEventListener('change', function() {
+              document.documentElement.setAttribute('data-theme', this.value);
+          });
+      }
+
+      // Settings Inspector Panel Logic (Advanced Settings)
+      document.body.addEventListener('click', function(e) {
+          // Open Inspector Panel
+          const bentoAction = e.target.closest('.bento-action');
+          if (bentoAction) {
+              const card = bentoAction.closest('.bento-card');
+              if (card) {
+                  const viewId = card.getAttribute('data-inspector-view');
+                  if (viewId) {
+                      // Toggle active views
+                      document.querySelectorAll('.inspector-view').forEach(view => {
+                          view.classList.toggle('active', view.getAttribute('data-view') === viewId);
+                      });
+                      // Open panel
+                      document.querySelectorAll('.settings-inspector-panel').forEach(panel => {
+                          panel.classList.add('open');
+                      });
+                  }
+              }
+          }
+          
+          // Close Inspector Panel
+          const closeInspector = e.target.closest('.close-inspector');
+          if (closeInspector) {
+              document.querySelectorAll('.settings-inspector-panel').forEach(panel => {
+                  panel.classList.remove('open');
+              });
+          }
       });
 
       window.switchWizardStep(0);

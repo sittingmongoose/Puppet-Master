@@ -373,6 +373,16 @@ These widgets receive data via `invoke_from_event_loop` when events arrive on th
 | `widget.tier_tree` | `TierChanged` + TierTree snapshot | Plans/orchestrator-subagent-integration.md |
 
 ### 8.2 Pull-Based Widgets (redb rollups)
+### 8.2A Completed prose source contract
+
+`widget.completed_prose` is backed by evidence summaries, not ad hoc UI summarization.
+
+Rules:
+- the widget consumes precomputed evidence `summary` fields
+- summary ownership remains with the evidence/runtime contract rather than the widget layer
+- widgets may choose ordering, collapse/expand behavior, and navigation affordances, but they do not synthesize canonical completion prose from raw logs
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/storage-plan.md
 
 These widgets read pre-computed rollups from redb (produced by analytics scan jobs per Plans/storage-plan.md):
 

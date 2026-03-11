@@ -2741,44 +2741,76 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, Gate:GATE-00
 | **End Subtask** | Subtask complete | -- | Yes (re-check) | Yes (gate) | Yes (code/artifact review) |
 
 ### Gaps and potential issues in start/end verification
+This section closes the remaining start/end verification gaps and is normative.
 
-**Gaps:**
+### Canonical validation-table source of truth
+Start/end verification uses one static mapping table maintained with the orchestrator code and referenced by the planning docs.
 
-- **Definition of "quality" per tier:** The plan does not yet define a single canonical "quality checklist" (e.g. clippy, tests, coverage, code-review checklist). Implementers should add a small spec or table: for Phase/Task/Subtask, what quality checks run at end? (e.g. Phase: doc quality; Task: design doc; Subtask: code + tests + linter.)
-- **Who runs quality review in agent-driven runs:** The reviewer subagent runs in **all three** situations: (1) **always** at end-of-tier, (2) **on retry** when the tier is retried after failure, and (3) **when quality gate fails** (re-run reviewer as part of the feedback loop). There is no scenario that skips the reviewer; it is required for every completion or retry.
-- **Readiness checklist source of truth:** The questions "Does GUI need to be updated? Does backend need to be updated?" require a mapping from "execution-affecting settings" to "GUI controls" and "backend usage." That mapping could live in code (e.g. a static list per tier), in the plan, or in a small config. Without it, the readiness step is heuristic or manual.
-- **Interview flow:** The interview orchestrator has its own phases (Scope, Architecture, UX, ...). Start/end verification for **interview phases** should mirror this (start: wiring + readiness; end: wiring re-check + acceptance + quality for interview artifacts). The interview plan (`interview-subagent-integration.md`) should reference this section and define interview-phase-specific quality criteria (e.g. document completeness, requirement clarity).
+Each row MUST contain:
+- config field
+- GUI control or UI source
+- backend consumer
+- applicable tier set (`phase`, `task`, `subtask`, `iteration`, `interview_phase` as applicable)
+- required/optional execution impact
+- default/fallback behavior
 
-**Potential issues:**
+This table is the source of truth for `validate_config_wiring_for_tier(...)`. Readiness MUST NOT be heuristic prose.
 
-- **Quality over performance:** Quality of verification is paramount. Do not prioritize speed or "cheap" checks over completeness and correctness. Run full wiring, readiness, acceptance, and quality checks (including reviewer subagent and gate criteria) at start and end of each tier. Scope quality checks to changed files or this tier's artifacts to stay practical, but do not skip or weaken verification for performance reasons.
-- **Unrelated failures and who addresses them:**
+### Start-of-tier verification
+Start-of-phase, start-of-task, and start-of-subtask verification always run the same categories in this order:
+1. config-wiring validation against the canonical table
+2. readiness validation for required upstream artifacts and dependencies
+3. operation-sequence validation
+4. known-gap detection for execution-affecting unresolved prerequisites
 
-**Unrelated Failures Escalation (Resolved):**
-When a phase/tier fails with issues outside its task scope:
-1. **Automatic retry:** Parent-tier orchestrator retries the failed tier once (same config).
-2. **If retry also fails:** Surface a **CtA in Assistant chat** (not a modal): "Phase [X] failed with issues outside task scope. [Review details] [Skip phase] [Retry] [Abort run]."
-3. **P0 exceptions:** If the failure involves potential data loss (e.g., corrupted worktree), show a **modal dialog** instead: "Critical: [description]. This may affect your project files. [Review immediately] [Abort run]."
-4. Never silently bypass unrelated failures.
-5. "Who addresses": the **user** decides (via CtA options). The orchestrator does not attempt to fix unrelated issues autonomously.
-- **Feedback loop:** When end verification fails (acceptance or quality), the agent or user needs clear feedback (what failed, which file/criterion, suggested fix). Integrate with the existing "incomplete task + feedback" flow (e.g. prepend feedback to task file, re-run iteration) so rework is guided.
-- **Consistency with existing gates:** The codebase may already have verification gates between tiers. Start/end verification should **complement** them: start = before work; end = after work (gate + quality). Ensure we do not duplicate gate logic; the "acceptance criteria" at end can call the existing gate.
+A tier MUST NOT start when a required execution-affecting field is unwired, unavailable, or inconsistent.
 
----
+### End-of-tier verification
+End-of-phase, end-of-task, and end-of-subtask verification always run the same categories in this order:
+1. config-wiring re-check for execution-affecting settings used during the tier
+2. acceptance check for the tier’s declared outputs and completion criteria
+3. quality review
+4. feedback emission for any failed requirement, quality finding, or retry/remediation trigger
 
-## Lifecycle and Quality Features
+### Canonical quality matrix
+| Tier | Required quality review |
+|---|---|
+| Phase | artifact completeness, acceptance coverage, cross-doc integrity, terminology alignment |
+| Task | design/contract correctness, dependency consistency, fit with parent phase intent |
+| Subtask | code review, tests for touched scope, lint/format for touched scope, implementation acceptance |
+| Iteration | local acceptance of the concrete retry/fix objective when iteration-level execution is used |
+| Interview phase | document completeness, decision clarity, unresolved-clarification handling, output readiness for downstream plan generation |
 
-This section defines lifecycle hooks, structured handoff contracts, remediation loops, and cross-session persistence that enhance reliability and quality across **all providers** (Cursor, Codex, Claude Code, Gemini, Copilot). These features complement the start/end verification above and can be implemented using platform-native hooks where available, or via orchestrator-level middleware for platforms without native hooks.
+### Reviewer participation
+The reviewer/quality path is not optional.
+- it runs at the end of every tier completion path
+- it runs again on retry paths when the tier is re-attempted after a failure
+- it runs when a quality gate fails and the remediation loop feeds back into the same tier
 
-Canonical persistence note:
-- Seglog/redb are the authoritative persistence layers for hook execution, QA loop progress, crew state, and active-tier/runtime snapshots.
-- Examples under `.puppet-master/state/` in this section are derived/debug mirrors only unless another SSOT explicitly promotes them.
+### Failure vs warning policy
+- required execution-affecting mismatches fail verification
+- missing or inconsistent upstream dependencies required for the declared tier objective fail verification
+- display-only, observability-only, or deferred non-execution-affecting mismatches may warn when they do not change runtime behavior
+- performance concerns MUST NOT weaken the verification categories; implementation may scope work to changed artifacts, but may not silently skip categories
 
-Autonomous QA loop contract:
-- When end verification finds blocking Critical/Major issues that are retryable, orchestrator MAY start a bounded QA remediation cycle.
-- Each cycle MUST emit `run.qa_cycle_started` and `run.qa_cycle_completed`.
-- Warning-only findings attach evidence but do not create alternate terminal node statuses.
+### Interview-phase mirror
+Interview phases use the same start/end pattern:
+- start = wiring + readiness + sequence
+- end = wiring re-check + acceptance + quality
 
+`interview-subagent-integration.md` is responsible for the interview-phase-specific quality criteria and UI/runtime consequences, but it MUST mirror this contract rather than invent an alternate lifecycle.
+
+### Unrelated-failure escalation
+When a tier fails because of issues outside its intended scope:
+1. retry once automatically using the same config
+2. if retry also fails, raise an Assistant chat CTA with review, skip, retry, and abort options
+3. use a modal instead only for P0 risk such as possible data loss or workspace corruption
+4. do not silently bypass unrelated failures
+
+### Feedback loop
+Verification failures MUST produce structured feedback identifying the failing criterion, affected artifact or file when known, and the expected next action. Rework loops reuse the existing incomplete-task / remediation flow rather than inventing a separate ad hoc channel.
+
+ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
 ### 1. Hook-Based Lifecycle Middleware (BeforeTier/AfterTier)
 
 **Concept:** Puppet Master should support **BeforeTier** and **AfterTier** hooks that run automatically at tier boundaries (Phase, Task, Subtask, Iteration). Hooks handle lifecycle concerns (tracking, state management, validation) separately from execution logic.

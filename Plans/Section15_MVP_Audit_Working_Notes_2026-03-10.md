@@ -4350,3 +4350,803 @@ This matrix is the closure answer to "what still feels unwired?" It identifies w
 
 - No remaining Section 15 item appears underspecified at the ledger level in a way that should block implementation planning.
 - The remaining risk is reconciliation drift when these decisions are copied into owner docs, not missing product/technical meaning inside the ledger itself.
+
+## Ninth-pass verification sweep: current plan-doc drift still visible outside the ledger
+
+Date: 2026-03-11
+
+Purpose of this pass:
+
+- answer the practical question "are these features fully thought through?"
+- distinguish **ledger-level completeness** from **current plan-doc-set readiness**
+- record the remaining places where the current plans still read as unwired, contradictory, or GUI-incomplete even though the ledger decisions themselves are mostly closed
+
+### Top-level verdict
+
+- **At the ledger level:** the feature meanings are now mostly thought through.
+- **At the current plan-doc-set level:** no, not all of them are fully reconciled yet.
+- The biggest remaining problem is no longer missing product thinking in the ledger; it is that several adjacent plan docs still describe older GUI/state/command behavior.
+- So the implementation risk is now:
+  - stale canonical text outside the ledger
+  - missing command IDs / wiring coverage
+  - missing persistent shell identities
+  - old GUI placements that conflict with the resolved shell model
+
+### Findings from cross-checking the live planning docs
+
+#### Finding A: project-switch shell model still drifts in the current GUI docs
+
+Observed in current planning docs:
+
+- `FinalGUISpec.md` still defines a **title-bar project bar** as the primary project switcher.
+- the same doc still describes the project switcher as a dropdown in the title bar instead of the leaner quick-switch / shell model resolved later in this ledger
+- the same wording propagates into index/reference sections that still call it `project bar`
+
+Why this matters:
+
+- it keeps 15.17 Instant Project Switch, 15.8 Project and Session Browser, and 15.10 Multi-Tab and Multi-Window tied to an older shell assumption
+- it obscures where the GUI work actually lands:
+  - quick switch entrypoint
+  - project/session browser page
+  - active-tab-only switch semantics
+  - compact metadata rules
+
+Ledger conclusion:
+
+- **GUI accounted for in the ledger**
+- **still drifting in current owner docs**
+
+Affected features:
+
+- 15.8
+- 15.10
+- 15.17
+
+#### Finding B: chat/session navigation still drifts between sidebar and floating-overlay models
+
+Observed in current planning docs:
+
+- `FinalGUISpec.md` still describes a floating thread-list overlay
+- `assistant-chat-design.md` still contains the detailed Usage pop-out model in section 25
+- `UI_Command_Catalog.md` still defines:
+  - `cmd.chat.open_usage_popout`
+  - `cmd.chat.close_usage_popout`
+
+Why this matters:
+
+- the ledger resolved thread/session navigation around:
+  - persistent thread/session navigation patterns
+  - thread Usage as a canonical detail surface
+  - no dependence on a separate usage pop-out as the primary model
+- the current command catalog and chat docs still suggest a different GUI contract, so 15.8, 15.9, and 15.10 remain partially unwired outside the ledger
+
+Ledger conclusion:
+
+- **feature behavior thought through**
+- **current chat/UI command docs still describe the older route**
+
+Affected features:
+
+- 15.8
+- 15.9
+- 15.10
+- 15.12
+
+#### Finding C: browser/dev-loop/terminal shell contracts are still only partially reconciled outside the ledger
+
+Observed in current planning docs:
+
+- `FinalGUISpec.md` still uses the older:
+  - embedded-browser-first wording
+  - generic `Watch mode` framing in Ports
+  - terminal tab/split language that predates the tighter shell/restore decisions in this ledger
+- the current browser section still reads like one broad bottom-panel browser feature rather than a split between preview / detached preview / automation / auth surfaces
+
+Why this matters:
+
+- 15.14, 15.15, and 15.18 depend on:
+  - explicit surface separation
+  - platform fallback behavior
+  - summarized vs detailed dev-loop state
+  - project-scoped restore and interruption policy
+- without that reconciliation, the GUI work still invites multiple incompatible implementations
+
+Ledger conclusion:
+
+- **the ledger has accounted for the GUI/state distinctions**
+- **the current GUI docs still read like an older merged model**
+
+Affected features:
+
+- 15.14
+- 15.15
+- 15.18
+
+#### Finding D: command catalog and wiring matrix are still missing the promoted shell/runtime command families
+
+Observed in current planning docs:
+
+- `UI_Command_Catalog.md` still lacks canonical command families for:
+  - explicit project switching
+  - workspace tab lifecycle
+  - tab/window shell operations
+  - thread Usage-tab activation
+  - dev-session lifecycle
+  - one-click catalog lifecycle
+- `Wiring_Matrix.md` is still example/template-heavy and does not yet reflect those Section 15 command families
+
+Why this matters:
+
+- this is the clearest remaining "still unwired" problem
+- even where the ledger now defines the behavior, the command layer does not yet prove that the GUI can dispatch it consistently
+
+Most affected features:
+
+- 15.7 MCP support
+- 15.8 Project/session browser
+- 15.9 Mid-stream usage
+- 15.10 Multi-tab/window
+- 15.13 One-click install
+- 15.14 Terminal/panes
+- 15.15 Dev loop
+- 15.17 Instant project switch
+- 15.18 Browser/click-to-context
+
+Ledger conclusion:
+
+- **major residual packetization blocker**
+- this is not a thinking gap in the feature behavior anymore; it is a command/wiring reconciliation gap
+
+#### Finding E: storage-plan still lacks some of the shell identities implied by the ledger decisions
+
+Observed in current planning docs:
+
+- `storage-plan.md` already carries `project_id`, browser preview keys, and some project shell state
+- but the current text still does **not** cleanly establish all of the later shell identities the ledger now assumes, especially:
+  - `workspace_tab`
+  - top-level window identity for detached surfaces
+  - browser-tab identity distinct from preview session
+  - terminal-session identity
+  - dev-session identity
+
+Why this matters:
+
+- 15.10, 15.14, 15.15, 15.17, and 15.18 all imply restart/restore behavior that becomes ambiguous without those identities
+- the GUI can look complete while persistence stays under-modeled
+
+Ledger conclusion:
+
+- **state thinking is present in the ledger**
+- **persistent owner-doc modeling still trails behind it**
+
+Affected features:
+
+- 15.10
+- 15.14
+- 15.15
+- 15.17
+- 15.18
+
+#### Finding F: per-project requested-vs-effective state is still not fully normalized in live docs
+
+Observed in current planning docs:
+
+- `Tools.md` still says app-level-only tool-permission scope can be enough for MVP
+- `Permissions_System.md` has strong permission logic, but the cross-doc requested-vs-effective explanation is still not fully normalized with:
+  - MCP
+  - Personas
+  - browser capability tiers
+  - project switching
+
+Why this matters:
+
+- 15.7 MCP Support and 15.17 Instant Project Switch both depend on per-project effective state making sense in the UI
+- without that, switching projects or applying per-project settings can still look underspecified in the current plan set
+
+Ledger conclusion:
+
+- **the ledger resolves the conceptual model**
+- **the current docs still leave a reconciliation burden**
+
+Affected features:
+
+- 15.7
+- 15.13
+- 15.17
+- 15.18
+
+### Per-feature status after this verification pass
+
+| Feature | Ledger thought-through? | Current plan-doc drift still visible? | Main remaining problem type |
+| --- | --- | --- | --- |
+| 15.1 Dangerous-Command Blocking (FileSafe) | yes | low | mostly owner-doc reconciliation |
+| 15.2 Branching Conversations | yes | medium | restore/history owner-doc reconciliation |
+| 15.3 In-App Project Instructions Editor | yes | low-medium | owner-doc placement and diagnostics wording |
+| 15.4 `@` Mention System | yes | low-medium | picker/attachment owner-doc wording |
+| 15.5 Stream Timers and Segment Durations | yes | low | owner-doc insertion not yet done |
+| 15.6 Interleaved Thinking Toggle | yes | low | owner-doc insertion not yet done |
+| 15.7 MCP Support | yes | high | requested/effective state + command/wiring reconciliation |
+| 15.8 Project and Session Browser | yes | high | shell model + session navigation drift |
+| 15.9 Mid-Stream Token and Context Updates | yes | high | usage-tab vs pop-out drift + command wiring |
+| 15.10 Multi-Tab and Multi-Window | yes | high | shell identities + restore/wiring drift |
+| 15.11 Virtualized Conversation or Log List | yes | low | mostly shared-list-contract reconciliation |
+| 15.12 "Know Where Your Tokens Go" | yes | medium | Usage-page owner-doc reconciliation |
+| 15.13 One-Click Install | yes | high | catalog lifecycle commands/wiring not yet reflected |
+| 15.14 Full IDE-Style Terminal and Panes | yes | high | shell/state/wiring reconciliation still needed |
+| 15.15 Hot Reload, Live Reload, and Fast Iteration | yes | high | dev-session model still not fully reflected outside ledger |
+| 15.16 Sound Effects Settings | yes | low-medium | final settings grouping/recovery wording |
+| 15.17 Instant Project Switch | yes | high | project-switch shell model still drifts in current GUI docs |
+| 15.18 Built-in Browser and Click-to-Context | yes | high | browser surface split + platform fallback still not reconciled outside ledger |
+
+### What this pass changes about the working conclusion
+
+- Earlier eighth-pass language said the remaining risk was mostly reconciliation drift.
+- That remains true, but this verification pass sharpens it:
+  - the **largest remaining unwired areas are real and concrete**
+  - they are concentrated in:
+    - shell/project-switch docs
+    - chat usage/view-state docs
+    - command catalog / wiring matrix
+    - storage identities
+    - requested/effective-state reconciliation
+
+### Updated implementation-readiness statement
+
+- **Feature semantics in the ledger:** mostly implementation-ready.
+- **Current planning-doc set as a whole:** **not yet fully implementation-ready** for the full Section 15 set until the above drift clusters are reconciled into the owner docs.
+- The Section 15 items are therefore best described as:
+  - **thought through in the ledger**
+  - **not yet fully reconciled in the planning set**
+
+### Immediate reconciliation priorities now implied by this pass
+
+1. Replace the old chat usage pop-out / floating-thread-overlay assumptions with the resolved session-navigation model.
+2. Replace the old title-bar project-bar assumption with the resolved project-switch shell model.
+3. Add the missing command families and wiring coverage for:
+   - project switch
+   - workspace tab/window shell
+   - thread Usage activation
+   - dev session lifecycle
+   - catalog install/update/remove
+4. Add the missing shell identities to storage and restore modeling.
+5. Normalize requested-vs-effective state across MCP, tools, permissions, Personas, and browser/runtime surfaces.
+
+### Final answer for this pass
+
+- The listed features have now been thought through substantially enough in the ledger that the remaining problems are mostly reconciliation and wiring problems, not "we still do not know what the feature should do" problems.
+- However, there **are** still real gaps if the question is about the **current planning-doc set outside this ledger**:
+  - some GUI changes are accounted for only in the ledger and not yet in the owner docs
+  - some command/wiring work is still missing from the live command catalog and wiring matrix
+  - some persistence identities are still missing from the live storage plan
+
+## Tenth-pass strict reconciliation checklist: replace vs additive vs retire-stale
+
+Date: 2026-03-11
+
+Purpose:
+
+- convert the remaining reconciliation risk into a strict execution checklist
+- answer exactly what must be:
+  - **replaced**
+  - **added additively**
+  - **retired as stale canonical text**
+- make it explicit what would need to happen for the Section 15 work to be considered actually reconciled across the planning set
+
+### Pass conclusion
+
+If the checklist below is completed faithfully, then the Section 15 feature set should be considered reconciled across the required docs.
+
+The hard rule is:
+
+- this cannot be done by only appending more addenda
+- some current text must be **replaced or explicitly demoted from canonical status**
+- if the old text is left in place next to the new text, drift will remain
+
+---
+
+### Bucket 1: MUST REPLACE / RETIRE AND REWRITE
+
+These are the places where additive text alone is not enough because the current canon still points implementers at the wrong behavior.
+
+#### 1. `FinalGUISpec.md` shell/project-switch canon
+
+Why replace:
+
+- current text still centers the shell around the old title-bar project bar
+- current text still carries older thread/session navigation assumptions
+- current browser/dev-loop text still reads like a merged older model
+
+What must be replaced:
+
+- the project-switch shell definition
+- any text that presents the title-bar project bar as the canonical primary project-switch surface
+- any text that treats the floating thread selector overlay as the chat-session navigation model
+- old browser wording that implies one undifferentiated browser host rather than preview / detached-preview / automation / auth surface separation
+- old generic watch-mode wording that predates the single dev-session model
+
+Why this is replace-only:
+
+- if the old shell text survives, 15.8, 15.10, 15.14, 15.15, 15.17, and 15.18 will still read as contradictory even after new text is added
+
+#### 2. `assistant-chat-design.md` usage/surface canon
+
+Why replace:
+
+- current section 25 still defines a detailed usage pop-out window as the active canon
+- the old command examples still normalize that pop-out
+
+What must be replaced:
+
+- pop-out detailed usage view as the primary thread-usage model
+- any remaining wording that implies thread usage is primarily a detached usage pop-out rather than the resolved canonical detail surface
+- any remaining text that depends on floating overlay navigation instead of the reconciled session-navigation model
+
+Why this is replace-only:
+
+- 15.8, 15.9, 15.10, and 15.12 cannot be considered reconciled while chat still teaches a different usage/view-state pattern
+
+#### 3. `UI_Command_Catalog.md` stale usage and missing shell commands
+
+Why replace:
+
+- it still canonizes:
+  - `cmd.chat.open_usage_popout`
+  - `cmd.chat.close_usage_popout`
+- it still lacks the promoted shell/runtime command families
+
+What must be replaced:
+
+- stale usage-popout commands
+
+What must be added at the same time:
+
+- canonical commands for:
+  - project switching
+  - workspace-tab lifecycle
+  - detached-window lifecycle where applicable
+  - thread Usage activation
+  - dev-session lifecycle
+  - catalog install / update / remove
+
+Why this is replace-plus-add:
+
+- old command IDs left in normative position will continue to mis-wire the GUI even if newer commands are added later
+
+#### 4. `newfeatures.md` Section 15 canon
+
+Why replace/retire:
+
+- Section 15 still exists as idea/origin text and can easily be misread as normative if not explicitly demoted
+
+What must happen:
+
+- the old Section 15 backlog/idea framing must be explicitly retired as canonical behavior
+- the promoted/implementation-ready owner path must become the clear authority
+
+Why this is replace/retire:
+
+- leaving Section 15 as soft ideation while trying to reconcile the rest of the packet guarantees future drift
+
+---
+
+### Bucket 2: MUST BE ADDITIVE, BUT WITH STRONG OWNER-DOC INSERTIONS
+
+These docs mostly need substantive new content inserted rather than large old sections rewritten. The gap is absence or under-modeling, not primarily contradictory canon.
+
+#### 5. `storage-plan.md`
+
+Additive requirements:
+
+- add first-class shell identities and restore records for:
+  - workspace tabs
+  - detached windows
+  - browser tabs distinct from preview sessions
+  - terminal sessions
+  - dev sessions
+- add requested/effective-state fields where runtime/browser/dev-loop state needs them
+
+Why additive:
+
+- the current storage plan is missing identities and restore contracts rather than asserting a strong conflicting opposite model
+
+#### 6. `Permissions_System.md`
+
+Additive requirements:
+
+- explicit cross-doc requested-vs-effective explanation
+- make clear how project-scoped effective state interacts with:
+  - mode overrides
+  - session cache
+  - MCP/tool availability
+  - project switching
+  - non-bypassable guards
+
+Why additive:
+
+- permission logic is already strong; the gap is cross-surface normalization, not core algorithm absence
+
+#### 7. `Tools.md`
+
+Additive requirements:
+
+- normalize tool/MCP/project scope around per-project effective resolution
+- retire the implication that app-level-only permission scope is sufficient for the promoted shell/project-switch feature set
+- align built-in/MCP/provider/custom tool availability under one requested/effective explanation
+
+Why additive:
+
+- tool semantics already exist; the missing part is the reconciliation layer
+
+#### 8. `Glossary.md`
+
+Additive requirements:
+
+- pin canonical terms for:
+  - workspace tab
+  - detached window
+  - browser surface classes
+  - requested vs effective state
+  - shared-with-agent
+  - attention center
+
+Why additive:
+
+- glossary does not need major replacement; it needs the missing anti-drift terms
+
+#### 9. `WorktreeGitImprovement.md`
+
+Additive requirements:
+
+- explicitly state stable project identity vs worktree path
+- bind worktree state to project/session/shell restore rules
+
+Why additive:
+
+- the worktree doc is mostly correct on git behavior; the missing piece is project-identity reconciliation with the shell model
+
+#### 10. `Personas.md`
+
+Additive requirements:
+
+- explicitly state the UI distinction between requested Persona and effective Persona
+- require visible selection reason when they differ
+
+Why additive:
+
+- Persona runtime logic already exists; this is a reconciliation insertion
+
+#### 11. `usage-feature.md`
+
+Additive requirements:
+
+- finalize one canonical GUI placement model for:
+  - app-wide Usage
+  - compact usage visibility
+  - thread Usage detail
+- tie artifact deep-links and chat thread usage to the same canonical surfaces
+
+Why additive:
+
+- current Usage behavior is close, but still too option-shaped in places
+
+---
+
+### Bucket 3: MUST EXPLICITLY RETIRE STALE CANON EVEN IF NEW TEXT IS ADDED
+
+This is the anti-drift bucket. These are the specific old concepts that must not remain silently authoritative after reconciliation.
+
+#### Retire these concepts explicitly
+
+- **title-bar project bar** as the primary project-switch shell
+- **floating thread-selector overlay** as the canonical chat session-navigation model
+- **usage pop-out** as the canonical per-thread usage detail surface
+- **one broad browser tab** without split surface classes
+- **generic watch mode** as the primary dev-loop model
+- **MCP as config-and-passthrough only**
+- **app-level-only tool-permission scope is enough for MVP**
+
+Why this matters:
+
+- these are the exact phrases/models most likely to survive into later edits and reintroduce ambiguity
+
+---
+
+### Strict reconciliation matrix by doc
+
+| Doc | Reconciliation mode | Why |
+| --- | --- | --- |
+| `FinalGUISpec.md` | replace + retire stale canon | current shell/view canon still points at older GUI behavior |
+| `assistant-chat-design.md` | replace + retire stale canon | old usage pop-out and session-navigation model still survive |
+| `UI_Command_Catalog.md` | replace stale rows + additive new families | stale command IDs plus missing shell/runtime actions |
+| `newfeatures.md` | retire stale canon | old Section 15 ideation must stop reading as normative |
+| `storage-plan.md` | additive | missing shell/runtime identities and restore records |
+| `Permissions_System.md` | additive | requested/effective reconciliation still under-specified cross-doc |
+| `Tools.md` | additive with one stale implication retired | tool/MCP/project scope still needs normalized effective-state model |
+| `Glossary.md` | additive | missing canonical anti-drift terms |
+| `WorktreeGitImprovement.md` | additive | stable project identity vs worktree path still needs explicit binding |
+| `Personas.md` | additive | requested vs effective Persona display rule still needs explicit UI wording |
+| `usage-feature.md` | additive with old option language demoted | Usage placement is close but still too option-shaped |
+
+---
+
+### What “fully reconciled” means after this pass
+
+The Section 15 work should only be called fully reconciled when all of the following are true:
+
+1. No remaining owner doc still teaches the old title-bar project-bar shell as the primary model.
+2. No remaining owner doc still teaches usage pop-out as the primary thread-usage model.
+3. The command catalog includes the promoted shell/runtime/catalog command families.
+4. The wiring matrix is updated from generic template/example posture to actual required coverage for those commands.
+5. The storage plan carries the missing shell/runtime identities.
+6. Requested-vs-effective state is explicitly aligned across:
+   - MCP
+   - tools
+   - permissions
+   - Personas
+   - browser/runtime capability
+7. `newfeatures.md` Section 15 can no longer be misread as the live authority.
+
+---
+
+### Final strict answer
+
+- Yes, once the ledger decisions are applied correctly to the required docs **and** the stale canon is actually retired, the Section 15 set should reconcile.
+- No, the job is **not** just "copy the ledger into a few places."
+- The exact remaining non-closed issue is:
+  - some current docs still canonize older models, so replacement/retirement is required in addition to additive reconciliation
+
+## Eleventh-pass thoroughness sweep: missed-thinking check after broader cross-doc read
+
+Date: 2026-03-11
+
+Purpose:
+
+- do one more sweep specifically to test the claim that nothing important was left unthought, unwired, or GUI-unaccounted-for
+- use broad cross-doc reading to look for any remaining gaps that were **not yet captured clearly enough** in the earlier passes
+- separate:
+  - true remaining design/spec gaps
+  - stale canonical conflicts in live docs
+  - already-closed feature semantics that only still need reconciliation
+
+### Bottom-line result of this pass
+
+- This pass did **not** surface major new feature-behavior unknowns inside the Section 15 set itself.
+- It **did** surface a few additional places where the live plan set still carries overlapping or conflicting ownership.
+- So the answer after this sweep is:
+  - the Section 15 features themselves remain thought through at the ledger level
+  - the remaining risk is still cross-doc stale canon, command/storage underwiring, and duplicate ownership of shell/runtime behavior
+
+### New or sharpened findings from this pass
+
+#### Finding G: shell ownership is still duplicated across multiple live docs, not just stale in one place
+
+Observed across current planning docs:
+
+- `FinalGUISpec.md` still owns the shell with a title-bar project bar
+- `newfeatures.md` still contains sidebar/project-shell language for overlapping project-navigation behavior
+- `00-plans-index.md` still points adjacent shell concerns into `FileManager.md`
+- `FileManager.md` still carries browser/container semantics that overlap with shell ownership
+
+Why this matters:
+
+- the drift is not just "one stale section"
+- multiple docs still appear to co-own the same shell/navigation territory
+- that increases the chance that later reconciliation will patch one document while leaving another document quietly authoritative
+
+What this changes:
+
+- the retirement/replacement work needs to be treated as **multi-owner cleanup**, not just point fixes inside one GUI doc
+
+Affected features:
+
+- 15.8
+- 15.10
+- 15.17
+- 15.18
+
+#### Finding H: thread Usage still has an unresolved three-way owner conflict
+
+Observed across current planning docs:
+
+- `assistant-chat-design.md` still defines a Usage pop-out model
+- `UI_Command_Catalog.md` still canonizes pop-out commands
+- `usage-feature.md` still frames placement as a set of options
+- `assistant-chat-design.md` elsewhere still says "Usage tab (or panel)"
+
+Why this matters:
+
+- this is not just old wording left behind in one section
+- the same interaction is still owned simultaneously by:
+  - chat
+  - usage
+  - command catalog
+- until one canonical surface model wins, 15.9 and 15.12 remain easy to implement differently
+
+What this changes:
+
+- the reconciliation pass must explicitly collapse these three owners into one authoritative surface model and demote the others to dependent references
+
+Affected features:
+
+- 15.9
+- 15.10
+- 15.12
+
+#### Finding I: browser GUI changes are accounted for in the ledger, but live docs still disagree about the container model
+
+Observed across current planning docs:
+
+- `FileManager.md` still talks about capped browser instances and LRU reuse
+- the same doc also tries to normalize browser behavior elsewhere
+- `FinalGUISpec.md` still describes browser tabs with pin behavior
+- persistence wording still leaves ambiguity about whether browser state is:
+  - app-global
+  - project-scoped
+  - tab-scoped
+  - detached-window-scoped
+
+Why this matters:
+
+- this is the clearest answer to "are GUI changes accounted for?"
+- **yes, they are accounted for in the ledger**
+- **no, the live docs do not yet agree on the browser container and restore model**
+- that leaves 15.18 especially vulnerable to incompatible implementation choices on Linux/macOS/Windows shell behavior
+
+What this changes:
+
+- browser reconciliation must explicitly choose:
+  - canonical in-shell browser tab/container model
+  - detached preview model
+  - automation/auth non-shell session model
+  - persistence boundaries for each
+
+Affected features:
+
+- 15.8
+- 15.10
+- 15.17
+- 15.18
+
+#### Finding J: dev-loop actions are still named in prose without stable canonical command IDs
+
+Observed across current planning docs:
+
+- `assistant-chat-design.md` still refers to canonical actions such as `StartDevMode` and `RunTestsWatch`
+- `UI_Command_Catalog.md` still does not carry an equivalent stable `cmd.*` command family for those promoted actions
+- `Wiring_Matrix.md` still reads as example/template-heavy rather than proving those bindings exist
+
+Why this matters:
+
+- this is a real unwired gap, not just stale prose
+- 15.14 and 15.15 still rely on important shell/runtime actions that do not yet have a clear canonical command identity in the live doc set
+
+What this changes:
+
+- the command catalog needs not only new families in general
+- it also needs to absorb already-referenced named dev-loop actions so prose and runtime command identity stop drifting
+
+Affected features:
+
+- 15.14
+- 15.15
+
+#### Finding K: browser/session persistence still has one more unstated boundary problem
+
+Observed across current planning docs:
+
+- project switching is described as restoring per-project state
+- but `browser_state:v1` still appears app-global in the current GUI spec
+- this conflicts with the later shell assumption that project switching should not accidentally smear browser/session state across projects
+
+Why this matters:
+
+- the earlier storage findings already covered missing identities
+- this pass adds a sharper point:
+  - even where state keys exist, their **scope boundary** is still not normalized
+- without this, project switching and browser restore behavior can both be "implemented correctly" in incompatible ways
+
+What this changes:
+
+- reconciliation must define whether browser history/tab stacks are:
+  - per project
+  - per workspace tab
+  - per detached browser window
+  - never restored for certain ephemeral sessions
+
+Affected features:
+
+- 15.8
+- 15.10
+- 15.17
+- 15.18
+
+#### Finding L: stale defer/backlog language still threatens reintroduction of ambiguity even after reconciliation
+
+Observed across current planning docs:
+
+- `newfeatures.md` still contains "additional ideas", defer language, and nice-to-have framing for some promoted Section 15 items
+- `newtools.md` and adjacent docs still preserve older MCP framing in places
+
+Why this matters:
+
+- even if the owner docs are updated, stale backlog language left nearby will continue to look like alternative canon
+- that is especially dangerous for:
+  - MCP support
+  - browser behavior
+  - project/session shell behavior
+
+What this changes:
+
+- anti-drift cleanup must include **explicit demotion of old backlog/defer framing**, not just inserting newer behavior elsewhere
+
+Affected features:
+
+- 15.7
+- 15.8
+- 15.17
+- 15.18
+
+### What this pass did not find
+
+This pass did **not** find major remaining "we still have not decided the feature behavior" gaps for:
+
+- 15.1 Dangerous-Command Blocking
+- 15.2 Branching Conversations
+- 15.3 In-App Project Instructions Editor
+- 15.4 `@` Mention System
+- 15.5 Stream Timers and Segment Durations
+- 15.6 Interleaved Thinking Toggle
+- 15.11 Virtualized Conversation or Log List
+- 15.16 Sound Effects Settings
+
+For those items, the remaining work continues to look like owner-doc reconciliation and integration wording, not missing conceptual closure in the feature itself.
+
+### Revised severity map after this sweep
+
+Highest remaining reconciliation risk:
+
+- 15.7 MCP Support
+- 15.8 Project and Session Browser
+- 15.9 Mid-Stream Token and Context Updates
+- 15.10 Multi-Tab and Multi-Window
+- 15.13 One-Click Install
+- 15.14 Full IDE-Style Terminal and Panes
+- 15.15 Hot Reload, Live Reload, and Fast Iteration
+- 15.17 Instant Project Switch
+- 15.18 Built-in Browser and Click-to-Context
+
+Reason these remain highest:
+
+- they depend on command identity, persistence boundaries, requested-vs-effective state, or shared shell ownership
+
+Lower remaining reconciliation risk:
+
+- 15.1
+- 15.2
+- 15.3
+- 15.4
+- 15.5
+- 15.6
+- 15.11
+- 15.12
+- 15.16
+
+Reason these are lower:
+
+- the product behavior is substantially closed
+- the remaining work is mostly insertion, clarification, or dependency wiring rather than unresolved design
+
+### Final answer after the thoroughness sweep
+
+- The Section 15 feature set does **not** appear to have major unthought-through behavior holes left in this ledger.
+- The remaining misses are:
+  - duplicate ownership of shell/runtime/browser behavior
+  - unresolved command identity for some promoted actions
+  - unresolved persistence scope boundaries
+  - stale backlog/defer language that would reintroduce drift
+- GUI changes **are** accounted for in the ledger.
+- The remaining problem is that several live docs still teach older or overlapping GUI models, especially around:
+  - project switch shell ownership
+  - thread Usage surface ownership
+  - browser container model
+  - dev-loop command identity

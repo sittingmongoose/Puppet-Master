@@ -141,40 +141,37 @@ ContractRef: ContractName:Plans/MiscPlan.md
 ---
 
 ## 4. Runtime surface
-
-<a id="RUNTIME-SURFACE"></a>
+The MVP runtime surface for skills is canonical and provider-agnostic.
 
 ### 4.1 Skill registry
-
-The runtime maintains a registry of discovered skills keyed by Skill ID. The registry is the source for:
-- GUI Skills tab list
-- Persona editor multi-select (`default_skill_refs`)
-- Resolution for the `skill` tool when invoked by name
+The skill registry remains the discovery and validation source for available skills. It determines what a run may reference, but it is not itself a provider-specific runtime delivery mechanism.
 
 ### 4.2 Persona `default_skill_refs`
-
-When a Persona specifies `default_skill_refs`, those skill IDs MUST be resolved against the registry at run start.
-
-Rule: Unresolvable refs MUST produce a warning but MUST NOT block the run.
-
-Rule: Resolved skills SHOULD be bundled by the context compiler as described in `Plans/FileSafe.md` Part B (Skill Bundling).
-
-ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA, ContractName:Plans/FileSafe.md
+`default_skill_refs` are resolved against the canonical registry during prompt/context assembly. They do not imply provider-native skill file installation at runtime.
 
 ### 4.3 `skill` tool
+The `skill` tool is the canonical on-demand runtime access path.
+- agents can request a specific skill by id
+- permission and policy checks still apply
+- tool responses are normal Puppet Master runtime artifacts, not provider-private hidden injections
 
-The canonical tool semantics are defined in `Plans/Tools.md`.
+### 4.4 Canonical MVP delivery path
+MVP runtime skill delivery is:
+1. resolve referenced skills from the registry
+2. bundle selected skill content into compiled context when the context compiler decides it is needed
+3. allow on-demand access through the `skill` tool for additional lookups
 
-Rule: The `skill` tool input `path_or_name` MUST accept either:
-- a Skill ID (preferred), resolved via the registry; or
-- an explicit file path to a `SKILL.md`, which MUST be under one of the allowed discovery roots.
+Provider-native skill directories, agent files, or external packaging formats are:
+- discovery sources
+- import/export formats
+- interoperability inputs
 
-Rule: The `skill` tool MUST return `{ name, content }` where `name` is the resolved Skill ID.
+They are not the canonical MVP runtime contract.
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+### 4.5 Non-goal for MVP
+MVP does not require a per-provider native runtime skill-loading matrix. If provider-native loading is added later, it is an optimization or interoperability layer above the canonical registry + bundling + tool path.
 
----
-
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md, ContractName:Plans/MiscPlan.md
 ## 5. Permissions integration
 
 <a id="PERMISSIONS"></a>

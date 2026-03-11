@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.evidence.schema.v1",
   "evidence_id": "plan-sharding-2026-03-11",
-  "created_at_utc": "2026-03-11T03:39:14.304137+00:00",
+  "created_at_utc": "2026-03-11T16:22:57.350531+00:00",
   "node": {
     "node_id": "plan-sharding"
   },
@@ -17,7 +17,7 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py run-gates",
-      "exit_code": 0
+      "exit_code": 1
     }
   ],
   "tool_calls": [
@@ -408,27 +408,19 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/FileManager/15-11-languageframework-presets.md",
+      "path": "Plans/_shards/FileManager/15-verification-ai-executable.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/FileManager/16-12-gaps-potential-problems-and-enhancements.md",
+      "path": "Plans/_shards/FileManager/16-13-git-status-integration.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/FileManager/17-verification-ai-executable.md",
+      "path": "Plans/_shards/FileManager/17-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/FileManager/18-13-git-status-integration.md",
-      "change_type": "modified"
-    },
-    {
-      "path": "Plans/_shards/FileManager/19-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md",
-      "change_type": "modified"
-    },
-    {
-      "path": "Plans/_shards/FileManager/20-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md",
+      "path": "Plans/_shards/FileManager/18-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
@@ -1108,15 +1100,11 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/25-attempt-centric-runtime-recovery-ui-reconciliation-addendum-2026-03-09.md",
+      "path": "Plans/_shards/Run_Graph_View/25-runtime-scheduler-blocked-view-contract.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/26-runtime-scheduler-blocked-view-contract.md",
-      "change_type": "modified"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/27-blocked-state-rendering-and-recovery-addendum.md",
+      "path": "Plans/_shards/Run_Graph_View/26-blocked-state-rendering-and-recovery-addendum.md",
       "change_type": "modified"
     },
     {
@@ -1204,11 +1192,7 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Tools/20-tool-field-name-and-taxonomy-alignment-addendum.md",
-      "change_type": "modified"
-    },
-    {
-      "path": "Plans/_shards/Tools/21-tool-field-name-and-taxonomy-alignment.md",
+      "path": "Plans/_shards/Tools/20-tool-field-name-and-taxonomy-alignment.md",
       "change_type": "modified"
     },
     {
@@ -2088,83 +2072,79 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/20-lifecycle-and-quality-features.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/20-considerations.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/21-considerations.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/21-next-steps.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/22-next-steps.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/22-implementation-notes-where-code-lives-and-what-to-add.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/23-implementation-notes-where-code-lives-and-what-to-add.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/23-parallel-execution-subagent-integration.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/24-parallel-execution-subagent-integration.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/24-platform-specific-capabilities-extensions.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/25-platform-specific-capabilities-extensions.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/25-leveraging-platform-capabilities-for-subagent-integration.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/26-leveraging-platform-capabilities-for-subagent-integration.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/26-updated-implementation-architecture.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/27-updated-implementation-architecture.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/27-benefits-of-platform-capabilities.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/28-benefits-of-platform-capabilities.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/28-implementation-considerations.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/29-implementation-considerations.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/29-next-steps-2.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/30-next-steps-2.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/30-autonomous-qa-loop-pattern-integration.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/31-autonomous-qa-loop-pattern-integration.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/31-change-summary.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/32-change-summary.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/32-persona-and-effective-runtime-resolution-addendum-2026-03-06.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/33-persona-and-effective-runtime-resolution-addendum-2026-03-06.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/33-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-08.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/34-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-08.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/34-runtime-scheduler-consumer-subagent-reconciliation-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/35-runtime-scheduler-consumer-subagent-reconciliation-addendum-2026-03-09.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/35-runtime-scheduler-consumer-reconciliation-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/36-runtime-scheduler-consumer-reconciliation-addendum-2026-03-09.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/36-orchestrator-runtime-consumer-and-remediation-execution-reconciliation-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/37-orchestrator-runtime-consumer-and-remediation-execution-reconciliation-addendum-2026-03-09.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/37-runtime-enum-and-counter-alignment-addendum.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/38-runtime-enum-and-counter-alignment-addendum.md",
-      "change_type": "modified"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/39-runtime-consumer-alignment.md",
+      "path": "Plans/_shards/orchestrator-subagent-integration/38-runtime-consumer-alignment.md",
       "change_type": "modified"
     },
     {

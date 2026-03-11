@@ -494,6 +494,22 @@ pub struct NodePosition {
 ```
 
 ### 7.4 Relationship to Existing Structs
+### 7.5 Canonical upstream ownership for graph projections
+
+The Run Graph view consumes projections from canonical runtime and plan contracts. It MUST NOT invent source-of-truth values locally.
+
+| Graph surface | Canonical owner | Required fields |
+|---|---|---|
+| Plan Mapping (`C2`) | `TierNode` / plan graph contract | `breadcrumb`, `section_anchor`, `excerpt` |
+| Worker Activity (`C3`) | runtime event / attempt snapshot contract | `requested_persona_id`, `effective_persona_id`, `provider`, `model`, `attempt_id`, `session_id?` |
+| Verifier Activity (`C4`) | gate/reviewer event contract | `requested_persona_id`, `effective_persona_id`, `provider`, `model`, `gate_id?`, `attempt_id?` |
+| Model / Tokens / Usage (`C5`) | `UsageRecord` | `run_id`, `tier_id`, `attempt_id?`, `effective_platform`, `effective_model`, `input_tokens`, `output_tokens`, `total_tokens`, `estimated_cost?` |
+| HITL Controls (`C6`) | blocked projection / HITL request contract | `blocked_reason_code`, ordered `allowed_action_ids[]`, `blocked_sequence`, `preserved_local_work`, `requires_safe_point_restore?`, prerequisite metadata |
+| Completed/summary references | evidence contract | `summary`, `summary_kind`, `evidence_ref?`, `detail_ref?` |
+
+The graph detail pane MUST treat these as read-only projections. If a field is absent upstream, the gap belongs to the owner contract named above rather than to the Run Graph UI.
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md
 
 These projection structs are **computed from** existing backend structs:
 - `TierNode` (puppet-master-rs/src/core/tier_node.rs): provides id, tier_type, title, description, dependencies, state_machine.
@@ -875,77 +891,70 @@ export component RunGraphView {
 ContractRef: ContractName:Plans/FinalGUISpec.md#14, ContractName:Plans/Contracts_V0.md
 
 ### 14.2 Rust View-Model Integration
+The Rust backend owns the canonical view-model state and all Slint callbacks for the Run Graph surface.
 
-The Rust backend MUST implement a view-model struct that holds the state and handles Slint callbacks.
+#### Required state
+`RunGraphViewModel` MUST own:
+- `run_meta`
+- canonical `nodes` and `edges` projection vectors
+- `layout_cache` keyed by `(graph_generation, preset)`
+- `view_state` containing zoom, pan, selection, and viewport bounds in graph coordinates
+- `visible_nodes` and `visible_edges` as the culling result used to populate Slint models
+- a weak `ui_handle`
 
-```rust
-struct RunGraphViewModel {
-    // State
-    run_meta: RunGraphMeta,
-    nodes: Vec<GraphNode>,
-    edges: Vec<GraphEdge>,
-    layout_cache: HashMap<(String, LayoutPreset), Vec<NodePosition>>,
-    view_state: ViewState, // zoom, pan, selection, viewport bounds
-    visible_nodes: Vec<usize>, // indices into `nodes` that intersect the viewport
-    visible_edges: Vec<usize>, // indices into `edges` with at least one endpoint visible
+#### `new(ui_handle, initial_tree)`
+`new(...)` MUST execute the following steps in order:
+1. Read the canonical plan/runtime tree in deterministic order. Stable ordering is tier order first, then lexical `node.id` within siblings when no stronger ordering exists.
+2. Build `GraphNode` projections, including plan mapping, state badges, runtime identity snapshot, usage references, and blocked metadata already required elsewhere in this document.
+3. Build `GraphEdge` projections from dependency lists without inventing implied edges.
+4. Compute the initial layout using Preset 1 (`Layered L-R`) unless a persisted preset is available.
+5. Restore persisted `view_state` when present; otherwise default to fit-to-screen, no selection, and a viewport centered on the graph root.
+6. Compute the visible subset using the viewport plus overscan.
+7. Push the initial visible models into Slint.
 
-    // Slint Handle
-    ui_handle: Weak<RunGraphView>,
-}
+`new(...)` MUST NOT leave layout, color, or visible-set computation as deferred `todo!()` behavior.
 
-impl RunGraphViewModel {
-    fn new(ui_handle: Weak<RunGraphView>, initial_tree: &TierTree) -> Self {
-        // 1. Convert TierTree nodes to Vec<GraphNode> projections
-        // 2. Build Vec<GraphEdge> from dependency lists
-        // 3. Compute initial layout (Layered L-R preset)
-        // 4. Compute initial viewport-visible subset
-        // 5. Push initial data to Slint model
-        // Return initialized struct
-        todo!()
-    }
+#### `on_event_batch(events)`
+Event updates are batched on a timer and processed on the Rust side. The batch handler MUST:
+- update only the affected `GraphNode` / `GraphEdge` fields per event type
+- mark the batch as structural only when nodes, dependencies, or graph generation change
+- recompute layout asynchronously only for structural batches
+- recompute the visible subset after any viewport, selection, state, or layout change
+- push row-level model mutations rather than replacing the full model whenever possible
 
-    /// Called when new events arrive via invoke_from_event_loop.
-    /// Events are batched at 16ms intervals by a timer; this processes the batch.
-    fn on_event_batch(&mut self, events: &[PuppetMasterEvent]) {
-        let mut structural_change = false;
-        for event in events {
-            match event {
-                // Update the specific GraphNode fields per section 12.2 mapping
-                // Set structural_change = true if new nodes/edges added
-                _ => { /* per-event-type update logic */ }
-            }
-        }
-        if structural_change {
-            self.recompute_layout_async(); // spawn_blocking
-        }
-        self.update_visible_set(); // re-filter nodes/edges by viewport
-        self.push_to_slint(); // ModelRc row-level updates, not full replacement
-    }
+#### `compute_layout(preset)`
+`compute_layout(...)` is normative, not illustrative.
 
-    fn compute_layout(&self, preset: LayoutPreset) -> Vec<NodePosition> {
-        // Runs on spawn_blocking thread.
-        // Implements Sugiyama (section 9.2) with deterministic tie-break rules.
-        // Returns calculated x/y/w/h for all nodes.
-        todo!()
-    }
+Preset behavior:
+- Presets 1 and 2 use the Sugiyama pipeline already defined in §9.2, including deterministic tie-break rules.
+- Preset 3 reuses the same layer assignment with reduced spacing and the compact spacing rules from §9.3.
+- Preset 4 groups task/subtask nodes inside their phase container bands using the grouping rules from §9.4.
+- Preset 5 reuses Layered L-R positioning plus deterministic critical-path emphasis from §9.5; it does not invent a separate layout algorithm.
 
-    /// Filters nodes/edges to those intersecting the current viewport.
-    /// Viewport = visible screen area in graph coordinates (accounting for zoom/pan).
-    /// Overscan buffer: 200px on each side.
-    fn update_visible_set(&mut self) {
-        // Recompute visible_nodes and visible_edges from view_state viewport bounds
-        // Push filtered model to Slint (only visible items in the repeater models)
-    }
+Common rules:
+- layout output is deterministic for the same graph generation and preset
+- ties are broken lexicographically by canonical node identity
+- layout runs off the UI thread
+- the cache key includes graph generation so stale positions are not reused after replans or structural edits
 
-    /// Resolves state-to-color mapping using theme tokens.
-    /// Called when building GraphNodeUI items for Slint.
-    fn resolve_node_color(&self, state: &TierState) -> (Color, Color) {
-        // Returns (state_color, border_color) from theme token lookup
-        todo!()
-    }
-}
-```
+#### `update_visible_set()`
+Viewport culling is required behavior.
+- Visibility is computed in graph coordinates after applying the current zoom and pan.
+- A node is visible when its bounding rectangle intersects the viewport expanded by an overscan buffer of 200px on each side.
+- An edge is visible when at least one endpoint is visible, or when its curve intersects the expanded viewport.
+- The Slint repeater models contain only the visible subset.
 
+#### `resolve_node_color(state)`
+Color resolution happens in Rust.
+- Node fill and border colors come from the state-to-theme-token table in §8.
+- Selected nodes use `Theme.accent` for the selected border treatment.
+- Edge color derives from the upstream node state at 60% opacity unless another explicit rule in this document overrides it.
+- Slint receives fully resolved colors; it does not perform state-to-token lookup logic itself.
+
+#### `push_to_slint()`
+`push_to_slint()` MUST use row-level updates where feasible. Full-vector replacement is reserved for structural changes that invalidate indices.
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
 ### 14.3 Performance Optimization in Slint
 
 1. **Viewport Culling**: The Rust view-model maintains the visible viewport bounds (in graph coordinates, accounting for zoom and pan). Only nodes whose bounding rectangles intersect the viewport (+ 200px overscan) are included in the `nodes` model passed to Slint. Similarly, only edges with at least one endpoint in the visible set are included in the `edges` model. When the user pans or zooms, the Rust view-model recomputes the visible set and updates the Slint models via `ModelRc` row-level mutations.
@@ -1152,7 +1161,7 @@ Add the following to the graph node / detail payload contract:
 - `non_selected_reason`
 - `failure_class`
 - `blocked_reason_code`
-- `allowed_actions[]`
+- `allowed_action_ids[]`
 - `safe_point_id`
 - remediation lineage identifiers
 - `replan_generation`
@@ -1205,18 +1214,6 @@ The detail panel MUST show:
 - blocked, retrying/backoff, remediation-in-progress, and terminal failure MUST render as distinct states
 - stale attempts MUST be visibly marked as historical and non-resumable
 - safe-point details MUST explicitly distinguish runtime safe points from user-facing restore points
-## Attempt-Centric Runtime Recovery UI Reconciliation Addendum (2026-03-09)
-
-Run Graph is a consumer of canonical runtime contracts and MUST NOT invent alternate state families.
-
-Required rules:
-- queue-analysis links use `scheduler_pass_id`
-- pass-history rows may show `selected_at_utc`, score breakdown, and `newly_ready_nodes[]` only when present in canonical scheduler-pass records
-- blocked node lists sort by `blocked_sequence` descending within the active view
-- pre-attempt blocked episodes bind recovery to `blocked_sequence`, not a fabricated `attempt_id`
-- node surfaces use canonical blocked reasons; `attention_required` is not a node runtime state
-- remediation ceiling surfaces show a persistent blocked state with recovery actions driven by canonical commands and visible remediation lineage
-- safe-point history links open by `safe_point_id`, not by loose attempt-only heuristics
 ## Runtime Scheduler / Blocked View Contract
 
 Run Graph is a consumer of canonical runtime contracts and MUST NOT invent alternate state families.

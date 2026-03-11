@@ -822,208 +822,16 @@ ContractRef: EventType:tool.denied, ContractName:Plans/Tools.md, ContractName:Pl
 
 All of the above are canonical contract fields, not UI-only projection conveniences.
 ## Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum (2026-03-09)
-
-This section is normative and supersedes earlier runtime packet wording wherever conflicting.
+This section is an exact compatibility mirror of the later canonical runtime contract so readers do not stop at stale transitional enum lists.
 
 ### Event-name precedence
 | Canonical event | Legacy alias | Rule |
 |---|---|---|
-| `scheduler.pass` | `run.scheduler_analysis` | `scheduler.pass` is canonical. Legacy aliases MAY be emitted only for compatibility and MUST carry identical identity and meaning. |
+| `scheduler.pass` | `run.scheduler_analysis` | `scheduler.pass` is canonical. |
 | `node.blocked` | `run.node_blocked` | `node.blocked` is canonical. |
 | `node.unblocked` | `run.node_unblocked` | `node.unblocked` is canonical. |
 | `remediation.spawned` | `run.remediation_started` | `remediation.spawned` is canonical. |
 | `remediation.resolved` | `run.remediation_completed` | `remediation.resolved` is canonical. |
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
-
-### Canonical enum families
-#### `failure_class`
-Use `failure_class` only for classified attempt outcomes that drive retry, remediation, escalation, or terminal failure policy.
-
-Allowed values:
-- `provider_transient`
-- `structured_output_invalid`
-- `verification_failed`
-- `reviewer_findings`
-- `storage_io`
-- `graph_integrity`
-
-#### `blocked_reason_code`
-Use `blocked_reason_code` when execution cannot continue automatically until a prerequisite changes or a user/operator action occurs.
-
-Allowed values:
-- `permission_denied`
-- `user_declined`
-- `headless_ask_denied`
-- `filesafe_blocked`
-- `external_side_effect_blocked`
-- `auth_expired`
-- `replan_required`
-- `waiting_approval`
-- `clarification_blocked`
-- `worktree_conflict`
-- `dirty_worktree`
-- `plugin_hook_blocked`
-
-Rules:
-- pure blocked outcomes MAY set `failure_class = null`
-- blocked outcomes that originate from a classified failed attempt MAY retain both `failure_class` and `blocked_reason_code`
-- blocked outcomes are not retryable by default; retryability comes from the shared matrix plus current prerequisites
-
-Additional canonical values not yet in the enum above:
-
-| Value | Meaning |
-|-------|---------|  
-| `validation_blocked` | Tool output failed post-execution validation (schema check, safety scan, or constraint check). Recovery: fix validation rule or tool output. |
-| `remediation_ceiling_exceeded` | Remediation generation count has reached the configured ceiling. No further automatic remediation is permitted. Recovery: replan, manual fix, or abort node. |
-
-#### `plugin_hook_blocked` definition
-
-`plugin_hook_blocked` is triggered when a plugin hook returns `Block` for a hook that affects execution flow.
-
-**Triggering hooks** (execution-affecting):
-- `pre_tool_invoke`
-- `pre_attempt_start`
-- `pre_node_dispatch`
-
-**Non-triggering hooks** (observation-only -- cannot block):
-- `post_tool_invoke`
-- `post_attempt_complete`
-- All session/message/compaction/shell hooks
-
-**Required metadata in blocked payload:**
-- `plugin_id` -- which plugin issued the block
-- `hook_name` -- which hook returned Block
-- `block_reason` -- freetext reason string from the plugin
-
-**Valid `allowed_action_ids[]` for plugin blocks:**
-- `approve` -- override block for this attempt only
-- `decline` -- accept block, node enters blocked state
-- `retry_now` -- re-invoke the hook (plugin may have been updated)
-- `skip_node` -- skip node if graph allows
-
-Plugin hooks MUST NOT invent plugin-private retry or recovery semantics that bypass scheduler observability or canonical taxonomy.
-
-ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Executor_Protocol.md
-
-#### `wake_reason`
-Allowed values:
-- `node_completed`
-- `verification_completed`
-- `approval_resolved`
-- `clarification_resolved`
-- `permission_changed`
-- `auth_recovered`
-- `backoff_expired`
-- `remediation_completed`
-- `restore_completed`
-- `replan_applied`
-- `capacity_changed`
-- `manual_wakeup`
-- `watchdog_recheck`
-
-#### `non_selected_reason`
-Allowed values:
-- `lower_score`
-- `lane_reservation`
-- `capacity_deferred`
-- `worktree_conflict`
-- `already_running_in_pool`
-- `generation_stale`
-- `blocked_during_pass`
-
-#### `allowed_action_id`
-Allowed values:
-- `approve`
-- `decline`
-- `retry_now`
-- `resume_after_prerequisite`
-- `restore_safe_point_then_retry`
-- `start_fresh_attempt`
-- `replan`
-- `skip_node`
-- `abort_run`
-- `open_details`
-
-#### `attempt_terminal_state`
-
-Canonical values:
-
-| Value | Meaning |
-|-------|---------|  
-| `completed_success` | Attempt finished and passed verification. |
-| `completed_failed` | Attempt finished but failed verification or was rejected. |
-| `interrupted_by_restart` | Attempt was in progress when the process restarted; classified on recovery. |
-| `stale_historical` | Attempt belongs to a prior replan generation and has been superseded by newer attempts. |
-
-An attempt record MUST transition to exactly one of these values and MUST NOT transition away from a terminal state.
-
-`stale_historical` is applied when: (1) `replan_generation` increments and the attempt belongs to a prior generation, OR (2) the run session is re-opened after dormancy and the attempt was in a non-terminal state with no safe point to resume from.
-
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
-
-#### `detail_ref` format
-
-`detail_ref` is a structured string with format `{type}:{id}` where type is one of:
-
-| Type | Meaning | Example |
-|------|---------|---------|  
-| `evidence` | Reference to an evidence record | `evidence:ev-abc123` |
-| `artifact` | Reference to a build/output artifact | `artifact:art-def456` |
-| `log_range` | Reference to a segment log range | `log_range:seg-789:100-200` |
-| `storage_key` | Reference to a redb storage key | `storage_key:attempt.run1.node2.att3` |
-
-The type prefix enables consumers to resolve the reference to the correct storage backend.
-
-ContractRef: ContractName:Plans/storage-plan.md
-
-### Identity rules
-- `scheduler_pass_id` is the canonical identity for queue-analysis passes
-- `analysis_id` is a legacy alias; when present it MUST equal `scheduler_pass_id`
-- every dispatch attempt receives a new `attempt_id`
-- retries, prerequisite-resumed work, and safe-point-restored reruns create new `attempt_id` values rather than mutating prior attempts in place
-- previous attempt records remain immutable history
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Graph_View.md
-
-### Required canonical events
-#### `run.graph_canonical_locked`
-Required fields:
-- `run_id`
-- `replan_generation`
-- `ts`
-
-#### `node.prerequisite_resolved`
-Required fields:
-- `run_id`
-- `node_id`
-- `attempt_id?`
-- `resolution_kind` (`approval`, `clarification`, `permission`, `auth`, `replan`, `worktree`, `other`)
-- `prior_blocked_reason_code`
-- `ts`
-
-### Blocking payload rule
-Every canonical blocked event/path MUST expose:
-- `blocked_reason_code`
-- `allowed_action_ids[]`
-- prerequisite metadata needed to bind domain-specific commands (for example `auth_realm`, `missing_scopes[]`, guard/rule identifiers, report refs)
-- `preserved_local_work`
-- `failure_class?`
-- `detail_ref?`
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md
-## Canonical Runtime Event, Outcome, and Action Contract Reconciliation Addendum (2026-03-09)
-
-This section supersedes packet-era naming and field drift wherever conflicts remain.
-
-### Canonical event names
-| canonical event | legacy alias | canonical identity |
-|---|---|---|
-| `scheduler.pass` | `run.scheduler_analysis` | `run_id`, `scheduler_pass_id` |
-| `node.ready` | `run.node_ready` | `run_id`, `node_id`, `ready_since_utc` |
-| `node.blocked` | `run.node_blocked` | `run_id`, `node_id`, `blocked_sequence`, `attempt_id?` |
-| `node.unblocked` | `run.node_unblocked` | `run_id`, `node_id`, `blocked_sequence`, `attempt_id?` |
-| `safe_point.created` | none | `safe_point_id` |
-| `safe_point.restored` | none | `safe_point_id`, `restore_sequence` |
-| `remediation.spawned` | `run.remediation_started` | `remediation_root_id`, `child_attempt_id` |
-| `remediation.resolved` | `run.remediation_completed` | `remediation_root_id`, `child_attempt_id` |
 
 ### Canonical enum families
 `failure_class`:
@@ -1050,20 +858,34 @@ This section supersedes packet-era naming and field drift wherever conflicts rem
 - `validation_blocked`
 - `remediation_ceiling_exceeded`
 
-### Canonical blocked payload
-ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+`allowed_action_id`:
+- `approve`
+- `decline`
+- `retry_now`
+- `resume_after_prerequisite`
+- `restore_safe_point_then_retry`
+- `start_fresh_attempt`
+- `replan`
+- `skip_node`
+- `abort_run`
+- `open_details`
+
+### Blocking payload rule
 Every runtime-facing blocked event or projection MUST expose:
-ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 - `blocked_reason_code`
 - ordered `allowed_action_ids[]`
+- prerequisite metadata needed to bind the recovery command
 - `preserved_local_work`
 - `requires_safe_point_restore?`
-- prerequisite metadata needed to bind the recovery command
 - `failure_class?`
-- `detail_ref?` in `{type}:{id}` form
+- `detail_ref?`
 
-Legacy pre-reconciliation blocked-action field names are deprecated aliases only and MUST NOT appear in new canonical schemas.
-ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+No section in this file may present an earlier shorter enum set as the canonical value family.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Executor_Protocol.md
+## Canonical Runtime Event, Outcome, and Action Contract Reconciliation Addendum (2026-03-09)
+
+This section supersedes packet-era naming and field drift wherever conflicts remain.
 
 ### `scheduler.pass`
 Required fields:
