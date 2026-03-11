@@ -530,6 +530,7 @@ Minimum required persistence:
 
 ---
 
+**Usage on message/turn and cost_usage:** Usage may be stored on message/turn for per-thread display. The cost_usage runtime artifact (Plans/Runtime_Artifacts_Panel.md) reuses the same canonical schema as usage.event; there is no second canonical store.
 ## Acceptance criteria (testable)
 Acceptance criteria are written to be testable by an agent/verifier that can run a provider and inspect the resulting seglog (NDJSON) per `Plans/storage-plan.md`.
 

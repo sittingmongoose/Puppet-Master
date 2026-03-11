@@ -97,7 +97,6 @@ Each widget in the catalog has:
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/FinalGUISpec.md#7.2
 
 ### 2.2 Usage & Budget Widgets
-
 | Widget ID | Display Name | Description | Data Source | Update | Default | Min | Max | Pages |
 |-----------|-------------|-------------|-------------|--------|---------|-----|-----|-------|
 | `widget.quota_summary` | Quota Summary | 5h/7d usage bars per platform with plan type | `redb:rollups/usage_5h.*`, `usage_7d.*` + platform APIs | pull | 2x1 | 1x1 | 4x2 | Usage, Dashboard |
@@ -110,8 +109,9 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 | `widget.reset_countdown` | Reset Countdown | Countdown to next quota reset per platform | Platform API or rate-limit error parsing | pull | 1x1 | 1x1 | 2x1 | Usage, Dashboard |
 | `widget.multi_account` | Multi-Account Status | Per-platform account list, active account, cooldown | `redb:settings/multi_account.*` + platform APIs | pull | 2x1 | 1x1 | 4x2 | Usage, Dashboard |
 
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md
+Artifacts-panel linkage: runtime `cost_usage` artifacts surfaced in `Plans/Runtime_Artifacts_Panel.md` navigate into these same Usage/Ledger widget-backed views. `Show in Ledger` and `Show in Usage` MUST resolve to canonical `usage.event`-backed filters (run/thread/usage identity), not to a separate artifact-local usage store.
 
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md
 ### 2.3 Orchestrator Tab Widgets
 
 | Widget ID | Display Name | Description | Data Source | Update | Default | Min | Max | Pages |
@@ -497,6 +497,3 @@ ContractRef: Primitive:UICommand (Plans/Contracts_V0.md#UICommand), ContractName
 | Plans/human-in-the-loop.md | HITL approval events and policy |
 | Plans/Run_Graph_View.md | Node Graph Display (NOT a widget) |
 | Plans/Orchestrator_Page.md | Orchestrator 6-tab structure, per-tab default layouts |
-
-
-**Artifacts panel and Show in Ledger/Usage:** The Artifacts panel (Plans/Runtime_Artifacts_Panel.md) offers "Show in Ledger" and "Show in Usage" for cost_usage items. Those actions navigate to the Usage page or Ledger view, which are composed from the widgets in this document (e.g. widget.ledger_table for event-level usage). Implementation must ensure the linkage (e.g. filter by run_id/thread_id or usage_event_id) is consistent so the target view shows the correct canonical usage.event. See Plans/usage-feature.md for the single coherent schema.

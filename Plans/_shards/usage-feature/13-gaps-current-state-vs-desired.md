@@ -28,17 +28,13 @@
   - When env vars are set, Usage can show provider-reported 5h/7d (or equivalent) where the platform supports it; when not set, we still show usage from `usage.jsonl`.
 
 ### Gap 3: Ledger vs. usage_tracker split
+**Desired:** Ledger, usage/event rows, cost_usage artifacts, 5h/7d rollups, and thread-scoped usage all reflect one coherent schema and attribution model.
 
-- **Current state**
-  - **Write path:** Orchestrator uses `state::UsageTracker` + `types::UsageRecord`; writes to `usage.jsonl` with fields: `action`, `duration_ms`, `tokens` (optional), `cost` (typically None), `tier_id`, `session_id`, `model`.
-  - **Read path (Ledger):** Ledger view reads raw JSON and maps to `LedgerEntry` using different names: expects `operation` (we write `action`), `tokens_in`/`tokens_out` (we write `tokens` as a single number), `cost`.
-  - **Unused:** `platforms::UsageTracker` has `UsageEvent`, `get_usage_summary(platform, time_range)` and `get_usage_summary_all_platforms`; the GUI does not use them.
-- **Desired**
-  - Single coherent schema for `usage.jsonl`: one write format (e.g. align `UsageRecord` with STATE_FILES §5.2 and Ledger expectations: `operation` or `action` consistently, `tokens_in`/`tokens_out` or a single `tokens` with documented meaning).
-  - One code path for "current usage" that the GUI uses: either (a) aggregate from `usage.jsonl` in a shared module, or (b) use `platforms::UsageTracker::get_usage_summary` with time ranges, with events written in a format that tracker can read (or bridge from `UsageRecord` to `UsageEvent` on read).
-- **Acceptance**
-  - Ledger displays all fields we write; 5h/7d aggregation and Ledger both consume the same file/schema without ad-hoc field remapping.
+**Canonical resolution:** The system MUST use one coherent usage schema and attribution model across Ledger, `usage.event`, `usage.jsonl`, `runtime_artifact.cost_usage`, and 5h/7d rollups. Canonical field names MUST use `operation` for the normalized action name plus `tokens_in`, `tokens_out`, and `reasoning_tokens` for token accounting; legacy `action` plus aggregate `tokens` is compatibility-only wording and MUST NOT be introduced for new writes. The Ledger, 5h/7d aggregation, and Usage page all consume the same record shape without ad-hoc remapping between display rows and stored events.
 
+**Acceptance signal:** A single usage event/cost payload can populate Ledger, Usage, cost_usage artifact detail, and rollups without per-surface translation logic beyond formatting.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, PolicyRule:Decision_Policy.md§2
 ### Gap 4: Quota/plan only from errors
 
 - **Current state**

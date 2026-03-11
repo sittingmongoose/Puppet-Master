@@ -86,8 +86,6 @@ The existing `Containers & Registry` settings area remains the primary configura
   - notice when the file was auto-generated and still needs review/configuration
 
 ### 2. Contextual Docker Manage surface
-
-
 Docker Manage (and Unraid) are exposed via the **side panel** (or primary content) per Plans/FinalGUISpec.md §4 / §5 / §7. Placement and "Hide when not used in Project" align with the shell. When the project is Docker-related, the Docker icon in the activity bar shows this panel in the single side-panel slot (last-click wins).
 
 ContractRef: ContractName:Plans/FinalGUISpec.md
@@ -108,7 +106,6 @@ The surface must include:
 - `ca_profile.xml` status and shortcut to edit it
 - requested auth mode and effective capability chips
 - explicit warnings when browser auth produced only partial capability (for example, browse-only or push-only)
-
 ### 3. Orchestrator and dashboard integration
 Docker-related actions must also remain available from orchestrator/dashboard build/preview surfaces when a Docker-related run is active. The contextual Docker Manage surface is not a replacement for orchestrator controls; it is a richer management layer that complements them.
 
@@ -759,59 +756,19 @@ The first-class scope above does **not** require initial automation for:
 - Profile images can be either repo-managed uploaded assets or externally hosted URLs; uploaded images default to repo-managed assets.
 - Template-repo changes auto-commit by default, do not auto-push by default, and expose a one-click push action in the UI.
 
-## Shared blocked-Outcome Alignment Addendum (2026-03-08)
+## Remote Side-Effect Blocked Payload Normalization (2026-03-09)
 
-The Docker/Unraid remote-side-effect contracts are the reference pattern for shared blocked outcomes.
+The Docker/Unraid remote-side-effect contracts remain the reference pattern for blocked remote mutation and must use canonical runtime payload names.
 
-Required alignment:
+Required runtime-facing rules:
 - remote side effects blocked by confirmation/policy remain `blocked`, not `failed`
-- completed local work (build artifacts, commits, generated local outputs) is preserved
-- automatic retry is not permitted until the user or policy condition explicitly resolves
-- blocked payloads must continue to provide exact `reason_code` and `recovery_options[]`
-
-This document's stronger blocked-outcome pattern should be treated as the cross-runtime baseline rather than as a domain-specific exception.
-## External Publish Blocked-Outcome Alignment Addendum (2026-03-09)
-
-Container publish and registry flows must use the same blocked-outcome semantics as the runtime packet.
-
-### Required rules
+- preserve completed local work whenever remote publish/creation steps are blocked
 - auth expiry during publish blocks the publish path without discarding the completed local build result
 - remote-side-effect approval requirements remain blocked until explicitly resolved
-- re-auth alone does not auto-publish; the user must explicitly resume or retry through the canonical action
+- auth recovery alone does not auto-resubmit or auto-publish a blocked remote side effect; explicit resume/retry remains required
 - UI must explain when a local artifact exists but remote publish remains blocked
-## Shared Blocked-Outcome Action Reconciliation Addendum (2026-03-09)
-
-This document remains the reference pattern for blocked remote side effects.
-
-Runtime-facing rules:
-- preserve completed local work whenever remote publish/creation steps are blocked
-- runtime-facing blocked payloads MUST use canonical `blocked_reason_code` plus `allowed_action_ids[]`
-- domain-specific `reason_code` values MAY remain internal detail, but they MUST map into canonical runtime taxonomy at shared surfaces
-- auth recovery alone does not auto-resubmit a blocked remote side effect; explicit resume/retry remains required
-## Remote Side-Effect Blocked Payload Consolidation Addendum (2026-03-09)
-
-Container publish and Unraid remote-side-effect flows remain the reference pattern for blocked remote mutation, but must use canonical runtime payload names.
-
-### Required runtime-facing rules
-- preserve completed local work whenever remote publish/creation steps are blocked
-- runtime-facing blocked payloads MUST use canonical `blocked_reason_code` plus `allowed_action_ids[]`
+- runtime-facing blocked payloads MUST use canonical `blocked_reason_code` plus ordered `allowed_action_ids[]`
 - domain-specific `reason_code` values MAY remain internal detail, but MUST map into canonical runtime taxonomy at shared surfaces
-- auth recovery alone does not auto-resubmit a blocked remote side effect; explicit runtime resume/retry remains required
-
-## Container Blocked-Payload Field Name Correction Addendum
-
-Container publish and similar remote side-effect examples are reference patterns only.
-
-Canonical runtime-facing blocked payload shape:
-- `blocked_reason_code`
-- ordered `allowed_action_ids[]`
-- `preserved_local_work`
-- `detail_ref?`
-
-Legacy fields such as `reason_code` and `recovery_options[]` are non-canonical and MUST NOT be copied into new shared runtime contracts.
-## Remote Side-Effect Blocked Payload Normalization
-
-Container publish and similar remote side-effect examples are reference patterns only.
 
 Canonical runtime-facing blocked payload shape:
 - `blocked_reason_code`

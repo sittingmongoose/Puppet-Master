@@ -1,8 +1,6 @@
 ## 7. Views Specification
 
 ### 7.1 View Inventory (21 views/panels + 6 bottom panel tabs)
-
-
 | 21 | Artifacts | -- | Side panel | **NEW** (runtime artifacts: diffs, plans, evidence, browser recordings, cost_usage, etc.; see Plans/Runtime_Artifacts_Panel.md) |
 
 | # | View | Group | Type | Status |
@@ -28,7 +26,6 @@
 | 19 | AgentActivity | -- | Embedded pane | **NEW** |
 | 20 | BottomPanel | -- | Bottom panel | **NEW** (Terminal/Problems/Output/Ports/Browser/Debug) |
 | 21 | NotFound | -- | Primary content | Existing |
-
 ### 7.2 Dashboard
 
 **Group:** Home | **Location:** Primary content

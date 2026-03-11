@@ -452,10 +452,19 @@ Required blocked event families:
 - `unraid.template_repo.setup.blocked`
 
 ##### Canonical enum binding
+`TemplateRepoStatus` is exactly:
 
+- `unconfigured`
+- `config_invalid`
+- `clean`
+- `dirty_uncommitted`
+- `committed_local_only`
+- `push_in_progress`
+- `push_failed`
+- `diverged_remote`
+- `needs_review`
 
-#### Additions: Runtime Artifacts (GUI panel) event types and index
-
+##### Runtime Artifacts (GUI panel) event types and index
 **Scope:** Agent-run outputs displayed in the Artifacts panel (see Plans/Runtime_Artifacts_Panel.md). Distinct from Project Plan Package artifacts (Plans/Project_Output_Artifacts.md).
 
 **Seglog event types (one per artifact type):** Each event uses the standard EventRecord envelope (schema, ts, seq, type, run_id, thread_id, payload). The `type` value is one of:
@@ -485,19 +494,9 @@ Required blocked event families:
 
 **cost_usage alignment:** The payload of `runtime_artifact.cost_usage` events MUST align with the canonical `usage.event` schema (tokens_in, tokens_out, reasoning_tokens, cost, platform/provider, model, etc.). Canonical usage remains `usage.event`; cost_usage is an attribution record that references the same pipeline. Ledger and Usage page consume the same data.
 
+**Local usage mirror compatibility:** Where a local append-only `usage.jsonl` mirror exists, it MUST preserve the same canonical field names as `usage.event`, using `operation`, `tokens_in`, `tokens_out`, and `reasoning_tokens`. Legacy `action` plus aggregate `tokens` is compatibility-only wording and MUST NOT be reintroduced as the write shape.
+
 ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/usage-feature.md, PolicyRule:Decision_Policy.md§2
-
-`TemplateRepoStatus` is exactly:
-
-- `unconfigured`
-- `config_invalid`
-- `clean`
-- `dirty_uncommitted`
-- `committed_local_only`
-- `push_in_progress`
-- `push_failed`
-- `diverged_remote`
-- `needs_review`
 
 - Effective auth capability snapshots MAY be restored for UI display, but they are advisory until revalidated.
 - Secret material MUST NOT be mirrored into redb or seglog.
@@ -567,7 +566,6 @@ ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/C
 - **editor snippets:** JSON for snippet collections (`name`, `prefixes`, `body`, `description`, `scope`, `source`).
 
 **Migrations:** Use redb's schema version or a custom `schema_version` key in a `meta` namespace. On open, check version; if older, run migration functions (e.g. create new namespaces, copy/transform data, bump version). Document each migration (version N → N+1) and keep migrations reversible where possible (e.g. add column, don't drop until next major).
-
 #### 2.3.0 Thread checkpoint restoration contract
 
 - `thread_checkpoint.{thread_id}` stores the currently selected restore pointer for that thread, not the full restore history.
@@ -1014,46 +1012,6 @@ Storage and projections MUST persist the scheduler and recovery model without am
 ## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)
 
 This section defines runtime Recovery Persistence Consolidation.
-
-### Canonical keys
-- `scheduler_pass_record`: key = `run_id`, `scheduler_pass_id`
-- `blocked_projection`: key = `run_id`, `node_id`, `blocked_sequence`
-- `attempt_id?` and `thread_id?` are fields on `blocked_projection`, not primary-key components
-- `wizard_runtime_state`: key = `wizard_id`
-- `safe_point_restore_record`: key = `safe_point_id`, `restore_sequence`
-
-### Canonical records
-1. `attempt_record`
-   - key: `run_id`, `node_id`, `attempt_id`
-   - fields include `scheduler_pass_id`, requested/effective model snapshot ids, requested/effective permission snapshot ids, `replan_generation`, `mutation_capable`, `safe_point_id?`, `provider_attempt_ref?`, remediation lineage refs, terminal state, and independent counter-family fields
-2. `scheduler_pass_record`
-   - fields include `wake_reason`, `secondary_wake_reasons[]`, full score breakdowns, `selected_at_utc`, and `newly_ready_nodes[]`
-3. `blocked_projection`
-   - fields include `blocked_reason_code`, `allowed_action_ids[]`, `preserved_local_work`, `requires_safe_point_restore?`, prerequisite metadata, `failure_class?`, `detail_ref?`, `attempt_id?`, and `thread_id?`
-4. `safe_point_record`
-   - key: `safe_point_id`
-   - safe-point namespace is runtime-internal and distinct from user-facing restore-point storage
-5. `safe_point_restore_record`
-   - append-only restore history; never last-write-wins
-6. `remediation_lineage_record`
-   - key: `remediation_root_id`
-7. `thread_blocked_notice`
-   - key: `thread_id`, `blocked_sequence`
-   - fields include `node_id?`, `attempt_id?`, active blocked metadata, `message_id`, and `resume_url?`
-8. `wizard_runtime_state`
-   - fields include `wizard_status`, `wizard_step`, `blocked_reason_code?`, `clarification_round_count`, `report_ref?`, `resume_url?`, `decomposition_degraded`, `degradation_reason?`, and `replan_generation?`
-
-### Counter rule
-- `attempt_count` is total started attempts for the node in the run.
-- `automatic_retry_count`, `prerequisite_resume_count`, `manual_resume_count`, and `remediation_retry_count` remain independent stored counters.
-- `retry_count` is a derived display value only and MUST NOT drive policy.
-
-### Restart and stale history
-Attempts from older `replan_generation` values, or in-flight attempts that cannot resume after restart, transition to `stale_historical` and remain queryable but never resumable.
-
-### Report identity rule
-Canonical persisted references use `*_ref` fields. Raw `*_path` wording is compatibility-only.
-## Runtime Recovery Persistence Consolidation
 
 ### Canonical keys
 - `scheduler_pass_record`: key = `run_id`, `scheduler_pass_id`

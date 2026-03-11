@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/GitHub_Integration.md",
-  "source_sha256": "cd62a76410e59a6013343f85361448a400cc0a0a7b1c058e0216c9680e462406",
+  "source_sha256": "41da58de032ee8f9f078fbee1de0a7b35249966a662e78cd51bfc15e0c84e3ec",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -31,100 +31,72 @@
     {
       "dest_path": "Plans/_shards/GitHub_Integration/04-a-git-panel-ide-surface.md",
       "start_line": 70,
-      "end_line": 450,
-      "segment_sha256": "c55fac6a9749afe80d2a70cfb30b70fb8137e6f67c8e312071d93f14cb94728e",
+      "end_line": 447,
+      "segment_sha256": "f4cd26a5dc178a4afe8e2a878ed66192d03cf5049dcc514e5a7ae773b7f65712",
       "heading": "## A. Git Panel (IDE Surface)"
     },
     {
       "dest_path": "Plans/_shards/GitHub_Integration/05-b-github-api-integration.md",
-      "start_line": 451,
-      "end_line": 679,
+      "start_line": 448,
+      "end_line": 676,
       "segment_sha256": "b889e97fd3417a85ef25a784bd081fc26d97ead4e36e76c8f1f16c54fb9c3477",
       "heading": "## B. GitHub API Integration"
     },
     {
       "dest_path": "Plans/_shards/GitHub_Integration/06-c-ssh-remote-dev-servers.md",
-      "start_line": 680,
-      "end_line": 859,
+      "start_line": 677,
+      "end_line": 856,
       "segment_sha256": "eeeb2c6120d627b4c1b128ef2263b52c9ac10f6a2c97be9d50da077d75fd7eb1",
       "heading": "## C. SSH Remote Dev Servers"
     },
     {
       "dest_path": "Plans/_shards/GitHub_Integration/07-d-project-management-flows-no-chain-wizard-required.md",
-      "start_line": 860,
-      "end_line": 1100,
+      "start_line": 857,
+      "end_line": 1097,
       "segment_sha256": "9212cd3f3d7d6dcb7d9253be6efc45c6df01d3a2b0b2b0bc60439c219f6b2bfb",
       "heading": "## D. Project Management Flows (No Chain Wizard Required)"
     },
     {
       "dest_path": "Plans/_shards/GitHub_Integration/08-e-ui-command-ids-reserved-by-this-document.md",
-      "start_line": 1101,
-      "end_line": 1149,
+      "start_line": 1098,
+      "end_line": 1146,
       "segment_sha256": "35d4d64149fce49ae68a68b2c50f3d4543ac7e46ba096411fa32bbfb129a15e2",
       "heading": "## E. UI Command IDs Reserved by This Document"
     },
     {
       "dest_path": "Plans/_shards/GitHub_Integration/09-f-redb-configuration-keys-reserved-by-this-document.md",
-      "start_line": 1150,
-      "end_line": 1171,
+      "start_line": 1147,
+      "end_line": 1168,
       "segment_sha256": "ac7ff0b42bb08fe80501b536e98f176c6547530b311f714251e4ecea0cc555a2",
       "heading": "## F. redb Configuration Keys Reserved by This Document"
     },
     {
       "dest_path": "Plans/_shards/GitHub_Integration/10-anti-drift-compliance.md",
-      "start_line": 1172,
-      "end_line": 1190,
+      "start_line": 1169,
+      "end_line": 1187,
       "segment_sha256": "3d5b3f4ca30aa8a944b9d2c7b1ba6fe09915172a8d5e163f94788edb6bb3ea13",
       "heading": "## Anti-Drift Compliance"
     },
     {
       "dest_path": "Plans/_shards/GitHub_Integration/11-references.md",
-      "start_line": 1191,
-      "end_line": 1206,
+      "start_line": 1188,
+      "end_line": 1203,
       "segment_sha256": "660a6944818a6729f64bec03cbf98f66dd80e3517ab6dde8fe9d2e60b7ca56af",
       "heading": "## References"
     },
     {
       "dest_path": "Plans/_shards/GitHub_Integration/12-chat-driven-external-repo-import-mvp.md",
-      "start_line": 1207,
-      "end_line": 1230,
+      "start_line": 1204,
+      "end_line": 1227,
       "segment_sha256": "89b15b94d7f74bb032f5cd1ac07407498dbbcfd5465610e3111c1245dc16acb0",
       "heading": "## Chat-driven external repo import (MVP)"
     },
     {
-      "dest_path": "Plans/_shards/GitHub_Integration/13-wizard-blocked-state-and-deferred-launch-reconciliation-addendum-2026-03-08.md",
-      "start_line": 1231,
-      "end_line": 1243,
-      "segment_sha256": "c0d18157a565e8905c9cc44b45cc69c285ea12cfad3d7ac70c0d1e88cba3971e",
-      "heading": "## Wizard blocked-State and Deferred Launch Reconciliation Addendum (2026-03-08)"
-    },
-    {
-      "dest_path": "Plans/_shards/GitHub_Integration/14-github-runtime-recovery-alignment-addendum-2026-03-09.md",
-      "start_line": 1244,
-      "end_line": 1251,
-      "segment_sha256": "b7a4c43ebdd3cd0df3e68bbfc70013f228213165e586b4035c7397efbddf78c4",
-      "heading": "## GitHub Runtime Recovery Alignment Addendum (2026-03-09)"
-    },
-    {
-      "dest_path": "Plans/_shards/GitHub_Integration/15-deferred-github-flow-recovery-reconciliation-addendum-2026-03-09.md",
-      "start_line": 1252,
-      "end_line": 1259,
-      "segment_sha256": "5ac3e21fa9c04233b5ecafb897af9df06902db394d3aff62bde88573dc150760",
-      "heading": "## Deferred GitHub Flow Recovery Reconciliation Addendum (2026-03-09)"
-    },
-    {
-      "dest_path": "Plans/_shards/GitHub_Integration/16-deferred-github-flow-blocked-identity-consolidation-addendum-2026-03-09.md",
-      "start_line": 1260,
-      "end_line": 1277,
-      "segment_sha256": "ba8248ad5ddca8cd232d99be07e85218d1b0b57082849cc33978b394b41de7b2",
-      "heading": "## Deferred GitHub Flow Blocked Identity Consolidation Addendum (2026-03-09)"
-    },
-    {
-      "dest_path": "Plans/_shards/GitHub_Integration/17-deferred-github-recovery-binding.md",
-      "start_line": 1278,
-      "end_line": 1295,
-      "segment_sha256": "a3eb38f2e1baa638a1edcd7d9037e0d7c72368b83be9afd6e5f405a378b8d95f",
-      "heading": "## Deferred GitHub Recovery Binding"
+      "dest_path": "Plans/_shards/GitHub_Integration/13-deferred-github-recovery-binding-2026-03-09.md",
+      "start_line": 1228,
+      "end_line": 1257,
+      "segment_sha256": "ac5646548e4a25a08a32c35c4f4847ed8ffba6ac36bbea6122c987af59a410f9",
+      "heading": "## Deferred GitHub Recovery Binding (2026-03-09)"
     }
   ]
 }

@@ -68,8 +68,6 @@ ContractRef: ContractName:Plans/DRY_Rules.md, PolicyRule:Decision_Policy.md§2
 ---
 
 ## A. Git Panel (IDE Surface)
-
-
 The Git panel is exposed via the **side panel** (or primary content) per Plans/FinalGUISpec.md §4 / §5 / §7. Placement and toggling are deterministic from the activity bar (single slot, last-click wins).
 
 **Scope (AI in Git / multi-repo):** AI in Git (e.g. AI-assisted commit messages, suggestions) and multi-repo source control are in scope; see Plans/feature-list.md. Either add to this doc in a later pass or explicitly defer with a pointer.
@@ -447,7 +445,6 @@ ContractRef: Invariant:INV-003, PolicyRule:Decision_Policy.md§2
   ContractRef: PolicyRule:Decision_Policy.md§2
 
 ---
-
 ## B. GitHub API Integration
 
 GitHub API is used for hosting operations only (repository management, PR, Issues,
@@ -1228,68 +1225,33 @@ Puppet Master Assistant Chat supports importing an external repository (typicall
 
 ContractRef: ToolID:GitHubApiTool, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
 
-## Wizard blocked-State and Deferred Launch Reconciliation Addendum (2026-03-08)
+## Deferred GitHub Recovery Binding (2026-03-09)
 
-Deferred or preloaded Chain Wizard entry points in GitHub/project-management flows must preserve the full wizard blocked-state model introduced by the runtime scheduler packet.
+Deferred or GitHub-seeded wizard/runtime flows must preserve blocked-state identity, recovery context, and local generated artifacts.
 
-Required behavior:
+Deferred GitHub launch and resume flows MUST persist a binding record containing:
+- `wizard_id?`
+- `thread_id?`
+- `run_id?`
+- `node_id?`
+- `attempt_id?`
+- deferred payload ref
+- `blocked_sequence?`
+- `replan_generation?`
+- clearing status
+
+Rules:
 - deferred wizard launch paths must support both `attention_required` and `blocked`
-- any stored `resume_url` / preloaded wizard payload must survive blocked-state recovery and deep-link reopening
-- if a wizard was opened from a GitHub/deferred project flow and later becomes `blocked`, the recovery path must return to the same wizard instance/context rather than creating a fresh blank wizard
-- imported/deferred project setup context must remain intact when the wizard is resumed from blocked state
+- any stored `resume_url` or preloaded wizard payload must survive blocked-state recovery and deep-link reopening
+- if a GitHub-seeded wizard becomes blocked, resume MUST return to the same wizard instance/context rather than creating a fresh blank flow
+- if the blocked state is tied to a runtime node/attempt, the deferred GitHub context remains linked to that originating node/attempt
+- auth-blocked GitHub actions surface canonical recovery actions rather than integration-specific fallback loops
+- repo-import or workflow-generation flows that become blocked preserve local generated artifacts and mark remote steps as blocked explicitly
+- the binding is created before handing control to deferred GitHub auth/import/launch flows
+- if the deferred flow blocks, the runtime blocked episode references this binding
+- the binding is cleared only when the deferred flow completes successfully, the owning blocked episode is abandoned, or the wizard/run context is cancelled or superseded
+- approval or auth resolution wakes the scheduler/event consumer immediately; it is not a polling loop
 
 Acceptance criteria:
 - no-wizard/deferred GitHub entry paths do not lose blocked-state recovery
 - deep links and preloaded payloads remain stable across blocked/unblocked transitions
-## GitHub Runtime Recovery Alignment Addendum (2026-03-09)
-
-GitHub-backed flows that interact with runtime execution must preserve blocked and retry semantics.
-
-### Required rules
-- deferred GitHub actions launched from wizard or runtime state remain tied to the originating node/attempt when applicable
-- auth-blocked GitHub actions surface canonical recovery actions rather than integration-specific fallback loops
-- repo-import or workflow-generation flows that become blocked must preserve local generated artifacts and mark remote steps as blocked explicitly
-## Deferred GitHub Flow Recovery Reconciliation Addendum (2026-03-09)
-
-Deferred or GitHub-seeded wizard/runtime flows must preserve blocked recovery identity.
-
-Rules:
-- if a GitHub-seeded wizard becomes blocked, resume MUST return to the same wizard instance/context rather than creating a fresh blank flow
-- if the blocked state is tied to a runtime node/attempt, the deferred GitHub context remains linked to that originating node/attempt
-- blocked recovery surfaces must use canonical runtime action families and preserve local generated artifacts while remote steps remain blocked
-## Deferred GitHub Flow Blocked Identity Consolidation Addendum (2026-03-09)
-
-Deferred GitHub launch and resume flows MUST persist a binding record containing:
-- `wizard_id?`
-- `thread_id?`
-- `run_id?`
-- `node_id?`
-- `attempt_id?`
-- deferred payload ref
-- `blocked_sequence?`
-- `replan_generation?`
-- clearing status
-
-Rules:
-- the binding is created before handing control to deferred GitHub auth/import/launch flows
-- if the deferred flow blocks, the runtime blocked episode references this binding
-- the binding is cleared only when the deferred flow completes successfully, the owning blocked episode is abandoned, or the wizard/run context is cancelled or superseded
-- approval or auth resolution wakes the scheduler/event consumer immediately; it is not a polling loop
-## Deferred GitHub Recovery Binding
-
-Deferred GitHub launch and resume flows MUST persist a binding record containing:
-- `wizard_id?`
-- `thread_id?`
-- `run_id?`
-- `node_id?`
-- `attempt_id?`
-- deferred payload ref
-- `blocked_sequence?`
-- `replan_generation?`
-- clearing status
-
-Rules:
-- the binding is created before handing control to deferred GitHub auth/import/launch flows
-- if the deferred flow blocks, the runtime blocked episode references this binding
-- the binding is cleared only when the deferred flow completes successfully, the owning blocked episode is abandoned, or the wizard/run context is cancelled or superseded
-- approval or auth resolution wakes the scheduler/event consumer immediately; it is not a polling loop

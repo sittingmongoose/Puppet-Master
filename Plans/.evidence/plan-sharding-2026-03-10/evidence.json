@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.evidence.schema.v1",
   "evidence_id": "plan-sharding-2026-03-10",
-  "created_at_utc": "2026-03-10T18:51:28.690649+00:00",
+  "created_at_utc": "2026-03-10T21:18:44.416891+00:00",
   "node": {
     "node_id": "plan-sharding"
   },
@@ -745,24 +745,28 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/GitHub_Integration/13-deferred-github-recovery-binding-2026-03-09.md",
+      "change_type": "added"
+    },
+    {
       "path": "Plans/_shards/GitHub_Integration/13-wizard-blocked-state-and-deferred-launch-reconciliation-addendum-2026-03-08.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/GitHub_Integration/14-github-runtime-recovery-alignment-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/GitHub_Integration/15-deferred-github-flow-recovery-reconciliation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/GitHub_Integration/16-deferred-github-flow-blocked-identity-consolidation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/GitHub_Integration/17-deferred-github-recovery-binding.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/GitHub_Integration/manifest.json",
@@ -965,80 +969,136 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/Project_Output_Artifacts/03-1-canonical-persistence-vs-filesystem-staging.md",
+      "change_type": "added"
+    },
+    {
       "path": "Plans/_shards/Project_Output_Artifacts/03-runtime-artifacts-gui-panel-distinct-from-this-document.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/04-1-canonical-persistence-vs-filesystem-staging.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Project_Output_Artifacts/04-2-required-artifact-set-ssot-project-plan-package.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/05-2-required-artifact-set-ssot-project-plan-package.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Project_Output_Artifacts/05-3-schema-alignment-critical-do-not-rename-fields.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/06-3-schema-alignment-critical-do-not-rename-fields.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Project_Output_Artifacts/06-4-contract-layers-two-layer-model.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/07-4-contract-layers-two-layer-model.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Project_Output_Artifacts/07-5-dry-enforcement-contract-referenced-graph.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/08-5-dry-enforcement-contract-referenced-graph.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Project_Output_Artifacts/08-6-autonomy-decision-logging-no-human-required-decisions.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/09-6-autonomy-decision-logging-no-human-required-decisions.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Project_Output_Artifacts/09-7-plan-graph-requirements-sharded-only-canonical-optional-derived-export.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/10-7-plan-graph-requirements-sharded-only-canonical-optional-derived-export.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Project_Output_Artifacts/10-8-seglog-canonical-persistence-contract-artifact-events.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/11-8-seglog-canonical-persistence-contract-artifact-events.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Project_Output_Artifacts/11-9-acceptance-criteria-validator-requirements.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/Project_Output_Artifacts/12-10-validation-pass-report-artifacts.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/12-9-acceptance-criteria-validator-requirements.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/13-10-validation-pass-report-artifacts.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Project_Output_Artifacts/13-11-traceability-outputs.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/14-11-traceability-outputs.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Project_Output_Artifacts/14-12-optional-derived-quickstartmd-contract-human-convenience-only.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/15-12-optional-derived-quickstartmd-contract-human-convenience-only.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Project_Output_Artifacts/15-change-summary.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/16-change-summary.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Project_Output_Artifacts/16-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/17-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/18-runtime-queue-analysis-recovery-artifact-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/19-runtime-artifact-identity-reconciliation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/20-runtime-recovery-artifact-identity-and-scope-consolidation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/21-runtime-recovery-artifact-identity-and-scope.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/Project_Output_Artifacts/manifest.json",
@@ -1486,27 +1546,31 @@
     },
     {
       "path": "Plans/_shards/assistant-chat-design/35-blocked-thread-state-and-recovery-addendum-2026-03-08.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/35-unified-thread-blocked-state-lifecycle-2026-03-09.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/assistant-chat-design/36-runtime-blocked-recovery-thread-state-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/assistant-chat-design/37-blocked-thread-message-and-persistence-reconciliation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/assistant-chat-design/38-thread-blocked-state-multiplicity-and-action-rendering-consolidation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/assistant-chat-design/39-unified-thread-blocked-state-lifecycle.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/assistant-chat-design/40-concurrent-blocked-episodes-and-enum-alignment-addendum.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/assistant-chat-design/manifest.json",
@@ -1663,10 +1727,6 @@
     {
       "path": "Plans/_shards/feature-list/05-runtime-scheduler-recovery-summary-consolidation-addendum-2026-03-09.md",
       "change_type": "modified"
-    },
-    {
-      "path": "Plans/_shards/feature-list/06-artifacts-panel-and-panels-addendum-2026-03-09.md",
-      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/feature-list/manifest.json",
@@ -2281,12 +2341,16 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/storage-plan/17-permission-snapshot-storage-and-safe-point-namespace-addendum.md",
+      "change_type": "added"
+    },
+    {
       "path": "Plans/_shards/storage-plan/17-runtime-recovery-persistence-consolidation.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/storage-plan/18-permission-snapshot-storage-and-safe-point-namespace-addendum.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/storage-plan/manifest.json",

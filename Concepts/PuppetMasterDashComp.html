@@ -8,6 +8,101 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    /* --- REDESIGNED WIZARD & CHAT SYSTEM --- */
+    /* --- REDESIGNED WIZARD & CHAT SYSTEM --- */
+    .hidden { display: none !important; }
+    
+    .page-wizard {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      background: var(--background);
+      overflow: hidden;
+      position: relative;
+    }
+    .page-wizard.active { display: flex; animation: fadeIn 0.3s ease-in-out; }
+    
+    .wizard-global-nav {
+      display: flex; align-items: center; justify-content: center;
+      padding: var(--xl); background: var(--surface);
+      border-bottom: 1px solid var(--border-light); gap: var(--lg);
+      z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .wizard-nav-step {
+      display: flex; align-items: center; gap: var(--sm); cursor: pointer;
+      color: var(--text-muted); font-size: 13px; font-family: var(--display-font);
+      transition: all 0.2s ease-out; position: relative;
+    }
+    .wizard-nav-step:hover { color: var(--text-primary); transform: scale(1.05); }
+    .wizard-nav-step.active { color: var(--text-primary); font-weight: 600; }
+    .wizard-nav-step.active::after {
+      content: ''; position: absolute; bottom: -24px; left: 0; right: 0;
+      height: 3px; background: var(--accent-blue); box-shadow: 0 0 8px var(--accent-blue);
+      border-radius: 3px 3px 0 0; animation: slideUp 0.2s ease-out forwards;
+    }
+    [data-theme^="retro"] .wizard-nav-step.active::after {
+      background: var(--accent-lime); box-shadow: 0 0 8px var(--accent-lime);
+    }
+    .wizard-nav-step.complete { color: var(--accent-lime); }
+    [data-theme^="basic"] .wizard-nav-step.complete { color: var(--accent-blue); }
+    .wizard-nav-connector { width: 40px; height: 2px; background: var(--border-light); transition: background 0.3s ease; }
+    .wizard-nav-connector.complete { background: var(--accent-lime); }
+    [data-theme^="basic"] .wizard-nav-connector.complete { background: var(--accent-blue); }
+
+    .wizard-content-area { flex: 1; min-height: 0; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+    .wizard-step-panel {
+      display: none; flex-direction: column; align-items: center;
+      padding: var(--xl); overflow-y: auto; flex: 1;
+      animation: slideInRight 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+    .wizard-step-panel.active { display: flex; }
+    .wizard-form-container {
+      width: 100%; max-width: 1000px; background: var(--surface-elevated);
+      border: 1px solid var(--border); border-radius: 12px; padding: var(--xl);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: var(--xl);
+    }
+    [data-theme^="retro"] .wizard-form-container { border-radius: 0; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); }
+
+    .wizard-binder-container {
+      width: 100%; height: 100%; flex: 1; display: flex;
+      background: var(--surface-elevated); border: 1px solid var(--border);
+      border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+      overflow: hidden; animation: boundsExpand 0.3s ease-out;
+    }
+    [data-theme^="retro"] .wizard-binder-container { border-radius: 0; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); }
+    .wizard-binder-sidebar { width: 260px; background: var(--surface); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; padding: var(--lg); gap: var(--sm); }
+    .wizard-doc-pill { padding: var(--md); border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; color: var(--text-secondary); transition: all 0.2s ease; font-size: 13px; }
+    .wizard-doc-pill.active { background: var(--accent-blue); color: var(--surface); font-weight: 600; }
+    [data-theme^="retro"] .wizard-doc-pill.active { background: var(--accent-lime); color: #1a1a1a; }
+    
+    .chat-modes { display: flex !important; padding: var(--sm) var(--md); gap: var(--xs); border-bottom: 1px solid var(--border-light); font-size: 12px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; width: 100%; }
+    .chat-modes::-webkit-scrollbar { display: none; }
+    .msg-focused { border: 2px solid var(--accent-lime) !important; background: rgba(0, 255, 65, 0.15) !important; box-shadow: 0 0 15px rgba(0, 255, 65, 0.4) !important; padding: var(--md) !important; margin: var(--xs) 0 !important; border-radius: 4px !important; }
+    [data-theme^="basic"] .msg-focused { border-color: var(--accent-blue) !important; background: rgba(0, 71, 171, 0.1) !important; }
+    
+    .role-badge { font-family: var(--display-font); font-size: 9px; padding: 2px 8px; border-radius: 4px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    .role-assistant { background: var(--accent-blue); color: #fff; }
+    .role-interviewer { background: var(--accent-lime); color: #1a1a1a; }
+    .role-builder { background: var(--accent-orange); color: #1a1a1a; }
+    
+    .chat-dropdown-popover { position: absolute; bottom: 30px; left: 0; width: 240px; background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 100; animation: slideUp 0.2s ease-out; }
+    .chat-dropdown-popover.active { display: flex; }
+    .chat-dropdown-search { padding: var(--sm); border-bottom: 1px solid var(--border-light); }
+    .chat-dropdown-search input { width: 100%; background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px; padding: 4px var(--sm); color: var(--text-primary); font-size: 11px; outline: none; }
+    .chat-dropdown-list { max-height: 200px; overflow-y: auto; padding: var(--xs); }
+    .chat-dropdown-item { padding: var(--sm) var(--md); font-size: 12px; cursor: pointer; border-radius: 4px; display: flex; align-items: center; gap: var(--sm); }
+    .chat-dropdown-item:hover { background: var(--surface); }
+    .chat-dropdown-item.active { background: rgba(0, 212, 255, 0.1); font-weight: bold; }
+    
+    .wizard-activity-floating { position: absolute; bottom: var(--xl); right: var(--xl); width: 400px; background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); display: flex; flex-direction: column; overflow: hidden; animation: slideUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 50; }
+    [data-theme^="retro"] .wizard-activity-floating { border-radius: 0; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); }
+    
+    .icon-inline { width: 14px; height: 14px; display: inline-block; vertical-align: middle; }
+    
+    @keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes boundsExpand { from { transform: scale(0.98); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    
     :root {
       --xs: 2px;
       --sm: 4px;
@@ -3374,6 +3469,7 @@ impl Dashboard {
             </div>
           </div>
           <div class="page page-wizard">
+
             <div class="wizard-global-nav">
               <div class="wizard-nav-step active" data-step-target="0" data-nav-step="0">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
@@ -3390,12 +3486,12 @@ impl Dashboard {
                 3. Interview
               </div>
               <div class="wizard-nav-connector"></div>
-              <div class="wizard-nav-step" data-step-target="4" data-nav-step="3">
+              <div class="wizard-nav-step" data-step-target="3" data-nav-step="3">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                 4. Review PRD
               </div>
               <div class="wizard-nav-connector"></div>
-              <div class="wizard-nav-step" data-step-target="5" data-nav-step="4">
+              <div class="wizard-nav-step" data-step-target="4" data-nav-step="4">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                 5. Configure
               </div>
@@ -3407,89 +3503,52 @@ impl Dashboard {
             </div>
 
             <div class="wizard-content-area">
-              
-              <!-- STEP 0: Project Setup -->
               <div class="wizard-step-panel active" data-wizard-panel="0">
                 <div class="wizard-form-container">
                   <div>
                     <div class="wizard-form-header">Project Setup</div>
                     <div class="wizard-form-desc">Select an intent and configure your working directory and repository.</div>
                   </div>
-                  
                   <div class="wizard-intent-cards">
-                    <div class="wizard-intent-card active" onclick="document.querySelectorAll('.wizard-intent-card').forEach(c=>c.classList.remove('active')); this.classList.add('active');">
+                    <div class="wizard-intent-card active">
                       <div class="wizard-intent-title">New project</div>
                       <div class="wizard-intent-desc">Start a greenfield project from scratch.</div>
                     </div>
-                    <div class="wizard-intent-card" onclick="document.querySelectorAll('.wizard-intent-card').forEach(c=>c.classList.remove('active')); this.classList.add('active');">
+                    <div class="wizard-intent-card">
                       <div class="wizard-intent-title">Fork & evolve</div>
                       <div class="wizard-intent-desc">Fork an existing repo to build a derivative.</div>
                     </div>
-                    <div class="wizard-intent-card" onclick="document.querySelectorAll('.wizard-intent-card').forEach(c=>c.classList.remove('active')); this.classList.add('active');">
+                    <div class="wizard-intent-card">
                       <div class="wizard-intent-title">Add a new Feature or Enhancement</div>
                       <div class="wizard-intent-desc">Add a major feature to an existing codebase.</div>
                     </div>
-                    <div class="wizard-intent-card" onclick="document.querySelectorAll('.wizard-intent-card').forEach(c=>c.classList.remove('active')); this.classList.add('active');">
+                    <div class="wizard-intent-card">
                       <div class="wizard-intent-title">Contribute PR</div>
                       <div class="wizard-intent-desc">Fix a bug and open a Pull Request.</div>
                     </div>
                   </div>
-                  
                   <div class="wizard-fields">
-                    <div>
-                      <label>Project Path</label>
-                      <input type="text" class="wizard-input" placeholder="/path/to/project">
-                    </div>
-                    <div style="display:flex; align-items:center; gap:var(--sm); margin-top:var(--md);">
-                      <input type="checkbox" id="wizGh" style="transform: scale(1.2);">
-                      <label for="wizGh" style="cursor:pointer; margin:0;">Create GitHub repo automatically</label>
-                    </div>
+                    <div><label>Project Path</label><input type="text" class="wizard-input" placeholder="/path/to/project"></div>
+                    <div style="display:flex; align-items:center; gap:var(--sm); margin-top:var(--md);"><input type="checkbox" id="wizGh" style="transform: scale(1.2);"><label for="wizGh" style="cursor:pointer; margin:0;">Create GitHub repo automatically</label></div>
                   </div>
-
-                  <div class="wizard-btn-row">
-                    <div></div>
-                    <button class="wizard-btn primary btn-icon" data-step-target="1">
-                      Next Step <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </button>
-                  </div>
+                  <div class="wizard-btn-row"><div></div><button class="wizard-btn primary btn-icon" data-step-target="1">Next Step <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div>
                 </div>
               </div>
 
-              <!-- STEP 1: Requirements -->
               <div class="wizard-step-panel" data-wizard-panel="1">
                 <div class="wizard-form-container">
-                  <div>
-                    <div class="wizard-form-header">Provide Requirements</div>
-                    <div class="wizard-form-desc">Upload existing documents or use the AI builder to gather requirements.</div>
-                  </div>
-                  
+                  <div><div class="wizard-form-header">Provide Requirements</div><div class="wizard-form-desc">Upload existing documents or use the AI builder to gather requirements.</div></div>
                   <div class="wizard-fields">
-                    <button class="wizard-btn btn-icon" style="justify-content: center; padding: var(--xl);">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                      Upload Files (Max 10, 5MB each)
-                    </button>
-                    
+                    <button class="wizard-btn btn-icon" style="justify-content: center; padding: var(--xl);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg> Upload Files (Max 10, 5MB each)</button>
                     <div style="text-align: center; color: var(--text-muted); font-size: 13px; margin: var(--sm) 0;">— OR —</div>
-                    
-                    <button class="wizard-btn primary btn-icon" style="justify-content: center;">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                      Open Requirements Doc Builder
-                    </button>
+                    <button class="wizard-btn primary btn-icon" style="justify-content: center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Open Requirements Doc Builder</button>
                   </div>
-
-                  <div class="wizard-btn-row">
-                    <button class="wizard-btn" data-step-target="0">Back</button>
-                    <button class="wizard-btn primary btn-icon" data-step-target="2">
-                      Start Interview <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </button>
-                  </div>
+                  <div class="wizard-btn-row"><button class="wizard-btn" data-step-target="0">Back</button><button class="wizard-btn primary btn-icon" data-step-target="2">Start Interview <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div>
                 </div>
               </div>
 
-              
-              <!-- STEP 2: Interactive Interview -->
               <div class="wizard-step-panel" data-wizard-panel="2">
-                <div class="wizard-interview-container">
+                <div class="wizard-binder-container">
                   <div class="interview-sidebar">
                     <div class="interview-sidebar-title">Interview Progress</div>
                     <div class="interview-phase-step complete"><div class="dot"></div> Scope & Goals</div>
@@ -3501,255 +3560,56 @@ impl Dashboard {
                     <div class="interview-phase-step"><div class="dot"></div> Performance</div>
                     <div class="interview-phase-step"><div class="dot"></div> Testing</div>
                     <div class="interview-phase-step"><div class="dot"></div> Product / UX</div>
+                    <div style="margin-top: auto; padding-top: var(--xl); border-top: 1px solid var(--border-light);"><button class="wizard-btn" data-step-target="1" style="width: 100%; margin-bottom: var(--sm);">Back</button><button class="wizard-btn primary btn-icon" data-step-target="3" style="width: 100%; justify-content: center;">Skip to PRD <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div>
                   </div>
-                  
-                  <div class="interview-chat-area">
-                    <div class="interview-chat-header">
-                      <span><strong>AI Interviewer</strong> (product-manager)</span>
-                      <span style="color:var(--text-muted); cursor:pointer;">End Interview Early</span>
-                    </div>
-                    
-                    <div class="interview-messages">
-                      <div class="msg-bubble msg-ai">
-                        Hello! I see you selected "Add a new Feature or Enhancement". To kick off our Feature Scope probe: What exactly are you adding or changing in this project?
-                      </div>
-                      <div class="msg-bubble msg-user">
-                        I need to add a brand new feature step to the interactive interview UI so it correctly probes for project scope before doing the actual architecture interview.
-                      </div>
-                      <div class="msg-bubble msg-ai">
-                        Excellent, I have mapped the feature boundaries. Moving on to Architecture: Do you have a preferred UI framework for rendering this new phase tracker component?
-                      </div>
-                    </div>
-                    
-                    <div class="interview-input-area">
-                      <div class="interview-chips">
-                        <div class="interview-chip" onclick="document.querySelector('.interview-text-input input').value='React';">React</div>
-                        <div class="interview-chip" onclick="document.querySelector('.interview-text-input input').value='Slint';">Slint</div>
-                        <div class="interview-chip" onclick="document.querySelector('.interview-text-input input').value='Iced';">Iced</div>
-                        <div class="interview-chip" onclick="document.querySelector('.interview-text-input input').value='Let AI Decide';">Let AI Decide</div>
-                      </div>
-                      <div class="interview-text-input">
-                        <input type="text" placeholder="Type your answer here...">
-                        <button class="wizard-btn primary btn-icon" data-step-target="3">
-                          Send <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                        </button>
-                      </div>
-                      <div style="display:flex; justify-content:space-between; margin-top:var(--md);">
-                        <button class="wizard-btn" data-step-target="1" style="padding:var(--sm) var(--md); font-size:11px;">Back to Requirements</button>
-                        <button class="wizard-btn" data-step-target="3" style="padding:var(--sm) var(--md); font-size:11px;">Skip Remaining Phases</button>
-                      </div>
-                    </div>
+                  <div class="wizard-binder-content">
+                    <div class="wizard-binder-toolbar" style="background: var(--surface-elevated); border-bottom: 1px solid var(--border-light);"><div class="wizard-btn-group"><span style="font-family: var(--display-font); font-size: 13px; color: var(--text-primary);">Live Document: <span style="color: var(--text-secondary); font-family: var(--body-font);">architecture.md</span> <span class="wizard-activity-pulse" style="display:inline-block; margin-left:var(--sm);"></span></span></div><div class="wizard-btn-group"><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit</button></div></div>
+                    <div class="wizard-binder-view mock-md"><h1>Architecture Draft</h1><p><em>This document is actively being written by the Architect Reviewer subagent based on our conversation...</em></p><h2>1. Framework Choice</h2><p>The user has specified a preference for <strong>Slint</strong> over Iced or React for the GUI framework.</p><h2>2. Data Flow</h2><div class="mock-mermaid">graph TD;<br>A[Slint UI] -->|Channels| B(Rust App State);<br>B --> C{Redb Persistence};<br>C -->|Orchestrator| D[Agent Runners];</div></div>
                   </div>
                 </div>
               </div>
 
-<!-- STEP 3: Review PRD (Binder) -->
               <div class="wizard-step-panel" data-wizard-panel="3">
                 <div class="wizard-binder-container">
-                  <div class="wizard-binder-sidebar">
-                    <div class="wizard-binder-sidebar-title">Generated Documents</div>
-                    <div class="wizard-doc-pill active" onclick="document.querySelectorAll('.wizard-doc-pill').forEach(c=>c.classList.remove('active')); this.classList.add('active');">
-                      <span>Product Requirements</span>
-                      <span class="wizard-doc-status approved">[PASS]</span>
-                    </div>
-                    <div class="wizard-doc-pill" onclick="document.querySelectorAll('.wizard-doc-pill').forEach(c=>c.classList.remove('active')); this.classList.add('active');">
-                      <span>Contract Seeds</span>
-                      <span class="wizard-doc-status review">[REVIEW]</span>
-                    </div>
-                    <div class="wizard-doc-pill" onclick="document.querySelectorAll('.wizard-doc-pill').forEach(c=>c.classList.remove('active')); this.classList.add('active');">
-                      <span>Architecture</span>
-                      <span class="wizard-doc-status">[DRAFT]</span>
-                    </div>
-                  </div>
+                  <div class="wizard-binder-sidebar"><div class="wizard-binder-sidebar-title">Generated Documents</div><div class="wizard-doc-pill active"><span>Product Requirements</span><span class="wizard-doc-status approved">[PASS]</span></div><div class="wizard-doc-pill"><span>Contract Seeds</span><span class="wizard-doc-status review">[REVIEW]</span></div><div class="wizard-doc-pill"><span>Architecture</span><span class="wizard-doc-status">[DRAFT]</span></div></div>
                   <div class="wizard-binder-content">
-                    <div class="wizard-binder-toolbar">
-                      <div class="wizard-btn-group">
-                        <button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit</button>
-                        <button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Export</button>
-                      </div>
-                      <div class="wizard-btn-group">
-                        <button class="wizard-btn" data-step-target="1">Back</button>
-                        <button class="wizard-btn primary btn-icon" data-step-target="4">
-                          Approve & Continue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                        </button>
-                      </div>
-                    </div>
-                    <div class="wizard-binder-view mock-md">
-                      <h1>Product Requirements Document</h1>
-                      <p><strong>Status:</strong> Approved | <strong>Version:</strong> 1.0</p>
-                      <h2>1. Scope</h2>
-                      <p>The goal is to develop a comprehensive command-line interface for the Puppet Master orchestration engine. The CLI will feature a robust TUI (Text User Interface) mimicking an IDE experience but tailored for agent workflows.</p>
-                      <h2>2. Architecture Draft</h2>
-                      <div class="mock-mermaid">
-                        graph TD;<br>
-                        A[User CLI] -->|Commands| B(Core API);<br>
-                        B --> C{Agent Pool};<br>
-                        C -->|Schedule| D[Orchestrator];
-                      </div>
-                      <h2>3. Acceptance Criteria</h2>
-                      <p>- The application must launch in under 500ms.<br>- Agents must be able to resume crashed sessions from checkpoints.<br>- No hardcoded credentials.</p>
-                    </div>
+                    <div class="wizard-binder-toolbar"><div class="wizard-btn-group"><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit</button><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Export</button></div><div class="wizard-btn-group"><button class="wizard-btn" data-step-target="2">Back</button><button class="wizard-btn primary btn-icon" data-step-target="4">Approve & Continue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div></div>
+                    <div class="wizard-binder-view mock-md"><h1>Product Requirements Document</h1><p><strong>Status:</strong> Approved | <strong>Version:</strong> 1.0</p><h2>1. Scope</h2><p>The goal is to develop a comprehensive command-line interface for the Puppet Master orchestration engine.</p><h2>2. Architecture Draft</h2><div class="mock-mermaid">graph TD;<br>A[User CLI] -->|Commands| B(Core API);<br>B --> C{{Agent Pool}};<br>C -->|Schedule| D[Orchestrator];</div><h2>3. Acceptance Criteria</h2><p>- The application must launch in under 500ms.<br>- Agents must be able to resume crashed sessions from checkpoints.</p></div>
                   </div>
                 </div>
               </div>
 
-              
-              <!-- STEP 4: Configure -->
               <div class="wizard-step-panel" data-wizard-panel="4">
                 <div class="wizard-form-container">
-                  <div>
-                    <div class="wizard-form-header">Interview & Execution Configuration</div>
-                    <div class="wizard-form-desc">Configure your subagent interaction parameters and execution environments.</div>
+                  <div><div class="wizard-form-header">Interview & Execution Configuration</div><div class="wizard-form-desc">Configure your subagent interaction parameters and execution environments.</div></div>
+                  <div style="display:grid; grid-template-columns: 1fr 1fr; gap: var(--md);">
+                    <div class="wizard-fields"><div style="font-family: var(--display-font); font-size: 16px; margin-bottom: var(--md); border-bottom: 1px solid var(--border-light); padding-bottom: var(--sm);">Execution Tiers</div><div style="display:flex; gap: var(--lg);"><div style="flex:1;"><label>Provider</label><select class="wizard-select"><option>Claude Code</option><option>Cursor</option><option>Gemini</option><option>OpenCode</option></select></div><div style="flex:1;"><label>Model</label><select class="wizard-select"><option>sonnet-4.5</option><option>opus-4</option></select></div></div><div><label>AI Reasoning Level</label><select class="wizard-select"><option>Medium</option><option selected>High</option><option>Max</option></select></div><div><label>Vision Provider</label><select class="wizard-select"><option>Gemini Flash</option><option>Claude Sonnet</option></select></div></div>
+                    <div class="wizard-fields"><div style="font-family: var(--display-font); font-size: 16px; margin-bottom: var(--md); border-bottom: 1px solid var(--border-light); padding-bottom: var(--sm);">Interview Settings</div><div style="display:flex; gap: var(--lg);"><div style="flex:1;"><label>Min Questions / Phase</label><input type="number" class="wizard-input" value="3"></div><div style="flex:1;"><label>Max Questions / Phase</label><div style="display:flex; gap:var(--xs); align-items:center;"><input type="number" class="wizard-input" value="8" style="flex:1;"><label style="display:flex; align-items:center; gap:var(--xs); margin-left:var(--sm);"><input type="checkbox"> Unlimited</label></div></div></div><div style="display:flex; flex-direction:column; gap:var(--md); margin-top:var(--md);"><label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer;"><input type="checkbox" checked style="transform:scale(1.2);"> Require Architecture Confirmation</label><label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer;"><input type="checkbox" checked style="transform:scale(1.2);"> Generate initial AGENTS.md</label></div></div>
+                    <div class="wizard-fields" style="grid-column: span 2;"><div style="font-family: var(--display-font); font-size: 16px; margin-bottom: var(--md); border-bottom: 1px solid var(--border-light); padding-bottom: var(--sm);">Multi-Pass Review</div><label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer;"><input type="checkbox" checked style="transform:scale(1.2);"> Enable Multi-Pass Review <span style="color:var(--accent-orange); font-size:11px; margin-left:var(--md);">[WARN] Increases token usage rapidly</span></label><div style="display:flex; gap: var(--lg); margin-top:var(--sm);"><div style="flex:1;"><label>Number of Reviews</label><input type="number" class="wizard-input" value="2" min="1" max="5"></div><div style="flex:1;"><label>Max Subagents</label><input type="number" class="wizard-input" value="3" min="1" max="10"></div><div style="flex:1;"><label>Use Different Models</label><select class="wizard-select"><option selected>Yes</option><option>No</option></select></div></div></div>
                   </div>
-                  
-                  <div style="display:grid; grid-template-columns: 1fr 1fr; gap: var(--xxl);">
-                    <div class="wizard-fields">
-                      <div style="font-family: var(--display-font); font-size: 16px; margin-bottom: var(--md); border-bottom: 1px solid var(--border-light); padding-bottom: var(--sm);">Execution Tiers</div>
-                      <div style="display:flex; gap: var(--lg);">
-                        <div style="flex:1;">
-                          <label>Provider</label>
-                          <select class="wizard-select">
-                            <option>Claude Code</option>
-                            <option>Cursor</option>
-                            <option>Gemini</option>
-                            <option>OpenCode</option>
-                          </select>
-                        </div>
-                        <div style="flex:1;">
-                          <label>Model</label>
-                          <select class="wizard-select">
-                            <option>sonnet-4.5</option>
-                            <option>opus-4</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div>
-                        <label>AI Reasoning Level</label>
-                        <select class="wizard-select">
-                          <option>Medium</option>
-                          <option selected>High</option>
-                          <option>Max</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label>Vision Provider</label>
-                        <select class="wizard-select">
-                          <option>Gemini Flash</option>
-                          <option>Claude Sonnet</option>
-                        </select>
-                      </div>
-                    </div>
-                    
-                    <div class="wizard-fields">
-                      <div style="font-family: var(--display-font); font-size: 16px; margin-bottom: var(--md); border-bottom: 1px solid var(--border-light); padding-bottom: var(--sm);">Interview Settings</div>
-                      <div style="display:flex; gap: var(--lg);">
-                        <div style="flex:1;">
-                          <label>Min Questions / Phase</label>
-                          <input type="number" class="wizard-input" value="3">
-                        </div>
-                        <div style="flex:1;">
-                          <label>Max Questions / Phase</label>
-                          <div style="display:flex; gap:var(--xs); align-items:center;">
-                            <input type="number" class="wizard-input" value="8" style="flex:1;">
-                            <label style="display:flex; align-items:center; gap:var(--xs); margin-left:var(--sm);"><input type="checkbox"> Unlimited</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div style="display:flex; flex-direction:column; gap:var(--md); margin-top:var(--md);">
-                        <label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer;"><input type="checkbox" checked style="transform:scale(1.2);"> Require Architecture Confirmation</label>
-                        <label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer;"><input type="checkbox" checked style="transform:scale(1.2);"> Generate initial AGENTS.md</label>
-                      </div>
-                    </div>
-                    
-                    <div class="wizard-fields" style="grid-column: span 2;">
-                      <div style="font-family: var(--display-font); font-size: 16px; margin-bottom: var(--md); border-bottom: 1px solid var(--border-light); padding-bottom: var(--sm);">Multi-Pass Review</div>
-                      <label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer;"><input type="checkbox" checked style="transform:scale(1.2);"> Enable Multi-Pass Review <span style="color:var(--accent-orange); font-size:11px; margin-left:var(--md);">[WARN] Increases token usage rapidly</span></label>
-                      <div style="display:flex; gap: var(--lg); margin-top:var(--sm);">
-                        <div style="flex:1;">
-                          <label>Number of Reviews</label>
-                          <input type="number" class="wizard-input" value="2" min="1" max="5">
-                        </div>
-                        <div style="flex:1;">
-                          <label>Max Subagents</label>
-                          <input type="number" class="wizard-input" value="3" min="1" max="10">
-                        </div>
-                        <div style="flex:1;">
-                          <label>Use Different Models</label>
-                          <select class="wizard-select">
-                            <option selected>Yes</option>
-                            <option>No</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="wizard-btn-row">
-                    <button class="wizard-btn" data-step-target="2">Back</button>
-                    <button class="wizard-btn primary btn-icon" data-step-target="5">
-                      Review Plan <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </button>
-                  </div>
+                  <div class="wizard-btn-row"><button class="wizard-btn" data-step-target="3">Back</button><button class="wizard-btn primary btn-icon" data-step-target="5">Review Plan <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div>
                 </div>
               </div>
-<!-- STEP 5: Review & Start (Binder) -->
+
               <div class="wizard-step-panel" data-wizard-panel="5">
                 <div class="wizard-binder-container">
-                  <div class="wizard-binder-sidebar">
-                    <div class="wizard-binder-sidebar-title">Execution</div>
-                    <div class="wizard-doc-pill active" onclick="document.querySelectorAll('.wizard-doc-pill').forEach(c=>c.classList.remove('active')); this.classList.add('active');">
-                      <span>Execution Plan</span>
-                      <span class="wizard-doc-status approved">[READY]</span>
-                    </div>
-                    <div class="wizard-doc-pill" onclick="document.querySelectorAll('.wizard-doc-pill').forEach(c=>c.classList.remove('active')); this.classList.add('active');">
-                      <span>Acceptance Manifest</span>
-                      <span class="wizard-doc-status">[READY]</span>
-                    </div>
-                  </div>
+                  <div class="wizard-binder-sidebar"><div class="wizard-binder-sidebar-title">Execution</div><div class="wizard-doc-pill active"><span>Execution Plan</span><span class="wizard-doc-status approved">[READY]</span></div><div class="wizard-doc-pill"><span>Acceptance Manifest</span><span class="wizard-doc-status">[READY]</span></div></div>
                   <div class="wizard-binder-content">
-                    <div class="wizard-binder-toolbar">
-                      <div class="wizard-btn-group"></div>
-                      <div class="wizard-btn-group">
-                        <button class="wizard-btn" data-step-target="4">Back</button>
-                        <button class="wizard-btn primary btn-icon" onclick="document.querySelector('.page-tab[data-page=\'orchestrator\']').click(); setTimeout(()=>document.querySelector('.orch-tab[data-tab=\'node_graph\']').click(), 50);">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> START CHAIN
-                        </button>
-                      </div>
-                    </div>
-                    <div class="wizard-binder-view mock-md">
-                      <h1>Execution Plan</h1>
-                      <h2>Phase 1: Foundation</h2>
-                      <p><strong>Subagent:</strong> architect-reviewer</p>
-                      <p>- Initialize repository.<br>- Set up base module structure.<br>- Verify CI/CD linting rules.</p>
-                      <h2>Phase 2: Core Engine</h2>
-                      <p><strong>Subagent:</strong> rust-engineer</p>
-                      <p>- Implement orchestrator state machine.<br>- Write redb persistence layer.</p>
-                    </div>
+                    <div class="wizard-binder-toolbar"><div class="wizard-btn-group"></div><div class="wizard-btn-group"><button class="wizard-btn" data-step-target="4">Back</button><button class="wizard-btn primary btn-icon" onclick="document.querySelector('.page-tab[data-page=\'orchestrator\']').click(); setTimeout(()=>document.querySelector('.orch-tab[data-tab=\'node_graph\']').click(), 50);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> START CHAIN</button></div></div>
+                    <div class="wizard-binder-view mock-md"><h1>Execution Plan</h1><h2>Phase 1: Foundation</h2><p><strong>Subagent:</strong> architect-reviewer</p><p>- Initialize repository.<br>- Set up base module structure.</p><h2>Phase 2: Core Engine</h2><p><strong>Subagent:</strong> rust-engineer</p><p>- Implement orchestrator state machine.</p></div>
                   </div>
                 </div>
               </div>
-
             </div>
 
-            <!-- Floating Activity Timeline -->
             <div class="wizard-activity-floating">
-              <div class="wizard-activity-header">
-                <div style="display:flex; align-items:center; gap:var(--sm);">
-                  <div class="wizard-activity-pulse"></div>
-                  <span>Agent Activity: Multi-Pass Review</span>
-                </div>
-                <span>Phase 2 of 3</span>
-              </div>
+              <div class="wizard-activity-header"><div style="display:flex; align-items:center; gap:var(--sm);"><div class="wizard-activity-pulse"></div><span>Agent Activity: Multi-Pass Review</span></div><span>Phase 2 of 3</span></div>
               <div class="wizard-activity-log">
                 <div class="wizard-activity-item"><span class="time">10:42:01</span><span>Spawning quality-reviewer for PRD.md</span></div>
                 <div class="wizard-activity-item"><span class="time">10:42:15</span><span>Found 2 missing acceptance criteria. Applying autofix...</span></div>
                 <div class="wizard-activity-item"><span class="time">10:42:20</span><span>Validation passed. Promoting to canonical.</span></div>
               </div>
-              <div class="wizard-activity-controls">
-                <button class="wizard-btn" style="flex:1; padding:4px;">Pause</button>
-                <button class="wizard-btn primary" style="flex:1; padding:4px;" disabled>Resume</button>
-                <button class="wizard-btn" style="flex:1; padding:4px; color:var(--accent-magenta);">Cancel</button>
-              </div>
+              <div class="wizard-activity-controls"><button class="wizard-btn" style="flex:1; padding:4px;">Pause</button><button class="wizard-btn primary" style="flex:1; padding:4px;" disabled>Resume</button><button class="wizard-btn" style="flex:1; padding:4px; color:var(--accent-magenta);">Cancel</button></div>
             </div>
 
           </div>
@@ -5215,90 +5075,132 @@ impl Dashboard {
         </div>
       </div>
 
-      <aside class="chat-panel" id="chatPanel">
-          <div class="chat-panel-header">
-            <span class="title">Chat</span>
-            <div class="panel-actions">
-              <button title="Pop out" id="popOutBtn">⧉</button>
-              <button title="Close" id="closeChatBtn">×</button>
+      <aside class="chat-panel hidden" id="chatPanel">
+            <div class="chat-panel-header" style="flex-direction: column; align-items: stretch; gap: var(--sm); padding: var(--sm) var(--md); background: var(--surface-elevated); min-height: auto; border-bottom: 1px solid var(--border-light);">
+              <div style="display: flex; align-items: center; width: 100%;">
+                <div class="title" style="font-size: 13px; flex: 1; display:flex; align-items:center; gap:var(--sm); font-family:var(--display-font);">
+                    ASSISTANT <span class="chatRoleBadge role-badge role-assistant">Assistant</span>
+                </div>
+                <div class="panel-actions" style="display: flex; gap: var(--xs);">
+                  <button class="popOutBtn" title="Pop out" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>
+                  <button class="closeChatBtn" title="Close" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px; padding: 2px var(--sm);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" placeholder="Search messages & threads..." style="width: 100%; border: none; background: transparent; padding: 4px; color: var(--text-primary); font-size: 11px; outline: none;">
+              </div>
             </div>
-          </div>
-          <div class="chat-body">
-            <div class="chat-thread-sidebar">
-              <div class="sidebar-title">HISTORY</div>
-              <div class="chat-thread-list">
-                <div class="chat-thread-item active">Project X Plan</div>
-                <div class="chat-thread-item">Ideas</div>
-                <div class="chat-thread-item">Code Review</div>
-                <div class="chat-thread-item">Meeting Notes</div>
-                <div class="chat-thread-item">New Feature</div>
+
+            <div class="chat-body" style="flex: 1; display: flex; min-height: 0; overflow: hidden;">
+              <div class="chat-thread-sidebar" style="width: 180px; min-width: 140px; background: var(--surface-elevated); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; overflow: hidden;">
+                <div class="sidebar-title" style="padding: var(--md); font-weight: 600; font-size: 12px; border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
+                  HISTORY
+                  <button style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                </div>
+                <div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm);">
+                  <div class="chat-thread-item" data-thread="thread1" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Wizard: Dashboard UI</div>
+                  <div class="chat-thread-item" data-thread="thread2" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Refactor Database Layer</div>
+                  <div class="chat-thread-item" data-thread="thread3" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Fix Auth Token Bug</div>
+                  <div class="chat-thread-item" data-thread="thread4" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Research Web Frameworks</div>
+                  <div class="chat-thread-item" data-thread="thread5" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Context Lens Check</div>
+                  <div class="chat-thread-item" data-thread="thread6" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">FileSafe Blocking</div>
+                </div>
               </div>
-              <button class="chat-new-thread-btn">+ NEW THREAD</button>
-            </div>
-            <div class="chat-main">
-              <div class="chat-modes">
-                <span class="mode active" data-mode="ask">Ask</span>
-                <span class="mode" data-mode="plan">Plan</span>
-                <span class="mode" data-mode="interview">Interview</span>
-                <span class="mode" data-mode="brainstorm">BrainStorm</span>
-                <span class="mode" data-mode="crew">Crew</span>
-              </div>
-              <div class="plan-card" id="planCard" style="display: none;">
-                <div class="plan-title">Plan</div>
-                <ul class="plan-outline">
-                  <li><input type="checkbox"> Phase 1: Setup</li>
-                  <li><input type="checkbox" checked> Phase 2: Dashboard widgets</li>
-                  <li><input type="checkbox"> Phase 3: Integration</li>
-                </ul>
-              </div>
-              <div class="message-stream">
-                <div class="message assistant">
-                  I've analyzed the requirements. The dashboard should include orchestrator status, current task, progress bars, and budget donuts. Shall I proceed with implementation?
-                  <div class="message-block collapsed">
-                    <div class="block-header">thinking</div>
-                    <div class="block-body">Reasoning about widget layout and spec alignment...</div>
+
+              <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden;">
+                <div class="chat-modes chatModesBar" style="display: flex; padding: var(--sm) var(--md); gap: var(--xs); border-bottom: 1px solid var(--border-light); font-size: 12px;">
+                  <div class="mode" data-mode="ask" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Ask</div>
+                  <div class="mode" data-mode="plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Plan</div>
+                  <div class="mode" data-mode="deep-plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Deep Plan</div>
+                  <div class="mode" data-mode="crew" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Crew</div>
+                </div>
+                
+                <div class="chat-header-workflow hidden chatWorkflowHeader" style="display:flex; justify-content:space-between; align-items:center; padding:var(--sm) var(--md); border-bottom:1px solid var(--border-light); background:var(--surface-elevated); font-size:12px; font-weight:600;">
+                  <span class="workflowHeaderTitle">Interactive Interview</span>
+                  <button class="wizard-btn returnToChatBtn" style="padding:2px var(--sm); font-size:10px;">Return to Chat</button>
+                </div>
+
+                <div class="message-stream messageStream" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-direction: column; gap: var(--md);">
+                </div>
+
+                <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light);">
+                  <div class="pendingInterventionBlock hidden" style="position:absolute; top:-40px; left:var(--md); right:var(--md); background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:6px; padding:var(--sm) var(--md); display:flex; justify-content:space-between; align-items:center; font-size:11px; box-shadow:0 -4px 12px rgba(0,0,0,0.1); z-index:10;">
+                    <span style="color:var(--text-secondary); text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:200px;">"Wait, update the cache too."</span>
+                    <div style="display:flex; gap:var(--xs); align-items:center;">
+                      <span style="color:var(--text-muted); margin-right:var(--xs);">Queued</span>
+                      <button title="Steer (Interrupt)" style="background:none; border:none; color:var(--accent-blue); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+                      <button title="Edit" style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
+                      <button title="Cancel" style="background:none; border:none; color:var(--accent-magenta); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                    </div>
                   </div>
-                  <div class="message-block collapsed">
-                    <div class="block-header">Ran: cargo test</div>
-                    <div class="block-body"><pre>$ cargo test
-running 3 tests
-test tests::integration::basic ... ok
-test result: ok. 3 passed</pre></div>
+
+                  <div style="background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
+                    <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; outline:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm);">
+                      <div style="display:flex; gap:var(--md); align-items:center;">
+                        <button title="Attach File" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
+                        <label style="font-size:10px; color:var(--text-secondary); display:flex; align-items:center; gap:2px; cursor:pointer;"><input type="checkbox"> ELI5</label>
+                        <label style="font-size:10px; color:var(--accent-orange); display:flex; align-items:center; gap:2px; cursor:pointer;" title="Auto-approve tools"><input type="checkbox"> YOLO</label>
+                      </div>
+                      <button style="background:var(--accent-blue); color:var(--surface); border:none; border-radius:4px; padding:4px var(--md); font-size:11px; font-weight:600; cursor:pointer;">Send</button>
+                    </div>
                   </div>
-                  <div class="message-files-touched">app.rs +2 -1</div>
-                  <span class="message-revert">Revert</span>
                 </div>
-                <div class="message user">
-                  Yes, implement the full layout per the spec.
+
+                <div class="chat-footer" style="display:flex; justify-content:space-between; padding:var(--sm) var(--md); background:var(--surface); border-top:1px solid var(--border-light); font-size:10px; min-height: 24px; position:relative;">
+                  <div style="display:flex; gap:var(--md); align-items:center;">
+                    <div style="position:relative;">
+                      <button class="chat-dropdown-btn" data-dropdown="persona" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
+                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span class="persona-label">product-manager</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="chat-dropdown-popover personaPopover">
+                        <div class="chat-dropdown-search"><input type="text" placeholder="Find persona..." class="personaSearch"></div>
+                        <div class="chat-dropdown-list personaList">
+                            <div class="chat-dropdown-item active" data-value="product-manager"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> product-manager</div>
+                            <div class="chat-dropdown-item" data-value="architect-reviewer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> architect-reviewer</div>
+                            <div class="chat-dropdown-item" data-value="rust-engineer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> rust-engineer</div>
+                            <div class="chat-dropdown-item" data-value="technical-writer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> technical-writer</div>
+                            <div class="chat-dropdown-item" data-value="knowledge-synthesizer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> knowledge-synthesizer</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div style="position:relative;">
+                      <button class="chat-dropdown-btn" data-dropdown="model" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
+                        <span class="model-label">Claude: sonnet-4.5</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="chat-dropdown-popover modelPopover">
+                        <div class="chat-dropdown-search"><input type="text" placeholder="Find model..." class="modelSearch"></div>
+                        <div class="chat-dropdown-list modelList">
+                            <div class="chat-dropdown-header">Anthropic</div>
+                            <div class="chat-dropdown-item active" data-value="Claude: sonnet-4.5">sonnet-4.5</div>
+                            <div class="chat-dropdown-item" data-value="Claude: opus-3">opus-3</div>
+                            <div class="chat-dropdown-header">OpenAI</div>
+                            <div class="chat-dropdown-item" data-value="OpenAI: o3-mini">o3-mini</div>
+                            <div class="chat-dropdown-item" data-value="OpenAI: gpt-4o">gpt-4o</div>
+                            <div class="chat-dropdown-header">Local</div>
+                            <div class="chat-dropdown-item" data-value="Local: DeepSeek R1">DeepSeek R1</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <span title="Reasoning Effort: High" style="color:var(--text-secondary); display:flex; align-items:center; gap:var(--xs);">
+                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54z"></path></svg>
+                        High
+                    </span>
+                  </div>
+                  <div style="display:flex; gap:var(--md); align-items:center;">
+                    <div class="context-usage" title="Context: 42k / 128k" style="display:flex; align-items:center; gap:var(--xs);">
+                      <div style="width:12px; height:12px; border-radius:50%; background:conic-gradient(var(--accent-blue) 30%, var(--border-light) 0); border:1px solid var(--border);"></div>
+                      <span>42k</span>
+                    </div>
+                    <a href="#" style="color:var(--accent-orange); display:flex; align-items:center; gap:var(--xs); text-decoration: none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Problems</a>
+                  </div>
                 </div>
               </div>
-              <div class="chat-queue-area">
-                <div class="queue-item">
-                  <span class="truncate">Implement dashboard widgets with orchestrator status...</span>
-                  <span class="actions"><a>[edit]</a> <a>[send now]</a> <a>[remove]</a></span>
-                </div>
-              </div>
-              <div class="chat-input-area">
-                <textarea placeholder="Type a message..."></textarea>
-                <div class="input-row">
-                  <button class="at-btn">@</button>
-                  <button class="attach-btn">Attach</button>
-                  <span class="steer-queue-toggle"><span class="active">Steer</span> / <span>Queue</span></span>
-                  <button>SEND</button>
-                </div>
-                <div class="subagent-indicator">&gt; 2 subagents working</div>
-              </div>
-              <div class="chat-footer">
-                <select><option>Claude Code</option><option>Cursor</option><option>Codex</option></select>
-                <select><option>sonnet-4.5</option><option>opus</option></select>
-                <select><option>Low</option><option>Medium</option><option>High</option></select>
-                <select><option>Media</option><option>Image</option><option>Video</option></select>
-                <span class="context-usage">42k/128k <span class="context-progress filled"></span></span>
-                <a>3 problems</a>
-              </div>
-            </div>
-          </div>
-        </aside>
+    </aside>
     </div>
 
     <footer class="status-bar">
@@ -5336,23 +5238,387 @@ test result: ok. 3 passed</pre></div>
       <span class="status-snapshot">Last snapshot: 10m ago</span>
     </footer>
   </div>
+          <div class="chat-resizer hidden" id="chatResizer"></div>
+          <aside class="chat-panel hidden" id="chatPanel">
+            
+            <div class="chat-panel-header" style="flex-direction: column; align-items: stretch; gap: var(--sm); padding: var(--sm) var(--md); background: var(--surface-elevated); min-height: auto; border-bottom: 1px solid var(--border-light);">
+              <div style="display: flex; align-items: center; width: 100%;">
+                <div class="title" style="font-size: 13px; flex: 1; display:flex; align-items:center; gap:var(--sm); font-family:var(--display-font);">
+                    ASSISTANT <span class="chatRoleBadge role-badge role-assistant">Assistant</span>
+                </div>
+                <div class="panel-actions" style="display: flex; gap: var(--xs);">
+                  <button class="popOutBtn" title="Pop out" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>
+                  <button class="closeChatBtn" title="Close" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px; padding: 2px var(--sm);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" placeholder="Search messages & threads..." style="width: 100%; border: none; background: transparent; padding: 4px; color: var(--text-primary); font-size: 11px; outline: none;">
+              </div>
+            </div>
 
-  <div class="floating-chat" id="floatingChat">
-    <div class="float-title" id="floatDrag">
-      Chat - Puppet Master
-      <button class="close-float" id="closeFloat">×</button>
-    </div>
-    <div class="float-content">
-      <div class="chat-body">
-        <div class="chat-thread-sidebar">
-          <div class="sidebar-title">HISTORY</div>
-          <div class="chat-thread-list">
-            <div class="chat-thread-item active">Project X Plan</div>
-            <div class="chat-thread-item">Ideas</div>
-            <div class="chat-thread-item">Code Review</div>
+            <div class="chat-body" style="flex: 1; display: flex; min-height: 0; overflow: hidden;">
+              <div class="chat-thread-sidebar" style="width: 180px; min-width: 140px; background: var(--surface-elevated); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; overflow: hidden;">
+                <div class="sidebar-title" style="padding: var(--md); font-weight: 600; font-size: 12px; border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
+                  HISTORY
+                  <button style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                </div>
+                <div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm);">
+                  <div class="chat-thread-item" data-thread="thread1" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Wizard: Dashboard UI</div>
+                  <div class="chat-thread-item" data-thread="thread2" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Refactor Database Layer</div>
+                  <div class="chat-thread-item" data-thread="thread3" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Fix Auth Token Bug</div>
+                  <div class="chat-thread-item" data-thread="thread4" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Research Web Frameworks</div>
+                  <div class="chat-thread-item" data-thread="thread5" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Context Lens Check</div>
+                  <div class="chat-thread-item" data-thread="thread6" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">FileSafe Blocking</div>
+                </div>
+              </div>
+
+              <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden;">
+                <div class="chat-modes chatModesBar">
+                  <div class="mode" data-mode="ask" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Ask</div>
+                  <div class="mode" data-mode="plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Plan</div>
+                  <div class="mode" data-mode="deep-plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Deep Plan</div>
+                  <div class="mode" data-mode="crew" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Crew</div>
+                </div>
+                
+                <div class="chat-header-workflow hidden chatWorkflowHeader" style="display:flex; justify-content:space-between; align-items:center; padding:var(--sm) var(--md); border-bottom:1px solid var(--border-light); background:var(--surface-elevated); font-size:12px; font-weight:600;">
+                  <span class="workflowHeaderTitle">Interactive Interview</span>
+                  <button class="wizard-btn returnToChatBtn" style="padding:2px var(--sm); font-size:10px;">Return to Chat</button>
+                </div>
+
+                <div class="message-stream messageStream" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-direction: column; gap: var(--md);">
+                </div>
+
+                <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light);">
+                  <div class="pendingInterventionBlock hidden" style="position:absolute; top:-40px; left:var(--md); right:var(--md); background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:6px; padding:var(--sm) var(--md); display:flex; justify-content:space-between; align-items:center; font-size:11px; box-shadow:0 -4px 12px rgba(0,0,0,0.1); z-index:10;">
+                    <span style="color:var(--text-secondary); text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:200px;">"Wait, update the cache too."</span>
+                    <div style="display:flex; gap:var(--xs); align-items:center;">
+                      <span style="color:var(--text-muted); margin-right:var(--xs);">Queued</span>
+                      <button title="Steer (Interrupt)" style="background:none; border:none; color:var(--accent-blue); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+                      <button title="Edit" style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
+                      <button title="Cancel" style="background:none; border:none; color:var(--accent-magenta); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                    </div>
+                  </div>
+
+                  <div style="background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
+                    <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; outline:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm);">
+                      <div style="display:flex; gap:var(--md); align-items:center;">
+                        <button title="Attach File" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
+                        <label style="font-size:10px; color:var(--text-secondary); display:flex; align-items:center; gap:2px; cursor:pointer;"><input type="checkbox"> ELI5</label>
+                        <label style="font-size:10px; color:var(--accent-orange); display:flex; align-items:center; gap:2px; cursor:pointer;" title="Auto-approve tools"><input type="checkbox"> YOLO</label>
+                      </div>
+                      <button style="background:var(--accent-blue); color:var(--surface); border:none; border-radius:4px; padding:4px var(--md); font-size:11px; font-weight:600; cursor:pointer;">Send</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="chat-footer" style="display:flex; justify-content:space-between; padding:var(--sm) var(--md); background:var(--surface); border-top:1px solid var(--border-light); font-size:10px; min-height: 24px; position:relative;">
+                  <div style="display:flex; gap:var(--md); align-items:center;">
+                    <div style="position:relative;">
+                      <button class="chat-dropdown-btn" data-dropdown="persona" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
+                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span class="persona-label">product-manager</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="chat-dropdown-popover personaPopover">
+                        <div class="chat-dropdown-search"><input type="text" placeholder="Find persona..." class="personaSearch"></div>
+                        <div class="chat-dropdown-list personaList">
+                            <div class="chat-dropdown-item active" data-value="product-manager"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> product-manager</div>
+                            <div class="chat-dropdown-item" data-value="architect-reviewer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> architect-reviewer</div>
+                            <div class="chat-dropdown-item" data-value="rust-engineer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> rust-engineer</div>
+                            <div class="chat-dropdown-item" data-value="technical-writer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> technical-writer</div>
+                            <div class="chat-dropdown-item" data-value="knowledge-synthesizer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> knowledge-synthesizer</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div style="position:relative;">
+                      <button class="chat-dropdown-btn" data-dropdown="model" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
+                        <span class="model-label">Claude: sonnet-4.5</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="chat-dropdown-popover modelPopover">
+                        <div class="chat-dropdown-search"><input type="text" placeholder="Find model..." class="modelSearch"></div>
+                        <div class="chat-dropdown-list modelList">
+                            <div class="chat-dropdown-header">Anthropic</div>
+                            <div class="chat-dropdown-item active" data-value="Claude: sonnet-4.5">sonnet-4.5</div>
+                            <div class="chat-dropdown-item" data-value="Claude: opus-3">opus-3</div>
+                            <div class="chat-dropdown-header">OpenAI</div>
+                            <div class="chat-dropdown-item" data-value="OpenAI: o3-mini">o3-mini</div>
+                            <div class="chat-dropdown-item" data-value="OpenAI: gpt-4o">gpt-4o</div>
+                            <div class="chat-dropdown-header">Local</div>
+                            <div class="chat-dropdown-item" data-value="Local: DeepSeek R1">DeepSeek R1</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <span title="Reasoning Effort: High" style="color:var(--text-secondary); display:flex; align-items:center; gap:var(--xs);">
+                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54z"></path></svg>
+                        High
+                    </span>
+                  </div>
+                  <div style="display:flex; gap:var(--md); align-items:center;">
+                    <div class="context-usage" title="Context: 42k / 128k" style="display:flex; align-items:center; gap:var(--xs);">
+                      <div style="width:12px; height:12px; border-radius:50%; background:conic-gradient(var(--accent-blue) 30%, var(--border-light) 0); border:1px solid var(--border);"></div>
+                      <span>42k</span>
+                    </div>
+                    <a href="#" style="color:var(--accent-orange); display:flex; align-items:center; gap:var(--xs); text-decoration: none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Problems</a>
+                  </div>
+                </div>
+              </div>
+    
+          </aside>
+          
+          <div class="floating-chat" id="floatingChat" style="resize:both; overflow:hidden; min-width:320px; min-height:400px; display:none; flex-direction:column; z-index:1000;">
+            <div class="float-title" id="floatDrag" style="display:flex; align-items:center; justify-content:space-between; padding:0 var(--md); background:var(--surface-elevated); border-bottom:var(--border-width) solid var(--border); cursor:move; font-weight:600; font-size:13px; height:28px;">
+              Assistant - Puppet Master <button class="closeChatBtn" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; font-size:16px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+            <div class="float-content" style="flex:1; display:flex; flex-direction:column; overflow:hidden; height: calc(100% - 28px);">
+              
+            <div class="chat-panel-header" style="flex-direction: column; align-items: stretch; gap: var(--sm); padding: var(--sm) var(--md); background: var(--surface-elevated); min-height: auto; border-bottom: 1px solid var(--border-light);">
+              <div style="display: flex; align-items: center; width: 100%;">
+                <div class="title" style="font-size: 13px; flex: 1; display:flex; align-items:center; gap:var(--sm); font-family:var(--display-font);">
+                    ASSISTANT <span class="chatRoleBadge role-badge role-assistant">Assistant</span>
+                </div>
+                <div class="panel-actions" style="display: flex; gap: var(--xs);">
+                  <button class="popOutBtn" title="Pop out" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>
+                  <button class="closeChatBtn" title="Close" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px; padding: 2px var(--sm);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" placeholder="Search messages & threads..." style="width: 100%; border: none; background: transparent; padding: 4px; color: var(--text-primary); font-size: 11px; outline: none;">
+              </div>
+            </div>
+
+            <div class="chat-body" style="flex: 1; display: flex; min-height: 0; overflow: hidden;">
+              <div class="chat-thread-sidebar" style="width: 180px; min-width: 140px; background: var(--surface-elevated); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; overflow: hidden;">
+                <div class="sidebar-title" style="padding: var(--md); font-weight: 600; font-size: 12px; border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
+                  HISTORY
+                  <button style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                </div>
+                <div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm);">
+                  <div class="chat-thread-item" data-thread="thread1" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Wizard: Dashboard UI</div>
+                  <div class="chat-thread-item" data-thread="thread2" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Refactor Database Layer</div>
+                  <div class="chat-thread-item" data-thread="thread3" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Fix Auth Token Bug</div>
+                  <div class="chat-thread-item" data-thread="thread4" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Research Web Frameworks</div>
+                  <div class="chat-thread-item" data-thread="thread5" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Context Lens Check</div>
+                  <div class="chat-thread-item" data-thread="thread6" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">FileSafe Blocking</div>
+                </div>
+              </div>
+
+              <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden;">
+                <div class="chat-modes chatModesBar">
+                  <div class="mode" data-mode="ask" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Ask</div>
+                  <div class="mode" data-mode="plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Plan</div>
+                  <div class="mode" data-mode="deep-plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Deep Plan</div>
+                  <div class="mode" data-mode="crew" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Crew</div>
+                </div>
+                
+                <div class="chat-header-workflow hidden chatWorkflowHeader" style="display:flex; justify-content:space-between; align-items:center; padding:var(--sm) var(--md); border-bottom:1px solid var(--border-light); background:var(--surface-elevated); font-size:12px; font-weight:600;">
+                  <span class="workflowHeaderTitle">Interactive Interview</span>
+                  <button class="wizard-btn returnToChatBtn" style="padding:2px var(--sm); font-size:10px;">Return to Chat</button>
+                </div>
+
+                <div class="message-stream messageStream" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-direction: column; gap: var(--md);">
+                </div>
+
+                <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light);">
+                  <div class="pendingInterventionBlock hidden" style="position:absolute; top:-40px; left:var(--md); right:var(--md); background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:6px; padding:var(--sm) var(--md); display:flex; justify-content:space-between; align-items:center; font-size:11px; box-shadow:0 -4px 12px rgba(0,0,0,0.1); z-index:10;">
+                    <span style="color:var(--text-secondary); text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:200px;">"Wait, update the cache too."</span>
+                    <div style="display:flex; gap:var(--xs); align-items:center;">
+                      <span style="color:var(--text-muted); margin-right:var(--xs);">Queued</span>
+                      <button title="Steer (Interrupt)" style="background:none; border:none; color:var(--accent-blue); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+                      <button title="Edit" style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
+                      <button title="Cancel" style="background:none; border:none; color:var(--accent-magenta); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                    </div>
+                  </div>
+
+                  <div style="background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
+                    <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; outline:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm);">
+                      <div style="display:flex; gap:var(--md); align-items:center;">
+                        <button title="Attach File" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
+                        <label style="font-size:10px; color:var(--text-secondary); display:flex; align-items:center; gap:2px; cursor:pointer;"><input type="checkbox"> ELI5</label>
+                        <label style="font-size:10px; color:var(--accent-orange); display:flex; align-items:center; gap:2px; cursor:pointer;" title="Auto-approve tools"><input type="checkbox"> YOLO</label>
+                      </div>
+                      <button style="background:var(--accent-blue); color:var(--surface); border:none; border-radius:4px; padding:4px var(--md); font-size:11px; font-weight:600; cursor:pointer;">Send</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="chat-footer" style="display:flex; justify-content:space-between; padding:var(--sm) var(--md); background:var(--surface); border-top:1px solid var(--border-light); font-size:10px; min-height: 24px; position:relative;">
+                  <div style="display:flex; gap:var(--md); align-items:center;">
+                    <div style="position:relative;">
+                      <button class="chat-dropdown-btn" data-dropdown="persona" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
+                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span class="persona-label">product-manager</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="chat-dropdown-popover personaPopover">
+                        <div class="chat-dropdown-search"><input type="text" placeholder="Find persona..." class="personaSearch"></div>
+                        <div class="chat-dropdown-list personaList">
+                            <div class="chat-dropdown-item active" data-value="product-manager"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> product-manager</div>
+                            <div class="chat-dropdown-item" data-value="architect-reviewer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> architect-reviewer</div>
+                            <div class="chat-dropdown-item" data-value="rust-engineer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> rust-engineer</div>
+                            <div class="chat-dropdown-item" data-value="technical-writer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> technical-writer</div>
+                            <div class="chat-dropdown-item" data-value="knowledge-synthesizer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> knowledge-synthesizer</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div style="position:relative;">
+                      <button class="chat-dropdown-btn" data-dropdown="model" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
+                        <span class="model-label">Claude: sonnet-4.5</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="chat-dropdown-popover modelPopover">
+                        <div class="chat-dropdown-search"><input type="text" placeholder="Find model..." class="modelSearch"></div>
+                        <div class="chat-dropdown-list modelList">
+                            <div class="chat-dropdown-header">Anthropic</div>
+                            <div class="chat-dropdown-item active" data-value="Claude: sonnet-4.5">sonnet-4.5</div>
+                            <div class="chat-dropdown-item" data-value="Claude: opus-3">opus-3</div>
+                            <div class="chat-dropdown-header">OpenAI</div>
+                            <div class="chat-dropdown-item" data-value="OpenAI: o3-mini">o3-mini</div>
+                            <div class="chat-dropdown-item" data-value="OpenAI: gpt-4o">gpt-4o</div>
+                            <div class="chat-dropdown-header">Local</div>
+                            <div class="chat-dropdown-item" data-value="Local: DeepSeek R1">DeepSeek R1</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <span title="Reasoning Effort: High" style="color:var(--text-secondary); display:flex; align-items:center; gap:var(--xs);">
+                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54z"></path></svg>
+                        High
+                    </span>
+                  </div>
+                  <div style="display:flex; gap:var(--md); align-items:center;">
+                    <div class="context-usage" title="Context: 42k / 128k" style="display:flex; align-items:center; gap:var(--xs);">
+                      <div style="width:12px; height:12px; border-radius:50%; background:conic-gradient(var(--accent-blue) 30%, var(--border-light) 0); border:1px solid var(--border);"></div>
+                      <span>42k</span>
+                    </div>
+                    <a href="#" style="color:var(--accent-orange); display:flex; align-items:center; gap:var(--xs); text-decoration: none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Problems</a>
+                  </div>
+                </div>
+              </div>
+    
+            </div>
           </div>
-          <button class="chat-new-thread-btn">+ NEW</button>
-        </div>
+        
+
+  
+              <div style="display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px; padding: 2px var(--sm);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" placeholder="Search messages & threads..." style="width: 100%; border: none; background: transparent; padding: 4px; color: var(--text-primary); font-size: 11px; outline: none;">
+              </div>
+            </div>
+
+            <div class="chat-body" style="flex: 1; display: flex; min-height: 0; overflow: hidden;">
+              <div class="chat-thread-sidebar" style="width: 180px; min-width: 140px; background: var(--surface-elevated); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; overflow: hidden;">
+                <div class="sidebar-title" style="padding: var(--md); font-weight: 600; font-size: 12px; border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
+                  HISTORY
+                  <button style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                </div>
+                <div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm);">
+                  <div class="chat-thread-item" data-thread="thread1" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Wizard: Dashboard UI</div>
+                  <div class="chat-thread-item" data-thread="thread2" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Refactor Database Layer</div>
+                  <div class="chat-thread-item" data-thread="thread3" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Fix Auth Token Bug</div>
+                  <div class="chat-thread-item" data-thread="thread4" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Research Web Frameworks</div>
+                  <div class="chat-thread-item" data-thread="thread5" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Context Lens Check</div>
+                  <div class="chat-thread-item" data-thread="thread6" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">FileSafe Blocking</div>
+                </div>
+              </div>
+
+              <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden;">
+                <div class="chat-modes chatModesBar" style="display: flex; padding: var(--sm) var(--md); gap: var(--xs); border-bottom: 1px solid var(--border-light); font-size: 12px;">
+                  <div class="mode" data-mode="ask" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Ask</div>
+                  <div class="mode" data-mode="plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Plan</div>
+                  <div class="mode" data-mode="deep-plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Deep Plan</div>
+                  <div class="mode" data-mode="crew" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Crew</div>
+                </div>
+                
+                <div class="chat-header-workflow hidden chatWorkflowHeader" style="display:flex; justify-content:space-between; align-items:center; padding:var(--sm) var(--md); border-bottom:1px solid var(--border-light); background:var(--surface-elevated); font-size:12px; font-weight:600;">
+                  <span class="workflowHeaderTitle">Interactive Interview</span>
+                  <button class="wizard-btn returnToChatBtn" style="padding:2px var(--sm); font-size:10px;">Return to Chat</button>
+                </div>
+
+                <div class="message-stream messageStream" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-direction: column; gap: var(--md);">
+                </div>
+
+                <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light);">
+                  <div class="pendingInterventionBlock hidden" style="position:absolute; top:-40px; left:var(--md); right:var(--md); background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:6px; padding:var(--sm) var(--md); display:flex; justify-content:space-between; align-items:center; font-size:11px; box-shadow:0 -4px 12px rgba(0,0,0,0.1); z-index:10;">
+                    <span style="color:var(--text-secondary); text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:200px;">"Wait, update the cache too."</span>
+                    <div style="display:flex; gap:var(--xs); align-items:center;">
+                      <span style="color:var(--text-muted); margin-right:var(--xs);">Queued</span>
+                      <button title="Steer (Interrupt)" style="background:none; border:none; color:var(--accent-blue); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+                      <button title="Edit" style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
+                      <button title="Cancel" style="background:none; border:none; color:var(--accent-magenta); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                    </div>
+                  </div>
+
+                  <div style="background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
+                    <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; outline:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm);">
+                      <div style="display:flex; gap:var(--md); align-items:center;">
+                        <button title="Attach File" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
+                        <label style="font-size:10px; color:var(--text-secondary); display:flex; align-items:center; gap:2px; cursor:pointer;"><input type="checkbox"> ELI5</label>
+                        <label style="font-size:10px; color:var(--accent-orange); display:flex; align-items:center; gap:2px; cursor:pointer;" title="Auto-approve tools"><input type="checkbox"> YOLO</label>
+                      </div>
+                      <button style="background:var(--accent-blue); color:var(--surface); border:none; border-radius:4px; padding:4px var(--md); font-size:11px; font-weight:600; cursor:pointer;">Send</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="chat-footer" style="display:flex; justify-content:space-between; padding:var(--sm) var(--md); background:var(--surface); border-top:1px solid var(--border-light); font-size:10px; min-height: 24px; position:relative;">
+                  <div style="display:flex; gap:var(--md); align-items:center;">
+                    <div style="position:relative;">
+                      <button class="chat-dropdown-btn" data-dropdown="persona" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
+                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span class="persona-label">product-manager</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="chat-dropdown-popover personaPopover">
+                        <div class="chat-dropdown-search"><input type="text" placeholder="Find persona..." class="personaSearch"></div>
+                        <div class="chat-dropdown-list personaList">
+                            <div class="chat-dropdown-item active" data-value="product-manager"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> product-manager</div>
+                            <div class="chat-dropdown-item" data-value="architect-reviewer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> architect-reviewer</div>
+                            <div class="chat-dropdown-item" data-value="rust-engineer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> rust-engineer</div>
+                            <div class="chat-dropdown-item" data-value="technical-writer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> technical-writer</div>
+                            <div class="chat-dropdown-item" data-value="knowledge-synthesizer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> knowledge-synthesizer</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div style="position:relative;">
+                      <button class="chat-dropdown-btn" data-dropdown="model" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
+                        <span class="model-label">Claude: sonnet-4.5</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="chat-dropdown-popover modelPopover">
+                        <div class="chat-dropdown-search"><input type="text" placeholder="Find model..." class="modelSearch"></div>
+                        <div class="chat-dropdown-list modelList">
+                            <div class="chat-dropdown-header">Anthropic</div>
+                            <div class="chat-dropdown-item active" data-value="Claude: sonnet-4.5">sonnet-4.5</div>
+                            <div class="chat-dropdown-item" data-value="Claude: opus-3">opus-3</div>
+                            <div class="chat-dropdown-header">OpenAI</div>
+                            <div class="chat-dropdown-item" data-value="OpenAI: o3-mini">o3-mini</div>
+                            <div class="chat-dropdown-item" data-value="OpenAI: gpt-4o">gpt-4o</div>
+                            <div class="chat-dropdown-header">Local</div>
+                            <div class="chat-dropdown-item" data-value="Local: DeepSeek R1">DeepSeek R1</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <span title="Reasoning Effort: High" style="color:var(--text-secondary); display:flex; align-items:center; gap:var(--xs);">
+                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54z"></path></svg>
+                        High
+                    </span>
+                  </div>
+                  <div style="display:flex; gap:var(--md); align-items:center;">
+                    <div class="context-usage" title="Context: 42k / 128k" style="display:flex; align-items:center; gap:var(--xs);">
+                      <div style="width:12px; height:12px; border-radius:50%; background:conic-gradient(var(--accent-blue) 30%, var(--border-light) 0); border:1px solid var(--border);"></div>
+                      <span>42k</span>
+                    </div>
+                    <a href="#" style="color:var(--accent-orange); display:flex; align-items:center; gap:var(--xs); text-decoration: none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Problems</a>
+                  </div>
+                </div>
+              </div>
+    </div></div>
         <div class="chat-main">
           <div class="chat-modes">
             <span class="mode active" data-mode="ask">Ask</span>
@@ -5395,459 +5661,41 @@ test result: ok. 3 passed</pre></div>
   <div class="pixel-grid" id="pixelGrid"></div>
 
   <script>
-    let chatDetached = false;
-    document.getElementById('themeSelect').addEventListener('change', function() {
-      document.documentElement.setAttribute('data-theme', this.value);
-    });
+    const mockThreads = {
+      'thread1': { role: 'interviewer', title: 'INTERVIEWER', html: `<div class="message assistant">Hello! I see you selected "Add a new Feature or Enhancement". To kick off our Feature Scope probe: What exactly are you adding or changing in this project?</div><div class="message user">I need to add a brand new feature step to the interactive interview UI so it correctly probes for project scope before doing the actual architecture interview.</div><div class="message assistant">Excellent, I have mapped the feature boundaries. Moving on to Architecture: Do you have a preferred UI framework for rendering this new phase tracker component?</div><div class="interview-chips" style="display:flex; flex-wrap:wrap; gap:var(--sm); margin-top:var(--sm);"><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">React</div><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">Slint</div><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">Let AI Decide</div></div>` },
+      'thread2': { role: 'assistant', title: 'ASSISTANT', mode: 'crew', html: `<div class="message user">Refactor the user schema to support multi-tenant workspaces.</div><div class="message assistant" style="background:transparent; border:none; padding:0; box-shadow:none;"><div style="display:flex; flex-direction:column; gap:var(--sm);"><div style="background:var(--surface-elevated); border:1px solid var(--border-light); padding:var(--sm) var(--md); border-radius:4px; display:flex; justify-content:space-between; align-items:center; font-size:11px;"><span style="display:flex; align-items:center; gap:var(--xs);"><div class="wizard-activity-pulse" style="width:6px; height:6px;"></div> <b>database-admin</b> analyzing schema...</span><span style="color:var(--text-muted);">0:14</span></div><div style="background:var(--surface-elevated); border:1px solid var(--border-light); padding:var(--sm) var(--md); border-radius:4px; display:flex; justify-content:space-between; align-items:center; font-size:11px;"><span style="display:flex; align-items:center; gap:var(--xs);"><div class="wizard-activity-pulse" style="width:6px; height:6px;"></div> <b>rust-engineer</b> drafting migrations...</span><span style="color:var(--text-muted);">0:08</span></div></div></div>` },
+      'thread3': { role: 'assistant', title: 'ASSISTANT', mode: 'deep-plan', html: `<div class="message user">Users are getting 401s after 1 hour. Fix the token refresh logic.</div><div class="message assistant"><div class="message-block collapsed" style="border-left: 2px solid var(--border-light); padding-left: var(--sm); margin-bottom: var(--sm);"><div class="block-header" style="font-size:11px; cursor:pointer;">[+] Thinking (12s)</div></div><div class="message-block" style="border-left: 2px solid var(--accent-blue); padding-left: var(--sm); margin-bottom: var(--sm);"><div class="block-header" style="font-size:11px; cursor:pointer;">[-] Ran bash command</div><div class="block-body"><pre style="font-size:10px; background:var(--surface); padding:4px; overflow-x:auto;">$ git grep "token_expiry"</pre></div></div>I found the issue. The refresh token logic in <code>auth.rs</code> was comparing UTC against local time. I have applied the fix.</div>` },
+      'thread4': { role: 'assistant', title: 'ASSISTANT', mode: 'ask', html: `<div class="message user">What are the latest breaking changes in React 19?</div><div class="message assistant">React 19 introduces several major breaking changes...<div style="margin-top:var(--lg); border-top:1px dashed var(--border-light); padding-top:var(--sm);"><div style="font-size:10px; font-weight:600; margin-bottom:var(--xs); color:var(--text-secondary);">SOURCES</div><div style="font-size:11px; display:flex; flex-direction:column; gap:var(--xs);"><div><span style="color:var(--accent-blue);">[1] React 19 Upgrade Guide</span></div><div><span style="color:var(--accent-blue);">[2] Everything new in React 19</span></div></div></div></div>` },
+      'thread5': { role: 'assistant', title: 'ASSISTANT', mode: 'ask', html: `<div style="text-align:center; font-size:10px; color:var(--text-muted); margin-bottom:var(--sm);">Context Lens Active</div><div class="message user" style="opacity: 0.5; position:relative; border:none; box-shadow:none;"><div style="position:absolute; top:-8px; right:-8px; background:var(--surface); border:1px solid var(--border); font-size:9px; padding:2px 4px; border-radius:4px; color:var(--text-primary);">Muted</div>Here is the old log file...</div><div class="message assistant">I understand.</div><div class="message user msg-focused" style="position:relative; background:transparent;"><div style="position:absolute; top:-8px; right:-8px; background:var(--accent-blue); color:var(--surface); font-size:9px; padding:2px 4px; border-radius:4px;">Focused</div>Focus strictly on this error block.</div>` },
+      'thread6': { role: 'builder', title: 'PRD BUILDER', html: `<div class="message assistant">I've drafted the preliminary PRD for the "Multi-tenant Refactor".<div style="margin-top:var(--md); padding:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated); display:flex; align-items:center; gap:var(--sm); font-size:11px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Opened <b>multi-tenant-refactor.md</b> in Binder</div></div>` }
+    };
 
-    document.querySelectorAll('.page-tab').forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        var pageId = this.getAttribute('data-page');
-        if (!pageId) return;
-        document.querySelectorAll('.page-tab').forEach(function(t) { t.classList.remove('active'); });
-        this.classList.add('active');
-        document.querySelectorAll('.primary-content > .page').forEach(function(p) {
-          p.classList.toggle('active', p.classList.contains('page-' + pageId));
+    window.switchToChatThread = function(threadId) {
+      const thread = mockThreads[threadId];
+      if (!thread) return;
+      document.querySelectorAll('.chat-thread-item').forEach(i => i.classList.toggle('active', i.getAttribute('data-thread') === threadId));
+      document.querySelectorAll('.messageStream').forEach(el => { el.innerHTML = thread.html; });
+      document.querySelectorAll('.chatModesBar').forEach(bar => {
+        if (thread.role !== 'assistant') { bar.style.display = 'none'; }
+        else { bar.style.display = 'flex'; bar.querySelectorAll('.mode').forEach(m => m.classList.toggle('active', m.getAttribute('data-mode') === (thread.mode || 'ask'))); }
+      });
+      document.querySelectorAll('.chatWorkflowHeader').forEach(hdr => {
+        if (thread.role !== 'assistant') { hdr.classList.remove('hidden'); hdr.querySelector('.workflowHeaderTitle').textContent = thread.title; }
+        else { hdr.classList.add('hidden'); }
+      });
+      document.querySelectorAll('.chatRoleBadge').forEach(badge => { badge.className = 'role-badge chatRoleBadge role-' + thread.role; badge.textContent = thread.title; });
+      document.querySelectorAll('.pendingInterventionBlock').forEach(block => { block.classList.toggle('hidden', threadId !== 'thread2'); });
+    };
+
+    window.toggleChatDropdown = function(type) {
+        document.querySelectorAll('.' + type + 'Popover').forEach(popover => {
+            const isActive = popover.classList.contains('active');
+            document.querySelectorAll('.chat-dropdown-popover').forEach(p => p.classList.remove('active'));
+            if (!isActive) popover.classList.add('active');
         });
-      });
-    });
+    };
 
-    (function() {
-      var form = document.getElementById('projectsNewForm');
-      var addBtn = document.getElementById('projectsAddBtn');
-      var cancelBtn = document.getElementById('projectsNewFormCancel');
-      var createBtn = document.getElementById('projectsCreateBtn');
-      if (!form || !addBtn) return;
-      function showForm() { form.classList.remove('hidden'); }
-      function hideForm() { form.classList.add('hidden'); }
-      addBtn.addEventListener('click', showForm);
-      if (cancelBtn) cancelBtn.addEventListener('click', hideForm);
-      if (createBtn) createBtn.addEventListener('click', function() { hideForm(); });
-    })();
-
-    
-
-    function switchOrchTab(container, tabId) {
-      if (!container || !tabId) return;
-      container.querySelectorAll('.orch-tab').forEach(function(t) {
-        t.classList.toggle('active', t.getAttribute('data-tab') === tabId);
-      });
-      container.querySelectorAll('.orch-tab-content').forEach(function(c) {
-        c.classList.toggle('active', c.getAttribute('data-tab') === tabId);
-      });
-    }
-    document.querySelectorAll('.orch-tab').forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        var tabId = this.getAttribute('data-tab');
-        var container = this.closest('.page-orchestrator');
-        if (container && tabId) switchOrchTab(container, tabId);
-      });
-    });
-    var orchTerminalClear = document.querySelector('.orch-terminal-clear');
-    if (orchTerminalClear && document.getElementById('orchTerminalOutput')) {
-      orchTerminalClear.addEventListener('click', function() {
-        var out = document.getElementById('orchTerminalOutput');
-        if (out) out.innerHTML = '<div class="line line-muted">[Cleared]</div>';
-      });
-    }
-    (function() {
-      var list = document.querySelector('.orch-prose-list');
-      if (list) {
-        list.querySelectorAll('.orch-prose-block').forEach(function(block, i) { if (i >= 3) block.style.display = 'none'; });
-        list.querySelectorAll('.orch-prose-toggle').forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            var isRecent = this.getAttribute('data-prose') === 'recent';
-            list.querySelectorAll('.orch-prose-toggle').forEach(function(b) { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
-            this.classList.add('active'); this.setAttribute('aria-pressed', 'true');
-            list.querySelectorAll('.orch-prose-block').forEach(function(block, i) {
-              block.style.display = isRecent && i >= 3 ? 'none' : '';
-            });
-          });
-        });
-      }
-    })();
-    document.querySelectorAll('.orch-prose-block-head').forEach(function(head) {
-      head.addEventListener('click', function() {
-        var block = this.closest('.orch-prose-block');
-        if (!block) return;
-        var collapsed = block.classList.toggle('collapsed');
-        this.setAttribute('aria-expanded', !collapsed);
-      });
-    });
-    var orchPage = document.querySelector('.page.page-orchestrator');
-    if (orchPage) {
-      var orchTabIds = ['progress', 'tiers', 'node_graph', 'evidence', 'history', 'ledger'];
-      orchPage.addEventListener('keydown', function(e) {
-        if (!orchPage.classList.contains('active')) return;
-        if (e.ctrlKey && e.key === 'Tab') {
-          e.preventDefault();
-          var tabs = orchPage.querySelectorAll('.orch-tab');
-          var idx = -1;
-          tabs.forEach(function(t, i) { if (t.classList.contains('active')) idx = i; });
-          idx = e.shiftKey ? (idx <= 0 ? tabs.length - 1 : idx - 1) : (idx < 0 || idx >= tabs.length - 1 ? 0 : idx + 1);
-          switchOrchTab(orchPage, tabs[idx].getAttribute('data-tab'));
-        } else if (e.altKey && e.key >= '1' && e.key <= '6') {
-          e.preventDefault();
-          var i = parseInt(e.key, 10) - 1;
-          if (orchTabIds[i]) switchOrchTab(orchPage, orchTabIds[i]);
-        }
-      });
-    }
-
-    document.querySelectorAll('.orch-tier-toggle').forEach(function(toggle) {
-      toggle.addEventListener('click', function(e) {
-        e.stopPropagation();
-        var node = this.closest('.orch-tier-node');
-        if (!node) return;
-        var wasExpanded = node.classList.contains('expanded');
-        node.classList.toggle('expanded', !wasExpanded);
-        this.textContent = wasExpanded ? '\u25B6' : '\u25BC';
-      });
-    });
-    document.querySelectorAll('.orch-tier-node').forEach(function(node) {
-      node.addEventListener('click', function(e) {
-        if (e.target.classList.contains('orch-tier-toggle')) return;
-        var tree = this.closest('.orch-tier-tree');
-        if (tree) tree.querySelectorAll('.orch-tier-node').forEach(function(n) { n.classList.remove('selected'); });
-        this.classList.add('selected');
-        var detail = document.getElementById('orchTierDetailBody');
-        if (detail) {
-          var label = this.querySelector('.orch-tier-label')?.textContent || 'Node';
-          var tier = this.getAttribute('data-tier') || '';
-          var evidenceHtml = tier === '2.2' ? 'Evidence: <a href="#" class="orch-tier-link">GateReport 2.2 (10:38)</a>' : 'Evidence: (none)';
-          detail.innerHTML = '<p><strong>' + label + '</strong></p><p>Platform: Claude Code. Acceptance criteria: see spec.</p><p class="orch-tier-detail-meta">' + evidenceHtml + '</p><p class="orch-tier-detail-meta">Iteration: 1</p>';
-        }
-      });
-    });
-
-    var orchGraphPlaceholder = document.getElementById('orchGraphPlaceholder');
-      var orchDagPreview = document.getElementById('orchDagPreview');
-      
-      // Settings Search Bar Logic
-      document.querySelectorAll('.settings-search-input').forEach(function(input) {
-        input.addEventListener('input', function(e) {
-          var query = e.target.value.toLowerCase().trim();
-          var page = e.target.closest('.page');
-          if (!page) return;
-          
-          var cards = page.querySelectorAll('.bento-card');
-          var noResults = page.querySelector('.settings-no-results');
-          var hasVisible = false;
-          
-          cards.forEach(function(card) {
-            var header = card.querySelector('.bento-header');
-            var desc = card.querySelector('.bento-desc');
-            var text = '';
-            if (header) text += header.textContent.toLowerCase() + ' ';
-            if (desc) text += desc.textContent.toLowerCase();
-            
-            if (query === '' || text.indexOf(query) !== -1) {
-              card.style.display = '';
-              hasVisible = true;
-            } else {
-              card.style.display = 'none';
-            }
-          });
-          
-          if (noResults) {
-            noResults.style.display = hasVisible ? 'none' : 'block';
-          }
-        });
-      });
-
-      // Settings Inspector Logic
-      var inspectorPanel = document.querySelector('.settings-inspector-panel');
-      var inspectorClose = document.querySelector('.close-inspector');
-      var inspectorTitle = document.querySelector('.inspector-header h3');
-      
-      if (inspectorPanel && inspectorClose) {
-        inspectorClose.addEventListener('click', function() {
-          inspectorPanel.classList.remove('open');
-        });
-        
-        document.addEventListener('click', function(e) {
-          if (e.target.classList.contains('bento-action')) {
-            var card = e.target.closest('.bento-card');
-            if (!card) return;
-            
-            var viewId = card.getAttribute('data-inspector-view');
-            if (!viewId) return;
-            
-            // Determine layout class based on active page
-            var activePage = document.querySelector('.page.active');
-            inspectorPanel.classList.remove('inspector-layout-sidebar', 'inspector-layout-dashboard', 'inspector-layout-masonry');
-            
-            if (activePage) {
-              if (activePage.classList.contains('page-settings-a')) {
-                inspectorPanel.classList.add('inspector-layout-sidebar');
-              } else if (activePage.classList.contains('page-settings-b')) {
-                inspectorPanel.classList.add('inspector-layout-dashboard');
-              } else if (activePage.classList.contains('page-settings-c')) {
-                inspectorPanel.classList.add('inspector-layout-masonry');
-              }
-            }
-            
-            // Set Title
-            var header = card.querySelector('.bento-header');
-            if (header && inspectorTitle) {
-              inspectorTitle.textContent = header.textContent.trim();
-            }
-            
-            // Show correct view
-            inspectorPanel.querySelectorAll('.inspector-view').forEach(function(view) {
-              if (view.getAttribute('data-view') === viewId) {
-                view.classList.add('active');
-              } else {
-                view.classList.remove('active');
-              }
-            });
-            
-            inspectorPanel.classList.add('open');
-          }
-        });
-      }
-
-    if (document.getElementById('orchGraphStartBtn')) {
-      document.getElementById('orchGraphStartBtn').addEventListener('click', function() {
-        if (orchGraphPlaceholder) orchGraphPlaceholder.style.display = 'none';
-        if (orchDagPreview) orchDagPreview.style.display = 'flex';
-      });
-    }
-    if (document.getElementById('orchDagResetBtn')) {
-      document.getElementById('orchDagResetBtn').addEventListener('click', function() {
-        if (orchGraphPlaceholder) orchGraphPlaceholder.style.display = 'flex';
-        if (orchDagPreview) orchDagPreview.style.display = 'none';
-      });
-    }
-    (function() {
-      var canvas = document.getElementById('orchGraphCanvas');
-      var zoomPctEl = document.getElementById('orchGraphZoomPct');
-      var zoomIndicatorEl = document.getElementById('orchGraphZoomIndicator');
-      var graphScale = 1;
-      function setGraphZoom(scale) {
-        graphScale = Math.max(0.5, Math.min(2, scale));
-        if (canvas) canvas.style.transform = 'scale(' + graphScale + ')';
-        var pct = Math.round(graphScale * 100) + '%';
-        if (zoomPctEl) zoomPctEl.textContent = pct;
-        if (zoomIndicatorEl) zoomIndicatorEl.textContent = pct;
-      }
-      var orchGraphDetailBody = document.getElementById('orchGraphDetailBody');
-    if (orchGraphDetailBody) {
-      orchGraphDetailBody.addEventListener('click', function(e) {
-        var btn = e.target.closest('.orch-rungraph-detail-section-head');
-        if (!btn) return;
-        var section = btn.closest('.orch-rungraph-detail-section');
-        if (!section) return;
-        section.classList.toggle('collapsed');
-        btn.setAttribute('aria-expanded', section.classList.contains('collapsed') ? 'false' : 'true');
-      });
-    }
-    function buildNodeDetailHtml(id, title, type, state) {
-      var c1 = '<div class="orch-rungraph-detail-section" data-section"><button type="button" class="orch-rungraph-detail-section-head" aria-expanded="true">C1 Node summary</button><div class="orch-rungraph-detail-section-body"><p><strong>' + id + '</strong> ' + title + '</p><p>Type: ' + type + ' · State: ' + state + '</p><p>Run date: 2026-03-09 · Attempts: 1 · HITL Status: No HITL request</p></div></div>';
-      var c2 = '<div class="orch-rungraph-detail-section collapsed" data-section"><button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C2 Plan Mapping</button><div class="orch-rungraph-detail-section-body"><p>Breadcrumb: Phase 2 &gt; Task ' + id + '</p><button type="button" class="wizard-btn">Open plan at section</button> <button type="button" class="wizard-btn">Copy plan reference</button></div></div>';
-      var c3 = '<div class="orch-rungraph-detail-section collapsed" data-section"><button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C3 Worker Activity</button><div class="orch-rungraph-detail-section-body"><p>Claude Code / sonnet-4.5</p></div></div>';
-      var c4 = '<div class="orch-rungraph-detail-section collapsed" data-section"><button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C4 Verifier Activity</button><div class="orch-rungraph-detail-section-body"><p>Verifier: — · Final verdict: —</p></div></div>';
-      var c5 = '<div class="orch-rungraph-detail-section collapsed" data-section"><button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C5 Model, Tokens, Usage</button><div class="orch-rungraph-detail-section-body"><p>Worker model: sonnet-4.5 · Cost: $0.02</p><a href="#" class="orch-rungraph-usage-link">View in Usage</a></div></div>';
-      var c6 = '<div class="orch-rungraph-detail-section collapsed" data-section"><button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C6 HITL Controls</button><div class="orch-rungraph-detail-section-body"><p>No pending approvals for this node.</p></div></div>';
-      var c7 = '<div class="orch-rungraph-detail-section collapsed" data-section"><button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C7 Dependencies</button><div class="orch-rungraph-detail-section-body"><p>Upstream: 2 (Phase 2)</p><p>Downstream: —</p></div></div>';
-      var c8 = '<div class="orch-rungraph-detail-section collapsed" data-section"><button type="button" class="orch-rungraph-detail-section-head" aria-expanded="false">C8 Logs &amp; Events</button><div class="orch-rungraph-detail-section-body"><p>run_id: run-abc12ef · tier_id: ' + id + '</p><a href="#">Raw log</a></div></div>';
-      return c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8;
-    }
-    if (orchDagPreview) {
-        orchDagPreview.querySelectorAll('.orch-rungraph-node').forEach(function(node) {
-          node.addEventListener('click', function() {
-            var id = this.getAttribute('data-node-id');
-            orchDagPreview.querySelectorAll('.orch-rungraph-node').forEach(function(n) { n.classList.remove('selected'); });
-            orchDagPreview.querySelectorAll('.orch-rungraph-row').forEach(function(r) { r.classList.remove('selected'); });
-            this.classList.add('selected');
-            var row = orchDagPreview.querySelector('.orch-rungraph-row[data-node-id="' + id + '"]');
-            if (row) { row.classList.add('selected'); row.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
-            var detail = document.getElementById('orchGraphDetailBody');
-            if (detail) {
-              var title = (this.querySelector('.orch-rungraph-node-title') || {}).textContent || id;
-              var type = (this.querySelector('.orch-rungraph-node-type') || {}).textContent || 'Node';
-              var state = (this.querySelector('.orch-rungraph-node-state') || {}).textContent || '—';
-              detail.innerHTML = buildNodeDetailHtml(id, title, type, state);
-            }
-          });
-        });
-        orchDagPreview.querySelectorAll('.orch-rungraph-row').forEach(function(row) {
-          row.addEventListener('click', function() {
-            var id = this.getAttribute('data-node-id');
-            orchDagPreview.querySelectorAll('.orch-rungraph-node').forEach(function(n) { n.classList.remove('selected'); });
-            orchDagPreview.querySelectorAll('.orch-rungraph-row').forEach(function(r) { r.classList.remove('selected'); });
-            this.classList.add('selected');
-            var node = orchDagPreview.querySelector('.orch-rungraph-node[data-node-id="' + id + '"]');
-            if (node) node.classList.add('selected');
-            var detail = document.getElementById('orchGraphDetailBody');
-            if (detail) {
-              var nameCell = (this.cells && this.cells[0]) ? this.cells[0].textContent : id;
-              var type = (this.cells && this.cells[1]) ? this.cells[1].textContent : '—';
-              var state = (this.cells && this.cells[2]) ? this.cells[2].textContent : '—';
-              detail.innerHTML = buildNodeDetailHtml(id, nameCell, type, state);
-            }
-          });
-        });
-        if (canvas) {
-          canvas.addEventListener('click', function(e) {
-            if (e.target.closest('.orch-rungraph-node')) return;
-            orchDagPreview.querySelectorAll('.orch-rungraph-node').forEach(function(n) { n.classList.remove('selected'); });
-            orchDagPreview.querySelectorAll('.orch-rungraph-row').forEach(function(r) { r.classList.remove('selected'); });
-            var detail = document.getElementById('orchGraphDetailBody');
-            if (detail) detail.innerHTML = '<p class="orch-rungraph-no-selection" id="orchGraphNoSelection">No node selected.</p>';
-          });
-        }
-        var zoomBtns = orchDagPreview.querySelectorAll('.orch-rungraph-zoom');
-        if (zoomBtns[0]) zoomBtns[0].addEventListener('click', function() { setGraphZoom(graphScale * 1.2); });
-        if (zoomBtns[1]) zoomBtns[1].addEventListener('click', function() { setGraphZoom(graphScale / 1.2); });
-        var fitBtn = orchDagPreview.querySelector('.orch-rungraph-fit');
-        if (fitBtn) fitBtn.addEventListener('click', function() { setGraphZoom(1); });
-      }
-    })();
-
-    document.querySelectorAll('.orch-history-row').forEach(function(row) {
-      row.addEventListener('click', function() {
-        var runId = this.getAttribute('data-run-id');
-        var orchPage = document.querySelector('.page.page-orchestrator');
-        if (orchPage && runId) {
-          switchOrchTab(orchPage, 'node_graph');
-          var ph = document.getElementById('orchGraphPlaceholder');
-          var prev = document.getElementById('orchDagPreview');
-          if (ph && prev) { ph.style.display = 'none'; prev.style.display = 'flex'; }
-        }
-      });
-    });
-    document.querySelectorAll('.orch-evidence-row').forEach(function(row) {
-      row.addEventListener('click', function() {
-        var tbody = this.closest('tbody');
-        if (tbody) tbody.querySelectorAll('.orch-evidence-row').forEach(function(r) { r.classList.remove('selected'); });
-        this.classList.add('selected');
-        var detail = document.getElementById('orchEvidenceDetailBody');
-        if (detail) {
-          var type = this.getAttribute('data-type') || '';
-          var desc = this.getAttribute('data-desc') || this.cells[3]?.textContent || '';
-          var typePreview = type === 'Screenshot' ? 'Screenshot: image would display here.' : type === 'FileSnapshot' ? 'File snapshot: diff view would display here.' : type === 'GateReport' ? 'Gate report: pass/fail checklist would display here.' : desc;
-          detail.textContent = typePreview;
-        }
-      });
-    });
-
-    const chatPanel = document.getElementById('chatPanel');
-    const filesPanel = document.getElementById('filesPanel');
-    const floatingChat = document.getElementById('floatingChat');
-
-    document.querySelector('.activity-bar .icon[title="Chat"]').addEventListener('click', function() {
-      if (chatDetached) return;
-      chatPanel.classList.toggle('hidden');
-    });
-    document.querySelector('.activity-bar .icon[title="Files"]').addEventListener('click', function() {
-      filesPanel.classList.toggle('hidden');
-    });
-    document.getElementById('activityBarToggle').addEventListener('click', function() {
-      var bar = document.getElementById('activityBar');
-      bar.classList.toggle('collapsed');
-      this.innerHTML = bar.classList.contains('collapsed') ? '&gt;' : '&lt;';
-    });
-    document.getElementById('terminalGroupSelect').addEventListener('change', function() {
-      var g = this.value;
-      var grid = document.querySelector('.terminal-grid');
-      if (grid) grid.setAttribute('data-group', g);
-    });
-
-    document.querySelectorAll('.chat-modes .mode').forEach(function(m) {
-      m.addEventListener('click', function() {
-        const chatMain = m.closest('.chat-main');
-        chatMain.querySelectorAll('.mode').forEach(x => x.classList.remove('active'));
-        m.classList.add('active');
-        const planCard = chatMain.querySelector('.plan-card');
-        if (planCard) planCard.style.display = m.dataset.mode === 'plan' ? 'block' : 'none';
-      });
-    });
-    document.querySelectorAll('.message-stream').forEach(function(stream) {
-      stream.addEventListener('click', function(e) {
-        const header = e.target.closest('.block-header');
-        if (header) {
-          const block = header.closest('.message-block');
-          if (block) block.classList.toggle('collapsed');
-        }
-      });
-    });
-
-    document.getElementById('closeChatBtn').addEventListener('click', function() {
-      if (!chatDetached) chatPanel.classList.add('hidden');
-    });
-
-    document.getElementById('popOutBtn').addEventListener('click', function() {
-      chatDetached = !chatDetached;
-      if (chatDetached) {
-        chatPanel.classList.add('hidden');
-        floatingChat.classList.add('visible');
-      } else {
-        chatPanel.classList.remove('hidden');
-        floatingChat.classList.remove('visible');
-      }
-    });
-
-    document.getElementById('closeFloat').addEventListener('click', function() {
-      chatDetached = false;
-      chatPanel.classList.remove('hidden');
-      floatingChat.classList.remove('visible');
-    });
-
-    let isDragging = false;
-    let startX, startY, startLeft, startTop;
-    const floatTitle = document.getElementById('floatDrag');
-
-    floatTitle.addEventListener('mousedown', function(e) {
-      if (e.target.classList.contains('close-float')) return;
-      isDragging = true;
-      startX = e.clientX;
-      startY = e.clientY;
-      startLeft = floatingChat.offsetLeft;
-      startTop = floatingChat.offsetTop;
-    });
-
-    document.addEventListener('mousemove', function(e) {
-      if (!isDragging) return;
-      floatingChat.style.left = (startLeft + e.clientX - startX) + 'px';
-      floatingChat.style.top = (startTop + e.clientY - startY) + 'px';
-    });
-
-    document.addEventListener('mouseup', function() {
-      isDragging = false;
-    });
-
-    document.getElementById('collapseBottom').addEventListener('click', function() {
-      document.getElementById('bottomPanel').classList.toggle('collapsed');
-      this.textContent = document.getElementById('bottomPanel').classList.contains('collapsed') ? '▲' : '▼';
-    });
-
-    document.querySelectorAll('.file-tree .file').forEach(file => {
-      file.addEventListener('click', function() {
-        // File opened
-      });
-    });
-
-    document.querySelector('.activity-bar .icon:first-child').addEventListener('click', function() {
-      // Home view
-    });
-
-    document.getElementById('statusMenuBtn').addEventListener('click', function(e) {
-      e.stopPropagation();
-      document.getElementById('statusMenuDropdown').classList.toggle('visible');
-    });
-    document.addEventListener('click', function() {
-      document.getElementById('statusMenuDropdown').classList.remove('visible');
-    });
-    document.querySelectorAll('.chat-thread-item').forEach(item => {
-      item.addEventListener('click', function() {
-        document.querySelectorAll('.chat-thread-item').forEach(i => i.classList.remove('active'));
-        this.classList.add('active');
-      });
-    });
-  // WIZARD LOGIC
     window.switchWizardStep = function(stepIndex) {
-      console.log('Switching to step:', stepIndex);
       document.querySelectorAll('.page-wizard').forEach(wizardContainer => {
           wizardContainer.querySelectorAll('.wizard-nav-step').forEach(el => {
             el.classList.remove('active', 'complete');
@@ -5856,73 +5704,83 @@ test result: ok. 3 passed</pre></div>
             if (idx === stepIndex) el.classList.add('active');
           });
           wizardContainer.querySelectorAll('.wizard-nav-connector').forEach((el, i) => {
-            if (i < stepIndex) {
-                el.classList.add('complete');
-            } else {
-                el.classList.remove('complete');
-            }
+            el.classList.toggle('complete', i < stepIndex);
           });
-          
           const panels = wizardContainer.querySelectorAll('.wizard-step-panel');
           panels.forEach(panel => {
             const idx = parseInt(panel.getAttribute('data-wizard-panel'));
             if (idx === stepIndex) {
               panel.style.display = 'flex';
               panel.classList.add('active');
-              panel.classList.remove('exit-left');
-            } else if (idx < stepIndex) {
-              panel.style.display = 'none';
-              panel.classList.remove('active');
-              panel.classList.add('exit-left');
+              if (stepIndex === 2) {
+                 const cp = document.getElementById('chatPanel');
+                 if (cp) cp.classList.remove('hidden');
+                 if (window.switchToChatThread) window.switchToChatThread('thread1');
+              }
             } else {
               panel.style.display = 'none';
-              panel.classList.remove('active', 'exit-left');
+              panel.classList.remove('active');
             }
           });
       });
     };
-    
+
+    function initChatResizer() {
+      const resizer = document.getElementById('chatResizer');
+      const panel = document.getElementById('chatPanel');
+      if (!resizer || !panel) return;
+      let isResizing = false;
+      resizer.addEventListener('mousedown', (e) => { isResizing = true; resizer.classList.add('resizing'); document.body.style.cursor = 'col-resize'; });
+      document.addEventListener('mousemove', (e) => {
+        if (!isResizing) return;
+        const newWidth = window.innerWidth - e.clientX;
+        if (newWidth >= 320 && newWidth <= 800) { panel.style.width = newWidth + 'px'; panel.style.maxWidth = 'none'; }
+      });
+      document.addEventListener('mouseup', () => {
+        if (isResizing) { isResizing = false; resizer.classList.remove('resizing'); document.body.style.cursor = 'default'; }
+      });
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
-      // Event delegation for anything that navigates the wizard
+      initChatResizer();
       document.body.addEventListener('click', (e) => {
-        // Handle next/back buttons and top nav steps
         const target = e.target.closest('[data-step-target], [data-nav-step]');
         if (target) {
             const attr = target.getAttribute('data-step-target') || target.getAttribute('data-nav-step');
             const step = parseInt(attr);
-            if (!isNaN(step)) {
-                window.switchWizardStep(step);
-            }
+            if (!isNaN(step)) window.switchWizardStep(step);
         }
+        const threadItem = e.target.closest('.chat-thread-item');
+        if (threadItem) window.switchToChatThread(threadItem.getAttribute('data-thread'));
+        const dropdownBtn = e.target.closest('.chat-dropdown-btn');
+        if (dropdownBtn) window.toggleChatDropdown(dropdownBtn.getAttribute('data-dropdown'));
+        const closeBtn = e.target.closest('.closeChatBtn');
+        if (closeBtn) {
+            document.getElementById('chatPanel').classList.add('hidden');
+            document.getElementById('floatingChat').style.display = 'none';
+        }
+        const popOutBtn = e.target.closest('.popOutBtn');
+        if (popOutBtn) {
+            document.getElementById('chatPanel').classList.add('hidden');
+            document.getElementById('floatingChat').style.display = 'flex';
+        }
+        if (e.target.closest('.returnToChatBtn')) window.switchToChatThread('thread4');
       });
       
-      document.querySelectorAll('.wizard-intent-card').forEach(card => {
-        card.addEventListener('click', function() {
-          const siblings = this.parentElement.querySelectorAll('.wizard-intent-card');
-          siblings.forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.page-tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          var pageId = this.getAttribute('data-page');
+          if (!pageId) return;
+          document.querySelectorAll('.page-tab').forEach(function(t) { t.classList.remove('active'); });
           this.classList.add('active');
+          document.querySelectorAll('.primary-content > .page').forEach(function(p) {
+            p.classList.toggle('active', p.classList.contains('page-' + pageId));
+          });
         });
       });
-      
-      document.querySelectorAll('.wizard-doc-pill').forEach(pill => {
-        pill.addEventListener('click', function() {
-          const siblings = this.parentElement.querySelectorAll('.wizard-doc-pill');
-          siblings.forEach(s => s.classList.remove('active'));
-          this.classList.add('active');
-          const view = this.closest('.wizard-binder-container').querySelector('.wizard-binder-view');
-          if (view) {
-            view.style.animation = 'none';
-            view.offsetHeight; 
-            view.style.animation = 'fadeIn 0.3s ease-in-out';
-          }
-        });
-      });
-      
-      // Make absolutely sure we init after everything renders
-      setTimeout(() => {
-        window.switchWizardStep(0);
-      }, 50);
+
+      window.switchWizardStep(0);
     });
-</script>
+    </script>
 </body>
 </html>

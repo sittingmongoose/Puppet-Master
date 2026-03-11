@@ -406,10 +406,19 @@ Required blocked event families:
 - `unraid.template_repo.setup.blocked`
 
 ##### Canonical enum binding
+`TemplateRepoStatus` is exactly:
 
+- `unconfigured`
+- `config_invalid`
+- `clean`
+- `dirty_uncommitted`
+- `committed_local_only`
+- `push_in_progress`
+- `push_failed`
+- `diverged_remote`
+- `needs_review`
 
-#### Additions: Runtime Artifacts (GUI panel) event types and index
-
+##### Runtime Artifacts (GUI panel) event types and index
 **Scope:** Agent-run outputs displayed in the Artifacts panel (see Plans/Runtime_Artifacts_Panel.md). Distinct from Project Plan Package artifacts (Plans/Project_Output_Artifacts.md).
 
 **Seglog event types (one per artifact type):** Each event uses the standard EventRecord envelope (schema, ts, seq, type, run_id, thread_id, payload). The `type` value is one of:
@@ -439,19 +448,9 @@ Required blocked event families:
 
 **cost_usage alignment:** The payload of `runtime_artifact.cost_usage` events MUST align with the canonical `usage.event` schema (tokens_in, tokens_out, reasoning_tokens, cost, platform/provider, model, etc.). Canonical usage remains `usage.event`; cost_usage is an attribution record that references the same pipeline. Ledger and Usage page consume the same data.
 
+**Local usage mirror compatibility:** Where a local append-only `usage.jsonl` mirror exists, it MUST preserve the same canonical field names as `usage.event`, using `operation`, `tokens_in`, `tokens_out`, and `reasoning_tokens`. Legacy `action` plus aggregate `tokens` is compatibility-only wording and MUST NOT be reintroduced as the write shape.
+
 ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/usage-feature.md, PolicyRule:Decision_Policy.md§2
-
-`TemplateRepoStatus` is exactly:
-
-- `unconfigured`
-- `config_invalid`
-- `clean`
-- `dirty_uncommitted`
-- `committed_local_only`
-- `push_in_progress`
-- `push_failed`
-- `diverged_remote`
-- `needs_review`
 
 - Effective auth capability snapshots MAY be restored for UI display, but they are advisory until revalidated.
 - Secret material MUST NOT be mirrored into redb or seglog.
@@ -521,7 +520,6 @@ ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/C
 - **editor snippets:** JSON for snippet collections (`name`, `prefixes`, `body`, `description`, `scope`, `source`).
 
 **Migrations:** Use redb's schema version or a custom `schema_version` key in a `meta` namespace. On open, check version; if older, run migration functions (e.g. create new namespaces, copy/transform data, bump version). Document each migration (version N → N+1) and keep migrations reversible where possible (e.g. add column, don't drop until next major).
-
 #### 2.3.0 Thread checkpoint restoration contract
 
 - `thread_checkpoint.{thread_id}` stores the currently selected restore pointer for that thread, not the full restore history.

@@ -711,5 +711,6 @@ Each topic below lists 1-5 specific points where Puppet Master's implementation 
 ### 10.6 Notable process docs (UI blocker/orchestrator pattern)
 - Session composer "blocker" orchestrator pattern (question/permission blocks prompt input): `specs/session-composer-refactor-plan.md` and `packages/app/src/pages/session/composer/*`
 
-
-**Usage pipeline:** Usage collection and storage (message-level usage, getUsage-style normalization, processor finish-step) are covered by Plans/usage-feature.md as SSOT. Future extraction should reference that plan so usage pipeline terminology does not duplicate or contradict.
+### 10.7 Usage pipeline and normalization mapping
+- Upstream reference pattern: OpenCode's message-level usage flow (`Session.getUsage`, processor finish-step, and related normalization logic) is useful as an extraction target for how response metadata becomes durable usage records.
+- Puppet Master mapping rule: all extracted usage terminology, persistence semantics, and UI linkage MUST map into `Plans/usage-feature.md` and `Plans/storage-plan.md` rather than creating a parallel OpenCode-shaped usage vocabulary in this document or downstream packets.

@@ -1,5 +1,4 @@
 ## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)
-
 File/artifact browsing must support the new runtime artifacts and reports produced by scheduler/remediation flows while preserving canonical runtime identity.
 
 ### Required support

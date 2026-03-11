@@ -1,5 +1,4 @@
 ## Runtime Scheduler Recovery Summary Consolidation Addendum (2026-03-09)
-
 Summary bullets for this feature family MUST say:
 - deterministic scored ready-set scheduling instead of pure lexical dispatch
 - event-driven queue-analysis passes keyed by `scheduler_pass_id`

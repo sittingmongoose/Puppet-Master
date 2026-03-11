@@ -8,8 +8,8 @@
 +------+------------------------------------------+---------------+
 |      |                                          |               |
 | ACT  |   PRIMARY CONTENT AREA                   | SIDE PANEL    |
-| BAR  |   (active page view)                     | [Chat] [Files]|
-|      |                                          | Detachable    |
+| BAR  |   (active page view)                     | Activity-bar  |
+|      |                                          | surface slot  |
 | 48px |                                          | 240-480px     |
 |      |                                          |               |
 |      +------------------------------------------+               |
@@ -28,7 +28,7 @@
 | **Title bar** | `HorizontalLayout` | height: 28px fixed | App name (Orbitron Bold 14px), **project bar** (dropdown + recent list), theme toggle, settings gear |
 | **Activity bar** | `VerticalLayout` | width: 48px fixed | Icon-only vertical nav; always visible |
 | **Primary content** | `VerticalLayout` (flex: 1) | fills remaining space | Active page view; scrollable internally per page |
-| **Side panel** | `VerticalLayout` | width: 240-480px, resizable | Chat or File Manager tabs; detachable |
+| **Side panel** | `VerticalLayout` | width: 240-480px, resizable | Hosts the currently selected activity-bar side-panel surface; one visible at a time; detachable where supported |
 | **Bottom panel** | `VerticalLayout` | height: 120-300px, collapsible | Terminal, Problems, Output tabs |
 | **Status bar** | `HorizontalLayout` | height: 24px fixed | Chat mode, platform/model dropdowns, context usage, orchestrator status |
 

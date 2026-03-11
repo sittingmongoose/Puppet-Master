@@ -943,7 +943,6 @@ Reference additions for rewrite planning:
 - Planning documents, including future Deep Plan Mode surfaces, use the same Markdown/Mermaid pipeline and canonical-source rules.
 
 ## Runtime Scheduler Recovery Summary Consolidation Addendum (2026-03-09)
-
 Summary bullets for this feature family MUST say:
 - deterministic scored ready-set scheduling instead of pure lexical dispatch
 - event-driven queue-analysis passes keyed by `scheduler_pass_id`

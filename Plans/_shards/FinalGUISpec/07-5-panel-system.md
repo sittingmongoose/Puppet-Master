@@ -1,9 +1,7 @@
 ## 5. Panel System
 
 ### 5.1 Detachable Panels
-
-
-**Panels that can occupy the side panel (one at a time; last-click wins):** Chat, File Manager, Git (GitHub), Docker Manage, Source Control, Unraid, Artifacts. See §4.1 Activity Bar for which activity bar icon shows which panel. Each of these panels supports detach/re-dock as below.
+**Side-panel occupancy contract (one at a time; last-click wins):** The side panel is the single activity-bar-driven side-panel slot. Run & Debug, Git (GitHub), Docker Manage, Source Control, Unraid, Artifacts, Chat, and File Manager can occupy it one at a time. See §4.1 Activity Bar for which icon shows which panel. Detach/re-dock support is limited to the panels listed below.
 
 The following panels support detach/re-dock:
 - **Chat panel**
@@ -11,7 +9,6 @@ The following panels support detach/re-dock:
 - **Bottom panel** (Terminal/Output)
 
 Other views (Dashboard, Settings, etc.) remain in the primary content area and are not detachable.
-
 ### 5.2 Panel State Machine
 
 Per panel: **DOCKED** <-> **FLOATING**. Same Slint component is used inline when docked or as the root of a separate Slint `Window` when floating.
@@ -71,12 +68,7 @@ Three-signal system for panel detach discovery:
 3. **First-run hint (one-time):** On first use of Chat or File Manager, inline banner: "This panel can be popped out into its own window. [Try it] [Dismiss]." Dismissed permanently after first interaction.
 
 ### 5.7 Panel Persistence
-
-
 **Layout persistence per project:** Panel dock state (docked side and width, or floating position/size), **activity bar icon order**, and **which panel was last visible** are persisted **per project** in redb (e.g. under keys scoped by `project_id`). Restored on startup and when switching projects. If a floating window was on a monitor no longer connected, fall back to docked state.
-
-Panel dock state (docked side and width, or floating position/size) persisted in redb under `layout:v1` key. Restored on startup and after theme restart. If a floating window was on a monitor no longer connected, fall back to docked state.
-
 ### 5.8 Panel Edge Cases and Recovery
 
 **Data sync:** Floating and docked instances share the same `Rc<VecModel<T>>` and scalar properties. When the Rust side replaces an entire model (e.g., project switch), it must update the shared `Rc` in-place rather than reassigning the pointer, so both windows stay synchronized.
