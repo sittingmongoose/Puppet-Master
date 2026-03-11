@@ -211,16 +211,6 @@ These rows are authoritative for Docker/Unraid flows and supersede any duplicate
 | `cmd.orchestrator.update_unraid_template` | `{ publish_result_id?: string }` | `unraid.template.generation.started`, `unraid.template.generation.completed`, `unraid.template.generation.failed`, or `unraid.template.generation.blocked` | Orchestrator page, Docker Manage |
 | `cmd.orchestrator.push_unraid_template_repo` | `{ template_repo_id?: string }` | `unraid.template_repo.push.started`, `unraid.template_repo.push.completed`, `unraid.template_repo.push.failed`, or `unraid.template_repo.push.blocked` | Orchestrator page, Docker Manage |
 | `cmd.orchestrator.open_unraid_template_repo` | `{ template_repo_id?: string }` | no persisted domain event (external open action) | Orchestrator page, Docker Manage |
-#### Additional rows required in §2.5 Orchestrator page commands
-
-| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
-|---|---|---|---|
-| `cmd.orchestrator.push_image` | `{ namespace?: string, repository?: string, tag_template?: string }` | `docker.publish.started`, `docker.publish.completed` or `docker.publish.failed` | Orchestrator page, Dashboard, Docker Manage |
-| `cmd.orchestrator.open_running_container` | `{ preview_session_id?: string, url?: string }` | no persisted domain event (external open action) | Orchestrator page, Dashboard, Docker Manage |
-| `cmd.orchestrator.open_container_logs` | `{ preview_session_id?: string }` | no persisted domain event (navigation/open action) | Orchestrator page, Dashboard, Docker Manage |
-| `cmd.orchestrator.update_unraid_template` | `{ publish_result_id?: string }` | `unraid.template.generation.started`, `unraid.template.generation.completed` or `unraid.template.generation.failed` | Orchestrator page, Docker Manage |
-| `cmd.orchestrator.push_unraid_template_repo` | `{ template_repo_id?: string }` | `unraid.template_repo.push.started`, `unraid.template_repo.push.completed` or `unraid.template_repo.push.failed` | Orchestrator page, Docker Manage |
-| `cmd.orchestrator.open_unraid_template_repo` | `{ template_repo_id?: string }` | no persisted domain event (external open action) | Orchestrator page, Docker Manage |
 
 These IDs are required by `Plans/Orchestrator_Page.md`.
 
@@ -333,7 +323,17 @@ These IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#UICommand
 
 ---
+### 2.8A Side-panel and artifacts navigation commands
 
+| Command | Payload | Event / persistence | Notes |
+|---|---|---|---|
+| `cmd.panel.switch` | `{ "panel_id": "git" | "docker" | "source_control" | "unraid" | "artifacts" | "chat" | "files" | "run_debug", "project_id": "<optional>" }` | Layout/UI state only; no domain event required. | Single side-panel slot; last-click wins. Used by the activity bar, keyboard shortcuts, and command palette. |
+| `cmd.artifacts.open_panel` | `{ "project_id": "<optional>", "filter": { "artifact_type": "<optional>", "task_id": "<optional>" } }` | Layout/UI state only; no domain event required. | Opens or focuses the Artifacts panel in the side panel. |
+| `cmd.artifacts.select_item` | `{ "artifact_id": "<required>", "project_id": "<optional>" }` | Layout/UI state only; no domain event required. | Selects/highlights a runtime artifact row or card inside the Artifacts panel. |
+| `cmd.artifacts.show_in_ledger` | `{ "artifact_id": "<required>", "usage_event_ref": "<optional>", "run_id": "<optional>", "thread_id": "<optional>" }` | Layout/UI state only; no domain event required. | Opens Ledger with the canonical usage event in scope; when no direct usage ref exists, filter by run/thread/timestamp. |
+| `cmd.artifacts.show_in_usage` | `{ "artifact_id": "<required>", "usage_event_ref": "<optional>", "run_id": "<optional>", "thread_id": "<optional>" }` | Layout/UI state only; no domain event required. | Opens the Usage page or thread Usage tab with the same canonical usage event in scope. |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
 ## References
 - `Plans/Contracts_V0.md#UICommand`
 - `Plans/GitHub_API_Auth_and_Flows.md`
@@ -346,79 +346,7 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and
 - `Plans/Wiring_Matrix.schema.json`
 - `Plans/Wiring_Matrix.md`
 
-## Scheduler Recovery and blocked-State Commands Addendum (2026-03-08)
-
-Add or update commands so retry/recovery semantics are explicit.
-
-### 1. Retry commands
-
-`cmd.graph.retry_node` and `cmd.orchestrator.retry_node` payloads must gain:
-- `retry_mode: "from_safe_point" | "fresh_attempt"`
-- `safe_point_id?`
-- `expected_failure_class?`
-
-### 2. Remediation detail command
-
-Add command:
-- `cmd.orchestrator.open_remediation_details`
-- payload: `{ run_id, node_id, remediation_root_id }`
-
-### 3. Queue analysis command
-
-Add command:
-- `cmd.orchestrator.open_queue_analysis`
-- payload: `{ run_id, analysis_id? }`
-
-### 4. Wizard blocked command parity
-
-Any existing wizard `attention_required` resume/view actions must have blocked-state parity using the same deep-link model.
-
-### 5. Contract rules
-
-- retry commands must not silently choose safe-point vs fresh-attempt behavior
-- blocked-state commands must carry enough identity to reopen the exact report/context
-## Runtime Recovery Command Catalog Addendum (2026-03-09)
-
-Add or reconcile the following canonical UI commands:
-- `cmd.graph.open_queue_analysis`
-- `cmd.graph.open_attempt_details`
-- `cmd.graph.retry_attempt`
-- `cmd.graph.resume_blocked`
-- `cmd.graph.restore_safe_point_then_retry`
-- `cmd.graph.open_remediation_lineage`
-- `cmd.orchestrator.filter_blocked_reason`
-- `cmd.orchestrator.open_safe_point_history`
-
-### Payload requirements
-Payloads must include enough identity to avoid ambiguity:
-- `run_id`
-- `thread_id` when relevant
-- `node_id`
-- `attempt_id` when an attempt exists
-- `safe_point_id` when acting on a restore/retry path
-- `blocked_reason_code` or `failure_class` when the action is classification-specific
-
-Duplicate or overlapping command rows must be merged so one command ID maps to one canonical meaning and payload shape.
-## Runtime Recovery Action Mapping Reconciliation Addendum (2026-03-09)
-
-Canonical runtime recovery actions map to canonical command ids.
-
-| `allowed_action_id` | graph command family | orchestrator command family | minimum payload |
-|---|---|---|---|
-| `approve` | approval command | approval command | `run_id`, `node_id`, `attempt_id?`, request identity |
-| `decline` | decline command | decline command | `run_id`, `node_id`, `attempt_id?`, request identity |
-| `retry_now` | retry-attempt command | retry-attempt command | `run_id`, `node_id`, `attempt_id` |
-| `restore_safe_point_then_retry` | restore-and-retry command | restore-and-retry command | `run_id`, `node_id`, `attempt_id`, `safe_point_id` |
-| `start_fresh_attempt` | fresh-attempt command | fresh-attempt command | `run_id`, `node_id`, `attempt_id` |
-| `resume_after_prerequisite` | resume-blocked command | resume-blocked command | `run_id`, `node_id`, `attempt_id?`, `blocked_reason_code` |
-| `replan` | replan command | replan command | `run_id`, `node_id`, `attempt_id?` |
-| `skip_node` | skip-node command | skip-node command | `run_id`, `node_id`, `attempt_id?` |
-| `abort_run` | abort-run command | abort-run command | `run_id` |
-| `open_details` | open-details command | open-details command | `run_id`, `node_id`, `attempt_id?` |
-
-Legacy retry-node style command ids MUST be treated as deprecated aliases of attempt-centric commands.
-ContractRef: UICommand:cmd.orchestrator.retry_attempt, UICommand:cmd.orchestrator.restore_safe_point_then_retry, ContractName:Plans/Contracts_V0.md
-## Canonical Runtime Recovery Command Consolidation Addendum (2026-03-09)
+## Canonical Runtime Recovery Command Consolidation (2026-03-09)
 
 Canonical recovery commands use one shared namespace: `cmd.runtime.*`.
 Legacy `cmd.graph.*` and `cmd.orchestrator.*` recovery IDs are deprecated aliases only.
@@ -445,36 +373,7 @@ Legacy `cmd.graph.*` and `cmd.orchestrator.*` recovery IDs are deprecated aliase
 When a blocked episode exists before any attempt is created, recovery targets `blocked_sequence` directly and MUST NOT fabricate an `attempt_id`.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
-## Canonical Runtime Recovery Command Consolidation
-
-Canonical recovery commands use one shared namespace: `cmd.runtime.*`.
-Legacy `cmd.graph.*` and `cmd.orchestrator.*` recovery IDs are deprecated aliases only.
-
-| `allowed_action_id` | canonical command id | minimum args |
-|---|---|---|
-| `approve` | `cmd.runtime.approve` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
-| `decline` | `cmd.runtime.decline` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
-| `retry_now` | `cmd.runtime.retry_now` | `{ run_id, node_id, attempt_id }` |
-| `resume_after_prerequisite` | `cmd.runtime.resume_after_prerequisite` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
-| `restore_safe_point_then_retry` | `cmd.runtime.restore_safe_point_then_retry` | `{ run_id, node_id, attempt_id, safe_point_id }` |
-| `start_fresh_attempt` | `cmd.runtime.start_fresh_attempt` | `{ run_id, node_id, attempt_id? }` |
-| `replan` | `cmd.runtime.replan` | `{ run_id, node_id, attempt_id? }` |
-| `skip_node` | `cmd.runtime.skip_node` | `{ run_id, node_id, attempt_id? }` |
-| `abort_run` | `cmd.runtime.abort_run` | `{ run_id }` |
-| `open_details` | `cmd.runtime.open_attempt_details` | `{ run_id, node_id, attempt_id? }` |
-
-### Navigation commands
-- `cmd.runtime.open_queue_analysis` -> `{ run_id, scheduler_pass_id }`
-- `cmd.runtime.open_remediation_lineage` -> `{ run_id, remediation_root_id }`
-- `cmd.runtime.open_safe_point_history` -> `{ run_id, safe_point_id? }`
-
-### Pre-attempt blocked rule
-When a blocked episode exists before any attempt is created, recovery targets `blocked_sequence` directly and MUST NOT fabricate an `attempt_id`.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
-## Blocked-State Recovery Command Definitions Addendum
-
-### Recovery commands
+### Recovery command definitions
 
 The following commands MUST have full definitions in the UI Command Catalog to support blocked-state recovery UI:
 
@@ -482,16 +381,16 @@ ContractRef: ContractName:Plans/Contracts_V0.md, UICommand:cmd.runtime.approve, 
 
 | Command ID | Args schema | Expected events | Affected surfaces | Acceptance check |
 |-----------|-------------|----------------|-------------------|------------------|
-| `cmd.runtime.approve` | `{ node_id, attempt_id, blocked_reason_code }` | `node.unblocked`, `attempt.started` | Run Graph View, Dashboard, Thread | Node transitions from blocked to running |
-| `cmd.runtime.decline` | `{ node_id, attempt_id }` | `node.blocked` (remains blocked with `user_declined`) | Run Graph View, Dashboard, Thread | Node blocked_reason_code updated |
-| `cmd.runtime.retry_now` | `{ node_id, attempt_id? }` | `attempt.started` | Run Graph View, Dashboard | New attempt begins for node |
-| `cmd.runtime.resume_after_prerequisite` | `{ node_id, prerequisite_type }` | `node.unblocked`, `scheduler.pass` | Run Graph View, Dashboard | Scheduler wakeup includes node |
-| `cmd.runtime.restore_safe_point_then_retry` | `{ node_id, safe_point_id }` | `safe_point.restored`, `attempt.started` | Run Graph View | Restore completes, new attempt begins |
-| `cmd.runtime.start_fresh_attempt` | `{ node_id }` | `attempt.started` | Run Graph View | Fresh attempt with no safe-point restore |
-| `cmd.runtime.replan` | `{ node_id? }` | `run.graph_canonical_locked` (new generation) | Run Graph View, Dashboard | replan_generation increments |
-| `cmd.runtime.skip_node` | `{ node_id }` | `node.skipped` | Run Graph View | Node marked skipped, dependents notified |
+| `cmd.runtime.approve` | Canonical minimum args above + blocked/request identity as needed | `node.unblocked`, `attempt.started` | Run Graph View, Dashboard, Thread | Node transitions from blocked to running |
+| `cmd.runtime.decline` | Canonical minimum args above + blocked/request identity as needed | `node.blocked` (remains blocked with `user_declined`) | Run Graph View, Dashboard, Thread | Node blocked_reason_code updated |
+| `cmd.runtime.retry_now` | Canonical minimum args above | `attempt.started` | Run Graph View, Dashboard | New attempt begins for node |
+| `cmd.runtime.resume_after_prerequisite` | Canonical minimum args above + prerequisite metadata as needed | `node.unblocked`, `scheduler.pass` | Run Graph View, Dashboard | Scheduler wakeup includes node |
+| `cmd.runtime.restore_safe_point_then_retry` | Canonical minimum args above | `safe_point.restored`, `attempt.started` | Run Graph View | Restore completes, new attempt begins |
+| `cmd.runtime.start_fresh_attempt` | Canonical minimum args above | `attempt.started` | Run Graph View | Fresh attempt with no safe-point restore |
+| `cmd.runtime.replan` | Canonical minimum args above | `run.graph_canonical_locked` (new generation) | Run Graph View, Dashboard | replan_generation increments |
+| `cmd.runtime.skip_node` | Canonical minimum args above | `node.skipped` | Run Graph View | Node marked skipped, dependents notified |
 | `cmd.runtime.abort_node` | `{ node_id }` | `node.aborted` | Run Graph View | Node marked permanently failed |
-| `cmd.runtime.abort_run` | `{ run_id }` | `run.aborted` | Dashboard, Run Graph View | Entire run terminates |
+| `cmd.runtime.abort_run` | Canonical minimum args above | `run.aborted` | Dashboard, Run Graph View | Entire run terminates |
 
 All blocked-state recovery action buttons in the UI MUST map to one of these commands via `allowed_action_ids[]`.
 

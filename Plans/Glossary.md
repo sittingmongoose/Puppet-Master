@@ -28,6 +28,7 @@ ContractRef: Invariant:INV-010
 ---
 
 ## 2. Core terms
+This section defines the canonical terms used across runtime orchestration, artifacts, and usage surfaces.
 
 ### Runtime orchestration and recovery terms
 - **Scheduler pass** -- one deterministic queue-analysis and dispatch cycle. Each pass refreshes readiness, blocked/backoff state, available capacity, score breakdowns, and selected nodes before dispatching work.
@@ -63,6 +64,15 @@ ContractRef: ContractName:Contracts_V0.md#UICommand, ContractName:Plans/Executor
 
 ---
 
+### Runtime artifacts and usage terms
+
+- **Artifacts panel** — The side-panel surface that lists project-scoped runtime artifacts projected from `runtime_artifact.*` events.
+- **Runtime artifact** — An agent-run output represented by a typed `runtime_artifact.*` event and indexed in `artifacts_index:v1:{project_id}` for GUI display. Distinct from Project Plan Package artifacts.
+- **Project Plan Package artifact** — A project output defined by `Plans/Project_Output_Artifacts.md`; it is not automatically a runtime artifact unless separately emitted through the runtime-artifact pipeline.
+- **cost_usage artifact** — A runtime artifact that attributes cost/usage using the same canonical schema as `usage.event`; it is not a second usage store.
+- **Show in Ledger / Show in Usage** — Navigation actions from a `cost_usage` artifact that open Ledger or Usage with the canonical usage event in scope.
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/usage-feature.md
 ## 3. Anti-drift documents
 - **Spec Lock** -- `Plans/Spec_Lock.json`; locked decisions that MUST NOT drift.
 - **Crosswalk** -- `Plans/Crosswalk.md`; ownership boundaries for primitives.
@@ -110,61 +120,3 @@ ContractRef: Primitive:SessionStore, ContractName:Plans/storage-plan.md, PolicyR
 - `Plans/Architecture_Invariants.md`
 - `Plans/Contracts_V0.md`
 - `Plans/Spec_Lock.json`
-## Runtime Scheduler / Recovery Terminology Addendum (2026-03-09)
-
-Confirm or add the following canonical terms:
-- **attempt_id** -- the stable identity for one execution attempt of a node or remediation child
-- **queue analysis** -- the scheduler-pass record describing ready nodes, selected nodes, score breakdowns, and non-selected reasons
-- **wake reason** -- the canonical trigger for rerunning queue analysis
-- **blocked outcome** -- a non-executed or externally prevented outcome that preserves work and exposes recovery actions instead of being treated as a generic failure
-- **safe point** -- runtime-internal recovery anchor created before mutation-capable execution or remediation apply
-- **restore point** -- user-facing history checkpoint distinct from safe points
-- **remediation lineage** -- the parent/child chain connecting an originating failed attempt to automatic fix attempts and final resolution
-- **graph lock** -- the boundary after which canonical graph integrity failures must not silently degrade to flat execution
-
-Glossary definitions must match the packet's executor, storage, UI, and provider usage exactly.
-## Runtime Packet Terminology Reconciliation Addendum (2026-03-09)
-
-Add the following canonical terms:
-- **Scheduler pass ID** -- the canonical identity for a queue-analysis pass; legacy `analysis_id` is an alias only
-- **Allowed action ID** -- the canonical runtime action family surfaced by blocked or recovery state (`approve`, `decline`, `retry_now`, `resume_after_prerequisite`, `restore_safe_point_then_retry`, `start_fresh_attempt`, `replan`, `skip_node`, `abort_run`, `open_details`)
-- **Graph canonical lock** -- the runtime boundary after which degraded draft decomposition fallback is forbidden
-- **Stale attempt** -- a historical attempt from an older generation or superseded recovery branch that remains queryable but is not resumable
-- **Prerequisite-resolved wake** -- the runtime wake caused by a prerequisite becoming satisfied (approval, clarification, permission, auth, replan, or worktree resolution)
-- **Plugin hook blocked** -- a blocked runtime outcome caused by a plugin hook preventing progress; it is not a plugin-private warning path
-- **Worktree conflict** -- a blocked runtime condition where worktree overlap, merge risk, or dirty baseline forbids safe dispatch or restore
-## Runtime Scheduler Recovery Terminology Consolidation Addendum (2026-03-09)
-
-Canonical terms:
-- **Scheduler pass ID** -- canonical identity for one queue-analysis pass; legacy `analysis_id` is an alias only
-- **Allowed action ID** -- canonical machine-readable runtime recovery action family exposed by blocked or recovery state
-- **Blocked outcome** -- non-executed or externally prevented outcome that preserves work and exposes recovery actions instead of being treated as a generic failure
-- **Safe point** -- runtime-internal recovery anchor created before mutation-capable execution or remediation apply
-- **Restore point** -- user-facing history checkpoint distinct from runtime safe points
-- **Stale attempt** -- historical attempt from an older generation or superseded recovery branch that remains queryable but not resumable
-- **Graph canonical lock** -- runtime boundary after which degraded draft decomposition fallback is forbidden
-- **attention_required** -- clarification or review is needed but the current flow can still continue inside the current surface
-- **blocked** -- execution cannot continue automatically until a prerequisite changes or new explicit user input arrives
-
-## Runtime Scheduler Audit Terminology Addendum
-
-Add or normalize the following canonical terms:
-- **Scheduler pass ID** -- canonical identity for queue-analysis passes; legacy `analysis_id` is alias-only
-- **blocked_sequence** -- per-node monotonic blocked-episode counter
-- **validation_blocked** -- blocked reason for post-execution validation failure
-- **remediation_ceiling_exceeded** -- blocked reason indicating remediation ceiling reached
-- **provider_attempt_ref** -- upstream provider/session identity distinct from runtime `attempt_id`
-- **detail_ref** -- structured `{type}:{id}` reference used by blocked/remediation/safe-point records
-- **thread_blocked_notice** -- persisted thread-scoped projection for one blocked episode
-- **wizard blocked** -- canonical wizard state where automation cannot continue until prerequisite resolution or new explicit input
-## Runtime Scheduler Audit Terminology Addendum
-
-Add or normalize the following canonical terms:
-- **Scheduler pass ID** -- canonical identity for queue-analysis passes; legacy `analysis_id` is alias-only
-- **blocked_sequence** -- per-node monotonic blocked-episode counter
-- **validation_blocked** -- blocked reason for post-execution validation failure
-- **remediation_ceiling_exceeded** -- blocked reason indicating remediation ceiling reached
-- **provider_attempt_ref** -- upstream provider/session identity distinct from runtime `attempt_id`
-- **detail_ref** -- structured `{type}:{id}` reference used by blocked/remediation/safe-point records
-- **thread_blocked_notice** -- persisted thread-scoped projection for one blocked episode
-- **wizard blocked** -- canonical wizard state where automation cannot continue until prerequisite resolution or new explicit input

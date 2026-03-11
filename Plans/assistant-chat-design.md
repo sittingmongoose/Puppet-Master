@@ -837,7 +837,6 @@ ContractRef: `ContractName:Plans/chain-wizard-flexibility.md#requirements-qualit
 ---
 
 ## 12. Context usage display
-
 ### 12.1 Auto Retrieval indicator (thread override) — live state + animation
 
 In addition to the context circle, the chat header/footer MUST expose a small **Auto Retrieval** control for the current thread:
@@ -864,10 +863,10 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#13-activity-transparenc
 - **Interview:** The same context circle and thread Usage tab behavior applies to **Interview** chat threads (context circle in Interview header, hover, click → Usage tab for that Interview thread).
 - **Context Usage Display Placement (Resolved):** **Tab in the chat side panel** labeled **"Usage"**. Not a slide-out panel. The Usage tab sits alongside the thread list in the sidebar. Consistent with the thread list sidebar pattern — no new UI paradigm needed. Contains: token breakdown (input/output), cost estimate, context window fill percentage, and per-turn usage history.
 - **Purpose:** Helps users manage long sessions, avoid truncation surprises, and understand cost/limits when running multiple threads or heavy plans. Data for this display is supplied by analytics scan rollups (seglog → counters/rollups → redb) per Plans/storage-plan.md and by **per-thread usage** derived from the thread's messages (tokens, cost per assistant turn); the same rollups feed dashboard and usage widgets (Plans/usage-feature.md, Plans/feature-list.md).
+- **Artifacts linkage:** Per-thread usage (context circle, thread Usage tab) aligns with the runtime `cost_usage` artifact. When the Artifacts panel offers **Show in Ledger** or **Show in Usage** for a `cost_usage` item, navigation must land on the same canonical per-thread/app-wide usage surfaces filtered by the matching `usage.event` / run / thread identity rather than inventing a separate artifact-local usage model.
 - **Rate limit hit:** When the platform returns a rate-limit or quota error (e.g. 5h window full), the thread shows a clear message and, where appropriate, the option to **switch platform or model** so the user can continue without waiting.
 
 ---
-
 ## 13. Activity transparency: search, bash, and file activity
 
 ### 13.1 Retrieval audit (Auto Retrieval + project indices)
@@ -2148,6 +2147,3 @@ When multiple nodes are simultaneously blocked, each with its own `blocked_notic
 - `restore_outcome` values (`restored_clean`, `restored_with_conflicts`, `restore_failed`, `restore_skipped`) per Plans/Contracts_V0.md.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
-
-
-**Artifacts panel and cost_usage:** Per-thread usage (context circle, thread Usage tab) aligns with the cost_usage runtime artifact. The Artifacts panel offers "Show in Ledger" and "Show in Usage" for cost_usage items; see Plans/usage-feature.md and Plans/Runtime_Artifacts_Panel.md.

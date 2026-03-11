@@ -69,7 +69,6 @@ ContractRef: ContractName:Plans/Widget_System.md, ContractName:Plans/Run_Graph_V
 | `ca_profile.xml` editing | Shared cross-project default, per-project override, two-layer editor (structured + raw XML), passthrough preservation for unknown fields, image upload or external URL, and repo-managed asset default for uploaded images | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md` |
 
 ## 2026-03-09 addendum — Artifacts panel and Usage/Ledger linkage
-
 - [ ] Artifacts panel in view inventory and panel system (FinalGUISpec §7.1, §4.1, §5).
 - [ ] Panel toggling: Git, Docker, Source Control, Unraid, Artifacts, Chat, Files (single side-panel slot, last-click wins).
 - [ ] Usage/Ledger linkage from cost_usage artifact (Show in Ledger / Show in Usage actions).

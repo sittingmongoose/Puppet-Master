@@ -1,0 +1,379 @@
+{
+  "schema_id": "puppet-master-research-packet-v1",
+  "run_id": "rewrite-20260310-203420-gui-artifacts-usage-panels",
+  "created_at_utc": "2026-03-10T20:34:20Z",
+  "topic": "gui-artifacts-usage-panels",
+  "objective": "Emit a packetization-ready packet for the GUI, Artifacts panel, Usage alignment, and Activity bar/side panels feature set. The packet must close the full MUST CHANGE and MUST RECONCILE doc set within Plans/**: FinalGUISpec (activity bar single slot last-click wins, no Home, panel list, layout per project, Artifacts view); storage-plan (runtime_artifact.* event types, artifacts_index:v1:{project_id}, projector, cost_usage alignment, and local usage-mirror field-shape rules); usage-feature (cost_usage artifact, Show in Ledger/Usage, OpenCode pipeline reference, Gap 3 single schema with canonical operation/tokens fields); Project_Output_Artifacts (pointer to Runtime Artifacts); new Runtime_Artifacts_Panel.md (19 types, schemas, task_id rule, reasoning_tokens, browser recordings, all differentiators MVP); and all MUST RECONCILE Plans docs (Provider_OpenCode, CLI_Bridged_Providers, assistant-chat-design, GitHub_Integration, Containers_Registry_and_Unraid, FileManager, Contracts_V0, GUI_Rebuild_Requirements_Checklist, OpenCode_Deep_Extraction, 00-plans-index, feature-list, UI_Command_Catalog, Glossary). State-file mirror semantics are resolved in these canonical Plans SSOTs because packet intents are restricted to Plans/**. No details dropped; implementation-ready.",
+  "decisions": [
+    {
+      "id": "runtime-artifact-mechanism-option-2",
+      "decision": "One seglog event type per artifact type only. Event types: runtime_artifact.code_diff, runtime_artifact.implementation_plan, runtime_artifact.reasoning_summary, runtime_artifact.validation_test, runtime_artifact.screenshot, runtime_artifact.evidence, runtime_artifact.document, runtime_artifact.restore_point, runtime_artifact.browser_recording, runtime_artifact.tool_llm_trace, runtime_artifact.context_snapshot, runtime_artifact.cost_usage, runtime_artifact.hitl_approval, runtime_artifact.failed_attempts, runtime_artifact.subagent_lineage, runtime_artifact.before_after_snapshot, runtime_artifact.suggested_next_steps, runtime_artifact.api_web_call, runtime_artifact.artifact_version. No single generic runtime_artifact event with subtype field.",
+      "rationale": "Storage and projectors need stable event type names; single type with discriminator causes drift."
+    },
+    {
+      "id": "artifacts-index-redb-key",
+      "decision": "redb key for Artifacts index is per-project only: artifacts_index:v1:{project_id}. Not global; not per-run.",
+      "rationale": "Artifacts are project-scoped; index must match."
+    },
+    {
+      "id": "task-id-deterministic",
+      "decision": "task_id is present in runtime artifact payload when the run has task/subtask granularity; otherwise omit from payload. No optional wording; rule is deterministic.",
+      "rationale": "Avoids ambiguous optional semantics."
+    },
+    {
+      "id": "reasoning-tokens-required-ui-conditional",
+      "decision": "reasoning_tokens is required in the usage/cost_usage schema. In the UI, display the field only when value > 0; do not show when zero.",
+      "rationale": "Schema completeness; UI avoids clutter when not applicable."
+    },
+    {
+      "id": "cost-usage-attribution-only",
+      "decision": "cost_usage runtime artifact is an attribution record only. Same canonical usage pipeline and schema as usage.event (tokens_in, tokens_out, reasoning_tokens, cost, platform/provider, model). Ledger and Usage page consume the same data; no second store.",
+      "rationale": "Single source of truth for usage; cost_usage links to it."
+    },
+    {
+      "id": "show-in-ledger-usage-required",
+      "decision": "Show in Ledger and Show in Usage are required actions for the cost_usage artifact in the Artifacts panel; link to Ledger and Usage page using same canonical usage data (e.g. filter by run_id/thread_id or usage_event_id).",
+      "rationale": "User can navigate from artifact to full usage context."
+    },
+    {
+      "id": "gap3-single-schema",
+      "decision": "cost_usage, usage.event, usage.jsonl mirrors, Ledger, 5h/7d rollups, and Usage page all use one coherent schema. Canonical field names use operation plus tokens_in, tokens_out, and reasoning_tokens; legacy action plus aggregate tokens is compatibility-only wording and must not be used for new writes.",
+      "rationale": "Eliminates dual write paths and field-name drift."
+    },
+    {
+      "id": "side-panel-single-slot-last-click-wins",
+      "decision": "Single side-panel slot: clicking an activity bar icon replaces the current panel content (last-click wins). The most recently clicked icon's panel is shown. No Home button on the activity bar; main app navigation (Dashboard, Projects, etc.) stays in title bar / primary content.",
+      "rationale": "Explicit UX so GUI implementation is unambiguous."
+    },
+    {
+      "id": "layout-persistence-per-project",
+      "decision": "Layout (panel positions, dock sides, activity bar order) is saved per project (e.g. redb keys per project_id). Persist automatically; no separate save layout action required.",
+      "rationale": "User expects layout to follow project."
+    },
+    {
+      "id": "activity-bar-panels-list",
+      "decision": "Panels that can occupy the side panel and are exposed via activity bar: Git (GitHub), Docker, Source Control, Unraid, Artifacts, Chat, File Manager, and Run & Debug. Activity bar is extensible (extensions/plugins add icons); drag-to-reorder applies to built-in and extension icons; optional user-defined separators.",
+      "rationale": "Full inventory and extensibility."
+    },
+    {
+      "id": "browser-recordings-required",
+      "decision": "Browser recordings are a required artifact type in the Artifacts panel (not optional). Type: runtime_artifact.browser_recording; behavior and schema must be specified.",
+      "rationale": "MVP requirement from research."
+    },
+    {
+      "id": "all-differentiators-mvp",
+      "decision": "All artifact differentiators identified in the research are MVP and required; no optional differentiators.",
+      "rationale": "Consistent scope."
+    },
+    {
+      "id": "opencode-product-vs-provider",
+      "decision": "OpenCode the product (repo) is the reference for usage collection (message-level usage, getUsage-style normalization, processor finish-step, message + step-finish). OpenCode the provider (Provider_OpenCode.md) is one transport. All providers normalize to the same usage.event / message usage shape; collection mechanism differs per provider.",
+      "rationale": "Prevents terminology drift."
+    },
+    {
+      "id": "run-debug-spec-detail",
+      "decision": "Run & Debug (DAP) spec must include: config in .puppet-master/launch.json (VS Code-compatible; launch vs attach); toolbar Start/Continue (F5), Pause, Step Over (F10), Step Into (F11), Step Out (Shift+F11), Restart, Stop (Shift+F5); panes Call stack, Variables, Breakpoints, Debug console; line/conditional/hit-count/exception breakpoints; run to cursor; evaluate expression, Watches; logpoints, inline values, CodeLens, test-debug, AI actions, Debug MCP, orchestrator-debug where in scope.",
+      "rationale": "Implementation-ready parity and differentiators."
+    },
+    {
+      "id": "ai-in-git-multi-repo-scope",
+      "decision": "AI in Git (e.g. AI-assisted commit messages, suggestions) and multi-repo source control are in scope for feature-list and GitHub_Integration; either add to scope in those docs or explicitly defer with a pointer.",
+      "rationale": "Research requested both; reconcile so not dropped."
+    },
+    {
+      "id": "artifacts-navigation-commands-required",
+      "decision": "The command catalog must define side-panel and artifacts navigation commands for panel switching, opening the Artifacts panel, selecting an artifact, and navigating a cost_usage artifact to Ledger or Usage.",
+      "rationale": "Keeps command IDs, UI actions, and usage navigation semantics aligned across GUI docs."
+    }
+  ],
+  "doc_intents": [
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 4.1 Activity Bar",
+          "content_markdown": "Left edge, 48px wide. A vertical strip of icons, each representing a panel or group. **There is no Home icon on the activity bar;** main app navigation (Dashboard, Projects, etc.) stays in the title bar / primary content.\n\n| Icon | Panel / group | Behavior |\n|------|----------------|----------|\n| Play | Run & Debug | Toggles Run & Debug panel in side panel (DAP-based debugging; see §7.20) |\n| Git / branch | Git (GitHub) | Toggles Git panel in side panel (repo/branch/diff/operations; see Plans/GitHub_Integration.md §A) |\n| Docker | Docker | Toggles Docker Manage panel in side panel when project is Docker-related (see Plans/Containers_Registry_and_Unraid.md) |\n| Source control | Source Control | Toggles Source Control panel in side panel (multi-repo; Git-focused) |\n| Unraid | Unraid | Toggles Unraid template panel in side panel when project has Unraid template workflow |\n| Box/archive | Artifacts | Toggles Artifacts panel in side panel (runtime artifacts; see Plans/Runtime_Artifacts_Panel.md) |\n| Chat | Chat | Toggles Chat tab in side panel |\n| Folder | Files | Toggles File Manager panel in side panel |\n| Sliders | Settings | Settings (unified) in primary content |\n| Chart | Data | Usage, Metrics, Evidence, etc. in primary content; default **Usage** |\n\n**Single side-panel slot, last-click wins:** Only one side panel is visible at a time. Clicking an activity bar icon **replaces** the current panel content with that icon's panel. The most recently clicked icon's panel is shown.\n\n**Behavior:**\n- **Single click** on an activity bar icon shows that panel in the side panel slot (replacing whatever was there).\n- **Long press or right-click** on a group icon (e.g. Data) opens a popover sub-menu listing pages in that group; Run & Debug / Git / Docker / Source Control / Unraid / Artifacts / Chat / Files each occupy the side panel when clicked.\n- **Active indicator:** 3px vertical accent stripe on the left edge of the active icon.\n- Icons are 24x24px, outlined, using `Theme.text-primary` with the active icon using `Theme.accent-blue`.\n\n**Activity bar reordering:** Icons can be dragged up/down to reorder. A separator line can be placed between primary and secondary groups. Order is persisted in redb **per project** (see §5.7).\n\n**Activity bar extensibility:** Extensions/plugins may add activity bar items. Drag-to-reorder applies to built-in and extension icons.\n\nContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Runtime_Artifacts_Panel.md, PolicyRule:Decision_Policy.md§2"
+        }
+      ]
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 5.1 Detachable Panels",
+          "content_markdown": "\n**Panels that can occupy the side panel (one at a time; last-click wins):** Chat, File Manager, Git (GitHub), Docker Manage, Source Control, Unraid, Artifacts. See §4.1 Activity Bar for which activity bar icon shows which panel. Each of these panels supports detach/re-dock as below.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 5.7 Panel Persistence",
+          "content_markdown": "\n**Layout persistence per project:** Panel dock state (docked side and width, or floating position/size), **activity bar icon order**, and **which panel was last visible** are persisted **per project** in redb (e.g. under keys scoped by `project_id`). Restored on startup and when switching projects. If a floating window was on a monitor no longer connected, fall back to docked state.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 7.1 View Inventory (21 views/panels + 6 bottom panel tabs)",
+          "content_markdown": "\n| 21 | Artifacts | -- | Side panel | **NEW** (runtime artifacts: diffs, plans, evidence, browser recordings, cost_usage, etc.; see Plans/Runtime_Artifacts_Panel.md) |\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 4.4 Keyboard Shortcuts",
+          "content_markdown": "\n\n**Artifacts panel and side-panel toggling:** Any shortcuts for \"Open Artifacts panel,\" \"Toggle side panel,\" or switching between side-panel content (Git, Docker, Unraid, Artifacts, Chat, Files) MUST be registered in the shortcut registry and appear in Settings > Shortcuts. Activity bar icon clicks are the primary interaction; keyboard shortcuts are additive and must stay consistent with §4.1 and §5.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "##### Canonical enum binding",
+          "content_markdown": "\n#### Additions: Runtime Artifacts (GUI panel) event types and index\n\n**Scope:** Agent-run outputs displayed in the Artifacts panel (see Plans/Runtime_Artifacts_Panel.md). Distinct from Project Plan Package artifacts (Plans/Project_Output_Artifacts.md).\n\n**Seglog event types (one per artifact type):** Each event uses the standard EventRecord envelope (schema, ts, seq, type, run_id, thread_id, payload). The `type` value is one of:\n- `runtime_artifact.code_diff`\n- `runtime_artifact.implementation_plan`\n- `runtime_artifact.reasoning_summary`\n- `runtime_artifact.validation_test`\n- `runtime_artifact.screenshot`\n- `runtime_artifact.evidence`\n- `runtime_artifact.document`\n- `runtime_artifact.restore_point`\n- `runtime_artifact.browser_recording`\n- `runtime_artifact.tool_llm_trace`\n- `runtime_artifact.context_snapshot`\n- `runtime_artifact.cost_usage`\n- `runtime_artifact.hitl_approval`\n- `runtime_artifact.failed_attempts`\n- `runtime_artifact.subagent_lineage`\n- `runtime_artifact.before_after_snapshot`\n- `runtime_artifact.suggested_next_steps`\n- `runtime_artifact.api_web_call`\n- `runtime_artifact.artifact_version`\n\n**redb key:** `artifacts_index:v1:{project_id}` (per-project only). Value: index structure for the project's runtime artifacts (e.g. list or map of artifact_id to metadata for UI listing/filtering).\n\n**Projector:** A projector (or equivalent) reads seglog events whose `type` starts with `runtime_artifact.` and writes/updates the per-project `artifacts_index:v1:{project_id}`. No `payload.artifact_type` discriminator; type is given by event `type`.\n\n**cost_usage alignment:** The payload of `runtime_artifact.cost_usage` events MUST align with the canonical `usage.event` schema (tokens_in, tokens_out, reasoning_tokens, cost, platform/provider, model, etc.). Canonical usage remains `usage.event`; cost_usage is an attribution record that references the same pipeline. Ledger and Usage page consume the same data.\n\nContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/usage-feature.md, PolicyRule:Decision_Policy.md§2\n\n**Local usage mirror compatibility:** Where a local append-only `usage.jsonl` mirror exists, it MUST preserve the same canonical field names as `usage.event`, using `operation`, `tokens_in`, `tokens_out`, and `reasoning_tokens`. Legacy `action` plus aggregate `tokens` is compatibility-only wording and MUST NOT be reintroduced as the write shape.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/usage-feature.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "## Data and Backend (conceptual)",
+          "content_markdown": "\n### Cost_usage runtime artifact and Show in Ledger / Show in Usage\n\nThe **cost_usage** runtime artifact (see Plans/Runtime_Artifacts_Panel.md and Plans/storage-plan.md) is an **attribution record** only. It uses the **same canonical usage pipeline and schema** as `usage.event` (tokens_in, tokens_out, reasoning_tokens, cost, platform/provider, model). There is no second store; the Ledger and Usage page consume the same data.\n\n**Artifacts panel actions for cost_usage items:** For each cost_usage artifact, the Artifacts panel MUST offer:\n- **Show in Ledger** — Navigate to the Usage area (Ledger tab or Ledger view) with filters set so the canonical usage.event for this cost is visible (e.g. by usage_event_seq or usage_event_ref, or by run_id/thread_id/timestamp).\n- **Show in Usage** — Navigate to the Usage page (or thread Usage tab when the cost is for that thread) with the same event in scope (e.g. selected or scrolled into view).\n\nImplementation note: If the cost_usage payload includes `usage_event_seq` or `usage_event_ref`, the GUI can pass it to the Usage/Ledger view to scroll to or highlight that row. Otherwise open Usage/Ledger filtered by run_id/thread_id/ts.\n\n### OpenCode (product) usage pipeline reference\n\nFor implementers: the flow by which usage is collected and stored can be referenced from the OpenCode product (anomalyco/opencode repo). Conceptual flow: **provider response** → adapter → **LanguageModelV2Usage** (or equivalent) → **getUsage-style normalization** (e.g. Session.getUsage) → **processor** applies on finish-step to assistant message + step-finish part; **UI reads from messages** and/or usage.event. Key paths in that repo: session-context-metrics (UI metrics from messages), processor finish-step (where token/cost is applied to message), Session.getUsage (normalization). Puppet Master does not replicate this exactly; all providers (CLI-bridged, OpenCode provider, Codex, Gemini, Copilot) normalize to the same usage.event / message usage shape; collection mechanism differs per provider. OpenCode the **provider** (Plans/Provider_OpenCode.md) is one transport; OpenCode the **product** is the reference for \"how message-level usage becomes stored usage.\"\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Provider_OpenCode.md, PolicyRule:Decision_Policy.md§2\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/usage-feature.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### Gap 3: Ledger vs. usage_tracker split",
+          "content_markdown": "\n**Desired:** Ledger, usage/event rows, cost_usage artifacts, 5h/7d rollups, and thread-scoped usage all reflect one coherent schema and attribution model.\n\n**Canonical resolution:** The system MUST use one coherent usage schema and attribution model across Ledger, `usage.event`, `usage.jsonl`, `runtime_artifact.cost_usage`, and 5h/7d rollups. Canonical field names MUST use `operation` for the normalized action name plus `tokens_in`, `tokens_out`, and `reasoning_tokens` for token accounting; legacy `action` plus aggregate `tokens` is compatibility-only wording and MUST NOT be introduced for new writes. The Ledger, 5h/7d aggregation, and Usage page all consume the same record shape without ad-hoc remapping between display rows and stored events.\n\n**Acceptance signal:** A single usage event/cost payload can populate Ledger, Usage, cost_usage artifact detail, and rollups without per-surface translation logic beyond formatting.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, PolicyRule:Decision_Policy.md§2\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Project_Output_Artifacts.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "## 0. Scope (normative)",
+          "content_markdown": "\n## Runtime Artifacts (GUI panel) — distinct from this document\n\nThis document is the SSOT for **Project Plan Package** artifacts (user-project outputs under `.puppet-master/project/**`). A separate concept is **Runtime Artifacts**: agent-run outputs (diffs, plans, evidence, browser recordings, cost_usage, etc.) displayed in the **Artifacts panel** of the GUI. Those are persisted via seglog `runtime_artifact.*` event types and redb `artifacts_index:v1:{project_id}`. The full spec (19 types, JSON schemas, task_id rule, reasoning_tokens, cost_usage, Show in Ledger/Usage, browser recordings) is in **Plans/Runtime_Artifacts_Panel.md**. Do not conflate the two: Project Plan Package = user-project deliverables; Runtime Artifacts = agent-run outputs in the Artifacts panel.\n\nContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "intent": "create",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "# Runtime Artifacts Panel — SSOT\n\n> **Compliance:** This document follows Plans/DRY_Rules.md. Naming: \"Puppet Master\" only. No open questions; deterministic defaults per Plans/Decision_Policy.md.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Project_Output_Artifacts.md\n\n## 1. Purpose and scope\n\nThe **Artifacts panel** is the single place to see everything agents produced during a run or thread: file changes (diffs), plans, verification evidence, screenshots, reasoning summaries, browser recordings, tool/LLM traces, cost_usage attribution, and other types below. It does not run agents; it lists, previews, and links. All artifact types listed are **required** for MVP; there are no optional types.\n\n## 2. Two artifact families (no conflation)\n\n| Family | Scope | SSOT | Persistence |\n|--------|--------|------|-------------|\n| **Project Plan Package** | User-project outputs | Plans/Project_Output_Artifacts.md | .puppet-master/project/** |\n| **Runtime Artifacts** | Agent-run outputs in Artifacts panel | This document | seglog runtime_artifact.*, redb artifacts_index:v1:{project_id} |\n\n## 3. Mechanism: one event type per artifact type\n\n**Option 2 only:** One seglog event type per artifact type. No single generic `runtime_artifact` event with a subtype field. Each event uses the standard EventRecord envelope (schema, ts, seq, type, run_id, thread_id, payload). The `type` value is exactly one of the 19 event type names below.\n\n**Canonical 19 artifact types and event type names:**\n- code_diff → `runtime_artifact.code_diff`\n- implementation_plan → `runtime_artifact.implementation_plan`\n- reasoning_summary → `runtime_artifact.reasoning_summary`\n- validation_test → `runtime_artifact.validation_test`\n- screenshot → `runtime_artifact.screenshot`\n- evidence → `runtime_artifact.evidence`\n- document → `runtime_artifact.document`\n- restore_point → `runtime_artifact.restore_point`\n- browser_recording → `runtime_artifact.browser_recording` (required; not optional)\n- tool_llm_trace → `runtime_artifact.tool_llm_trace`\n- context_snapshot → `runtime_artifact.context_snapshot`\n- cost_usage → `runtime_artifact.cost_usage`\n- hitl_approval → `runtime_artifact.hitl_approval`\n- failed_attempts → `runtime_artifact.failed_attempts`\n- subagent_lineage → `runtime_artifact.subagent_lineage`\n- before_after_snapshot → `runtime_artifact.before_after_snapshot`\n- suggested_next_steps → `runtime_artifact.suggested_next_steps`\n- api_web_call → `runtime_artifact.api_web_call`\n- artifact_version → `runtime_artifact.artifact_version`\n\n## 4. redb key and projector\n\n**redb key:** `artifacts_index:v1:{project_id}`. Per-project only; not global; not per-run.\n\n**Projector:** A projector (or equivalent) reads seglog events whose `type` starts with `runtime_artifact.` (or lists the 19 types explicitly) and writes/updates the per-project artifacts index. No payload.artifact_type discriminator; type is given by event `type`.\n\n## 5. Canonical IDs and task_id rule\n\n**Canonical ID set:** artifact_id, run_id, thread_id, task_id (per rule below), linked_artifact_id, logical_artifact_id. Format (e.g. UUID, prefixed) must be specified in implementation; see Plans/Contracts_V0.md for run_id/thread_id.\n\n**task_id rule (deterministic):** Present in payload **when the run has task/subtask granularity**; **otherwise omit from payload.** No \"optional\" wording; not conditional on \"if available.\"\n\n## 6. reasoning_tokens and cost_usage\n\n**reasoning_tokens:** Required in the usage/cost_usage schema (integer, minimum 0). In the UI, display the field **only when value > 0**; do not show when zero.\n\n**cost_usage artifact:** Attribution record only. Same canonical usage pipeline and schema as usage.event (tokens_in, tokens_out, reasoning_tokens, cost, platform/provider, model). Ledger and Usage page consume the same data. Required actions in Artifacts panel for cost_usage items: **Show in Ledger**, **Show in Usage** (navigate to Ledger/Usage with filters so the canonical usage event is visible).\n\nContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md\n\n## 7. JSON schemas (all required)\n\n**Envelope:** Plans/runtime_artifact_envelope.schema.json (`$id`: pm.runtime_artifact.envelope.v1). Common payload fields for all runtime artifact events.\n\n**Per-type:** One file per artifact type, e.g. Plans/runtime_artifact_code_diff.schema.json through Plans/runtime_artifact_artifact_version.schema.json, with `$id`: pm.runtime_artifact.<type>.v1. Each payload is validated against the envelope plus the corresponding type schema. The cost_usage schema MUST include required reasoning_tokens (integer, minimum 0). All 19 type schemas are required; no optional schema files.\n\nImplementation MUST validate every runtime_artifact.* event payload against the envelope and the matching type schema before appending to seglog and before writing to the artifacts index.\n\n## 8. Browser recordings\n\nBrowser recordings are a **required** artifact type (runtime_artifact.browser_recording). Source: GUI automation runs (e.g. Playwright) from Orchestrator or Chat. Stored under canonical evidence path; list shows thumbnail, duration, run/session id, timestamp. Detail: in-panel video player or \"Open in default app\"; optional timeline with key events. Actions: Copy path, Export, Send to Chat as needed.\n\n## 9. All differentiators MVP\n\nAll artifact differentiators identified in the research are MVP and required; no optional differentiators. Triggers, cardinality, error handling, sanitization, and UI edge cases must be specified per type as needed for implementation.\n\n## 10. References\n\n- Plans/Contracts_V0.md (EventRecord envelope)\n- Plans/storage-plan.md (event types, redb key, projector, cost_usage alignment)\n- Plans/usage-feature.md (usage pipeline, Show in Ledger/Usage, Gap 3)\n- Plans/Project_Output_Artifacts.md (distinction from Project Plan Package)\n- Plans/FileManager.md (open by artifact identity)\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Provider_OpenCode.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## OpenCode Runtime Packet Reconciliation Addendum (2026-03-09)",
+          "content_markdown": "\nOpenCode-specific runtime behavior must remain aligned with the canonical runtime packet.\n\n### Required OpenCode runtime fields\n- `run_id`, `thread_id`, `node_id`, `attempt_id`\n- retry count when present\n- requested/effective model identifiers\n- requested/effective permission snapshot identifiers when relevant\n- `replan_generation`\n- `mutation_capable`\n- `safe_point_id?`\n- `remediation_root_id?`\n- `remediation_parent_attempt_id?`\n- `remediation_generation?`\n\n### Required rules\n- preserve canonical runtime identity (`run_id`, `thread_id`, `node_id`, `attempt_id`, generation, snapshot ids, safe point, and remediation lineage) across the request/stream lifecycle\n- OpenCode transport reconnect logic may reconnect only to observe an existing attempt; it MUST NOT silently resubmit prompts, reset attempt identity, or invent provider-local fallback loops\n- OpenCode-specific auth, transient, structured-output, and tool-denial signals MUST normalize into canonical `blocked_reason_code` / `failure_class` values before orchestration or UI consumes them\n- prerequisite resolution after auth or permission recovery MUST surface a canonical scheduler wake and create a new attempt snapshot rather than mutating the blocked attempt in place\n- a `safe_point_id` created before a mutation-capable OpenCode attempt remains attached across the entire request/stream lifecycle\n- any OpenCode-local retry wording is superseded by canonical runtime retry ownership\n\n**Usage and Ledger alignment:** OpenCode server returns message-level usage; the adapter maps it to normalized usage (same shape as usage.event). Persistence and Ledger/Usage consumption follow Plans/storage-plan.md and Plans/usage-feature.md. For implementers, the OpenCode product pipeline (Session.getUsage, processor finish-step) is the reference for how message metadata becomes stored usage; terminology should not drift.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "\n\n**Usage on message/turn and cost_usage:** Usage may be stored on message/turn for per-thread display. The cost_usage runtime artifact (Plans/Runtime_Artifacts_Panel.md) reuses the same canonical schema as usage.event; there is no second canonical store.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "\n\n**Artifacts panel and cost_usage:** Per-thread usage (context circle, thread Usage tab) aligns with the cost_usage runtime artifact. The Artifacts panel offers \"Show in Ledger\" and \"Show in Usage\" for cost_usage items; see Plans/usage-feature.md and Plans/Runtime_Artifacts_Panel.md.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/GitHub_Integration.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "## A. Git Panel (IDE Surface)",
+          "content_markdown": "\n\nThe Git panel is exposed via the **side panel** (or primary content) per Plans/FinalGUISpec.md §4 / §5 / §7. Placement and toggling are deterministic from the activity bar (single slot, last-click wins).\n\n**Scope (AI in Git / multi-repo):** AI in Git (e.g. AI-assisted commit messages, suggestions) and multi-repo source control are in scope; see Plans/feature-list.md. Either add to this doc in a later pass or explicitly defer with a pointer.\n\nContractRef: ContractName:Plans/FinalGUISpec.md\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 2. Contextual Docker Manage surface",
+          "content_markdown": "\n\nDocker Manage (and Unraid) are exposed via the **side panel** (or primary content) per Plans/FinalGUISpec.md §4 / §5 / §7. Placement and \"Hide when not used in Project\" align with the shell. When the project is Docker-related, the Docker icon in the activity bar shows this panel in the single side-panel slot (last-click wins).\n\nContractRef: ContractName:Plans/FinalGUISpec.md\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/FileManager.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)",
+          "content_markdown": "\nFile/artifact browsing must support the new runtime artifacts and reports produced by scheduler/remediation flows while preserving canonical runtime identity.\n\n### Required support\n- open scheduler analysis exports/reports when materialized\n- open remediation reports/details when materialized\n- open degradation reports when materialized\n- open generated non-repo drafts without treating them as normal workspace files\n\n### Required navigation targets\n- queue-analysis snapshots by `scheduler_pass_id`\n- attempt-scoped evidence and reports by stable `attempt_id`\n- safe-point manifests / restore logs by `safe_point_id`\n- remediation lineage summaries by `remediation_root_id`\n- blocked-detail pivots through `detail_ref`\n\nRules:\n- runtime reports opened from Dashboard/Assistant/Orchestrator surfaces must preserve identity and not silently redirect to unrelated files\n- UI and file browsing affordances must use stable identities (`attempt_id`, `safe_point_id`, `remediation_root_id`) rather than ambiguous node-only labels\n- legacy `analysis_id` may be accepted only as an alias equal to `scheduler_pass_id`\n\n**Runtime Artifacts alignment:** Open by artifact identity and the Artifacts panel MUST align with Plans/Runtime_Artifacts_Panel.md (artifacts_index:v1:{project_id}, 19 artifact types, navigation).\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "\n\n**runtime_artifact.* events:** Payload schemas for runtime_artifact.* events are defined in Plans/storage-plan.md and Plans/Runtime_Artifacts_Panel.md; this document does not define the 19 payloads. For task_id: present in payload when the run has task/subtask granularity; otherwise omit (deterministic rule).\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "\n\n- [ ] Artifacts panel in view inventory and panel system (FinalGUISpec §7.1, §4.1, §5).\n- [ ] Panel toggling: Git, Docker, Source Control, Unraid, Artifacts, Chat, Files (single side-panel slot, last-click wins).\n- [ ] Usage/Ledger linkage from cost_usage artifact (Show in Ledger / Show in Usage actions).\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "\n\n**Usage pipeline:** Usage collection and storage (message-level usage, getUsage-style normalization, processor finish-step) are covered by Plans/usage-feature.md as SSOT. Future extraction should reference that plan so usage pipeline terminology does not duplicate or contradict.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/00-plans-index.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Plan map",
+          "content_markdown": "\n| Plan | Primary scope | Notes / canonical intent |\n|------|--------------|--------------------------|\n| `rewrite-tie-in-memo.md` | Locked rewrite decisions | Canonical for rewrite constraints + deltas to apply elsewhere |\n| `agent-rules-context.md` | Application/project rules pipeline | Canonical for rules sourcing + injection into every agent/provider run |\n| `orchestrator-subagent-integration.md` | Main run loop policy: tiers, subagents, wiring validation | Registry-driven Persona set (canonical list §4: Phase, Task lang/domain/framework, Subtask, Iteration, Cross-phase including `explorer` and `requirements-quality-reviewer`). DRY:DATA:subagent_registry; task tool (Tools.md §3.6) validates against this list. Persona definitions, storage, schema, and injection: `Plans/Personas.md` (SSOT). Treat platform specifics as Provider concerns. |\n| `interview-subagent-integration.md` | Interview phases + subagent use | Phase assignments use the registry-driven Persona set; cross-phase (`ux-researcher`, `knowledge-synthesizer`, `context-manager`, `explorer`, `requirements-quality-reviewer`, etc.). Mirrors orchestrator patterns at interview-phase boundaries. Persona injection per `Plans/Personas.md` §5.2. |\n| `assistant-chat-design.md` | Assistant/Chat UX and modes | Keep UX; anchor persistence/search to event stream projections |\n| `assistant-memory-subsystem.md` | Assistant-only memory continuity subsystem | Canonical SSOT for Assistant memory boundary, per-project memory stores (`assistant_memory.redb` + lexical/semantic indexes), decay scoring, capsule/retrieval budgets, and maintenance operations. Explicitly separate from rules pipeline contracts. |\n| `FinalGUISpec.md` | Slint GUI contract | Canonical UI source for **Interaction Mode (Expert/ELI5)** + **Chat ELI5** defaults/independence and the single dual-copy checklist (`§7.4.0`). |\n| `GitHub_Integration.md` | GitHub/Git IDE integration spec | Git panel (repo/branch/diff/operations), GitHub API (OAuth device-code, PRs, Actions), SSH remote dev servers, no-wizard project flows (Add Existing / New Local / New GitHub Repo). Cross-refs: Plans/GitHub_API_Auth_and_Flows.md, Plans/FileManager.md, Plans/chain-wizard-flexibility.md. |\n| `FileManager.md` | File Manager panel, IDE-style editor, @ mention, click-to-open | Canonical for file tree, editor (tabs, split panes, save, line numbers, syntax), image viewer, HTML preview + hot reload, same browser as §15.18, terminal/browser tabs (§9), editor enhancements MVP (§10), language/framework presets (§11). **LSP is MVP** (§10.10): diagnostics, hover, completion, navigation, inlay hints, code actions, code lens; implement with desktop editor from start. |\n| `LSPSupport.md` | LSP client support for rewrite | **LSP is MVP** -- in scope for desktop release. Canonical for LSP: diagnostics, hover, completion, navigation, inlay hints, code actions, code lens, Chat Window LSP (§5.1); OpenCode-style server registry/root discovery; Rust client crates (lsp-types, lsp-client/async_lsp_client). Implement with desktop editor and Chat from start. |\n| `storage-plan.md` | seglog, redb, Tantivy, projectors, analytics scan | Implementation checklist; chat persistence/search map to this stack; analytics scan rollups in redb feed dashboard/usage (usage-feature.md, feature-list). |\n| `chain-wizard-flexibility.md` | Wizard intents + requirements canonicalization + GitHub flows | Canonical for intent-based flows and requirements merge/canonical artifact |\n| `Document_Packaging_Policy.md` | Deterministic packaging for large Markdown/text artifacts | Canonical Document Set contract: sharded set + `00-index.md` + `manifest.json` + full audits with non-bypassable run failure on verification breach. |\n| `human-in-the-loop.md` | HITL semantics at tier boundaries | Canonical for pause-for-approval toggles + tier boundary meaning |\n| `FileSafe.md` | Safe-edit guards + context compilation | Maps to central tool policy + patch pipeline |\n| `Prompt_Pipeline.md` | Prompt assembly pipeline + compaction contract | SSOT for prompt assembly stage ordering and compaction/rotation contracts (pairs with FileSafe Part B for compilation details). |\n| `WorktreeGitImprovement.md` | Worktree/git correctness + GUI wiring | Maps to patch/apply/verify/rollback + Provider run dirs |\n| `MiscPlan.md` | Cleanup + runner contract + artifact retention | Maps to patch pipeline + event artifacts retention |\n| `newtools.md` | GUI testing/tools discovery + MCP tooling | Maps to central tool registry/policy engine |\n| `Tools.md` | Built-in tools, custom tools, permissions (allow/deny/ask) | Canonical for tool semantics and permission model; OpenCode-style. **task** tool launches subagents; `subagent_type` is validated against the registry-driven Persona set (orchestrator §4, §3.6). MCP config covered in newtools.md and AGENTS.md. |\n| `OpenCode_Deep_Extraction.md` | OpenCode pattern extraction procedure + known-good baseline | Provenance doc for extracting upstream patterns and mapping them into Puppet Master SSOT docs. Covers 8 subsystems (run modes, agents, permissions, commands, formatters, skills, plugins, models) with file pointers, behavior summaries, SSOT mapping table (§8), and delta hooks (§9). |\n| `Decision_Log.md` | Decisions made during plan updates | Records decisions not captured in `auto_decisions.jsonl`; timestamped and final. |\n| `usage-feature.md` | Usage UX + dashboards | Treat usage as projections/rollups over event ledger; **per-thread usage in chat** (context circle, hover tooltip, thread Usage tab) per §5 (OpenCode-style). Widget-composed page addendum (2026-02-23). |\n| `Runtime_Artifacts_Panel.md` | Artifacts panel (runtime artifacts) | Canonical for 19 artifact types, seglog `runtime_artifact.*`, redb `artifacts_index:v1:{project_id}`, cost_usage, Show in Ledger/Usage, browser recordings, and JSON schemas. Distinct from Project Plan Package (`Project_Output_Artifacts.md`). |\n| `newfeatures.md` | Feature ideas + patterns | Treat Iced references as legacy examples; no SQLite (storage is seglog/redb/Tantivy); rewrite anchors are Provider/event-store/tool-policy |\n| `Widget_System.md` | Cross-cutting widget catalog, grid layout, add-widget flow | Canonical for portable page widgets, grid-based resizing, layout persistence. Referenced by Dashboard, Usage, Orchestrator pages. Single widget catalog shared across all widget-composed surfaces. |\n| `Run_Graph_View.md` | Node Graph Display (Airflow-style DAG view) | Canonical for the full-page graph visualization tab on the Orchestrator page. NOT a portable widget. Includes Slint implementation guide, data model contract, 5 layout presets, 8-section detail panel, HITL controls, performance targets (500 nodes). |\n| `Orchestrator_Page.md` | Orchestrator single-page 6-tab structure | Canonical for tab layout (Progress / Tiers / Node Graph Display / Evidence / History / Ledger). Widget-based tabs reference Widget_System.md. Node Graph tab references Run_Graph_View.md. Terminal widgets, prose summaries, data source documentation. |\n| `GUI_Rebuild_Requirements_Checklist.md` | Auditable summary checklist for 2026-02-23 GUI rebuild handoff requirements | Single verification table confirming coverage for widget system, Usage page, chat context enhancements, Dashboard widget grid migration, Orchestrator 6-tab structure, and Node Graph image-backed spec. |\n| `Executor_Protocol.md` | Deterministic overseer flow and lifecycle semantics | Canonical for Builder/Verifier/Overseer roles, next-ready selection, and verifier-driven auto completion to `done`. |\n| `UI_Wiring_Rules.md` | UI wiring rules + verification | Canonical for Rule 1 (UI dispatches only typed UICommands) and Rule 2 (every UI element maps to one UICommandID). Defines UI Command Dispatcher boundary and Wiring Matrix verification concept. |\n| `Provider_Stream_Mapping_External_Reference_A2A.md` | Upstream external-framework + A2A bridge → V0 stream mapping | Canonical mapping of upstream native events and A2A bridge concepts to V0 normalized stream events. Diagnostic instrumentation categories, deterministic rules, and Overseer audit protocol instrumentation. Cross-refs: CLI_Bridged_Providers.md, Architecture_Invariants.md#INV-001, Glossary.md, Executor_Protocol.md. |\n| `Provider_OpenCode.md` | OpenCode server-bridged provider integration | Optional provider; user installs OpenCode locally; Puppet Master connects via HTTP REST + SSE. See also CLI_Bridged_Providers.md (extended for HTTP transport). |\n| `BinaryLocator_Spec.md` | Deterministic provider CLI discovery | Canonical algorithm for locating + validating external Provider CLIs (initially Cursor Agent + Claude Code) across OS using only official install footprints (override/PATH/common locations/launchers). |\n| `Run_Modes.md` | Canonical run-mode definitions + CLI-bridged strategy selection | SSOT for Mode enum (ask/plan/regular/yolo), HTE vs DAE strategy selection, budget defaults, kill conditions, outcome taxonomy, and mode-specific context-management deltas. |\n| `Personas.md` | Canonical Persona system definitions | SSOT for Persona vs Agent vs Subagent definitions, storage layout (`.puppet-master/personas/` + `~/.config/puppet-master/personas/`), PERSONA.md schema (YAML frontmatter + body), validation rules, reserved IDs (explorer, researcher, deep-researcher), GUI management (Settings > Advanced > Personas), context-injection rules, and registry relationship. |\n| `Permissions_System.md` | Canonical permission system definitions | SSOT for permission actions (`allow`/`ask`/`deny`), multi-layer precedence (mode > session > Persona > project > global > defaults), granular rules (wildcard syntax, last-match-wins), special guards (`doom_loop`, `external_directory`), ask-flow semantics (`once`/`always`/`reject`), deterministic defaults, `.env` deny rules, resolution algorithm, TOML persistence, permission profiles, and GUI requirements (Settings > Permissions). |\n| `Commands_System.md` | Canonical User Commands system | SSOT for User Commands (user-authored command presets): definitions (User Command vs UICommand distinction), storage layout (`.puppet-master/commands/` + `~/.config/puppet-master/commands/`), command schema (YAML frontmatter + Markdown template body), template syntax (`$ARGUMENTS`, `$N`, `@path`, `` !`cmd` ``), execution semantics (subtask, Persona/mode/model overrides), permissions integration (bash/read guards on shell injection/file includes), GUI requirements (Settings > Rules & Commands > Commands), and dry-run preview. |\n| `Skills_System.md` | Canonical skills system | SSOT for skill discovery/storage roots, SKILL.md schema (frontmatter + body), validation rules, permission integration, Persona skill refs (`default_skill_refs`), runtime surface (via `skill` tool), and GUI requirements (Skills tab). |\n| `Plugins_System.md` | Canonical plugin system | SSOT for plugin discovery (internal/project/global/config paths), load order (deterministic), plugin context, 10 hook events with typed I/O and return enums, compaction hook (InjectContext/ReplacePrompt), custom tool registration with collision policy, structured plugin logging, GUI requirements (Settings > Plugins), and OpenCode baseline/deltas. |\n| `Formatters_System.md` | Canonical formatter system | SSOT for formatter lifecycle (HTE-only, triggered on File.Edited), built-in formatter table (21 formatters), per-formatter config (disabled/command/environment/extensions, `$FILE` placeholder), evidence tracking via `format.applied` events, GUI requirements (Settings > Formatters), and OpenCode baseline/deltas. |\n| `Models_System.md` | Canonical model system | SSOT for canonical model ID (`provider_id/model_id`), 6-level selection priority, model options (per-provider+model), per-Persona model overrides (`default_model`/`default_variant` in PERSONA.md frontmatter), variants (built-in default/fast/powerful + custom + disabling + cycling), canonical media model alias table (§6.8: Nano Banana, Nano Banana Pro, Veo fast, TTS flash, TTS pro), GUI requirements (Settings > Models, Chat model picker, variant picker), and OpenCode baseline/deltas. |\n| `Media_Generation_and_Capabilities.md` | Media generation and capability system SSOT | Canonical for `capabilities.get` (internal tool returning all media + provider-tool capabilities with enabled/disabled + disabled_reason + setup hints), `media.generate` (uniform media generation interface with per-request `model_override`, artifact-path output, and stable error codes), natural-language slot extraction grammar (deterministic regex-based prompt parsing), capability picker dropdown UI/UX, Cursor-native image routing (Image only; Video/TTS/Music unsupported on Cursor), Gemini media APIs, and verbatim UI copy strings. Model aliases for media (Nano Banana, Nano Banana Pro, Veo fast, TTS flash, TTS pro) are DRY-referenced from `Plans/Models_System.md` §6.8. |\n| `OpenCode_Coverage_Matrix.md` | OpenCode-to-SSOT coverage audit | Audit of all OpenCode-derived capabilities (extraction §7A–§7H) vs Puppet Master SSOT docs. Coverage matrix, DRY authority audit, GUI/config wiring audit, and mandatory fix list (anchors/subsections). |\n| `Wiring_Matrix.md` | Wiring matrix template + examples | Template and 10 EXAMPLE rows for the wiring matrix. Real entries are JSON validated against Wiring_Matrix.schema.json. |\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/feature-list.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Runtime Scheduler Recovery Summary Consolidation Addendum (2026-03-09)",
+          "content_markdown": "\nSummary bullets for this feature family MUST say:\n- deterministic scored ready-set scheduling instead of pure lexical dispatch\n- event-driven queue-analysis passes keyed by `scheduler_pass_id`\n- immutable attempt lineage with new `attempt_id` per dispatch and explicit runtime fields for retry/blocking/remediation/safe points\n- blocked outcomes with explicit recovery actions instead of generic failures, with distinct `attention_required` vs `blocked` wizard/thread/dashboard states\n- safe-point-backed recovery distinct from user-facing restore points\n- remediation child execution with explicit lineage and shared failure-class retry/backoff policy\n- pre-lock-only draft decomposition fallback and post-lock graph-integrity stop behavior\n\nRemove or revise older summary phrasing that implies lexical dispatch, node-centric retry commands, or `attention_required` as the only paused clarification state.\n\n**Artifacts panel and panels (from GUI/Artifacts/Usage scope):** Artifacts panel (runtime artifacts, 19 types, cost_usage, Show in Ledger/Usage); side-panel toggling for Git, Docker, Unraid, Artifacts, Chat, Files (single slot, last-click wins); layout save per project; OpenCode-style usage-on-message reference; AI in Git; multi-repo source control (or explicit deferral).\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Widget_System.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "file_end",
+          "operation": "append",
+          "anchor": "",
+          "content_markdown": "\n\n**Artifacts panel and Show in Ledger/Usage:** The Artifacts panel (Plans/Runtime_Artifacts_Panel.md) offers \"Show in Ledger\" and \"Show in Usage\" for cost_usage items. Those actions navigate to the Usage page or Ledger view, which are composed from the widgets in this document (e.g. widget.ledger_table for event-level usage). Implementation must ensure the linkage (e.g. filter by run_id/thread_id or usage_event_id) is consistent so the target view shows the correct canonical usage.event. See Plans/usage-feature.md for the single coherent schema.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 2.8 Assistant memory (Gist Review) commands",
+          "content_markdown": "\nThese IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7.\n\n| Command ID | Args schema (keys only) | Expected events | Affected surfaces |\n|---|---|---|---|\n| `cmd.chat.memory.verify` | `{ project_id, gist_id }` | `memory.gist.verification_requested`, `memory.gist.verified` or `memory.gist.verification_failed` | Assistant chat Gist Review panel |\n| `cmd.chat.memory.edit` | `{ project_id, gist_id, patch }` | `memory.gist.updated` | Assistant chat Gist Review panel |\n| `cmd.chat.memory.pin` | `{ project_id, gist_id, pinned }` | `memory.gist.pinned` or `memory.gist.unpinned` | Assistant chat Gist Review panel |\n| `cmd.chat.memory.discard` | `{ project_id, gist_id }` | `memory.gist.discarded` | Assistant chat Gist Review panel |\n| `cmd.chat.memory.toggle_auto_save_unverified` | `{ project_id, enabled }` | `settings.updated` | Assistant chat Gist Review panel |\n| `cmd.chat.memory.preview_capsule` | `{ project_id, thread_id? }` | no persisted domain event (preview computation only) | Assistant chat Gist Review panel |\n| `cmd.chat.memory.rebuild_lexical_index` | `{ project_id }` | `memory.index.lexical.rebuild.started`, `memory.index.lexical.rebuild.completed` | Assistant chat Gist Review panel |\n| `cmd.chat.memory.rebuild_semantic_index` | `{ project_id }` | `memory.index.semantic.rebuild.started`, `memory.index.semantic.rebuild.completed` | Assistant chat Gist Review panel |\n| `cmd.chat.memory.verification_sweep` | `{ project_id }` | `memory.verification_sweep.started`, `memory.verification_sweep.completed` | Assistant chat Gist Review panel |\n| `cmd.chat.memory.dedup_sweep` | `{ project_id }` | `memory.dedup_sweep.started`, `memory.dedup_sweep.completed` | Assistant chat Gist Review panel |\n| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |\n| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |\n\nContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#UICommand\n\n---\n\n### 2.8A Side-panel and artifacts navigation commands\n\n| Command | Payload | Event / persistence | Notes |\n|---|---|---|---|\n| `cmd.panel.switch` | `{ \"panel_id\": \"git\" | \"docker\" | \"source_control\" | \"unraid\" | \"artifacts\" | \"chat\" | \"files\" | \"run_debug\", \"project_id\": \"<optional>\" }` | Layout/UI state only; no domain event required. | Single side-panel slot; last-click wins. Used by the activity bar, keyboard shortcuts, and command palette. |\n| `cmd.artifacts.open_panel` | `{ \"project_id\": \"<optional>\", \"filter\": { \"artifact_type\": \"<optional>\", \"task_id\": \"<optional>\" } }` | Layout/UI state only; no domain event required. | Opens or focuses the Artifacts panel in the side panel. |\n| `cmd.artifacts.select_item` | `{ \"artifact_id\": \"<required>\", \"project_id\": \"<optional>\" }` | Layout/UI state only; no domain event required. | Selects/highlights a runtime artifact row or card inside the Artifacts panel. |\n| `cmd.artifacts.show_in_ledger` | `{ \"artifact_id\": \"<required>\", \"usage_event_ref\": \"<optional>\", \"run_id\": \"<optional>\", \"thread_id\": \"<optional>\" }` | Layout/UI state only; no domain event required. | Opens Ledger with the canonical usage event in scope; when no direct usage ref exists, filter by run/thread/timestamp. |\n| `cmd.artifacts.show_in_usage` | `{ \"artifact_id\": \"<required>\", \"usage_event_ref\": \"<optional>\", \"run_id\": \"<optional>\", \"thread_id\": \"<optional>\" }` | Layout/UI state only; no domain event required. | Opens the Usage page or thread Usage tab with the same canonical usage event in scope. |\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Glossary.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 2. Core terms",
+          "content_markdown": "\n### Runtime orchestration and recovery terms\n- **Scheduler pass** -- one deterministic queue-analysis and dispatch cycle. Each pass refreshes readiness, blocked/backoff state, available capacity, score breakdowns, and selected nodes before dispatching work.\n- **Ready set** -- the full set of nodes that are currently dispatch-eligible after dependency checks, blocker checks, backoff checks, generation validity checks, and capacity-lane eligibility checks have been applied.\n- **Scheduler lane** -- the canonical dispatch class used as the first scheduler score term. MVP lane order is `remediation > unblocker > normal`.\n- **Scheduler score tuple** -- the ordered selection tuple `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)` used to choose ready nodes deterministically.\n- **Wake reason** -- the canonical reason queue analysis reran. Examples include node completion, approval resolution, clarification resolution, backoff expiry, remediation completion, replan patch application, restore/recovery completion, auth recovery, and capacity changes.\n- **Queue analysis** -- the emitted runtime/projection record for one scheduler pass. It includes the ready set, selected nodes, score breakdowns, capacity state, and `non_selected_reason` for ready nodes that were not dispatched.\n- **Blocked** -- a canonical runtime, node, or thread state meaning execution cannot continue automatically until an external condition is resolved. `blocked` is not a synonym for `failed`.\n- **attention_required** -- a canonical state meaning clarification or user review is required but the current flow is still active. It is distinct from `blocked`; repeated unresolved clarification escalation eventually becomes `blocked`.\n- **Blocked reason code** -- the canonical explanation for why a node/thread/run is blocked, such as `permission_denied`, `user_declined`, `headless_ask_denied`, `filesafe_blocked`, `external_side_effect_blocked`, `auth_expired`, or `replan_required`.\n- **Failure class** -- the canonical classification of an attempt outcome used to drive retry, backoff, remediation, escalation, and user recovery behavior.\n- **Blocked outcome** -- an intentionally non-executed or externally prevented outcome that preserves completed local work and surfaces recovery options instead of being treated as a generic execution failure.\n- **Safe point** -- a runtime-internal recovery anchor created before mutation-capable attempts and remediation apply steps. Safe points preserve the pre-attempt baseline needed for deterministic retry/recovery.\n- **Restore point** -- a user-facing history or rewind checkpoint. Restore points are distinct from runtime safe points and must not be conflated with scheduler recovery.\n- **Remediation lineage** -- the canonical parent/child lineage that connects a failed attempt to automatic fix attempts, findings, superseded attempts, and final resolution.\n- **Remediation child** -- a runtime child attempt spawned to fix or verify a specific failed parent attempt. It is not a loose task-board item.\n- **Replan generation** -- the monotonic identifier for the active canonical graph/spec generation. Runtime attempts, safe points, and recovery decisions must be checked against the active generation.\n- **Graph lock** -- the boundary after which the canonical graph is fixed. Graceful draft-decomposition degradation is allowed only before graph lock; post-lock integrity failures must not silently degrade.\n- **Non-selected reason** -- the canonical reason a ready node was not dispatched in a scheduler pass, such as lower score, capacity exhaustion, lane reservation, or equivalent deterministic queue policy.\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Run_Graph_View.md\n\n- **Session** -- user-facing term for one interactive run context.\n  - Note: persisted events may contain a field named `thread_id` for correlation, but user-facing text MUST say \"Session\".\n- **Provider** -- an external AI platform integration (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini).\n- **Tool** -- a host capability invoked by Puppet Master (filesystem, shell, network fetch, etc) under policy.\n- **UICommand** -- a stable command ID dispatched by the UI to trigger non-trivial logic.\n- **ContractRef** -- a citation that binds an operational requirement to a canonical contract, schema, policy, invariant, or primitive.\n- **Overseer** -- the AI foreman role inside the Orchestrator. Responsibilities (docs-only): (1) Determines readiness at tier boundaries (Phase/Task/Subtask/Iteration). (2) Selects the next unit of work (chunk/node) deterministically. (3) Spawns Builder subagents to implement work. (4) Runs deterministic verifier checks (scripts/tests/greps). (5) Performs semantic/subjective audits at the start/end of tiers: start-of-tier scans for gaps/undefined refs/drift (auto-fix if safe, else human-visible alert); end-of-tier convergence scan (if concerns, spawn 2 reviewer subagents; escalate only if reviewers agree). (6) Stops on FAIL and surfaces evidence and next action.\n\nContractRef: ContractName:Contracts_V0.md#UICommand, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md\n\n---\n\n### Runtime artifacts and usage terms\n\n- **Artifacts panel** — The side-panel surface that lists project-scoped runtime artifacts projected from `runtime_artifact.*` events.\n- **Runtime artifact** — An agent-run output represented by a typed `runtime_artifact.*` event and indexed in `artifacts_index:v1:{project_id}` for GUI display. Distinct from Project Plan Package artifacts.\n- **Project Plan Package artifact** — A project output defined by `Plans/Project_Output_Artifacts.md`; it is not automatically a runtime artifact unless separately emitted through the runtime-artifact pipeline.\n- **cost_usage artifact** — A runtime artifact that attributes cost/usage using the same canonical schema as `usage.event`; it is not a second usage store.\n- **Show in Ledger / Show in Usage** — Navigation actions from a `cost_usage` artifact that open Ledger or Usage with the canonical usage event in scope.\n\nContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/usage-feature.md\n"
+        }
+      ]
+    }
+  ]
+}

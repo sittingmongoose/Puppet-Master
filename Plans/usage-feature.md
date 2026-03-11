@@ -199,8 +199,6 @@ Beyond state-file aggregation, each platform can augment Usage with API or CLI d
 **Implementation order:** State-file aggregation first (works for all platforms). Then add augmentation per platform: Claude (Admin API + stream) and error parsing (Codex) is already documented; next wire Cursor API, Codex CLI usage enrichment, Copilot CLI + metrics API, and Gemini estimated-cost display (plus optional AI Studio link).
 
 ## Data and Backend (conceptual)
-
-
 ### Cost_usage runtime artifact and Show in Ledger / Show in Usage
 
 The **cost_usage** runtime artifact (see Plans/Runtime_Artifacts_Panel.md and Plans/storage-plan.md) is an **attribution record** only. It uses the **same canonical usage pipeline and schema** as `usage.event` (tokens_in, tokens_out, reasoning_tokens, cost, platform/provider, model). There is no second store; the Ledger and Usage page consume the same data.
@@ -215,11 +213,22 @@ Implementation note: If the cost_usage payload includes `usage_event_seq` or `us
 
 For implementers: the flow by which usage is collected and stored can be referenced from the OpenCode product (anomalyco/opencode repo). Conceptual flow: **provider response** → adapter → **LanguageModelV2Usage** (or equivalent) → **getUsage-style normalization** (e.g. Session.getUsage) → **processor** applies on finish-step to assistant message + step-finish part; **UI reads from messages** and/or usage.event. Key paths in that repo: session-context-metrics (UI metrics from messages), processor finish-step (where token/cost is applied to message), Session.getUsage (normalization). Puppet Master does not replicate this exactly; all providers (CLI-bridged, OpenCode provider, Codex, Gemini, Copilot) normalize to the same usage.event / message usage shape; collection mechanism differs per provider. OpenCode the **provider** (Plans/Provider_OpenCode.md) is one transport; OpenCode the **product** is the reference for "how message-level usage becomes stored usage."
 
-### Gap 3 resolution: single coherent schema
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Provider_OpenCode.md, PolicyRule:Decision_Policy.md§2
+### Cost_usage runtime artifact and Show in Ledger / Show in Usage
 
-**Gap 3 (Ledger vs. usage_tracker split)** is resolved by ensuring that **cost_usage** and **usage.event** use a **single coherent schema**. The Ledger, 5h/7d aggregation, and Usage page all consume one format. The write path (UsageRecord, usage.jsonl, or seglog usage.event) MUST be documented so that field names (e.g. operation/action, tokens_in/tokens_out, cost) are consistent. No ad-hoc remapping between Ledger display and stored events.
+The **cost_usage** runtime artifact (see Plans/Runtime_Artifacts_Panel.md and Plans/storage-plan.md) is an **attribution record** only. It uses the **same canonical usage pipeline and schema** as `usage.event` (tokens_in, tokens_out, reasoning_tokens, cost, platform/provider, model). There is no second store; the Ledger and Usage page consume the same data.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, PolicyRule:Decision_Policy.md§2
+**Artifacts panel actions for cost_usage items:** For each cost_usage artifact, the Artifacts panel MUST offer:
+- **Show in Ledger** — Navigate to the Usage area (Ledger tab or Ledger view) with filters set so the canonical usage.event for this cost is visible (e.g. by usage_event_seq or usage_event_ref, or by run_id/thread_id/timestamp).
+- **Show in Usage** — Navigate to the Usage page (or thread Usage tab when the cost is for that thread) with the same event in scope (e.g. selected or scrolled into view).
+
+Implementation note: If the cost_usage payload includes `usage_event_seq` or `usage_event_ref`, the GUI can pass it to the Usage/Ledger view to scroll to or highlight that row. Otherwise open Usage/Ledger filtered by run_id/thread_id/ts.
+
+### OpenCode (product) usage pipeline reference
+
+For implementers: the flow by which usage is collected and stored can be referenced from the OpenCode product (anomalyco/opencode repo). Conceptual flow: **provider response** → adapter → **LanguageModelV2Usage** (or equivalent) → **getUsage-style normalization** (e.g. Session.getUsage) → **processor** applies on finish-step to assistant message + step-finish part; **UI reads from messages** and/or usage.event. Key paths in that repo: session-context-metrics (UI metrics from messages), processor finish-step (where token/cost is applied to message), Session.getUsage (normalization). Puppet Master does not replicate this exactly; all providers (CLI-bridged, OpenCode provider, Codex, Gemini, Copilot) normalize to the same usage.event / message usage shape; collection mechanism differs per provider. OpenCode the **provider** (Plans/Provider_OpenCode.md) is one transport; OpenCode the **product** is the reference for "how message-level usage becomes stored usage."
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Provider_OpenCode.md, PolicyRule:Decision_Policy.md§2
 
 ### Backend implementation notes
 
@@ -265,17 +274,13 @@ The plan does not mandate A/B/C; the product can choose one and document it. Con
   - When env vars are set, Usage can show provider-reported 5h/7d (or equivalent) where the platform supports it; when not set, we still show usage from `usage.jsonl`.
 
 ### Gap 3: Ledger vs. usage_tracker split
+**Desired:** Ledger, usage/event rows, cost_usage artifacts, 5h/7d rollups, and thread-scoped usage all reflect one coherent schema and attribution model.
 
-- **Current state**
-  - **Write path:** Orchestrator uses `state::UsageTracker` + `types::UsageRecord`; writes to `usage.jsonl` with fields: `action`, `duration_ms`, `tokens` (optional), `cost` (typically None), `tier_id`, `session_id`, `model`.
-  - **Read path (Ledger):** Ledger view reads raw JSON and maps to `LedgerEntry` using different names: expects `operation` (we write `action`), `tokens_in`/`tokens_out` (we write `tokens` as a single number), `cost`.
-  - **Unused:** `platforms::UsageTracker` has `UsageEvent`, `get_usage_summary(platform, time_range)` and `get_usage_summary_all_platforms`; the GUI does not use them.
-- **Desired**
-  - Single coherent schema for `usage.jsonl`: one write format (e.g. align `UsageRecord` with STATE_FILES §5.2 and Ledger expectations: `operation` or `action` consistently, `tokens_in`/`tokens_out` or a single `tokens` with documented meaning).
-  - One code path for "current usage" that the GUI uses: either (a) aggregate from `usage.jsonl` in a shared module, or (b) use `platforms::UsageTracker::get_usage_summary` with time ranges, with events written in a format that tracker can read (or bridge from `UsageRecord` to `UsageEvent` on read).
-- **Acceptance**
-  - Ledger displays all fields we write; 5h/7d aggregation and Ledger both consume the same file/schema without ad-hoc field remapping.
+**Canonical resolution:** The system MUST use one coherent usage schema and attribution model across Ledger, `usage.event`, `usage.jsonl`, `runtime_artifact.cost_usage`, and 5h/7d rollups. Canonical field names MUST use `operation` for the normalized action name plus `tokens_in`, `tokens_out`, and `reasoning_tokens` for token accounting; legacy `action` plus aggregate `tokens` is compatibility-only wording and MUST NOT be introduced for new writes. The Ledger, 5h/7d aggregation, and Usage page all consume the same record shape without ad-hoc remapping between display rows and stored events.
 
+**Acceptance signal:** A single usage event/cost payload can populate Ledger, Usage, cost_usage artifact detail, and rollups without per-surface translation logic beyond formatting.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, PolicyRule:Decision_Policy.md§2
 ### Gap 4: Quota/plan only from errors
 
 - **Current state**
@@ -613,16 +618,6 @@ ContractRef: ContractName:Plans/Widget_System.md#4
 - Plans/FinalGUISpec.md -- responsive grid (section 12.3), existing Usage view (section 7.8)
 - Plans/storage-plan.md -- redb rollup keys for usage data
 
-## Scheduler / blocked Usage Observability Addendum (2026-03-08)
-
-Usage/telemetry surfaces should account for the new runtime packet so observability is not limited to successful executed calls.
-
-Required guidance:
-- usage rollups may continue to exclude non-executed tool calls from executed-tool latency/error widgets, but blocked and remediation counts should remain queryable via dedicated runtime/scheduler projections
-- queue-analysis freshness, blocked counts, remediation generations, and retry/backoff counts should be available for future usage/operations surfaces rather than being lost because they are not ordinary tool invocations
-
-Acceptance criteria:
-- the product can report on blocked/remediation/scheduler behavior without corrupting executed-tool usage metrics
 ## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)
 
 Usage and analytics surfaces should reflect the new runtime model.
@@ -634,4 +629,11 @@ Usage and analytics surfaces should reflect the new runtime model.
 - queue-analysis passes and wake reasons
 - safe-point creates/restores
 
+### Metrics integrity rule
+- usage rollups may continue to exclude non-executed tool calls from executed-tool latency/error widgets, but blocked and remediation counts should remain queryable via dedicated runtime/scheduler projections
+- queue-analysis freshness, blocked counts, remediation generations, and retry/backoff counts should be available for future usage/operations surfaces rather than being lost because they are not ordinary tool invocations
+
 Any summary view must differentiate blocked outcomes from failures so user-visible statistics do not imply unsuccessful work where local progress was preserved.
+
+Acceptance criteria:
+- the product can report on blocked/remediation/scheduler behavior without corrupting executed-tool usage metrics

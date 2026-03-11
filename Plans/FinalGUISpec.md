@@ -128,8 +128,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 +------+------------------------------------------+---------------+
 |      |                                          |               |
 | ACT  |   PRIMARY CONTENT AREA                   | SIDE PANEL    |
-| BAR  |   (active page view)                     | [Chat] [Files]|
-|      |                                          | Detachable    |
+| BAR  |   (active page view)                     | Activity-bar  |
+|      |                                          | surface slot  |
 | 48px |                                          | 240-480px     |
 |      |                                          |               |
 |      +------------------------------------------+               |
@@ -148,7 +148,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 | **Title bar** | `HorizontalLayout` | height: 28px fixed | App name (Orbitron Bold 14px), **project bar** (dropdown + recent list), theme toggle, settings gear |
 | **Activity bar** | `VerticalLayout` | width: 48px fixed | Icon-only vertical nav; always visible |
 | **Primary content** | `VerticalLayout` (flex: 1) | fills remaining space | Active page view; scrollable internally per page |
-| **Side panel** | `VerticalLayout` | width: 240-480px, resizable | Chat or File Manager tabs; detachable |
+| **Side panel** | `VerticalLayout` | width: 240-480px, resizable | Hosts the currently selected activity-bar side-panel surface; one visible at a time; detachable where supported |
 | **Bottom panel** | `VerticalLayout` | height: 120-300px, collapsible | Terminal, Problems, Output tabs |
 | **Status bar** | `HorizontalLayout` | height: 24px fixed | Chat mode, platform/model dropdowns, context usage, orchestrator status |
 
@@ -225,7 +225,6 @@ Primary content: 1280 - 48 - 48 = 1184px wide
 ## 4. Navigation Architecture
 
 ### 4.1 Activity Bar
-
 Left edge, 48px wide. A vertical strip of icons, each representing a panel or group. **There is no Home icon on the activity bar;** main app navigation (Dashboard, Projects, etc.) stays in the title bar / primary content.
 
 | Icon | Panel / group | Behavior |
@@ -254,7 +253,6 @@ Left edge, 48px wide. A vertical strip of icons, each representing a panel or gr
 **Activity bar extensibility:** Extensions/plugins may add activity bar items. Drag-to-reorder applies to built-in and extension icons.
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Runtime_Artifacts_Panel.md, PolicyRule:Decision_Policy.md§2
-
 ### 4.2 Command Palette
 
 `Ctrl+K` (primary) or `Ctrl+P` (alternative) opens a centered overlay (~500-600px wide, top third of window) with fuzzy search across all pages, commands, and actions.
@@ -276,6 +274,8 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Contai
 At the top of the primary content area, a breadcrumb strip (20px) shows `Group > Page` (e.g., `Data > Ledger`). Breadcrumb items are clickable for quick navigation within the group.
 
 ### 4.4 Keyboard Shortcuts
+
+**Artifacts panel and side-panel toggling:** Any shortcuts for "Open Artifacts panel," "Toggle side panel," or switching between side-panel content (Git, Docker, Unraid, Artifacts, Chat, Files) MUST be registered in the shortcut registry and appear in Settings > Shortcuts. Activity bar icon clicks are the primary interaction; keyboard shortcuts are additive and must stay consistent with §4.1 and §5.
 
 
 **Artifacts panel and side-panel toggling:** Any shortcuts for "Open Artifacts panel," "Toggle side panel," or switching between side-panel content (Git, Docker, Unraid, Artifacts, Chat, Files) MUST be registered in the shortcut registry and appear in Settings > Shortcuts. Activity bar icon clicks are the primary interaction; keyboard shortcuts are additive and must stay consistent with §4.1 and §5.
@@ -326,9 +326,7 @@ At the top of the primary content area, a breadcrumb strip (20px) shows `Group >
 ## 5. Panel System
 
 ### 5.1 Detachable Panels
-
-
-**Panels that can occupy the side panel (one at a time; last-click wins):** Chat, File Manager, Git (GitHub), Docker Manage, Source Control, Unraid, Artifacts. See §4.1 Activity Bar for which activity bar icon shows which panel. Each of these panels supports detach/re-dock as below.
+**Side-panel occupancy contract (one at a time; last-click wins):** The side panel is the single activity-bar-driven side-panel slot. Run & Debug, Git (GitHub), Docker Manage, Source Control, Unraid, Artifacts, Chat, and File Manager can occupy it one at a time. See §4.1 Activity Bar for which icon shows which panel. Detach/re-dock support is limited to the panels listed below.
 
 The following panels support detach/re-dock:
 - **Chat panel**
@@ -336,7 +334,6 @@ The following panels support detach/re-dock:
 - **Bottom panel** (Terminal/Output)
 
 Other views (Dashboard, Settings, etc.) remain in the primary content area and are not detachable.
-
 ### 5.2 Panel State Machine
 
 Per panel: **DOCKED** <-> **FLOATING**. Same Slint component is used inline when docked or as the root of a separate Slint `Window` when floating.
@@ -396,12 +393,7 @@ Three-signal system for panel detach discovery:
 3. **First-run hint (one-time):** On first use of Chat or File Manager, inline banner: "This panel can be popped out into its own window. [Try it] [Dismiss]." Dismissed permanently after first interaction.
 
 ### 5.7 Panel Persistence
-
-
 **Layout persistence per project:** Panel dock state (docked side and width, or floating position/size), **activity bar icon order**, and **which panel was last visible** are persisted **per project** in redb (e.g. under keys scoped by `project_id`). Restored on startup and when switching projects. If a floating window was on a monitor no longer connected, fall back to docked state.
-
-Panel dock state (docked side and width, or floating position/size) persisted in redb under `layout:v1` key. Restored on startup and after theme restart. If a floating window was on a monitor no longer connected, fall back to docked state.
-
 ### 5.8 Panel Edge Cases and Recovery
 
 **Data sync:** Floating and docked instances share the same `Rc<VecModel<T>>` and scalar properties. When the Rust side replaces an entire model (e.g., project switch), it must update the shared `Rc` in-place rather than reassigning the pointer, so both windows stay synchronized.
@@ -599,8 +591,6 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#13, ContractName:Plans/DRY_Rules
 ## 7. Views Specification
 
 ### 7.1 View Inventory (21 views/panels + 6 bottom panel tabs)
-
-
 | 21 | Artifacts | -- | Side panel | **NEW** (runtime artifacts: diffs, plans, evidence, browser recordings, cost_usage, etc.; see Plans/Runtime_Artifacts_Panel.md) |
 
 | # | View | Group | Type | Status |
@@ -626,7 +616,6 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#13, ContractName:Plans/DRY_Rules
 | 19 | AgentActivity | -- | Embedded pane | **NEW** |
 | 20 | BottomPanel | -- | Bottom panel | **NEW** (Terminal/Problems/Output/Ports/Browser/Debug) |
 | 21 | NotFound | -- | Primary content | Existing |
-
 ### 7.2 Dashboard
 
 **Group:** Home | **Location:** Primary content
