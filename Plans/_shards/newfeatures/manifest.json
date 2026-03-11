@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/newfeatures.md",
-  "source_sha256": "3fc004ad2e641876864e33eeffe9e8712d0b84d39ce9ae7d3f544e8bd6d31dc9",
+  "source_sha256": "8fd9cb37383f2f6409b78706f6ba50aa4f6a8a45015f48b082220b068d7257e7",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -143,98 +143,91 @@
     {
       "dest_path": "Plans/_shards/newfeatures/20-15-additional-feature-ideas.md",
       "start_line": 464,
-      "end_line": 868,
-      "segment_sha256": "13fbdc98e860ea6f556bf807a47fb67e14d54d2472e7d59f5db2c4befc8239b1",
+      "end_line": 495,
+      "segment_sha256": "b35f26d7f0e299cfdd53219822a04a71f403c38c2138c5d42cb61ae2639339af",
       "heading": "## 15. Additional Feature Ideas"
     },
     {
       "dest_path": "Plans/_shards/newfeatures/21-16-phasing-and-dependencies.md",
-      "start_line": 869,
-      "end_line": 888,
+      "start_line": 496,
+      "end_line": 515,
       "segment_sha256": "ff06623590da44098a377ce48d0d18e4bf973f7c213036d616cb4a6cdbd2df9a",
       "heading": "## 16. Phasing and Dependencies"
     },
     {
       "dest_path": "Plans/_shards/newfeatures/22-17-relationship-to-existing-plans-and-cross-reference.md",
-      "start_line": 889,
-      "end_line": 988,
-      "segment_sha256": "1b25354b80bc67be48dc479a4df2e5a7a73c0176aa7a75ed8551c00113bae3ae",
+      "start_line": 516,
+      "end_line": 611,
+      "segment_sha256": "a0ac55a5365fc678ebff840608a7b442c528b0955d997f07b39548e172f11f93",
       "heading": "## 17. Relationship to Existing Plans and Cross-Reference"
     },
     {
       "dest_path": "Plans/_shards/newfeatures/23-18-task-status-log.md",
-      "start_line": 989,
-      "end_line": 996,
+      "start_line": 612,
+      "end_line": 619,
       "segment_sha256": "7605d374bfa4f698ef9eb494e12c82847187d592c32d042a4d7249f948307559",
       "heading": "## 18. Task Status Log"
     },
     {
       "dest_path": "Plans/_shards/newfeatures/24-19-technical-analysis-how-these-mechanisms-work.md",
-      "start_line": 997,
-      "end_line": 1218,
+      "start_line": 620,
+      "end_line": 841,
       "segment_sha256": "e8bf9fe0764061e272e36caadc636b6e724da7948a0026dcb44fd2d618073ba0",
       "heading": "## 19. Technical Analysis: How These Mechanisms Work"
     },
     {
       "dest_path": "Plans/_shards/newfeatures/25-20-human-in-the-loop-hitl-mode.md",
-      "start_line": 1219,
-      "end_line": 1226,
+      "start_line": 842,
+      "end_line": 849,
       "segment_sha256": "7dbde5d69d19c9d40b8a1201f3c00143102421967bb65a754315f167828f173b",
       "heading": "## 20. Human-in-the-Loop (HITL) Mode"
     },
     {
       "dest_path": "Plans/_shards/newfeatures/26-21-updating-puppet-master.md",
-      "start_line": 1227,
-      "end_line": 1257,
+      "start_line": 850,
+      "end_line": 880,
       "segment_sha256": "bbb094ddf042b505146ffe997f40718455e4c235f78a880d576a980e6817428d",
       "heading": "## 21. Updating Puppet Master"
     },
     {
       "dest_path": "Plans/_shards/newfeatures/27-22-cross-device-sync.md",
-      "start_line": 1258,
-      "end_line": 1298,
+      "start_line": 881,
+      "end_line": 921,
       "segment_sha256": "3f933714499bc74bbfb7bd5ab61478def93dea375683212fa89774461e92d341",
       "heading": "## 22. Cross-Device Sync"
     },
     {
       "dest_path": "Plans/_shards/newfeatures/28-23-gaps-and-potential-issues.md",
-      "start_line": 1299,
-      "end_line": 1395,
-      "segment_sha256": "ad0c6e0888692b8a5925fe401a4c3dcddcec5dda73f8a398965020f2beff7ab1",
+      "start_line": 922,
+      "end_line": 1130,
+      "segment_sha256": "f09bd554c15b90fc2a92beff285cd2b4042276a8a7cac8b89a986d83f677dd43",
       "heading": "## 23. Gaps and Potential Issues"
     },
     {
-      "dest_path": "Plans/_shards/newfeatures/29-24-unified-markdown-mermaid-html-and-image-rendering-architecture-2026-03-07.md",
-      "start_line": 1396,
-      "end_line": 1511,
-      "segment_sha256": "359e596560e791fd9f245eccb387fdff54292dc9128216c5aad199e8d97ec5eb",
-      "heading": "## 24. Unified Markdown, Mermaid, HTML, and Image Rendering Architecture (2026-03-07)"
-    },
-    {
-      "dest_path": "Plans/_shards/newfeatures/30-runtime-safe-point-clarification-addendum-2026-03-08.md",
-      "start_line": 1512,
-      "end_line": 1534,
+      "dest_path": "Plans/_shards/newfeatures/29-runtime-safe-point-clarification-addendum-2026-03-08.md",
+      "start_line": 1131,
+      "end_line": 1153,
       "segment_sha256": "1bbf9aa1df791f0fa427aa351c746e403ea8afc1567828605be030682ecc5c81",
       "heading": "## Runtime Safe-Point Clarification Addendum (2026-03-08)"
     },
     {
-      "dest_path": "Plans/_shards/newfeatures/31-user-facing-recovery-semantics-addendum-2026-03-09.md",
-      "start_line": 1535,
-      "end_line": 1543,
+      "dest_path": "Plans/_shards/newfeatures/30-user-facing-recovery-semantics-addendum-2026-03-09.md",
+      "start_line": 1154,
+      "end_line": 1162,
       "segment_sha256": "a47e837ee15f17eebea5e50d5b6d5444aa17d3f8f2d4a3c210c6d03e04628e23",
       "heading": "## User-Facing Recovery Semantics Addendum (2026-03-09)"
     },
     {
-      "dest_path": "Plans/_shards/newfeatures/32-user-facing-runtime-recovery-semantics-consolidation-addendum-2026-03-09.md",
-      "start_line": 1544,
-      "end_line": 1556,
+      "dest_path": "Plans/_shards/newfeatures/31-user-facing-runtime-recovery-semantics-consolidation-addendum-2026-03-09.md",
+      "start_line": 1163,
+      "end_line": 1175,
       "segment_sha256": "6e4d046dc207eccf7325c41176a77eeb2189b569a8b0e716dd98eafa5eb6cef1",
       "heading": "## User-Facing Runtime Recovery Semantics Consolidation Addendum (2026-03-09)"
     },
     {
-      "dest_path": "Plans/_shards/newfeatures/33-safe-point-restore-point-crash-recovery-alignment-addendum.md",
-      "start_line": 1557,
-      "end_line": 1573,
+      "dest_path": "Plans/_shards/newfeatures/32-safe-point-restore-point-crash-recovery-alignment-addendum.md",
+      "start_line": 1176,
+      "end_line": 1192,
       "segment_sha256": "afdecab0f77a9d4ffc1d01d2a4672cf5a1187010f9d0a8b35e420aea4b47c4b6",
       "heading": "## Safe Point / Restore Point / Crash Recovery Alignment Addendum"
     }

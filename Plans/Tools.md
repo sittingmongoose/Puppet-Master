@@ -332,27 +332,16 @@ See [OpenCode -- Custom tools](https://opencode.ai/docs/tools/#custom-tools) for
 ---
 
 ## 5. MCP integration (in scope)
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Personas.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
-MCP is **in scope** for this document: MCP-discovered tools are first-class entries in the central tool registry and subject to the same permission model. Per-platform MCP config paths, GUI (Context7, cited web search), and server lifecycle are in **newtools.md** (§8) and AGENTS.md; here we define integration with the registry and policy.
+MCP-discovered tools are first-class tools in the central registry and participate in the same requested-vs-effective resolution model as built-in, provider, custom, and skill-backed tools.
 
-### 5.1 Registry and policy
-
-- **Discovery:** When a run starts, the runner (or Provider) discovers MCP tools from the platform's MCP config (injected from GUI/config per newtools §8). Each MCP tool is **registered** in the central registry with a stable name (e.g. server name + tool name, or a normalized id).
-- **Permission model:** MCP tools use the same allow/deny/ask. Wildcards apply: e.g. `context7_*: allow`, `websearch_cited: ask`. Deny takes precedence.
-- **Normalization:** MCP tool invocations and results are normalized into the same event model as built-in tools (seglog), so analytics (latency, error rate) and dashboard rollups include MCP tools.
-
-### 5.2 Naming and precedence
-
-- **Name collisions:** If an MCP tool has the same name as a built-in (e.g. `read`), policy must define precedence (e.g. built-in wins, or namespace: `mcp_context7_read`). Prefer namespacing MCP tools by server so that `mymcp_*` wildcards work.
-- **Visibility:** Only tools from **enabled** MCP servers (per run config) appear in the registry for that run. Disabling Context7 in GUI should remove Context7 tools from the set the agent can see.
-
-### 5.3 Where MCP is specified elsewhere
-
-- **Config paths, GUI, Context7, cited web search:** newtools.md §8, §8.1, §8.2, §8.2.1.
-- **Platform CLI flags and config format:** AGENTS.md; §7 below (compact table).
-
----
-
+Rules:
+- enabling an MCP server expresses requested availability, not guaranteed effective availability
+- effective availability is recalculated from server health, provider/platform support, project scope, Persona/permission state, and policy at runtime
+- project switching recalculates effective MCP availability for the new project context
+- app-level-only permission scope is not sufficient for the promoted shell/project-switch model
+- namespacing and wildcarding remain mandatory for policy resolution and diagnostics
 ## 6. Ways to add tools (implementation angles)
 
 | Mechanism | What it adds | Where it's configured | Notes |
@@ -400,7 +389,7 @@ Tool events feed analytics and the Usage tool widget. Align with **storage-plan.
 ### 8.1 Config persistence
 
 - **Where:** Tool permissions live in the same config as the rest of Settings (e.g. `GuiConfig` in memory, persisted to redb as `config:v1` per FinalGUISpec §15.1). Use the key **`tool_permissions`** (object: tool name or wildcard → `"allow"` | `"deny"` | `"ask"`, or per-tool object for granular rules per §10.1).
-- **Scope:** Can be app-level only for MVP; per-project overrides (e.g. `project.{project_id}.tool_permissions`) are an enhancement if needed.
+- **Scope:** Tool permissions support app-level defaults plus project-scoped overrides for the active project context. Project switching recalculates the effective permission set from the current scope layers.
 - **Mid-run:** Run config is an immutable snapshot at start (FinalGUISpec §9.7). Changing Settings (including tool permissions) mid-run does **not** affect the active run; next run picks up the new config.
 
 ### 8.2 Policy application order and invocation flow
@@ -441,13 +430,14 @@ When the user enables **YOLO** (Assistant), treat all tools as **allow** for tha
 - **Wildcard matching:** **Prefix match.** A rule `mymcp_*` matches any tool name that **starts with** `mymcp_`. More general globs (e.g. `*_read`) can be added later if needed; document the rule in the registry spec.
 
 ### 8.7 MCP server unavailable
+If an MCP server is enabled but unavailable, the user sees deterministic degraded behavior.
 
-If an MCP server is enabled in config but fails to start or connect at run start, either (a) **hide** its tools from the registry for that run (agent doesn't see them), or (b) **register** them as "unavailable" and return a clear error if the agent tries to call one. Prefer (a) to avoid failed tool calls; document in Doctor so the user sees "Context7 unavailable (connection failed)."
-
----
-
-## 9. Gaps, potential problems, and enhancements
-
+Rules:
+- the UI must show the server as unavailable with reason when that state is knowable
+- tool visibility and invocation behavior follow one canonical policy rather than ad hoc hiding in one surface and disabled-state display in another
+- when the tools are omitted from invocation surfaces, the unavailability still remains visible in settings/health diagnostics
+- when a tool is shown but unavailable, the disabled reason and remediation path must be explicit
+- no success-shaped fallback is allowed
 ### 9.1 Gaps and potential problems
 
 | Gap / risk | Description | Mitigation |

@@ -633,6 +633,17 @@ Auto mode MUST NOT be opaque. The system must always expose:
 
 ### 10.11 Effective Persona Resolution Record (cross-reference)
 ### 10.11A Runtime identity surfaces
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+### 10.11B Requested vs effective Persona display
+
+Persona-facing UI must disclose requested vs effective Persona state whenever the final runtime Persona differs from the requested selection.
+
+Minimum requirements:
+- show both requested and effective Persona when they differ
+- show a concise selection reason or override reason
+- keep this visible on surfaces where the difference materially affects runtime behavior, especially chat, orchestrator, and settings surfaces that expose Persona selection or compatibility
+- project switching must recalculate and redisplay effective Persona state for the new project context
 
 Requested and effective persona/runtime identity must remain visible outside the prompt pipeline.
 

@@ -15,9 +15,18 @@ The Dashboard must distinguish:
 - auto-dismiss only when the wizard leaves `blocked`
 
 ### 2. Assistant thread selector / badges
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
-Thread status must include a distinct `blocked` presentation rather than overloading `attention_required`.
+Thread and session navigation uses persistent shell surfaces.
 
+Rules:
+- the active thread list is visible in a persistent sidebar or equivalent persistent region, not only in a floating overlay
+- the selector must expose running, queued, blocked, and attention-required badges per thread
+- branch lineage is visible in the selector/history model using stable branch labels and source lineage metadata
+- badge aggregation must preserve highest-severity state while still showing blocked counts when present
+- the project/session browser may complement thread navigation but does not replace the active-thread list inside chat
+
+The floating thread-list overlay pattern is not canonical after this section.
 ### 3. Run Graph and Orchestrator views
 
 Required visible scheduler/remediation data:

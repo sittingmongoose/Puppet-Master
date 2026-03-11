@@ -1,4 +1,23 @@
 ## 1. Definitions and concepts
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
+
+### Additional shell/runtime identities required by the promoted Section 15 feature set
+
+The storage model MUST treat the following as first-class identities when the feature is enabled:
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
+- `workspace_tab_id`
+- `window_id`
+- `browser_tab_id`
+- `preview_session_id`
+- `terminal_session_id`
+- `dev_session_id`
+- `branch_id` for branched conversation/session lineage
+
+Identity rules:
+- `project_id` is stable across path rebinding and restore operations; raw path is not the canonical identity
+- `workspace_tab_id` is distinct from `project_id`
+- `browser_tab_id` is distinct from `preview_session_id`
+- detached windows and ephemeral automation/auth sessions have separate persistence scope from workspace-tab shell state
 
 | Term | Meaning |
 |------|--------|

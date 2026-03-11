@@ -34,8 +34,7 @@ Canonical source: [Plans/newfeatures.md](../../newfeatures.md)
 - [26-21-updating-puppet-master.md](26-21-updating-puppet-master.md) — ## 21. Updating Puppet Master
 - [27-22-cross-device-sync.md](27-22-cross-device-sync.md) — ## 22. Cross-Device Sync
 - [28-23-gaps-and-potential-issues.md](28-23-gaps-and-potential-issues.md) — ## 23. Gaps and Potential Issues
-- [29-24-unified-markdown-mermaid-html-and-image-rendering-architecture-2026-03-07.md](29-24-unified-markdown-mermaid-html-and-image-rendering-architecture-2026-03-07.md) — ## 24. Unified Markdown, Mermaid, HTML, and Image Rendering Architecture (2026-03-07)
-- [30-runtime-safe-point-clarification-addendum-2026-03-08.md](30-runtime-safe-point-clarification-addendum-2026-03-08.md) — ## Runtime Safe-Point Clarification Addendum (2026-03-08)
-- [31-user-facing-recovery-semantics-addendum-2026-03-09.md](31-user-facing-recovery-semantics-addendum-2026-03-09.md) — ## User-Facing Recovery Semantics Addendum (2026-03-09)
-- [32-user-facing-runtime-recovery-semantics-consolidation-addendum-2026-03-09.md](32-user-facing-runtime-recovery-semantics-consolidation-addendum-2026-03-09.md) — ## User-Facing Runtime Recovery Semantics Consolidation Addendum (2026-03-09)
-- [33-safe-point-restore-point-crash-recovery-alignment-addendum.md](33-safe-point-restore-point-crash-recovery-alignment-addendum.md) — ## Safe Point / Restore Point / Crash Recovery Alignment Addendum
+- [29-runtime-safe-point-clarification-addendum-2026-03-08.md](29-runtime-safe-point-clarification-addendum-2026-03-08.md) — ## Runtime Safe-Point Clarification Addendum (2026-03-08)
+- [30-user-facing-recovery-semantics-addendum-2026-03-09.md](30-user-facing-recovery-semantics-addendum-2026-03-09.md) — ## User-Facing Recovery Semantics Addendum (2026-03-09)
+- [31-user-facing-runtime-recovery-semantics-consolidation-addendum-2026-03-09.md](31-user-facing-runtime-recovery-semantics-consolidation-addendum-2026-03-09.md) — ## User-Facing Runtime Recovery Semantics Consolidation Addendum (2026-03-09)
+- [32-safe-point-restore-point-crash-recovery-alignment-addendum.md](32-safe-point-restore-point-crash-recovery-alignment-addendum.md) — ## Safe Point / Restore Point / Crash Recovery Alignment Addendum

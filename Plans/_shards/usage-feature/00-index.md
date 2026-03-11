@@ -14,15 +14,13 @@ Canonical source: [Plans/usage-feature.md](../../usage-feature.md)
 - [06-relationship-to-existing-docs.md](06-relationship-to-existing-docs.md) — ## Relationship to Existing Docs
 - [07-external-references-competitive-ecosystem.md](07-external-references-competitive-ecosystem.md) — ## External References (Competitive & Ecosystem)
 - [08-scope-of-the-usage-feature.md](08-scope-of-the-usage-feature.md) — ## Scope of the Usage Feature
-- [09-data-sources-state-files-json-jsonl.md](09-data-sources-state-files-json-jsonl.md) — ## Data Sources: State Files (JSON / JSONL)
-- [10-per-platform-usage-data-api-cli.md](10-per-platform-usage-data-api-cli.md) — ## Per-platform usage data (API / CLI)
-- [11-data-and-backend-conceptual.md](11-data-and-backend-conceptual.md) — ## Data and Backend (conceptual)
-- [12-gui-placement-options.md](12-gui-placement-options.md) — ## GUI Placement Options
-- [13-gaps-current-state-vs-desired.md](13-gaps-current-state-vs-desired.md) — ## Gaps (Current State vs. Desired)
-- [14-potential-problems.md](14-potential-problems.md) — ## Potential Problems
-- [15-enhancements-beyond-minimum.md](15-enhancements-beyond-minimum.md) — ## Enhancements (Beyond Minimum)
-- [16-out-of-scope-for-this-plan.md](16-out-of-scope-for-this-plan.md) — ## Out of Scope for This Plan
-- [17-success-criteria.md](17-success-criteria.md) — ## Success Criteria
-- [18-version-history.md](18-version-history.md) — ## Version History
-- [19-widget-composed-page-layout-addendum-2026-02-23.md](19-widget-composed-page-layout-addendum-2026-02-23.md) — ## Widget-Composed Page Layout (Addendum -- 2026-02-23)
-- [20-runtime-scheduler-recovery-observability-addendum-2026-03-09.md](20-runtime-scheduler-recovery-observability-addendum-2026-03-09.md) — ## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)
+- [09-data-and-backend-conceptual.md](09-data-and-backend-conceptual.md) — ## Data and Backend (conceptual)
+- [10-gui-placement-options.md](10-gui-placement-options.md) — ## GUI Placement Options
+- [11-gaps-current-state-vs-desired.md](11-gaps-current-state-vs-desired.md) — ## Gaps (Current State vs. Desired)
+- [12-potential-problems.md](12-potential-problems.md) — ## Potential Problems
+- [13-enhancements-beyond-minimum.md](13-enhancements-beyond-minimum.md) — ## Enhancements (Beyond Minimum)
+- [14-out-of-scope-for-this-plan.md](14-out-of-scope-for-this-plan.md) — ## Out of Scope for This Plan
+- [15-success-criteria.md](15-success-criteria.md) — ## Success Criteria
+- [16-version-history.md](16-version-history.md) — ## Version History
+- [17-widget-composed-page-layout-addendum-2026-02-23.md](17-widget-composed-page-layout-addendum-2026-02-23.md) — ## Widget-Composed Page Layout (Addendum -- 2026-02-23)
+- [18-runtime-scheduler-recovery-observability-addendum-2026-03-09.md](18-runtime-scheduler-recovery-observability-addendum-2026-03-09.md) — ## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)

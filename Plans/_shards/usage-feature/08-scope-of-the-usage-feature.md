@@ -25,35 +25,66 @@
 - **Retention:** Policy for how long to keep usage/ledger data (e.g. file-based or redb-backed) to bound disk use while supporting 5h/7d and historical views.
 
 ### 5. Per-thread usage in Chat (OpenCode-style)
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md
 
-Chat threads must expose **per-thread usage** in the same way as the OpenCode desktop app: a small **context indicator** at the top of chat, **hover tooltip** with summary, and **click** to open a **Usage tab (or panel) for that thread** with detailed breakdown. This gives users immediate visibility into how much context and cost each thread has consumed without leaving the chat.
+Per-thread usage is a canonical in-shell surface.
 
-**Reference implementation:** OpenCode desktop -- [anomalyco/opencode](https://github.com/anomalyco/opencode):
+Rules:
+- chat header context indicator is always the entrypoint
+- hover shows summary metrics
+- activation opens the thread Usage surface in the chat shell
+- a detached usage pop-out is not canonical
+- the same usage identity powers thread Usage, app-wide Usage, and cost_usage artifact deep-links
+- mid-stream updates are allowed but must use explicit in-progress states until final usage totals are known
 
-- **Context circle + tooltip:** `packages/app/src/components/session-context-usage.tsx` -- A small **ProgressCircle** (e.g. 16px) shows **context usage %** for the current session/thread. Wrapped in a **Tooltip**: on hover, the tooltip shows **total tokens**, **usage %** (of model context limit), and **cost** (USD). The circle is clickable.
-- **Click → Usage tab:** Click opens the **"context" tab** in the session's review panel (or equivalent), which shows detailed usage for that thread. In OpenCode this is done by opening the review panel and switching to the `context` tab (`tabs.open("context")`, `tabs.setActive("context")`).
-- **Metrics computation:** `packages/app/src/components/session/session-context-metrics.ts` -- Metrics are derived from **messages** in the thread: per assistant message, `tokens.input`, `tokens.output`, `tokens.reasoning`, `tokens.cache.read`, `tokens.cache.write`; `cost` per assistant message. **Total cost** = sum of assistant message costs. **Context usage %** = (total tokens / model context limit) × 100 when limit is known. Total tokens = input + output + reasoning + cache read + cache write (from last assistant message with tokens, or accumulated).
+Thread Usage content:
+- total tokens
+- context-window fill percentage when known
+- input/output/reasoning/cache breakdown when reported
+- per-turn or per-segment usage history when available
+- direct navigation to app-wide Usage preserving filters
+### Cursor -- API (usage/account only; not for model invocation)
 
-**Requirements for Puppet Master:**
+- **Distinction:** The **Cursor API** is for **augmenting usage/account data only** -- usage, limits, plan, billing, etc. We **do not** use it to engage with the platform to run models. Model invocation stays **CLI + OAuth** (subscription auth only). AGENTS.md "No API available" refers to "no API for invoking models"; the Cursor API that exists is a different surface (usage/account/limits) and does not conflict with our "CLI-only for execution, OAuth for auth" policy.
+- **Availability:** Cursor exposes an API we can call to get usage/limits/account info. Using it only augments the Usage view; we do not use it to send prompts or run agents.
+- **Auth:** For API calls (usage/account): `CURSOR_API_KEY` for headless/CI or app auth where applicable. Model runs continue to use OAuth/subscription via the CLI.
+- **What we can get:** Usage, limits, or plan info where the API exposes it. **Deterministic default:** Cursor API augmentation is **disabled** until a Spec Lock update pins the endpoint contract; local aggregation from `usage.jsonl` remains the primary source of truth for 5h/7d and ledger.
+- **Usage feature:** When implemented, call the Cursor API only for usage/limits/account data (with rate limiting and fallback to local aggregation); show Cursor usage and limits in the Usage view. If the API does not expose 5h/7d, keep local aggregation from `usage.jsonl` as primary and use the API for any extra fields (e.g. plan, feature flags).
 
-| Element | Requirement |
-|--------|-------------|
-| **Context indicator** | Small circular progress (or gauge) in the **chat header** (e.g. next to platform/model dropdown) showing **context usage %** for the **current thread**. Visible at a glance. |
-| **Hover tooltip** | On hover over the indicator: show **token count** (total), **usage %** (of model context limit if known), and **cost** (USD or equivalent) for that thread. Same data as in the thread Usage tab summary. |
-| **Click** | Click opens a **Usage tab (or panel) for that chat thread**. Tab/panel shows: **summary** (total tokens, usage %, cost); **token breakdown** (input/output/reasoning/cache if available); **optional** per-turn table or over-time chart; **link** to the app-wide Usage view (Plans/usage-feature.md §1-§4). When cost is not available from the platform, show "--" or "N/A" and still show token counts. |
-| **Data source** | Per-thread metrics come from **thread messages** (and normalized stream usage events): persist token/cost per assistant turn with the thread (§11 assistant-chat-design). When seglog/redb is in place, thread usage can be derived from event stream projections for that thread_id; until then, aggregate from thread message store or usage.jsonl filtered by thread/session id. |
-| **Placement** | Indicator in chat header; thread Usage tab can be a tab in the chat side panel (e.g. "Context" or "Usage" next to the message list) or a slide-out panel, per assistant-chat-design §12. |
-| **Empty state** | When the thread has **no messages yet** or **no token/cost data** (e.g. new thread, or platform did not report usage): show context indicator at **0%** (or a neutral "--"); tooltip shows "No usage yet" or "No token data for this thread." Thread Usage tab shows the same (0 tokens, $0.00, "No usage yet") and still offers link to app-wide Usage view. |
-| **Accessibility** | Context indicator must be **focusable** (keyboard tab order). **aria-label** (e.g. "Context usage for this thread") so screen readers announce purpose. **Enter** or **Space** on the indicator opens the thread Usage tab (same as click). Tooltip must be available to keyboard users (e.g. focus shows tooltip, or visible label when space is limited). |
-| **Interview threads** | The same behavior applies to **Interview** chat threads: context circle in the Interview chat header, hover tooltip, click opens Usage tab for that Interview thread. Data source: Interview thread messages and usage events keyed by that thread_id. |
+### Codex -- CLI + provider data
 
-**Thread Usage tab -- suggested contents (implementer detail):** (1) **Summary line:** Total tokens, context usage % (if model limit known), total cost (USD or "N/A"). (2) **Breakdown:** Input / output / reasoning / cache read / cache write (show only fields the platform provides). (3) **Per-turn table (optional):** Each assistant turn with tokens and cost for that turn; sort by time. (4) **Link:** "View all usage" or "Open Usage" that navigates to the app-wide Usage page. (5) **Empty state:** "No usage yet for this thread" when there are no messages or no token data.
+- **Availability:** Run Codex via `codex exec ...` after OAuth/device-code auth (`codex login` / `codex login --device-auth`) or `CODEX_API_KEY` in headless contexts.
+- **What we can get:** Structured CLI output (`--json` / JSONL), run metadata, and error parsing (including 5-hour window reset hints). Optional provider-side usage/quota endpoints can augment plan/limit display when available.
+- **Usage feature:** Persist per-run usage metadata parsed from CLI events into `usage.jsonl`, and enrich with provider quota/reset data where supported. No SDK integration path.
 
-**Data and event shape:** Per-thread aggregation requires **thread_id** on usage data. **seglog:** `usage.event` payload must include **`thread_id`** (Plans/storage-plan.md §2.2) so projectors or UI can filter by thread. **usage.jsonl (interim):** If using file-based usage before seglog, each line should include either (a) **thread_id**, or (b) **session_id** that is explicitly mapped 1:1 to thread_id in persisted state. **Message-level:** When persisting with the thread (assistant-chat-design §11), each assistant message (or turn) should carry token/cost fields so the thread can compute totals without querying usage.jsonl.
+### Copilot -- CLI + REST metrics
 
-**Cost when platform doesn't report:** Default is to show **"N/A"** or **"--"** for cost in the tooltip and thread Usage tab; token counts are still shown. **Optional enhancement:** When the platform does not report cost but does report token counts, the app can **estimate** cost using known model pricing (e.g. from AGENTS.md or a small internal table: $/1M input, $/1M output per model). If implemented: (1) show estimated cost with a **disclaimer** in the UI (e.g. "Est. $X.XX (approximate; pricing may change)" or a tooltip "Cost is estimated from token count and published model pricing"). (2) Use **published list prices** only; do not guess. (3) Prefer platform-reported cost when available; estimate only when the platform omits it. (4) Document the source of pricing (e.g. "Anthropic/OpenAI/Google list prices as of YYYY-MM") and consider a setting to hide estimated cost if the user prefers "N/A" only. This is optional for MVP; "N/A" is acceptable.
+- **Availability:** Run Copilot through the CLI after GitHub OAuth/device auth (`/login`) or token auth (`GITHUB_TOKEN` / `GH_TOKEN`).
+- **What we can get:** CLI run outputs plus GitHub REST metrics (`/orgs/{org}/copilot/metrics`) for org-level usage and limits.
+- **Usage feature:** Record per-run usage from CLI output into `usage.jsonl`, and augment with GitHub metrics API data when tokens are configured. No SDK integration path.
 
-**Gaps and edge cases (implementer detail):** (1) **Model context limit unknown:** If the platform does not report a context limit, show **total tokens** and **cost** only; show usage % as "--" or hide the percentage in the circle (circle can show a neutral state or tokens count). (2) **Cost not available:** Show "N/A" or "--" for cost in tooltip and thread Usage tab; token counts still shown (see "Cost when platform doesn't report" above for optional estimation). (3) **Multiple models in same thread:** If the user switched model mid-thread, show **aggregate** tokens and cost for the thread; optional breakdown by model in the thread Usage tab. (4) **Streaming in progress:** Update the context circle and tooltip as new tokens/cost arrive (or show "Updating..." until turn completes). (5) **Interview vs Assistant:** Same UX; ensure Interview thread_id is distinct and usage events for Interview runs carry that thread_id.
+### Claude Code -- Admin API (existing)
 
-**Cross-references:** assistant-chat-design.md §12 (Context usage display), §11 (thread persistence -- store token/cost with thread where applicable); storage-plan.md (thread usage from seglog projections, usage.event.thread_id); AGENTS.md (platform usage sources).
+- **Availability:** Anthropic **Admin API** (`/v1/organizations/usage_report/claude_code`); env: `ANTHROPIC_API_KEY`. Already documented in AGENTS.md.
+- **What we get:** Organization-level usage and cost; `customer_type`, `subscription_type` for plan detection. Per-session usage also available from **stream-json** output when we use `--output-format stream-json` (usage events in the stream).
+- **Usage feature:** Use Admin API for 5h/7d or org windows when key is set; use stream-json usage events for per-run tokens and optional mid-stream context %. No SDK required for CLI-based runs.
+
+### Gemini -- Direct-provider (local counters + estimated cost)
+
+- **Availability:** Gemini is a **Direct-provider**. Puppet Master records local per-run usage events into `usage.jsonl` and can display **estimated** cost (estimate only).
+- **What we show (authoritative):** Local counters and ledger derived from `usage.jsonl` (e.g., 5h/7d rollups) plus per-run totals when available from provider responses.
+- **Optional external reference:** Provide an optional UI link/button to AI Studio "Usage & Limits" for account-level quota/limit visibility. Do **not** claim authoritative remaining quota in-app unless a supported API exists for the configured key/account.
+
+
+### Summary table (augmentation sources)
+
+| Platform   | Primary augmentation              | Auth / env                    | Notes                                                                 |
+|-----------|------------------------------------|-------------------------------|-----------------------------------------------------------------------|
+| **Cursor**| API (usage/limits/account only; not for model invocation) | `CURSOR_API_KEY` / app auth  | OAuth + CLI for running models; Cursor API augmentation is disabled until Spec Lock pins an endpoint contract. |
+| **Codex** | CLI stream + provider data         | CLI login / `CODEX_API_KEY`   | Per-run usage from CLI JSON/JSONL + optional provider quota data.      |
+| **Copilot**| CLI + REST metrics API            | `GITHUB_TOKEN` / `GH_TOKEN`  | Per-run usage from CLI; org-level from `/orgs/{org}/copilot/metrics`.  |
+| **Claude**| Admin API + stream-json usage     | `ANTHROPIC_API_KEY`          | Org usage + plan; per-run tokens from stream.                          |
+| **Gemini**| Local counters + estimated cost (no authoritative quota) | Google Gemini API key (see Settings) | Optional external link to AI Studio "Usage & Limits"; do not claim remaining quota in-app without a supported API. |
+
+**Implementation order:** State-file aggregation first (works for all platforms). Then add augmentation per platform: Claude (Admin API + stream) and error parsing (Codex) is already documented; next wire Cursor API, Codex CLI usage enrichment, Copilot CLI + metrics API, and Gemini estimated-cost display (plus optional AI Studio link).
 

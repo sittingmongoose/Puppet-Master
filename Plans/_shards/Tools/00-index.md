@@ -16,13 +16,12 @@ Canonical source: [Plans/Tools.md](../../Tools.md)
 - [08-6-ways-to-add-tools-implementation-angles.md](08-6-ways-to-add-tools-implementation-angles.md) — ## 6. Ways to add tools (implementation angles)
 - [09-7-per-platform-mcp-and-tool-config-reference.md](09-7-per-platform-mcp-and-tool-config-reference.md) — ## 7. Per-platform MCP and tool config (reference)
 - [10-8-implementation-details-and-technical-notes.md](10-8-implementation-details-and-technical-notes.md) — ## 8. Implementation details and technical notes
-- [11-9-gaps-potential-problems-and-enhancements.md](11-9-gaps-potential-problems-and-enhancements.md) — ## 9. Gaps, potential problems, and enhancements
-- [12-10-implementation-plan-permissions-spec-for-implementers.md](12-10-implementation-plan-permissions-spec-for-implementers.md) — ## 10. Implementation plan: permissions (spec for implementers)
-- [13-11-relationship-to-other-plans.md](13-11-relationship-to-other-plans.md) — ## 11. Relationship to other plans
-- [14-12-implementation-checklist-ordered-for-implementation-plan.md](14-12-implementation-checklist-ordered-for-implementation-plan.md) — ## 12. Implementation checklist (ordered for implementation plan)
-- [15-13-references.md](15-13-references.md) — ## 13. References
-- [16-tool-policy-outcome-taxonomy-addendum-2026-03-08.md](16-tool-policy-outcome-taxonomy-addendum-2026-03-08.md) — ## Tool Policy Outcome Taxonomy Addendum (2026-03-08)
-- [17-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md](17-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md) — ## Tool Denial / Runtime Taxonomy Alignment Addendum (2026-03-09)
-- [18-tool-denial-and-runtime-action-reconciliation-addendum-2026-03-09.md](18-tool-denial-and-runtime-action-reconciliation-addendum-2026-03-09.md) — ## Tool Denial and Runtime Action Reconciliation Addendum (2026-03-09)
-- [19-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-03-09.md](19-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-03-09.md) — ## Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)
-- [20-tool-field-name-and-taxonomy-alignment.md](20-tool-field-name-and-taxonomy-alignment.md) — ## Tool Field Name and Taxonomy Alignment
+- [11-10-implementation-plan-permissions-spec-for-implementers.md](11-10-implementation-plan-permissions-spec-for-implementers.md) — ## 10. Implementation plan: permissions (spec for implementers)
+- [12-11-relationship-to-other-plans.md](12-11-relationship-to-other-plans.md) — ## 11. Relationship to other plans
+- [13-12-implementation-checklist-ordered-for-implementation-plan.md](13-12-implementation-checklist-ordered-for-implementation-plan.md) — ## 12. Implementation checklist (ordered for implementation plan)
+- [14-13-references.md](14-13-references.md) — ## 13. References
+- [15-tool-policy-outcome-taxonomy-addendum-2026-03-08.md](15-tool-policy-outcome-taxonomy-addendum-2026-03-08.md) — ## Tool Policy Outcome Taxonomy Addendum (2026-03-08)
+- [16-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md](16-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md) — ## Tool Denial / Runtime Taxonomy Alignment Addendum (2026-03-09)
+- [17-tool-denial-and-runtime-action-reconciliation-addendum-2026-03-09.md](17-tool-denial-and-runtime-action-reconciliation-addendum-2026-03-09.md) — ## Tool Denial and Runtime Action Reconciliation Addendum (2026-03-09)
+- [18-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-03-09.md](18-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-03-09.md) — ## Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)
+- [19-tool-field-name-and-taxonomy-alignment.md](19-tool-field-name-and-taxonomy-alignment.md) — ## Tool Field Name and Taxonomy Alignment

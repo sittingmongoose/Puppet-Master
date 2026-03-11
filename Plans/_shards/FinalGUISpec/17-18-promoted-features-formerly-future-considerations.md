@@ -5,7 +5,7 @@ All items previously listed as "future considerations" have been promoted to MVP
 | Feature | MVP Location |
 |---------|-------------|
 | Built-in browser / click-to-context | Bottom Panel Browser tab (§7.20) |
-| Project bar / instant project switch | Title bar project bar (§3.4) |
+| Instant project switch | Workspace-tab project switch model (§3.4) |
 | Sound effects | UX Patterns §10.13 + Settings > General |
 | Hot reload controls | Bottom Panel Ports tab (§7.20) |
 | In-app instructions editor | File Editor instructions mode (§7.18) |

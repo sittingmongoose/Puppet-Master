@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/usage-feature.md",
-  "source_sha256": "668d72a89f36a10100c88edb495678283daa7d1a163a2318d682537ddc0796cb",
+  "source_sha256": "9ddfa19b0258d03d677c6d8ecacfadafdcab006cd2164588606e7dfa3658ce83",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -59,91 +59,77 @@
     {
       "dest_path": "Plans/_shards/usage-feature/08-scope-of-the-usage-feature.md",
       "start_line": 78,
-      "end_line": 136,
-      "segment_sha256": "8395f6b08fb8e91f74d5f5b7179e137c0d5c31ed549eeda1aef818396d85e664",
+      "end_line": 167,
+      "segment_sha256": "50e330b2b8269a04073404c1c55d722b483d182c17d4d8138707f3af3a56362e",
       "heading": "## Scope of the Usage Feature"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/09-data-sources-state-files-json-jsonl.md",
-      "start_line": 137,
-      "end_line": 151,
-      "segment_sha256": "e40a5693ba627c0c41837dcf60006e9bef1ef05808b9d276f199eacf37a7dd0a",
-      "heading": "## Data Sources: State Files (JSON / JSONL)"
-    },
-    {
-      "dest_path": "Plans/_shards/usage-feature/10-per-platform-usage-data-api-cli.md",
-      "start_line": 152,
-      "end_line": 200,
-      "segment_sha256": "690302a93fd11ae8ed5a4724e8df249f22f85b45b8503e051494bf4b050e41b5",
-      "heading": "## Per-platform usage data (API / CLI)"
-    },
-    {
-      "dest_path": "Plans/_shards/usage-feature/11-data-and-backend-conceptual.md",
-      "start_line": 201,
-      "end_line": 238,
+      "dest_path": "Plans/_shards/usage-feature/09-data-and-backend-conceptual.md",
+      "start_line": 168,
+      "end_line": 205,
       "segment_sha256": "c084ebeb517447fe2f36584646651353bf767f989dd6683c9275b0faf786ee1d",
       "heading": "## Data and Backend (conceptual)"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/12-gui-placement-options.md",
-      "start_line": 239,
-      "end_line": 246,
-      "segment_sha256": "af6a6802bb5162d7ef852539e01dc41bf235fcd49383113715793145c98bd4dc",
+      "dest_path": "Plans/_shards/usage-feature/10-gui-placement-options.md",
+      "start_line": 206,
+      "end_line": 217,
+      "segment_sha256": "6fc15b283e313a9769cd5607da7a57e8525eb3462972274391637b7096324134",
       "heading": "## GUI Placement Options"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/13-gaps-current-state-vs-desired.md",
-      "start_line": 247,
-      "end_line": 354,
+      "dest_path": "Plans/_shards/usage-feature/11-gaps-current-state-vs-desired.md",
+      "start_line": 218,
+      "end_line": 325,
       "segment_sha256": "263d97662cdf72f60314966553060ce321449d9c9681298512765ecfb839ccf7",
       "heading": "## Gaps (Current State vs. Desired)"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/14-potential-problems.md",
-      "start_line": 355,
-      "end_line": 432,
+      "dest_path": "Plans/_shards/usage-feature/12-potential-problems.md",
+      "start_line": 326,
+      "end_line": 403,
       "segment_sha256": "65851099307272a1d3978ffc4a6a9005228ef7892836e2c3c8f03ecbf4b11858",
       "heading": "## Potential Problems"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/15-enhancements-beyond-minimum.md",
-      "start_line": 433,
-      "end_line": 515,
+      "dest_path": "Plans/_shards/usage-feature/13-enhancements-beyond-minimum.md",
+      "start_line": 404,
+      "end_line": 486,
       "segment_sha256": "f3ce0c6317204de0400a52b1cc3e5607e400f1c4fac77e2a32eff7cb5ee9a241",
       "heading": "## Enhancements (Beyond Minimum)"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/16-out-of-scope-for-this-plan.md",
-      "start_line": 516,
-      "end_line": 521,
+      "dest_path": "Plans/_shards/usage-feature/14-out-of-scope-for-this-plan.md",
+      "start_line": 487,
+      "end_line": 492,
       "segment_sha256": "840be484e9ac974c58b8b14864280e68212e51926112914c4d3ec88f9055d980",
       "heading": "## Out of Scope for This Plan"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/17-success-criteria.md",
-      "start_line": 522,
-      "end_line": 529,
+      "dest_path": "Plans/_shards/usage-feature/15-success-criteria.md",
+      "start_line": 493,
+      "end_line": 500,
       "segment_sha256": "a9e54460761a8ecc70732420dd0d64196f68f6b6adf5ff0eb5043e488a8711c5",
       "heading": "## Success Criteria"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/18-version-history.md",
-      "start_line": 530,
-      "end_line": 545,
+      "dest_path": "Plans/_shards/usage-feature/16-version-history.md",
+      "start_line": 501,
+      "end_line": 516,
       "segment_sha256": "05e34bc25c697c572dba585f20f77d0c1bf58a4774f07116b18c8a7022810251",
       "heading": "## Version History"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/19-widget-composed-page-layout-addendum-2026-02-23.md",
-      "start_line": 546,
-      "end_line": 646,
+      "dest_path": "Plans/_shards/usage-feature/17-widget-composed-page-layout-addendum-2026-02-23.md",
+      "start_line": 517,
+      "end_line": 617,
       "segment_sha256": "9f96bb8432f3c07a5ff99d8edb114c9bb2efa890a4c6d78d52a9a20a8c67c6b5",
       "heading": "## Widget-Composed Page Layout (Addendum -- 2026-02-23)"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/20-runtime-scheduler-recovery-observability-addendum-2026-03-09.md",
-      "start_line": 647,
-      "end_line": 665,
+      "dest_path": "Plans/_shards/usage-feature/18-runtime-scheduler-recovery-observability-addendum-2026-03-09.md",
+      "start_line": 618,
+      "end_line": 636,
       "segment_sha256": "d5b46f023694ebb4d511f6625f2bfc40b1ee297a5e1879a711ec7193400edc7d",
       "heading": "## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)"
     }

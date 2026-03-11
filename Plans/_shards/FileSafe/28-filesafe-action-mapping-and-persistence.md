@@ -1,4 +1,15 @@
 ## FileSafe Action Mapping and Persistence
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+### Dangerous-command blocking GUI reconciliation
+
+Dangerous-command blocking is a first-class blocked feature, not terminal-only messaging.
+
+Rules:
+- blocked destructive actions render in the thread, runtime status surfaces, and action-needed routing
+- terminal/output rendering may summarize the block, but it is not the only user-visible surface
+- if rerun requires restore-before-rerun, that requirement is visible before the rerun action executes
+- restore-and-branch from a FileSafe-blocked state follows the same branch lineage and preserved-work rules as other restore-driven branching flows
 
 ### Shared runtime fields
 FileSafe blocked payloads MUST use the canonical blocked payload:

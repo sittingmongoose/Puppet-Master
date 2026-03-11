@@ -12,7 +12,7 @@ These decisions are final and must not be revisited during implementation:
 8. **redb for layout persistence**, seglog for events, Tantivy for search
 9. **Model/platform selection via dropdowns**, not text entry
 10. **Product name: "Puppet Master"**
-11. **All 12 former "future considerations" are MVP** -- browser, project bar, sound effects, hot reload, instructions editor, custom themes, language detection, catalog, sync, SSH, debug, terminal tab management
+11. **All 12 former "future considerations" are MVP** -- browser, instant project switch, sound effects, hot reload, instructions editor, custom themes, language detection, catalog, sync, SSH, debug, terminal tab management
 12. **Bottom panel has 6 tabs** -- Terminal, Problems, Output, Ports, Browser, Debug
 13. **Webview via `wry`** -- used for Browser tab and HTML preview
 14. **Debug via DAP** -- Debug Adapter Protocol for integrated debugging

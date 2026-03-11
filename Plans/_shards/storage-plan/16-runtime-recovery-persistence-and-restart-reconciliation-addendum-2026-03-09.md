@@ -1,4 +1,16 @@
 ## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)
+### Promoted Section 15 restore-scope rules
+
+Restore eligibility:
+- workspace tabs restore independently with project identity, active surface, and local shell state
+- detached windows restore only when their surface class and platform support allow it
+- in-shell browser tabs restore by project and workspace tab
+- auth sessions and automation sessions do not auto-restore as shell browser tabs
+- terminal sessions and dev sessions restore as records of prior state; a live process is not presumed healthy after restart without verification
+
+Project-switch rule:
+- switching projects recalculates effective tool/MCP/persona/browser capability state for the new project context
+- background activity from the previous project remains queryable and visible through its own project/workspace identities rather than being collapsed into the new active project
 This section is the canonical persistence contract for runtime recovery, blocked episodes, usage attribution, and runtime identity needed by Orchestrator, Run Graph, HITL, and chat surfaces.
 
 ### Canonical keys

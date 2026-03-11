@@ -20,7 +20,7 @@
 
 The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the same project context; chat integrates via @ mention and **click-to-open** (file paths and code blocks in the thread open in the editor). Full behavior and MVP scope are defined below.
 
-This plan also covers **image viewing** and **HTML-in-browser preview with hot reload**; **split editor panes**; **drag editor out to its own window and back** (detach/snap); **tabs** in the editor and Terminal and **multiple browser instances**; **language/framework presets** (JetBrains-style, with tool download on project add or interview); and a full set of **editor enhancements** (UX, navigation & search, layout, run/debug, modal editing, remote SSH, agent/design sidebar, OpenCode-style cache/watcher, Graphite-style review). **LSP (Language Server Protocol) is in scope for MVP**: diagnostics, hover, autocomplete, go-to-definition, and symbol search use language servers when available for the current preset; see **§10.10**. Full LSP integration in the **Chat Window** (diagnostics in context, @ symbol with LSP, code-block hover/go-to-definition) is in **Plans/LSPSupport.md §5.1** and **Plans/assistant-chat-design.md §9.1**.
+This plan also covers **image viewing** and **HTML-in-browser preview with hot reload**; **split editor panes**; **drag editor out to its own window and back** (detach/snap); **tabs** in the editor and Terminal and **browser tabs plus detached preview windows**; **language/framework presets** (JetBrains-style, with tool download on project add or interview); and a full set of **editor enhancements** (UX, navigation & search, layout, run/debug, modal editing, remote SSH, agent/design sidebar, OpenCode-style cache/watcher, Graphite-style review). **LSP (Language Server Protocol) is in scope for MVP**: diagnostics, hover, autocomplete, go-to-definition, and symbol search use language servers when available for the current preset; see **§10.10**. Full LSP integration in the **Chat Window** (diagnostics in context, @ symbol with LSP, code-block hover/go-to-definition) is in **Plans/LSPSupport.md §5.1** and **Plans/assistant-chat-design.md §9.1**.
 
 **Scope of this document:** This spec defines File Manager, editor, @ mention, click-to-open, image/HTML preview, tabs, and editor enhancements. It defers chat UX details to Plans/assistant-chat-design.md, layout to Plans/feature-list.md (GUI layout) and Plans/FinalGUISpec.md, and browser click-to-context/agent actions to Plans/newfeatures.md §15.18. Storage terms (**redb**, **seglog**, project storage design) are defined in rewrite-tie-in-memo and project storage design docs.
 
@@ -249,15 +249,16 @@ The app includes an **IDE-style editor** so users can open, view, and edit proje
 ---
 
 ## 3. @ mention in chat
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md
 
-**Done when:** Typing @ opens file list (same as File Manager); selecting a file adds it to message context; UI explains @ = context vs click = open. **Requires** same file list source as File Manager; full UX in assistant-chat-design. **If file list fails:** Show message in @ popup (e.g. "No project" or "Could not load files"); do not send message with invalid ref. **File deleted after @:** At send time, if file is missing, either resolve to last-known content or warn and allow send without attachment.
+The `@` mention system is project-scoped and identity-preserving.
 
-- **Trigger:** In the chat input, the user types **@** to open a **small search box** over the file list (same file list as File Manager -- single source of truth).
-- **Behavior:** User picks a file (search/filter by name or path); the selected file is **added to the agent's context** for that message (e.g. as an attachment or context reference so the agent can read it). This provides explicit file context without leaving the chat. **@ vs click-to-open:** **@** adds the file to the **message context** (agent can read it); **clicking** a path or code block **opens the file in the editor**. They are intentionally different: context vs open. Explain this in the UI (e.g. tooltip or short hint) so users are not confused.
-- **Scope:** Chat-specific; full UX for @ mention is in assistant-chat-design.md. This plan states that @ mention resolution uses the same file list as the File Manager.
-
----
-
+Rules:
+- invoking `@` opens a picker rooted in the active project context
+- sources may include recent files, modified files, folder navigation, and symbol-aware results when LSP data exists
+- the inserted mention preserves the canonical file identity/path needed by prompt assembly and click-to-open behavior
+- mentions work in Assistant and Interview chat surfaces
+- when the referenced file is already open, mention navigation resolves to the existing editor state instead of opening duplicate buffers unnecessarily
 ## 4. Integration: File Manager, editor, and chat
 
 - File Manager, editor, and chat share the **same project context**.
@@ -338,30 +339,17 @@ Implement in roughly this order so that contracts and single sources of truth ex
 ### 8.2 HTML in browser and hot reload
 
 ### 8.2A Rewrite normalization for HTML/browser preview (2026-03-08)
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
-For rewrite implementation, the canonical contract is the unified rendering architecture in `Plans/newfeatures.md` §24.4A and `Plans/rewrite-tie-in-memo.md`.
+HTML preview and browser preview use the canonical browser surface classes.
 
-Normalization rules:
-- Full HTML preview uses the loopback workspace preview server: `http://127.0.0.1:<port>/preview/<project_id>/<document_id>/...`.
-- `file://` is not an MVP transport for file-backed HTML preview.
-- Canonical hot-reload debounce is `app.preview.hot_reload_debounce_ms` with default `500`.
-- Browser capacity applies to in-shell browser tabs only; detached preview/browser windows are outside that cap.
-- Detached preview/browser windows are first-class behavior, not an error fallback.
-- Click-to-context payload shape, truncation, and capture limits for browser-class surfaces are owned by `Plans/newfeatures.md` §15.18 and `Plans/assistant-chat-design.md` §28.4A; local summary text in this file must not redefine those values.
-
-Fallback order:
-1. embedded browser/runtime path when the current platform adapter supports it
-2. detached preview/browser window using the same logical preview subject and, when possible, the same `preview_session_id`
-3. explicit degraded error state
-
-Supersession rule:
-- Any earlier `file://`, `local HTTP server`, `400 ms`, `max browser instances`, or LRU browser-instance reuse language in this file is pre-normalization text and MUST NOT override the rewrite rendering contract above.
-
-- **Open HTML in browser:** When user opens an HTML file, app can open it in system or embedded browser (or "Open in browser" / "Preview" action). Use file: URL or local HTTP server so relative paths resolve.
-- **Edit + hot reload:** User opens HTML in editor; optionally preview in browser. When user saves the HTML file or any **linked** file, browser view refreshes automatically after a debounce. **Linked files:** Files that trigger refresh are the HTML file itself and any resource referenced by it (e.g. `<link href="...">`, `<script src="...">`) that lie under the project or the same directory; implementation may use a simple same-dir + referenced-path rule. **Debounce:** **400 ms** default (per file, per preview instance); configurable in Settings → Editor or Developer (e.g. 100-2000 ms); persist in redb. Rapid saves result in one refresh after the last save within the window. Tight loop: edit → Save → see result in browser.
-- **Scope:** One or more HTML files per project; embedded vs system browser is implementation choice. Local resources only; no remote deployment in MVP.
-- **Security:** Preview in sandboxed/local context (file: or localhost). Document any restrictions (e.g. no file:// to paths outside project).
-
+Rules:
+- file-backed HTML preview uses `workspace_preview` or `detached_preview`
+- preview subject identity is not silently retargeted by over-cap behavior
+- multiple browser tabs may render distinct preview subjects inside the shell
+- preview restore is scoped by project and workspace tab
+- auth and automation browser sessions do not become file-manager preview tabs automatically
+- click-to-context from HTML preview uses the same capture and share/revoke model as the main browser feature
 ### 8.3 Same browser surface as built-in browser and click-to-context
 
 The HTML preview uses the **same built-in browser** as in **Plans/newfeatures.md §15.18** (Built-in Browser and Click-to-Context). One WebView/browser panel for: (1) Local HTML preview and hot reload (§8.2), (2) **Click-to-context for the Assistant**: user can **click on parts of the page** and **send that element's context to the Assistant chat** (DOM, attributes, rect, etc.) via the same mechanism as §15.18 (modifier key or "Send element to chat" toggle). When viewing your HTML design in this browser, you can click an element and add it as context for the next message. Edit → Save → hot reload → click section → send to Assistant. Element context schema, capture mode, security, and Assistant integration are in newfeatures.md §15.18. **Web app testing:** Same browser surface aligns with web app testing/verification (Playwright, browser verifier, GUI tool catalog per feature-list and newtools.md).
@@ -375,27 +363,14 @@ When viewing a local HTML file in the built-in browser (with or without hot relo
 ## 9. Tabs: Editor, Terminal, Browser
 
 ### 9A. Browser tab and detached preview normalization (2026-03-08)
+The canonical browser container model is tab-first for in-shell browsing.
 
-Browser-capacity behavior in this section predates the rewrite rendering addendum and is normalized as follows:
-
-- `max browser tabs` refers only to in-shell Browser-tab capacity.
-- Detached preview/browser windows are outside the in-shell browser-tab cap.
-- The product MUST NOT recycle or retarget an existing preview subject solely because the in-shell browser-tab cap has been reached.
-- If in-shell capacity is exhausted, the UI may offer detached-open or explicit user-directed re-use of an existing browser tab, but it MUST NOT silently change the underlying preview subject identity.
-- Preview/browser-tab capacity settings and detached-window behavior must align with `Plans/newfeatures.md` §24.4A and `Plans/FinalGUISpec.md` §7.20.
-
-**Done when:** Editor tabs per §2; terminal tabs with pin semantics; browser instances capped and over-cap policy defined. **Max browser instances:** Redb key e.g. `app.editor.max_browser_instances` (redb `settings` namespace; app-level); AutoDecision: default 3. **Settings:** Max browser previews: Settings → Editor or Developer; range 1-10; persist in redb. Terminal tab limit: AutoDecision: default 8; key `app.terminal.max_tabs` (redb `settings` namespace; app-level). **Pin semantics:** AutoDecision: terminal pin matches editor pin (pinned excluded from "Close others" and LRU close when a terminal tab cap exists).
-
-- **Editor tabs:** Multiple open files in the editor are shown as **tabs** per editor group (§2.1, §2.4). Reorder, close (with unsaved prompt), persist per project.
-- **Terminal tabs:** The **Terminal** (bottom panel per feature-list/gui-layout) supports **tabs**: multiple terminal sessions (e.g. one per shell or task). User can open a new terminal tab, switch between them, close, and optionally name or **pin**. **Pin semantics:** Pinned terminal tabs are excluded from "Close others" (and optionally from LRU-style close when terminal tab limit exists); align with or explicitly distinguish from editor pin (§12.4). Each tab has its own cwd and history; project context applies when a project is selected.
-- **Browser:** The app supports **multiple browser instances** (e.g. multiple preview windows or browser panels). **Cap:** Enforce a **max browser instances** (AutoDecision: default 3; configurable in Settings, persist in redb). **One instance** = one WebView/preview window. When the user tries to open another preview over the cap: AutoDecision: reuse the least-recently-used instance (switch its URL to the new file and focus it; no prompt). No requirement for **tabs within** a single browser. Each instance is the same WebView/browser surface (§8, newfeatures.md §15.18) with click-to-context available.
-
----
-
-## 10. Editor enhancements (MVP)
-
-All of the following are **in scope for MVP**. When **LSP is available** for the current preset (§10.10), diagnostics, hover, autocomplete, go-to-definition, and symbol search use the language server; **fallback** to text-based or indexed search when LSP is unavailable.
-
+Rules:
+- in-shell browser uses browser tabs, not a free-floating browser-instance pool
+- detached preview/browser windows are first-class and outside the in-shell browser-tab cap
+- LRU browser-instance reuse is not canonical behavior
+- when the browser cap is reached, the user gets an explicit choice or a deterministic command failure; the app must not silently replace the current preview subject
+- browser tab identity is distinct from preview-session identity so the same preview subject may exist in multiple containers without persistence ambiguity
 ### 10.1 Editor UX (text/code)
 
 - **Minimap:** Small overview of the file in the right gutter for quick scrolling and orientation (e.g. VS Code-style).
@@ -582,9 +557,9 @@ ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileSafe.md, C
 
 #### 12.2.6 Browser instances and resources
 
-**Problem:** Each browser (WebView) instance uses significant memory; many preview windows can exhaust resources.
+**Problem:** Browser tabs and detached preview windows use significant memory; too many active browser surfaces can exhaust resources.
 
-**Solution:** (1) **Cap:** Enforce a **max browser instances** (e.g. 3-5). When the user tries to open another preview (e.g. "Open in browser" on a second HTML file), either (a) **reuse** an existing instance (e.g. switch its URL to the new file) or (b) **close least-recently-used** and open the new one, or (c) **prompt:** "Max previews reached. Close one or open in existing?" (2) **LRU close:** If cap is reached and user opens a new preview, auto-close the least-recently-used preview window and open the new one; show a brief toast "Closed preview for X to open Y." (3) **Settings:** Add **Max browser previews** in Settings → Editor or Developer (e.g. 1-10); persist in redb. Document in §8 and §9.
+**Solution:** (1) **In-shell cap:** Enforce a **max browser tabs** cap for in-shell browser tabs only. Detached preview windows are outside that cap. (2) **Over-cap behavior:** If the user tries to open another in-shell browser tab after the cap is reached, do **not** silently retarget the current preview subject. Instead either prompt the user to close/focus an existing tab or fail the action with a clear message. (3) **Detached windows:** Detached preview windows remain first-class and are managed separately from the in-shell tab cap. (4) **Settings:** Add **Max browser tabs** in Settings → General or Developer (e.g. 2-12); persist in redb. Document in §8 and §9.
 
 #### 12.2.7 Symbol index staleness
 

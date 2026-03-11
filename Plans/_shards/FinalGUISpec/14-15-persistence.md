@@ -32,7 +32,7 @@
 | `browser_state:v1` | Browser tab URLs, bookmarks, history (last 100 entries), pinned tabs | On change (debounced 500ms) |
 | `terminal_state:v1` | Terminal tab list: name, pinned flag, PTY config. Does NOT persist terminal content (only tab metadata). | On change (debounced 300ms) |
 | `sound_prefs:v1` | Sound effects master toggle, per-event toggles, volume level | On change |
-| `hotreload_state:v1:{project_id}` | Watch mode toggle state, build command, watched paths | On change |
+| `hotreload_state:v1:{project_id}` | Dev-session reload state, build command, watched paths | On change |
 
 Normative mapping note for review workflows:
 - The canonical durable review/bundle contract is owned by `Plans/storage-plan.md` (`bundle.{bundle_id}`, `doc_registry.{bundle_id}`, `notes_index.{bundle_id}`, `note.{bundle_id}.{note_id}`, `document_pane_state.{bundle_id}`, `final_review_output.{bundle_id}`).

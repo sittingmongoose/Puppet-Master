@@ -24,6 +24,17 @@
 - List worktrees, recover orphaned worktrees, worktree status, or which tier is using which worktree.
 
 ### 4.2 GUI improvements
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
+
+### 4.2A Stable project identity and instant-project-switch binding
+
+The worktree and git model must bind to stable project identity rather than raw path-only shell semantics.
+
+Rules:
+- project switching uses stable `project_id` even when a project path moves, is rebound, or is reopened through worktree-aware flows
+- background worktree activity from a non-active project remains visible after the user switches projects
+- project switch restore cannot collapse multiple workspace tabs onto one path-only identity
+- any worktree/rebind flow that changes path representation must update the project identity mapping used by shell restore, browser restore, and terminal/dev-session restore logic
 
 #### 4.2.1 Wire existing settings to run config (see Section 5)
 

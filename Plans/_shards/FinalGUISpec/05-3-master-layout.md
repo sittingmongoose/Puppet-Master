@@ -25,7 +25,7 @@
 
 | Zone | Slint Container | Size | Behavior |
 |------|----------------|------|----------|
-| **Title bar** | `HorizontalLayout` | height: 28px fixed | App name (Orbitron Bold 14px), **project bar** (dropdown + recent list), theme toggle, settings gear |
+| **Title bar** | `HorizontalLayout` | height: 28px fixed | App name (Orbitron Bold 14px), compact current-project context, theme toggle, settings gear |
 | **Activity bar** | `VerticalLayout` | width: 48px fixed | Icon-only vertical nav; always visible |
 | **Primary content** | `VerticalLayout` (flex: 1) | fills remaining space | Active page view; scrollable internally per page |
 | **Side panel** | `VerticalLayout` | width: 240-480px, resizable | Hosts the currently selected activity-bar side-panel surface; one visible at a time; detachable where supported |
@@ -42,23 +42,25 @@ When "minimize to tray" is enabled in Settings/General:
 - **Tray notifications:** HITL approval required, run complete, rate limit hit (respects system notification settings)
 
 ### 3.4 Project Bar (Title Bar)
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
 
-The title bar contains a **project bar** -- a dropdown/strip showing all known projects with instant switching.
+The title bar no longer owns primary project switching.
 
-**Layout:** `Puppet Master` label (Orbitron Bold 14px) | project dropdown (Rajdhani Medium 13px) | spacer | theme toggle icon | settings gear icon.
+Canonical shell rule:
+- project switching is a workspace-tab operation surfaced through the Projects view, project/session browser, command palette, and dedicated switch commands
+- the active workspace tab changes project by default
+- a separate command opens the target project in a new workspace tab
+- the title bar may show compact current-project context, but it is not a project bar and does not own the multi-project shell model
 
-**Project dropdown behavior:**
-- Shows current project name with a chevron-down icon
-- Click opens a dropdown listing all known projects, sorted by last-opened (most recent first)
-- Each row: project name, path (truncated), last-opened timestamp, status dot (green=healthy, amber=stale config, red=missing/broken)
-- Fuzzy search filter at top of dropdown (auto-focused on open)
-- "Open folder..." action at bottom opens native directory picker
-- "New project" action creates a new project entry
-- **Instant switch:** Selecting a project triggers a full state reload: editor tabs close and reopen for the new project, file tree refreshes, chat threads switch to the new project's threads, config reloads per-project overrides, LSP servers restart for new project languages, dashboard resets to new project's orchestrator state
-- **State preservation:** Per-project state (editor tabs, scroll positions, panel layout, active view, chat thread selection) is saved to redb on switch-away and restored on switch-back
-- **Animation:** Project name cross-fades (150ms ease-in-out) on switch. Content area shows skeleton placeholder during reload (typically <500ms)
-- **Keyboard shortcut:** Ctrl+Shift+P opens the project dropdown (registered in shortcut registry)
+Required visible behavior:
+- current project name/path summary for the active workspace tab
+- badge when the active project has background activity, blocked items, or unsaved shell state that needs attention
+- keyboard entrypoint for instant project switch
+- responsive collapse without losing the command-palette project switch path
 
+Non-canonical after this section:
+- title-bar dropdown/strip as the primary project-switch shell
+- shell semantics that assume only one active project context exists in the application at a time
 ### 3.5 Spacing and Density
 
 **Global spacing tokens** (base design tokens; independent of UI scaling):

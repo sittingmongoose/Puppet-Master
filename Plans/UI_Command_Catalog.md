@@ -28,6 +28,20 @@ ContractRef: Primitive:UICommand, ContractName:Contracts_V0.md#UICommand
 ---
 
 ## 2. Canonical command IDs
+### 2.0A Promoted Section 15 command families
+
+The command catalog MUST include stable IDs for the following families:
+ContractRef: UICommand:cmd.project.switch_active_tab, UICommand:cmd.project.open_in_new_workspace_tab, UICommand:cmd.workspace_tab.create, UICommand:cmd.workspace_tab.close, UICommand:cmd.chat.open_thread_usage, UICommand:cmd.browser.share_with_agent, UICommand:cmd.browser.revoke_share_with_agent, UICommand:cmd.dev.start_session, UICommand:cmd.dev.stop_session, UICommand:cmd.catalog.install_item, UICommand:cmd.catalog.update_item, UICommand:cmd.catalog.remove_item, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+- project switching and project open-in-new-workspace-tab
+- workspace tab create/close/reopen/move/focus
+- detached window open/reattach/close for supported surfaces
+- branch-from-restore and branch-open
+- thread Usage activation
+- browser open/focus/detach/share-with-agent/revoke-share
+- dev session start/stop/restart/show-output/show-ports
+- catalog install/update/remove/enable/disable/apply-later
+
+These IDs are canonical runtime commands, not informal action labels.
 
 ### 2.0 Command entry contract (doc-level)
 Every command listed below MUST define:
@@ -239,46 +253,30 @@ ContractRef: ContractName:Plans/Orchestrator_Page.md#14, ContractName:Plans/Cont
 ---
 
 ### 2.6 Chat context usage commands
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.chat.compact_context` | `{ thread_id }` | `context.compaction.started`, `context.compaction.completed` | Chat header context indicator + thread Usage surface |
+| `cmd.chat.open_thread_usage` | `{ thread_id }` | layout/UI state only | Chat header context indicator + thread Usage surface |
+| `cmd.chat.focus_thread_usage` | `{ thread_id }` | layout/UI state only | Chat side panel / thread Usage surface |
+| `cmd.chat.close_thread_usage` | `{ thread_id }` | layout/UI state only | Chat side panel / thread Usage surface |
+
+`cmd.chat.open_usage_popout` and `cmd.chat.close_usage_popout` are superseded and MUST NOT remain canonical IDs.
+ContractRef: UICommand:cmd.chat.open_thread_usage, UICommand:cmd.chat.focus_thread_usage, UICommand:cmd.chat.close_thread_usage, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md
 ### 2.6A Render / browser preview commands
-
-These IDs are required by rewrite-tie-in-memo.md, FileManager.md, FinalGUISpec.md, and assistant-chat-design.md for unified rendering surfaces.
-
-| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
+| Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
-| `cmd.preview.open` | `{ document_id?, artifact_id?, path?, mode, preferred_surface? }` | `preview.session.created`, `preview.session.attached` | File Editor, Chat, Embedded Document Pane, Browser tab |
-| `cmd.preview.close` | `{ preview_session_id }` | `preview.session.closed` | File Editor, Browser tab, Detached preview |
-| `cmd.preview.detach` | `{ preview_session_id }` | `preview.session.detached`, `preview.session.attached` | File Editor, Browser tab, Embedded Document Pane |
-| `cmd.preview.reattach` | `{ preview_session_id, target_surface }` | `preview.session.attached` | File Editor, Browser tab |
-| `cmd.preview.reload` | `{ preview_session_id, reason? }` | `preview.session.reloaded` or `preview.session.state_changed` | File Editor, Browser tab, Detached preview |
-| `cmd.preview.open_source` | `{ preview_session_id, node_id? }` | no persisted domain event (navigation/focus update) | File Editor, Chat, Embedded Document Pane |
-| `cmd.preview.request_edit` | `{ preview_session_id, node_id, operation, payload }` | `preview.action.requested`, `preview.action.completed` | File Editor, Embedded Document Pane, eligible Chat/Planning surfaces |
-| `cmd.preview.export_svg` | `{ preview_session_id, node_id?, destination? }` | `preview.session.exported` | File Editor, Chat, Embedded Document Pane |
-| `cmd.preview.export_png` | `{ preview_session_id, node_id?, destination? }` | `preview.session.exported` | File Editor, Chat, Embedded Document Pane |
-| `cmd.preview.copy_svg` | `{ preview_session_id, node_id? }` | `preview.session.exported` | File Editor, Chat, Embedded Document Pane |
-| `cmd.preview.copy_image` | `{ preview_session_id, node_id? }` | `preview.session.exported` | File Editor, Chat, Embedded Document Pane |
-| `cmd.browser.inspect_toggle` | `{ preview_session_id?, enabled }` | no persisted domain event (UI state update) | Browser tab, Detached browser |
-| `cmd.browser.capture_element` | `{ preview_session_id?, capture_mode }` | `browser.element_captured` | Browser tab, Detached browser |
-
-ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
-
-These IDs are required by `Plans/assistant-chat-design.md` section 25 and related context controls (§12–§13, §17).
-
-| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
-|---|---|---|---|
-| `cmd.chat.compact_context` | `{ thread_id }` | `context.compaction.started`, `context.compaction.completed` | Assistant chat context ring + usage pop-out |
-| `cmd.chat.open_usage_popout` | `{ thread_id }` | no persisted domain event (window open/focus state update) | Assistant chat context ring + usage pop-out |
-| `cmd.chat.close_usage_popout` | `{ thread_id }` | no persisted domain event (window close state update) | Assistant chat context ring + usage pop-out |
-| `cmd.chat.auto_retrieval.toggle` | `{ thread_id, enabled }` | `chat.thread.auto_retrieval_override.updated` | Assistant chat (Auto Retrieval chip) |
-| `cmd.chat.context_lens.toggle` | `{ thread_id, enabled }` | `context.lens.activated` / `context.lens.deactivated` | Assistant chat (Context Lens button + selection mode) |
-| `cmd.chat.context_lens.set_mode` | `{ thread_id, mode }` | `context.lens.mode_set` | Assistant chat (Context Lens submenu) |
-| `cmd.chat.context_overlay.toggle_mute` | `{ thread_id, message_id }` | `context.overlay.updated` | Assistant chat (message mute state) |
-| `cmd.chat.context_overlay.toggle_focus` | `{ thread_id, message_id }` | `context.overlay.updated` | Assistant chat (message focus state) |
-| `cmd.chat.subcompact.apply` | `{ thread_id, message_ids }` | `context.subcompact.created`, `context.overlay.updated` | Assistant chat (subcompact summary block) |
-| `cmd.chat.subcompact.revert` | `{ thread_id, subcompact_id }` | `context.subcompact.reverted`, `context.overlay.updated` | Assistant chat |
-
-ContractRef: ContractName:Plans/assistant-chat-design.md#17-context-truncation, ContractName:Plans/assistant-chat-design.md#13-activity-transparency-search-bash-and-file-activity, ContractName:Plans/Contracts_V0.md#UICommand
-
----
+| `cmd.browser.open_workspace_preview` | `{ project_id, target, workspace_tab_id }` | layout/UI state only | File preview, Browser tab, Ports |
+| `cmd.browser.open_detached_preview` | `{ project_id, target, source_workspace_tab_id }` | layout/UI state only | File preview, Browser tab |
+| `cmd.browser.focus_browser_tab` | `{ browser_tab_id }` | layout/UI state only | Browser surface |
+| `cmd.browser.detach_browser_tab` | `{ browser_tab_id }` | layout/UI state only | Browser surface |
+| `cmd.browser.share_with_agent` | `{ browser_tab_id, thread_id }` | `browser.context_shared` | Browser chrome, Assistant chat |
+| `cmd.browser.revoke_share_with_agent` | `{ browser_tab_id, thread_id? }` | `browser.context_share_revoked` | Browser chrome, attention surfaces |
+| `cmd.dev.start_session` | `{ project_id, workspace_tab_id, mode, target? }` | `dev.session.started` | Toolbar, Chat, Ports, Terminal |
+| `cmd.dev.stop_session` | `{ dev_session_id }` | `dev.session.stopping`, `dev.session.stopped` | Toolbar, Chat, Ports, Terminal |
+| `cmd.dev.restart_session` | `{ dev_session_id }` | `dev.session.restarting`, `dev.session.started` | Toolbar, Chat, Ports, Terminal |
+| `cmd.catalog.install_item` | `{ item_type, item_id, version? }` | `catalog.install.started`, `catalog.install.completed` | Catalog |
+| `cmd.catalog.update_item` | `{ item_type, item_id, target_version? }` | `catalog.update.started`, `catalog.update.completed` | Catalog |
+| `cmd.catalog.remove_item` | `{ item_type, item_id }` | `catalog.remove.started`, `catalog.remove.completed` | Catalog |
 ### 2.7 Chat slash commands (reserved)
 These IDs are required by `Plans/assistant-chat-design.md` section 5.
 

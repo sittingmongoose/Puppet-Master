@@ -1515,67 +1515,127 @@ Default prefix/suffix length: 32 chars (clamped).
 ### 7.20 Bottom Panel (NEW)
 
 #### Browser normalization against unified rendering contract (2026-03-08)
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
 
-The Browser tab MUST follow the unified rendering contract in `Plans/newfeatures.md` §24.4A and `Plans/rewrite-tie-in-memo.md`.
+The browser model is split into explicit surface classes.
 
-Rules:
-- The Browser tab is the primary in-shell host for `workspace_preview` and optional `external_browse`.
-- Embedded hosting is an optimization; detached preview/browser windows remain the only guaranteed cross-platform path.
-- If embedded attach fails or is unsupported on the current platform, the UI MUST switch to detached-open using the same logical preview subject and show explicit detached-state UI rather than a blank pane.
-- Browser-tab capacity applies only to in-shell tabs. Detached preview/browser windows do not consume browser-tab capacity.
-- Inspect/capture schema, truncation, and rate limits MUST follow `Plans/newfeatures.md` §15.18 and `Plans/assistant-chat-design.md` §28.4A; local shorthand in this section MUST NOT redefine those limits.
+### Surface classes
+- `workspace_preview`: in-shell browser tab for project-linked preview and trusted browser tasks
+- `detached_preview`: detached browser or preview window linked to a workspace tab and project
+- `automation_session`: ephemeral automation browser session that does not become a persistent shell tab automatically
+- `auth_session`: ephemeral auth/device/login browser session that is never restored as a shell browser tab automatically
 
-Required detached-state UI:
-- show current state badge: `embedded`, `detached`, `degraded`, or `error`
-- offer `Focus detached window` and `Reattach when supported`
-- preserve navigation state and `preview_session_id` unless a transport restart is explicitly required by platform fallback
+### Required shell behavior
+- browser tab caps apply only to in-shell browser tabs
+- detached preview windows are outside the in-shell browser-tab cap
+- automation and auth sessions are never silently converted into workspace browser tabs
+- browser state is restored per project and workspace tab when the surface class allows restoration
+- user-triggered share-to-agent state is visible on the originating browser/preview surface and revocable from the browser chrome and attention surfaces
 
-**Location:** Below primary content, collapsible
+### Cross-platform rule
+- Windows uses WebView2, macOS uses WKWebView, Linux uses WebKitGTK/Wry
+- when embedding support differs by platform, the surface class remains the same and only the hosting mode changes
+- Wayland limitations may require detached-window fallback for some embedded-browser cases, but a static screenshot fallback is not acceptable as the steady-state browser model
 
-**Tab bar (24px):** Terminal | Problems | Output | Ports | Browser | Debug. Optionally **References** (when Find references / Shift+F12 is implemented, results appear in a **References** tab; click row opens file at location; see §7.18 LSP features). Collapse/expand button. Pop-out button.
+### Dev-loop interaction
+- Ports and browser surfaces reflect the active dev session
+- opening a detected local server from Ports creates or focuses the correct browser surface without bypassing the tab/window restore rules above
+#### 10.9.1 Native Clipboard Contract (Normative)
 
-**Terminal:** Agent stdout/stderr, bash command output. Uses terminal styling (monospace, dark background even in light theme). Color-coded: stdout=ACID_LIME, stderr=HOT_MAGENTA, system/info=SAFETY_ORANGE, FileSafe-blocked=RED with "[BLOCKED] Blocked by FileSafe" prefix. Max 500 visible lines. Auto-scroll with scroll-lock toggle.
+Text-entry widgets (`TextInput`, `TextEdit`) MUST use Slint-native clipboard and selection behavior for keyboard shortcuts and context-menu actions.
+ContractRef: ContractName:Plans/FinalGUISpec.md#10.9, SchemaID:Spec_Lock.json#locked_decisions.ui, PolicyRule:Decision_Policy.md§2
 
-**Terminal tab management:** Each terminal instance is a tab within the Terminal section. Tab naming: tabs show agent/task name; user can pin or rename terminal tabs. **Pin semantics:** Pinned tabs are narrower (icon-only), persist across sessions, and cannot be closed without unpinning first. Unpinned tabs close normally. **Instance caps:** Maximum 12 terminal instances (configurable in Settings > General, range 4-20). When the cap is reached, attempting to open a new terminal shows a toast: "Terminal limit reached -- close an existing terminal first." LRU eviction is NOT automatic; user must explicitly close tabs. **New terminal:** "+" button on terminal tab bar creates a new shell instance. Right-click terminal tab: Rename, Split horizontally, Split vertically, Pin/Unpin, Close (disabled if pinned), Close others, Close all unpinned.
+Implementations MUST NOT route text-widget copy/paste/select-all behavior through custom Rust clipboard read/write handlers.
+ContractRef: ContractName:Plans/FinalGUISpec.md#10.9, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
 
-**Problems:** Shows LSP diagnostics for the target project: errors, warnings, info. Columns: file (path), line, message, severity, source (e.g., rust-analyzer). Click row to open file in File Editor at that location. Filter by severity via toggle buttons (Errors / Warnings / Info). Badge on tab label shows count (e.g., "Problems (3)"). **Empty states:** "No problems detected" when LSP is active with zero diagnostics; "Open a file to see diagnostics" when no LSP server is running; "Select a project to see diagnostics" (or equivalent) when no project is selected (e.g. when opened from Chat with no project set).
+Implementations MUST NOT add custom key interception for Ctrl/Cmd+A/C/X/V on text widgets.
+ContractRef: ContractName:Plans/FinalGUISpec.md#10.9, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
 
-**Output:** Puppet Master's own log output (debug/info/warn/error, filtered by settings log level).
+Non-text copy contexts (for example Copy Path / Copy Value) MAY use `ClipboardHelper`, but this exception MUST remain scoped to non-text widgets only.
+ContractRef: ContractName:Plans/FinalGUISpec.md#10.9, ContractName:Plans/FileManager.md, PolicyRule:Decision_Policy.md§2
 
-**Ports (includes Hot Reload):** Shows detected local servers (port, process name, status) when target project runs dev servers. **Hot reload controls:** A "Watch mode" toggle button at the top of the Ports tab. When enabled, Puppet Master starts a file watcher (using `notify` crate) on the target project directory. On detected changes (debounced 500ms), triggers the project's configured build command (from Settings > General or project config). Status line: "Watching: src/ (12 files changed, last rebuild 3s ago)" or "Watch mode: off". Build output streams to a dedicated terminal tab named "[hot-reload]". Errors in build output are parsed and surfaced in the Problems tab (if possible). Toggle persists per-project in redb. **Port list:** For each detected port: port number, process name, PID, status (listening/closed), uptime. Click row to open `http://localhost:{port}` in the Browser tab. "Kill" button per row (with confirmation). Auto-refresh every 5s or on file-watcher event. Empty state: "No active ports -- start a dev server to see it here."
+<a id="10.9.2"></a>
+#### 10.9.2 Clipboard Surface Coverage Matrix
 
-**Browser (MVP):** Embedded webview tab for viewing web content without leaving the IDE. Uses `wry` crate for cross-platform webview embedding (WebView2 on Windows, WebKit on macOS/Linux). The Browser tab hosts a webview as a native child window within the bottom panel area.
+| Surface | Allowed implementation path | Disallowed glue | Required verification |
+|---------|-----------------------------|-----------------|-----------------------|
+| File Editor input | Slint `TextInput` / `TextEdit` native keyboard + context-menu clipboard actions | Manual clipboard read/write for text widgets; custom Ctrl/Cmd+A/C/X/V interceptors | Verify Ctrl/Cmd+A/C/X/V + Copy/Paste/Select All context actions behave natively |
+| Chat composer input | Slint text widget native clipboard behavior | Message-level clipboard rerouting for text input | Verify parity with File Editor shortcuts and context actions |
+| Terminal command input (if editable) | Slint editable text widget native clipboard behavior | Custom clipboard manager for text entry | Verify Ctrl/Cmd+A/C/X/V + context actions on terminal command input |
+| Terminal/log read-only output | Read-only Slint text widget selection/copy behavior (or equivalent read-only selectable surface) | Paste routed into read-only output; manual text-widget clipboard read/write | Verify selection and copy work; verify paste is not treated as editable insertion in read-only output |
+| Non-text copy contexts (path/value) | `ClipboardHelper` callback only for non-text targets | Reusing non-text helper as a general text-widget clipboard path | Verify copied value equals selected path/value source text |
 
-**Browser UI:**
-- **URL bar:** Text input at top of browser tab with navigation buttons (Back, Forward, Refresh, Home). URL auto-completes from history. Enter key navigates. Shows loading indicator (progress bar below URL bar) during page load.
-- **Tab management within Browser:** Multiple browser tabs within the Browser section (similar to terminal tabs). Pin semantics apply (same as terminal: pinned tabs are icon-only, cannot be closed without unpinning). Instance cap: maximum 8 browser tabs (configurable in Settings > General, range 2-12). "+" button opens new tab with blank page or configured home URL.
-- **Click-to-context:** When viewing a page, user can activate "Inspect mode" via a crosshair button in the browser toolbar. In inspect mode, hovering over elements highlights them with an overlay border. Clicking an element captures its context: tag name, id, class list, text content (truncated to 500 chars), bounding rect, parent path (up to 5 ancestors), and an HTML snippet of the element and immediate children. Captured context is injected into the Chat input with a toast: "Element context captured." Rate limit: 1 capture per 2 seconds. DOM size cap: elements with >100 children are summarized.
-- **DevTools:** Optional "Open DevTools" button (opens the webview's built-in dev tools in a separate window). Useful for CSS debugging.
-- **Bookmarks:** Simple bookmark list (URL + title). Add current page via star icon in URL bar. Bookmark list accessible from dropdown. Persisted in redb.
-- **Empty state:** "No page loaded -- enter a URL or click a link from the chat" with a list of bookmarks (if any).
-- **Security:** Sandboxed webview. No access to local filesystem unless explicitly granted. JavaScript enabled by default with toggle. Cookies/storage scoped per-project.
+<a id="10.9.3"></a>
+#### 10.9.3 Legacy Glue Removal Checklist
 
-**Debug (MVP):** Integrated debugging via the Debug Adapter Protocol (DAP). The Debug tab provides a debugging interface for the target project.
+Migration readiness checklist for clipboard behavior:
+- [ ] Remove manual clipboard read/write handlers used for text widgets.
+- [ ] Remove custom Ctrl/Cmd clipboard key interceptors for text widgets.
+- [ ] Remove read-only text workaround glue where native Slint read-only text widgets cover the behavior.
+- [ ] Remove manual selection-state plumbing implemented only to support text-widget clipboard actions.
+- [ ] Keep `ClipboardHelper` usage scoped to non-text copy contexts (path/value).
 
-**Debug UI:**
-- **Run configurations:** A dropdown at the top of the Debug tab listing saved run/debug configurations for the current project. Each configuration specifies: name, type (launch/attach), program/command, arguments, environment variables, working directory, pre-launch task (optional), and DAP adapter path. Configurations are stored per-project in `.puppet-master/launch.json` (compatible with VS Code launch.json format where possible). "Edit configurations" button opens the configuration file in the File Editor.
-- **Debug toolbar:** Play (start/continue), Pause, Step Over, Step Into, Step Out, Restart, Stop buttons. All buttons have clear iconography and tooltips. Disabled when not applicable (e.g., Step Over disabled when not paused at breakpoint).
-- **Variables panel:** Tree view of local variables, arguments, and watch expressions. Expandable for compound types. Editable values (double-click to modify, with type validation).
-- **Call stack:** List of stack frames. Click to navigate to source location in File Editor. Current frame highlighted.
-- **Breakpoints:** List of all breakpoints across files. Columns: file, line, condition (if conditional), hit count, enabled toggle. Click to navigate. Right-click: Edit condition, Remove, Disable.
-- **Debug console:** REPL-style input for evaluating expressions in the current debug context. Output shows evaluation results. History (up-arrow for previous commands).
-- **Breakpoint gutter integration:** In the File Editor (§7.18), clicking the left gutter (to the left of line numbers) toggles a breakpoint (red dot). Conditional breakpoints via right-click gutter > "Add conditional breakpoint" (shows input for condition expression). Breakpoints are persisted per-project in redb.
-- **DAP adapter management:** Settings > Debug (new subsection in Advanced or dedicated tab) lists available debug adapters. Built-in support for common adapters (codelldb for Rust/C++, debugpy for Python, node-debug for JavaScript). Custom adapters can be added (adapter path, type, supported languages). Adapter auto-detection from project language (see §7.3 language auto-detection).
-- **Empty state:** "No debug configuration found -- create one to start debugging" with "Create configuration" button that generates a template based on detected project language.
-- **Keyboard shortcuts:** F5 (Start/Continue), F10 (Step Over), F11 (Step Into), Shift+F11 (Step Out), Shift+F5 (Stop). Registered in shortcut registry.
+This checklist MUST be completed before closing clipboard migration tasks in the rebuild queue.
+ContractRef: ContractName:Plans/FinalGUISpec.md#10.9.1, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
 
-**4-split terminal (Dashboard):** The Dashboard also contains a 4-split terminal area (2x2 default layout). One PTY per pane. Bounded line buffers per pane (ring buffer or fixed-size deque). Virtualized rendering. Resizable splits; ratios persisted in redb.
+### 10.10 Truncation with Expand
 
-**Collapse behavior:** Double-click tab bar or click collapse button to minimize to just the tab bar (24px). Height stored and restored.
+Long text (file paths, error messages, thinking streams) truncates with "..." and expands on click. All text remains selectable.
 
-### 7.21 NotFound
+### 10.11 Animation and Transition Specifications
 
-Fallback 404/error page shown when navigation target is invalid.
+All animations use Slint's built-in `animate` directive with consistent timing:
+
+| Category | Duration | Easing | Examples |
+|----------|----------|--------|----------|
+| **Micro feedback** | 100ms | ease-out | Button press, toggle flip, checkbox tick |
+| **Panel transitions** | 200ms | ease-in-out | Panel collapse/expand, sidebar show/hide, tab switch |
+| **Overlays** | 150ms (in), 100ms (out) | ease-out / ease-in | Modal appear/dismiss, toast slide-in, context menu popup |
+| **Layout shifts** | 250ms | ease-in-out | Dashboard card reorder, panel dock/undock, split resize |
+| **Progress** | continuous | linear | Spinner rotation, indeterminate progress bar, streaming indicator |
+| **State transitions** | 150ms | ease-out | Status dot color change, auth status update, orchestrator state change |
+
+**Reduced motion:** When system prefers-reduced-motion is active (detected via platform API on startup), replace all animations with instant transitions (0ms duration). Store override in Settings > General as a toggle ("Reduce animations").
+
+**Scroll animations:** Scroll-to-target (e.g., click-to-open from chat) uses 200ms ease-out. Auto-scroll for new content is instant (no animation) to avoid visual delay.
+
+### 10.12 Progress Bars and Indicators
+
+**Determinate progress bar:** Filled bar showing percentage. Height 4px (inline) or 8px (standalone). Color follows status: `Theme.accent-blue` (normal), `Theme.success-green` (complete), `Theme.warning-amber` (paused).
+
+**Indeterminate progress bar:** Sliding highlight animation (1.5s loop, linear). Used when total is unknown (e.g., agent thinking, web search). Same height as determinate.
+
+**Stalled state:** If a progress bar hasn't updated in 30 seconds, change color to `Theme.warning-amber` and show a subtle pulse animation. Tooltip: "Progress stalled -- last update 45s ago."
+
+**Context gauge (chat):** Circular progress (16px diameter) showing context window usage. Color transitions: blue (0-75%), amber (75-90%), red (90-100%). Hover tooltip shows exact token count and percentage.
+
+**Phase/tier progress:** Stepped progress indicator (circles connected by lines). Each circle shows phase/tier state: empty (pending), half-filled (in-progress with spinning edge), filled (complete), X (failed). Connected line fills left-to-right as phases complete.
+
+### 10.13 Sound Effects (MVP)
+
+Audio feedback for key application events. Uses the `rodio` crate for cross-platform audio playback. All sounds are optional and disabled by default.
+
+**Settings > General toggle:** "Sound effects" (default: off). When off, no audio is played. When on, sub-toggles allow per-event control.
+
+**Event-to-sound mapping:**
+
+| Event | Sound | Duration | Notes |
+|-------|-------|----------|-------|
+| Run complete (success) | Short ascending chime (3 notes) | ~600ms | Plays when any orchestrator run or chat agent run finishes successfully |
+| Run complete (failure) | Low descending tone (2 notes) | ~400ms | Plays when a run fails or is cancelled by error |
+| HITL approval needed | Gentle bell / notification ping | ~300ms | Plays when an approval prompt appears; does not repeat until dismissed |
+| Rate limit hit | Soft warning tone | ~200ms | Plays once per rate-limit event (not on every retry) |
+| Error (critical) | Sharp alert tone | ~250ms | Plays on unrecoverable errors (auth failure, crash recovery prompt) |
+| Message received | Subtle click / pop | ~100ms | Plays when a new assistant message arrives in an inactive thread (configurable) |
+| Timer milestone | Single soft tick | ~100ms | Plays at configurable intervals during long runs (e.g., every 5 minutes). Off by default. |
+
+**Sound file format:** WAV or OGG files bundled with the application in `assets/sounds/`. File size budget: <50KB per sound, <500KB total. Users can replace sound files by placing custom files in `~/.puppet-master/sounds/` with matching filenames (e.g., `run-complete-success.wav` overrides the built-in sound).
+
+**Volume control:** Master volume slider in Settings > General (0-100%, default 50%). Volume respects system volume. No per-event volume controls in MVP.
+
+**Mute behavior:** When the app is minimized to tray, sounds still play (so the user hears run-complete notifications). When system "Do Not Disturb" or equivalent is active, sounds are suppressed.
+
+**Implementation notes:** Sounds play on a dedicated audio thread (never block the UI thread). `rodio::OutputStream` is created once at startup and reused. If audio device is unavailable (e.g., headless server), skip silently (no error toast).
 
 ---
 

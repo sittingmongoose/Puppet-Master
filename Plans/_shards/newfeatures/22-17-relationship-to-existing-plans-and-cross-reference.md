@@ -28,7 +28,7 @@ The following maps **existing plans** and **current code** to the features in th
 | **Updating Puppet Master** | No existing plan; app update (version visibility, update discovery, upgrade path, config compatibility) is specified in this plan only. | §21 Updating Puppet Master. |
 | **Cross-device sync** | No existing plan. Manual export/import plus sync to BYOS (Bring Your Own Storage). Multiple storage options and custom config; support NAS, network storage, server (SMB, NFS, SFTP, WebDAV, or mounted path). Same payload for export and BYOS; no central cloud account. | §22 Cross-Device Sync. |
 | **IDE terminal, panes, hot reload** | No existing plan. Full IDE-style terminal + Problems, Output, Debug Console, Ports (§15.14); hot reload / live reload / fast iteration with project detection, one-click dev mode, Assistant-callable live tools (§15.15). **assistant-chat-design.md §17:** Assistant can call up live testing tools; spec in newfeatures §15.16. | §15.15, §15.16. |
-| **Instant project switch** | No existing plan. Ability to instantly switch between projects with context and settings swapping; project bar or sidebar (OpenCode Desktop-style). Reference: [OpenCode](https://github.com/anomalyco/opencode) `packages/app` layout + sidebar-project; route/URL as source of truth; per-project state keyed by path. | §15.17. |
+| **Instant project switch** | No existing plan. Ability to instantly switch between projects with context and settings swapping using the workspace-tab shell model. Reference: [OpenCode](https://github.com/anomalyco/opencode) `packages/app` layout + sidebar-project; route/URL as source of truth; per-project state keyed by path. | §15.17. |
 | **Built-in browser / click-to-context** | No existing plan. Launch webapps inside the app; click an element and send its context (DOM, attributes, rect) immediately to the Assistant chat (Cursor-style). Native implementation via Wry WebView + custom protocol; JS captures element, POSTs to `puppet-master://element-context`; Rust forwards to Assistant. | §15.18. |
 | **Sound effects** | No existing plan. Per-event sound settings (Agent, Permissions, Errors, optional others): toggle + sound selection per event; user can load their own sounds (file picker, store in app sounds dir); combined built-in + user catalog; config persistence; single playback helper. UI layout flexible. | §15.17. |
 | **Assistant / chat** | **Plans/assistant-chat-design.md:** Assistant chat, Dashboard warnings and CtAs (HITL approval), live testing tools (§17 / §22), context/usage display; rules pipeline and project context. | §15.15 Assistant-callable live tools; §20 HITL (CtAs addressable via Assistant); §3/§7 usage visibility. |
@@ -60,13 +60,9 @@ The following maps **existing plans** and **current code** to the features in th
 - **Worktree and cleanup:** WorktreeGitImprovement and MiscPlan define worktree lifecycle and cleanup policy. Background agents' "git branch per run" should use the same git/worktree modules and respect cleanup allowlists and evidence retention.
 
 ### 17.5 What to Defer or Skip
+The promoted Section 15 feature set is not deferred by this section.
 
-- **Three-process architecture (§19.1):** We are not adding a Node server or WebSocket. Treat §19.1 as "one possible pattern elsewhere"; our implementation stays single Rust process. Stream parsing (if added) is in-Rust with bounded buffers.
-- **Full protocol normalization (§5) and stream-json everywhere:** Valuable if we add streaming and multi-provider output. Defer until we have a concrete need (e.g. live progress, thinking display). When we do, define a minimal schema and per-platform adapters in our runners.
-- **Multi-tab / multi-window (§15.10), virtualization (§15.11):** UX improvements; defer until core features (hooks, plugins, recovery, usage UI) are in. Virtualization matters if we show very long logs or message lists.
-- **In-app instructions editor (§15.3), @ mentions (§15.4), project browser (§15.8):** Nice-to-have; implement after persistent rate limit, recovery, and hooks. @ mentions require prompt-building changes; project browser can reuse project list and git status from existing code.
-- **Database (§14):** Per rewrite, structured storage is not optional: use **redb** (and analytics scan jobs over seglog) for querying and scale; see Plans/storage-plan.md.
-
+Only genuinely separate post-MVP or unrelated items remain candidates for deferral here. Any sentence in older text that classifies promoted Section 15 items as optional polish, later enhancements, or post-core follow-up is non-authoritative historical framing.
 ### 17.6 References to Other Plan Documents
 
 - **Plans/FileSafe.md** -- Guards, context compilation, token efficiency; integration point in runner.

@@ -29,6 +29,25 @@ Storage for the rewrite follows a multi-store design: **seglog** as the canonica
 ---
 
 ## 1. Definitions and concepts
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
+
+### Additional shell/runtime identities required by the promoted Section 15 feature set
+
+The storage model MUST treat the following as first-class identities when the feature is enabled:
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
+- `workspace_tab_id`
+- `window_id`
+- `browser_tab_id`
+- `preview_session_id`
+- `terminal_session_id`
+- `dev_session_id`
+- `branch_id` for branched conversation/session lineage
+
+Identity rules:
+- `project_id` is stable across path rebinding and restore operations; raw path is not the canonical identity
+- `workspace_tab_id` is distinct from `project_id`
+- `browser_tab_id` is distinct from `preview_session_id`
+- detached windows and ephemeral automation/auth sessions have separate persistence scope from workspace-tab shell state
 
 | Term | Meaning |
 |------|--------|
@@ -975,6 +994,18 @@ Storage and projections MUST persist the scheduler and recovery model without am
 - permission/auth/approval/replan resolution creates a new attempt snapshot; old attempt snapshots remain immutable
 - safe-point restore does not mutate the originating attempt record in place; it leads to a new attempt record tied back by lineage
 ## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)
+### Promoted Section 15 restore-scope rules
+
+Restore eligibility:
+- workspace tabs restore independently with project identity, active surface, and local shell state
+- detached windows restore only when their surface class and platform support allow it
+- in-shell browser tabs restore by project and workspace tab
+- auth sessions and automation sessions do not auto-restore as shell browser tabs
+- terminal sessions and dev sessions restore as records of prior state; a live process is not presumed healthy after restart without verification
+
+Project-switch rule:
+- switching projects recalculates effective tool/MCP/persona/browser capability state for the new project context
+- background activity from the previous project remains queryable and visible through its own project/workspace identities rather than being collapsed into the new active project
 This section is the canonical persistence contract for runtime recovery, blocked episodes, usage attribution, and runtime identity needed by Orchestrator, Run Graph, HITL, and chat surfaces.
 
 ### Canonical keys

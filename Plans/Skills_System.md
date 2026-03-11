@@ -193,6 +193,15 @@ ContractRef: ContractName:Plans/Permissions_System.md
 ---
 
 ## 6. GUI requirements
+### 6.1A Catalog-installed skill lifecycle
+
+Catalog-installed skills remain canonical discovered skills after installation.
+
+Rules:
+- install/update/remove actions use the same discovery, validation, and shadowing model already defined here
+- the GUI must distinguish catalog-installed skills from local/manual skills
+- removal/update behavior is explicit when a skill is currently referenced by a Persona or active compiled context policy
+- uninstalling a catalog item must not silently remove a higher-priority local skill that shadows it or is shadowed by it
 
 <a id="GUI-SKILLS"></a>
 

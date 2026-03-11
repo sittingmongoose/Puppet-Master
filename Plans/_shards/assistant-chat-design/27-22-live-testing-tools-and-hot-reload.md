@@ -1,6 +1,11 @@
 ## 22. Live Testing Tools and Hot Reload
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
 
-The **Assistant** can **call up live testing tools**: the user (or the Assistant on the user's behalf) can request e.g. "start hot reload dev mode" or "run tests in watch mode." The app starts the right watcher/dev server for the current project and routes live logs, errors, and reload status into the IDE panes (Terminal, Output, Problems). Full specification: **Plans/newfeatures.md** §15.16 (Hot Reload, Live Reload, and Fast Iteration). The Assistant execution path must be able to invoke the canonical actions `StartDevMode` and `RunTestsWatch` so that results surface in the integrated panes.
+Live testing and hot reload are dev-session operations.
 
----
-
+Rules:
+- assistant-invoked dev actions map to stable UI commands and visible shell state changes
+- `start hot reload dev mode`, `start dev server`, and `run tests in watch mode` are user-facing intents that must resolve to canonical `cmd.*` IDs in the UI command catalog
+- the chat surface shows whether a dev session is starting, active, failed, stopping, or stopped
+- output routes into the canonical terminal/output/ports surfaces owned by the shell; chat does not create a parallel dev-output model
+- project switch or workspace-tab close must surface explicit consequences for any active dev session

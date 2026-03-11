@@ -19,8 +19,7 @@ Canonical source: [Plans/FileManager.md](../../FileManager.md)
 - [11-7-edge-cases.md](11-7-edge-cases.md) — ## 7. Edge cases
 - [12-8-image-viewer-and-html-preview.md](12-8-image-viewer-and-html-preview.md) — ## 8. Image viewer and HTML preview
 - [13-9-tabs-editor-terminal-browser.md](13-9-tabs-editor-terminal-browser.md) — ## 9. Tabs: Editor, Terminal, Browser
-- [14-10-editor-enhancements-mvp.md](14-10-editor-enhancements-mvp.md) — ## 10. Editor enhancements (MVP)
-- [15-verification-ai-executable.md](15-verification-ai-executable.md) — ## Verification (AI-executable)
-- [16-13-git-status-integration.md](16-13-git-status-integration.md) — ## 13. Git Status Integration
-- [17-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md](17-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md) — ## 14. Markdown, Mermaid, HTML, SVG, and Image Rendering (Rewrite Addendum -- 2026-03-07)
-- [18-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md](18-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md) — ## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)
+- [14-verification-ai-executable.md](14-verification-ai-executable.md) — ## Verification (AI-executable)
+- [15-13-git-status-integration.md](15-13-git-status-integration.md) — ## 13. Git Status Integration
+- [16-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md](16-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md) — ## 14. Markdown, Mermaid, HTML, SVG, and Image Rendering (Rewrite Addendum -- 2026-03-07)
+- [17-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md](17-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md) — ## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)

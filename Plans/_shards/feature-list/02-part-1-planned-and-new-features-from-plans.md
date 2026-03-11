@@ -166,7 +166,7 @@ Contracts V0 as SSOT for event envelope, UICommand, EventRecord, AuthState. Anti
 
 **Attachments, web search, extensibility.** Files and photos; paste and drag-drop. Web search with citations (inline + Sources list); full spec in newtools. MCP/plugins same as rest of app. All providers support image attachments as input context; image generation is available via Cursor-native generation (Cursor; no key) or Gemini API-backed generation (non-Cursor; requires a Google API key).
 
-**File Manager, IDE-style editor, and @ mention.** @ in prompt opens autocomplete (recent/modified files, folder nav). Insert path or @path; resolve when building prompt. File Manager: pop-out side window; selecting a file opens it in the **in-app IDE-style editor**. **IDE-style editor (MVP):** center-left File Editor strip; **tabs** for open files (GUI setting **max editor tabs**, default e.g. 20-30, for LRU cap); **split panes** (multiple editor groups); **drag editor out to own window and back** (detach/snap, same as File Manager and Chat); editable content, Save (Ctrl+S), unsaved indicator, line numbers, go-to-line/range, basic syntax highlighting; open from File Manager or from chat. **LSP (MVP):** diagnostics, hover, completion, inlay hints, semantic highlighting, code actions, code lens, signature help; status in status bar; per-server enable/disable and custom servers via Settings > LSP (Plans/LSPSupport.md). **Chat Window LSP (MVP):** diagnostics in Assistant/Interview context; @ symbol with LSP workspace/symbol; code blocks in messages with hover and click-to-definition; Problems link from Chat (Plans/LSPSupport.md §5.1, assistant-chat-design §9.1). **Additional LSP enhancements (Plans/LSPSupport.md §9.1):** find references, rename symbol, format document/selection; go to type definition, go to implementation, document links, call hierarchy, folding/selection range; Chat "Fix all," "Rename X to Y," "Where is this used?," "Format file," copy type to chat; optional LSP diagnostics verification gate and LSP snapshot in evidence; Interview "structure of file" via documentSymbol; promote lsp tool when ready. **Terminal:** tabs for multiple terminal sessions in bottom panel. **Browser:** multiple browser instances (no in-browser tabs). **Language/framework presets** (JetBrains-style): tools downloaded when project added or from interview flow; run/debug, modal editing, remote SSH, review/1-click apply, etc. Full list in Plans/FileManager.md §10-§11. **Click to open in editor:** clicking a file path (files-touched strip, "Read:" / "Edited:", or code block filename) in chat opens that file in the editor; when line/range is known, scroll to it. Activity "Read: file" and code blocks open in editor; context files as chips; drag file into chat to attach.
+**File Manager, IDE-style editor, and @ mention.** @ in prompt opens autocomplete (recent/modified files, folder nav). Insert path or @path; resolve when building prompt. File Manager: pop-out side window; selecting a file opens it in the **in-app IDE-style editor**. **IDE-style editor (MVP):** center-left File Editor strip; **tabs** for open files (GUI setting **max editor tabs**, default e.g. 20-30, for LRU cap); **split panes** (multiple editor groups); **drag editor out to own window and back** (detach/snap, same as File Manager and Chat); editable content, Save (Ctrl+S), unsaved indicator, line numbers, go-to-line/range, basic syntax highlighting; open from File Manager or from chat. **LSP (MVP):** diagnostics, hover, completion, inlay hints, semantic highlighting, code actions, code lens, signature help; status in status bar; per-server enable/disable and custom servers via Settings > LSP (Plans/LSPSupport.md). **Chat Window LSP (MVP):** diagnostics in Assistant/Interview context; @ symbol with LSP workspace/symbol; code blocks in messages with hover and click-to-definition; Problems link from Chat (Plans/LSPSupport.md §5.1, assistant-chat-design §9.1). **Additional LSP enhancements (Plans/LSPSupport.md §9.1):** find references, rename symbol, format document/selection; go to type definition, go to implementation, document links, call hierarchy, folding/selection range; Chat "Fix all," "Rename X to Y," "Where is this used?," "Format file," copy type to chat; optional LSP diagnostics verification gate and LSP snapshot in evidence; Interview "structure of file" via documentSymbol; promote lsp tool when ready. **Terminal:** tabs for multiple terminal sessions in bottom panel. **Browser:** in-shell browser tabs plus detached preview/browser windows. **Language/framework presets** (JetBrains-style): tools downloaded when project added or from interview flow; run/debug, modal editing, remote SSH, review/1-click apply, etc. Full list in Plans/FileManager.md §10-§11. **Click to open in editor:** clicking a file path (files-touched strip, "Read:" / "Edited:", or code block filename) in chat opens that file in the editor; when line/range is known, scroll to it. Activity "Read: file" and code blocks open in editor; context files as chips; drag file into chat to attach.
 
 **Chat history search.** Human search across chats/history (UI). Agent search via tool/MCP or index in context pipeline for prior messages/sessions.
 
@@ -784,47 +784,126 @@ On context compiler failure:
 ---
 
 ### 12. Extensibility and other
+This section tracks promoted feature inventory and its owner-doc routing for the rewrite planning set.
 
-**Plugin and skills extensibility.** Commands, agents/roles, hooks, skills (trigger-based context). Plugin directory (e.g. app data or project .puppet-master/plugins/); manifest (e.g. plugin.json). Loading at startup; invocation by name. Skills: auto-inject when trigger matches (file extension, keyword, regex). GUI Plugins/Extensions section. Bundled default plugin. One-click install from curated catalog: catalog format (id, name, description, type, source URL or bundled path, version); install = copy + enable; updates/uninstall.
-
-**Keyboard-first and command palette.** Shortcuts for major actions (20+). Ctrl/Cmd+P command palette; filtered action list. In-app shortcut docs. Accessibility: focus, screen reader.
-
-**Customizable desktop shortcuts.** GUI (Config → Shortcuts tab or Advanced → Shortcuts) to view, change, and reset keyboard shortcuts for in-app text/composer (defaults: Ctrl+A/E/B/F, Alt+B/F, Ctrl+D/K/U/W, Alt+D, Ctrl+T/G for line/word movement, kill, transpose, cancel). Backend: ShortcutAction, KeyBinding, default_shortcuts (DRY:DATA), build_key_map, GuiConfig.shortcuts; key map wired at app level. Export/import JSON, search/filter in list, shortcut in tooltip/menu label. MiscPlan §7.7, §7.9, §8.8, §7.11.1.
-
-**Agent Skills management.** GUI (Config → Skills tab or Advanced → Skills) to discover, list, add, edit, remove, and set permissions for agent skills (SKILL.md in folders; OpenCode-style discovery paths). Backend: src/skills/ (discovery, load_skill, frontmatter, permissions, list_skills_for_agent); GuiConfig.skill_permissions; first-wins deduplication. Bulk permission by pattern, sort/filter, preview body, last modified, validate all. MiscPlan §7.8, §7.10, §8.9, §7.11.2.
+**Promoted Section 15 owner.** `Plans/Section15_MVP_Promoted_Features_Spec.md` is the primary owner for the promoted Section 15 feature set. The subsystem docs below remain authoritative for their own storage, command, permission, shell, and UI details.
 
 **Database and projections.** Per rewrite: seglog (canonical ledger), redb (durable KV state/projections/settings), Tantivy (full-text search). Queryable history, analytics, and recovery metadata are produced from these; no separate SQLite for run/session/history.
 
-**Branching conversations.** Restore then fork; alternate branches with labels. "Restore and branch" in UI.
+**Branching conversations.** Restore then fork; alternate branches with labels and visible lineage.
 
-**In-app project instructions editor.** Edit AGENTS.md/CLAUDE.md/project rules in-app; optional live markdown preview; save to project root. Support project rules file.
+**In-app project instructions editor.** Edit project rules and project instruction files in-app; save targets match the runtime-consumed instruction paths.
 
-**@ mention system.** @ in prompt opens autocomplete (recent/modified files, folder nav); insert path or @path; resolve when building prompt.
+**`@` mention system.** `@` in prompt opens autocomplete rooted in the active project; insertion preserves the canonical file identity used by prompt assembly and click-to-open behavior.
 
-**Multi-tab and multi-window.** Tabs (view + context per tab); multiple windows; optional drag tabs between windows; persist tab list and order.
+**Multi-tab and multi-window.** Workspace tabs are first-class, each with its own view/context and active project. Multiple windows may host workspace tabs; tab and window state persist with deterministic fallback when drag-between-window support is unavailable.
 
-**Project and session browser.** List projects and per-project sessions/runs; search/filter; optional git status per project; open project or session.
+**Project and session browser.** Browse projects and their sessions/runs/threads with search/filter and project/session status visibility.
 
-**Instant project switch (OpenCode-style).** Project bar or sidebar; single source of truth for current project; swap context/settings on selection; project list persisted; "Open project..."; what swaps: nav, per-project state, last session per project. Alignment with snapshotting and redb (project_path).
+**Instant project switch.** Project switching is workspace-tab based by default. The active workspace tab switches project immediately, and a separate command opens a target project in a new workspace tab. Background activity from non-active projects remains visible through badges and attention surfaces.
 
-**Built-in browser and click-to-context (Cursor-style).** Launch webapps in-app; click element → send context to Assistant (DOM, attributes, rect). Wry WebView; custom protocol or IPC; modifier or toolbar toggle for capture. Element context schema (tagName, id, className, textContent, role, ariaLabel, rect, parentPath, optional outerHTML; token/size cap). Rust handler → app state → Assistant; "Element sent to chat" toast. Phased: separate window → schema v1 → Assistant integration → optional embedding → polish. Security: validate, sanitize, rate limit.
+**Built-in browser and click-to-context.** Browser behavior uses in-shell browser tabs plus detached preview windows. Automation and auth browser sessions remain separate ephemeral classes. User-triggered share-to-agent state is visible and revocable.
 
-**Full IDE-style terminal and panes.** Terminal at current project folder (embedded or external). **Terminal tabs:** multiple terminal sessions (new tab, switch, close, optional name); each tab has own cwd and history. Panes: Terminal, Problems, Output, Debug Console, Ports. Single "open terminal at path" helper; project path from app state. See FileManager.md §9.
+**Full IDE-style terminal and panes.** Terminal sessions, Problems, Output, Debug Console, and Ports are canonical panes tied to project and dev-session state.
 
-**Hot reload, live reload, fast iteration.** One-click dev server/watcher; project type detection (Cargo.toml, package.json, etc.); integrated Terminal/Output; state preservation where supported. Assistant-callable ("start hot reload," "run tests in watch"). Project scanners; integrate watchers; error handling → Problems pane.
+**Hot reload, live reload, fast iteration.** One-click dev-session launch, stack-aware reload behavior, integrated output panes, explicit fallback to live reload, and explicit termination rules on switch/close.
 
-**Sound effects settings.** Per-event enable/disable and sound selection; user-loaded sounds; built-in + user catalog. Events: Agent, Permissions, Errors, optional HITL/Dev server/Build. Config persistence; accessibility (system silent/reduce motion).
+**Sound effects settings.** Per-event enable/disable and sound selection with persisted settings and accessibility-aware behavior.
 
-**Updating Puppet Master.** Version visibility; update discovery; upgrade path docs; config/state compatibility across versions.
+**Updating Puppet Master.** Version visibility, update discovery, and compatibility-aware upgrade path information.
 
-**Cross-device sync.** Manual export/import + BYOS. Sync payload: config, state, threads, history. Storage options: local/mounted, NAS/SMB/NFS/SFTP/WebDAV, cloud folder; custom config. "Sync now" / "Sync on startup"; conflict policy. No secrets by default; optional encrypted secrets.
+**Cross-device sync.** Manual export/import plus BYOS sync targets for config/state/history payloads with explicit conflict policy.
 
-**One-click install (no code).** Curated catalog of commands, agents, hooks, skills; install = copy + enable; updates/uninstall; catalog format; default catalog.
-
+**One-click install (no code).** Curated catalog lifecycle for commands, agents, hooks, skills, themes, and MCP configs, including install, update, remove, and active-item conflict behavior.
 
 #### Scan additions (auto-import: extensibility/other)
+##### Plans/Section15_MVP_Promoted_Features_Spec.md
+- **Promoted Section 15 owner.** Canonical owner for shell/project-switch/browser/tab/window/dev-loop/catalog/usage/branching defaults and cross-feature rules.
+
 ##### Plans/newfeatures.md
-- **One-click install catalog.** Curated catalog of commands/agents/hooks/skills with install/update/uninstall flows (newfeatures §15.19).
-- **Plugin and skills extensibility (plugin dir).** Plugin directory with manifest + startup loading; skills auto-inject on triggers; GUI extensions section (newfeatures §12).
----
+- **Historical/origin source for promoted Section 15 ideas.** Normative behavior for promoted items lives in the promoted owner doc and reconciled subsystem SSOTs; this file remains the origin/reference source.
+### 1. GUI and views
+
+**Pages.** Dashboard, Projects, Wizard, Config, Doctor, Tiers, Evidence, Metrics, History, Coverage, Memory, Ledger, Login, Settings, Setup, Interview, NotFound. Config currently has multiple tabs: Project, Tiers, Branching, Verification, Memory, Budgets, Advanced, Interview, GUI Automation.
+
+**Theme.** Light/Dark (AppTheme); palette and semantic colors (background, text, surface, accent, success, shadow, etc.) per theme in theme/palette.rs, colors.rs, styles.rs, tokens.rs, scaled.rs.
+
+**Widget catalog.** Navigation/header (Page, header, simple_header); selectable text and context menu (selectable_label, selectable_label_mono, selectable_text_input, selectable_text_field, context_menu_actions); buttons/inputs (styled_button, styled_button_sized, variants, styled_text_input, labeled_input, code_input); layout (page_header, refresh_button, responsive_form_row, responsive_label_value, responsive_columns, responsive_grid); status (status_badge, status_dot, pulsing_status_dot, auth_status_chip); panels (panel, themed_panel, panel_with_title, panel_with_header); modals/toasts (modal_overlay, confirm_modal, error_modal, toast_overlay, ToastManager); feedback (progress_bar, help_tooltip, help_text, get_tooltip); specialized (terminal_output, terminal_compact, terminal_large; interview_panel; budget_donut, usage_chart; step_circle_canvas; paper_texture, pixel_grid, scanline_overlay, retro_overlay; icon, icon_sized; page_transition). See docs/gui-widget-catalog.md.
+
+### 2. Platforms
+
+**Supported providers (rewrite).** CLI-bridged: Cursor, Claude Code. Server-bridged: OpenCode. Direct-provider: Codex, GitHub Copilot, Gemini. Provider specs cover auth, model discovery, plan mode (where applicable), media capability gating, headless flags (where applicable), subagents, and MCP capability.
+
+**Runners and support.** cursor.rs, codex.rs, claude.rs, gemini.rs, copilot.rs; registry in platforms/registry.rs; auth_actions.rs, auth_status.rs; platform_detector.rs; capability.rs; model_catalog.rs. Provider auth strategy is realm-aware: `github_api` (GitHub API provider operations) and `copilot_github` (Copilot provider auth) are separate inventories.
+
+### 3. Orchestration
+
+**State machines.** Orchestrator: Idle → Planning → Executing (with Paused) → Complete/Error. Tier: Pending → Planning → Running → Gating → Passed (with Retrying, Escalated, Failed). core/state_machine.rs.
+
+**Tier hierarchy.** Phase → Task → Subtask; leaf nodes are execution units. core/tier_node.rs; each node has TierStateMachine, acceptance criteria, dependencies, required files.
+
+**Orchestrator.** Coordinates state machines, execution engine, tier tree, session tracking, checkpoints, event emission. Uses ExecutionEngine, PromptBuilder, FreshSpawn, PlatformRouter, SessionTracker, CheckpointManager, AdvancementEngine, EscalationEngine, LoopGuard, ParallelExecutor, DependencyAnalyzer, ComplexityClassifier, WorkerReviewer, AgentsManager, GateEnforcer, PromotionEngine, ProgressManager, UsageTracker, GitManager, PrManager, WorktreeManager, VerificationIntegration, GateRunner. core/orchestrator.rs.
+
+**Execution.** Per-iteration: build prompt (progress.txt, AGENTS.md excerpts), fresh process spawn (no session resume), platform routing, iteration result parsing. core/execution_engine.rs, fresh_spawn.rs, prompt_builder.rs. Iteration lifecycle: Planning → run iteration → completion signal parsing → verification gate → AGENTS.md updates → state file updates → advance or retry/escalate.
+
+### 4. Verification gates
+
+**Gate runner.** Runs gates at tier boundaries (task/phase); config: parallel vs sequential, stop-on-first-failure, evidence collection, timeout. Produces GateReport; wired to EvidenceStore and BroadcastEventBus. verification/gate_runner.rs.
+
+**Verifier registry.** Default verifiers: Command, FileExists, Regex, Script, AI, Browser, IcedGui. verification/ (command_verifier, file_exists_verifier, regex_verifier, script_verifier, ai_verifier, browser_verifier, iced_gui_verifier). Types in types/execution.rs: VerificationMethod, Criterion, GateReport, GateResult, Evidence. **Optional:** LSP diagnostics gate ("No LSP errors in scope" at tier boundaries) and LSP snapshot in evidence for audit (Plans/LSPSupport.md §9.1).
+
+**Evidence.** Stored under .puppet-master/evidence/ (gate-reports, screenshots, test-logs, verifier-results). Evidence view and detail view for browsing.
+
+### 5. State and config
+
+**State files.** prd.json (work queue; state/prd_manager.rs); progress.txt (append-only short-term memory; state/progress_manager.rs); AGENTS.md (long-term memory; root and optional per-tier; state/agents_manager.rs, agents_multi_level.rs, agents_gate_enforcer.rs, agents_promotion.rs, agents_archive.rs). .puppet-master/ per STATE_FILES.md.
+
+**GUI config.** config/gui_config.rs: Project (name, working directory, description, version); Tiers (per-tier platform, model, reasoning_effort, plan_mode, ask_mode, output_format, max_iterations, task_failure_style); Branching (base_branch, naming_pattern, granularity, auto_pr); Verification (browser_adapter, evidence_directory, screenshot_on_failure); Memory (progress_file, agents_file, prd_file, multi_level_agents); Budgets (per-platform max_calls_per_run/hour/day, unlimited_auto_mode); Advanced (log_level, process_timeout_ms, parallel_iterations, etc.); Interview (InterviewGuiConfig); GUI Automation (enabled, mode, workspace_isolation, artifacts_directory, visual_diff_threshold). Wizard: WizardTierConfig per tier.
+
+### 6. Git
+
+**Modules.** git_manager.rs (general git operations); commit_formatter.rs (commit message formatting); branch_strategy.rs (branch strategy); pr_manager.rs (PR creation/management); worktree_manager.rs (worktrees for parallel task execution; WorktreeInfo, MergeResult, .puppet-master/worktrees). git/mod.rs.
+
+### 7. Interview and start chain
+
+**Interview.** interview/orchestrator.rs: multi-phase requirements gathering, AI failover, completion validation. PhaseManager, InterviewPhase, interview/state.rs. ReferenceManager, DocumentWriter, FailoverManager, ResearchEngine, CompletionValidator, AgentsMdGenerator, TestStrategyGenerator, etc.
+
+**Start chain.** start_chain/pipeline.rs: StartChainPipeline from requirements (text or file) to PRD; optional AI generation and validation; evidence saving. StartChainParams: project_name, requirements, use_ai, ai_platform, ai_model, validate_with_ai, ai_gap_config, save_evidence. Components: RequirementsParser, RequirementsInventory, RequirementsInterviewer, DocumentParser, StructureDetector, PrdGenerator, MultiPassGenerator, TierPlanGenerator, ArchitectureGenerator, TestPlanGenerator, CriterionClassifier, CriterionToScriptConverter, Traceability, ValidationGate, AcceptanceCriteriaInjector, formatters. Wizard kicks off StartChainPipeline and writes prd.json / AGENTS.md as configured.
+
+### 8. Doctor
+
+**Check registry.** doctor/check_registry.rs. Checks: transport-aware provider readiness (Cursor/Claude CLI availability, Codex/Copilot/Gemini direct-provider auth/connectivity, OpenCode server health); Git transport (GitInstalled, GitConfigured, GitRepo); Auth realms (`github_api`, `copilot_github`) reported independently; Project (WorkingDir, PrdFile, StateDirectory); Config (ConfigFile, ConfigValid); Runtime (UsageCheck, SecretsCheck, RuntimeCheck, NodeRuntime); PlaywrightCheck, PlatformCompatibilityCheck, WiringCheck. doctor/checks/. DoctorReport, CheckReport, categories; Doctor view runs and displays results.
+
+### 9. Automation
+
+**Headless runner.** automation/headless_runner.rs: Iced tiny-skia headless renderer (no GPU/display); builds full widget tree via app.view(), layout, draw, screenshot to RGBA/PNG. Used for GUI automation: navigate, execute actions, snapshots, assertions.
+
+**Runners.** Headless (HeadlessRunner / headless_runner::run); Native (NativeRunner); Hybrid. GuiRunSpec: run_id, scenario_name, mode (Headless/Native/Hybrid), full_action, workspace_root, artifacts_root, workspace_isolation, steps (GuiStep: action + assertions), timeout_ms. GuiAction: Navigate, Execute, Click, RightClick, Type, Wait, Resize, Snapshot. GuiAssertion: PageIs, NoLastError, OrchestratorStatus, OutputContains, DoctorRunning/DoctorResultCountAtLeast/DoctorCheckStatus, ToastContains/ToastTypeContains, AuthStatus, SetupChecking/SetupPlatformStatus/SetupPlatformCountAtLeast, ContextMenuOpen. run_gui_automation(spec) → GuiRunResult (step_results, debug timeline/summary, artifact manifest).
+
+**Action catalog.** automation/action_catalog.rs: resolve_action(action_id) → Message (e.g. nav.dashboard, nav.config for all pages); used by headless/native runners.
+
+**Workspace clone.** automation/workspace_clone.rs: Ephemeral clone for isolation; ClonedWorkspace, build_artifact_manifest, ensure_path_within.
+
+**Debug feed.** automation/debug_feed.rs: DebugFeedCollector records step/backend/log/system events; writes debug bundle (timeline + summary) under artifacts.
+
+### 10. Other
+
+**Logging.** logging/ (event_bus, log_streamer, log_retention, logger_service, iteration_logger, intensive_logger, error_logger).
+
+**Usage tracking.** platforms/usage_tracker.rs; Metrics view; Doctor UsageCheck.
+
+**Checkpoints.** core/checkpoint_manager.rs; state persistence in core/state_persistence.rs.
+
+**Tray.** tray.rs -- system tray integration (TrayAction subscription in app).
+
+**Build info.** build_info.rs for version/build data.
+
+##### Plans/Containers_Registry_and_Unraid.md
+- **Contextual Docker Manage surface.** First-class Docker management UI shown when a Docker-related project is active, with `Hide Docker Manage when not used in Project.` setting (default enabled).
+- **Dual DockerHub auth UX.** Browser/device login plus PAT entry, with PAT-recommended helper copy and requested-vs-effective capability display.
+- **Protected repository auto-create flow.** Missing DockerHub repos can be created from Puppet Master, but only after explicit non-bypassable confirmation with namespace, repository name, and privacy (default private).
+- **First-class build/run/publish workflow.** Buildx-backed image build, container run for testing, user-openable container access, and publish results including digest/tag evidence.
+- **Managed Unraid template publishing.** Auto-generate/update Unraid XML after successful publish by default; manage a dedicated template repo by default with auto-commit on, auto-push off, one-click push from the UI, and a defined unmanaged local-output path when the managed repo is unavailable.
+- **Per-project template repo layout.** One template repo per project, root `ca_profile.xml`, maintainer folder, and `project-name.xml` with maintainer folder defaulting to the DockerHub namespace but remaining editable.
+- **Shared/per-project `ca_profile.xml` model.** Generate-if-missing, shared cross-project default with per-project override, profile image upload or external URL, repo-managed asset default for uploaded images, and a two-layer editor (structured fields + raw XML passthrough preservation) so all fields remain editable without losing unknown content.
 

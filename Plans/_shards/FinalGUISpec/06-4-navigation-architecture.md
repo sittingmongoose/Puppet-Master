@@ -87,7 +87,7 @@ At the top of the primary content area, a breadcrumb strip (20px) shows `Group >
 | `Alt+Up/Down` | Cycle through chat threads |
 | `Ctrl+Shift+C` | Compact current session |
 | `Ctrl+Shift+X` | Export thread |
-| `Ctrl+Shift+P` | Open project switcher (project bar) |
+| `Ctrl+Shift+P` | Open project switcher |
 | `F5` | Start/Continue debug |
 | `F10` | Step Over (debug) |
 | `F11` | Step Into (debug) |

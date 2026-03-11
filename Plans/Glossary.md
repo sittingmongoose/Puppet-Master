@@ -28,51 +28,27 @@ ContractRef: Invariant:INV-010
 ---
 
 ## 2. Core terms
-This section defines the canonical terms used across runtime orchestration, artifacts, and usage surfaces.
+### Shell and workspace terms
 
-### Runtime orchestration and recovery terms
-- **Scheduler pass** -- one deterministic queue-analysis and dispatch cycle. Each pass refreshes readiness, blocked/backoff state, available capacity, score breakdowns, and selected nodes before dispatching work.
-- **Ready set** -- the full set of nodes that are currently dispatch-eligible after dependency checks, blocker checks, backoff checks, generation validity checks, and capacity-lane eligibility checks have been applied.
-- **Scheduler lane** -- the canonical dispatch class used as the first scheduler score term. MVP lane order is `remediation > unblocker > normal`.
-- **Scheduler score tuple** -- the ordered selection tuple `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)` used to choose ready nodes deterministically.
-- **Wake reason** -- the canonical reason queue analysis reran. Examples include node completion, approval resolution, clarification resolution, backoff expiry, remediation completion, replan patch application, restore/recovery completion, auth recovery, and capacity changes.
-- **Queue analysis** -- the emitted runtime/projection record for one scheduler pass. It includes the ready set, selected nodes, score breakdowns, capacity state, and `non_selected_reason` for ready nodes that were not dispatched.
-- **Blocked** -- a canonical runtime, node, or thread state meaning execution cannot continue automatically until an external condition is resolved. `blocked` is not a synonym for `failed`.
-- **attention_required** -- a canonical state meaning clarification or user review is required but the current flow is still active. It is distinct from `blocked`; repeated unresolved clarification escalation eventually becomes `blocked`.
-- **Blocked reason code** -- the canonical explanation for why a node/thread/run is blocked, such as `permission_denied`, `user_declined`, `headless_ask_denied`, `filesafe_blocked`, `external_side_effect_blocked`, `auth_expired`, or `replan_required`.
-- **Failure class** -- the canonical classification of an attempt outcome used to drive retry, backoff, remediation, escalation, and user recovery behavior.
-- **Blocked outcome** -- an intentionally non-executed or externally prevented outcome that preserves completed local work and surfaces recovery options instead of being treated as a generic execution failure.
-- **Safe point** -- a runtime-internal recovery anchor created before mutation-capable attempts and remediation apply steps. Safe points preserve the pre-attempt baseline needed for deterministic retry/recovery.
-- **Restore point** -- a user-facing history or rewind checkpoint. Restore points are distinct from runtime safe points and must not be conflated with scheduler recovery.
-- **Remediation lineage** -- the canonical parent/child lineage that connects a failed attempt to automatic fix attempts, findings, superseded attempts, and final resolution.
-- **Remediation child** -- a runtime child attempt spawned to fix or verify a specific failed parent attempt. It is not a loose task-board item.
-- **Replan generation** -- the monotonic identifier for the active canonical graph/spec generation. Runtime attempts, safe points, and recovery decisions must be checked against the active generation.
-- **Graph lock** -- the boundary after which the canonical graph is fixed. Graceful draft-decomposition degradation is allowed only before graph lock; post-lock integrity failures must not silently degrade.
-- **Non-selected reason** -- the canonical reason a ready node was not dispatched in a scheduler pass, such as lower score, capacity exhaustion, lane reservation, or equivalent deterministic queue policy.
+- **workspace tab** — the primary in-window working context. Holds one active project plus local shell state such as active thread, side-panel state, browser tabs, terminal sessions, and dev-session references.
+- **detached window** — a secondary top-level window linked to a parent workspace tab or detached-surface record. It is not the primary shell identity.
+- **project/session browser** — a shell surface for browsing projects and their sessions/runs/threads across the app.
+- **attention center** — the canonical shell surface for background, blocked, or action-needed items that must remain visible outside the currently active thread or project.
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Run_Graph_View.md
+### Browser and preview terms
 
-- **Session** -- user-facing term for one interactive run context.
-  - Note: persisted events may contain a field named `thread_id` for correlation, but user-facing text MUST say "Session".
-- **Provider** -- an external AI platform integration (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini).
-- **Tool** -- a host capability invoked by Puppet Master (filesystem, shell, network fetch, etc) under policy.
-- **UICommand** -- a stable command ID dispatched by the UI to trigger non-trivial logic.
-- **ContractRef** -- a citation that binds an operational requirement to a canonical contract, schema, policy, invariant, or primitive.
-- **Overseer** -- the AI foreman role inside the Orchestrator. Responsibilities (docs-only): (1) Determines readiness at tier boundaries (Phase/Task/Subtask/Iteration). (2) Selects the next unit of work (chunk/node) deterministically. (3) Spawns Builder subagents to implement work. (4) Runs deterministic verifier checks (scripts/tests/greps). (5) Performs semantic/subjective audits at the start/end of tiers: start-of-tier scans for gaps/undefined refs/drift (auto-fix if safe, else human-visible alert); end-of-tier convergence scan (if concerns, spawn 2 reviewer subagents; escalate only if reviewers agree). (6) Stops on FAIL and surfaces evidence and next action.
+- **workspace_preview** — in-shell browser/preview tab linked to a project and workspace tab.
+- **detached_preview** — detached browser/preview window linked to a project and workspace tab.
+- **automation_session** — ephemeral browser session used for automation/tooling and not promoted automatically into the persistent shell model.
+- **auth_session** — ephemeral browser session used for auth/device/browser login flows and not restored as a persistent shell browser tab.
+- **shared_with_agent** — state marking that a browser/preview subject has been explicitly shared with the active agent/thread and can be revoked.
 
-ContractRef: ContractName:Contracts_V0.md#UICommand, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md
+### Runtime resolution terms
 
----
-
-### Runtime artifacts and usage terms
-
-- **Artifacts panel** — The side-panel surface that lists project-scoped runtime artifacts projected from `runtime_artifact.*` events.
-- **Runtime artifact** — An agent-run output represented by a typed `runtime_artifact.*` event and indexed in `artifacts_index:v1:{project_id}` for GUI display. Distinct from Project Plan Package artifacts.
-- **Project Plan Package artifact** — A project output defined by `Plans/Project_Output_Artifacts.md`; it is not automatically a runtime artifact unless separately emitted through the runtime-artifact pipeline.
-- **cost_usage artifact** — A runtime artifact that attributes cost/usage using the same canonical schema as `usage.event`; it is not a second usage store.
-- **Show in Ledger / Show in Usage** — Navigation actions from a `cost_usage` artifact that open Ledger or Usage with the canonical usage event in scope.
-
-ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/usage-feature.md
+- **requested state** — the configuration or selection asked for by the user, command, Persona, project, or settings surface.
+- **effective state** — the configuration or capability actually resolved at runtime after platform, provider, permission, health, and policy evaluation.
+- **branch lineage** — the explicit relationship between a branched thread/session and its source restore point or source thread.
+- **dev session** — the canonical lifecycle record for a project-linked dev server, watcher, hot-reload, live-reload, or test-watch run.
 ## 3. Anti-drift documents
 - **Spec Lock** -- `Plans/Spec_Lock.json`; locked decisions that MUST NOT drift.
 - **Crosswalk** -- `Plans/Crosswalk.md`; ownership boundaries for primitives.

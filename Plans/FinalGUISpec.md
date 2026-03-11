@@ -145,7 +145,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 | Zone | Slint Container | Size | Behavior |
 |------|----------------|------|----------|
-| **Title bar** | `HorizontalLayout` | height: 28px fixed | App name (Orbitron Bold 14px), **project bar** (dropdown + recent list), theme toggle, settings gear |
+| **Title bar** | `HorizontalLayout` | height: 28px fixed | App name (Orbitron Bold 14px), compact current-project context, theme toggle, settings gear |
 | **Activity bar** | `VerticalLayout` | width: 48px fixed | Icon-only vertical nav; always visible |
 | **Primary content** | `VerticalLayout` (flex: 1) | fills remaining space | Active page view; scrollable internally per page |
 | **Side panel** | `VerticalLayout` | width: 240-480px, resizable | Hosts the currently selected activity-bar side-panel surface; one visible at a time; detachable where supported |
@@ -162,23 +162,25 @@ When "minimize to tray" is enabled in Settings/General:
 - **Tray notifications:** HITL approval required, run complete, rate limit hit (respects system notification settings)
 
 ### 3.4 Project Bar (Title Bar)
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
 
-The title bar contains a **project bar** -- a dropdown/strip showing all known projects with instant switching.
+The title bar no longer owns primary project switching.
 
-**Layout:** `Puppet Master` label (Orbitron Bold 14px) | project dropdown (Rajdhani Medium 13px) | spacer | theme toggle icon | settings gear icon.
+Canonical shell rule:
+- project switching is a workspace-tab operation surfaced through the Projects view, project/session browser, command palette, and dedicated switch commands
+- the active workspace tab changes project by default
+- a separate command opens the target project in a new workspace tab
+- the title bar may show compact current-project context, but it is not a project bar and does not own the multi-project shell model
 
-**Project dropdown behavior:**
-- Shows current project name with a chevron-down icon
-- Click opens a dropdown listing all known projects, sorted by last-opened (most recent first)
-- Each row: project name, path (truncated), last-opened timestamp, status dot (green=healthy, amber=stale config, red=missing/broken)
-- Fuzzy search filter at top of dropdown (auto-focused on open)
-- "Open folder..." action at bottom opens native directory picker
-- "New project" action creates a new project entry
-- **Instant switch:** Selecting a project triggers a full state reload: editor tabs close and reopen for the new project, file tree refreshes, chat threads switch to the new project's threads, config reloads per-project overrides, LSP servers restart for new project languages, dashboard resets to new project's orchestrator state
-- **State preservation:** Per-project state (editor tabs, scroll positions, panel layout, active view, chat thread selection) is saved to redb on switch-away and restored on switch-back
-- **Animation:** Project name cross-fades (150ms ease-in-out) on switch. Content area shows skeleton placeholder during reload (typically <500ms)
-- **Keyboard shortcut:** Ctrl+Shift+P opens the project dropdown (registered in shortcut registry)
+Required visible behavior:
+- current project name/path summary for the active workspace tab
+- badge when the active project has background activity, blocked items, or unsaved shell state that needs attention
+- keyboard entrypoint for instant project switch
+- responsive collapse without losing the command-palette project switch path
 
+Non-canonical after this section:
+- title-bar dropdown/strip as the primary project-switch shell
+- shell semantics that assume only one active project context exists in the application at a time
 ### 3.5 Spacing and Density
 
 **Global spacing tokens** (base design tokens; independent of UI scaling):
@@ -311,7 +313,7 @@ At the top of the primary content area, a breadcrumb strip (20px) shows `Group >
 | `Alt+Up/Down` | Cycle through chat threads |
 | `Ctrl+Shift+C` | Compact current session |
 | `Ctrl+Shift+X` | Export thread |
-| `Ctrl+Shift+P` | Open project switcher (project bar) |
+| `Ctrl+Shift+P` | Open project switcher |
 | `F5` | Start/Continue debug |
 | `F10` | Step Over (debug) |
 | `F11` | Step Into (debug) |
@@ -2105,360 +2107,31 @@ Default prefix/suffix length: 32 chars (clamped).
 ### 7.20 Bottom Panel (NEW)
 
 #### Browser normalization against unified rendering contract (2026-03-08)
-
-The Browser tab MUST follow the unified rendering contract in `Plans/newfeatures.md` §24.4A and `Plans/rewrite-tie-in-memo.md`.
-
-Rules:
-- The Browser tab is the primary in-shell host for `workspace_preview` and optional `external_browse`.
-- Embedded hosting is an optimization; detached preview/browser windows remain the only guaranteed cross-platform path.
-- If embedded attach fails or is unsupported on the current platform, the UI MUST switch to detached-open using the same logical preview subject and show explicit detached-state UI rather than a blank pane.
-- Browser-tab capacity applies only to in-shell tabs. Detached preview/browser windows do not consume browser-tab capacity.
-- Inspect/capture schema, truncation, and rate limits MUST follow `Plans/newfeatures.md` §15.18 and `Plans/assistant-chat-design.md` §28.4A; local shorthand in this section MUST NOT redefine those limits.
-
-Required detached-state UI:
-- show current state badge: `embedded`, `detached`, `degraded`, or `error`
-- offer `Focus detached window` and `Reattach when supported`
-- preserve navigation state and `preview_session_id` unless a transport restart is explicitly required by platform fallback
-
-**Location:** Below primary content, collapsible
-
-**Tab bar (24px):** Terminal | Problems | Output | Ports | Browser | Debug. Optionally **References** (when Find references / Shift+F12 is implemented, results appear in a **References** tab; click row opens file at location; see §7.18 LSP features). Collapse/expand button. Pop-out button.
-
-**Terminal:** Agent stdout/stderr, bash command output. Uses terminal styling (monospace, dark background even in light theme). Color-coded: stdout=ACID_LIME, stderr=HOT_MAGENTA, system/info=SAFETY_ORANGE, FileSafe-blocked=RED with "[BLOCKED] Blocked by FileSafe" prefix. Max 500 visible lines. Auto-scroll with scroll-lock toggle.
-
-**Terminal tab management:** Each terminal instance is a tab within the Terminal section. Tab naming: tabs show agent/task name; user can pin or rename terminal tabs. **Pin semantics:** Pinned tabs are narrower (icon-only), persist across sessions, and cannot be closed without unpinning first. Unpinned tabs close normally. **Instance caps:** Maximum 12 terminal instances (configurable in Settings > General, range 4-20). When the cap is reached, attempting to open a new terminal shows a toast: "Terminal limit reached -- close an existing terminal first." LRU eviction is NOT automatic; user must explicitly close tabs. **New terminal:** "+" button on terminal tab bar creates a new shell instance. Right-click terminal tab: Rename, Split horizontally, Split vertically, Pin/Unpin, Close (disabled if pinned), Close others, Close all unpinned.
-
-**Problems:** Shows LSP diagnostics for the target project: errors, warnings, info. Columns: file (path), line, message, severity, source (e.g., rust-analyzer). Click row to open file in File Editor at that location. Filter by severity via toggle buttons (Errors / Warnings / Info). Badge on tab label shows count (e.g., "Problems (3)"). **Empty states:** "No problems detected" when LSP is active with zero diagnostics; "Open a file to see diagnostics" when no LSP server is running; "Select a project to see diagnostics" (or equivalent) when no project is selected (e.g. when opened from Chat with no project set).
-
-**Output:** Puppet Master's own log output (debug/info/warn/error, filtered by settings log level).
-
-**Ports (includes Hot Reload):** Shows detected local servers (port, process name, status) when target project runs dev servers. **Hot reload controls:** A "Watch mode" toggle button at the top of the Ports tab. When enabled, Puppet Master starts a file watcher (using `notify` crate) on the target project directory. On detected changes (debounced 500ms), triggers the project's configured build command (from Settings > General or project config). Status line: "Watching: src/ (12 files changed, last rebuild 3s ago)" or "Watch mode: off". Build output streams to a dedicated terminal tab named "[hot-reload]". Errors in build output are parsed and surfaced in the Problems tab (if possible). Toggle persists per-project in redb. **Port list:** For each detected port: port number, process name, PID, status (listening/closed), uptime. Click row to open `http://localhost:{port}` in the Browser tab. "Kill" button per row (with confirmation). Auto-refresh every 5s or on file-watcher event. Empty state: "No active ports -- start a dev server to see it here."
-
-**Browser (MVP):** Embedded webview tab for viewing web content without leaving the IDE. Uses `wry` crate for cross-platform webview embedding (WebView2 on Windows, WebKit on macOS/Linux). The Browser tab hosts a webview as a native child window within the bottom panel area.
-
-**Browser UI:**
-- **URL bar:** Text input at top of browser tab with navigation buttons (Back, Forward, Refresh, Home). URL auto-completes from history. Enter key navigates. Shows loading indicator (progress bar below URL bar) during page load.
-- **Tab management within Browser:** Multiple browser tabs within the Browser section (similar to terminal tabs). Pin semantics apply (same as terminal: pinned tabs are icon-only, cannot be closed without unpinning). Instance cap: maximum 8 browser tabs (configurable in Settings > General, range 2-12). "+" button opens new tab with blank page or configured home URL.
-- **Click-to-context:** When viewing a page, user can activate "Inspect mode" via a crosshair button in the browser toolbar. In inspect mode, hovering over elements highlights them with an overlay border. Clicking an element captures its context: tag name, id, class list, text content (truncated to 500 chars), bounding rect, parent path (up to 5 ancestors), and an HTML snippet of the element and immediate children. Captured context is injected into the Chat input with a toast: "Element context captured." Rate limit: 1 capture per 2 seconds. DOM size cap: elements with >100 children are summarized.
-- **DevTools:** Optional "Open DevTools" button (opens the webview's built-in dev tools in a separate window). Useful for CSS debugging.
-- **Bookmarks:** Simple bookmark list (URL + title). Add current page via star icon in URL bar. Bookmark list accessible from dropdown. Persisted in redb.
-- **Empty state:** "No page loaded -- enter a URL or click a link from the chat" with a list of bookmarks (if any).
-- **Security:** Sandboxed webview. No access to local filesystem unless explicitly granted. JavaScript enabled by default with toggle. Cookies/storage scoped per-project.
-
-**Debug (MVP):** Integrated debugging via the Debug Adapter Protocol (DAP). The Debug tab provides a debugging interface for the target project.
-
-**Debug UI:**
-- **Run configurations:** A dropdown at the top of the Debug tab listing saved run/debug configurations for the current project. Each configuration specifies: name, type (launch/attach), program/command, arguments, environment variables, working directory, pre-launch task (optional), and DAP adapter path. Configurations are stored per-project in `.puppet-master/launch.json` (compatible with VS Code launch.json format where possible). "Edit configurations" button opens the configuration file in the File Editor.
-- **Debug toolbar:** Play (start/continue), Pause, Step Over, Step Into, Step Out, Restart, Stop buttons. All buttons have clear iconography and tooltips. Disabled when not applicable (e.g., Step Over disabled when not paused at breakpoint).
-- **Variables panel:** Tree view of local variables, arguments, and watch expressions. Expandable for compound types. Editable values (double-click to modify, with type validation).
-- **Call stack:** List of stack frames. Click to navigate to source location in File Editor. Current frame highlighted.
-- **Breakpoints:** List of all breakpoints across files. Columns: file, line, condition (if conditional), hit count, enabled toggle. Click to navigate. Right-click: Edit condition, Remove, Disable.
-- **Debug console:** REPL-style input for evaluating expressions in the current debug context. Output shows evaluation results. History (up-arrow for previous commands).
-- **Breakpoint gutter integration:** In the File Editor (§7.18), clicking the left gutter (to the left of line numbers) toggles a breakpoint (red dot). Conditional breakpoints via right-click gutter > "Add conditional breakpoint" (shows input for condition expression). Breakpoints are persisted per-project in redb.
-- **DAP adapter management:** Settings > Debug (new subsection in Advanced or dedicated tab) lists available debug adapters. Built-in support for common adapters (codelldb for Rust/C++, debugpy for Python, node-debug for JavaScript). Custom adapters can be added (adapter path, type, supported languages). Adapter auto-detection from project language (see §7.3 language auto-detection).
-- **Empty state:** "No debug configuration found -- create one to start debugging" with "Create configuration" button that generates a template based on detected project language.
-- **Keyboard shortcuts:** F5 (Start/Continue), F10 (Step Over), F11 (Step Into), Shift+F11 (Step Out), Shift+F5 (Stop). Registered in shortcut registry.
-
-**4-split terminal (Dashboard):** The Dashboard also contains a 4-split terminal area (2x2 default layout). One PTY per pane. Bounded line buffers per pane (ring buffer or fixed-size deque). Virtualized rendering. Resizable splits; ratios persisted in redb.
-
-**Collapse behavior:** Double-click tab bar or click collapse button to minimize to just the tab bar (24px). Height stored and restored.
-
-### 7.21 NotFound
-
-Fallback 404/error page shown when navigation target is invalid.
-
----
-
-## 8. Widget Catalog
-
-All widgets read from `Theme.*` globals rather than hardcoded colors. Each widget must support all four theme variants.
-
-### 8.1 Core Widgets
-
-| Widget | Purpose | Key Properties |
-|--------|---------|---------------|
-| **StyledButton** | Primary/Secondary/Danger/Warning/Info/Ghost buttons | variant, label, icon, enabled, loading (spinner), onClick callback |
-| **StyledInput** | Themed text inputs | placeholder, value, variant (text/password/number), onChanged callback |
-| **ComboBox** | Dropdown selection | items (model), selected-index, onSelected callback. **Used for platform and model selection** |
-| **SelectableText** | Read-only selectable text — implemented as `TextInput { read-only: true }` (single-line) or `TextEdit { read-only: true }` (multi-line). Slint's `read-only` mode preserves native OS text selection and Ctrl+C copy; no custom clipboard glue required. | text, wrap-mode, font-size, color |
-| **StatusBadge** | Status dots and colored badges | status (running/paused/error/complete/idle), label, size |
-| **ProgressBar** | Animated progress bars | value (0.0-1.0), variant (phase/task/subtask), animated |
-| **Terminal** | Terminal output display | lines (VecModel), auto-scroll, max-lines, color-coding by line type |
-| **Modal** | Modal dialogs | title, content, variant (confirm/error/info), onConfirm/onCancel |
-| **Toast** | Toast notifications | message, variant (success/error/warning/info), duration, dismissible |
-| **PanelCard** | Paper-texture panels | title, collapsible, collapsed, drag-handle, content slot |
-| **HelpTooltip** | "?" icon with contextual help | text, position (top/bottom/left/right) |
-| **PageHeader** | Page title + action buttons | title, subtitle, actions slot |
-| **ContextMenu** | Copy/paste/select-all context menu | items (VecModel), position, onSelect |
-| **BudgetDonut** | Donut chart for usage | used, total, label, color |
-| **UsageChart** | Bar chart for usage data | data points (VecModel), labels |
-| **ActivityBar** | Vertical icon nav | items (VecModel), active-index, onSelect, reorderable |
-| **StatusBar** | Bottom status strip | mode, platform, model, context-usage, status. When LSP is active (Plans/LSPSupport.md), **status** includes LSP server name and state (e.g. "rust-analyzer: Ready" or "Initializing..." / "Error: ...") for the current editor context. |
-| **Breadcrumb** | Navigation breadcrumb | items (VecModel), onNavigate |
-| **CommandPalette** | Fuzzy search overlay | commands (VecModel), filter, onSelect |
-| **PixelGridOverlay** | Pixel grid effect | opacity, spacing, color |
-| **PaperTextureOverlay** | Paper grain texture | opacity |
-| **StepCircle** | Step indicator circles | step-number, status (active/complete/pending) |
-| **Icon** | SVG icon system | icon-type (~50 types), size, color |
-| **InterviewPanel** | Interview progress side panel | phase, progress, current-question |
-
-### 8.2 Button State Feedback
-
-Every `StyledButton` must support the following visual states:
-
-| State | Visual | Behavior |
-|-------|--------|----------|
-| **Default** | Normal styling per variant | Clickable |
-| **Hover** | Lightened background (`btn-hover`) | Cursor: pointer |
-| **Active/Pressed** | Darkened, inset shadow | During click |
-| **Loading** | Spinner icon replaces or joins label; button disabled | During async operation |
-| **Disabled** | Muted colors, no shadow | Not clickable; cursor: not-allowed |
-| **Success** | Brief green flash or checkmark icon (500ms) | After successful operation completes |
-| **Error** | Brief red flash (500ms) | After operation fails |
-
-**Implementation:** `StyledButton` has `in property <bool> loading` and `in property <ButtonState> state` that controls visual presentation. The Rust backend sets `loading: true` when an async action starts and `loading: false` + brief `state: success` when it completes.
-
-### 8.3 Toggle State Synchronization
-
-All toggles and stateful controls that reflect server/backend state (e.g., Login/Logout, Install/Uninstall, manual-path enable) must:
-1. Update immediately when the backend state changes (via `invoke_from_event_loop`)
-2. Show a loading state during the transition (e.g., "Logging in..." spinner)
-3. Never show stale state -- if an auth/install/path validation check is in progress, show a spinner, not stale state
-4. Use Slint's reactive property system: backend writes to a shared property, UI automatically reflects
-
----
-
-## 9. State Management
-
-### 9.1 Architecture
-
-```
-Backend (Rust)                              UI (Slint)
-+------------------+                        +------------------+
-| AppState         |                        | Theme globals    |
-| - orchestrator   |  -- properties -->     | Root component   |
-| - projects       |  -- VecModel -->       | - views          |
-| - chat threads   |  -- callbacks <--      | - panels         |
-| - file tree      |                        | - overlays       |
-| - usage data     |                        +------------------+
-+------------------+
-```
-
-### 9.2 Rust-to-Slint Data Flow
-
-- **Scalar properties** (orchestrator status, current phase, theme mode): Set directly on Slint component properties from Rust
-- **List data** (chat messages, file tree, output lines, evidence items): Use `Rc<VecModel<T>>` shared between Rust and Slint. Slint's `ModelNotify` automatically triggers re-render when data changes
-- **Cross-window sharing:** Same `Rc<VecModel<T>>` bound to both main window and floating panel windows for automatic synchronization
-
-### 9.3 Slint-to-Rust Data Flow
-
-- **Callbacks:** Slint components define callbacks (e.g., `callback send-message(string)`, `callback navigate(int)`). Rust registers handlers via `.on_<callback_name>()`
-- Callbacks are thin -- Rust performs logic, updates state, then updates Slint properties
-
-### 9.4 Thread-Safe Updates
-
-Background threads (orchestrator events, usage refresh, auth checks) update the UI via `slint::invoke_from_event_loop`:
-
-```rust
-let ui_handle = ui.as_weak();
-tokio::spawn(async move {
-    let event = receive_event().await;
-    let _ = ui_handle.upgrade_in_event_loop(move |ui| {
-        ui.set_orchestrator_status(event.status.into());
-    });
-});
-```
-
-**Critical:** Do NOT use timer-based polling (e.g., 50ms or 100ms timers) to sync state. Use event-driven updates via channels + `invoke_from_event_loop`. The current Iced implementation uses 50ms polling via crossbeam channels -- this must NOT be replicated.
-
-### 9.5 Event Channel Architecture
-
-```
-Backend Event --> tokio channel --> spawn --> invoke_from_event_loop --> UI update
-Tray Action  --> tokio channel --> spawn --> invoke_from_event_loop --> UI update
-Auth Change  --> tokio channel --> spawn --> invoke_from_event_loop --> UI update
-Usage Update --> tokio channel --> spawn --> invoke_from_event_loop --> UI update
-```
-
-All events flow through typed Rust channels. The receiving end calls `invoke_from_event_loop` to update Slint properties on the main thread.
-
-### 9.6 Context Management
-
-**Context compilation:** Each prompt sent to a platform assembles context from multiple sources: conversation history (last N turns + summary of older turns), system instructions (AGENTS.md, project rules), file context (@ mentioned files, recently edited files), and plan state. Context is compiled on the Rust side before invoking the platform CLI.
-
-**Context window tracking:** Token count for each thread is tracked and displayed in the chat footer's context circle (§7.16). When a platform supports streaming token counts, the display updates in real-time during generation.
-
-**Compact session:** User-triggered via `/compact` command or `Ctrl+Shift+C`. Trims the conversation context while preserving key information (system instructions, plan state, last N turns, summary of compacted turns). The compacted portion is replaced with a "Session compacted" marker in the message stream; original messages are preserved in seglog but removed from active context.
-
-**Re-pack on model switch:** When the user changes the model mid-thread (especially to one with a smaller context window), context is automatically re-packed: last N turns retained in full, older turns summarized, and the total is trimmed to fit within the new model's context limit (sourced from `platform_specs`).
-
-**Truncation handling:** When context approaches the model's limit, a warning appears in the chat footer ("Context 95% -- consider compacting"). If context exceeds the limit, automatic truncation removes the oldest non-essential turns (preserving system instructions and plan state) and shows a toast: "Context truncated -- oldest messages removed."
-
-### 9.7 Config Wiring Architecture
-
-The GUI Settings page is the editing surface; the orchestrator reads configuration at run-time. The wiring works as follows:
-
-1. **Edit in GUI:** User changes a value (e.g., Branching > Auto PR toggle). The Slint property updates immediately.
-2. **Auto-save to redb:** A debounced callback (200ms) serializes the current config struct and writes to redb `config:v1`. No explicit "Save" button -- settings auto-save. A small "Saved" indicator flashes in the Settings header on write.
-3. **Run reads config:** When a run starts, the orchestrator reads `config:v1` from redb, producing an immutable `RunConfig` snapshot. Mid-run config changes do NOT affect the active run.
-4. **Reset/defaults:** Each Settings tab has a "Reset to defaults" button (confirm modal). Individual settings have a hover reset icon that resets that single field.
-
-**Config migration:** When the app version introduces new config fields, the loader applies defaults for missing fields and logs a toast: "Settings updated for v{version} -- N new options available."
-
----
-
-## 10. UX Patterns
-
-### 10.1 Button Feedback
-
-See §8.2 for full button state specification. Summary:
-- Every button that triggers an async operation must show a loading spinner
-- Button is disabled during loading to prevent double-clicks
-- Brief success/error visual feedback on completion (500ms)
-- Never leave a button in loading state indefinitely -- implement timeouts (default 30s)
-
-**Specific button feedback requirements:**
-
-| Button/Action | Loading State | Success Feedback | Error Feedback |
-|---------------|--------------|-----------------|----------------|
-| Login/Logout | Spinner replaces icon, "Authenticating..." | Badge flips to new auth state, green flash | Red flash, error toast with message |
-| Re-authenticate | Spinner + "Checking auth..." badge | Auth state updates to `LoggedIn` with refreshed timestamp | Auth state updates to `AuthExpired` or `AuthFailed`; retry action remains visible |
-| Install/Uninstall (Cursor/Claude/Playwright) | Row spinner + state chip `Installing` or `Uninstalling`; action buttons disabled | State chip flips to `Installed` or `Not Installed`; version/path refresh | State chip `Failed` + inline error + retry action |
-| Settings save | "Saving..." in header, checkmark on complete | "Saved" fades in header (2s) | Error toast |
-| File upload/attach | Progress bar in attachment area | Thumbnail/filename appears | Error toast with "Retry" |
-| Run start | Button transitions: "Start" → spinner → "Running" (disabled) | Status badge updates | Error card on dashboard |
-| Doctor check | Per-row spinner during check | PASS/FAIL/WARN badge per row | Error badge with message |
-| Import/export | Modal with progress bar | Success toast with file path | Error toast with details |
-| Clean workspace | Confirm modal → progress bar → "Cleaned X files" toast | Toast with count | Error toast |
-
-**Toggle sync guarantee:** When a toggle is flipped (e.g., auth login/logout, git enable/disable, filter on/off), the toggle must reflect the actual backend state, not just the UI click. Pattern: flip optimistically → call backend → on failure, flip back with error toast. Never leave a toggle in a state that disagrees with the backend.
-
-### 10.2 Loading States
-
-| Context | Loading Indicator |
-|---------|------------------|
-| Page navigation | Skeleton placeholder or spinner in content area |
-| Data fetch (projects, evidence, history) | Skeleton rows or spinner overlay |
-| Auth check | Spinner on auth status badge; "LoggingIn..." or "LoggingOut..." text |
-| Install/uninstall operation | Spinner on install-state chip; row actions disabled until completion |
-| Manual path validation (Cursor/Claude) | "Validating path..." indicator with `Valid`/`Invalid` badge result |
-| Multi-account refresh | Spinner on account status chips; active account and cooldown badges refresh on completion |
-| Settings save | Button loading state + success toast |
-| Orchestrator start | Button loading state; status badge transitions to "Starting..." then "Running" |
-
-### 10.2.1 Canonical Real-Time State Sets
-
-- **Provider auth states:** `LoggedOut`, `LoggingIn`, `LoggedIn`, `LoggingOut`, `AuthExpired`, `AuthFailed`.
-- **Install states (Cursor CLI, Claude CLI, Playwright runtime):** `Not Installed`, `Installing`, `Installed`, `Uninstalling`, `Failed`.
-- **Manual path validation states (Cursor/Claude only):** `Unchecked`, `Validating`, `Valid`, `Invalid`.
-
-### 10.3 Toast Notifications
-
-- 4 variants: success (lime), error (magenta), warning (orange), info (blue)
-- Auto-dismiss after configurable duration (default: 4s for info/success, 8s for warning/error)
-- Manual dismiss via close button
-- Stack in top-right corner; max 3 visible (older ones dismissed)
-- Each toast has a unique ID for deduplication
-
-### 10.4 Modal Dialogs
-
-- Variants: confirm (with confirm/cancel), error (with dismiss), info (with OK)
-- Dark overlay behind modal (50% opacity)
-- Focus trapped within modal when open
-- Escape key closes modal
-- Used sparingly -- prefer inline feedback over modals
-
-### 10.5 Empty States
-
-Every view must have a meaningful empty state:
-- Brief explanation of what the view shows
-- Action to populate it (e.g., "Run your first orchestration to see evidence here" with a button)
-- Relevant icon consistent with active theme
-- No blank pages -- always communicate what the user can do
-
-**Specific empty states:**
-
-| View/Area | Empty State Message | Action |
-|-----------|-------------------|--------|
-| Dashboard (no project) | "Select or create a project to get started" | "New Project" button |
-| Chat (empty thread) | "Start a conversation -- ask questions, plan tasks, or run commands" | Focus composer input |
-| Chat (no threads) | "No chat threads yet" | "New Thread" button |
-| File Manager (no project) | "Open a project to browse files" | "Select Project" button |
-| File Editor (no files open) | "Open a file from the File Manager or click a file path in chat" | None (informational) |
-| Usage (no data) | "Usage data will appear after your first run" | None (informational) |
-| Evidence (no evidence) | "Evidence logs will appear after orchestration runs" | "Start a run" link |
-| Queue (empty) | "No messages queued -- the assistant will process messages as they arrive" | None |
-| Terminal (no output) | Blinking cursor on empty dark background | None |
-| Agent Activity (idle) | "No active agents -- start a run to see agent activity here" | None |
-| Browser (no page) | "No page loaded -- enter a URL or click a link from the chat" | Show bookmarks if any |
-| Debug (no config) | "No debug configuration found -- create one to start debugging" | "Create configuration" button |
-| Ports (no servers) | "No active ports -- start a dev server to see it here" | None |
-| Catalog (empty) | "Catalog is empty -- check your network connection or refresh" | "Refresh" button |
-| SSH (no connections) | "No SSH connections configured" | "Add connection" button |
-
-### 10.6 Error States
-
-- Inline error messages for form validation (below the field, accent-magenta text)
-- Error toasts for transient failures (network, auth)
-- Error cards on Dashboard for orchestrator errors (red border, clear message, retry button)
-- Error pages for unrecoverable states (with "Return to Dashboard" button)
-- **Auth token expiry:** When a platform auth token expires mid-run, show inline error in chat/terminal ("[!] Claude Code auth expired -- please re-authenticate") with a "Re-authenticate" button that opens the Authentication tab. Do not silently fail.
-- **Network disconnection:** If the app detects network loss during a chat or run, show a persistent banner at the top of the primary content area: "Network disconnected -- reconnecting..." with a spinner. Auto-dismiss on reconnection with brief "Reconnected" toast.
-- **File operation failures:** When a file save, rename, or delete fails, show a toast with the specific error ("Permission denied: /path/to/file") and a "Retry" button.
-- **Large file timeout:** If a file takes >5 seconds to load, show a progress spinner with "Loading large file..." and a "Cancel" button. If it exceeds 15 seconds, show a timeout error with "File too large -- opened in read-only truncated mode."
-
-### 10.7 Onboarding and First-Run Experience
-
-**First launch default layout:**
-- Activity Bar (left)
-- Dashboard (primary content, center)
-- Chat panel (right, collapsed or 30% width)
-- No bottom panel
-
-**Three-step interactive tour (non-blocking, one-time):**
-1. "This is your Dashboard" -- highlights primary content
-2. "This is the Chat" -- highlights side panel
-3. "Use the sidebar to navigate" -- highlights activity bar, mentions Ctrl+K
-
-Each step has "Next" and "Skip tour." Completion persisted; tour never repeats.
-
-**Progressive customization:** Layout customization features surface only after user has completed at least one interaction. Subtle gear icon with tooltip "Customize your layout."
-
-**Layout presets before freeform:** Named presets (Focus, Orchestrator, Editor, Monitor) shown first. Custom layouts available after using presets. Up to 5 custom layouts.
-
-### 10.8 HITL Approval UI
-
-When the orchestrator pauses for HITL approval:
-- Dashboard shows a CtA card: "Phase X complete -- approval required"
-- Card shows completion status, evidence summary
-- "Approve & Continue" button (primary/accent)
-- "Reject" or "Cancel" button (secondary)
-- Can also be addressed via Chat: user types "approve and continue"
-- Toast notification when HITL pause occurs
-- Status bar shows "Awaiting approval" indicator
-
-### 10.9 Context Menus
-
-Slint does not have a built-in context menu component, so the popup UI is a custom overlay. However, **clipboard operations are fully native** — Slint's `TextInput` and `TextEdit` handle Ctrl+C/V/X/A at the OS level with no custom key handlers required.
-
-**Popup UI (custom):**
-- Triggered on right-click via `TouchArea` with `pointer-event` callback
-- Positioned at mouse coordinates, adjusted to stay within window bounds
-- Dismissed on click outside or Escape
-- Styled per theme (retro: hard shadow + sharp corners; basic: subtle border + 4px radius)
-
-**Clipboard items — call Slint built-in functions, no manual state management:**
-- **Copy** → calls `element.copy()` on the focused/targeted `TextInput` or `TextEdit`
-- **Paste** → calls `element.paste()`
-- **Select All** → calls `element.select-all()`
-- **Copy Path / Copy Value** (file-manager or read-only label contexts) → reads `element.text` property and writes to clipboard via `ClipboardHelper` Rust callback (only non-text-widget case requiring custom clipboard access)
-
-**What is NOT needed:**
-- No custom Ctrl+C/V/X/A keyboard event interceptors
-- No manual `clipboard::read()` / `clipboard::write()` for text widgets
-- No `read-only` workaround widgets (use `TextInput { read-only: true }` directly)
-
-<a id="10.9.1"></a>
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+The browser model is split into explicit surface classes.
+
+### Surface classes
+- `workspace_preview`: in-shell browser tab for project-linked preview and trusted browser tasks
+- `detached_preview`: detached browser or preview window linked to a workspace tab and project
+- `automation_session`: ephemeral automation browser session that does not become a persistent shell tab automatically
+- `auth_session`: ephemeral auth/device/login browser session that is never restored as a shell browser tab automatically
+
+### Required shell behavior
+- browser tab caps apply only to in-shell browser tabs
+- detached preview windows are outside the in-shell browser-tab cap
+- automation and auth sessions are never silently converted into workspace browser tabs
+- browser state is restored per project and workspace tab when the surface class allows restoration
+- user-triggered share-to-agent state is visible on the originating browser/preview surface and revocable from the browser chrome and attention surfaces
+
+### Cross-platform rule
+- Windows uses WebView2, macOS uses WKWebView, Linux uses WebKitGTK/Wry
+- when embedding support differs by platform, the surface class remains the same and only the hosting mode changes
+- Wayland limitations may require detached-window fallback for some embedded-browser cases, but a static screenshot fallback is not acceptable as the steady-state browser model
+
+### Dev-loop interaction
+- Ports and browser surfaces reflect the active dev session
+- opening a detected local server from Ports creates or focuses the correct browser surface without bypassing the tab/window restore rules above
 #### 10.9.1 Native Clipboard Contract (Normative)
 
 Text-entry widgets (`TextInput`, `TextEdit`) MUST use Slint-native clipboard and selection behavior for keyboard shortcuts and context-menu actions.
@@ -2850,7 +2523,7 @@ Chat messages, file trees, log outputs, evidence lists, and other long lists use
 | `browser_state:v1` | Browser tab URLs, bookmarks, history (last 100 entries), pinned tabs | On change (debounced 500ms) |
 | `terminal_state:v1` | Terminal tab list: name, pinned flag, PTY config. Does NOT persist terminal content (only tab metadata). | On change (debounced 300ms) |
 | `sound_prefs:v1` | Sound effects master toggle, per-event toggles, volume level | On change |
-| `hotreload_state:v1:{project_id}` | Watch mode toggle state, build command, watched paths | On change |
+| `hotreload_state:v1:{project_id}` | Dev-session reload state, build command, watched paths | On change |
 
 Normative mapping note for review workflows:
 - The canonical durable review/bundle contract is owned by `Plans/storage-plan.md` (`bundle.{bundle_id}`, `doc_registry.{bundle_id}`, `notes_index.{bundle_id}`, `note.{bundle_id}.{note_id}`, `document_pane_state.{bundle_id}`, `final_review_output.{bundle_id}`).
@@ -3015,7 +2688,7 @@ All items previously listed as "future considerations" have been promoted to MVP
 | Feature | MVP Location |
 |---------|-------------|
 | Built-in browser / click-to-context | Bottom Panel Browser tab (§7.20) |
-| Project bar / instant project switch | Title bar project bar (§3.4) |
+| Instant project switch | Workspace-tab project switch model (§3.4) |
 | Sound effects | UX Patterns §10.13 + Settings > General |
 | Hot reload controls | Bottom Panel Ports tab (§7.20) |
 | In-app instructions editor | File Editor instructions mode (§7.18) |
@@ -3043,7 +2716,7 @@ No features are deferred. All items in this specification are MVP scope.
 | `Plans/storage-plan.md` | Persistence (§15), seglog projections, redb schema, Tantivy |
 | `Plans/agent-rules-context.md` | Settings/Rules tab (§7.4), application + project rules |
 | `Plans/Glossary.md` | Product name "Puppet Master" throughout |
-| `Plans/newfeatures.md` | Bottom panel/terminal (§7.20), thinking display, streaming, keyboard shortcuts, stream event visualization, duration timers, background runs, restore points, config migration dialog, rate-limit banner, version update banner, **project bar (§3.4)**, **sound effects (§10.13)**, **hot reload controls (§7.20 Ports)**, **instructions editor (§7.18)**, **language auto-detection (§7.3)** |
+| `Plans/newfeatures.md` | Bottom panel/terminal (§7.20), thinking display, streaming, keyboard shortcuts, stream event visualization, duration timers, background runs, restore points, config migration dialog, rate-limit banner, version update banner, **instant project switch (§3.4)**, **sound effects (§10.13)**, **hot reload controls (§7.20 Ports)**, **instructions editor (§7.18)**, **language auto-detection (§7.3)** |
 | `Plans/interview-subagent-integration.md` | Interview config tab (section 7.4), agent activity (section 7.19), embedded document pane (section 7.19.1), findings summary preview, single final approval gate, multi-pass review |
 | `Plans/orchestrator-subagent-integration.md` | Dashboard (§7.2), orchestrator controls, tier display |
 | `Plans/WorktreeGitImprovement.md` | Branching tab in Settings (§7.4), worktree recovery in Health tab |
@@ -3071,7 +2744,7 @@ These decisions are final and must not be revisited during implementation:
 8. **redb for layout persistence**, seglog for events, Tantivy for search
 9. **Model/platform selection via dropdowns**, not text entry
 10. **Product name: "Puppet Master"**
-11. **All 12 former "future considerations" are MVP** -- browser, project bar, sound effects, hot reload, instructions editor, custom themes, language detection, catalog, sync, SSH, debug, terminal tab management
+11. **All 12 former "future considerations" are MVP** -- browser, instant project switch, sound effects, hot reload, instructions editor, custom themes, language detection, catalog, sync, SSH, debug, terminal tab management
 12. **Bottom panel has 6 tabs** -- Terminal, Problems, Output, Ports, Browser, Debug
 13. **Webview via `wry`** -- used for Browser tab and HTML preview
 14. **Debug via DAP** -- Debug Adapter Protocol for integrated debugging
@@ -3550,9 +3223,18 @@ The Dashboard must distinguish:
 - auto-dismiss only when the wizard leaves `blocked`
 
 ### 2. Assistant thread selector / badges
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
-Thread status must include a distinct `blocked` presentation rather than overloading `attention_required`.
+Thread and session navigation uses persistent shell surfaces.
 
+Rules:
+- the active thread list is visible in a persistent sidebar or equivalent persistent region, not only in a floating overlay
+- the selector must expose running, queued, blocked, and attention-required badges per thread
+- branch lineage is visible in the selector/history model using stable branch labels and source lineage metadata
+- badge aggregation must preserve highest-severity state while still showing blocked counts when present
+- the project/session browser may complement thread navigation but does not replace the active-thread list inside chat
+
+The floating thread-list overlay pattern is not canonical after this section.
 ### 3. Run Graph and Orchestrator views
 
 Required visible scheduler/remediation data:
