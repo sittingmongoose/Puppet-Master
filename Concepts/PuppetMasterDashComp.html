@@ -2590,7 +2590,7 @@
       display: flex;
     }
 
-    /* Shared Bento Card Styling */
+        /* Shared Bento Card Styling */
     .bento-card {
       background: var(--surface-elevated);
       border: 1px solid var(--border);
@@ -2602,10 +2602,12 @@
       gap: var(--sm);
       transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
       opacity: 0;
-      animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      animation-duration: 0.6s;
+      animation-fill-mode: forwards;
+      animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
       view-transition-name: bento-card;
-      height: 100%;
     }
+
     [data-theme^="retro"] .bento-card {
       border-radius: 0;
       box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
@@ -2644,9 +2646,10 @@
       margin-bottom: var(--sm);
     }
     .bento-surface {
-      display: flex;
-      flex-direction: column;
-      gap: var(--sm);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--md);
+      align-items: center;
       font-size: 12px;
     }
     .bento-surface.row {
@@ -2736,7 +2739,7 @@
       flex: 1;
       min-height: 0;
     }
-    .settings-sidebar {
+        .settings-sidebar {
       width: 220px;
       min-width: 220px;
       background: var(--surface-elevated);
@@ -2746,6 +2749,7 @@
       display: flex;
       flex-direction: column;
     }
+
     .settings-search-bar {
       margin-bottom: var(--lg);
       /* Removing any weird borders or backgrounds that span full width */
@@ -2827,7 +2831,9 @@
     }
     [data-theme="retro-light"] input[type="checkbox"]:checked {
       border-color: #1A1A1A;
+      background: var(--accent-lime);
     }
+
     input[type="checkbox"]:checked::after {
       content: '';
       width: 4px;
@@ -2866,7 +2872,7 @@
     @keyframes slideInBottom { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes zoomInBounce { 0% { opacity: 0; transform: scale(0.9); } 70% { transform: scale(1.02); } 100% { opacity: 1; transform: scale(1); } }
 
-    /* Update inspector panel styles */
+        /* Update inspector panel styles */
     .settings-inspector-panel {
       position: absolute;
       top: 0; right: 0; bottom: 0;
@@ -2893,6 +2899,7 @@
       visibility: visible;
       transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), visibility 0s;
     }
+
     .settings-inspector-panel .inspector-header {
       padding: var(--xl);
       border-bottom: 1px solid var(--border-light);
@@ -2994,164 +3001,19 @@
       overflow-y: auto;
       flex: 1;
     }
-    .bento-grid {
+        .bento-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 500px));
       justify-content: start;
       gap: var(--lg);
     }
+
     .page-settings.active {
       display: flex;
       animation: fadeIn 0.3s ease-in-out;
-    }
+    /* End of Settings Styles */
 
-    /* Option B: Bento Dashboard */
-    .settings-b-dashboard {
-      padding: var(--xl);
-      overflow-y: auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      grid-auto-rows: min-content;
-      gap: var(--lg);
-    }
-    .settings-b-dashboard .span-2 {
-      grid-column: span 2;
-    }
-    @media (max-width: 800px) {
-      .settings-b-dashboard .span-2 {
-        grid-column: span 1;
-      }
-    }
-
-    /* Option C: Masonry Layout */
-    .settings-c-masonry {
-      padding: var(--xl);
-      overflow-y: auto;
-      column-count: 3;
-      column-gap: var(--lg);
-    }
-    @media (max-width: 1200px) { .settings-c-masonry { column-count: 2; } }
-    @media (max-width: 800px) { .settings-c-masonry { column-count: 1; } }
-    .settings-c-masonry .bento-card {
-      break-inside: avoid;
-      margin-bottom: var(--lg);
-    }
-
-    /* Shared Inspector Panel */
-    .settings-inspector-panel {
-      position: absolute;
-      top: 0;
-      right: -400px;
-      width: 400px;
-      height: 100%;
-      background: var(--surface-elevated);
-      border-left: var(--border-width) solid var(--border);
-      box-shadow: -4px 0 15px rgba(0,0,0,0.2);
-      display: flex;
-      flex-direction: column;
-      transition: right 0.3s ease;
-      z-index: 100;
-    }
-    .settings-inspector-panel.open {
-      right: 0;
-    }
-    .inspector-header {
-      padding: var(--md) var(--lg);
-      border-bottom: var(--border-width) solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--surface);
-    }
-    .inspector-header h3 {
-      font-family: var(--display-font);
-      font-size: 14px;
-      margin: 0;
-    }
-    .close-inspector {
-      background: none;
-      border: none;
-      color: var(--text-secondary);
-      font-size: 18px;
-      cursor: pointer;
-    }
-    .close-inspector:hover { color: var(--text-primary); }
-    .inspector-body {
-      padding: var(--lg);
-      overflow-y: auto;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: var(--md);
-    }
-    .inspector-view {
-      display: none;
-      flex-direction: column;
-      gap: var(--md);
-    }
-    .inspector-view.active {
-      display: flex;
-    }
-    
-    /* Layout Variants for Detail Panel */
-    
-    /* A: Sidebar inside panel */
-    .inspector-layout-sidebar .inspector-body {
-      padding: 0;
-      flex-direction: row;
-    }
-    .inspector-layout-sidebar .inspector-view {
-      flex: 1;
-      flex-direction: row;
-      gap: 0;
-    }
-    .inspector-layout-sidebar .inspector-view > details {
-      flex: 1;
-      border: none;
-      border-radius: 0;
-      border-bottom: 1px solid var(--border);
-      margin: 0;
-    }
-    /* We simulate the sidebar by styling the summary elements differently */
-    .inspector-layout-sidebar .inspector-view {
-      display: none;
-      flex-direction: column;
-    }
-    .inspector-layout-sidebar .inspector-view.active {
-      display: flex;
-      padding: var(--lg);
-    }
-    
-    /* B: Dashboard of section cards */
-    .inspector-layout-dashboard .inspector-view {
-      display: none;
-      grid-template-columns: 1fr;
-      gap: var(--lg);
-    }
-    .inspector-layout-dashboard .inspector-view.active {
-      display: grid;
-    }
-    .inspector-layout-dashboard details {
-      background: var(--surface);
-      border: var(--border-width) solid var(--border);
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      margin: 0;
-    }
-    .inspector-layout-dashboard summary {
-      background: transparent;
-      border-bottom: 1px solid var(--border-light);
-    }
-    
-    /* C: Masonry stacked cards */
-    .inspector-layout-masonry .inspector-view {
-      display: none;
-      column-count: 1;
-      column-gap: var(--lg);
-    }
-    .inspector-layout-masonry .inspector-view.active {
-      display: block;
-    }
+    .pixel-grid {
     .inspector-layout-masonry details {
       break-inside: avoid;
       margin-bottom: var(--lg);
@@ -4286,7 +4148,7 @@ impl Dashboard {
                 <div class="bento-grid">
                   <div class="settings-no-results">No matching settings found.</div>
                   <!-- General Card -->
-                  <div class="bento-card" data-inspector-view="general" data-category="core" style="animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0ms forwards;">
+                  <div class="bento-card" data-inspector-view="general" data-category="core" style="animation: slideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg> General</div>
                     <div class="bento-desc">Core application appearance and behavior.</div>
                     <div class="bento-surface">
@@ -4297,7 +4159,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 12 settings...</button>
                   </div>
                   <!-- Branching Card -->
-                  <div class="bento-card" data-inspector-view="branching" data-category="core" style="animation: slideInBottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 50ms forwards;">
+                  <div class="bento-card" data-inspector-view="branching" data-category="core" style="animation: slideInBottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 100ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg> Tiers & Branching</div>
                     <div class="bento-desc">Git operations and parallel execution rules.</div>
                     <div class="bento-surface">
@@ -4308,7 +4170,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 8 settings...</button>
                   </div>
                   <!-- Memory Card -->
-                  <div class="bento-card" data-inspector-view="memory" data-category="features" style="animation: zoomInBounce 0.5s ease-out 100ms forwards;">
+                  <div class="bento-card" data-inspector-view="memory" data-category="features" style="animation: zoomInBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 200ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5A3 3 0 0 0 13.6 4.4"/><path d="M6.401 6.5A3 3 0 0 1 10.4 4.4"/></svg> Memory & Context</div>
                     <div class="bento-desc">Context injection and retrieval budgets.</div>
                     <div class="bento-surface">
@@ -4319,7 +4181,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 14 settings...</button>
                   </div>
                   <!-- Models Card -->
-                  <div class="bento-card" data-inspector-view="models" data-category="features" style="animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 50ms forwards;">
+                  <div class="bento-card" data-inspector-view="models" data-category="features" style="animation: slideInRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 300ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg> Models & Media</div>
                     <div class="bento-desc">Global defaults and provider priorities.</div>
                     <div class="bento-surface">
@@ -4330,7 +4192,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 10 settings...</button>
                   </div>
                   <!-- Security Card -->
-                  <div class="bento-card" data-inspector-view="security" data-category="features" style="animation: slideInBottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 150ms forwards;">
+                  <div class="bento-card" data-inspector-view="security" data-category="features" style="animation: slideInBottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 400ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2-1 4-2 7-2 2.89 0 4.7 1 6.7 2a1 1 0 0 1 1 1z"/></svg> Security & FileSafe</div>
                     <div class="bento-desc">Control what the agent is allowed to execute and edit.</div>
                     <div class="bento-surface">
@@ -4341,7 +4203,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 8 settings...</button>
                   </div>
                   <!-- Containers Card -->
-                  <div class="bento-card" data-inspector-view="containers" data-category="features" style="animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 100ms forwards;">
+                  <div class="bento-card" data-inspector-view="containers" data-category="features" style="animation: slideInRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 500ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><line x1="16.5" x2="7.5" y1="9.4" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" x2="12" y1="22.08" y2="12"/></svg> Containers & Registry</div>
                     <div class="bento-desc">Docker runtime and Unraid publishing.</div>
                     <div class="bento-surface">
@@ -4352,7 +4214,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 15 settings...</button>
                   </div>
                   <!-- Interview Card -->
-                  <div class="bento-card" data-inspector-view="interview" data-category="features" style="animation: slideInLeft 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 200ms forwards;">
+                  <div class="bento-card" data-inspector-view="interview" data-category="features" style="animation: slideInLeft 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 600ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg> Interview & Orchestrator</div>
                     <div class="bento-desc">Multi-pass review and plan mode defaults.</div>
                     <div class="bento-surface">
@@ -4363,7 +4225,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 9 settings...</button>
                   </div>
                   <!-- Auth Card -->
-                  <div class="bento-card" data-inspector-view="auth" data-category="system" style="animation: zoomInBounce 0.5s ease-out 50ms forwards;">
+                  <div class="bento-card" data-inspector-view="auth" data-category="system" style="animation: zoomInBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 50ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg> Authentication & Accounts</div>
                     <div class="bento-desc">Manage provider logins and OAuth.</div>
                     <div class="bento-surface">
@@ -4374,7 +4236,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 6 settings...</button>
                   </div>
                   <!-- Health Card -->
-                  <div class="bento-card" data-inspector-view="health" data-category="system" style="animation: slideInBottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 250ms forwards;">
+                  <div class="bento-card" data-inspector-view="health" data-category="system" style="animation: slideInBottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 150ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Health & Doctor</div>
                     <div class="bento-desc">System diagnostics and workspace cleanup.</div>
                     <div class="bento-surface">
@@ -4384,7 +4246,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 5 settings...</button>
                   </div>
                   <!-- Permissions Card -->
-                  <div class="bento-card" data-inspector-view="permissions" data-category="system" style="animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0ms forwards;">
+                  <div class="bento-card" data-inspector-view="permissions" data-category="system" style="animation: slideInRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 250ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Permissions & Rules</div>
                     <div class="bento-desc">Granular tool overrides and doom loop guards.</div>
                     <div class="bento-surface">
@@ -4394,7 +4256,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 18 settings...</button>
                   </div>
                   <!-- Personas Card -->
-                  <div class="bento-card" data-inspector-view="personas" data-category="system" style="animation: slideInLeft 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 150ms forwards;">
+                  <div class="bento-card" data-inspector-view="personas" data-category="system" style="animation: slideInLeft 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 350ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Personas</div>
                     <div class="bento-desc">Manage custom agent behaviors and prompts.</div>
                     <div class="bento-surface">
@@ -4404,7 +4266,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 11 settings...</button>
                   </div>
                   <!-- Plugins Card -->
-                  <div class="bento-card" data-inspector-view="plugins" data-category="extensions" style="animation: zoomInBounce 0.5s ease-out 200ms forwards;">
+                  <div class="bento-card" data-inspector-view="plugins" data-category="extensions" style="animation: zoomInBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 450ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.611c-.47.47-1.088.706-1.705.706s-1.233-.235-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18-.894-.527-.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568c-.47-.47-.706-1.087-.706-1.704s.235-1.233.706-1.704l1.611-1.611a.98.98 0 0 1 .837-.276c.47.07.802.48.968.925a2.501 2.501 0 1 0 3.214-3.214c-.446-.166-.855-.497-.925-.968a.979.979 0 0 1 .276-.837l1.61-1.611c.47-.47 1.088-.706 1.705-.706s1.233.235 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"/></svg> Plugins & Skills</div>
                     <div class="bento-desc">Extend capabilities with external code.</div>
                     <div class="bento-surface">
@@ -4414,7 +4276,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 8 settings...</button>
                   </div>
                   <!-- Formatters Card -->
-                  <div class="bento-card" data-inspector-view="formatters" data-category="extensions" style="animation: slideInBottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 50ms forwards;">
+                  <div class="bento-card" data-inspector-view="formatters" data-category="extensions" style="animation: slideInBottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 550ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M3 5h4"/><path d="M19 17v4"/><path d="M17 19h4"/></svg> Formatters & LSP</div>
                     <div class="bento-desc">Code intelligence and formatting rules.</div>
                     <div class="bento-surface">
@@ -4424,7 +4286,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 22 settings...</button>
                   </div>
                   <!-- Commands Card -->
-                  <div class="bento-card" data-inspector-view="commands" data-category="extensions" style="animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 150ms forwards;">
+                  <div class="bento-card" data-inspector-view="commands" data-category="extensions" style="animation: slideInRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 650ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><rect width="20" height="16" x="2" y="4" rx="2" ry="2"/><path d="M6 8h.01"/><path d="M10 8h.01"/><path d="M14 8h.01"/><path d="M18 8h.01"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/><path d="M7 16h10"/></svg> Commands & Shortcuts</div>
                     <div class="bento-desc">Custom slash commands and keybindings.</div>
                     <div class="bento-surface">
@@ -4434,7 +4296,7 @@ impl Dashboard {
                     <button class="bento-action">Configure 16 settings...</button>
                   </div>
                   <!-- Editor Card -->
-                  <div class="bento-card" data-inspector-view="editor" data-category="editor" style="animation: slideInLeft 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 100ms forwards;">
+                  <div class="bento-card" data-inspector-view="editor" data-category="editor" style="animation: slideInLeft 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 750ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Editor UX & File Manager</div>
                     <div class="bento-desc">Text editor behavior and file tree preferences.</div>
                     <div class="bento-surface">
@@ -4448,266 +4310,9 @@ impl Dashboard {
             </div>
           </div>
 
-          <div class="page page-settings-b">
-            <div class="settings-search-bar">
-              <input type="text" class="settings-search-input" placeholder="Search settings...">
-            </div>
-            <div class="settings-b-dashboard">
-              <div class="settings-no-results" style="grid-column: 1 / -1;">No matching settings found.</div>
-              <div class="bento-card span-2" data-inspector-view="general"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg> General</div>
-                <div class="bento-surface row">
-                  <label>Theme <select><option>Retro Dark</option></select></label>
-                  <label>UI Scale <input type="range" min="75" max="150" value="100"></label>
-                  <label><input type="checkbox" checked> Interaction Mode (ELI5)</label>
-                  <button class="bento-action" style="margin-top:0;margin-left:auto;">Advanced...</button>
-                </div>
-              </div>
-              <div class="bento-card" data-inspector-view="branching"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg> Tiers & Branching</div>
-                <div class="bento-surface">
-                  <label><input type="checkbox" checked> Enable Git Operations</label>
-                  <label><input type="checkbox"> Auto PR Creation</label>
-                  <label><input type="checkbox"> Parallel Execution</label>
-                </div>
-                <button class="bento-action">Advanced...</button>
-              </div>
-              <div class="bento-card" data-inspector-view="memory"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5A3 3 0 0 0 13.6 4.4"/><path d="M6.401 6.5A3 3 0 0 1 10.4 4.4"/></svg> Memory & Context</div>
-                <div class="bento-surface">
-                  <label><input type="checkbox" checked> Inject Parent Summary</label>
-                  <label><input type="checkbox" checked> Inject Scoped AGENTS.md</label>
-                  <label><input type="checkbox" checked> Inject Attempt Journal</label>
-                </div>
-                <button class="bento-action">Configure Budgets...</button>
-              </div>
-              <div class="bento-card span-2" data-inspector-view="models"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg> Models & Media</div>
-                <div class="bento-surface row">
-                  <label>Default Model <select><option>claude-3-5-sonnet</option></select></label>
-                  <label>Variant <select><option>powerful</option></select></label>
-                  <label><input type="checkbox"> Image Gen</label>
-                  <button class="bento-action" style="margin-top:0;margin-left:auto;">Provider Tuning...</button>
-                </div>
-              </div>
-              <div class="bento-card" data-inspector-view="security"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2-1 4-2 7-2 2.89 0 4.7 1 6.7 2a1 1 0 0 1 1 1z"/></svg> Security & FileSafe</div>
-                <div class="bento-surface">
-                  <label><input type="checkbox" checked> Block destructive commands</label>
-                  <label><input type="checkbox" checked> Restrict writes</label>
-                  <label><input type="checkbox" checked> Block sensitive files</label>
-                </div>
-                <button class="bento-action">Manage Rules...</button>
-              </div>
-              <div class="bento-card" data-inspector-view="containers"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><line x1="16.5" x2="7.5" y1="9.4" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" x2="12" y1="22.08" y2="12"/></svg> Containers & Registry</div>
-                <div class="bento-surface">
-                  <label>Runtime <select><option>docker</option></select></label>
-                  <label><input type="checkbox" checked> Hide Docker Manage</label>
-                  <label><input type="password" placeholder="DockerHub PAT"></label>
-                </div>
-                <button class="bento-action">Advanced...</button>
-              </div>
-              <div class="bento-card" data-inspector-view="interview"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg> Interview & Orchestrator</div>
-                <div class="bento-surface">
-                  <label><input type="checkbox"> Multi-Pass Review</label>
-                  <label>Plan Mode <select><option>Balanced</option></select></label>
-                  <label><input type="checkbox" checked> Phase subagents</label>
-                </div>
-                <button class="bento-action">Advanced...</button>
-              </div>
-              <div class="bento-card" data-inspector-view="auth"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg> Authentication & Accounts</div>
-                <div class="bento-surface">
-                  <div class="status-badge success" style="display:inline-block;padding:2px 6px;border-radius:4px;background:var(--graph-passed);color:#000;font-size:10px;">GitHub Connected</div>
-                  <label>Active Account <select><option>Personal</option></select></label>
-                  <label><input type="password" placeholder="Gemini API Key"></label>
-                </div>
-                <button class="bento-action">Advanced...</button>
-              </div>
-              <div class="bento-card" data-inspector-view="health"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Health & Doctor</div>
-                <div class="bento-surface">
-                  <div class="status-badge success" style="display:inline-block;padding:2px 6px;border-radius:4px;background:var(--graph-passed);color:#000;font-size:10px;">All Systems Go</div>
-                  <button class="wizard-btn" style="width:100%;">Clean workspace now</button>
-                </div>
-                <button class="bento-action">Advanced...</button>
-              </div>
-              <div class="bento-card span-2" data-inspector-view="permissions"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Permissions & Rules</div>
-                <div class="bento-surface row">
-                  <label>Global Default <select><option>Ask</option><option>Allow</option><option>Deny</option></select></label>
-                  <label>Doom Loop Threshold <input type="number" value="3"></label>
-                  <button class="bento-action" style="margin-top:0;margin-left:auto;">Advanced...</button>
-                </div>
-              </div>
-              <div class="bento-card" data-inspector-view="personas"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Personas</div>
-                <div class="bento-surface">
-                  <button class="wizard-btn" style="width:100%;">+ Create New Persona</button>
-                  <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;">Active: Default, Code Reviewer, Planner</div>
-                </div>
-                <button class="bento-action">Advanced...</button>
-              </div>
-              <div class="bento-card" data-inspector-view="plugins"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.611c-.47.47-1.088.706-1.705.706s-1.233-.235-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18-.894-.527-.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568c-.47-.47-.706-1.087-.706-1.704s.235-1.233.706-1.704l1.611-1.611a.98.98 0 0 1 .837-.276c.47.07.802.48.968.925a2.501 2.501 0 1 0 3.214-3.214c-.446-.166-.855-.497-.925-.968a.979.979 0 0 1 .276-.837l1.61-1.611c.47-.47 1.088-.706 1.705-.706s1.233.235 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"/></svg> Plugins & Skills</div>
-                <div class="bento-surface">
-                  <label><input type="checkbox" checked> Enable Plugins</label>
-                  <button class="wizard-btn" style="width:100%;">Add Plugin</button>
-                </div>
-                <button class="bento-action">Advanced...</button>
-              </div>
-              <div class="bento-card" data-inspector-view="formatters"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M3 5h4"/><path d="M19 17v4"/><path d="M17 19h4"/></svg> Formatters & LSP</div>
-                <div class="bento-surface">
-                  <label><input type="checkbox" checked> Enable Formatters</label>
-                  <label><input type="checkbox"> Disable auto-LSP downloads</label>
-                </div>
-                <button class="bento-action">Advanced...</button>
-              </div>
-              <div class="bento-card" data-inspector-view="commands"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><rect width="20" height="16" x="2" y="4" rx="2" ry="2"/><path d="M6 8h.01"/><path d="M10 8h.01"/><path d="M14 8h.01"/><path d="M18 8h.01"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/><path d="M7 16h10"/></svg> Commands & Shortcuts</div>
-                <div class="bento-surface">
-                  <button class="wizard-btn" style="width:100%;">Bind Shortcut</button>
-                  <label>Scope <select><option>Global</option><option>Project</option></select></label>
-                </div>
-                <button class="bento-action">Advanced...</button>
-              </div>
-              <div class="bento-card" data-inspector-view="editor"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Editor UX & File Manager</div>
-                <div class="bento-surface">
-                  <label><input type="checkbox"> Use Vim bindings</label>
-                  <label><input type="checkbox"> Line wrap</label>
-                  <label><input type="checkbox" checked> Hide ignored files</label>
-                </div>
-                <button class="bento-action">Advanced...</button>
-              </div>
-            </div>
-          </div>
+          
 
-          <div class="page page-settings-c">
-            <div class="settings-search-bar">
-              <input type="text" class="settings-search-input" placeholder="Search settings...">
-            </div>
-            <div class="settings-c-masonry">
-              <div class="settings-no-results">No matching settings found.</div>
-              <!-- General -->
-              <div class="bento-card" data-inspector-view="general"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg> General</div>
-                <div class="bento-surface">
-                  <label>Theme <select><option>Retro Dark</option></select></label>
-                  <label>UI Scale <input type="range" min="75" max="150" value="100"></label>
-                  <label><input type="checkbox" checked> Interaction Mode (ELI5)</label>
-                </div>
-                <button class="bento-action">Configure 12 settings...</button>
-              </div>
-              <!-- Branching -->
-              <div class="bento-card" data-inspector-view="branching"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg> Tiers & Branching</div>
-                <div class="bento-surface">
-                  <label><input type="checkbox" checked> Enable Git Operations</label>
-                  <label><input type="checkbox"> Auto PR Creation</label>
-                  <label><input type="checkbox"> Parallel Execution</label>
-                </div>
-                <button class="bento-action">Configure 8 settings...</button>
-              </div>
-              <!-- Memory -->
-              <div class="bento-card" data-inspector-view="memory"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5A3 3 0 0 0 13.6 4.4"/><path d="M6.401 6.5A3 3 0 0 1 10.4 4.4"/></svg> Memory & Context</div>
-                <div class="bento-surface">
-                  <label><input type="checkbox" checked> Inject Parent Summary</label>
-                  <label><input type="checkbox" checked> Inject Scoped AGENTS.md</label>
-                  <label><input type="checkbox" checked> Inject Attempt Journal</label>
-                </div>
-                <button class="bento-action">Configure 14 settings...</button>
-              </div>
-              <!-- Models -->
-              <div class="bento-card" data-inspector-view="models"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg> Models & Media</div>
-                <div class="bento-surface">
-                  <label>Default Model <select><option>claude-3-5-sonnet</option></select></label>
-                  <label>Variant <select><option>powerful</option></select></label>
-                  <label><input type="checkbox"> Image Gen</label>
-                </div>
-                <button class="bento-action">Configure 10 settings...</button>
-              </div>
-              <!-- Security -->
-              <div class="bento-card" data-inspector-view="security"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2-1 4-2 7-2 2.89 0 4.7 1 6.7 2a1 1 0 0 1 1 1z"/></svg> Security & FileSafe</div>
-                <div class="bento-surface">
-                  <label><input type="checkbox" checked> Block destructive commands</label>
-                  <label><input type="checkbox" checked> Restrict writes</label>
-                  <label><input type="checkbox" checked> Block sensitive files</label>
-                </div>
-                <button class="bento-action">Configure 8 settings...</button>
-              </div>
-              <!-- Containers -->
-              <div class="bento-card" data-inspector-view="containers"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><line x1="16.5" x2="7.5" y1="9.4" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" x2="12" y1="22.08" y2="12"/></svg> Containers & Registry</div>
-                <div class="bento-surface">
-                  <label>Runtime <select><option>docker</option></select></label>
-                  <label><input type="checkbox" checked> Hide Docker Manage</label>
-                  <label><input type="password" placeholder="DockerHub PAT"></label>
-                </div>
-                <button class="bento-action">Configure 15 settings...</button>
-              </div>
-              <!-- Interview -->
-              <div class="bento-card" data-inspector-view="interview"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg> Interview & Orchestrator</div>
-                <div class="bento-surface">
-                  <label><input type="checkbox"> Multi-Pass Review</label>
-                  <label>Plan Mode <select><option>Balanced</option></select></label>
-                  <label><input type="checkbox" checked> Phase subagents</label>
-                </div>
-                <button class="bento-action">Configure 9 settings...</button>
-              </div>
-              <!-- Auth -->
-              <div class="bento-card" data-inspector-view="auth"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg> Authentication & Accounts</div>
-                <div class="bento-surface">
-                  <div class="status-badge success" style="display:inline-block;padding:2px 6px;border-radius:4px;background:var(--graph-passed);color:#000;font-size:10px;">GitHub Connected</div>
-                  <label>Active Account <select><option>Personal</option></select></label>
-                  <label><input type="password" placeholder="Gemini API Key"></label>
-                </div>
-                <button class="bento-action">Configure 6 settings...</button>
-              </div>
-              <!-- Health -->
-              <div class="bento-card" data-inspector-view="health"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Health & Doctor</div>
-                <div class="bento-surface">
-                  <div class="status-badge success" style="display:inline-block;padding:2px 6px;border-radius:4px;background:var(--graph-passed);color:#000;font-size:10px;">All Systems Go</div>
-                  <button class="wizard-btn" style="width:100%;">Clean workspace now</button>
-                </div>
-                <button class="bento-action">Configure 5 settings...</button>
-              </div>
-              <!-- Permissions -->
-              <div class="bento-card" data-inspector-view="permissions"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Permissions & Rules</div>
-                <div class="bento-surface">
-                  <label>Global Default <select><option>Ask</option><option>Allow</option><option>Deny</option></select></label>
-                  <label>Doom Loop Threshold <input type="number" value="3"></label>
-                </div>
-                <button class="bento-action">Configure 18 settings...</button>
-              </div>
-              <!-- Personas -->
-              <div class="bento-card" data-inspector-view="personas"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Personas</div>
-                <div class="bento-surface">
-                  <button class="wizard-btn" style="width:100%;">+ Create New Persona</button>
-                  <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;">Active: Default, Code Reviewer, Planner</div>
-                </div>
-                <button class="bento-action">Configure 11 settings...</button>
-              </div>
-              <!-- Plugins -->
-              <div class="bento-card" data-inspector-view="plugins"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.611c-.47.47-1.088.706-1.705.706s-1.233-.235-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18-.894-.527-.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568c-.47-.47-.706-1.087-.706-1.704s.235-1.233.706-1.704l1.611-1.611a.98.98 0 0 1 .837-.276c.47.07.802.48.968.925a2.501 2.501 0 1 0 3.214-3.214c-.446-.166-.855-.497-.925-.968a.979.979 0 0 1 .276-.837l1.61-1.611c.47-.47 1.088-.706 1.705-.706s1.233.235 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"/></svg> Plugins & Skills</div>
-                <div class="bento-surface">
-                  <label><input type="checkbox" checked> Enable Plugins</label>
-                  <button class="wizard-btn" style="width:100%;">Add Plugin</button>
-                </div>
-                <button class="bento-action">Configure 8 settings...</button>
-              </div>
-              <!-- Formatters -->
-              <div class="bento-card" data-inspector-view="formatters"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M3 5h4"/><path d="M19 17v4"/><path d="M17 19h4"/></svg> Formatters & LSP</div>
-                <div class="bento-surface">
-                  <label><input type="checkbox" checked> Enable Formatters</label>
-                  <label><input type="checkbox"> Disable auto-LSP downloads</label>
-                </div>
-                <button class="bento-action">Configure 22 settings...</button>
-              </div>
-              <!-- Commands -->
-              <div class="bento-card" data-inspector-view="commands"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><rect width="20" height="16" x="2" y="4" rx="2" ry="2"/><path d="M6 8h.01"/><path d="M10 8h.01"/><path d="M14 8h.01"/><path d="M18 8h.01"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/><path d="M7 16h10"/></svg> Commands & Shortcuts</div>
-                <div class="bento-surface">
-                  <button class="wizard-btn" style="width:100%;">Bind Shortcut</button>
-                  <label>Scope <select><option>Global</option><option>Project</option></select></label>
-                </div>
-                <button class="bento-action">Configure 16 settings...</button>
-              </div>
-              <!-- Editor -->
-              <div class="bento-card" data-inspector-view="editor"><div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Editor UX & File Manager</div>
-                <div class="bento-surface">
-                  <label><input type="checkbox"> Use Vim bindings</label>
-                  <label><input type="checkbox"> Line wrap</label>
-                  <label><input type="checkbox" checked> Hide ignored files</label>
-                </div>
-                <button class="bento-action">Configure 10 settings...</button>
-              </div>
-            </div>
-          </div>
+          
 
           <!-- Shared Inspector Panel -->
           <div class="settings-inspector-panel">

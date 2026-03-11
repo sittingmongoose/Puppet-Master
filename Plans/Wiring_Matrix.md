@@ -264,21 +264,21 @@ Each row MUST identify:
 - replay/recovery expectations
 - command surfaces that act on the resulting state
 ## Runtime Recovery Producer / Consumer Wiring
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
-Add canonical rows for:
-- `node.ready`
-- `scheduler.pass`
-- `node.blocked`
-- `node.unblocked`
-- `safe_point.created`
-- `safe_point.restored`
-- `remediation.spawned`
-- `remediation.resolved`
+The following rows are required for the promoted Section 15 feature set in addition to the runtime recovery rows already required elsewhere.
 
-Each row MUST identify:
-- producer
-- persisted record
-- UI consumers
-- policy consumers
-- replay/recovery expectations
-- command surfaces that act on the resulting state
+| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
+|---|---|---|---|---|
+| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
+| Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
+| Thread context indicator | `cmd.chat.open_thread_usage` | chat header | chat layout controller | Focus canonical thread Usage surface |
+| Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
+| Browser toolbar share button | `cmd.browser.share_with_agent` | browser chrome | browser context controller | Mark current browser subject shared with active thread |
+| Browser toolbar revoke button | `cmd.browser.revoke_share_with_agent` | browser chrome / attention center | browser context controller | Clear shared-with-agent state |
+| Chat live-tool action | `cmd.dev.start_session` | chat action / toolbar | dev-session controller | Start dev session and route output to shell panes |
+| Dev stop button | `cmd.dev.stop_session` | toolbar / ports / terminal | dev-session controller | Stop active dev session deterministically |
+| Catalog install button | `cmd.catalog.install_item` | catalog UI | catalog lifecycle controller | Install target item and propagate subsystem effects |
+| Catalog remove button | `cmd.catalog.remove_item` | catalog UI | catalog lifecycle controller | Remove item using subsystem-specific active-item rules |
+
+This section is normative and not an example/template section.

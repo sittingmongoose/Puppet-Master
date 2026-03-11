@@ -273,6 +273,16 @@ ContractRef: ContractName:Plans/Permissions_System.md#PRECEDENCE-LAYERS
 ---
 
 ## 6. GUI requirements
+### 6.6 Catalog-installed command lifecycle
+
+Catalog-installed commands are still canonical User Commands after installation.
+
+Rules:
+- installation creates or updates a command in the same canonical command roots described in §2
+- updates follow the same validation rules as manual edits
+- removal of an installed command is blocked or deferred when the command is actively referenced by an open edit session or another subsystem requires explicit replacement/confirmation
+- the GUI must show whether a command is local/manual, catalog-installed, or catalog-installed with local override
+- uninstalling a catalog item must not silently delete a user-authored project override that intentionally shadows it
 
 <a id="GUI-COMMANDS"></a>
 

@@ -698,175 +698,42 @@ ContractRef: ContractName:Plans/storage-plan.md
 
 ---
 ## 11. Threads and chat management
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
 
-- **Multiple threads, single chat window:** The user can add **additional chats** (message threads). This **switches to another message thread** in the same chat UI -- it does **not** open a new chat window or pop-out. So there is one chat panel with a **thread list** (or equivalent); selecting a thread shows that thread's messages. This lets the user run **multiple things in parallel** (e.g. one thread in Plan mode, another in Ask mode) by switching between threads.
-- **Responsive chat UI -- icons when narrow:** The **chat area** (composer, footer, queue strip, header buttons) must be **responsive** to the chat window or panel width. When the chat window is **made small**, **buttons and other components** that normally show **text labels** (e.g. "Send", "Stop", "Edit", "Send now", "Cancel", "Clear queue") should **switch to small icons only** to save space and avoid crowding. When the window is **wide enough**, show text labels (with or without icons). When the chat panel width is below **280px**, the UI switches to icon-only mode (labels hidden, only icons shown). Config: `ui.chat.icon_only_breakpoint_px`, default `280`, stored in redb. **Tooltips** must remain available so the user can hover to see the action name when in icon-only mode. Applies to: composer actions, queue message buttons (Edit, Send now, Cancel), footer controls, and any other labeled buttons in the chat panel.
-- **Thread list (sidebar) -- resizable and collapsible:** The **side part that shows prior thread history** (the thread list) must be **adjustable in size** and **collapsible**. (1) **Resizable:** The user can **drag** the divider between the thread list and the chat area to make the list wider or narrower. (2) **Collapsible:** The user can **collapse** the thread list to a **much smaller** strip (e.g. narrow column or icon rail). **Expanded** state: show a **larger preview** of each thread name (more of the title visible, more list items in view). **Collapsed** state: show a **much smaller** strip--e.g. narrow width with a compact thread name (truncated or icon/short label) so the user still sees which thread is selected and can expand again or switch threads. Toggle via a button (e.g. chevron or panel toggle) or by double-clicking the divider. Persist the user's choice (expanded/collapsed and width if resizable) per session or in settings.
-- **New thread:** A **plus button** (or equivalent) starts a **new chat/thread**. New thread gets a default title (e.g. "New chat" or first message snippet); user can rename it (see below).
-- **Thread state indicators:** In the **thread list** (message thread history), each thread has an **indicator** showing:
-  - **Working** -- this thread has an agent run in progress (e.g. spinner, "Working...", or status text).
-  - **Completed** -- the last agent turn in this thread finished (e.g. checkmark or "Done").
-  - **Attention Required** -- the thread is paused waiting for the user to answer clarification questions from the requirements quality reviewer (see §11.1). Shown as an amber ⚠ badge with a numeric count of unanswered questions.
-  So at a glance the user can see which threads are active, idle, or awaiting user attention.
-- **Rename threads:** The user can **rename** a thread (e.g. via context menu, inline edit, or thread settings). The chosen title is shown in the thread list and in any history/search.
-- **Archive threads:** The user can **archive** a thread. Archived threads are hidden from the default thread list but remain **searchable** (in chat history search) and recoverable (e.g. "View archived" or filter). Archiving keeps the list manageable without losing history.
-- **Resume and rewind:** The user can **resume** a thread from persisted state (restore context and continue) and **rewind** (or "Restore to here") to a given message -- i.e. branch/rollback using the same restore-point mechanism as Plans/newfeatures.md §8. Exposed via slash command or thread actions.
-- **Session share:** The user can **share session** -- produce a bundle (e.g. messages + metadata, no secrets) for support or replay. Available via slash command or menu.
-- **Delete thread:** The user can **delete** a thread permanently (in addition to archiving). Deletion requires confirmation; archive remains the default for "hide but keep."
-- **Copy message:** Message content is **selectable** so the user can copy text (e.g. assistant reply) to the clipboard; or provide a "Copy" action on messages. Use selectable widgets per docs/gui-widget-catalog.md.
-- **Run-complete notification:** When a run completes in a **different** thread than the one the user is viewing, the app shows a notification (e.g. badge or toast). A **setting in application settings** (e.g. under Chat or Notifications: "Notify when run completes in another thread") allows the user to **turn this off**. Default: on.
-- **Concurrent threads:** A **setting** controls the maximum number of threads that can have an agent run in progress at the same time. Default: **10** concurrent threads. When the limit is reached, new runs **queue** automatically (FIFO). Config: `orchestrator.max_concurrent_threads`, default `10`. Platform rate/process limits still apply.
-- **Plan panel scope:** The **plan panel** (§8) is **per thread**: when the user switches threads, the panel shows the plan (and todo) for the **current thread**.
-- **Persistence -- everything in the chat thread:** **Everything** in the chat thread must **persist**. The thread is the full record of the conversation and must survive app restart, re-open, and resume/rewind. Nothing shown in the thread is ephemeral-only. Implementation: canonical event stream (seglog) and projections (redb, Tantivy) per Plans/storage-plan.md. Specifically, persist (e.g. per project under `.puppet-master/` or in app data):
-  - **Thread list** and per-thread metadata (title, archive state, etc.).
-  - **Messages** -- every user and assistant message (prompts and replies).
-  - **Prompts** -- user prompts and any composed-but-queued or sent prompts, so the full prompt history is retained.
-  - **Thought streams** -- reasoning/chain-of-thought (thinking) content when the normalized stream provides it; persist so scrolling back or re-opening the thread shows past reasoning.
-  - **Code block diffs** -- code blocks and their diffs (e.g. edits, patches, file changes shown in the thread) must be stored with the thread so the user can review what was proposed or applied at any point.
-  - **Subagent blocks** -- which subagents ran and what they worked on (§14); first-class entries in thread history.
-  - **Plan and todo** -- the plan panel content (written plan, todo list) per thread.
-  - **Queue state** -- when a run is not active, the pending queued messages for that thread.
-  - **Activity transparency data** -- what was searched, which files were explored or changed, bash output summaries (or references), so the audit trail in the thread is complete.
-  - **Attachments** -- references to attached files/images so the thread can restore context (blobs may be stored separately; thread stores references and metadata).
-  - **Usage per turn** -- tokens (input/output/reasoning/cache if available) and cost per assistant turn, so the **context circle** and **thread Usage tab** (§12, Plans/usage-feature.md §5) can show per-thread usage without rescanning. When seglog is in place, this can be derived from `usage.event` (with `thread_id`); until then, persist with the thread or in usage.jsonl keyed by thread/session id.
-  Resume and rewind rely on this; see Plans/newfeatures.md for recovery and snapshot behavior. If the UI shows it in the thread, it must be persisted.
-- **Backup and sync to other devices:** Chat threads and messages (including **Interview** threads and messages) must be **included in the application's backup and sync-to-other-devices feature**. When the user exports, backs up, or syncs to another device (e.g. via manual export/import or BYOS per Plans/newfeatures.md §22), the payload must include all chat and interview thread data (thread list, full message content, and all persisted thread content listed above) so the user can restore or continue conversations on another machine. Same scope as the sync payload defined in newfeatures.md §22 (thread/history index and message blobs for Assistant and Interview).
+Threads and chat management are persistent shell behaviors.
 
-### 11.1 Thread State: `attention_required`
+### Canonical navigation model
+- the thread list is a persistent sidebar or equivalent persistent shell region
+- the user may resize or collapse it, but not replace it with a transient-only overlay model
+- switching threads preserves scroll position, pending-input draft state, and side-panel tab state per thread where applicable
 
-**State definition:** A thread enters `attention_required` when the requirements quality reviewer generates `needs_user_clarification[]` entries that could not be auto-resolved. The wizard is paused; no further agent execution occurs until the user submits answers.
+### Branching conversations
+- restore-and-branch creates a new `thread_id` and `branch_id` linked to the source restore point and source thread
+- branch labels are visible in history and thread navigation
+- branching from a running or dirty thread requires confirmation that names the preserved source state and the new branch target
+- branch lineage remains queryable for restore/history and usage attribution
 
-#### Thread List Indicator (sidebar)
-
-When a thread is in `attention_required` state, its entry in the thread list shows:
-
-- An amber/warning-colored badge (⚠ or equivalent icon) to the left of the thread name.
-- A numeric count badge showing the number of unanswered clarification questions (e.g., "3 questions").
-- The thread entry is visually elevated -- moved to the top of its section, or rendered bold -- so it is immediately noticeable.
-- The badge clears when all questions are answered and the wizard returns to a non-`attention_required` state.
-
-#### Badge data model
-
-```json
-{
-  "thread_id": "<string>",
-  "state": "attention_required",
-  "unanswered_question_count": "<integer ≥ 1>",
-  "wizard_id": "<string>",
-  "wizard_step": "<string>",
-  "quality_report_path": "<string path to quality report file>"
-}
-```
-
-ContractRef: `SchemaID:pm.requirements_quality_report.schema.v1`, `ContractName:Plans/chain-wizard-flexibility.md#requirements-quality-escalation-semantics`
-
-### 11.2 System Message Type: `clarification_request`
-
-This message is automatically posted to the thread when the requirements quality reviewer generates `needs_user_clarification[]` entries that could not be auto-resolved.
-
-#### Message schema (within the thread message model)
-
-```json
-{
-  "type": "clarification_request",
-  "message_id": "<string>",
-  "timestamp_utc": "<ISO-8601 date-time>",
-  "wizard_id": "<string>",
-  "wizard_step": "<string>",
-  "quality_report_path": "<string path to quality report>",
-  "questions": [
-    {
-      "question_id": "<string>",
-      "question": "<specific, answerable, non-overlapping question>",
-      "context": "<background context for the user>",
-      "answer_format": "<free_text|single_choice|multi_choice|yes_no|identifier>",
-      "choices": ["<option1>", "<option2>"]
-    }
-  ],
-  "resume_url": "<deep-link to exact wizard step>",
-  "answered": false
-}
-```
-
-- `answered` transitions to `true` when all questions have received user responses.
-- When `answered` becomes `true`, the wizard re-runs Pass 1 + Pass 2 automatically.
-
-#### Visual rendering spec
-
-- Displayed as a distinct card/panel within the thread (not a regular chat bubble).
-- **Header:** ⚠ "Requirements Clarification Needed" in amber.
-- **Sub-header:** "Wizard: [wizard_step]" + "Resume →" link.
-- Each question rendered as a labeled form field matching `answer_format`:
-  - `free_text` → textarea
-  - `yes_no` → radio buttons (Yes / No)
-  - `single_choice` → radio button group using `choices[]`
-  - `multi_choice` → checkbox group using `choices[]`
-  - `identifier` → text input with validation
-- "Submit Answers" button at bottom; disabled until all questions have a value.
-- After submit: system posts a confirmation message and the card shows a "Submitted ✓" state.
-
-ContractRef: `SchemaID:pm.requirements_quality_report.schema.v1`, `ContractName:Plans/chain-wizard-flexibility.md#requirements-quality-escalation-semantics`, `ContractName:Plans/FinalGUISpec.md`
-
-### 11.3 Thread State Lifecycle: `attention_required`
-
-```
-[wizard running]
-    → quality reviewer runs
-    → needs_user_clarification[] non-empty
-    → state: attention_required
-    → clarification_request system message posted
-    → user views + answers questions
-    → "Submit Answers" clicked
-    → wizard re-runs Pass 1 + Pass 2
-    → [if PASS] state: active  (attention_required cleared, badge removed)
-    → [if FAIL again] state: attention_required  (new clarification_request posted, old one archived)
-```
-
-**State transitions:**
-
-| From | To | Trigger |
-|------|----|---------|
-| `active` | `attention_required` | Quality reviewer reports `needs_user_clarification[]` non-empty |
-| `attention_required` | `active` | User submits answers and Pass 1 + Pass 2 return PASS verdict |
-| `attention_required` | `attention_required` | User submits answers but Pass 1 + Pass 2 still return FAIL (new round of questions) |
-
-**Max clarification rounds:** **3**. After 3 consecutive rounds still failing, wizard state becomes `blocked` and a different escalation path is triggered -- outside the scope of this spec; see `Plans/chain-wizard-flexibility.md`.
-
-ContractRef: `ContractName:Plans/chain-wizard-flexibility.md#requirements-quality-escalation-semantics`
-
----
-
+### Session browser interaction
+- project/session browsing may open or focus a thread, but active-thread navigation remains local to the chat shell
+- blocked, queued, and background states must remain visible through badges and attention surfaces even when the thread is not active
 ## 12. Context usage display
-### 12.1 Auto Retrieval indicator (thread override) — live state + animation
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md
 
-In addition to the context circle, the chat header/footer MUST expose a small **Auto Retrieval** control for the current thread:
+Per-thread usage uses one canonical detail surface.
 
-- **Control:** A compact **chip** labeled **“Auto Retrieval”** with an On/Off state.
-- **Scope:** Thread-local override only (does not mutate project Settings defaults).
-- **States:**
-  - **On:** chip is lit/colored.
-  - **Off:** chip is muted/neutral.
-  - **Searching (in-flight):** chip animates (spinner/pulse) while any retrieval query is running.
-- **Source indicators (optional but recommended):** When searching, tiny glyphs for **Chat / Code / Logs** may light up as each source runs.
-- **Popover:** Clicking the chip opens a small popover showing:
-  - current thread override (On/Off),
-  - which sources are enabled for auto retrieval (chat/code/logs),
-  - last retrieval time and a “view last retrieval details” link (navigates to the latest audit entry per §13).
-- **Accessibility:** chip is focusable; tooltip/aria-label communicates state (“Auto Retrieval on”, “Auto Retrieval searching”, etc.).
+Rules:
+- the context indicator lives in the chat header for the active thread
+- hover shows summary values
+- activation opens the thread Usage surface in the chat side panel or equivalent canonical in-shell region
+- a separate detached usage pop-out is not the canonical model
+- streaming updates may show in-progress or updating states, but must converge into the same canonical Usage surface
+- the same thread Usage identity is used by cost_usage artifact deep-links and app-wide Usage navigation
 
-ContractRef: ContractName:Plans/assistant-chat-design.md#13-activity-transparency-search-bash-and-file-activity, ContractName:Plans/FinalGUISpec.md#7-16-chat-panel-new
-- **Streaming:** When the platform supports it, the assistant's **response streams** (text appears as it arrives rather than all at once). The UI consumes the normalized stream (Plans/newfeatures.md §5, §19.3); fallback to batch when the platform does not stream.
-- **Visible context and usage info:** The chat UI should show **context usage and related information** in a way similar to **OpenCode's desktop application** -- e.g. token or context-window usage, current model, rate limits, or other usage/limits that help the user understand how much context is in use and when limits might be hit.
-- **Context circle (OpenCode-style):** At the **top of the chat** (e.g. in the chat header next to platform/model), show a **small context indicator** -- a circular progress or gauge showing **context usage %** for the current thread. **Hover:** Tooltip shows **token count**, **usage %**, and **cost** (USD or equivalent) for that thread. **Click:** Opens a **Usage tab (or panel) for that chat thread** with detailed breakdown: tokens (input/output/reasoning/cache if available), cost, usage over time or per turn, and link to the app-wide Usage view. Reference: OpenCode -- `packages/app/src/components/session-context-usage.tsx` (ProgressCircle + Tooltip, click opens "context" tab), `session-context-metrics.ts` (metrics from messages). Full spec: Plans/usage-feature.md "Per-thread usage in Chat (OpenCode-style)".
-- **Empty state:** When the thread has **no usage data yet** (new thread or no token/cost reported): show the indicator at **0%** (or neutral "--"); tooltip "No usage yet." Click still opens the thread Usage tab (showing 0 tokens, $0.00, and link to app-wide Usage).
-- **Keyboard and accessibility:** The context indicator is **focusable** (in tab order). **Enter** or **Space** opens the thread Usage tab (same as click). Use an **accessible-label** (e.g. "Context usage for this thread") so screen readers announce its purpose. See Plans/usage-feature.md §5.
-- **Interview:** The same context circle and thread Usage tab behavior applies to **Interview** chat threads (context circle in Interview header, hover, click → Usage tab for that Interview thread).
-- **Context Usage Display Placement (Resolved):** **Tab in the chat side panel** labeled **"Usage"**. Not a slide-out panel. The Usage tab sits alongside the thread list in the sidebar. Consistent with the thread list sidebar pattern — no new UI paradigm needed. Contains: token breakdown (input/output), cost estimate, context window fill percentage, and per-turn usage history.
-- **Purpose:** Helps users manage long sessions, avoid truncation surprises, and understand cost/limits when running multiple threads or heavy plans. Data for this display is supplied by analytics scan rollups (seglog → counters/rollups → redb) per Plans/storage-plan.md and by **per-thread usage** derived from the thread's messages (tokens, cost per assistant turn); the same rollups feed dashboard and usage widgets (Plans/usage-feature.md, Plans/feature-list.md).
-- **Artifacts linkage:** Per-thread usage (context circle, thread Usage tab) aligns with the runtime `cost_usage` artifact. When the Artifacts panel offers **Show in Ledger** or **Show in Usage** for a `cost_usage` item, navigation must land on the same canonical per-thread/app-wide usage surfaces filtered by the matching `usage.event` / run / thread identity rather than inventing a separate artifact-local usage model.
-- **Rate limit hit:** When the platform returns a rate-limit or quota error (e.g. 5h window full), the thread shows a clear message and, where appropriate, the option to **switch platform or model** so the user can continue without waiting.
-
----
+Required content for the thread Usage surface:
+- total tokens and context-window fill when available
+- input/output/reasoning/cache breakdown when reported
+- per-turn or per-segment history when the upstream usage record supports it
+- link to app-wide Usage with the same thread/run filters in scope
 ## 13. Activity transparency: search, bash, and file activity
 
 ### 13.1 Retrieval audit (Auto Retrieval + project indices)
@@ -1206,11 +1073,16 @@ The **Dashboard** displays **warnings** and **Calls to Action (CtAs)** that requ
 ---
 
 ## 22. Live Testing Tools and Hot Reload
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
 
-The **Assistant** can **call up live testing tools**: the user (or the Assistant on the user's behalf) can request e.g. "start hot reload dev mode" or "run tests in watch mode." The app starts the right watcher/dev server for the current project and routes live logs, errors, and reload status into the IDE panes (Terminal, Output, Problems). Full specification: **Plans/newfeatures.md** §15.16 (Hot Reload, Live Reload, and Fast Iteration). The Assistant execution path must be able to invoke the canonical actions `StartDevMode` and `RunTestsWatch` so that results surface in the integrated panes.
+Live testing and hot reload are dev-session operations.
 
----
-
+Rules:
+- assistant-invoked dev actions map to stable UI commands and visible shell state changes
+- `start hot reload dev mode`, `start dev server`, and `run tests in watch mode` are user-facing intents that must resolve to canonical `cmd.*` IDs in the UI command catalog
+- the chat surface shows whether a dev session is starting, active, failed, stopping, or stopped
+- output routes into the canonical terminal/output/ports surfaces owned by the shell; chat does not create a parallel dev-output model
+- project switch or workspace-tab close must surface explicit consequences for any active dev session
 ## 23. Gaps, Competitive Comparison, and Enhancements
 
 This section reviews the Assistant & Chat plan for **gaps**, **potential problems**, and **competitive coverage** (vs. OpenCode, Claude Code, Codex, Gemini, Antigravity, Cursor). **All gaps listed below are adopted as MVP:** the main body of this plan (§1-§22) has been updated to include every adopted requirement (slash commands, interrupt vs. stop, up to 2 queued messages FIFO, Plan read-only until execute, thinking toggle, export, compact, model switch UI, resume/rewind, revert last edit, session share, HITL dashboard + thread notification).
@@ -1373,115 +1245,12 @@ These enhancements are **MVP** requirements. They must integrate with virtualiza
 
 <a id="25-context-enhancements"></a>
 ## 25. Context Circle Enhancements (Addendum -- 2026-02-23)
+The canonical thread-usage behavior now lives in `## 12. Context usage display` and `Plans/usage-feature.md`.
 
-This section extends the context usage ring (section 12) with a "Compact Now" action in the tooltip and a pop-out detailed usage window on click.
-
-### 25.1 "Compact Now" Action in Tooltip
-
-The hover tooltip for the context circle (section 12) is extended with a clickable action line:
-
-**Updated tooltip contents:**
-
-| Line | Content | Behavior |
-|------|---------|----------|
-| 1 | Tokens Used: {count} | Static text |
-| 2 | Context Used: {percent}% | Static text |
-| 3 | Cost: ${amount} | Static text (dollars and cents, e.g., $1.23) |
-| 4 | **Compact Now** | Clickable link/button text |
-
-**"Compact Now" behavior:**
-- Triggers context compaction for the current thread -- same effect as the user-triggered "Compact session" (e.g., /compact or the compaction pipeline from section 17).
-- On click: tooltip closes, context circle shows a brief "Compacting..." spinner overlay (200ms minimum display to prevent flash).
-- On completion: context circle animates to reflect the new usage percentage. A brief toast notification confirms: "Context compacted: {old_percent}% -> {new_percent}%".
-- If compaction is not possible (e.g., already at minimum context, or no messages to compact): show toast "Context already at minimum."
-- If compaction fails (error): show toast "Compaction failed: {reason}".
-
-**UICommand:** `cmd.chat.compact_context` with args `{ thread_id }`.
-
-ContractRef: Primitive:UICommand (Plans/Contracts_V0.md#UICommand)
-
-### 25.2 Pop-Out Detailed Usage View
-
-Clicking the context circle opens a **pop-out window** (not just a tab) with detailed thread usage information.
-
-**Pop-out window specification:**
-
-| Property | Value |
-|----------|-------|
-| Window type | Floating / detachable (per Plans/FinalGUISpec.md section 5 panel detaching semantics) |
-| Default size | 400 x 500 px |
-| Title | "Usage -- {thread_name}" |
-| Behavior | Only one pop-out per thread at a time; clicking the circle again focuses the existing pop-out |
-| Close | Window close button (X), or Escape key |
-| Position persistence | redb key `context_popout_state:v1:{thread_id}` stores `{ x, y, width, height }` |
-
-**Pop-out content** (same data as the thread Usage tab described in section 12, plus enhancements):
-
-1. **Header**: "Compact Now" button (prominent, top-right). Thread name. Context ring (larger, 48px).
-
-2. **Summary row**: Total tokens, context percentage, total cost -- same as tooltip but larger and more readable.
-
-3. **Token breakdown table**:
-   | Category | Tokens | % |
-   |----------|--------|---|
-   | Input | {count} | {pct} |
-   | Output | {count} | {pct} |
-   | Reasoning | {count} | {pct} |
-   | Cache (read) | {count} | {pct} |
-
-4. **Per-turn table** (scrollable, virtualized):
-   | Turn | Role | Platform | Model | Tokens In | Tokens Out | Cost |
-   |------|------|----------|-------|-----------|------------|------|
-   | 1 | user | -- | -- | {n} | -- | -- |
-   | 2 | assistant | Claude | opus | {n} | {n} | $X.XX |
-   | ... | ... | ... | ... | ... | ... | ... |
-
-5. **Cost-over-time chart**: small line chart showing cumulative cost over turns.
-
-6. **Link to app-wide Usage**: "View all usage" link at bottom -- navigates to the dedicated Usage page (Plans/usage-feature.md).
-
-ContractRef: ContractName:Plans/FinalGUISpec.md#5, ContractName:Plans/usage-feature.md
-
-### 25.3 Accessibility
-
-**Context circle:**
-- The context circle MUST be focusable (Tab key reaches it).
-- `accessible-role: "button"`.
-- `accessible-label: "Context usage for this thread, {percent}% used"`.
-- Enter or Space opens the pop-out detailed view (same as click).
-- Tooltip MUST be available to keyboard users: on focus, tooltip appears; "Compact Now" is focusable within the tooltip (Tab key).
-
-**Pop-out window:**
-- All elements inside the pop-out MUST be keyboard-navigable.
-- The per-turn table MUST support arrow-key navigation.
-- The "Compact Now" button and "View all usage" link MUST be focusable.
-- The pop-out root container uses an explicit `accessible-role` for a floating dialog/window surface.
-- `accessible-label` on pop-out window: "Detailed usage for {thread_name}".
-- On open: focus moves to the pop-out window. On close (Escape): focus returns to the context circle.
-
-ContractRef: ContractName:Plans/FinalGUISpec.md#13
-
-### 25.4 UICommand IDs (Context Circle)
-
-| Command ID | Args | Behavior | Events |
-|-----------|------|----------|--------|
-| `cmd.chat.compact_context` | `{ thread_id: string }` | Trigger context compaction | `context.compaction.started`, `context.compaction.completed` |
-| `cmd.chat.open_usage_popout` | `{ thread_id: string }` | Open/focus the usage pop-out window | UI-only (no persisted event) |
-| `cmd.chat.close_usage_popout` | `{ thread_id: string }` | Close the usage pop-out window | UI-only (no persisted event) |
-
-ContractRef: Primitive:UICommand (Plans/Contracts_V0.md#UICommand), ContractName:Plans/UI_Command_Catalog.md
-
-### 25.5 References (Section 25)
-
-- Section 12 of this document (original context circle specification)
-- Section 17 of this document (compaction pipeline)
-- Plans/usage-feature.md section 5 (per-thread usage data)
-- Plans/FinalGUISpec.md section 5 (panel detaching / floating windows)
-- Plans/FinalGUISpec.md section 13 (accessibility)
-- Plans/Contracts_V0.md (UICommand contract)
-
----
-
+Historical note:
+- compact-now behavior remains valid when backed by canonical compaction commands
+- the detached usage pop-out is no longer canonical
+- any old command IDs or persistence keys that exist only for the pop-out model are superseded by the canonical thread Usage surface and its stable command IDs
 ## 26. Per-Pass Validation Model/Provider Settings (Invariant Sweep)
 
 > **Addendum — 2026-02-25**

@@ -73,6 +73,22 @@ The tool invocation is paused pending user approval. The user is presented with 
 The tool invocation is blocked. The policy engine emits a `tool.denied` event (`Plans/Contracts_V0.md#EventRecord`) and returns an error to the agent. The tool is not executed.
 
 ### 2.4 Deterministic precedence across layers
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+### 2.4A Requested vs effective permissioned capability state
+
+The UI and runtime must distinguish requested state from effective state whenever permission, policy, platform, or health constraints change what is actually available.
+
+This rule applies to:
+- tool availability
+- MCP server/tool availability
+- browser trust/capability tiers
+- project-scoped overrides after project switch
+- Persona-selected profiles and overrides
+
+Display rule:
+- when requested and effective state differ, the effective state is what executes
+- the UI must disclose the difference and its reason on the owning surface rather than forcing the user to infer it from missing controls or failed calls
 
 <a id="PRECEDENCE-LAYERS"></a>
 
@@ -452,6 +468,15 @@ ContractRef: ContractName:Plans/Tools.md
 ---
 
 ## 10. GUI requirements
+### 10.10 Effective-state disclosure requirements
+
+Permissions-adjacent UI must show effective-state disclosure when runtime capability differs from requested configuration.
+
+Minimum disclosure surfaces:
+- Permissions tab rows for unavailable or downgraded MCP/tool entries
+- Persona-related surfaces when a Persona-selected permission profile is not what ultimately applies
+- browser trust-tier and restricted-preview surfaces when capability falls back to a safer mode
+- project-switch transitions when the newly active project changes the applicable permission result set
 
 <a id="GUI-PERMISSIONS"></a>
 

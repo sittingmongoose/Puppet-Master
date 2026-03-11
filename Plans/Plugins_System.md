@@ -395,6 +395,15 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord
 ---
 
 ## 9. GUI requirements
+### 9.3 Catalog-installed plugin and hook lifecycle
+
+Catalog-installed plugins, hooks, and MCP config bundles use explicit lifecycle semantics.
+
+Rules:
+- install/update/remove actions must surface whether the target plugin is currently enabled, loaded, or referenced by Persona settings
+- active plugin updates may require reload, deferred apply, or explicit disable-before-remove behavior depending on the plugin state
+- the GUI must distinguish catalog-installed plugins from manual/local ones
+- uninstalling a catalog plugin must not silently delete unrelated local overrides or config-sourced plugins with the same display name
 
 <a id="GUI-PLUGINS"></a>
 

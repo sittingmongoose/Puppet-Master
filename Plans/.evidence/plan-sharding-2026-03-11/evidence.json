@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.evidence.schema.v1",
   "evidence_id": "plan-sharding-2026-03-11",
-  "created_at_utc": "2026-03-11T16:49:22.112815+00:00",
+  "created_at_utc": "2026-03-11T18:43:06.997251+00:00",
   "node": {
     "node_id": "plan-sharding"
   },
@@ -405,23 +405,39 @@
     },
     {
       "path": "Plans/_shards/FileManager/14-10-editor-enhancements-mvp.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FileManager/14-verification-ai-executable.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FileManager/15-13-git-status-integration.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FileManager/15-verification-ai-executable.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/FileManager/16-13-git-status-integration.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FileManager/16-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FileManager/17-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FileManager/17-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FileManager/18-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/FileManager/manifest.json",
@@ -588,96 +604,176 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/FinalGUISpec/10-11-anti-flickering-and-scroll-preservation.md",
+      "change_type": "added"
+    },
+    {
       "path": "Plans/_shards/FinalGUISpec/10-8-widget-catalog.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/11-12-responsive-design.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/11-9-state-management.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/12-10-ux-patterns.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/12-13-accessibility.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/13-11-anti-flickering-and-scroll-preservation.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/13-14-slint-file-organization.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/14-12-responsive-design.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/14-15-persistence.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/15-13-accessibility.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/15-16-migration-mapping.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/16-14-slint-file-organization.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/16-17-risks-and-mitigations.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/17-15-persistence.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/17-18-promoted-features-formerly-future-considerations.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/18-16-migration-mapping.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/18-appendix-a-cross-references.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/19-17-risks-and-mitigations.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/19-appendix-b-locked-decisions-summary.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/20-18-promoted-features-formerly-future-considerations.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/20-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-addendum-2026-02-23.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/21-17-persona-editor-compatibility-disclosure-and-surface-level-persona-controls-2026-03-06.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/21-appendix-a-cross-references.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/22-appendix-b-locked-decisions-summary.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/22-rendering-surface-addendum-2026-03-07.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/23-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-addendum-2026-02-23.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/23-assistant-planning-ux-addendum-2026-03-08.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/24-17-persona-editor-compatibility-disclosure-and-surface-level-persona-controls-2026-03-06.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/24-scheduler-blocked-and-remediation-gui-addendum-2026-03-08.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/25-rendering-surface-addendum-2026-03-07.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/25-runtime-scheduler-blocked-state-gui-parity-addendum-2026-03-09.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/26-assistant-planning-ux-addendum-2026-03-08.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/26-runtime-blocked-queue-and-recovery-gui-reconciliation-addendum-2026-03-09.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/27-runtime-scheduler-recovery-gui-consolidation-addendum-2026-03-09.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/27-scheduler-blocked-and-remediation-gui-addendum-2026-03-08.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/28-blocked-recovery-gui-reconciliation.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/28-runtime-scheduler-blocked-state-gui-parity-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FinalGUISpec/29-blocked-state-visual-distinction-and-recovery-ux-addendum.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/29-runtime-blocked-queue-and-recovery-gui-reconciliation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/30-runtime-scheduler-recovery-gui-consolidation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/31-blocked-recovery-gui-reconciliation.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/32-blocked-state-visual-distinction-and-recovery-ux-addendum.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/FinalGUISpec/manifest.json",
@@ -1156,44 +1252,80 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/Tools/11-10-implementation-plan-permissions-spec-for-implementers.md",
+      "change_type": "added"
+    },
+    {
       "path": "Plans/_shards/Tools/11-9-gaps-potential-problems-and-enhancements.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/Tools/12-10-implementation-plan-permissions-spec-for-implementers.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Tools/12-11-relationship-to-other-plans.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Tools/13-11-relationship-to-other-plans.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Tools/13-12-implementation-checklist-ordered-for-implementation-plan.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Tools/14-12-implementation-checklist-ordered-for-implementation-plan.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Tools/14-13-references.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Tools/15-13-references.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Tools/15-tool-policy-outcome-taxonomy-addendum-2026-03-08.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/Tools/16-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Tools/16-tool-policy-outcome-taxonomy-addendum-2026-03-08.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Tools/17-tool-denial-and-runtime-action-reconciliation-addendum-2026-03-09.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Tools/17-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/Tools/18-tool-denial-and-runtime-action-reconciliation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Tools/18-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-03-09.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Tools/19-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/Tools/19-tool-field-name-and-taxonomy-alignment.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/Tools/20-tool-field-name-and-taxonomy-alignment.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/Tools/manifest.json",
@@ -1600,16 +1732,24 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/feature-list/03-part-1a-markdown-mermaid-and-unified-rendering-addendum-2026-03-07.md",
+      "change_type": "added"
+    },
+    {
       "path": "Plans/_shards/feature-list/03-part-2-existing-codebase-features.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/feature-list/04-part-1a-markdown-mermaid-and-unified-rendering-addendum-2026-03-07.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/feature-list/04-runtime-scheduler-recovery-summary-consolidation-addendum-2026-03-09.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/feature-list/05-runtime-scheduler-recovery-summary-consolidation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/feature-list/manifest.json",
@@ -1865,23 +2005,39 @@
     },
     {
       "path": "Plans/_shards/newfeatures/29-24-unified-markdown-mermaid-html-and-image-rendering-architecture-2026-03-07.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/newfeatures/29-runtime-safe-point-clarification-addendum-2026-03-08.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/newfeatures/30-runtime-safe-point-clarification-addendum-2026-03-08.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/newfeatures/30-user-facing-recovery-semantics-addendum-2026-03-09.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/newfeatures/31-user-facing-recovery-semantics-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/newfeatures/31-user-facing-runtime-recovery-semantics-consolidation-addendum-2026-03-09.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/newfeatures/32-safe-point-restore-point-crash-recovery-alignment-addendum.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/newfeatures/32-user-facing-runtime-recovery-semantics-consolidation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/newfeatures/33-safe-point-restore-point-crash-recovery-alignment-addendum.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/newfeatures/manifest.json",
@@ -2264,52 +2420,92 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/usage-feature/09-data-and-backend-conceptual.md",
+      "change_type": "added"
+    },
+    {
       "path": "Plans/_shards/usage-feature/09-data-sources-state-files-json-jsonl.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/10-gui-placement-options.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/usage-feature/10-per-platform-usage-data-api-cli.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/usage-feature/11-data-and-backend-conceptual.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/11-gaps-current-state-vs-desired.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/usage-feature/12-gui-placement-options.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/12-potential-problems.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/13-enhancements-beyond-minimum.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/usage-feature/13-gaps-current-state-vs-desired.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/14-out-of-scope-for-this-plan.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/usage-feature/14-potential-problems.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/usage-feature/15-enhancements-beyond-minimum.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/15-success-criteria.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/usage-feature/16-out-of-scope-for-this-plan.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/16-version-history.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/usage-feature/17-success-criteria.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/17-widget-composed-page-layout-addendum-2026-02-23.md",
+      "change_type": "added"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/18-runtime-scheduler-recovery-observability-addendum-2026-03-09.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/usage-feature/18-version-history.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/usage-feature/19-widget-composed-page-layout-addendum-2026-02-23.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/usage-feature/20-runtime-scheduler-recovery-observability-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/usage-feature/manifest.json",

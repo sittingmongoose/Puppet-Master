@@ -52,13 +52,18 @@ The **Artifacts panel** is the single place to see everything agents produced du
 **task_id rule (deterministic):** Present in payload **when the run has task/subtask granularity**; **otherwise omit from payload.** No "optional" wording; not conditional on "if available."
 
 ## 6. reasoning_tokens and cost_usage
+**reasoning_tokens:** Required in the usage/cost_usage schema (integer, minimum 0). In the UI, display the field only when value > 0.
 
-**reasoning_tokens:** Required in the usage/cost_usage schema (integer, minimum 0). In the UI, display the field **only when value > 0**; do not show when zero.
+**cost_usage artifact:** Attribution record only. It uses the same canonical usage identity and normalized fields as the Usage page, thread Usage surface, Ledger, Run Graph, and Orchestrator usage displays.
 
-**cost_usage artifact:** Attribution record only. Same canonical usage pipeline and schema as usage.event (tokens_in, tokens_out, reasoning_tokens, cost, platform/provider, model). Ledger and Usage page consume the same data. Required actions in Artifacts panel for cost_usage items: **Show in Ledger**, **Show in Usage** (navigate to Ledger/Usage with filters so the canonical usage event is visible).
+Required actions for `cost_usage` items:
+- **Show in Ledger** — navigate to the canonical Ledger surface with the matching usage identity in scope
+- **Show in Usage** — navigate to either app-wide Usage or the canonical thread Usage surface depending on the artifact scope, preserving the same run/thread filters
 
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
-
+Rules:
+- cost_usage artifacts do not create an artifact-local usage model
+- thread-scoped cost_usage artifacts land on the same canonical thread Usage surface used by the chat context indicator
+- app-wide cost_usage artifacts land on the canonical Usage page
 ## 7. JSON schemas (all required)
 
 **Envelope:** Plans/runtime_artifact_envelope.schema.json (`$id`: pm.runtime_artifact.envelope.v1). Common payload fields for all runtime artifact events.
@@ -68,6 +73,12 @@ ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-pla
 Implementation MUST validate every runtime_artifact.* event payload against the envelope and the matching type schema before appending to seglog and before writing to the artifacts index.
 
 ## 8. Browser recordings
+Browser recordings must preserve the canonical browser surface distinction.
+
+Rules:
+- a recording created from `workspace_preview` or `detached_preview` retains the owning project/workspace identity
+- a recording created from automation or auth flows does not imply that the underlying browser session is a persistent shell browser tab
+- actions such as Send to Chat or Open must route back to the owning canonical surface model rather than inventing a separate browser-recording shell
 
 Browser recordings are a **required** artifact type (runtime_artifact.browser_recording). Source: GUI automation runs (e.g. Playwright) from Orchestrator or Chat. Stored under canonical evidence path; list shows thumbnail, duration, run/session id, timestamp. Detail: in-panel video player or "Open in default app"; optional timeline with key events. Actions: Copy path, Export, Send to Chat as needed.
 
