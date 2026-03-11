@@ -1,31 +1,20 @@
-import sys
+import re
 
-def cleanup():
-    file_path = '/home/sittingmongoose/Cursor/Puppet Master/Concepts/PuppetMasterDashComp.html'
-    with open(file_path, 'r', encoding='utf-8') as f:
-        content = f.read()
+with open('Concepts/PuppetMasterDashComp.html', 'r', encoding='utf-8') as f:
+    content = f.read()
 
-    # check if there's an extra </div> after </footer> and before the chat panels
-    # The last </div> should close the app-shell
-    
-    # We will just ensure the structure is exactly:
-    # ...
-    # </footer>
-    # </div>
-    # <div class="chat-resizer" ...
-    
-    import re
-    # Look for the gap between footer and resizer
-    footer_match = re.search(r'</footer>\s*(</div>\s*)+<div class="chat-resizer"', content, flags=re.DOTALL)
-    if footer_match:
-        # replace multiple </div> with just one
-        new_gap = '</footer>\n  </div>\n\n  <div class="chat-resizer"'
-        content = content[:footer_match.start()] + new_gap + content[footer_match.end()-22:] # -22 to skip <div class="chat-resizer"
-        # wait, that's not safe. Let's do a simple replace.
-        content = re.sub(r'</footer>\s*(</div>\s*)+<div class="chat-resizer"', '</footer>\n  </div>\n\n  <div class="chat-resizer"', content)
+# Make sure all elements have proper cursors and layout
+css_fixes = r'''
+    .resizer-col {
+      width: 4px;
+      background: transparent;
+      cursor: col-resize;
+      transition: background 0.2s;
+      z-index: 100;
+    }
+'''
+if css_fixes not in content:
+    print("CSS fixes not found")
 
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.write(content)
-    print("Cleanup done.")
-
-cleanup()
+with open('Concepts/PuppetMasterDashComp.html', 'w', encoding='utf-8') as f:
+    f.write(content)
