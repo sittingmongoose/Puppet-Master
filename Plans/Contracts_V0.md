@@ -872,6 +872,7 @@ This section is an exact compatibility mirror of the later canonical runtime con
 
 ### Blocking payload rule
 Every runtime-facing blocked event or projection MUST expose:
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Executor_Protocol.md
 - `blocked_reason_code`
 - ordered `allowed_action_ids[]`
 - prerequisite metadata needed to bind the recovery command
