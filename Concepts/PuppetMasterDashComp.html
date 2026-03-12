@@ -8,6 +8,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Orbitron:wght@700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    .interview-phase-step { cursor: pointer; padding: var(--sm) var(--md); border-radius: 4px; transition: background 0.2s; margin-bottom: 2px; }
+    .interview-phase-step:hover { background: var(--surface-elevated); }
+    .interview-phase-step.active { background: var(--surface-elevated); font-weight: 600; color: var(--accent-blue); }
+    [data-theme^="retro"] .interview-phase-step.active { color: var(--accent-lime); }
+    .wizard-doc-pill { cursor: pointer; }
+    .req-chat-msg { padding: var(--md); border-radius: 8px; margin-bottom: var(--sm); font-size: 13px; max-width: 85%; }
+    .req-chat-msg.assistant { background: var(--surface); border: 1px solid var(--border-light); border-left: 3px solid var(--accent-blue); align-self: flex-start; }
+    [data-theme^="retro"] .req-chat-msg.assistant { border-left-color: var(--accent-lime); }
+    .req-chat-msg.user { background: var(--surface-elevated); border: 1px solid var(--border-light); align-self: flex-end; }
     /* --- REDESIGNED WIZARD & CHAT SYSTEM --- */
     /* --- REDESIGNED WIZARD & CHAT SYSTEM --- */
     .hidden { display: none !important; }
@@ -2298,11 +2307,13 @@
     .orch-table td { color: var(--text-secondary); }
 
     /* Projects page (§7.3) */
+    /* Projects page (§7.3) Redesign (Bento Style) */
     .page-projects {
       display: flex;
       flex-direction: column;
       gap: var(--lg);
-      overflow: hidden;
+      overflow-y: auto;
+      padding-bottom: var(--xl);
     }
     .page-projects .projects-breadcrumb {
       font-size: 12px;
@@ -2320,18 +2331,19 @@
       color: var(--text-primary);
       font-weight: 600;
     }
-    .page-projects .projects-header {
+    .page-projects .projects-header-bento {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: var(--md);
     }
-    .page-projects .projects-header .projects-title {
+    .page-projects .projects-title {
       font-family: var(--display-font);
-      font-size: 18px;
+      font-size: 24px;
       font-weight: 700;
       color: var(--text-primary);
+      letter-spacing: 0.5px;
     }
     .page-projects .projects-actions {
       display: flex;
@@ -2340,8 +2352,8 @@
       flex-wrap: wrap;
     }
     .page-projects .projects-actions button {
-      padding: var(--xs) var(--md);
-      font-size: 12px;
+      padding: var(--sm) var(--lg);
+      font-size: 13px;
       font-family: var(--body-font);
       font-weight: 600;
       border: var(--border-width) solid var(--border);
@@ -2349,16 +2361,20 @@
       background: var(--surface-elevated);
       color: var(--text-primary);
       cursor: pointer;
+      transition: all 0.2s ease;
     }
     .page-projects .projects-actions button:hover {
       background: var(--accent-lime);
       color: #1A1A1A;
       border-color: var(--border);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 255, 65, 0.2);
     }
     [data-theme="basic-light"] .page-projects .projects-actions button:hover,
     [data-theme="basic-dark"] .page-projects .projects-actions button:hover {
       background: var(--accent-blue);
       color: var(--surface);
+      box-shadow: 0 4px 12px rgba(0, 71, 171, 0.2);
     }
     .page-projects .projects-actions button.primary {
       background: var(--accent-lime);
@@ -2374,209 +2390,365 @@
     .page-projects .projects-actions button.ghost {
       background: transparent;
       color: var(--text-secondary);
+      border-color: transparent;
+      box-shadow: none;
     }
     .page-projects .projects-actions button.ghost:hover {
       color: var(--text-primary);
       background: var(--surface-elevated);
+      border-color: var(--border);
+      transform: translateY(0);
+      box-shadow: none;
     }
-    .page-projects .projects-current-card {
-      background: var(--surface);
-      border: var(--border-width) solid var(--border);
-      border-left: 4px solid var(--accent-lime);
-      border-radius: var(--border-radius);
-      padding: var(--md);
-      box-shadow: var(--shadow);
-    }
-    [data-theme="basic-light"] .page-projects .projects-current-card,
-    [data-theme="basic-dark"] .page-projects .projects-current-card {
-      border-left-color: var(--accent-blue);
-    }
-    .page-projects .projects-current-card .current-card-header {
-      display: flex;
-      align-items: center;
-      gap: var(--md);
-      flex-wrap: wrap;
-      margin-bottom: var(--sm);
-    }
-    .page-projects .projects-current-card .current-card-name {
-      font-weight: 600;
-      font-size: 14px;
-      color: var(--text-primary);
-    }
-    .page-projects .projects-current-card .current-card-path {
-      font-size: 12px;
-      font-family: 'Consolas', 'Monaco', monospace;
-      color: var(--text-secondary);
-    }
-    .page-projects .projects-current-card .current-card-actions {
-      display: flex;
-      gap: var(--sm);
-      margin-top: var(--md);
-    }
-    .page-projects .projects-current-card .current-card-actions button {
-      padding: var(--xs) var(--md);
-      font-size: 11px;
-      background: var(--surface-elevated);
-      border: var(--border-width) solid var(--border);
-      border-radius: var(--border-radius);
-      color: var(--text-primary);
-      cursor: pointer;
-    }
+
     .page-projects .projects-toolbar {
       display: flex;
       align-items: center;
       gap: var(--md);
       flex-wrap: wrap;
+      background: var(--surface-elevated);
+      padding: var(--md) var(--lg);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
     }
+    [data-theme="basic-light"] .page-projects .projects-toolbar,
+    [data-theme="basic-dark"] .page-projects .projects-toolbar { box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+
     .page-projects .projects-toolbar label {
-      font-size: 12px;
+      font-size: 13px;
+      font-weight: 500;
       color: var(--text-secondary);
       margin-right: var(--xs);
     }
     .page-projects .projects-toolbar select {
-      padding: 2px var(--sm);
-      font-size: 12px;
-      background: var(--surface-elevated);
-      border: var(--border-width) solid var(--border);
-      border-radius: var(--border-radius);
-      color: var(--text-primary);
-      cursor: pointer;
-    }
-    .page-projects .projects-list-wrap {
-      flex: 1;
-      min-height: 0;
-      overflow: auto;
-      border: var(--border-width) solid var(--border-light);
-      border-radius: var(--border-radius);
-    }
-    .page-projects .projects-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-    }
-    .page-projects .projects-table th,
-    .page-projects .projects-table td {
-      padding: var(--sm) var(--md);
+      padding: 6px var(--md);
+      font-size: 13px;
+      background: var(--surface);
       border: 1px solid var(--border-light);
-      text-align: left;
-    }
-    .page-projects .projects-table th {
-      background: var(--surface-elevated);
-      font-weight: 600;
-      color: var(--text-primary);
-      white-space: nowrap;
-    }
-    .page-projects .projects-table td {
-      color: var(--text-secondary);
-      vertical-align: middle;
-    }
-    .page-projects .projects-table tbody tr:hover {
-      background: var(--surface-elevated);
-    }
-    .page-projects .projects-table tbody tr.current {
-      background: rgba(0, 255, 65, 0.08);
-      border-left: 3px solid var(--accent-lime);
-    }
-    [data-theme="basic-light"] .page-projects .projects-table tbody tr.current,
-    [data-theme="basic-dark"] .page-projects .projects-table tbody tr.current {
-      background: rgba(21, 101, 192, 0.08);
-      border-left-color: var(--accent-blue);
-    }
-    .page-projects .health-dot {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .page-projects .health-dot.healthy {
-      background: var(--graph-passed);
-    }
-    .page-projects .health-dot.stale {
-      background: var(--accent-orange);
-    }
-    .page-projects .health-dot.error {
-      background: var(--graph-failed);
-    }
-    .page-projects .lang-badge {
-      display: inline-block;
-      padding: 2px var(--sm);
-      font-size: 11px;
-      font-weight: 500;
       border-radius: var(--border-radius);
-      background: var(--accent-blue);
-      color: var(--surface);
-      margin-right: var(--xs);
-      margin-bottom: var(--xs);
-    }
-    .page-projects .lang-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2px;
-      align-items: center;
-    }
-    .page-projects .project-actions {
-      display: flex;
-      gap: var(--sm);
-      flex-wrap: wrap;
-    }
-    .page-projects .project-actions a,
-    .page-projects .project-actions button.link {
-      font-size: 11px;
-      color: var(--accent-blue);
-      background: none;
-      border: none;
+      color: var(--text-primary);
       cursor: pointer;
-      padding: 0;
-      text-decoration: none;
-      font-family: inherit;
+      outline: none;
     }
-    [data-theme="retro-dark"] .page-projects .project-actions a,
-    [data-theme="retro-dark"] .page-projects .project-actions button.link {
-      color: var(--accent-lime);
+    .page-projects .projects-toolbar select:focus { border-color: var(--accent-lime); }
+    [data-theme="basic-light"] .page-projects .projects-toolbar select:focus,
+    [data-theme="basic-dark"] .page-projects .projects-toolbar select:focus { border-color: var(--accent-blue); }
+
+    .projects-grid-bento {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--xl);
+      margin-top: var(--sm);
     }
-    .page-projects .project-actions a:hover,
-    .page-projects .project-actions button.link:hover {
-      text-decoration: underline;
-    }
-    .page-projects .project-actions button.link.danger {
-      color: var(--accent-magenta);
-    }
-    .page-projects .projects-new-form {
+
+    .project-card-bento {
       background: var(--surface);
       border: var(--border-width) solid var(--border);
       border-radius: var(--border-radius);
-      padding: var(--md);
-      box-shadow: var(--shadow);
-      margin-bottom: var(--lg);
-    }
-    .page-projects .projects-new-form.hidden {
-      display: none;
-    }
-    .page-projects .projects-new-form .form-row {
-      margin-bottom: var(--md);
-    }
-    .page-projects .projects-new-form label {
-      display: block;
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-bottom: var(--xs);
-    }
-    .page-projects .projects-new-form input[type="text"] {
-      width: 100%;
-      max-width: 400px;
-      padding: var(--xs) var(--md);
-      font-size: 13px;
-      background: var(--surface-elevated);
-      border: var(--border-width) solid var(--border);
-      border-radius: var(--border-radius);
-      color: var(--text-primary);
-    }
-    .page-projects .projects-new-form .form-actions {
+      padding: var(--lg);
       display: flex;
-      gap: var(--sm);
-      margin-top: var(--lg);
+      flex-direction: column;
+      gap: var(--md);
+      box-shadow: var(--shadow);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      cursor: pointer;
     }
+    [data-theme="basic-light"] .project-card-bento,
+    [data-theme="basic-dark"] .project-card-bento { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    
+    .project-card-bento:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-lime);
+    }
+    [data-theme="basic-light"] .project-card-bento:hover,
+    [data-theme="basic-dark"] .project-card-bento:hover {
+      border-color: var(--accent-blue);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    .project-card-bento.current {
+      border-left: 6px solid var(--accent-lime);
+      background: linear-gradient(to right, rgba(0, 255, 65, 0.05), transparent);
+    }
+    [data-theme="basic-light"] .project-card-bento.current,
+    [data-theme="basic-dark"] .project-card-bento.current {
+      border-left-color: var(--accent-blue);
+      background: linear-gradient(to right, rgba(0, 71, 171, 0.05), transparent);
+    }
+
+    .project-card-header {
+      display: flex;
+      align-items: center;
+      gap: var(--sm);
+      justify-content: space-between;
+    }
+    .project-card-title-area {
+      display: flex;
+      align-items: center;
+      gap: var(--sm);
+      flex: 1;
+      min-width: 0;
+    }
+    .project-card-title {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: var(--display-font);
+    }
+    
+    .health-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      box-shadow: 0 0 8px currentColor;
+    }
+    .health-dot.healthy { background: var(--graph-passed); color: var(--graph-passed); }
+    .health-dot.stale { background: var(--accent-orange); color: var(--accent-orange); }
+    .health-dot.error { background: var(--graph-failed); color: var(--graph-failed); }
+    
+    .project-card-path {
+      font-size: 12px;
+      font-family: 'Consolas', 'Monaco', monospace;
+      color: var(--text-secondary);
+      background: var(--surface-elevated);
+      padding: var(--sm) var(--md);
+      border-radius: 4px;
+      border: 1px solid var(--border-light);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .project-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sm);
+    }
+    .lang-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 12px;
+      background: var(--surface-elevated);
+      color: var(--text-primary);
+      border: 1px solid var(--border-light);
+    }
+
+    .project-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: var(--md);
+      border-top: 1px dashed var(--border-light);
+    }
+    .project-last-opened {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    
+    .project-card-actions {
+      display: flex;
+      gap: var(--xs);
+    }
+    .project-action-btn {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .project-action-btn:hover {
+      background: var(--accent-lime);
+      color: #1A1A1A;
+      border-color: var(--accent-lime);
+    }
+    [data-theme="basic-light"] .project-action-btn:hover,
+    [data-theme="basic-dark"] .project-action-btn:hover {
+      background: var(--accent-blue);
+      color: var(--surface);
+      border-color: var(--accent-blue);
+    }
+    .project-action-btn.danger:hover {
+      background: var(--accent-magenta);
+      color: #fff;
+      border-color: var(--accent-magenta);
+    }
+    .project-action-btn svg { width: 14px; height: 14px; fill: currentColor; }
+
+    /* Settings Modal Animations & Styles */
+    .project-settings-modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .project-settings-modal.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    .project-settings-content {
+      width: 800px;
+      max-width: 95vw;
+      height: 600px;
+      max-height: 90vh;
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      transform: translateY(30px) scale(0.95);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      overflow: hidden;
+    }
+    [data-theme^="retro"] .project-settings-content { border-radius: 0; box-shadow: 8px 8px 0 rgba(0,0,0,0.5); }
+    
+    .project-settings-modal.visible .project-settings-content {
+      transform: translateY(0) scale(1);
+    }
+
+    .psm-header {
+      padding: var(--lg) var(--xl);
+      background: var(--surface-elevated);
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .psm-title {
+      font-family: var(--display-font);
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: var(--md);
+    }
+    .psm-close {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: var(--xs);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .psm-close:hover { background: rgba(255,0,0,0.1); color: var(--accent-magenta); }
+    .psm-close svg { width: 20px; height: 20px; fill: currentColor; }
+
+    .psm-body {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+    }
+    .psm-sidebar {
+      width: 200px;
+      background: var(--surface-elevated);
+      border-right: 1px solid var(--border-light);
+      padding: var(--lg) 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .psm-tab {
+      padding: var(--md) var(--xl);
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      border-left: 3px solid transparent;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: var(--sm);
+    }
+    .psm-tab:hover { background: var(--surface); color: var(--text-primary); }
+    .psm-tab.active {
+      color: var(--text-primary);
+      background: var(--surface);
+      border-left-color: var(--accent-lime);
+      font-weight: 700;
+    }
+    [data-theme="basic-light"] .psm-tab.active,
+    [data-theme="basic-dark"] .psm-tab.active { border-left-color: var(--accent-blue); }
+    .psm-tab svg { width: 14px; height: 14px; fill: currentColor; }
+
+    .psm-pane {
+      flex: 1;
+      padding: var(--xl);
+      overflow-y: auto;
+      background: var(--background);
+    }
+    .psm-section { margin-bottom: var(--xl); }
+    .psm-section-title { font-size: 14px; font-weight: 600; margin-bottom: var(--md); color: var(--text-primary); border-bottom: 1px solid var(--border-light); padding-bottom: var(--xs); }
+    .psm-field { margin-bottom: var(--md); display: flex; flex-direction: column; gap: var(--xs); }
+    .psm-field label { font-size: 12px; color: var(--text-secondary); font-weight: 600; }
+    .psm-field input[type="text"], .psm-field select {
+      padding: var(--sm) var(--md);
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      color: var(--text-primary);
+      font-size: 13px;
+      font-family: var(--body-font);
+    }
+    [data-theme^="retro"] .psm-field input[type="text"], [data-theme^="retro"] .psm-field select { border-radius: 0; }
+    
+    .psm-toggle-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--md); padding: var(--md); background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 8px; }
+    [data-theme^="retro"] .psm-toggle-row { border-radius: 0; }
+    .psm-toggle-label { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    .psm-toggle-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    
+    .psm-footer {
+      padding: var(--md) var(--xl);
+      background: var(--surface-elevated);
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--md);
+    }
+    .psm-btn {
+      padding: var(--sm) var(--lg);
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      background: var(--surface);
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+    }
+    [data-theme^="retro"] .psm-btn { border-radius: 0; }
+    .psm-btn.primary { background: var(--accent-lime); color: #1A1A1A; border-color: var(--accent-lime); }
+    [data-theme="basic-light"] .psm-btn.primary, [data-theme="basic-dark"] .psm-btn.primary { background: var(--accent-blue); color: var(--surface); border-color: var(--accent-blue); }
+    .psm-btn:hover { filter: brightness(1.1); }
+    
+    /* Hide the old projects-new-form as it's part of the old structure */
+    .page-projects .projects-new-form { display: none !important; }
 
     /* Settings Page Prototypes A, B, C */
     .page-settings-a, .page-settings-b, .page-settings-c {
@@ -2601,6 +2773,9 @@
       display: flex;
       flex-direction: column;
       gap: var(--sm);
+      max-height: 420px;
+      height: max-content;
+      overflow-y: auto;
       transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
       opacity: 0;
       animation-duration: 0.6s;
@@ -2914,6 +3089,14 @@
       overflow-y: auto;
       padding: var(--md);
     }
+    
+    .inspector-view {
+      display: none;
+    }
+    .inspector-view.active {
+      display: block;
+    }
+    
     .settings-inspector-panel details {
       margin-bottom: var(--sm);
       background: var(--surface);
@@ -3004,8 +3187,8 @@
     }
         .bento-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 500px));
-      justify-content: start;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      align-items: start;
       gap: var(--lg);
     }
 
@@ -4053,51 +4236,26 @@ impl Dashboard {
           </div> <!-- End page-dashboard -->
           <div class="page page-projects">
             <nav class="projects-breadcrumb" aria-label="Breadcrumb">Home &gt; <span class="current">Projects</span></nav>
-            <div class="projects-header">
+            <div class="projects-header-bento">
               <h1 class="projects-title">Projects</h1>
               <div class="projects-actions">
-                <button type="button" class="primary" id="projectsAddBtn">Add project</button>
-                <button type="button">Open folder...</button>
-                <button type="button">Refresh</button>
-                <button type="button" class="ghost">Cleanup</button>
+                <button type="button" class="primary" id="projectsAddBtn">New Project</button>
+                <button type="button">Open Folder...</button>
+                <button type="button" class="ghost">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                  Refresh
+                </button>
               </div>
             </div>
-            <div class="projects-new-form hidden" id="projectsNewForm">
-              <h3 style="font-size: 14px; margin-bottom: var(--md);">Create new project</h3>
-              <div class="form-row">
-                <label for="newProjectName">Project name</label>
-                <input type="text" id="newProjectName" placeholder="My Project">
-              </div>
-              <div class="form-row">
-                <label for="newProjectPath">Working directory</label>
-                <input type="text" id="newProjectPath" placeholder="/path/to/project">
-                <button type="button" style="margin-top: var(--xs);">Browse</button>
-              </div>
-              <div class="form-actions">
-                <button type="button" class="primary" id="projectsCreateBtn">Create project</button>
-                <button type="button" id="projectsNewFormCancel">Cancel</button>
-              </div>
-            </div>
-            <div class="projects-current-card">
-              <div class="current-card-header">
-                <span class="health-dot healthy" title="Healthy"></span>
-                <span class="current-card-name">puppet-master-rs</span>
-                <span class="status-badge">Idle</span>
-              </div>
-              <div class="current-card-path">~/Cursor/Puppet Master</div>
-              <div class="current-card-actions">
-                <button type="button">Switch project</button>
-                <button type="button">Settings</button>
-              </div>
-            </div>
+
             <div class="projects-toolbar">
-              <label for="projectsSortBy">Sort by</label>
+              <label for="projectsSortBy">Sort by:</label>
               <select id="projectsSortBy">
                 <option>Name</option>
-                <option>Last opened</option>
+                <option>Last Opened</option>
                 <option>Status</option>
               </select>
-              <label for="projectsFilterLang" style="margin-left: var(--lg);">Language</label>
+              <label for="projectsFilterLang" style="margin-left: var(--xl);">Language:</label>
               <select id="projectsFilterLang">
                 <option>All</option>
                 <option>Rust</option>
@@ -4106,76 +4264,254 @@ impl Dashboard {
                 <option>Docker</option>
                 <option>C#</option>
               </select>
-              <label for="projectsFilterStatus" style="margin-left: var(--lg);">Status</label>
+              <label for="projectsFilterStatus" style="margin-left: var(--xl);">Status:</label>
               <select id="projectsFilterStatus">
                 <option>All</option>
                 <option>Idle</option>
                 <option>Running</option>
                 <option>Paused</option>
               </select>
+              
+              <div style="flex:1;"></div>
+              
+              <div style="position:relative; display:flex; align-items:center;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute; left:10px; color:var(--text-muted);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" placeholder="Search projects..." style="padding:6px 12px 6px 32px; font-size:13px; background:var(--surface); border:1px solid var(--border-light); border-radius:var(--border-radius); color:var(--text-primary); outline:none;">
+              </div>
             </div>
-            <div class="projects-list-wrap">
-              <table class="projects-table" role="grid">
-                <thead>
-                  <tr>
-                    <th scope="col" style="width: 32px;">Health</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Path</th>
-                    <th scope="col">Languages</th>
-                    <th scope="col">Last opened</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="current">
-                    <td><span class="health-dot healthy" title="Healthy"></span></td>
-                    <td>puppet-master-rs</td>
-                    <td style="font-family: Consolas, Monaco, monospace; font-size: 11px;">~/Cursor/Puppet Master</td>
-                    <td><div class="lang-badges"><span class="lang-badge">Rust</span><span class="lang-badge">Slint</span></div></td>
-                    <td>2m ago</td>
-                    <td><span class="status-badge">Idle</span></td>
-                    <td><div class="project-actions"><a href="#">Open</a><a href="#">Settings</a><a href="#" class="danger">Remove</a><a href="#">Archive</a></div></td>
-                  </tr>
-                  <tr>
-                    <td><span class="health-dot healthy" title="Healthy"></span></td>
-                    <td>api-backend</td>
-                    <td style="font-family: Consolas, Monaco, monospace; font-size: 11px;">~/projects/api-backend</td>
-                    <td><div class="lang-badges"><span class="lang-badge">Rust</span><span class="lang-badge">Docker</span></div></td>
-                    <td>1h ago</td>
-                    <td><span class="status-badge">Running</span></td>
-                    <td><div class="project-actions"><a href="#">Open</a><a href="#">Settings</a><a href="#" class="danger">Remove</a><a href="#">Archive</a></div></td>
-                  </tr>
-                  <tr>
-                    <td><span class="health-dot stale" title="Stale config"></span></td>
-                    <td>docs-site</td>
-                    <td style="font-family: Consolas, Monaco, monospace; font-size: 11px;">~/repos/docs-site</td>
-                    <td><div class="lang-badges"><span class="lang-badge">JS/TS</span></div></td>
-                    <td>Yesterday</td>
-                    <td><span class="status-badge idle">Idle</span></td>
-                    <td><div class="project-actions"><a href="#">Open</a><a href="#">Settings</a><a href="#" class="danger">Remove</a><a href="#">Archive</a></div></td>
-                  </tr>
-                  <tr>
-                    <td><span class="health-dot healthy" title="Healthy"></span></td>
-                    <td>legacy-app</td>
-                    <td style="font-family: Consolas, Monaco, monospace; font-size: 11px;">~/work/legacy-app</td>
-                    <td><div class="lang-badges"><span class="lang-badge">Python</span><span class="lang-badge">Docker</span></div></td>
-                    <td>3 days ago</td>
-                    <td><span class="status-badge paused">Paused</span></td>
-                    <td><div class="project-actions"><a href="#">Open</a><a href="#">Settings</a><a href="#" class="danger">Remove</a><a href="#">Archive</a></div></td>
-                  </tr>
-                  <tr>
-                    <td><span class="health-dot error" title="Directory missing"></span></td>
-                    <td>experiment</td>
-                    <td style="font-family: Consolas, Monaco, monospace; font-size: 11px;">/old/path/experiment</td>
-                    <td><div class="lang-badges"><span class="lang-badge">C#</span></div></td>
-                    <td>1 week ago</td>
-                    <td><span class="status-badge error">Error</span></td>
-                    <td><div class="project-actions"><a href="#">Open</a><a href="#">Settings</a><a href="#" class="danger">Remove</a><a href="#">Archive</a></div></td>
-                  </tr>
-                </tbody>
-              </table>
+
+            <div class="projects-grid-bento">
+              
+              <!-- Card 1: Current -->
+              <div class="project-card-bento current">
+                <div class="project-card-header">
+                  <div class="project-card-title-area">
+                    <span class="health-dot healthy" title="Healthy"></span>
+                    <span class="project-card-title">puppet-master-rs</span>
+                  </div>
+                  <span class="status-badge">Idle</span>
+                </div>
+                <div class="project-card-path" title="~/Cursor/Puppet Master">~/Cursor/Puppet Master</div>
+                <div class="project-card-tags">
+                  <span class="lang-badge">Rust</span>
+                  <span class="lang-badge">Slint</span>
+                </div>
+                <div class="project-card-footer">
+                  <span class="project-last-opened">Active now</span>
+                  <div class="project-card-actions">
+                    <button class="project-action-btn" title="Open" onclick="event.stopPropagation();">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </button>
+                    <button class="project-action-btn" title="Settings" onclick="event.stopPropagation(); document.getElementById('projectSettingsModal').classList.add('visible');">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    </button>
+                    <button class="project-action-btn" title="Archive" onclick="event.stopPropagation();">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+                    </button>
+                    <button class="project-action-btn danger" title="Remove" onclick="event.stopPropagation();">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 2 -->
+              <div class="project-card-bento">
+                <div class="project-card-header">
+                  <div class="project-card-title-area">
+                    <span class="health-dot healthy" title="Healthy"></span>
+                    <span class="project-card-title">api-backend</span>
+                  </div>
+                  <span class="status-badge">Running</span>
+                </div>
+                <div class="project-card-path" title="~/projects/api-backend">~/projects/api-backend</div>
+                <div class="project-card-tags">
+                  <span class="lang-badge">Rust</span>
+                  <span class="lang-badge">Docker</span>
+                </div>
+                <div class="project-card-footer">
+                  <span class="project-last-opened">1h ago</span>
+                  <div class="project-card-actions">
+                    <button class="project-action-btn" title="Open" onclick="event.stopPropagation();">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </button>
+                    <button class="project-action-btn" title="Settings" onclick="event.stopPropagation(); document.getElementById('projectSettingsModal').classList.add('visible');">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    </button>
+                    <button class="project-action-btn" title="Archive" onclick="event.stopPropagation();">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+                    </button>
+                    <button class="project-action-btn danger" title="Remove" onclick="event.stopPropagation();">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="project-card-bento">
+                <div class="project-card-header">
+                  <div class="project-card-title-area">
+                    <span class="health-dot stale" title="Stale config"></span>
+                    <span class="project-card-title">docs-site</span>
+                  </div>
+                  <span class="status-badge idle">Idle</span>
+                </div>
+                <div class="project-card-path" title="~/repos/docs-site">~/repos/docs-site</div>
+                <div class="project-card-tags">
+                  <span class="lang-badge">JS/TS</span>
+                </div>
+                <div class="project-card-footer">
+                  <span class="project-last-opened">Yesterday</span>
+                  <div class="project-card-actions">
+                    <button class="project-action-btn" title="Open" onclick="event.stopPropagation();">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </button>
+                    <button class="project-action-btn" title="Settings" onclick="event.stopPropagation(); document.getElementById('projectSettingsModal').classList.add('visible');">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    </button>
+                    <button class="project-action-btn" title="Archive" onclick="event.stopPropagation();">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+                    </button>
+                    <button class="project-action-btn danger" title="Remove" onclick="event.stopPropagation();">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card 4 -->
+              <div class="project-card-bento">
+                <div class="project-card-header">
+                  <div class="project-card-title-area">
+                    <span class="health-dot error" title="Directory missing"></span>
+                    <span class="project-card-title">experiment</span>
+                  </div>
+                  <span class="status-badge error">Error</span>
+                </div>
+                <div class="project-card-path" title="/old/path/experiment">/old/path/experiment</div>
+                <div class="project-card-tags">
+                  <span class="lang-badge">C#</span>
+                </div>
+                <div class="project-card-footer">
+                  <span class="project-last-opened">1 week ago</span>
+                  <div class="project-card-actions">
+                    <button class="project-action-btn" title="Open" onclick="event.stopPropagation();">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </button>
+                    <button class="project-action-btn" title="Settings" onclick="event.stopPropagation(); document.getElementById('projectSettingsModal').classList.add('visible');">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    </button>
+                    <button class="project-action-btn" title="Archive" onclick="event.stopPropagation();">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+                    </button>
+                    <button class="project-action-btn danger" title="Remove" onclick="event.stopPropagation();">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Card 5: legacy-app -->
+              <div class="project-card-bento">
+                <div class="project-card-header">
+                  <div class="project-card-title-area">
+                    <span class="health-dot healthy" title="Healthy"></span>
+                    <span class="project-card-title">legacy-app</span>
+                  </div>
+                  <span class="status-badge paused">Paused</span>
+                </div>
+                <div class="project-card-path" title="~/work/legacy-app">~/work/legacy-app</div>
+                <div class="project-card-tags">
+                  <span class="lang-badge">Python</span>
+                  <span class="lang-badge">Docker</span>
+                </div>
+                <div class="project-card-footer">
+                  <span class="project-last-opened">3 days ago</span>
+                  <div class="project-card-actions">
+                    <button class="project-action-btn" title="Open" onclick="event.stopPropagation();">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </button>
+                    <button class="project-action-btn" title="Settings" onclick="event.stopPropagation(); document.getElementById('projectSettingsModal').classList.add('visible');">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    </button>
+                    <button class="project-action-btn" title="Archive" onclick="event.stopPropagation();">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+                    </button>
+                    <button class="project-action-btn danger" title="Remove" onclick="event.stopPropagation();">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
             </div>
+
+            <!-- Settings Modal -->
+            <div id="projectSettingsModal" class="project-settings-modal" onclick="if(event.target===this) this.classList.remove('visible')">
+              <div class="project-settings-content" onclick="event.stopPropagation()">
+                <div class="psm-header">
+                  <div class="psm-title">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    Project Settings
+                  </div>
+                  <button class="psm-close" onclick="document.getElementById('projectSettingsModal').classList.remove('visible')">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                  </button>
+                </div>
+                <div class="psm-body">
+                  <div class="psm-sidebar">
+                    <div class="psm-tab active">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                      General
+                    </div>
+                    <div class="psm-tab">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                      Environment
+                    </div>
+                    <div class="psm-tab">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                      Agent Behavior
+                    </div>
+                  </div>
+                  <div class="psm-pane">
+                    <div class="psm-section">
+                      <div class="psm-section-title">Core Settings</div>
+                      <div class="psm-field">
+                        <label>Project Name</label>
+                        <input type="text" value="puppet-master-rs">
+                      </div>
+                      <div class="psm-field">
+                        <label>Working Directory</label>
+                        <input type="text" value="~/Cursor/Puppet Master">
+                      </div>
+                    </div>
+                    <div class="psm-section">
+                      <div class="psm-section-title">Features</div>
+                      <div class="psm-toggle-row">
+                        <div>
+                          <div class="psm-toggle-label">Auto-save Files</div>
+                          <div class="psm-toggle-desc">Automatically save changes when switching away.</div>
+                        </div>
+                        <input type="checkbox" checked style="width:16px;height:16px;">
+                      </div>
+                      <div class="psm-toggle-row">
+                        <div>
+                          <div class="psm-toggle-label">Enable Hit-in-the-Loop</div>
+                          <div class="psm-toggle-desc">Require approval before executing destructive actions.</div>
+                        </div>
+                        <input type="checkbox" checked style="width:16px;height:16px;">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="psm-footer">
+                  <button class="psm-btn" onclick="document.getElementById('projectSettingsModal').classList.remove('visible')">Cancel</button>
+                  <button class="psm-btn primary" onclick="document.getElementById('projectSettingsModal').classList.remove('visible')">Save Changes</button>
+                </div>
+              </div>
+            </div>
+
           </div>
           <div class="page page-wizard">
 
@@ -4238,7 +4574,20 @@ impl Dashboard {
                   </div>
                   <div class="wizard-fields">
                     <div><label>Project Path</label><input type="text" class="wizard-input" placeholder="/path/to/project"></div>
-                    <div style="display:flex; align-items:center; gap:var(--sm); margin-top:var(--md);"><input type="checkbox" id="wizGh" style="transform: scale(1.2);"><label for="wizGh" style="cursor:pointer; margin:0;">Create GitHub repo automatically</label></div>
+                    <div style="display:flex; align-items:center; gap:var(--sm); margin-top:var(--md);"><input type="checkbox" id="wizGh" style="transform: scale(1.2);" onchange="document.getElementById('ghSettings').style.display = this.checked ? 'block' : 'none';"><label for="wizGh" style="cursor:pointer; margin:0;">Create GitHub repo automatically</label></div>
+                    <div id="ghSettings" style="display:none; margin-top:var(--md); padding:var(--xl); background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+                      <div style="font-family: var(--display-font); font-size: 14px; font-weight:600; margin-bottom: var(--lg); border-bottom: 1px solid var(--border-light); padding-bottom: 4px; display:flex; align-items:center; gap:var(--sm);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg> Repository Configuration</div>
+                      <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--lg); margin-bottom:var(--lg);">
+                        <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Repository Name</label><input type="text" class="wizard-input" placeholder="my-awesome-project"></div>
+                        <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Visibility</label><select class="wizard-select"><option>Public</option><option>Private</option><option>Internal</option></select></div>
+                      </div>
+                      <div style="margin-bottom:var(--lg);"><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Description</label><input type="text" class="wizard-input" placeholder="A short description of your repository"></div>
+                      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:var(--lg);">
+                        <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">.gitignore Template</label><select class="wizard-select"><option>None</option><option>Node</option><option>Rust</option><option>Python</option></select></div>
+                        <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">License</label><select class="wizard-select"><option>None</option><option>MIT</option><option>Apache 2.0</option><option>GPL-3.0</option></select></div>
+                        <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Default Branch</label><input type="text" class="wizard-input" value="main"></div>
+                      </div>
+                    </div>
                   </div>
                   <div class="wizard-btn-row"><div></div><button class="wizard-btn primary btn-icon" data-step-target="1">Next Step <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div>
                 </div>
@@ -4247,10 +4596,65 @@ impl Dashboard {
               <div class="wizard-step-panel" data-wizard-panel="1">
                 <div class="wizard-form-container">
                   <div><div class="wizard-form-header">Provide Requirements</div><div class="wizard-form-desc">Upload existing documents or use the AI builder to gather requirements.</div></div>
-                  <div class="wizard-fields">
+                  <div id="reqBuilderStart" class="wizard-fields">
                     <button class="wizard-btn btn-icon" style="justify-content: center; padding: var(--xl);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg> Upload Files (Max 10, 5MB each)</button>
                     <div style="text-align: center; color: var(--text-muted); font-size: 13px; margin: var(--sm) 0;">— OR —</div>
-                    <button class="wizard-btn primary btn-icon" style="justify-content: center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Open Requirements Doc Builder</button>
+                    <button class="wizard-btn primary btn-icon" style="justify-content: center;" onclick="document.getElementById('chatPanel').classList.remove('hidden'); "><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Open Requirements Doc Builder</button>
+                  </div>
+
+                  <!-- Builder Chat Flow -->
+
+                  <div class="wizard-fields" style="margin-top: var(--xl); padding: var(--xl); background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                    <div style="font-family: var(--display-font); font-size: 16px; margin-bottom: var(--lg); border-bottom: 1px solid var(--border-light); padding-bottom: var(--sm); display:flex; align-items:center; gap:var(--sm);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Builder & Interview Configuration</div>
+                    
+                    <div style="font-family: var(--display-font); font-size: 13px; color: var(--text-secondary); margin-bottom: var(--sm);">Requirements Doc Builder Stages</div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap: var(--md); margin-bottom: var(--xl);">
+                      <!-- Intake Stage -->
+                      <div style="padding: var(--md); border: 1px solid var(--border-light); border-radius: 6px; background: var(--surface);">
+                        <div style="font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: var(--sm);">Intake / Clarification</div>
+                        <label style="display:block; margin-bottom:var(--xs); font-size:12px;">Provider</label>
+                        <select class="wizard-select" style="padding: 4px 8px; font-size: 12px; margin-bottom: var(--sm);"><option>Claude Code</option><option>Cursor</option><option>Gemini</option><option>OpenCode</option><option>Codex</option><option>Copilot</option></select>
+                        <label style="display:block; margin-bottom:var(--xs); font-size:12px;">Model</label>
+                        <select class="wizard-select" style="padding: 4px 8px; font-size: 12px;"><option>sonnet-4.5</option><option>opus-4</option></select>
+                      </div>
+                      <!-- Drafting Stage -->
+                      <div style="padding: var(--md); border: 1px solid var(--border-light); border-radius: 6px; background: var(--surface);">
+                        <div style="font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: var(--sm);">Drafting</div>
+                        <label style="display:block; margin-bottom:var(--xs); font-size:12px;">Provider</label>
+                        <select class="wizard-select" style="padding: 4px 8px; font-size: 12px; margin-bottom: var(--sm);"><option>Cursor</option><option>Claude Code</option><option>Gemini</option><option>OpenCode</option><option>Codex</option><option>Copilot</option></select>
+                        <label style="display:block; margin-bottom:var(--xs); font-size:12px;">Model</label>
+                        <select class="wizard-select" style="padding: 4px 8px; font-size: 12px;"><option>sonnet-4.5-thinking</option><option>opus-4</option></select>
+                      </div>
+                      <!-- Review Stage -->
+                      <div style="padding: var(--md); border: 1px solid var(--border-light); border-radius: 6px; background: var(--surface);">
+                        <div style="font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-bottom: var(--sm);">Review / Quality</div>
+                        <label style="display:block; margin-bottom:var(--xs); font-size:12px;">Provider</label>
+                        <select class="wizard-select" style="padding: 4px 8px; font-size: 12px; margin-bottom: var(--sm);"><option>Claude Code</option><option>Cursor</option><option>Gemini</option><option>OpenCode</option><option>Codex</option><option>Copilot</option></select>
+                        <label style="display:block; margin-bottom:var(--xs); font-size:12px;">Model</label>
+                        <select class="wizard-select" style="padding: 4px 8px; font-size: 12px;"><option>opus-4</option><option>sonnet-4.5</option></select>
+                      </div>
+                    </div>
+                    
+                    <div style="font-family: var(--display-font); font-size: 13px; color: var(--text-secondary); margin-bottom: var(--sm);">Interview Rules</div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap: var(--lg); margin-bottom: var(--md);">
+                      <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Min Questions / Phase</label><input type="number" class="wizard-input" value="3"></div>
+                      <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Max Questions / Phase</label>
+                        <div style="display:flex; gap:var(--xs); align-items:center;">
+                          <input type="number" class="wizard-input" value="8" style="flex:1;">
+                          <label style="display:flex; align-items:center; gap:var(--xs); margin-left:var(--sm); cursor:pointer;"><input type="checkbox"> Unlimited</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="display:flex; gap:var(--xl); padding: var(--md); background: var(--surface); border: 1px solid var(--border-light); border-radius: 6px; margin-bottom: var(--lg);">
+                      <label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer; font-size:13px; font-weight:500;"><input type="checkbox" checked style="transform:scale(1.2);"> Require Architecture Confirmation</label>
+                      <label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer; font-size:13px; font-weight:500;"><input type="checkbox" checked style="transform:scale(1.2);"> Generate initial AGENTS.md</label>
+                    </div>
+
+                    <div style="font-family: var(--display-font); font-size: 13px; color: var(--text-secondary); margin-bottom: var(--sm);">Requirements Multi-Pass Review</div>
+                    <div style="display:flex; gap:var(--xl); padding: var(--md); background: var(--surface); border: 1px solid var(--border-light); border-radius: 6px;">
+                      <label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer; font-size:13px; font-weight:500;"><input type="checkbox" checked style="transform:scale(1.2);"> Enable Document Validation (Pass 1)</label>
+                      <label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer; font-size:13px; font-weight:500;"><input type="checkbox" checked style="transform:scale(1.2);"> Enable Canonical Alignment (Pass 2)</label>
+                    </div>
                   </div>
                   <div class="wizard-btn-row"><button class="wizard-btn" data-step-target="0">Back</button><button class="wizard-btn primary btn-icon" data-step-target="2">Start Interview <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div>
                 </div>
@@ -4273,28 +4677,122 @@ impl Dashboard {
                   </div>
                   <div class="wizard-binder-content">
                     <div class="wizard-binder-toolbar" style="background: var(--surface-elevated); border-bottom: 1px solid var(--border-light);"><div class="wizard-btn-group"><span style="font-family: var(--display-font); font-size: 13px; color: var(--text-primary);">Live Document: <span style="color: var(--text-secondary); font-family: var(--body-font);">architecture.md</span> <span class="wizard-activity-pulse" style="display:inline-block; margin-left:var(--sm);"></span></span></div><div class="wizard-btn-group"><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit</button></div></div>
-                    <div class="wizard-binder-view mock-md"><h1>Architecture Draft</h1><p><em>This document is actively being written by the Architect Reviewer subagent based on our conversation...</em></p><h2>1. Framework Choice</h2><p>The user has specified a preference for <strong>Slint</strong> over Iced or React for the GUI framework.</p><h2>2. Data Flow</h2><div class="mock-mermaid">graph TD;<br>A[Slint UI] -->|Channels| B(Rust App State);<br>B --> C{Redb Persistence};<br>C -->|Orchestrator| D[Agent Runners];</div></div>
+                    <div class="wizard-binder-view mock-md">
+                      <h1>Architecture Draft</h1>
+                      <p><em>This document is actively being written by the Architect Reviewer subagent based on our conversation...</em></p>
+                      <h2>1. Framework Choice</h2>
+                      <p>The system is architected as a native desktop application using <strong>Rust</strong>. The frontend leverages the <strong>Slint UI framework</strong> instead of Iced or React to provide a fluid, premium desktop experience with declarative, easily maintained component definitions.</p>
+                      <h2>2. Multi-Agent Data Flow</h2>
+                      <div class="mock-mermaid">graph TD;<br>A[Slint UI Components] -->|MPSC Channels| B(Rust Orchestrator Core);<br>B --> C{Redb Persistence Layer};<br>B --> D[Agent Task Queue];<br>D --> E((Cursor Provider));<br>D --> F((Claude Provider));<br>E --> C;<br>F --> C;</div>
+                      <h2>3. State Management</h2>
+                      <p>State is entirely event-sourced through the Orchestrator loop. All state transitions regarding execution tiers (Phase -> Task -> Subtask -> Iteration) are handled sequentially to avoid race conditions and guarantee determinism.</p>
+                      <h2>4. Persistence Strategy</h2>
+                      <p>Data persistence relies on <strong>redb</strong> (an embedded key-value store in Rust) and the standard file system. File system interactions are strictly guarded by the <code>FileSafe</code> verification gates to prevent accidental overwrites during autonomous execution.</p>
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div class="wizard-step-panel" data-wizard-panel="3">
                 <div class="wizard-binder-container">
-                  <div class="wizard-binder-sidebar"><div class="wizard-binder-sidebar-title">Generated Documents</div><div class="wizard-doc-pill active"><span>Product Requirements</span><span class="wizard-doc-status approved">[PASS]</span></div><div class="wizard-doc-pill"><span>Contract Seeds</span><span class="wizard-doc-status review">[REVIEW]</span></div><div class="wizard-doc-pill"><span>Architecture</span><span class="wizard-doc-status">[DRAFT]</span></div></div>
+                  <div class="wizard-binder-sidebar">
+                    <div class="wizard-binder-sidebar-title">Generated Documents</div>
+                    <div id="pill-prd" class="wizard-doc-pill prd-pill active" onclick="showPRDMock('prd')"><span>Product Requirements</span><span class="wizard-doc-status approved">[PASS]</span></div>
+                    <div id="pill-seeds" class="wizard-doc-pill prd-pill" onclick="showPRDMock('seeds')"><span>Contract Seeds</span><span class="wizard-doc-status review">[REVIEW]</span></div>
+                    <div id="pill-arch" class="wizard-doc-pill prd-pill" onclick="showPRDMock('arch')"><span>Architecture</span><span class="wizard-doc-status">[DRAFT]</span></div>
+                  </div>
                   <div class="wizard-binder-content">
                     <div class="wizard-binder-toolbar"><div class="wizard-btn-group"><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit</button><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Export</button></div><div class="wizard-btn-group"><button class="wizard-btn" data-step-target="2">Back</button><button class="wizard-btn primary btn-icon" data-step-target="4">Approve & Continue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div></div>
-                    <div class="wizard-binder-view mock-md"><h1>Product Requirements Document</h1><p><strong>Status:</strong> Approved | <strong>Version:</strong> 1.0</p><h2>1. Scope</h2><p>The goal is to develop a comprehensive command-line interface for the Puppet Master orchestration engine.</p><h2>2. Architecture Draft</h2><div class="mock-mermaid">graph TD;<br>A[User CLI] -->|Commands| B(Core API);<br>B --> C{{Agent Pool}};<br>C -->|Schedule| D[Orchestrator];</div><h2>3. Acceptance Criteria</h2><p>- The application must launch in under 500ms.<br>- Agents must be able to resume crashed sessions from checkpoints.</p></div>
+                    <div id="prd-mock-content" class="wizard-binder-view mock-md">
+                      <h1>Product Requirements Document</h1>
+                      <p><strong>Status:</strong> Approved | <strong>Version:</strong> 1.0</p>
+                      <h2>1. Executive Summary</h2>
+                      <p>Puppet Master is a cross-platform desktop IDE designed to orchestrate AI agents for automated coding. It leverages Rust and Slint for a highly responsive user experience.</p>
+                      <h2>2. Functional Requirements</h2>
+                      <p><ul><li>FR1: The system shall support 4 tier phases for execution: Phase, Task, Subtask, Iteration.</li><li>FR2: It must integrate natively with multiple providers: Cursor, Gemini, Codex, Claude Code, Copilot.</li><li>FR3: A visual node graph (DAG) representation of tasks must be provided.</li><li>FR4: Must include a multi-agent interview wizard for capturing requirements.</li></ul></p>
+                      <h2>3. Non-Functional Requirements</h2>
+                      <p><ul><li>NFR1: Native performance with application launch time under 500ms.</li><li>NFR2: The UI framework must be based on Slint for declarative performance.</li><li>NFR3: Agent memory scaling must not exceed token quotas (budget caps must be supported).</li></ul></p>
+                      <h2>4. Multi-Pass Review Process</h2>
+                      <p>The system integrates an automated multi-pass document validation and canonical alignment to ensure the PRD conforms strictly to the schema before any code execution starts.</p>
+                      <h2>5. Out of Scope</h2>
+                      <p>Mobile application and cloud deployment orchestration are deferred to version 2.0.</p>
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div class="wizard-step-panel" data-wizard-panel="4">
                 <div class="wizard-form-container">
-                  <div><div class="wizard-form-header">Interview & Execution Configuration</div><div class="wizard-form-desc">Configure your subagent interaction parameters and execution environments.</div></div>
-                  <div style="display:grid;  gap: var(--md);">
-                    <div class="wizard-fields"><div style="font-family: var(--display-font); font-size: 16px; margin-bottom: var(--md); border-bottom: 1px solid var(--border-light); padding-bottom: var(--sm);">Execution Tiers</div><div style="display:flex; gap: var(--lg);"><div style="flex:1;"><label>Provider</label><select class="wizard-select"><option>Claude Code</option><option>Cursor</option><option>Gemini</option><option>OpenCode</option></select></div><div style="flex:1;"><label>Model</label><select class="wizard-select"><option>sonnet-4.5</option><option>opus-4</option></select></div></div><div><label>AI Reasoning Level</label><select class="wizard-select"><option>Medium</option><option selected>High</option><option>Max</option></select></div><div><label>Vision Provider</label><select class="wizard-select"><option>Gemini Flash</option><option>Claude Sonnet</option></select></div></div>
-                    <div class="wizard-fields"><div style="font-family: var(--display-font); font-size: 16px; margin-bottom: var(--md); border-bottom: 1px solid var(--border-light); padding-bottom: var(--sm);">Interview Settings</div><div style="display:flex; gap: var(--lg);"><div style="flex:1;"><label>Min Questions / Phase</label><input type="number" class="wizard-input" value="3"></div><div style="flex:1;"><label>Max Questions / Phase</label><div style="display:flex; gap:var(--xs); align-items:center;"><input type="number" class="wizard-input" value="8" style="flex:1;"><label style="display:flex; align-items:center; gap:var(--xs); margin-left:var(--sm);"><input type="checkbox"> Unlimited</label></div></div></div><div style="display:flex; flex-direction:column; gap:var(--md); margin-top:var(--md);"><label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer;"><input type="checkbox" checked style="transform:scale(1.2);"> Require Architecture Confirmation</label><label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer;"><input type="checkbox" checked style="transform:scale(1.2);"> Generate initial AGENTS.md</label></div></div>
-                    <div class="wizard-fields" style="grid-column: span 2;"><div style="font-family: var(--display-font); font-size: 16px; margin-bottom: var(--md); border-bottom: 1px solid var(--border-light); padding-bottom: var(--sm);">Multi-Pass Review</div><label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer;"><input type="checkbox" checked style="transform:scale(1.2);"> Enable Multi-Pass Review <span style="color:var(--accent-orange); font-size:11px; margin-left:var(--md);">[WARN] Increases token usage rapidly</span></label><div style="display:flex; gap: var(--lg); margin-top:var(--sm);"><div style="flex:1;"><label>Number of Reviews</label><input type="number" class="wizard-input" value="2" min="1" max="5"></div><div style="flex:1;"><label>Max Subagents</label><input type="number" class="wizard-input" value="3" min="1" max="10"></div><div style="flex:1;"><label>Use Different Models</label><select class="wizard-select"><option selected>Yes</option><option>No</option></select></div></div></div>
+                  <div>
+                    <div class="wizard-form-header">Execution Tiers Configuration</div>
+                    <div class="wizard-form-desc">Configure the AI providers and models for each tier of the workflow.</div>
+                  </div>
+                  <div style="display:flex; flex-direction:column; gap: var(--xl);">
+                    
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--lg);">
+                      <!-- Phase Tier -->
+                      <div class="wizard-fields" style="padding: var(--lg); background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                        <div style="font-family: var(--display-font); font-size: 14px; font-weight:600; margin-bottom: var(--sm); border-bottom: 1px solid var(--border-light); padding-bottom: 8px; display:flex; align-items:center; gap:var(--sm);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg> 1. Phase Tier</div>
+                        <div style="display:flex; flex-direction:column; gap:var(--sm);">
+                          <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Provider</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option>Claude Code</option><option>Cursor</option><option>Gemini</option><option>OpenCode</option><option>Codex</option><option>Copilot</option></select></div>
+                          <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Model</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option>sonnet-4.5</option><option>opus-4</option></select></div>
+                          <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--sm);">
+                            <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Reasoning Effort</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option>Medium</option><option selected>High</option><option>Max</option></select></div>
+                            <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Plan Mode</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option>Auto</option><option>Strict</option></select></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Task Tier -->
+                      <div class="wizard-fields" style="padding: var(--lg); background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                        <div style="font-family: var(--display-font); font-size: 14px; font-weight:600; margin-bottom: var(--sm); border-bottom: 1px solid var(--border-light); padding-bottom: 8px; display:flex; align-items:center; gap:var(--sm);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> 2. Task Tier</div>
+                        <div style="display:flex; flex-direction:column; gap:var(--sm);">
+                          <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Provider</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option>Claude Code</option><option>Cursor</option><option>Gemini</option><option>OpenCode</option><option>Codex</option><option>Copilot</option></select></div>
+                          <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Model</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option>sonnet-4.5</option><option>opus-4</option></select></div>
+                          <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--sm);">
+                            <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Reasoning Effort</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option>Medium</option><option selected>High</option><option>Max</option></select></div>
+                            <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Plan Mode</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option>Auto</option><option>Strict</option></select></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Subtask Tier -->
+                      <div class="wizard-fields" style="padding: var(--lg); background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                        <div style="font-family: var(--display-font); font-size: 14px; font-weight:600; margin-bottom: var(--sm); border-bottom: 1px solid var(--border-light); padding-bottom: 8px; display:flex; align-items:center; gap:var(--sm);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg> 3. Subtask Tier</div>
+                        <div style="display:flex; flex-direction:column; gap:var(--sm);">
+                          <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Provider</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option selected>Cursor</option><option>Claude Code</option><option>Gemini</option><option>OpenCode</option><option>Codex</option><option>Copilot</option></select></div>
+                          <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Model</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option>sonnet-4.5-thinking</option><option>opus-4</option></select></div>
+                          <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--sm);">
+                            <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Reasoning Effort</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option>Medium</option><option selected>High</option><option>Max</option></select></div>
+                            <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Output Format</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option>Stream-JSON</option><option>Text</option></select></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Iteration Tier -->
+                      <div class="wizard-fields" style="padding: var(--lg); background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                        <div style="font-family: var(--display-font); font-size: 14px; font-weight:600; margin-bottom: var(--sm); border-bottom: 1px solid var(--border-light); padding-bottom: 8px; display:flex; align-items:center; gap:var(--sm);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> 4. Iteration Tier</div>
+                        <div style="display:flex; flex-direction:column; gap:var(--sm);">
+                          <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Provider</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option selected>Cursor</option><option>Claude Code</option><option>Gemini</option><option>OpenCode</option><option>Codex</option><option>Copilot</option></select></div>
+                          <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Model</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option>sonnet-4.5</option><option>opus-4</option></select></div>
+                          <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--sm);">
+                            <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Reasoning Effort</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option>Low</option><option selected>Medium</option><option>High</option></select></div>
+                            <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Ask Mode</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option>Auto-approve</option><option>Require Prompt</option></select></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="wizard-fields" style="padding: var(--lg); background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                      <div style="font-family: var(--display-font); font-size: 14px; font-weight:600; margin-bottom: var(--sm); border-bottom: 1px solid var(--border-light); padding-bottom: 8px; display:flex; align-items:center; gap:var(--sm);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> Post-Interview Document Validation</div>
+                      <label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer;"><input type="checkbox" checked style="transform:scale(1.2);"> <span style="font-weight: 500;">Enable Multi-Pass Review</span> <span style="background:var(--accent-orange); color:#1a1a1a; padding: 2px 6px; border-radius: 4px; font-size:10px; font-weight:700; margin-left:var(--sm);">WARN</span><span style="color:var(--text-secondary); font-size:11px;">Increases token usage rapidly</span></label>
+                      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap: var(--lg); margin-top:var(--md);">
+                        <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Number of Reviews</label><input type="number" class="wizard-input" value="2" min="1" max="5" style="padding: 6px; font-size: 13px;"></div>
+                        <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Max Subagents</label><input type="number" class="wizard-input" value="3" min="1" max="10" style="padding: 6px; font-size: 13px;"></div>
+                        <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Use Different Models</label><select class="wizard-select" style="padding: 6px; font-size: 13px;"><option selected>Yes</option><option>No</option></select></div>
+                      </div>
+                    </div>
+
                   </div>
                   <div class="wizard-btn-row"><button class="wizard-btn" data-step-target="3">Back</button><button class="wizard-btn primary btn-icon" data-step-target="5">Review Plan <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div>
                 </div>
@@ -4302,10 +4800,28 @@ impl Dashboard {
 
               <div class="wizard-step-panel" data-wizard-panel="5">
                 <div class="wizard-binder-container">
-                  <div class="wizard-binder-sidebar"><div class="wizard-binder-sidebar-title">Execution</div><div class="wizard-doc-pill active"><span>Execution Plan</span><span class="wizard-doc-status approved">[READY]</span></div><div class="wizard-doc-pill"><span>Acceptance Manifest</span><span class="wizard-doc-status">[READY]</span></div></div>
+                  <div class="wizard-binder-sidebar">
+                    <div class="wizard-binder-sidebar-title">Execution</div>
+                    <div id="pill-exec" class="wizard-doc-pill exec-pill active" onclick="showExecMock('exec')"><span>Execution Plan</span><span class="wizard-doc-status approved">[READY]</span></div>
+                    <div id="pill-manifest" class="wizard-doc-pill exec-pill" onclick="showExecMock('manifest')"><span>Acceptance Manifest</span><span class="wizard-doc-status">[READY]</span></div>
+                  </div>
                   <div class="wizard-binder-content">
                     <div class="wizard-binder-toolbar"><div class="wizard-btn-group"></div><div class="wizard-btn-group"><button class="wizard-btn" data-step-target="4">Back</button><button class="wizard-btn primary btn-icon" onclick="document.querySelector('.page-tab[data-page=\'orchestrator\']').click(); setTimeout(()=>document.querySelector('.orch-tab[data-tab=\'node_graph\']').click(), 50);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> START CHAIN</button></div></div>
-                    <div class="wizard-binder-view mock-md"><h1>Execution Plan</h1><h2>Phase 1: Foundation</h2><p><strong>Subagent:</strong> architect-reviewer</p><p>- Initialize repository.<br>- Set up base module structure.</p><h2>Phase 2: Core Engine</h2><p><strong>Subagent:</strong> rust-engineer</p><p>- Implement orchestrator state machine.</p></div>
+                    <div id="exec-mock-content" class="wizard-binder-view mock-md">
+                      <h1>Execution Plan</h1>
+                      <h2>Phase 1: Foundation</h2>
+                      <p><strong>Subagent:</strong> architect-reviewer</p>
+                      <p>- Initialize Rust binary crate and workspace.<br>- Setup Redb persistence schema and initial migrations.<br>- Add standard `cargo fmt` and `clippy` checks to verification gates.</p>
+                      <h2>Phase 2: GUI Core</h2>
+                      <p><strong>Subagent:</strong> slint-engineer</p>
+                      <p>- Stub out the main `AppWindow` in Slint.<br>- Implement bridging channels between the Rust core and UI.<br>- Compile dummy placeholder screens for Dashboard and Chat.</p>
+                      <h2>Phase 3: Agent Orchestration</h2>
+                      <p><strong>Subagent:</strong> backend-developer</p>
+                      <p>- Create state machine logic for Phase/Task/Subtask execution.<br>- Wire in the Cursor CLI and Claude Code CLI providers.<br>- Set up concurrency limiters and rate-limit backoff handling.</p>
+                      <h2>Phase 4: Integration & Tests</h2>
+                      <p><strong>Subagent:</strong> qa-engineer</p>
+                      <p>- Write end-to-end tests for orchestrator state transitions.<br>- Ensure GUI builds successfully headless for CI verification.</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -4768,23 +5284,27 @@ impl Dashboard {
                   <div class="bento-card" data-inspector-view="general" data-category="core" style="animation: slideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg> General</div>
                     <div class="bento-desc">Core application appearance and behavior.</div>
-                    <div class="bento-surface">
-                      <label>Theme <select><option>Retro Dark</option><option>Basic Light</option></select></label>
-                      <label>UI Scale <input type="range" min="75" max="150" value="100"></label>
-                      <label><input type="checkbox" checked> Interaction Mode (ELI5)</label>
+                    <div class="bento-surface row">
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Theme <select style="width: 100%;"><option>Retro Dark</option><option>Basic Light</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">UI Scale <input type="range" min="75" max="150" value="100" style="width: 100%;"></label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Interaction Mode (ELI5)</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Enable UI Animations</label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Font Family <select style="width: 100%;"><option>Orbitron & Rajdhani</option><option>Inter & Mono</option></select></label>
                     </div>
-                    <button class="bento-action">Configure 12 settings...</button>
+                    <button class="bento-action" style="margin-top: auto;">Configure 12 settings...</button>
                   </div>
                   <!-- Branching Card -->
                   <div class="bento-card" data-inspector-view="branching" data-category="core" style="animation: slideInBottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 100ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg> Tiers & Branching</div>
                     <div class="bento-desc">Git operations and parallel execution rules.</div>
-                    <div class="bento-surface">
-                      <label><input type="checkbox" checked> Enable Git Operations</label>
-                      <label><input type="checkbox"> Auto PR Creation</label>
-                      <label><input type="checkbox"> Parallel Execution</label>
+                    <div class="bento-surface row">
+                      <label style="width: 100%;"><input type="checkbox" checked> Enable Git Operations</label>
+                      <label style="width: 100%;"><input type="checkbox"> Auto PR Creation</label>
+                      <label style="width: 100%;"><input type="checkbox"> Parallel Execution</label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Merge Threshold <select style="width: 100%;"><option>Auto-merge</option><option>Require Review</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Tier Mode <select style="width: 100%;"><option>Standard</option><option>Aggressive</option></select></label>
                     </div>
-                    <button class="bento-action">Configure 8 settings...</button>
+                    <button class="bento-action" style="margin-top: auto;">Configure 8 settings...</button>
                   </div>
                   <!-- Memory Card -->
                   <div class="bento-card" data-inspector-view="memory" data-category="features" style="animation: zoomInBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 200ms forwards;">
@@ -4801,34 +5321,43 @@ impl Dashboard {
                   <div class="bento-card" data-inspector-view="models" data-category="features" style="animation: slideInRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 300ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg> Models & Media</div>
                     <div class="bento-desc">Global defaults and provider priorities.</div>
-                    <div class="bento-surface">
-                      <label>Default Model <select><option>claude-3-5-sonnet</option></select></label>
-                      <label>Variant <select><option>powerful</option></select></label>
-                      <label><input type="checkbox"> Image Gen</label>
+                    <div class="bento-surface row">
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Platform <select style="width: 100%;"><option>Anthropic</option><option>OpenAI</option><option>Google</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Default Model <select style="width: 100%;"><option>claude-3-5-sonnet</option><option>claude-3-opus</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Variant <select style="width: 100%;"><option>powerful</option><option>fast</option></select></label>
+                      <label style="width: 100%;"><input type="checkbox"> Enable Image Gen</label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Max Tokens <input type="number" value="8192" style="width: 100%;"></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Temperature <input type="range" min="0" max="100" value="70" style="width: 100%;"></label>
                     </div>
-                    <button class="bento-action">Configure 10 settings...</button>
+                    <button class="bento-action" style="margin-top: auto;">Configure 10 settings...</button>
                   </div>
                   <!-- Security Card -->
                   <div class="bento-card" data-inspector-view="security" data-category="features" style="animation: slideInBottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 400ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2-1 4-2 7-2 2.89 0 4.7 1 6.7 2a1 1 0 0 1 1 1z"/></svg> Security & FileSafe</div>
                     <div class="bento-desc">Control what the agent is allowed to execute and edit.</div>
-                    <div class="bento-surface">
-                      <label><input type="checkbox" checked> Block destructive commands</label>
-                      <label><input type="checkbox" checked> Restrict writes</label>
-                      <label><input type="checkbox" checked> Block sensitive files</label>
+                    <div class="bento-surface row">
+                      <label style="width: 100%;"><input type="checkbox" checked> Block destructive commands</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Restrict writes to working dir</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Block sensitive files</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Command blocklist enabled</label>
+                      <label style="width: 100%;"><input type="checkbox"> Require network approval</label>
+                      <label style="width: 100%;"><input type="checkbox"> Read-only mode</label>
                     </div>
-                    <button class="bento-action">Configure 8 settings...</button>
+                    <button class="bento-action" style="margin-top: auto;">Configure 8 settings...</button>
                   </div>
                   <!-- Containers Card -->
                   <div class="bento-card" data-inspector-view="containers" data-category="features" style="animation: slideInRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 500ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><line x1="16.5" x2="7.5" y1="9.4" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" x2="12" y1="22.08" y2="12"/></svg> Containers & Registry</div>
                     <div class="bento-desc">Docker runtime and Unraid publishing.</div>
-                    <div class="bento-surface">
-                      <label>Runtime <select><option>docker</option></select></label>
-                      <label><input type="checkbox" checked> Hide Docker Manage</label>
-                      <label><input type="password" placeholder="DockerHub PAT"></label>
+                    <div class="bento-surface row">
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Runtime <select style="width: 100%;"><option>docker</option><option>podman</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Default Image <select style="width: 100%;"><option>ubuntu:latest</option><option>alpine:latest</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Pull Policy <select style="width: 100%;"><option>Always</option><option>If Not Present</option></select></label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Hide Docker Manager</label>
+                      <label style="width: 100%;"><input type="checkbox"> Auto-start runtime</label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Docker path <input type="text" value="/usr/bin/docker" style="width: 100%;"></label>
                     </div>
-                    <button class="bento-action">Configure 15 settings...</button>
+                    <button class="bento-action" style="margin-top: auto;">Configure 15 settings...</button>
                   </div>
                   <!-- Interview Card -->
                   <div class="bento-card" data-inspector-view="interview" data-category="features" style="animation: slideInLeft 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 600ms forwards;">
@@ -4866,11 +5395,15 @@ impl Dashboard {
                   <div class="bento-card" data-inspector-view="permissions" data-category="system" style="animation: slideInRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 250ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Permissions & Rules</div>
                     <div class="bento-desc">Granular tool overrides and doom loop guards.</div>
-                    <div class="bento-surface">
-                      <label>Global Default <select><option>Ask</option><option>Allow</option><option>Deny</option></select></label>
-                      <label>Doom Loop Threshold <input type="number" value="3"></label>
+                    <div class="bento-surface row">
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Scope <select style="width: 100%;"><option>Global</option><option>Project</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Global Default <select style="width: 100%;"><option>Ask</option><option>Allow</option><option>Deny</option></select></label>
+                      <label style="width: 100%;"><input type="checkbox" checked> File Read Access</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> File Write Access</label>
+                      <label style="width: 100%;"><input type="checkbox"> Web Fetch Access</label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Doom Loop Threshold <input type="number" value="3" style="width: 100%;"></label>
                     </div>
-                    <button class="bento-action">Configure 18 settings...</button>
+                    <button class="bento-action" style="margin-top: auto;">Configure 18 settings...</button>
                   </div>
                   <!-- Personas Card -->
                   <div class="bento-card" data-inspector-view="personas" data-category="system" style="animation: slideInLeft 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 350ms forwards;">
@@ -4896,11 +5429,14 @@ impl Dashboard {
                   <div class="bento-card" data-inspector-view="formatters" data-category="extensions" style="animation: slideInBottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 550ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M3 5h4"/><path d="M19 17v4"/><path d="M17 19h4"/></svg> Formatters & LSP</div>
                     <div class="bento-desc">Code intelligence and formatting rules.</div>
-                    <div class="bento-surface">
-                      <label><input type="checkbox" checked> Enable Formatters</label>
-                      <label><input type="checkbox"> Disable auto-LSP downloads</label>
+                    <div class="bento-surface row">
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Scope <select style="width: 100%;"><option>Global</option><option>Project</option></select></label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Enable Formatters</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Auto-format on save</label>
+                      <label style="width: 100%;"><input type="checkbox"> Disable auto-LSP downloads</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Show inline hints</label>
                     </div>
-                    <button class="bento-action">Configure 22 settings...</button>
+                    <button class="bento-action" style="margin-top: auto;">Configure 22 settings...</button>
                   </div>
                   <!-- Commands Card -->
                   <div class="bento-card" data-inspector-view="commands" data-category="extensions" style="animation: slideInRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 650ms forwards;">
@@ -6680,5 +7216,30 @@ impl Dashboard {
       window.switchWizardStep(0);
     });
     </script>
+<script>
+function showPRDMock(id) {
+  const el = document.getElementById("prd-mock-content");
+  if(id === "prd") {
+    el.innerHTML = "<h1>Product Requirements Document</h1><p><strong>Status:</strong> Approved | <strong>Version:</strong> 1.0</p><h2>1. Executive Summary</h2><p>Puppet Master is a cross-platform desktop IDE designed to orchestrate AI agents for automated coding. It leverages Rust and Slint for a highly responsive user experience.</p><h2>2. Functional Requirements</h2><ul><li>FR1: The system shall support 4 tier phases for execution: Phase, Task, Subtask, Iteration.</li><li>FR2: It must integrate natively with multiple providers: Cursor, Gemini, Codex, Claude Code, Copilot.</li><li>FR3: A visual node graph (DAG) representation of tasks must be provided.</li><li>FR4: Must include a multi-agent interview wizard for capturing requirements.</li></ul><h2>3. Non-Functional Requirements</h2><ul><li>NFR1: Native performance with application launch time under 500ms.</li><li>NFR2: The UI framework must be based on Slint for declarative performance.</li><li>NFR3: Agent memory scaling must not exceed token quotas (budget caps must be supported).</li></ul><h2>4. Multi-Pass Review Process</h2><p>The system integrates an automated multi-pass document validation and canonical alignment to ensure the PRD conforms strictly to the schema before any code execution starts.</p><h2>5. Out of Scope</h2><p>Mobile application and cloud deployment orchestration are deferred to version 2.0.</p>";
+  } else if(id === "seeds") {
+    el.innerHTML = "<h1>Contract Seeds</h1><p>These JSON artifacts lock in the decisions for the execution phase.</p><pre style=\"background:var(--surface); padding:var(--md); font-family:monospace; font-size:11px;\">{\n  \"schema_version\": \"1.0\",\n  \"tier_config\": {\n    \"auto_approve\": false,\n    \"branching\": \"feature\"\n  }\n}</pre>";
+  } else if(id === "arch") {
+    el.innerHTML = "<h1>Architecture Documentation</h1><h2>1. Core Systems</h2><p>We are using a Rust backend connected to a Slint UI via channels. Persistent state is maintained using `redb`.</p><h2>2. Component Diagram</h2><div class=\"mock-mermaid\">graph TD;<br>UI[Slint Window] -->|Events| Backend[Rust Core];<br>Backend --> DB[(Redb)];<br>Backend --> Agents{{Agent Subsystem}};<br></div>";
+  }
+  document.querySelectorAll(".prd-pill").forEach(p => p.classList.remove("active"));
+  document.getElementById("pill-" + id).classList.add("active");
+}
+
+function showExecMock(id) {
+  const el = document.getElementById("exec-mock-content");
+  if(id === "exec") {
+    el.innerHTML = "<h1>Execution Plan</h1><h2>Phase 1: Foundation</h2><p><strong>Subagent:</strong> architect-reviewer</p><p>- Initialize Rust binary crate and workspace.<br>- Setup Redb persistence schema and initial migrations.<br>- Add standard `cargo fmt` and `clippy` checks to verification gates.</p><h2>Phase 2: GUI Core</h2><p><strong>Subagent:</strong> slint-engineer</p><p>- Stub out the main `AppWindow` in Slint.<br>- Implement bridging channels between the Rust core and UI.<br>- Compile dummy placeholder screens for Dashboard and Chat.</p><h2>Phase 3: Agent Orchestration</h2><p><strong>Subagent:</strong> backend-developer</p><p>- Create state machine logic for Phase/Task/Subtask execution.<br>- Wire in the Cursor CLI and Claude Code CLI providers.<br>- Set up concurrency limiters and rate-limit backoff handling.</p><h2>Phase 4: Integration </body> Tests</h2><p><strong>Subagent:</strong> qa-engineer</p><p>- Write end-to-end tests for orchestrator state transitions.<br>- Ensure GUI builds successfully headless for CI verification.</p>";
+  } else if(id === "manifest") {
+    el.innerHTML = "<h1>Acceptance Manifest</h1><p>This manifest guarantees exactly what needs to be verified before merging the task.</p><pre style=\"background:var(--surface); padding:var(--md); font-family:monospace; font-size:11px;\">{\n  \"gates\": [\n    { \"id\": \"GATE-001\", \"type\": \"syntax\", \"command\": \"cargo check\" },\n    { \"id\": \"GATE-002\", \"type\": \"tests\", \"command\": \"cargo test\" },\n    { \"id\": \"GATE-003\", \"type\": \"headless_ui\", \"command\": \"npm run test:ui\" }\n  ],\n  \"artifacts\": [\n    \"src/main.rs\",\n    \"ui/app.slint\"\n  ]\n}</pre>";
+  }
+  document.querySelectorAll(".exec-pill").forEach(p => p.classList.remove("active"));
+  document.getElementById("pill-" + id).classList.add("active");
+}
+</script>
 </body>
 </html>
