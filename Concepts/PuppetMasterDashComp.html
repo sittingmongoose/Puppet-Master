@@ -3869,6 +3869,29 @@ impl Dashboard {
               </div>
               <div style="font-size: 11px; color: var(--text-muted);">0 active</div>
             </div>
+              <div class="bento-widget size-1x1">
+                <div class="widget-header">
+                  <span class="widget-title">Active Subagents</span>
+                  <div class="widget-settings"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:var(--xs); font-size:11px;">
+                  <div style="display:flex; justify-content:space-between;"><span>Code Investigator</span><span style="color:var(--accent-lime);">Active</span></div>
+                  <div style="display:flex; justify-content:space-between;"><span>Test Writer</span><span style="color:var(--accent-lime);">Active</span></div>
+                  <div style="display:flex; justify-content:space-between;"><span>PR Reviewer</span><span style="color:var(--text-muted);">Idle</span></div>
+                </div>
+              </div>
+
+              <div class="bento-widget size-2x1">
+                <div class="widget-header">
+                  <span class="widget-title">Recent Activity</span>
+                  <div class="widget-settings"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
+                </div>
+                <div style="font-size:11px; display:flex; flex-direction:column; gap:var(--xs);">
+                  <div style="display:flex; justify-content:space-between; padding:4px; border-bottom:1px solid var(--border-light);"><span>Modified app.rs</span><span style="color:var(--text-muted);">2m ago</span></div>
+                  <div style="display:flex; justify-content:space-between; padding:4px; border-bottom:1px solid var(--border-light);"><span>Created config.rs</span><span style="color:var(--text-muted);">15m ago</span></div>
+                  <div style="display:flex; justify-content:space-between; padding:4px; border-bottom:1px solid var(--border-light);"><span>Ran test suite (success)</span><span style="color:var(--text-muted);">1h ago</span></div>
+                </div>
+              </div>
             </div>
             <div id="dashGridMetrics" style="display:none; width: 100%;">
                 <div class="bento-widget size-2x1" style="width:100%;">
@@ -3903,6 +3926,36 @@ impl Dashboard {
                     </div>
                     <div style="font-size:11px; color:var(--text-muted); margin-top:var(--sm);">99.99% Uptime</div>
                 </div>
+                <div class="bento-widget size-1x1" style="width: calc(50% - (var(--lg) / 2)); margin-top:var(--lg);">
+                    <div class="widget-header">
+                        <span class="widget-title">API Latency</span>
+                    </div>
+                    <div style="font-size:24px; color:var(--accent-lime);">142ms</div>
+                    <div style="width:100%; height:20px; background:rgba(0,255,65,0.1); margin-top:var(--sm); border-radius:4px; overflow:hidden; position:relative;">
+                        <div style="position:absolute; bottom:0; left:0; width:100%; height:60%; background:var(--accent-lime); opacity:0.3;"></div>
+                    </div>
+                </div>
+                <div class="bento-widget size-1x1" style="width: calc(50% - (var(--lg) / 2)); margin-top:var(--lg); margin-left:var(--lg);">
+                    <div class="widget-header">
+                        <span class="widget-title">Cache Hit Rate</span>
+                    </div>
+                    <div style="display:flex; justify-content:center; align-items:center; flex:1;">
+                        <div style="width:60px; height:60px; border-radius:50%; border:4px solid var(--border-light); border-top-color:var(--accent-blue); display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:14px;">94%</div>
+                    </div>
+                </div>
+                <div class="bento-widget size-2x1" style="width:100%; margin-top:var(--lg);">
+                    <div class="widget-header">
+                        <span class="widget-title">Budget Allocation</span>
+                    </div>
+                    <div style="display:flex; height:24px; border-radius:6px; overflow:hidden; margin-top:var(--sm);">
+                        <div style="width:60%; background:var(--accent-blue);" title="Claude (60%)"></div>
+                        <div style="width:25%; background:var(--accent-lime);" title="OpenAI (25%)"></div>
+                        <div style="width:15%; background:var(--accent-orange);" title="Gemini (15%)"></div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; font-size:10px; margin-top:var(--xs); color:var(--text-muted);">
+                        <span>Claude</span><span>OpenAI</span><span>Gemini</span>
+                    </div>
+                </div>
             </div>
             <div id="dashGridMonitoring" style="display:none; width: 100%;">
                 <div class="bento-widget size-2x2" style="width:100%;">
@@ -3923,6 +3976,44 @@ impl Dashboard {
                             <span style="color:var(--accent-lime);">CPU: 12% | RAM: 8.0GB</span>
                         </div>
                     </div>
+                </div>
+                <div class="bento-widget size-2x1" style="width:100%; margin-top:var(--lg);">
+                    <div class="widget-header">
+                        <span class="widget-title">Container Health</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:var(--sm);">
+                        <div style="height:40px; background:var(--accent-lime); border-radius:4px; opacity:0.8;"></div>
+                        <div style="height:40px; background:var(--accent-lime); border-radius:4px; opacity:0.8;"></div>
+                        <div style="height:40px; background:var(--accent-orange); border-radius:4px; opacity:0.8;"></div>
+                        <div style="height:40px; background:var(--accent-lime); border-radius:4px; opacity:0.8;"></div>
+                    </div>
+                    <div style="font-size:10px; color:var(--text-muted); margin-top:var(--xs);">8 active swarms | 1 degraded</div>
+                </div>
+                <div class="bento-widget size-2x1" style="width:100%; margin-top:var(--lg);">
+                    <div class="widget-header">
+                        <span class="widget-title">Network Traffic</span>
+                    </div>
+                    <svg viewBox="0 0 400 60" style="width:100%; height:60px; fill:none; stroke:var(--accent-blue); stroke-width:2;">
+                        <path d="M0 50 Q 50 10, 100 40 T 200 20 T 300 45 T 400 30" style="stroke:var(--accent-blue); fill:rgba(0, 71, 171, 0.1);"></path>
+                        <path d="M0 55 Q 50 20, 100 45 T 200 30 T 300 50 T 400 40" style="stroke:var(--accent-lime); opacity:0.5;"></path>
+                    </svg>
+                    <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-muted); margin-top:var(--xs);">
+                        <span>Ingress: 1.2 MB/s</span><span>Egress: 450 KB/s</span>
+                    </div>
+                </div>
+                <div class="bento-widget size-1x1" style="width: calc(50% - (var(--lg) / 2)); margin-top:var(--lg);">
+                    <div class="widget-header">
+                        <span class="widget-title">Database Load</span>
+                    </div>
+                    <div style="font-size:24px; color:var(--accent-blue);">42 qps</div>
+                    <div style="font-size:10px; color:var(--text-muted);">Avg response: 12ms</div>
+                </div>
+                <div class="bento-widget size-1x1" style="width: calc(50% - (var(--lg) / 2)); margin-top:var(--lg); margin-left:var(--lg);">
+                    <div class="widget-header">
+                        <span class="widget-title">Error Rates</span>
+                    </div>
+                    <div style="font-size:24px; color:var(--accent-orange);">0.02%</div>
+                    <div style="font-size:10px; color:var(--text-muted);">Last 24h: 12 exceptions</div>
                 </div>
             </div>
           </div>
@@ -6195,9 +6286,11 @@ impl Dashboard {
             tabsContainer.addEventListener('drop', e => {
                 e.preventDefault();
                 tabsContainer.classList.remove('drag-over');
-                                const draggedFilename = e.dataTransfer.getData('text/plain');
+                const draggedFilename = e.dataTransfer.getData('text/plain');
                 if (draggedFilename) {
                     const existingTab = document.querySelector(`.tab[data-filename="${draggedFilename}"]`);
+                    const sourcePane = existingTab ? existingTab.closest('.editor-pane') : null;
+                    
                     tabsContainer.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                     
                     if (existingTab) {
@@ -6223,6 +6316,19 @@ impl Dashboard {
                         const codeTarget = pane.querySelector('.editor-code');
                         if (codeTarget) {
                             codeTarget.innerHTML = `// Viewing ${draggedFilename}\n\nfn imported_${draggedFilename.replace(/[^a-zA-Z0-9]/gi, '_')}() {\n    println!("Dropped ${draggedFilename}");\n}`;
+                        }
+                    }
+
+                    // Check source pane cleanup
+                    if (sourcePane && sourcePane !== pane) {
+                        if (!sourcePane.querySelector('.tab')) {
+                            sourcePane.style.display = 'none';
+                            const edView = document.getElementById('editorView');
+                            if (edView && !edView.querySelector('.editor-pane:not([style*="display: none"])')) {
+                                edView.style.display = 'none';
+                                const splitResizer = document.getElementById('editorSplitResizer');
+                                if (splitResizer) splitResizer.style.display = 'none';
+                            }
                         }
                     }
                 }
