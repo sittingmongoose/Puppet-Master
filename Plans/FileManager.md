@@ -743,40 +743,33 @@ ContractRef: Plans/Progression_Gates.md, Plans/evidence.schema.json
 
 ## 13. Git Status Integration
 
-This section specifies how the File Manager integrates Git status overlays and connects to the Git panel defined in `Plans/GitHub_Integration.md`.
+File Manager integrates with Source Control, not with a legacy combined Git panel.
 
-### 13.1 Git Status Overlay in File Tree
+### 13.1 Git status overlay in file tree
 
-- Each file node in the File Manager tree displays a single-character status badge beside the filename when the project is a git repository:
-  - `M` (modified) — unstaged edits
-  - `A` (added/staged new file)
-  - `D` (deleted — staged or unstaged)
-  - `R` (renamed)
-  - `U` (unmerged/conflict)
-  - `?` (untracked)
-  - No badge — file is clean/tracked with no changes
-- Badge color: modified=amber, added=green, deleted=red, conflict=red, untracked=grey
-- Badges update within 2 seconds of any git operation completing (file-watcher or post-command refresh)
-- Toggle: "Show git status" in File Manager header (default: on); persisted in redb key `file_manager/show_git_status`
-- If the project folder is not a git repo: badges are hidden; no error shown
+The file tree may show Git status badges, but those badges are read-only indicators unless the user opens Source Control or a file diff.
 
-### 13.2 Git Panel Strip
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md
 
-- A collapsible strip at the bottom of the File Manager panel (above the footer) shows:
-  - Current branch name (or "no branch" if detached HEAD)
-  - Working folder mode: local path OR `user@host:path` for SSH remote (ContractRef: Plans/GitHub_Integration.md §A.1, §C.3)
-  - Change count badge: "N changes" (click opens the Git panel §A.2 in its own panel slot)
-  - Sync status: ↑N ahead / ↓N behind / ✓ up-to-date
-- "Open Git Panel" link or click on the strip opens the full Git panel (Plans/GitHub_Integration.md §A)
-- Strip is hidden if the folder is not a git repo
+### 13.2 Source Control strip
 
-### 13.3 Repo-Aware Filtering
+The file-tree header or strip may expose compact repo state, but its primary action targets are:
+- `Open in Source Control`
+- `Open diff`
+- `Open compare`
 
-- `.gitignore` patterns are respected by the file tree (existing behavior §1)
-- Additionally, git-ignored files may be marked with a dimmed style distinct from untracked files
-- The "Show git status" toggle (§13.1) and "Hide ignored" toggle (§1) are independent settings
+It must not claim ownership of commit, history, graph, or worktree management.
 
-ContractRef: Plans/GitHub_Integration.md §A, Plans/GitHub_Integration.md §C.3, Plans/DRY_Rules.md, Plans/Decision_Policy.md, Plans/Architecture_Invariants.md#INV-010
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/WorktreeGitImprovement.md
+
+### 13.3 Repo-aware filtering and worktree context
+
+When multiple worktrees or repo roots are relevant:
+- the file tree must show which repo/worktree is active
+- file-status overlays must resolve against that active repo/worktree
+- any handoff to Source Control must preserve `repo_id` and `worktree_id`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Orchestrator_Page.md
 
 ## 14. Markdown, Mermaid, HTML, SVG, and Image Rendering (Rewrite Addendum -- 2026-03-07)
 

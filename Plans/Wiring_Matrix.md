@@ -282,3 +282,17 @@ The following rows are required for the promoted Section 15 feature set in addit
 | Catalog remove button | `cmd.catalog.remove_item` | catalog UI | catalog lifecycle controller | Remove item using subsystem-specific active-item rules |
 
 This section is normative and not an example/template section.
+
+## Source Control, GitHub Actions, and Docker Manager Wiring Addendum (2026-03-12)
+
+Minimum required new rows for the final packet apply:
+- `btn.panel.source_control` -> `cmd.panel.switch`
+- `btn.panel.github_actions` -> `cmd.panel.switch`
+- `btn.panel.docker_manager` -> `cmd.panel.switch`
+- Source Control subview switches -> `cmd.source_control.switch_subview`
+- worktree compare / recover / prune controls -> `cmd.git.worktree.*`
+- GitHub Actions rerun / cancel / dispatch / pin / admin CRUD controls -> `cmd.github.actions.*`
+- Docker Manager container / image / compose / build-bake / registry / kubernetes controls -> `cmd.docker.*` and `cmd.docker.k8s.*`
+- Orchestrator cross-surface pivots -> `cmd.orchestrator.open_in_source_control`, `cmd.orchestrator.open_in_github_actions`, `cmd.orchestrator.open_in_docker_manager`
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/Orchestrator_Page.md

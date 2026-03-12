@@ -5435,10 +5435,12 @@ impl Dashboard {
                     <div class="bento-desc">Extend capabilities with external code.</div>
                     <div class="bento-surface row">
                       <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Plugin Engine <select style="width: 100%;"><option>Node.js</option><option>Python</option></select></label>
-                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Update Frequency <select style="width: 100%;"><option>Daily</option><option>On Launch</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Update <select style="width: 100%;"><option>Daily</option><option>Launch</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Timeout (ms) <input type="number" value="5000" style="width: 100%;"></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Max Memory (MB) <input type="number" value="512" style="width: 100%;"></label>
                       <label style="width: 100%;"><input type="checkbox" checked> Enable Plugins</label>
-                      <label style="width: 100%;"><input type="checkbox" checked> Auto-update plugins</label>
-                      <label style="width: 100%;"><input type="checkbox"> Allow network access</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Network access</label>
+                      <label style="width: 100%;"><input type="checkbox"> Auto-start plugins</label>
                     </div>
                     <button class="bento-action" style="margin-top: auto;">Configure 8 settings...</button>
                   </div>
@@ -5476,12 +5478,12 @@ impl Dashboard {
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Editor UX & File Manager</div>
                     <div class="bento-desc">Text editor behavior and file tree preferences.</div>
                     <div class="bento-surface row">
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Keymap <select style="width: 100%;"><option>Standard</option><option>Vim</option></select></label>
                       <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Font Size <input type="number" value="13" style="width: 100%;"></label>
-                      <label style="width: 100%;"><input type="checkbox"> Use Vim bindings</label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Tab Size <input type="number" value="4" style="width: 100%;"></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Line Wrap <select style="width: 100%;"><option>Off</option><option>On</option><option>Word Bound</option></select></label>
                       <label style="width: 100%;"><input type="checkbox" checked> Show line numbers</label>
-                      <label style="width: 100%;"><input type="checkbox" checked> Highlight active line</label>
-                      <label style="width: 100%;"><input type="checkbox"> Show minimap</label>
-                      <label style="width: 100%;"><input type="checkbox" checked> Hide ignored files</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Show minimap</label>
                     </div>
                     <button class="bento-action" style="margin-top: auto;">Configure 10 settings...</button>
                   </div>                </div>
@@ -5907,10 +5909,16 @@ impl Dashboard {
                   <summary>Plugins</summary>
                   <div class="details-content">
                     <label><input type="checkbox" checked> Enable Plugins</label>
-                    <button class="wizard-btn">Add Plugin (Install/Local)</button>
-                    <label><input type="checkbox" checked> Enable per-hook</label>
+                    <label>Plugin Engine <select style="width: 100%;"><option>Node.js</option><option>Python</option></select></label>
+                    <label>Update <select style="width: 100%;"><option>Daily</option><option>Launch</option></select></label>
+                    <label>Plugin Source <input type="text" value="https://registry.pm.dev" style="width: 100%;"></label>
                     <label>Hook timeout (ms) <input type="number" value="5000"></label>
+                    <label>Max Memory (MB) <input type="number" value="512"></label>
+                    <label><input type="checkbox" checked> Network access</label>
+                    <label><input type="checkbox"> Auto-start plugins</label>
+                    <label><input type="checkbox" checked> Enable per-hook</label>
                     <label><input type="checkbox"> Allow tool override (Warning)</label>
+                    <button class="wizard-btn">Add Plugin (Install/Local)</button>
                     <button class="wizard-btn">Reload plugins</button>
                   </div>
                 </details>
@@ -6000,7 +6008,11 @@ impl Dashboard {
                 <details open>
                   <summary>Editor UX</summary>
                   <div class="details-content">
-                    <label><input type="checkbox"> Use Vim bindings</label>
+                    <label>Keymap <select style="width: 100%;"><option>Standard</option><option>Vim</option></select></label>
+                    <label>Font Size <input type="number" value="13" style="width: 100%;"></label>
+                    <label>Tab Size <input type="number" value="4" style="width: 100%;"></label>
+                    <label>File Action <select style="width: 100%;"><option>Click</option><option>Dbl-Click</option></select></label>
+                    <label>Theme Match <select style="width: 100%;"><option>System</option><option>Editor Only</option></select></label>
                     <label><input type="checkbox"> Line wrap</label>
                     <label><input type="checkbox" checked> Minimap</label>
                     <label><input type="checkbox" checked> Line numbers</label>

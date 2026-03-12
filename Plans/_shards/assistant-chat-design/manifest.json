@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/assistant-chat-design.md",
-  "source_sha256": "2604cbbe12cd9e81d6f597b5dce354920e78bf6ad9f8c92a894e9357cfa49c46",
+  "source_sha256": "7739faaa0f9bdaee862353e638ad6c1b8bd4c94b2f3cdef535ac14668cfd05a0",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -267,25 +267,11 @@
       "heading": "## Blocked Thread Message and Persistence Reconciliation Addendum (2026-03-09)"
     },
     {
-      "dest_path": "Plans/_shards/assistant-chat-design/38-thread-blocked-state-multiplicity-and-action-rendering-consolidation-addendum-2026-03-09.md",
+      "dest_path": "Plans/_shards/assistant-chat-design/38-unified-thread-blocked-state-lifecycle.md",
       "start_line": 1850,
-      "end_line": 1874,
-      "segment_sha256": "c455b21f7742a20f72e88c4ad04025f826c72d189a4d1dafb0b66475628cd7d6",
-      "heading": "## Thread Blocked-State Multiplicity and Action Rendering Consolidation Addendum (2026-03-09)"
-    },
-    {
-      "dest_path": "Plans/_shards/assistant-chat-design/39-unified-thread-blocked-state-lifecycle.md",
-      "start_line": 1875,
-      "end_line": 1904,
+      "end_line": 1879,
       "segment_sha256": "2e4fa56e2d3642d2486ee22771ff9021b0a7da1a264586f229fdb5547c901c61",
       "heading": "## Unified Thread Blocked-State Lifecycle"
-    },
-    {
-      "dest_path": "Plans/_shards/assistant-chat-design/40-concurrent-blocked-episodes-and-enum-alignment-addendum.md",
-      "start_line": 1905,
-      "end_line": 1923,
-      "segment_sha256": "59f97455b30adbe91793607bdde39ea2eb33044a3f6a6a1aa517a026be734bba",
-      "heading": "## Concurrent Blocked Episodes and Enum Alignment Addendum"
     }
   ]
 }

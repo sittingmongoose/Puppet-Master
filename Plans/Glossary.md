@@ -30,6 +30,25 @@ ContractRef: Invariant:INV-010
 ## 2. Core terms
 ### Shell and workspace terms
 
+### Source control, CI, and container orchestration terms
+
+**Source Control**
+The Git-first operational surface for repository changes, history, graph, branches/stash, and worktrees.
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md
+
+**GitHub Actions**
+The GitHub-hosted workflow and admin surface for Current Branch runs, Workflows, and Settings.
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+
+**Docker Manager**
+The operational surface for containers, images, compose, registries, build/bake, Publish / Unraid, and project-focused Kubernetes.
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md
+
+**Operation receipt**
+A canonical runtime-linked record that preserves the cross-surface identity of a run/attempt action and its resulting SCM, workflow, runtime, publish, or usage references.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+
 - **workspace tab** — the primary in-window working context. Holds one active project plus local shell state such as active thread, side-panel state, browser tabs, terminal sessions, and dev-session references.
 - **detached window** — a secondary top-level window linked to a parent workspace tab or detached-surface record. It is not the primary shell identity.
 - **project/session browser** — a shell surface for browsing projects and their sessions/runs/threads across the app.

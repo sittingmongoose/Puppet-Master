@@ -178,79 +178,71 @@ ContractRef: ContractName:Plans/Run_Graph_View.md#17, ContractName:Plans/Contrac
 ### 2.5 Orchestrator page commands
 #### 2.5A Containers & Registry / Docker Manage commands
 
-These rows are authoritative for Docker/Unraid flows and supersede any duplicate Docker/Unraid rows elsewhere in §2.5.
-
-##### Deterministic ID and fallback rules
-
-- `preview_session_id` is a UUIDv7 created when `cmd.orchestrator.preview_open` starts a preview. If omitted later, resolve to the current active preview for the same `project_id`; if none exists, fail with `reason_code: no_active_preview`.
-- `publish_result_id` is a UUIDv7 created by `docker.publish.completed`. If omitted, resolve to the most recent successful publish for the same `project_id`; if none exists, fail with `reason_code: no_publish_result`.
-- `template_repo_id` is the stable string `unraid-template::<project_id>` when managed publishing is configured. When generation ran without a managed repo, `template_repo_id` remains unset and any command that requires it MUST fail with `reason_code: no_template_repo`.
-  ContractRef: UICommand:cmd.docker.apply_shared_ca_profile, UICommand:cmd.orchestrator.push_unraid_template_repo, UICommand:cmd.orchestrator.open_unraid_template_repo, ContractName:Plans/storage-plan.md
-
-##### Normative override for `cmd.orchestrator.build_run`
-
-- For Docker-related flows, the canonical args schema is `{ profile? }`.
-- The legacy `publish` arg is deprecated and MUST NOT trigger remote image push, DockerHub repository creation, Unraid template generation, or template-repo push.
-  ContractRef: UICommand:cmd.orchestrator.build_run, UICommand:cmd.orchestrator.push_image, ContractName:Plans/Containers_Registry_and_Unraid.md
-- If a caller supplies `publish: true` in a Docker-related flow, the runtime MUST either reject the command with `reason_code: publish_arg_deprecated` or ignore the field while surfacing a warning; it MUST NOT reinterpret the command as publish approval.
-  ContractRef: UICommand:cmd.orchestrator.build_run, ContractName:Plans/Permissions_System.md, ContractName:Plans/Containers_Registry_and_Unraid.md
-
-##### Template-repo setup semantic rules
-
-- `mode: "create_new", provider: "github"` requires `github_api` auth and `external_publish_side_effect` approval before remote repo creation.
-- `mode: "create_new", provider: "local_only"` creates only a local managed repo and leaves `remote_url` unset.
-- `mode: "create_new", provider: "other_git"` is invalid; use `select_existing`.
-- `mode: "select_existing"` may target `local_only` or `other_git`; it MUST validate layout, branch, migration, and dirty-state rules before enabling managed publishing.
-  ContractRef: UICommand:cmd.docker.template_repo_setup, ContractName:Plans/storage-plan.md
-- The approval payload for remote repo creation MUST show provider, owner/namespace, repo name, visibility, default branch, and local working-copy path.
-  ContractRef: UICommand:cmd.docker.template_repo_setup, ContractName:Plans/Permissions_System.md
-
-##### Command catalog
+#### 2.5A Source Control commands
 
 | Command ID | Args schema (keys only) | Expected events | Affected surfaces |
 |---|---|---|---|
-| `cmd.docker.save_pat` | `{ provider?: "dockerhub", pat: string }` | `docker.auth.pat.saved` or `docker.auth.failed` | Settings > Advanced, Docker Manage |
-| `cmd.docker.browser_login` | `{ provider?: "dockerhub" }` | `docker.auth.browser_login.started`, `docker.auth.browser_login.device_code_issued`, zero or more `docker.auth.browser_login.polling`, terminal: `docker.auth.capability_validated` or `docker.auth.browser_login.cancelled` or `docker.auth.browser_login.timed_out` or `docker.auth.failed` | Settings > Advanced, Docker Manage |
-| `cmd.docker.validate_auth` | `{ provider?: "dockerhub" }` | `docker.auth.capability_validated` or `docker.auth.failed` | Settings > Advanced, Docker Manage |
-| `cmd.docker.clear_credentials` | `{ provider?: "dockerhub", scope?: "browser" \| "pat" \| "all" }` | `docker.auth.cleared` | Settings > Advanced, Docker Manage |
-| `cmd.docker.refresh_repositories` | `{ namespace?: string }` | `docker.repositories.refreshed` or `docker.repositories.refresh_failed` | Settings > Advanced, Docker Manage |
-| `cmd.docker.create_repository` | `{ namespace: string, repository: string, privacy: "private" \| "public" }` | `docker.repository.create.confirmation_requested` | Settings > Advanced, Docker Manage |
-| `cmd.docker.create_repository.confirm` | `{ namespace: string, repository: string, privacy: "private" \| "public" }` | `docker.repository.created` or `docker.repository.create_failed` | Settings > Advanced, Docker Manage |
-| `cmd.docker.create_repository.cancel` | `{ namespace: string, repository: string }` | `docker.repository.create.cancelled` | Settings > Advanced, Docker Manage |
-| `cmd.docker.template_repo_setup` | `{ mode: "create_new" \| "select_existing", provider: "github" \| "local_only" \| "other_git", repo_name?: string, repo_path?: string, remote_url?: string, visibility?: "public" \| "private", branch?: string, local_working_copy_path?: string, maintainer_slug?: string, adopt_dirty_repo?: bool, allow_layout_migration?: bool }` | `unraid.template_repo.migration.confirmation_requested`, `unraid.template_repo.adoption.confirmation_requested`, `unraid.template_repo.created`, `unraid.template_repo.validated`, `unraid.template_repo.validation_failed`, or `unraid.template_repo.setup.blocked` | Settings > Advanced, Docker Manage |
-| `cmd.docker.apply_shared_ca_profile` | `{ template_repo_id?: string }` | `unraid.ca_profile.projection.started`, `unraid.ca_profile.projection.completed`, `unraid.ca_profile.projection.failed`, or `unraid.ca_profile.projection.blocked` | Settings > Advanced, Docker Manage |
-| `cmd.orchestrator.push_image` | `{ namespace?: string, repository?: string, tag_template?: string }` | `docker.publish.started`, `docker.publish.completed`, `docker.publish.failed`, or `docker.publish.blocked` | Orchestrator page, Dashboard, Docker Manage |
-| `cmd.orchestrator.open_running_container` | `{ preview_session_id?: string, url?: string }` | no persisted domain event (external open action) | Orchestrator page, Dashboard, Docker Manage |
-| `cmd.orchestrator.open_container_logs` | `{ preview_session_id?: string }` | no persisted domain event (navigation/open action) | Orchestrator page, Dashboard, Docker Manage |
-| `cmd.orchestrator.update_unraid_template` | `{ publish_result_id?: string }` | `unraid.template.generation.started`, `unraid.template.generation.completed`, `unraid.template.generation.failed`, or `unraid.template.generation.blocked` | Orchestrator page, Docker Manage |
-| `cmd.orchestrator.push_unraid_template_repo` | `{ template_repo_id?: string }` | `unraid.template_repo.push.started`, `unraid.template_repo.push.completed`, `unraid.template_repo.push.failed`, or `unraid.template_repo.push.blocked` | Orchestrator page, Docker Manage |
-| `cmd.orchestrator.open_unraid_template_repo` | `{ template_repo_id?: string }` | no persisted domain event (external open action) | Orchestrator page, Docker Manage |
+| `cmd.source_control.switch_subview` | `{ subview }` | layout/UI state only | Source Control |
+| `cmd.source_control.select_repo` | `{ repo_id }` | layout/UI state only | Source Control |
+| `cmd.source_control.select_worktree` | `{ worktree_id }` | layout/UI state only | Source Control, Orchestrator |
+| `cmd.source_control.open_history_commit` | `{ repo_id, commit }` | layout/UI state only | Source Control |
+| `cmd.source_control.open_graph_commit` | `{ repo_id, commit }` | layout/UI state only | Source Control |
+| `cmd.source_control.compare_refs` | `{ repo_id, left_ref, right_ref, worktree_id? }` | layout/UI state only | Source Control |
+| `cmd.source_control.resolve_conflict` | `{ repo_id, path, worktree_id? }` | no persisted domain event (navigation/open action) | Source Control, File Editor |
+| `cmd.git.worktree.open` | `{ worktree_id }` | no persisted domain event (navigation/open action) | Source Control |
+| `cmd.git.worktree.compare` | `{ worktree_id, compare_target? }` | layout/UI state only | Source Control |
+| `cmd.git.worktree.recover` | `{ worktree_id }` | `tool.invoked` or `tool.denied`; runtime events emitted by orchestrator/worktree manager | Source Control, Orchestrator |
+| `cmd.git.worktree.prune` | `{ worktree_id }` | `tool.invoked` or `tool.denied`; runtime events emitted by orchestrator/worktree manager | Source Control |
 
-These IDs are required by `Plans/Orchestrator_Page.md`.
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Contracts_V0.md
+
+#### 2.5B GitHub Actions commands
 
 | Command ID | Args schema (keys only) | Expected events | Affected surfaces |
 |---|---|---|---|
-| `cmd.orchestrator.switch_tab` | `{ tab_id }` | no persisted domain event (active tab state update) | Orchestrator page |
-| `cmd.orchestrator.open_evidence` | `{ tier_id }` | no persisted domain event (navigation/filter update) | Orchestrator > Evidence tab |
-| `cmd.orchestrator.open_history_run` | `{ run_id }` | no persisted domain event (navigation/update) | Orchestrator > History + Node Graph tabs |
-| `cmd.orchestrator.retry_node` | `{ tier_id }` | `tool.invoked` or `tool.denied`; run-state events emitted by orchestrator | Orchestrator page |
-| `cmd.orchestrator.replan_node` | `{ tier_id }` | `tool.invoked` or `tool.denied`; run-state events emitted by orchestrator | Orchestrator page |
-| `cmd.orchestrator.reopen_node` | `{ tier_id }` | run-state events emitted by orchestrator | Orchestrator page |
-| `cmd.orchestrator.approve_hitl` | `{ request_id, tier_id, rationale? }` | `hitl.approved` | Orchestrator page, Dashboard, Assistant CtA |
-| `cmd.orchestrator.reject_hitl` | `{ request_id, tier_id, rationale?, resolution? }` | `hitl.rejected` | Orchestrator page, Dashboard, Assistant CtA |
-| `cmd.orchestrator.cancel_hitl` | `{ request_id, tier_id, rationale? }` | `hitl.cancelled` | Orchestrator page, Dashboard, Assistant CtA |
-| `cmd.orchestrator.preview_open` | `{ mode?, target? }` | `live.session.started` or `live.session.degraded` | Orchestrator page, Dashboard |
-| `cmd.orchestrator.preview_stop` | `{ preview_session_id? }` | `live.session.completed` | Orchestrator page, Dashboard |
-| `cmd.orchestrator.open_preview_artifact` | `{ artifact_id }` | no persisted domain event (artifact open/copy action) | Orchestrator page, Dashboard, Evidence tab |
-| `cmd.orchestrator.build_run` | `{ profile?, publish? }` | `build.session.started`, `build.session.completed` | Orchestrator page, Dashboard |
-| `cmd.orchestrator.open_build_artifact` | `{ artifact_path }` | no persisted domain event (artifact open/copy action) | Orchestrator page, Dashboard, Evidence tab |
-| `cmd.orchestrator.cancel_background_run` | `{ run_id }` | `run.background_state_changed` | Orchestrator page, Dashboard |
-| `cmd.orchestrator.open_background_diff` | `{ run_id }` | no persisted domain event (navigation/update) | Orchestrator page, Dashboard |
-| `cmd.orchestrator.open_crew` | `{ crew_id }` | no persisted domain event (navigation/update) | Orchestrator page, Dashboard |
+| `cmd.github.actions.switch_subview` | `{ subview }` | layout/UI state only | GitHub Actions |
+| `cmd.github.actions.focus_current_branch` | `{ repo_id, branch, worktree_id? }` | layout/UI state only | GitHub Actions |
+| `cmd.github.actions.refresh` | `{ repo_id, scope? }` | no persisted domain event (API fetch + cache) | GitHub Actions |
+| `cmd.github.actions.rerun` | `{ workflow_run_id }` | `github.actions.rerun.started`, terminal: `github.actions.rerun.completed` or `github.actions.rerun.failed` or `github.actions.rerun.blocked` | GitHub Actions |
+| `cmd.github.actions.cancel` | `{ workflow_run_id }` | `github.actions.cancel.started`, terminal: `github.actions.cancel.completed` or `github.actions.cancel.failed` or `github.actions.cancel.blocked` | GitHub Actions |
+| `cmd.github.actions.pin_workflow` | `{ workflow_id, pinned }` | layout/UI state only | GitHub Actions |
+| `cmd.github.actions.dispatch` | `{ workflow_id, ref, inputs? }` | `github.actions.dispatch.started`, terminal: `github.actions.dispatch.completed` or `github.actions.dispatch.failed` or `github.actions.dispatch.blocked` | GitHub Actions |
+| `cmd.github.actions.upsert_secret` | `{ scope, name, value, environment? }` | `github.actions.secret.updated` or `github.actions.secret.update_failed` or `github.actions.secret.update.blocked` | GitHub Actions |
+| `cmd.github.actions.delete_secret` | `{ scope, name, environment? }` | `github.actions.secret.deleted` or `github.actions.secret.delete_failed` | GitHub Actions |
+| `cmd.github.actions.upsert_variable` | `{ scope, name, value, environment? }` | `github.actions.variable.updated` or `github.actions.variable.update_failed` or `github.actions.variable.update.blocked` | GitHub Actions |
+| `cmd.github.actions.delete_variable` | `{ scope, name, environment? }` | `github.actions.variable.deleted` or `github.actions.variable.delete_failed` | GitHub Actions |
+| `cmd.github.actions.upsert_environment` | `{ name, protection_rules?, reviewers? }` | `github.actions.environment.updated` or `github.actions.environment.update_failed` or `github.actions.environment.update.blocked` | GitHub Actions |
+| `cmd.github.actions.delete_environment` | `{ name }` | `github.actions.environment.deleted` or `github.actions.environment.delete_failed` | GitHub Actions |
 
-ContractRef: ContractName:Plans/Orchestrator_Page.md#14, ContractName:Plans/Contracts_V0.md#UICommand
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md
 
----
+#### 2.5C Docker Manager commands
+
+| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
+|---|---|---|---|
+| `cmd.docker_manager.switch_subview` | `{ subview }` | layout/UI state only | Docker Manager |
+| `cmd.docker.container.open` | `{ container_id }` | layout/UI state only | Docker Manager |
+| `cmd.docker.container.start` | `{ container_id }` | `docker.container.started` or `docker.container.start_failed` | Docker Manager |
+| `cmd.docker.container.stop` | `{ container_id }` | `docker.container.stopped` or `docker.container.stop_failed` | Docker Manager |
+| `cmd.docker.container.restart` | `{ container_id }` | `docker.container.restarted` or `docker.container.restart_failed` | Docker Manager |
+| `cmd.docker.container.remove` | `{ container_id, force? }` | `docker.container.removed` or `docker.container.remove_failed` or `docker.container.remove.blocked` | Docker Manager |
+| `cmd.docker.container.logs` | `{ container_id, follow? }` | no persisted domain event (log open/follow) | Docker Manager, Orchestrator |
+| `cmd.docker.container.inspect` | `{ container_id }` | layout/UI state only | Docker Manager |
+| `cmd.docker.image.pull` | `{ registry?, namespace?, repository, tag? }` | `docker.image.pull.started`, terminal: `docker.image.pull.completed` or `docker.image.pull.failed` | Docker Manager |
+| `cmd.docker.image.push` | `{ image_ref }` | `docker.publish.started`, terminal: `docker.publish.completed` or `docker.publish.failed` or `docker.publish.blocked` | Docker Manager |
+| `cmd.docker.image.tag` | `{ source_ref, target_ref }` | `docker.image.tagged` or `docker.image.tag_failed` | Docker Manager |
+| `cmd.docker.image.remove` | `{ image_ref, force? }` | `docker.image.removed` or `docker.image.remove_failed` or `docker.image.remove.blocked` | Docker Manager |
+| `cmd.docker.compose.up` | `{ project_id, profile?, services? }` | `docker.compose.started` or `docker.compose.failed` | Docker Manager |
+| `cmd.docker.compose.down` | `{ project_id, remove_orphans? }` | `docker.compose.stopped` or `docker.compose.stop_failed` | Docker Manager |
+| `cmd.docker.compose.logs` | `{ project_id, services?, follow? }` | no persisted domain event (log open/follow) | Docker Manager |
+| `cmd.docker.bake.run` | `{ target?, file? }` | `docker.bake.started`, terminal: `docker.bake.completed` or `docker.bake.failed` | Docker Manager |
+| `cmd.docker.k8s.apply` | `{ context, namespace, manifest_ref }` | `docker.k8s.apply.started`, terminal: `docker.k8s.apply.completed` or `docker.k8s.apply.failed` or `docker.k8s.apply.blocked` | Docker Manager |
+| `cmd.docker.k8s.rollout_status` | `{ context, namespace, workload_ref }` | no persisted domain event (status fetch) | Docker Manager |
+| `cmd.docker.k8s.logs` | `{ context, namespace, workload_ref, follow? }` | no persisted domain event (log open/follow) | Docker Manager |
+| `cmd.docker.k8s.exec` | `{ context, namespace, workload_ref, container?, command? }` | `docker.k8s.exec.started`, terminal: `docker.k8s.exec.completed` or `docker.k8s.exec.failed` or `docker.k8s.exec.blocked` | Docker Manager |
+| `cmd.docker.k8s.port_forward` | `{ context, namespace, workload_ref, local_port, remote_port }` | `docker.k8s.port_forward.started`, terminal: `docker.k8s.port_forward.stopped` or `docker.k8s.port_forward.failed` | Docker Manager |
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md, ContractName:Plans/Permissions_System.md
 
 ### 2.6 Chat context usage commands
 | Command ID | Payload | Domain event(s) | UI surface(s) |
@@ -325,13 +317,16 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and
 
 | Command | Payload | Event / persistence | Notes |
 |---|---|---|---|
-| `cmd.panel.switch` | `{ "panel_id": "git" | "docker" | "source_control" | "unraid" | "artifacts" | "chat" | "files" | "run_debug", "project_id": "<optional>" }` | Layout/UI state only; no domain event required. | Single side-panel slot; last-click wins. Used by the activity bar, keyboard shortcuts, and command palette. |
-| `cmd.artifacts.open_panel` | `{ "project_id": "<optional>", "filter": { "artifact_type": "<optional>", "task_id": "<optional>" } }` | Layout/UI state only; no domain event required. | Opens or focuses the Artifacts panel in the side panel. |
-| `cmd.artifacts.select_item` | `{ "artifact_id": "<required>", "project_id": "<optional>" }` | Layout/UI state only; no domain event required. | Selects/highlights a runtime artifact row or card inside the Artifacts panel. |
-| `cmd.artifacts.show_in_ledger` | `{ "artifact_id": "<required>", "usage_event_ref": "<optional>", "run_id": "<optional>", "thread_id": "<optional>" }` | Layout/UI state only; no domain event required. | Opens Ledger with the canonical usage event in scope; when no direct usage ref exists, filter by run/thread/timestamp. |
-| `cmd.artifacts.show_in_usage` | `{ "artifact_id": "<required>", "usage_event_ref": "<optional>", "run_id": "<optional>", "thread_id": "<optional>" }` | Layout/UI state only; no domain event required. | Opens the Usage page or thread Usage tab with the same canonical usage event in scope. |
+| `cmd.panel.switch` | `{ "panel_id": "source_control" | "github_actions" | "docker_manager" | "artifacts" | "chat" | "files" | "run_debug", "project_id": "<optional>", "context?": { "repo_id?": "<optional>", "worktree_id?": "<optional>", "workflow_run_id?": "<optional>", "publish_result_id?": "<optional>", "k8s_ref?": "<optional>" } }` | Layout/UI state only; no domain event required. | Single side-panel slot; last-click wins. |
+| `cmd.artifacts.open_panel` | `{ "project_id": "<optional>", "filter": { "artifact_type": "<optional>", "task_id": "<optional>" } }` | Layout/UI state only; no domain event required. | Opens or focuses the Artifacts panel. |
+| `cmd.artifacts.show_in_ledger` | `{ "artifact_id": "<required>", "usage_event_ref": "<optional>", "run_id": "<optional>", "thread_id": "<optional>" }` | Layout/UI state only; no domain event required. | Opens canonical Ledger / Usage-linked state. |
+| `cmd.artifacts.show_in_usage` | `{ "artifact_id": "<required>", "usage_event_ref": "<optional>", "run_id": "<optional>", "thread_id": "<optional>" }` | Layout/UI state only; no domain event required. | Opens canonical Usage state. |
+| `cmd.orchestrator.open_in_source_control` | `{ run_id, attempt_id?, repo_id?, worktree_id?, commit_range? }` | Layout/UI state only; no domain event required. | Cross-surface Orchestrator pivot. |
+| `cmd.orchestrator.open_in_github_actions` | `{ run_id, workflow_run_id?, job_id?, step_id? }` | Layout/UI state only; no domain event required. | Cross-surface Orchestrator pivot. |
+| `cmd.orchestrator.open_in_docker_manager` | `{ run_id, publish_result_id?, runtime_ref?, k8s_ref? }` | Layout/UI state only; no domain event required. | Cross-surface Orchestrator pivot. |
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
+
 ## References
 - `Plans/Contracts_V0.md#UICommand`
 - `Plans/GitHub_API_Auth_and_Flows.md`

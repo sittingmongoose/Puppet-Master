@@ -93,3 +93,14 @@ All artifact differentiators identified in the research are MVP and required; no
 - Plans/usage-feature.md (usage pipeline, Show in Ledger/Usage, Gap 3)
 - Plans/Project_Output_Artifacts.md (distinction from Project Plan Package)
 - Plans/FileManager.md (open by artifact identity)
+
+## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
+
+Runtime artifacts and receipt-like summaries for this packet must stay on canonical runtime identity.
+
+Rules:
+- Source Control, GitHub Actions, Docker Manager, and Orchestrator must not invent isolated artifact-local receipt IDs when canonical run/attempt identity already exists.
+- If a receipt-like artifact is surfaced, it must preserve the canonical linkage fields needed to open the related surface in context.
+- cost-bearing receipt items continue to route to canonical Usage/Ledger identity.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Orchestrator_Page.md

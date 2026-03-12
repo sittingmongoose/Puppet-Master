@@ -496,69 +496,26 @@ pub struct NodePosition {
 ### 7.4 Relationship to Existing Structs
 ### 7.5 Canonical upstream ownership for graph projections
 
-The Run Graph view consumes projections from canonical runtime and plan contracts. It MUST NOT invent source-of-truth values locally.
+The Run Graph consumes canonical runtime projections; it does not invent feature-local state.
 
-| Graph surface | Canonical owner | Required fields |
+Required upstream projection families for this packet:
+
+| Detail area | Canonical owner | Required fields |
 |---|---|---|
-| Plan Mapping (`C2`) | `TierNode` / plan graph contract | `breadcrumb`, `section_anchor`, `excerpt` |
-| Worker Activity (`C3`) | runtime event / attempt snapshot contract | `requested_persona_id`, `effective_persona_id`, `provider`, `model`, `attempt_id`, `session_id?` |
-| Verifier Activity (`C4`) | gate/reviewer event contract | `requested_persona_id`, `effective_persona_id`, `provider`, `model`, `gate_id?`, `attempt_id?` |
-| Model / Tokens / Usage (`C5`) | `UsageRecord` | `run_id`, `tier_id`, `attempt_id?`, `effective_platform`, `effective_model`, `input_tokens`, `output_tokens`, `total_tokens`, `estimated_cost?` |
-| HITL Controls (`C6`) | blocked projection / HITL request contract | `blocked_reason_code`, ordered `allowed_action_ids[]`, `blocked_sequence`, `preserved_local_work`, `requires_safe_point_restore?`, prerequisite metadata |
-| Completed/summary references | evidence contract | `summary`, `summary_kind`, `evidence_ref?`, `detail_ref?` |
+| SCM / worktree lineage | `Plans/storage-plan.md` + `Plans/WorktreeGitImprovement.md` | `repo_id`, `worktree_id`, worktree path snapshot, branch, commit range, compare target |
+| GitHub Actions linkage | `Plans/GitHub_Integration.md` + `Plans/GitHub_API_Auth_and_Flows.md` | workflow, run, job, step, latest status, failed-step reference |
+| Docker / Publish / Unraid linkage | `Plans/Containers_Registry_and_Unraid.md` + `Plans/newtools.md` | runtime/context ref, image refs, `publish_result_id`, digest refs, `template_repo_id`, review state |
+| Kubernetes linkage | `Plans/Containers_Registry_and_Unraid.md` | context, namespace, workload, rollout/apply refs |
+| Usage / cost linkage | `Plans/usage-feature.md` + `Plans/Runtime_Artifacts_Panel.md` | canonical usage event ref or usage_event_seq |
 
-The graph detail pane MUST treat these as read-only projections. If a field is absent upstream, the gap belongs to the owner contract named above rather than to the Run Graph UI.
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
 
-ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md
+Detail-pane rules:
+- the selected-node detail view MUST be able to open the relevant Source Control, GitHub Actions, or Docker Manager surface in-context
+- historical node detail MUST preserve historical lineage even when the live worktree, workflow run, or runtime no longer exists
+- missing live targets must render as historical/retired state, not as silent disappearance
 
-These projection structs are **computed from** existing backend structs:
-- `TierNode` (puppet-master-rs/src/core/tier_node.rs): provides id, tier_type, title, description, dependencies, state_machine.
-- `TierTree` (same file): arena-based storage; used to build the full graph.
-- `TierState` (puppet-master-rs/src/types/state.rs): enum values map directly to `GraphNode.state`.
-- `PuppetMasterEvent` variants (puppet-master-rs/src/types/events.rs): `TierChanged`, `IterationStart/Complete`, `GateStart/Complete`, `Progress`, `Output`, `Error`, `UserInteractionRequired`, `EvidenceStored`.
-- `UsageRecord` (puppet-master-rs/src/types/budget.rs): provides token counts and cost.
-- `StoredEvidence` (puppet-master-rs/src/types/evidence.rs): evidence type and file path.
-
-The view-model layer converts backend structs to `GraphNode` projections on initial load, then applies incremental updates as events arrive.
-
-ContractRef: DRY:DATA:TierTree, DRY:DATA:TierState, DRY:DATA:PuppetMasterEvent
-
----
-
-<a id="8-state-colors"></a>
-## 8. State-to-Color Mapping (Theme Tokens)
-
-All colors use theme tokens. No hard-coded hex values in Slint components.
-
-| TierState | Theme Token | Retro Dark | Retro Light | Basic Dark | Basic Light |
-|-----------|------------|------------|-------------|------------|-------------|
-| Pending | `Theme.graph-pending` | #6C757D | #ADB5BD | #6C757D | #ADB5BD |
-| Planning | `Theme.graph-planning` | #FFC107 | #FFD54F | #FFC107 | #FFD54F |
-| Running | `Theme.graph-running` | #FF9800 | #FFB74D | #FF9800 | #FFB74D |
-| Gating | `Theme.graph-gating` | #E040FB | #CE93D8 | #AB47BC | #CE93D8 |
-| Passed | `Theme.graph-passed` | #4CAF50 | #66BB6A | #4CAF50 | #66BB6A |
-| Failed | `Theme.graph-failed` | #F44336 | #EF5350 | #F44336 | #EF5350 |
-| Escalated | `Theme.graph-escalated` | #FF5722 | #FF8A65 | #FF5722 | #FF8A65 |
-| Retrying | `Theme.graph-retrying` | #FFEB3B | #FFF176 | #FFEB3B | #FFF176 |
-| Skipped | `Theme.graph-skipped` | #607D8B | #90A4AE | #607D8B | #90A4AE |
-| Reopened | `Theme.graph-reopened` | #00BCD4 | #4DD0E1 | #00BCD4 | #4DD0E1 |
-
-**Edge colors** derive from the upstream node's state color (same token, but at 60% opacity for the line).
-
-**Selected node border**: `Theme.accent` color (4px border).
-
-These tokens MUST be added to the theme system (Plans/FinalGUISpec.md section 6) as new `Theme.graph-*` properties. Custom themes can override these.
-
-ContractRef: ContractName:Plans/FinalGUISpec.md#6
-
----
-
-<a id="9-layout-algorithms"></a>
-## 9. DAG Layout Algorithms (5 Presets)
-
-All layout algorithms are **deterministic**: same graph + same preset = same layout every time.
-
-Layout computation runs on a **background thread** (tokio::spawn_blocking). The UI shows a skeleton/shimmer during layout computation. Layout positions are cached per `(run_id, preset)` tuple. If computation fails or exceeds 2 seconds, the UI reuses the last cached layout for that preset when available; otherwise it falls back to **Preset 3 Compact** and shows a non-blocking banner explaining the fallback.
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md
 
 ### 9.1 Preset Table
 
@@ -1236,13 +1193,12 @@ ContractRef: ContractName:Plans/Contracts_V0.md
 
 ### Node badge blocked-state rendering
 
-| State | Badge Color | Icon | Label |
-|-------|-------------|------|-------|
-| `attention_required` | Amber | Warning triangle | "Needs input" |
-| `blocked` | Red | Stop circle | "Blocked" |
-| `waiting_approval` | Blue | User badge | "Awaiting approval" |
+Run Graph node badges MUST use canonical node runtime states only.
 
-These three states MUST be visually distinct.
+Required rules:
+- `blocked` renders as the canonical node state for unmet prerequisites, auth gates, permission gates, worktree conflicts, and other blocked runtime outcomes.
+- retry/backoff and remediation-in-progress render as distinct runtime states rather than being collapsed into `blocked`.
+- `attention_required` and `waiting_approval` are not canonical Run Graph node states; those concepts belong to wizard or thread surfaces rather than node-state badges.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
 

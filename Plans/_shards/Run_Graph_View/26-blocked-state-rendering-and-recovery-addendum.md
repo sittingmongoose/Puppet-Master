@@ -8,13 +8,12 @@ ContractRef: ContractName:Plans/Contracts_V0.md
 
 ### Node badge blocked-state rendering
 
-| State | Badge Color | Icon | Label |
-|-------|-------------|------|-------|
-| `attention_required` | Amber | Warning triangle | "Needs input" |
-| `blocked` | Red | Stop circle | "Blocked" |
-| `waiting_approval` | Blue | User badge | "Awaiting approval" |
+Run Graph node badges MUST use canonical node runtime states only.
 
-These three states MUST be visually distinct.
+Required rules:
+- `blocked` renders as the canonical node state for unmet prerequisites, auth gates, permission gates, worktree conflicts, and other blocked runtime outcomes.
+- retry/backoff and remediation-in-progress render as distinct runtime states rather than being collapsed into `blocked`.
+- `attention_required` and `waiting_approval` are not canonical Run Graph node states; those concepts belong to wizard or thread surfaces rather than node-state badges.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
 

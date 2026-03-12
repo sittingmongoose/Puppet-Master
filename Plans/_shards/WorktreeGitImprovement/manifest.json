@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/WorktreeGitImprovement.md",
-  "source_sha256": "72e79227615f9ea09e5b74cf33369e3b62488d87b01ffe27aed020acdb31e8e9",
+  "source_sha256": "ef9b5826eaacfe6b20d8ebab6842d30bcb3c02b0d5d9742bc87f98160779c8f3",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -141,16 +141,9 @@
       "heading": "## Runtime Worktree Conflict Reconciliation Addendum (2026-03-09)"
     },
     {
-      "dest_path": "Plans/_shards/WorktreeGitImprovement/20-runtime-worktree-conflict-detection-and-recovery-consolidation-addendum-2026-03-09.md",
+      "dest_path": "Plans/_shards/WorktreeGitImprovement/20-worktree-conflict-and-dirty-worktree-runtime-alignment.md",
       "start_line": 1085,
       "end_line": 1093,
-      "segment_sha256": "0a412c01b757fbb8df01db42e6ff6c1ea14706be1e26bef57b137ff4cfb14367",
-      "heading": "## Runtime Worktree Conflict Detection and Recovery Consolidation Addendum (2026-03-09)"
-    },
-    {
-      "dest_path": "Plans/_shards/WorktreeGitImprovement/21-worktree-conflict-and-dirty-worktree-runtime-alignment.md",
-      "start_line": 1094,
-      "end_line": 1102,
       "segment_sha256": "693424643bc4f9110e9b9b6fd9675b932f80711ebce0843ce5272f934ddb163b",
       "heading": "## Worktree Conflict and Dirty-Worktree Runtime Alignment"
     }

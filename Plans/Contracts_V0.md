@@ -442,16 +442,20 @@ ContractRef: ContractName:Plans/Contracts_V0.md#ContextInjectionToggles, PolicyR
 
 Rules:
 - `request_kind` is `tier_boundary_approval` for V0.
-- `allowed_actions` MUST be an ordered subset of `approve_continue | reject | cancel_run | skip`.
+- `allowed_actions[]` is the HITL-only action list contract for approval requests.
+- runtime blocked/recovery payloads use ordered `allowed_action_ids[]` instead.
+- `recovery_options[]` is not canonical runtime vocabulary.
 - `hitl.approval_requested`, `hitl.approved`, `hitl.rejected`, and `hitl.cancelled` events MUST carry a stable `request_id`.
-- Rejections MAY add `reject_resolution` (`rerun | skip | abort`) and optional `rationale`.
+- rejections MAY add `reject_resolution` (`rerun | skip | abort`) and optional `rationale`.
 
-ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md
 
----
+Compatibility rule:
+- Cross-document readers MUST NOT treat HITL `allowed_actions[]` as the canonical runtime blocked-action field.
+- The canonical runtime blocked-action field remains `allowed_action_ids[]` in blocked projections and blocked events.
 
-<a id="7"></a>
-<a id="UICommand"></a>
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
+
 ## 7. UICommand
 UI actions that trigger non-trivial logic MUST be expressed as UI commands with stable IDs.
 
