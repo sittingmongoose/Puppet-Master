@@ -1215,66 +1215,52 @@ ContractRef: UICommand:cmd.orchestrator.build_run, UICommand:cmd.orchestrator.op
 
 ### 14.7 Docker runtime + DockerHub contract
 
-**Local runtime flow (default):**
-1. Preflight checks: Docker engine reachable, compose file resolvable, required ports available.
-2. If registry push is requested, validate DockerHub auth before launch and fail closed with actionable remediation if auth is missing or expired.
-3. Resolve runtime settings from Settings > Advanced > Containers & Registry (runtime selector, binary path, compose path, project-name strategy, namespace/repository/tag defaults).
-4. Launch path:
-   - `docker compose up -d` for service stacks
-   - `docker buildx build` for deterministic image build path
-5. Capture logs/health until preview or build completes.
-6. Teardown with `docker compose down` on explicit stop, on project close when `stop_on_project_close` is enabled, and on app exit; otherwise preserve the running preview and surface that state explicitly in the UI.
-7. Evidence/log capture MUST redact credentials, auth headers, and token-bearing environment variables before persistence.
+Docker support is expressed through the Docker Manager surface.
 
-**Settings contract (Slint Settings):**
-- `Containers & Registry` section includes:
-  - runtime selector (`docker` default)
-  - Docker binary path override and compose file/path defaults
-  - compose project-name strategy (`auto`, `fixed`, `hash-based`)
-  - DockerHub namespace/repository/tag defaults and tag templates
-  - auth inputs (`browser` or `pat`), with PAT recommended but not default-exclusive; browser-login, PAT-save, validation, and clear-credentials behavior are defined by §14.7A and `Plans/Containers_Registry_and_Unraid.md`
-  - push policy (`manual` default; optional `after_build`)
+Required Docker Manager contract coverage:
+- containers, images, compose, registries, build/bake, Publish / Unraid, and project-focused Kubernetes
+- Docker as default runtime mode, Podman as alternate runtime mode inside the same surface
+- requested vs effective auth capability disclosure for Docker Hub
+- protected missing-repository creation and publish-side-effect separation
 
-**DockerHub auth/push contract:**
-- Use the §14.7A auth model with both browser-login and PAT inputs.
-- Store tokens in the canonical stores defined by `Plans/Containers_Registry_and_Unraid.md`; never place tokens in project files, redb, or evidence logs.
-- Validation status includes a timestamp and last-known registry host so the UI can explain what was verified.
-- Push results include digest and tag map in evidence and chat summary.
-- If auth expires during push, emit `docker.publish.failed` with `reason_code: auth_expired`, preserve the local build result, and surface a re-auth + retry CTA without forcing a rebuild.
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
 
-**CI template defaults for container publish:**
-- `docker/login-action`
-- `docker/setup-qemu-action`
-- `docker/setup-buildx-action`
-- `docker/build-push-action`
-- optional `docker/scout-action`
+Doctor / preflight rules remain canonical here:
+- `doctor.docker.engine`
+- `doctor.docker.compose`
+- `doctor.docker.buildx`
+- `doctor.dockerhub.auth.capability`
+- `doctor.dockerhub.repo.access`
+- Kubernetes-specific runtime checks when Kubernetes subview actions are invoked
 
-ContractRef: ContractName:Plans/FinalGUISpec.md#7.4, PolicyRule:no_secrets_in_storage, SchemaID:evidence.schema.json, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+`doctor.registry.auth` is a deprecated alias for DockerHub-specific flows and MUST NOT remain the visible canonical term in surface docs.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/storage-plan.md
+
+Result payload minima remain authoritative here and must be reused by other docs:
+- `docker_auth_result`
+- `docker_publish_result`
+- `unraid_template_result`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 ### 14.8 GitHub Actions settings + generation contract
 
-**Required Settings surface:**
-- `CI / GitHub Actions` section with:
-  - workflow templates
-  - trigger controls
-  - matrix/profile options
-  - required-secrets checklist
-  - workflow validation + preview action
+GitHub Actions generation and readiness must align with the live GitHub Actions surface.
 
-**Assistant generation flow:**
-1. Select template + options from settings.
-2. Render workflow preview in UI/editor.
-3. Validate YAML and required secrets references.
-4. Write `.github/workflows/<template-or-name>.yml` only after user approval.
-5. Reflect generated workflow in Settings UI list.
+Required Settings > Advanced coverage:
+- workflow template selection
+- trigger and matrix controls
+- required-secrets readiness checklist
+- preview/apply generation flow
 
-**Template families required by this plan:**
-- `docker-build-push`
-- `native-build-matrix` (OS-native build artifact jobs)
-- `web-preview-and-test`
-- `mobile-ios-android`
+Required GitHub Actions surface alignment:
+- generated workflows are visible from the `Workflows` subview
+- current-branch run behavior and workflow dispatch use the same repository and branch context
+- admin readiness for secrets, variables, and environments reuses the same capability/auth model as the live GitHub Actions Settings subview
+- `doctor.actions.workflow-ready` remains the canonical readiness gate for workflow generation/apply flows
 
-ContractRef: ContractName:Plans/FinalGUISpec.md#7.4, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, Primitive:UICommand
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md
 
 ### 14.9 Automation migration contract (Iced-era tool to Slint-era tooling)
 

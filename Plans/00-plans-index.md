@@ -156,3 +156,13 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Pro
 - `Plans/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, and `Plans/FinalGUISpec.md` for rendering and interaction
 - `Plans/chain-wizard-flexibility.md`, `Plans/assistant-chat-design.md`, and `Plans/interview-subagent-integration.md` for paused/degraded planning-state semantics
 - `Plans/Glossary.md` for canonical runtime terminology
+
+## 2026-03-12 addendum — source control, GitHub Actions, and Docker Manager
+
+- `Plans/GitHub_Integration.md` now owns two distinct operational surfaces: Git-first Source Control and GitHub Actions.
+- `Plans/WorktreeGitImprovement.md` remains canonical for worktree correctness and runtime alignment, but Source Control is the primary user-facing worktree surface.
+- `Plans/Containers_Registry_and_Unraid.md` is the canonical owner for Docker Manager, including Publish / Unraid and project-focused Kubernetes placement.
+- `Plans/newtools.md` remains canonical for Docker/Actions doctor and result minima and must be read alongside the feature-owner docs.
+- `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Permissions_System.md`, and `Plans/usage-feature.md` are required anti-drift companions for this packet.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md, ContractName:Plans/storage-plan.md

@@ -1,0 +1,1 @@
+sed -i 's/<div id="reqBuilderChat" style="display:none; flex-direction:column; height: 400px; border: 1px solid var(--border-light); border-radius: 8px; background: var(--surface-elevated); overflow:hidden; margin-top: var(--xl); box-shadow: 0 4px 12px rgba(0,0,0,0.05);">/<div id="reqBuilderChat" style="display:none;">/' Concepts/PuppetMasterDashComp.html

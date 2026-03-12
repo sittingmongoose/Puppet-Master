@@ -59,14 +59,18 @@ ContractRef: ContractName:Plans/Widget_System.md, ContractName:Plans/Run_Graph_V
 
 ## 2026-03-07 addendum — DockerHub / Unraid GUI requirements
 
-| Area | Requirement | Canonical source |
-|------|-------------|------------------|
-| Docker Manage visibility | Contextual Docker management surface shown for Docker-related projects, with `Hide Docker Manage when not used in Project.` setting defaulting to enabled | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md` |
-| DockerHub auth UX | Browser login button plus PAT entry, PAT-recommended explainer, requested-vs-effective capability display, and disabled-with-explanation controls when capability is partial | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md` |
-| Repo creation safety | Non-bypassable confirmation for missing-repo creation, showing namespace/repo/privacy and defaulting privacy to private | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md` |
-| Runtime/user access | Build, run/preview, stop, open running container, logs, health, and access URL actions | `Plans/Containers_Registry_and_Unraid.md`, `Plans/Orchestrator_Page.md` |
-| Unraid publishing | Auto-generate/update XML after publish by default, managed template repo by default, one-click push UI, explicit unmanaged-output handling, and canonical template-repo status binding | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md`, `Plans/Orchestrator_Page.md` |
-| `ca_profile.xml` editing | Shared cross-project default, per-project override, two-layer editor (structured + raw XML), passthrough preservation for unknown fields, image upload or external URL, and repo-managed asset default for uploaded images | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md` |
+| Requirement | Canonical expectation | Source |
+|---|---|---|
+| Source Control surface | Separate first-class Source Control surface with Changes, History, Graph, Worktrees, and Branches / Stash; not merged into GitHub Actions | `Plans/GitHub_Integration.md`, `Plans/WorktreeGitImprovement.md`, `Plans/FinalGUISpec.md` |
+| GitHub Actions surface | Separate first-class GitHub Actions surface with Current Branch, Workflows, Settings, rerun/cancel/pin, and secrets/variables/environments CRUD | `Plans/GitHub_Integration.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/newtools.md` |
+| Docker Manager visibility | Contextual Docker Manager surface shown for Docker-related projects, with `Hide Docker Manage when not used in Project.` defaulting to enabled | `Plans/Containers_Registry_and_Unraid.md`, `Plans/FinalGUISpec.md` |
+| Docker Manager breadth | Containers, images, compose, registries, build/bake, Publish / Unraid, networks/volumes/contexts, and project-focused Kubernetes | `Plans/Containers_Registry_and_Unraid.md`, `Plans/newtools.md` |
+| DockerHub auth UX | Browser login plus PAT, requested-vs-effective capability display, and disabled-with-explanation controls when capability is partial | `Plans/Containers_Registry_and_Unraid.md`, `Plans/newtools.md` |
+| Repo creation safety | Missing-repo creation is explicit, non-bypassable, and distinct from image-push approval | `Plans/Containers_Registry_and_Unraid.md`, `Plans/Permissions_System.md` |
+| Orchestrator pivots | Orchestrator exposes `Open in Source Control`, `Open in GitHub Actions`, and `Open in Docker Manager` with preserved context | `Plans/Orchestrator_Page.md`, `Plans/UI_Command_Catalog.md` |
+| Usage/Ledger linkage | cost-bearing receipts from these surfaces deep-link into canonical Usage/Ledger, not a feature-local cost view | `Plans/usage-feature.md`, `Plans/Runtime_Artifacts_Panel.md` |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md
 
 ## 2026-03-09 addendum — Artifacts panel and Usage/Ledger linkage
 - [ ] Artifacts panel in view inventory and panel system (FinalGUISpec §7.1, §4.1, §5).

@@ -569,27 +569,53 @@ The Orchestrator page owns run-wide scheduler and recovery summaries.
 - ready-but-unselected rows MUST show `non_selected_reason` and score breakdown
 - blocked rows MUST show only the currently valid `allowed_action_ids[]`
 - newly-ready rows MUST identify the wake reason and, when applicable, the directly satisfied dependency
-## Runtime Recovery Surface Layout and Navigation Reconciliation Addendum (2026-03-09)
-
-The Orchestrator page is a consumer of canonical runtime contracts.
-
-Rules:
-- queue-analysis navigation uses `scheduler_pass_id`
-- blocked rows show only currently valid `allowed_action_ids[]`; unavailable actions are explained rather than silently omitted
-- newly-ready rows may show direct prerequisite/source context only when canonical `scheduler.pass` data includes it
-- recovery actions use canonical `cmd.runtime.*` commands
-- node surfaces use canonical blocked reasons; `attention_required` is not a node runtime state
-- pre-attempt blocked episodes bind recovery to `blocked_sequence`
-- remediation, safe-point, and queue-analysis pivots open by canonical identity (`remediation_root_id`, `safe_point_id`, `scheduler_pass_id`)
 ## Orchestrator Runtime Recovery Contract
 
-The Orchestrator page is a consumer of canonical runtime contracts.
+The Orchestrator page owns the page-level runtime lineage, blocked-state remediation, and cross-surface pivot model for the accepted MVP operational surfaces.
 
-Rules:
-- queue-analysis navigation uses `scheduler_pass_id`
-- blocked rows show only currently valid `allowed_action_ids[]`; unavailable actions are explained rather than silently omitted
-- newly-ready rows may show direct prerequisite/source context only when canonical `scheduler.pass` data includes it
-- recovery actions use canonical `cmd.runtime.*` commands
-- node surfaces use canonical blocked reasons; `attention_required` is not a node runtime state
-- pre-attempt blocked episodes bind recovery to `blocked_sequence`
-- remediation, safe-point, and queue-analysis pivots open by canonical identity (`remediation_root_id`, `safe_point_id`, `scheduler_pass_id`)
+Required lineage payload available to page consumers:
+- `repo_id`
+- `worktree_id`
+- worktree path snapshot
+- branch name and compare target
+- commit or commit-range reference
+- `workflow_id`, `workflow_run_id`, `job_id`, `step_id` when GitHub Actions is involved
+- `publish_result_id`, image refs, digest refs, runtime/context refs, and `template_repo_id` when Docker Manager / Publish / Unraid is involved
+- Kubernetes context, namespace, workload, and rollout ref when the run touched Kubernetes
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Contracts_V0.md
+
+Tab requirements:
+- `Progress` shows current worktree, branch, requested vs effective runtime identity, latest workflow status, and latest publish/runtime state when relevant
+- `Tiers` shows worktree ownership and cross-surface CTAs per tier
+- `Node Graph Display` consumes the same lineage identities rather than inventing graph-local ones
+- `History` preserves historical run-to-repo, run-to-actions, and run-to-docker lineage even when live state has changed
+- `Evidence` can pivot to related workflow logs, Docker publish receipts, and Kubernetes rollout detail when present
+- `Ledger` remains the canonical runtime/usage history surface and must not be replaced by feature-local receipt timelines
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/GitHub_Integration.md
+
+Required CTAs:
+- `Open in Source Control`
+- `Open in GitHub Actions`
+- `Open in Docker Manager`
+- `Retry from safe point`
+- `Start fresh attempt`
+- `Resolve blocked prerequisite`
+
+These CTAs MUST preserve the exact project, run, worktree, and attempt context needed by the target surface.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Crosswalk.md
+
+Blocked-state minima:
+- `dirty_worktree`
+- `worktree_conflict`
+- GitHub auth/admin blocked states
+- Docker auth/repo-access/publish blocked states
+- template review / template push blocked states
+- Kubernetes context / apply / rollout blocked states when applicable
+
+Blocked outcomes remain blocked, not failed, when the underlying action was intentionally not executed.
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/newtools.md
+

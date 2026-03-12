@@ -279,52 +279,24 @@ Required distinction:
 - Canonical graph degradation is forbidden.
 - Intentional non-execution is modeled as blocked, not failed.
 - Wizard blocked escalation is policy-distinct from attention_required.
-## Runtime Scheduler / Recovery Deterministic Defaults Addendum (2026-03-09)
-
-Add these deterministic defaults:
-- scored event-driven scheduling is the default runtime model
-- watchdog polling is allowed only as a backup, not as primary correctness
-- no critical-path scheduler term in MVP
-- blind retry is forbidden
-- blocked outcomes preserve local work by default when a side effect was intentionally prevented or a prerequisite is missing
-- draft decomposition may degrade only before graph lock
-- canonical graph integrity failures do not degrade silently
-
-Where earlier policy prose is ambiguous, these defaults win.
 ## Runtime Recovery Deterministic Defaults Reconciliation Addendum (2026-03-09)
 
 Where higher-precedence sources do not decide, use these defaults:
+- scored event-driven scheduling is the default runtime model
 - canonical event names and enum families from `Plans/Contracts_V0.md` win over older aliases
 - `watchdog_recheck` may emit redundant wakeups defensively, but MUST NOT become the primary correctness path
+- no critical-path scheduler term in MVP
+- blind retry is forbidden
 - default retry ceiling remains `3` attempts unless a higher-precedence contract narrows it
 - default remediation ceiling remains `3` generations unless a higher-precedence contract narrows it
 - blocked outcomes preserve completed local work by default when execution stopped because a prerequisite or remote side effect was unresolved
 - prerequisite resolution always creates a new attempt snapshot rather than mutating an old one in place
+- draft decomposition may degrade only before graph lock
+- canonical graph integrity failures do not degrade silently
+
+Where earlier policy prose is ambiguous, these defaults win.
+
 ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
-## Canonical Runtime Recovery Matrix and Counter Policy Addendum (2026-03-09)
-
-This section defines canonical Runtime Recovery Matrix Completion.
-
-### Additional blocked rows
-| classifier family | classifier | automatic next step | counter family | backoff | requires safe-point restore | remediation | terminal / escalation |
-|---|---|---|---|---|---|---|---|
-| `blocked_reason_code` | `validation_blocked` | wait for corrected input or explicit user action | `manual_resume_count` | none | no | optional | remain blocked |
-| `blocked_reason_code` | `remediation_ceiling_exceeded` | no automatic retry | none | none | no | no | remain blocked until replan, manual fix, or abort |
-| `blocked_reason_code` | `worktree_conflict` | wait for conflict resolution | `manual_resume_count` | none | maybe | no | remain blocked |
-| `blocked_reason_code` | `dirty_worktree` | wait for cleanup or restore action | `manual_resume_count` | none | maybe | no | remain blocked |
-| `blocked_reason_code` | `plugin_hook_blocked` | wait for hook resolution or explicit override action | `manual_resume_count` | none | no | no | remain blocked |
-
-### Timeout normalization
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
-`tool_outcome = timed_out` MUST first normalize to `failure_class = provider_transient`, then follow the canonical provider-transient row.
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
-
-### Field-level override
-When a blocked payload sets `requires_safe_point_restore = true`, that field overrides the row-default rerun path.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
 ## Canonical Runtime Recovery Matrix Completion
 
 ### Additional blocked rows
@@ -345,3 +317,17 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
 When a blocked payload sets `requires_safe_point_restore = true`, that field overrides the row-default rerun path.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
+
+## Source Control, GitHub Actions, and Docker Manager Blocked-State Addendum (2026-03-12)
+
+Additional deterministic blocked defaults for this packet:
+
+| blocked_reason_code | default posture | required user-visible effect |
+|---|---|---|
+| `worktree_conflict` | remain blocked until resolution | show Source Control recovery CTA |
+| `dirty_worktree` | remain blocked until cleanup or restore action | show Source Control recovery CTA |
+| `auth_expired` for GitHub-hosted Actions admin/run actions | remain blocked until auth refresh | show GitHub Actions recovery CTA |
+| `external_side_effect_blocked` for Docker repo create/push/template push | remain blocked until approval or explicit decline | preserve local build/publish result |
+| Kubernetes apply/exec/port-forward prerequisite block | remain blocked until context/prerequisite resolves | show Docker Manager Kubernetes CTA |
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md

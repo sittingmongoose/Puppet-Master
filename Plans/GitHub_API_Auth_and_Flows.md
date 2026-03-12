@@ -516,9 +516,11 @@ GitHub auth events are not sufficient on their own; they must integrate with the
 
 Required rules:
 - A GitHub auth problem that prevents execution MUST surface as the canonical blocked-state event/path for the affected node or run, with `auth_realm = github_api` and exact recovery options.
-- A successful reconnect, re-auth, or scope upgrade MUST trigger the canonical scheduler wake-reason for auth recovery defined in `Plans/Contracts_V0.md` and the scheduler MUST reevaluate affected blocked nodes immediately.
+- A successful reconnect, re-auth, or scope upgrade MUST bind back to the originating blocked attempt or blocked node episode, trigger the canonical scheduler wake-reason for auth recovery defined in `Plans/Contracts_V0.md`, and reevaluate affected blocked nodes immediately.
+- Resumed work after auth recovery MUST use a new attempt snapshot; previously blocked attempts remain immutable history.
 - A failed or cancelled re-auth attempt MUST preserve the blocked node state and MUST NOT silently clear the block.
 - If a GitHub operation had already completed local preparation (for example worktree state or local git steps), that local work remains preserved; the blocked state covers only the pending hosted side effect.
+- Auth recovery MUST NOT auto-resubmit a blocked remote side effect without the canonical runtime resume/retry action.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#AuthEvent, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Graph_View.md
 
@@ -542,53 +544,6 @@ Auth-blocked recovery MUST preserve the existing secrecy contract:
 - auth recovery state changes must be replayable from canonical events without reconstructing secrets from runtime storage
 
 ContractRef: ContractName:Plans/Contracts_V0.md#AuthEvent, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_Integration.md, PolicyRule:no_secrets_in_storage
-## Runtime Auth-Blocked Recovery Reconciliation Addendum (2026-03-09)
-
-This packet confirms GitHub auth behavior as part of the shared runtime model.
-
-### Canonical mappings
-- missing / expired / revoked token -> `blocked_reason_code = auth_expired`
-- missing required scopes -> `blocked_reason_code = auth_expired` plus `missing_scopes[]`
-- user cancels auth flow -> `blocked_reason_code = user_declined`
-- headless mode cannot show auth prompt -> `blocked_reason_code = headless_ask_denied`
-- transient GitHub API outage / rate limiting / network failure -> `failure_class = provider_transient`
-- separate remote-side-effect approval still required -> `blocked_reason_code = external_side_effect_blocked`
-
-### Recovery rule
-Auth recovery does not automatically resubmit blocked side effects. Completed local work is preserved, the blocked node remains inspectable, and rerun/resume occurs only through the canonical runtime action after prerequisites are satisfied.
-## GitHub Runtime Auth Recovery Reconciliation Addendum (2026-03-09)
-
-GitHub API auth recovery must follow the canonical runtime packet.
-
-Rules:
-- auth-blocked GitHub operations remain blocked with `blocked_reason_code = auth_expired`, `user_declined`, `headless_ask_denied`, or `external_side_effect_blocked` as applicable
-- blocked payloads MUST expose canonical runtime action families plus the GitHub-specific metadata needed to bind connect/re-auth commands (`auth_realm`, `missing_scopes[]`)
-- successful reconnect/scope-upgrade emits a canonical prerequisite-resolved wake and reevaluates affected blocked nodes in the same scheduler cycle
-- rerun after auth recovery occurs as a new attempt snapshot; previously blocked attempts remain immutable history
-- auth recovery does not auto-resubmit a blocked side effect without the canonical runtime resume/retry action
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md
-## GitHub API Auth Recovery Runtime Consolidation Addendum (2026-03-09)
-
-GitHub API auth recovery is part of the shared runtime model.
-
-### Canonical mappings
-- missing/expired/revoked token -> `blocked_reason_code = auth_expired`
-- missing required scopes -> `blocked_reason_code = auth_expired` plus `missing_scopes[]`
-- user cancels auth flow -> `blocked_reason_code = user_declined`
-- headless mode cannot show auth prompt -> `blocked_reason_code = headless_ask_denied`
-- transient GitHub outage / rate limiting / network failure -> `failure_class = provider_transient`
-- unresolved remote-side-effect approval -> `blocked_reason_code = external_side_effect_blocked`
-
-### Attempt-scoped recovery
-Successful reconnect/scope upgrade MUST:
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Run_Modes.md
-- bind back to the originating blocked attempt or blocked node episode
-- emit `node.prerequisite_resolved`
-- reevaluate affected blocked work in the same scheduler cycle
-- require a new attempt snapshot for resumed work
-
-Auth recovery MUST NOT auto-resubmit a blocked remote side effect without the canonical runtime resume/retry action.
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/GitHub_Integration.md
 
 ## Auth Expired Mid-Attempt Recovery Addendum
 
@@ -613,3 +568,24 @@ On auth recovery (user completes device-code flow or token refresh succeeds):
 3. The attempt resumes from the safe point rather than restarting from scratch.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
+
+## GitHub Actions Admin and Readiness Addendum (2026-03-12)
+
+The `github_api` realm also powers the GitHub Actions surface.
+
+Required behavior:
+- list/view/rerun/cancel workflow runs
+- dispatch workflows
+- manage repository and environment secrets
+- manage variables
+- manage environments
+- surface requested vs effective admin capability when auth is present but incomplete
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/newtools.md, ContractName:Plans/Permissions_System.md
+
+Boundary rules:
+- Git transport state and GitHub API state remain separate systems.
+- An authenticated Git transport does not imply GitHub Actions admin capability.
+- Missing or expired Actions admin capability yields deterministic disabled states and blocked outcomes rather than silent browser fallback.
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Decision_Policy.md

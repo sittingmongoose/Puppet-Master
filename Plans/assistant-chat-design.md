@@ -291,58 +291,26 @@ This list is the SSOT for reserved slash commands. The canonical machine-readabl
 
 ### 5.1 Git & GitHub Slash Commands
 
-Git and GitHub commands are available in chat when the active project is a git repository. All git operations executed via chat use the same code path as the Git panel (Plans/GitHub_Integration.md §A) — they are not separate implementations. ContractRef: Plans/GitHub_Integration.md, Plans/DRY_Rules.md
+Git and GitHub slash commands are split by surface ownership.
 
-**Git commands (slash commands):**
+### Source Control commands
+- `/git` and related git-local operations target the Source Control surface and reuse the same code path as Source Control actions.
+- Chat git commands may open or focus Source Control with repo/worktree context when a visual follow-up is needed.
 
-| Command | Description | Error behavior |
-|---------|-------------|----------------|
-| `/git status` | Show current branch, staged/unstaged file count, sync state | Shows "(no repo)" if not a git repo |
-| `/git commit <message>` | Commit all staged changes with the given message | "Nothing staged" if no staged files |
-| `/git stage <file>` | Stage a specific file (or `.` for all) | "File not found" or "Already staged" |
-| `/git push` | Push current branch to tracking remote | Shows auth-expired or unreachable error |
-| `/git pull` | Pull with rebase (default) | Shows conflict file list on conflict |
-| `/git sync` | Pull then push (equivalent to Sync button) | Stops at first error, shows which step failed |
-| `/git branch <name>` | Create and switch to a new branch | "Invalid branch name" on bad chars |
-| `/git stash` | Stash all uncommitted changes | "Nothing to stash" if working tree clean |
-| `/git log [N]` | Show last N commits (default 10) in chat as a formatted list | — |
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md
 
-**GitHub Actions commands:**
+### GitHub Actions commands
+- `/actions` and `/actions logs` target the GitHub Actions surface and must mirror its run/log/admin failure semantics.
+- Chat responses for Actions runs must preserve workflow/run/job/step identity so the user can continue in the GitHub Actions surface without losing context.
 
-| Command | Description | Error behavior |
-|---------|-------------|----------------|
-| `/actions` | List recent workflow runs for the current repo with status/log summary fields | "Not linked to GitHub" if no github_api auth |
-| `/actions run <workflow>` | Trigger a workflow_dispatch workflow by name | "Permission denied" (403) or "No workflow_dispatch trigger" |
-| `/actions logs <run-id>` | Fetch and show log tail (last 200 lines) plus status/log summary for the run | "Run not found" |
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
 
-- GitHub commands require `github_api` auth realm (ContractRef: Plans/GitHub_API_Auth_and_Flows.md §auth-realm-split)
-- If not authenticated, commands show inline device-code auth prompt
-- All command outputs are rendered as structured chat messages (not raw terminal output)
-- Command outputs include a "Open Git Panel" / "Open Actions Panel" deep-link button
-- `/actions` and `/actions logs` outputs MUST include the same summary fields defined by `Plans/GitHub_Integration.md §B.3`:
-  run status, run conclusion, run duration, failed job count, log truncation state, and last log timestamp.
-- `/actions` command failures MUST mirror `Plans/GitHub_Integration.md §B.3` failure-state semantics for auth/rate-limit/list/detail/log failures so chat and panel behavior stay consistent.
+### Surface boundary rule
+- Chat must not present the old combined Git/GitHub panel model as canonical.
+- When the user asks to inspect repo state, route to Source Control semantics.
+- When the user asks to inspect hosted workflows or GitHub Actions logs/settings, route to GitHub Actions semantics.
 
----
-
-## 6. Teach
-
-- **Concept:** Users can ask the Assistant how to use Puppet Master (platform, modes, queues, etc.). No separate "Teach" sidebar or inline tips component is required.
-- **Implementation:** Give the chat bot access to information on how Puppet Master works (e.g. inject or retrieve from docs: REQUIREMENTS.md, ARCHITECTURE.md, AGENTS.md, GUI_SPEC.md, platform CLI sections, mode descriptions). The same chat surface is used; the user just asks ("How does Plan mode work?", "How do I add to the queue?"). **Build requirement:** The documentation that Teach uses (REQUIREMENTS.md, ARCHITECTURE.md, AGENTS.md, GUI_SPEC.md, and any other canonical docs referenced above) must be built or validated when the rest of the project is built so it is always available to the Assistant.
-- **Document rendering rule (required):** Chat must not render full document bodies for requirements, PRD, phase docs, contract seeds, or other long artifacts. Teach responses use concise summaries plus pointers to review surfaces.
-- **Optional enhancements (in chat):** Structured tips tied to current mode/platform, short copy-pasteable "how to" snippets, and "How does [platform] work?" or "How does Plan mode work?" flows that inject a short summary/snippet with pointers, not full documents. All of this is delivered **through the chat**, not a separate UI.
-- **Export conversation:** The user can **export the current thread** (messages and optionally agent tool summary) to **Markdown or JSON** for backup, sharing, or compliance. Available via slash command (e.g. `/export`) or a menu action.
-
----
-
-## 7. Attachments, Web Search, and Extensibility
-
-- **Files and photos:** User can add files to the chat, especially **photos**, so the agent has visual and file context. **Paste** (e.g. image from clipboard) and **drag-drop** into the composer are supported; same attachment pipeline as "add files." Attachments are included in the context sent to the platform CLI (per platform capabilities; all providers support image **attachments** per AGENTS.md). **Image generation vs. attachment:** All platforms can *accept* image attachments as input context, but image *generation* (creating new images from prompts) is available only via Cursor-native generation (no API key required) or Google Gemini API-backed generation (requires a configured Google API key). For the full generation contract, capability gating, and disabled-reason semantics, see `Plans/Media_Generation_and_Capabilities.md` §1–§2 (SSOT).
-
-ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE, ToolID:media.generate
-
-- **Web search (cited):** The agent must be able to **search the web with citations** when appropriate (e.g. via MCP or a dedicated web-search tool). Results must include **inline citations** and a **Sources:** list (URLs and titles) so the user can verify and follow references. The same capability applies to **Interview** and **Orchestrator** -- they use the same run config and MCP/tool wiring. Full specification (output format, architecture options, provider/auth, model selection, errors, security, per-platform, and **gaps/potential problems**) is in **Plans/newtools.md §8.2.1**. We adapt an approach like [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited) (LLM-grounded search; Google, OpenAI, OpenRouter) as a single shared implementation (prefer MCP server so all three surfaces use the same tool).
-- **Plugins, MCPs, and extensibility:** The chat must be able to use **plugins**, **MCPs** (Model Context Protocol servers), and other extensibility mechanisms available in the application. When the user runs the Assistant (or Interview) in chat, the same plugin/MCP configuration that applies to the rest of Puppet Master (e.g. Context7, Browser MCP, custom tools) should be available to the chat session so the agent can call tools, query docs, or use other registered capabilities. Wire chat execution to the same run config and MCP/plugin discovery used elsewhere (see Plans/newtools.md §8 for MCP config and platform coverage).
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FileManager.md
 
 ### 7.1 Capability introspection (`capabilities.get`)
 
@@ -1847,31 +1815,6 @@ A blocked thread MUST persist:
 - preserved-local-work flag
 
 Resume/retry controls in chat MUST map to canonical runtime actions rather than thread-local shortcuts.
-## Thread Blocked-State Multiplicity and Action Rendering Consolidation Addendum (2026-03-09)
-
-Canonical thread states:
-- `active`
-- `attention_required`
-- `blocked`
-- `completed`
-- `failed`
-
-Rules:
-- `attention_required` means the active flow can continue inside the same clarification or review loop.
-- `blocked` means automation cannot continue until a prerequisite changes or a new explicit recovery action occurs.
-- wizard-blocked and node-blocked episodes are distinct persisted episodes and MUST NOT be collapsed into one mutable thread flag.
-
-### Precedence
-1. active node-blocked episode for the visible runtime context
-2. active wizard-blocked episode
-3. active `attention_required` clarification
-4. historical blocked episodes
-
-### Multi-episode display
-- thread selector shows the highest-severity active badge
-- when more than one blocked episode is active, show a count badge
-- resolving one blocked episode updates only that episode; others remain active
-- action buttons are rendered from canonical `allowed_action_ids[]` plus blocked metadata and MUST NOT invent thread-local recovery semantics
 ## Unified Thread Blocked-State Lifecycle
 Canonical thread states:
 - `active`
@@ -1902,22 +1845,3 @@ Rules:
 Thread blocked notices persist enough identity to restore the same blocked surfaces and action set after restart or resume.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
-## Concurrent Blocked Episodes and Enum Alignment Addendum
-
-### Concurrent blocked episode rendering
-
-When multiple nodes are simultaneously blocked, each with its own `blocked_notice` message:
-
-1. The thread message list MUST render each `blocked_notice` as a separate, distinct system message.
-2. Each `blocked_notice` message shows its own `blocked_reason_code`, explanation, and action buttons mapped from `allowed_action_ids[]`.
-3. blocked_notice messages MUST NOT be collapsed, merged, or deduplicated -- even if they share the same `blocked_reason_code`.
-4. The thread selector sidebar badge for a thread with blocked nodes shows the total blocked count (e.g., "3 blocked").
-5. Resolving one blocked episode (via any `allowed_action_ids[]` action) updates only that specific `blocked_notice` message; other blocked messages remain active.
-
-### Enum cross-references
-
-- `blocked_reason_code` values include `validation_blocked` and `remediation_ceiling_exceeded` per Plans/Contracts_V0.md.
-- `attempt_terminal_state` values (`completed_success`, `completed_failed`, `interrupted_by_restart`, `stale_historical`) per Plans/Contracts_V0.md.
-- `restore_outcome` values (`restored_clean`, `restored_with_conflicts`, `restore_failed`, `restore_skipped`) per Plans/Contracts_V0.md.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md

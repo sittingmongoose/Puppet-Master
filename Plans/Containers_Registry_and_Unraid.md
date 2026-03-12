@@ -86,26 +86,44 @@ The existing `Containers & Registry` settings area remains the primary configura
   - notice when the file was auto-generated and still needs review/configuration
 
 ### 2. Contextual Docker Manage surface
-Docker Manage (and Unraid) are exposed via the **side panel** (or primary content) per Plans/FinalGUISpec.md §4 / §5 / §7. Placement and "Hide when not used in Project" align with the shell. When the project is Docker-related, the Docker icon in the activity bar shows this panel in the single side-panel slot (last-click wins).
 
-ContractRef: ContractName:Plans/FinalGUISpec.md
+The canonical user-facing surface is **Docker Manager**.
 
-Puppet Master must provide a first-class Docker management GUI surface that appears when a Docker-related project is in use. It may be implemented as a dedicated page, dockable panel, or another canonical GUI surface, but it must behave as a first-class management UI rather than a hidden advanced-only setting.
+Docker Manager is a first-class operational surface for containerized projects. It replaces `Docker Manage` as the canonical surface name and subsumes Publish / Unraid behavior.
 
-The surface must include:
-- runtime status (engine reachable, buildx ready, compose status, container status)
-- target image summary (`namespace/repository:tag`, privacy, last digest if pushed)
-- build controls
-- run/preview controls
-- stop/teardown controls
-- open-access actions so the user can open the running container or its web UI when available
-- logs/health visibility for the running container
-- publish controls
-- Unraid XML generation/update status
-- Unraid template repository status and one-click push action
-- `ca_profile.xml` status and shortcut to edit it
-- requested auth mode and effective capability chips
-- explicit warnings when browser auth produced only partial capability (for example, browse-only or push-only)
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/newtools.md
+
+Required stable subviews:
+- `Containers`
+- `Images`
+- `Compose`
+- `Registries`
+- `Build / Bake`
+- `Publish / Unraid`
+- advanced foldouts for `Networks`, `Volumes`, and `Contexts`
+- project-focused `Kubernetes`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Orchestrator_Page.md
+
+Surface rules:
+- Docker is the default visible runtime mode when the project is Docker-related.
+- Podman is an alternate runtime inside the same surface, not a separate panel.
+- Kubernetes is a Docker Manager subview when manifests, Helm artifacts, kube-linked state, or explicit enablement are present.
+- Unraid is integrated under `Publish / Unraid`; it does not require a separate top-level panel.
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Permissions_System.md
+
+Subview behavior minima:
+- `Containers`: lifecycle, logs, inspect, attach/shell, stats, open app when an access URL exists
+- `Images`: build, pull, push, tag, inspect, remove, prune, digest/tag visibility
+- `Compose`: project/group lifecycle, service subsets, logs, restart, down/up, compose-group reopen state
+- `Registries`: Docker Hub first, registry inventory/selection, reconnect, browse, pull, inspect
+- `Build / Bake`: Dockerfile target selection, Buildx/Bake discovery, build-preview settings
+- `Publish / Unraid`: requested vs effective auth state, protected repo creation, digest receipts, Unraid generation and template-repo follow-on
+- `Kubernetes`: apply, diff, rollout status, logs, exec, port-forward, workload/resource view, Helm basics, image-to-cluster linkage
+
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
 ### 3. Orchestrator and dashboard integration
 Docker-related actions must also remain available from orchestrator/dashboard build/preview surfaces when a Docker-related run is active. The contextual Docker Manage surface is not a replacement for orchestrator controls; it is a richer management layer that complements them.
 

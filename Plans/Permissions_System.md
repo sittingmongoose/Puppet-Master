@@ -745,48 +745,6 @@ When a blocked permission outcome is resolved by policy edit, approval, or mode 
 - keep the prior attempt snapshot immutable
 
 Permission-related blocked outcomes MUST carry the exact blocking rule or permission key plus any metadata needed to bind the prerequisite-specific UI command.
-## Permission Blocked Outcome and Prerequisite Wake Consolidation Addendum (2026-03-09)
-
-This section defines permission Snapshot and Wakeup Chain.
-
-### Canonical blocked payload fields
-Permissions-driven blocked flows MUST use the canonical runtime blocked payload:
-- `blocked_reason_code`
-- `allowed_action_ids[]`
-- `preserved_local_work`
-- `requires_safe_point_restore?`
-- prerequisite metadata
-- `detail_ref?`
-
-### Permission snapshot propagation
-Attempt start captures immutable requested/effective permission snapshot identifiers. The full snapshot is stored with the attempt record; downstream consumers carry only the stable IDs unless they need the resolved map.
-
-### Wakeup chain
-When approval or permission prerequisites resolve:
-1. emit the prerequisite-resolution event with the blocked target identity
-2. deliver it to the scheduler immediately
-3. wake the scheduler with the appropriate `wake_reason`
-4. recompute readiness without polling
-## Permission Snapshot and Wakeup Chain
-
-### Canonical blocked payload fields
-Permissions-driven blocked flows MUST use the canonical runtime blocked payload:
-- `blocked_reason_code`
-- `allowed_action_ids[]`
-- `preserved_local_work`
-- `requires_safe_point_restore?`
-- prerequisite metadata
-- `detail_ref?`
-
-### Permission snapshot propagation
-Attempt start captures immutable requested/effective permission snapshot identifiers. The full snapshot is stored with the attempt record; downstream consumers carry only the stable IDs unless they need the resolved map.
-
-### Wakeup chain
-When approval or permission prerequisites resolve:
-1. emit the prerequisite-resolution event with the blocked target identity
-2. deliver it to the scheduler immediately
-3. wake the scheduler with the appropriate `wake_reason`
-4. recompute readiness without polling
 ## Permission Snapshot and Wakeup Chain Addendum
 
 ### Field name correction
@@ -833,3 +791,14 @@ When HITL approval resolves an `external_side_effect_blocked` state:
 This is an immediate event-driven wakeup, not polling-based.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
+## Source Control, GitHub Actions, and Docker Manager Permission Addendum (2026-03-12)
+
+External-side-effect and admin-gated behavior for this packet uses canonical permission and blocked-state rules.
+
+Required mappings:
+- GitHub Actions rerun/cancel/dispatch and admin CRUD operations may require explicit capability and may surface blocked outcomes when approval or auth prerequisites are missing
+- Docker Hub repository creation, image push, managed template-repo create/push, and Kubernetes mutating actions use the external-side-effect guard model when they produce hosted or remote side effects
+- requested vs effective capability disclosure must remain visible whenever a surface control is disabled by partial auth or policy state
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Decision_Policy.md

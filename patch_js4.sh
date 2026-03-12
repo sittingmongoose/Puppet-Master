@@ -1,0 +1,1 @@
+sed -i 's/document.getElementById('\''chatPanel'\'').classList.remove('\''hidden'\'');/document.getElementById('\''chatPanel'\'').classList.remove('\''hidden'\''); document.getElementById('\''chatPanel'\'').scrollIntoView({behavior: '\''smooth'\''});/g' Concepts/PuppetMasterDashComp.html

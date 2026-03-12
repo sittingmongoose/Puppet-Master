@@ -321,38 +321,6 @@ This packet requires an explicit terminology crosswalk:
 Required rule:
 - docs and implementations must not use these terms interchangeably
 - UI copy must preserve the distinction
-## Runtime Scheduler / Recovery Ownership Addendum (2026-03-09)
-
-Clarify doc ownership boundaries:
-- `Executor_Protocol.md` owns scheduler execution semantics and readiness rules
-- `Contracts_V0.md` owns event payload contracts
-- `storage-plan.md` owns persistence/projection contracts
-- `Run_Graph_View.md`, `Orchestrator_Page.md`, and `FinalGUISpec.md` own UI surfaces, not underlying runtime semantics
-- `Permissions_System.md`, `Tools.md`, `Models_System.md`, and provider docs own mapping into runtime classifications, not alternate retry logic
-- `Glossary.md` owns canonical terminology for safe point, restore point, blocked outcome, wake reason, queue analysis, and remediation lineage
-## Runtime Scheduler Ownership and Precedence Reconciliation Addendum (2026-03-09)
-
-Clarify ownership boundaries:
-- `Plans/Contracts_V0.md` owns canonical runtime event names, enum families, action families, and identity rules
-- `Plans/Executor_Protocol.md` owns scheduler execution semantics, readiness, score terms, and graph-lock behavior
-- `Plans/storage-plan.md` owns persistence/projection shape and immutable history rules
-- GUI/view docs own rendering and interaction, not alternate semantics
-- provider/auth/tool docs own mapping into runtime taxonomy, not parallel retry models
-- `Plans/Glossary.md` owns canonical terminology for runtime recovery and queue analysis terms
-## Runtime Packet Ownership and Precedence Consolidation Addendum (2026-03-09)
-
-Canonical ownership:
-- runtime lifecycle and scheduling: `Plans/Executor_Protocol.md`
-- runtime events, enums, and payloads: `Plans/Contracts_V0.md`
-- persistence and restart recovery: `Plans/storage-plan.md`
-- deterministic recovery defaults: `Plans/Decision_Policy.md`
-- runtime command IDs: `Plans/UI_Command_Catalog.md`
-- chat, GUI, run graph, orchestrator, and wizard surfaces are consumers of the contracts above
-
-Precedence rules:
-- legacy packet-era names such as `analysis_id`, `run.scheduler_analysis`, `allowed_actions[]`, and `recovery_options[]` are compatibility terms only
-- when a consumer doc conflicts with the owner docs above, the owner docs win
-- stale canonical text must be replaced or retired, not preserved by later additive notes alone
 ## Runtime Scheduler / Recovery Ownership and Precedence
 
 Canonical ownership:
@@ -367,3 +335,36 @@ Precedence rules:
 - legacy packet-era names such as `analysis_id`, `run.scheduler_analysis`, `allowed_actions[]`, and `recovery_options[]` are compatibility terms only
 - when a consumer doc conflicts with the owner docs above, the owner docs win
 - stale canonical text must be replaced or retired, not preserved by later additive notes alone
+
+## Source Control, GitHub Actions, and Docker Manager Ownership Addendum (2026-03-12)
+
+### SourceControlSurface
+
+Owner: `Plans/GitHub_Integration.md` + `Plans/WorktreeGitImprovement.md`.
+
+Rules:
+- Git-local and Git-remote repo operations, history, graph, stash, conflicts, and worktree UX belong to Source Control.
+- GitHub-hosted workflow/admin behavior does not belong to Source Control.
+- Worktree lifecycle correctness remains owned by the worktree plan even when surfaced through Source Control.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md
+
+### GitHubActionsSurface
+
+Owner: `Plans/GitHub_Integration.md` with auth/runtime constraints from `Plans/GitHub_API_Auth_and_Flows.md`.
+
+Rules:
+- GitHub Actions uses GitHub API identity and capability, not Git transport state, for hosted workflow/admin behavior.
+- Current Branch / Workflows / Settings are separate subviews of one Actions surface.
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md
+
+### DockerManagerSurface
+
+Owner: `Plans/Containers_Registry_and_Unraid.md` with readiness/result minima from `Plans/newtools.md`.
+
+Rules:
+- Docker Manager is the canonical umbrella for Docker, Podman, registries/Docker Hub, compose, build/bake, Publish / Unraid, and project-focused Kubernetes.
+- Unraid and Kubernetes are not required top-level shell surfaces for MVP.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md
