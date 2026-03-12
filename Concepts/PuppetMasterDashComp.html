@@ -3812,152 +3812,153 @@ impl Dashboard {
           </div>
           <div class="bento-dashboard" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-wrap: wrap; gap: var(--lg); align-content: flex-start;">
             <div id="dashGridMain" style="display:contents;">
+                <div class="bento-widget size-2x2">
+                  <div class="widget-header">
+                    <span class="widget-title">Orchestrator Status</span>
+                    <div class="widget-settings"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
+                  </div>
+                  <span class="status-badge" style="margin-bottom:var(--md);">Running</span>
+                  <div class="orchestrator-buttons">
+                    <button>START</button>
+                    <button class="primary">PAUSE</button>
+                    <button>RESUME</button>
+                    <button>STOP</button>
+                    <button>RESET</button>
+                    <button>PREVIEW</button>
+                    <button>BUILD</button>
+                    <button class="kill-btn">Kill</button>
+                  </div>
+                  <div class="preview-build-strip">
+                    <span>Preview: running</span>
+                    <a href="#">Open preview</a>
+                    <span>|</span>
+                    <span>Build: success</span>
+                    <a href="#">Open artifact</a>
+                  </div>
+                </div>
+                
+                <div class="bento-widget size-2x1">
+                  <div class="widget-header">
+                    <span class="widget-title">Current Task</span>
+                    <div class="widget-settings"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15..."></path></svg></div>
+                  </div>
+                  <div style="font-size:12px; margin-bottom:var(--sm);">Refactor authentication module</div>
+                  <div class="progress-bar"><div class="fill" style="width:45%"></div></div>
+                  <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-muted);">
+                    <span>Step 3 of 7</span>
+                    <span>45%</span>
+                  </div>
+                </div>
+                
+                <div class="bento-widget size-1x1">
+                  <div class="widget-header">
+                    <span class="widget-title">Active Subagents</span>
+                  </div>
+                  <div style="display:flex; flex-direction:column; gap:var(--xs); font-size:11px;">
+                    <div style="display:flex; justify-content:space-between;"><span>Investigator</span><span style="color:var(--accent-lime);">Active</span></div>
+                    <div style="display:flex; justify-content:space-between;"><span>Coder</span><span style="color:var(--accent-lime);">Active</span></div>
+                  </div>
+                </div>
 
-            <div class="bento-widget size-2x2" >
-              <div class="widget-header">
-                <span class="widget-title">Orchestrator Status</span>
-                <div class="widget-settings"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
-              </div>
-              <span class="status-badge" style="margin-bottom:var(--md);">Running</span>
-              <div class="orchestrator-buttons">
-                <button>START</button>
-                <button class="primary">PAUSE</button>
-                <button>RESUME</button>
-                <button>STOP</button>
-                <button>RESET</button>
-                <button>PREVIEW</button>
-                <button>BUILD</button>
-                <button class="kill-btn">Kill</button>
-              </div>
-              <div class="preview-build-strip">
-                <span>Preview: running</span>
-                <a href="#">Open preview</a>
-                <span>|</span>
-                <span>Build: success</span>
-                <a href="#">Open artifact</a>
-              </div>
-            </div>
-            
-            <div class="bento-widget size-2x1" >
-              <div class="widget-header">
-                <span class="widget-title">Current Task</span>
-                <div class="widget-settings"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
-              </div>
-              <div style="font-size:12px; margin-bottom:var(--sm);">Refactor authentication module</div>
-              <div class="progress-bar"><div class="fill" style="width:45%"></div></div>
-              <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-muted);">
-                <span>Step 3 of 7</span>
-                <span>45%</span>
-              </div>
-            </div>
-            
-            <div class="bento-widget size-1x1" >
-              <div class="widget-header">
-                <span class="widget-title">Metrics</span>
-                <div class="widget-settings"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
-              </div>
-              <div style="display:flex; flex-direction:column; gap:var(--xs); font-size:11px;">
-                <div style="display:flex; justify-content:space-between;"><span>Token Usage</span><span style="color:var(--accent-lime);">14.2k</span></div>
-                <div style="display:flex; justify-content:space-between;"><span>Cost</span><span style="color:var(--accent-orange);">$0.12</span></div>
-              </div>
-            </div>
-            
-            <div class="bento-widget size-1x1" >
-              <div class="widget-header">
-                <span class="widget-title">Background Runs</span>
-                <div class="widget-settings"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
-              </div>
-              <div style="font-size: 11px; color: var(--text-muted);">0 active</div>
-            </div>
-              <div class="bento-widget size-1x1">
-                <div class="widget-header">
-                  <span class="widget-title">Active Subagents</span>
-                  <div class="widget-settings"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
+                <div class="bento-widget size-1x1">
+                  <div class="widget-header">
+                    <span class="widget-title">Platform Quota</span>
+                  </div>
+                  <div style="font-size: 11px; display:flex; flex-direction:column; gap:4px;">
+                    <div>Claude: 85%</div>
+                    <div class="progress-bar"><div class="fill" style="width: 85%"></div></div>
+                    <div>Gemini: 12%</div>
+                    <div class="progress-bar"><div class="fill" style="width: 12%"></div></div>
+                  </div>
                 </div>
-                <div style="display:flex; flex-direction:column; gap:var(--xs); font-size:11px;">
-                  <div style="display:flex; justify-content:space-between;"><span>Code Investigator</span><span style="color:var(--accent-lime);">Active</span></div>
-                  <div style="display:flex; justify-content:space-between;"><span>Test Writer</span><span style="color:var(--accent-lime);">Active</span></div>
-                  <div style="display:flex; justify-content:space-between;"><span>PR Reviewer</span><span style="color:var(--text-muted);">Idle</span></div>
-                </div>
-              </div>
 
-              <div class="bento-widget size-2x1">
-                <div class="widget-header">
-                  <span class="widget-title">Recent Activity</span>
-                  <div class="widget-settings"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
+                <div class="bento-widget size-2x1">
+                  <div class="widget-header">
+                    <span class="widget-title">Recent Activity</span>
+                  </div>
+                  <div style="font-size:11px; display:flex; flex-direction:column; gap:var(--xs);">
+                    <div style="display:flex; justify-content:space-between; padding:4px; border-bottom:1px solid var(--border-light);"><span>Modified app.rs</span><span style="color:var(--text-muted);">2m ago</span></div>
+                    <div style="display:flex; justify-content:space-between; padding:4px; border-bottom:1px solid var(--border-light);"><span>Ran tests</span><span style="color:var(--accent-lime);">Passed</span></div>
+                  </div>
                 </div>
-                <div style="font-size:11px; display:flex; flex-direction:column; gap:var(--xs);">
-                  <div style="display:flex; justify-content:space-between; padding:4px; border-bottom:1px solid var(--border-light);"><span>Modified app.rs</span><span style="color:var(--text-muted);">2m ago</span></div>
-                  <div style="display:flex; justify-content:space-between; padding:4px; border-bottom:1px solid var(--border-light);"><span>Created config.rs</span><span style="color:var(--text-muted);">15m ago</span></div>
-                  <div style="display:flex; justify-content:space-between; padding:4px; border-bottom:1px solid var(--border-light);"><span>Ran test suite (success)</span><span style="color:var(--text-muted);">1h ago</span></div>
+
+                <div class="bento-widget size-1x1">
+                  <div class="widget-header">
+                    <span class="widget-title">Agent Lineage</span>
+                  </div>
+                  <div style="display:flex; flex-direction:column; gap:4px; font-size:10px;">
+                    <div style="padding:4px; background:rgba(0,255,65,0.05); border-left:2px solid var(--accent-lime);">Orchestrator -> CodeInv</div>
+                    <div style="padding:4px; background:rgba(0,255,65,0.05); border-left:2px solid var(--accent-lime);">CodeInv -> TestGen</div>
+                  </div>
                 </div>
-              </div>
+
+                <div class="bento-widget size-1x1">
+                  <div class="widget-header">
+                    <span class="widget-title">System Health</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:8px; flex:1; justify-content:center;">
+                    <div style="width:60px; height:60px; border-radius:50%; border:4px solid var(--accent-lime); display:flex; align-items:center; justify-content:center; color:var(--accent-lime); font-weight:bold; font-size:18px;">OK</div>
+                  </div>
+                </div>
             </div>
-            <div id="dashGridMetrics" style="display:none; width: 100%;">
-                <div class="bento-widget size-2x1" style="width:100%;">
+            <div id="dashGridMetrics" style="display:none;">
+                <div class="bento-widget size-2x1">
                     <div class="widget-header">
                         <span class="widget-title">Token Usage Over Time</span>
                     </div>
                     <div style="flex:1; display:flex; align-items:flex-end; gap:4px; padding-top:var(--md); border-bottom:1px solid var(--border-light);">
-                        <!-- Fake bar chart -->
                         <div style="width:20px; height:20%; background:var(--accent-blue);"></div>
                         <div style="width:20px; height:40%; background:var(--accent-blue);"></div>
                         <div style="width:20px; height:35%; background:var(--accent-blue);"></div>
                         <div style="width:20px; height:60%; background:var(--accent-blue);"></div>
                         <div style="width:20px; height:90%; background:var(--accent-lime);"></div>
-                        <div style="width:20px; height:50%; background:var(--accent-lime);"></div>
-                        <div style="width:20px; height:70%; background:var(--accent-lime);"></div>
                     </div>
                 </div>
-                <div class="bento-widget size-1x1" style="width: calc(50% - (var(--lg) / 2)); margin-top:var(--lg);">
+                <div class="bento-widget size-1x1">
                     <div class="widget-header">
                         <span class="widget-title">Cost Summary</span>
                     </div>
                     <div style="font-size:24px; color:var(--accent-orange); font-family:var(--display-font);">$12.45</div>
-                    <div style="font-size:11px; color:var(--text-muted); margin-top:var(--xs);">This billing cycle</div>
+                    <div style="font-size:10px; color:var(--text-muted);">This cycle</div>
                 </div>
-                <div class="bento-widget size-1x1" style="width: calc(50% - (var(--lg) / 2)); margin-top:var(--lg); margin-left:var(--lg);">
+                <div class="bento-widget size-1x1">
                     <div class="widget-header">
                         <span class="widget-title">SLA Status</span>
                     </div>
                     <div style="display:flex; align-items:center; gap:var(--sm);">
                         <div style="width:12px; height:12px; border-radius:50%; background:var(--accent-lime);"></div>
-                        <span style="font-size:14px;">All Systems Operational</span>
+                        <span style="font-size:14px;">99.99%</span>
                     </div>
-                    <div style="font-size:11px; color:var(--text-muted); margin-top:var(--sm);">99.99% Uptime</div>
                 </div>
-                <div class="bento-widget size-1x1" style="width: calc(50% - (var(--lg) / 2)); margin-top:var(--lg);">
+                <div class="bento-widget size-1x1">
                     <div class="widget-header">
-                        <span class="widget-title">API Latency</span>
+                        <span class="widget-title">Token Efficiency</span>
                     </div>
-                    <div style="font-size:24px; color:var(--accent-lime);">142ms</div>
-                    <div style="width:100%; height:20px; background:rgba(0,255,65,0.1); margin-top:var(--sm); border-radius:4px; overflow:hidden; position:relative;">
-                        <div style="position:absolute; bottom:0; left:0; width:100%; height:60%; background:var(--accent-lime); opacity:0.3;"></div>
-                    </div>
+                    <div style="font-size:24px; color:var(--accent-lime);">1.2x</div>
+                    <div style="font-size:10px; color:var(--text-muted);">Optimization ON</div>
                 </div>
-                <div class="bento-widget size-1x1" style="width: calc(50% - (var(--lg) / 2)); margin-top:var(--lg); margin-left:var(--lg);">
+                <div class="bento-widget size-1x1">
                     <div class="widget-header">
-                        <span class="widget-title">Cache Hit Rate</span>
+                        <span class="widget-title">Inference Speed</span>
                     </div>
-                    <div style="display:flex; justify-content:center; align-items:center; flex:1;">
-                        <div style="width:60px; height:60px; border-radius:50%; border:4px solid var(--border-light); border-top-color:var(--accent-blue); display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:14px;">94%</div>
-                    </div>
+                    <div style="font-size:24px; color:var(--accent-blue);">85 t/s</div>
+                    <div style="font-size:10px; color:var(--text-muted);">Stable</div>
                 </div>
-                <div class="bento-widget size-2x1" style="width:100%; margin-top:var(--lg);">
+                <div class="bento-widget size-2x1">
                     <div class="widget-header">
                         <span class="widget-title">Budget Allocation</span>
                     </div>
-                    <div style="display:flex; height:24px; border-radius:6px; overflow:hidden; margin-top:var(--sm);">
-                        <div style="width:60%; background:var(--accent-blue);" title="Claude (60%)"></div>
-                        <div style="width:25%; background:var(--accent-lime);" title="OpenAI (25%)"></div>
-                        <div style="width:15%; background:var(--accent-orange);" title="Gemini (15%)"></div>
+                    <div style="display:flex; height:20px; border-radius:10px; overflow:hidden; margin-top:var(--sm);">
+                        <div style="width:60%; background:var(--accent-blue);"></div>
+                        <div style="width:25%; background:var(--accent-lime);"></div>
+                        <div style="width:15%; background:var(--accent-orange);"></div>
                     </div>
-                    <div style="display:flex; justify-content:space-between; font-size:10px; margin-top:var(--xs); color:var(--text-muted);">
-                        <span>Claude</span><span>OpenAI</span><span>Gemini</span>
+                    <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-muted); margin-top:4px;">
+                        <span>Claude</span><span>Codex</span><span>Gemini</span>
                     </div>
                 </div>
             </div>
-            <div id="dashGridMonitoring" style="display:none; width: 100%;">
+            <div id="dashGridMonitoring" style="display:none;">
                 <div class="bento-widget size-2x2" style="width:100%;">
                     <div class="widget-header">
                         <span class="widget-title">Active Nodes</span>
@@ -4014,6 +4015,37 @@ impl Dashboard {
                     </div>
                     <div style="font-size:24px; color:var(--accent-orange);">0.02%</div>
                     <div style="font-size:10px; color:var(--text-muted);">Last 24h: 12 exceptions</div>
+                </div>
+                <div class="bento-widget size-2x1" style="width:100%; margin-top:var(--lg);">
+                    <div class="widget-header">
+                        <span class="widget-title">Memory Allocation</span>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:var(--xs);">
+                        <div style="display:flex; justify-content:space-between; font-size:10px;"><span>Heap</span><span>4.2GB / 8GB</span></div>
+                        <div class="progress-bar"><div class="fill" style="width: 52%"></div></div>
+                        <div style="display:flex; justify-content:space-between; font-size:10px;"><span>Stack</span><span>1.1GB / 2GB</span></div>
+                        <div class="progress-bar"><div class="fill" style="width: 55%"></div></div>
+                    </div>
+                </div>
+                <div class="bento-widget size-1x1" style="margin-top:var(--lg);">
+                    <div class="widget-header">
+                        <span class="widget-title">Storage Usage</span>
+                    </div>
+                    <div style="font-size:24px; color:var(--accent-blue);">62%</div>
+                    <div class="progress-bar"><div class="fill" style="width: 62%"></div></div>
+                </div>
+                <div class="bento-widget size-1x1" style="margin-top:var(--lg); margin-left:var(--lg);">
+                    <div class="widget-header">
+                        <span class="widget-title">Uptime History</span>
+                    </div>
+                    <div style="display:flex; gap:2px; height:20px; align-items:flex-end;">
+                        <div style="flex:1; height:100%; background:var(--accent-lime);"></div>
+                        <div style="flex:1; height:100%; background:var(--accent-lime);"></div>
+                        <div style="flex:1; height:100%; background:var(--accent-lime);"></div>
+                        <div style="flex:1; height:80%; background:var(--accent-orange);"></div>
+                        <div style="flex:1; height:100%; background:var(--accent-lime);"></div>
+                    </div>
+                    <div style="font-size:10px; color:var(--text-muted); margin-top:4px;">Last 30 days</div>
                 </div>
             </div>
           </div>
@@ -6234,8 +6266,8 @@ impl Dashboard {
                     if (monitoringGrid) monitoringGrid.style.display = 'none';
                     
                     if (tabName === 'Main' && mainGrid) mainGrid.style.display = 'contents';
-                    if (tabName === 'Metrics' && metricsGrid) metricsGrid.style.display = 'flex';
-                    if (tabName === 'Monitoring' && monitoringGrid) monitoringGrid.style.display = 'flex';
+                    if (tabName === 'Metrics' && metricsGrid) metricsGrid.style.display = 'contents';
+                    if (tabName === 'Monitoring' && monitoringGrid) monitoringGrid.style.display = 'contents';
                 }
             });
         });
