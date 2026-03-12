@@ -2854,9 +2854,6 @@
       padding: var(--md) var(--lg);
       background: var(--surface);
       border-bottom: var(--border-width) solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 10;
     }
     .settings-search-input {
       width: 100%;
@@ -5310,12 +5307,15 @@ impl Dashboard {
                   <div class="bento-card" data-inspector-view="memory" data-category="features" style="animation: zoomInBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 200ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5A3 3 0 0 0 13.6 4.4"/><path d="M6.401 6.5A3 3 0 0 1 10.4 4.4"/></svg> Memory & Context</div>
                     <div class="bento-desc">Context injection and retrieval budgets.</div>
-                    <div class="bento-surface">
-                      <label><input type="checkbox" checked> Inject Parent Summary</label>
-                      <label><input type="checkbox" checked> Inject Scoped AGENTS.md</label>
-                      <label><input type="checkbox" checked> Inject Attempt Journal</label>
+                    <div class="bento-surface row">
+                      <label style="width: 100%;"><input type="checkbox" checked> Inject Parent Summary</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Inject Scoped AGENTS.md</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Inject Attempt Journal</label>
+                      <label style="width: 100%;"><input type="checkbox"> Auto-prune old context</label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Max Context (kTokens) <input type="number" value="128" style="width: 100%;"></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Summarize at <select style="width: 100%;"><option>90%</option><option>80%</option></select></label>
                     </div>
-                    <button class="bento-action">Configure 14 settings...</button>
+                    <button class="bento-action" style="margin-top: auto;">Configure 14 settings...</button>
                   </div>
                   <!-- Models Card -->
                   <div class="bento-card" data-inspector-view="models" data-category="features" style="animation: slideInRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 300ms forwards;">
@@ -5363,33 +5363,43 @@ impl Dashboard {
                   <div class="bento-card" data-inspector-view="interview" data-category="features" style="animation: slideInLeft 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 600ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg> Interview & Orchestrator</div>
                     <div class="bento-desc">Multi-pass review and plan mode defaults.</div>
-                    <div class="bento-surface">
-                      <label><input type="checkbox"> Multi-Pass Review</label>
-                      <label>Plan Mode <select><option>Balanced</option></select></label>
-                      <label><input type="checkbox" checked> Phase subagents</label>
+                    <div class="bento-surface row">
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Plan Mode <select style="width: 100%;"><option>Balanced</option><option>Strict</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Interview Questions <input type="number" value="5" style="width: 100%;"></label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Enable Multi-Pass Review</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Phase subagents</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Research subagents</label>
+                      <label style="width: 100%;"><input type="checkbox"> Auto-proceed on confidence</label>
                     </div>
-                    <button class="bento-action">Configure 9 settings...</button>
+                    <button class="bento-action" style="margin-top: auto;">Configure 9 settings...</button>
                   </div>
                   <!-- Auth Card -->
                   <div class="bento-card" data-inspector-view="auth" data-category="system" style="animation: zoomInBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 50ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg> Authentication & Accounts</div>
                     <div class="bento-desc">Manage provider logins and OAuth.</div>
-                    <div class="bento-surface">
-                      <div class="status-badge success">GitHub Connected</div>
-                      <label>Active Account <select><option>Personal</option></select></label>
-                      <label><input type="password" placeholder="Gemini API Key"></label>
+                    <div class="bento-surface row">
+                      <div class="status-badge success" style="align-self: flex-start;">GitHub Connected</div>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Active Account <select style="width: 100%;"><option>Personal</option><option>Work</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Multi-account count <input type="number" value="2" style="width: 100%;"></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Gemini API Key <input type="password" placeholder="••••••••••••" style="width: 100%;"></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Session Timeout <select style="width: 100%;"><option>30 days</option><option>24 hours</option></select></label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Require 2FA for destructive actions</label>
                     </div>
-                    <button class="bento-action">Configure 6 settings...</button>
+                    <button class="bento-action" style="margin-top: auto;">Configure 6 settings...</button>
                   </div>
                   <!-- Health Card -->
                   <div class="bento-card" data-inspector-view="health" data-category="system" style="animation: slideInBottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 150ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Health & Doctor</div>
                     <div class="bento-desc">System diagnostics and workspace cleanup.</div>
-                    <div class="bento-surface">
-                      <div class="status-badge success">All Systems Go</div>
-                      <button class="wizard-btn" style="align-self: flex-start; padding: 6px 12px; font-size: 11px;">Clean workspace now</button>
+                    <div class="bento-surface row">
+                      <div class="status-badge success" style="align-self: flex-start; padding: 4px 8px; border-radius: 4px; background: var(--graph-passed); color: #000; font-size: 11px; margin-bottom: 4px;">All Systems Go</div>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Platform Filter <select style="width: 100%;"><option>All</option><option>Linux</option><option>macOS</option><option>Windows</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Log Retention (days) <input type="number" value="7" style="width: 100%;"></label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Auto-clean on exit</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Report telemetry</label>
+                      <button class="wizard-btn" style="width: 100%; padding: 6px 12px; font-size: 11px;">Run Doctor Now</button>
                     </div>
-                    <button class="bento-action">Configure 5 settings...</button>
+                    <button class="bento-action" style="margin-top: auto;">Configure 5 settings...</button>
                   </div>
                   <!-- Permissions Card -->
                   <div class="bento-card" data-inspector-view="permissions" data-category="system" style="animation: slideInRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 250ms forwards;">
@@ -5409,30 +5419,39 @@ impl Dashboard {
                   <div class="bento-card" data-inspector-view="personas" data-category="system" style="animation: slideInLeft 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 350ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Personas</div>
                     <div class="bento-desc">Manage custom agent behaviors and prompts.</div>
-                    <div class="bento-surface">
-                      <button class="wizard-btn" style="align-self: flex-start; padding: 6px 12px; font-size: 11px;">+ Create New Persona</button>
-                      <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;">Active: Default, Code Reviewer, Planner</div>
+                    <div class="bento-surface row">
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Persona Mode <select style="width: 100%;"><option>Auto</option><option>Manual</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Default Persona <select style="width: 100%;"><option>System</option><option>Vibecoder</option></select></label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Strict tone matching</label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">System Prompt Override <input type="text" placeholder="Optional..." style="width: 100%;"></label>
+                      <div style="font-size:11px;color:var(--text-secondary);width:100%;">Active: Default, Reviewer</div>
+                      <button class="wizard-btn" style="width: 100%; padding: 6px 12px; font-size: 11px;">+ Create New Persona</button>
                     </div>
-                    <button class="bento-action">Configure 11 settings...</button>
+                    <button class="bento-action" style="margin-top: auto;">Configure 11 settings...</button>
                   </div>
                   <!-- Plugins Card -->
                   <div class="bento-card" data-inspector-view="plugins" data-category="extensions" style="animation: zoomInBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 450ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.611c-.47.47-1.088.706-1.705.706s-1.233-.235-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18-.894-.527-.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568c-.47-.47-.706-1.087-.706-1.704s.235-1.233.706-1.704l1.611-1.611a.98.98 0 0 1 .837-.276c.47.07.802.48.968.925a2.501 2.501 0 1 0 3.214-3.214c-.446-.166-.855-.497-.925-.968a.979.979 0 0 1 .276-.837l1.61-1.611c.47-.47 1.088-.706 1.705-.706s1.233.235 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"/></svg> Plugins & Skills</div>
                     <div class="bento-desc">Extend capabilities with external code.</div>
-                    <div class="bento-surface">
-                      <label><input type="checkbox" checked> Enable Plugins</label>
-                      <button class="wizard-btn" style="align-self: flex-start; padding: 6px 12px; font-size: 11px;">Add Plugin</button>
+                    <div class="bento-surface row">
+                      <label style="width: 100%;"><input type="checkbox" checked> Enable Plugins</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Auto-update plugins</label>
+                      <label style="width: 100%;"><input type="checkbox"> Allow network access</label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Plugin Directory <input type="text" value="~/.puppet-master/plugins" style="width: 100%;"></label>
+                      <button class="wizard-btn" style="width: 100%; padding: 6px 12px; font-size: 11px;">Add Plugin</button>
                     </div>
-                    <button class="bento-action">Configure 8 settings...</button>
+                    <button class="bento-action" style="margin-top: auto;">Configure 8 settings...</button>
                   </div>
                   <!-- Formatters Card -->
                   <div class="bento-card" data-inspector-view="formatters" data-category="extensions" style="animation: slideInBottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 550ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M3 5h4"/><path d="M19 17v4"/><path d="M17 19h4"/></svg> Formatters & LSP</div>
                     <div class="bento-desc">Code intelligence and formatting rules.</div>
                     <div class="bento-surface row">
-                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Scope <select style="width: 100%;"><option>Global</option><option>Project</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Scope <select style="width: 100%;"><option>Global</option><option>Project</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Default Formatter <select style="width: 100%;"><option>Prettier</option><option>Rustfmt</option></select></label>
                       <label style="width: 100%;"><input type="checkbox" checked> Enable Formatters</label>
                       <label style="width: 100%;"><input type="checkbox" checked> Auto-format on save</label>
+                      <label style="width: 100%;"><input type="checkbox"> Format on paste</label>
                       <label style="width: 100%;"><input type="checkbox"> Disable auto-LSP downloads</label>
                       <label style="width: 100%;"><input type="checkbox" checked> Show inline hints</label>
                     </div>
@@ -5442,22 +5461,29 @@ impl Dashboard {
                   <div class="bento-card" data-inspector-view="commands" data-category="extensions" style="animation: slideInRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 650ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><rect width="20" height="16" x="2" y="4" rx="2" ry="2"/><path d="M6 8h.01"/><path d="M10 8h.01"/><path d="M14 8h.01"/><path d="M18 8h.01"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/><path d="M7 16h10"/></svg> Commands & Shortcuts</div>
                     <div class="bento-desc">Custom slash commands and keybindings.</div>
-                    <div class="bento-surface">
-                      <button class="wizard-btn" style="align-self: flex-start; padding: 6px 12px; font-size: 11px;">Bind Shortcut</button>
-                      <label>Scope <select><option>Global</option><option>Project</option></select></label>
+                    <div class="bento-surface row">
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Scope <select style="width: 100%;"><option>Global</option><option>Project</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Prefix <input type="text" value="/" style="width: 100%;"></label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Enable custom aliases</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Export commands on exit</label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Cmd Timeout (s) <input type="number" value="60" style="width: 100%;"></label>
+                      <button class="wizard-btn" style="width: 100%; padding: 6px 12px; font-size: 11px;">Bind Shortcut</button>
                     </div>
-                    <button class="bento-action">Configure 16 settings...</button>
+                    <button class="bento-action" style="margin-top: auto;">Configure 16 settings...</button>
                   </div>
                   <!-- Editor Card -->
                   <div class="bento-card" data-inspector-view="editor" data-category="editor" style="animation: slideInLeft 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 750ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg> Editor UX & File Manager</div>
                     <div class="bento-desc">Text editor behavior and file tree preferences.</div>
-                    <div class="bento-surface">
-                      <label><input type="checkbox"> Use Vim bindings</label>
-                      <label><input type="checkbox"> Line wrap</label>
-                      <label><input type="checkbox" checked> Hide ignored files</label>
+                    <div class="bento-surface row">
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Font Size <input type="number" value="13" style="width: 100%;"></label>
+                      <label style="width: 100%;"><input type="checkbox"> Use Vim bindings</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Show line numbers</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Highlight active line</label>
+                      <label style="width: 100%;"><input type="checkbox"> Show minimap</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Hide ignored files</label>
                     </div>
-                    <button class="bento-action">Configure 10 settings...</button>
+                    <button class="bento-action" style="margin-top: auto;">Configure 10 settings...</button>
                   </div>                </div>
               </div>
             </div>
