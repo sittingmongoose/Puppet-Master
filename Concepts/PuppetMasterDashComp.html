@@ -3185,7 +3185,7 @@
         .bento-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      align-items: start;
+      align-items: stretch;
       gap: var(--lg);
     }
 
@@ -5336,12 +5336,12 @@ impl Dashboard {
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2-1 4-2 7-2 2.89 0 4.7 1 6.7 2a1 1 0 0 1 1 1z"/></svg> Security & FileSafe</div>
                     <div class="bento-desc">Control what the agent is allowed to execute and edit.</div>
                     <div class="bento-surface row">
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">FileSafe Level <select style="width: 100%;"><option>Strict</option><option>Balanced</option><option>Off</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Network <select style="width: 100%;"><option>Ask</option><option>Allow</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Command Blocklist <input type="text" value="rm, drop, truncate" style="width: 100%;"></label>
                       <label style="width: 100%;"><input type="checkbox" checked> Block destructive commands</label>
                       <label style="width: 100%;"><input type="checkbox" checked> Restrict writes to working dir</label>
                       <label style="width: 100%;"><input type="checkbox" checked> Block sensitive files</label>
-                      <label style="width: 100%;"><input type="checkbox" checked> Command blocklist enabled</label>
-                      <label style="width: 100%;"><input type="checkbox"> Require network approval</label>
-                      <label style="width: 100%;"><input type="checkbox"> Read-only mode</label>
                     </div>
                     <button class="bento-action" style="margin-top: auto;">Configure 8 settings...</button>
                   </div>
@@ -5365,11 +5365,11 @@ impl Dashboard {
                     <div class="bento-desc">Multi-pass review and plan mode defaults.</div>
                     <div class="bento-surface row">
                       <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Plan Mode <select style="width: 100%;"><option>Balanced</option><option>Strict</option></select></label>
-                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Interview Questions <input type="number" value="5" style="width: 100%;"></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Questions <input type="number" value="5" style="width: 100%;"></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Confidence Threshold <input type="range" min="0" max="100" value="80" style="width: 100%;"></label>
                       <label style="width: 100%;"><input type="checkbox" checked> Enable Multi-Pass Review</label>
                       <label style="width: 100%;"><input type="checkbox" checked> Phase subagents</label>
                       <label style="width: 100%;"><input type="checkbox" checked> Research subagents</label>
-                      <label style="width: 100%;"><input type="checkbox"> Auto-proceed on confidence</label>
                     </div>
                     <button class="bento-action" style="margin-top: auto;">Configure 9 settings...</button>
                   </div>
@@ -5434,11 +5434,11 @@ impl Dashboard {
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.611c-.47.47-1.088.706-1.705.706s-1.233-.235-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18-.894-.527-.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568c-.47-.47-.706-1.087-.706-1.704s.235-1.233.706-1.704l1.611-1.611a.98.98 0 0 1 .837-.276c.47.07.802.48.968.925a2.501 2.501 0 1 0 3.214-3.214c-.446-.166-.855-.497-.925-.968a.979.979 0 0 1 .276-.837l1.61-1.611c.47-.47 1.088-.706 1.705-.706s1.233.235 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"/></svg> Plugins & Skills</div>
                     <div class="bento-desc">Extend capabilities with external code.</div>
                     <div class="bento-surface row">
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Plugin Engine <select style="width: 100%;"><option>Node.js</option><option>Python</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Update Frequency <select style="width: 100%;"><option>Daily</option><option>On Launch</option></select></label>
                       <label style="width: 100%;"><input type="checkbox" checked> Enable Plugins</label>
                       <label style="width: 100%;"><input type="checkbox" checked> Auto-update plugins</label>
                       <label style="width: 100%;"><input type="checkbox"> Allow network access</label>
-                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Plugin Directory <input type="text" value="~/.puppet-master/plugins" style="width: 100%;"></label>
-                      <button class="wizard-btn" style="width: 100%; padding: 6px 12px; font-size: 11px;">Add Plugin</button>
                     </div>
                     <button class="bento-action" style="margin-top: auto;">Configure 8 settings...</button>
                   </div>
