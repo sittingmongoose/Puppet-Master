@@ -1,39 +1,36 @@
-# GUI Polish & Deep Functional Fixes
+# GUI Tweaks & Widget Additions Plan
 
 **Objective:**
-Address critical layout DOM bugs, ensure robust dashboard tabs, fix editor tab drag-and-drop lifecycles, and properly restore chat window docking and resizing.
+Fix the editor pane closing issue on tab drag-and-drop, and flesh out the Dashboard tabs with more diverse, realistic bento widgets.
 
 ## Requirements & Revisions
 
-### 1. Fix Broken DOM Tree (Projects Page visibility)
-- **Diagnosis:** The `.page-dashboard` `<div>` was missing its closing tag after the recent bento grid refactor. This caused `.page-projects` to be incorrectly nested inside `.page-dashboard`, breaking the main navigation logic.
-- **Fix:** Insert the missing `</div>` directly before the `.page-projects` div. 
+### 1. Fix Editor Pane Empty State (Drag & Drop)
+- **Diagnosis:** When a tab is dragged to another `.editor-pane`, the tab's DOM element is moved. However, the source pane does not check if it is now empty. This leaves an empty, unclosable editor pane on the screen.
+- **Fix:** Update the `drop` event listener in the editor tabs. Before moving the tab, identify its source pane. After the DOM move, check if the source pane has any `.tab` elements remaining. If not, apply `display: none` to the source pane. Also check if the entire `.editor-view` should hide, identical to the manual tab close logic.
 
-### 2. Fix Chat Panel Layout & Resizing
-- **Diagnosis:** The `.chat-resizer` and `.chat-panel` were pushed entirely outside the `.app-shell` hierarchy, placing them below the footer, which broke all horizontal flexbox sizing.
-- **Fix:** Move `.chat-resizer` and `.chat-panel` back inside `.center-row`, placed exactly after `.content-wrapper` closes. The resizer JS logic is already sound, but fixing the DOM placement will make it function perfectly again.
+### 2. Flesh Out Dashboard Widgets
+- **Diagnosis:** The Dashboard tabs (Main, Metrics, Monitoring) only have a few widgets each and feel sparse.
+- **Fix:** Add several new premium, SVG-powered widgets to each grid to emphasize the layout capabilities.
+- **Main Grid Additions:**
+  - *Active Subagents* (`size-1x1`): List of currently working agents (e.g., Code Investigator, Test Writer).
+  - *Recent Activity* (`size-2x1`): A timeline list of recent file changes or system events.
+- **Metrics Grid Additions:**
+  - *API Latency* (`size-1x1`): Displaying average request latency with a mini trendline.
+  - *Cache Hit Rate* (`size-1x1`): Displaying a percentage visual.
+  - *Budget Allocation* (`size-2x1`): Displaying budget splits across models (Claude, OpenAI, Gemini) using inline styling to mock pie/bar distributions.
+- **Monitoring Grid Additions:**
+  - *Container Health* (`size-2x1`): Status of orchestrator docker instances with mock uptime data.
+  - *Network Traffic* (`size-2x1`): Mock area chart of ingress/egress.
+  - *Database Load* (`size-1x1`): Query volume per second.
+  - *Error Rates* (`size-1x1`): Exception counts in the last 24 hours.
 
-### 3. Fleshed-out Dashboard Tabs (Main, Metrics, Monitoring)
-- **Diagnosis:** The dashboard tabs currently only swap active visual states, but they don't change the underlying widgets.
-- **Fix:** 
-  - Create three distinct `.bento-dashboard` grids (`#dashGridMain`, `#dashGridMetrics`, `#dashGridMonitoring`).
-  - Populate "Metrics" with mock performance line charts, cost/token usage graphs, and SLA badges (using styled HTML/CSS, no emojis).
-  - Populate "Monitoring" with mock server health nodes, active Docker swarms, and memory allocation bars.
-  - Update the dashboard tabs JS to toggle the visibility (`display: flex` vs `display: none`) of these specific grid containers.
-
-### 4. Fix Editor Tab Tearing & Closing
-- **Diagnosis:** When a tab is dropped, `draggedFilename` is extracted correctly, but recreating the tab using raw innerHTML loses the `*` dot indicator, and there might be CSS stacking contexts hiding the SVG close button.
-- **Fix:** 
-  - Refactor the Drag & Drop JS: Instead of destroying and recreating the tab via innerHTML, we will directly `appendChild` the *actual* DOM node of the dragged tab into the new pane. This perfectly preserves all attached event listeners (like `dragstart`), inner SVGs, and text nodes, permanently fixing the "disappearing close button" bug.
-  - Ensure the empty pane placeholder text handles moving the last tab cleanly.
-
-### 5. Terminal "Collapse" Sizing Fix
-- **Diagnosis:** The terminal's collapse button toggles a class, but inline flex styles applied by the resizer override it.
-- **Fix:** Ensure that when `#bottomPanel` has the `.collapsed` class, it forces `flex: none !important; height: 24px !important;` overriding any inline styles set by the user's manual dragging.
+### 3. Strict Constraints
+- **No Emojis:** Rely exclusively on high-quality SVGs and styled CSS for all new widgets.
+- **Bento Grid Alignment:** Ensure the new widgets use the exact `size-1x1`, `size-2x1`, and `size-2x2` CSS classes to maintain the reflowing grid structure without stretching.
 
 ## Implementation Steps
-1. **DOM Restructuring:** Extract the `chat-resizer` and `chat-panel` blocks from the bottom of the document and insert them inside `.center-row`.
-2. **Close Tags:** Add the missing `</div>` for `.page-dashboard`.
-3. **Tab JS Rewrite:** Change `drop` event listener in the editor tabs to physically move the `existingTab` DOM element instead of destroying and string-matching it.
-4. **Dashboard Views:** Add the new Metrics and Monitoring HTML grids with rich bento widgets.
-5. **Dashboard JS Logic:** Bind the tab clicks to swap the active bento grid.
+1. **JS Update:** Refactor the `e.dataTransfer` drop logic to include a source pane cleanup step.
+2. **HTML Grid `#dashGridMain`:** Append the *Active Subagents* and *Recent Activity* widgets.
+3. **HTML Grid `#dashGridMetrics`:** Append *API Latency*, *Cache Hit Rate*, and *Budget Allocation*.
+4. **HTML Grid `#dashGridMonitoring`:** Append *Container Health*, *Network Traffic*, *Database Load*, and *Error Rates*.
