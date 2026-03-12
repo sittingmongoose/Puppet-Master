@@ -1047,8 +1047,8 @@
       flex-direction: column;
     }
     .bottom-panel.collapsed {
-      height: 24px;
-      min-height: 24px;
+      height: 24px !important;
+      min-height: 24px !important;
     }
     .bottom-panel.collapsed .bottom-tabs-content { display: none; }
 
@@ -3249,11 +3249,12 @@
       flex-direction: column;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
       position: relative;
+      flex: none; /* Prevents widgets from shrinking or growing */
     }
     [data-theme^="retro"] .bento-widget { border-radius: 0; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); border-width: 2px; }
-    .bento-widget.size-1x1 { width: calc(50% - (var(--lg) / 2)); min-height: 120px; }
-    .bento-widget.size-2x1 { width: 100%; min-height: 120px; }
-    .bento-widget.size-2x2 { width: 100%; min-height: 240px; }
+    .bento-widget.size-1x1 { width: 220px; height: 220px; }
+    .bento-widget.size-2x1 { width: calc(440px + var(--lg)); height: 220px; }
+    .bento-widget.size-2x2 { width: calc(440px + var(--lg)); height: calc(440px + var(--lg)); }
     
     .widget-header {
       display: flex;
@@ -3512,7 +3513,7 @@
     <div class="main-area">
       <div class="left-panel">
         <nav class="activity-bar collapsed" id="activityBar">
-          <div class="icon" title="Dashboard" id="dashboardToggleIcon"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg></span><span class="icon-label">HOME</span></div>
+          <div class="icon" title="Dashboard" id="dashboardToggleIcon"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg></span><span class="icon-label">HOME</span></div>
           <div class="icon" title="Chat"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="icon-label">CHAT</span></div>
           <div class="icon active" title="Files" data-target="panel-files"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg></span><span class="icon-label">FILES</span></div>
           <div class="icon" title="Run & Debug" data-target="panel-run"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></span><span class="icon-label">RUN</span></div>
@@ -3798,17 +3799,26 @@ impl Dashboard {
 
           </div>
           <div class="resizer-col" id="editorDashResizer"></div>
-          <div class="dashboard-view" id="dashboardView">
-          <div class="dashboard-header">
-            <button class="add-widget-btn">Add widget</button>
-            <button class="add-widget-btn">Add widget</button>
-            <button class="customize-widgets-btn">Customize</button>
+          <div class="dashboard-view pane-container" id="dashboardView">
+          <div class="dashboard-header pane-header-drag" draggable="true" data-pane="dashboardView" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-light); cursor: grab; padding: var(--xs) var(--sm);">
+            <div class="dashboard-tabs" style="display: flex; gap: 2px;">
+              <span class="tab active" style="padding: var(--xs) var(--md); font-size: 11px; cursor: pointer; color: var(--text-primary); background: var(--surface); border: var(--border-width) solid var(--border); border-bottom: none; border-radius: var(--border-radius) var(--border-radius) 0 0;">Main</span>
+              <span class="tab" style="padding: var(--xs) var(--md); font-size: 11px; cursor: pointer; color: var(--text-secondary); border: var(--border-width) solid transparent;">Metrics</span>
+              <span class="tab" style="padding: var(--xs) var(--md); font-size: 11px; cursor: pointer; color: var(--text-secondary); border: var(--border-width) solid transparent;">Monitoring</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--sm);">
+              <button class="customize-widgets-btn" style="padding: var(--xs) var(--md); font-size: 11px; background: var(--surface-elevated); border: var(--border-width) solid var(--border); border-radius: var(--border-radius); cursor: pointer; color: var(--text-primary);">Customize</button>
+            </div>
           </div>
-          <div class="dashboard-grid">
-            <div class="widget-card">
-              <div class="drag-handle"></div>
-              <div class="widget-title">Orchestrator Status</div>
-              <span class="status-badge">Running</span>
+          <div class="bento-dashboard" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-wrap: wrap; gap: var(--lg); align-content: flex-start;">
+            <div id="dashGridMain" style="display:contents;">
+
+            <div class="bento-widget size-2x2" >
+              <div class="widget-header">
+                <span class="widget-title">Orchestrator Status</span>
+                <div class="widget-settings"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
+              </div>
+              <span class="status-badge" style="margin-bottom:var(--md);">Running</span>
               <div class="orchestrator-buttons">
                 <button>START</button>
                 <button class="primary">PAUSE</button>
@@ -3827,86 +3837,97 @@ impl Dashboard {
                 <a href="#">Open artifact</a>
               </div>
             </div>
-            <div class="widget-card">
-              <div class="drag-handle"></div>
-              <div class="widget-title">Current Task</div>
-              <div style="font-size: 12px;">
-                <div>Tier: Phase 2 / Task 3</div>
-                <div>Item: Implement dashboard widgets</div>
-                <div>Platform: Claude Code | Model: sonnet-4.5</div>
-                <div class="subagent-indicator">> 2 subagents active</div>
+            
+            <div class="bento-widget size-2x1" >
+              <div class="widget-header">
+                <span class="widget-title">Current Task</span>
+                <div class="widget-settings"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
+              </div>
+              <div style="font-size:12px; margin-bottom:var(--sm);">Refactor authentication module</div>
+              <div class="progress-bar"><div class="fill" style="width:45%"></div></div>
+              <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-muted);">
+                <span>Step 3 of 7</span>
+                <span>45%</span>
               </div>
             </div>
-            <div class="widget-card" style="grid-column: span 2;">
-              <div class="drag-handle"></div>
-              <div class="widget-title">Progress</div>
-              <div style="margin-top: var(--sm);">
-                <div style="font-size: 11px;">Phase</div>
-                <div class="progress-bar"><div class="fill" style="width: 66%"></div></div>
-                <div style="font-size: 11px;">Task</div>
-                <div class="progress-bar"><div class="fill" style="width: 40%"></div></div>
-                <div style="font-size: 11px;">Subtask</div>
-                <div class="progress-bar"><div class="fill" style="width: 80%"></div></div>
+            
+            <div class="bento-widget size-1x1" >
+              <div class="widget-header">
+                <span class="widget-title">Metrics</span>
+                <div class="widget-settings"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:var(--xs); font-size:11px;">
+                <div style="display:flex; justify-content:space-between;"><span>Token Usage</span><span style="color:var(--accent-lime);">14.2k</span></div>
+                <div style="display:flex; justify-content:space-between;"><span>Cost</span><span style="color:var(--accent-orange);">$0.12</span></div>
               </div>
             </div>
-            <div class="widget-card">
-              <div class="drag-handle"></div>
-              <div class="widget-title">Budgets</div>
-              <div class="donut-row">
-                <div class="donut-mini" style="border-top-color: var(--accent-blue);"><span class="inner">45%</span></div>
-                <div class="donut-mini" style="border-top-color: var(--accent-lime);"><span class="inner">12%</span></div>
-                <div class="donut-mini" style="border-top-color: var(--accent-orange);"><span class="inner">78%</span></div>
+            
+            <div class="bento-widget size-1x1" >
+              <div class="widget-header">
+                <span class="widget-title">Background Runs</span>
+                <div class="widget-settings"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
               </div>
-              <div style="font-size: 10px; margin-top: var(--xs);">Claude | Codex | Gemini</div>
-            </div>
-            <div class="widget-card cta-card">
-              <div class="drag-handle"></div>
-              <div class="widget-title"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 4px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>Requirements Need Your Input</div>
-              <div style="font-size: 12px; margin-bottom: var(--md);">3 questions need answers before this wizard can proceed.</div>
-              <button class="primary" style="margin-right: var(--sm);">Resume Wizard</button>
-              <button>View in Thread</button>
-            </div>
-            <div class="widget-card">
-              <div class="drag-handle"></div>
-              <div class="widget-title">Terminal Output</div>
-              <div class="terminal-output">
-                <div class="line">$ cargo build</div>
-                <div class="line">   Compiling puppet-master v0.1.0</div>
-                <div class="line">   Compiling slint v1.5.1</div>
-                <div class="line stderr">error[E0433]: unresolved import `slint`</div>
-                <div class="line info">  --> src/main.rs:12:5</div>
-              </div>
-            </div>
-            <div class="widget-card">
-              <div class="drag-handle"></div>
-              <div class="widget-title">Interview Panel</div>
-              <div style="font-size: 12px;">
-                <div>Phase: Validate (2/5)</div>
-                <div class="progress-bar" style="margin-top: var(--sm);"><div class="fill" style="width: 40%"></div></div>
-              </div>
-            </div>
-            <div class="widget-card error-card">
-              <div class="drag-handle"></div>
-              <div class="widget-title">Error Display</div>
-              <div style="font-size: 12px; color: var(--accent-magenta);">Build failed: unresolved import</div>
-              <button style="margin-top: var(--sm);">Retry</button>
-            </div>
-            <div class="widget-card">
-              <div class="drag-handle"></div>
-              <div class="widget-title">Platform Quota</div>
-              <div style="font-size: 12px;">
-                <div>Codex: 2/5 crews, 45/100 quota</div>
-                <div>Claude: 1/3 crews, 12/50 quota</div>
-              </div>
-            </div>
-            <div class="widget-card background-runs-card">
-              <div class="drag-handle"></div>
-              <div class="widget-title">Background Runs</div>
               <div style="font-size: 11px; color: var(--text-muted);">0 active</div>
             </div>
+            </div>
+            <div id="dashGridMetrics" style="display:none; width: 100%;">
+                <div class="bento-widget size-2x1" style="width:100%;">
+                    <div class="widget-header">
+                        <span class="widget-title">Token Usage Over Time</span>
+                    </div>
+                    <div style="flex:1; display:flex; align-items:flex-end; gap:4px; padding-top:var(--md); border-bottom:1px solid var(--border-light);">
+                        <!-- Fake bar chart -->
+                        <div style="width:20px; height:20%; background:var(--accent-blue);"></div>
+                        <div style="width:20px; height:40%; background:var(--accent-blue);"></div>
+                        <div style="width:20px; height:35%; background:var(--accent-blue);"></div>
+                        <div style="width:20px; height:60%; background:var(--accent-blue);"></div>
+                        <div style="width:20px; height:90%; background:var(--accent-lime);"></div>
+                        <div style="width:20px; height:50%; background:var(--accent-lime);"></div>
+                        <div style="width:20px; height:70%; background:var(--accent-lime);"></div>
+                    </div>
+                </div>
+                <div class="bento-widget size-1x1" style="width: calc(50% - (var(--lg) / 2)); margin-top:var(--lg);">
+                    <div class="widget-header">
+                        <span class="widget-title">Cost Summary</span>
+                    </div>
+                    <div style="font-size:24px; color:var(--accent-orange); font-family:var(--display-font);">$12.45</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:var(--xs);">This billing cycle</div>
+                </div>
+                <div class="bento-widget size-1x1" style="width: calc(50% - (var(--lg) / 2)); margin-top:var(--lg); margin-left:var(--lg);">
+                    <div class="widget-header">
+                        <span class="widget-title">SLA Status</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:var(--sm);">
+                        <div style="width:12px; height:12px; border-radius:50%; background:var(--accent-lime);"></div>
+                        <span style="font-size:14px;">All Systems Operational</span>
+                    </div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:var(--sm);">99.99% Uptime</div>
+                </div>
+            </div>
+            <div id="dashGridMonitoring" style="display:none; width: 100%;">
+                <div class="bento-widget size-2x2" style="width:100%;">
+                    <div class="widget-header">
+                        <span class="widget-title">Active Nodes</span>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:var(--md);">
+                        <div style="display:flex; justify-content:space-between; padding:var(--sm); background:var(--surface); border:1px solid var(--border-light); border-radius:var(--border-radius);">
+                            <span>worker-node-01</span>
+                            <span style="color:var(--accent-lime);">CPU: 45% | RAM: 2.1GB</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; padding:var(--sm); background:var(--surface); border:1px solid var(--border-light); border-radius:var(--border-radius);">
+                            <span>worker-node-02</span>
+                            <span style="color:var(--accent-orange);">CPU: 89% | RAM: 4.5GB</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; padding:var(--sm); background:var(--surface); border:1px solid var(--border-light); border-radius:var(--border-radius);">
+                            <span>db-master</span>
+                            <span style="color:var(--accent-lime);">CPU: 12% | RAM: 8.0GB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
           </div>
           </div>
-          </div>
+          </div> <!-- End page-dashboard -->
           <div class="page page-projects">
             <nav class="projects-breadcrumb" aria-label="Breadcrumb">Home &gt; <span class="current">Projects</span></nav>
             <div class="projects-header">
@@ -5333,6 +5354,137 @@ impl Dashboard {
           </div>
         </main>
           </div>
+<div class="resizer-col hidden" id="chatResizer"></div>
+          <aside class="chat-panel hidden" id="chatPanel">
+            
+            <div class="chat-panel-header" style="flex-direction: column; align-items: stretch; gap: var(--sm); padding: var(--sm) var(--md); background: var(--surface-elevated); min-height: auto; border-bottom: 1px solid var(--border-light);">
+              <div style="display: flex; align-items: center; width: 100%;">
+                <div class="title" style="font-size: 13px; flex: 1; display:flex; align-items:center; gap:var(--sm); font-family:var(--display-font);">
+                    ASSISTANT <span class="chatRoleBadge role-badge role-assistant">Assistant</span>
+                </div>
+                <div class="panel-actions" style="display: flex; gap: var(--xs);">
+                  <button class="popOutBtn" title="Pop out" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>
+                  <button class="closeChatBtn" title="Close" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px; padding: 2px var(--sm);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" placeholder="Search messages & threads..." style="width: 100%; border: none; background: transparent; padding: 4px; color: var(--text-primary); font-size: 11px; outline: none;">
+              </div>
+            </div>
+
+            <div class="chat-body" style="flex: 1; display: flex; min-height: 0; overflow: hidden;">
+              <div class="chat-thread-sidebar" style="width: 180px; min-width: 140px; background: var(--surface-elevated); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; overflow: hidden;">
+                <div class="sidebar-title" style="padding: var(--md); font-weight: 600; font-size: 12px; border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
+                  HISTORY
+                  <button style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                </div>
+                <div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm);">
+                  <div class="chat-thread-item" data-thread="thread1" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Wizard: Dashboard UI</div>
+                  <div class="chat-thread-item" data-thread="thread2" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Refactor Database Layer</div>
+                  <div class="chat-thread-item" data-thread="thread3" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Fix Auth Token Bug</div>
+                  <div class="chat-thread-item" data-thread="thread4" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Research Web Frameworks</div>
+                  <div class="chat-thread-item" data-thread="thread5" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Context Lens Check</div>
+                  <div class="chat-thread-item" data-thread="thread6" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">FileSafe Blocking</div>
+                </div>
+              </div>
+
+              <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden;">
+                <div class="chat-modes chatModesBar">
+                  <div class="mode" data-mode="ask" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Ask</div>
+                  <div class="mode" data-mode="plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Plan</div>
+                  <div class="mode" data-mode="deep-plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Deep Plan</div>
+                  <div class="mode" data-mode="crew" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Crew</div>
+                </div>
+                
+                <div class="chat-header-workflow hidden chatWorkflowHeader" style="display:flex; justify-content:space-between; align-items:center; padding:var(--sm) var(--md); border-bottom:1px solid var(--border-light); background:var(--surface-elevated); font-size:12px; font-weight:600;">
+                  <span class="workflowHeaderTitle">Interactive Interview</span>
+                  <button class="wizard-btn returnToChatBtn" style="padding:2px var(--sm); font-size:10px;">Return to Chat</button>
+                </div>
+
+                <div class="message-stream messageStream" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-direction: column; gap: var(--md);">
+                </div>
+
+                <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light);">
+                  <div class="pendingInterventionBlock hidden" style="position:absolute; top:-40px; left:var(--md); right:var(--md); background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:6px; padding:var(--sm) var(--md); display:flex; justify-content:space-between; align-items:center; font-size:11px; box-shadow:0 -4px 12px rgba(0,0,0,0.1); z-index:10;">
+                    <span style="color:var(--text-secondary); text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:200px;">"Wait, update the cache too."</span>
+                    <div style="display:flex; gap:var(--xs); align-items:center;">
+                      <span style="color:var(--text-muted); margin-right:var(--xs);">Queued</span>
+                      <button title="Steer (Interrupt)" style="background:none; border:none; color:var(--accent-blue); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+                      <button title="Edit" style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
+                      <button title="Cancel" style="background:none; border:none; color:var(--accent-magenta); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                    </div>
+                  </div>
+
+                  <div style="background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
+                    <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; outline:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm);">
+                      <div style="display:flex; gap:var(--md); align-items:center;">
+                        <button title="Attach File" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
+                        <label style="font-size:10px; color:var(--text-secondary); display:flex; align-items:center; gap:2px; cursor:pointer;"><input type="checkbox"> ELI5</label>
+                        <label style="font-size:10px; color:var(--accent-orange); display:flex; align-items:center; gap:2px; cursor:pointer;" title="Auto-approve tools"><input type="checkbox"> YOLO</label>
+                      </div>
+                      <button style="background:var(--accent-blue); color:var(--surface); border:none; border-radius:4px; padding:4px var(--md); font-size:11px; font-weight:600; cursor:pointer;">Send</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="chat-footer" style="display:flex; justify-content:space-between; padding:var(--sm) var(--md); background:var(--surface); border-top:1px solid var(--border-light); font-size:10px; min-height: 24px; position:relative;">
+                  <div style="display:flex; gap:var(--md); align-items:center;">
+                    <div style="position:relative;">
+                      <button class="chat-dropdown-btn" data-dropdown="persona" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
+                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span class="persona-label">product-manager</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="chat-dropdown-popover personaPopover">
+                        <div class="chat-dropdown-search"><input type="text" placeholder="Find persona..." class="personaSearch"></div>
+                        <div class="chat-dropdown-list personaList">
+                            <div class="chat-dropdown-item active" data-value="product-manager"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> product-manager</div>
+                            <div class="chat-dropdown-item" data-value="architect-reviewer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> architect-reviewer</div>
+                            <div class="chat-dropdown-item" data-value="rust-engineer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> rust-engineer</div>
+                            <div class="chat-dropdown-item" data-value="technical-writer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> technical-writer</div>
+                            <div class="chat-dropdown-item" data-value="knowledge-synthesizer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> knowledge-synthesizer</div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div style="position:relative;">
+                      <button class="chat-dropdown-btn" data-dropdown="model" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
+                        <span class="model-label">Claude: sonnet-4.5</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="chat-dropdown-popover modelPopover">
+                        <div class="chat-dropdown-search"><input type="text" placeholder="Find model..." class="modelSearch"></div>
+                        <div class="chat-dropdown-list modelList">
+                            <div class="chat-dropdown-header">Anthropic</div>
+                            <div class="chat-dropdown-item active" data-value="Claude: sonnet-4.5">sonnet-4.5</div>
+                            <div class="chat-dropdown-item" data-value="Claude: opus-3">opus-3</div>
+                            <div class="chat-dropdown-header">OpenAI</div>
+                            <div class="chat-dropdown-item" data-value="OpenAI: o3-mini">o3-mini</div>
+                            <div class="chat-dropdown-item" data-value="OpenAI: gpt-4o">gpt-4o</div>
+                            <div class="chat-dropdown-header">Local</div>
+                            <div class="chat-dropdown-item" data-value="Local: DeepSeek R1">DeepSeek R1</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <span title="Reasoning Effort: High" style="color:var(--text-secondary); display:flex; align-items:center; gap:var(--xs);">
+                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54z"></path></svg>
+                        High
+                    </span>
+                  </div>
+                  <div style="display:flex; gap:var(--md); align-items:center;">
+                    <div class="context-usage" title="Context: 42k / 128k" style="display:flex; align-items:center; gap:var(--xs);">
+                      <div style="width:12px; height:12px; border-radius:50%; background:conic-gradient(var(--accent-blue) 30%, var(--border-light) 0); border:1px solid var(--border);"></div>
+                      <span>42k</span>
+                    </div>
+                    <a href="#" style="color:var(--accent-orange); display:flex; align-items:center; gap:var(--xs); text-decoration: none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Problems</a>
+                  </div>
+                </div>
+              </div>
+    
+          </aside>
+          
+          
         </div>
         
         <div class="resizer-row" id="terminalResizer"></div>
@@ -5358,29 +5510,36 @@ impl Dashboard {
             </div>
           </div>
           <div class="bottom-tabs-content">
-            <div class="terminal-grid" data-group="build">
-              <div class="terminal-pane">
-                <div class="line">$ cargo build</div>
-                <div class="line">   Compiling puppet-master v0.1.0</div>
-                <div class="line">   Compiling slint v1.5.1</div>
-                <div class="line stderr">error[E0433]: unresolved import `slint`</div>
-                <div class="line info">  --> src/main.rs:12:5</div>
+            <div class="terminal-grid-flex" data-group="build" style="display:flex; flex-direction:column; flex:1; min-height:0; gap:1px; background:var(--border);">
+              <div style="display:flex; flex:1; min-height:0; gap:1px;">
+                  <div class="terminal-pane" id="term1" style="flex:1; background:#0d1117;">
+                    <div class="line">$ cargo build</div>
+                    <div class="line">   Compiling puppet-master v0.1.0</div>
+                    <div class="line">   Compiling slint v1.5.1</div>
+                    <div class="line stderr">error[E0433]: unresolved import `slint`</div>
+                    <div class="line info">  --> src/main.rs:12:5</div>
+                  </div>
+                  <div class="resizer-col" id="termSplitH1"></div>
+                  <div class="terminal-pane" id="term2" style="flex:1; background:#0d1117;">
+                    <div class="line">$ cargo test</div>
+                    <div class="line">running 3 tests</div>
+                    <div class="line">test tests::integration::basic ... ok</div>
+                    <div class="line info">test result: ok. 3 passed</div>
+                  </div>
               </div>
-              <div class="terminal-pane">
-                <div class="line">$ cargo test</div>
-                <div class="line">running 3 tests</div>
-                <div class="line">test tests::integration::basic ... ok</div>
-                <div class="line info">test result: ok. 3 passed</div>
-              </div>
-              <div class="terminal-pane">
-                <div class="line">[INFO] Agent: Phase 2 Task 3</div>
-                <div class="line">[OK] Reading src/auth/mod.rs</div>
-                <div class="line">[OK] 48 lines analyzed</div>
-              </div>
-              <div class="terminal-pane">
-                <div class="line">$ git log --oneline -2</div>
-                <div class="line">a3f2c1d feat: add auth handler</div>
-                <div class="line">b7e4a09 refactor: provider trait</div>
+              <div class="resizer-row" id="termSplitV"></div>
+              <div style="display:flex; flex:1; min-height:0; gap:1px;" id="termBottomRow">
+                  <div class="terminal-pane" id="term3" style="flex:1; background:#0d1117;">
+                    <div class="line">[INFO] Agent: Phase 2 Task 3</div>
+                    <div class="line">[OK] Reading src/auth/mod.rs</div>
+                    <div class="line">[OK] 48 lines analyzed</div>
+                  </div>
+                  <div class="resizer-col" id="termSplitH2"></div>
+                  <div class="terminal-pane" id="term4" style="flex:1; background:#0d1117;">
+                    <div class="line">$ git log --oneline -2</div>
+                    <div class="line">a3f2c1d feat: add auth handler</div>
+                    <div class="line">b7e4a09 refactor: provider trait</div>
+                  </div>
               </div>
             </div>
           </div>
@@ -5550,136 +5709,6 @@ impl Dashboard {
       <span class="status-snapshot">Last snapshot: 10m ago</span>
     </footer>
   </div>
-          <div class="chat-resizer hidden" id="chatResizer"></div>
-          <aside class="chat-panel hidden" id="chatPanel">
-            
-            <div class="chat-panel-header" style="flex-direction: column; align-items: stretch; gap: var(--sm); padding: var(--sm) var(--md); background: var(--surface-elevated); min-height: auto; border-bottom: 1px solid var(--border-light);">
-              <div style="display: flex; align-items: center; width: 100%;">
-                <div class="title" style="font-size: 13px; flex: 1; display:flex; align-items:center; gap:var(--sm); font-family:var(--display-font);">
-                    ASSISTANT <span class="chatRoleBadge role-badge role-assistant">Assistant</span>
-                </div>
-                <div class="panel-actions" style="display: flex; gap: var(--xs);">
-                  <button class="popOutBtn" title="Pop out" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>
-                  <button class="closeChatBtn" title="Close" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-                </div>
-              </div>
-              <div style="display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px; padding: 2px var(--sm);">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                <input type="text" placeholder="Search messages & threads..." style="width: 100%; border: none; background: transparent; padding: 4px; color: var(--text-primary); font-size: 11px; outline: none;">
-              </div>
-            </div>
-
-            <div class="chat-body" style="flex: 1; display: flex; min-height: 0; overflow: hidden;">
-              <div class="chat-thread-sidebar" style="width: 180px; min-width: 140px; background: var(--surface-elevated); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; overflow: hidden;">
-                <div class="sidebar-title" style="padding: var(--md); font-weight: 600; font-size: 12px; border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
-                  HISTORY
-                  <button style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
-                </div>
-                <div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm);">
-                  <div class="chat-thread-item" data-thread="thread1" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Wizard: Dashboard UI</div>
-                  <div class="chat-thread-item" data-thread="thread2" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Refactor Database Layer</div>
-                  <div class="chat-thread-item" data-thread="thread3" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Fix Auth Token Bug</div>
-                  <div class="chat-thread-item" data-thread="thread4" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Research Web Frameworks</div>
-                  <div class="chat-thread-item" data-thread="thread5" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Context Lens Check</div>
-                  <div class="chat-thread-item" data-thread="thread6" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">FileSafe Blocking</div>
-                </div>
-              </div>
-
-              <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden;">
-                <div class="chat-modes chatModesBar">
-                  <div class="mode" data-mode="ask" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Ask</div>
-                  <div class="mode" data-mode="plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Plan</div>
-                  <div class="mode" data-mode="deep-plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Deep Plan</div>
-                  <div class="mode" data-mode="crew" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Crew</div>
-                </div>
-                
-                <div class="chat-header-workflow hidden chatWorkflowHeader" style="display:flex; justify-content:space-between; align-items:center; padding:var(--sm) var(--md); border-bottom:1px solid var(--border-light); background:var(--surface-elevated); font-size:12px; font-weight:600;">
-                  <span class="workflowHeaderTitle">Interactive Interview</span>
-                  <button class="wizard-btn returnToChatBtn" style="padding:2px var(--sm); font-size:10px;">Return to Chat</button>
-                </div>
-
-                <div class="message-stream messageStream" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-direction: column; gap: var(--md);">
-                </div>
-
-                <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light);">
-                  <div class="pendingInterventionBlock hidden" style="position:absolute; top:-40px; left:var(--md); right:var(--md); background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:6px; padding:var(--sm) var(--md); display:flex; justify-content:space-between; align-items:center; font-size:11px; box-shadow:0 -4px 12px rgba(0,0,0,0.1); z-index:10;">
-                    <span style="color:var(--text-secondary); text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:200px;">"Wait, update the cache too."</span>
-                    <div style="display:flex; gap:var(--xs); align-items:center;">
-                      <span style="color:var(--text-muted); margin-right:var(--xs);">Queued</span>
-                      <button title="Steer (Interrupt)" style="background:none; border:none; color:var(--accent-blue); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
-                      <button title="Edit" style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
-                      <button title="Cancel" style="background:none; border:none; color:var(--accent-magenta); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-                    </div>
-                  </div>
-
-                  <div style="background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
-                    <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; outline:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm);">
-                      <div style="display:flex; gap:var(--md); align-items:center;">
-                        <button title="Attach File" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
-                        <label style="font-size:10px; color:var(--text-secondary); display:flex; align-items:center; gap:2px; cursor:pointer;"><input type="checkbox"> ELI5</label>
-                        <label style="font-size:10px; color:var(--accent-orange); display:flex; align-items:center; gap:2px; cursor:pointer;" title="Auto-approve tools"><input type="checkbox"> YOLO</label>
-                      </div>
-                      <button style="background:var(--accent-blue); color:var(--surface); border:none; border-radius:4px; padding:4px var(--md); font-size:11px; font-weight:600; cursor:pointer;">Send</button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="chat-footer" style="display:flex; justify-content:space-between; padding:var(--sm) var(--md); background:var(--surface); border-top:1px solid var(--border-light); font-size:10px; min-height: 24px; position:relative;">
-                  <div style="display:flex; gap:var(--md); align-items:center;">
-                    <div style="position:relative;">
-                      <button class="chat-dropdown-btn" data-dropdown="persona" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
-                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <span class="persona-label">product-manager</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                      </button>
-                      <div class="chat-dropdown-popover personaPopover">
-                        <div class="chat-dropdown-search"><input type="text" placeholder="Find persona..." class="personaSearch"></div>
-                        <div class="chat-dropdown-list personaList">
-                            <div class="chat-dropdown-item active" data-value="product-manager"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> product-manager</div>
-                            <div class="chat-dropdown-item" data-value="architect-reviewer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> architect-reviewer</div>
-                            <div class="chat-dropdown-item" data-value="rust-engineer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> rust-engineer</div>
-                            <div class="chat-dropdown-item" data-value="technical-writer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> technical-writer</div>
-                            <div class="chat-dropdown-item" data-value="knowledge-synthesizer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> knowledge-synthesizer</div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div style="position:relative;">
-                      <button class="chat-dropdown-btn" data-dropdown="model" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
-                        <span class="model-label">Claude: sonnet-4.5</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                      </button>
-                      <div class="chat-dropdown-popover modelPopover">
-                        <div class="chat-dropdown-search"><input type="text" placeholder="Find model..." class="modelSearch"></div>
-                        <div class="chat-dropdown-list modelList">
-                            <div class="chat-dropdown-header">Anthropic</div>
-                            <div class="chat-dropdown-item active" data-value="Claude: sonnet-4.5">sonnet-4.5</div>
-                            <div class="chat-dropdown-item" data-value="Claude: opus-3">opus-3</div>
-                            <div class="chat-dropdown-header">OpenAI</div>
-                            <div class="chat-dropdown-item" data-value="OpenAI: o3-mini">o3-mini</div>
-                            <div class="chat-dropdown-item" data-value="OpenAI: gpt-4o">gpt-4o</div>
-                            <div class="chat-dropdown-header">Local</div>
-                            <div class="chat-dropdown-item" data-value="Local: DeepSeek R1">DeepSeek R1</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <span title="Reasoning Effort: High" style="color:var(--text-secondary); display:flex; align-items:center; gap:var(--xs);">
-                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54z"></path></svg>
-                        High
-                    </span>
-                  </div>
-                  <div style="display:flex; gap:var(--md); align-items:center;">
-                    <div class="context-usage" title="Context: 42k / 128k" style="display:flex; align-items:center; gap:var(--xs);">
-                      <div style="width:12px; height:12px; border-radius:50%; background:conic-gradient(var(--accent-blue) 30%, var(--border-light) 0); border:1px solid var(--border);"></div>
-                      <span>42k</span>
-                    </div>
-                    <a href="#" style="color:var(--accent-orange); display:flex; align-items:center; gap:var(--xs); text-decoration: none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Problems</a>
-                  </div>
-                </div>
-              </div>
-    
-          </aside>
-          
           <div class="floating-chat" id="floatingChat" style="resize:both; overflow:hidden; min-width:320px; min-height:400px; display:none; flex-direction:column; z-index:1000;">
             <div class="float-title" id="floatDrag" style="display:flex; align-items:center; justify-content:space-between; padding:0 var(--md); background:var(--surface-elevated); border-bottom:var(--border-width) solid var(--border); cursor:move; font-weight:600; font-size:13px; height:28px;">
               Assistant - Puppet Master <button class="closeChatBtn" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; font-size:16px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
@@ -6086,6 +6115,41 @@ impl Dashboard {
 
     document.addEventListener('DOMContentLoaded', () => {
 
+        // Dashboard tabs logic
+        document.querySelectorAll('.dashboard-tabs').forEach(tabsContainer => {
+            tabsContainer.addEventListener('click', e => {
+                const tab = e.target.closest('.tab');
+                if (tab) {
+                    tabsContainer.querySelectorAll('.tab').forEach(t => {
+                        t.classList.remove('active');
+                        t.style.color = 'var(--text-secondary)';
+                        t.style.background = 'transparent';
+                        t.style.border = 'var(--border-width) solid transparent';
+                    });
+                    tab.classList.add('active');
+                    tab.style.color = 'var(--text-primary)';
+                    tab.style.background = 'var(--surface)';
+                    tab.style.border = 'var(--border-width) solid var(--border)';
+                    tab.style.borderBottom = 'none';
+                    tab.style.borderRadius = 'var(--border-radius) var(--border-radius) 0 0';
+                    
+                    const tabName = tab.textContent.trim();
+                    const mainGrid = document.getElementById('dashGridMain');
+                    const metricsGrid = document.getElementById('dashGridMetrics');
+                    const monitoringGrid = document.getElementById('dashGridMonitoring');
+                    
+                    if (mainGrid) mainGrid.style.display = 'none';
+                    if (metricsGrid) metricsGrid.style.display = 'none';
+                    if (monitoringGrid) monitoringGrid.style.display = 'none';
+                    
+                    if (tabName === 'Main' && mainGrid) mainGrid.style.display = 'contents';
+                    if (tabName === 'Metrics' && metricsGrid) metricsGrid.style.display = 'flex';
+                    if (tabName === 'Monitoring' && monitoringGrid) monitoringGrid.style.display = 'flex';
+                }
+            });
+        });
+
+
         // Setup Drag & Drop for Panels
         let draggedPaneId = null;
         document.querySelectorAll('.pane-header-drag').forEach(header => {
@@ -6131,19 +6195,26 @@ impl Dashboard {
             tabsContainer.addEventListener('drop', e => {
                 e.preventDefault();
                 tabsContainer.classList.remove('drag-over');
-                const draggedFilename = e.dataTransfer.getData('text/plain');
+                                const draggedFilename = e.dataTransfer.getData('text/plain');
                 if (draggedFilename) {
-                    // Remove from previous
                     const existingTab = document.querySelector(`.tab[data-filename="${draggedFilename}"]`);
-                    if (existingTab) existingTab.remove();
-                    
                     tabsContainer.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                    const newTab = document.createElement('span');
-                    newTab.className = 'tab active';
-                    newTab.setAttribute('data-filename', draggedFilename);
-                    newTab.draggable = true;
-                    newTab.innerHTML = `${draggedFilename} <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
-                    tabsContainer.appendChild(newTab);
+                    
+                    if (existingTab) {
+                        existingTab.classList.add('active');
+                        tabsContainer.appendChild(existingTab);
+                    } else {
+                        // Fallback if not found
+                        const newTab = document.createElement('span');
+                        newTab.className = 'tab active';
+                        newTab.draggable = true;
+                        newTab.setAttribute('data-filename', draggedFilename);
+                        newTab.addEventListener('dragstart', ev => {
+                            ev.dataTransfer.setData('text/plain', draggedFilename);
+                        });
+                        newTab.innerHTML = `${draggedFilename} <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+                        tabsContainer.appendChild(newTab);
+                    }
                     
                     // Simple mock: just make pane visible and update code target if it's pane1
                     const pane = tabsContainer.closest('.editor-pane');
@@ -6185,11 +6256,10 @@ impl Dashboard {
                 if (!isChatResizing) return;
                 const newWidth = window.innerWidth - e.clientX;
                 if (newWidth >= 320 && newWidth <= 1200) { 
-                    chatPanel.style.width = newWidth + 'px'; 
-                    chatPanel.style.minWidth = 'none';
-                    chatPanel.style.maxWidth = 'none'; 
-                    chatPanel.style.flex = 'none';
-                }
+                    chatPanel.style.width = newWidth + 'px';
+                    chatPanel.style.minWidth = 'auto';
+                    chatPanel.style.maxWidth = 'none';
+                    chatPanel.style.flex = 'none';                }
             });
             document.addEventListener('mouseup', () => {
                 if (isChatResizing) { isChatResizing = false; chatResizer.classList.remove('resizing'); document.body.style.cursor = 'default'; }
@@ -6289,11 +6359,17 @@ impl Dashboard {
         const closeBtn = e.target.closest('.closeChatBtn');
         if (closeBtn) {
             document.getElementById('chatPanel').classList.add('hidden');
+            const chatResizer = document.getElementById('chatResizer');
+            if (chatResizer) chatResizer.classList.add('hidden');
             document.getElementById('floatingChat').style.display = 'none';
+            const chatIcon = document.querySelector('.activity-bar .icon[title="Chat"]');
+            if (chatIcon) chatIcon.classList.remove('active');
         }
         const popOutBtn = e.target.closest('.popOutBtn');
         if (popOutBtn) {
             document.getElementById('chatPanel').classList.add('hidden');
+            const chatResizer = document.getElementById('chatResizer');
+            if (chatResizer) chatResizer.classList.add('hidden');
             document.getElementById('floatingChat').style.display = 'flex';
         }
         if (e.target.closest('.returnToChatBtn')) window.switchToChatThread('thread4');
@@ -6305,6 +6381,8 @@ impl Dashboard {
             
             if (title === 'Chat') {
                 if (chatPanel) chatPanel.classList.toggle('hidden');
+                const chatResizer = document.getElementById('chatResizer');
+                if (chatResizer) chatResizer.classList.toggle('hidden');
                 iconBtn.classList.toggle('active');
             } else if (title === 'Dashboard') {
                 const dash = document.getElementById('dashboardView');
@@ -6364,6 +6442,10 @@ impl Dashboard {
             const bottomPanel = document.getElementById('bottomPanel');
             if (bottomPanel) {
                 bottomPanel.classList.toggle('collapsed');
+                if (bottomPanel.classList.contains('collapsed')) {
+                    bottomPanel.style.height = '';
+                    bottomPanel.style.flex = '';
+                }
             }
         }
       });
