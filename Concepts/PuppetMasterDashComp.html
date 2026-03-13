@@ -5017,81 +5017,6 @@ impl Dashboard {
                   </div>
                 </div>
               </div>
-                    <span class="status-badge">Idle</span>
-                    <div class="orchestrator-buttons">
-                      <button>START</button>
-                      <button class="primary">PAUSE</button>
-                      <button>RESUME</button>
-                      <button>STOP</button>
-                      <button>RESET</button>
-                      <button>PREVIEW</button>
-                      <button>BUILD</button>
-                    </div>
-                    <div class="preview-build-strip">
-                      <span>Preview: stopped</span>
-                      <a href="#">Open preview</a>
-                      <span>|</span>
-                      <span>Build: —</span>
-                      <a href="#">Open artifact</a>
-                    </div>
-                  </div>
-                  <div class="orch-card">
-                    <div class="orch-card-title">Current Task</div>
-                    <div style="font-size: 12px;">
-                      <div>Phase 2 / Task 3</div>
-                      <div>Item: Implement dashboard widgets</div>
-                      <div>Platform: Claude Code | Model: sonnet-4.5</div>
-                      <div class="subagent-indicator">&gt; 2 subagents active</div>
-                    </div>
-                  </div>
-                  <div class="orch-card" style="grid-column: span 2;">
-                    <div class="orch-card-title">Progress</div>
-                    <div class="orch-progress-row"><span class="orch-progress-label">2/3 Phase</span><div class="progress-bar"><div class="fill" style="width: 66%"></div></div></div>
-                    <div class="orch-progress-row"><span class="orch-progress-label">4/10 Task</span><div class="progress-bar"><div class="fill" style="width: 40%"></div></div></div>
-                    <div class="orch-progress-row"><span class="orch-progress-label">8/10 Subtask</span><div class="progress-bar"><div class="fill" style="width: 80%"></div></div></div>
-                  </div>
-                  <div class="orch-card">
-                    <div class="orch-card-title">Calls to Action</div>
-                    <div class="orch-cta-list">
-                      <div class="orch-cta-item orch-cta-muted">No HITL pending</div>
-                      <div class="orch-cta-item orch-cta-muted">Run active — no rate limits</div>
-                    </div>
-                  </div>
-                  <div class="orch-card">
-                    <div class="orch-card-title">Agent Terminal<button type="button" class="orch-terminal-clear" title="Clear output">Clear</button></div>
-                    <div class="terminal-output" id="orchTerminalOutput">
-                      <div class="line line-info">[INFO] Agent: Phase 2 Task 3</div>
-                      <div class="line line-ok">[OK] Reading src/auth/mod.rs</div>
-                      <div class="line line-ok">[OK] 48 lines analyzed</div>
-                    </div>
-                  </div>
-                  <div class="orch-card" style="grid-column: span 2;">
-                    <div class="orch-card-title">Completed Prose</div>
-                    <div class="orch-prose-toolbar">
-                      <button type="button" class="orch-prose-toggle active" data-prose="recent" aria-pressed="true">Show recent</button>
-                      <button type="button" class="orch-prose-toggle" data-prose="all" aria-pressed="false">Show all</button>
-                    </div>
-                    <div class="orch-prose-list">
-                      <div class="orch-prose-block expanded" data-prose-block>
-                        <button type="button" class="orch-prose-block-head" aria-expanded="true"><span class="orch-prose-badge orch-prose-passed">Passed</span> Phase 1: Project Setup <span class="orch-prose-dur">2m 34s</span></button>
-                        <div class="orch-prose-block-body"><p>Completed the initial project scaffolding. Created the Cargo workspace with three crates (core, cli, gui). Set up CI configuration and installed dependencies.</p><p class="orch-prose-meta">4 files created, 2 files modified.</p></div>
-                      </div>
-                      <div class="orch-prose-block expanded" data-prose-block>
-                        <button type="button" class="orch-prose-block-head" aria-expanded="true"><span class="orch-prose-badge orch-prose-passed">Passed</span> Task 1.1: Scaffold core <span class="orch-prose-dur">1m 12s</span></button>
-                        <div class="orch-prose-block-body"><p>Added core library with tier types and event types. Unit tests passing.</p><p class="orch-prose-meta">2 files created.</p></div>
-                      </div>
-                      <div class="orch-prose-block expanded" data-prose-block>
-                        <button type="button" class="orch-prose-block-head" aria-expanded="true"><span class="orch-prose-badge orch-prose-failed">Failed</span> Task 2.1: Integration gate <span class="orch-prose-dur">0m 45s</span></button>
-                        <div class="orch-prose-block-body"><p>Gate failed: 1 acceptance check did not pass. See evidence for details.</p><p class="orch-prose-meta">0 files modified.</p></div>
-                      </div>
-                      <div class="orch-prose-block collapsed" data-prose-block>
-                        <button type="button" class="orch-prose-block-head" aria-expanded="false"><span class="orch-prose-badge orch-prose-passed">Passed</span> Subtask 1.1.1 <span class="orch-prose-dur">0m 22s</span></button>
-                        <div class="orch-prose-block-body"><p>Subtask completed in 0m 22s.</p></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div class="orch-tab-content" data-tab="tiers">
                 <div class="orch-tiers-layout">
                   <div class="orch-tiers-toolbar orch-toolbar">
@@ -5330,6 +5255,7 @@ impl Dashboard {
                               
                             </div>
                           </div>
+                        </div>
                     </div>
                     <div class="orch-rungraph-topbar-footer">
                       <button type="button" class="wizard-btn" id="orchDagResetBtn">Reset (no run)</button>
