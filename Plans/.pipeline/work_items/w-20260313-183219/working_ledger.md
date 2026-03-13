@@ -1,0 +1,434 @@
+# Working Ledger
+
+## Work Item
+- `w-20260313-183219`
+
+## Mode
+- `research`
+
+## Topic / Scope
+- Beef up assistant chat behavior/capabilities.
+- Include related interviewer chat and document viewer chat surfaces.
+- Discussion is pre-research and pre-packetization at this point.
+
+## Objective
+- Preserve emerging scope, constraints, terminology, and design direction across a long discussion.
+- Stay ready for targeted repo reading once the user identifies specific files/areas to inspect.
+
+## Constraints / Non-Goals
+- Do not do repo research yet.
+- Do not perform a broad repo sweep unless later requested or clearly required.
+- Do not edit planning docs during research mode.
+- Ledger is execution memory only, not canonical, and must not be cited in planning docs.
+
+## Key Facts and Findings
+- Initial topic established: assistant chat improvements, plus interviewer and document viewer chat.
+- User explicitly said not to do research yet.
+- User intends to provide two more prompts before directing what to inspect.
+- Targeted reading should happen only after the user specifies what to look at.
+- First concrete seam: plan/document highlighting or annotation with send-to-chat behavior.
+- Existing plan docs already cover a closely related **selection/context → Assistant chat** pattern for browser/HTML surfaces:
+  - `Plans/FileManager.md` §8.3-8.4: click an element / section and send its context to Assistant as context for the next message.
+  - `Plans/newfeatures.md`: built-in browser / click-to-context sends element context immediately to Assistant chat.
+  - `Plans/FinalGUISpec.md`: Bottom Panel Browser tab is the canonical click-to-context browser surface.
+- Existing plan docs also already cover **Deep Plan / document review annotations**, but through an **inline notes + targeted resubmit** model rather than explicit send-to-chat wording:
+  - `Plans/assistant-chat-design.md` §8.7: Deep Plan users may select text and add inline notes; `Resubmit with Notes` launches targeted revision.
+  - `Plans/FinalGUISpec.md` §7.19 / Embedded Document Pane: `Highlight -> Add note`, anchored notes, note lifecycle (`open -> addressed -> resolved`), deterministic re-anchoring via position + quote selector, `Resubmit with Notes` targeted revision.
+  - `Plans/chain-wizard-flexibility.md`: builder/interview docs are reviewed in the embedded document pane; user may edit and add inline notes, then resubmit.
+- Current documentation therefore appears to describe **two adjacent but distinct interaction models**:
+  - selection becomes chat context
+  - selection becomes anchored note for targeted revision
+- External reference repo inspected and deleted: `open-plan-annotator`.
+- External repo model summary:
+  - browser-based local review UI opened from hook/plugin flow
+  - selection actions support deletion / comment / insertion / replacement
+  - final decision is approve vs deny/request changes
+  - deny path serializes annotations into structured markdown feedback for the agent
+  - stronger review grammar than current Puppet Master docs, but centered on browser mediation rather than native in-app document/chat surfaces
+- User agrees with adding richer annotation capabilities to native document preview/review surfaces.
+- `Plans/storage-plan.md` already contains persistence contracts for embedded-document bundles and inline notes:
+  - `notes_index.{bundle_id}`
+  - `note.{bundle_id}.{note_id}` → `note_record.v1`
+  - `revision_run.{bundle_id}.{revision_id}`
+  - `note_reply_index.{bundle_id}.{note_id}`
+  - bundle/note revision events in seglog
+- This means the feature can likely be implemented as an **extension of the existing note model**, not a net-new storage subsystem.
+- GUI impact cluster confirmed:
+  - Chat already has a structured footer, keyboard-shortcut expectations, and Context Lens selection precedent.
+  - Embedded Document Pane already has context menu + notes drawer/list + final-review gates.
+  - Slint currently assumes a custom context menu widget for app surfaces (`no built-in context menu` workaround in `FinalGUISpec.md`).
+  - Responsive behavior already collapses panels into drawers/overlays under narrow widths, so annotation UI must degrade cleanly.
+- `Concepts/PuppetMasterDashComp.html` materially clarifies the intended GUI composition:
+  - Wizard review uses a **binder layout** with:
+    - left document list/sidebar (`wizard-doc-pill`)
+    - central document content area (`wizard-binder-view`)
+    - top binder toolbar (`wizard-binder-toolbar`)
+  - Interview concept also uses binder-style document review in the main content area.
+  - Chat is a **separate side panel** (`#chatPanel`) with its own thread list, composer, queued-intervention strip, and footer.
+  - The concept already shows context-usage information in chat footer and a structured chat composer area, which is a natural home for send-to-chat chips.
+  - This strongly argues against merging annotations into the left doc list or into a browser-style modal reviewer.
+
+## Gaps / Problems Identified
+- Exact enhancement goals are not yet specified.
+- Unknown whether focus is UX flow, state model, prompt/runtime behavior, tooling, permissions, memory, threading, or all of the above.
+- Unknown which specific docs or plan files will be impacted.
+- There is not yet one crisp, cross-surface contract saying **highlight selection in a plan/doc and send it to chat context**.
+- Current docs appear split between:
+  - Deep Plan / Embedded Document Pane note workflow (`Add note` + `Resubmit with Notes`)
+  - Browser/HTML click-to-context workflow (`send to Assistant/chat context`)
+- Need to decide whether plan/document annotation should:
+  - remain note/resubmit-only,
+  - add a parallel send-to-chat affordance,
+  - or unify both under a single selection-action contract.
+- Potential terminology drift risk: user language is "highlight doc and send to chat context"; existing docs often say "inline notes", "anchored-note model", or "click-to-context" instead.
+- Current docs do not yet define the richer annotation grammar on native document surfaces; they mostly describe freeform note annotations.
+- Preview-mode/source-mode mapping is a likely implementation seam: structured annotations need deterministic source anchoring, even when created from a rendered preview surface.
+- The GUI work is not just "add more menu items"; it touches:
+  - selection affordances
+  - inline annotation rendering
+  - note/annotation drawer information architecture
+  - chat composer/context-chip UI
+  - cross-pane navigation and focus management
+  - responsive behavior and accessibility
+- The concept narrows likely placement decisions:
+  - left sidebar should stay dedicated to document switching/status
+  - annotation UI likely belongs in a **right-side drawer/rail or overlay within binder content**, not in the left doc rail
+  - send-to-chat should target the already separate chat panel rather than spawning a transient annotation-review modal
+
+## Candidate Fixes / Design Directions
+- No design direction committed yet; awaiting the user’s next prompts.
+- Likely need to track cross-surface consistency between assistant chat, interviewer chat, and document viewer chat once scope is clearer.
+- Strong candidate framing: define a **shared selection-to-context contract** usable by:
+  - plan documents,
+  - interviewer document pane,
+  - document viewer chat surfaces,
+  - browser/HTML preview surfaces.
+- Plausible options:
+  - **Option A — Additive:** keep anchored notes for revision workflows, but add `Send selection to chat` as a second action on highlighted plan/doc text.
+  - **Option B — Unified action model:** selection toolbar with actions like `Add note`, `Send to Assistant`, `Send to Interviewer` (surface-dependent availability).
+  - **Option C — Notes only:** translate note submissions into chat-visible context under the hood, but keep the UI framed around notes/resubmit.
+- Current recommendation leaning:
+  - favor **Option A or B**, not C.
+  - Reason: existing docs already distinguish targeted revision from chat conversation; preserving both is clearer than collapsing them.
+- Specific features worth borrowing from `open-plan-annotator` if scope expands:
+  - explicit action taxonomy on a selection (`comment`, `replace`, `insert`, `delete`)
+  - keyboardable selection actions
+  - structured feedback serialization instead of plain loose prose
+- Updated recommendation:
+  - yes, add richer annotation features to native document preview/review surfaces.
+  - import the **annotation grammar**, not the browser-gated review workflow.
+  - preserve both durable targeted-revision notes and separate send-to-chat context actions.
+- Recommended native action palette candidate:
+  - `Comment / Ask`
+  - `Replace with...`
+  - `Insert after...`
+  - `Remove / Strike this`
+  - `Send selection to chat`
+- Recommended semantic rule:
+  - `Replace`, `Insert`, and `Remove` are structured change-request annotations, not direct patch-apply operations.
+  - the agent still performs the edit during targeted revision or follow-up chat.
+- Recommended surface scope:
+  - Deep Plan document review
+  - Interview embedded document pane
+  - document viewer / review surfaces
+  - potentially broader file/document review later if we want one shared selection-action contract
+- Implementation-ready contract recommendation:
+  - **User-facing umbrella term:** `Annotation`
+  - **Persisted substrate:** remain on the existing `note_record.v1` lineage for compatibility
+  - **New field family on note/annotation records:**
+    - `operation` = `comment | replace | insert_after | remove`
+    - `intent_kind` = `question | change_request | both`
+    - `operation_payload?`
+      - `comment`: `{ body }`
+      - `replace`: `{ replacement_text, rationale? }`
+      - `insert_after`: `{ insert_text, rationale? }`
+      - `remove`: `{ rationale? }`
+    - keep existing lifecycle and anchor fields
+- Action semantics (recommended):
+  - `Comment / Ask`
+    - creates durable annotation
+    - default `operation=comment`
+    - `intent_kind` inferred with existing rule (`?` / `Q:` => question, else change_request)
+  - `Replace with...`
+    - creates durable annotation
+    - default `operation=replace`, `intent_kind=change_request`
+  - `Insert after...`
+    - creates durable annotation
+    - default `operation=insert_after`, `intent_kind=change_request`
+  - `Remove / Strike this`
+    - creates durable annotation
+    - default `operation=remove`, `intent_kind=change_request`
+  - `Send selection to chat`
+    - **ephemeral chat-context injection**, not a durable annotation by default
+    - adds a removable context chip/pill to the owning chat composer for the next turn
+- Recommended target-resolution rule for `Send selection to chat`:
+  - default target = the chat surface that owns the current page context
+    - Deep Plan/doc review in Assistant context → Assistant chat
+    - Interview page document pane → Interview chat
+    - Document viewer chat page → that page’s chat
+  - if the owning surface has no active thread, create one deterministically in that same surface
+  - if no owning chat can be resolved, require explicit target choice; no silent fallback
+- Surface capability matrix (recommended v1):
+  - **Editable/source-backed text docs** (Deep Plan markdown, Interview docs, reviewable text artifacts):
+    - all 5 actions available
+  - **Rendered markdown/preview with deterministic source mapping**:
+    - all 5 actions available
+  - **Read-only rendered views without stable source mapping** (likely `Plan graph`, some generated renders):
+    - `Comment / Ask` optional if quote-only anchoring is acceptable
+    - `Send selection to chat` allowed
+    - `Replace / Insert / Remove` disabled in v1
+  - **Browser/HTML click-to-context surfaces**:
+    - remain on existing click-to-context contract for now
+    - do not force document-annotation semantics onto browser UX in v1
+- Rendering / visual rules (recommended):
+  - annotation drawer/list remains canonical
+  - in-doc rendering uses lightweight preview-only affordances:
+    - `comment` → note badge/marker
+    - `replace` → highlighted source span + small "Replace" chip
+    - `insert_after` → anchor caret/marker + "Insert" chip
+    - `remove` → preview strikethrough styling on the selected span
+  - these visuals are **review cues only**, not actual document mutation
+- Source-of-truth / anchoring rule:
+  - canonical anchors attach to source text, not the rendered visual tree
+  - preview-mode selection must map back to source offsets when deterministic
+  - if deterministic source mapping is unavailable:
+    - `Send selection to chat` may still work using quote/provenance payload
+    - durable structured change-request annotations are disabled or downgraded to comment-only
+- Targeted revision integration:
+  - `Resubmit with Notes` consumes all open durable annotations (or user-selected subset)
+  - revision input must now include `operation` + `operation_payload`, not only freeform note text
+  - revision output still marks annotations `addressed` with explanation / updated anchor
+  - final lifecycle remains `open -> addressed -> resolved`
+  - Multi-Pass Review gating remains unchanged: all docs approved + no open annotations
+- Persistence extension recommendation:
+  - extend existing `note_record.v1` rather than replacing it
+  - preserve:
+    - `anchor.text_position`
+    - `anchor.text_quote`
+    - `addressed_explanation`
+    - `last_revision_id`
+    - `last_reanchor_result`
+    - `updated_anchor`
+  - add:
+    - `operation`
+    - `intent_kind`
+    - `operation_payload`
+    - `source_surface` (`assistant_deep_plan | interview_doc_pane | document_viewer | ...`)
+    - `provenance` (`doc_id`, `path`, `selected_text_excerpt`)
+- Event contract recommendation:
+  - durable annotation events can extend existing bundle-note events
+  - likely additional event needed for ephemeral chat injection:
+    - `bundle.selection_sent_to_chat`
+  - payload should include requested target, effective target, doc provenance, and selection excerpt
+- Failure / fallback behavior:
+  - no silent note drop
+  - no silent chat-target fallback
+  - if re-anchoring fails, keep annotation open and show explicit warning
+  - if send-to-chat target resolution fails, show target picker or explicit error
+- Acceptance criteria candidate (implementation-ready):
+  - selecting text in supported document surfaces opens an annotation action palette
+  - `Replace`, `Insert`, `Remove`, and `Comment` create durable annotations visible in the drawer
+  - `Send selection to chat` creates a composer context chip in the owning chat surface for the next turn
+  - structured annotations survive restart via existing bundle/note persistence
+  - targeted revision consumes structured annotations without invoking Multi-Pass Review
+  - re-anchoring remains deterministic and never silently discards annotations
+  - unsupported read-only surfaces visibly disable actions that require stable source mapping
+- GUI-specific implementation impacts (implementation-ready):
+  - **1. Selection action UI**
+    - Replace current `Add note`-only context menu with an annotation action menu/palette.
+    - Because Slint lacks a built-in context menu, this is a first-class reusable widget, not a one-off hack.
+    - Keyboard path required: context-menu key / shortcut parity, plus palette actions discoverable via command palette.
+  - **2. Annotation drawer redesign**
+    - Current Notes drawer/list must become an annotation drawer that can display operation type, payload preview, lifecycle, replies, and anchor status.
+    - Filters likely expand from `Open / Addressed / Resolved` to also support operation-type filtering or badges.
+    - The drawer remains the canonical durable surface even if inline cues are richer.
+    - Based on the concept binder layout, this drawer should likely be a **right-side collapsible rail in the binder surface**; keep the left rail for doc navigation/status.
+  - **3. Inline document affordances**
+    - Margin markers alone are insufficient once multiple operation types exist.
+    - Need lightweight inline chips/overlays (`Comment`, `Replace`, `Insert`, `Remove`) without mutating the actual doc text.
+    - `Remove` may use strikethrough preview styling; `Replace` / `Insert` likely use chips or ghost-preview affordances.
+  - **4. Chat composer/context injection UI**
+    - `Send selection to chat` needs a visible pre-send context representation in the owning chat composer.
+    - Best fit is a removable context chip/pill strip near the composer, analogous to how queued messages/context overlays already have visible state.
+    - Must show provenance (doc name/path + excerpt) and removal affordance before send.
+    - Based on the concept file, the most natural placement is **inside `chat-input-area`, above the textarea/composer shell and below any queued intervention block**.
+  - **5. Cross-surface ownership cues**
+    - When a doc pane belongs to Interview vs Assistant vs document-viewer chat, the UI must make the target chat obvious.
+    - If target is ambiguous, the selection action should open a small target picker instead of silently routing elsewhere.
+    - The concept suggests a default: route to the page-owned chat panel first; if hidden, open or pulse that panel rather than asking immediately.
+  - **6. Read-only / unsupported state UX**
+    - For `plan_graph` and other no-source-map renders, actions requiring source anchoring must appear disabled with explicit explanation.
+    - `Send to chat` can stay enabled where quote/provenance payload is still meaningful.
+  - **7. Focus / keyboard / accessibility**
+    - New action palette, drawer rows, and context chips all need tab order, screen-reader labels, and shortcut discoverability.
+    - Selection-driven actions must not break existing editor/chat clipboard semantics.
+    - Keyboard-only path is mandatory; current plans already set a strong precedent here.
+  - **8. Responsive behavior**
+    - At narrow widths where panels become drawers, annotation drawer and action UI must collapse into overlay/drawer patterns cleanly.
+    - Inline chips must not create unreadable clutter in compact layouts.
+  - **9. Review gating UI**
+    - Final-review gating currently keys off "no open notes"; this likely becomes "no open annotations".
+    - Button copy, validation banners, and review summaries must be updated across Deep Plan / Builder / Interview flows.
+  - **10. Widget reuse / DRY**
+    - This likely wants one reusable `AnnotationActionMenu`, one `AnnotationDrawer`, one `ContextChipStrip`, and shared inline annotation decorators.
+    - Avoid per-surface bespoke implementations; Assistant Deep Plan, Interview, and document viewer should share the same primitives.
+- Specific features likely **not** worth copying directly:
+  - external browser review flow as the primary UX
+  - approve/deny gate model as the only way to iterate on a document
+  - plugin/hook-specific architecture that does not match Puppet Master’s native shell/app model
+
+## Impacted Docs
+- `Plans/assistant-chat-design.md`
+- `Plans/FinalGUISpec.md`
+- `Plans/FileManager.md`
+- `Plans/newfeatures.md`
+- `Plans/chain-wizard-flexibility.md`
+- Potentially later: interview/doc-viewer-specific source docs if this becomes a shared cross-surface contract
+
+## Decisions Already Resolved
+- Work item mode is `research`.
+- Work item status should remain `active` during active discussion/research.
+- Topic is additive discussion around chat surface improvements across multiple chat contexts.
+- Research must wait until the user explicitly points to what should be examined.
+- Research started only after the user named the first seam to inspect.
+- External repo was inspected locally and deleted after review.
+- Existing docs do already contain relevant precedent; this is not a greenfield feature.
+- Provisional design recommendation resolved: richer structured annotations should be added natively to document preview/review surfaces.
+- Provisional implementation direction resolved:
+  - extend note-based embedded-document review into structured annotations
+  - keep send-to-chat as a separate ephemeral action
+  - do not introduce direct patch-apply semantics in v1
+- GUI conclusion:
+  - yes, this has significant GUI impact and must be treated as a cross-surface UI feature, not just a backend note-schema tweak.
+- Updated GUI recommendation from concept alignment:
+  - **Document switching/status:** left binder rail
+  - **Annotation management:** right binder rail / drawer
+  - **Selection actions:** inline context menu / floating palette at selection
+  - **Ephemeral send-to-chat state:** chip strip in owned chat panel composer
+  - **Chat itself:** remains a separate panel, not embedded inside the binder review surface
+- Recommended GUI defaults now locked (current research recommendation):
+  - **Annotation drawer auto-open:** auto-open on the **first durable annotation creation** in a bundle/page context to teach discoverability; after that, keep drawer state sticky and do not force it open on every annotation.
+  - **Hidden chat on send-to-chat:** **do not auto-open chat by default**. Instead:
+    - add the selection to pending composer chips in the owning chat surface,
+    - pulse/badge the chat launcher,
+    - show lightweight toast/snackbar (`Selection added to Assistant chat` / `Open chat`).
+    - Rationale: preserves document-review flow and supports batching multiple selections before chatting.
+  - **Chip strip strategy:** use **one unified composer prep strip/tray** for all pre-send context items, with typed chips grouped by source (`doc selection`, `browser context`, `Context Lens`, attachments where applicable) rather than a document-selection-only strip.
+  - **Read-only render policy (v1):** for generic read-only / no-source-map renders, **send-to-chat only** by default; do **not** allow durable structured annotations. Future exception possible for renderers with stable semantic anchors/IDs.
+- Specific implication for `plan_graph`:
+  - keep the existing spirit of `Talk to Assistant to edit plan graph`
+  - allow selecting a node/area and sending that context to chat
+  - do not expose `replace / insert / remove` there in v1
+  - durable comment annotations on plan graph are deferred unless a stable node-anchor contract is defined
+- Remaining gap defaults now recommended:
+  - **Visual density**
+    - keep inline annotation visuals subtle and sparse
+    - one compact inline marker/chip per anchor by default
+    - richer payload preview belongs in hover/focus states and the annotation drawer, not permanently inline
+    - `remove` may show strikethrough preview; `replace` / `insert_after` should not render full replacement text inline by default
+  - **Unified prep tray**
+    - use one composer prep tray above the textarea
+    - keep subgroups inside the tray: `Context` and `Attachments`
+    - document-selection chips live under `Context`
+    - failed sends keep chips; successful sends clear chips for that turn
+    - tray contents persist per thread when switching threads
+  - **Target ambiguity**
+    - routing precedence:
+      1. explicit target selected by the user
+      2. page-owned chat surface for the current workflow/page
+      3. if multiple plausible targets remain, show a target picker
+      4. if the resolved surface has no thread yet, create one deterministically there
+    - hidden/detached chat is not ambiguity by itself; it still counts as the page-owned target
+  - **Render boundary**
+    - durable annotations require either deterministic source offsets or stable semantic anchor IDs
+    - v1 durable annotation surfaces:
+      - source-backed markdown/text docs
+      - preview modes that can map the selection back to source text deterministically
+    - v1 send-to-chat-only surfaces:
+      - `plan_graph`
+      - visual diagram/node renders without stable semantic anchor IDs
+      - generic read-only/no-source-map renders
+  - **Targeted revision formatting**
+    - targeted revision input should be a deterministic ordered list:
+      - ordered by `doc_id`, then source position
+      - each record includes `annotation_id`, `operation`, `intent_kind`, `selected_text`, `operation_payload`, `anchor`, and `provenance`
+    - targeted revision may partially address annotations
+    - per-annotation output statuses should be:
+      - `addressed`
+      - `still_open`
+      - `cannot_apply` with explanation
+  - **Terminology**
+    - user-facing umbrella term = `Annotations`
+    - drawer title = `Annotations`
+    - operation labels remain:
+      - `Comment / Ask`
+      - `Replace with...`
+      - `Insert after...`
+      - `Remove / Strike this`
+      - `Send selection to chat`
+    - `note` remains acceptable as legacy/internal substrate wording, but not the primary UX label
+  - **Accessibility**
+    - standard context-menu invocation path (`Menu` key / `Shift+F10`) opens the action menu on a current selection
+    - annotation actions should also be reachable from the command palette
+    - annotation markers, drawer rows, chips, pulses, and toasts need explicit accessible labels/live-region behavior
+  - **Rollout**
+    - v1 should cover the shared document-review/binder family:
+      - Assistant Deep Plan
+      - Wizard requirements/PRD review
+      - Interview embedded document pane
+      - document viewer review surfaces if they reuse the same component family
+    - v1 excludes:
+      - generic File Editor
+      - browser click-to-context
+      - plan_graph / diagram semantic editing
+    - if document viewer does not actually share the same component family yet, it should follow immediately after the shared binder surfaces instead of blocking v1
+
+## Open Questions / Uncertainties
+- Only low-priority / future-phase uncertainties remain:
+  - exact final visual styling tokens for markers, chips, and drawer rows
+  - whether any future renderer earns stable semantic-anchor support beyond the initial binder/text surfaces
+  - whether one gesture should eventually support both durable annotation creation and send-to-chat in a combined shortcut path (not required for v1)
+
+## Packetization Notes
+- Preserve terminology, defaults, contracts, user-visible behavior, state distinctions, and unresolved seams as they emerge.
+- Likely packetization seam: "document selection / annotation actions across assistant chat, interviewer, and document viewer".
+- Important split to preserve:
+  - chat-context injection semantics
+  - targeted document-revision semantics
+- Likely direction is additive: enrich existing note/resubmit flows rather than replacing them.
+- Concept-informed provisional choices:
+  - use a **right annotation rail**
+  - use a **composer chip strip**
+  - default routing = page-owned chat panel
+  - keep inline visuals subtle, not diff-heavy
+- This topic is now ready for reconciliation / coverage work.
+
+## Gap Summary Snapshot
+- Remaining gaps are now mostly **boundary / edge-contract gaps**, not core feature-definition gaps.
+- Main remaining gap buckets:
+  - Mostly polish/future-phase gaps after the defaults above, not blocking gaps for reconciliation.
+  - Outside the GUI, the main non-blocking but important spec/risk buckets are:
+    - **Prompt contract:** structured annotation payloads must stay deterministic and not collapse into loose prose.
+    - **Provider variance:** different models/providers may follow `replace` / `insert_after` / `remove` requests with different reliability.
+    - **Auditability:** need explicit event history for annotation creation, send-to-chat, revision consumption, and revision failure.
+    - **Precedence/conflicts:** need clear rules for overlapping annotations, contradictory annotations, and annotations that become stale after direct user edits.
+    - **Thread isolation:** send-to-chat context must stay scoped to the resolved owning thread/surface.
+    - **Recovery:** interrupted revision runs need clean resume semantics for partially addressed annotations and pending chips.
+    - **Security/privacy:** selection forwarding into chat should honor any surface/document sensitivity boundaries that exist elsewhere in the system.
+  - Improvement ideas worth keeping:
+    - add conflict detection/statuses such as `overlaps`, `contradicts`, `stale_after_edit`
+    - support resubmitting only a selected subset of annotations
+    - include rationale consistently so revision outcomes are easier to audit
+    - eventually group many sent selections into a compact chat-side digest when batching would otherwise create chip spam
+
+## Do-Not-Forget Details
+- Track requested vs effective behavior if that becomes relevant.
+- Track provider/platform capability differences if model/runtime behavior enters scope.
+- Track terminology decisions and precedence/override rules as they emerge.
+- Track fallback behavior, non-goals, and acceptance criteria once discussed.
+- Preserve the exact existing note lifecycle if reused: `open -> addressed -> resolved`.
+- Preserve deterministic selector/re-anchoring rule if document selections become durable records.
+- Keep chat full-document rendering prohibition in mind for builder/interview flows; current docs prefer editor/document-pane pointers instead of dumping whole docs into chat.
+- Remember that browser click-to-context is already a first-class precedent for selection → Assistant context.
+- Preserve the explicit embedded-document-pane non-goal: no direct patch-apply/suggested-change mode unless introduced later as a separate capability.
+- Reuse existing bundle/note persistence and event model from `Plans/storage-plan.md`; avoid inventing a second annotation storage path.
