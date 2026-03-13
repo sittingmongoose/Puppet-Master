@@ -61,6 +61,8 @@
   - Authentication page includes auth method indicators
   - dashboard/settings surfaces already use the requested-vs-effective pattern in other domains
   - Usage page already expects per-platform labels because quota semantics differ by provider
+- User clarified that **media follows the same Gemini auth-surface rules as regular Gemini usage**; do not hard-split media into API-key-only behavior in the spec unless future evidence requires it.
+- User clarified that **"AI Studio key" is too narrow** terminology; API-key auth must be named generically because keys may come from multiple Google auth/provisioning paths (including Vertex AI-related setups).
 
 ## Gaps / Problems Identified
 - Potential concurrent edits to this work item area may need careful handling later.
@@ -80,6 +82,8 @@
 - `Plans/FinalGUISpec.md` Authentication section is currently too API-key-centric for Gemini; it lacks a clearly first-class OAuth section and does not reflect the distinct plan/bucket behavior.
 - `Plans/usage-feature.md` currently treats Gemini mostly as API-key/AI-Studio-oriented and "estimated" usage, which is incomplete if Gemini OAuth is expected to surface a different quota bucket/plan path.
 - `Plans/storage-plan.md` has the requested/effective machinery, but Gemini-specific auth-mode and usage-source fields are not yet spelled out concretely.
+- Prior candidate direction "media may still force API-key mode" is no longer acceptable as a default assumption.
+- Current shorthand like "AI Studio key" risks encoding the wrong product boundary into specs and UI copy.
 
 ## Candidate Fixes / Design Directions
 - Split Gemini in planning docs into **two auth surfaces** under one provider:
@@ -121,6 +125,10 @@
   - requested auth mode shown in settings/auth surfaces
   - effective capability / active bucket shown in usage/auth status surfaces
   - degraded reason shown when requested mode cannot satisfy a capability
+- Use neutral naming for the key-based auth surface:
+  - prefer `API key` / `Gemini API key` / `Google API key`
+  - avoid hardcoding `AI Studio key` as the canonical label
+- Media should inherit the same requested/effective auth-mode resolution model as standard Gemini usage unless a capability-specific restriction is explicitly documented later.
 
 ## Impacted Docs
 - `Plans/CLI_Bridged_Providers.md`
@@ -138,6 +146,8 @@
 - The external comparison source should be treated as a behavioral reference for OAuth handling, but must not be named in planning docs.
 - The old local app implementation is not authoritative for this Gemini seam and should not drive the spec discussion.
 - Existing storage/usage/UI plans should be extended, not bypassed; Gemini should plug into the existing requested/effective and usage-source patterns rather than creating a parallel system.
+- Media uses the same Gemini auth-surface rules as regular Gemini usage.
+- Canonical UI/spec terminology should avoid narrowing API-key auth to "AI Studio" only.
 
 ## Open Questions / Uncertainties
 - Whether concurrent ledger work will reuse this `work_id` or produce a competing work item.
@@ -149,6 +159,7 @@
 - Should the UI offer an `auto` auth-mode policy, or force users to choose the Gemini auth surface per feature/capability?
 - What exact `usage_source_kind` vocabulary should be canonical for Gemini so ledger/usage UI can explain whether numbers come from local estimates, OAuth quota APIs, or API-key-side estimates?
 - Do we want Gemini auth status to remain a single provider card with multiple method badges, or introduce sub-rows / sub-realms analogous to other auth splits?
+- If we keep a `needs_project`-style OAuth state, what exact product meaning should it carry in Puppet Master terms so it is understandable and not provider-jargon?
 
 ## Packetization Notes
 - Not ready for packetization.

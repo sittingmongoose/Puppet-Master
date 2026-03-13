@@ -37,6 +37,65 @@
 - Important implication:
   - new multi-account failover / account-threshold / effective-account behavior should extend the existing usage model and projections
   - do not invent a second independent "account pressure" or "quota" subsystem beside Usage
+- Clarified multi-account control-loop scope:
+  - account selection / failover is not just an Orchestrator-node concern
+  - any provider-using actor must participate in the same pre-send and post-send account-health loop
+  - this explicitly includes assistant chat, interviewer, requirements-doc builder, overseers, node workers, and delegated workers
+  - any completed provider interaction can update account health and trigger the next message/attempt to resolve onto a different account
+- Clarified non-Orchestrator conversational actor flow:
+  - assistant, interviewer, and requirements-doc-builder should share provider/account/usage/runtime identity behavior, but they are not orchestration nodes/packages/seams
+  - their primary mode is conversational/brainstorming and decision-forming, not orchestration-style HITL escalation routing
+  - requirements-doc-builder flow is conversational first:
+    - collaborative ideation / viability / approach discussion
+    - then more structured questioning to close gaps and lock decisions
+    - then generation of more traditional requirements documents/artifacts
+  - interviewer follows a similar conversational-to-structured pattern, but moves topic-by-topic and ultimately produces documents/artifacts shaped for the node/contract system
+  - the broader handoff chain described by the user is:
+    - requirements-doc-builder artifacts
+    - interview flow artifacts
+    - conversion into graph-plan inputs
+    - handoff to Orchestrator
+  - human review exists at both document-production stages in that upstream flow
+- Boundary clarification:
+  - chat-thread resolution surfaces for blocked/HITL/critical Orchestrator events should not be projected backwards onto normal assistant/interviewer/requirements-builder conversation in the same way
+  - those conversational actors already operate directly in chat, so they share runtime identity/account/usage behavior without needing the same Orchestrator-style resolution-thread pattern for ordinary interaction
+- Clarified retry/worker identity direction:
+  - the old structured-attempt-handoff pattern should be retained in the new model
+  - each failed node attempt should leave a structured receipt/handoff artifact:
+    - what it did
+    - what changed
+    - why it failed/blocked
+    - what to try next
+  - default retry model should use a fresh agent/subagent for the next attempt
+  - retries should remain policy-driven with budgets/caps; not blind infinite looping
+  - some failures should route to remediation, graph patch, or block/HITL instead of simple retry
+- New execution-policy settings requirement:
+  - GUI should let the user choose whether retries use:
+    - a fresh agent/subagent (default)
+    - the same agent/subagent retaining prior context
+  - GUI should also let the user choose whether node execution uses:
+    - subagents by default
+    - full agents instead of subagents
+  - user expectation is:
+    - default: use subagents
+    - configurable override: use full agents for nodes instead of subagents
+- Clarified execution-policy UI split:
+  - worker kind and retry-context policy are separate settings, not one combined toggle
+  - chat already acts as a requested-identity override surface for provider/model/effort/persona and should align with the same requested-vs-effective model used by Orchestrator actors
+  - the next settings/UI seam must cover:
+    - agent vs subagent
+    - fresh vs reused retry worker
+    - overseer delegation on/off
+    - delegated-worker provider/model/effort policy
+    - consistent requested-vs-effective identity display across chat actors and orchestration actors
+- Terminology refinement:
+  - prefer `overseer-spawned node worker` over the vaguer term `delegated worker`
+- Execution-path hypothesis now leaning stronger:
+  - user expects most or nearly all node execution to likely be overseer-spawned rather than direct-runtime-dispatched
+  - this suggests the "overseer-spawned node worker" path may be the normal/default operational path, while direct node-worker dispatch may become the rarer/special-case path
+  - this has implications for settings, UI language, runtime contracts, and requested-vs-effective identity display:
+    - the primary node execution path should not be described as an edge-case if it is the common path
+    - direct dispatch may need to be framed as an optimization/fallback/special policy mode rather than the baseline mental model
 - Important existing tension surfaced by the usage docs:
   - usage documentation already acknowledges heterogeneous provider semantics and incomplete live-API availability
   - this aligns with the current discussion that quota/pressure detection will need mixed signal sources (runtime outcomes, provider capabilities, heuristics/log-derived signals where necessary)

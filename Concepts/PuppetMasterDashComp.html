@@ -13,87 +13,15 @@
     .interview-phase-step.active { background: var(--surface-elevated); font-weight: 600; color: var(--accent-blue); }
     [data-theme^="retro"] .interview-phase-step.active { color: var(--accent-lime); }
     .wizard-doc-pill { cursor: pointer; }
-    .req-chat-msg { padding: var(--md); border-radius: 8px; margin-bottom: var(--sm); font-size: 13px; max-width: 85%; }
-    .req-chat-msg.assistant { background: var(--surface); border: 1px solid var(--border-light); border-left: 3px solid var(--accent-blue); align-self: flex-start; }
-    [data-theme^="retro"] .req-chat-msg.assistant { border-left-color: var(--accent-lime); }
-    .req-chat-msg.user { background: var(--surface-elevated); border: 1px solid var(--border-light); align-self: flex-end; }
-    /* --- REDESIGNED WIZARD & CHAT SYSTEM --- */
     /* --- REDESIGNED WIZARD & CHAT SYSTEM --- */
     .hidden { display: none !important; }
     
-    .page-wizard {
-      display: none;
-      flex-direction: column;
-      flex: 1;
-      min-height: 0;
-      background: var(--background);
-      overflow: hidden;
-      position: relative;
-    }
-    .page-wizard.active { display: flex; animation: fadeIn 0.3s ease-in-out; }
-    
-    .wizard-global-nav {
-      display: flex; align-items: center; justify-content: center;
-      padding: var(--xl); background: var(--surface);
-      border-bottom: 1px solid var(--border-light); gap: var(--lg);
-      z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-    .wizard-nav-step {
-      display: flex; align-items: center; gap: var(--sm); cursor: pointer;
-      color: var(--text-muted); font-size: 13px; font-family: var(--display-font);
-      transition: all 0.2s ease-out; position: relative;
-    }
-    .wizard-nav-step:hover { color: var(--text-primary); transform: scale(1.05); }
-    .wizard-nav-step.active { color: var(--text-primary); font-weight: 600; }
-    .wizard-nav-step.active::after {
-      content: ''; position: absolute; bottom: -24px; left: 0; right: 0;
-      height: 3px; background: var(--accent-blue); box-shadow: 0 0 8px var(--accent-blue);
-      border-radius: 3px 3px 0 0; animation: slideUp 0.2s ease-out forwards;
-    }
-    [data-theme^="retro"] .wizard-nav-step.active::after {
-      background: var(--accent-lime); box-shadow: 0 0 8px var(--accent-lime);
-    }
-    .wizard-nav-step.complete { color: var(--accent-lime); }
-    [data-theme^="basic"] .wizard-nav-step.complete { color: var(--accent-blue); }
-    .wizard-nav-connector { width: 40px; height: 2px; background: var(--border-light); transition: background 0.3s ease; }
-    .wizard-nav-connector.complete { background: var(--accent-lime); }
-    [data-theme^="basic"] .wizard-nav-connector.complete { background: var(--accent-blue); }
-
-    .wizard-content-area { flex: 1; min-height: 0; position: relative; overflow: hidden; display: flex; flex-direction: column; }
-    .wizard-step-panel {
-      display: none; flex-direction: column; align-items: center;
-      padding: var(--xl); overflow-y: auto; flex: 1;
-      animation: slideInRight 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-    }
-    .wizard-step-panel.active { display: flex; }
-    .wizard-form-container {
-      width: 100%; max-width: 1000px; background: var(--surface-elevated);
-      border: 1px solid var(--border); border-radius: 12px; padding: var(--xl);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: var(--xl);
-    }
-    [data-theme^="retro"] .wizard-form-container { border-radius: 0; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); }
-
-    .wizard-binder-container {
-      width: 100%; height: 100%; flex: 1; display: flex;
-      background: var(--surface-elevated); border: 1px solid var(--border);
-      border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,0.1);
-      overflow: hidden; animation: boundsExpand 0.3s ease-out;
-    }
-    [data-theme^="retro"] .wizard-binder-container { border-radius: 0; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); }
-    .wizard-binder-sidebar { width: 260px; background: var(--surface); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; padding: var(--lg); gap: var(--sm); }
-    .wizard-doc-pill { padding: var(--md); border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; color: var(--text-secondary); transition: all 0.2s ease; font-size: 13px; }
-    .wizard-doc-pill.active { background: var(--accent-blue); color: var(--surface); font-weight: 600; }
-    [data-theme^="retro"] .wizard-doc-pill.active { background: var(--accent-lime); color: #1a1a1a; }
-    
-    .chat-modes { display: flex !important; padding: var(--sm) var(--md); gap: var(--xs); border-bottom: 1px solid var(--border-light); font-size: 12px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; width: 100%; }
-    .chat-modes::-webkit-scrollbar { display: none; }
     .msg-focused { border: 2px solid var(--accent-lime) !important; background: rgba(0, 255, 65, 0.15) !important; box-shadow: 0 0 15px rgba(0, 255, 65, 0.4) !important; padding: var(--md) !important; margin: var(--xs) 0 !important; border-radius: 4px !important; }
     [data-theme^="basic"] .msg-focused { border-color: var(--accent-blue) !important; background: rgba(0, 71, 171, 0.1) !important; }
     
     .role-badge { font-family: var(--display-font); font-size: 9px; padding: 2px 8px; border-radius: 4px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
     .role-assistant { background: var(--accent-blue); color: #fff; }
     .role-interviewer { background: var(--accent-lime); color: #1a1a1a; }
-    .role-builder { background: var(--accent-orange); color: #1a1a1a; }
     
     .chat-dropdown-popover { position: absolute; bottom: 30px; left: 0; width: 240px; background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 100; animation: slideUp 0.2s ease-out; }
     .chat-dropdown-popover.active { display: flex; }
@@ -104,13 +32,7 @@
     .chat-dropdown-item:hover { background: var(--surface); }
     .chat-dropdown-item.active { background: rgba(0, 212, 255, 0.1); font-weight: bold; }
     
-    .wizard-activity-floating { position: absolute; bottom: var(--xl); right: var(--xl); width: 400px; background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); display: flex; flex-direction: column; overflow: hidden; animation: slideUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 50; }
-    [data-theme^="retro"] .wizard-activity-floating { border-radius: 0; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); }
-    
     .icon-inline { width: 14px; height: 14px; display: inline-block; vertical-align: middle; }
-    
-    @keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-    @keyframes boundsExpand { from { transform: scale(0.98); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     
     :root {
       --xs: 2px;
@@ -332,13 +254,6 @@
       flex: 1;
       min-height: 0;
     }
-    .primary-content {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      min-height: 0;
-      overflow: hidden;
-    }
     .page {
       display: none;
       flex: 1;
@@ -357,43 +272,7 @@
       display: flex;
     }
 
-    /* Shared Bento Card Styling */
-    .bento-card {
-      background: var(--surface-elevated);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: var(--xl);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      display: flex;
-      flex-direction: column;
-      gap: var(--sm);
-      max-height: 420px;
-      height: max-content;
-      overflow-y: auto;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-      opacity: 0;
-      animation-name: slideUp;
-      animation-name: slideUp; animation-duration: 0.6s;
-      animation-fill-mode: forwards;
-      animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      view-transition-name: bento-card;
-    }
-    .bento-card:hover {
-      border-color: var(--accent-blue);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-    }
-    [data-theme^="retro"] .bento-card:hover {
-      border-color: var(--accent-lime);
-    }
-    .bento-widget {
-      background: var(--surface);
-      border: 1px solid var(--border-light);
-      border-radius: 8px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
+    /* Shared Bento Card Styling - main def later in file */
     .widget-header {
       padding: var(--sm) var(--md);
       background: var(--surface-elevated);
@@ -714,21 +593,6 @@
       gap: var(--md);
       flex-wrap: wrap;
     }
-    .donut-mini {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 3px solid var(--border-light);
-      border-top-color: var(--accent-blue);
-      transform: rotate(-90deg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      transform: rotate(0deg);
-    }
-    .donut-mini .inner { transform: rotate(90deg); }
-
     .terminal-output {
       font-family: 'Consolas', 'Monaco', monospace;
       font-size: 12px;
@@ -850,6 +714,17 @@
       color: #1A1A1A;
     }
     [data-theme="retro-dark"] .chat-modes .mode.active { border: 2px solid #1A1A1A; }
+
+    .chat-header-workflow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--sm) var(--md);
+      border-bottom: 1px solid var(--border-light);
+      background: var(--surface-elevated);
+      font-size: 12px;
+      font-weight: 600;
+    }
 
     .chat-new-thread-btn {
       padding: var(--sm) var(--md);
@@ -1080,14 +955,15 @@
       font-size: 13px;
     }
     .file-tree .folder, .file-tree .file {
-      padding: 2px 0;
+      padding: 4px 0;
       padding-left: var(--lg);
+      font-size: 11px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: var(--sm);
     }
-    .file-tree .folder { font-weight: 500; }
+    .file-tree .folder { font-weight: 700; }
     .file-tree .file .git-status {
       margin-left: auto;
       font-size: 10px;
@@ -1157,15 +1033,6 @@
       display: flex;
       min-height: 0;
       overflow: hidden;
-    }
-    .terminal-grid-old {
-      display: grid;
-      
-      grid-template-rows: 1fr 1fr;
-      flex: 1;
-      min-height: 0;
-      gap: 1px;
-      background: var(--border);
     }
     .terminal-pane {
       min-width: 0;
@@ -1775,7 +1642,6 @@
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
     @keyframes boundsExpand { from { transform: scale(0.98); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(0, 212, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0); } }
     [data-theme^="retro"] @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(180, 255, 57, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(180, 255, 57, 0); } 100% { box-shadow: 0 0 0 0 rgba(180, 255, 57, 0); } }
@@ -1994,7 +1860,7 @@
       overflow: auto;
     }
     .orch-tier-detail-body p { margin-bottom: var(--sm); }
-    .orch-node-graph-wrap { height: 100%; min-height: 200px; }
+    .orch-node-graph-wrap { height: 100%; min-height: 200px; display: flex; flex-direction: column; overflow: hidden; }
     .orch-dag-preview {
       padding: var(--md);
       display: flex;
@@ -2084,17 +1950,6 @@
     [data-theme="retro-dark"] .orch-ledger-usage-link, [data-theme="retro-light"] .orch-ledger-usage-link { color: var(--accent-lime); }
     .orch-ledger-footer { background: var(--surface-elevated); font-weight: 600; }
     .orch-ledger-footer td { padding: var(--sm) var(--md); border: 1px solid var(--border-light); }
-    .orch-node-graph-placeholder {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: var(--lg);
-      height: 100%;
-      min-height: 200px;
-      color: var(--text-secondary);
-    }
-    .orch-node-graph-wrap { height: 100%; min-height: 200px; display: flex; flex-direction: column; overflow: hidden; }
     .orch-rungraph-empty {
       display: flex;
       flex-direction: column;
@@ -2803,9 +2658,6 @@
     [data-theme="basic-light"] .psm-btn.primary, [data-theme="basic-dark"] .psm-btn.primary { background: var(--accent-blue); color: var(--surface); border-color: var(--accent-blue); }
     .psm-btn:hover { filter: brightness(1.1); }
     
-    /* Hide the old projects-new-form as it's part of the old structure */
-    .page-projects .projects-new-form { display: none !important; }
-
     /* Settings Page Prototypes A, B, C */
     .page-settings-a, .page-settings-b, .page-settings-c {
       display: none;
@@ -3096,7 +2948,6 @@
       border: 1px solid rgba(11, 128, 67, 0.3);
     }
 
-    @keyframes slideInLeft { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
     @keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
     @keyframes slideInBottom { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes zoomInBounce { 0% { opacity: 0; transform: scale(0.9); } 70% { transform: scale(1.02); } 100% { opacity: 1; transform: scale(1); } }
@@ -3624,11 +3475,11 @@
     .files-search {
       display: flex;
       flex-direction: column;
+      padding: var(--md);
       border-bottom: 1px solid var(--border-light);
     }
     .search-input-wrap {
       display: flex;
-      padding: var(--md);
       gap: var(--xs);
     }
     .search-input-wrap input {
@@ -3726,8 +3577,6 @@
         <span>puppet-master-rs</span>
         <span>&#9660;</span>
       </div>
-      <!-- globalDashToggle removed -->
-      <button style="display:none;" id="globalDashToggle" title="Toggle Dashboard" style="margin-left: 8px; background: none; border: none; cursor: pointer; color: var(--text-secondary);"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg></button>
       <nav class="page-tabs">
         <span class="page-tab active" tabindex="0" data-page="dashboard">Home</span>
         <span class="page-tab" tabindex="0" data-page="projects">Projects</span>
@@ -3768,26 +3617,26 @@
               <span>FILES</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
             </div>
-            <div class="files-search" style="padding:var(--md); border-bottom:1px solid var(--border-light);">
-              <div class="search-input-wrap" style="display:flex; gap:var(--xs);">
-                <input type="text" placeholder="Search files..." class="wizard-input" style="padding:4px 8px; font-size:11px; flex:1;">
-                <button class="wizard-btn" style="padding:4px; font-size:11px;">🔍</button>
+            <div class="files-search">
+              <div class="search-input-wrap">
+                <input type="text" placeholder="Search files..." class="wizard-input" style="flex:1;">
+                <button class="wizard-btn">🔍</button>
               </div>
             </div>
             <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
               <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
                 <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">WORKSPACE</summary>
-                <div class="file-tree" style="padding:var(--sm);">
-                  <div class="folder" style="font-weight:bold; font-size:11px; padding:4px 0;">▼ src/</div>
-                  <div class="file" style="font-size:11px; padding:4px 0; padding-left:12px; color:var(--accent-blue);">app.rs <span class="git-status" style="color:var(--accent-orange); float:right;">M</span></div>
-                  <div class="file" style="font-size:11px; padding:4px 0; padding-left:12px;">main.rs</div>
-                  <div class="folder" style="font-weight:bold; font-size:11px; padding:4px 0; padding-left:12px;">▼ views/</div>
-                  <div class="file" style="font-size:11px; padding:4px 0; padding-left:24px;">dashboard.rs</div>
-                  <div class="file" style="font-size:11px; padding:4px 0; padding-left:24px;">config.rs <span class="git-status added" style="color:var(--accent-lime); float:right;">A</span></div>
-                  <div class="folder" style="font-weight:bold; font-size:11px; padding:4px 0;">▼ tests/</div>
-                  <div class="file" style="font-size:11px; padding:4px 0; padding-left:12px;">integration.rs</div>
-                  <div class="file" style="font-size:11px; padding:4px 0;">Cargo.toml</div>
-                  <div class="file" style="font-size:11px; padding:4px 0;">README.md</div>
+                <div class="file-tree">
+                  <div class="folder">▼ src/</div>
+                  <div class="file" style="color:var(--accent-blue);">app.rs <span class="git-status" style="color:var(--accent-orange); float:right;">M</span></div>
+                  <div class="file">main.rs</div>
+                  <div class="folder" style="padding-left:12px;">▼ views/</div>
+                  <div class="file" style="padding-left:24px;">dashboard.rs</div>
+                  <div class="file" style="padding-left:24px;">config.rs <span class="git-status added" style="color:var(--accent-lime); float:right;">A</span></div>
+                  <div class="folder">▼ tests/</div>
+                  <div class="file" style="padding-left:12px;">integration.rs</div>
+                  <div class="file">Cargo.toml</div>
+                  <div class="file">README.md</div>
                 </div>
               </details>
             </div>
@@ -6201,7 +6050,7 @@ impl Dashboard {
                   <div class="mode" data-mode="crew" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Crew</div>
                 </div>
                 
-                <div class="chat-header-workflow hidden chatWorkflowHeader" style="display:flex; justify-content:space-between; align-items:center; padding:var(--sm) var(--md); border-bottom:1px solid var(--border-light); background:var(--surface-elevated); font-size:12px; font-weight:600;">
+                <div class="chat-header-workflow hidden chatWorkflowHeader">
                   <span class="workflowHeaderTitle">Interactive Interview</span>
                   <button class="wizard-btn returnToChatBtn" style="padding:2px var(--sm); font-size:10px;">Return to Chat</button>
                 </div>
@@ -6349,133 +6198,6 @@ impl Dashboard {
           </div>
         </div>
       </div>
-
-      <aside class="chat-panel hidden" id="chatPanel">
-            <div class="chat-panel-header" style="flex-direction: column; align-items: stretch; gap: var(--sm); padding: var(--sm) var(--md); background: var(--surface-elevated); min-height: auto; border-bottom: 1px solid var(--border-light);">
-              <div style="display: flex; align-items: center; width: 100%;">
-                <div class="title" style="font-size: 13px; flex: 1; display:flex; align-items:center; gap:var(--sm); font-family:var(--display-font);">
-                    ASSISTANT <span class="chatRoleBadge role-badge role-assistant">Assistant</span>
-                </div>
-                <div class="panel-actions" style="display: flex; gap: var(--xs);">
-                  <button class="popOutBtn" title="Pop out" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>
-                  <button class="closeChatBtn" title="Close" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-                </div>
-              </div>
-              <div style="display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px; padding: 2px var(--sm);">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                <input type="text" placeholder="Search messages & threads..." style="width: 100%; border: none; background: transparent; padding: 4px; color: var(--text-primary); font-size: 11px; outline: none;">
-              </div>
-            </div>
-
-            <div class="chat-body" style="flex: 1; display: flex; min-height: 0; overflow: hidden;">
-              <div class="chat-thread-sidebar" style="width: 180px; min-width: 140px; background: var(--surface-elevated); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; overflow: hidden;">
-                <div class="sidebar-title" style="padding: var(--md); font-weight: 600; font-size: 12px; border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
-                  HISTORY
-                  <button style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
-                </div>
-                <div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm);">
-                  <div class="chat-thread-item" data-thread="thread1" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Wizard: Dashboard UI</div>
-                  <div class="chat-thread-item" data-thread="thread2" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Refactor Database Layer</div>
-                  <div class="chat-thread-item" data-thread="thread3" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Fix Auth Token Bug</div>
-                  <div class="chat-thread-item" data-thread="thread4" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Research Web Frameworks</div>
-                  <div class="chat-thread-item" data-thread="thread5" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Context Lens Check</div>
-                  <div class="chat-thread-item" data-thread="thread6" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">FileSafe Blocking</div>
-                </div>
-              </div>
-
-              <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden;">
-                <div class="chat-modes chatModesBar" style="display: flex; padding: var(--sm) var(--md); gap: var(--xs); border-bottom: 1px solid var(--border-light); font-size: 12px;">
-                  <div class="mode" data-mode="ask" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Ask</div>
-                  <div class="mode" data-mode="plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Plan</div>
-                  <div class="mode" data-mode="deep-plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Deep Plan</div>
-                  <div class="mode" data-mode="crew" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Crew</div>
-                </div>
-                
-                <div class="chat-header-workflow hidden chatWorkflowHeader" style="display:flex; justify-content:space-between; align-items:center; padding:var(--sm) var(--md); border-bottom:1px solid var(--border-light); background:var(--surface-elevated); font-size:12px; font-weight:600;">
-                  <span class="workflowHeaderTitle">Interactive Interview</span>
-                  <button class="wizard-btn returnToChatBtn" style="padding:2px var(--sm); font-size:10px;">Return to Chat</button>
-                </div>
-
-                <div class="message-stream messageStream" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-direction: column; gap: var(--md);">
-                </div>
-
-                <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light);">
-                  <div class="pendingInterventionBlock hidden" style="position:absolute; top:-40px; left:var(--md); right:var(--md); background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:6px; padding:var(--sm) var(--md); display:flex; justify-content:space-between; align-items:center; font-size:11px; box-shadow:0 -4px 12px rgba(0,0,0,0.1); z-index:10;">
-                    <span style="color:var(--text-secondary); text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:200px;">"Wait, update the cache too."</span>
-                    <div style="display:flex; gap:var(--xs); align-items:center;">
-                      <span style="color:var(--text-muted); margin-right:var(--xs);">Queued</span>
-                      <button title="Steer (Interrupt)" style="background:none; border:none; color:var(--accent-blue); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
-                      <button title="Edit" style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
-                      <button title="Cancel" style="background:none; border:none; color:var(--accent-magenta); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-                    </div>
-                  </div>
-
-                  <div style="background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
-                    <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; outline:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm);">
-                      <div style="display:flex; gap:var(--md); align-items:center;">
-                        <button title="Attach File" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
-                        <label style="font-size:10px; color:var(--text-secondary); display:flex; align-items:center; gap:2px; cursor:pointer;"><input type="checkbox"> ELI5</label>
-                        <label style="font-size:10px; color:var(--accent-orange); display:flex; align-items:center; gap:2px; cursor:pointer;" title="Auto-approve tools"><input type="checkbox"> YOLO</label>
-                      </div>
-                      <button style="background:var(--accent-blue); color:var(--surface); border:none; border-radius:4px; padding:4px var(--md); font-size:11px; font-weight:600; cursor:pointer;">Send</button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="chat-footer" style="display:flex; justify-content:space-between; padding:var(--sm) var(--md); background:var(--surface); border-top:1px solid var(--border-light); font-size:10px; min-height: 24px; position:relative;">
-                  <div style="display:flex; gap:var(--md); align-items:center;">
-                    <div style="position:relative;">
-                      <button class="chat-dropdown-btn" data-dropdown="persona" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
-                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <span class="persona-label">product-manager</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                      </button>
-                      <div class="chat-dropdown-popover personaPopover">
-                        <div class="chat-dropdown-search"><input type="text" placeholder="Find persona..." class="personaSearch"></div>
-                        <div class="chat-dropdown-list personaList">
-                            <div class="chat-dropdown-item active" data-value="product-manager"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> product-manager</div>
-                            <div class="chat-dropdown-item" data-value="architect-reviewer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> architect-reviewer</div>
-                            <div class="chat-dropdown-item" data-value="rust-engineer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> rust-engineer</div>
-                            <div class="chat-dropdown-item" data-value="technical-writer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> technical-writer</div>
-                            <div class="chat-dropdown-item" data-value="knowledge-synthesizer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> knowledge-synthesizer</div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div style="position:relative;">
-                      <button class="chat-dropdown-btn" data-dropdown="model" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
-                        <span class="model-label">Claude: sonnet-4.5</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                      </button>
-                      <div class="chat-dropdown-popover modelPopover">
-                        <div class="chat-dropdown-search"><input type="text" placeholder="Find model..." class="modelSearch"></div>
-                        <div class="chat-dropdown-list modelList">
-                            <div class="chat-dropdown-header">Anthropic</div>
-                            <div class="chat-dropdown-item active" data-value="Claude: sonnet-4.5">sonnet-4.5</div>
-                            <div class="chat-dropdown-item" data-value="Claude: opus-3">opus-3</div>
-                            <div class="chat-dropdown-header">OpenAI</div>
-                            <div class="chat-dropdown-item" data-value="OpenAI: o3-mini">o3-mini</div>
-                            <div class="chat-dropdown-item" data-value="OpenAI: gpt-4o">gpt-4o</div>
-                            <div class="chat-dropdown-header">Local</div>
-                            <div class="chat-dropdown-item" data-value="Local: DeepSeek R1">DeepSeek R1</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <span title="Reasoning Effort: High" style="color:var(--text-secondary); display:flex; align-items:center; gap:var(--xs);">
-                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54z"></path></svg>
-                        High
-                    </span>
-                  </div>
-                  <div style="display:flex; gap:var(--md); align-items:center;">
-                    <div class="context-usage" title="Context: 42k / 128k" style="display:flex; align-items:center; gap:var(--xs);">
-                      <div style="width:12px; height:12px; border-radius:50%; background:conic-gradient(var(--accent-blue) 30%, var(--border-light) 0); border:1px solid var(--border);"></div>
-                      <span>42k</span>
-                    </div>
-                    <a href="#" style="color:var(--accent-orange); display:flex; align-items:center; gap:var(--xs); text-decoration: none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Problems</a>
-                  </div>
-                </div>
-              </div>
-    </aside>
     </div>
 
     <footer class="status-bar">
@@ -6559,7 +6281,7 @@ impl Dashboard {
                   <div class="mode" data-mode="crew" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Crew</div>
                 </div>
                 
-                <div class="chat-header-workflow hidden chatWorkflowHeader" style="display:flex; justify-content:space-between; align-items:center; padding:var(--sm) var(--md); border-bottom:1px solid var(--border-light); background:var(--surface-elevated); font-size:12px; font-weight:600;">
+                <div class="chat-header-workflow hidden chatWorkflowHeader">
                   <span class="workflowHeaderTitle">Interactive Interview</span>
                   <button class="wizard-btn returnToChatBtn" style="padding:2px var(--sm); font-size:10px;">Return to Chat</button>
                 </div>
@@ -6646,162 +6368,8 @@ impl Dashboard {
     
             </div>
           </div>
-        
-
-  
-              <div style="display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px; padding: 2px var(--sm);">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                <input type="text" placeholder="Search messages & threads..." style="width: 100%; border: none; background: transparent; padding: 4px; color: var(--text-primary); font-size: 11px; outline: none;">
-              </div>
-            </div>
-
-            <div class="chat-body" style="flex: 1; display: flex; min-height: 0; overflow: hidden;">
-              <div class="chat-thread-sidebar" style="width: 180px; min-width: 140px; background: var(--surface-elevated); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; overflow: hidden;">
-                <div class="sidebar-title" style="padding: var(--md); font-weight: 600; font-size: 12px; border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
-                  HISTORY
-                  <button style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
-                </div>
-                <div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm);">
-                  <div class="chat-thread-item" data-thread="thread1" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Wizard: Dashboard UI</div>
-                  <div class="chat-thread-item" data-thread="thread2" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Refactor Database Layer</div>
-                  <div class="chat-thread-item" data-thread="thread3" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Fix Auth Token Bug</div>
-                  <div class="chat-thread-item" data-thread="thread4" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Research Web Frameworks</div>
-                  <div class="chat-thread-item" data-thread="thread5" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Context Lens Check</div>
-                  <div class="chat-thread-item" data-thread="thread6" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">FileSafe Blocking</div>
-                </div>
-              </div>
-
-              <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden;">
-                <div class="chat-modes chatModesBar" style="display: flex; padding: var(--sm) var(--md); gap: var(--xs); border-bottom: 1px solid var(--border-light); font-size: 12px;">
-                  <div class="mode" data-mode="ask" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Ask</div>
-                  <div class="mode" data-mode="plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Plan</div>
-                  <div class="mode" data-mode="deep-plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Deep Plan</div>
-                  <div class="mode" data-mode="crew" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Crew</div>
-                </div>
-                
-                <div class="chat-header-workflow hidden chatWorkflowHeader" style="display:flex; justify-content:space-between; align-items:center; padding:var(--sm) var(--md); border-bottom:1px solid var(--border-light); background:var(--surface-elevated); font-size:12px; font-weight:600;">
-                  <span class="workflowHeaderTitle">Interactive Interview</span>
-                  <button class="wizard-btn returnToChatBtn" style="padding:2px var(--sm); font-size:10px;">Return to Chat</button>
-                </div>
-
-                <div class="message-stream messageStream" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-direction: column; gap: var(--md);">
-                </div>
-
-                <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light);">
-                  <div class="pendingInterventionBlock hidden" style="position:absolute; top:-40px; left:var(--md); right:var(--md); background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:6px; padding:var(--sm) var(--md); display:flex; justify-content:space-between; align-items:center; font-size:11px; box-shadow:0 -4px 12px rgba(0,0,0,0.1); z-index:10;">
-                    <span style="color:var(--text-secondary); text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:200px;">"Wait, update the cache too."</span>
-                    <div style="display:flex; gap:var(--xs); align-items:center;">
-                      <span style="color:var(--text-muted); margin-right:var(--xs);">Queued</span>
-                      <button title="Steer (Interrupt)" style="background:none; border:none; color:var(--accent-blue); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
-                      <button title="Edit" style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
-                      <button title="Cancel" style="background:none; border:none; color:var(--accent-magenta); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-                    </div>
-                  </div>
-
-                  <div style="background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
-                    <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; outline:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm);">
-                      <div style="display:flex; gap:var(--md); align-items:center;">
-                        <button title="Attach File" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
-                        <label style="font-size:10px; color:var(--text-secondary); display:flex; align-items:center; gap:2px; cursor:pointer;"><input type="checkbox"> ELI5</label>
-                        <label style="font-size:10px; color:var(--accent-orange); display:flex; align-items:center; gap:2px; cursor:pointer;" title="Auto-approve tools"><input type="checkbox"> YOLO</label>
-                      </div>
-                      <button style="background:var(--accent-blue); color:var(--surface); border:none; border-radius:4px; padding:4px var(--md); font-size:11px; font-weight:600; cursor:pointer;">Send</button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="chat-footer" style="display:flex; justify-content:space-between; padding:var(--sm) var(--md); background:var(--surface); border-top:1px solid var(--border-light); font-size:10px; min-height: 24px; position:relative;">
-                  <div style="display:flex; gap:var(--md); align-items:center;">
-                    <div style="position:relative;">
-                      <button class="chat-dropdown-btn" data-dropdown="persona" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
-                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <span class="persona-label">product-manager</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                      </button>
-                      <div class="chat-dropdown-popover personaPopover">
-                        <div class="chat-dropdown-search"><input type="text" placeholder="Find persona..." class="personaSearch"></div>
-                        <div class="chat-dropdown-list personaList">
-                            <div class="chat-dropdown-item active" data-value="product-manager"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> product-manager</div>
-                            <div class="chat-dropdown-item" data-value="architect-reviewer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> architect-reviewer</div>
-                            <div class="chat-dropdown-item" data-value="rust-engineer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> rust-engineer</div>
-                            <div class="chat-dropdown-item" data-value="technical-writer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> technical-writer</div>
-                            <div class="chat-dropdown-item" data-value="knowledge-synthesizer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> knowledge-synthesizer</div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div style="position:relative;">
-                      <button class="chat-dropdown-btn" data-dropdown="model" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
-                        <span class="model-label">Claude: sonnet-4.5</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                      </button>
-                      <div class="chat-dropdown-popover modelPopover">
-                        <div class="chat-dropdown-search"><input type="text" placeholder="Find model..." class="modelSearch"></div>
-                        <div class="chat-dropdown-list modelList">
-                            <div class="chat-dropdown-header">Anthropic</div>
-                            <div class="chat-dropdown-item active" data-value="Claude: sonnet-4.5">sonnet-4.5</div>
-                            <div class="chat-dropdown-item" data-value="Claude: opus-3">opus-3</div>
-                            <div class="chat-dropdown-header">OpenAI</div>
-                            <div class="chat-dropdown-item" data-value="OpenAI: o3-mini">o3-mini</div>
-                            <div class="chat-dropdown-item" data-value="OpenAI: gpt-4o">gpt-4o</div>
-                            <div class="chat-dropdown-header">Local</div>
-                            <div class="chat-dropdown-item" data-value="Local: DeepSeek R1">DeepSeek R1</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <span title="Reasoning Effort: High" style="color:var(--text-secondary); display:flex; align-items:center; gap:var(--xs);">
-                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54z"></path></svg>
-                        High
-                    </span>
-                  </div>
-                  <div style="display:flex; gap:var(--md); align-items:center;">
-                    <div class="context-usage" title="Context: 42k / 128k" style="display:flex; align-items:center; gap:var(--xs);">
-                      <div style="width:12px; height:12px; border-radius:50%; background:conic-gradient(var(--accent-blue) 30%, var(--border-light) 0); border:1px solid var(--border);"></div>
-                      <span>42k</span>
-                    </div>
-                    <a href="#" style="color:var(--accent-orange); display:flex; align-items:center; gap:var(--xs); text-decoration: none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Problems</a>
-                  </div>
-                </div>
-              </div>
-    </div></div>
-        <div class="chat-main">
-          <div class="chat-modes">
-            <span class="mode active" data-mode="ask">Ask</span>
-            <span class="mode" data-mode="plan">Plan</span>
-            <span class="mode" data-mode="interview">Interview</span>
-            <span class="mode" data-mode="brainstorm">BrainStorm</span>
-            <span class="mode" data-mode="crew">Crew</span>
-          </div>
-          <div class="plan-card" id="planCardFloat" style="display: none;">
-            <div class="plan-title">Plan</div>
-            <ul class="plan-outline">
-              <li><input type="checkbox"> Phase 1: Setup</li>
-              <li><input type="checkbox" checked> Phase 2: Dashboard widgets</li>
-            </ul>
-          </div>
-          <div class="message-stream">
-            <div class="message assistant">I've analyzed the requirements. The dashboard should include orchestrator status, current task, progress bars, and budget donuts.</div>
-            <div class="message user">Yes, implement the full layout per the spec.</div>
-          </div>
-          <div class="chat-input-area">
-            <textarea placeholder="Type a message..."></textarea>
-            <div class="input-row">
-              <button class="at-btn">@</button>
-              <button class="attach-btn">Attach</button>
-              <span class="steer-queue-toggle"><span class="active">Steer</span> / <span>Queue</span></span>
-              <button>SEND</button>
-            </div>
-          </div>
-          <div class="chat-footer">
-            <select><option>Claude Code</option></select>
-            <select><option>sonnet-4.5</option></select>
-            <span class="context-usage">42k/128k</span>
-            <a>3 problems</a>
-          </div>
         </div>
       </div>
-    </div>
-  </div>
 
   <div class="pixel-grid" id="pixelGrid"></div>
 
@@ -6813,6 +6381,14 @@ impl Dashboard {
       'thread4': { role: 'assistant', title: 'ASSISTANT', mode: 'ask', html: `<div class="message user">What are the latest breaking changes in React 19?</div><div class="message assistant">React 19 introduces several major breaking changes...<div style="margin-top:var(--lg); border-top:1px dashed var(--border-light); padding-top:var(--sm);"><div style="font-size:10px; font-weight:600; margin-bottom:var(--xs); color:var(--text-secondary);">SOURCES</div><div style="font-size:11px; display:flex; flex-direction:column; gap:var(--xs);"><div><span style="color:var(--accent-blue);">[1] React 19 Upgrade Guide</span></div><div><span style="color:var(--accent-blue);">[2] Everything new in React 19</span></div></div></div></div>` },
       'thread5': { role: 'assistant', title: 'ASSISTANT', mode: 'ask', html: `<div style="text-align:center; font-size:10px; color:var(--text-muted); margin-bottom:var(--sm);">Context Lens Active</div><div class="message user" style="opacity: 0.5; position:relative; border:none; box-shadow:none;"><div style="position:absolute; top:-8px; right:-8px; background:var(--surface); border:1px solid var(--border); font-size:9px; padding:2px 4px; border-radius:4px; color:var(--text-primary);">Muted</div>Here is the old log file...</div><div class="message assistant">I understand.</div><div class="message user msg-focused" style="position:relative; background:transparent;"><div style="position:absolute; top:-8px; right:-8px; background:var(--accent-blue); color:var(--surface); font-size:9px; padding:2px 4px; border-radius:4px;">Focused</div>Focus strictly on this error block.</div>` },
       'thread6': { role: 'builder', title: 'PRD BUILDER', html: `<div class="message assistant">I've drafted the preliminary PRD for the "Multi-tenant Refactor".<div style="margin-top:var(--md); padding:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated); display:flex; align-items:center; gap:var(--sm); font-size:11px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Opened <b>multi-tenant-refactor.md</b> in Binder</div></div>` }
+    };
+
+    window.orchNodeDetailContent = {
+      '1': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>1</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Phase</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-passed); color:#000; padding:1px 4px; font-size:9px;">Passed</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>1m 20s</b></div></div></details>',
+      '2': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Phase</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-running); color:#000; padding:1px 4px; font-size:9px;">Running</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>0m 45s</b></div></div></details>',
+      '2.1': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2.1</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Task</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-passed); color:#000; padding:1px 4px; font-size:9px;">Passed</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Attempts</span> <b>2</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>0m 22s</b></div></div></details>',
+      '2.2': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C1 Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2.2</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--accent-lime); color:#000; padding:1px 4px; font-size:9px;">Running</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Attempts</span> <b>1 (Retry 0)</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Safe-Point ID</span> <b style="color:var(--accent-blue);">sp-49a8f</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Worktree</span> <b>wt-2</b></div><div style="margin-top:var(--sm); border-top:1px dashed var(--border-light); padding-top:4px;"><span style="color:var(--text-secondary);">Queue Analysis:</span><div style="color:var(--text-muted); margin-top:2px;">Last wake: Dependency Resolved</div></div></div></details><details class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C2 Plan Mapping</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="color:var(--text-secondary); margin-bottom:4px;">Breadcrumb: Phase 2 &gt; Task 2 &gt; Subtask 2</div><button class="wizard-btn" style="font-size:9px; padding:2px 6px;">Open plan at section</button></div></details><details class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C3 Worker Activity</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div><span style="color:var(--text-secondary);">Identity:</span> rust-engineer</div><div><span style="color:var(--text-secondary);">Model:</span> Claude sonnet-4.5</div><div style="margin-top:var(--xs);"><a href="#" style="color:var(--accent-blue);">View logs...</a></div></div></details><details class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C6 HITL &amp; Recovery</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="color:var(--text-muted); margin-bottom:var(--sm);">No pending approvals.</div><div style="border-top:1px dashed var(--border-light); padding-top:var(--sm); display:flex; flex-direction:column; gap:var(--xs);"><button class="wizard-btn" style="font-size:10px;">Retry from safe point</button><button class="wizard-btn" style="font-size:10px;">Start fresh attempt</button></div></div></details>',
+      '2.3': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2.3</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Task</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-pending); color:#fff; padding:1px 4px; font-size:9px;">Pending</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Blocked</span> <b>Yes</b></div><div style="color:var(--text-muted); margin-top:var(--sm);">Waiting on Task 2.2 completion.</div></div></details>'
     };
 
     window.switchToChatThread = function(threadId) {
@@ -6840,6 +6416,33 @@ impl Dashboard {
         });
     };
 
+    function setChatPanelVisible(visible) {
+      const cp = document.getElementById('chatPanel');
+      const resizer = document.getElementById('chatResizer');
+      if (cp) cp.classList.toggle('hidden', !visible);
+      if (resizer) resizer.classList.toggle('hidden', !visible);
+    }
+    function setFloatingChatVisible(visible) {
+      const fl = document.getElementById('floatingChat');
+      if (fl) fl.style.display = visible ? 'flex' : 'none';
+    }
+    function hideChatAndSyncUI(closeInPage, showFloating) {
+      setChatPanelVisible(!closeInPage);
+      setFloatingChatVisible(!!showFloating);
+      if (!showFloating) {
+        const chatIcon = document.querySelector('.activity-bar .icon[title="Chat"]');
+        if (chatIcon) chatIcon.classList.remove('active');
+      }
+    }
+    function hideEditorViewIfNoVisiblePanes() {
+      const edView = document.getElementById('editorView');
+      if (edView && !edView.querySelector('.editor-pane:not([style*="display: none"])')) {
+        edView.style.display = 'none';
+        const splitResizer = document.getElementById('editorSplitResizer');
+        if (splitResizer) splitResizer.style.display = 'none';
+      }
+    }
+
     window.switchWizardStep = function(stepIndex) {
       document.querySelectorAll('.page-wizard').forEach(wizardContainer => {
           wizardContainer.querySelectorAll('.wizard-nav-step').forEach(el => {
@@ -6854,12 +6457,11 @@ impl Dashboard {
           const panels = wizardContainer.querySelectorAll('.wizard-step-panel');
           panels.forEach(panel => {
             const idx = parseInt(panel.getAttribute('data-wizard-panel'));
-            if (idx === stepIndex) {
+              if (idx === stepIndex) {
               panel.style.display = 'flex';
               panel.classList.add('active');
               if (stepIndex === 2) {
-                 const cp = document.getElementById('chatPanel');
-                 if (cp) cp.classList.remove('hidden');
+                 setChatPanelVisible(true);
                  if (window.switchToChatThread) window.switchToChatThread('thread1');
               }
             } else {
@@ -6873,51 +6475,66 @@ impl Dashboard {
 
 
 
+    (function resizeController() {
+        let active = null;
+        document.addEventListener('mousemove', (e) => {
+            if (!active) return;
+            active.moveHandler(e);
+        });
+        document.addEventListener('mouseup', () => {
+            if (active) {
+                active.resizer.classList.remove('resizing');
+                document.body.style.cursor = 'default';
+                active = null;
+            }
+        });
+        window.registerResizer = function(resizerEl, opts) {
+            resizerEl.addEventListener('mousedown', (e) => {
+                active = { resizer: resizerEl, moveHandler: opts.onMove };
+                resizerEl.classList.add('resizing');
+                document.body.style.cursor = opts.isHorizontal ? 'col-resize' : 'row-resize';
+                e.preventDefault();
+            });
+        };
+    })();
+
     function setupResizer(resizerId, prevElementId, nextElementId, isHorizontal=true) {
         const resizer = document.getElementById(resizerId);
         if (!resizer) return;
-        
-        let isResizing = false;
-        resizer.addEventListener('mousedown', (e) => {
-            isResizing = true;
-            resizer.classList.add('resizing');
-            document.body.style.cursor = isHorizontal ? 'col-resize' : 'row-resize';
-            e.preventDefault();
-        });
-        
-        document.addEventListener('mousemove', (e) => {
-            if (!isResizing) return;
-            const prev = document.getElementById(prevElementId);
-            const next = document.getElementById(nextElementId);
-            
-            if (isHorizontal && prev && resizer.parentNode) {
-                const containerRect = resizer.parentNode.getBoundingClientRect();
-                const newWidth = e.clientX - containerRect.left;
-                if (newWidth > 100 && newWidth < containerRect.width - 100) {
-                    prev.style.width = newWidth + 'px';
-                    prev.style.flex = 'none';
+        const getPrev = () => document.getElementById(prevElementId) || (prevElementId && document.querySelector('.' + prevElementId));
+        const getNext = () => document.getElementById(nextElementId) || (nextElementId && document.querySelector('.' + nextElementId));
+        window.registerResizer(resizer, {
+            isHorizontal,
+            onMove(e) {
+                const prev = getPrev();
+                const next = getNext();
+                if (isHorizontal && prev && resizer.parentNode) {
+                    const containerRect = resizer.parentNode.getBoundingClientRect();
+                    const newWidth = e.clientX - containerRect.left;
+                    if (newWidth > 100 && newWidth < containerRect.width - 100) {
+                        prev.style.width = newWidth + 'px';
+                        prev.style.flex = 'none';
+                    }
+                } else if (!isHorizontal && next && resizer.parentNode) {
+                    const containerRect = resizer.parentNode.getBoundingClientRect();
+                    const newHeight = containerRect.bottom - e.clientY;
+                    if (newHeight > 50 && newHeight < containerRect.height - 100) {
+                        next.style.height = newHeight + 'px';
+                        next.style.flex = 'none';
+                    }
                 }
-            } else if (!isHorizontal && next && resizer.parentNode) {
-                // For terminal resizer, 'next' is the bottom panel
-                const containerRect = resizer.parentNode.getBoundingClientRect();
-                const newHeight = containerRect.bottom - e.clientY;
-                if (newHeight > 50 && newHeight < containerRect.height - 100) {
-                    next.style.height = newHeight + 'px';
-                    next.style.flex = 'none';
-                }
-            }
-        });
-        
-        document.addEventListener('mouseup', () => {
-            if (isResizing) {
-                isResizing = false;
-                resizer.classList.remove('resizing');
-                document.body.style.cursor = 'default';
             }
         });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+
+        // Sync Dashboard activity-bar icon with initial visibility (dashboard is shown by default)
+        const dash = document.getElementById('dashboardView');
+        const dashboardIcon = document.querySelector('.activity-bar .icon[title="Dashboard"]');
+        if (dash && dashboardIcon && dash.style.display !== 'none') {
+            dashboardIcon.classList.add('active');
+        }
 
         // Dashboard tabs logic
         document.querySelectorAll('.dashboard-tabs').forEach(tabsContainer => {
@@ -7068,42 +6685,23 @@ impl Dashboard {
         
         const chatResizer = document.getElementById('chatResizer');
         const chatPanel = document.getElementById('chatPanel');
-        if (chatResizer && chatPanel) {
-            let isChatResizing = false;
-            chatResizer.addEventListener('mousedown', (e) => { isChatResizing = true; chatResizer.classList.add('resizing'); document.body.style.cursor = 'col-resize'; e.preventDefault();});
-            document.addEventListener('mousemove', (e) => {
-                if (!isChatResizing) return;
-                const newWidth = window.innerWidth - e.clientX;
-                if (newWidth >= 320 && newWidth <= 1200) { 
-                    chatPanel.style.width = newWidth + 'px';
-                    chatPanel.style.minWidth = 'auto';
-                    chatPanel.style.maxWidth = 'none';
-                    chatPanel.style.flex = 'none';                }
-            });
-            document.addEventListener('mouseup', () => {
-                if (isChatResizing) { isChatResizing = false; chatResizer.classList.remove('resizing'); document.body.style.cursor = 'default'; }
+        if (chatResizer && chatPanel && window.registerResizer) {
+            window.registerResizer(chatResizer, {
+                isHorizontal: true,
+                onMove(e) {
+                    const newWidth = window.innerWidth - e.clientX;
+                    if (newWidth >= 320 && newWidth <= 1200) {
+                        chatPanel.style.width = newWidth + 'px';
+                        chatPanel.style.minWidth = 'auto';
+                        chatPanel.style.maxWidth = 'none';
+                        chatPanel.style.flex = 'none';
+                    }
+                }
             });
         }
 
 
       document.body.addEventListener('click', (e) => {
-        
-        // Hide Dashboard toggle
-                const globalDashToggle = e.target.closest('#globalDashToggle');
-        if (globalDashToggle) {
-            const dash = document.getElementById('dashboardView');
-            if (dash) {
-                if (dash.style.display === 'none') {
-                    dash.style.display = 'flex';
-                    globalDashToggle.style.color = 'var(--text-secondary)';
-                } else {
-                    dash.style.display = 'none';
-                    globalDashToggle.style.color = 'var(--accent-lime)';
-                }
-                const dashResizer = document.getElementById('editorDashResizer');
-                if (dashResizer) dashResizer.style.display = dash.style.display;
-            }
-        }
         
         // Close editor tab
         const tabCloseBtn = e.target.closest('.tab-close');
@@ -7115,13 +6713,7 @@ impl Dashboard {
             // If no tabs left in pane, close pane
             if (pane && !pane.querySelector('.tab')) {
                 pane.style.display = 'none';
-                // If both panes hidden, hide editor view
-                const edView = document.getElementById('editorView');
-                if (edView && !edView.querySelector('.editor-pane:not([style*="display: none"])')) {
-                    edView.style.display = 'none';
-                    const splitResizer = document.getElementById('editorSplitResizer');
-                    if (splitResizer) splitResizer.style.display = 'none';
-                }
+                hideEditorViewIfNoVisiblePanes();
             }
             e.stopPropagation(); // stop click from bubbling
         }
@@ -7176,22 +6768,31 @@ impl Dashboard {
         const dropdownBtn = e.target.closest('.chat-dropdown-btn');
         if (dropdownBtn) window.toggleChatDropdown(dropdownBtn.getAttribute('data-dropdown'));
         const closeBtn = e.target.closest('.closeChatBtn');
-        if (closeBtn) {
-            document.getElementById('chatPanel').classList.add('hidden');
-            const chatResizer = document.getElementById('chatResizer');
-            if (chatResizer) chatResizer.classList.add('hidden');
-            document.getElementById('floatingChat').style.display = 'none';
-            const chatIcon = document.querySelector('.activity-bar .icon[title="Chat"]');
-            if (chatIcon) chatIcon.classList.remove('active');
-        }
+        if (closeBtn) hideChatAndSyncUI(true, false);
         const popOutBtn = e.target.closest('.popOutBtn');
-        if (popOutBtn) {
-            document.getElementById('chatPanel').classList.add('hidden');
-            const chatResizer = document.getElementById('chatResizer');
-            if (chatResizer) chatResizer.classList.add('hidden');
-            document.getElementById('floatingChat').style.display = 'flex';
-        }
+        if (popOutBtn) hideChatAndSyncUI(true, true);
         if (e.target.closest('.returnToChatBtn')) window.switchToChatThread('thread4');
+
+        const orchNode = e.target.closest('.orch-rungraph-node');
+        const orchRow = e.target.closest('.orch-rungraph-row');
+        const orchGraphTarget = orchNode || orchRow;
+        if (orchGraphTarget) {
+            const nodeId = orchGraphTarget.getAttribute('data-node-id');
+            if (nodeId) {
+                const container = document.getElementById('orchDagPreview');
+                if (container) {
+                    container.querySelectorAll('.orch-rungraph-node, .orch-rungraph-row').forEach(el => el.classList.remove('selected'));
+                    orchGraphTarget.classList.add('selected');
+                    const other = container.querySelector('.orch-rungraph-node[data-node-id="' + nodeId + '"], .orch-rungraph-row[data-node-id="' + nodeId + '"]');
+                    if (other && other !== orchGraphTarget) other.classList.add('selected');
+                }
+                const detailBody = document.getElementById('orchGraphDetailBody');
+                if (detailBody && window.orchNodeDetailContent) {
+                    const html = window.orchNodeDetailContent[nodeId];
+                    detailBody.innerHTML = html != null ? html : '<p class="orch-rungraph-no-selection">No detail for this node.</p>';
+                }
+            }
+        }
 
                 const iconBtn = e.target.closest('.activity-bar .icon');
         if (iconBtn) {
@@ -7237,16 +6838,6 @@ impl Dashboard {
             }
         }
 
-        const advSearchToggle = e.target.closest('#advSearchToggle');
-        if (advSearchToggle) {
-            const advSearchPanel = document.getElementById('advSearchPanel');
-            if (advSearchPanel) advSearchPanel.classList.toggle('open');
-        }
-
-        const searchToggle = e.target.closest('.search-toggle');
-        if (searchToggle) {
-            searchToggle.classList.toggle('on');
-        }        
         const activityBarToggle = e.target.closest('#activityBarToggle');
         if (activityBarToggle) {
             const activityBar = document.getElementById('activityBar');
@@ -7267,11 +6858,36 @@ impl Dashboard {
                 }
             }
         }
+
+        // Open/Close Inspector Panel (Settings)
+        const bentoAction = e.target.closest('.bento-action');
+        if (bentoAction) {
+            const card = bentoAction.closest('.bento-card');
+            if (card) {
+                const viewId = card.getAttribute('data-inspector-view');
+                if (viewId) {
+                    const panel = document.querySelector('.settings-inspector-panel');
+                    const currentActive = document.querySelector('.inspector-view.active');
+                    if (panel && panel.classList.contains('open') && currentActive && currentActive.getAttribute('data-view') === viewId) {
+                        panel.classList.remove('open');
+                        return;
+                    }
+                    document.querySelectorAll('.inspector-view').forEach(view => {
+                        view.classList.toggle('active', view.getAttribute('data-view') === viewId);
+                    });
+                    if (panel) panel.classList.add('open');
+                }
+            }
+        }
+        const closeInspector = e.target.closest('.close-inspector');
+        if (closeInspector) {
+            document.querySelectorAll('.settings-inspector-panel').forEach(panel => panel.classList.remove('open'));
+        }
       });
       
       document.querySelectorAll('.page-tab').forEach(function(tab) {
         tab.addEventListener('click', function() {
-          var pageId = this.getAttribute('data-page');
+          const pageId = this.getAttribute('data-page');
           if (!pageId) return;
           document.querySelectorAll('.page-tab').forEach(function(t) { t.classList.remove('active'); });
           this.classList.add('active');
@@ -7309,7 +6925,7 @@ impl Dashboard {
           });
       });
 
-      document.querySelectorAll('.page-settings-a .bento-card').forEach((card, index) => {
+      document.querySelectorAll('.page-settings .bento-card').forEach((card, index) => {
           card.style.viewTransitionName = `bento-card-${index}`;
       });
 
@@ -7322,48 +6938,11 @@ impl Dashboard {
       }
 
       // Settings Inspector Panel Logic (Advanced Settings)
-      document.body.addEventListener('click', function(e) {
-          // Open/Close Inspector Panel
-          const bentoAction = e.target.closest('.bento-action');
-          if (bentoAction) {
-              const card = bentoAction.closest('.bento-card');
-              if (card) {
-                  const viewId = card.getAttribute('data-inspector-view');
-                  if (viewId) {
-                      const panel = document.querySelector('.settings-inspector-panel');
-                      const currentActive = document.querySelector('.inspector-view.active');
-                      
-                      // If it's already open and clicking the SAME card, close it.
-                      if (panel && panel.classList.contains('open') && currentActive && currentActive.getAttribute('data-view') === viewId) {
-                          panel.classList.remove('open');
-                          return;
-                      }
-
-                      // Toggle active views
-                      document.querySelectorAll('.inspector-view').forEach(view => {
-                          view.classList.toggle('active', view.getAttribute('data-view') === viewId);
-                      });
-                      // Open panel
-                      if (panel) panel.classList.add('open');
-                  }
-              }
-          }
-          
-          // Close Inspector Panel
-          const closeInspector = e.target.closest('.close-inspector');
-          if (closeInspector) {
-              document.querySelectorAll('.settings-inspector-panel').forEach(panel => {
-                  panel.classList.remove('open');
-              });
-          }
-      });
-
-      
       document.querySelectorAll('.orch-tab').forEach(function(tab) {
         tab.addEventListener('click', function() {
-          var tabId = this.getAttribute('data-tab');
+          const tabId = this.getAttribute('data-tab');
           if (!tabId) return;
-          var parent = this.closest('.page-orchestrator');
+          const parent = this.closest('.page-orchestrator');
           if (!parent) return;
           parent.querySelectorAll('.orch-tab').forEach(function(t) { t.classList.remove('active'); });
           this.classList.add('active');
@@ -7378,29 +6957,32 @@ impl Dashboard {
     });
     </script>
 <script>
-function showPRDMock(id) {
-  const el = document.getElementById("prd-mock-content");
-  if(id === "prd") {
-    el.innerHTML = "<h1>Product Requirements Document</h1><p><strong>Status:</strong> Approved | <strong>Version:</strong> 1.0</p><h2>1. Executive Summary</h2><p>Puppet Master is a cross-platform desktop IDE designed to orchestrate AI agents for automated coding. It leverages Rust and Slint for a highly responsive user experience.</p><h2>2. Functional Requirements</h2><ul><li>FR1: The system shall support 4 tier phases for execution: Phase, Task, Subtask, Iteration.</li><li>FR2: It must integrate natively with multiple providers: Cursor, Gemini, Codex, Claude Code, Copilot.</li><li>FR3: A visual node graph (DAG) representation of tasks must be provided.</li><li>FR4: Must include a multi-agent interview wizard for capturing requirements.</li></ul><h2>3. Non-Functional Requirements</h2><ul><li>NFR1: Native performance with application launch time under 500ms.</li><li>NFR2: The UI framework must be based on Slint for declarative performance.</li><li>NFR3: Agent memory scaling must not exceed token quotas (budget caps must be supported).</li></ul><h2>4. Multi-Pass Review Process</h2><p>The system integrates an automated multi-pass document validation and canonical alignment to ensure the PRD conforms strictly to the schema before any code execution starts.</p><h2>5. Out of Scope</h2><p>Mobile application and cloud deployment orchestration are deferred to version 2.0.</p>";
-  } else if(id === "seeds") {
-    el.innerHTML = "<h1>Contract Seeds</h1><p>These JSON artifacts lock in the decisions for the execution phase.</p><pre style=\"background:var(--surface); padding:var(--md); font-family:monospace; font-size:11px;\">{\n  \"schema_version\": \"1.0\",\n  \"tier_config\": {\n    \"auto_approve\": false,\n    \"branching\": \"feature\"\n  }\n}</pre>";
-  } else if(id === "arch") {
-    el.innerHTML = "<h1>Architecture Documentation</h1><h2>1. Core Systems</h2><p>We are using a Rust backend connected to a Slint UI via channels. Persistent state is maintained using `redb`.</p><h2>2. Component Diagram</h2><div class=\"mock-mermaid\">graph TD;<br>UI[Slint Window] -->|Events| Backend[Rust Core];<br>Backend --> DB[(Redb)];<br>Backend --> Agents{{Agent Subsystem}};<br></div>";
+(function() {
+  function showPRDMock(id) {
+    const el = document.getElementById("prd-mock-content");
+    if(id === "prd") {
+      el.innerHTML = "<h1>Product Requirements Document</h1><p><strong>Status:</strong> Approved | <strong>Version:</strong> 1.0</p><h2>1. Executive Summary</h2><p>Puppet Master is a cross-platform desktop IDE designed to orchestrate AI agents for automated coding. It leverages Rust and Slint for a highly responsive user experience.</p><h2>2. Functional Requirements</h2><ul><li>FR1: The system shall support 4 tier phases for execution: Phase, Task, Subtask, Iteration.</li><li>FR2: It must integrate natively with multiple providers: Cursor, Gemini, Codex, Claude Code, Copilot.</li><li>FR3: A visual node graph (DAG) representation of tasks must be provided.</li><li>FR4: Must include a multi-agent interview wizard for capturing requirements.</li></ul><h2>3. Non-Functional Requirements</h2><ul><li>NFR1: Native performance with application launch time under 500ms.</li><li>NFR2: The UI framework must be based on Slint for declarative performance.</li><li>NFR3: Agent memory scaling must not exceed token quotas (budget caps must be supported).</li></ul><h2>4. Multi-Pass Review Process</h2><p>The system integrates an automated multi-pass document validation and canonical alignment to ensure the PRD conforms strictly to the schema before any code execution starts.</p><h2>5. Out of Scope</h2><p>Mobile application and cloud deployment orchestration are deferred to version 2.0.</p>";
+    } else if(id === "seeds") {
+      el.innerHTML = "<h1>Contract Seeds</h1><p>These JSON artifacts lock in the decisions for the execution phase.</p><pre style=\"background:var(--surface); padding:var(--md); font-family:monospace; font-size:11px;\">{\n  \"schema_version\": \"1.0\",\n  \"tier_config\": {\n    \"auto_approve\": false,\n    \"branching\": \"feature\"\n  }\n}</pre>";
+    } else if(id === "arch") {
+      el.innerHTML = "<h1>Architecture Documentation</h1><h2>1. Core Systems</h2><p>We are using a Rust backend connected to a Slint UI via channels. Persistent state is maintained using `redb`.</p><h2>2. Component Diagram</h2><div class=\"mock-mermaid\">graph TD;<br>UI[Slint Window] -->|Events| Backend[Rust Core];<br>Backend --> DB[(Redb)];<br>Backend --> Agents{{Agent Subsystem}};<br></div>";
+    }
+    document.querySelectorAll(".prd-pill").forEach(p => p.classList.remove("active"));
+    document.getElementById("pill-" + id).classList.add("active");
   }
-  document.querySelectorAll(".prd-pill").forEach(p => p.classList.remove("active"));
-  document.getElementById("pill-" + id).classList.add("active");
-}
-
-function showExecMock(id) {
-  const el = document.getElementById("exec-mock-content");
-  if(id === "exec") {
-    el.innerHTML = "<h1>Execution Plan</h1><h2>Phase 1: Foundation</h2><p><strong>Subagent:</strong> architect-reviewer</p><p>- Initialize Rust binary crate and workspace.<br>- Setup Redb persistence schema and initial migrations.<br>- Add standard `cargo fmt` and `clippy` checks to verification gates.</p><h2>Phase 2: GUI Core</h2><p><strong>Subagent:</strong> slint-engineer</p><p>- Stub out the main `AppWindow` in Slint.<br>- Implement bridging channels between the Rust core and UI.<br>- Compile dummy placeholder screens for Dashboard and Chat.</p><h2>Phase 3: Agent Orchestration</h2><p><strong>Subagent:</strong> backend-developer</p><p>- Create state machine logic for Phase/Task/Subtask execution.<br>- Wire in the Cursor CLI and Claude Code CLI providers.<br>- Set up concurrency limiters and rate-limit backoff handling.</p><h2>Phase 4: Integration Tests</h2><p><strong>Subagent:</strong> qa-engineer</p><p>- Write end-to-end tests for orchestrator state transitions.<br>- Ensure GUI builds successfully headless for CI verification.</p>";
-  } else if(id === "manifest") {
-    el.innerHTML = "<h1>Acceptance Manifest</h1><p>This manifest guarantees exactly what needs to be verified before merging the task.</p><pre style=\"background:var(--surface); padding:var(--md); font-family:monospace; font-size:11px;\">{\n  \"gates\": [\n    { \"id\": \"GATE-001\", \"type\": \"syntax\", \"command\": \"cargo check\" },\n    { \"id\": \"GATE-002\", \"type\": \"tests\", \"command\": \"cargo test\" },\n    { \"id\": \"GATE-003\", \"type\": \"headless_ui\", \"command\": \"npm run test:ui\" }\n  ],\n  \"artifacts\": [\n    \"src/main.rs\",\n    \"ui/app.slint\"\n  ]\n}</pre>";
+  function showExecMock(id) {
+    const el = document.getElementById("exec-mock-content");
+    if(id === "exec") {
+      el.innerHTML = "<h1>Execution Plan</h1><h2>Phase 1: Foundation</h2><p><strong>Subagent:</strong> architect-reviewer</p><p>- Initialize Rust binary crate and workspace.<br>- Setup Redb persistence schema and initial migrations.<br>- Add standard `cargo fmt` and `clippy` checks to verification gates.</p><h2>Phase 2: GUI Core</h2><p><strong>Subagent:</strong> slint-engineer</p><p>- Stub out the main `AppWindow` in Slint.<br>- Implement bridging channels between the Rust core and UI.<br>- Compile dummy placeholder screens for Dashboard and Chat.</p><h2>Phase 3: Agent Orchestration</h2><p><strong>Subagent:</strong> backend-developer</p><p>- Create state machine logic for Phase/Task/Subtask execution.<br>- Wire in the Cursor CLI and Claude Code CLI providers.<br>- Set up concurrency limiters and rate-limit backoff handling.</p><h2>Phase 4: Integration Tests</h2><p><strong>Subagent:</strong> qa-engineer</p><p>- Write end-to-end tests for orchestrator state transitions.<br>- Ensure GUI builds successfully headless for CI verification.</p>";
+    } else if(id === "manifest") {
+      el.innerHTML = "<h1>Acceptance Manifest</h1><p>This manifest guarantees exactly what needs to be verified before merging the task.</p><pre style=\"background:var(--surface); padding:var(--md); font-family:monospace; font-size:11px;\">{\n  \"gates\": [\n    { \"id\": \"GATE-001\", \"type\": \"syntax\", \"command\": \"cargo check\" },\n    { \"id\": \"GATE-002\", \"type\": \"tests\", \"command\": \"cargo test\" },\n    { \"id\": \"GATE-003\", \"type\": \"headless_ui\", \"command\": \"npm run test:ui\" }\n  ],\n  \"artifacts\": [\n    \"src/main.rs\",\n    \"ui/app.slint\"\n  ]\n}</pre>";
+    }
+    document.querySelectorAll(".exec-pill").forEach(p => p.classList.remove("active"));
+    document.getElementById("pill-" + id).classList.add("active");
   }
-  document.querySelectorAll(".exec-pill").forEach(p => p.classList.remove("active"));
-  document.getElementById("pill-" + id).classList.add("active");
-}
+  window.showPRDMock = showPRDMock;
+  window.showExecMock = showExecMock;
+})();
 </script>
 </body>
 </html>
