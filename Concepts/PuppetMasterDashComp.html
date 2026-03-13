@@ -8,10 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Orbitron:wght@700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    .interview-phase-step { cursor: pointer; padding: var(--sm) var(--md); border-radius: 4px; transition: background 0.2s; margin-bottom: 2px; }
-    .interview-phase-step:hover { background: var(--surface-elevated); }
-    .interview-phase-step.active { background: var(--surface-elevated); font-weight: 600; color: var(--accent-blue); }
-    [data-theme^="retro"] .interview-phase-step.active { color: var(--accent-lime); }
     .wizard-doc-pill { cursor: pointer; }
     /* --- REDESIGNED WIZARD & CHAT SYSTEM --- */
     .hidden { display: none !important; }
@@ -22,6 +18,7 @@
     .role-badge { font-family: var(--display-font); font-size: 9px; padding: 2px 8px; border-radius: 4px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
     .role-assistant { background: var(--accent-blue); color: #fff; }
     .role-interviewer { background: var(--accent-lime); color: #1a1a1a; }
+    .role-builder { background: var(--accent-blue); color: var(--surface); }
     
     .chat-dropdown-popover { position: absolute; bottom: 30px; left: 0; width: 240px; background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 100; animation: slideUp 0.2s ease-out; }
     .chat-dropdown-popover.active { display: flex; }
@@ -608,8 +605,8 @@
     .terminal-output .line.info { color: var(--accent-orange); }
 
     .chat-panel {
-      width: 420px;
-      min-width: 320px;
+      width: 550px;
+      min-width: 440px;
       background: var(--surface);
       border-left: var(--border-width) solid var(--border);
       display: flex;
@@ -640,6 +637,15 @@
       font-size: 14px;
     }
     .chat-panel-header .panel-actions button:hover { color: var(--text-primary); }
+    .chat-panel-header.chat-panel-header-stacked {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--sm);
+      padding: var(--sm) var(--md);
+      background: var(--surface-elevated);
+      min-height: auto;
+      border-bottom: 1px solid var(--border-light);
+    }
 
     .chat-body {
       flex: 1;
@@ -649,19 +655,41 @@
     }
 
     .chat-thread-sidebar {
-      width: 180px;
-      min-width: 140px;
+      width: 200px;
+      min-width: 160px;
+      max-width: 400px;
+      resize: horizontal;
       background: var(--surface-elevated);
-      border-right: var(--border-width) solid var(--border);
+      border-right: 1px solid var(--border-light);
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      transition: width 0.2s ease;
+    }
+    .chat-thread-sidebar.collapsed {
+      width: 120px !important;
+      min-width: 120px !important;
+      resize: none;
     }
     .chat-thread-sidebar .sidebar-title {
       padding: var(--md);
       font-weight: 600;
       font-size: 12px;
       border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-thread-sidebar .sidebar-title .collapse-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    .chat-thread-sidebar .sidebar-title .collapse-btn:hover {
+      color: var(--text-primary);
     }
     .chat-thread-list {
       flex: 1;
@@ -677,22 +705,154 @@
       font-size: 12px;
       background: var(--surface);
       box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
     }
     [data-theme="basic-light"] .chat-thread-item,
     [data-theme="basic-dark"] .chat-thread-item { box-shadow: none; }
     .chat-thread-item:hover { background: var(--surface-elevated); }
     .chat-thread-item.active {
-      background: var(--accent-lime);
-      color: #1A1A1A;
-      border-color: var(--border);
+      background: var(--surface-elevated);
+      color: var(--text-primary);
+      border: 2px solid var(--accent-blue); /* Default role color, can be overridden by specific classes */
     }
-    [data-theme="retro-dark"] .chat-thread-item.active { border-color: #1A1A1A; }
+    [data-theme^="retro"] .chat-thread-item.active {
+      box-shadow: 4px 4px 0 var(--accent-blue);
+    }
+    
+    .chat-thread-item .thread-top-row {
+      display: flex;
+      align-items: center;
+      gap: var(--xs);
+    }
+    .chat-thread-item .thread-timestamp {
+      font-size: 10px;
+      color: var(--text-muted);
+      min-width: 24px;
+    }
+    .chat-thread-item .thread-title {
+      font-weight: bold;
+      color: var(--text-primary);
+      font-size: 12px;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .chat-thread-item .thread-bottom-row {
+      display: flex;
+      gap: var(--xs);
+      align-items: flex-start;
+      margin-top: 2px;
+    }
+    .chat-thread-item .thread-status-col {
+      width: 24px;
+      display: flex;
+      justify-content: center;
+      padding-top: 4px;
+    }
+    .chat-thread-item .thread-working-pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      animation: pulse 1.5s infinite;
+    }
+    .chat-thread-item .thread-status-unread {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .chat-thread-item .thread-status-read {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      border: 1px solid var(--text-muted);
+      background: transparent;
+    }
+    .chat-thread-item .thread-status-draft {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      border: 1px dashed var(--text-muted);
+      background: transparent;
+    }
+    
+    .chat-thread-item .thread-summary {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: var(--body-font);
+      flex: 1;
+    }
+    
+    .chat-thread-sidebar.collapsed .chat-thread-item .thread-summary,
+    .chat-thread-sidebar.collapsed .chat-thread-item .thread-timestamp,
+    .chat-thread-sidebar.collapsed .chat-thread-item .thread-status-col {
+      display: none;
+    }
+
+    .chat-thread-item .thread-hover-actions {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      display: none;
+      gap: 2px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: 4px;
+      padding: 2px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .chat-thread-item:hover .thread-hover-actions {
+      display: flex;
+    }
+    .chat-thread-item .thread-action-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chat-thread-item .thread-action-btn:hover {
+      color: var(--text-primary);
+      background: var(--surface);
+      border-radius: 2px;
+    }
+    
+    /* Specific Role Colors for Threads */
+    .chat-thread-item.role-assistant.active { border-color: var(--text-primary); }
+    [data-theme^="retro"] .chat-thread-item.role-assistant.active { border-color: var(--accent-lime); box-shadow: 4px 4px 0 var(--accent-lime); }
+    .chat-thread-item.role-assistant .thread-title { color: var(--text-primary); }
+    [data-theme^="retro"] .chat-thread-item.role-assistant .thread-title { color: var(--accent-lime); }
+    .chat-thread-item.role-assistant .thread-working-pulse, .chat-thread-item.role-assistant .thread-status-unread { color: var(--text-primary); }
+    [data-theme^="retro"] .chat-thread-item.role-assistant .thread-working-pulse, [data-theme^="retro"] .chat-thread-item.role-assistant .thread-status-unread { color: var(--accent-lime); }
+    
+    .chat-thread-item.role-interviewer.active { border-color: var(--accent-lime); }
+    [data-theme^="retro"] .chat-thread-item.role-interviewer.active { box-shadow: 4px 4px 0 var(--accent-lime); }
+    .chat-thread-item.role-interviewer .thread-title { color: var(--accent-lime); }
+    .chat-thread-item.role-interviewer .thread-working-pulse, .chat-thread-item.role-interviewer .thread-status-unread { color: var(--accent-lime); }
+    
+    .chat-thread-item.role-doc.active { border-color: var(--accent-orange); }
+    [data-theme^="retro"] .chat-thread-item.role-doc.active { box-shadow: 4px 4px 0 var(--accent-orange); }
+    .chat-thread-item.role-doc .thread-title { color: var(--accent-orange); }
+    .chat-thread-item.role-doc .thread-working-pulse, .chat-thread-item.role-doc .thread-status-unread { color: var(--accent-orange); }
+
+    .chat-thread-item.role-prd.active { border-color: var(--accent-magenta); }
+    [data-theme^="retro"] .chat-thread-item.role-prd.active { box-shadow: 4px 4px 0 var(--accent-magenta); }
+    .chat-thread-item.role-prd .thread-title { color: var(--accent-magenta); }
+    .chat-thread-item.role-prd .thread-working-pulse, .chat-thread-item.role-prd .thread-status-unread { color: var(--accent-magenta); }
 
     .chat-main {
       flex: 1;
       display: flex;
       flex-direction: column;
-      min-width: 0;
+      min-width: 350px;
       overflow: hidden;
     }
 
@@ -1521,11 +1681,12 @@
       line-height: 1.6;
       color: var(--text-primary);
     }
-    
     /* Markdown & Mermaid Mocks */
     .mock-md h1 { font-size: 24px; margin-bottom: var(--lg); border-bottom: 1px solid var(--border-light); padding-bottom: var(--sm); }
     .mock-md h2 { font-size: 18px; margin-top: var(--xl); margin-bottom: var(--md); }
     .mock-md p { margin-bottom: var(--md); color: var(--text-secondary); }
+    .mock-md ul { padding-left: 1.5em; margin-bottom: var(--md); }
+    .mock-md li { margin-bottom: var(--xs); }
     .mock-mermaid {
       background: var(--surface);
       border: 1px solid var(--border-light);
@@ -3088,6 +3249,7 @@
       padding: var(--xl);
       overflow-y: auto;
       flex: 1;
+      overflow-anchor: none;
     }
         .bento-grid {
       display: grid;
@@ -3099,6 +3261,13 @@
     .page-settings.active {
       display: flex;
       animation: fadeIn 0.3s ease-in-out;
+    }
+    .page-settings .bento-grid {
+      align-items: start;
+      min-height: 0;
+    }
+    .page-settings .bento-card {
+      contain: layout;
     }
     /* End of Settings Styles */
 
@@ -3190,8 +3359,13 @@
       font-size: 13px;
       color: var(--text-secondary);
       position: relative;
-      padding: var(--sm) 0;
+      padding: var(--sm) var(--md) 0;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.2s;
+      margin-bottom: 2px;
     }
+    .interview-phase-step:hover { background: var(--surface-elevated); }
     .interview-phase-step .dot {
       width: 12px;
       height: 12px;
@@ -3201,9 +3375,11 @@
       z-index: 2;
     }
     .interview-phase-step.active {
+      background: var(--surface-elevated);
       color: var(--text-primary);
       font-weight: 600;
     }
+    [data-theme^="retro"] .interview-phase-step.active { color: var(--accent-lime); }
     .interview-phase-step.active .dot {
       border-color: var(--accent-blue);
       background: var(--accent-blue);
@@ -3221,8 +3397,8 @@
     .interview-phase-step::after {
       content: '';
       position: absolute;
-      top: 24px;
-      left: 5px;
+      top: calc(var(--sm) + 16px);
+      left: 8px;
       width: 2px;
       height: 100%;
       background: var(--border-light);
@@ -4467,22 +4643,37 @@ impl Dashboard {
               <div class="wizard-nav-connector"></div>
               <div class="wizard-nav-step" data-step-target="2" data-nav-step="2">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                3. Interview
+                3. Doc Builder
               </div>
               <div class="wizard-nav-connector"></div>
               <div class="wizard-nav-step" data-step-target="3" data-nav-step="3">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                4. Review PRD
+                4. Review Requirements
               </div>
               <div class="wizard-nav-connector"></div>
               <div class="wizard-nav-step" data-step-target="4" data-nav-step="4">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                5. Configure
+                5. Interview Configuration
               </div>
               <div class="wizard-nav-connector"></div>
               <div class="wizard-nav-step" data-step-target="5" data-nav-step="5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                6. Interview
+              </div>
+              <div class="wizard-nav-connector"></div>
+              <div class="wizard-nav-step" data-step-target="6" data-nav-step="6">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                7. Review PRD
+              </div>
+              <div class="wizard-nav-connector"></div>
+              <div class="wizard-nav-step" data-step-target="7" data-nav-step="7">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                8. Configure
+              </div>
+              <div class="wizard-nav-connector"></div>
+              <div class="wizard-nav-step" data-step-target="8" data-nav-step="8">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                6. Review & Start
+                9. Review & Start
               </div>
             </div>
 
@@ -4538,13 +4729,13 @@ impl Dashboard {
                   <div id="reqBuilderStart" class="wizard-fields">
                     <button class="wizard-btn btn-icon" style="justify-content: center; padding: var(--xl);"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg> Upload Files (Max 10, 5MB each)</button>
                     <div style="text-align: center; color: var(--text-muted); font-size: 13px; margin: var(--sm) 0;">— OR —</div>
-                    <button class="wizard-btn primary btn-icon" style="justify-content: center;" onclick="document.getElementById('chatPanel').classList.remove('hidden'); "><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Open Requirements Doc Builder</button>
+                    <button class="wizard-btn primary btn-icon" style="justify-content: center;" onclick="if(window.openRequirementsBuilder) window.openRequirementsBuilder();"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Open Requirements Doc Builder</button>
                   </div>
 
                   <!-- Builder Chat Flow -->
 
                   <div class="wizard-fields" style="margin-top: var(--xl); padding: var(--xl); background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-                    <div style="font-family: var(--display-font); font-size: 16px; margin-bottom: var(--lg); border-bottom: 1px solid var(--border-light); padding-bottom: var(--sm); display:flex; align-items:center; gap:var(--sm);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Builder & Interview Configuration</div>
+                    <div style="font-family: var(--display-font); font-size: 16px; margin-bottom: var(--lg); border-bottom: 1px solid var(--border-light); padding-bottom: var(--sm); display:flex; align-items:center; gap:var(--sm);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Doc Builder Configuration</div>
                     
                     <div style="font-family: var(--display-font); font-size: 13px; color: var(--text-secondary); margin-bottom: var(--sm);">Requirements Doc Builder Stages</div>
                     <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap: var(--md); margin-bottom: var(--xl);">
@@ -4573,7 +4764,77 @@ impl Dashboard {
                         <select class="wizard-select" style="padding: 4px 8px; font-size: 12px;"><option>opus-4</option><option>sonnet-4.5</option></select>
                       </div>
                     </div>
-                    
+
+                    <div style="font-family: var(--display-font); font-size: 13px; color: var(--text-secondary); margin-bottom: var(--sm);">Requirements Multi-Pass Review</div>
+                    <div style="display:flex; gap:var(--xl); padding: var(--md); background: var(--surface); border: 1px solid var(--border-light); border-radius: 6px;">
+                      <label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer; font-size:13px; font-weight:500;"><input type="checkbox" checked style="transform:scale(1.2);"> Enable Document Validation (Pass 1)</label>
+                      <label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer; font-size:13px; font-weight:500;"><input type="checkbox" checked style="transform:scale(1.2);"> Enable Canonical Alignment (Pass 2)</label>
+                    </div>
+                  </div>
+                  <div class="wizard-btn-row"><button class="wizard-btn" data-step-target="0">Back</button><button class="wizard-btn primary btn-icon" data-step-target="5">Start Interview <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div>
+                </div>
+              </div>
+
+              <div class="wizard-step-panel" data-wizard-panel="2">
+                <div class="wizard-binder-container">
+                  <div class="interview-sidebar">
+                    <div class="interview-sidebar-title">Doc Builder Progress</div>
+                    <div class="interview-phase-step complete"><div class="dot"></div> Intake</div>
+                    <div class="interview-phase-step active"><div class="dot"></div> Clarification</div>
+                    <div class="interview-phase-step"><div class="dot"></div> Drafting</div>
+                    <div class="interview-phase-step"><div class="dot"></div> Review</div>
+                  </div>
+                  <div class="wizard-binder-content" style="flex: 1;">
+                    <div class="wizard-binder-toolbar" style="background: var(--surface-elevated); border-bottom: 1px solid var(--border-light);"><div class="wizard-btn-group"><span style="font-family: var(--display-font); font-size: 13px; color: var(--text-primary);">Live Document: <span style="color: var(--text-secondary); font-family: var(--body-font);">requirements-draft.md</span> <span class="wizard-activity-pulse" style="display:inline-block; margin-left:var(--sm);"></span></span></div><div class="wizard-btn-group"><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit</button></div><div class="wizard-btn-group"><button class="wizard-btn" data-step-target="1">Back</button><button class="wizard-btn primary btn-icon" data-step-target="3">Review Requirements <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div></div>
+                    <div class="wizard-binder-view mock-md">
+                      <h1>Requirements Draft</h1>
+                      <p><em>This document is actively being written by the Requirements Doc Builder based on your inputs...</em></p>
+                      <h2>1. Overview</h2>
+                      <p>Preliminary scope and goals are being captured from the conversation. The builder will structure functional and non-functional requirements into a PRD-ready format.</p>
+                      <h2>2. Key Requirements</h2>
+                      <p>Draft sections will appear here as the builder clarifies constraints, acceptance criteria, and out-of-scope items.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wizard-step-panel" data-wizard-panel="3">
+                <div class="wizard-binder-container">
+                  <div class="wizard-binder-sidebar" style="min-width: 160px;">
+                    <div class="wizard-binder-sidebar-title">Generated Documents</div>
+                    <div class="wizard-doc-pill active" style="margin-bottom: var(--sm);"><span>Requirements draft</span><span class="wizard-doc-status review">[REVIEW]</span></div>
+                    <div class="wizard-doc-pill"><span>PRD draft</span><span class="wizard-doc-status">[DRAFT]</span></div>
+                  </div>
+                  <div class="wizard-binder-content" style="flex: 1;">
+                    <div class="wizard-binder-toolbar"><div class="wizard-btn-group"><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit</button></div><div class="wizard-btn-group"><button class="wizard-btn" data-step-target="2">Back</button><button class="wizard-btn primary btn-icon" data-step-target="4">Continue to Interview <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div></div>
+                    <div class="wizard-binder-view mock-md">
+                      <h1>Requirements Draft (Review)</h1>
+                      <p><strong>Status:</strong> Review | <strong>Version:</strong> 0.9</p>
+                      <h2>1. Summary</h2>
+                      <p>Draft requirements captured from the builder conversation. Review and approve before continuing to the Interview step.</p>
+                      <h2>2. Functional Requirements</h2>
+                      <p>Draft FRs will be validated in the next pass. You can edit inline or request changes via the builder chat.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wizard-step-panel" data-wizard-panel="4">
+                <div class="wizard-form-container">
+                  <div>
+                    <div class="wizard-form-header">Interview Configuration</div>
+                    <div class="wizard-form-desc">Configure provider, model, question limits, and review options for the interview process.</div>
+                  </div>
+                  <div class="wizard-fields" style="margin-top: var(--xl); padding: var(--xl); background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                    <div style="font-family: var(--display-font); font-size: 13px; color: var(--text-secondary); margin-bottom: var(--sm);">Interview default</div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap: var(--lg); margin-bottom: var(--xl);">
+                      <div style="padding: var(--md); border: 1px solid var(--border-light); border-radius: 6px; background: var(--surface);">
+                        <label style="display:block; margin-bottom:var(--xs); font-size:12px;">Provider</label>
+                        <select class="wizard-select" style="padding: 4px 8px; font-size: 12px; margin-bottom: var(--sm);"><option>Claude Code</option><option>Cursor</option><option>Gemini</option><option>OpenCode</option><option>Codex</option><option>Copilot</option></select>
+                        <label style="display:block; margin-bottom:var(--xs); font-size:12px;">Model</label>
+                        <select class="wizard-select" style="padding: 4px 8px; font-size: 12px;"><option>sonnet-4.5</option><option>opus-4</option></select>
+                      </div>
+                    </div>
                     <div style="font-family: var(--display-font); font-size: 13px; color: var(--text-secondary); margin-bottom: var(--sm);">Interview Rules</div>
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap: var(--lg); margin-bottom: var(--md);">
                       <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Min Questions / Phase</label><input type="number" class="wizard-input" value="3"></div>
@@ -4584,22 +4845,30 @@ impl Dashboard {
                         </div>
                       </div>
                     </div>
-                    <div style="display:flex; gap:var(--xl); padding: var(--md); background: var(--surface); border: 1px solid var(--border-light); border-radius: 6px; margin-bottom: var(--lg);">
+                    <div style="display:flex; flex-wrap:wrap; gap:var(--xl); padding: var(--md); background: var(--surface); border: 1px solid var(--border-light); border-radius: 6px; margin-bottom: var(--lg);">
                       <label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer; font-size:13px; font-weight:500;"><input type="checkbox" checked style="transform:scale(1.2);"> Require Architecture Confirmation</label>
                       <label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer; font-size:13px; font-weight:500;"><input type="checkbox" checked style="transform:scale(1.2);"> Generate initial AGENTS.md</label>
+                      <label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer; font-size:13px; font-weight:500;"><input type="checkbox" style="transform:scale(1.2);"> Generate Playwright requirements</label>
                     </div>
-
-                    <div style="font-family: var(--display-font); font-size: 13px; color: var(--text-secondary); margin-bottom: var(--sm);">Requirements Multi-Pass Review</div>
-                    <div style="display:flex; gap:var(--xl); padding: var(--md); background: var(--surface); border: 1px solid var(--border-light); border-radius: 6px;">
-                      <label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer; font-size:13px; font-weight:500;"><input type="checkbox" checked style="transform:scale(1.2);"> Enable Document Validation (Pass 1)</label>
-                      <label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer; font-size:13px; font-weight:500;"><input type="checkbox" checked style="transform:scale(1.2);"> Enable Canonical Alignment (Pass 2)</label>
+                    <div style="font-family: var(--display-font); font-size: 13px; color: var(--text-secondary); margin-bottom: var(--sm);">Vision provider</div>
+                    <div style="margin-bottom: var(--xl);">
+                      <select class="wizard-select" style="padding: 6px 8px; font-size: 12px;"><option>Same as default</option><option>Claude Code</option><option>Cursor</option><option>Gemini</option></select>
+                    </div>
+                    <div style="font-family: var(--display-font); font-size: 13px; color: var(--text-secondary); margin-bottom: var(--sm);">Multi-Pass Review for Interview</div>
+                    <div style="padding: var(--md); background: var(--surface); border: 1px solid var(--border-light); border-radius: 6px;">
+                      <label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer; font-size:13px; font-weight:500; margin-bottom: var(--md);"><input type="checkbox" style="transform:scale(1.2);"> Enable Multi-Pass Review <span style="color:var(--text-muted); font-size:11px; margin-left:var(--xs);">Increases token usage</span></label>
+                      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap: var(--md);">
+                        <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Review passes</label><select class="wizard-select" style="padding: 4px 8px; font-size: 12px;"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option></select></div>
+                        <div><label style="display:block; margin-bottom:var(--xs); font-size:12px; font-weight:600;">Max subagents</label><input type="number" class="wizard-input" value="3" min="1" max="10" style="padding: 4px 8px; font-size: 12px;"></div>
+                        <div style="display:flex; align-items:flex-end;"><label style="display:flex; align-items:center; gap:var(--sm); cursor:pointer; font-size:12px;"><input type="checkbox" style="transform:scale(1.2);"> Use different models</label></div>
+                      </div>
                     </div>
                   </div>
-                  <div class="wizard-btn-row"><button class="wizard-btn" data-step-target="0">Back</button><button class="wizard-btn primary btn-icon" data-step-target="2">Start Interview <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div>
+                  <div class="wizard-btn-row"><button class="wizard-btn" data-step-target="3">Back</button><button class="wizard-btn primary btn-icon" data-step-target="5">Start Interview <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div>
                 </div>
               </div>
 
-              <div class="wizard-step-panel" data-wizard-panel="2">
+              <div class="wizard-step-panel" data-wizard-panel="5">
                 <div class="wizard-binder-container">
                   <div class="interview-sidebar">
                     <div class="interview-sidebar-title">Interview Progress</div>
@@ -4612,10 +4881,9 @@ impl Dashboard {
                     <div class="interview-phase-step"><div class="dot"></div> Performance</div>
                     <div class="interview-phase-step"><div class="dot"></div> Testing</div>
                     <div class="interview-phase-step"><div class="dot"></div> Product / UX</div>
-                    <div style="margin-top: auto; padding-top: var(--xl); border-top: 1px solid var(--border-light);"><button class="wizard-btn" data-step-target="1" style="width: 100%; margin-bottom: var(--sm);">Back</button><button class="wizard-btn primary btn-icon" data-step-target="3" style="width: 100%; justify-content: center;">Skip to PRD <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div>
                   </div>
                   <div class="wizard-binder-content">
-                    <div class="wizard-binder-toolbar" style="background: var(--surface-elevated); border-bottom: 1px solid var(--border-light);"><div class="wizard-btn-group"><span style="font-family: var(--display-font); font-size: 13px; color: var(--text-primary);">Live Document: <span style="color: var(--text-secondary); font-family: var(--body-font);">architecture.md</span> <span class="wizard-activity-pulse" style="display:inline-block; margin-left:var(--sm);"></span></span></div><div class="wizard-btn-group"><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit</button></div></div>
+                    <div class="wizard-binder-toolbar" style="background: var(--surface-elevated); border-bottom: 1px solid var(--border-light);"><div class="wizard-btn-group"><span style="font-family: var(--display-font); font-size: 13px; color: var(--text-primary);">Live Document: <span style="color: var(--text-secondary); font-family: var(--body-font);">architecture.md</span> <span class="wizard-activity-pulse" style="display:inline-block; margin-left:var(--sm);"></span></span></div><div class="wizard-btn-group"><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit</button></div><div class="wizard-btn-group"><button class="wizard-btn" data-step-target="4">Back</button><button class="wizard-btn primary btn-icon" data-step-target="6">Skip to PRD <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div></div>
                     <div class="wizard-binder-view mock-md">
                       <h1>Architecture Draft</h1>
                       <p><em>This document is actively being written by the Architect Reviewer subagent based on our conversation...</em></p>
@@ -4632,7 +4900,7 @@ impl Dashboard {
                 </div>
               </div>
 
-              <div class="wizard-step-panel" data-wizard-panel="3">
+              <div class="wizard-step-panel" data-wizard-panel="6">
                 <div class="wizard-binder-container">
                   <div class="wizard-binder-sidebar">
                     <div class="wizard-binder-sidebar-title">Generated Documents</div>
@@ -4641,7 +4909,7 @@ impl Dashboard {
                     <div id="pill-arch" class="wizard-doc-pill prd-pill" onclick="showPRDMock('arch')"><span>Architecture</span><span class="wizard-doc-status">[DRAFT]</span></div>
                   </div>
                   <div class="wizard-binder-content">
-                    <div class="wizard-binder-toolbar"><div class="wizard-btn-group"><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit</button><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Export</button></div><div class="wizard-btn-group"><button class="wizard-btn" data-step-target="2">Back</button><button class="wizard-btn primary btn-icon" data-step-target="4">Approve & Continue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div></div>
+                    <div class="wizard-binder-toolbar"><div class="wizard-btn-group"><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit</button><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Export</button></div><div class="wizard-btn-group"><button class="wizard-btn" data-step-target="5">Back</button><button class="wizard-btn primary btn-icon" data-step-target="7">Approve & Continue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div></div>
                     <div id="prd-mock-content" class="wizard-binder-view mock-md">
                       <h1>Product Requirements Document</h1>
                       <p><strong>Status:</strong> Approved | <strong>Version:</strong> 1.0</p>
@@ -4660,7 +4928,7 @@ impl Dashboard {
                 </div>
               </div>
 
-              <div class="wizard-step-panel" data-wizard-panel="4">
+              <div class="wizard-step-panel" data-wizard-panel="7">
                 <div class="wizard-form-container">
                   <div>
                     <div class="wizard-form-header">Execution Tiers Configuration</div>
@@ -4733,11 +5001,11 @@ impl Dashboard {
                     </div>
 
                   </div>
-                  <div class="wizard-btn-row"><button class="wizard-btn" data-step-target="3">Back</button><button class="wizard-btn primary btn-icon" data-step-target="5">Review Plan <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div>
+                  <div class="wizard-btn-row"><button class="wizard-btn" data-step-target="6">Back</button><button class="wizard-btn primary btn-icon" data-step-target="8">Review Plan <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div>
                 </div>
               </div>
 
-              <div class="wizard-step-panel" data-wizard-panel="5">
+              <div class="wizard-step-panel" data-wizard-panel="8">
                 <div class="wizard-binder-container">
                   <div class="wizard-binder-sidebar">
                     <div class="wizard-binder-sidebar-title">Execution</div>
@@ -4745,7 +5013,7 @@ impl Dashboard {
                     <div id="pill-manifest" class="wizard-doc-pill exec-pill" onclick="showExecMock('manifest')"><span>Acceptance Manifest</span><span class="wizard-doc-status">[READY]</span></div>
                   </div>
                   <div class="wizard-binder-content">
-                    <div class="wizard-binder-toolbar"><div class="wizard-btn-group"></div><div class="wizard-btn-group"><button class="wizard-btn" data-step-target="4">Back</button><button class="wizard-btn primary btn-icon" onclick="document.querySelector('.page-tab[data-page=\'orchestrator\']').click(); setTimeout(()=>document.querySelector('.orch-tab[data-tab=\'node_graph\']').click(), 50);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> START CHAIN</button></div></div>
+                    <div class="wizard-binder-toolbar"><div class="wizard-btn-group"></div><div class="wizard-btn-group"><button class="wizard-btn" data-step-target="7">Back</button><button class="wizard-btn primary btn-icon" onclick="document.querySelector('.page-tab[data-page=\'orchestrator\']').click(); setTimeout(()=>document.querySelector('.orch-tab[data-tab=\'node_graph\']').click(), 50);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> START CHAIN</button></div></div>
                     <div id="exec-mock-content" class="wizard-binder-view mock-md">
                       <h1>Execution Plan</h1>
                       <h2>Phase 1: Foundation</h2>
@@ -6010,11 +6278,19 @@ impl Dashboard {
 <div class="resizer-col hidden" id="chatResizer"></div>
           <aside class="chat-panel hidden" id="chatPanel">
             
-            <div class="chat-panel-header" style="flex-direction: column; align-items: stretch; gap: var(--sm); padding: var(--sm) var(--md); background: var(--surface-elevated); min-height: auto; border-bottom: 1px solid var(--border-light);">
-              <div style="display: flex; align-items: center; width: 100%;">
+            <div class="chat-panel-header chat-panel-header-stacked">
+              <div style="display: flex; align-items: center; width: 100%; gap: var(--md);">
                 <div class="title" style="font-size: 13px; flex: 1; display:flex; align-items:center; gap:var(--sm); font-family:var(--display-font);">
-                    ASSISTANT <span class="chatRoleBadge role-badge role-assistant">Assistant</span>
+                    <span class="chatHeaderTitle" style="color:var(--text-primary);">ASSISTANT</span>
                 </div>
+                
+                <div style="display:flex; gap:var(--md); align-items:center; font-size:11px;">
+                  <span class="context-usage" title="Context: 42k / 128k" style="color:var(--text-secondary); font-family:var(--body-font); display:flex; align-items:center; gap:var(--xs);">
+                    <svg width="10" height="10" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="var(--text-secondary)" opacity="0.8"></circle></svg> 42k/128k
+                  </span>
+                  <a href="#" style="color:var(--accent-orange); border: 1px solid var(--accent-orange); display:flex; align-items:center; gap:4px; text-decoration: none; padding:2px 8px; border-radius:4px; font-weight:600;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Issues</a>
+                </div>
+
                 <div class="panel-actions" style="display: flex; gap: var(--xs);">
                   <button class="popOutBtn" title="Pop out" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>
                   <button class="closeChatBtn" title="Close" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
@@ -6026,39 +6302,127 @@ impl Dashboard {
               </div>
             </div>
 
-            <div class="chat-body" style="flex: 1; display: flex; min-height: 0; overflow: hidden;">
-              <div class="chat-thread-sidebar" style="width: 180px; min-width: 140px; background: var(--surface-elevated); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; overflow: hidden;">
+            <div class="chat-body">
+              <div class="chat-thread-sidebar">
                 <div class="sidebar-title" style="padding: var(--md); font-weight: 600; font-size: 12px; border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
                   HISTORY
-                  <button style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                  <button class="collapse-btn" title="Collapse" style="background:none; border:none; color:var(--text-muted); cursor:pointer; padding:2px;" onclick="this.closest('.chat-thread-sidebar').classList.toggle('collapsed');">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                  </button>
                 </div>
                 <div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm);">
-                  <div class="chat-thread-item" data-thread="thread1" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Wizard: Dashboard UI</div>
-                  <div class="chat-thread-item" data-thread="thread2" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Refactor Database Layer</div>
-                  <div class="chat-thread-item" data-thread="thread3" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Fix Auth Token Bug</div>
-                  <div class="chat-thread-item" data-thread="thread4" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Research Web Frameworks</div>
-                  <div class="chat-thread-item" data-thread="thread5" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Context Lens Check</div>
-                  <div class="chat-thread-item" data-thread="thread6" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">FileSafe Blocking</div>
+                  <div class="chat-thread-item role-doc active" data-thread="thread1">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">12m</span>
+                      <div class="thread-title">Requirements Doc</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
+                      <div class="thread-summary">Updating dashboard widget layout.<br>Read 3 files, +142 -10</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+
+                  <div class="chat-thread-item role-assistant" data-thread="thread2">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">1h</span>
+                      <div class="thread-title">Refactor Database Layer</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-status-unread"></div></div>
+                      <div class="thread-summary">Consolidated queries into repository pattern.<br>Ran `cargo test`, 35 passed.</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+
+                  <div class="chat-thread-item role-assistant" data-thread="thread3">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">2h</span>
+                      <div class="thread-title">Fix Auth Token Bug</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-status-read"></div></div>
+                      <div class="thread-summary">Found issue in JWT expiration check.<br>Applied fix to auth.rs, verified locally.</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+
+                  <div class="chat-thread-item role-interviewer" data-thread="thread4">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">3h</span>
+                      <div class="thread-title">Research Web Frameworks</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-status-read"></div></div>
+                      <div class="thread-summary">Compared Axum and Actix-web.<br>User selected Axum for the new API.</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+
+                  <div class="chat-thread-item role-assistant" data-thread="thread5">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">1d</span>
+                      <div class="thread-title">Context Lens Check</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-status-read"></div></div>
+                      <div class="thread-summary">Analyzed dependency graph.<br>Extracted 12 relevant symbols.</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+
+                  <div class="chat-thread-item role-assistant" data-thread="thread6">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">1d</span>
+                      <div class="thread-title">FileSafe Blocking</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-status-read"></div></div>
+                      <div class="thread-summary">Addressed write block on config.json.<br>User explicitly allowed YOLO bypass.</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+
+                  <div class="chat-thread-item role-prd" data-thread="thread7">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">2d</span>
+                      <div class="thread-title">Requirements Doc Builder</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-status-draft"></div></div>
+                      <div class="thread-summary">Generated full MVP specification.<br>Awaiting approval on Phase 2 plan.</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden;">
-                <div class="chat-modes chatModesBar">
-                  <div class="mode" data-mode="ask" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Ask</div>
-                  <div class="mode" data-mode="plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Plan</div>
-                  <div class="mode" data-mode="deep-plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Deep Plan</div>
-                  <div class="mode" data-mode="crew" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Crew</div>
-                </div>
-                
-                <div class="chat-header-workflow hidden chatWorkflowHeader">
-                  <span class="workflowHeaderTitle">Interactive Interview</span>
-                  <button class="wizard-btn returnToChatBtn" style="padding:2px var(--sm); font-size:10px;">Return to Chat</button>
-                </div>
-
+              <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
                 <div class="message-stream messageStream" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-direction: column; gap: var(--md);">
                 </div>
 
-                <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light);">
+                <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light); display:flex; flex-direction:column; gap:var(--sm);">
                   <div class="pendingInterventionBlock hidden" style="position:absolute; top:-40px; left:var(--md); right:var(--md); background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:6px; padding:var(--sm) var(--md); display:flex; justify-content:space-between; align-items:center; font-size:11px; box-shadow:0 -4px 12px rgba(0,0,0,0.1); z-index:10;">
                     <span style="color:var(--text-secondary); text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:200px;">"Wait, update the cache too."</span>
                     <div style="display:flex; gap:var(--xs); align-items:center;">
@@ -6071,66 +6435,76 @@ impl Dashboard {
 
                   <div style="background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
                     <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; outline:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm);">
-                      <div style="display:flex; gap:var(--md); align-items:center;">
-                        <button title="Attach File" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
-                        <label style="font-size:10px; color:var(--text-secondary); display:flex; align-items:center; gap:2px; cursor:pointer;"><input type="checkbox"> ELI5</label>
-                        <label style="font-size:10px; color:var(--accent-orange); display:flex; align-items:center; gap:2px; cursor:pointer;" title="Auto-approve tools"><input type="checkbox"> YOLO</label>
+                    
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm); border-top: 1px solid var(--border-light);">
+                      <div style="display:flex; gap:var(--sm); align-items:center;">
+                        <button title="Attach File" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; padding:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
+                        
+                        <div style="position:relative;">
+                          <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; min-width:80px; justify-content:space-between; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
+                            <span>Agent</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                          </button>
+                          <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
+                            <div class="chat-dropdown-list">
+                                <div class="chat-dropdown-item active" data-value="Agent">Agent</div>
+                                <div class="chat-dropdown-item" data-value="Ask">Ask</div>
+                                <div class="chat-dropdown-item" data-value="Plan">Plan</div>
+                                <div class="chat-dropdown-item" data-value="Deep Plan">Deep Plan</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div style="display:flex; gap:var(--md); align-items:center; margin-left:var(--sm); font-size:10px;">
+                          <span style="cursor:pointer; color:var(--text-secondary); transition:all 0.2s;" title="Explain Like I'm 5" onclick="this.classList.toggle('active')" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-secondary)'">ELI5</span>
+                          <span style="cursor:pointer; color:var(--accent-orange); font-weight:600; transform:scale(1.1); transition:all 0.2s;" title="Auto-approve tools" onclick="this.classList.toggle('active')">YOLO</span>
+                          <span style="cursor:pointer; color:var(--text-secondary); transition:all 0.2s;" title="Multi-agent Crew" onclick="this.classList.toggle('active')" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-secondary)'">CREW</span>
+                        </div>
                       </div>
-                      <button style="background:var(--accent-blue); color:var(--surface); border:none; border-radius:4px; padding:4px var(--md); font-size:11px; font-weight:600; cursor:pointer;">Send</button>
+
+                      <button style="background:var(--accent-blue); color:var(--surface); border:none; border-radius:4px; padding:6px var(--lg); font-size:11px; font-weight:600; cursor:pointer;">SEND</button>
                     </div>
                   </div>
-                </div>
 
-                <div class="chat-footer" style="display:flex; justify-content:space-between; padding:var(--sm) var(--md); background:var(--surface); border-top:1px solid var(--border-light); font-size:10px; min-height: 24px; position:relative;">
-                  <div style="display:flex; gap:var(--md); align-items:center;">
+                  <div style="display:flex; gap:var(--md); align-items:center; font-size:10px; margin-top:var(--sm);">
                     <div style="position:relative;">
-                      <button class="chat-dropdown-btn" data-dropdown="persona" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
-                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <span class="persona-label">product-manager</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
+                        <span class="persona-label">product-manager</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                       </button>
-                      <div class="chat-dropdown-popover personaPopover">
-                        <div class="chat-dropdown-search"><input type="text" placeholder="Find persona..." class="personaSearch"></div>
-                        <div class="chat-dropdown-list personaList">
-                            <div class="chat-dropdown-item active" data-value="product-manager"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> product-manager</div>
-                            <div class="chat-dropdown-item" data-value="architect-reviewer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> architect-reviewer</div>
-                            <div class="chat-dropdown-item" data-value="rust-engineer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> rust-engineer</div>
-                            <div class="chat-dropdown-item" data-value="technical-writer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> technical-writer</div>
-                            <div class="chat-dropdown-item" data-value="knowledge-synthesizer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> knowledge-synthesizer</div>
+                      <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
+                        <div class="chat-dropdown-list">
+                            <div class="chat-dropdown-item active">product-manager</div>
+                            <div class="chat-dropdown-item">architect-reviewer</div>
+                            <div class="chat-dropdown-item">rust-engineer</div>
                         </div>
                       </div>
                     </div>
                     
                     <div style="position:relative;">
-                      <button class="chat-dropdown-btn" data-dropdown="model" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
-                        <span class="model-label">Claude: sonnet-4.5</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
+                        <span class="model-label">Claude: sonnet-4.5</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                       </button>
-                      <div class="chat-dropdown-popover modelPopover">
-                        <div class="chat-dropdown-search"><input type="text" placeholder="Find model..." class="modelSearch"></div>
-                        <div class="chat-dropdown-list modelList">
-                            <div class="chat-dropdown-header">Anthropic</div>
-                            <div class="chat-dropdown-item active" data-value="Claude: sonnet-4.5">sonnet-4.5</div>
-                            <div class="chat-dropdown-item" data-value="Claude: opus-3">opus-3</div>
-                            <div class="chat-dropdown-header">OpenAI</div>
-                            <div class="chat-dropdown-item" data-value="OpenAI: o3-mini">o3-mini</div>
-                            <div class="chat-dropdown-item" data-value="OpenAI: gpt-4o">gpt-4o</div>
-                            <div class="chat-dropdown-header">Local</div>
-                            <div class="chat-dropdown-item" data-value="Local: DeepSeek R1">DeepSeek R1</div>
+                      <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
+                        <div class="chat-dropdown-list">
+                            <div class="chat-dropdown-item active">sonnet-4.5</div>
+                            <div class="chat-dropdown-item">opus-3</div>
+                            <div class="chat-dropdown-item">gpt-4o</div>
                         </div>
                       </div>
                     </div>
 
-                    <span title="Reasoning Effort: High" style="color:var(--text-secondary); display:flex; align-items:center; gap:var(--xs);">
-                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54z"></path></svg>
-                        High
-                    </span>
-                  </div>
-                  <div style="display:flex; gap:var(--md); align-items:center;">
-                    <div class="context-usage" title="Context: 42k / 128k" style="display:flex; align-items:center; gap:var(--xs);">
-                      <div style="width:12px; height:12px; border-radius:50%; background:conic-gradient(var(--accent-blue) 30%, var(--border-light) 0); border:1px solid var(--border);"></div>
-                      <span>42k</span>
+                    <div style="position:relative;">
+                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
+                        <span>High</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
+                        <div class="chat-dropdown-list">
+                            <div style="padding: var(--sm) var(--md); font-weight: 600; color: var(--text-muted); border-bottom: 1px solid var(--border-light);">Select Effort</div>
+                            <div class="chat-dropdown-item active">High</div>
+                            <div class="chat-dropdown-item">Medium</div>
+                            <div class="chat-dropdown-item">Low</div>
+                        </div>
+                      </div>
                     </div>
-                    <a href="#" style="color:var(--accent-orange); display:flex; align-items:center; gap:var(--xs); text-decoration: none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Problems</a>
                   </div>
                 </div>
               </div>
@@ -6241,11 +6615,19 @@ impl Dashboard {
             </div>
             <div class="float-content" style="flex:1; display:flex; flex-direction:column; overflow:hidden; height: calc(100% - 28px);">
               
-            <div class="chat-panel-header" style="flex-direction: column; align-items: stretch; gap: var(--sm); padding: var(--sm) var(--md); background: var(--surface-elevated); min-height: auto; border-bottom: 1px solid var(--border-light);">
-              <div style="display: flex; align-items: center; width: 100%;">
+            <div class="chat-panel-header chat-panel-header-stacked">
+              <div style="display: flex; align-items: center; width: 100%; gap: var(--md);">
                 <div class="title" style="font-size: 13px; flex: 1; display:flex; align-items:center; gap:var(--sm); font-family:var(--display-font);">
-                    ASSISTANT <span class="chatRoleBadge role-badge role-assistant">Assistant</span>
+                    <span class="chatHeaderTitle" style="color:var(--text-primary);">ASSISTANT</span>
                 </div>
+                
+                <div style="display:flex; gap:var(--md); align-items:center; font-size:11px;">
+                  <span class="context-usage" title="Context: 42k / 128k" style="color:var(--text-secondary); font-family:var(--body-font); display:flex; align-items:center; gap:var(--xs);">
+                    <svg width="10" height="10" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="var(--text-secondary)" opacity="0.8"></circle></svg> 42k/128k
+                  </span>
+                  <a href="#" style="color:var(--accent-orange); border: 1px solid var(--accent-orange); display:flex; align-items:center; gap:4px; text-decoration: none; padding:2px 8px; border-radius:4px; font-weight:600;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Issues</a>
+                </div>
+
                 <div class="panel-actions" style="display: flex; gap: var(--xs);">
                   <button class="popOutBtn" title="Pop out" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>
                   <button class="closeChatBtn" title="Close" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
@@ -6257,39 +6639,127 @@ impl Dashboard {
               </div>
             </div>
 
-            <div class="chat-body" style="flex: 1; display: flex; min-height: 0; overflow: hidden;">
-              <div class="chat-thread-sidebar" style="width: 180px; min-width: 140px; background: var(--surface-elevated); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; overflow: hidden;">
+            <div class="chat-body">
+              <div class="chat-thread-sidebar">
                 <div class="sidebar-title" style="padding: var(--md); font-weight: 600; font-size: 12px; border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
                   HISTORY
-                  <button style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                  <button class="collapse-btn" title="Collapse" style="background:none; border:none; color:var(--text-muted); cursor:pointer; padding:2px;" onclick="this.closest('.chat-thread-sidebar').classList.toggle('collapsed');">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                  </button>
                 </div>
                 <div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm);">
-                  <div class="chat-thread-item" data-thread="thread1" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Wizard: Dashboard UI</div>
-                  <div class="chat-thread-item" data-thread="thread2" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Refactor Database Layer</div>
-                  <div class="chat-thread-item" data-thread="thread3" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Fix Auth Token Bug</div>
-                  <div class="chat-thread-item" data-thread="thread4" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Research Web Frameworks</div>
-                  <div class="chat-thread-item" data-thread="thread5" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">Context Lens Check</div>
-                  <div class="chat-thread-item" data-thread="thread6" style="padding: var(--md); margin-bottom: var(--sm); cursor: pointer; border: var(--border-width) solid var(--border); border-radius: var(--border-radius); font-size: 12px; background: var(--surface);">FileSafe Blocking</div>
+                  <div class="chat-thread-item role-doc active" data-thread="thread1">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">12m</span>
+                      <div class="thread-title">Requirements Doc</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
+                      <div class="thread-summary">Updating dashboard widget layout.<br>Read 3 files, +142 -10</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+
+                  <div class="chat-thread-item role-assistant" data-thread="thread2">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">1h</span>
+                      <div class="thread-title">Refactor Database Layer</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-status-unread"></div></div>
+                      <div class="thread-summary">Consolidated queries into repository pattern.<br>Ran `cargo test`, 35 passed.</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+
+                  <div class="chat-thread-item role-assistant" data-thread="thread3">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">2h</span>
+                      <div class="thread-title">Fix Auth Token Bug</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-status-read"></div></div>
+                      <div class="thread-summary">Found issue in JWT expiration check.<br>Applied fix to auth.rs, verified locally.</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+
+                  <div class="chat-thread-item role-interviewer" data-thread="thread4">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">3h</span>
+                      <div class="thread-title">Research Web Frameworks</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-status-read"></div></div>
+                      <div class="thread-summary">Compared Axum and Actix-web.<br>User selected Axum for the new API.</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+
+                  <div class="chat-thread-item role-assistant" data-thread="thread5">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">1d</span>
+                      <div class="thread-title">Context Lens Check</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-status-read"></div></div>
+                      <div class="thread-summary">Analyzed dependency graph.<br>Extracted 12 relevant symbols.</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+
+                  <div class="chat-thread-item role-assistant" data-thread="thread6">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">1d</span>
+                      <div class="thread-title">FileSafe Blocking</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-status-read"></div></div>
+                      <div class="thread-summary">Addressed write block on config.json.<br>User explicitly allowed YOLO bypass.</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+
+                  <div class="chat-thread-item role-prd" data-thread="thread7">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">2d</span>
+                      <div class="thread-title">Requirements Doc Builder</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-status-draft"></div></div>
+                      <div class="thread-summary">Generated full MVP specification.<br>Awaiting approval on Phase 2 plan.</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden;">
-                <div class="chat-modes chatModesBar">
-                  <div class="mode" data-mode="ask" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Ask</div>
-                  <div class="mode" data-mode="plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Plan</div>
-                  <div class="mode" data-mode="deep-plan" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Deep Plan</div>
-                  <div class="mode" data-mode="crew" style="padding: 4px var(--md); cursor: pointer; color: var(--text-secondary); border-radius: var(--border-radius);">Crew</div>
-                </div>
-                
-                <div class="chat-header-workflow hidden chatWorkflowHeader">
-                  <span class="workflowHeaderTitle">Interactive Interview</span>
-                  <button class="wizard-btn returnToChatBtn" style="padding:2px var(--sm); font-size:10px;">Return to Chat</button>
-                </div>
-
+              <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
                 <div class="message-stream messageStream" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-direction: column; gap: var(--md);">
                 </div>
 
-                <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light);">
+                <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light); display:flex; flex-direction:column; gap:var(--sm);">
                   <div class="pendingInterventionBlock hidden" style="position:absolute; top:-40px; left:var(--md); right:var(--md); background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:6px; padding:var(--sm) var(--md); display:flex; justify-content:space-between; align-items:center; font-size:11px; box-shadow:0 -4px 12px rgba(0,0,0,0.1); z-index:10;">
                     <span style="color:var(--text-secondary); text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:200px;">"Wait, update the cache too."</span>
                     <div style="display:flex; gap:var(--xs); align-items:center;">
@@ -6302,66 +6772,76 @@ impl Dashboard {
 
                   <div style="background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
                     <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; outline:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm);">
-                      <div style="display:flex; gap:var(--md); align-items:center;">
-                        <button title="Attach File" style="background:none; border:none; color:var(--text-secondary); cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
-                        <label style="font-size:10px; color:var(--text-secondary); display:flex; align-items:center; gap:2px; cursor:pointer;"><input type="checkbox"> ELI5</label>
-                        <label style="font-size:10px; color:var(--accent-orange); display:flex; align-items:center; gap:2px; cursor:pointer;" title="Auto-approve tools"><input type="checkbox"> YOLO</label>
+                    
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm); border-top: 1px solid var(--border-light);">
+                      <div style="display:flex; gap:var(--sm); align-items:center;">
+                        <button title="Attach File" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; padding:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
+                        
+                        <div style="position:relative;">
+                          <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; min-width:80px; justify-content:space-between; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
+                            <span>Agent</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                          </button>
+                          <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
+                            <div class="chat-dropdown-list">
+                                <div class="chat-dropdown-item active" data-value="Agent">Agent</div>
+                                <div class="chat-dropdown-item" data-value="Ask">Ask</div>
+                                <div class="chat-dropdown-item" data-value="Plan">Plan</div>
+                                <div class="chat-dropdown-item" data-value="Deep Plan">Deep Plan</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div style="display:flex; gap:var(--md); align-items:center; margin-left:var(--sm); font-size:10px;">
+                          <span style="cursor:pointer; color:var(--text-secondary); transition:all 0.2s;" title="Explain Like I'm 5" onclick="this.classList.toggle('active')" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-secondary)'">ELI5</span>
+                          <span style="cursor:pointer; color:var(--accent-orange); font-weight:600; transform:scale(1.1); transition:all 0.2s;" title="Auto-approve tools" onclick="this.classList.toggle('active')">YOLO</span>
+                          <span style="cursor:pointer; color:var(--text-secondary); transition:all 0.2s;" title="Multi-agent Crew" onclick="this.classList.toggle('active')" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-secondary)'">CREW</span>
+                        </div>
                       </div>
-                      <button style="background:var(--accent-blue); color:var(--surface); border:none; border-radius:4px; padding:4px var(--md); font-size:11px; font-weight:600; cursor:pointer;">Send</button>
+
+                      <button style="background:var(--accent-blue); color:var(--surface); border:none; border-radius:4px; padding:6px var(--lg); font-size:11px; font-weight:600; cursor:pointer;">SEND</button>
                     </div>
                   </div>
-                </div>
 
-                <div class="chat-footer" style="display:flex; justify-content:space-between; padding:var(--sm) var(--md); background:var(--surface); border-top:1px solid var(--border-light); font-size:10px; min-height: 24px; position:relative;">
-                  <div style="display:flex; gap:var(--md); align-items:center;">
+                  <div style="display:flex; gap:var(--md); align-items:center; font-size:10px; margin-top:var(--sm);">
                     <div style="position:relative;">
-                      <button class="chat-dropdown-btn" data-dropdown="persona" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
-                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <span class="persona-label">product-manager</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
+                        <span class="persona-label">product-manager</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                       </button>
-                      <div class="chat-dropdown-popover personaPopover">
-                        <div class="chat-dropdown-search"><input type="text" placeholder="Find persona..." class="personaSearch"></div>
-                        <div class="chat-dropdown-list personaList">
-                            <div class="chat-dropdown-item active" data-value="product-manager"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> product-manager</div>
-                            <div class="chat-dropdown-item" data-value="architect-reviewer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> architect-reviewer</div>
-                            <div class="chat-dropdown-item" data-value="rust-engineer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> rust-engineer</div>
-                            <div class="chat-dropdown-item" data-value="technical-writer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> technical-writer</div>
-                            <div class="chat-dropdown-item" data-value="knowledge-synthesizer"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> knowledge-synthesizer</div>
+                      <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
+                        <div class="chat-dropdown-list">
+                            <div class="chat-dropdown-item active">product-manager</div>
+                            <div class="chat-dropdown-item">architect-reviewer</div>
+                            <div class="chat-dropdown-item">rust-engineer</div>
                         </div>
                       </div>
                     </div>
                     
                     <div style="position:relative;">
-                      <button class="chat-dropdown-btn" data-dropdown="model" style="background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:4px; padding:2px var(--sm); color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 10px;">
-                        <span class="model-label">Claude: sonnet-4.5</span> <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
+                        <span class="model-label">Claude: sonnet-4.5</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                       </button>
-                      <div class="chat-dropdown-popover modelPopover">
-                        <div class="chat-dropdown-search"><input type="text" placeholder="Find model..." class="modelSearch"></div>
-                        <div class="chat-dropdown-list modelList">
-                            <div class="chat-dropdown-header">Anthropic</div>
-                            <div class="chat-dropdown-item active" data-value="Claude: sonnet-4.5">sonnet-4.5</div>
-                            <div class="chat-dropdown-item" data-value="Claude: opus-3">opus-3</div>
-                            <div class="chat-dropdown-header">OpenAI</div>
-                            <div class="chat-dropdown-item" data-value="OpenAI: o3-mini">o3-mini</div>
-                            <div class="chat-dropdown-item" data-value="OpenAI: gpt-4o">gpt-4o</div>
-                            <div class="chat-dropdown-header">Local</div>
-                            <div class="chat-dropdown-item" data-value="Local: DeepSeek R1">DeepSeek R1</div>
+                      <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
+                        <div class="chat-dropdown-list">
+                            <div class="chat-dropdown-item active">sonnet-4.5</div>
+                            <div class="chat-dropdown-item">opus-3</div>
+                            <div class="chat-dropdown-item">gpt-4o</div>
                         </div>
                       </div>
                     </div>
 
-                    <span title="Reasoning Effort: High" style="color:var(--text-secondary); display:flex; align-items:center; gap:var(--xs);">
-                        <svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54z"></path></svg>
-                        High
-                    </span>
-                  </div>
-                  <div style="display:flex; gap:var(--md); align-items:center;">
-                    <div class="context-usage" title="Context: 42k / 128k" style="display:flex; align-items:center; gap:var(--xs);">
-                      <div style="width:12px; height:12px; border-radius:50%; background:conic-gradient(var(--accent-blue) 30%, var(--border-light) 0); border:1px solid var(--border);"></div>
-                      <span>42k</span>
+                    <div style="position:relative;">
+                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
+                        <span>High</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
+                        <div class="chat-dropdown-list">
+                            <div style="padding: var(--sm) var(--md); font-weight: 600; color: var(--text-muted); border-bottom: 1px solid var(--border-light);">Select Effort</div>
+                            <div class="chat-dropdown-item active">High</div>
+                            <div class="chat-dropdown-item">Medium</div>
+                            <div class="chat-dropdown-item">Low</div>
+                        </div>
+                      </div>
                     </div>
-                    <a href="#" style="color:var(--accent-orange); display:flex; align-items:center; gap:var(--xs); text-decoration: none;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Problems</a>
                   </div>
                 </div>
               </div>
@@ -6375,12 +6855,13 @@ impl Dashboard {
 
   <script>
     const mockThreads = {
-      'thread1': { role: 'interviewer', title: 'INTERVIEWER', html: `<div class="message assistant">Hello! I see you selected "Add a new Feature or Enhancement". To kick off our Feature Scope probe: What exactly are you adding or changing in this project?</div><div class="message user">I need to add a brand new feature step to the interactive interview UI so it correctly probes for project scope before doing the actual architecture interview.</div><div class="message assistant">Excellent, I have mapped the feature boundaries. Moving on to Architecture: Do you have a preferred UI framework for rendering this new phase tracker component?</div><div class="interview-chips" style="display:flex; flex-wrap:wrap; gap:var(--sm); margin-top:var(--sm);"><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">React</div><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">Slint</div><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">Let AI Decide</div></div>` },
-      'thread2': { role: 'assistant', title: 'ASSISTANT', mode: 'crew', html: `<div class="message user">Refactor the user schema to support multi-tenant workspaces.</div><div class="message assistant" style="background:transparent; border:none; padding:0; box-shadow:none;"><div style="display:flex; flex-direction:column; gap:var(--sm);"><div style="background:var(--surface-elevated); border:1px solid var(--border-light); padding:var(--sm) var(--md); border-radius:4px; display:flex; justify-content:space-between; align-items:center; font-size:11px;"><span style="display:flex; align-items:center; gap:var(--xs);"><div class="wizard-activity-pulse" style="width:6px; height:6px;"></div> <b>database-admin</b> analyzing schema...</span><span style="color:var(--text-muted);">0:14</span></div><div style="background:var(--surface-elevated); border:1px solid var(--border-light); padding:var(--sm) var(--md); border-radius:4px; display:flex; justify-content:space-between; align-items:center; font-size:11px;"><span style="display:flex; align-items:center; gap:var(--xs);"><div class="wizard-activity-pulse" style="width:6px; height:6px;"></div> <b>rust-engineer</b> drafting migrations...</span><span style="color:var(--text-muted);">0:08</span></div></div></div>` },
-      'thread3': { role: 'assistant', title: 'ASSISTANT', mode: 'deep-plan', html: `<div class="message user">Users are getting 401s after 1 hour. Fix the token refresh logic.</div><div class="message assistant"><div class="message-block collapsed" style="border-left: 2px solid var(--border-light); padding-left: var(--sm); margin-bottom: var(--sm);"><div class="block-header" style="font-size:11px; cursor:pointer;">[+] Thinking (12s)</div></div><div class="message-block" style="border-left: 2px solid var(--accent-blue); padding-left: var(--sm); margin-bottom: var(--sm);"><div class="block-header" style="font-size:11px; cursor:pointer;">[-] Ran bash command</div><div class="block-body"><pre style="font-size:10px; background:var(--surface); padding:4px; overflow-x:auto;">$ git grep "token_expiry"</pre></div></div>I found the issue. The refresh token logic in <code>auth.rs</code> was comparing UTC against local time. I have applied the fix.</div>` },
-      'thread4': { role: 'assistant', title: 'ASSISTANT', mode: 'ask', html: `<div class="message user">What are the latest breaking changes in React 19?</div><div class="message assistant">React 19 introduces several major breaking changes...<div style="margin-top:var(--lg); border-top:1px dashed var(--border-light); padding-top:var(--sm);"><div style="font-size:10px; font-weight:600; margin-bottom:var(--xs); color:var(--text-secondary);">SOURCES</div><div style="font-size:11px; display:flex; flex-direction:column; gap:var(--xs);"><div><span style="color:var(--accent-blue);">[1] React 19 Upgrade Guide</span></div><div><span style="color:var(--accent-blue);">[2] Everything new in React 19</span></div></div></div></div>` },
-      'thread5': { role: 'assistant', title: 'ASSISTANT', mode: 'ask', html: `<div style="text-align:center; font-size:10px; color:var(--text-muted); margin-bottom:var(--sm);">Context Lens Active</div><div class="message user" style="opacity: 0.5; position:relative; border:none; box-shadow:none;"><div style="position:absolute; top:-8px; right:-8px; background:var(--surface); border:1px solid var(--border); font-size:9px; padding:2px 4px; border-radius:4px; color:var(--text-primary);">Muted</div>Here is the old log file...</div><div class="message assistant">I understand.</div><div class="message user msg-focused" style="position:relative; background:transparent;"><div style="position:absolute; top:-8px; right:-8px; background:var(--accent-blue); color:var(--surface); font-size:9px; padding:2px 4px; border-radius:4px;">Focused</div>Focus strictly on this error block.</div>` },
-      'thread6': { role: 'builder', title: 'PRD BUILDER', html: `<div class="message assistant">I've drafted the preliminary PRD for the "Multi-tenant Refactor".<div style="margin-top:var(--md); padding:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated); display:flex; align-items:center; gap:var(--sm); font-size:11px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Opened <b>multi-tenant-refactor.md</b> in Binder</div></div>` }
+      'thread1': { role: 'doc', title: 'DOC BUILDER', html: `<div class="message assistant">I'll help you build your requirements document. What is the main goal of this project?</div><div class="message user">We need a desktop IDE that orchestrates AI agents for coding tasks.</div><div class="message assistant">Got it. I've started capturing that in the live document. Any specific constraints or integrations you want to call out?</div><div class="message user">Yes, it needs to run locally using Rust for the backend and we'll use a local instance of the LLM via Ollama if the user doesn't want to use an API key.</div><div class="message assistant">Excellent. I've updated the "Architecture & Dependencies" section to reflect the Rust backend constraint and the optional local Ollama fallback.<div style="margin-top:var(--md); padding:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated); display:flex; align-items:center; gap:var(--sm); font-size:11px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Opened <b>requirements-draft.md</b> in Binder</div></div>` },
+      'thread2': { role: 'assistant', title: 'ASSISTANT', mode: 'crew', html: `<div class="message user">Refactor the user schema to support multi-tenant workspaces. Currently, users are tied directly to projects, but we need them tied to a workspace, and projects belong to workspaces.</div><div class="message assistant" style="background:transparent; border:none; padding:0; box-shadow:none;"><div style="display:flex; flex-direction:column; gap:var(--sm);"><div style="background:var(--surface-elevated); border:1px solid var(--border-light); padding:var(--sm) var(--md); border-radius:4px; display:flex; justify-content:space-between; align-items:center; font-size:11px;"><span style="display:flex; align-items:center; gap:var(--xs);"><div class="wizard-activity-pulse" style="width:6px; height:6px;"></div> <b>database-admin</b> analyzing schema...</span><span style="color:var(--text-muted);">0:14</span></div><div style="background:var(--surface-elevated); border:1px solid var(--border-light); padding:var(--sm) var(--md); border-radius:4px; display:flex; justify-content:space-between; align-items:center; font-size:11px;"><span style="display:flex; align-items:center; gap:var(--xs);"><div class="wizard-activity-pulse" style="width:6px; height:6px;"></div> <b>rust-engineer</b> drafting migrations...</span><span style="color:var(--text-muted);">0:08</span></div></div></div><div class="message assistant">I've generated the migrations for the multi-tenant architecture. The <code>Workspace</code> table has been created, and the foreign key constraints on <code>Project</code> and <code>User</code> have been updated accordingly. I also migrated existing data by creating a default workspace for every existing user.<br><br>Would you like me to run the tests to verify the schema update?</div>` },
+      'thread3': { role: 'assistant', title: 'ASSISTANT', mode: 'deep-plan', html: `<div class="message user">Users are getting 401s after 1 hour. Fix the token refresh logic.</div><div class="message assistant"><div class="message-block collapsed" style="border-left: 2px solid var(--border-light); padding-left: var(--sm); margin-bottom: var(--sm);"><div class="block-header" style="font-size:11px; cursor:pointer;">[+] Thinking (12s)</div></div><div class="message-block" style="border-left: 2px solid var(--accent-blue); padding-left: var(--sm); margin-bottom: var(--sm);"><div class="block-header" style="font-size:11px; cursor:pointer;">[-] Ran bash command</div><div class="block-body"><pre style="font-size:10px; background:var(--surface); padding:4px; overflow-x:auto;">$ git grep "token_expiry"</pre></div></div>I found the issue. The refresh token logic in <code>auth.rs</code> was comparing UTC against local time. I have applied the fix by standardizing all expiration checks to use <code>chrono::Utc::now()</code>.<br><br>I also added a unit test in <code>auth_tests.rs</code> to simulate a token on the edge of expiration to prevent regressions.</div>` },
+      'thread4': { role: 'interviewer', title: 'INTERVIEWER', html: `<div class="message assistant">Hello! I see you selected "Add a new Feature or Enhancement". To kick off our Feature Scope probe: What exactly are you adding or changing in this project?</div><div class="message user">I need to add a brand new feature step to the interactive interview UI so it correctly probes for project scope before doing the actual architecture interview.</div><div class="message assistant">Excellent, I have mapped the feature boundaries. Moving on to Architecture: Do you have a preferred UI framework for rendering this new phase tracker component?</div><div class="interview-chips" style="display:flex; flex-wrap:wrap; gap:var(--sm); margin-top:var(--sm);"><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">React</div><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">Slint</div><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">Let AI Decide</div></div><div class="message user">Let's go with Slint, since the rest of the application is migrating to it.</div><div class="message assistant">Perfect. I'll make sure the spec specifies Slint for the new phase tracker. I will generate a state machine model for the interview phases so we can visualize the flow before implementation.</div>` },
+      'thread5': { role: 'assistant', title: 'ASSISTANT', mode: 'ask', html: `<div style="text-align:center; font-size:10px; color:var(--text-muted); margin-bottom:var(--sm);">Context Lens Active</div><div class="message user" style="opacity: 0.5; position:relative; border:none; box-shadow:none;"><div style="position:absolute; top:-8px; right:-8px; background:var(--surface); border:1px solid var(--border); font-size:9px; padding:2px 4px; border-radius:4px; color:var(--text-primary);">Muted</div>Here is the old log file...</div><div class="message assistant">I understand. I am analyzing the dependency graph context you provided.</div><div class="message user msg-focused" style="position:relative; background:transparent;"><div style="position:absolute; top:-8px; right:-8px; background:var(--accent-blue); color:var(--surface); font-size:9px; padding:2px 4px; border-radius:4px;">Focused</div>Focus strictly on the circular dependency error block near the bottom of that output.</div><div class="message assistant">I see the issue. The circular dependency is occurring between <code>orchestrator.rs</code> and <code>agent_manager.rs</code>. <code>orchestrator</code> imports <code>AgentManager</code> to dispatch tasks, but <code>agent_manager</code> is trying to import the <code>OrchestratorState</code> enum directly from the orchestrator.<br><br>To resolve this, we should extract the state enums into a shared <code>types.rs</code> or <code>state.rs</code> module that both can depend on without referencing each other. Shall I implement this refactor?</div>` },
+      'thread6': { role: 'assistant', title: 'ASSISTANT', mode: 'ask', html: `<div class="message user">Update the build script so it automatically copies the generated config file to the output directory.</div><div class="message assistant">I have modified <code>build.rs</code> to include the copy step. Let me run the build to test it.</div><div class="message assistant" style="border-color: var(--accent-magenta);"><b>FileSafe Blocked Action</b><br>The tool attempted to write to <code>/etc/config.json</code>, which is outside the allowed project sandbox.<br><br>Do you want to allow this write operation?</div><div class="message user">Oh, wait. No, it should write to <code>./dist/config.json</code> locally. Let me turn on YOLO mode so you can just fix it and run it.</div><div class="message assistant">Understood. YOLO mode is active. I've corrected the path in <code>build.rs</code> to target <code>./dist/config.json</code> and executed the build script. The file was successfully copied to the local distribution folder.</div>` },
+      'thread7': { role: 'prd', title: 'PRD BUILDER', html: `<div class="message assistant">I've drafted the preliminary PRD for the "Multi-tenant Refactor" based on the requirements doc we built earlier.<div style="margin-top:var(--md); padding:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated); display:flex; align-items:center; gap:var(--sm); font-size:11px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Opened <b>multi-tenant-refactor.md</b> in Binder</div></div><div class="message user">Looks good, but can you add a section specifically detailing the migration strategy for existing active users? We can't have downtime during the deployment.</div><div class="message assistant">Absolutely. I have added a new section "4.3 Zero-Downtime Migration Strategy". It outlines a multi-phase rollout: first dual-writing to the new Workspace tables, then backfilling historical data, and finally flipping the read path. I've updated the document in the Binder.</div>` }
     };
 
     window.orchNodeDetailContent = {
@@ -6405,6 +6886,13 @@ impl Dashboard {
         else { hdr.classList.add('hidden'); }
       });
       document.querySelectorAll('.chatRoleBadge').forEach(badge => { badge.className = 'role-badge chatRoleBadge role-' + thread.role; badge.textContent = thread.title; });
+      document.querySelectorAll('.chatHeaderTitle').forEach(el => { 
+        el.textContent = thread.title; 
+        if(thread.role === 'doc') { el.style.color = 'var(--accent-orange)'; }
+        else if(thread.role === 'interviewer') { el.style.color = 'var(--accent-lime)'; }
+        else if(thread.role === 'prd') { el.style.color = 'var(--accent-magenta)'; }
+        else { el.style.color = 'var(--text-primary)'; }
+      });
       document.querySelectorAll('.pendingInterventionBlock').forEach(block => { block.classList.toggle('hidden', threadId !== 'thread2'); });
     };
 
@@ -6422,6 +6910,7 @@ impl Dashboard {
       if (cp) cp.classList.toggle('hidden', !visible);
       if (resizer) resizer.classList.toggle('hidden', !visible);
     }
+    window.openRequirementsBuilder = function() { if (window.switchWizardStep) window.switchWizardStep(2); };
     function setFloatingChatVisible(visible) {
       const fl = document.getElementById('floatingChat');
       if (fl) fl.style.display = visible ? 'flex' : 'none';
@@ -6462,7 +6951,16 @@ impl Dashboard {
               panel.classList.add('active');
               if (stepIndex === 2) {
                  setChatPanelVisible(true);
+                 var chatIcon = document.querySelector('.activity-bar .icon[title="Chat"]'); if (chatIcon) chatIcon.classList.add('active');
+                 if (window.switchToChatThread) window.switchToChatThread('thread7');
+              } else if (stepIndex === 5) {
+                 setChatPanelVisible(true);
+                 var chatIcon = document.querySelector('.activity-bar .icon[title="Chat"]'); if (chatIcon) chatIcon.classList.add('active');
                  if (window.switchToChatThread) window.switchToChatThread('thread1');
+              } else if (stepIndex === 6) {
+                 setChatPanelVisible(true);
+                 var chatIcon = document.querySelector('.activity-bar .icon[title="Chat"]'); if (chatIcon) chatIcon.classList.add('active');
+                 if (window.switchToChatThread) window.switchToChatThread('thread6');
               }
             } else {
               panel.style.display = 'none';
@@ -6819,7 +7317,7 @@ impl Dashboard {
                 }
             } else {
                 const isActive = iconBtn.classList.contains('active');
-                document.querySelectorAll('.activity-bar .icon:not([title="Chat"])').forEach(i => i.classList.remove('active'));
+                document.querySelectorAll('.activity-bar .icon[data-target]').forEach(i => i.classList.remove('active'));
                 
                 const sidePanelSlot = document.getElementById('sidePanelSlot');
                 if (isActive) {

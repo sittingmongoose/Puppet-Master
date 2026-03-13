@@ -490,19 +490,33 @@ Standard Plan review:
 - user may continue the chat, request revisions, or open the plan in the editor
 - follow-up chat responses may revise the planning artifact
 
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md
+
 Deep Plan review:
 - the plan document opens automatically in the editor / preview-capable planning surface
 - users may edit the markdown directly
-- users may select text and add inline notes
-- `Resubmit with Notes` launches a targeted revision pass
-- targeted revision may update the plan document and/or answer question-notes
-- targeted revision MUST NOT auto-run Multi-Pass Review
+- on source-backed or deterministically mapped selections, the review palette offers `Comment / Ask`, `Replace with...`, `Insert after...`, `Remove / Strike this`, and `Send selection to chat`
+- durable actions create annotations on the existing `note_record.v1` lineage; `Send selection to chat` creates a visible pending `document_selection_context` chip on the owning thread
 
-Deep Plan note-handling rules:
-- reuse the Embedded Document Pane anchored-note model
-- preserve note lifecycle (`open -> addressed -> resolved`)
-- use deterministic position + quote selector re-anchoring
-- if an anchor cannot be reattached, keep the note open and show an explicit warning rather than silently dropping it
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+Deep Plan targeted revision rules:
+- `Resubmit with Annotations` launches a targeted revision pass over docs with open durable annotations, or a user-selected subset
+- targeted revision may update the plan document and/or answer question/comment annotations
+- targeted revision MUST NOT auto-run Multi-Pass Review
+- conflicting or stale mutating annotations are excluded from automatic revision until the user resolves them
+
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Crosswalk.md
+
+Deep Plan annotation-handling rules:
+- preserve the annotation lifecycle `open -> addressed -> resolved`
+- preserve deterministic position + quote selector re-anchoring
+- if an anchor cannot be reattached, keep the annotation open and show an explicit warning rather than silently dropping it
+- comment annotations may coexist with other annotations on the same span; overlapping mutating annotations conflict by default
+- final review gates use `no open annotations`, not `no open notes`
+- read-only / no-source-map renders such as plan-graph-like surfaces are `Send selection to chat` only in v1 unless a stable semantic-anchor contract is added later
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
 
 ### 8.8 Approval, queue, and execution handoff
 
@@ -548,7 +562,7 @@ Escalation signals include:
 - PT appears in the Assistant Chat GUI for both planning overlays and uses the canonical enum `Light | Balanced | Comprehensive`.
 - Deep Plan at a given PT performs more research and produces a richer artifact than Plan at the same PT.
 - Both planning overlays emit a normalized TODO list suitable for later execution.
-- Deep Plan documents open in an editor/preview-capable surface and support inline notes plus targeted revision.
+- Deep Plan documents open in an editor/preview-capable surface and support durable annotations plus targeted revision.
 - Planning artifacts are not written into the project repo by default.
 - Execution starts only after explicit approval and uses `regular` or `yolo`, never `plan`.
 - Approved plans can execute immediately when idle or queue behind another active run in the same thread.
@@ -1497,55 +1511,55 @@ Chat/planning rendering needs one explicit source model for non-file content.
 
 ### 28.4A Element-context attachment contract
 
-When browser or HTML preview capture sends element context into chat, the thread uses one canonical typed attachment:
+Rendered selection capture uses two canonical typed attachments:
+- `attachment_type = browser_element_context` for browser / HTML element capture
+- `attachment_type = document_selection_context` for native document selections forwarded into chat
 
-- `attachment_type = browser_element_context`
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileManager.md, ContractName:Plans/newfeatures.md
 
-**Required fields**
+`document_selection_context` required fields:
 - `attachment_id`
 - `schema_version`
-- `origin_kind` (`workspace_preview`, `external_browse`)
-- `preview_session_id` (required for workspace preview when available)
-- `page_url`
-- `page_title` (optional)
+- `origin_kind` (`assistant_deep_plan`, `wizard_document_review`, `interview_document_review`, `document_review_surface`, `workspace_preview`)
+- `source_surface`
+- `bundle_id?`
+- `doc_id`
+- `doc_path` or equivalent bounded provenance
+- `display_name?`
 - `captured_at`
-- `capture_reason` (`user_click`, `user_keyboard`)
-- `payload` (the bounded element-context schema from newfeatures.md section 15.18)
+- `selected_text` (bounded)
+- `anchor` (`text_position?`, `text_quote`, or stable semantic anchor id)
+- `requested_target`
+- `effective_target?`
+- `sensitivity_state`
+- `truncation_state`
 
-**Composer behavior**
-- A capture creates a pending composer chip/card immediately visible to the user.
-- The chip is attached to the next submitted user message by default.
-- The user may remove the chip before send.
-- Capturing an element MUST NOT silently inject a hidden message into the thread.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
 
-**Prompt assembly**
-- `browser_element_context` is serialized as a structured attachment before the user's freeform message text.
-- Prompt assembly MUST use bounded fields first (`tagName`, `id`, `className`, `textContent`, `role`, `rect`, `parentPath`) and include truncated optional HTML only when still within budget.
-- If truncation occurs, the attachment metadata must include that truncation occurred.
+Composer behavior:
+- capture creates a visible pending composer chip/card immediately visible to the user
+- chips are stored in composer-prep state keyed by `thread_id`, never as global chat state
+- the chip is attached to the next submitted user message by default and the user may remove it before send
+- capturing a selection MUST NOT silently inject a hidden message into the thread
+- hidden chat panels do not auto-open by default; the owning chat surface may pulse/badge and show a toast instead
+- if the owning thread is terminal or non-writable, create a new thread in the same owning surface and record both `requested_target` and `effective_target`
 
-**Persistence and search**
-- The attachment persists as part of the submitted user message record.
-- Search/indexing should store summary fields only; do not index unbounded raw HTML.
-- Secrets scrubbing and storage rules from storage-plan.md still apply before persistence.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
 
-**Audit behavior**
-- Captures must be visible in thread history as user-supplied context, not hidden system state.
-- The thread audit view should show capture source (`workspace_preview` vs `external_browse`) and page URL/title when available.
+Prompt assembly:
+- both structured attachment types are serialized before the user's freeform message text
+- `document_selection_context` serializes bounded provenance, anchor, and excerpt fields first; it MUST NOT inject raw unbounded document bodies
+- blocked or expired chips MUST NOT be serialized as successful user attachments
 
-Required actions when applicable:
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md
 
-- copy source Markdown/Mermaid
-- open source in editor
-- open rendered preview in detached window
-- export Mermaid as SVG
-- export Mermaid as PNG
-- focus the corresponding source block when a rendered interaction is not safely editable
+Persistence and audit:
+- submitted attachments persist as part of the submitted user message record
+- pending composer chips may persist across restart per thread until sent or removed; if they cannot be restored safely they return as blocked/expired, not silently dropped
+- search/indexing stores bounded summary fields only; do not index unbounded raw document text
+- captures and blocks must be visible in thread history or audit views as user-supplied context, including source provenance and requested/effective target
 
-Nice-to-have but not required for initial packetization:
-
-- copy SVG directly
-- copy rendered image
-- quick-insert assistant action that proposes a Mermaid block into the active document
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Crosswalk.md
 
 ### 28.5 Structured editing rules
 

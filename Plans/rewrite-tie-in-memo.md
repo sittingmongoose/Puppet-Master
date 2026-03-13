@@ -299,9 +299,9 @@ The rendering system must define runtime expectations per platform.
 
 ### Source/preview mapping and edit contract
 
-#### Preview action protocol v1
+Preview mutation and document annotation are related but distinct contracts. Direct preview mutation remains a validated shared-buffer patch path; annotation and chat handoff remain review-layer operations until an explicit direct-edit bridge is invoked.
 
-#### Operation payload schemas and mutation pipeline
+#### Preview action protocol v1
 
 All successful preview mutations resolve to canonical text patches against the same shared buffer model used by File Editor.
 
@@ -313,12 +313,16 @@ All successful preview mutations resolve to canonical text patches against the s
 - `set_inline_format` -> `{ format: "bold" | "italic" | "code", enable }`
 - `replace_mermaid_block` -> `{ replacement_source }`
 
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
+
 **Patch rules**
 - The runtime MUST resolve `node_id` against the current parse tree for the provided `parse_revision`.
 - The runtime MUST validate `source_revision` before patch application.
-- The resulting patch MUST be constrained to the mapped source span for that node or block.
+- The resulting patch MUST stay constrained to the mapped source span for that node or block.
 - Requests MUST fail with `ambiguous_mapping` when the requested operation would require modifying text outside the mapped node span.
 - Requests MUST fail with `unsupported_region` for raw HTML regions, malformed Markdown regions, unknown extensions, and opaque fenced content.
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Permissions_System.md
 
 **Shared-buffer integration**
 - Successful preview edits apply through the same in-memory buffer/update path as File Editor.
@@ -326,81 +330,25 @@ All successful preview mutations resolve to canonical text patches against the s
 - Preview actions MUST NOT write directly to disk and MUST NOT bypass the normal save path.
 - Each successful preview action creates one undo step unless the host editor later adds explicit coalescing rules.
 
-**UI outcomes**
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+**UI outcomes and result codes**
 - On `applied_patch`, the source buffer and rendered preview update to the new `source_revision`.
 - On `rejected_stale_revision`, `ambiguous_mapping`, or `unsupported_region`, the UI focuses source at the mapped region when possible and shows a deterministic user-facing reason.
-- File Editor preview and Embedded Document Pane remain the only mutation-capable preview surfaces in v1 unless another surface is explicitly wired to the same validation path.
+- Direct preview mutation result codes remain: `applied_patch`, `rejected_stale_revision`, `unsupported_region`, `ambiguous_mapping`, `permission_denied`, `fallback_focus_source`, and `render_error`.
 
-The source/preview edit contract requires one shared action protocol across chat, editor preview, and embedded document panes.
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md
 
-**Allowed `operation` values in v1**
-- `toggle_checkbox`
-- `edit_heading_text`
-- `edit_list_item_text`
-- `set_link_target`
-- `set_inline_format`
-- `replace_mermaid_block`
-- `open_source`
-- `open_detached`
+#### Selection annotations and chat handoff boundary
 
-Operations outside this whitelist MUST return a non-mutating result and focus/open source when appropriate.
+Selection actions such as `comment`, `replace`, `insert_after`, `remove`, and `send_selection_to_chat` are not direct preview-mutation operations.
 
-**Request rules**
-- `PreviewActionRequest` MUST include `preview_session_id`, `node_id`, `parse_revision`, `operation`, and `payload`.
-- Mutating requests MUST also validate the current `source_revision` before applying a patch.
-- Requests from stale preview state MUST NOT be auto-rebased silently.
+- On source-backed or deterministically mapped preview surfaces, selection actions may create durable annotations or `document_selection_context` attachments.
+- On no-source-map or unsupported regions, mutating annotation actions MUST fail as non-destructive outcomes while `send_selection_to_chat`, `open_source`, and `open_detached` may still succeed.
+- Chat and planning surfaces may issue non-destructive selection handoff only until they are explicitly wired to the validated mutation path.
+- Audit must distinguish `created_annotation`, `selection_sent_to_chat`, and `selection_forward_blocked` from direct patch outcomes.
 
-**Result codes**
-- `applied_patch`
-- `rejected_stale_revision`
-- `unsupported_region`
-- `ambiguous_mapping`
-- `permission_denied`
-- `fallback_focus_source`
-- `render_error`
-
-**Deterministic fallback**
-- `ambiguous_mapping`, `unsupported_region`, and `rejected_stale_revision` MUST never mutate rendered DOM state.
-- Those outcomes MUST move focus to source at the mapped region when possible.
-
-**Audit**
-- Every request emits `preview.action.requested`.
-- Every terminal outcome emits `preview.action.completed` with `result_code`.
-- Patch summaries should be recorded in bounded form for audit/history, not as unbounded raw document bodies.
-
-**Surface scope**
-- File Editor preview and Embedded Document Pane may issue v1 preview actions.
-- Chat and planning surfaces may issue only non-destructive actions until their attachment/edit flow is explicitly wired to the same validation path.
-
-Preview interactions must route through a validated mapping contract instead of directly mutating the rendered DOM.
-
-Minimum mapping entities:
-
-- **RenderedBlockRef**
-  - `node_id`
-  - `block_kind`
-  - `source_start`
-  - `source_end`
-  - `parse_revision`
-  - `capabilities`
-- **PreviewActionRequest**
-  - `preview_session_id`
-  - `node_id`
-  - `parse_revision`
-  - `operation`
-  - `payload`
-- **PreviewActionResult**
-  - `applied_patch`
-  - `rejected_stale_revision`
-  - `fallback_focus_source`
-  - `error`
-
-Rules:
-
-- Source text remains canonical.
-- Preview edits are allowed only through **whitelisted structured commands** that map to known source spans or fenced diagram blocks.
-- If an action cannot be reversed into a confident source patch, the system must focus/open source editing at the exact mapped block instead of mutating preview state.
-- Raw HTML regions, malformed/unknown syntax, and opaque fenced content remain source-centric.
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md
 
 ### Markdown/Mermaid contract
 

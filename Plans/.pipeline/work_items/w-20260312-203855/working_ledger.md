@@ -22,6 +22,65 @@
 - Keep future repo reading targeted first; avoid a broad sweep unless the discussion clearly requires it.
 
 ## Key Facts and Findings
+- Orchestrator page shell direction clarified by user:
+  - Orchestrator should remain tab-first, not widget-first
+  - `Progress` remains the first tab and is the tab that contains orchestrator widgets
+  - existing `Tiers` tab should be replaced by a seam/package-oriented tab (name still open; likely `Seams` or equivalent)
+  - `Node Graph Display` tab remains, but must evolve to show graph-patch lineage:
+    - old invalidated/superseded nodes remain visible
+    - old nodes stay clickable for historical detail
+    - patched generations branch from the old path
+    - live path may later rejoin surviving downstream nodes
+  - `Evidence` tab remains but needs major redesign
+  - `History` and `Ledger` both remain candidates, but merging them is on the table
+  - all Orchestrator tabs need substantial redesign around the new model
+- Widget-system implication clarified:
+  - Orchestrator widgets live inside the `Progress` tab
+  - some orchestrator widgets may also be hostable on Dashboard
+  - non-Orchestrator widgets should not be hostable on the Orchestrator page
+  - widgets remain resizable/customizable, but tab-first structure remains primary
+- Old composite-reference check confirms:
+  - the historical Orchestrator shell already used:
+    - `Progress`
+    - `Tiers`
+    - `Node Graph Display`
+    - `Evidence`
+    - `History`
+    - `Ledger`
+  - `Progress` already functioned as the widget-hosting operational tab
+  - the old shell reinforces the current redesign direction:
+    - preserve tab-first structure
+    - replace `Tiers` with a seam/package-oriented tab
+    - keep the widget model anchored inside `Progress`
+- Orchestrator tab redesign direction is now materially clearer:
+  - keep tabs separate:
+    - `Progress`
+    - `Seams` (replacement for `Tiers`)
+    - `Node Graph`
+    - `Evidence`
+    - `History`
+    - `Ledger`
+  - `Progress` is the widget-hosting operational summary tab
+  - `Seams` is hierarchical seam-first, package-second, node-on-drill-in
+  - `Evidence` should use separate panes:
+    - evidence records pane
+    - artifact pane
+  - `History` and `Ledger` should remain separate:
+    - `History` = chronological runtime story
+    - `Ledger` = structured record inspection
+- Node Graph tab direction now includes:
+  - graph canvas + right-side detail inspector
+  - node click should expose:
+    - requested/effective provider/model/effort/persona/account
+    - usage/token/cost info
+    - worker policy
+    - retry/review/promotion state
+    - lane/worktree/snapshot state
+    - linked evidence/artifacts
+  - clicking evidence/artifact links from node detail should navigate to the Evidence tab with the relevant evidence/artifact selected
+- Cross-tab navigation is now treated as a design contract:
+  - important objects/events should be deep-linkable across Progress / Seams / Node Graph / Evidence / History / Ledger
+  - cross-tab navigation should preserve/filter/select the target context, not merely switch tabs
 - Targeted usage-tracking doc check confirms usage is already heavily documented rather than missing:
   - `Plans/usage-feature.md` is the strongest current owner for usage/quota/alerts/analytics/product-shape discussion.
   - `Plans/storage-plan.md` and `Plans/FinalGUISpec.md` also carry meaningful usage/runtime/event/GUI assumptions.
@@ -43,16 +102,18 @@
   - this explicitly includes assistant chat, interviewer, requirements-doc builder, overseers, node workers, and delegated workers
   - any completed provider interaction can update account health and trigger the next message/attempt to resolve onto a different account
 - Clarified non-Orchestrator conversational actor flow:
-  - assistant, interviewer, and requirements-doc-builder should share provider/account/usage/runtime identity behavior, but they are not orchestration nodes/packages/seams
+  - assistant, interviewer, requirements-doc-builder, and PRD builder should share provider/account/usage/runtime identity behavior, but they are not orchestration nodes/packages/seams
   - their primary mode is conversational/brainstorming and decision-forming, not orchestration-style HITL escalation routing
   - requirements-doc-builder flow is conversational first:
     - collaborative ideation / viability / approach discussion
     - then more structured questioning to close gaps and lock decisions
     - then generation of more traditional requirements documents/artifacts
   - interviewer follows a similar conversational-to-structured pattern, but moves topic-by-topic and ultimately produces documents/artifacts shaped for the node/contract system
+  - PRD builder exists after interviewer and behaves closer to the assistant, but with specialized context/rules for the document-handling workflow
   - the broader handoff chain described by the user is:
     - requirements-doc-builder artifacts
     - interview flow artifacts
+    - PRD-builder artifacts
     - conversion into graph-plan inputs
     - handoff to Orchestrator
   - human review exists at both document-production stages in that upstream flow
@@ -69,6 +130,77 @@
   - default retry model should use a fresh agent/subagent for the next attempt
   - retries should remain policy-driven with budgets/caps; not blind infinite looping
   - some failures should route to remediation, graph patch, or block/HITL instead of simple retry
+- Targeted external loop research on a fresh-iteration coding loop found the most reusable handoff ideas are simple and durable:
+  - each iteration starts fresh
+  - memory persists through explicit artifacts rather than hidden context
+  - the loop reads:
+    - current task/plan state
+    - append-only progress log / learnings
+    - persistent reusable-pattern summary
+    - repo state / git history
+  - the loop appends:
+    - what was implemented
+    - files changed
+    - learnings/gotchas
+    - reusable patterns for future iterations
+- Strong reusable handoff pattern extracted:
+  - separate:
+    - task state / completion truth
+    - append-only execution learnings
+    - reusable pattern memory
+  - do not rely on one giant conversational thread as the only continuity mechanism
+- Translation direction for Puppet Master:
+  - keep the value of fresh-worker retries with explicit handoff artifacts
+  - but do not copy the simplistic "repeat single-story loop until done" model as-is
+  - our system needs richer handoff structure because retries may flow into:
+    - another overseer-spawned node worker
+    - remediation
+    - review/corroboration
+    - graph patch / replan
+    - restore / safe-point logic
+- Handoff-data implication:
+  - each attempt should likely produce at least:
+    - what was attempted
+    - what changed / artifacts produced
+    - checks/tests/review outcome
+    - why it failed/blocked
+    - contamination / restore state if relevant
+    - recommended next action
+    - reusable learnings/patterns when appropriate
+- Storage/delivery clarification pressure from user:
+  - "JSON-like" is too vague; the design still needs to pin down:
+    - whether these artifacts are literally JSON/JSONL/redb-backed records/projections
+    - what concrete project-scoped paths or storage domains own them
+    - how a worker actually receives the handoff packet (inline prompt block, referenced artifact, fetched context, or mixed model)
+  - current recommendation direction:
+    - canonical handoff/retry memory should be structured runtime records, not loose markdown logs
+    - worker-facing handoff should be a synthesized bounded packet assembled from canonical records, not full raw history
+  - but exact storage medium/path/delivery mechanism remains an open design seam and needs to be specified concretely
+- Targeted storage-doc check clarified the existing documented persistence stack:
+  - `Plans/storage-plan.md` already declares:
+    - `seglog` = canonical append-only event source
+    - `redb` = durable KV state / checkpoints / projections / rollups
+    - `Tantivy` = search index
+    - JSONL mirror = disposable projector output, not canonical truth
+  - `Plans/FinalGUISpec.md` aligns with this:
+    - persistence(events) = seglog
+    - layout/settings/state = redb
+- Important refinement:
+  - the broad canonical runtime storage model *has* been decided/documented at stack level
+  - what is *not yet nailed down* is how the newly discussed objects map into that stack:
+    - node retry memory
+    - attempt handoff artifacts
+    - reusable learning records
+    - worker handoff packets
+- Current recommended direction after checking docs:
+  - canonical truth for these new orchestration artifacts should fit the documented stack:
+    - event/source-of-truth aspects in seglog
+    - projected/current-state/read-optimized aspects in redb
+    - export/inspection views as JSON/JSONL only when the user requests them from UI surfaces like Orchestrator
+  - avoid making loose JSON files the canonical source
+- User preference clarified:
+  - exportability from the Orchestrator page is desirable
+  - "optional JSON" wording should be removed from the design language unless JSON export is explicitly about manual inspection/export, not canonical storage
 - New execution-policy settings requirement:
   - GUI should let the user choose whether retries use:
     - a fresh agent/subagent (default)
@@ -445,6 +577,11 @@
 - Current working focus is moving into projection ownership by surface rather than reconciliation.
 
 ## Open Questions / Uncertainties
+- Corroboration disagreement handling has now been tightened conceptually:
+  - `2-of-3` accepts the high-impact claim as canonical
+  - no `2-of-3` means the high-impact claim is not accepted as blocking/canonical truth
+  - if disagreement still surfaces a credible lesser concern, runtime should always emit a non-blocking advisory/minor finding rather than dropping it
+  - that advisory/minor finding should be visible on the Orchestrator page
 - Is the desired mental model:
   - Orchestrator executes the canonical node graph directly
   - Orchestrator uses projections derived from the node graph plus runtime attempts

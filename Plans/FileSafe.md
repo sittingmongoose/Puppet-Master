@@ -1460,7 +1460,7 @@ impl BashGuard {
         // Extract potential commands from prompt
         // Common patterns: code blocks, shell commands, SQL statements
         let command_patterns = extract_commands_from_prompt(prompt);
-        
+
         for cmd in command_patterns {
             self.check_command(&cmd)?;
         }
@@ -1596,6 +1596,25 @@ async fn execute(&self, request: &ExecutionRequest) -> Result<ExecutionResult> {
 - Check **context files** separately (security filter)
 - Check **before** building CLI args (early failure)
 - Respect verification gate and interview operation type (`PUPPET_MASTER_OPERATION_TYPE`)
+
+### 11.3A Structured chat attachments and forwarded document selections
+
+FileSafe applies to structured chat attachments, not just freeform prompt text and context-file paths.
+
+Rules:
+- FileSafe must inspect the compiled prompt plus structured attachments together before platform send.
+- `document_selection_context` attachments must pass the same mandatory secret-scrub pipeline before seglog/redb/index/blob persistence.
+- Path-based sensitive sources such as `.env`, key/cert paths, credential files, and equivalent secret-bearing locations are not eligible for selection forwarding.
+- If attachment forwarding is blocked, the runtime must emit an explicit block result and visible reason code; it must not pretend the context was sent successfully.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage
+
+Default handling:
+- Heuristic secret-ish redaction remains off by default.
+- Mandatory secret scrubbing remains on for all structured attachments before persistence.
+- Search/indexing stores bounded summaries and provenance only, not unbounded raw selected text.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md
 
 ### 11.4 Integration with Verification Gates
 
