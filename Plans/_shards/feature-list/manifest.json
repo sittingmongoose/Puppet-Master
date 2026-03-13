@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/feature-list.md",
-  "source_sha256": "b657553c232c3ee07c301f9d10d6ec9c14b625968ee743ca8a3e23b6d6143002",
+  "source_sha256": "012bc1530403f77d2861bb6488616725ec8904e19685bc9612c7d41f711ac210",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -29,10 +29,17 @@
       "heading": "## Part 1A - Markdown, Mermaid, and Unified Rendering Addendum (2026-03-07)"
     },
     {
-      "dest_path": "Plans/_shards/feature-list/04-runtime-scheduler-recovery-summary-consolidation-addendum-2026-03-09.md",
+      "dest_path": "Plans/_shards/feature-list/04-source-control-github-actions-and-docker-manager-mvp-consolidation-addendum-2026-03-12.md",
       "start_line": 935,
-      "end_line": 947,
-      "segment_sha256": "12f7a6b14d4cc9170a80a694689398f76c478e6f3418f5f0dee35528cba8c8d9",
+      "end_line": 958,
+      "segment_sha256": "ca9a9acaa1cedd94753610a63d70d1c70b16ffbd07aa69b63cb967bb9aa6c57d",
+      "heading": "## Source Control, GitHub Actions, and Docker Manager MVP Consolidation Addendum (2026-03-12)"
+    },
+    {
+      "dest_path": "Plans/_shards/feature-list/05-runtime-scheduler-recovery-summary-consolidation-addendum-2026-03-09.md",
+      "start_line": 959,
+      "end_line": 972,
+      "segment_sha256": "2a12751d858eee97c0f744a572426038aeea333ddb4a1ea323f51f6a212f2903",
       "heading": "## Runtime Scheduler Recovery Summary Consolidation Addendum (2026-03-09)"
     }
   ]

@@ -17,3 +17,4 @@ Any summary view must differentiate blocked outcomes from failures so user-visib
 
 Acceptance criteria:
 - the product can report on blocked/remediation/scheduler behavior without corrupting executed-tool usage metrics
+

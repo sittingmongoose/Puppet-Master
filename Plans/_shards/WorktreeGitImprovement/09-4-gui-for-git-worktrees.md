@@ -24,7 +24,30 @@
 - List worktrees, recover orphaned worktrees, worktree status, or which tier is using which worktree.
 
 ### 4.2 GUI improvements
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
+
+GUI ownership for worktrees is normalized around Source Control and Orchestrator.
+
+Primary ownership:
+- Source Control is the primary operational surface for worktree inventory and user actions.
+- Orchestrator consumes worktree identity, ownership, blocked state, and lineage for run/history/recovery views.
+- Settings > Branching and Health may expose configuration or diagnostics, but they are not the primary place to manage active worktrees.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
+
+Required Source Control worktree behavior:
+- list all active worktrees for the current repo
+- show branch, path, owner run/tier, dirty/conflict/orphaned state, age, and upstream relation
+- support `open`, `compare`, `recover`, `prune`, and `view lineage`
+- surface explicit disabled reasons when active-run ownership or blocked state prevents a destructive action
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+Required Orchestrator consumption:
+- Progress, Tiers, History, and Node Graph must be able to show the worktree used by the run/attempt
+- `dirty_worktree` and `worktree_conflict` MUST present recovery CTAs that route back to Source Control with the correct worktree in scope
+- historical runs MUST preserve the historical worktree reference even when the live worktree has been pruned or retired
+
+ContractRef: ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Executor_Protocol.md
 
 ### 4.2A Stable project identity and instant-project-switch binding
 

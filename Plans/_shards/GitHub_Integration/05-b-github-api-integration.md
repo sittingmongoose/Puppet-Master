@@ -122,108 +122,225 @@ ContractRef: Invariant:INV-003, PolicyRule:Decision_Policy.md§2, ContractName:P
 
 ### B.3 GitHub Actions Panel
 
-The GitHub Actions Panel surfaces workflow runs for the current repository and supports
-triggering `workflow_dispatch` workflows.
+The GitHub Actions surface is a distinct GitHub-hosted workflow/admin panel. It is not a sub-mode of Source Control.
 
-ContractRef: UICommand:cmd.github.actions_list, Invariant:INV-011
+Required stable subviews:
+- `Current Branch`
+- `Workflows`
+- `Settings`
 
-#### Workflow runs list
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
 
-- Columns (all REQUIRED): workflow name, branch, run status, duration, triggered-by,
-  timestamp (relative + absolute on hover).
-  ContractRef: PolicyRule:Decision_Policy.md§2
-- Run status icons with semantic color (deterministic mapping, no ambiguous states):
-  ContractRef: PolicyRule:Decision_Policy.md§2
+### Current Branch
 
-  | Status | Icon | Color |
-  |---|---|---|
-  | `queued` | ○ | grey |
-  | `in_progress` | ◑ (spinning) | yellow |
-  | `success` | ✓ | green |
-  | `failure` | ✕ | red |
-  | `cancelled` | ⊘ | grey |
+This subview shows workflow runs for the currently selected repo/worktree branch and supports:
+- latest-run status
+- rerun and cancel when permitted
+- failing job / step drilldown
+- direct pivot to the relevant Source Control diff or changed commit range
 
-- Click run → opens run detail view (§B.3 workflow run detail).
-  ContractRef: UICommand:cmd.github.actions_run_detail, Invariant:INV-011
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/WorktreeGitImprovement.md
 
-#### Workflow run detail
+### Workflows
 
-- Job list with status icon per job (same semantic color table as above).
-  ContractRef: PolicyRule:Decision_Policy.md§2
-- Expand job → step list with status icon and duration per step.
-  ContractRef: UICommand:cmd.github.actions_job_expand, Invariant:INV-011
-- **Run/log summary strip (REQUIRED):** visible at top of run detail and always includes:
-  (1) run status, (2) run conclusion, (3) run duration, (4) failed job count,
-  (5) log truncation state (`complete` or `truncated`), and (6) last log timestamp.
-  ContractRef: PolicyRule:Decision_Policy.md§2, Invariant:INV-003
-  - Run status + conclusion are sourced from workflow run payload fields (`status`,
-    `conclusion`).
-    ContractRef: SchemaID:Spec_Lock.json#github_operations
-  - Run duration is computed from `run_started_at` to `updated_at` and shown as
-    `MM:SS` for <1h and `HH:MM:SS` for >=1h.
-    ContractRef: PolicyRule:Decision_Policy.md§2
-  - Failed job count is computed from job entries whose terminal conclusion is failure-like.
-    ContractRef: PolicyRule:Decision_Policy.md§2
-  - Last log timestamp is parsed from the latest timestamped log line when present;
-    otherwise fallback to run `updated_at`.
-    ContractRef: PolicyRule:Decision_Policy.md§2
-- **View logs:** fetches and displays the last 200 lines of the job log.
-  ContractRef: UICommand:cmd.github.actions_view_logs, Invariant:INV-011
-  - Log viewer MUST use monospace font; ANSI escape codes MUST be stripped before display;
-    viewer MUST support text search (Ctrl+F / Cmd+F).
-    ContractRef: PolicyRule:Decision_Policy.md§2, Invariant:INV-003
-- **Download full log:** downloads the complete log archive via GitHub API and saves to
-  the user's OS Downloads folder; shows a toast on completion.
-  ContractRef: UICommand:cmd.github.actions_download_log, Invariant:INV-011
+This subview owns:
+- workflow list
+- pin / unpin
+- run history
+- run, job, and step detail
+- log tail and full-log download
+- `workflow_dispatch` forms and validation
+- refresh, backoff, and rate-limit behavior
 
-#### Trigger workflow (`workflow_dispatch`)
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/storage-plan.md
 
-- The "Run workflow" button MUST be shown only for workflows whose YAML defines a
-  `workflow_dispatch` trigger. MUST NOT be shown for other trigger types.
-  ContractRef: PolicyRule:Decision_Policy.md§2, Invariant:INV-003
-- If the workflow defines inputs, each input MUST be rendered as a form field (text,
-  boolean toggle, or select) matching the input's type as declared in the YAML.
-  ContractRef: PolicyRule:Decision_Policy.md§2
-- Submit dispatches `POST /repos/{owner}/{repo}/actions/workflows/{id}/dispatches` via the
-  GitHub API (realm: `github_api`).
-  ContractRef: SchemaID:Spec_Lock.json#github_operations, ContractName:Plans/GitHub_API_Auth_and_Flows.md
-- Success: show `Workflow triggered — run will appear shortly` toast; auto-refresh list.
-  ContractRef: PolicyRule:Decision_Policy.md§2
-- Error — HTTP 403: show `Permission denied: you do not have Actions write access`.
-  ContractRef: Invariant:INV-003, PolicyRule:Decision_Policy.md§2
-- Error — HTTP 422: show the validation error message from the API response body verbatim
-  (truncated to 200 characters; `Show full error` expands inline).
-  ContractRef: PolicyRule:Decision_Policy.md§2, Invariant:INV-003
+### Settings
 
-#### Auto-refresh
+This subview owns in-app admin behavior for:
+- repository secrets CRUD
+- environment secrets CRUD
+- variables CRUD
+- environment inventory and selection
+- explicit disabled states when auth, scope, or repo linkage is insufficient
 
-- The workflow runs list MUST auto-refresh every 30 seconds while the Actions Panel is
-  visible. Refresh MUST be silently cancelled when the panel is hidden.
-  ContractRef: PolicyRule:Decision_Policy.md§2
-- Refresh interval MUST be persisted in redb under key
-  `github_actions/refresh_interval_s` (default: `30`; minimum: `10`; maximum: `300`).
-  ContractRef: ConfigKey:github_actions/refresh_interval_s, ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md§2
-- Retry on refresh failure: bounded to 3 consecutive attempts with exponential back-off
-  starting at 5 seconds. After 3 failures, show `Actions refresh failed — <reason>` with
-  a `Retry now` button; auto-retry stops until the user retries or the panel is closed.
-  ContractRef: PolicyRule:Decision_Policy.md§2, Invariant:INV-003
+Browser fallback is allowed only for unsupported edge cases; it is not the default contract.
 
-**Actions panel failure states (exhaustive for list/detail/log flows):**
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Permissions_System.md
 
-| Error | Display text | Action(s) |
+### Workflow authoring alignment
+
+Workflow generation in Settings > Advanced must align with this live Actions surface.
+Generated workflows, required-secrets readiness, and validation outcomes MUST be discoverable from GitHub Actions rather than remaining settings-only state.
+
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/FinalGUISpec.md
+
+### C.1 Adding an SSH Target
+
+**Entry point:** Settings → SSH Remotes → "Add Remote"
+
+This flow MUST NOT require the Chain Wizard.
+
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md, PolicyRule:Decision_Policy.md§2
+
+**GUI flow (sequential steps, no branching ambiguity):**
+
+**Step 1 — Required fields (all REQUIRED; form MUST NOT advance until all are valid):**
+
+| Field | Type | Validation | Default |
+|---|---|---|---|
+| Host | text | Valid hostname or IP address | *(none)* |
+| User | text | Non-empty, no whitespace | *(none)* |
+| Auth method | select | `ssh_key` or `ssh_agent` | `ssh_key` |
+| Remote folder | text | Absolute path (starts with `/`) | *(none)* |
+| Nickname | text | Non-empty; auto-suggested as `user@host` | `user@host` |
+
+ContractRef: PolicyRule:Decision_Policy.md§2
+
+**Step 2 — Optional fields:**
+
+| Field | Type | Default |
 |---|---|---|
-| Run list fetch auth failure (401/403) | `Cannot load workflow runs: authentication required` | `Reconnect GitHub`, `Retry` |
-| Run list rate limited | `GitHub API rate limit reached — retry after <HH:MM:SS>` | `Retry` (enabled after reset) |
-| Run detail unavailable (404) | `Workflow run not found or no longer available` | `Refresh run list` |
-| Job detail fetch failure | `Unable to load job details: <status> — <message>` | `Retry`, `Open workflow in browser` |
-| Log tail fetch failed | `Unable to load log tail for job <id>` | `Retry`, `Download full log` |
-| Full log download permission failure (403) | `Permission denied: cannot download workflow logs` | `Reconnect GitHub`, `Open run in browser` |
-| Full log download missing/expired (404/410) | `Log archive unavailable for this run` | `Retry`, `Refresh run list` |
-| Full log redirect/download network failure | `Log download failed: network error` | `Retry download` |
-| Workflow dispatch permission failure (403) | `Permission denied: you do not have Actions write access` | `Reconnect GitHub`, `Dismiss` |
-| Workflow dispatch validation failure (422) | `Workflow dispatch rejected: <validation message>` | `Edit inputs`, `Retry` |
+| SSH port | integer | `22` |
+| Proxy jump host | text | *(empty = no jump)* |
 
-ContractRef: Invariant:INV-003, PolicyRule:Decision_Policy.md§2, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+ContractRef: PolicyRule:Decision_Policy.md§2
+
+**Step 3 — Auth method detail (conditional on Step 1 auth method selection):**
+
+- `ssh_key` selected: show a key-file picker listing key files found in `~/.ssh/` (files
+  matching `id_*`, `*.pem`, `*.key`); user may also browse for any file. MUST NOT require
+  the user to enter a passphrase here; the OS SSH agent or OS keychain handles passphrases.
+  ContractRef: PolicyRule:no_secrets_in_storage, Invariant:INV-002
+- `ssh_agent` selected: no additional input required; Puppet Master uses the running SSH
+  agent (`$SSH_AUTH_SOCK`).
+  ContractRef: PolicyRule:Decision_Policy.md§2
+
+**Step 4 — Validation:**
+
+Puppet Master MUST attempt a validation connection before saving. The connection test MUST
+execute: `ssh -q -o BatchMode=yes -o ConnectTimeout=10 [-p <port>] [-J <jump>] <user>@<host> exit`.
+
+ContractRef: PolicyRule:Decision_Policy.md§2
+
+Validation MUST report one of the following deterministic outcomes:
+
+| Outcome | Display text | Action(s) |
+|---|---|---|
+| Success | `Connection successful — remote is reachable` | `Save` |
+| Connection refused | `Port closed or SSH not running on host` | `Back`, `Retry` |
+| Auth failed | `Auth failed — check key or user` | `Back`, `Retry` |
+| Host key mismatch | `Host key changed — verify and accept or reject` | `Accept` (saves key), `Reject` (cancels) |
+| Timeout | `Connection timed out` | `Back`, `Retry` |
+
+ContractRef: PolicyRule:Decision_Policy.md§2, Invariant:INV-003
+
+- The `Accept` action for host key mismatch MUST present the new key fingerprint for user
+  review before accepting. MUST NOT auto-accept changed host keys.
+  ContractRef: PolicyRule:Decision_Policy.md§2, Invariant:INV-003
+
+**Step 5 — Save:**
+
+On successful validation, the SSH remote MUST be saved to redb under the key
+`ssh_remotes/{id}` where `{id}` is a stable UUID generated at save time.
+
+ContractRef: ConfigKey:ssh_remotes, ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md§2
+
+The saved record MUST contain: `id`, `nickname`, `host`, `port`, `user`, `auth_method`,
+`key_path` (if `ssh_key`), `remote_folder`, `jump_host` (if set). MUST NOT contain
+passphrases or private key content.
+
+ContractRef: PolicyRule:no_secrets_in_storage, Invariant:INV-002
+
+---
+
+### C.2 Managing SSH Targets
+
+**Entry point:** Settings → SSH Remotes
+
+- The SSH Remotes settings page MUST list all saved remotes as a table with columns:
+  Nickname, Host, User, Status badge.
+  ContractRef: PolicyRule:Decision_Policy.md§2, Invariant:INV-003
+- Status badge per remote (deterministic set):
+  ContractRef: PolicyRule:Decision_Policy.md§2
+
+  | Badge | Display | Condition |
+  |---|---|---|
+  | `connected` | ✓ Connected | Last test or active session succeeded |
+  | `disconnected` | ○ Disconnected | Not tested; or session ended cleanly |
+  | `error` | ✕ Error · <reason> | Last test or session failed |
+
+- Per-remote actions (right-click or row action menu): `Edit`, `Remove`, `Test connection`,
+  `Set as active`.
+  ContractRef: UICommand:cmd.ssh.remote_edit, UICommand:cmd.ssh.remote_remove, UICommand:cmd.ssh.remote_test, UICommand:cmd.ssh.remote_set_active, Invariant:INV-011
+- **Test connection:** re-runs the validation check from §C.1 Step 4 and updates the
+  status badge with the result. MUST complete within 15 seconds; on timeout, show
+  `Connection timed out` with `Retry`.
+  ContractRef: PolicyRule:Decision_Policy.md§2, Invariant:INV-003
+- **Remove:** prompts `Remove remote "<nickname>"? This will not affect the remote server.`
+  with `Remove` (confirm) and `Cancel`. MUST NOT remove any files from the remote.
+  ContractRef: PolicyRule:Decision_Policy.md§2, Invariant:INV-003
+
+---
+
+### C.3 Remote Project Context
+
+When a project is configured to use an SSH remote, the following rules MUST apply:
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, PolicyRule:Decision_Policy.md§2
+
+**Git Panel:**
+
+- The status bar working folder MUST display `user@host:remote/path`.
+  ContractRef: PolicyRule:Decision_Policy.md§2
+- All `git` commands MUST be executed on the remote via SSH subprocess:
+  `ssh [-p <port>] [-J <jump>] <user>@<host> "cd <remote_folder> && git <args>"`.
+  MUST NOT run `git` locally for remote-mode projects.
+  ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/WorktreeGitImprovement.md
+
+**File Manager:**
+
+- The file tree MUST show the remote filesystem. File listing MUST use SFTP or an
+  SSH `find`/`ls` pipeline; the choice is implementation-defined (deterministic default:
+  SFTP when available, SSH pipeline as fallback).
+  ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/FileManager.md
+- File edits MUST be applied on the remote (write via SFTP or heredoc over SSH).
+  MUST NOT create a local checkout for remote-mode projects.
+  ContractRef: PolicyRule:Decision_Policy.md§2
+
+**Terminal:**
+
+- The local terminal tab MUST open an SSH session to the remote; no local shell MUST be
+  opened for remote-mode projects.
+  ContractRef: PolicyRule:Decision_Policy.md§2
+
+**Agents and execution:**
+
+- Puppet Master agents MUST run on the remote machine, not locally, in remote mode.
+  ContractRef: PolicyRule:Decision_Policy.md§2
+
+---
+
+### C.4 Tool & Provider Execution on Remote
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, PolicyRule:Decision_Policy.md§2
+
+- **Git operations:** run via SSH command on remote as specified in §C.3.
+  ContractRef: ContractName:Plans/WorktreeGitImprovement.md
+- **File browsing:** SFTP or SSH `find`/`ls` pipeline (deterministic default: SFTP when
+  available; SSH pipeline as fallback).
+  ContractRef: PolicyRule:Decision_Policy.md§2
+- **AI provider CLIs:** MUST be installed on the remote machine. Puppet Master MUST invoke
+  them via SSH subprocess and MUST stream stdout/stderr back over SSH to the local UI in
+  real time.
+  ContractRef: PolicyRule:Decision_Policy.md§2
+- Error — provider CLI not found on remote: show
+  `Provider CLI not found on remote — install <provider_name> on <host>` with a `Dismiss`
+  action. MUST NOT attempt to install the CLI automatically without explicit user consent.
+  ContractRef: PolicyRule:Decision_Policy.md§2, Invariant:INV-003
+- Error — SSH session drops mid-run: show `SSH session lost — reconnecting…` and
+  auto-retry the connection once (bounded: 1 auto-retry, then show `Reconnect` button for
+  manual retry). MUST NOT silently swallow the disconnect.
+  ContractRef: PolicyRule:Decision_Policy.md§2, Invariant:INV-003
 
 ---
 

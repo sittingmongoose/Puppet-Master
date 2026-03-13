@@ -171,6 +171,26 @@ Project management and switching. Shows project list with status indicators, cur
 - Tooltip on hover shows specific health details
 
 ### 7.4 Settings (Unified)
+
+#### 7.4.B Source Control, GitHub Actions, and Docker Manager settings normalization
+
+The unified Settings surface MUST expose configuration and persistence controls for the three operational side panels without redefining their runtime contracts.
+
+Required Settings coverage:
+- Source Control: auto-fetch interval, default diff mode, history/graph filters, default compare target, worktree visibility preferences, merge/conflict presentation defaults
+- GitHub Actions: default subview, refresh interval, pinned workflows, current-branch focus behavior, log display preferences, admin-scope visibility
+- Docker Manager: runtime defaults, hidden-subview policy, default subview, requested auth mode, registry defaults, build/bake defaults, compose defaults, Kubernetes visibility and namespace/context focus, Publish / Unraid defaults
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/storage-plan.md
+
+State ownership rules:
+- shared defaults live in Settings
+- panel navigation and selection state restore per project
+- secrets remain outside redb and are never stored in panel-state records
+- requested vs effective capability differences MUST be visible when they alter the enabled/disabled state of panel actions
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md
+
 ### 7.4A LSP settings and override semantics
 
 The unified Settings surface exposes the canonical LSP configuration without redefining backend policy.

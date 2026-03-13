@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/FinalGUISpec.md",
-  "source_sha256": "c6a0d884057a910016ae03433f8bb9d0ba4bb942075998e21585b4d7cd5032a5",
+  "source_sha256": "1753d567e5462cc2b78db2af14e5c5b6874bdc64b74a000fc16ead4d567e7405",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -45,168 +45,168 @@
     {
       "dest_path": "Plans/_shards/FinalGUISpec/06-4-navigation-architecture.md",
       "start_line": 227,
-      "end_line": 327,
-      "segment_sha256": "95a5e734996f70dec6378db3d2e4ca9ded8da599a37029f65ef4e320dc4e6ab7",
+      "end_line": 335,
+      "segment_sha256": "8965165a1e99d69db4b706204828e3336f0e7b49fadc90f67d4c442f797e0ac6",
       "heading": "## 4. Navigation Architecture"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/07-5-panel-system.md",
-      "start_line": 328,
-      "end_line": 412,
+      "start_line": 336,
+      "end_line": 420,
       "segment_sha256": "828ce2f8f39e1aa373d8a486de2b93f8187aac9bda2b7197b1ecc47fe139a4d8",
       "heading": "## 5. Panel System"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/08-6-theme-system.md",
-      "start_line": 413,
-      "end_line": 592,
+      "start_line": 421,
+      "end_line": 600,
       "segment_sha256": "14c2fc169663efe89a80c144eda34af5801ffb5900afb1e6e7e41b4747aec54b",
       "heading": "## 6. Theme System"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/09-7-views-specification.md",
-      "start_line": 593,
-      "end_line": 2233,
-      "segment_sha256": "6e23ee2ddb3bcd996423efc326673edaa46dd9887fccae830c45985c8b25db23",
+      "start_line": 601,
+      "end_line": 2261,
+      "segment_sha256": "3275e4f9fabf2dacde12a0b2fdeee512884e80422b2fea859a6195fbb9e52b66",
       "heading": "## 7. Views Specification"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/10-11-anti-flickering-and-scroll-preservation.md",
-      "start_line": 2234,
-      "end_line": 2275,
+      "start_line": 2262,
+      "end_line": 2303,
       "segment_sha256": "b795893cdaaeb63c731bea147cfec354b312f0608716676e4f9f22a04e332625",
       "heading": "## 11. Anti-Flickering and Scroll Preservation"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/11-12-responsive-design.md",
-      "start_line": 2276,
-      "end_line": 2309,
+      "start_line": 2304,
+      "end_line": 2337,
       "segment_sha256": "4af4745b1242be4f0bbaac9d739eab2b1a44935fec8c97309ca3f891c878c99c",
       "heading": "## 12. Responsive Design"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/12-13-accessibility.md",
-      "start_line": 2310,
-      "end_line": 2349,
+      "start_line": 2338,
+      "end_line": 2377,
       "segment_sha256": "9e8c79e4916df135cd94e977230fad106e13e98ff79212f59b89b02c5f42a4d5",
       "heading": "## 13. Accessibility"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/13-14-slint-file-organization.md",
-      "start_line": 2350,
-      "end_line": 2491,
+      "start_line": 2378,
+      "end_line": 2519,
       "segment_sha256": "436f4188824a370b47eab56cbc2e032f448551d7d1818111380cb41ef9b2071c",
       "heading": "## 14. Slint File Organization"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/14-15-persistence.md",
-      "start_line": 2492,
-      "end_line": 2571,
+      "start_line": 2520,
+      "end_line": 2599,
       "segment_sha256": "91f7067c52f940d8009c025bfc0445b2d5d15b02741b9dd2361531a68395fe1c",
       "heading": "## 15. Persistence"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/15-16-migration-mapping.md",
-      "start_line": 2572,
-      "end_line": 2648,
+      "start_line": 2600,
+      "end_line": 2676,
       "segment_sha256": "323c10e668bf9104bac94cb0e36f7c28f01877fea2ef778e3fc79914d715fbad",
       "heading": "## 16. Migration Mapping"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/16-17-risks-and-mitigations.md",
-      "start_line": 2649,
-      "end_line": 2683,
+      "start_line": 2677,
+      "end_line": 2711,
       "segment_sha256": "2403e1b50f67b653ea47bb5470c082e539e825ea99e3ae5898b9db32a1447f5c",
       "heading": "## 17. Risks and Mitigations"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/17-18-promoted-features-formerly-future-considerations.md",
-      "start_line": 2684,
-      "end_line": 2706,
+      "start_line": 2712,
+      "end_line": 2734,
       "segment_sha256": "0c9f6f72f1e6eeba02df5462d550d5cc3efdd283a1ca9b7a7a8fbade2ca711ad",
       "heading": "## 18. Promoted Features (Formerly Future Considerations)"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/18-appendix-a-cross-references.md",
-      "start_line": 2707,
-      "end_line": 2732,
+      "start_line": 2735,
+      "end_line": 2760,
       "segment_sha256": "f78a06cf395489df568c82926d7e01683d924c33af69c4124a57d31a44c74bd5",
       "heading": "## Appendix A: Cross-References"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/19-appendix-b-locked-decisions-summary.md",
-      "start_line": 2733,
-      "end_line": 2755,
+      "start_line": 2761,
+      "end_line": 2783,
       "segment_sha256": "f11d8577a337c0a6291de6aef894291a07e0d230a8981807bb1d595df11318c2",
       "heading": "## Appendix B: Locked Decisions Summary"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/20-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-addendum-2026-02-23.md",
-      "start_line": 2756,
-      "end_line": 2838,
+      "start_line": 2784,
+      "end_line": 2866,
       "segment_sha256": "82c5d96f598ad07669246f37934342405249e8dfb28e26717c73fe8d53d899c5",
       "heading": "## Appendix C: Dashboard Widget Grid and Widget Catalog Integration (Addendum -- 2026-02-23)"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/21-17-persona-editor-compatibility-disclosure-and-surface-level-persona-controls-2026-03-06.md",
-      "start_line": 2839,
-      "end_line": 3016,
+      "start_line": 2867,
+      "end_line": 3044,
       "segment_sha256": "3db435cdfe29dba6dd32b9df0bd00b1e0769603953b7f93131e368c3437931c3",
       "heading": "## 17. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/22-rendering-surface-addendum-2026-03-07.md",
-      "start_line": 3017,
-      "end_line": 3103,
+      "start_line": 3045,
+      "end_line": 3131,
       "segment_sha256": "5cd1f953758a055bcadc37a5d04661d599f2d2f4ad02b823b6ee737e886b31fb",
       "heading": "## Rendering Surface Addendum (2026-03-07)"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/23-assistant-planning-ux-addendum-2026-03-08.md",
-      "start_line": 3104,
-      "end_line": 3208,
+      "start_line": 3132,
+      "end_line": 3236,
       "segment_sha256": "38056f60c9ef086c06e64dc495abe25a3404b686085863316d51a117f8917bd6",
       "heading": "## Assistant Planning UX Addendum (2026-03-08)"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/24-scheduler-blocked-and-remediation-gui-addendum-2026-03-08.md",
-      "start_line": 3209,
-      "end_line": 3262,
+      "start_line": 3237,
+      "end_line": 3290,
       "segment_sha256": "e00b749c56ff062be905cc9b97321989e678c316284dbf2b3be1057ba3507ae9",
       "heading": "## Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/25-runtime-scheduler-blocked-state-gui-parity-addendum-2026-03-09.md",
-      "start_line": 3263,
-      "end_line": 3279,
+      "start_line": 3291,
+      "end_line": 3307,
       "segment_sha256": "a50f46a8a9269e5f93601e7b9f0b83dbd49c35a821cde91dd59f9ed7a1fd6a3b",
       "heading": "## Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/26-runtime-blocked-queue-and-recovery-gui-reconciliation-addendum-2026-03-09.md",
-      "start_line": 3280,
-      "end_line": 3318,
+      "start_line": 3308,
+      "end_line": 3346,
       "segment_sha256": "a896ba37ec2d3d1a66fcfd318c677354f28bd56a7e9ea94fa409e0437d929f87",
       "heading": "## Runtime Blocked, Queue, and Recovery GUI Reconciliation Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/27-runtime-scheduler-recovery-gui-consolidation-addendum-2026-03-09.md",
-      "start_line": 3319,
-      "end_line": 3330,
+      "start_line": 3347,
+      "end_line": 3358,
       "segment_sha256": "03eedd98d2545df07af60729d7490ba0d50698e5d99eb162f0da7ed60dcbf1fb",
       "heading": "## Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/28-blocked-recovery-gui-reconciliation.md",
-      "start_line": 3331,
-      "end_line": 3354,
+      "start_line": 3359,
+      "end_line": 3382,
       "segment_sha256": "cee0a196c57859c90b0bab13b77b808eafce4fd15ae71b99cd9d472d35657cea",
       "heading": "## Blocked / Recovery GUI Reconciliation"
     },
     {
       "dest_path": "Plans/_shards/FinalGUISpec/29-blocked-state-visual-distinction-and-recovery-ux-addendum.md",
-      "start_line": 3355,
-      "end_line": 3416,
+      "start_line": 3383,
+      "end_line": 3444,
       "segment_sha256": "f77ee6aaceaaab84fc9c29cd7dfc372d5c9c51247a03fd1aa0e9df9b40ffa922",
       "heading": "## Blocked-State Visual Distinction and Recovery UX Addendum"
     }

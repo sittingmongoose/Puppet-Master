@@ -932,8 +932,6 @@ Reference additions for rewrite planning:
 - Preview-mode edits are limited to validated structured commands and otherwise fall back to source editing.
 - Planning documents, including future Deep Plan Mode surfaces, use the same Markdown/Mermaid pipeline and canonical-source rules.
 
-## Runtime Scheduler Recovery Summary Consolidation Addendum (2026-03-09)
-
 ## Source Control, GitHub Actions, and Docker Manager MVP Consolidation Addendum (2026-03-12)
 
 ### GUI and views
@@ -957,6 +955,8 @@ ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Gra
 - blocked-state and requested-vs-effective rules remain product-wide behavior, not panel-local polish
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Decision_Policy.md
+
+## Runtime Scheduler Recovery Summary Consolidation Addendum (2026-03-09)
 
 Summary bullets for this feature family MUST say:
 - deterministic scored ready-set scheduling instead of pure lexical dispatch

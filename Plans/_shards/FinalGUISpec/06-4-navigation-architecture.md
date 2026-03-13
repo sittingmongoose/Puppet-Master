@@ -1,34 +1,42 @@
 ## 4. Navigation Architecture
 
 ### 4.1 Activity Bar
-Left edge, 48px wide. A vertical strip of icons, each representing a panel or group. **There is no Home icon on the activity bar;** main app navigation (Dashboard, Projects, etc.) stays in the title bar / primary content.
 
-| Icon | Panel / group | Behavior |
-|------|----------------|----------|
-| Play | Run & Debug | Toggles Run & Debug panel in side panel (DAP-based debugging; see §7.20) |
-| Git / branch | Git (GitHub) | Toggles Git panel in side panel (repo/branch/diff/operations; see Plans/GitHub_Integration.md §A) |
-| Docker | Docker | Toggles Docker Manage panel in side panel when project is Docker-related (see Plans/Containers_Registry_and_Unraid.md) |
-| Source control | Source Control | Toggles Source Control panel in side panel (multi-repo; Git-focused) |
-| Unraid | Unraid | Toggles Unraid template panel in side panel when project has Unraid template workflow |
-| Box/archive | Artifacts | Toggles Artifacts panel in side panel (runtime artifacts; see Plans/Runtime_Artifacts_Panel.md) |
-| Chat | Chat | Toggles Chat tab in side panel |
-| Folder | Files | Toggles File Manager panel in side panel |
-| Sliders | Settings | Settings (unified) in primary content |
-| Chart | Data | Usage, Metrics, Evidence, etc. in primary content; default **Usage** |
+The activity bar is the canonical entry point for persistent side-panel operational surfaces.
 
-**Single side-panel slot, last-click wins:** Only one side panel is visible at a time. Clicking an activity bar icon **replaces** the current panel content with that icon's panel. The most recently clicked icon's panel is shown.
+Required side-panel items for this feature set:
+- `chat`
+- `files`
+- `source_control`
+- `github_actions`
+- `docker_manager`
+- `artifacts`
+- `run_debug`
 
-**Behavior:**
-- **Single click** on an activity bar icon shows that panel in the side panel slot (replacing whatever was there).
-- **Long press or right-click** on a group icon (e.g. Data) opens a popover sub-menu listing pages in that group; Run & Debug / Git / Docker / Source Control / Unraid / Artifacts / Chat / Files each occupy the side panel when clicked.
-- **Active indicator:** 3px vertical accent stripe on the left edge of the active icon.
-- Icons are 24x24px, outlined, using `Theme.text-primary` with the active icon using `Theme.accent-blue`.
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/GitHub_Integration.md
 
-**Activity bar reordering:** Icons can be dragged up/down to reorder. A separator line can be placed between primary and secondary groups. Order is persisted in redb **per project** (see §5.7).
+Required shell rules:
+- Source Control and GitHub Actions are separate activity-bar destinations.
+- The legacy combined `Git (GitHub)` surface is retired as canonical shell behavior.
+- Docker Manager is the canonical container/runtime side-panel destination.
+- Kubernetes does not get a separate activity-bar item for MVP; it is a Docker Manager subview.
+- Unraid does not require a separate top-level activity-bar item; Publish / Unraid lives inside Docker Manager.
+- Activity-bar labels, tooltips, keyboard shortcuts, and `cmd.panel.switch` IDs MUST use the same surface vocabulary.
 
-**Activity bar extensibility:** Extensions/plugins may add activity bar items. Drag-to-reorder applies to built-in and extension icons.
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md
 
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Runtime_Artifacts_Panel.md, PolicyRule:Decision_Policy.md§2
+Canonical side-panel descriptions:
+
+| Panel ID | Canonical label | Purpose |
+|---|---|---|
+| `source_control` | Source Control | Git-first repo state, changes, history, graph, branches/stash, and worktrees |
+| `github_actions` | GitHub Actions | GitHub-hosted workflows, runs, logs, dispatch, and admin settings |
+| `docker_manager` | Docker Manager | Containers, images, compose, registries, build/bake, Publish / Unraid, and project-focused Kubernetes |
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/UI_Command_Catalog.md
+
+Unchanged primary-content and bottom-panel surfaces continue to follow the rest of this document.
+
 ### 4.2 Command Palette
 
 `Ctrl+K` (primary) or `Ctrl+P` (alternative) opens a centered overlay (~500-600px wide, top third of window) with fuzzy search across all pages, commands, and actions.

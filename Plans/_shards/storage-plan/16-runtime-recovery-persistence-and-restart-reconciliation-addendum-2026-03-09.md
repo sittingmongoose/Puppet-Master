@@ -26,7 +26,28 @@ This section is the canonical persistence contract for runtime recovery, blocked
 
 `attempt_id?` and `thread_id?` remain fields on `blocked_projection` and are not primary-key components.
 
+### Cross-surface receipt record
+
+The runtime receipt record is the canonical bridge between Orchestrator, Source Control, GitHub Actions, Docker Manager, Artifacts, and Usage.
+
+Minimum fields:
+- `run_id`
+- `attempt_id`
+- `project_id`
+- `repo_id?`
+- `worktree_id?`
+- `branch_ref?`
+- `commit_range?`
+- `workflow_refs?` with workflow / run / job / step identifiers
+- `docker_refs?` with runtime/context/image/publish/template identifiers
+- `kubernetes_refs?` with context/namespace/workload/rollout identifiers
+- `usage_event_ref?`
+- `created_at_utc`
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Orchestrator_Page.md
+
 ### Canonical records
+
 1. `attempt_record`
    - fields include `scheduler_pass_id`, requested/effective persona snapshot refs, requested/effective model snapshot refs, requested/effective permission snapshot refs, `replan_generation`, `mutation_capable`, `safe_point_id?`, `provider_attempt_ref?`, remediation lineage refs, and terminal outcome fields
 2. `tier_runtime_record`

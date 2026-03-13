@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/usage-feature.md",
-  "source_sha256": "9ddfa19b0258d03d677c6d8ecacfadafdcab006cd2164588606e7dfa3658ce83",
+  "source_sha256": "9ec6549e1949572b0acaeb29161a03ab0a15722d46c5bb73aa4ead555db70a81",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -129,9 +129,16 @@
     {
       "dest_path": "Plans/_shards/usage-feature/18-runtime-scheduler-recovery-observability-addendum-2026-03-09.md",
       "start_line": 618,
-      "end_line": 636,
-      "segment_sha256": "d5b46f023694ebb4d511f6625f2bfc40b1ee297a5e1879a711ec7193400edc7d",
+      "end_line": 637,
+      "segment_sha256": "1bce7d6770b4a9176e973da65f275fca964eec5c6cb688a1e637cd58e35f322b",
       "heading": "## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/19-source-control-github-actions-and-docker-manager-cost-attribution-addendum-2026-03-12.md",
+      "start_line": 638,
+      "end_line": 647,
+      "segment_sha256": "c62d0fd607f6d92b9a9f0ff812e876b36644df346c7840550422bee84218b10a",
+      "heading": "## Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)"
     }
   ]
 }

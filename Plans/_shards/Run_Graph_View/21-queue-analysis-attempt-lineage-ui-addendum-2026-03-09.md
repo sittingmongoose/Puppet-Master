@@ -16,17 +16,6 @@ Add the following to the graph node / detail payload contract:
 - `replan_generation`
 - preserved-local-work indicator
 
-### Required detail sections
-The detail panel MUST show:
-1. current execution status and generation
-2. current or last attempt identity
-3. scheduler score breakdown / queue-analysis explanation
-4. blocked or failed classification with reason codes
-5. recovery actions available now
-6. safe-point state and restore history when present
-7. remediation lineage and child attempts
-8. evidence / artifacts for the selected attempt
-
 ### Queue analysis surface
 The graph view MUST include a queue-analysis affordance showing:
 - last wake reason

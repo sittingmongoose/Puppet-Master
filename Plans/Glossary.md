@@ -28,8 +28,6 @@ ContractRef: Invariant:INV-010
 ---
 
 ## 2. Core terms
-### Shell and workspace terms
-
 ### Source control, CI, and container orchestration terms
 
 **Source Control**
@@ -47,6 +45,8 @@ ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:
 **Operation receipt**
 A canonical runtime-linked record that preserves the cross-surface identity of a run/attempt action and its resulting SCM, workflow, runtime, publish, or usage references.
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+### Shell and workspace terms
 
 
 - **workspace tab** — the primary in-window working context. Holds one active project plus local shell state such as active thread, side-panel state, browser tabs, terminal sessions, and dev-session references.

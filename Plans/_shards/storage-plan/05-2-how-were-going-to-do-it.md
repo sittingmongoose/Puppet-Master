@@ -269,257 +269,36 @@ Preview/browser rendering requires both durable UI state and replayable lifecycl
 
 #### Additions: Container publish / DockerHub / Unraid persistence contract
 
-This addendum defines the minimum persistence contract required so Settings, Docker Manage, Orchestrator, and post-publish flows restore the same state.
+This addendum defines the persistence required for Source Control, GitHub Actions, Docker Manager, and their Orchestrator linkage.
 
-##### Scope split
+### Scope split
 
 | Scope | Store | What belongs here |
 |---|---|---|
-| Secret | OS credential store only | DockerHub PATs, browser-login derived credentials, credential-helper references |
-| Global app state | redb | Shared container defaults, `Hide Docker Manage when not used in Project.`, shared `ca_profile` draft/profile state |
-| Project state | redb | Selected namespace/repository/tag template, push policy, last validation snapshot (non-secret), Docker Manage surface state, template repo config/status, per-project `ca_profile` override |
-| Event ledger | seglog | Auth validation, repo create, publish, template generation, template repo push state transitions |
+| Secret | OS credential store only | GitHub API tokens, Docker PATs, browser-login derived credentials, registry/helper secrets |
+| Global app state | redb | shared Source Control defaults, Actions defaults, Docker Manager defaults, hidden-subview policy |
+| Project state | redb | selected repo/worktree, panel subviews, pinned workflows, selected runtime/context, requested auth mode, template repo state |
+| Event ledger | seglog | auth validation, blocked/recovery outcomes, workflow actions, publish results, runtime receipts, cross-surface linkage |
 
-##### Required redb keys
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md, PolicyRule:no_secrets_in_storage
 
-##### Canonical Docker / Unraid project-state schema
+### Required redb keys
 
-`docker.project_state.{project_id}` -> {
-  requested_auth_mode,
-  effective_auth_snapshot: {
-    effective_auth_provider_state,
-    effective_capabilities[],
-    effective_account_identity,
-    last_validation_timestamp,
-    last_validation_host,
-    degraded_reason?
-  },
-  selected_namespace,
-  selected_repository,
-  repository_create_privacy_default,
-  tag_template,
-  push_policy,
-  auto_generate_unraid_xml,
-  manage_template_repo,
-  auto_push_template_repo,
-  last_publish_result_id?,
-  active_preview_session_id?,
-  docker_manage_surface_state:{ active_tab, dock_state, expanded_panels[] }
-}
+- `source_control.project_state.{project_id}` -> `{ active_subview, selected_repo_id, selected_worktree_id?, history_filter?, graph_filter?, graph_layout?, compare_target?, auto_fetch_interval_s, conflict_presentation }`
+- `github_actions.project_state.{project_id}` -> `{ active_subview, current_branch_ref?, pinned_workflow_ids[], refresh_interval_s, last_opened_run_id?, last_opened_job_id?, admin_scope_selection?, log_display_mode? }`
+- `docker_manager.project_state.{project_id}` -> `{ active_subview, selected_runtime, selected_context?, selected_compose_project?, selected_registry?, requested_auth_mode?, selected_namespace?, selected_repository?, tag_template?, push_policy?, last_validation_snapshot?, last_publish_result_id?, template_repo_id?, kubernetes_focus? }`
+- `orchestrator.receipt.{run_id}.{attempt_id}` -> `{ repo_id?, worktree_id?, branch_ref?, commit_range?, workflow_refs?, docker_refs?, kubernetes_refs?, usage_event_ref? }`
 
-`unraid.template_repo.{project_id}` -> {
-  template_repo_id?,
-  enabled,
-  provider,
-  repo_path,
-  remote_url?,
-  remote_visibility?,
-  branch,
-  maintainer_slug,
-  status: TemplateRepoStatus,
-  last_commit_oid?,
-  last_push_ts?,
-  review_state
-}
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/usage-feature.md
 
-Add the following seglog events:
+### Naming and migration rules
 
-| Event type | Minimum payload |
-|---|---|
-| `unraid.template_repo.migration.confirmation_requested` | `project_id`, `template_repo_id?`, `reason_code`, `proposed_layout` |
-| `unraid.template_repo.adoption.confirmation_requested` | `project_id`, `template_repo_id?`, `reason_code`, `dirty_paths[]` |
-| `unraid.template_repo.created` | `project_id`, `template_repo_id`, `provider`, `repo_path`, `remote_url?`, `branch`, `visibility?` |
-| `unraid.ca_profile.projection.started` | `project_id`, `template_repo_id?`, `source_scope` |
-| `unraid.ca_profile.projection.completed` | `project_id`, `template_repo_id?`, `files_written[]` |
-| `unraid.ca_profile.projection.failed` | `project_id`, `template_repo_id?`, `reason_code`, `message` |
-| `unraid.ca_profile.projection.blocked` | `project_id`, `template_repo_id?`, `blocked_step`, `reason_code`, `recovery_options[]` |
+- `docker_manage_surface_state` is legacy naming and MUST migrate to `docker_manager.project_state.{project_id}`.
+- `requested_auth_mode` and `effective_*` snapshots remain separate fields.
+- blocked-state payloads use canonical `allowed_action_ids[]`; `recovery_options[]` is not canonical project-state vocabulary.
 
-`unraid.template.generation.completed.template_repo_id` is nullable when Puppet Master generated unmanaged local output rather than writing into a configured managed repo.
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
 
-- `settings.containers_registry.v1` -> global container defaults (runtime selector, binary path, compose defaults, push-policy default, Docker Manage visibility setting)
-- `docker.project_state.{project_id}` -> `{ requested_auth_mode, effective_auth_snapshot, selected_namespace, selected_repository, tag_template, push_policy, last_validation_timestamp, last_publish_result_id?, active_preview_session_id?, docker_manage_surface_state:{ active_tab, dock_state, expanded_panels[] } }`
-- `unraid.template_repo.{project_id}` -> `{ template_repo_id, enabled, repo_path, remote_url, branch, maintainer_slug, status: TemplateRepoStatus, last_commit_oid?, last_push_ts?, review_state }`
-- `unraid.ca_profile.shared` -> shared maintainer profile model
-- `unraid.ca_profile.project.{project_id}` -> per-project override model when project scope is enabled
-
-##### Required seglog event families
-
-| Event type | Minimum payload |
-|---|---|
-| `docker.auth.browser_login.started` | `project_id`, `provider`, `requested_auth_mode` |
-| `docker.auth.browser_login.device_code_issued` | `project_id`, `verification_uri`, `user_code`, `expires_in_seconds` |
-| `docker.auth.browser_login.polling` | `project_id`, `poll_interval_seconds`, `attempt` |
-| `docker.auth.browser_login.cancelled` | `project_id`, `provider` |
-| `docker.auth.browser_login.timed_out` | `project_id`, `provider`, `expires_in_seconds` |
-| `docker.auth.pat.saved` | `project_id`, `provider`, `storage_scope` |
-| `docker.auth.capability_validated` | `project_id`, `requested_auth_mode`, `effective_auth_provider_state`, `effective_capabilities[]`, `effective_account_identity`, `degraded_reason?` |
-| `docker.auth.failed` | `project_id`, `requested_auth_mode`, `reason_code`, `message` |
-| `docker.auth.cleared` | `provider`, `scope`, `project_id?`, `cleared_by` |
-| `docker.repositories.refreshed` | `project_id`, `namespace`, `repository_count` |
-| `docker.repositories.refresh_failed` | `project_id`, `namespace`, `reason_code`, `message` |
-| `docker.repository.create.confirmation_requested` | `project_id`, `namespace`, `repository`, `privacy` |
-| `docker.repository.created` | `project_id`, `namespace`, `repository`, `privacy` |
-| `docker.repository.create.cancelled` | `project_id`, `namespace`, `repository` |
-| `docker.repository.create_failed` | `project_id`, `namespace`, `repository`, `reason_code`, `message` |
-| `docker.publish.started` | `project_id`, `namespace`, `repository`, `tags[]` |
-| `docker.publish.completed` | `project_id`, `publish_result_id`, `registry_host`, `namespace`, `repository`, `tags[]`, `digests[]`, `platforms[]`, `sanitized_logs_path` |
-| `docker.publish.failed` | `project_id`, `namespace`, `repository`, `reason_code`, `message` |
-| `unraid.template_repo.validated` | `project_id`, `template_repo_id`, `repo_path`, `branch`, `status` |
-| `unraid.template_repo.validation_failed` | `project_id`, `repo_path`, `reason_code`, `message` |
-| `unraid.template.generation.started` | `project_id`, `publish_result_id`, `template_repo_id` |
-| `unraid.template.generation.completed` | `project_id`, `publish_result_id`, `template_xml_path`, `template_repo_id`, `maintainer_slug`, `commit_status`, `push_status`, `review_state`, `ca_profile_state` |
-| `unraid.template.generation.failed` | `project_id`, `template_repo_id?`, `reason_code`, `message` |
-| `unraid.template_repo.auto_committed` | `project_id`, `template_repo_id`, `commit_oid`, `files_committed[]` |
-| `unraid.template_repo.auto_commit_skipped` | `project_id`, `template_repo_id`, `reason_code` |
-| `unraid.template_repo.push.started` | `project_id`, `template_repo_id`, `branch`, `remote_url` |
-| `unraid.template_repo.push.completed` | `project_id`, `template_repo_id`, `branch`, `remote_url`, `commit_oid` |
-| `unraid.template_repo.push.failed` | `project_id`, `template_repo_id`, `branch`, `reason_code`, `message` |
-
-##### Restore rules
-##### Shared `ca_profile` projection contract
-
-`unraid.ca_profile.shared` is the canonical editable source-of-truth when a project has not enabled per-project override.
-
-Projection rules:
-- Shared-profile edits do **not** eagerly mutate every managed template repository in the background.
-- Projection into a specific project repo occurs only when that project runs `Generate/Update Unraid Template` or the user explicitly chooses `Apply shared profile to this repo`.
-- Projection may update only Puppet-Master-owned paths for that project:
-  - `ca_profile.xml`
-  - `assets/maintainer/**` written for that projection pass
-- If the target repo is dirty, diverged, or review-blocked, Puppet Master MUST preserve the shared source model, mark the project repo state accordingly, and avoid silent mutation.
-
-##### Canonical blocked-event payload minima
-
-Blocked outcomes are distinct from runtime failures.
-
-Minimum blocked payload:
-- `project_id`
-- `blocked_step`
-- `reason_code`
-- `guard_name?`
-- `recovery_options[]`
-
-Required blocked event families:
-- `docker.publish.blocked`
-- `unraid.template.generation.blocked`
-- `unraid.template_repo.push.blocked`
-- `unraid.template_repo.setup.blocked`
-
-##### Canonical enum binding
-`TemplateRepoStatus` is exactly:
-
-- `unconfigured`
-- `config_invalid`
-- `clean`
-- `dirty_uncommitted`
-- `committed_local_only`
-- `push_in_progress`
-- `push_failed`
-- `diverged_remote`
-- `needs_review`
-
-##### Runtime Artifacts (GUI panel) event types and index
-**Scope:** Agent-run outputs displayed in the Artifacts panel (see Plans/Runtime_Artifacts_Panel.md). Distinct from Project Plan Package artifacts (Plans/Project_Output_Artifacts.md).
-
-**Seglog event types (one per artifact type):** Each event uses the standard EventRecord envelope (schema, ts, seq, type, run_id, thread_id, payload). The `type` value is one of:
-- `runtime_artifact.code_diff`
-- `runtime_artifact.implementation_plan`
-- `runtime_artifact.reasoning_summary`
-- `runtime_artifact.validation_test`
-- `runtime_artifact.screenshot`
-- `runtime_artifact.evidence`
-- `runtime_artifact.document`
-- `runtime_artifact.restore_point`
-- `runtime_artifact.browser_recording`
-- `runtime_artifact.tool_llm_trace`
-- `runtime_artifact.context_snapshot`
-- `runtime_artifact.cost_usage`
-- `runtime_artifact.hitl_approval`
-- `runtime_artifact.failed_attempts`
-- `runtime_artifact.subagent_lineage`
-- `runtime_artifact.before_after_snapshot`
-- `runtime_artifact.suggested_next_steps`
-- `runtime_artifact.api_web_call`
-- `runtime_artifact.artifact_version`
-
-**redb key:** `artifacts_index:v1:{project_id}` (per-project only). Value: index structure for the project's runtime artifacts (e.g. list or map of artifact_id to metadata for UI listing/filtering).
-
-**Projector:** A projector (or equivalent) reads seglog events whose `type` starts with `runtime_artifact.` and writes/updates the per-project `artifacts_index:v1:{project_id}`. No `payload.artifact_type` discriminator; type is given by event `type`.
-
-**cost_usage alignment:** The payload of `runtime_artifact.cost_usage` events MUST align with the canonical `usage.event` schema (tokens_in, tokens_out, reasoning_tokens, cost, platform/provider, model, etc.). Canonical usage remains `usage.event`; cost_usage is an attribution record that references the same pipeline. Ledger and Usage page consume the same data.
-
-**Local usage mirror compatibility:** Where a local append-only `usage.jsonl` mirror exists, it MUST preserve the same canonical field names as `usage.event`, using `operation`, `tokens_in`, `tokens_out`, and `reasoning_tokens`. Legacy `action` plus aggregate `tokens` is compatibility-only wording and MUST NOT be reintroduced as the write shape.
-
-ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/usage-feature.md, PolicyRule:Decision_Policy.md§2
-
-- Effective auth capability snapshots MAY be restored for UI display, but they are advisory until revalidated.
-- Secret material MUST NOT be mirrored into redb or seglog.
-- Template repo status MUST be recomputed from the working copy on project open and then reconciled with the last persisted snapshot.
-- Shared `ca_profile` state is the default source unless the project explicitly enables per-project override.
-
-**Schema:** redb uses **namespaces** (tables) and **key-value** pairs. Keys and values are bytes; we define a **key encoding** (e.g. string prefix + project_id + id) and **value encoding** (e.g. bincode or JSON) per namespace.
-
-**Namespaces (tables) and key patterns:**
-
-| Namespace | Key pattern | Value | Purpose |
-|-----------|-------------|--------|---------|
-| `settings` | `app.{key}` | JSON or bincode | App-level settings (theme, max_tabs, etc.) |
-| `settings` | `project.{project_id}.{key}` | JSON | Per-project settings |
-| `sessions` | `thread.{thread_id}` | Thread metadata (title, created, project_id) | Chat thread list |
-| `sessions` | `thread_list.{project_id}` | List of thread_ids | Order of threads per project |
-| `runs` | `run.{run_id}` | Run metadata + status | Run lookup |
-| `checkpoints` | `projector.app_global.{projector_name}` | `{ seglog_path, offset_or_seq }` | Projector resume position for the app-global seglog |
-| `checkpoints` | `projector.project_local.{project_id}.{projector_name}` | `{ seglog_path, offset_or_seq }` | Projector resume position for one project's local seglog |
-| `checkpoints` | `thread_checkpoint.{thread_id}` | `{ selected_restore_point_id, anchor_message_id, anchor_seq, updated_at }` | Selected restore pointer for resume/rewind |
-| `editor` | `tabs.{project_id}` | Ordered list of paths | FileManager.md §2.9 |
-| `editor` | `active_tab.{project_id}` | Active tab index | |
-| `editor` | `scroll_cursor.{project_id}.{path_hash}` | Scroll/cursor state | |
-| `editor` | `max_tabs` | u32 | App-level |
-| `editor` | `session.{project_id}.{session_id}` | Session-scoped view state | |
-| `rollups` | `usage_5h.{platform}` | Aggregated 5h usage | Usage/dashboard |
-| `rollups` | `usage_7d.{platform}` | Aggregated 7d usage | |
-| `rollups` | `tool_latency.{window}` | Tool latency distribution | Analytics |
-| `rollups` | `tool_usage.{window}` | Per-tool stats (count, p50/p95 ms, error_count) for Usage tool widget | Plans/Tools.md §8.4; analytics scan aggregates `tool.invoked` into this key. |
-| `rollups` | `tool_usage_meta.{window}` | Freshness metadata (`computed_at`, `window_started_at`, `window_ended_at`) for the tool usage widget | Lets Usage show a deterministic "Last updated" timestamp without scanning seglog. |
-| `rollups` | `thread_usage.{thread_id}` | Optional per-thread usage rollup (context circle, thread Usage tab) | Overwritten by projector or analytics; keys for archived/deleted threads can be removed or left to retention. |
-| `sessions` | `queue.{thread_id}` | Queue state (items, order) for thread | Restored on load; written when queue events applied. |
-| `sessions` | `plan_todo.{thread_id}` | Plan and todo state for thread | Restored on load; written when plan_todo events applied. |
-| `sessions` | `context_overlay.{thread_id}` | JSON `context_overlay_state.v1` | Thread-local Context Lens overlay state (mute/focus/subcompact) + Auto Retrieval override (assistant-chat-design.md §17.5–§17.6). |
-| `editor` | `file_tree_expanded.{project_id}` | Expanded paths in file tree | Optional; value: list of path_hashes or paths. |
-| `editor` | `layout.{project_id}` (optional) | Split sizes, panel visibility | Optional; value: layout blob. |
-| `editor` | `recent_files.{project_id}` (optional) | Recently opened file paths | Optional; value: ordered list. |
-| `checkpoints` | `run.{run_id}` | Run resume position (segment + offset or seq) | Replay or resume run; cleanup when run is discarded. |
-| `checkpoints` | `interview_session.{interview_id}` | Interview session state | Restore interview UI. |
-| `checkpoints` | `interview_checkpoint.{interview_id}` | Interview projector/phase position | Resume interview pipeline. |
-| `checkpoints` | `hitl.{run_id}` | HITL pending state (e.g. approval_requested) | Restore HITL prompt after crash; clear on approved/rejected. |
-| `runs` | `background.{run_id}` | JSON background-run record | Queue/recovery state for background and async runs. |
-| `runs` | `background_queue.{project_id}` | JSON ordered queue entries | Durable bounded queue per project. |
-| `runs` | `tier_runtime.{run_id}.{tier_id}` | JSON requested/effective Persona/runtime + config-validation snapshot | Restore/run inspection surfaces. |
-| `runs` | `crew.{crew_id}` | JSON crew metadata + lifecycle state | Crew coordination/replay. |
-| `runs` | `crew_board.{crew_id}` | JSON ordered message board summary / index | Durable shared-messaging projection for crews. |
-| `review_rules` | `app` or `project.{project_id}` | YAML review rules blob | FileManager.md §10.8 |
-| `editor` | `snippets.global` / `snippets.project.{project_id}` | Snippet collections and template metadata | FileManager.md §10.9 |
-| `restore_points` | `point.{project_id}.{restore_point_id}` | JSON: `{ turn_id, timestamp, file_snapshots: [{ path, content_hash, blob_ref }] }` | Restore-point metadata and blob references for rollback (newfeatures.md §8). Blobs may be inline (small) or file-referenced. |
-| `restore_points` | `index.{project_id}` | JSON: ordered list of `restore_point_id` | Fast listing for "History" / "Restore to…" UI. Pruned when retention exceeded. |
-| `restore_points` | `index_thread.{thread_id}` | JSON: ordered list of `{ restore_point_id, anchor_message_id, anchor_seq, created_at }` | Thread-local restore history for rewind menus and recovery |
-
-**Value encoding (per namespace):** Keys are UTF-8 or fixed encoding; values are namespace-specific. Use **JSON** for human-inspectable or cross-version flexibility (settings, thread metadata, checkpoints, queue, plan_todo, rollups for dashboard). Use **bincode** (or redb native types) where compact and fast read/write matter (e.g. editor scroll_cursor, large blobs). Document the choice per namespace in code.
-
-- **settings:** JSON (app and project keys).
-- **sessions:** `thread.{id}` → JSON `{ title, created_ts, project_id, archived? }`; `thread_list.{project_id}` → JSON array of thread_id; `queue.{thread_id}`, `plan_todo.{thread_id}`, `context_overlay.{thread_id}` → JSON (structure per assistant-chat-design §11).
-- **runs:** JSON `{ status, started_ts, ... }`.
-- **checkpoints:** JSON `{ segment, offset }` or `{ seq }` for projectors; run/interview/hitl checkpoints as JSON with enough to resume.
-- **HITL checkpoint shape:** `checkpoints -> hitl.{run_id}` stores at minimum `{ request_id, run_id, tier_id, tier_type, request_kind, message, allowed_actions, status, created_at, resolved_at?, rationale?, reject_resolution? }`.
-- **background run state:** `runs -> background.{run_id}` stores the durable queue/lifecycle record for background or async runs; `background_queue.{project_id}` stores the ordered pending queue for restart recovery.
-- **tier runtime snapshots:** `runs -> tier_runtime.{run_id}.{tier_id}` stores the frozen requested/effective Persona/runtime/config-validation record used by Orchestrator history, Current Task UI, and resume.
-- **crew state:** `runs -> crew.{crew_id}` and `crew_board.{crew_id}` are projections of seglog crew lifecycle and message-board events; JSON files under `.puppet-master/state/` are derived mirrors only, never canonical state.
-- **restore_points:** JSON for metadata and index; blob references point to app-data files or inline bincode for small snapshots. Pruning deletes both redb key and referenced blob file.
-- **editor:** Tabs and lists as JSON; scroll_cursor and binary blobs as bincode if desired.
-- **rollups:** JSON: `usage_5h/7d` → `{ platform, tokens_in, tokens_out, ... }`; `tool_usage.{window}` → `{ tool_name, count, p50_ms, p95_ms, error_count }`; `tool_usage_meta.{window}` → `{ computed_at, window_started_at, window_ended_at }`; `thread_usage.{thread_id}` → same shape as usage rollup for one thread.
-- **review_rules:** UTF-8 YAML text persisted as the canonical editable format; validation metadata may be cached separately if needed.
-- **editor snippets:** JSON for snippet collections (`name`, `prefixes`, `body`, `description`, `scope`, `source`).
-
-**Migrations:** Use redb's schema version or a custom `schema_version` key in a `meta` namespace. On open, check version; if older, run migration functions (e.g. create new namespaces, copy/transform data, bump version). Document each migration (version N → N+1) and keep migrations reversible where possible (e.g. add column, don't drop until next major).
 #### 2.3.0 Thread checkpoint restoration contract
 
 - `thread_checkpoint.{thread_id}` stores the currently selected restore pointer for that thread, not the full restore history.

@@ -176,8 +176,6 @@ ContractRef: ContractName:Plans/Run_Graph_View.md#17, ContractName:Plans/Contrac
 ---
 
 ### 2.5 Orchestrator page commands
-#### 2.5A Containers & Registry / Docker Manage commands
-
 #### 2.5A Source Control commands
 
 | Command ID | Args schema (keys only) | Expected events | Affected surfaces |

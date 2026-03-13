@@ -24,3 +24,4 @@ Canonical source: [Plans/usage-feature.md](../../usage-feature.md)
 - [16-version-history.md](16-version-history.md) — ## Version History
 - [17-widget-composed-page-layout-addendum-2026-02-23.md](17-widget-composed-page-layout-addendum-2026-02-23.md) — ## Widget-Composed Page Layout (Addendum -- 2026-02-23)
 - [18-runtime-scheduler-recovery-observability-addendum-2026-03-09.md](18-runtime-scheduler-recovery-observability-addendum-2026-03-09.md) — ## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)
+- [19-source-control-github-actions-and-docker-manager-cost-attribution-addendum-2026-03-12.md](19-source-control-github-actions-and-docker-manager-cost-attribution-addendum-2026-03-12.md) — ## Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)
