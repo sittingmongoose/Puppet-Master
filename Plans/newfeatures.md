@@ -1036,8 +1036,12 @@ Instead, use one rendering family with:
 
 - The browser surface remains real and important.
 - Full HTML preview uses the browser-oriented path.
-- Generated Markdown/Mermaid preview does **not** require being treated as arbitrary full-trust browser content.
-- Click-to-context stays aligned with the browser/HTML surface, not with raw chat Markdown rendering.
+- Generated Markdown/Mermaid/native document review does **not** become arbitrary full-trust browser content.
+- Browser click-to-context remains the canonical browser/HTML path via `browser_element_context`.
+- Native document selection-to-chat is a separate `document_selection_context` path for source-backed document review surfaces.
+- Durable annotations live on native document review surfaces and do not generalize to arbitrary external browsing.
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md
 
 ### 24.3 Platform and embedding strategy
 

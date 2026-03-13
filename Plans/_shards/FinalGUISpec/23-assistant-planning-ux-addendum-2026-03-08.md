@@ -40,14 +40,14 @@ Required visible actions when applicable:
 
 ### 3. Deep Plan review in editor / Embedded Document Pane
 
-Deep Plan documents reuse the Embedded Document Pane note/revision contract.
+Deep Plan documents reuse the Embedded Document Pane annotation/revision contract.
 
 Required behavior:
-- highlight text -> `Add note`
-- note markers in margin + note list/drawer
-- `Resubmit with Notes` launches targeted revision for the plan document
-- deterministic note re-anchoring after edits
-- no silent note loss
+- highlight text -> annotation action palette
+- annotation markers in margin + annotation list/drawer
+- `Resubmit with Annotations` launches targeted revision for the plan document
+- deterministic annotation re-anchoring after edits
+- no silent annotation loss
 - no automatic Multi-Pass Review requirement before plan approval/execution
 
 The plan document may contain:
@@ -98,7 +98,7 @@ If a project is already active, the wizard should open on the preloaded feature/
 
 - Assistant Chat visibly exposes both Plan and Deep Plan.
 - PT is shown for both planning overlays using the canonical labels `Light`, `Balanced`, and `Comprehensive`.
-- Deep Plan documents open in a preview-capable editor/document surface and support inline notes plus targeted revision.
+- Deep Plan documents open in a preview-capable editor/document surface and support durable annotations plus targeted revision.
 - When the wizard is recommended, the user sees an explicit CTA and can decline without leaving chat.
 - Accepting the CTA opens the Chain Wizard / Interview flow with visible imported context.
 - Planning documents continue to use the shared markdown/mermaid rendering and source-canonical rules already defined elsewhere in the spec.

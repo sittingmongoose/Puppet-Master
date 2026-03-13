@@ -314,15 +314,22 @@ Preview/browser trust tiers are runtime capability gates. They do not replace to
 | Local asset loading from active workspace preview root | deny | allow | deny by default |
 | Cookies / local storage reuse | deny | allow, project-scoped only | separate store from workspace preview |
 | Preview mutation bridge (`request_edit`) | allow only through narrow v1 preview bridge | deny by default | deny |
+| Durable document annotations from rendered selection | allow only when runtime can map the selection to canonical source text or a stable semantic anchor | allow only for workspace-backed docs with the same mapping guarantee | deny |
+| Forward bounded selection to page-owned chat as `document_selection_context` | allow | allow when subject is workspace-backed | deny; use `browser_element_context` instead |
 | Open source / export bridge | allow | allow when subject is workspace-backed | deny unless the page is a workspace preview |
 | Inspect / capture element context | deny | allow | allow, user-triggered only |
 | DevTools | deny | allow when user explicitly opens DevTools | allow when user explicitly opens DevTools |
 | Arbitrary host/file API access | deny | deny | deny |
 
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/newfeatures.md, ContractName:Plans/assistant-chat-design.md
+
 Rules:
+- Requested vs effective selection/revision capability MUST be visible when the runtime downgrades a requested path.
 - `generated_restricted` and `workspace_preview` MUST NOT share storage/cookies by default.
-- `external_browse` MUST NOT inherit source-mutation privileges from workspace preview.
+- `external_browse` MUST NOT inherit durable annotation or source-mutation privileges from workspace preview.
 - A GUI toggle or browser feature MUST NOT expand trust-tier capabilities beyond this matrix without an explicit plan update.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md
 
 <a id="DEFAULTS"></a>
 

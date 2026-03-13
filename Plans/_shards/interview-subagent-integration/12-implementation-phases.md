@@ -47,26 +47,29 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 ### 5.1 Interview artifact review loop: TargetedRevisionPass
 
-Interview-generated human-readable artifacts (for example phase documents, PRD, `AGENTS.md`, and related bundle docs shown in the Embedded Document Pane) use the same bundle review loop as the Requirements Doc Builder.
+Interview-generated human-readable artifacts use the same bundle review loop as the Requirements Doc Builder, but with interview-owned chat routing and recovery state.
 
 **SSOT:**
 - Workflow semantics: `Plans/chain-wizard-flexibility.md` §5.5
 - Ownership boundary: `Plans/Crosswalk.md` §3.14
 - UI contract: `Plans/FinalGUISpec.md` §7.19.1
 
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/FinalGUISpec.md
+
 **Required behavior:**
 1. After interview document generation completes, artifacts enter the shared document-bundle review flow (`draft` / `changes-requested` / `approved`).
-2. Users may add inline notes to interview artifacts using the same anchored-note model as Requirements Doc Builder bundles.
-3. Clicking **Resubmit with Notes** launches a targeted revision pass over all interview artifacts with `open` notes, or a user-selected subset of interview artifacts with `open` notes.
-4. The targeted revision pass MAY update artifact content and/or answer question notes without modifying artifact text.
-5. For each processed note, the pass MUST record an addressed explanation and an updated anchor when re-anchoring succeeds.
-6. The targeted revision pass MUST NOT trigger Multi-Pass Review.
-7. Final Multi-Pass Review remains a separate final-only gate and is enabled only when all bundle docs are `Approved/Done` and no notes remain `open`.
-8. Resume/recovery MUST restore document statuses, note states, selected revision scope, and any in-progress targeted revision pass from persisted bundle state.
+2. Users may create durable annotations on interview artifacts using the same anchored annotation model as Requirements Doc Builder bundles.
+3. Users may also forward bounded selections into the interview-owned chat thread as `document_selection_context` attachments.
+4. Clicking **Resubmit with Annotations** launches a targeted revision pass over interview artifacts with open durable annotations, or a user-selected subset.
+5. The targeted revision pass MAY update artifact content and/or answer question/comment annotations without modifying artifact text.
+6. For each processed annotation, the pass MUST record `addressed_explanation` and an updated anchor when re-anchoring succeeds.
+7. The targeted revision pass MUST NOT trigger Multi-Pass Review.
+8. Final Multi-Pass Review remains a separate final-only gate and is enabled only when all bundle docs are `Approved/Done` and no annotations remain `open`.
+9. Resume/recovery MUST restore document statuses, annotation states, selected revision scope, pending thread-scoped chips, and any in-progress targeted revision run from persisted state.
 
-ContractRef: ContractName:Plans/chain-wizard-flexibility.md, Primitive:Seglog, ContractName:Plans/FinalGUISpec.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
 
-This section is intentionally DRY: interview bundles reuse the same targeted revision lifecycle rather than defining a second review model.
+This section is intentionally DRY: interview bundles reuse the same annotation-driven targeted revision lifecycle rather than defining a second review model.
 
 ### Phase 6: Testing & Refinement
 1. Test subagent invocations for each phase

@@ -1434,9 +1434,9 @@ Rules:
 - The pane may issue v1 structured preview edits only when the underlying subject is backed by a mutable shared buffer or a validated transient source buffer using the same preview-action pipeline.
 - Review/inspection surfaces that are not yet wired to the validated preview-action path remain non-destructive even when they render Markdown/Mermaid richly.
 
-**Purpose:** The Embedded Document Pane supports live, multi-document preview during doc generation (Requirements Doc Builder + Interviewer) and provides inline notes + targeted resubmits for cheap iteration.
+**Purpose:** The Embedded Document Pane supports live, multi-document preview during doc generation (Requirements Doc Builder + Interviewer) and provides durable annotations, send-selection-to-chat handoff, and targeted resubmits for cheap iteration.
 
-**Non-goal (explicit):** No "suggested change / patch apply" mode. Notes are plain instructions/questions; agent edits normally.
+**Non-goal (explicit):** No direct patch-apply mode. Structured annotations remain requests/review cues; the agent/runtime performs document changes through targeted revision or later explicit edit flows.
 
 ---
 
@@ -1468,69 +1468,87 @@ Rules:
 
 ---
 
-#### B) Inline Note Mode (Highlight + Note)
+#### B) Annotation Mode (Highlight + Actions)
 
-**UX**
-- Select text → context menu: Add note.
-- Note appears as:
-  - a margin marker in the doc, and
-  - a note card in a Notes drawer/list.
+The Embedded Document Pane uses a selection-driven **Annotations** review model rather than an `Add note`-only flow.
 
-**Notes list**
-- Filters: Open / Addressed / Resolved
-- Note kind (auto-inferred, deterministic default):
-  - if note ends with `?` or starts with `Q:` → question
-  - otherwise → change_request
-  - user can override; note may be both
+**Selection palette**
+- Select text to open a reusable action palette with: `Comment / Ask`, `Replace with...`, `Insert after...`, `Remove / Strike this`, and `Send selection to chat`.
+- `Comment / Ask`, `Replace`, `Insert after`, and `Remove` create durable annotations.
+- `Send selection to chat` creates a removable `document_selection_context` chip in the page-owned chat composer prep strip.
+- Actions that require stable source anchoring are disabled with explicit explanation on no-source-map renders.
 
-**Note lifecycle**
-- open → addressed → resolved
-- Agent can set addressed (with reply/link/pointer); user controls final resolved.
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md
 
-**Anchor robustness (required)**
-Store both:
-- Position selector: start/end offsets (fast, brittle)
-- Quote selector: exact text + prefix/suffix context (resilient)
+**Annotation drawer**
+- Title: `Annotations`.
+- Placement: right-side rail / drawer in binder-style review surfaces; the left rail remains dedicated to document switching and status.
+- On the first durable annotation in a page/bundle context, auto-open the drawer once for discoverability; after that, drawer open/closed state is sticky.
+- Each row shows operation badge, selected excerpt, payload preview, anchor status, lifecycle state, and replies.
+- Filters include `Open`, `Addressed`, `Resolved`, plus operation-type filters/badges.
 
-Default prefix/suffix length: 32 chars (clamped).
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 
-**Re-anchoring algorithm (deterministic)**
-1) try position selector
-2) if mismatch, try quote selector match (exact + prefix/suffix preference)
-3) if still not found: keep note open + show warning `Anchor not found — reselect to re-anchor` (never discard)
+**Lifecycle and anchoring**
+- Annotation lifecycle is `open -> addressed -> resolved`.
+- The agent/runtime may set `addressed`; the user controls final `resolved`.
+- Store both `anchor.text_position` and `anchor.text_quote`.
+- Default prefix/suffix length is 32 chars (clamped).
+- Re-anchoring is deterministic: 1) position selector, 2) quote selector with prefix/suffix preference, 3) keep annotation open and show `Anchor not found — reselect to re-anchor`.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md
+
+**Cross-pane chat handoff**
+- Hidden chat does not auto-open on `Send selection to chat`; instead pulse/badge the owning chat launcher and show a lightweight toast.
+- Use one unified composer prep strip above the textarea for pending context chips; document-selection chips live beside other context sources, not in a bespoke one-off tray.
+- Read-only / no-source-map renders are `Send selection to chat` only in v1 unless the renderer later gains stable semantic anchors.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
 
 ---
 
-#### C) Bundle Controls: Resubmit with Notes + Final Review
+#### C) Bundle Controls: Resubmit with Annotations + Final Review
 
-**Resubmit with Notes (targeted revision pass)**
-- Runs a targeted revision pass on docs with open notes (or user-selected subset).
-- Applies requested edits and/or answers questions.
-- Marks notes addressed with an explanation and (if possible) updated anchor location.
-- Hard rule: MUST NOT trigger Multi-Pass Review.
+**Resubmit with Annotations (targeted revision pass)**
+- Runs a targeted revision pass on docs with open durable annotations, or a user-selected subset.
+- Input records are deterministic and ordered by `doc_id`, source start offset, and `annotation_id`.
+- Each record carries `operation`, `intent_kind`, `operation_payload`, `selected_text`, anchor data, and bounded provenance.
+- The pass may update document text and/or answer question/comment annotations without changing the document.
+- For each processed annotation, record `addressed_explanation` and an updated anchor when re-anchoring succeeds.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md
+
+**Structured-output and conflict rules**
+- Conflicting or stale mutating annotations are excluded from automatic revision and surfaced for user resolution.
+- Allow one automatic retry on schema/order/shape validation failure; after that, degrade or fail explicitly rather than silently coercing output.
+- Hard rule: targeted revision MUST NOT trigger Multi-Pass Review.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Crosswalk.md
 
 **Final Multi-Pass Review (runs once, final-only)**
-- Multi-Pass Review is disabled until:
-  - all bundle docs are Approved/Done, and
-  - there are no open notes.
-- User explicitly clicks Run Final Review (do not auto-run).
+- Multi-Pass Review is disabled until all bundle docs are Approved/Done and there are no open annotations.
+- User explicitly clicks `Run Final Review`; do not auto-run.
 - Runs once by default; rerun explicit only.
 - Outputs findings and optional revised bundle.
 
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md
+
 **Single final gate**
-- After final review completes, show Accept | Reject | Edit.
-- Accept applies revised bundle.
-- Reject discards review output bundle and preserves pre-review bundle.
-- Edit opens revised docs without rerunning review.
+- After final review completes, show `Accept | Reject | Edit`.
+- `Accept` applies the revised bundle.
+- `Reject` discards review output and preserves the pre-review bundle.
+- `Edit` opens the revised docs without rerunning review.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md
 
 ---
 
 #### D) Acceptance Criteria (UI-level, testable)
 
 - During generation, ≥2 docs appear in the doc list; user can switch between them and watch live updates.
-- Notes are anchored to selections; after edits, notes re-attach via quote+context or remain open with a clear anchor-not-found warning (never silently lost).
-- Resubmit with Notes applies/answers notes and does not run Multi-Pass Review.
-- Multi-Pass Review cannot start until all docs are Approved/Done and notes resolved; it runs once by default and ends in a single Accept/Reject/Edit gate.
+- Annotations are anchored to selections; after edits, they re-attach via quote+context or remain open with a clear anchor-not-found warning (never silently lost).
+- Resubmit with Annotations applies/answers durable annotations and does not run Multi-Pass Review.
+- Multi-Pass Review cannot start until all docs are Approved/Done and annotations are resolved; it runs once by default and ends in a single Accept/Reject/Edit gate.
 
 ### 7.20 Bottom Panel (NEW)
 

@@ -41,11 +41,11 @@ Contracts V0 as SSOT for event envelope, UICommand, EventRecord, AuthState. Anti
 
 ##### Plans/Crosswalk.md
 - **DocumentCheckpoint.** Document-level restore points / coarse undo checkpoints (Crosswalk §3.11).
-- **DocumentInlineNotes.** Inline anchored notes with deterministic re-anchoring when text changes (Crosswalk §3.13).
+- **DocumentInlineNotes / annotations.** Durable anchored annotations on the legacy note substrate with deterministic re-anchoring and conflict handling (Crosswalk §3.13).
 - **DocumentPane.** Live multi-document preview surface with statuses (writing/draft/needs-review/approved) and read-only protections (Crosswalk §3.7).
 - **DocumentReviewSurface.** Review routing surface for documents (tri-location review routing) (Crosswalk §3.8).
 - **ReviewFindingsSummary.** Structured review findings schema + rendering surface (Crosswalk §3.9).
-- **TargetedRevisionPass.** "Resubmit with Notes" targeted revision workflow without triggering full review loop (Crosswalk §3.14).
+- **TargetedRevisionPass.** `Resubmit with Annotations` targeted revision workflow without triggering full review loop (Crosswalk §3.14).
 
 ##### Plans/DRY_Rules.md
 - **ContractRef taxonomy registry.** Registry of allowed ContractRef categories with validation rules (DRY_Rules §6).
@@ -144,8 +144,8 @@ Contracts V0 as SSOT for event envelope, UICommand, EventRecord, AuthState. Anti
 - **Transactional patch/apply/verify/rollback pipeline.** Unified transactional edit lifecycle pipeline to prevent silent corruption (rewrite memo ¶25).
 
 ##### Plans/storage-plan.md
-- **Document bundle persistence keys.** Persist doc-builder bundle state/inline notes/final-review gating in redb (storage-plan §2.3).
-- **Event schema registry.** Central registry of event types/payload schemas for docs/validation (storage-plan §7).
+- **Document bundle persistence keys.** Persist doc-builder bundle state, durable annotations on `note_record.v1` lineage, targeted revision runs, thread-scoped composer-prep recovery, and final-review gating in redb (storage-plan §2.3).
+- **Event schema registry.** Central registry of event types/payload schemas for annotation creation/status, selection sent/blocked, revisions, and validation (storage-plan §7).
 - **JSONL mirror generation.** Human-readable JSONL mirror of seglog written by projector (storage-plan §2.4).
 - **Per-project seglog isolation option.** Option to store seglog per project under .puppet-master for isolation (storage-plan §7).
 - **Scheduled backup/restore.** Scheduled backup/restore flows for redb/seglog to backups directory (storage-plan §7).
@@ -233,13 +233,14 @@ Contracts V0 as SSOT for event envelope, UICommand, EventRecord, AuthState. Anti
 - **Requested vs effective persona runtime state.** Runs/sub-runs/phases/tiers record requested_persona, effective_persona, selection source/reason, and applied/skipped Persona controls (Personas §10.11).
 
 ##### Plans/assistant-chat-design.md
-- **Context circle pop-out + compact now.** Context usage UI with pop-out detailed breakdown and a "Compact Now" action (Assistant chat design §25).
+- **Context circle pop-out + compact now.** Context usage UI with pop-out detailed breakdown and a `Compact Now` action (Assistant chat design §25).
 - **Per-pass validation model/provider selectors.** Settings UI to select provider+model per validation pass (Pass 1/2/3) with audit mirroring to reports (Assistant chat design §26).
 - **Chat Persona mode + effective Persona display.** Chat supports manual/auto/hybrid Persona modes and must always show effective Persona + selection reason instead of opaque Auto state (Assistant chat design §27).
-- **Natural-language Persona summons in chat.** Chat recognizes explicit requests like "Use Explorer" or "Answer as a technical writer" as Persona overrides with turn/session scope semantics (Assistant chat design §27.3).
+- **Natural-language Persona summons in chat.** Chat recognizes explicit requests like `Use Explorer` or `Answer as a technical writer` as Persona overrides with turn/session scope semantics (Assistant chat design §27.3).
 - **Chat Persona aliases and fuzzy matching.** Persona requests resolve through canonical IDs, display names, aliases, and normalized natural-language forms (Assistant chat design §27.4).
 - **Subagent blocks show effective Persona/model/platform.** In-thread subagent blocks display effective Persona, platform, model, and skipped unsupported Persona controls when relevant (Assistant chat design §27.6-§27.7).
-- **Thread attention_required + clarification requests.** Thread state attention_required with structured clarification_request forms (yes/no, single/multi-choice, free text) and bounded clarification loops (Assistant chat design §11).
+- **Thread attention_required + clarification requests.** Thread state `attention_required` with structured clarification_request forms (yes/no, single/multi-choice, free text) and bounded clarification loops (Assistant chat design §11).
+- **Deep Plan annotations + document-selection attachments.** Deep Plan review uses durable annotations plus thread-scoped `document_selection_context` chips instead of a note-only/browser-only split (Assistant chat design §8.7, §28.4A).
 
 ##### Plans/assistant-memory-subsystem.md
 - **Deterministic memory verification.** Auto/manual verification rules tied to evidence (build/test/commits/artifacts), with verified-only injection defaults (Assistant memory subsystem verification).
@@ -302,7 +303,7 @@ Contracts V0 as SSOT for event envelope, UICommand, EventRecord, AuthState. Anti
 ##### Plans/FinalGUISpec.md
 - **Agent activity pane.** Read-only streaming subagent output pane with virtualization constraints (FinalGUISpec §7.19).
 - **Bottom panel multi-tool suite.** Terminal/Problems/Output/Ports/Browser/Debug integrated bottom panel with hot-reload and inspect modes (FinalGUISpec §7.20).
-- **Embedded document pane w/ inline notes.** Live multi-doc preview with status badges + highlight/anchored inline notes + targeted resubmit-with-notes flow (FinalGUISpec §7.19-7.19.1).
+- **Embedded document pane w/ annotations.** Live multi-doc preview with status badges, selection action palette, durable annotations, thread-scoped send-to-chat chips, and targeted resubmit-with-annotations flow (FinalGUISpec §7.19-§7.19.1).
 - **File manager drag-drop + conflict dialogs.** Explicit UI contract for drag/drop + conflict resolution dialogs in file manager panel (FinalGUISpec §7.17).
 - **Persona editor compatibility matrix.** Persona editor shows supported / partially supported / unsupported control state per provider (Claude Code, Cursor CLI, OpenCode, Direct/API) (FinalGUISpec §17.1).
 - **Persona runtime control editor fields.** GUI support for default_platform/default_model/default_variant/temperature/top_p/reasoning_effort/talkativeness plus tool guidance and aliases (FinalGUISpec §17.2).

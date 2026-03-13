@@ -48,6 +48,18 @@ The app includes an **IDE-style editor** so users can open, view, and edit proje
 
 **Note:** This lock is an interaction rule only; it does not create a separate buffer or history branch. The shared-buffer invariant remains intact.
 
+### 2.4.1A Embedded document annotations and chat handoff boundary
+
+The Embedded Document Pane shares document identity and buffer state with File Editor, but annotation and chat-handoff state remain adjacent review state rather than extra file buffers.
+
+Rules:
+- Durable annotations anchor to canonical source text in the shared buffer, not to rendered DOM state.
+- Creating or resolving annotations does not create a second buffer, a second dirty flag, or a separate undo/history branch for the file itself.
+- `Send selection to chat` creates thread-scoped composer-prep state and does not mutate the file buffer.
+- If a selection was made against stale rendered state, mutating annotation creation must fail explicitly rather than silently rebase to a different span.
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
 ### 2.5 Data model and dirty state
 
 - **Buffer model:** One buffer per file path; one tab per path per group (no duplicate tabs for same path in one group). The active tab is the current buffer. See §2.4 for same path in multiple groups. ContractRef: Plans/storage-plan.md §2.3, Plans/FileSafe.md

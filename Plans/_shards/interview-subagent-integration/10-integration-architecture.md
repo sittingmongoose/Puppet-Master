@@ -838,33 +838,24 @@ When implementing or changing **interview-related code** in Puppet Master (inter
 
 ### 5.4 Multi-Pass Review (Interview Documents)
 
-Multi-Pass Review is the **final-review** step for the Interview document bundle. Cheap iteration during interview doc creation happens via inline notes + Resubmit with Notes (targeted revision), not by repeatedly running Multi-Pass Review.
+Multi-Pass Review is the **final-review** step for the Interview document bundle. Cheap iteration during interview doc creation happens via durable annotations plus `Resubmit with Annotations`, not by repeatedly running Multi-Pass Review.
 
 **Bundle preconditions (hard gate):**
-- Multi-Pass Review is enabled only when:
-  - all docs in the interview bundle are marked **Approved/Done**, and
-  - there are **no open notes** (all notes resolved), and
-  - user explicitly clicks **Run Final Review**.
+- Multi-Pass Review is enabled only when all docs in the interview bundle are marked **Approved/Done**.
+- There must be **no open annotations**; question/comment annotations remain gating items until resolved.
+- User explicitly clicks **Run Final Review**.
 - Runs once by default; rerun explicit only.
 
-**Live preview + notes (required supporting workflow):**
-- During interview doc creation and targeted resubmits, the Embedded Document Pane provides live multi-document preview:
-  - doc list grows as docs are created
-  - per-doc badges include `writing…`, `draft`, `needs-review`, `changes-requested`, `approved`
-  - follow-active toggle default ON
-- Inline notes (highlight + note) are supported with robust anchoring + deterministic re-anchoring (position + quote selectors; default prefix/suffix 32 chars).
-- Resubmit with Notes triggers a targeted revision pass that applies requested changes and/or answers questions, marks notes `addressed`, and MUST NOT trigger Multi-Pass Review.
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md
 
-ContractRef: ContractName:Plans/chain-wizard-flexibility.md
+**Live preview + annotations (required supporting workflow):**
+- During interview doc creation and targeted resubmits, the Embedded Document Pane provides live multi-document preview.
+- Per-doc badges include `writing…`, `draft`, `needs-review`, `changes-requested`, and `approved`.
+- The selection palette offers durable annotations on source-backed or deterministically mapped docs, and `Send selection to chat` on supported review surfaces.
+- Read-only / no-source-map renders are `Send selection to chat` only in v1.
+- `Resubmit with Annotations` triggers a targeted revision pass and MUST NOT trigger Multi-Pass Review.
 
-**Final gate (single decision):**
-- After final review completes, show **Accept | Reject | Edit** once for the review output bundle.
-  - Accept applies revised bundle.
-  - Reject discards review output bundle and preserves pre-review bundle.
-  - Edit opens revised docs without rerunning review.
-- Review output bundle MUST be stored separately so Reject is a clean discard.
-
-ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md
 
 ### 5.5 Requirements Quality Reviewer Trigger Rule
 

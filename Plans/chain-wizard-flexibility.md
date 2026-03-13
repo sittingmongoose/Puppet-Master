@@ -589,11 +589,7 @@ Promotion rules:
 
 ### 5.5 Document review surfaces and generation order
 
-This section defines the bundle-level review + iteration model for Requirements Doc Builder outputs, aligned with the Embedded Document Pane contract (`Plans/FinalGUISpec.md` §7.19.1).
-
-**Key constraint:** The user must be able to iterate cheaply (targeted revisions driven by notes) without repeatedly invoking expensive Multi-Pass Review. Multi-Pass Review is final-only and runs once per bundle by default.
-
----
+Requirements Doc Builder bundle review now uses a unified annotation + chat-handoff model instead of a note-only loop.
 
 #### 5.5.0 Bundle + doc state model
 
@@ -601,95 +597,94 @@ This section defines the bundle-level review + iteration model for Requirements 
 - `idle`
 - `generating` (some docs `writing…`)
 - `awaiting_user_review` (generation complete; docs are `draft/needs-review`)
-- `revision_running` (Resubmit with Notes targeted revision pass)
+- `revision_running` (`Resubmit with Annotations` targeted revision pass)
 - `awaiting_approvals` (user marks docs Approved/Done)
-- `ready_for_final_review` (all docs approved + no open notes)
+- `ready_for_final_review` (all docs approved + no open annotations)
 - `final_review_running` (Multi-Pass Review)
-- `final_gate` (Accept | Reject | Edit)
+- `final_gate` (`Accept | Reject | Edit`)
 - `complete`
 - `error` / `interrupted` (resume supported)
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
 **Doc-level states (canonical):**
-- `writing…` → `draft` → `approved`
-- `draft` ↔ `changes-requested` (notes open / resubmits)
+- `writing…` -> `draft` -> `approved`
+- `draft` <-> `changes-requested` (open annotations or reply-only targeted revision outcomes)
+- `needs-review` may be used as a doc badge when helpful
 
-`needs-review` may be used as a doc badge when helpful.
-
----
+ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/Crosswalk.md
 
 #### 5.5.1 Requirements Doc Builder flow (updated)
 
 1. Conversation phase.
 2. User confirms generation.
 3. Qualifying questions for `empty` and `thin` checklist sections only.
-4. Builder generates staged artifacts (requirements doc + contract seed pack) as a **bundle**, streaming writes into the Embedded Document Pane (live multi-doc preview).
-5. Generation completes → docs become `draft` or `needs-review`.
-6. User reviews, optionally edits, and adds inline notes (questions/change requests).
-7. User clicks **Resubmit with Notes** (targeted revision pass). This step can repeat as needed.
-8. User resolves notes and marks each doc **Approved/Done**.
-9. When **all** docs are Approved/Done **and** there are **no open notes**, enable **Run Final Review** (Multi-Pass Review). Do not auto-run.
+4. Builder generates staged artifacts as a **bundle**, streaming writes into the Embedded Document Pane.
+5. Generation completes; docs become `draft` / `needs-review`.
+6. User reviews, optionally edits, creates durable annotations, and may send bounded selections to the page-owned chat.
+7. User clicks **Resubmit with Annotations** (targeted revision pass). This step can repeat as needed.
+8. User resolves remaining annotations and marks each doc **Approved/Done**.
+9. When all docs are Approved/Done and there are no open annotations, enable **Run Final Review**. Do not auto-run.
 10. Multi-Pass Review runs once by default and ends with a single gate: **Accept | Reject | Edit**.
 
-**Hard rule:** Resubmit with Notes MUST NOT trigger Multi-Pass Review.
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
-ContractRef: ContractName:Plans/chain-wizard-flexibility.md
+**Hard rule:** `Resubmit with Annotations` MUST NOT trigger Multi-Pass Review.
 
----
+ContractRef: ContractName:Plans/Crosswalk.md
 
-#### 5.5.2 Resubmit with Notes: targeted revision contract
+#### 5.5.2 Resubmit with Annotations: targeted revision contract
 
 **Input:**
-- Current doc contents for docs with open notes (or user-selected subset)
-- All open notes (anchors + note_text + kind)
-- Minimal context: document registry + which docs are Approved/Done
+- Current doc contents for docs with open durable annotations, or a user-selected subset
+- All open durable annotations in deterministic order by `doc_id`, source start offset, and `annotation_id`
+- Minimal context: document registry, per-doc approval state, requested/effective revision capability, and bounded provenance
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
 
 **Output:**
 - Updated doc text for modified docs
-- Replies for question notes (attached to the note thread)
-- For each note: mark `addressed` with explanation and (if possible) updated anchor location
+- Replies for question/comment annotations
+- One result record per input annotation, in the same order, with `outcome = addressed | still_open | cannot_apply`, `addressed_explanation`, `updated_anchor?`, and `failure_code?`
+
+ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/Crosswalk.md
 
 **Hard rules:**
 - MUST NOT trigger Multi-Pass Review
-- May answer questions without changing docs
+- MAY answer questions without changing docs
+- Conflicting or stale mutating annotations are excluded from automatic revision until resolved
+- Allow one automatic retry on structured validation failure; then degrade or fail explicitly
 
-ContractRef: ContractName:Plans/chain-wizard-flexibility.md
-
----
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md
 
 #### 5.5.3 Acceptance criteria (workflow-level)
 
-- During generation, ≥2 docs appear in the doc list; user can switch and see streaming updates in the active doc.
-- Notes persist and re-anchor using quote+context; if not found, note remains open with explicit warning.
-- Resubmit with Notes performs a targeted pass and never invokes Multi-Pass Review.
-- Final review cannot run until all docs Approved/Done and no open notes exist; runs once by default; ends in Accept/Reject/Edit gate with clean discard semantics for Reject.
+- The selection palette appears on supported docs and creates durable annotations for `Comment`, `Replace`, `Insert after`, and `Remove`.
+- `Send selection to chat` creates a thread-scoped composer chip in the owning chat surface for the next turn.
+- Durable annotations persist and re-anchor deterministically; `anchor_not_found` remains explicit and never silent.
+- `Resubmit with Annotations` performs a targeted pass and never invokes Multi-Pass Review.
+- Final review cannot run until all docs are Approved/Done and no annotations remain open.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 
 ### 5.6 Multi-Pass Review (Requirements Doc)
 
-Multi-Pass Review is the **final-review** step for the Requirements Doc Builder bundle. It is intentionally not part of the cheap iteration loop; targeted revisions happen via **Resubmit with Notes** (§5.5).
+Multi-Pass Review is the **final-review** step for the Requirements Doc Builder bundle. Cheap iteration happens through durable annotations plus `Resubmit with Annotations`, not by repeatedly running Multi-Pass Review.
 
 **Trigger (hard gate):**
-- Enabled only when:
-  - all docs in the bundle are marked **Approved/Done**, and
-  - there are **no open notes** (all notes resolved), and
-  - user explicitly clicks **Run Final Review**.
-- Must not auto-run when the conditions become true.
-- Runs once by default; rerun explicit only.
+- Enabled only when all docs in the bundle are marked **Approved/Done**.
+- Enabled only when there are **no open annotations**; question/comment annotations count as open until the user resolves them.
+- User must explicitly click **Run Final Review**.
+- Must not auto-run when conditions become true.
 
-**Output + gate:**
-- Produces a findings summary and optional revised bundle.
-- After completion, show a single gate: **Accept | Reject | Edit**.
-- Review output is stored as a separate artifact set so:
-  - Reject discards review output cleanly and preserves the pre-review bundle.
-  - Accept applies the revised bundle.
-  - Edit opens revised docs without rerunning review.
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md
 
-**Reviewer selection (deterministic):**
-- Always include `requirements-quality-reviewer`.
-- Add at most **two** secondary reviewers:
-  - one domain reviewer resolved from the Builder domain-fragment stage when a single dominant domain exists
-  - one structural reviewer: `architect-reviewer` for architecture-heavy requirements, otherwise `code-reviewer`
-- Maximum reviewers per Builder Multi-Pass run: **3**
-- Reviewer Personas are read-only during review; only the final synthesis pass writes a revised staged bundle.
+**Separation rules:**
+- `Send selection to chat` chips do not satisfy or bypass the final-review gate.
+- Targeted revision and final review remain separate runtime actions with separate audit trails.
+- Interrupted targeted revision cleanup must preserve safe-point lineage and unresolved annotations until terminal resolution.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/MiscPlan.md, ContractName:Plans/storage-plan.md
 
 ### 5.7 Contract Layer (Requirements → Contracts → Plan → Execution)
 

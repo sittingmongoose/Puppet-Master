@@ -127,19 +127,33 @@ Standard Plan review:
 - user may continue the chat, request revisions, or open the plan in the editor
 - follow-up chat responses may revise the planning artifact
 
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md
+
 Deep Plan review:
 - the plan document opens automatically in the editor / preview-capable planning surface
 - users may edit the markdown directly
-- users may select text and add inline notes
-- `Resubmit with Notes` launches a targeted revision pass
-- targeted revision may update the plan document and/or answer question-notes
-- targeted revision MUST NOT auto-run Multi-Pass Review
+- on source-backed or deterministically mapped selections, the review palette offers `Comment / Ask`, `Replace with...`, `Insert after...`, `Remove / Strike this`, and `Send selection to chat`
+- durable actions create annotations on the existing `note_record.v1` lineage; `Send selection to chat` creates a visible pending `document_selection_context` chip on the owning thread
 
-Deep Plan note-handling rules:
-- reuse the Embedded Document Pane anchored-note model
-- preserve note lifecycle (`open -> addressed -> resolved`)
-- use deterministic position + quote selector re-anchoring
-- if an anchor cannot be reattached, keep the note open and show an explicit warning rather than silently dropping it
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+Deep Plan targeted revision rules:
+- `Resubmit with Annotations` launches a targeted revision pass over docs with open durable annotations, or a user-selected subset
+- targeted revision may update the plan document and/or answer question/comment annotations
+- targeted revision MUST NOT auto-run Multi-Pass Review
+- conflicting or stale mutating annotations are excluded from automatic revision until the user resolves them
+
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Crosswalk.md
+
+Deep Plan annotation-handling rules:
+- preserve the annotation lifecycle `open -> addressed -> resolved`
+- preserve deterministic position + quote selector re-anchoring
+- if an anchor cannot be reattached, keep the annotation open and show an explicit warning rather than silently dropping it
+- comment annotations may coexist with other annotations on the same span; overlapping mutating annotations conflict by default
+- final review gates use `no open annotations`, not `no open notes`
+- read-only / no-source-map renders such as plan-graph-like surfaces are `Send selection to chat` only in v1 unless a stable semantic-anchor contract is added later
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
 
 ### 8.8 Approval, queue, and execution handoff
 
@@ -185,7 +199,7 @@ Escalation signals include:
 - PT appears in the Assistant Chat GUI for both planning overlays and uses the canonical enum `Light | Balanced | Comprehensive`.
 - Deep Plan at a given PT performs more research and produces a richer artifact than Plan at the same PT.
 - Both planning overlays emit a normalized TODO list suitable for later execution.
-- Deep Plan documents open in an editor/preview-capable surface and support inline notes plus targeted revision.
+- Deep Plan documents open in an editor/preview-capable surface and support durable annotations plus targeted revision.
 - Planning artifacts are not written into the project repo by default.
 - Execution starts only after explicit approval and uses `regular` or `yolo`, never `plan`.
 - Approved plans can execute immediately when idle or queue behind another active run in the same thread.

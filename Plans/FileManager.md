@@ -202,6 +202,18 @@ The app includes an **IDE-style editor** so users can open, view, and edit proje
 
 **Note:** This lock is an interaction rule only; it does not create a separate buffer or history branch. The shared-buffer invariant remains intact.
 
+### 2.4.1A Embedded document annotations and chat handoff boundary
+
+The Embedded Document Pane shares document identity and buffer state with File Editor, but annotation and chat-handoff state remain adjacent review state rather than extra file buffers.
+
+Rules:
+- Durable annotations anchor to canonical source text in the shared buffer, not to rendered DOM state.
+- Creating or resolving annotations does not create a second buffer, a second dirty flag, or a separate undo/history branch for the file itself.
+- `Send selection to chat` creates thread-scoped composer-prep state and does not mutate the file buffer.
+- If a selection was made against stale rendered state, mutating annotation creation must fail explicitly rather than silently rebase to a different span.
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
 ### 2.5 Data model and dirty state
 
 - **Buffer model:** One buffer per file path; one tab per path per group (no duplicate tabs for same path in one group). The active tab is the current buffer. See §2.4 for same path in multiple groups. ContractRef: Plans/storage-plan.md §2.3, Plans/FileSafe.md
@@ -356,7 +368,17 @@ The HTML preview uses the **same built-in browser** as in **Plans/newfeatures.md
 
 ### 8.4 Click-to-context when viewing HTML
 
-When viewing a local HTML file in the built-in browser (with or without hot reload), **clicking an element** (with same modifier or toolbar as newfeatures.md §15.18) **sends that element's context to the Assistant**. The Assistant receives a structured summary (tag, id, class, text, role, rect, parent path, optional HTML snippet) so the user can ask for changes or explanations about that part of the page. Same behavior as "launch webapp and click to send context"; here the "webapp" is the user's local HTML file.
+When viewing a local HTML file in the built-in browser, clicking an element still sends `browser_element_context` to the Assistant. The Assistant receives a structured element summary (`tag`, `id`, `class`, `text`, `role`, `rect`, `parent path`, optional HTML snippet) so the user can ask for changes or explanations about that part of the page.
+
+ContractRef: ContractName:Plans/newfeatures.md, ContractName:Plans/assistant-chat-design.md
+
+Boundary rules:
+- This HTML/browser path remains separate from native document review selection handoff.
+- Native document surfaces use `document_selection_context` and may also support durable annotations when deterministic source mapping exists.
+- Browser/HTML click-to-context does not imply durable annotations or `Resubmit with Annotations` semantics.
+- Capture privilege and source-mutation privilege remain separate even for workspace-backed HTML preview.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/rewrite-tie-in-memo.md
 
 ---
 

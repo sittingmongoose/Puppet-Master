@@ -308,68 +308,78 @@ ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Contracts_V0.md
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md#EventRecord
 
-#### Additions: Document bundle registry + inline notes persistence
+#### Additions: Document bundle registry + annotation persistence
 
-Document-generation bundles (Requirements Doc Builder bundles and Interview bundles) must persist enough state to:
+Document-generation bundles must persist enough state to:
 - restore the Embedded Document Pane doc list + selection after restart
-- restore inline notes and their lifecycle state
-- enforce final-review gating (all docs approved + no open notes)
+- restore durable annotations and their lifecycle state
+- restore review gating (`all docs approved + no open annotations`)
 - support clean discard semantics for final review Reject
+
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/FinalGUISpec.md
 
 **Recommended redb placement:**
 - Store durable bundle state in `runs` and/or `checkpoints` namespaces as JSON blobs keyed by `bundle_id` / `run_id`.
 
-**Key patterns (add rows to the table above):**
-- `runs` → `bundle.{bundle_id}` → JSON `{ bundle_id, run_id, page_context, bundle_state, created_at, updated_at }`
-- `runs` → `doc_registry.{bundle_id}` → JSON `document_registry.v1`
-- `runs` → `notes_index.{bundle_id}` → JSON `{ note_ids: [note_id...], open_count, addressed_count, resolved_count }`
-- `runs` → `note.{bundle_id}.{note_id}` → JSON `note_record.v1`
-- `runs` → `review_findings_summary.{bundle_id}.{review_run_id}` → JSON `review_findings_summary.v1`
-- `checkpoints` → `document_pane_state.{bundle_id}` → JSON `document_pane_state.v1`
-- `checkpoints` → `final_review_output.{bundle_id}` → JSON `{ artifact_set_ref, created_at, status }` (separate artifact set so Reject discards cleanly)
+**Key patterns:**
+- `runs` -> `bundle.{bundle_id}` -> JSON `{ bundle_id, run_id, page_context, bundle_state, created_at, updated_at }`
+- `runs` -> `doc_registry.{bundle_id}` -> JSON `document_registry.v1`
+- `runs` -> `notes_index.{bundle_id}` -> JSON `{ annotation_ids: [note_id...], open_count, addressed_count, resolved_count }` (legacy key retained; user-facing term is annotation)
+- `runs` -> `note.{bundle_id}.{note_id}` -> JSON `note_record.v1`
+- `runs` -> `review_findings_summary.{bundle_id}.{review_run_id}` -> JSON `review_findings_summary.v1`
+- `checkpoints` -> `document_pane_state.{bundle_id}` -> JSON `document_pane_state.v1`
+- `checkpoints` -> `final_review_output.{bundle_id}` -> JSON `{ artifact_set_ref, created_at, status }`
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/assistant-chat-design.md
 
 **Schema notes (must align with workflow contracts):**
 - `document_registry.v1` fields: `{ bundle_id, docs[]: { doc_id, path, display_name, created_by, status, updated_at } }`.
-- `bundle_state.v1` fields: `{ bundle_id, run_id, page_context, state, selected_doc_id, final_review: { status, review_run_id?, findings_summary_ref?, gate_ready }, open_note_count, approved_doc_count, created_at, updated_at }`.
+- `bundle_state.v1` fields: `{ bundle_id, run_id, page_context, state, selected_doc_id, final_review: { status, review_run_id?, findings_summary_ref?, gate_ready }, open_annotation_count, approved_doc_count, created_at, updated_at }`.
 - `document_pane_state.v1` fields: `{ bundle_id, selected_doc_id, selected_view, follow_active_doc, scroll_state, filter_state, history_selection }`.
-- `review_findings_summary.v1` fields: `{ bundle_id, review_run_id, scope, per_doc_counts: [{ doc_id, gaps, consistency_issues, missing_information, unresolved_items }], applied_changes_summary, unresolved_items, revised_artifact_ref?, created_at, updated_at }`.
-- `final_review_output.v1` fields: `{ bundle_id, review_run_id, findings_summary_ref, artifact_set_ref, created_at, status }`.
-- `note_record.v1` includes both selector types:
-  - `anchor.text_position` `{ start, end }`
-  - `anchor.text_quote` `{ exact, prefix, suffix }` with default prefix/suffix length 32 chars (clamped).
-- Notes kind + lifecycle rules are enforced at write time:
-  - kind inference: `question` if ends with `?` or starts with `Q:`, else `change_request`; allow user override and `both`.
-  - lifecycle: `open` → `addressed` → `resolved` (user controls resolved).
+- `note_record.v1` remains the canonical durable annotation record and includes `anchor.text_position`, `anchor.text_quote`, `operation`, `intent_kind`, `operation_payload`, `source_surface`, `provenance`, `conflict_state`, and `staleness_state`.
+- Lifecycle remains `open -> addressed -> resolved`; question-vs-change-request inference still applies, but annotations may also carry explicit operation payloads.
+- Durable mutating annotations require either deterministic source mapping or a stable semantic anchor; otherwise only chat handoff is allowed.
 
-**Seglog vs redb:**
-- redb is the durable snapshot store for UI restoration and gating decisions.
-- Required persisted events for replay-safe workflow state: `bundle.created`, `bundle.state_changed`, `bundle.doc_status_changed`, `bundle.note_created`, `bundle.note_status_changed`, `bundle.final_review_started`, `bundle.final_review_completed`, and `bundle.final_gate_decided`.
-- Projectors MUST be able to deterministically rebuild `bundle_state`, `document_registry`, `notes_index`, `note_record`, `review_findings_summary`, and `final_review_output` from those events plus canonical artifact references.
-
-ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/FinalGUISpec.md
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md
 
 #### Additions: Targeted revision persistence + event contract
 
-Targeted revision runs ("Resubmit with Notes") must persist enough state to support interruption + resume, deterministic replay, note-thread reply rendering, and final-review gating derived from note status.
+Targeted revision runs must persist enough state to support interruption + resume, deterministic replay, annotation-thread reply rendering, thread-scoped chat-handoff restoration, and final-review gating derived from annotation status.
 
-**Recommended redb placement (add rows to the table above):**
-- `runs` → `revision_run.{bundle_id}.{revision_id}` → JSON `{ bundle_id, revision_id, status, selected_doc_ids, selected_note_ids, started_at, completed_at?, interrupted_at?, resumed_from_revision_id? }`
-- `runs` → `note_reply_index.{bundle_id}.{note_id}` → JSON `{ replies: [{ author, created_at, body, revision_id? }] }`
+**Recommended redb placement:**
+- `runs` -> `revision_run.{bundle_id}.{revision_id}` -> JSON `{ bundle_id, revision_id, status, selected_doc_ids, selected_annotation_ids, requested_revision_capability, effective_revision_capability, validation_retry_count, safe_point_ref?, started_at, completed_at?, interrupted_at?, resumed_from_revision_id? }`
+- `runs` -> `note_reply_index.{bundle_id}.{note_id}` -> JSON `{ replies: [{ author, created_at, body, revision_id? }] }`
+- `checkpoints` -> `composer_prep_state.{thread_id}` -> JSON `{ thread_id, chips: [{ attachment_type, attachment_id, status, source_surface, doc_id?, bounded_summary, blocked_reason_code? }], updated_at }`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/MiscPlan.md
 
 **`note_record.v1` minimum additions:**
 - `addressed_explanation?`
 - `last_revision_id?`
-- `last_reanchor_result?` = `position_match | quote_match | anchor_not_found`
+- `last_reanchor_result? = position_match | quote_match | anchor_not_found`
 - `updated_anchor?`
 - `reopened_count`
+
+ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/Crosswalk.md
 
 **Required seglog events (minimum set):**
 - `bundle.revision_started`
 - `bundle.revision_completed`
 - `bundle.revision_interrupted`
 - `bundle.note_replied`
+- `bundle.selection_sent_to_chat`
+- `bundle.selection_forward_blocked`
 
-ContractRef: ContractName:Plans/chain-wizard-flexibility.md#5.5.2, ContractName:Plans/interview-subagent-integration.md
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md
+
+**Persistence rules:**
+- The runtime, not model output, is authoritative for annotation status transitions.
+- Already validated revision outcomes remain persisted across interruption; unvalidated annotations remain `open`.
+- Pending composer chips store bounded provenance and attachment summaries only, never unbounded raw payloads.
+- Mandatory secret scrubbing applies before seglog/redb/index/blob persistence.
+- Cleanup must preserve safe-point and remediation lineage until the originating revision attempt reaches terminal resolution.
+
+ContractRef: ContractName:Plans/MiscPlan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
 
 
 #### Additions: Auto Retrieval + Context Lens persistence (Assistant chat)

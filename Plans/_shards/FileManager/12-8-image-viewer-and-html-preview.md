@@ -28,7 +28,17 @@ The HTML preview uses the **same built-in browser** as in **Plans/newfeatures.md
 
 ### 8.4 Click-to-context when viewing HTML
 
-When viewing a local HTML file in the built-in browser (with or without hot reload), **clicking an element** (with same modifier or toolbar as newfeatures.md §15.18) **sends that element's context to the Assistant**. The Assistant receives a structured summary (tag, id, class, text, role, rect, parent path, optional HTML snippet) so the user can ask for changes or explanations about that part of the page. Same behavior as "launch webapp and click to send context"; here the "webapp" is the user's local HTML file.
+When viewing a local HTML file in the built-in browser, clicking an element still sends `browser_element_context` to the Assistant. The Assistant receives a structured element summary (`tag`, `id`, `class`, `text`, `role`, `rect`, `parent path`, optional HTML snippet) so the user can ask for changes or explanations about that part of the page.
+
+ContractRef: ContractName:Plans/newfeatures.md, ContractName:Plans/assistant-chat-design.md
+
+Boundary rules:
+- This HTML/browser path remains separate from native document review selection handoff.
+- Native document surfaces use `document_selection_context` and may also support durable annotations when deterministic source mapping exists.
+- Browser/HTML click-to-context does not imply durable annotations or `Resubmit with Annotations` semantics.
+- Capture privilege and source-mutation privilege remain separate even for workspace-backed HTML preview.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/rewrite-tie-in-memo.md
 
 ---
 

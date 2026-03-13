@@ -65,7 +65,7 @@ ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FileSafe.md
 
 ### 1.2A Structured attachment normalization for browser element context
 
-Before final conversation payload emission, the prompt pipeline MUST normalize structured user attachments created by the chat/composer surface.
+Before final conversation payload emission, the prompt pipeline MUST normalize structured user attachments created by the chat/composer surface and native document review surfaces.
 
 For `browser_element_context` attachments:
 - normalization occurs after context compilation and before final conversation serialization
@@ -74,7 +74,18 @@ For `browser_element_context` attachments:
 - optional truncated HTML is included only if still within attachment budget
 - attachment metadata MUST record when truncation occurred
 
-This keeps browser-element context deterministic across chat, browser preview, and prompt assembly implementations.
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/newfeatures.md
+
+For `document_selection_context` attachments:
+- normalization occurs after context compilation and before final conversation serialization
+- attachments are serialized in stable thread-prep order before the user's freeform message text
+- bounded fields are serialized first: `source_surface`, `bundle_id?`, `doc_id`, `doc_path/display_name`, bounded `selected_text`, anchor data, `requested_target`, `effective_target?`, `sensitivity_state`, `truncation_state`
+- raw unbounded document bodies MUST NOT be injected into the prompt through this attachment path
+- blocked or expired chips MUST NOT be serialized as successful user attachments
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md
+
+This keeps browser capture and native document selection handoff deterministic across chat, document review, preview, and prompt assembly implementations.
 
 <a id="ASSEMBLY-PIPELINE"></a>
 
