@@ -829,7 +829,8 @@
     .chat-thread-item.role-assistant.active { border-color: var(--text-primary); }
     [data-theme^="retro"] .chat-thread-item.role-assistant.active { border-color: var(--accent-lime); box-shadow: 4px 4px 0 var(--accent-lime); }
     .chat-thread-item.role-assistant .thread-title { color: var(--text-primary); }
-    [data-theme^="retro"] .chat-thread-item.role-assistant .thread-title { color: var(--accent-lime); }
+    [data-theme="retro-dark"] .chat-thread-item.role-assistant .thread-title { color: #fff; }
+    [data-theme="retro-light"] .chat-thread-item.role-assistant .thread-title { color: #000; }
     .chat-thread-item.role-assistant .thread-working-pulse, .chat-thread-item.role-assistant .thread-status-unread { color: var(--text-primary); }
     [data-theme^="retro"] .chat-thread-item.role-assistant .thread-working-pulse, [data-theme^="retro"] .chat-thread-item.role-assistant .thread-status-unread { color: var(--accent-lime); }
     
@@ -847,6 +848,21 @@
     [data-theme^="retro"] .chat-thread-item.role-prd.active { box-shadow: 4px 4px 0 var(--accent-magenta); }
     .chat-thread-item.role-prd .thread-title { color: var(--accent-magenta); }
     .chat-thread-item.role-prd .thread-working-pulse, .chat-thread-item.role-prd .thread-status-unread { color: var(--accent-magenta); }
+
+    .chat-toggle-btn {
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      display: inline-block;
+    }
+    .chat-toggle-btn:hover { color: var(--text-primary); }
+    .chat-toggle-btn.active {
+      font-weight: 600;
+      transform: scale(1.1);
+    }
+    .chat-toggle-btn.toggle-eli5.active { color: var(--accent-lime); }
+    .chat-toggle-btn.toggle-yolo.active { color: var(--accent-orange); }
+    .chat-toggle-btn.toggle-crew.active { color: var(--accent-blue); }
 
     .chat-main {
       flex: 1;
@@ -6286,7 +6302,11 @@ impl Dashboard {
                 
                 <div style="display:flex; gap:var(--md); align-items:center; font-size:11px;">
                   <span class="context-usage" title="Context: 42k / 128k" style="color:var(--text-secondary); font-family:var(--body-font); display:flex; align-items:center; gap:var(--xs);">
-                    <svg width="10" height="10" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="var(--text-secondary)" opacity="0.8"></circle></svg> 42k/128k
+                    <svg width="12" height="12" viewBox="0 0 24 24" style="transform: rotate(-90deg);">
+                      <circle cx="12" cy="12" r="10" fill="transparent" stroke="var(--border-light)" stroke-width="4"></circle>
+                      <circle cx="12" cy="12" r="10" fill="transparent" stroke="var(--accent-blue)" stroke-width="4" stroke-dasharray="62.8" stroke-dashoffset="42"></circle>
+                    </svg>
+                    42k/128k
                   </span>
                   <a href="#" style="color:var(--accent-orange); border: 1px solid var(--accent-orange); display:flex; align-items:center; gap:4px; text-decoration: none; padding:2px 8px; border-radius:4px; font-weight:600;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Issues</a>
                 </div>
@@ -6422,7 +6442,7 @@ impl Dashboard {
                 <div class="message-stream messageStream" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-direction: column; gap: var(--md);">
                 </div>
 
-                <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light); display:flex; flex-direction:column; gap:var(--sm);">
+                <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light); display:flex; flex-direction:column; gap:0;">
                   <div class="pendingInterventionBlock hidden" style="position:absolute; top:-40px; left:var(--md); right:var(--md); background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:6px; padding:var(--sm) var(--md); display:flex; justify-content:space-between; align-items:center; font-size:11px; box-shadow:0 -4px 12px rgba(0,0,0,0.1); z-index:10;">
                     <span style="color:var(--text-secondary); text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:200px;">"Wait, update the cache too."</span>
                     <div style="display:flex; gap:var(--xs); align-items:center;">
@@ -6441,7 +6461,7 @@ impl Dashboard {
                         <button title="Attach File" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; padding:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
                         
                         <div style="position:relative;">
-                          <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; min-width:80px; justify-content:space-between; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
+                          <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; min-width:100px; justify-content:space-between; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
                             <span>Agent</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                           </button>
                           <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
@@ -6455,9 +6475,9 @@ impl Dashboard {
                         </div>
 
                         <div style="display:flex; gap:var(--md); align-items:center; margin-left:var(--sm); font-size:10px;">
-                          <span style="cursor:pointer; color:var(--text-secondary); transition:all 0.2s;" title="Explain Like I'm 5" onclick="this.classList.toggle('active')" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-secondary)'">ELI5</span>
-                          <span style="cursor:pointer; color:var(--accent-orange); font-weight:600; transform:scale(1.1); transition:all 0.2s;" title="Auto-approve tools" onclick="this.classList.toggle('active')">YOLO</span>
-                          <span style="cursor:pointer; color:var(--text-secondary); transition:all 0.2s;" title="Multi-agent Crew" onclick="this.classList.toggle('active')" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-secondary)'">CREW</span>
+                          <span class="chat-toggle-btn toggle-eli5" title="Explain Like I'm 5" onclick="this.classList.toggle('active')">ELI5</span>
+                          <span class="chat-toggle-btn toggle-yolo active" title="Auto-approve tools" onclick="this.classList.toggle('active')">YOLO</span>
+                          <span class="chat-toggle-btn toggle-crew" title="Multi-agent Crew" onclick="this.classList.toggle('active')">CREW</span>
                         </div>
                       </div>
 
@@ -6465,9 +6485,9 @@ impl Dashboard {
                     </div>
                   </div>
 
-                  <div style="display:flex; gap:var(--md); align-items:center; font-size:10px; margin-top:var(--sm);">
+                  <div style="display:flex; gap:var(--sm); align-items:center; font-size:10px; padding: var(--sm) 0;">
                     <div style="position:relative;">
-                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
+                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:4px 10px; min-width:120px; justify-content:space-between; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
                         <span class="persona-label">product-manager</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                       </button>
                       <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
@@ -6480,7 +6500,7 @@ impl Dashboard {
                     </div>
                     
                     <div style="position:relative;">
-                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
+                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:4px 10px; min-width:120px; justify-content:space-between; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
                         <span class="model-label">Claude: sonnet-4.5</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                       </button>
                       <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
@@ -6493,7 +6513,7 @@ impl Dashboard {
                     </div>
 
                     <div style="position:relative;">
-                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
+                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:4px 10px; min-width:80px; justify-content:space-between; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
                         <span>High</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                       </button>
                       <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
@@ -6623,7 +6643,11 @@ impl Dashboard {
                 
                 <div style="display:flex; gap:var(--md); align-items:center; font-size:11px;">
                   <span class="context-usage" title="Context: 42k / 128k" style="color:var(--text-secondary); font-family:var(--body-font); display:flex; align-items:center; gap:var(--xs);">
-                    <svg width="10" height="10" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="var(--text-secondary)" opacity="0.8"></circle></svg> 42k/128k
+                    <svg width="12" height="12" viewBox="0 0 24 24" style="transform: rotate(-90deg);">
+                      <circle cx="12" cy="12" r="10" fill="transparent" stroke="var(--border-light)" stroke-width="4"></circle>
+                      <circle cx="12" cy="12" r="10" fill="transparent" stroke="var(--accent-blue)" stroke-width="4" stroke-dasharray="62.8" stroke-dashoffset="42"></circle>
+                    </svg>
+                    42k/128k
                   </span>
                   <a href="#" style="color:var(--accent-orange); border: 1px solid var(--accent-orange); display:flex; align-items:center; gap:4px; text-decoration: none; padding:2px 8px; border-radius:4px; font-weight:600;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Issues</a>
                 </div>
@@ -6759,7 +6783,7 @@ impl Dashboard {
                 <div class="message-stream messageStream" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-direction: column; gap: var(--md);">
                 </div>
 
-                <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light); display:flex; flex-direction:column; gap:var(--sm);">
+                <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light); display:flex; flex-direction:column; gap:0;">
                   <div class="pendingInterventionBlock hidden" style="position:absolute; top:-40px; left:var(--md); right:var(--md); background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:6px; padding:var(--sm) var(--md); display:flex; justify-content:space-between; align-items:center; font-size:11px; box-shadow:0 -4px 12px rgba(0,0,0,0.1); z-index:10;">
                     <span style="color:var(--text-secondary); text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:200px;">"Wait, update the cache too."</span>
                     <div style="display:flex; gap:var(--xs); align-items:center;">
@@ -6778,7 +6802,7 @@ impl Dashboard {
                         <button title="Attach File" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; padding:4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button>
                         
                         <div style="position:relative;">
-                          <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; min-width:80px; justify-content:space-between; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
+                          <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; min-width:100px; justify-content:space-between; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
                             <span>Agent</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                           </button>
                           <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
@@ -6792,9 +6816,9 @@ impl Dashboard {
                         </div>
 
                         <div style="display:flex; gap:var(--md); align-items:center; margin-left:var(--sm); font-size:10px;">
-                          <span style="cursor:pointer; color:var(--text-secondary); transition:all 0.2s;" title="Explain Like I'm 5" onclick="this.classList.toggle('active')" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-secondary)'">ELI5</span>
-                          <span style="cursor:pointer; color:var(--accent-orange); font-weight:600; transform:scale(1.1); transition:all 0.2s;" title="Auto-approve tools" onclick="this.classList.toggle('active')">YOLO</span>
-                          <span style="cursor:pointer; color:var(--text-secondary); transition:all 0.2s;" title="Multi-agent Crew" onclick="this.classList.toggle('active')" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-secondary)'">CREW</span>
+                          <span class="chat-toggle-btn toggle-eli5" title="Explain Like I'm 5" onclick="this.classList.toggle('active')">ELI5</span>
+                          <span class="chat-toggle-btn toggle-yolo active" title="Auto-approve tools" onclick="this.classList.toggle('active')">YOLO</span>
+                          <span class="chat-toggle-btn toggle-crew" title="Multi-agent Crew" onclick="this.classList.toggle('active')">CREW</span>
                         </div>
                       </div>
 
@@ -6802,9 +6826,9 @@ impl Dashboard {
                     </div>
                   </div>
 
-                  <div style="display:flex; gap:var(--md); align-items:center; font-size:10px; margin-top:var(--sm);">
+                  <div style="display:flex; gap:var(--sm); align-items:center; font-size:10px; padding: var(--sm) 0;">
                     <div style="position:relative;">
-                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
+                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:4px 10px; min-width:120px; justify-content:space-between; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
                         <span class="persona-label">product-manager</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                       </button>
                       <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
@@ -6817,7 +6841,7 @@ impl Dashboard {
                     </div>
                     
                     <div style="position:relative;">
-                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
+                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:4px 10px; min-width:120px; justify-content:space-between; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
                         <span class="model-label">Claude: sonnet-4.5</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                       </button>
                       <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
@@ -6830,7 +6854,7 @@ impl Dashboard {
                     </div>
 
                     <div style="position:relative;">
-                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:2px 8px; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
+                      <button class="chat-dropdown-btn" style="background:var(--surface); border:1px solid var(--border-light); border-radius:4px; padding:4px 10px; min-width:80px; justify-content:space-between; color:var(--text-primary); cursor:pointer; display:flex; align-items:center; gap:var(--xs); font-size: 11px; font-weight:600;" onclick="this.nextElementSibling.classList.toggle('active')">
                         <span>High</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                       </button>
                       <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
