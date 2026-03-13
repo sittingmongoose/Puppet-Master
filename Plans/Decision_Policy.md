@@ -285,6 +285,7 @@ Where higher-precedence sources do not decide, use these defaults:
 - scored event-driven scheduling is the default runtime model
 - canonical event names and enum families from `Plans/Contracts_V0.md` win over older aliases
 - `watchdog_recheck` may emit redundant wakeups defensively, but MUST NOT become the primary correctness path
+  ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
 - no critical-path scheduler term in MVP
 - blind retry is forbidden
 - default retry ceiling remains `3` attempts unless a higher-precedence contract narrows it

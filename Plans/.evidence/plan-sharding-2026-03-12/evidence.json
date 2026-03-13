@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.evidence.schema.v1",
   "evidence_id": "plan-sharding-2026-03-12",
-  "created_at_utc": "2026-03-12T19:50:11.364776+00:00",
+  "created_at_utc": "2026-03-12T20:31:51.363965+00:00",
   "node": {
     "node_id": "plan-sharding"
   },
@@ -17,8 +17,7 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py run-gates",
-      "exit_code": -1,
-      "stdout_excerpt": "not yet run"
+      "exit_code": 0
     }
   ],
   "tool_calls": [
@@ -693,35 +692,31 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/GitHub_Integration/06-c-ssh-remote-dev-servers.md",
+      "path": "Plans/_shards/GitHub_Integration/06-d-project-management-flows-no-chain-wizard-required.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/GitHub_Integration/07-d-project-management-flows-no-chain-wizard-required.md",
+      "path": "Plans/_shards/GitHub_Integration/07-e-ui-command-ids-reserved-by-this-document.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/GitHub_Integration/08-e-ui-command-ids-reserved-by-this-document.md",
+      "path": "Plans/_shards/GitHub_Integration/08-f-redb-configuration-keys-reserved-by-this-document.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/GitHub_Integration/09-f-redb-configuration-keys-reserved-by-this-document.md",
+      "path": "Plans/_shards/GitHub_Integration/09-anti-drift-compliance.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/GitHub_Integration/10-anti-drift-compliance.md",
+      "path": "Plans/_shards/GitHub_Integration/10-references.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/GitHub_Integration/11-references.md",
+      "path": "Plans/_shards/GitHub_Integration/11-chat-driven-external-repo-import-mvp.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/GitHub_Integration/12-chat-driven-external-repo-import-mvp.md",
-      "change_type": "modified"
-    },
-    {
-      "path": "Plans/_shards/GitHub_Integration/13-deferred-github-recovery-binding-2026-03-09.md",
+      "path": "Plans/_shards/GitHub_Integration/12-deferred-github-recovery-binding-2026-03-09.md",
       "change_type": "modified"
     },
     {
@@ -1025,71 +1020,63 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/10-8-state-to-color-mapping-theme-tokens.md",
+      "path": "Plans/_shards/Run_Graph_View/10-10-interactions.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/11-9-dag-layout-algorithms-5-presets.md",
+      "path": "Plans/_shards/Run_Graph_View/11-11-performance-requirements.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/12-10-interactions.md",
+      "path": "Plans/_shards/Run_Graph_View/12-12-real-time-update-strategy.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/13-11-performance-requirements.md",
+      "path": "Plans/_shards/Run_Graph_View/13-13-theme-integration.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/14-12-real-time-update-strategy.md",
+      "path": "Plans/_shards/Run_Graph_View/14-14-slint-implementation-guide.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/15-13-theme-integration.md",
+      "path": "Plans/_shards/Run_Graph_View/15-15-accessibility.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/16-14-slint-implementation-guide.md",
+      "path": "Plans/_shards/Run_Graph_View/16-16-persistence.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/17-15-accessibility.md",
+      "path": "Plans/_shards/Run_Graph_View/17-17-uicommand-ids.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/18-16-persistence.md",
+      "path": "Plans/_shards/Run_Graph_View/18-18-acceptance-criteria.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/19-17-uicommand-ids.md",
+      "path": "Plans/_shards/Run_Graph_View/19-19-references.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/20-18-acceptance-criteria.md",
+      "path": "Plans/_shards/Run_Graph_View/20-scheduler-analysis-and-remediation-visibility-addendum-2026-03-08.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/21-19-references.md",
+      "path": "Plans/_shards/Run_Graph_View/21-queue-analysis-attempt-lineage-ui-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/22-scheduler-analysis-and-remediation-visibility-addendum-2026-03-08.md",
+      "path": "Plans/_shards/Run_Graph_View/22-queue-analysis-attempt-lineage-reconciliation-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/23-queue-analysis-attempt-lineage-ui-addendum-2026-03-09.md",
+      "path": "Plans/_shards/Run_Graph_View/23-runtime-scheduler-blocked-view-contract.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Run_Graph_View/24-queue-analysis-attempt-lineage-reconciliation-addendum-2026-03-09.md",
-      "change_type": "modified"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/25-runtime-scheduler-blocked-view-contract.md",
-      "change_type": "modified"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/26-blocked-state-rendering-and-recovery-addendum.md",
+      "path": "Plans/_shards/Run_Graph_View/24-blocked-state-rendering-and-recovery-addendum.md",
       "change_type": "modified"
     },
     {
@@ -1261,16 +1248,8 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/WorktreeGitImprovement/20-runtime-worktree-conflict-detection-and-recovery-consolidation-addendum-2026-03-09.md",
-      "change_type": "deleted"
-    },
-    {
       "path": "Plans/_shards/WorktreeGitImprovement/20-worktree-conflict-and-dirty-worktree-runtime-alignment.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/WorktreeGitImprovement/21-worktree-conflict-and-dirty-worktree-runtime-alignment.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/WorktreeGitImprovement/manifest.json",
@@ -1321,128 +1300,108 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/11-6-teach.md",
+      "path": "Plans/_shards/assistant-chat-design/11-8-plan-mode-deep-plan-mode-and-plan-thoroughness-pt.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/12-7-attachments-web-search-and-extensibility.md",
+      "path": "Plans/_shards/assistant-chat-design/12-9-file-manager-ide-style-editor-and-mention.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/13-8-plan-mode-deep-plan-mode-and-plan-thoroughness-pt.md",
+      "path": "Plans/_shards/assistant-chat-design/13-10-chat-history-search.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/14-9-file-manager-ide-style-editor-and-mention.md",
+      "path": "Plans/_shards/assistant-chat-design/14-11-threads-and-chat-management.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/15-10-chat-history-search.md",
+      "path": "Plans/_shards/assistant-chat-design/15-12-context-usage-display.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/16-11-threads-and-chat-management.md",
+      "path": "Plans/_shards/assistant-chat-design/16-13-activity-transparency-search-bash-and-file-activity.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/17-12-context-usage-display.md",
+      "path": "Plans/_shards/assistant-chat-design/17-14-subagents-crew.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/18-13-activity-transparency-search-bash-and-file-activity.md",
+      "path": "Plans/_shards/assistant-chat-design/18-15-plan-mode-crew-mode.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/19-14-subagents-crew.md",
+      "path": "Plans/_shards/assistant-chat-design/19-16-interview-phase-ux-chat-surface.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/20-15-plan-mode-crew-mode.md",
+      "path": "Plans/_shards/assistant-chat-design/20-17-context-truncation.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/21-16-interview-phase-ux-chat-surface.md",
+      "path": "Plans/_shards/assistant-chat-design/21-18-brainstorm-mode.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/22-17-context-truncation.md",
+      "path": "Plans/_shards/assistant-chat-design/22-19-documentation-audience-ai-overseer.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/23-18-brainstorm-mode.md",
+      "path": "Plans/_shards/assistant-chat-design/23-20-references.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/24-19-documentation-audience-ai-overseer.md",
+      "path": "Plans/_shards/assistant-chat-design/24-21-dashboard-warnings-and-calls-to-action.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/25-20-references.md",
+      "path": "Plans/_shards/assistant-chat-design/25-22-live-testing-tools-and-hot-reload.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/26-21-dashboard-warnings-and-calls-to-action.md",
+      "path": "Plans/_shards/assistant-chat-design/26-23-gaps-competitive-comparison-and-enhancements.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/27-22-live-testing-tools-and-hot-reload.md",
+      "path": "Plans/_shards/assistant-chat-design/27-24-chat-thread-performance-virtualization-and-flicker-avoidance.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/28-23-gaps-competitive-comparison-and-enhancements.md",
+      "path": "Plans/_shards/assistant-chat-design/28-25-context-circle-enhancements-addendum-2026-02-23.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/29-24-chat-thread-performance-virtualization-and-flicker-avoidance.md",
+      "path": "Plans/_shards/assistant-chat-design/29-26-per-pass-validation-modelprovider-settings-invariant-sweep.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/30-25-context-circle-enhancements-addendum-2026-02-23.md",
+      "path": "Plans/_shards/assistant-chat-design/30-27-persona-control-in-assistant-chat-2026-03-06.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/31-26-per-pass-validation-modelprovider-settings-invariant-sweep.md",
+      "path": "Plans/_shards/assistant-chat-design/31-28-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces-2026-03-07.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/32-27-persona-control-in-assistant-chat-2026-03-06.md",
+      "path": "Plans/_shards/assistant-chat-design/32-29-natural-language-mode-invocation-and-wizard-escalation-2026-03-08.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/33-28-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces-2026-03-07.md",
+      "path": "Plans/_shards/assistant-chat-design/33-blocked-thread-state-and-recovery-addendum-2026-03-08.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/34-29-natural-language-mode-invocation-and-wizard-escalation-2026-03-08.md",
+      "path": "Plans/_shards/assistant-chat-design/34-runtime-blocked-recovery-thread-state-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/35-blocked-thread-state-and-recovery-addendum-2026-03-08.md",
+      "path": "Plans/_shards/assistant-chat-design/35-blocked-thread-message-and-persistence-reconciliation-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/assistant-chat-design/36-runtime-blocked-recovery-thread-state-addendum-2026-03-09.md",
+      "path": "Plans/_shards/assistant-chat-design/36-unified-thread-blocked-state-lifecycle.md",
       "change_type": "modified"
-    },
-    {
-      "path": "Plans/_shards/assistant-chat-design/37-blocked-thread-message-and-persistence-reconciliation-addendum-2026-03-09.md",
-      "change_type": "modified"
-    },
-    {
-      "path": "Plans/_shards/assistant-chat-design/38-thread-blocked-state-multiplicity-and-action-rendering-consolidation-addendum-2026-03-09.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/assistant-chat-design/38-unified-thread-blocked-state-lifecycle.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/assistant-chat-design/39-unified-thread-blocked-state-lifecycle.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/assistant-chat-design/40-concurrent-blocked-episodes-and-enum-alignment-addendum.md",
-      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/assistant-chat-design/manifest.json",
@@ -1593,7 +1552,11 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/feature-list/04-runtime-scheduler-recovery-summary-consolidation-addendum-2026-03-09.md",
+      "path": "Plans/_shards/feature-list/04-source-control-github-actions-and-docker-manager-mvp-consolidation-addendum-2026-03-12.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/feature-list/05-runtime-scheduler-recovery-summary-consolidation-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
@@ -2282,6 +2245,10 @@
     },
     {
       "path": "Plans/_shards/usage-feature/18-runtime-scheduler-recovery-observability-addendum-2026-03-09.md",
+      "change_type": "modified"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/19-source-control-github-actions-and-docker-manager-cost-attribution-addendum-2026-03-12.md",
       "change_type": "modified"
     },
     {

@@ -538,13 +538,6 @@ Scheduler and remediation widgets update from event/projection streams. Do not r
 
 The Orchestrator page owns the page-level recovery, queue-analysis, and remediation views that complement the node-level run graph.
 
-### Required surfaces
-- queue-analysis summary card for the latest scheduler pass
-- blocked work list grouped by `blocked_reason_code`
-- remediation lineage list showing parent attempt, child attempts, and resolution
-- safe-point restore history for the active run
-- quick filters for `blocked`, `attention_required`, `retrying`, and `remediation`
-
 ### Surface boundaries
 - the run graph owns node-specific diagnostics
 - the Orchestrator page owns run-wide summaries, grouped queues, and bulk navigation between affected nodes/attempts
@@ -618,4 +611,3 @@ Blocked-state minima:
 Blocked outcomes remain blocked, not failed, when the underlying action was intentionally not executed.
 
 ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/newtools.md
-
