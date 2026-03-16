@@ -10,151 +10,27 @@ This document exists to avoid losing features when writing rewrite implementatio
 ## Part 1 - Planned and New Features (from Plans)
 
 ### 1. Rewrite and architecture
+**Single deterministic agent loop.** Every backend is a Provider behind one unified session/event store, tool registry, and patch/edit pipeline. OpenCode-style provider abstraction, centralized config, and session orchestration make the main engine deterministic and reliable. Platform-specific runner terminology converges on Provider plus unified event model.
 
-**Single deterministic agent loop.** Every backend is a Provider behind one unified session/event store, tool registry, and patch/edit pipeline. OpenCode-style provider abstraction, centralized config, and session orchestration make the main engine deterministic and reliable. Platform-specific "runner" terminology converges on Provider plus unified event model.
+**Event-sourced storage (no SQLite).** Storage is seglog as the canonical append-only event ledger, redb for durable KV state/projections/settings, and Tantivy for full-text search over chats, docs, and log summaries. Sessions and runs are replayable from seglog with deterministic projections into redb/Tantivy and checkpointing for resumability. Analytics scan jobs write rollups into redb for Usage, dashboards, and cross-surface attribution.
 
-**Event-sourced storage (no SQLite).** Storage is seglog as the canonical append-only event ledger, redb for durable KV state/projections/settings, and Tantivy for full-text search over chats, docs, and log summaries. Sessions and runs are replayable from seglog with deterministic projections into redb/Tantivy and checkpointing for resumability. **Analytics scan jobs** scan seglog for tool latency distributions, error rates, and usage; they write **rollups** into redb for the Usage view and dashboard (5h/7d, tool performance, error summaries).
+**GUI rewrite (Rust + Slint).** Desktop UI switches to Rust and Slint with winit backend for Windows, macOS, and Linux. Default renderer is winit + Skia; fallback GPU is winit + FemtoVG-wgpu; emergency software fallback is kept for compatibility.
 
-**GUI rewrite (Rust + Slint).** Desktop UI switches to Rust and Slint with winit backend for Windows, macOS, and Linux. Default renderer is winit + Skia; fallback GPU is winit + FemtoVG-wgpu; emergency software fallback is kept for compatibility. Backend selection via Slint BackendSelector or SLINT_BACKEND.
+**Future thin clients.** Mobile and web clients are thin clients against the desktop-owned core and unified event/command APIs.
 
-**Theme (locked).** Three themes: Light, Dark, and Basic. Theme switching is supported; app restart is acceptable. Light and Dark preserve the retro look; Basic is plain and easier to read. No Iced commitment; UX requirements only.
+**Core reliability.** Tools are governed by a central policy engine. Edits go through an explicit patch/apply/verify/rollback pipeline. Plans/ remains the authoritative requirements source for orchestration, safe-edit, subagents, worktree/git, and tooling.
 
-**Future thin clients.** Mobile and web clients will be thin and connect back to the desktop app. Stable boundary is the unified event model plus streaming API (runs, events, artifacts) and command API (start run, approve tool, cancel run); no direct provider/tool access from clients.
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-**Core reliability.** Tools are governed by a central policy engine (permissions, validation, normalized tool results). Edits go through an explicit patch/apply/verify/rollback pipeline (worktrees, branches, sandboxes). Plans/ is the authoritative requirements source for orchestration, safe-edit, subagents, worktree/git, and tooling.
+**Provider and CLI.** Claude Code CLI and Cursor Agent CLI remain bridged Providers. Cursor / ACP remains optional future work only.
 
-**Provider and CLI.** Claude Code CLI as Provider (stream-json, print mode, optional partials; Claude Code Hooks for tools/telemetry). Cursor Agent CLI as Provider (--print --output-format stream-json, internal parsing into unified event model). **Cursor / ACP (Resolved — Not Needed for MVP):**
-Cursor CLI is not ACP-native (confirmed by Cursor staff, January 2026). Cursor supports MCPs, which Puppet Master already uses. An ACP adapter layer is **not needed for MVP**. If Cursor adds ACP support in the future, an adapter can be added as a non-breaking enhancement. Priority: P4 (future/optional). Gemini auth: API key default in UI; explicit exception to "subscription only"; OAuth optional.
+**Gemini provider auth/account model.** Gemini is one DirectApi provider with mixed OAuth and API-key account pools. Default `requested_auth_mode` is `auto` with OAuth-first provider preference. Explicit `oauth` and explicit `api_key` requests do not silently cross-fallback. Requested vs effective auth/account identity is recorded across prompt assembly, storage, health, and usage. Gemini API key remains the explicit allowed exception to the broader subscription-first guidance, but OAuth remains first-class and default-preferred. Media follows the same Gemini auth/account rules as regular provider usage.
 
-**Contract-Locked PlanGraph System.** Canonical node-based plan graph and execution: user-project outputs under `.puppet-master/project/**` (sharded plan graph, Project Contract Pack, acceptance_manifest, auto_decisions; seglog canonical; optional UI wiring artifacts for GUI projects). Progression Gates (GATE-001–GATE-010): schema validation, Spec Lock integrity, drift phrases, evidence, wiring matrix validation; Verifier role; run-gates verifier (`python3 scripts/pm-plans-verify.py run-gates`). Overseer Protocol: Builder/Verifier/Overseer roles, deterministic next-ready selection and status lifecycle for plan_graph nodes; Spec Lock version checks.
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Media_Generation_and_Capabilities.md
 
-Contract layers: Platform vs Project contracts, ProjectContract:* refs in node shards; Spec_Lock.json pins schema versions and locked decisions. UI command layer: stable UICommand IDs (UI_Command_Catalog), Wiring Rules (dispatch only UICommands; one element, one command), Dispatcher boundary, Wiring Matrix (schema-validated). Architecture invariants INV-001–INV-012 (tool correlation, no secrets, UI SSOT/boundary, deterministic ordering, providers isolated, no stringly-typed IDs, GitHub API-only, Cursor transport invisible, naming, wiring coverage).
+**Contract-Locked PlanGraph System.** Canonical node-based plan graph and execution remains unchanged in scope, with user-project outputs under `.puppet-master/project/**`, progression gates, verifier role, and Overseer protocol.
 
-Contracts V0 as SSOT for event envelope, UICommand, EventRecord, AuthState. Anti-drift: required SSOT reading order (Spec_Lock → Contracts_V0 → Crosswalk → DRY_Rules → Glossary → Decision_Policy → schemas → UI_Command_Catalog → Architecture_Invariants → Progression_Gates → Executor_Protocol → Verifier command). Scope: self-build plan graph (`Plans/plan_graph.*`) vs user-project (`.puppet-master/project/*`); do not conflate. Plans: Project_Output_Artifacts.md, Progression_Gates.md, Executor_Protocol.md, UI_Command_Catalog.md, UI_Wiring_Rules.md, Wiring_Matrix.md, Architecture_Invariants.md, Contracts_V0.md, Crosswalk.md, 00-plans-index.md.
-
-
-#### Scan additions (auto-import: architecture)
-##### Plans/Contracts_V0.md
-- **AGENTS.md enforcement (contracted).** AGENTS.md light enforcement as a formal contract: lint + runtime budgets + truncation tracking (Contracts V0 §5.5).
-- **Context injection toggles (contracted).** Contracted per-project toggles for Parent Summary / Scoped AGENTS.md / Attempt Journal with GUI exposure (Contracts V0 §5.6).
-- **InstructionBundle contract.** Formal contract for assembling Instruction/Work/Memory bundles and scoped AGENTS.md chain handling (Contracts V0 §5).
-
-##### Plans/Crosswalk.md
-- **DocumentCheckpoint.** Document-level restore points / coarse undo checkpoints (Crosswalk §3.11).
-- **DocumentInlineNotes / annotations.** Durable anchored annotations on the legacy note substrate with deterministic re-anchoring and conflict handling (Crosswalk §3.13).
-- **DocumentPane.** Live multi-document preview surface with statuses (writing/draft/needs-review/approved) and read-only protections (Crosswalk §3.7).
-- **DocumentReviewSurface.** Review routing surface for documents (tri-location review routing) (Crosswalk §3.8).
-- **ReviewFindingsSummary.** Structured review findings schema + rendering surface (Crosswalk §3.9).
-- **TargetedRevisionPass.** `Resubmit with Annotations` targeted revision workflow without triggering full review loop (Crosswalk §3.14).
-
-##### Plans/DRY_Rules.md
-- **ContractRef taxonomy registry.** Registry of allowed ContractRef categories with validation rules (DRY_Rules §6).
-- **Forbidden drift phrase detection.** Scanner for TBD/open questions/vague terms without measurable behaviors (DRY_Rules §4).
-- **Inline requirement tag convention.** Inline Req:FR/Req:NFR tags for readability only, with authoritative refs elsewhere (DRY_Rules §10).
-- **Plan-quality gate for missing ContractRefs.** Automated gating rejecting unreferenced operational text / missing ContractRef annotations (DRY_Rules §7-9; ties to gates).
-- **Requirement annotation enforcement.** Enforce MUST/SHALL/REQUIRED statements include ContractRef; fail validation otherwise (DRY_Rules §5-7).
-
-##### Plans/Decision_Policy.md
-- **Deterministic precedence + autonomous decision logging.** Formal precedence hierarchy for resolving ambiguity (Spec Lock/Crosswalk/DRY/etc.) with auto_decisions.jsonl logging (Decision_Policy §1-5).
-- **Requirements quality reporting.** Clarification/quality assessment workflow producing a requirements_quality_report output before runs (Decision_Policy §6.2-6.3).
-
-##### Plans/Document_Packaging_Policy.md
-- **00-index.md required fields.** Index must include source path, generation marker, source sha256, split rule summary, and ordered shard listing w/ line ranges (Packaging Policy §1.1).
-- **Deterministic shard naming.** Zero-padded numeric prefix + kebab slug from heading text; fallback chunk naming by line ranges (Packaging Policy §1.3).
-- **Docset canonical truth rules.** When .docset exists it is canonical; otherwise the .md is canonical (Packaging Policy §7.4).
-- **Document Set contract (.docset).** Standard packaged docset directory with 00-index.md, manifest.json, ordered shards, and evidence/ (Packaging Policy §1).
-- **Fallback fixed-line chunking.** Deterministic fallback chunking when heading split fails (Packaging Policy §2.2).
-- **Heading-aware split rule.** Primary split at ## headings outside fenced code blocks (Packaging Policy §2.1).
-- **Losslessness proof audits.** Reconstruction hash equality, line accounting, idempotency, and clean-room determinism proofs required (Packaging Policy §4-5).
-- **Multi-audit evidence requirement.** Audits A/B/C must be documented under evidence/ (Packaging Policy §5).
-- **Packaging enforcement scope.** Applies to required artifacts under .puppet-master/requirements/** and .puppet-master/project/** (Packaging Policy §6).
-- **Pointer stub file.** Deterministic stub at original path pointing to docset + verification command format (Packaging Policy §7.3).
-- **Pointer verification discovery rules.** Compliance checks for stubs/docsets: manifest, reconstruction, line coverage, idempotency, clean-room determinism (Packaging Policy §7.5).
-- **Size trigger budgets.** Default max_bytes/max_estimated_tokens and fallback_chunk_lines thresholds (Packaging Policy §3).
-- **manifest.json schema.** Manifest fields for source metadata + per-shard ranges and hashes (Packaging Policy §1.2).
-
-##### Plans/Executor_Protocol.md
-- **Auto-marking verified→done.** When verifier outcome pass + evidence valid, auto-transition verified to done (Executor Protocol §4).
-- **Deterministic node readiness predicate.** Readiness requires queued status, blockers done, and Spec Lock schema versions match (Executor Protocol §2).
-- **Document packaging gate.** Before finalization, enforce Document_Packaging_Policy compliance for artifacts (Executor Protocol §6.1).
-- **Lexicographic ready-node selection.** When multiple nodes are ready, select lexicographically smallest node_id (Executor Protocol §2).
-- **Overseer deterministic dispatch algorithm.** Deterministic loop: readiness → lexical select → dispatch builder → verify_pending → dispatch verifier → apply transitions (Executor Protocol §6).
-- **Spec Lock version validation in executor.** Reject readiness if required schema version keys mismatch/missing (Executor Protocol §2).
-- **Terminal state lifecycle rules.** done and failed are terminal; no further transitions (Executor Protocol §3).
-- **Verified transitional state enforcement.** Enforce verified as a required transitional state with outcome+timestamp (Executor Protocol §4).
-
-##### Plans/OpenCode_Coverage_Matrix.md
-- **Default .env deny rules.** Canonical defaults treating .env as ask/deny with .env.example allow (Coverage Matrix §7C.6).
-- **LSP integration (matrix reference).** LSP integration called out as desktop MVP scope item (Coverage Matrix §7D/refs).
-- **MCP integration contract (matrix).** MCP discovery/registry/permission gating/config paths described without SSOT (Coverage Matrix §7D.1).
-- **Permissions doom_loop guard.** Threshold-based guard against recursive permission request loops (Coverage Matrix §7C.4).
-- **Permissions external_directory guard.** Allowlist for restricting skill/plugin discovery to safe external paths (Coverage Matrix §7C.4).
-- **Permissions multi-layer precedence model.** Multi-layer precedence model for permissions resolution beyond flat overlay (Coverage Matrix §7C.1).
-- **Provider error classification taxonomy.** Unified classification for retryable/overflow/auth errors with policies (Coverage Matrix §7H.5/§10.3).
-- **Provider transform layer.** Standardized provider request/response normalization contract (Coverage Matrix §7H.4/§10.3).
-- **Run modes + enforcement.** Mode selection taxonomy with budget enforcement and deterministic kill conditions (Coverage Matrix §7A).
-- **Tool lifecycle + hook boundaries.** Tool execution lifecycle with before/after hooks wired via plugins (Coverage Matrix §10.1).
-
-##### Plans/OpenCode_Deep_Extraction.md
-- **.env default read permissions.** Default permission patterns treating *.env as ask while *.env.example allow (OpenCode deep extraction §7C.6).
-- **Baseline→PM delta hooks set.** Documented delta hooks for Rust-native plan mode, subprocess subagent execution, compaction thresholds, plugin hook aliases, etc. (OpenCode deep extraction §9).
-- **Command subtask + model override semantics.** Subtask flag triggers subagent execution; runtime parsing of provider/model override formats (OpenCode deep extraction §7D.4).
-- **Contract mapping to PM SSOT.** Detailed mapping tables from upstream contracts to PM SSOT artifacts (OpenCode deep extraction §8).
-- **Overflow/error detection patterns.** Context overflow regex patterns + retryability rules across providers (OpenCode deep extraction §7H.5).
-- **Plugin tool override precedence rules.** Explicit rules for plugin tool overriding built-ins and PM deltas restricting overrides (OpenCode deep extraction §7G.4/§9G).
-- **Provider transform layer details.** Provider-specific stream normalization/schema transforms and quirks handling (OpenCode deep extraction §7H.4).
-- **Session compaction mechanics.** Hidden summary agent, prune-protect window, protected tool list, and compaction customization hooks (OpenCode deep extraction §7B.5).
-- **Skill permission patterns + prune protection.** Skill-specific permission wildcards and compaction prune protection for skill tool (OpenCode deep extraction §7F.4).
-- **Upstream notes capture list.** Upstream notes worth capturing (tools/permissions/provider/session taxonomy) not enumerated in feature list (OpenCode deep extraction §10).
-
-##### Plans/Progression_Gates.md
-- **Additional progression gates beyond 001-010.** Canonical doc defines gates up through GATE-014 (incl 011-014) beyond feature-list mention (Progression_Gates).
-- **Change budget enforcement details.** Gate-level enforcement of max files/LOC delta and allowed/forbidden paths (GATE-006 details).
-- **GATE-011 requirements traceability coverage.** Deterministic gate requiring traceability artifacts and zero uncovered requirements (GATE-011).
-- **GATE-012 requirements quality gate.** Gate validates requirements_quality_report PASS and zero needs_user_clarification items (GATE-012).
-- **GATE-013 ambiguity marker resolution gate.** Scan AMBIGUOUS markers and require mapping to auto_decisions.jsonl entries (GATE-013).
-- **GATE-014 document set packaging gate.** Gate validating shard packaging, reconstruction parity, line accounting, idempotency, determinism, stubs (GATE-014).
-- **Verifier role specification.** Deterministic verifier role semantics (must run gates exactly; block on failure) (Progression_Gates §1).
-
-##### Plans/Project_Output_Artifacts.md
-- **Deterministic node ID requirements.** Stable node IDs derived from canonical intent (no timestamps/randomness) across sharded graphs (Project_Output_Artifacts §7).
-- **Deterministic quickstart.md generation.** Optional derived quickstart.md with verbatim sourcing and size/count limits (Project_Output_Artifacts §12).
-- **Docset packaging for large artifacts.** Package large artifacts as .docset directories with pointer stubs when size triggers reached (Project_Output_Artifacts §2.3).
-- **Requirements traceability output set.** Traceability outputs: requirements_quality_report.json, requirements_coverage.json, requirements_coverage.md with orphan tracking (Project_Output_Artifacts §11).
-- **Schema alignment + field normalization enforcement.** Strict field naming alignment across artifact schemas with DRY integrity rules (Project_Output_Artifacts §3).
-- **Seglog canonical artifact persistence contract.** Artifact persistence contract with required fields and regenerable filesystem exports (Project_Output_Artifacts §8).
-- **Validation pass report artifacts.** Persist three-pass validation reports (incl Pass 3 write-protection invariant) in seglog as artifacts (Project_Output_Artifacts §10).
-
-##### Plans/Prompt_Pipeline.md
-- **Compaction determinism constraints.** Compaction/pruning rules including protected outputs/tool classes (Prompt_Pipeline §2).
-- **GUI prompt/injected-context preview.** GUI surfaces for injected-context breakdown and safe prompt preview (Prompt_Pipeline §4).
-- **Instruction bundle format contract.** Canonical Instruction Bundle structure including injected-context breakdown (Prompt_Pipeline §1.3).
-- **Prompt assembly stage ordering.** Deterministic multi-stage prompt assembly ordering (config→personas→skills→context→bundle→plugins→tool schemas→final) (Prompt_Pipeline §1.2).
-- **Instruction-layer talkativeness control.** Persona `talkativeness` is carried into prompt assembly and effective-state records independently of provider sampling support (Prompt_Pipeline §6.5-§6.9).
-- **Run rotation outcome (done.rotated).** Explicit follow-up run spawning on overflow/rotation with outcome taxonomy (Prompt_Pipeline §3).
-
-##### Plans/rewrite-tie-in-memo.md
-- **Checkpointing + resume semantics.** Checkpointing contract for resumability after crashes (rewrite memo ¶24).
-- **Event replay + deterministic projections.** Explicit session replay from seglog with deterministic projections into redb/Tantivy and replay verification semantics (rewrite memo ¶23-24).
-- **Normalized tool results contract.** Central policy engine with normalized tool results into unified event stream (rewrite memo ¶25).
-- **Plans as orchestration SSOT sync.** Load and keep orchestration state synced from Plans as authoritative source (rewrite memo ¶26/¶39).
-- **Provider streaming parsing contract.** Provider streaming parsing normalized into unified event model (rewrite memo ¶40).
-- **Provider trait as stable contract.** Provider trait/tool registry interfaces treated as locked stable contracts (rewrite memo ¶40).
-- **Remove experimental toggles enforcement.** Explicit removal/enforcement against experimental settings/toggles in rewrite (rewrite memo ¶44).
-- **Transactional patch/apply/verify/rollback pipeline.** Unified transactional edit lifecycle pipeline to prevent silent corruption (rewrite memo ¶25).
-
-##### Plans/storage-plan.md
-- **Document bundle persistence keys.** Persist doc-builder bundle state, durable annotations on `note_record.v1` lineage, targeted revision runs, thread-scoped composer-prep recovery, and final-review gating in redb (storage-plan §2.3).
-- **Event schema registry.** Central registry of event types/payload schemas for annotation creation/status, selection sent/blocked, revisions, and validation (storage-plan §7).
-- **JSONL mirror generation.** Human-readable JSONL mirror of seglog written by projector (storage-plan §2.4).
-- **Per-project seglog isolation option.** Option to store seglog per project under .puppet-master for isolation (storage-plan §7).
-- **Scheduled backup/restore.** Scheduled backup/restore flows for redb/seglog to backups directory (storage-plan §7).
-- **Seglog rotation/compaction.** Optional seglog segment rotation/compaction to reduce file count (storage-plan §7).
-- **Streaming projector to UI.** Projector pushes updates to UI instead of only tail polling (storage-plan §7).
-- **Thread checkpoint restoration keys.** Store/restore per-thread restore points for rewind/resume (storage-plan §2.3).
-- **Thread/run history export.** Export thread/run history from seglog/JSONL mirror (storage-plan §7).
----
-
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Executor_Protocol.md
 ### 2. Chat and assistant
 
 **Chat modes.** Ask (read-only; no edits, no execution). Plan (read-only until execute; clarifying questions required, then research, then plan + todo; execute after approval). Interview (switch to interview flow; reduced phases when from Assistant; at end: Do now or Add to queue). BrainStorm (multi-model, shared context, subagents communicate; on execute chat switches to Agent mode). Crew (invoke crew with Plan; must work together). **Chat controls (OpenCode-style):** platform dropdown, model dropdown (customizable -- dynamic discovery + manage models), reasoning/effort when platform supports it; in chat header or footer; context passed on switch; apply to next turn. Many features require a project.
@@ -173,7 +49,7 @@ Contracts V0 as SSOT for event envelope, UICommand, EventRecord, AuthState. Anti
 
 **Teach.** Assistant explains how Puppet Master works from docs (REQUIREMENTS.md, ARCHITECTURE.md, AGENTS.md, GUI_SPEC.md, platform CLI sections, mode descriptions). The documentation that Teach uses must be built when the rest of the project is built so it is always available. Optional tips/snippets and "How does [X] work?" flows in chat. No separate Teach UI.
 
-**Attachments, web search, extensibility.** Files and photos; paste and drag-drop. Web search with citations (inline + Sources list); full spec in newtools. MCP/plugins same as rest of app. All providers support image attachments as input context; image generation is available via Cursor-native generation (Cursor; no key) or Gemini API-backed generation (non-Cursor; requires a Google API key).
+**Attachments, web search, extensibility.** Files and photos; paste and drag-drop. Web search with citations (inline + Sources list); full spec in newtools. MCP/plugins same as rest of app. All providers support image attachments as input context; image generation is available via Cursor-native generation (Cursor; no Gemini credentials required) or Gemini media generation on non-Cursor backends using the same requested/effective auth/account resolution model as standard Gemini usage.
 
 **File Manager, IDE-style editor, and @ mention.** @ in prompt opens autocomplete (recent/modified files, folder nav). Insert path or @path; resolve when building prompt. File Manager: pop-out side window; selecting a file opens it in the **in-app IDE-style editor**. **IDE-style editor (MVP):** center-left File Editor strip; **tabs** for open files (GUI setting **max editor tabs**, default e.g. 20-30, for LRU cap); **split panes** (multiple editor groups); **drag editor out to own window and back** (detach/snap, same as File Manager and Chat); editable content, Save (Ctrl+S), unsaved indicator, line numbers, go-to-line/range, basic syntax highlighting; open from File Manager or from chat. **LSP (MVP):** diagnostics, hover, completion, inlay hints, semantic highlighting, code actions, code lens, signature help; status in status bar; per-server enable/disable and custom servers via Settings > LSP (Plans/LSPSupport.md). **Chat Window LSP (MVP):** diagnostics in Assistant/Interview context; @ symbol with LSP workspace/symbol; code blocks in messages with hover and click-to-definition; Problems link from Chat (Plans/LSPSupport.md §5.1, assistant-chat-design §9.1). **Additional LSP enhancements (Plans/LSPSupport.md §9.1):** find references, rename symbol, format document/selection; go to type definition, go to implementation, document links, call hierarchy, folding/selection range; Chat "Fix all," "Rename X to Y," "Where is this used?," "Format file," copy type to chat; optional LSP diagnostics verification gate and LSP snapshot in evidence; Interview "structure of file" via documentSymbol; promote lsp tool when ready. **Terminal:** tabs for multiple terminal sessions in bottom panel. **Browser:** in-shell browser tabs plus detached preview/browser windows. **Language/framework presets** (JetBrains-style): tools downloaded when project added or from interview flow; run/debug, modal editing, remote SSH, review/1-click apply, etc. Full list in Plans/FileManager.md §10-§11. **Click to open in editor:** clicking a file path (files-touched strip, "Read:" / "Edited:", or code block filename) in chat opens that file in the editor; when line/range is known, scroll to it. Activity "Read: file" and code blocks open in editor; context files as chips; drag file into chat to attach.
 
@@ -620,11 +496,11 @@ On context compiler failure:
 
 **Capability Introspection (`capabilities.get`).** Internal tool returning the full set of capabilities available to the running Puppet Master instance — both media capabilities (`media.image`, `media.video`, `media.tts`, `media.music`) and provider-tool capabilities (e.g., OpenCode-discovered tools). Each entry includes `enabled`, `disabled_reason`, and `setup_hint`. Assistant and Interviewer call `capabilities.get` when the user asks about available features; when Assistant is operating in the Requirements Doc Builder workflow, the same requirement applies. Full contract: `Plans/Media_Generation_and_Capabilities.md` [§1](Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM). Registered in tool table: `Plans/Tools.md` §3.1.
 
-**Media Generation (`media.generate` — Image / Video / TTS / Music).** Uniform internal tool for all media generation. Accepts a structured request envelope (`kind`, `prompt`, optional parameters: `count`, `aspect_ratio`, `size`, `resolution`, `duration`, `format`, `voice`, `bpm`, `seed`, `negative_prompt`, `quality`). Backend routing: Cursor-native for images only when Cursor is the active backend (Video/TTS/Music unsupported on Cursor); Gemini media APIs for all kinds on non-Cursor backends (requires Google Gemini API key). Artifacts written to `.puppet-master/artifacts/media/<request_id>/` (artifact paths, not data URIs). Stable error codes (§2.6 of SSOT). Natural-language slot extraction grammar (deterministic regex-based parsing) runs before `media.generate` to produce the request envelope from user prompts. Full contract: `Plans/Media_Generation_and_Capabilities.md` [§2](Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE), [§3](Plans/Media_Generation_and_Capabilities.md#SLOT-EXTRACTION).
+**Media Generation (`media.generate` — Image / Video / TTS / Music).** Uniform internal tool for all media generation. Accepts a structured request envelope (`kind`, `prompt`, optional parameters: `count`, `aspect_ratio`, `size`, `resolution`, `duration`, `format`, `voice`, `bpm`, `seed`, `negative_prompt`, `quality`). Backend routing: Cursor-native for images only when Cursor is the active backend (Video/TTS/Music unsupported on Cursor); Gemini media APIs for all kinds on non-Cursor backends using the same requested/effective auth/account resolution model as standard Gemini usage. Artifacts written to `.puppet-master/artifacts/media/<request_id>/` (artifact paths, not data URIs). Stable error codes (§2.6 of SSOT). Natural-language slot extraction grammar (deterministic regex-based parsing) runs before `media.generate` to produce the request envelope from user prompts. Full contract: `Plans/Media_Generation_and_Capabilities.md` [§2](Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE), [§3](Plans/Media_Generation_and_Capabilities.md#SLOT-EXTRACTION).
 
 **Per-message model override.** Users can specify a model for a single `media.generate` request inline in their prompt (e.g., "Generate an image using Nano Banana Pro") without changing the persistent model in Settings. The override is ephemeral — it applies only to the current invocation. Resolution: alias → exact model id → exact displayName → else `MODEL_UNAVAILABLE`. Canonical media model aliases (Nano Banana, Nano Banana Pro, Veo fast, TTS flash, TTS pro) are defined in `Plans/Models_System.md` [§6.8](Plans/Models_System.md#MEDIA-ALIASES). Full contract: `Plans/Media_Generation_and_Capabilities.md` [§2.3](Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE), `Plans/Models_System.md`.
 
-**Capability picker dropdown.** Composer-area dropdown showing the four media capabilities (Image, Video, TTS, Music). Disabled capabilities are visible but greyed out with a tooltip showing the disabled reason. When a Google API key is missing, a banner/footnote displays "Please provide a free or paid Google API Key." with a "Get API key" link. Clicking an enabled capability inserts a verbatim prompt guiding the user to describe their generation request. Provider-exposed tools (e.g., OpenCode tools) appear in `capabilities.get` output but are NOT part of this media dropdown. Full contract: `Plans/Media_Generation_and_Capabilities.md` [§4](Plans/Media_Generation_and_Capabilities.md#CAPABILITY-PICKER), [§5](Plans/Media_Generation_and_Capabilities.md#UI-COPY).
+**Capability picker dropdown.** Composer-area dropdown showing the four media capabilities (Image, Video, TTS, Music). Disabled capabilities are visible but greyed out with a tooltip showing the disabled reason. When visible capabilities are blocked because no eligible Gemini account is configured for the resolved request/policy, a banner/footnote displays "Configure Gemini access in Settings -> Authentication." with sign-in / API-key guidance and a "Get API key" link. Clicking an enabled capability inserts a verbatim prompt guiding the user to describe their generation request. Provider-exposed tools (e.g., OpenCode tools) appear in `capabilities.get` output but are NOT part of this media dropdown. Full contract: `Plans/Media_Generation_and_Capabilities.md` [§4](Plans/Media_Generation_and_Capabilities.md#CAPABILITY-PICKER), [§5](Plans/Media_Generation_and_Capabilities.md#UI-COPY).
 
 
 #### Scan additions (auto-import: tools/discovery)

@@ -223,17 +223,21 @@ Resolution order for `model_override`:
 ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
 
 ### 2.4 Backend routing
-
 **Cursor backend special case:**
-- When the active backend is Cursor **and** `kind=image`: route via Cursor-native image generation. No Google API key is required.
+- When the active backend is Cursor **and** `kind=image`: route via Cursor-native image generation. No Gemini account or API key is required.
 - When the active backend is Cursor **and** `kind` is `video`, `tts`, or `music`: the capability is disabled with `disabled_reason: BACKEND_UNSUPPORTED`.
-
-**All non-Cursor backends:**
-- All media kinds (`image`, `video`, `tts`, `music`) use the **Gemini media APIs** with the configured Google Gemini API key.
-- If no Google Gemini API key is configured, media capabilities are disabled with `disabled_reason: NOT_CONFIGURED`.
 
 ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:Decision_Policy.md§2
 
+**All non-Cursor backends:**
+- Media generation uses the same canonical Gemini requested/effective auth/account resolution model as standard Gemini provider usage.
+- Resolve `requested_auth_mode`, provider capability block, eligible auth surfaces, and the eligible account pool before dispatch.
+- If the resolved effective account is OAuth-backed and media-capable, route with that OAuth-backed Gemini account context.
+- If the resolved effective account is API-key-backed and media-capable, route with that API-key-backed Gemini account context.
+- If no eligible Gemini account exists for the resolved request/policy, media capabilities are disabled with `disabled_reason: NOT_CONFIGURED`.
+- Explicit `oauth` and explicit `api_key` requests use the same no-silent-cross-fallback rule as the rest of the Gemini provider.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/rewrite-tie-in-memo.md
 ### 2.5 Response shape
 
 ```json
@@ -295,7 +299,7 @@ ContractRef: ToolID:media.generate, SchemaID:pm.media.generate.result.v1, Primit
 
 ContractRef: ToolID:media.generate, Primitive:ArtifactStore
 
-**Cursor special-case:** When `engine.backend = "cursor_native"`, Cursor routes `kind=image` to Cursor-native image generation without requiring a Google API key. For `kind` ∈ {`video`, `tts`, `music`}, the Cursor backend returns `error.code = "BACKEND_UNSUPPORTED"`.
+**Cursor special-case:** When `engine.backend = "cursor_native"`, Cursor routes `kind=image` to Cursor-native image generation without requiring Gemini credentials. For `kind` ∈ {`video`, `tts`, `music`}, the Cursor backend returns `error.code = "BACKEND_UNSUPPORTED"`.
 
 On failure:
 ```json
@@ -310,7 +314,7 @@ On failure:
   "usage": null,
   "error": {
     "code": "NOT_CONFIGURED",
-    "message": "This feature requires a free or paid Google API Key. Add one in Settings → Gemini Provider (Get API key), then try again."
+    "message": "This feature requires Gemini access. Sign in with Gemini OAuth or add a Google/Gemini API key in Settings -> Authentication, then try again."
   }
 }
 ```
@@ -561,25 +565,24 @@ Disabled rows remain keyboard-focusable so the same reason text is available on 
 ContractRef: ToolID:capabilities.get, Invariant:INV-003
 
 ### 4.3 Banner/footnote
+When visible media capabilities are disabled because no eligible Gemini account is configured for the resolved request/policy, the dropdown footer displays this banner/footnote:
 
-When any media capability requires a Google API key that is not configured, the dropdown footer displays a banner/footnote with exactly this text:
+> **"Configure Gemini access in Settings → Authentication."** Sign in with Gemini OAuth or add a Google/Gemini API key. [Get API key]
 
-> **"Please provide a free or paid Google API Key."** [Get API key]
+The `Get API key` text is a clickable convenience link to the Google AI Studio API-key page, but the surrounding copy MUST NOT imply AI Studio is the only valid source of Gemini API keys.
 
-The "Get API key" text is a clickable link directing the user to the Google AI Studio API key page.
+ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/rewrite-tie-in-memo.md
 
-When multiple visible capabilities are disabled for the same missing-key reason, show the footer banner once and keep it pinned at the bottom of the dropdown while the list scrolls. The banner is supplemental guidance; per-item disabled reasons remain visible on hover/focus.
+When multiple visible capabilities are disabled for the same missing-configuration reason, show the footer banner once and keep it pinned at the bottom of the dropdown while the list scrolls. The banner is supplemental guidance; per-item disabled reasons remain visible on hover/focus.
 
-ContractRef: ToolID:capabilities.get, Invariant:INV-003
-
+ContractRef: ToolID:capabilities.get, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
 ### 4.4 Cursor backend behavior
-
 When the active backend is Cursor:
-- **Image** is **enabled** without requiring a Google API key (routes via Cursor-native generation per §2.4).
+- **Image** is **enabled** without requiring Gemini credentials because it routes via Cursor-native image generation.
 - **Video**, **TTS**, and **Music** are **disabled** with `disabled_reason: BACKEND_UNSUPPORTED`.
+- Cursor's image special case does not create a separate Gemini account model; non-Cursor media still follows the canonical Gemini requested/effective auth/account flow.
 
 ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
-
 ### 4.5 Click behavior
 
 Clicking an **enabled** capability item inserts a pre-authored assistant prompt into the chat composer. The prompt guides the user to describe their generation request with relevant parameters. See §5 for the exact prompt strings per capability.
@@ -596,7 +599,7 @@ ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
 
 ### 4.7 Runtime refresh behavior
 
-The capability picker refreshes after Settings or provider-state changes that affect capability evaluation (for example, saving a Google API key, toggling a media capability off, switching providers, or recovering an MCP/provider bridge). Refresh MUST preserve composer text already typed by the user; only the picker contents and footer/banner state are recalculated.
+The capability picker refreshes after Settings or provider-state changes that affect capability evaluation (for example, signing in with Gemini OAuth, saving a Gemini API key, toggling a media capability off, switching providers, or recovering an MCP/provider bridge). Refresh MUST preserve composer text already typed by the user; only the picker contents and footer/banner state are recalculated.
 
 ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/FinalGUISpec.md
 
@@ -605,53 +608,56 @@ ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/Fina
 <a id="5"></a>
 <a id="UI-COPY"></a>
 ## 5. UI copy strings
-
 The following strings are the canonical verbatim copy for media UI surfaces.
 
 ### 5.1 Capability click prompts
 
 **Image click prompt:**
-> “What image are we generating? Describe the subject, style, and optionally aspect ratio (1:1, 16:9), size (1024, 2048), and how many variations you want.”
+> "What image are we generating? Describe the subject, style, and optionally aspect ratio (1:1, 16:9), size (1024, 2048), and how many variations you want."
 
 **Video click prompt:**
-> “What video are we generating? Describe the scene, camera/style, duration, and aspect ratio/resolution if you have a preference.”
+> "What video are we generating? Describe the scene, camera/style, duration, and aspect ratio/resolution if you have a preference."
 
 **TTS click prompt:**
-> “What text should I speak, and what voice/style should it use? You can also choose output format (WAV/MP3) if available.”
+> "What text should I speak, and what voice/style should it use? You can also choose output format (WAV/MP3) if available."
 
 **Music click prompt:**
-> “What music are we generating? Share genre, mood, tempo (BPM), and duration. If you want, mention instruments or references.”
+> "What music are we generating? Share genre, mood, tempo (BPM), and duration. If you want, mention instruments or references."
 
 ContractRef: ToolID:capabilities.get, Invariant:INV-003
 
 ### 5.2 Disabled-reason messages
 
 **Not configured reason (`NOT_CONFIGURED`):**
-> “This feature requires a free or paid Google API Key. Add one in Settings → Gemini Provider (Get API key), then try again.”
+> "This feature requires Gemini access. Sign in with Gemini OAuth or add a Google/Gemini API key in Settings -> Authentication, then try again."
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/rewrite-tie-in-memo.md
 
 **Model unavailable reason (`MODEL_UNAVAILABLE`):**
-> “That model isn’t available with the current API key (or it’s not enabled). Pick a different model in Settings, or ask ‘What models are available?’”
+> "That model isn't available with the current Gemini account or API key (or it isn't enabled). Pick a different model in Settings, or ask 'What models are available?'"
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/Models_System.md#MODEL-ID
 
 **Admin disabled reason (`ADMIN_DISABLED`):**
-> “This feature is disabled in Settings. Enable it under Media settings, then try again.”
-
-**Backend unsupported reason (`BACKEND_UNSUPPORTED`):**
-> “The current backend supports Image Generation only. To use Video/TTS/Music, add a Google API Key and use a non-Cursor backend for media generation.”
-
-**Rate limited reason (`RATE_LIMITED`):**
-> “This feature is temporarily rate-limited. Wait a moment and try again.”
-
-**Quota exceeded reason (`QUOTA_EXCEEDED`):**
-> “API quota for this feature has been exhausted. Check your provider usage dashboard or wait for quota to reset.”
+> "This feature is disabled in Settings. Enable it under Media settings, then try again."
 
 ContractRef: ToolID:capabilities.get, Invariant:INV-003
 
----
+**Backend unsupported reason (`BACKEND_UNSUPPORTED`):**
+> "The current backend supports Image Generation only. To use Video/TTS/Music, use a non-Cursor backend with an eligible Gemini account or API key for media generation."
 
-<a id="6"></a>
-<a id="ACCEPTANCE"></a>
+ContractRef: ToolID:capabilities.get, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Multi-Account.md
+
+**Rate limited reason (`RATE_LIMITED`):**
+> "This feature is temporarily rate-limited. Wait a moment and try again."
+
+ContractRef: ToolID:capabilities.get, Invariant:INV-003
+
+**Quota exceeded reason (`QUOTA_EXCEEDED`):**
+> "API quota for this feature has been exhausted. Check your provider usage dashboard or wait for quota to reset."
+
+ContractRef: ToolID:capabilities.get, Invariant:INV-003
 ## 6. Acceptance criteria
-
 These criteria are testable assertions that MUST hold for any conforming implementation.
 
 ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/Progression_Gates.md
@@ -667,27 +673,27 @@ ContractRef: ToolID:capabilities.get
 ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
 
 <a id="AC-MED03"></a>
-**AC-MED03:** When the active backend is Cursor and no Google API key is configured, `media.image` MUST be enabled (routed via Cursor-native generation) and `media.video`, `media.tts`, `media.music` MUST be disabled with `BACKEND_UNSUPPORTED`.
+**AC-MED03:** When the active backend is Cursor and no eligible Gemini account is configured, `media.image` MUST be enabled (routed via Cursor-native generation) and `media.video`, `media.tts`, `media.music` MUST be disabled with `BACKEND_UNSUPPORTED`.
 
 ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
 
 <a id="AC-MED03A"></a>
-**AC-MED03A:** When the active backend is Cursor and a valid Google Gemini API key is configured, `media.image` MUST remain enabled via Cursor-native generation and `media.video`, `media.tts`, `media.music` MUST remain disabled with `BACKEND_UNSUPPORTED`.
+**AC-MED03A:** When the active backend is Cursor and a valid Gemini API key and/or Gemini OAuth account is configured, `media.image` MUST remain enabled via Cursor-native generation and `media.video`, `media.tts`, `media.music` MUST remain disabled with `BACKEND_UNSUPPORTED`.
 
-ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Multi-Account.md
 
 <a id="AC-MED04"></a>
-**AC-MED04:** When the active backend is non-Cursor and a valid Google Gemini API key is configured, each media capability (`media.image`, `media.video`, `media.tts`, `media.music`) is eligible for enablement and routes through the Gemini media APIs, **subject to**: (a) the per-capability Settings > Media toggle (if toggled OFF → `ADMIN_DISABLED`), and (b) the underlying model being available for that kind (if unavailable → `MODEL_UNAVAILABLE`). A configured key alone does NOT guarantee all four are enabled.
+**AC-MED04:** When the active backend is non-Cursor and at least one eligible Gemini account exists for the resolved request/policy, each media capability (`media.image`, `media.video`, `media.tts`, `media.music`) is eligible for enablement and routes through the Gemini media provider path, **subject to**: (a) the per-capability Settings > Media toggle (if toggled OFF -> `ADMIN_DISABLED`), and (b) the underlying model being available for that kind (if unavailable -> `MODEL_UNAVAILABLE`). An eligible account alone does NOT guarantee all four are enabled.
 
-ContractRef: ToolID:capabilities.get, ToolID:media.generate
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Multi-Account.md
 
 <a id="AC-MED05"></a>
-**AC-MED05:** When the active backend is non-Cursor and no Google Gemini API key is configured, all four media capabilities MUST be disabled with `NOT_CONFIGURED`.
+**AC-MED05:** When the active backend is non-Cursor and no eligible Gemini account exists for the resolved request/policy, all four media capabilities MUST be disabled with `NOT_CONFIGURED`.
 
-ContractRef: ToolID:capabilities.get, ToolID:media.generate
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
 
 <a id="AC-MED06"></a>
-**AC-MED06:** The `model_override` field in `media.generate` MUST resolve via alias → exact model id → exact displayName → else `MODEL_UNAVAILABLE`. The override MUST NOT change the persistent model in Settings.
+**AC-MED06:** The `model_override` field in `media.generate` MUST resolve via alias -> exact model id -> exact displayName -> else `MODEL_UNAVAILABLE`. The override MUST NOT change the persistent model in Settings.
 
 ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
 
@@ -717,14 +723,14 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 ContractRef: ToolID:capabilities.get, Invariant:INV-003
 
 <a id="AC-MED12"></a>
-**AC-MED12:** When both an infrastructure-disabled condition (`BACKEND_UNSUPPORTED`, `NOT_CONFIGURED`, `RATE_LIMITED`, or `QUOTA_EXCEEDED`) and an admin toggle disable are simultaneously true, `capabilities.get` MUST return the infrastructure-disabled reason based on the precedence in §1.4 (not `ADMIN_DISABLED`).
+**AC-MED12:** When both an infrastructure-disabled condition (`BACKEND_UNSUPPORTED`, `NOT_CONFIGURED`, `RATE_LIMITED`, or `QUOTA_EXCEEDED`) and an admin-toggle disable are simultaneously true, `capabilities.get` MUST return the infrastructure-disabled reason based on the precedence in §1.4 (not `ADMIN_DISABLED`).
 
 ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
 
 <a id="AC-MED13"></a>
-**AC-MED13:** When the active backend is Cursor, `media.generate` for `kind=image` MUST route via Cursor-native image generation (no Google API key required) and MUST NOT fall through to the Gemini media API path. For `kind` ∈ {`video`, `tts`, `music`}, `media.generate` MUST return `error.code = "BACKEND_UNSUPPORTED"`.
+**AC-MED13:** When the active backend is non-Cursor, `media.generate` MUST use the same requested/effective Gemini auth/account resolution model as standard Gemini provider interactions. Explicit `oauth` and explicit `api_key` requests MUST NOT silently cross-fallback to the other auth surface.
 
-ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
+ContractRef: ToolID:media.generate, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
 
 <a id="AC-MED14"></a>
 **AC-MED14:** `media.generate` MUST write generated artifacts to `.puppet-master/artifacts/media/<request_id>/output_000.<ext>` and co-locate a `manifest.json` in the same directory. Each artifact entry MUST include `artifact_id`, `kind`, `mime`, `artifact://` URI, `sha256`, `bytes`, and `meta`. No inline `data_uri` field is permitted in the response.
@@ -747,13 +753,9 @@ ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md
 ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
 
 <a id="AC-MED18"></a>
-**AC-MED18:** The capability picker MUST support keyboard navigation for disabled items, expose disabled-reason text to assistive technology, keep the missing-key footer pinned when applicable, and refresh after capability-affecting Settings/provider changes without clearing existing composer text.
+**AC-MED18:** The capability picker MUST support keyboard navigation for disabled items, expose disabled-reason text to assistive technology, keep the missing-configuration footer pinned when applicable, and refresh after capability-affecting Settings/provider changes without clearing existing composer text.
 
 ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/FinalGUISpec.md
-
----
-
-<a id="APPENDIX-A"></a>
 ## Appendix A. Slot extraction rules (regex-ish, deterministic)
 
 1) Pre-processing:

@@ -1715,6 +1715,88 @@
     }
     [data-theme^="retro"] .mock-mermaid { border-radius: 0; }
 
+    /* Document Review & Annotations */
+    .wizard-annotation-drawer {
+      width: 300px;
+      background: var(--surface);
+      border-left: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .annotation-drawer-header {
+      padding: var(--md) var(--lg);
+      border-bottom: 1px solid var(--border-light);
+      font-weight: 600;
+      font-family: var(--display-font);
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .annotation-item {
+      padding: var(--md);
+      border-bottom: 1px solid var(--border-light);
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sm);
+      transition: background 0.2s;
+    }
+    .annotation-item:hover { background: var(--surface-elevated); }
+    .annotation-item.resolved { opacity: 0.6; }
+    .annotation-status {
+      font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: bold; text-transform: uppercase;
+      display: inline-block; width: fit-content;
+    }
+    .annotation-status.open { background: var(--accent-orange); color: #000; }
+    .annotation-status.resolved { background: var(--graph-passed); color: #000; }
+    
+    .text-selection-palette {
+      position: absolute;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      display: none;
+      flex-direction: column;
+      z-index: 100;
+      overflow: hidden;
+      min-width: 160px;
+    }
+    [data-theme^="retro"] .text-selection-palette { border-radius: 0; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); }
+    .text-selection-palette.visible { display: flex; }
+    .palette-action {
+      padding: var(--sm) var(--md);
+      font-size: 12px;
+      cursor: pointer;
+      color: var(--text-primary);
+      background: transparent;
+      border: none;
+      text-align: left;
+    }
+    .palette-action:hover { background: var(--accent-blue); color: var(--surface); }
+    [data-theme^="retro"] .palette-action:hover { background: var(--accent-lime); color: #1a1a1a; }
+    
+    .composer-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--xs);
+      background: var(--surface);
+      border: 1px solid var(--accent-blue);
+      color: var(--text-primary);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      margin-bottom: var(--sm);
+      margin-right: var(--xs);
+    }
+    [data-theme^="retro"] .composer-chip { border-color: var(--accent-orange); border-radius: 0; }
+    .composer-chip .close-chip { cursor: pointer; color: var(--text-muted); }
+    .composer-chip .close-chip:hover { color: var(--accent-magenta); }
+    .highlight-selection { background: rgba(0, 150, 255, 0.3); border-bottom: 2px dashed var(--accent-blue); }
+    .selectable-doc { user-select: text; }
+
     /* Timeline / Agent Activity */
     .wizard-activity-floating {
       position: absolute;
@@ -4216,6 +4298,10 @@ impl Dashboard {
                 </div>
             </div>
             <div id="dashGridMetrics" style="display:none;">
+                <div style="grid-column: 1 / -1; background:var(--surface-elevated); border:1px solid var(--border-light); border-left:4px solid var(--accent-blue); border-radius:4px; padding:var(--sm) var(--md); font-size:11px; display:flex; justify-content:space-between; align-items:center;">
+                  <div><span style="color:var(--text-secondary);">Active Gemini Context:</span> <span style="font-weight:bold; margin-left:var(--xs);">user@domain.com (OAuth)</span></div>
+                  <div style="color:var(--text-muted);">Current Mode: <span style="color:var(--text-primary); font-weight:600;">OAuth Active</span></div>
+                </div>
                 <div class="bento-widget size-2x1">
                     <div class="widget-header">
                         <span class="widget-title">Token Usage Over Time</span>
@@ -4822,14 +4908,36 @@ impl Dashboard {
                     <div class="wizard-doc-pill"><span>PRD draft</span><span class="wizard-doc-status">[DRAFT]</span></div>
                   </div>
                   <div class="wizard-binder-content" style="flex: 1;">
-                    <div class="wizard-binder-toolbar"><div class="wizard-btn-group"><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit</button></div><div class="wizard-btn-group"><button class="wizard-btn" data-step-target="2">Back</button><button class="wizard-btn primary btn-icon" data-step-target="4">Continue to Interview <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div></div>
-                    <div class="wizard-binder-view mock-md">
+                    <div class="wizard-binder-toolbar">
+                      <div class="wizard-btn-group">
+                        <button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit</button>
+                      </div>
+                      <div class="wizard-btn-group">
+                        <button class="wizard-btn" data-step-target="2">Back</button>
+                        <button class="wizard-btn btn-icon" id="resubmitBtn3" style="display:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 1 0 2.63-6.37L21 8"></path></svg> Resubmit with Annotations</button>
+                        <button class="wizard-btn primary btn-icon" id="approveBtn3" data-step-target="4">Continue to Interview <span class="gated-text" style="font-weight:normal; opacity:0.8; margin-left:4px;"></span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+                      </div>
+                    </div>
+                    <div style="font-size:11px; color:var(--text-secondary); margin: 0 var(--md) var(--sm);">
+                      Select text in the document to add annotations or send the selection to chat.
+                    </div>
+                    <div class="wizard-binder-view mock-md selectable-doc" id="docView3">
                       <h1>Requirements Draft (Review)</h1>
                       <p><strong>Status:</strong> Review | <strong>Version:</strong> 0.9</p>
                       <h2>1. Summary</h2>
                       <p>Draft requirements captured from the builder conversation. Review and approve before continuing to the Interview step.</p>
                       <h2>2. Functional Requirements</h2>
                       <p>Draft FRs will be validated in the next pass. You can edit inline or request changes via the builder chat.</p>
+                    </div>
+                  </div>
+                  
+                  <div class="wizard-annotation-drawer" id="drawer3">
+                    <div class="annotation-drawer-header">
+                      Annotations <span style="font-size:10px; font-weight:normal; color:var(--text-muted);"><span class="open-count">0</span> Open</span>
+                    </div>
+                    <div class="drawer-content" style="flex:1; overflow-y:auto;">
+                      <!-- Annotations get injected here -->
+                      <div style="padding:var(--xl); text-align:center; color:var(--text-muted); font-size:11px;">Select text to add an annotation</div>
                     </div>
                   </div>
                 </div>
@@ -4925,8 +5033,21 @@ impl Dashboard {
                     <div id="pill-arch" class="wizard-doc-pill prd-pill" onclick="showPRDMock('arch')"><span>Architecture</span><span class="wizard-doc-status">[DRAFT]</span></div>
                   </div>
                   <div class="wizard-binder-content">
-                    <div class="wizard-binder-toolbar"><div class="wizard-btn-group"><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit</button><button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Export</button></div><div class="wizard-btn-group"><button class="wizard-btn" data-step-target="5">Back</button><button class="wizard-btn primary btn-icon" data-step-target="7">Approve & Continue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div></div>
-                    <div id="prd-mock-content" class="wizard-binder-view mock-md">
+                    <div class="wizard-binder-toolbar">
+                      <div class="wizard-btn-group">
+                        <button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit</button>
+                        <button class="wizard-btn btn-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Export</button>
+                      </div>
+                      <div class="wizard-btn-group">
+                        <button class="wizard-btn" data-step-target="5">Back</button>
+                        <button class="wizard-btn btn-icon" id="resubmitBtn6" style="display:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 1 0 2.63-6.37L21 8"></path></svg> Resubmit with Annotations</button>
+                        <button class="wizard-btn primary btn-icon" id="approveBtn6" data-step-target="7">Approve & Continue <span class="gated-text" style="font-weight:normal; opacity:0.8; margin-left:4px;"></span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+                      </div>
+                    </div>
+                    <div style="font-size:11px; color:var(--text-secondary); margin: 0 var(--md) var(--sm);">
+                      Select text in the PRD to add annotations or send the selection to chat.
+                    </div>
+                    <div id="prd-mock-content" class="wizard-binder-view mock-md selectable-doc">
                       <h1>Product Requirements Document</h1>
                       <p><strong>Status:</strong> Approved | <strong>Version:</strong> 1.0</p>
                       <h2>1. Executive Summary</h2>
@@ -4939,6 +5060,15 @@ impl Dashboard {
                       <p>The system integrates an automated multi-pass document validation and canonical alignment to ensure the PRD conforms strictly to the schema before any code execution starts.</p>
                       <h2>5. Out of Scope</h2>
                       <p>Mobile application and cloud deployment orchestration are deferred to version 2.0.</p>
+                    </div>
+                  </div>
+                  <div class="wizard-annotation-drawer" id="drawer6">
+                    <div class="annotation-drawer-header">
+                      Annotations <span style="font-size:10px; font-weight:normal; color:var(--text-muted);"><span class="open-count">0</span> Open</span>
+                    </div>
+                    <div class="drawer-content" style="flex:1; overflow-y:auto;">
+                      <!-- Annotations get injected here -->
+                      <div style="padding:var(--xl); text-align:center; color:var(--text-muted); font-size:11px;">Select text to add an annotation</div>
                     </div>
                   </div>
                 </div>
@@ -5838,12 +5968,14 @@ impl Dashboard {
                   </div>
                 </details>
                 <details open>
-                  <summary>Retrieval</summary>
+                  <summary>Retrieval & Search</summary>
                   <div class="details-content">
                     <label><input type="checkbox" checked> Auto Retrieval</label>
+                    <label><input type="checkbox" checked> Deep Search enabled</label>
                     <label>Chat history <select><option>allow</option><option>deny</option></select></label>
                     <label>Code <select><option>allow</option><option>deny</option></select></label>
                     <label>Logs <select><option>allow</option><option>deny</option></select></label>
+                    <label>Web Search <select><option>allow</option><option>ask</option><option>deny</option></select></label>
                     <label>Max queries per turn <input type="number" value="3"></label>
                     <label>Max hits per query <input type="number" value="10"></label>
                     <label>Logs lookback days <input type="number" value="7"></label>
@@ -5883,10 +6015,13 @@ impl Dashboard {
                 <details open>
                   <summary>Media Generation</summary>
                   <div class="details-content">
-                    <label><input type="checkbox"> Image Gen</label>
-                    <label>Image Model <select><option>dall-e-3</option></select></label>
-                    <label><input type="checkbox"> Video Gen</label>
-                    <label>Video Model <select><option>sora</option></select></label>
+                    <div style="font-size:10px; color:var(--accent-orange); margin-bottom:var(--xs);">Non-Cursor media requires an eligible Gemini account.</div>
+                    <label style="opacity:0.5; cursor:not-allowed;"><input type="checkbox" disabled> Image Gen</label>
+                    <label style="opacity:0.5; cursor:not-allowed;">Image Model <select disabled><option>Gemini Imagen</option><option>dall-e-3</option></select></label>
+                    <label style="opacity:0.5; cursor:not-allowed;"><input type="checkbox" disabled> Video Gen</label>
+                    <label style="opacity:0.5; cursor:not-allowed;">Video Model <select disabled><option>sora</option></select></label>
+                    <div style="font-size:10px; margin-top:4px; color:var(--text-muted);"><a href="#" style="color:var(--accent-blue);">Configure in Settings &rarr; Authentication</a></div>
+                    <div style="height:1px; background:var(--border-light); margin:var(--sm) 0;"></div>
                     <label><input type="checkbox"> TTS</label>
                     <label>TTS Model <select><option>elevenlabs</option></select></label>
                     <label><input type="checkbox"> Music Gen</label>
@@ -6039,7 +6174,24 @@ impl Dashboard {
                     <div class="status-badge success" style="display:inline-block;padding:2px 6px;border-radius:4px;background:var(--graph-passed);color:#000;font-size:10px;margin-bottom:8px;">GitHub Connected</div>
                     <button class="wizard-btn">Logout GitHub</button>
                     <label>Auth realm split <select><option>github_api</option><option>copilot_github</option></select></label>
-                    <label>Gemini API Key <input type="password" value=""></label>
+                    <div style="margin-top:var(--md); padding:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);">
+                      <div style="font-weight:600; font-size:12px; margin-bottom:var(--xs); display:flex; justify-content:space-between;">Google Gemini <span class="status-badge" style="background:var(--accent-lime); color:#000; padding:1px 4px; font-size:9px;">Connected</span></div>
+                      <label>Requested Auth Mode <select style="width:100%; margin-top:4px; margin-bottom:8px;"><option>Auto</option><option>OAuth</option><option>API Key</option></select></label>
+                      <div style="font-size:11px; margin-top:var(--sm); color:var(--text-secondary); display:flex; flex-direction:column; gap:2px;">
+                        <div>Effective Account: <span style="color:var(--text-primary);">user@domain.com</span></div>
+                        <div>Effective Auth Mode: <span style="color:var(--text-primary);">OAuth</span></div>
+                        <div>Switch Reason: <span style="color:var(--text-primary);">User Selected</span></div>
+                        <div>Cooldown: <span style="color:var(--text-primary);">None</span></div>
+                      </div>
+                      <details style="margin-top:var(--sm);">
+                        <summary style="font-size:11px; cursor:pointer;">Accounts (2)</summary>
+                        <div style="padding:var(--sm); border-top:1px solid var(--border-light); margin-top:4px;">
+                          <div style="margin-bottom:4px; font-size:11px;"><b>OAuth:</b> user@domain.com (Default Project) <span style="color:var(--accent-lime);">[Active]</span></div>
+                          <div style="font-size:11px;"><b>API Key:</b> personal-key-1 (Priority: Low) <span style="color:var(--text-muted);">[Standby]</span></div>
+                        </div>
+                      </details>
+                      <button class="wizard-btn" style="width:100%; margin-top:var(--sm); padding:4px;">Manage Gemini Accounts</button>
+                    </div>
                   </div>
                 </details>
               </div>
@@ -6454,6 +6606,7 @@ impl Dashboard {
                   </div>
 
                   <div style="background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
+                    <div class="composer-chips-container" style="display:flex; flex-wrap:wrap; padding:0 var(--sm);"></div>
                     <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; outline:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
                     
                     <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm); border-top: 1px solid var(--border-light);">
@@ -6508,6 +6661,10 @@ impl Dashboard {
                             <div class="chat-dropdown-item active">sonnet-4.5</div>
                             <div class="chat-dropdown-item">opus-3</div>
                             <div class="chat-dropdown-item">gpt-4o</div>
+                            <div class="chat-dropdown-item" style="opacity:0.5; cursor:not-allowed;">gemini-1.5-pro (Media)</div>
+                        </div>
+                        <div style="padding: var(--sm); font-size: 9px; color: var(--accent-orange); border-top: 1px solid var(--border-light); background: var(--surface-elevated); border-radius: 0 0 8px 8px;">
+                          Media capabilities require an eligible Gemini account.
                         </div>
                       </div>
                     </div>
@@ -6795,6 +6952,7 @@ impl Dashboard {
                   </div>
 
                   <div style="background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
+                    <div class="composer-chips-container" style="display:flex; flex-wrap:wrap; padding:0 var(--sm);"></div>
                     <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; outline:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
                     
                     <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm); border-top: 1px solid var(--border-light);">
@@ -6849,6 +7007,10 @@ impl Dashboard {
                             <div class="chat-dropdown-item active">sonnet-4.5</div>
                             <div class="chat-dropdown-item">opus-3</div>
                             <div class="chat-dropdown-item">gpt-4o</div>
+                            <div class="chat-dropdown-item" style="opacity:0.5; cursor:not-allowed;">gemini-1.5-pro (Media)</div>
+                        </div>
+                        <div style="padding: var(--sm); font-size: 9px; color: var(--accent-orange); border-top: 1px solid var(--border-light); background: var(--surface-elevated); border-radius: 0 0 8px 8px;">
+                          Media capabilities require an eligible Gemini account.
                         </div>
                       </div>
                     </div>
@@ -7504,6 +7666,261 @@ impl Dashboard {
   }
   window.showPRDMock = showPRDMock;
   window.showExecMock = showExecMock;
+})();
+
+// Document Review & Annotations Logic
+(function() {
+  function runWhenReady(fn) {
+    if (document.readyState !== 'loading') {
+      fn();
+    } else {
+      document.addEventListener('DOMContentLoaded', fn);
+    }
+  }
+
+  runWhenReady(function() {
+  const palette = document.createElement('div');
+  palette.className = 'text-selection-palette';
+  palette.style.position = 'fixed';
+  palette.innerHTML = `
+    <button class="palette-action" data-action="comment"><svg class="icon-inline" style="margin-right:8px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Comment / Ask</button>
+    <button class="palette-action" data-action="replace"><svg class="icon-inline" style="margin-right:8px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>Replace with...</button>
+    <button class="palette-action" data-action="remove"><svg class="icon-inline" style="margin-right:8px; color:var(--accent-magenta);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>Remove / Strike</button>
+    <button class="palette-action" data-action="send_chat"><svg class="icon-inline" style="margin-right:8px; color:var(--accent-lime);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>Send to chat</button>
+  `;
+  document.body.appendChild(palette);
+  palette.style.display = 'none';
+
+  let currentSelection = null;
+  let activePanelId = null;
+
+  function showPaletteAtRange(range, docView) {
+    palette.style.zIndex = '999999';
+    palette.style.position = 'fixed';
+    palette.style.visibility = 'hidden';
+    palette.style.display = 'flex';
+    const rect = range.getBoundingClientRect();
+    let top = rect.top - palette.offsetHeight - 10;
+    if (top < 10) top = rect.bottom + 10;
+    let left = rect.left + (rect.width / 2) - (palette.offsetWidth / 2);
+    if (left < 10) left = 10;
+    if (left + palette.offsetWidth > window.innerWidth - 10) left = window.innerWidth - palette.offsetWidth - 10;
+    if (top + palette.offsetHeight > window.innerHeight - 10) top = window.innerHeight - palette.offsetHeight - 10;
+    palette.style.top = top + 'px';
+    palette.style.left = left + 'px';
+    palette.style.visibility = 'visible';
+    const sel = window.getSelection();
+    currentSelection = { text: sel ? sel.toString() : '', docId: docView.id || 'unknown' };
+    const panel = docView.closest('.wizard-step-panel');
+    activePanelId = panel ? panel.dataset.wizardPanel : '3';
+  }
+
+  function rangeIntersectsDoc(range, el) {
+    try {
+      if (typeof range.intersectsNode === 'function') return range.intersectsNode(el);
+      var common = range.commonAncestorContainer;
+      var node = common.nodeType === 3 ? common.parentNode : common;
+      return el.contains(node);
+    } catch (e) { return false; }
+  }
+
+  function tryShowPaletteForSelection(optionalDocView) {
+    try {
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed || !sel.toString().trim()) {
+        palette.style.display = 'none';
+        return;
+      }
+      if (sel.rangeCount === 0) {
+        palette.style.display = 'none';
+        return;
+      }
+      const range = sel.getRangeAt(0);
+      var docView = null;
+      if (optionalDocView && rangeIntersectsDoc(range, optionalDocView)) {
+        docView = optionalDocView;
+      } else {
+        document.querySelectorAll('.selectable-doc').forEach(function(el) {
+          if (docView) return;
+          if (rangeIntersectsDoc(range, el)) docView = el;
+        });
+      }
+      if (!docView) {
+        palette.style.display = 'none';
+        return;
+      }
+      showPaletteAtRange(range, docView);
+    } catch (err) {
+      console.error("Palette positioning error:", err);
+    }
+  }
+
+  // Defer so the browser has committed the selection (cross-browser / file:// timing).
+  function scheduleShowPalette(optionalDocView) {
+    setTimeout(function() {
+      tryShowPaletteForSelection(optionalDocView);
+    }, 0);
+  }
+
+  document.addEventListener('mouseup', (e) => {
+    if (palette.contains(e.target)) return;
+    var docEl = e.target && e.target.closest ? e.target.closest('.selectable-doc') : null;
+    scheduleShowPalette(docEl || undefined);
+  });
+
+  var selectionchangeTimer = null;
+  document.addEventListener('selectionchange', function() {
+    clearTimeout(selectionchangeTimer);
+    selectionchangeTimer = setTimeout(function() {
+      tryShowPaletteForSelection();
+    }, 80);
+  });
+
+  document.addEventListener('mousedown', (e) => {
+    if (!palette.contains(e.target)) {
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed || !sel.toString().trim()) {
+        palette.style.display = 'none';
+      }
+    }
+  });
+
+  // Prevent selection from clearing when clicking on the palette
+  palette.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+  });
+
+  palette.addEventListener('click', (e) => {
+    const actionBtn = e.target.closest('.palette-action');
+    if (!actionBtn || !currentSelection) return;
+
+    const action = actionBtn.dataset.action;
+    palette.classList.remove('visible');
+    
+    if (action === 'send_chat') {
+      addComposerChip(currentSelection.text);
+    } else {
+      addAnnotation(activePanelId, currentSelection.text, action);
+    }
+    
+    window.getSelection().removeAllRanges();
+    palette.style.display = 'none';
+  });
+
+  function addComposerChip(text) {
+    const shortText = text.length > 20 ? text.substring(0, 20) + '...' : text;
+    const chipHtml = '<div class="composer-chip"><span>\"' + shortText + '\"</span> <span class="close-chip" onclick=\"this.parentElement.remove()\">×</span></div>';
+    document.querySelectorAll('.composer-chips-container').forEach(c => {
+      c.innerHTML += chipHtml;
+    });
+  }
+
+  const annotationsState = {
+    '3': [],
+    '6': []
+  };
+
+  function addAnnotation(panelId, text, action) {
+    if (!annotationsState[panelId]) return;
+    
+    let title = "Note";
+    if (action === 'replace') title = "Replace Request";
+    if (action === 'remove') title = "Remove Request";
+    
+    const shortText = text.length > 30 ? text.substring(0, 30) + '...' : text;
+    
+    const ann = {
+      id: Math.random().toString(36).substr(2, 9),
+      title: title,
+      text: shortText,
+      resolved: false
+    };
+    
+    annotationsState[panelId].push(ann);
+    renderAnnotations(panelId);
+  }
+
+  window.resolveAnnotation = function(panelId, annId) {
+    const ann = annotationsState[panelId].find(a => a.id === annId);
+    if (ann) ann.resolved = true;
+    renderAnnotations(panelId);
+  };
+
+  function renderAnnotations(panelId) {
+    const drawer = document.getElementById('drawer' + panelId);
+    if (!drawer) return;
+    
+    const content = drawer.querySelector('.drawer-content');
+    const state = annotationsState[panelId];
+    
+    const openCount = state.filter(a => !a.resolved).length;
+    const openCountEl = drawer.querySelector('.open-count');
+    if (openCountEl) openCountEl.innerText = openCount;
+    
+    if (state.length === 0) {
+      content.innerHTML = '<div style="padding:var(--xl); text-align:center; color:var(--text-muted); font-size:11px;">Select text to add an annotation</div>';
+    } else {
+      var html = '';
+      state.forEach(function(a) {
+        var itemClasses = 'annotation-item' + (a.resolved ? ' resolved' : '');
+        html += '<div class="' + itemClasses + '">';
+        html +=   '<div style="display:flex; justify-content:space-between; align-items:start;">';
+        html +=     '<div style="font-weight:600;">' + a.title + '</div>';
+        if (a.resolved) {
+          html +=   '<span class="annotation-status resolved">Resolved</span>';
+        } else {
+          html +=   '<button style="font-size:10px; padding:2px 6px; cursor:pointer;" onclick="resolveAnnotation(\'' + panelId + '\', \'' + a.id + '\')">Resolve</button>';
+        }
+        html +=   '</div>';
+        html +=   '<div style="font-family:monospace; background:rgba(0,0,0,0.1); padding:4px; font-size:10px; margin-top:4px;">"' + a.text + '"</div>';
+        if (!a.resolved) {
+          html += '<div style="font-size:11px; margin-top:4px; color:var(--text-secondary);">Waiting for revision...</div>';
+        }
+        html += '</div>';
+      });
+      content.innerHTML = html;
+    }
+    
+    updateGatedButtons(panelId, openCount);
+  }
+
+  function updateGatedButtons(panelId, openCount) {
+    const approveBtn = document.getElementById('approveBtn' + panelId);
+    const resubmitBtn = document.getElementById('resubmitBtn' + panelId);
+    
+    if (!approveBtn) return;
+    
+    const gatedText = approveBtn.querySelector('.gated-text');
+    
+    if (openCount > 0) {
+      if (resubmitBtn) resubmitBtn.style.display = 'inline-flex';
+      approveBtn.style.opacity = '0.5';
+      approveBtn.style.pointerEvents = 'none';
+      if (gatedText) gatedText.innerText = '(Gated: ' + openCount + ' Open)';
+    } else {
+      if (resubmitBtn) resubmitBtn.style.display = 'none';
+      approveBtn.style.opacity = '1';
+      approveBtn.style.pointerEvents = 'auto';
+      if (gatedText) gatedText.innerText = annotationsState[panelId].length > 0 ? '(0 Open)' : '';
+    }
+  }
+
+  // Bind resubmit actions
+  ['3', '6'].forEach(pid => {
+    const btn = document.getElementById('resubmitBtn' + pid);
+    if (btn) {
+      btn.addEventListener('click', () => {
+        btn.innerHTML = '<svg class="wizard-activity-pulse" style="margin-right:4px; width:10px; height:10px;"></svg> Revising...';
+        setTimeout(() => {
+          annotationsState[pid].forEach(a => a.resolved = true);
+          renderAnnotations(pid);
+          btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 1 0 2.63-6.37L21 8"></path></svg> Resubmit with Annotations';
+        }, 1500);
+      });
+    }
+  });
+
+  });
 })();
 </script>
 </body>

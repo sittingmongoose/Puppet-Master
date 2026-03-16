@@ -33,8 +33,14 @@ This project is moving to a single, deterministic "agent loop" architecture wher
 - **ACP note (important):** Cursor CLI is not ACP-native as of a Cursor staff reply (2026-01-04); Cursor CLI supports MCPs and may add ACP later, so if ACP is needed it's via an adapter layer on our side (not because Cursor suddenly "speaks ACP"). [web:167]
 
 ### Gemini auth decision (locked)
-- Gemini provider defaults to **API key** auth in the UI. This is an explicit allowed exception to the broader "subscription auth only / avoid API keys" guidance because Gemini's API key path can be used to access the user's Gemini subscription. OAuth remains optional as a stricter-access fallback. [page:4]
+- Gemini is one **DirectApi** provider with mixed OAuth and API-key account pools under the shared provider runtime.
+- The default Gemini `requested_auth_mode` is `auto`, and the provider-default auth-surface preference is OAuth first, then API key, unless project/run policy overrides it.
+- OAuth and API key are distinct Gemini auth surfaces / quota planes and MUST NOT be presented as the same plan or bucket.
+- Gemini API key remains the explicit allowed exception to the broader subscription-first / avoid-API-keys guidance.
+- Requested vs effective auth/account identity MUST be visible across prompt assembly, storage, setup/health, usage, and runtime reporting.
+- Media follows the same requested/effective Gemini auth/account rules as regular Gemini usage.
 
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/storage-plan.md
 ### Future mobile/web clients (impacts architecture now)
 - Mobile/web clients will be "thin" and connect back to the desktop app (desktop acts like a local server), so the stable boundary is the unified event model + streaming API (runs/events/artifacts) and command API (start run, approve tool, cancel run), rather than direct access to providers/tools on mobile/web.
 - Thin clients MUST NOT call providers, tool executors, or local patch pipelines directly. They consume streamed events/artifacts and send command requests to the desktop-owned core only.
@@ -55,16 +61,21 @@ This project is moving to a single, deterministic "agent loop" architecture wher
 ## Impacts on existing Plans (deltas to keep consistency)
 
 ### Immediate contradictions to resolve in Plans (so requirements do not fight each other)
-- **UI tech:** any plan text that assumes **Iced** UI implementation should be treated as *UX requirements only*, not a widget/library implementation commitment
-<a id="ui-scaling-migration"></a>
+- **UI tech:** any plan text that assumes **Iced** UI implementation should be treated as *UX requirements only*, not a widget/library implementation commitment.
 - **UI scaling migration:** Iced custom scaling mechanics (for example token-by-token multiplication layers) MUST be treated as legacy implementation references; Slint-target sections MUST describe native Slint scaling paths.
-  ContractRef: ContractName:Plans/Contracts_V0.md#8
-- **Storage:** any plan that proposes **SQLite** for run/session/history storage needs to be reframed as **event-sourced** storage with seglog/redb/Tantivy projections
-- **Provider abstraction:** platform-specific execution terminology in touched sections must use **Provider** + unified event model, especially for streaming output and tool gating
-- **Gemini auth:** existing "subscription-only / no API keys" guidance must explicitly allow a Gemini exception: "no API keys **except Gemini** (Gemini API key can represent subscription access)"
-- **Automation references:** any mention of Iced-era automation must be treated as a **migration reference pattern only**; rewrite deliverables target Slint runtime contracts and shared evidence schema
 
+ContractRef: ContractName:Plans/Contracts_V0.md#8
 
+- **Storage:** any plan that proposes **SQLite** for run/session/history storage needs to be reframed as **event-sourced** storage with seglog/redb/Tantivy projections.
+- **Provider abstraction:** platform-specific execution terminology in touched sections must use **Provider** + unified event model, especially for streaming output and tool gating.
+- **Gemini auth/account:** stale canon that says Gemini UI defaults to API key, or that OAuth is merely an optional fallback to the same bucket, MUST be retired. The canonical model is one provider with mixed OAuth/API-key account pools, OAuth-first default preference under `auto`, no silent cross-surface fallback for explicit auth requests, and requested/effective auth/account identity visible across surfaces.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+- **Gemini media:** any plan text that implies non-Cursor Gemini media is API-key-only MUST be retired; media follows the same Gemini auth/account model as standard provider usage.
+- **Automation references:** any mention of Iced-era automation must be treated as a **migration reference pattern only**; rewrite deliverables target Slint runtime contracts and shared evidence schema.
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/rewrite-tie-in-memo.md
 ### Storage consistency
 - All run/session/artifact/checkpoint persistence and event emission must align with **Plans/storage-plan.md** (seglog writer, redb schema, projector pipeline, analytics scan).
 - When adding or editing plans that touch runs, sessions, settings, or artifacts, add a cross-reference to storage-plan.md and specify whether the plan assumes seglog events, redb tables, or both.

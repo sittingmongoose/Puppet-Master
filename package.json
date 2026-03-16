@@ -7,5 +7,8 @@
     "build:mac:iced": "bash -c 'cd installer/macos && V=$(grep -m1 \"^version\" ../../puppet-master-rs/Cargo.toml | cut -d\\\" -f2) && ./build-dmg.sh $V'",
     "build:linux:iced": "bash -c 'cd scripts && V=$(grep -m1 \"^version\" ../puppet-master-rs/Cargo.toml | cut -d\\\" -f2) && ./build-linux-installer.sh $V'",
     "build:all": "bash build-all-installers.sh"
+  },
+  "dependencies": {
+    "jsdom": "^28.1.0"
   }
 }
