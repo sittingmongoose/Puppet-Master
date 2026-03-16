@@ -336,10 +336,11 @@ Examples of required auto behavior:
 Rule: auto mode MUST always expose the selected effective Persona and reason. It MUST NEVER emit an opaque `Auto` state with no resolved output.
 
 ### 6.5 Effective resolution record
-
 <a id="EFFECTIVE-RESOLUTION-RECORD"></a>
 
 Every prompt assembly run MUST produce an effective resolution record containing at least:
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Multi-Account.md
 
 - `requested_persona`
 - `effective_persona`
@@ -353,12 +354,22 @@ Every prompt assembly run MUST produce an effective resolution record containing
 - `effective_model`
 - `requested_variant`
 - `effective_variant`
+- `requested_auth_mode?`
+- `effective_auth_mode?`
+- `requested_account_policy?`
+- `effective_account_id?`
+- `effective_account_label?`
+- `effective_provider_identity?`
+- `effective_project_id?`
+- `account_switch_reason?`
 - `effective_temperature`
 - `effective_top_p`
 - `effective_reasoning_effort`
 - `effective_talkativeness`
 - `applied_persona_controls[]`
 - `skipped_persona_controls[]`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Multi-Account.md
 
 `applied_persona_controls[]` element schema:
 ```json
@@ -390,9 +401,20 @@ Rules:
 - If a requested control is clamped rather than fully honored, record it in `applied_persona_controls[]` with both requested and effective values.
 - If no scoped override is active, `persona_override_scope = none` and `persona_override_owner_id = null`.
 
-This record is the canonical cross-system effective runtime record referenced by `Plans/Personas.md` and `Plans/Models_System.md`. It MUST be available to event/history/UI consumers and to any payload that claims to expose requested/effective Persona/runtime state.
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md#EventRecord
 
-<a id="PROVIDER-CAPABILITY-FILTERING"></a>
+Auth/account resolution rules:
+- auth/account resolution occurs before attempt/message dispatch for every provider-using role
+- explicit `oauth` and explicit `api_key` requests MUST NOT silently cross-fallback
+- `auto` uses the policy-configured auth-surface preference order
+- load provider capability block, then eligible auth surfaces, then eligible account pool, then prefer the current healthy account before falling back to the highest-priority eligible alternative
+- if no eligible account exists, emit an explicit blocked/degraded reason rather than hiding the failure behind a silent fallback
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md, PolicyRule:Decision_Policy.md§3
+
+This record is the canonical cross-system effective runtime record referenced by `Plans/Personas.md`, `Plans/Models_System.md`, `Plans/storage-plan.md`, and UI/runtime consumers. It MUST be available to event/history/UI consumers and to any payload that claims to expose requested/effective Persona/runtime state.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 ### 6.6 Provider capability filtering stage
 
 Persona controls must pass through provider capability filtering before prompt/model execution.

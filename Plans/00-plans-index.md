@@ -41,16 +41,18 @@ ContractRef: SchemaID:Spec_Lock.json, ContractName:Plans/DRY_Rules.md#7
 - User-project output artifacts live under `.puppet-master/project/*` and are specified by `Plans/Project_Output_Artifacts.md`.
 
 ## Rewrite tie-in (2026-02-21)
-
 The project is intentionally adapting an OpenCode-style architecture and is mid-transition to a deterministic agent-loop core with:
 - **Providers** behind one unified **event model**
-- **Event-sourced storage**: `seglog` (canonical ledger) → projections into `redb` (KV state/settings) + Tantivy (search)
+- **Event-sourced storage**: `seglog` (canonical ledger) -> projections into `redb` (KV state/settings) + Tantivy (search)
 - **Central tool registry + policy engine** and a patch/apply/verify/rollback pipeline
 - **UI rewrite**: Rust + Slint (winit; Skia default)
-- **Auth**: subscription-first; **Gemini API key is an explicit allowed exception** (subscription-backed)
+- **Auth**: subscription-first; Gemini API key remains an explicit allowed exception, but Gemini is one provider with mixed OAuth/API-key account pools, OAuth-first default preference under `auto`, and requested/effective auth/account identity carried across storage, runtime, setup/health, and usage
 
-See: `Plans/rewrite-tie-in-memo.md`.
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
 
+See: `Plans/rewrite-tie-in-memo.md`, `Plans/Multi-Account.md`, `Plans/usage-feature.md`, and `Plans/FinalGUISpec.md`.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 ## Plan map
 | Plan | Primary scope | Notes / canonical intent |
 |------|--------------|--------------------------|

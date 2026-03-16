@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/usage-feature.md",
-  "source_sha256": "9ec6549e1949572b0acaeb29161a03ab0a15722d46c5bb73aa4ead555db70a81",
+  "source_sha256": "6807046c88483e54e80499abb62ec7e61c93d30736606eed86386b95241b6ece",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -59,84 +59,84 @@
     {
       "dest_path": "Plans/_shards/usage-feature/08-scope-of-the-usage-feature.md",
       "start_line": 78,
-      "end_line": 167,
-      "segment_sha256": "50e330b2b8269a04073404c1c55d722b483d182c17d4d8138707f3af3a56362e",
+      "end_line": 171,
+      "segment_sha256": "77eae578fc997a17b8a6efe64317056ac3f1f834b7cdca2c9dd0a340fc71cb45",
       "heading": "## Scope of the Usage Feature"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/09-data-and-backend-conceptual.md",
-      "start_line": 168,
-      "end_line": 205,
-      "segment_sha256": "c084ebeb517447fe2f36584646651353bf767f989dd6683c9275b0faf786ee1d",
+      "start_line": 172,
+      "end_line": 215,
+      "segment_sha256": "fff1672c0a354ca6dfcdf85bfe4b255a12a495f745bdaa5591cf3f3c99fbadc7",
       "heading": "## Data and Backend (conceptual)"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/10-gui-placement-options.md",
-      "start_line": 206,
-      "end_line": 217,
+      "start_line": 216,
+      "end_line": 227,
       "segment_sha256": "6fc15b283e313a9769cd5607da7a57e8525eb3462972274391637b7096324134",
       "heading": "## GUI Placement Options"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/11-gaps-current-state-vs-desired.md",
-      "start_line": 218,
-      "end_line": 325,
-      "segment_sha256": "263d97662cdf72f60314966553060ce321449d9c9681298512765ecfb839ccf7",
+      "start_line": 228,
+      "end_line": 359,
+      "segment_sha256": "cc84bcaa3ad3c564ae52181f50e3374b58005f52d93c702b69f4103929238410",
       "heading": "## Gaps (Current State vs. Desired)"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/12-potential-problems.md",
-      "start_line": 326,
-      "end_line": 403,
+      "start_line": 360,
+      "end_line": 437,
       "segment_sha256": "65851099307272a1d3978ffc4a6a9005228ef7892836e2c3c8f03ecbf4b11858",
       "heading": "## Potential Problems"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/13-enhancements-beyond-minimum.md",
-      "start_line": 404,
-      "end_line": 486,
+      "start_line": 438,
+      "end_line": 520,
       "segment_sha256": "f3ce0c6317204de0400a52b1cc3e5607e400f1c4fac77e2a32eff7cb5ee9a241",
       "heading": "## Enhancements (Beyond Minimum)"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/14-out-of-scope-for-this-plan.md",
-      "start_line": 487,
-      "end_line": 492,
+      "start_line": 521,
+      "end_line": 526,
       "segment_sha256": "840be484e9ac974c58b8b14864280e68212e51926112914c4d3ec88f9055d980",
       "heading": "## Out of Scope for This Plan"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/15-success-criteria.md",
-      "start_line": 493,
-      "end_line": 500,
+      "start_line": 527,
+      "end_line": 534,
       "segment_sha256": "a9e54460761a8ecc70732420dd0d64196f68f6b6adf5ff0eb5043e488a8711c5",
       "heading": "## Success Criteria"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/16-version-history.md",
-      "start_line": 501,
-      "end_line": 516,
+      "start_line": 535,
+      "end_line": 550,
       "segment_sha256": "05e34bc25c697c572dba585f20f77d0c1bf58a4774f07116b18c8a7022810251",
       "heading": "## Version History"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/17-widget-composed-page-layout-addendum-2026-02-23.md",
-      "start_line": 517,
-      "end_line": 617,
+      "start_line": 551,
+      "end_line": 651,
       "segment_sha256": "9f96bb8432f3c07a5ff99d8edb114c9bb2efa890a4c6d78d52a9a20a8c67c6b5",
       "heading": "## Widget-Composed Page Layout (Addendum -- 2026-02-23)"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/18-runtime-scheduler-recovery-observability-addendum-2026-03-09.md",
-      "start_line": 618,
-      "end_line": 637,
+      "start_line": 652,
+      "end_line": 671,
       "segment_sha256": "1bce7d6770b4a9176e973da65f275fca964eec5c6cb688a1e637cd58e35f322b",
       "heading": "## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/19-source-control-github-actions-and-docker-manager-cost-attribution-addendum-2026-03-12.md",
-      "start_line": 638,
-      "end_line": 647,
+      "start_line": 672,
+      "end_line": 681,
       "segment_sha256": "c62d0fd607f6d92b9a9f0ff812e876b36644df346c7840550422bee84218b10a",
       "heading": "## Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)"
     }

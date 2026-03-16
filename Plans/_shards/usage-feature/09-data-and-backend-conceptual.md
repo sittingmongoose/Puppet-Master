@@ -31,8 +31,14 @@ For implementers: the flow by which usage is collected and stored can be referen
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Provider_OpenCode.md, PolicyRule:Decision_Policy.md§2
 
 ### Backend implementation notes
+- **Data layer:** Reuse and extend existing usage/plan-detection logic. Expose a clear current-usage contract per platform that the GUI can poll or subscribe to.
+- **Primary input:** aggregate from `usage.jsonl` / canonical usage projections.
+- **Secondary input:** platform APIs and structured provider/runtime outputs when configured and supported.
 
-- **Data layer:** Reuse and extend existing usage/plan-detection logic. Expose a clear "current usage" contract (per platform) that the GUI can poll or subscribe to (e.g. 5h used/limit, 7d used/limit, plan label). **Primary input:** aggregate from `usage.jsonl` (and optional `summary.json`); secondary: platform APIs where configured.
-- **Sources:** Prefer **state JSON/JSONL first** (usage.jsonl, summary.json, active-subagents.json); then **per-platform API/CLI** (see "Per-platform usage data (API / CLI)"): Cursor API (usage/account only -- we do not use it for model invocation; OAuth + CLI for that), Codex CLI stream + provider data, Copilot CLI + GitHub Copilot metrics API, Claude Admin API + stream-json usage, Gemini direct-provider usage (local counters + estimated cost). Document which platforms support live vs after-run stats. AGENTS.md "Cursor | No API available" refers to model invocation; Cursor has a separate API for usage/limits that we may use to augment the Usage view.
-- **Persistence:** Current `usage.jsonl` (and any future redb) remains the source for event-level data; aggregated 5h/7d may be derived or cached from the same data or from platform APIs.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md
 
+- **Gemini source model:** Prefer the shared `UsageRecord` pipeline and carry explicit source attribution instead of hardcoding Gemini to local counters only.
+- **Gemini signal weighting:** strong provider/account telemetry outranks structured runtime output; structured output outranks heuristics; heuristics outrank local-only counters.
+- **Persistence:** event-level data and rollups remain canonical storage concerns; account-health and quota-pressure updates must feed the same control loop used by multi-account routing.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md§2

@@ -47,15 +47,17 @@ Minimum fields:
 ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Orchestrator_Page.md
 
 ### Canonical records
-
 1. `attempt_record`
-   - fields include `scheduler_pass_id`, requested/effective persona snapshot refs, requested/effective model snapshot refs, requested/effective permission snapshot refs, `replan_generation`, `mutation_capable`, `safe_point_id?`, `provider_attempt_ref?`, remediation lineage refs, and terminal outcome fields
+   - fields include `scheduler_pass_id`, requested/effective persona snapshot refs, requested/effective model snapshot refs, requested/effective permission snapshot refs, `requested_auth_mode?`, `effective_auth_mode?`, `requested_account_policy?`, `effective_account_id?`, `effective_project_id?`, `account_switch_reason?`, `replan_generation`, `mutation_capable`, `safe_point_id?`, `provider_attempt_ref?`, remediation lineage refs, and terminal outcome fields
 2. `tier_runtime_record`
-   - fields include `run_id`, `tier_id`, current state, requested/effective persona/platform/model, latest progress markers, queue-analysis refs, and pointers to current attempt or blocked episode when active
+   - fields include `run_id`, `tier_id`, current state, requested/effective persona/platform/model, `requested_auth_mode?`, `effective_auth_mode?`, `effective_account_id?`, latest progress markers, queue-analysis refs, and pointers to current attempt or blocked episode when active
 3. `blocked_projection`
    - fields include `blocked_reason_code`, ordered `allowed_action_ids[]`, `preserved_local_work`, `requires_safe_point_restore?`, prerequisite metadata, `failure_class?`, `detail_ref?`, `attempt_id?`, and `thread_id?`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md#EventRecord
+
 4. `usage_record`
-   - fields include `run_kind`, `run_id`, `tier_id`, `attempt_id?`, `thread_id?`, `effective_platform`, `effective_model`, `input_tokens`, `output_tokens`, `total_tokens`, `estimated_cost?`, and usage timestamps suitable for rollups and ledger views
+   - fields include `run_kind`, `run_id`, `tier_id`, `attempt_id?`, `thread_id?`, `effective_platform`, `effective_model`, `effective_auth_mode?`, `effective_account_id?`, `provider_account_id?`, `usage_source_kind?`, `signal_confidence?`, `effective_project_id?`, `input_tokens`, `output_tokens`, `total_tokens`, `estimated_cost?`, and usage timestamps suitable for rollups and ledger views
 5. `evidence_record`
    - fields include `summary`, `summary_kind?`, evidence refs, and any parent-summary/handoff refs needed by completed-prose surfaces
 6. `thread_blocked_notice`
@@ -63,6 +65,7 @@ ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/u
 7. `wizard_runtime_state`
    - fields include `wizard_status`, `wizard_step`, `blocked_reason_code?`, `clarification_round_count`, `report_ref?`, `resume_url?`, `decomposition_degraded`, `degradation_reason?`, and `replan_generation?`
 
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Orchestrator_Page.md
 ### Counter rule
 - `attempt_count` is the total started attempts for the node in the run
 - `automatic_retry_count`, `prerequisite_resume_count`, `manual_resume_count`, and `remediation_retry_count` remain independent stored counters

@@ -39,18 +39,36 @@ Required fields:
 - `thread_id?`
 - `effective_platform`
 - `effective_model`
+- `effective_auth_mode?`
+- `effective_account_id?`
 - `input_tokens`
 - `output_tokens`
 - `total_tokens`
 - `estimated_cost?`
 - timestamps sufficient for rollups and ordering
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+
 Optional but recommended attribution fields:
 - `provider_account_id?`
 - `usage_source_kind`
+- `signal_confidence`
+- `effective_project_id?`
 - `currency?`
 - `prompt_cache_hit?` / similar optimization counters when available
 
+Ownership and consumption:
+- Ledger reads normalized `UsageRecord` projections rather than ad hoc log parsing
+- Usage page rollups are derived from the same record family
+- Run Graph and Orchestrator aggregate by `tier_id` and `attempt_id?` from the same contract
+- Interview, assistant, builder, and orchestrator runs share the same schema; `run_kind` distinguishes workflow families without creating parallel usage systems
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md
+
+Rule:
+- There is one usage schema. Compatibility shims may ingest older sources, but new runtime surfaces MUST NOT define alternate token/model/auth/account attribution records.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
 ### Ownership and consumption
 - Ledger reads normalized `UsageRecord` projections rather than ad hoc log parsing
 - Usage page rollups are derived from the same record family
@@ -62,16 +80,22 @@ There is one usage schema. Compatibility shims may ingest older sources, but new
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
 ### Gap 4: Quota/plan only from errors
-
 - **Current state**
-  - `QuotaInfo` and `PlanInfo` are derived only from parsing Codex/Gemini (and similar) error messages (e.g. "5-hour message limit", "quota will reset after 8h44m7s").
-  - No proactive 5h/7d or plan display until a limit is hit and an error is returned.
+  - Some providers can only expose reset/plan hints after an error.
+  - For Gemini, the stale assumption that all quota data is local/estimated is no longer sufficient.
 - **Desired**
-  - Proactive 5h/7d (and plan where available) from platform APIs when configured.
-  - Error parsing retained as fallback for reset time and plan hints when API is unavailable or after a rate-limit error.
-- **Acceptance**
-  - User can see usage and reset countdown before hitting a limit; after a limit, we still show "Resets in X" from error parsing when available.
+  - Proactive usage/quota display from provider APIs or structured runtime output when configured and available.
+  - Error parsing remains a fallback for reset time, plan hints, and rate-limit recovery when stronger signals are unavailable.
+  - Gemini surfaces remain mode-aware: OAuth-backed quota and API-key/local-only estimates MUST stay labeled distinctly.
 
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+- **Acceptance**
+  - User can see usage and reset countdown before hitting a limit when strong or structured signals exist.
+  - After a limit, the app still surfaces `Resets in X` and the switch/fallback reason when available.
+  - The UI shows whether quota pressure came from authoritative, structured, heuristic, or local-only signals.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
 ### Gap 5: Alert threshold not configurable
 
 - **Current state**

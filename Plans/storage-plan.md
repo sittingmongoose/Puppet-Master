@@ -348,7 +348,6 @@ This addendum defines the persistence required for Source Control, GitHub Action
 ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md, PolicyRule:no_secrets_in_storage
 
 ### Required redb keys
-
 - `source_control.project_state.{project_id}` -> `{ active_subview, selected_repo_id, selected_worktree_id?, history_filter?, graph_filter?, graph_layout?, compare_target?, auto_fetch_interval_s, conflict_presentation }`
 - `github_actions.project_state.{project_id}` -> `{ active_subview, current_branch_ref?, pinned_workflow_ids[], refresh_interval_s, last_opened_run_id?, last_opened_job_id?, admin_scope_selection?, log_display_mode? }`
 - `docker_manager.project_state.{project_id}` -> `{ active_subview, selected_runtime, selected_context?, selected_compose_project?, selected_registry?, requested_auth_mode?, selected_namespace?, selected_repository?, tag_template?, push_policy?, last_validation_snapshot?, last_publish_result_id?, template_repo_id?, kubernetes_focus? }`
@@ -356,112 +355,26 @@ ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans
 
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/usage-feature.md
 
-### Naming and migration rules
+- `provider_accounts.project_policy.{project_id}.{provider_id}` -> `{ enabled, default_switch_mode, default_threshold, selection_mode, default_auth_surface_order[], manual_preferred_account_id?, role_policy_refs[], updated_at_utc }`
+- `provider_accounts.account.{project_id}.{provider_id}.{account_id}` -> `{ label, auth_surface, provider_identity?, credential_ref, enabled, priority, threshold_override?, switch_mode_override?, cooldown_until?, retry_budget?, configured_project_id?, allowed_roles?, disallowed_roles?, credential_state, configuration_state, availability_state, last_validated_at_utc? }`
+- `provider_accounts.run_snapshot.{run_id}.{provider_id}` -> `{ auth_surface_order[], eligible_account_ids[], policy_hash, snapshot_created_at_utc }`
+- `provider_accounts.health.{project_id}.{provider_id}.{account_id}` -> `{ last_usage_signal_at_utc?, usage_source_kind?, signal_confidence?, projected_remaining?, reset_at?, hard_failure_reason?, recent_switch_reason? }`
 
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, PolicyRule:no_secrets_in_storage
+### Naming and migration rules
 - `docker_manage_surface_state` is legacy naming and MUST migrate to `docker_manager.project_state.{project_id}`.
 - `requested_auth_mode` and `effective_*` snapshots remain separate fields.
+- Canonical auth/account routing names are `requested_account_policy`, `effective_account_id`, `effective_account_label?`, `effective_provider_identity?`, `effective_project_id?`, and `account_switch_reason?`.
+- `provider_identity` is provider-native metadata only and MUST NOT replace `account_id`.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+- `credential_ref` is the canonical non-secret handle for OS-stored credentials.
+- Secrets, API keys, bearer tokens, refresh tokens, and raw credential payloads MUST remain outside redb and seglog.
 - blocked-state payloads use canonical `allowed_action_ids[]`; `recovery_options[]` is not canonical project-state vocabulary.
+- account-scoped state uses the canonical names `credential_state`, `configuration_state`, and `availability_state`.
 
-ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
-
-#### 2.3.0 Thread checkpoint restoration contract
-
-- `thread_checkpoint.{thread_id}` stores the currently selected restore pointer for that thread, not the full restore history.
-- The full per-thread restore history is sourced from `restore_points.index_thread.{thread_id}` plus canonical restore-point records under `restore_points.point.{project_id}.{restore_point_id}`.
-- `restore_point.created` events MUST include `thread_id`, `anchor_message_id`, `anchor_seq`, `restore_point_id`, and `project_id` so thread checkpoint state can be rebuilt deterministically from seglog.
-- Checkpoint keys MUST store only pointers/cursors/IDs, not snapshot bodies.
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md#EventRecord
-
-#### Additions: Document bundle registry + annotation persistence
-
-Document-generation bundles must persist enough state to:
-- restore the Embedded Document Pane doc list + selection after restart
-- restore durable annotations and their lifecycle state
-- restore review gating (`all docs approved + no open annotations`)
-- support clean discard semantics for final review Reject
-
-ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/FinalGUISpec.md
-
-**Recommended redb placement:**
-- Store durable bundle state in `runs` and/or `checkpoints` namespaces as JSON blobs keyed by `bundle_id` / `run_id`.
-
-**Key patterns:**
-- `runs` -> `bundle.{bundle_id}` -> JSON `{ bundle_id, run_id, page_context, bundle_state, created_at, updated_at }`
-- `runs` -> `doc_registry.{bundle_id}` -> JSON `document_registry.v1`
-- `runs` -> `notes_index.{bundle_id}` -> JSON `{ annotation_ids: [note_id...], open_count, addressed_count, resolved_count }` (legacy key retained; user-facing term is annotation)
-- `runs` -> `note.{bundle_id}.{note_id}` -> JSON `note_record.v1`
-- `runs` -> `review_findings_summary.{bundle_id}.{review_run_id}` -> JSON `review_findings_summary.v1`
-- `checkpoints` -> `document_pane_state.{bundle_id}` -> JSON `document_pane_state.v1`
-- `checkpoints` -> `final_review_output.{bundle_id}` -> JSON `{ artifact_set_ref, created_at, status }`
-
-ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/assistant-chat-design.md
-
-**Schema notes (must align with workflow contracts):**
-- `document_registry.v1` fields: `{ bundle_id, docs[]: { doc_id, path, display_name, created_by, status, updated_at } }`.
-- `bundle_state.v1` fields: `{ bundle_id, run_id, page_context, state, selected_doc_id, final_review: { status, review_run_id?, findings_summary_ref?, gate_ready }, open_annotation_count, approved_doc_count, created_at, updated_at }`.
-- `document_pane_state.v1` fields: `{ bundle_id, selected_doc_id, selected_view, follow_active_doc, scroll_state, filter_state, history_selection }`.
-- `note_record.v1` remains the canonical durable annotation record and includes `anchor.text_position`, `anchor.text_quote`, `operation`, `intent_kind`, `operation_payload`, `source_surface`, `provenance`, `conflict_state`, and `staleness_state`.
-- Lifecycle remains `open -> addressed -> resolved`; question-vs-change-request inference still applies, but annotations may also carry explicit operation payloads.
-- Durable mutating annotations require either deterministic source mapping or a stable semantic anchor; otherwise only chat handoff is allowed.
-
-ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md
-
-#### Additions: Targeted revision persistence + event contract
-
-Targeted revision runs must persist enough state to support interruption + resume, deterministic replay, annotation-thread reply rendering, thread-scoped chat-handoff restoration, and final-review gating derived from annotation status.
-
-**Recommended redb placement:**
-- `runs` -> `revision_run.{bundle_id}.{revision_id}` -> JSON `{ bundle_id, revision_id, status, selected_doc_ids, selected_annotation_ids, requested_revision_capability, effective_revision_capability, validation_retry_count, safe_point_ref?, started_at, completed_at?, interrupted_at?, resumed_from_revision_id? }`
-- `runs` -> `note_reply_index.{bundle_id}.{note_id}` -> JSON `{ replies: [{ author, created_at, body, revision_id? }] }`
-- `checkpoints` -> `composer_prep_state.{thread_id}` -> JSON `{ thread_id, chips: [{ attachment_type, attachment_id, status, source_surface, doc_id?, bounded_summary, blocked_reason_code? }], updated_at }`
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/MiscPlan.md
-
-**`note_record.v1` minimum additions:**
-- `addressed_explanation?`
-- `last_revision_id?`
-- `last_reanchor_result? = position_match | quote_match | anchor_not_found`
-- `updated_anchor?`
-- `reopened_count`
-
-ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/Crosswalk.md
-
-**Required seglog events (minimum set):**
-- `bundle.revision_started`
-- `bundle.revision_completed`
-- `bundle.revision_interrupted`
-- `bundle.note_replied`
-- `bundle.selection_sent_to_chat`
-- `bundle.selection_forward_blocked`
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md
-
-**Persistence rules:**
-- The runtime, not model output, is authoritative for annotation status transitions.
-- Already validated revision outcomes remain persisted across interruption; unvalidated annotations remain `open`.
-- Pending composer chips store bounded provenance and attachment summaries only, never unbounded raw payloads.
-- Mandatory secret scrubbing applies before seglog/redb/index/blob persistence.
-- Cleanup must preserve safe-point and remediation lineage until the originating revision attempt reaches terminal resolution.
-
-ContractRef: ContractName:Plans/MiscPlan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
-
-
-#### Additions: Auto Retrieval + Context Lens persistence (Assistant chat)
-
-The Assistant chat context pipeline requires durable per-thread state for Auto Retrieval override and Context Lens overlays (mute/focus/subcompact) so resume/rewind remains consistent across restarts.
-
-**Recommended redb placement (add rows to the table above):**
-- `sessions` → `context_overlay.{thread_id}` → JSON `context_overlay_state.v1`
-
-**context_overlay_state.v1 (keys only; deterministic):**
-- `auto_retrieval_enabled: boolean` (default `true`)
-- `muted_message_ids: string[]`
-- `focused_message_ids: string[]`
-- `subcompacts: { subcompact_id: string, message_ids: string[], summary_text?: string, summary_blob_ref?: string, created_ts: string }[]`
-
-Rule: Any persisted overlay summaries and any indexed/log payloads MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (secrets stripped/redacted before persistence).
-ContractRef: ContractName:Plans/assistant-chat-design.md#17-context-truncation, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
+ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md#AuthState
 ### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints
 
 **Consumption model:** Each projector runs in a loop (or is triggered periodically):
@@ -831,15 +744,17 @@ Minimum fields:
 ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Orchestrator_Page.md
 
 ### Canonical records
-
 1. `attempt_record`
-   - fields include `scheduler_pass_id`, requested/effective persona snapshot refs, requested/effective model snapshot refs, requested/effective permission snapshot refs, `replan_generation`, `mutation_capable`, `safe_point_id?`, `provider_attempt_ref?`, remediation lineage refs, and terminal outcome fields
+   - fields include `scheduler_pass_id`, requested/effective persona snapshot refs, requested/effective model snapshot refs, requested/effective permission snapshot refs, `requested_auth_mode?`, `effective_auth_mode?`, `requested_account_policy?`, `effective_account_id?`, `effective_project_id?`, `account_switch_reason?`, `replan_generation`, `mutation_capable`, `safe_point_id?`, `provider_attempt_ref?`, remediation lineage refs, and terminal outcome fields
 2. `tier_runtime_record`
-   - fields include `run_id`, `tier_id`, current state, requested/effective persona/platform/model, latest progress markers, queue-analysis refs, and pointers to current attempt or blocked episode when active
+   - fields include `run_id`, `tier_id`, current state, requested/effective persona/platform/model, `requested_auth_mode?`, `effective_auth_mode?`, `effective_account_id?`, latest progress markers, queue-analysis refs, and pointers to current attempt or blocked episode when active
 3. `blocked_projection`
    - fields include `blocked_reason_code`, ordered `allowed_action_ids[]`, `preserved_local_work`, `requires_safe_point_restore?`, prerequisite metadata, `failure_class?`, `detail_ref?`, `attempt_id?`, and `thread_id?`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md#EventRecord
+
 4. `usage_record`
-   - fields include `run_kind`, `run_id`, `tier_id`, `attempt_id?`, `thread_id?`, `effective_platform`, `effective_model`, `input_tokens`, `output_tokens`, `total_tokens`, `estimated_cost?`, and usage timestamps suitable for rollups and ledger views
+   - fields include `run_kind`, `run_id`, `tier_id`, `attempt_id?`, `thread_id?`, `effective_platform`, `effective_model`, `effective_auth_mode?`, `effective_account_id?`, `provider_account_id?`, `usage_source_kind?`, `signal_confidence?`, `effective_project_id?`, `input_tokens`, `output_tokens`, `total_tokens`, `estimated_cost?`, and usage timestamps suitable for rollups and ledger views
 5. `evidence_record`
    - fields include `summary`, `summary_kind?`, evidence refs, and any parent-summary/handoff refs needed by completed-prose surfaces
 6. `thread_blocked_notice`
@@ -847,6 +762,7 @@ ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/u
 7. `wizard_runtime_state`
    - fields include `wizard_status`, `wizard_step`, `blocked_reason_code?`, `clarification_round_count`, `report_ref?`, `resume_url?`, `decomposition_degraded`, `degradation_reason?`, and `replan_generation?`
 
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Orchestrator_Page.md
 ### Counter rule
 - `attempt_count` is the total started attempts for the node in the run
 - `automatic_retry_count`, `prerequisite_resume_count`, `manual_resume_count`, and `remediation_retry_count` remain independent stored counters

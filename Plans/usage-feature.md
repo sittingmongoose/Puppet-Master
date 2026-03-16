@@ -147,24 +147,28 @@ Thread Usage content:
 - **Usage feature:** Use Admin API for 5h/7d or org windows when key is set; use stream-json usage events for per-run tokens and optional mid-stream context %. No SDK required for CLI-based runs.
 
 ### Gemini -- Direct-provider (local counters + estimated cost)
+- **Availability:** Gemini is a **Direct-provider** with one provider surface and mixed account pools. Supported auth surfaces include OAuth and API key; Google credential-based execution remains capability-gated where supported.
+- **What we show (authoritative):** One shared Gemini usage surface built from the canonical `UsageRecord` pipeline. It may combine provider runtime usage, provider quota APIs, provider usage APIs, provider error hints, and project rollups, but it MUST keep source/effective-mode labels visible.
+- **Mode-aware labeling:** OAuth-backed quota views may be labeled `Gemini quota` when provider semantics are authoritative. API-key/local-only views MUST use source-qualified wording such as `Gemini (estimated)` when authoritative quota data is unavailable.
 
-- **Availability:** Gemini is a **Direct-provider**. Puppet Master records local per-run usage events into `usage.jsonl` and can display **estimated** cost (estimate only).
-- **What we show (authoritative):** Local counters and ledger derived from `usage.jsonl` (e.g., 5h/7d rollups) plus per-run totals when available from provider responses.
-- **Optional external reference:** Provide an optional UI link/button to AI Studio "Usage & Limits" for account-level quota/limit visibility. Do **not** claim authoritative remaining quota in-app unless a supported API exists for the configured key/account.
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
+- **Account attribution:** Gemini usage records SHOULD expose `effective_account_id`, `effective_auth_mode`, `provider_account_id?`, `signal_confidence`, and `effective_project_id?`.
+- **Project context:** OAuth-backed Gemini usage may require configured/effective project context. That context is part of the effective runtime identity and MUST NOT be inferred from token presence alone.
+- **Naming:** Use `Gemini API key` / `Google API key` terminology. Do not hardcode `AI Studio key` as the canonical product boundary.
+- **Media:** Media generation follows the same requested/effective auth/account rules as normal Gemini usage rather than a separate key-only account system.
 
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/rewrite-tie-in-memo.md
 ### Summary table (augmentation sources)
+| Platform   | Primary augmentation | Auth / env | Notes |
+|-----------|----------------------|------------|-------|
+| **Cursor** | API (usage/limits/account only; not for model invocation) | `CURSOR_API_KEY` / app auth | OAuth + CLI for running models; Cursor API augmentation is disabled until Spec Lock pins an endpoint contract. |
+| **Codex** | CLI stream + provider data | CLI login / `CODEX_API_KEY` | Per-run usage from CLI JSON/JSONL + optional provider quota data. |
+| **Copilot** | CLI + REST metrics API | `GITHUB_TOKEN` / `GH_TOKEN` | Per-run usage from CLI; org-level from `/orgs/{org}/copilot/metrics`. |
+| **Claude** | Admin API + stream-json usage | `ANTHROPIC_API_KEY` | Org usage + plan; per-run tokens from stream. |
+| **Gemini** | Shared usage pipeline with auth/account attribution; provider runtime usage, quota APIs, usage APIs, error hints, and project rollups as available | Gemini OAuth accounts and/or Gemini API-key accounts; provider/account policy selects the effective auth surface | One provider surface; OAuth and API-key buckets are distinct and MUST remain source-labeled. |
 
-| Platform   | Primary augmentation              | Auth / env                    | Notes                                                                 |
-|-----------|------------------------------------|-------------------------------|-----------------------------------------------------------------------|
-| **Cursor**| API (usage/limits/account only; not for model invocation) | `CURSOR_API_KEY` / app auth  | OAuth + CLI for running models; Cursor API augmentation is disabled until Spec Lock pins an endpoint contract. |
-| **Codex** | CLI stream + provider data         | CLI login / `CODEX_API_KEY`   | Per-run usage from CLI JSON/JSONL + optional provider quota data.      |
-| **Copilot**| CLI + REST metrics API            | `GITHUB_TOKEN` / `GH_TOKEN`  | Per-run usage from CLI; org-level from `/orgs/{org}/copilot/metrics`.  |
-| **Claude**| Admin API + stream-json usage     | `ANTHROPIC_API_KEY`          | Org usage + plan; per-run tokens from stream.                          |
-| **Gemini**| Local counters + estimated cost (no authoritative quota) | Google Gemini API key (see Settings) | Optional external link to AI Studio "Usage & Limits"; do not claim remaining quota in-app without a supported API. |
-
-**Implementation order:** State-file aggregation first (works for all platforms). Then add augmentation per platform: Claude (Admin API + stream) and error parsing (Codex) is already documented; next wire Cursor API, Codex CLI usage enrichment, Copilot CLI + metrics API, and Gemini estimated-cost display (plus optional AI Studio link).
-
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 ## Data and Backend (conceptual)
 ### Cost_usage runtime artifact and Show in Ledger / Show in Usage
 
@@ -198,11 +202,17 @@ For implementers: the flow by which usage is collected and stored can be referen
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Provider_OpenCode.md, PolicyRule:Decision_Policy.md§2
 
 ### Backend implementation notes
+- **Data layer:** Reuse and extend existing usage/plan-detection logic. Expose a clear current-usage contract per platform that the GUI can poll or subscribe to.
+- **Primary input:** aggregate from `usage.jsonl` / canonical usage projections.
+- **Secondary input:** platform APIs and structured provider/runtime outputs when configured and supported.
 
-- **Data layer:** Reuse and extend existing usage/plan-detection logic. Expose a clear "current usage" contract (per platform) that the GUI can poll or subscribe to (e.g. 5h used/limit, 7d used/limit, plan label). **Primary input:** aggregate from `usage.jsonl` (and optional `summary.json`); secondary: platform APIs where configured.
-- **Sources:** Prefer **state JSON/JSONL first** (usage.jsonl, summary.json, active-subagents.json); then **per-platform API/CLI** (see "Per-platform usage data (API / CLI)"): Cursor API (usage/account only -- we do not use it for model invocation; OAuth + CLI for that), Codex CLI stream + provider data, Copilot CLI + GitHub Copilot metrics API, Claude Admin API + stream-json usage, Gemini direct-provider usage (local counters + estimated cost). Document which platforms support live vs after-run stats. AGENTS.md "Cursor | No API available" refers to model invocation; Cursor has a separate API for usage/limits that we may use to augment the Usage view.
-- **Persistence:** Current `usage.jsonl` (and any future redb) remains the source for event-level data; aggregated 5h/7d may be derived or cached from the same data or from platform APIs.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md
 
+- **Gemini source model:** Prefer the shared `UsageRecord` pipeline and carry explicit source attribution instead of hardcoding Gemini to local counters only.
+- **Gemini signal weighting:** strong provider/account telemetry outranks structured runtime output; structured output outranks heuristics; heuristics outrank local-only counters.
+- **Persistence:** event-level data and rollups remain canonical storage concerns; account-health and quota-pressure updates must feed the same control loop used by multi-account routing.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md§2
 ## GUI Placement Options
 The GUI placement model is now fixed.
 
@@ -256,18 +266,36 @@ Required fields:
 - `thread_id?`
 - `effective_platform`
 - `effective_model`
+- `effective_auth_mode?`
+- `effective_account_id?`
 - `input_tokens`
 - `output_tokens`
 - `total_tokens`
 - `estimated_cost?`
 - timestamps sufficient for rollups and ordering
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+
 Optional but recommended attribution fields:
 - `provider_account_id?`
 - `usage_source_kind`
+- `signal_confidence`
+- `effective_project_id?`
 - `currency?`
 - `prompt_cache_hit?` / similar optimization counters when available
 
+Ownership and consumption:
+- Ledger reads normalized `UsageRecord` projections rather than ad hoc log parsing
+- Usage page rollups are derived from the same record family
+- Run Graph and Orchestrator aggregate by `tier_id` and `attempt_id?` from the same contract
+- Interview, assistant, builder, and orchestrator runs share the same schema; `run_kind` distinguishes workflow families without creating parallel usage systems
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md
+
+Rule:
+- There is one usage schema. Compatibility shims may ingest older sources, but new runtime surfaces MUST NOT define alternate token/model/auth/account attribution records.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
 ### Ownership and consumption
 - Ledger reads normalized `UsageRecord` projections rather than ad hoc log parsing
 - Usage page rollups are derived from the same record family
@@ -279,16 +307,22 @@ There is one usage schema. Compatibility shims may ingest older sources, but new
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
 ### Gap 4: Quota/plan only from errors
-
 - **Current state**
-  - `QuotaInfo` and `PlanInfo` are derived only from parsing Codex/Gemini (and similar) error messages (e.g. "5-hour message limit", "quota will reset after 8h44m7s").
-  - No proactive 5h/7d or plan display until a limit is hit and an error is returned.
+  - Some providers can only expose reset/plan hints after an error.
+  - For Gemini, the stale assumption that all quota data is local/estimated is no longer sufficient.
 - **Desired**
-  - Proactive 5h/7d (and plan where available) from platform APIs when configured.
-  - Error parsing retained as fallback for reset time and plan hints when API is unavailable or after a rate-limit error.
-- **Acceptance**
-  - User can see usage and reset countdown before hitting a limit; after a limit, we still show "Resets in X" from error parsing when available.
+  - Proactive usage/quota display from provider APIs or structured runtime output when configured and available.
+  - Error parsing remains a fallback for reset time, plan hints, and rate-limit recovery when stronger signals are unavailable.
+  - Gemini surfaces remain mode-aware: OAuth-backed quota and API-key/local-only estimates MUST stay labeled distinctly.
 
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+- **Acceptance**
+  - User can see usage and reset countdown before hitting a limit when strong or structured signals exist.
+  - After a limit, the app still surfaces `Resets in X` and the switch/fallback reason when available.
+  - The UI shows whether quota pressure came from authoritative, structured, heuristic, or local-only signals.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
 ### Gap 5: Alert threshold not configurable
 
 - **Current state**

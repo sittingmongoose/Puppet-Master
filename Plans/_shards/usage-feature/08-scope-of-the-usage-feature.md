@@ -70,21 +70,25 @@ Thread Usage content:
 - **Usage feature:** Use Admin API for 5h/7d or org windows when key is set; use stream-json usage events for per-run tokens and optional mid-stream context %. No SDK required for CLI-based runs.
 
 ### Gemini -- Direct-provider (local counters + estimated cost)
+- **Availability:** Gemini is a **Direct-provider** with one provider surface and mixed account pools. Supported auth surfaces include OAuth and API key; Google credential-based execution remains capability-gated where supported.
+- **What we show (authoritative):** One shared Gemini usage surface built from the canonical `UsageRecord` pipeline. It may combine provider runtime usage, provider quota APIs, provider usage APIs, provider error hints, and project rollups, but it MUST keep source/effective-mode labels visible.
+- **Mode-aware labeling:** OAuth-backed quota views may be labeled `Gemini quota` when provider semantics are authoritative. API-key/local-only views MUST use source-qualified wording such as `Gemini (estimated)` when authoritative quota data is unavailable.
 
-- **Availability:** Gemini is a **Direct-provider**. Puppet Master records local per-run usage events into `usage.jsonl` and can display **estimated** cost (estimate only).
-- **What we show (authoritative):** Local counters and ledger derived from `usage.jsonl` (e.g., 5h/7d rollups) plus per-run totals when available from provider responses.
-- **Optional external reference:** Provide an optional UI link/button to AI Studio "Usage & Limits" for account-level quota/limit visibility. Do **not** claim authoritative remaining quota in-app unless a supported API exists for the configured key/account.
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
+- **Account attribution:** Gemini usage records SHOULD expose `effective_account_id`, `effective_auth_mode`, `provider_account_id?`, `signal_confidence`, and `effective_project_id?`.
+- **Project context:** OAuth-backed Gemini usage may require configured/effective project context. That context is part of the effective runtime identity and MUST NOT be inferred from token presence alone.
+- **Naming:** Use `Gemini API key` / `Google API key` terminology. Do not hardcode `AI Studio key` as the canonical product boundary.
+- **Media:** Media generation follows the same requested/effective auth/account rules as normal Gemini usage rather than a separate key-only account system.
 
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/rewrite-tie-in-memo.md
 ### Summary table (augmentation sources)
+| Platform   | Primary augmentation | Auth / env | Notes |
+|-----------|----------------------|------------|-------|
+| **Cursor** | API (usage/limits/account only; not for model invocation) | `CURSOR_API_KEY` / app auth | OAuth + CLI for running models; Cursor API augmentation is disabled until Spec Lock pins an endpoint contract. |
+| **Codex** | CLI stream + provider data | CLI login / `CODEX_API_KEY` | Per-run usage from CLI JSON/JSONL + optional provider quota data. |
+| **Copilot** | CLI + REST metrics API | `GITHUB_TOKEN` / `GH_TOKEN` | Per-run usage from CLI; org-level from `/orgs/{org}/copilot/metrics`. |
+| **Claude** | Admin API + stream-json usage | `ANTHROPIC_API_KEY` | Org usage + plan; per-run tokens from stream. |
+| **Gemini** | Shared usage pipeline with auth/account attribution; provider runtime usage, quota APIs, usage APIs, error hints, and project rollups as available | Gemini OAuth accounts and/or Gemini API-key accounts; provider/account policy selects the effective auth surface | One provider surface; OAuth and API-key buckets are distinct and MUST remain source-labeled. |
 
-| Platform   | Primary augmentation              | Auth / env                    | Notes                                                                 |
-|-----------|------------------------------------|-------------------------------|-----------------------------------------------------------------------|
-| **Cursor**| API (usage/limits/account only; not for model invocation) | `CURSOR_API_KEY` / app auth  | OAuth + CLI for running models; Cursor API augmentation is disabled until Spec Lock pins an endpoint contract. |
-| **Codex** | CLI stream + provider data         | CLI login / `CODEX_API_KEY`   | Per-run usage from CLI JSON/JSONL + optional provider quota data.      |
-| **Copilot**| CLI + REST metrics API            | `GITHUB_TOKEN` / `GH_TOKEN`  | Per-run usage from CLI; org-level from `/orgs/{org}/copilot/metrics`.  |
-| **Claude**| Admin API + stream-json usage     | `ANTHROPIC_API_KEY`          | Org usage + plan; per-run tokens from stream.                          |
-| **Gemini**| Local counters + estimated cost (no authoritative quota) | Google Gemini API key (see Settings) | Optional external link to AI Studio "Usage & Limits"; do not claim remaining quota in-app without a supported API. |
-
-**Implementation order:** State-file aggregation first (works for all platforms). Then add augmentation per platform: Claude (Admin API + stream) and error parsing (Codex) is already documented; next wire Cursor API, Codex CLI usage enrichment, Copilot CLI + metrics API, and Gemini estimated-cost display (plus optional AI Studio link).
-
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md

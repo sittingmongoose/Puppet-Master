@@ -76,23 +76,25 @@ ContractRef: ContractName:Plans/Glossary.md, PolicyRule:Decision_Policy.md§1
 ---
 
 ## Direct-provider companion requirements
-
 This document primarily defines bridged transports. For decision completeness, direct-provider integrations MUST follow this companion matrix:
 
-| Provider | Transport class | Required auth paths | Notes |
+| Provider | Transport class | Required auth paths | Companion rules |
 |---|---|---|---|
-| Codex | `DirectApi` | browser OAuth, headless device-code, API key | No SDK install flow in Puppet Master |
-| GitHub Copilot | `DirectApi` | GitHub device flow (`/login/device/code` + `/login/oauth/access_token`) | Polling + auth state updates required |
-| Gemini/Google | `DirectApi` | OAuth, API key, Google credential-based mode | Not a CLI subprocess path for auth/runtime |
+| Codex | `DirectApi` | browser OAuth, headless device-code, API key | No SDK install flow in Puppet Master. Requested/effective auth identity still follows the shared runtime snapshot model. |
+| GitHub Copilot | `DirectApi` | GitHub device flow (`/login/device/code` + `/login/oauth/access_token`) | Polling + auth state updates required. GitHub auth realms remain isolated where specified elsewhere. |
+| Gemini/Google | `DirectApi` | OAuth, API key, Google credential-based mode | One provider with mixed account pools. Default `requested_auth_mode` is `auto` with OAuth-first provider preference. Explicit `oauth` and explicit `api_key` requests MUST NOT silently cross-fallback. Media follows the same requested/effective auth/account rules as normal Gemini usage. Not a CLI subprocess path for auth/runtime. |
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md
 
 Direct-provider integrations MUST emit the same normalized provider stream schema as bridged transports.
 
-Direct-provider integrations MUST NOT rely on per-platform experimental feature switches in Puppet Master (GUI, config keys, or provider invocation) — experimental CLI flags and settings (for example Copilot `--experimental` or legacy Gemini experimental settings) are treated as legacy implementation details and MUST NOT be surfaced as experimental toggles in the Slint rewrite.
+Direct-provider integrations MUST expose the provider capability data needed for routing, usage, and recovery, including `supports_multi_account`, `switch_boundary`, `quota_signal_sources`, `quota_signal_confidence`, `auth_recovery_methods`, `supports_threshold_switch`, `supports_rate_limit_detection`, `supports_reset_countdown`, `supports_manual_set_active`, `supports_cooldown`, `supports_retry_budget`, and `supports_role_scoped_account_pools` where applicable.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/newtools.md, ContractName:Plans/Architecture_Invariants.md#INV-009, ContractName:Plans/rewrite-tie-in-memo.md
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/storage-plan.md
 
----
+Direct-provider integrations MUST NOT rely on per-platform experimental feature switches in Puppet Master (GUI, config keys, or provider invocation). Experimental CLI flags and legacy provider-specific settings are treated as implementation detail and MUST NOT be surfaced as experimental toggles in the Slint rewrite.
 
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/Architecture_Invariants.md#INV-009, ContractName:Plans/FinalGUISpec.md
 ## Provider facade
 
 ### Contract shape (facade)

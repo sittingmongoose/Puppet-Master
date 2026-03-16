@@ -171,7 +171,6 @@ Project management and switching. Shows project list with status indicators, cur
 - Tooltip on hover shows specific health details
 
 ### 7.4 Settings (Unified)
-
 #### 7.4.B Source Control, GitHub Actions, and Docker Manager settings normalization
 
 The unified Settings surface MUST expose configuration and persistence controls for the three operational side panels without redefining their runtime contracts.
@@ -191,6 +190,84 @@ State ownership rules:
 
 ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md
 
+#### 7.4.R Retrieval & Search (Memory tab; project-scoped; complements Context Injection)
+
+In addition to the three required Context Injection toggles (**Parent Summary**, **Scoped `AGENTS.md`**, **Attempt Journal**) defined by `Plans/Contracts_V0.md#ContextInjectionToggles`, the Memory tab MUST include a **Retrieval & Search** configuration card that governs **project-scoped auto-retrieval (RAG)** and **agent-callable search** across chat history, workspace code, and project logs.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#10-chat-history-search, ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md
+
+**Group:** Settings | **Location:** Primary content
+
+This is a **heavily redesigned** unified settings page that merges four previously separate views. It uses a tabbed interface.
+
+**Tabs:**
+
+| Tab | Content | Source |
+|-----|---------|--------|
+| **General** | Log level, auto-scroll, show timestamps, minimize to tray, start on boot, retention days, intensive logging, **Interaction Mode (Expert/ELI5)**, UI scale, max editor tabs, run-complete notification toggle, max concurrent runs per thread, sound effects toggle, max terminal instances, max browser tabs, hot-reload debounce, theme management, and per-platform concurrency limits. | Old "Settings" view + newfeatures.md |
+| **Tiers** | Phase/task/subtask tier configuration; per-tier platform, model, reasoning_effort, plan_mode, ask_mode, output_format. | Old "Config" Tiers tab |
+| **Branching** | Enable Git, Auto PR, branch strategy, Use worktrees, Parallel execution, granularity, Git info display, and Orchestrator concurrency overrides. | Old "Config" Branching tab |
+| **Verification** | Verification checks and screenshot toggles. | Old "Config" Verification tab |
+| **Memory** | Multi-level memory with progress/agents/PRD file paths, Context Injection toggles, and Retrieval & Search controls. | Old "Config" Memory tab |
+| **Budgets** | Per-platform token budgets. | Old "Config" Budgets tab |
+| **Advanced** | FileSafe Guards, MCP Configuration, Personas, Containers & Registry, CI / GitHub Actions, sub-agent toggles, cleanup config, and the explicit removal of legacy per-platform experimental toggles. | Old "Config" Advanced tab + newtools.md + FileSafe.md + MiscPlan.md + GitHub_API_Auth_and_Flows.md + Personas.md |
+| **Permissions** | Dedicated permissions management screen with scope selector, wildcard default, per-tool override table, presets, allowlists, doom_loop policy, and per-Persona permission profile editor. | Plans/Permissions_System.md + Plans/Tools.md |
+| **LSP** | Language Server Protocol settings, built-in/custom server controls, env/init options, and project override disclosure. | Plans/LSPSupport.md |
+| **Interview** | Interview-specific config, subagent toggles, Multi-Pass Review settings, question bounds, architecture confirmation, vision provider, and Interview concurrency overrides. | Old "Config" Interview tab + interview-subagent-integration.md |
+| **Media** | Media generation configuration. Capability toggles and model selectors remain here, but eligibility follows the canonical Gemini auth/account model. Cursor image generation remains enabled without Gemini credentials; non-Cursor media requires an eligible Gemini account under the same requested/effective auth/account rules as standard Gemini usage. | Plans/Media_Generation_and_Capabilities.md |
+| **Authentication** | Per-provider auth status with real-time auth state chips, login/logout/re-auth buttons, auth method indicators, auth URLs, Git info, and auth realm split for `github_api` / `copilot_github`. Gemini appears as **one provider** with grouped `OAuth` and `API key` account lists, `requested_auth_mode = auto | oauth | api_key`, provider summary fields for current effective account/current effective auth mode/recent switch reason/cooldown summary, and per-account rows for label, auth-surface badge, provider identity metadata, configured project id, auth/configuration/availability state, priority integer, threshold, cooldown, retry budget, and manual set-active override. The API-key group may show a `Get API key` link, but copy MUST NOT imply AI Studio is the only source of valid keys. OAuth and API key are different quota/plan paths and MUST be disclosed as such. | Old "Login" view + Plans/Multi-Account.md + Plans/rewrite-tie-in-memo.md |
+| **Health** | System health checks with platform filtering, status (PASS/FAIL/WARN/SKIP), fix suggestions, install/uninstall actions, direct-provider auth/connectivity checks, platform versions, manual path override for Cursor/Claude, worktree management, storage/cleanup actions, and multi-account health visibility. Gemini health includes grouped OAuth/API-key accounts, current effective account, current effective auth mode, auth/configuration/availability state, cooldown/auth freshness, and validation-required / needs-configuration disclosure where applicable. | Old "Doctor" view + WorktreeGitImprovement.md + MiscPlan.md + Plans/Multi-Account.md |
+| **Rules & Commands** | Application rules, project rules, User Commands management, dry-run preview, shortcut binding, and schema validation. | agent-rules-context.md + feature-list.md + Commands_System.md |
+| **Shortcuts** | Full keyboard shortcut table with change/reset/reset-all and export/import. | MiscPlan.md |
+| **Skills** | Discover/manage `SKILL.md` files, permission controls, preview, and refresh. | Plans/Skills_System.md |
+| **Plugins** | Manage installed plugins, enable/disable, reload, and plugin log viewer. | Plans/Plugins_System.md |
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/rewrite-tie-in-memo.md
+
+Additional Retrieval & Search controls within the Memory tab card:
+- **Project chat history** (Tantivy chat index; `chatsearch`)
+- **Project workspace code** (Tantivy code index + LSP + ripgrep; `codesearch`)
+- **Project logs** (Tantivy logs index; `logsearch`/`logread`)
+
+**Source allowlist toggles (per project):**
+- `retrieval.allow_chat_history` (default **ON**)
+- `retrieval.allow_code` (default **ON**)
+- `retrieval.allow_logs` (default **ON**)
+
+**Auto-retrieval mode per source (per project):**
+- Enum: `off | auto | always`
+- Keys: `retrieval.mode.chat_history`, `retrieval.mode.code`, `retrieval.mode.logs`
+- Default: **auto** for all three sources.
+- Note: `auto` uses deterministic trigger heuristics and budgets (see `Plans/assistant-chat-design.md` §10.1).
+
+**Budgets / caps (per project):**
+- `retrieval.max_queries_per_turn.<source>` (default: `2`)
+- `retrieval.max_hits_per_query.<source>` (default: `5`)
+- `retrieval.max_injected_bytes_per_turn.<source>` (default: `24_000`)
+- `retrieval.max_injected_bytes_per_turn.total` (default: `48_000`)
+- `retrieval.logs.max_lookback_days` (default: `7`)
+
+**Secrets policy (mandatory; non-configurable):**
+- Puppet Master MUST enforce `PolicyRule:no_secrets_in_storage` / `INV-002`: secrets (tokens/credentials/private keys) are stripped/redacted before any content is persisted to seglog/redb/Tantivy/blob files.
+- This mandatory scrub applies regardless of Retrieval settings and cannot be disabled.
+
+**Additional heuristic redaction (optional; default OFF):**
+- Toggle: `retrieval.redaction.secretish_enabled` (default **OFF**)
+- When enabled, apply an additional aggressive "secret-ish" redaction pass (on top of the mandatory scrub) to:
+  - log index summaries/snippets
+  - retrieved-context injection snippets (logs)
+  - optional code snippets displayed in retrieval blocks
+- UI copy must warn: "Heuristic redaction is best-effort and may hide useful details; it does not replace the mandatory secrets policy."
+
+**Thread-local override (UI):**
+- The chat header/footer includes an **Auto Retrieval** On/Off chip per thread (`Plans/assistant-chat-design.md` §12.1). This override is stored per thread and does not change project defaults.
+- The chip animates while retrieval is in-flight and links to the latest retrieval audit entry (§13).
+
+**Permissions interplay (required):**
+- Retrieval settings do not bypass Permissions: tool permissions still apply (`chatsearch`, `codesearch`, `logsearch`, `logread`, `webfetch`, `websearch`, `repo.import`).
+- If a source is allowed in Retrieval settings but the corresponding tool is denied by Permissions, that source is effectively disabled for the run and the UI must show the disabled reason consistent with other capability/permission UI.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md#10-chat-history-search, ContractName:Plans/assistant-chat-design.md#17-context-truncation, ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
 ### 7.4A LSP settings and override semantics
 
 The unified Settings surface exposes the canonical LSP configuration without redefining backend policy.
@@ -210,89 +287,6 @@ Required visible defaults:
 - `workspaceFolders` cap = 10 active roots
 
 ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md
-
-#### 7.4.R Retrieval & Search (Memory tab; project-scoped; complements Context Injection)
-
-In addition to the three required Context Injection toggles (**Parent Summary**, **Scoped `AGENTS.md`**, **Attempt Journal**) defined by `Plans/Contracts_V0.md#ContextInjectionToggles`, the Memory tab MUST include a **Retrieval & Search** configuration card that governs **project-scoped auto-retrieval (RAG)** and **agent-callable search** across:
-
-- **Project chat history** (Tantivy chat index; `chatsearch`)
-- **Project workspace code** (Tantivy code index + LSP + ripgrep; `codesearch`)
-- **Project logs** (Tantivy logs index; `logsearch`/`logread`)
-
-**Source allowlist toggles (per project):**
-- `retrieval.allow_chat_history` (default **ON**)
-- `retrieval.allow_code` (default **ON**)
-- `retrieval.allow_logs` (default **ON**)
-
-**Auto-retrieval mode per source (per project):**
-- Enum: `off | auto | always`
-- Keys: `retrieval.mode.chat_history`, `retrieval.mode.code`, `retrieval.mode.logs`
-- Default: **auto** for all three sources.
-- Note: “auto” uses deterministic trigger heuristics and budgets (see Plans/assistant-chat-design.md §10.1).
-
-**Budgets / caps (per project):**
-- `retrieval.max_queries_per_turn.<source>` (default: `2`)
-- `retrieval.max_hits_per_query.<source>` (default: `5`)
-- `retrieval.max_injected_bytes_per_turn.<source>` (default: `24_000`)
-- `retrieval.max_injected_bytes_per_turn.total` (default: `48_000`)
-- `retrieval.logs.max_lookback_days` (default: `7`)
-
-**Secrets policy (mandatory; non-configurable):**
-- Puppet Master MUST enforce PolicyRule:no_secrets_in_storage / INV-002: secrets (tokens/credentials/private keys) are stripped/redacted before any content is persisted to seglog/redb/Tantivy/blob files.
-- This mandatory scrub applies regardless of Retrieval settings and cannot be disabled.
-
-**Additional heuristic redaction (optional; default OFF):**
-- Toggle: `retrieval.redaction.secretish_enabled` (default **OFF**)
-- When enabled, apply an additional aggressive “secret-ish” redaction pass (on top of the mandatory scrub) to:
-  - log index summaries/snippets
-  - retrieved-context injection snippets (logs)
-  - (optional) code snippets displayed in retrieval blocks
-- UI copy must warn: “Heuristic redaction is best-effort and may hide useful details; it does not replace the mandatory secrets policy.”
-
-**Thread-local override (UI):**
-- The chat header/footer includes an **Auto Retrieval** On/Off chip per thread (Plans/assistant-chat-design.md §12.1). This override is stored per thread and does not change project defaults.
-- The chip animates while retrieval is in-flight and links to the latest retrieval audit entry (§13).
-
-**Permissions interplay (required):**
-- Retrieval settings do not bypass Permissions: tool permissions still apply (`chatsearch`, `codesearch`, `logsearch`, `logread`, `webfetch`, `websearch`, `repo.import`).
-- If a source is allowed in Retrieval settings but the corresponding tool is denied by Permissions, that source is effectively disabled for the run and the UI must show the disabled reason (consistent with other capability/permission UI).
-
-ContractRef: ContractName:Plans/assistant-chat-design.md#10-chat-history-search, ContractName:Plans/assistant-chat-design.md#17-context-truncation, ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
-**Group:** Settings | **Location:** Primary content
-
-This is a **heavily redesigned** unified settings page that merges four previously separate views. It uses a tabbed interface.
-
-**Tabs:**
-
-| Tab | Content | Source |
-|-----|---------|--------|
-| **General** | Log level, auto-scroll, show timestamps, minimize to tray, start on boot, retention days, intensive logging, **Interaction Mode (Expert/ELI5)** (app-level copy selector; default ELI5/ON), UI scale (0.75-1.5; Slint native scale factor, no per-token manual scaling), max editor tabs (LRU cap, default 20), run-complete notification toggle, max concurrent runs per thread (default 10), **sound effects** toggle (default off; see §10.13), max terminal instances (default 12, range 4-20), max browser tabs (default 8, range 2-12), hot-reload debounce (default 500ms, range 100-5000ms), **theme management** section (theme selector dropdown, "Open themes folder", "Create new theme", "Import theme", "Export theme" -- see §6.6), **Per-platform concurrency limits** (see §7.4.7) | Old "Settings" view + newfeatures.md |
-| **Tiers** | Phase/task/subtask tier configuration; per-tier: platform (**dropdown**), model (**dropdown**), reasoning_effort, plan_mode, ask_mode, output_format | Old "Config" Tiers tab |
-| **Branching** | **Enable Git** toggle (bound to `orchestrator.enable_git`; tooltip: "Enable git branch creation, commits, and PR creation during runs"); **Auto PR** toggle (bound to `branching.auto_pr`); **Branch strategy** dropdown: MainOnly / Feature / Release (bound to `branching.strategy`); **Use worktrees** toggle; **Parallel execution** toggle (note: "Parallel subtasks use separate git worktrees"); **Granularity** dropdown or label mapped to BranchStrategy (per_phase / per_task / per_subtask); Git info display (user, email, remote, branch -- resolved for active project, not CWD); **Orchestrator concurrency overrides** (collapsible, per-platform, see §7.4.7) | Old "Config" Branching tab |
-| **Verification** | Verification checks, screenshot toggles | Old "Config" Verification tab |
-| **Memory** | Multi-level memory with progress/agents/PRD file paths; **Context Injection** toggles and injected-context breakdown | Old "Config" Memory tab |
-| **Budgets** | Per-platform token budgets | Old "Config" Budgets tab |
-| **Advanced** | **FileSafe Guards** (collapsible card): three independent toggles -- "Block destructive commands" (on/off), "Restrict writes to plan" (on/off), "Block sensitive files" (on/off); approved commands list (scrollable, per-row remove, optional manual add); override toggle with warning styling. **MCP Configuration** (collapsible card): per-platform MCP toggles for **all supported providers** (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini), MCP server list (add/edit/remove servers with name/command/args/env fields), "Test connection" button per server, Context7 API key input (password-style), web search provider selection and API key. **Personas** (collapsible card): list, create, edit, delete Personas (project-local vs global); schema validation on save; permission profile and skill reference editing; see `Plans/Personas.md` §4 (canonical SSOT). **Containers & Registry** (collapsible card, see §7.4.8): Docker runtime/compose defaults, DockerHub namespace/repo/tag defaults, auth mode and push policy. **CI / GitHub Actions** (collapsible card, see §7.4.9): workflow template selection, trigger/matrix controls, required-secrets checklist, generate/preview/apply actions. **Other:** Sub-agent toggles and cleanup config (clean untracked before run, clean ignored files, clear agent-output dir, evidence retention days); the legacy Iced-era "Experimental features" subsection with per-platform "Enable Codex/Gemini/Copilot Experimental" toggles is removed in the Slint rewrite and MUST NOT be implemented. | Old "Config" Advanced tab + newtools.md + FileSafe.md + MiscPlan.md + GitHub_API_Auth_and_Flows.md + Personas.md |
-| **Permissions** | Dedicated permissions management screen (see §7.4.10): scope selector (Global/Project), global wildcard default, per-tool override table (Allow/Ask/Deny per row with expand for granular rules), presets (Read-only, Plan mode, Full), external directory allowlist manager, doom_loop policy config, per-Persona permission profile editor. Canonical SSOT: `Plans/Permissions_System.md` §10. | Plans/Permissions_System.md + Plans/Tools.md |
-| **LSP** | **Language Server Protocol (MVP)** (see §7.4.2): LSP is required for desktop release. Global "Disable automatic LSP server downloads" toggle; built-in servers list with per-server enable/disable (all on by default); per-server env vars and initialization options; custom LSP servers (add/edit/remove: command, extensions, env, initialization). Stored in app config (redb); project overrides optional. | Plans/LSPSupport.md |
-| **Interview** | Interview-specific config; enable_phase_subagents, enable_research_subagents, enable_validation_subagents, enable_document_subagents; **Multi-Pass Review:** toggle on/off (default off), number of review passes (1-5 dropdown, default 2), max review subagents (1-10, default 3), show warning label when enabled ("Increases cost and time"); min/max questions (spinners), architecture confirmation toggle, vision provider dropdown; **Interview concurrency overrides** (collapsible, per-platform, see §7.4.7) | Old "Config" Interview tab + interview-subagent-integration.md |
-| **Media** | Media generation configuration (see §7.4.15). Four capability toggles (Image Gen, Video Gen, TTS, Music Gen) each with model dropdown and description panel. Disabled-state rule: toggles greyed out when the required API key is missing — except Image Gen in Cursor chats, which remains enabled without a key. Canonical contract details (tool IDs, disabled reasons, request/response shapes) live in `Plans/Media_Generation_and_Capabilities.md` (SSOT); this tab provides the settings surface only. | Plans/Media_Generation_and_Capabilities.md |
-| **Authentication** | Per-provider auth status (Cursor, Codex, Claude, Gemini, Copilot, OpenCode, GitHub) with **real-time auth state** chips (`LoggedOut`, `LoggingIn`, `LoggedIn`, `LoggingOut`, `AuthExpired`, `AuthFailed`); login/logout/re-auth buttons; auth method indicators; auth URLs (selectable/copyable); Git info (user, email, remote, branch); **auth realm split:** show separate entries for `github_api` and `copilot_github` (SSOT: `Plans/Contracts_V0.md` `AuthRealm`); **multi-account visibility:** active account, account count, cooldown/rate-limit badge, and quick switch/manage entry. **Gemini Provider section:** Google Gemini API key field (password-style text input with show/hide toggle); clickable **[Get API key](https://aistudio.google.com/app/api-keys)** link next to the field; note near model dropdown: *"Usage limits vary by model/tier."*; informational sentence: *"Linking an API enables Image Generation as well."* See `Plans/Media_Generation_and_Capabilities.md` §2.4 for backend routing rules. | Old "Login" view |
-| **Health** | System health checks with platform filtering; check categories (CLI Tools, Git, Runtimes, Browser Tools, Capabilities, Project Setup); check status (PASS/FAIL/WARN/SKIP); fix suggestions with dry-run; **explicit Install/Uninstall actions** (no automatic install behavior) with **real-time install state** for Cursor CLI, Claude CLI, and Playwright browser runtime (`Not Installed`, `Installing`, `Installed`, `Uninstalling`, `Failed`); Codex/Copilot/Gemini rows show direct-provider auth/connectivity status (no install buttons); platform version display (CLI version per detected platform); **Cursor/Claude manual path override:** `Use manual path` checkbox + native file picker + validate action (Cursor/Claude only); **multi-account health visibility:** per-provider active account + account count + cooldown/auth freshness; **Worktree management:** worktree list (path, branch, status, age columns), "Recover orphaned worktrees" button, worktree status indicators (active/stale/orphaned); **Storage & Cleanup:** DB size, cache size, evidence log count; evidence retention days input; "Clean workspace now" button (confirm modal with preview of files to delete per MiscPlan.md); storage maintenance actions | Old "Doctor" view + WorktreeGitImprovement.md + MiscPlan.md |
-| **Rules & Commands** | Application rules (list or text area, editable); project rules (when project selected, reads/writes `.puppet-master/project-rules.md`); **User Commands management** (see §7.4.11): scope selector (Global/Project), command list with name/scope/description/Persona/mode/model columns, create/edit/delete commands, dry-run preview, shortcut binding, schema validation on save. Canonical SSOT: `Plans/Commands_System.md` §6. | From agent-rules-context.md + feature-list.md + Commands_System.md |
-| **Shortcuts** | Full keyboard shortcut table (action name, current binding, default binding); search/filter by action name or key; per-row "Change" button (captures next key combination) and "Reset" button; "Reset all" button; export/import shortcuts (JSON). Data sourced from shortcut registry (single source of truth, DRY:DATA). | MiscPlan.md |
-| **Skills** | Discover and manage SKILL.md files (project-level from `.puppet-master/skills/` and global from `~/.config/puppet-master/skills/`). Table: skill name, description, source (project/global), permission (Allow/Deny/Ask dropdown per row). Actions: Add, Edit (opens in File Editor), Remove, "Refresh" (re-scan disk). Bulk permission by pattern (e.g., "Allow all doc-*"). Preview skill body on row expand. | Plans/Skills_System.md |
-| **Plugins** | Manage installed plugins (see §7.4.12): list discovered plugins with id, name, version, source (internal/project/global/config), enabled/disabled toggle. Per-plugin component counts (commands, hooks, skills). Enable/disable per plugin or per-hook. "Reload plugins" button. Plugin log viewer. Canonical SSOT: `Plans/Plugins_System.md`. | Plans/Plugins_System.md |
-| **Formatters** | Manage code formatters (see §7.4.13): global "Enable formatters" toggle, per-formatter table (name, extensions, command, enabled/disabled toggle). Custom formatter add/edit/remove. Format-on-save indicator. Evidence log link for `format.applied` events. Canonical SSOT: `Plans/Formatters_System.md`. | Plans/Formatters_System.md |
-| **Models** | Model configuration (see §7.4.14): model picker (provider + model dropdowns), variant selector (default/fast/powerful/custom), per-Persona model override editor, custom variant definitions, provider priority list editor. Canonical SSOT: `Plans/Models_System.md`. | Plans/Models_System.md |
-| **Catalog** | Browse and install community content: commands, agents, hooks, skills, themes, and MCP server configs from a curated catalog. See §7.4.3. | feature-list.md |
-| **Sync** | Export, import, and sync app configuration across machines. See §7.4.4. | feature-list.md |
-| **SSH** | Manage SSH connections for remote editing. See §7.4.5. | FileManager.md |
-| **Debug** | Debug adapter configuration and run/debug profiles. See §7.4.6. | FileManager.md |
-| **HITL** | Three independent toggles: pause at phase/task/subtask completion; explanation of each level; all off by default | From human-in-the-loop.md |
-| **YAML** | Raw YAML editor for full config | Old "Config" YAML tab |
-
-ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/CLI_Bridged_Providers.md
 
 **§7.4.X Context Injection (Memory tab; per-project; optional per-run override)**
 
@@ -669,26 +663,26 @@ ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-
 The **Media** tab in Settings provides enable/disable toggles and model selection for each media capability. Layout:
 
 1. **Image Generation** (collapsible row):
-   - **Enable** toggle (default: follows backend — ON when Cursor backend or valid Google key present; OFF otherwise).
+   - **Enable** toggle (default: follows backend/provider eligibility — ON when Cursor image routing is active or at least one eligible Gemini account is configured for non-Cursor media; OFF otherwise).
    - **Model dropdown**: lists available image-generation models for the configured provider. Selection sets the default image model. Description panel below the dropdown changes dynamically with each model selection (short model description, supported features, max resolution).
-   - Disabled-state rule: greyed out when no Google Gemini API key is configured **except** in Cursor chats where Image Gen remains enabled without a key (routes via Cursor-native generation per `Plans/Media_Generation_and_Capabilities.md` §2.4).
+   - Disabled-state rule: greyed out when no eligible Gemini account is configured for non-Cursor media **except** in Cursor chats where Image Gen remains enabled without Gemini credentials (routes via Cursor-native generation per `Plans/Media_Generation_and_Capabilities.md` §2.4).
 
 2. **Video Generation** (collapsible row):
-   - **Enable** toggle (default OFF; requires Google Gemini API key).
+   - **Enable** toggle (default OFF; enablement requires an eligible Gemini account under the canonical requested/effective auth/account rules).
    - **Model dropdown** + dynamic description panel (same pattern as Image Gen).
-   - Disabled-state rule: greyed out when no Google key is configured.
+   - Disabled-state rule: greyed out when no eligible Gemini account is configured.
 
 3. **Text-to-Speech (TTS)** (collapsible row):
-   - **Enable** toggle (default OFF; requires Google Gemini API key).
+   - **Enable** toggle (default OFF; enablement requires an eligible Gemini account under the canonical requested/effective auth/account rules).
    - **Model dropdown** + dynamic description panel.
-   - Disabled-state rule: greyed out when no Google key is configured.
+   - Disabled-state rule: greyed out when no eligible Gemini account is configured.
 
 4. **Music Generation** (collapsible row):
-   - **Enable** toggle (default OFF; requires Google Gemini API key).
+   - **Enable** toggle (default OFF; enablement requires an eligible Gemini account under the canonical requested/effective auth/account rules).
    - **Model dropdown** + dynamic description panel.
-   - Disabled-state rule: greyed out when no Google key is configured.
+   - Disabled-state rule: greyed out when no eligible Gemini account is configured.
 
-**Disabled-state presentation:** When the required API key is missing, the toggle and dropdown are rendered **greyed out** (non-interactive). A footnote below the disabled row displays: *"Requires a Google API Key. [Get API key](https://aistudio.google.com/app/api-keys)"* (clickable link). When a capability is admin-disabled (toggle OFF), the model dropdown is hidden.
+**Disabled-state presentation:** When Gemini access is not configured for the resolved non-Cursor media path, the toggle and dropdown are rendered **greyed out** (non-interactive). A footnote below the disabled row displays: *"Configure Gemini access in Settings -> Authentication. Sign in with Gemini OAuth or add a Google/Gemini API key. [Get API key](https://aistudio.google.com/app/api-keys)"* When a capability is admin-disabled (toggle OFF), the model dropdown is hidden.
 
 **DRY note:** Capability IDs, disabled-reason values, backend routing rules, and UI copy strings are defined in `Plans/Media_Generation_and_Capabilities.md` §1–§5 and MUST NOT be restated here.
 
@@ -869,33 +863,39 @@ Interactive requirements gathering with phase tracking, Q&A flow, reference mate
 Hierarchical tier tree (phase/task/subtask) with expandable nodes. Shows tier type, status, platform, model, and details per node.
 
 ### 7.8 Usage (NEW)
-
 **Group:** Data | **Location:** Primary content
 
-Dedicated usage view providing persistent visibility into platform quota and consumption.
+Dedicated usage view providing persistent visibility into platform quota, consumption, and source confidence.
 
 **Sections:**
 
-1. **Quota summary:** Per-platform 5h/7d usage vs limit (e.g., "5h: X / Y", "7d: X / Y"). Plan type shown where available. Per-platform labels (e.g., "Codex 5h", "Claude 7d", "Gemini quota") because semantics differ by platform.
+1. **Quota summary:** Per-platform 5h/7d usage vs limit (or provider-equivalent window), with plan type where available. Per-platform labels remain explicit because semantics differ by provider. Gemini stays on one shared surface with source/effective-mode labels such as `Gemini quota` or `Gemini (estimated)`.
 
-2. **Alert thresholds:** Configurable warning threshold (70%, 80%, 90%). Warning when usage nears limit. Option to dismiss or quiet for N hours. Toast notification when approaching limit with option to switch platform/model.
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md
 
-3. **Ledger tab:** Event-level log (platform, operation, tokens in/out, cost, tier/session). Filtering by type, tier, session, date range. Export as JSON/CSV.
+2. **Alert thresholds:** Configurable warning threshold, toast notification when usage nears limit, option to dismiss or quiet, and switch/fallback reason disclosure when a provider account changes.
 
-4. **Analytics tab (optional):** Aggregate usage by time window, platform, project, model. Cost tracking where available. Export current view.
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/storage-plan.md
 
-5. **Reset countdown:** "Resets in 2h 15m" shown when reset time is available (from error parsing or API).
+3. **Ledger tab:** Event-level log with filtering by platform, auth mode, effective account, tier, session, thread, and date range. Export as JSON/CSV.
+4. **Analytics tab (optional):** Aggregate usage by time window, platform, project, model, auth mode, and account where available.
+5. **Reset countdown:** Show `Resets in X` when reset time is available from provider APIs, structured runtime signals, or fallback error parsing.
 
-6. **Tool usage widget:** Card or section showing tool-level metrics from seglog rollups (per Plans/Tools.md and storage-plan analytics scan). Columns or list: **Tool name** (built-in + MCP/custom), **Invocation count** (in selected window), **Latency** (e.g. p50 / p95 ms or median), **Error rate** (failures / total executed calls, %). Optional: sort by count or error rate; filter by time window (**5h / 24h / 7d**; custom is optional later); expand row for breakdown by platform or session. Data from redb projections produced by analytics scan over tool events in seglog. The card shows a **Last updated** timestamp sourced from rollup metadata; while a refresh is in progress, keep the previous values visible and show a lightweight "Refreshing…" state. Empty state copy: **"No tool activity recorded for this window yet."** Helps identify noisy or failing tools (e.g. repeated grep, MCP timeouts).
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
 
-**Data sources:** Primary: seglog/redb rollups from analytics scan jobs. Fallback: aggregate from `usage.jsonl`. Platform APIs augment when env vars are set. Tool usage: same analytics scan rollups (tool latency, error counts per tool).
+6. **Tool usage widget:** Same as current analytics rollup requirement.
+7. **Gemini account context strip:** Show current effective account, current effective auth mode, recent switch reason, cooldown state, and signal-confidence/source labels when the selected platform is Gemini.
+8. **Media usage display:** Media counters remain local counters unless an authoritative provider quota API explicitly exists. Media actions still follow the same Gemini requested/effective auth/account rules as standard Gemini usage.
 
-7. **Media usage display (local counters):** Per-capability usage counters sourced from local generation logs (redb projections), **not** authoritative provider quotas. Displays: current count vs configured cap (e.g., *"3 / 20 images today"*), estimated per-call cost (based on model pricing metadata when available), and approximate remaining budget. Puppet Master MUST NOT claim authoritative provider quota values unless a provider API explicitly returns them. When no provider quota API exists, show only local counters and an **"Open Usage & Limits"** external link (e.g., to [Google AI Studio](https://aistudio.google.com/) or the relevant provider dashboard) so the user can check their actual quota externally. Caps are user-configurable per capability in Settings > Media (§7.4.15); defaults: no cap (unlimited local counter, display only).
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md
 
-ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM, ToolID:media.generate
+**Data sources:** Primary: seglog/redb rollups from analytics scan jobs. Fallback: aggregate from `usage.jsonl`. Platform APIs and structured provider/runtime outputs augment when configured. Gemini account/context disclosure uses the same canonical `UsageRecord` / runtime snapshot family as the rest of the app.
 
-**Always-visible usage:** Status bar shows compact usage (e.g., "5h: 80% | 7d: 45%") for the selected platform. Dashboard budget widgets show donut charts.
+ContractRef: ContractName:Plans/storage-plan.md, ToolID:media.generate, ContractName:Plans/Runtime_Artifacts_Panel.md
 
+**Always-visible usage:** Status bar shows compact usage for the selected platform. Gemini status surfaces include current effective account and current effective auth mode when available.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
 ### 7.9 Metrics
 
 **Group:** Data | **Location:** Primary content
@@ -1162,7 +1162,7 @@ The active mode shows as a subtle label next to the SEND button ("Steer" or "Que
 
 **Reasoning/effort selector:** Shown only when `platform_specs::supports_effort(platform)` returns true. For Claude Code: dropdown with Low / Medium / High (maps to `CLAUDE_CODE_EFFORT_LEVEL` env var). For Codex and Copilot: dropdown with Low / Medium / High / Extra High. For Cursor: hidden (reasoning is encoded in model names like `sonnet-4.5-thinking`). For Gemini: hidden (no effort support). Per-thread setting.
 
-**Capability picker (media):** Compact dropdown (icon: sparkle or media icon) near the composer, listing the four media capabilities: **Image**, **Video**, **TTS**, **Music**. Each item maps to a capability ID from `Plans/Media_Generation_and_Capabilities.md` §4.1. **Enabled items** are clickable and insert the corresponding capability prompt into the composer (verbatim prompts per SSOT §5.1). **Disabled items** are visible but **greyed out** with a tooltip showing the disabled-reason message (per SSOT §5.2). Disabled rows remain keyboard-focusable so the same reason text is available on hover and focus. When any capability requires a missing Google API key, the dropdown footer shows a banner: *"Please provide a free or paid Google API Key."* **[Get API key](https://aistudio.google.com/app/api-keys)** (clickable link). Cursor backend behavior: Image enabled without key; Video/TTS/Music disabled with `BACKEND_UNSUPPORTED`. The dropdown refreshes after Settings changes that affect capability state and keeps the footer banner pinned while any visible item is blocked for the same missing-key reason. **Helper only:** the capability picker is a convenience shortcut — media generation is primarily invoked by natural language in the chat (see `Plans/Media_Generation_and_Capabilities.md` §3 for slot extraction). Per-thread; no persistence.
+**Capability picker (media):** Compact dropdown (icon: sparkle or media icon) near the composer, listing the four media capabilities: **Image**, **Video**, **TTS**, **Music**. Each item maps to a capability ID from `Plans/Media_Generation_and_Capabilities.md` §4.1. **Enabled items** are clickable and insert the corresponding capability prompt into the composer (verbatim prompts per SSOT §5.1). **Disabled items** are visible but **greyed out** with a tooltip showing the disabled-reason message (per SSOT §5.2). Disabled rows remain keyboard-focusable so the same reason text is available on hover and focus. When visible capabilities are blocked because no eligible Gemini account is configured for the resolved request/policy, the dropdown footer shows the canonical banner: *"Configure Gemini access in Settings -> Authentication."* Sign in with Gemini OAuth or add a Google/Gemini API key. **[Get API key](https://aistudio.google.com/app/api-keys)** Cursor backend behavior: Image enabled without Gemini credentials; Video/TTS/Music disabled with `BACKEND_UNSUPPORTED`. The dropdown refreshes after Settings changes that affect capability state and keeps the footer banner pinned while any visible item is blocked for the same missing-configuration reason. **Helper only:** the capability picker is a convenience shortcut — media generation is primarily invoked by natural language in the chat (see `Plans/Media_Generation_and_Capabilities.md` §3 for slot extraction). Per-thread; no persistence.
 
 ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-PICKER, ToolID:capabilities.get, Invariant:INV-003
 

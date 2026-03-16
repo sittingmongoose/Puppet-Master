@@ -35,8 +35,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md
 <a id="EventRecord"></a>
 ### 1.1 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)
 #### Persona/runtime snapshot payload contract
-
-The following object is the canonical persisted payload fragment for any event that claims to expose requested/effective Persona or runtime-resolution state:
+The following object is the canonical persisted payload fragment for any event that claims to expose requested/effective Persona, runtime-resolution, or provider auth/account identity state:
 
 ```json
 {
@@ -46,15 +45,23 @@ The following object is the canonical persisted payload fragment for any event t
   "selection_reason": "Auto: Rust repo + code task",
   "persona_override_scope": "none",
   "persona_override_owner_id": null,
-  "requested_platform": "codex",
-  "effective_platform": "codex",
-  "requested_model": "openai/gpt-5.3",
-  "effective_model": "openai/gpt-5.3",
+  "requested_platform": "gemini",
+  "effective_platform": "gemini",
+  "requested_model": "google/gemini-2.5-pro",
+  "effective_model": "google/gemini-2.5-pro",
   "requested_variant": "powerful",
   "effective_variant": "powerful",
+  "requested_auth_mode": "auto",
+  "effective_auth_mode": "oauth",
+  "requested_account_policy": "project_default",
+  "effective_account_id": "acct-gemini-oauth-main",
+  "effective_account_label": "Primary Gemini",
+  "effective_provider_identity": "user@example.com",
+  "effective_project_id": "proj-123",
+  "account_switch_reason": null,
   "effective_temperature": null,
   "effective_top_p": null,
-  "effective_reasoning_effort": "high",
+  "effective_reasoning_effort": null,
   "effective_talkativeness": "talk_more",
   "applied_persona_controls": [],
   "skipped_persona_controls": []
@@ -62,54 +69,25 @@ The following object is the canonical persisted payload fragment for any event t
 ```
 
 Rules:
-- `requested_persona` and `effective_persona` are the canonical persisted field names across all surfaces. They store canonical Persona IDs.
+- `requested_persona` and `effective_persona` remain the canonical persisted field names across all surfaces. They store canonical Persona IDs.
 - Persisted payloads MUST NOT introduce parallel canonical fields named `requested_persona_id` or `effective_persona_id`. Older readers may accept them only as migration aliases before normalization.
+- `requested_auth_mode` and `effective_auth_mode` are the canonical persisted auth-surface fields for provider-using runs.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Models_System.md
+
+- `requested_account_policy` stores the requested routing/control policy (`project_default`, role override, manual preferred-account override, or equivalent), while `effective_account_id` identifies the provider account actually used.
+- `effective_account_label`, `effective_provider_identity`, and `effective_project_id` are optional non-secret disclosure fields for audit/UI correlation only.
+- `effective_provider_identity` is provider-native identity metadata only; it MUST NOT replace the canonical internal `account_id`.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage
+
 - `run.started` MUST include the full snapshot when a run reaches prompt/runtime assembly.
 - `run.completed` MUST include the final effective snapshot used by the completed run.
 - `chat.subagent_started`, `chat.subagent_completed`, `run.tier_started`, `run.tier_completed`, and `run.persona_stage_changed` MUST either inline these fields or carry them as a child object named `persona_runtime_snapshot`.
-- If a run proceeds without Persona context, the snapshot MAY still be emitted with `requested_persona = null`, `effective_persona = null`, and a `selection_reason` that explicitly records the bare-context fallback.
+- If a run proceeds without auth/account specificity, the auth/account fields MAY be null as long as `selection_reason` explicitly records the fallback or omission.
+- Secrets, API keys, refresh tokens, access tokens, bearer tokens, and credential payloads MUST NEVER appear in this snapshot fragment.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
-
-**Definition:** `EventRecord` is the canonical event envelope persisted to seglog (and mirrored to JSONL and projections).
-
-**Required fields:**
-```json
-{
-  "schema": "pm.event.v0",
-  "ts": "2026-02-23T00:00:00Z",
-  "seq": 1,
-  "type": "tool.invoked",
-  "run_id": "PM-...",
-  "thread_id": "TH-...",
-  "payload": {}
-}
-```
-
-**Field semantics:**
-- `schema` (string, required): MUST be exactly `pm.event.v0`.
-- `ts` (string, required): ISO-8601 UTC timestamp.
-- `seq` (integer, required): monotonically increasing per seglog writer (or per run) to support checkpointing.
-- `type` (string, required): event type (e.g., `chat.message`, `run.started`, `tool.invoked`).
-- `run_id` (string, required): stable correlation for a provider run / orchestrator run.
-- `thread_id` (string, required): stable correlation for a user-visible chat thread / session.
-- `payload` (object, required): event-specific payload.
-
-ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:Spec_Lock.json#schema_versions.event_record
-
-**Compatibility:** Readers MAY accept `EventEnvelopeV1` during transition; writers MUST emit `EventRecord` for persisted seglog. (See §1.2.)
-
-**Run-event minimums (canonical):**
-- `run.started` persisted via `EventRecord` MUST include `mode`, `strategy`, and `strategy_resolution_reason` in `payload`.
-- `run.completed` persisted via `EventRecord` MUST include `status` and canonical `outcome`, and SHOULD include `stop_reason`, `budget_key`, `budget_limit`, and `observed_value` when termination was budget- or policy-driven.
-
-ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, PolicyRule:Decision_Policy.md§1
-
----
-
-<a id="EventEnvelopeV1"></a>
-
-**runtime_artifact.* events:** Payload schemas for runtime_artifact.* events are defined in Plans/storage-plan.md and Plans/Runtime_Artifacts_Panel.md; this document does not define the 19 payloads. For task_id: present in payload when the run has task/subtask granularity; otherwise omit (deterministic rule).
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage
 ### 1.2 EventEnvelopeV1 -- minimal compatibility envelope
 `EventEnvelopeV1` is the minimal event envelope used by some plans as an intermediate format.
 
@@ -279,44 +257,76 @@ ContractRef: ToolID:capabilities.get, ToolID:media.generate, PolicyRule:no_secre
 
 <a id="AuthState"></a>
 ### 4.1 AuthState
-Represents the canonical authentication status for a single provider (e.g., GitHub API auth).
+Represents the canonical authentication status for a provider summary or a single provider account visible in Settings / Setup / Health.
 
 **Minimum fields:**
 ```json
 {
-  "provider": "github",
+  "provider": "gemini",
+  "auth_surface": "oauth",
+  "account_id": "acct-gemini-oauth-main",
+  "account_label": "Primary Gemini",
+  "provider_identity": "user@example.com",
   "state": "LoggedIn",
-  "account_label": "github.com/octocat",
+  "credential_state": "present",
+  "configuration_state": "ready",
+  "availability_state": "eligible",
+  "effective_project_id": "proj-123",
   "updated_at": "2026-02-23T00:00:00Z"
 }
 ```
 
 Rules:
 - `state` uses the canonical auth lifecycle set (`AuthJobState`): `LoggedOut` | `LoggingIn` | `LoggedIn` | `LoggingOut` | `AuthExpired` | `AuthFailed`.
-- Secrets (tokens) MUST NOT be stored in `AuthState` when persisted; secrets live only in the OS credential store.
+- `account_id` is the stable internal key.
+- `account_label` is the user-facing editable label.
+- `provider_identity` is provider-native identity metadata only (email, subject, or provider descriptor) and MUST NOT be treated as the canonical internal key.
 
-ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
-<a id="AuthPolicy"></a>
+- `credential_state` uses the canonical account-scoped values `missing | present | expired | invalid | revoked`.
+- `configuration_state` uses the canonical account-scoped values `ready | needs_configuration | validation_required`.
+- `availability_state` uses the canonical account-scoped values `eligible | cooldown | hard_blocked | disabled`.
+- Provider-level cards MAY aggregate multiple account records, but aggregated display MUST preserve auth-surface and account distinctions whenever they change routing, quota semantics, or recovery behavior.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/FinalGUISpec.md
+
+- Gemini OAuth and API-key profiles MUST be represented as separate account records under one provider rather than as pseudo-providers.
+- Secrets (tokens, API keys, refresh tokens, bearer credentials) MUST NOT be stored in `AuthState` when persisted; secrets live only in the OS credential store.
+
+ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002, ContractName:Plans/rewrite-tie-in-memo.md
 ### 4.2 AuthPolicy
 Defines deterministic defaults for auth method selection per provider.
 
-Canonical enum contract for implementation:
+Canonical enum contracts for implementation:
 ```text
 ProviderAuthMethod = OAuthBrowser | OAuthDeviceCode | ApiKey | GoogleCredentials | CliInteractive
+RequestedAuthMode = auto | oauth | api_key | device_code | google_credentials | cli_interactive
 ```
 
 Rules:
 - Cursor and Claude Code use `CliInteractive` (CLI-bridged only).
 - Codex supports `OAuthBrowser`, `OAuthDeviceCode`, and `ApiKey` for direct-provider auth/calls.
 - GitHub Copilot uses `OAuthDeviceCode` for direct-provider auth/calls.
-- Gemini uses direct-provider auth/calls with `OAuthBrowser` and `ApiKey`; `GoogleCredentials` is supported for Google credential-based execution.
+- Gemini uses direct-provider auth/calls with `OAuthBrowser`, `ApiKey`, and `GoogleCredentials` where the provider/runtime capability matrix supports them.
 - OpenCode uses server credentials for server access plus provider-native auth managed by OpenCode.
-- For GitHub, default interactive auth MUST be OAuth device-code flow (see `Plans/GitHub_API_Auth_and_Flows.md`).
 
-ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, SchemaID:Spec_Lock.json#locked_decisions.auth_model
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/CLI_Bridged_Providers.md, SchemaID:Spec_Lock.json#locked_decisions.auth_model
 
-<a id="AuthEvent"></a>
+- Gemini is one provider with mixed OAuth and API-key account pools.
+- Gemini's default `requested_auth_mode` is `auto`, and the provider-default auth-surface preference is OAuth first, then API key, unless project/run policy overrides it.
+- Explicit `oauth` requests MUST filter to OAuth-eligible accounts only.
+- Explicit `api_key` requests MUST filter to API-key-eligible accounts only.
+- There is no silent cross-surface fallback between explicit `oauth` and explicit `api_key` requests.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+- `auto` resolves auth-surface preference before account selection and then chooses an eligible account inside the first viable surface.
+- Same-provider accounts are not interchangeable. Policy precedence is: provider default -> account override -> role-by-provider override -> role-by-account override -> run snapshot -> attempt/message resolution.
+- Manual `set active` / preferred-account selection is an override/debug control, not the default operating model.
+- For GitHub, default interactive auth MUST be OAuth device-code flow.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md
 ### 4.3 AuthEvent
 Auth flows MUST emit persisted events using `EventRecord` (§1.1), with stable `type` strings owned by the provider's plan.
 
@@ -332,24 +342,31 @@ ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans
 ---
 
 ### 4.4 Setup/Health lifecycle contracts
-
 Canonical enum contracts for implementation:
 ```text
 InstallableComponent = CursorCli | ClaudeCli | Playwright
 InstallJobState = NotInstalled | Installing | Installed | Uninstalling | Failed
 AuthJobState = LoggedOut | LoggingIn | LoggedIn | LoggingOut | AuthExpired | AuthFailed
 AuthRealm = github_api | copilot_github
+AuthSurface = oauth | api_key | google_credentials | device_code | cli_interactive
+CredentialState = missing | present | expired | invalid | revoked
+ConfigurationState = ready | needs_configuration | validation_required
+AvailabilityState = eligible | cooldown | hard_blocked | disabled
 ```
 
 Rules:
 - `InstallableComponent` applies to Setup/Health install controls only.
 - `InstallJobState` and `AuthJobState` are real-time UI/backend states and MUST be streamed deterministically.
+- `AuthJobState` is the user-facing derived chip. Backend state machines MUST derive it from auth-surface, credential, configuration, and availability state rather than inventing provider-specific ad-hoc enums.
+- Setup and Health MUST be able to show both provider summary state and account-scoped state when a provider supports multiple accounts.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md
+
 - `AuthRealm` values MUST be isolated: tokens/state for `github_api` and `copilot_github` are separate and MUST NOT be cross-consumed.
+- `credential_state`, `configuration_state`, and `availability_state` are canonical account-scoped dimensions and MUST NOT be collapsed into provider-global booleans when they alter routing, quota, or recovery semantics.
+- `needs_configuration` is the canonical user-facing partial-setup status for Gemini OAuth accounts; do not use provider-specific `needs_project` as the canonical persisted/display state name.
 
-ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md
-
----
-
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md
 ## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)
 
 This section defines cross-cutting context assembly and enforcement behaviors for the finished Puppet Master product.
