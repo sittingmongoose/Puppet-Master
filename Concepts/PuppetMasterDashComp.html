@@ -3841,7 +3841,55 @@
     [data-theme^="retro"] .artifact-btn:hover { border-color: var(--accent-lime); color: var(--accent-lime); }
     
     @keyframes slideInLeft { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
-    </style>
+    
+    /* --- NEW FEATURES CSS --- */
+    .slash-command-menu { position: absolute; bottom: 100%; left: var(--md); background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 200px; display: none; flex-direction: column; z-index: 50; }
+    .slash-command-menu.visible { display: flex; }
+    .slash-cmd-item { padding: var(--sm) var(--md); font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: var(--sm); }
+    .slash-cmd-item:hover { background: var(--surface); }
+    .slash-cmd-item.active { background: rgba(0, 212, 255, 0.1); border-left: 2px solid var(--accent-blue); }
+    .slash-cmd-name { font-weight: bold; color: var(--text-primary); }
+    .slash-cmd-desc { color: var(--text-muted); font-size: 10px; }
+
+    .message { position: relative; }
+    .msg-controls { position: absolute; top: var(--xs); display: flex; gap: var(--xs); opacity: 0; transition: opacity 0.2s; }
+    .message.user .msg-controls { left: -70px; flex-direction: row-reverse; top: 50%; transform: translateY(-50%); }
+    .message.assistant .msg-controls { right: var(--sm); top: var(--sm); }
+    .message:hover .msg-controls { opacity: 1; }
+    .msg-control-btn { background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px; padding: 4px; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; }
+    .msg-control-btn:hover { background: var(--surface-elevated); color: var(--text-primary); }
+    .msg-control-btn svg { width: 14px; height: 14px; }
+
+    .jump-to-latest { position: absolute; bottom: 80px; right: 20px; background: var(--accent-blue); color: var(--surface); border-radius: 20px; padding: 4px 12px; font-size: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2); z-index: 10; display: flex; align-items: center; gap: 4px; }
+    [data-theme^="retro"] .jump-to-latest { background: var(--accent-lime); color: #000; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); border-radius: 0; }
+
+    .activity-card { background: var(--surface); border: 1px solid var(--border-light); border-left: 3px solid var(--text-muted); border-radius: 6px; padding: var(--sm) var(--md); margin-top: var(--sm); font-size: 11px; display: flex; flex-direction: column; gap: var(--xs); }
+    [data-theme^="retro"] .activity-card { border-radius: 0; }
+    .activity-card.web { border-left-color: var(--accent-orange); }
+    .activity-card.bash { border-left-color: var(--accent-magenta); }
+    .activity-card.diff { border-left-color: var(--accent-blue); }
+    .activity-card-header { display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+    .activity-card-body { color: var(--text-secondary); font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .questionnaire-ui { background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 8px; padding: var(--md); margin-top: var(--md); display: flex; flex-direction: column; gap: var(--md); }
+    [data-theme^="retro"] .questionnaire-ui { border-radius: 0; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); }
+    .q-item { display: flex; flex-direction: column; gap: var(--xs); }
+    .q-item label { font-size: 12px; font-weight: bold; color: var(--text-primary); }
+    .q-input { background: var(--surface); border: 1px solid var(--border-light); padding: 6px var(--md); color: var(--text-primary); font-size: 12px; border-radius: 4px; }
+    .q-actions { display: flex; gap: var(--sm); justify-content: flex-end; margin-top: var(--sm); border-top: 1px solid var(--border-light); padding-top: var(--sm); }
+
+    .runtime-snapshot { font-size: 9px; padding: 2px 6px; background: rgba(255,255,255,0.1); border-radius: 12px; color: var(--text-muted); font-family: var(--display-font); display: inline-block; margin-bottom: var(--xs); border: 1px solid var(--border-light); }
+    [data-theme^="retro"] .runtime-snapshot { border-radius: 0; }
+
+    .sticky-plan-tracker { position: sticky; top: 0; background: var(--surface-elevated); border-bottom: 2px solid var(--accent-blue); padding: var(--md); z-index: 5; margin-bottom: var(--md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    [data-theme^="retro"] .sticky-plan-tracker { border-bottom-color: var(--accent-lime); box-shadow: 0 4px 0 rgba(0,0,0,0.5); }
+    .plan-todo-item { display: flex; align-items: center; gap: var(--sm); font-size: 11px; padding: 4px 0; border-bottom: 1px dashed var(--border-light); }
+    .plan-todo-item:last-child { border-bottom: none; }
+    .todo-status { width: 12px; height: 12px; border-radius: 50%; border: 1px solid var(--text-muted); display: inline-block; }
+    .todo-status.done { background: var(--graph-passed); border-color: var(--graph-passed); }
+    .todo-status.working { background: var(--accent-orange); border-color: var(--accent-orange); animation: pulse 1.5s infinite; }
+
+</style>
 </head>
 <body>
   <div class="app-shell">
@@ -3857,6 +3905,7 @@
         <span class="page-tab" tabindex="0" data-page="wizard">Wizard</span>
         <span class="page-tab" tabindex="0" data-page="orchestrator">Orchestrator</span>
         <span class="page-tab" tabindex="0" data-page="usage">Usage</span>
+        <span class="page-tab" tabindex="0" data-page="agent-config">Agent Config</span>
         <span class="page-tab" tabindex="0" data-page="settings">Settings</span>
       </nav>
       <div class="title-spacer"></div>
@@ -5611,6 +5660,81 @@ impl Dashboard {
               <p class="stub-desc">Usage, metrics, evidence, history. Will map to spec.</p>
             </div>
           </div>
+          <div class="page page-agent-config">
+            <div class="settings-a-layout" style="display:flex; height:100%;">
+              <div class="settings-sidebar" style="width:200px; border-right:1px solid var(--border-light); background:var(--surface-elevated); padding:var(--lg) 0;">
+                <div class="settings-group-header">Agent Configuration</div>
+                <a href="#" class="settings-tab active" data-agent-tab="personas">Personas</a>
+                <a href="#" class="settings-tab" data-agent-tab="skills">Skills Catalog</a>
+                <a href="#" class="settings-tab" data-agent-tab="permissions">Permissions</a>
+              </div>
+              <div class="psm-pane" style="flex:1; padding:var(--xl); overflow-y:auto; background:var(--background);">
+                
+                <div class="agent-tab-content active" id="agent-tab-personas">
+                  <h2 style="margin-bottom:var(--lg); font-family:var(--display-font);">Personas</h2>
+                  <p style="color:var(--text-secondary); margin-bottom:var(--xl);">Manage system personas and default behaviors.</p>
+                  <div class="psm-field">
+                    <label>Active Persona</label>
+                    <select>
+                      <option>product-manager</option>
+                      <option>architect-reviewer</option>
+                      <option>rust-engineer</option>
+                    </select>
+                  </div>
+                  <div style="font-size:11px; color:var(--text-muted); margin-bottom:var(--md);">Active persona drives the baseline system prompts and capabilities.</div>
+                  <button class="msg-control-btn" style="background:var(--surface-elevated); padding: 6px 12px; width:max-content;">Edit Persona Prompt</button>
+                </div>
+
+                <div class="agent-tab-content" id="agent-tab-skills" style="display:none;">
+                  <h2 style="margin-bottom:var(--lg); font-family:var(--display-font);">Skills Catalog</h2>
+                  <p style="color:var(--text-secondary); margin-bottom:var(--xl);">Browseable catalog, validation, drag/drop import, and Skill Store. Invoke via /skill in chat.</p>
+                  <div style="display:flex; gap:var(--sm); margin-bottom:var(--xl);">
+                    <button class="msg-control-btn" style="background:var(--accent-blue); color:var(--surface); padding: 6px 12px; width:max-content;">Browse Skill Store</button>
+                    <button class="msg-control-btn" style="padding: 6px 12px; width:max-content;">Import via Picker</button>
+                    <div style="flex:1; border: 1px dashed var(--border-light); border-radius: 4px; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:11px; padding: 6px;">Drag & Drop Skill Here</div>
+                  </div>
+                  <div style="display:flex; flex-direction:column; gap:var(--md);">
+                    <div style="border:1px solid var(--border-light); padding:var(--md); border-radius:4px; background:var(--surface-elevated);">
+                      <div style="font-weight:bold; font-size:14px; display:flex; justify-content:space-between; margin-bottom:var(--xs);"><span>skill-creator</span> <span style="color:var(--graph-passed); font-size:11px;">Ready</span></div>
+                      <div style="font-size:12px; color:var(--text-muted);">Guide for creating effective skills.</div>
+                    </div>
+                    <div style="border:1px solid var(--border-light); padding:var(--md); border-radius:4px; background:var(--surface-elevated);">
+                      <div style="font-weight:bold; font-size:14px; display:flex; justify-content:space-between; margin-bottom:var(--xs);"><span>test-fixer</span> <span style="color:var(--accent-orange); font-size:11px;">Validating...</span></div>
+                      <div style="font-size:12px; color:var(--text-muted);">Specialized in repairing unit tests.</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="agent-tab-content" id="agent-tab-permissions" style="display:none;">
+                  <h2 style="margin-bottom:var(--lg); font-family:var(--display-font);">Permissions & Tools</h2>
+                  <p style="color:var(--text-secondary); margin-bottom:var(--xl);">Manage Ask/Plan behavior and expanded web-tool keys.</p>
+                  
+                  <div class="psm-field" style="margin-bottom:var(--xl);">
+                    <label>Web Search Provider API Key</label>
+                    <input type="text" placeholder="sk-..." value="sk-web-12345***">
+                  </div>
+                  
+                  <div class="psm-toggle-row" style="padding:var(--md); margin-bottom:var(--sm);">
+                    <div>
+                      <div class="psm-toggle-label" style="font-size:13px;">Auto-Approve Web Crawls</div>
+                      <div class="psm-toggle-desc" style="font-size:11px;">Allow subagents to crawl without asking.</div>
+                    </div>
+                    <input type="checkbox" checked>
+                  </div>
+                  
+                  <div class="psm-toggle-row" style="padding:var(--md); margin-bottom:var(--sm);">
+                    <div>
+                      <div class="psm-toggle-label" style="font-size:13px;">Plan Mode Requirement</div>
+                      <div class="psm-toggle-desc" style="font-size:11px;">Force Ask/Plan for edits > 5 files.</div>
+                    </div>
+                    <input type="checkbox" checked>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
           <div class="page page-settings">
             <div class="settings-a-layout">
               <div class="settings-sidebar">
@@ -5620,7 +5744,8 @@ impl Dashboard {
                 <a href="#a-general" class="settings-tab" data-filter="core">General</a>
                 <a href="#a-branching" class="settings-tab" data-filter="core">Tiers & Branching</a>
 
-                <div class="settings-group-header">Features <span class="badge">5</span></div>
+                
+<div class="settings-group-header">Features <span class="badge">5</span></div>
                 <a href="#a-memory" class="settings-tab" data-filter="features">Memory & Context</a>
                 <a href="#a-models" class="settings-tab" data-filter="features">Models & Media</a>
                 <a href="#a-security" class="settings-tab" data-filter="features">Security & FileSafe</a>
@@ -5646,6 +5771,9 @@ impl Dashboard {
                   <input type="text" class="settings-search-input" placeholder="Search settings...">
                 </div>
                 <div class="bento-grid">
+
+</div>
+
                   <div class="settings-no-results">No matching settings found.</div>
                   <!-- General Card -->
                   <div class="bento-card" data-inspector-view="general" data-category="core" style="animation: slideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0ms forwards;">
@@ -6483,7 +6611,17 @@ impl Dashboard {
                   </button>
                 </div>
                 <div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm);">
-                  <div class="chat-thread-item role-doc active" data-thread="thread1">
+                  <div class="chat-thread-item active role-assistant" data-thread="thread0" onclick="switchToChatThread('thread0')">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">Now</span>
+                      <div class="thread-title">Dashboard Revamp</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
+                      <div class="thread-summary">Updating dashboard components...</div>
+                    </div>
+                  </div>
+                  <div class="chat-thread-item role-doc" data-thread="thread1">
                     <div class="thread-top-row">
                       <span class="thread-timestamp">12m</span>
                       <div class="thread-title">Requirements Doc</div>
@@ -6592,6 +6730,8 @@ impl Dashboard {
 
               <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
                 <div class="message-stream messageStream" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-direction: column; gap: var(--md);">
+
+
                 </div>
 
                 <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light); display:flex; flex-direction:column; gap:0;">
@@ -6605,7 +6745,27 @@ impl Dashboard {
                     </div>
                   </div>
 
-                  <div style="background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
+                  <div style="position:relative; background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
+
+<div class="slash-command-menu" style="bottom: 100%; margin-bottom: 8px;">
+  <div class="slash-cmd-item active">
+    <span class="slash-cmd-name">/web</span>
+    <span class="slash-cmd-desc">Search & extract</span>
+  </div>
+  <div class="slash-cmd-item">
+    <span class="slash-cmd-name">/skill</span>
+    <span class="slash-cmd-desc">Invoke skill</span>
+  </div>
+  <div class="slash-cmd-item">
+    <span class="slash-cmd-name">/model</span>
+    <span class="slash-cmd-desc">Change model</span>
+  </div>
+  <div class="slash-cmd-item">
+    <span class="slash-cmd-name">@</span>
+    <span class="slash-cmd-desc">Symbol search</span>
+  </div>
+</div>
+
                     <div class="composer-chips-container" style="display:flex; flex-wrap:wrap; padding:0 var(--sm);"></div>
                     <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; outline:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
                     
@@ -6634,7 +6794,7 @@ impl Dashboard {
                         </div>
                       </div>
 
-                      <button style="background:var(--accent-blue); color:var(--surface); border:none; border-radius:4px; padding:6px var(--lg); font-size:11px; font-weight:600; cursor:pointer;">SEND</button>
+                      <button title="Stop (Idle)" style="background:transparent; color:var(--accent-magenta); border:1px solid var(--accent-magenta); border-radius:4px; padding:0; cursor:pointer; display:flex; align-items:center; justify-content:center; width:28px; height:28px;"><div style="width:10px; height:10px; background:currentColor; border-radius:2px; animation: pulse 1s infinite;"></div></button>
                     </div>
                   </div>
 
@@ -6829,7 +6989,17 @@ impl Dashboard {
                   </button>
                 </div>
                 <div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm);">
-                  <div class="chat-thread-item role-doc active" data-thread="thread1">
+                  <div class="chat-thread-item active role-assistant" data-thread="thread0" onclick="switchToChatThread('thread0')">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">Now</span>
+                      <div class="thread-title">Dashboard Revamp</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
+                      <div class="thread-summary">Updating dashboard components...</div>
+                    </div>
+                  </div>
+                  <div class="chat-thread-item role-doc" data-thread="thread1">
                     <div class="thread-top-row">
                       <span class="thread-timestamp">12m</span>
                       <div class="thread-title">Requirements Doc</div>
@@ -6938,6 +7108,80 @@ impl Dashboard {
 
               <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
                 <div class="message-stream messageStream" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-direction: column; gap: var(--md);">
+
+<div class="sticky-plan-tracker">
+  <div style="font-weight:bold; font-size:12px; margin-bottom:4px; display:flex; justify-content:space-between;">
+    <span>Active Plan: Dashboard Revamp</span>
+    <span style="font-size:10px; color:var(--text-muted); cursor:pointer;">[Edit]</span>
+  </div>
+  <div class="plan-todo-item"><span class="todo-status done"></span> <span style="text-decoration:line-through; color:var(--text-muted)">1. Setup routing</span></div>
+  <div class="plan-todo-item"><span class="todo-status working"></span> <span style="color:var(--text-primary); font-weight:600;">2. Implement Chat UI changes</span></div>
+  <div class="plan-todo-item"><span class="todo-status"></span> <span style="color:var(--text-secondary)">3. Add settings IA</span></div>
+</div>
+
+<div class="message user">
+  <div class="runtime-snapshot">v1.2.4 (Frozen) • default-persona</div>
+  Please update the dashboard HTML to include the new slash commands and message controls.
+  <div class="msg-controls" style="opacity: 1;">
+    <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    <button class="msg-control-btn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
+    <button class="msg-control-btn" title="Resend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button>
+  </div>
+</div>
+
+<div class="message assistant">
+  <div class="runtime-snapshot">v1.2.5 (Current) • product-manager</div>
+  I'll start by mapping the codebase and then create a plan to implement these changes.
+  
+  <div class="activity-card bash">
+    <div class="activity-card-header">
+      <span style="color:var(--accent-magenta);">[Bash] run_shell_command</span>
+      <span style="font-size:9px; color:var(--text-muted);">0.4s</span>
+    </div>
+    <div class="activity-card-body">grep -rn "message-stream" .</div>
+  </div>
+
+  <div class="activity-card web">
+    <div class="activity-card-header">
+      <span style="color:var(--accent-orange);">[Web] web_search</span>
+      <span style="font-size:9px; color:var(--text-muted);">1.2s</span>
+    </div>
+    <div class="activity-card-body">Query: "Best practices for CSS multi-questionnaire UI"</div>
+  </div>
+  
+  <div class="msg-controls">
+    <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+  </div>
+</div>
+
+<div class="message assistant">
+  <div class="questionnaire-ui">
+    <div style="font-weight:bold; font-size:13px; margin-bottom:var(--xs);">Clarification Needed</div>
+    <div style="font-size:11px; color:var(--text-secondary); margin-bottom:var(--sm);">Please provide preferences before I proceed with the modifications.</div>
+    <div class="q-item">
+      <label>1. Should the composer stop button be prominent?</label>
+      <select class="q-input"><option>Yes, morph when idle</option><option>No, keep it subtle</option></select>
+    </div>
+    <div class="q-item">
+      <label>2. Any specific color for the Jump-to-latest badge?</label>
+      <input type="text" class="q-input" placeholder="e.g. blue, accent-lime...">
+    </div>
+    <div class="q-item" style="margin-top:var(--xs);">
+      <a href="#" style="color:var(--accent-blue); font-size:11px; text-decoration:none;">Something else...</a>
+    </div>
+    <div class="q-actions">
+      <button class="msg-control-btn" style="background:transparent; border:none;">Dismiss</button>
+      <button class="msg-control-btn" style="background:var(--surface-elevated);">Save Draft</button>
+      <button class="msg-control-btn" style="background:var(--accent-blue); color:var(--surface); border:none;">Submit</button>
+    </div>
+  </div>
+  <div class="msg-controls">
+    <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+  </div>
+</div>
+
+<div class="jump-to-latest">↓ Jump to latest</div>
+
                 </div>
 
                 <div class="chat-input-area" style="position:relative; padding: var(--md); border-top: 1px solid var(--border-light); display:flex; flex-direction:column; gap:0;">
@@ -6951,7 +7195,27 @@ impl Dashboard {
                     </div>
                   </div>
 
-                  <div style="background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
+                  <div style="position:relative; background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
+
+<div class="slash-command-menu" style="bottom: 100%; margin-bottom: 8px;">
+  <div class="slash-cmd-item active">
+    <span class="slash-cmd-name">/web</span>
+    <span class="slash-cmd-desc">Search & extract</span>
+  </div>
+  <div class="slash-cmd-item">
+    <span class="slash-cmd-name">/skill</span>
+    <span class="slash-cmd-desc">Invoke skill</span>
+  </div>
+  <div class="slash-cmd-item">
+    <span class="slash-cmd-name">/model</span>
+    <span class="slash-cmd-desc">Change model</span>
+  </div>
+  <div class="slash-cmd-item">
+    <span class="slash-cmd-name">@</span>
+    <span class="slash-cmd-desc">Symbol search</span>
+  </div>
+</div>
+
                     <div class="composer-chips-container" style="display:flex; flex-wrap:wrap; padding:0 var(--sm);"></div>
                     <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; outline:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
                     
@@ -6980,7 +7244,7 @@ impl Dashboard {
                         </div>
                       </div>
 
-                      <button style="background:var(--accent-blue); color:var(--surface); border:none; border-radius:4px; padding:6px var(--lg); font-size:11px; font-weight:600; cursor:pointer;">SEND</button>
+                      <button title="Stop (Idle)" style="background:transparent; color:var(--accent-magenta); border:1px solid var(--accent-magenta); border-radius:4px; padding:0; cursor:pointer; display:flex; align-items:center; justify-content:center; width:28px; height:28px;"><div style="width:10px; height:10px; background:currentColor; border-radius:2px; animation: pulse 1s infinite;"></div></button>
                     </div>
                   </div>
 
@@ -7037,14 +7301,99 @@ impl Dashboard {
         </div>
       </div>
 
+  
+          
   <div class="pixel-grid" id="pixelGrid"></div>
 
   <script>
     const mockThreads = {
+      'thread0': { role: 'assistant', title: 'DASHBOARD REVAMP', html: `<div class="sticky-plan-tracker">
+  <div style="font-weight:bold; font-size:12px; margin-bottom:4px; display:flex; justify-content:space-between;">
+    <span>Active Plan: Dashboard Revamp</span>
+    <span style="font-size:10px; color:var(--text-muted); cursor:pointer;">[Edit]</span>
+  </div>
+  <div class="plan-todo-item"><span class="todo-status done"></span> <span style="text-decoration:line-through; color:var(--text-muted)">1. Setup routing</span></div>
+  <div class="plan-todo-item"><span class="todo-status working"></span> <span style="color:var(--text-primary); font-weight:600;">2. Implement Chat UI changes</span></div>
+  <div class="plan-todo-item"><span class="todo-status"></span> <span style="color:var(--text-secondary)">3. Add settings IA</span></div>
+</div>
+
+<div class="message user">
+  <div class="runtime-snapshot">v1.2.4 (Frozen) • default-persona</div>
+  Please update the dashboard HTML to include the new slash commands and message controls.
+  <div class="msg-controls" style="opacity: 1;">
+    <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    <button class="msg-control-btn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
+    <button class="msg-control-btn" title="Resend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button>
+  </div>
+</div>
+
+<div class="message assistant">
+  <div class="runtime-snapshot">v1.2.5 (Current) • product-manager</div>
+  I'll start by mapping the codebase and then create a plan to implement these changes.
+  
+  <div class="activity-card bash">
+    <div class="activity-card-header">
+      <span style="color:var(--accent-magenta);">[Bash] run_shell_command</span>
+      <span style="font-size:9px; color:var(--text-muted);">0.4s</span>
+    </div>
+    <div class="activity-card-body">grep -rn "message-stream" .</div>
+  </div>
+
+  <div class="activity-card web">
+    <div class="activity-card-header">
+      <span style="color:var(--accent-orange);">[Web] web_search</span>
+      <span style="font-size:9px; color:var(--text-muted);">1.2s</span>
+    </div>
+    <div class="activity-card-body">Query: "Best practices for CSS multi-questionnaire UI"</div>
+  </div>
+  
+  <div class="msg-controls">
+    <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+  </div>
+</div>
+
+<div class="message assistant">
+  <div class="questionnaire-ui">
+    <div style="font-weight:bold; font-size:13px; margin-bottom:var(--xs);">Clarification Needed</div>
+    <div style="font-size:11px; color:var(--text-secondary); margin-bottom:var(--sm);">Please provide preferences before I proceed with the modifications.</div>
+    <div class="q-item">
+      <label>1. Should the composer stop button be prominent?</label>
+      <select class="q-input"><option>Yes, morph when idle</option><option>No, keep it subtle</option></select>
+    </div>
+    <div class="q-item">
+      <label>2. Any specific color for the Jump-to-latest badge?</label>
+      <input type="text" class="q-input" placeholder="e.g. blue, accent-lime...">
+    </div>
+    <div class="q-item" style="margin-top:var(--xs);">
+      <a href="#" style="color:var(--accent-blue); font-size:11px; text-decoration:none;">Something else...</a>
+    </div>
+    <div class="q-actions">
+      <button class="msg-control-btn" style="background:transparent; border:none;">Dismiss</button>
+      <button class="msg-control-btn" style="background:var(--surface-elevated);">Save Draft</button>
+      <button class="msg-control-btn" style="background:var(--accent-blue); color:var(--surface); border:none;">Submit</button>
+    </div>
+  </div>
+  <div class="msg-controls">
+    <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+  </div>
+</div>
+
+<div class="jump-to-latest">↓ Jump to latest</div>
+` },
       'thread1': { role: 'doc', title: 'DOC BUILDER', html: `<div class="message assistant">I'll help you build your requirements document. What is the main goal of this project?</div><div class="message user">We need a desktop IDE that orchestrates AI agents for coding tasks.</div><div class="message assistant">Got it. I've started capturing that in the live document. Any specific constraints or integrations you want to call out?</div><div class="message user">Yes, it needs to run locally using Rust for the backend and we'll use a local instance of the LLM via Ollama if the user doesn't want to use an API key.</div><div class="message assistant">Excellent. I've updated the "Architecture & Dependencies" section to reflect the Rust backend constraint and the optional local Ollama fallback.<div style="margin-top:var(--md); padding:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated); display:flex; align-items:center; gap:var(--sm); font-size:11px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Opened <b>requirements-draft.md</b> in Binder</div></div>` },
       'thread2': { role: 'assistant', title: 'ASSISTANT', mode: 'crew', html: `<div class="message user">Refactor the user schema to support multi-tenant workspaces. Currently, users are tied directly to projects, but we need them tied to a workspace, and projects belong to workspaces.</div><div class="message assistant" style="background:transparent; border:none; padding:0; box-shadow:none;"><div style="display:flex; flex-direction:column; gap:var(--sm);"><div style="background:var(--surface-elevated); border:1px solid var(--border-light); padding:var(--sm) var(--md); border-radius:4px; display:flex; justify-content:space-between; align-items:center; font-size:11px;"><span style="display:flex; align-items:center; gap:var(--xs);"><div class="wizard-activity-pulse" style="width:6px; height:6px;"></div> <b>database-admin</b> analyzing schema...</span><span style="color:var(--text-muted);">0:14</span></div><div style="background:var(--surface-elevated); border:1px solid var(--border-light); padding:var(--sm) var(--md); border-radius:4px; display:flex; justify-content:space-between; align-items:center; font-size:11px;"><span style="display:flex; align-items:center; gap:var(--xs);"><div class="wizard-activity-pulse" style="width:6px; height:6px;"></div> <b>rust-engineer</b> drafting migrations...</span><span style="color:var(--text-muted);">0:08</span></div></div></div><div class="message assistant">I've generated the migrations for the multi-tenant architecture. The <code>Workspace</code> table has been created, and the foreign key constraints on <code>Project</code> and <code>User</code> have been updated accordingly. I also migrated existing data by creating a default workspace for every existing user.<br><br>Would you like me to run the tests to verify the schema update?</div>` },
       'thread3': { role: 'assistant', title: 'ASSISTANT', mode: 'deep-plan', html: `<div class="message user">Users are getting 401s after 1 hour. Fix the token refresh logic.</div><div class="message assistant"><div class="message-block collapsed" style="border-left: 2px solid var(--border-light); padding-left: var(--sm); margin-bottom: var(--sm);"><div class="block-header" style="font-size:11px; cursor:pointer;">[+] Thinking (12s)</div></div><div class="message-block" style="border-left: 2px solid var(--accent-blue); padding-left: var(--sm); margin-bottom: var(--sm);"><div class="block-header" style="font-size:11px; cursor:pointer;">[-] Ran bash command</div><div class="block-body"><pre style="font-size:10px; background:var(--surface); padding:4px; overflow-x:auto;">$ git grep "token_expiry"</pre></div></div>I found the issue. The refresh token logic in <code>auth.rs</code> was comparing UTC against local time. I have applied the fix by standardizing all expiration checks to use <code>chrono::Utc::now()</code>.<br><br>I also added a unit test in <code>auth_tests.rs</code> to simulate a token on the edge of expiration to prevent regressions.</div>` },
-      'thread4': { role: 'interviewer', title: 'INTERVIEWER', html: `<div class="message assistant">Hello! I see you selected "Add a new Feature or Enhancement". To kick off our Feature Scope probe: What exactly are you adding or changing in this project?</div><div class="message user">I need to add a brand new feature step to the interactive interview UI so it correctly probes for project scope before doing the actual architecture interview.</div><div class="message assistant">Excellent, I have mapped the feature boundaries. Moving on to Architecture: Do you have a preferred UI framework for rendering this new phase tracker component?</div><div class="interview-chips" style="display:flex; flex-wrap:wrap; gap:var(--sm); margin-top:var(--sm);"><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">React</div><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">Slint</div><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">Let AI Decide</div></div><div class="message user">Let's go with Slint, since the rest of the application is migrating to it.</div><div class="message assistant">Perfect. I'll make sure the spec specifies Slint for the new phase tracker. I will generate a state machine model for the interview phases so we can visualize the flow before implementation.</div>` },
+      'thread4': { role: 'interviewer', title: 'INTERVIEWER', html: `<div class="message assistant">Hello! I see you selected "Add a new Feature or Enhancement". To kick off our Feature Scope probe: What exactly are you adding or changing in this project?</div><div class="message user">I need to add a brand new feature step to the interactive interview UI so it correctly probes for project scope before doing the actual architecture interview.</div><div class="message assistant">Excellent, I have mapped the feature boundaries. Moving on to Architecture: Do you have a preferred UI framework for rendering this new phase tracker component?</div><div class="questionnaire-ui">
+    <div style="font-weight:bold; font-size:13px; margin-bottom:var(--xs);">Clarification Needed</div>
+    <div style="font-size:11px; color:var(--text-secondary); margin-bottom:var(--sm);">Please provide preferences before I proceed with the modifications.</div>
+    <div class="q-item">
+      <label>1. UI framework for rendering phase tracker?</label>
+      <select class="q-input"><option>Slint</option><option>React</option></select>
+    </div>
+    <div class="q-actions">
+      <button class="msg-control-btn" style="background:var(--accent-blue); color:var(--surface); border:none;">Submit</button>
+    </div>
+  </div><div class="interview-chips" style="display:none;" style="display:flex; flex-wrap:wrap; gap:var(--sm); margin-top:var(--sm);"><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">React</div><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">Slint</div><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">Let AI Decide</div></div><div class="message user">Let's go with Slint, since the rest of the application is migrating to it.</div><div class="message assistant">Perfect. I'll make sure the spec specifies Slint for the new phase tracker. I will generate a state machine model for the interview phases so we can visualize the flow before implementation.</div>` },
       'thread5': { role: 'assistant', title: 'ASSISTANT', mode: 'ask', html: `<div style="text-align:center; font-size:10px; color:var(--text-muted); margin-bottom:var(--sm);">Context Lens Active</div><div class="message user" style="opacity: 0.5; position:relative; border:none; box-shadow:none;"><div style="position:absolute; top:-8px; right:-8px; background:var(--surface); border:1px solid var(--border); font-size:9px; padding:2px 4px; border-radius:4px; color:var(--text-primary);">Muted</div>Here is the old log file...</div><div class="message assistant">I understand. I am analyzing the dependency graph context you provided.</div><div class="message user msg-focused" style="position:relative; background:transparent;"><div style="position:absolute; top:-8px; right:-8px; background:var(--accent-blue); color:var(--surface); font-size:9px; padding:2px 4px; border-radius:4px;">Focused</div>Focus strictly on the circular dependency error block near the bottom of that output.</div><div class="message assistant">I see the issue. The circular dependency is occurring between <code>orchestrator.rs</code> and <code>agent_manager.rs</code>. <code>orchestrator</code> imports <code>AgentManager</code> to dispatch tasks, but <code>agent_manager</code> is trying to import the <code>OrchestratorState</code> enum directly from the orchestrator.<br><br>To resolve this, we should extract the state enums into a shared <code>types.rs</code> or <code>state.rs</code> module that both can depend on without referencing each other. Shall I implement this refactor?</div>` },
       'thread6': { role: 'assistant', title: 'ASSISTANT', mode: 'ask', html: `<div class="message user">Update the build script so it automatically copies the generated config file to the output directory.</div><div class="message assistant">I have modified <code>build.rs</code> to include the copy step. Let me run the build to test it.</div><div class="message assistant" style="border-color: var(--accent-magenta);"><b>FileSafe Blocked Action</b><br>The tool attempted to write to <code>/etc/config.json</code>, which is outside the allowed project sandbox.<br><br>Do you want to allow this write operation?</div><div class="message user">Oh, wait. No, it should write to <code>./dist/config.json</code> locally. Let me turn on YOLO mode so you can just fix it and run it.</div><div class="message assistant">Understood. YOLO mode is active. I've corrected the path in <code>build.rs</code> to target <code>./dist/config.json</code> and executed the build script. The file was successfully copied to the local distribution folder.</div>` },
       'thread7': { role: 'prd', title: 'PRD BUILDER', html: `<div class="message assistant">I've drafted the preliminary PRD for the "Multi-tenant Refactor" based on the requirements doc we built earlier.<div style="margin-top:var(--md); padding:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated); display:flex; align-items:center; gap:var(--sm); font-size:11px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Opened <b>multi-tenant-refactor.md</b> in Binder</div></div><div class="message user">Looks good, but can you add a section specifically detailing the migration strategy for existing active users? We can't have downtime during the deployment.</div><div class="message assistant">Absolutely. I have added a new section "4.3 Zero-Downtime Migration Strategy". It outlines a multi-phase rollout: first dual-writing to the new Workspace tables, then backfilling historical data, and finally flipping the read path. I've updated the document in the Binder.</div>` }
@@ -7054,12 +7403,13 @@ impl Dashboard {
       '1': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>1</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Phase</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-passed); color:#000; padding:1px 4px; font-size:9px;">Passed</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>1m 20s</b></div></div></details>',
       '2': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Phase</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-running); color:#000; padding:1px 4px; font-size:9px;">Running</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>0m 45s</b></div></div></details>',
       '2.1': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2.1</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Task</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-passed); color:#000; padding:1px 4px; font-size:9px;">Passed</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Attempts</span> <b>2</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>0m 22s</b></div></div></details>',
-      '2.2': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C1 Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2.2</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--accent-lime); color:#000; padding:1px 4px; font-size:9px;">Running</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Attempts</span> <b>1 (Retry 0)</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Safe-Point ID</span> <b style="color:var(--accent-blue);">sp-49a8f</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Worktree</span> <b>wt-2</b></div><div style="margin-top:var(--sm); border-top:1px dashed var(--border-light); padding-top:4px;"><span style="color:var(--text-secondary);">Queue Analysis:</span><div style="color:var(--text-muted); margin-top:2px;">Last wake: Dependency Resolved</div></div></div></details><details class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C2 Plan Mapping</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="color:var(--text-secondary); margin-bottom:4px;">Breadcrumb: Phase 2 &gt; Task 2 &gt; Subtask 2</div><button class="wizard-btn" style="font-size:9px; padding:2px 6px;">Open plan at section</button></div></details><details class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C3 Worker Activity</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div><span style="color:var(--text-secondary);">Identity:</span> rust-engineer</div><div><span style="color:var(--text-secondary);">Model:</span> Claude sonnet-4.5</div><div style="margin-top:var(--xs);"><a href="#" style="color:var(--accent-blue);">View logs...</a></div></div></details><details class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C6 HITL &amp; Recovery</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="color:var(--text-muted); margin-bottom:var(--sm);">No pending approvals.</div><div style="border-top:1px dashed var(--border-light); padding-top:var(--sm); display:flex; flex-direction:column; gap:var(--xs);"><button class="wizard-btn" style="font-size:10px;">Retry from safe point</button><button class="wizard-btn" style="font-size:10px;">Start fresh attempt</button></div></div></details>',
+      '2.2': '<div style="margin-bottom:var(--sm); font-size:10px; padding:2px 6px; background:rgba(255,255,255,0.1); border-radius:12px; color:var(--text-muted); display:inline-block;">Runtime: v1.2.5 (Current) • db-admin</div><details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C1 Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2.2</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--accent-lime); color:#000; padding:1px 4px; font-size:9px;">Running</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Attempts</span> <b>1 (Retry 0)</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Safe-Point ID</span> <b style="color:var(--accent-blue);">sp-49a8f</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Worktree</span> <b>wt-2</b></div><div style="margin-top:var(--sm); border-top:1px dashed var(--border-light); padding-top:4px;"><span style="color:var(--text-secondary);">Queue Analysis:</span><div style="color:var(--text-muted); margin-top:2px;">Last wake: Dependency Resolved</div></div></div></details><details class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C2 Plan Mapping</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="color:var(--text-secondary); margin-bottom:4px;">Breadcrumb: Phase 2 &gt; Task 2 &gt; Subtask 2</div><button class="wizard-btn" style="font-size:9px; padding:2px 6px;">Open plan at section</button></div></details><details class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C3 Worker Activity</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div><span style="color:var(--text-secondary);">Identity:</span> rust-engineer</div><div><span style="color:var(--text-secondary);">Model:</span> Claude sonnet-4.5</div><div style="margin-top:var(--xs);"><a href="#" style="color:var(--accent-blue);">View logs...</a></div></div></details><details class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C6 HITL &amp; Recovery</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="color:var(--text-muted); margin-bottom:var(--sm);">No pending approvals.</div><div style="border-top:1px dashed var(--border-light); padding-top:var(--sm); display:flex; flex-direction:column; gap:var(--xs);"><button class="wizard-btn" style="font-size:10px;">Retry from safe point</button><button class="wizard-btn" style="font-size:10px;">Start fresh attempt</button></div></div></details>',
       '2.3': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2.3</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Task</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-pending); color:#fff; padding:1px 4px; font-size:9px;">Pending</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Blocked</span> <b>Yes</b></div><div style="color:var(--text-muted); margin-top:var(--sm);">Waiting on Task 2.2 completion.</div></div></details>'
     };
 
     window.switchToChatThread = function(threadId) {
       const thread = mockThreads[threadId];
+      document.querySelectorAll('.slash-command-menu').forEach(menu => menu.classList.toggle('visible', threadId === 'thread1'));
       if (!thread) return;
       document.querySelectorAll('.chat-thread-item').forEach(i => i.classList.toggle('active', i.getAttribute('data-thread') === threadId));
       document.querySelectorAll('.messageStream').forEach(el => { el.innerHTML = thread.html; });
@@ -7406,6 +7756,9 @@ impl Dashboard {
         const fileItem = e.target.closest('.file-tree .file');
         if (fileItem && !e.target.closest('.git-status') && !e.target.closest('.folder')) {
             const filename = fileItem.textContent.trim().split(' ')[0];
+            const lowerName = filename.toLowerCase();
+            const ext = lowerName.includes('.') ? lowerName.split('.').pop() : '';
+
             const pane1 = document.getElementById('editorPane1');
             const edView = document.getElementById('editorView');
             if (edView) edView.style.display = 'flex';
@@ -7427,15 +7780,31 @@ impl Dashboard {
                 const codeTarget = pane1.querySelector('.editor-code');
                 if (codeTarget) {
                     let fakeCode = `// Viewing ${filename}\n\n`;
-                    if (filename.endsWith('.rs')) {
-                        fakeCode += `pub fn process_${filename.replace(/[^a-zA-Z0-9]/gi, '_')}() -> Result<(), Error> {\n    println!("Executing logic for ${filename}");\n    let state = load_state()?;\n    \n    if state.is_active() {\n        perform_action(&state);\n    }\n    \n    Ok(())\n}\n\n#[cfg(test)]\nmod tests {\n    #[test]\n    fn test_process() {\n        assert!(true);\n    }\n}`;
+
+                    if (filename === 'app.rs') {
+                        fakeCode += `use std::time::Duration;\n\n#[derive(Debug, Clone)]\npub struct AppConfig {\n    pub profile: String,\n    pub max_concurrent_runs: usize,\n    pub dashboard_enabled: bool,\n}\n\n#[derive(Debug, Clone, Copy)]\npub enum OrchestratorMode {\n    Planner,\n    Executor,\n    DashboardOnly,\n}\n\npub struct App {\n    config: AppConfig,\n    mode: OrchestratorMode,\n}\n\nimpl App {\n    pub fn new(profile: &str) -> Self {\n        Self {\n            config: AppConfig {\n                profile: profile.to_string(),\n                max_concurrent_runs: 4,\n                dashboard_enabled: true,\n            },\n            mode: OrchestratorMode::Planner,\n        }\n    }\n\n    pub fn from_env() -> Self {\n        // In the real app we would read env vars, files, etc.\n        Self::new(\"dev\")\n    }\n\n    pub fn run(&self) -> anyhow::Result<()> {\n        tracing::info!(profile = %self.config.profile, \"starting orchestrator app\");\n        // spin up scheduler, agents, and dashboard\n        Ok(())\n    }\n}\n\npub fn bootstrap() -> anyhow::Result<()> {\n    let app = App::from_env();\n    app.run()?;\n    Ok(())\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n\n    #[test]\n    fn bootstrap_uses_dev_profile_by_default() {\n        let app = App::new(\"dev\");\n        assert_eq!(app.config.profile, \"dev\");\n    }\n}\n`;
+                    } else if (filename === 'main.rs') {
+                        fakeCode += `use puppet_master::app::bootstrap;\n\nfn main() {\n    // Pretend CLI parsing layer\n    let profile = std::env::var(\"PUPPET_PROFILE\").unwrap_or_else(|_| \"dev\".to_string());\n\n    if let Err(err) = run_with_profile(&profile) {\n        eprintln!(\"fatal: {err:?}\");\n        std::process::exit(1);\n    }\n}\n\nfn run_with_profile(profile: &str) -> anyhow::Result<()> {\n    println!(\"starting Puppet Master with profile={profile}\");\n    // In the real binary we would wire tracing, metrics, etc.\n    bootstrap()?;\n    Ok(())\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n\n    #[test]\n    fn dev_profile_is_fast_and_chatty() {\n        let result = run_with_profile(\"dev\");\n        assert!(result.is_ok());\n    }\n}\n`;
+                    } else if (filename === 'dashboard.rs') {
+                        fakeCode += `#[derive(Debug, Clone)]\npub struct WidgetId(pub &'static str);\n\n#[derive(Debug, Clone)]\npub struct DashboardWidget {\n    pub id: WidgetId,\n    pub title: &'static str,\n    pub span: (u8, u8), // (columns, rows)\n}\n\n#[derive(Debug, Default)]\npub struct DashboardLayout {\n    pub widgets: Vec<DashboardWidget>,\n}\n\nimpl DashboardLayout {\n    pub fn default_main() -> Self {\n        Self {\n            widgets: vec![\n                DashboardWidget { id: WidgetId(\"orch_status\"), title: \"Orchestrator Status\", span: (2, 2) },\n                DashboardWidget { id: WidgetId(\"run_graph\"), title: \"Run Graph\", span: (2, 2) },\n                DashboardWidget { id: WidgetId(\"agents\"), title: \"Agents\", span: (1, 2) },\n                DashboardWidget { id: WidgetId(\"activity_log\"), title: \"Activity Log\", span: (3, 1) },\n            ],\n        }\n    }\n\n    pub fn visible_ids(&self) -> impl Iterator<Item = &WidgetId> {\n        self.widgets.iter().map(|w| &w.id)\n    }\n}\n\npub fn render_to_tui(layout: &DashboardLayout) {\n    // Here we would draw the grid in a terminal UI or web canvas.\n    for widget in &layout.widgets {\n        println!(\"rendering widget: {} ({:?})\", widget.title, widget.span);\n    }\n}\n`;
+                    } else if (filename === 'config.rs') {
+                        fakeCode += `use serde::Deserialize;\n\n#[derive(Debug, Deserialize, Clone)]\npub struct Config {\n    pub profile: String,\n    pub unraid_url: Option<String>,\n    pub max_parallel_plans: usize,\n}\n\nimpl Default for Config {\n    fn default() -> Self {\n        Self {\n            profile: \"dev\".to_string(),\n            unraid_url: None,\n            max_parallel_plans: 2,\n        }\n    }\n}\n\npub fn load_config() -> anyhow::Result<Config> {\n    // In reality we would merge env, CLI, and files.\n    let mut cfg = Config::default();\n    if let Ok(profile) = std::env::var(\"PUPPET_PROFILE\") {\n        cfg.profile = profile;\n    }\n    Ok(cfg)\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n\n    #[test]\n    fn uses_defaults_when_env_is_missing() {\n        let cfg = load_config().unwrap();\n        assert_eq!(cfg.profile, \"dev\");\n    }\n}\n`;
+                    } else if (filename === 'integration.rs') {
+                        fakeCode += `use crate::app::bootstrap;\n\n#[test]\nfn end_to_end_plan_run_succeeds() {\n    // A tiny fantasy of what a happy-path integration test might look like.\n    let result = bootstrap();\n    assert!(result.is_ok(), \"expected bootstrap to succeed\");\n}\n\n#[test]\nfn dashboard_can_render_after_first_plan() {\n    // Here we would drive a fake plan through the orchestrator and\n    // assert that the dashboard state contains at least one completed run.\n    assert!(true, \"dashboard rendering is not wired yet in this demo\");\n}\n`;
                     } else if (filename === 'Cargo.toml') {
-                        fakeCode += `[package]\nname = "puppet-master"\nversion = "0.1.0"\nedition = "2021"\n\n[dependencies]\nserde = { version = "1.0", features = ["derive"] }\ntokio = { version = "1.30", features = ["full"] }\nreqwest = { version = "0.11", features = ["json"] }`;
+                        fakeCode += `[package]\nname = \"puppet-master\"\nversion = \"0.1.0\"\nedition = \"2021\"\ndescription = \"Agentic orchestrator + dashboard for complex automation workflows\"\nauthors = [\"You <you@example.com>\"]\n\n[dependencies]\nserde = { version = \"1.0\", features = [\"derive\"] } # configuration + JSON\ntokio = { version = \"1.30\", features = [\"full\"] }  # async runtime for agents\nreqwest = { version = \"0.11\", features = [\"json\"] } # talking to remote services\ntracing = \"0.1\"                                      # structured logging\nanyhow = \"1\"                                         # ergonomic error handling\nclap = { version = \"4\", features = [\"derive\"] }     # CLI for the binary\n\n[features]\n# Enable extra widgets and endpoints for the dashboard.\ndashboard = []\n# Talk to an Unraid box for storage and compute.\nunraid-integration = []\n`;
                     } else if (filename === 'README.md') {
-                        fakeCode += `# Puppet Master\n\nA modern, highly extensible orchestrator and agentic IDE.\n\n## Getting Started\n\n\`\`\`bash\ncargo build --release\n./target/release/puppet-master\n\`\`\`\n\n## Features\n- AI Integration\n- Workspace Management`;
+                        fakeCode += `# Puppet Master\n\nA modern, highly extensible orchestrator and agentic IDE for long-running automation.\n\n## Quick start\n\nbash\n  cargo build --release\n  ./target/release/puppet-master --profile dev\n\n## Core concepts\n\n- Orchestrator: coordinates plans, agents, and external systems.\n- Agent: a focused worker that owns part of the workflow.\n- Dashboard: a live view over plans, runs, and logs.\n- Pipelines: composable graphs describing how work flows.\n\n## Next steps\n\n- Point the orchestrator at a real repo.\n- Configure a few sample plans.\n- Hook it into your existing CI so every change gets a rehearsal run.\n`;
+                    } else if (ext === 'rs') {
+                        fakeCode += `// Module extracted from ${filename}\n\npub struct ComponentState {\n    pub id: String,\n    pub healthy: bool,\n}\n\npub fn reconcile(state: &mut ComponentState) {\n    if !state.healthy {\n        println!(\"restarting {}\", state.id);\n        state.healthy = true;\n    }\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n\n    #[test]\n    fn unhealthy_components_are_restarted() {\n        let mut s = ComponentState { id: \"demo\".into(), healthy: false };\n        reconcile(&mut s);\n        assert!(s.healthy);\n    }\n}\n`;
+                    } else if (ext === 'md') {
+                        fakeCode += `# ${filename}\n\nDesign note for a Puppet Master component.\n\n## Context\n\nDescribe which part of the orchestrator this document belongs to\n(dashboard, planner, agents, storage, etc.).\n\n## Open questions\n\n- How should this component report progress back to the dashboard?\n- What failure modes do we expect in production?\n\n## Sketch\n\n- Start a lightweight agent process.\n- Stream structured events into the run graph.\n- Persist enough state to resume after a crash.\n`;
+                    } else if (ext === 'toml') {
+                        fakeCode += `# configuration for ${filename}\n\n[orchestrator]\nprofile = \"dev\"\nmax_parallel_plans = 4\n\n[unraid]\nurl = \"http://unraid.local\"\nshares = [\"puppet-artifacts\", \"puppet-cache\"]\n`;
                     } else {
-                        fakeCode += `// Generic content for ${filename}\n\nfunction init() {\n  console.log("Initialized");\n}`;
+                        fakeCode += `// Generic content for ${filename}\n\nfunction init() {\n  console.log(\"Initialized ${filename} in the fake editor view\");\n}\n`;
                     }
+
                     codeTarget.innerHTML = fakeCode.replace(/</g, '&lt;').replace(/>/g, '&gt;');
                 }
             }
@@ -7569,6 +7938,25 @@ impl Dashboard {
         }
       });
       
+      document.querySelectorAll('.editor-tabs .tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('.editor-tabs .tab').forEach(function(t) { t.classList.remove('active'); });
+          this.classList.add('active');
+        });
+      });
+
+      document.querySelectorAll('.page-agent-config .settings-tab').forEach(tab => {
+          tab.addEventListener('click', function(e) {
+              e.preventDefault();
+              document.querySelectorAll('.page-agent-config .settings-tab').forEach(t => t.classList.remove('active'));
+              this.classList.add('active');
+              const target = this.getAttribute('data-agent-tab');
+              document.querySelectorAll('.agent-tab-content').forEach(c => {
+                  c.style.display = c.id === 'agent-tab-' + target ? 'block' : 'none';
+              });
+          });
+      });
+
       document.querySelectorAll('.page-tab').forEach(function(tab) {
         tab.addEventListener('click', function() {
           const pageId = this.getAttribute('data-page');
@@ -7920,6 +8308,7 @@ impl Dashboard {
     }
   });
 
+  if (window.switchToChatThread) { window.switchToChatThread('thread0'); }
   });
 })();
 </script>
