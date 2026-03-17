@@ -171,6 +171,32 @@ Project management and switching. Shows project list with status indicators, cur
 - Tooltip on hover shows specific health details
 
 ### 7.4 Settings (Unified)
+
+#### 7.4B Agent Config
+`Agent Config` is the management home for assistant-facing runtime packages and configuration that travel with the assistant experience rather than with global system dependencies.
+
+Minimum tabs:
+- `Personas`
+- `Skills`
+
+Rules:
+- This supersedes older standalone `Skills page` wording.
+- `Settings` remains the home for system-wide dependencies, provider accounts, permissions, models, LSP, MCP, and other global runtime configuration.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Personas.md, ContractName:Plans/assistant-chat-design.md
+
+#### 7.4C Skills tab
+The Skills tab shows a browseable catalog of currently available skills.
+
+Required capabilities:
+- distinguish bundled PM skills, imported skills, and installed catalog skills
+- show readiness / validation state and missing-runtime requirements
+- allow drag/drop import and file-picker import
+- allow launching the Skill Store for browse/install flows only
+- keep management actions in the catalog itself rather than moving them into slash commands
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+
 #### 7.4.B Source Control, GitHub Actions, and Docker Manager settings normalization
 
 The unified Settings surface MUST expose configuration and persistence controls for the three operational side panels without redefining their runtime contracts.
@@ -210,7 +236,7 @@ This is a **heavily redesigned** unified settings page that merges four previous
 | **Verification** | Verification checks and screenshot toggles. | Old "Config" Verification tab |
 | **Memory** | Multi-level memory with progress/agents/PRD file paths, Context Injection toggles, and Retrieval & Search controls. | Old "Config" Memory tab |
 | **Budgets** | Per-platform token budgets. | Old "Config" Budgets tab |
-| **Advanced** | FileSafe Guards, MCP Configuration, Personas, Containers & Registry, CI / GitHub Actions, sub-agent toggles, cleanup config, and the explicit removal of legacy per-platform experimental toggles. | Old "Config" Advanced tab + newtools.md + FileSafe.md + MiscPlan.md + GitHub_API_Auth_and_Flows.md + Personas.md |
+| **Advanced** | FileSafe Guards, MCP Configuration, Containers & Registry, CI / GitHub Actions, sub-agent toggles, cleanup config, and the explicit removal of legacy per-platform experimental toggles. | Old "Config" Advanced tab + newtools.md + FileSafe.md + MiscPlan.md + GitHub_API_Auth_and_Flows.md |
 | **Permissions** | Dedicated permissions management screen with scope selector, wildcard default, per-tool override table, presets, allowlists, doom_loop policy, and per-Persona permission profile editor. | Plans/Permissions_System.md + Plans/Tools.md |
 | **LSP** | Language Server Protocol settings, built-in/custom server controls, env/init options, and project override disclosure. | Plans/LSPSupport.md |
 | **Interview** | Interview-specific config, subagent toggles, Multi-Pass Review settings, question bounds, architecture confirmation, vision provider, and Interview concurrency overrides. | Old "Config" Interview tab + interview-subagent-integration.md |
@@ -219,7 +245,6 @@ This is a **heavily redesigned** unified settings page that merges four previous
 | **Health** | System health checks with platform filtering, status (PASS/FAIL/WARN/SKIP), fix suggestions, install/uninstall actions, direct-provider auth/connectivity checks, platform versions, manual path override for Cursor/Claude, worktree management, storage/cleanup actions, and multi-account health visibility. Gemini health includes grouped OAuth/API-key accounts, current effective account, current effective auth mode, auth/configuration/availability state, cooldown/auth freshness, and validation-required / needs-configuration disclosure where applicable. | Old "Doctor" view + WorktreeGitImprovement.md + MiscPlan.md + Plans/Multi-Account.md |
 | **Rules & Commands** | Application rules, project rules, User Commands management, dry-run preview, shortcut binding, and schema validation. | agent-rules-context.md + feature-list.md + Commands_System.md |
 | **Shortcuts** | Full keyboard shortcut table with change/reset/reset-all and export/import. | MiscPlan.md |
-| **Skills** | Discover/manage `SKILL.md` files, permission controls, preview, and refresh. | Plans/Skills_System.md |
 | **Plugins** | Manage installed plugins, enable/disable, reload, and plugin log viewer. | Plans/Plugins_System.md |
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/rewrite-tie-in-memo.md
@@ -341,7 +366,7 @@ ContractRef: ContractName:Plans/rewrite-tie-in-memo.md
 
 **Audit rule:** Any row above marked "Required" must not ship with a missing variant. No in-scope row may remain single-variant.
 
-**Tab sub-grouping:** With 25 tabs, use a two-level navigation: left sidebar within Settings for groups, right area for the selected tab's content. Group labels act as collapsible section headers in the sidebar. Groups: **Core** (General, Tiers, Branching) | **Features** (Verification, Memory, Budgets, Permissions, Advanced, Interview, LSP, Models, Media) | **System** (Authentication, Health, Rules & Commands, Shortcuts, Skills, HITL) | **Extensions** (Plugins, Formatters, Catalog, Sync, SSH, Debug) | **Raw** (YAML). Each group header shows item count badge. Clicking a group header expands/collapses that group in the sidebar. Active tab highlighted with accent-left-border (3px).
+**Tab sub-grouping:** With 24 tabs, use a two-level navigation: left sidebar within Settings for groups, right area for the selected tab's content. Group labels act as collapsible section headers in the sidebar. Groups: **Core** (General, Tiers, Branching) | **Features** (Verification, Memory, Budgets, Permissions, Advanced, Interview, LSP, Models, Media) | **System** (Authentication, Health, Rules & Commands, Shortcuts, HITL) | **Extensions** (Plugins, Formatters, Catalog, Sync, SSH, Debug) | **Raw** (YAML). Each group header shows item count badge. Clicking a group header expands/collapses that group in the sidebar. Active tab highlighted with accent-left-border (3px).
 
 **§7.4.2 LSP (LSP tab):** LSP support is **MVP** (required for desktop release), not optional. Per Plans/LSPSupport.md, the GUI must expose full LSP configuration so users can control automatic downloads, enable/disable servers, set env and initialization options, and add custom servers. Provide **Settings > LSP** with:
 
@@ -602,7 +627,7 @@ The **Plugins** tab in Settings provides visibility and control over discovered 
 
 4. **Reload plugins**: "Reload" button re-scans discovery paths and reloads all plugin manifests. Toast confirms reload with count.
 
-5. **Per-Persona disabling**: A note linking to Settings > Advanced > Personas where `disabled_plugins` can be set per Persona.
+5. **Per-Persona disabling**: A note linking to Agent Config > Personas where `disabled_plugins` can be set per Persona.
 
 6. **ELI5/Expert**: In ELI5 mode, show only plugin name, description, and enabled toggle. Component counts, log viewer, and hook-level toggles are hidden. Tooltip prefix: `tooltip.plugins.*`.
 
@@ -644,7 +669,7 @@ The **Models** tab in Settings provides model and variant configuration. Layout:
 
 3. **Variant editor** (collapsible card): List of custom variants with name, model ID, and description. Add/edit/remove custom variants. Built-in variants (default/fast/powerful) can be customized (model ID override) but not deleted. Disable a variant: toggle to exclude it from the cycling order.
 
-4. **Per-Persona model overrides** (collapsible card): Table of Personas with `default_model` and `default_variant` columns. Edit button per row opens a model/variant picker. Clearing a field falls back to global config. Links to Settings > Advanced > Personas for full Persona editing.
+4. **Per-Persona model overrides** (collapsible card): Table of Personas with `default_model` and `default_variant` columns. Edit button per row opens a model/variant picker. Clearing a field falls back to global config. Links to Agent Config > Personas for full Persona editing.
 
 5. **Provider priority list** (collapsible card): Ordered list of provider IDs. Drag-to-reorder or up/down buttons. Determines the internal priority list for fallback when no model is explicitly set.
 
@@ -692,13 +717,13 @@ ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-
 
 <a id="SKILLS-TAB"></a>
 
-**§7.4.16 Skills (Skills tab):**
+**§7.4.16 Skills (Agent Config > Skills):**
 
 > **SSOT:** The canonical specification for skill identity, on-disk format, discovery roots, search order, shadowing, validation, and permission semantics is `Plans/Skills_System.md`. This section provides the FinalGUISpec GUI integration points only; normative behavior is defined in the SSOT.
 
 ContractRef: ContractName:Plans/Skills_System.md#GUI-SKILLS, ContractName:Plans/DRY_Rules.md
 
-The **Skills** tab in Settings provides discovery, inspection, and permission management for SKILL.md files. Skills are discovered from project-local roots (e.g., `.puppet-master/skills/`) and global roots (`~/.config/puppet-master/skills/`); the full set of discovery roots and their priority order is defined in `Plans/Skills_System.md` §3.
+The **Skills** management surface under **Agent Config > Skills** provides discovery, inspection, import/readiness visibility, and permission management for `SKILL.md` files. Skills are discovered from project-local roots (e.g., `.puppet-master/skills/`) and global roots (`~/.config/puppet-master/skills/`); the full set of discovery roots and their priority order is defined in `Plans/Skills_System.md` §3.
 
 **Layout:**
 
@@ -731,7 +756,7 @@ The **Skills** tab in Settings provides discovery, inspection, and permission ma
 
 **ELI5/Expert**: In ELI5 mode, show only skill name, description, source, and permission dropdown. Status column, shadowed badge, bulk permission, and validate-all button are hidden. Tooltip prefix: `tooltip.skills.*`.
 
-**Tab sub-grouping update**: The Skills tab belongs to the **System** group in the Settings sidebar.
+**Tab sub-grouping update**: Skill management lives under **Agent Config > Skills**, not as a standalone Settings sidebar tab.
 
 ### 7.5 Wizard
 
@@ -1025,206 +1050,79 @@ Platform readiness view for Setup and first-run troubleshooting. Shows detected 
 
 ### 7.16 Chat Panel (NEW)
 
-#### 7.16.R Auto Retrieval chip (thread-local) + live animation
+The Chat Panel is the canonical assistant-thread surface for Ask, Plan, Interview, BrainStorm, and Crew-assisted planning/execution handoff.
 
-Add an **Auto Retrieval** chip to the Chat Panel header/footer (placement may be near the context usage indicator):
+#### Thread header and mode controls
+Required controls:
+- platform/model/effort selectors
+- mode selector (`Ask`, `Plan`, `Interview`, `BrainStorm`, `Crew` as applicable)
+- thread selector / new thread action
+- compact-context / usage access where available
 
-- **Function:** Thread-local On/Off override for smart auto-retrieval (RAG) across project chat/code/log sources.
-- **Visual states:** Off (neutral), On (lit/accent), Searching (animated spinner/pulse while any retrieval query is running).
-- **Popover:** On click, show current override state and last retrieval summary with a “View details” action that scrolls to the most recent retrieval audit block in the thread.
-- **Accessibility:** Keyboard focusable; state announced via aria-label.
+Rules:
+- PM-native Ask and Plan semantics are authoritative and MUST NOT be rewritten to match OpenCode defaults.
+- Ask remains read-only analysis.
+- Plan remains read-only until explicit execution.
 
-#### 7.16.S Context Lens (Mute / Focus / Subcompact) — chat header button + per-message styling
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md
 
-Add a **Context Lens** button to the Chat Panel header (next to other thread-level controls):
+#### Message stream and controls
+Required message behaviors:
+- always-visible copy icons on user and assistant messages
+- `Stop`, `Edit`, and `Resend` apply only to the latest user message in scope
+- `Stop` cancels immediately
+- `Edit` / `Resend` rewind later work
+- controls disappear after the next user message
+- when scrolled away from the bottom, show a jump-to-latest control with unseen-count badge
 
-- **Button state:** Lit/colored when active; clicking shows submenu with **Mute / Focus / Subcompact** and highlights the current mode.
-- **Selection mode:** When active, clicking messages toggles them in the current mode selection set; exiting Context Lens clears selection (no “keep selection” behavior).
-- **Per-message visuals (required):**
-  - **Muted:** dimmed + “Muted” badge; tooltip “Excluded from context.”
-  - **Focused:** highlighted/pinned styling + “Focus” badge.
-  - **Subcompacted:** show compact “Subcompacted” summary block with expand/collapse and “Revert subcompact” action.
-- **Subcompact warning:** Applying Subcompact must show a warning modal before committing.
-- **Audit affordance:** Context Lens actions must create/update an audit entry block (see assistant-chat-design.md §13), and the UI should offer a “Review selection” link from the Context Lens submenu when any messages are selected.
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
 
-ContractRef: ContractName:Plans/assistant-chat-design.md#17-context-truncation, ContractName:Plans/UI_Command_Catalog.md#2-6-chat-context-usage-commands
-**Location:** Side panel (right by default, 240-480px, detachable)
+#### Activity cards
+The message stream uses the shared inline operation-card family.
 
-**Structure:**
+Required card families:
+- Bash / command cards
+- Web activity cards
+- Files explored / files changed cards
+- Diff cards
+- Subagent cards
 
-```
-+------------------------------------------+
-| [Chat] [Files]              [_] [pop] [x] |  Tab bar + panel controls
-+------------------------------------------+
-| [Ask] [Plan] [Int] [BS] [Crew]            |  Mode tabs (28px)
-+------------------------------------------+
-| v Thread: "Project X Plan"     [+]        |  Thread selector (24px)
-+------------------------------------------+
-|                                           |
-|   MESSAGE STREAM                          |  Flex: fills available
-|   (scrollable, virtualized)               |
-|                                           |
-|   +- Assistant -------------------------+ |
-|   | [thinking >] collapsed              | |
-|   | Response text here...               | |
-|   | [Read: 3 files] [Changed: 1]        | |  Activity badges
-|   +-------------------------------------+ |
-|                                           |
-+------------------------------------------+
-| [Queued: "follow up msg"  edit send del]  |  Queue area (0-2 items)
-+------------------------------------------+
-| +------------------------------------+-+ |
-| | Message input...              @  | S | |  Input (48-120px, auto-grow)
-| |                               pin|   | |
-| +------------------------------------+-+ |
-+------------------------------------------+
-| claude v | sonnet-4.5 v | 42k/128k [o]   |  Footer (20px)
-+------------------------------------------+
-```
+Rules:
+- command cards show compact preview in chat and focus the same live session in Terminal
+- web cards distinguish `Searching Web`, `Extracting Site`, `Researching Web`, `Crawling Site`, `Mapping Site`, and `Reading Site`
+- diff cards remain distinct from generic code blocks
+- primary action labels/routes must match the card type rather than one generic `open` action
 
-**Mode tabs:** Ask | Plan | Interview | BrainStorm | Crew. Active tab has accent background + 2px bottom border.
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/Tools.md
 
-Normalization rule: `Interview`, `BrainStorm`, and `Crew` are workflow overlays/surfaces. The canonical runtime mode sent to execution remains `ask`, `plan`, `regular`, or `yolo` per `Plans/Run_Modes.md`; overlay selection is persisted separately for UX only.
+#### Composer and submission behavior
+Required composer rules:
+- Steer vs Queue remain explicit submission modes
+- while a run is active and the composer is otherwise idle, the send control morphs into stop
+- if the user starts typing a new message during an active run, the composer returns to send behavior for queue/steer semantics
+- queued messages remain visible and editable
 
-**Mode details:**
-- **Ask:** Read-only analysis mode. No file edits, no execution. Good for questions, explanations, code review.
-- **Plan:** Creates a plan before execution. Three depth levels selectable via dropdown in plan panel header:
-  - *Shallow:* Brief plan, minimal clarifying questions
-  - *Regular:* Standard plan with clarifying questions and research
-  - *Deep:* Comprehensive plan with extensive research and detailed clarifying questions
-  Plan flow: Clarifying questions → Research → Plan + Todo → User approval → "Execute" button triggers execution via fresh processes. Plan panel updates progress in real-time. After execution, chat returns to normal Ask mode. "Add to queue" option available when invoked from Interview mode.
-- **Interview:** Switches to interview flow with phase-based Q&A. Reduced phases when invoked from Chat (vs standalone Interview view). Questions show suggested answer chips (clickable buttons) and a "Something else" freeform text bar, matching the standalone Interview UI (§7.6). Thought stream toggle available. At end: "Do now" or "Add to queue" options. "Continue in Assistant" button from orchestrator context opens a new Chat thread with interview context pre-loaded.
-- **BrainStorm:** Multi-model collaborative mode. Multiple subagents with shared context discuss and research before producing a unified plan. Subagents can communicate with each other before merging results. On "Execute," chat switches to Agent mode (single agent or crew executes the plan).
-- **Crew:** Invokes a crew (multiple coordinated agents) with a Plan. Crew members work together on the plan. "Execute with crew" button after plan approval. Crew can work from existing or new plan; plan format is consumable by both single agents and crews.
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
 
-**Teach capability:** The assistant can explain how Puppet Master works using built-in documentation (REQUIREMENTS.md, ARCHITECTURE.md, AGENTS.md, GUI_SPEC.md, platform CLI sections). Invoked via chat (e.g., "How does [X] work?") or `/teach` command. No separate UI -- runs within any chat mode.
+#### Plan panel and question forms
+Required planning/question UX:
+- sticky plan panel is authoritative for plan + TODO state
+- inline questionnaire / clarification forms support multiple questions in one flow
+- required questions block submit
+- drafts auto-save in bounded structured form
+- dismiss is explicit pause, not implicit rejection
 
-**Thread selector:** Dropdown with current thread name and status dot (green=idle, blue=running, orange=queued, red=attention_required). Click opens floating thread list overlay (max 300px wide) over message area with search, archive toggle, and [+] new thread. No permanent thread sidebar (panel too narrow).
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/chain-wizard-flexibility.md
 
-**Thread management:**
-- **New thread:** [+] button creates a new thread; inherits current platform/model/mode or defaults
-- **Rename:** Double-click thread name in list; or right-click → Rename
-- **Archive:** Right-click → Archive; archived threads hidden by default (toggle "Show archived" in thread list)
-- **Delete:** Right-click → Delete; confirmation modal required ("This cannot be undone")
-- **Resume:** Resume a previous thread, restoring its full conversation context
-- **Rewind:** Restore thread to a specific message (right-click message → "Rewind to here"); all messages after that point are soft-deleted (recoverable via "Show removed")
-- **Share/Export:** Right-click thread → Export; bundles thread as JSON (messages, plan, metadata); secrets are stripped automatically
-- **Run-complete notification:** When a run completes in a background thread, that thread's tab shows an accent dot badge; optional toast notification ("Thread 'Project X' completed"). Notification behavior configurable in Settings/General (on/off)
-- **Max concurrent runs:** Default 10 per thread; configurable in Settings/General. When limit reached, new runs are queued with a message "Run queued -- N runs active". Note: per-platform concurrency limits (§7.4.7) also apply — the more restrictive limit wins for any given spawn decision
+#### Runtime identity display
+Chat displays shared runtime identity; it does not own the schema.
 
-**Chat history search:** Search icon in thread list header opens a search bar that queries across all threads (human and assistant messages) via Tantivy index. Results show thread name, matching message preview, and timestamp. Click navigates to that message in its thread.
+Rules:
+- compact display may show requested vs effective deltas
+- expanded display may route to details, usage, or history
+- historical chat views use frozen runtime snapshots captured for the execution
 
-**Message stream:** Virtualized scrolling via `ListView`. User messages right-aligned with accent tint. Assistant messages left-aligned with surface background. 8px gap between messages. Thinking/reasoning: collapsible block with 2px left accent border, default collapsed; toggle to show/hide thinking for the entire thread. Activity transparency sections per assistant message (collapsible, default collapsed):
-- **Bash/commands:** Collapsed: "Ran: `cargo test`" (one-line summary). Expanded: full command text + output. Each command is an audit trail entry.
-- **Web search:** Collapsed: "Web search: 3 sources". Expanded: search query + list of URLs with titles.
-- **Files explored:** Collapsed: "[Read: 3 files]". Expanded: list of file paths, each clickable to open in File Editor.
-- **Files changed:** Collapsed: "[Changed: 1 file]". Expanded: list of changed files with +N -M line counts, clickable to open diff in File Editor.
-- **Code diffs:** Inline code diffs with filename header showing +N -M. Expanded: line-by-line diff with -/+ prefixes. Clickable to open file at that location.
-**Revert action:** Each assistant message with file changes shows a small "Revert" link; click undoes the last agent edit via Git restore point. Confirmation modal before reverting.
-
-**Files-touched strip:** Below each assistant message that modified files, a compact horizontal strip shows affected files with diff counts (e.g., `app.rs +42 -8 | main.rs +3 -1`). File names are clickable (opens in File Editor at first changed line). Strip collapses to `"3 files changed"` when >5 files; click expands.
-
-**Document rendering policy (required):**
-- Chat does not render full document bodies for requirements, phase docs, PRD, contract seeds, or similar long artifacts.
-- Chat shows concise summaries, findings, gaps, and change notes.
-
-**Post-generation/revision message contract (required):**
-- For document workflows, chat posts:
-  1. `Opened in editor` indicator,
-  2. Clickable canonical file path,
-  3. Pointer to embedded document pane entry.
-
-**Multi-Pass findings placement (required):**
-- Requirements and Interview Multi-Pass runs post findings summary in chat and indicate that the same summary is shown in the page preview section.
-
-**Plan panel:** When in Plan mode, a persistent sticky card at top shows plan outline and todo checkboxes. Collapsible.
-
-**Steer vs Queue submission modes:** The input area supports two submission modes, toggled via a small indicator next to the SEND button (or Tab key):
-- **Steer (default):** Enter sends immediately, interrupting the current generation if the assistant is actively generating. The new message is injected as a "steer" mid-stream.
-- **Queue:** Enter queues the message. The queued message is sent automatically when the current generation completes. Useful for chaining requests without interrupting the assistant.
-The active mode shows as a subtle label next to the SEND button ("Steer" or "Queue"). Tab toggles between modes. When in Queue mode and a message is queued, the queue area (below) becomes visible.
-
-**Queue area:** Max 2 queued messages (FIFO). Each: truncated text (60 chars), [edit] [send now] [remove]. Faint accent tint background. Appears only when messages are queued.
-
-**Subagent inline blocks:** When the assistant spawns subagents during execution, each subagent's work is displayed as a collapsible block in the message stream. Each block shows: persona/agent name (e.g., "Architect Reviewer"), task label (e.g., "Reviewing module structure"), platform + model badge, elapsed time, and a collapsed summary of output. Blocks persist in thread history. Click to expand and see full subagent output. Status indicator: spinner (running), checkmark (complete), X (failed).
-
-**Active subagent indicator:** When subagents are running, a small line below the composer shows "> 3 subagents working" with a subtle pulse animation. Updates in real-time via `invoke_from_event_loop`.
-
-**Input area:** Multi-line, auto-grows from 1 line (48px) to max 5 lines (120px). SEND button (accent background). Below-input row: `@` mention (opens file picker overlay with fuzzy search, showing files, symbols, and headings as you type), attach button (opens file dialog for files and images; paste and drag-drop also supported). Slash command detection: `/` shows autocomplete popup (see §7.16.2). **Chat ELI5 toggle:** Small toggle in input toolbar; default **OFF** (Expert/default LLM behavior). When on, assistant uses simpler explanations in this thread only (does not affect generated documents, tooltips, or interviewer text). This toggle is independent from app-level **Interaction Mode (Expert/ELI5)** in Settings. **YOLO/Regular toggle:** Permission mode selector; YOLO auto-approves all tool calls, Regular prompts for approval once or per-session. Per-session; does not persist across restarts. **YOLO + FileSafe interaction:** When YOLO is enabled and FileSafe guards are active, show a persistent warning chip in the input toolbar: "[!] YOLO active -- FileSafe guards still apply." When FileSafe blocks a command during YOLO mode, show inline approval card in the chat stream (see below).
-
-**FileSafe in-chat approval UI:** When a command is blocked by FileSafe, display an inline card in the chat stream: orange left border, command text in monospace, guard name that triggered, and two buttons: "Approve once" (runs the command this time only) and "Approve & add to list" (adds to approved commands in Settings > Advanced). The card auto-dismisses after 60 seconds with a "Timed out -- command skipped" message. Blocked commands are also logged to the FileSafe event log accessible from Settings > Advanced.
-
-**Footer strip (20px):** Contains the following controls left-to-right:
-
-**Platform selector:** Compact dropdown (icon + short name). Lists all 6 providers (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini). Data sourced from `platform_specs`. Per-thread setting -- changing platform applies to the next message sent, not any in-flight generation. When changed, the model dropdown repopulates for the new platform and the reasoning/effort control shows or hides accordingly.
-
-**Model selector:** Compact dropdown listing models for the currently selected platform. Models are discovered dynamically from platform CLIs (e.g., `agent models`, `claude models`) and cached. When discovery fails or returns empty, falls back to `platform_specs::fallback_model_ids(platform)`. User can customize the model list via a "Manage models" entry at the bottom of the dropdown (opens a small modal with: add custom model ID, reorder via drag, mark favorites which appear at the top, remove). Per-thread setting. The `/model` slash command also opens this selector for keyboard-friendly access.
-
-**Reasoning/effort selector:** Shown only when `platform_specs::supports_effort(platform)` returns true. For Claude Code: dropdown with Low / Medium / High (maps to `CLAUDE_CODE_EFFORT_LEVEL` env var). For Codex and Copilot: dropdown with Low / Medium / High / Extra High. For Cursor: hidden (reasoning is encoded in model names like `sonnet-4.5-thinking`). For Gemini: hidden (no effort support). Per-thread setting.
-
-**Capability picker (media):** Compact dropdown (icon: sparkle or media icon) near the composer, listing the four media capabilities: **Image**, **Video**, **TTS**, **Music**. Each item maps to a capability ID from `Plans/Media_Generation_and_Capabilities.md` §4.1. **Enabled items** are clickable and insert the corresponding capability prompt into the composer (verbatim prompts per SSOT §5.1). **Disabled items** are visible but **greyed out** with a tooltip showing the disabled-reason message (per SSOT §5.2). Disabled rows remain keyboard-focusable so the same reason text is available on hover and focus. When visible capabilities are blocked because no eligible Gemini account is configured for the resolved request/policy, the dropdown footer shows the canonical banner: *"Configure Gemini access in Settings -> Authentication."* Sign in with Gemini OAuth or add a Google/Gemini API key. **[Get API key](https://aistudio.google.com/app/api-keys)** Cursor backend behavior: Image enabled without Gemini credentials; Video/TTS/Music disabled with `BACKEND_UNSUPPORTED`. The dropdown refreshes after Settings changes that affect capability state and keeps the footer banner pinned while any visible item is blocked for the same missing-configuration reason. **Helper only:** the capability picker is a convenience shortcut — media generation is primarily invoked by natural language in the chat (see `Plans/Media_Generation_and_Capabilities.md` §3 for slot extraction). Per-thread; no persistence.
-
-ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-PICKER, ToolID:capabilities.get, Invariant:INV-003
-
-**Context usage:** Text label (e.g., "42k / 128k") plus a context circle (progress gauge, ~16px) showing context usage percentage. Color transitions: blue (0-75%), amber (75-90%), red (90-100%). Hover shows tokens/cost/percentage tooltip. Click opens Usage tab for that thread.
-
-**Per-thread usage:** Small context indicator (circular progress, ~16px) in chat header. Hover tooltip: total tokens, usage %, cost (USD). Click opens thread Usage tab with: summary (total tokens, context %, total cost), breakdown (input/output/reasoning/cache), optional per-turn table, link to app-wide Usage page.
-
-**LSP in Chat (MVP):** The Chat Window fully uses LSP (Plans/LSPSupport.md §5.1). **Diagnostics in Assistant context:** When building context for the next Assistant (or Interview) turn, include a summary of current LSP diagnostics for the project or @'d files (errors/warnings with file, line, message, severity, source) so the agent can suggest fixes. **@ symbol with LSP:** When LSP is available, the **@** menu includes **symbols** (from LSP workspace/symbol and optionally documentSymbol) so the user can add a function/class/symbol to context by name; results show path, line, kind. **Code blocks in messages:** Code blocks in assistant or user messages support **LSP hover** (tooltip with type/docs) and **click-to-definition** (e.g. Ctrl+Click) when the block has a known language and the project has an LSP server; definition opens in the File Editor. **Problems link from Chat:** Chat footer or message area offers a link or badge (e.g. "N problems") that opens the Problems panel (LSP diagnostics) for the current project or context. Optional: compact hint for @'d files (e.g. "2 errors in @'d files") with click-through to Problems. Fallback when LSP unavailable: @ symbol uses text-based symbol search; code blocks have no hover/definition; diagnostics in context omitted.
-
-**Chat LSP control placement and behavior:**
-- **Footer strip (left-to-right order):** Platform selector → Model selector → Reasoning/effort selector (when supported) → **Capability picker** (media) → Context usage → **Problems link**. The Problems link is the rightmost LSP-related control in the footer. The Capability picker lives between the effort selector and the context usage indicator.
-- **Problems link:** Label text: **"N problems"** when count > 0 (e.g. "3 problems"), or **"Problems"** when count is 0. Placement: immediately to the right of the context usage indicator (context circle / "42k/128k"). Click target: opens the **Problems** tab of the Bottom Panel (§7.20), filtered to the **current project** (or to files in current chat context if project is set). When no project is set, the link opens Problems with no filter (or shows "Select a project to see problems" in the panel).
-- **@ symbol:** Lives in the input area (below-input row: @ mention button). When opened, the overlay shows files and (when LSP available) symbols. No separate header control for LSP in Chat.
-- **Code-block LSP:** Hover and go-to-definition apply in the **message area** (message stream); no dedicated control -- interaction is on the code block content itself.
-
-**Chat LSP empty and zero states:**
-- **Diagnostics empty:** When LSP is active but there are zero diagnostics, the Problems link shows **"Problems"** (no number); clicking opens Problems panel with empty state **"No problems detected"** (§7.20).
-- **@ symbol -- no symbols:** When the user opens @ and selects "symbols" (or the symbol category) and LSP returns no results, show **"No symbols"** (or "No symbols in project") in the symbol list. Do not show an error; treat as empty result.
-- **Code block -- unknown or unsupported language:** When a code block in a message has an unknown language tag or no LSP server for that language, do **not** show hover or go-to-definition; do **not** show an error. Render the block as plain code only.
-
-**Chat LSP error states:**
-- **LSP server error:** If the LSP server for the project reports an error or crashes, do not block Chat. @ symbol falls back to text-based symbol search (FileManager §12.1.4). Code-block hover/definition in chat is unavailable for that language; no modal error -- optional toast or status: "Language server unavailable for symbols."
-- **Timeout resolving symbol (e.g. workspace/symbol):** If the LSP request times out while resolving symbols for @ or for a code block, show a brief inline message (e.g. "Symbol search timed out") and fall back to text-based symbol search for @; for code blocks, show no hover/definition for that request. Do not block the UI.
-- **Project not set:** When no project is selected, **disable** LSP-dependent behavior for Chat: @ symbol shows **files only** (no symbol category, or symbol category disabled with tooltip **"Select a project to use symbol search"**). Code-block hover and go-to-definition in chat are disabled (no error; hover/click do nothing or show tooltip **"Open a project for language features"**). Problems link remains clickable; opens Problems panel with empty state **"Select a project to see diagnostics"** or equivalent.
-
-**Chat LSP accessibility:**
-- **Platform / model / effort:** Keyboard path and focus order for these dropdowns are already specified (footer strip; Tab order). No change.
-- **"N problems" link:** Must be **focusable** (in tab order after context usage). **Screen reader:** Announce as "N problems" or "Problems, N items" (e.g. `aria-label="3 problems"` or live region when count updates). **Activation:** Enter or Space opens the Problems panel (same as click).
-- **Code-block hover and go-to-definition:** When focus is on a code block that supports LSP, keyboard users need a way to trigger go-to-definition (e.g. focus the block and use the same shortcut as in the editor: **F12** or **Ctrl+Click** equivalent). Expose **"Go to definition"** in a context menu for the code block (right-click or menu key). Screen reader: announce code blocks that support LSP as "Code, [language], go to definition available" so users know the action exists.
-
-**Tool approval dialog (in-chat):** When a tool has "ask" permission (per Tools.md), an inline approval card appears in the chat stream before execution. Shows: tool name, brief invocation summary (e.g., "bash: git status"), and three buttons: "Once" (approve this invocation only), "For Session" (approve all invocations of this tool for the current session), "Deny" (block this invocation). "For Session" approvals persist only until app restart. When YOLO mode is active, all tool approvals are skipped (but FileSafe guards still apply).
-
-#### 7.16.1 Web Search
-
-The chat supports web search with inline citations and a structured sources block. When the assistant performs web search:
-
-- The message body uses numbered citations (`[1]`, `[2]`, …) at the claim site. Activating a citation scrolls to and highlights the corresponding source row.
-- The message shows a query label such as `Web search: {query}` in the activity detail or sources header.
-- A **Sources** section appears below the message with clickable URL, title, and 1-2 sentence snippet per source. Clicking a source opens it in the Bottom Panel Browser tab (§7.20).
-- When more than 5 sources are present, the Sources section may collapse to a summary row (`Web search: N sources`) and expand on demand.
-- If the search fails or returns no usable sources, the chat shows an inline error or empty-result message and does not render a misleading citations block.
-- Accessibility: citation controls must be keyboard focusable and expose descriptive labels (for example `Citation 1 of 3`).
-
-#### 7.16.2 Slash Commands
-
-Typing `/` in the chat input shows an autocomplete popup listing available commands. The popup includes both **reserved slash commands** (built-in actions) and **User Commands** (user-authored presets from `Plans/Commands_System.md`). Reserved commands appear first; User Commands appear below, prefixed with `/x-`.
-
-**Built-in commands (reserved):**
-
-| Command | Action |
-|---------|--------|
-| `/new` | Create a new thread |
-| `/model` | Switch model for current thread |
-| `/export` | Export current thread (JSON bundle, secrets stripped) |
-| `/compact` | Compact current session (trim context, preserve key info) |
-| `/stop` | Stop current run |
-| `/resume` | Resume a paused run |
-| `/rewind` | Rewind to a specific message |
-| `/revert` | Revert last agent file edit |
-| `/share` | Share thread bundle |
-
-**User Commands (presets):** Users can define project-level and global command presets as `.md` files with YAML frontmatter + template body. Each preset may override Persona, mode, and model for its run. Custom command names MUST NOT conflict with reserved commands. Full schema, template syntax, and management GUI: `Plans/Commands_System.md` (canonical SSOT). Management UI: Settings > Rules & Commands (§7.4.11).
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
 
 ### 7.17 File Manager Panel (NEW)
 

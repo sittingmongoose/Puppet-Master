@@ -268,27 +268,38 @@ ContractRef: UICommand:cmd.chat.open_thread_usage, UICommand:cmd.chat.focus_thre
 | `cmd.catalog.update_item` | `{ item_type, item_id, target_version? }` | `catalog.update.started`, `catalog.update.completed` | Catalog |
 | `cmd.catalog.remove_item` | `{ item_type, item_id }` | `catalog.remove.started`, `catalog.remove.completed` | Catalog |
 ### 2.7 Chat slash commands (reserved)
-These IDs are required by `Plans/assistant-chat-design.md` section 5.
 
-| Command ID | Slash command | Args schema (keys only) | Expected events | Affected surfaces |
+Reserved Assistant Chat slash commands use stable canonical UI command IDs.
+
+| Canonical UI command ID | Slash syntax | Payload | Primary outcome | Surface |
 |---|---|---|---|---|
 | `cmd.chat.new` | `/new` | `{}` | `chat.thread.created` | Assistant chat |
-| `cmd.chat.model` | `/model` | `{ model_id }` | no persisted domain event (session model state update) | Assistant chat |
-| `cmd.chat.effort` | `/effort` | `{ level }` | no persisted domain event (session effort state update) | Assistant chat |
-| `cmd.chat.mode` | `/mode` | `{ mode }` | no persisted domain event (session mode state update) | Assistant chat |
+| `cmd.chat.model` | `/model` | `{ model_id }` | session model state update | Assistant chat |
+| `cmd.chat.effort` | `/effort` | `{ level }` | session effort state update | Assistant chat |
+| `cmd.chat.mode` | `/mode` | `{ mode }` | session mode state update | Assistant chat |
 | `cmd.chat.export` | `/export` | `{ format? }` | `chat.thread.exported` | Assistant chat |
-| `cmd.chat.clear` | `/clear` | `{ thread_id }` | `chat.thread.cleared` | Assistant chat |
-| `cmd.chat.help` | `/help` | `{}` | no persisted domain event (UI display update) | Assistant chat |
-| `cmd.chat.settings` | `/settings` | `{}` | no persisted domain event (navigation update) | Settings panel |
+| `cmd.chat.compact_context` | `/compact` | `{ thread_id }` | `context.compaction.started`, `context.compaction.completed` | Assistant chat |
+| `cmd.chat.stop` | `/stop` | `{ thread_id? }` | stream stop / run stop behavior | Assistant chat |
+| `cmd.chat.resume` | `/resume` | `{ thread_id? }` | runtime recovery or resume action | Assistant chat |
+| `cmd.chat.rewind` | `/rewind` | `{ thread_id, target_message_id? }` | thread rewind UI / runtime action | Assistant chat |
+| `cmd.chat.revert` | `/revert` | `{ thread_id, target_message_id? }` | restore/revert workflow | Assistant chat |
+| `cmd.chat.share` | `/share` | `{ thread_id, format? }` | share/export flow | Assistant chat |
+| `cmd.chat.settings` | `/settings` | `{}` | navigation only | Settings panel |
 | `cmd.chat.doctor` | `/doctor` | `{}` | `doctor.run.started` | Doctor page |
-| `cmd.chat.cancel` | `/cancel` | `{ thread_id? }` | `run.cancelled` | Assistant chat |
-| `cmd.chat.stop` | `/stop` | `{ thread_id? }` | no persisted domain event (stream stop) | Assistant chat |
+| `cmd.chat.help` | `/help` | `{}` | UI help display | Assistant chat |
+| `cmd.chat.web.search` | `/web search` | `{ query }` | web search activity | Assistant chat |
+| `cmd.chat.web.extract` | `/web extract` | `{ url }` | site extraction activity | Assistant chat |
+| `cmd.chat.web.research` | `/web research` | `{ task }` | research activity | Assistant chat |
+| `cmd.chat.web.crawl` | `/web crawl` | `{ url }` | crawl activity | Assistant chat |
+| `cmd.chat.web.map` | `/web map` | `{ url }` | map activity | Assistant chat |
+| `cmd.chat.skill.invoke` | `/skill` | `{ skill_ref, arguments? }` | skill invocation/load | Assistant chat |
 
-User-defined custom commands MUST NOT use any reserved command name listed above. Custom commands are prefixed with `/x-` by convention.
+Rules:
+- `/cancel` is an alias path to `cmd.chat.stop`; it does not own a separate canonical command ID.
+- `/clear` is not part of the canonical reserved Assistant Chat command set.
+- Reserved slash commands MUST remain aligned with `Plans/assistant-chat-design.md` and MUST NOT be treated as user-overridable commands.
 
-ContractRef: ContractName:Plans/assistant-chat-design.md#5, ContractName:Plans/Contracts_V0.md#UICommand
-
----
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Tools.md
 
 ### 2.8 Assistant memory (Gist Review) commands
 These IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7.

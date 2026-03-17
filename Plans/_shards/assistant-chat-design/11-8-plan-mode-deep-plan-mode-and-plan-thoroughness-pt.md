@@ -106,6 +106,8 @@ Optional but allowed sections:
 
 Both Plan and Deep Plan MUST emit a normalized TODO list even when the visible artifact is markdown-first.
 
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
 Required TODO fields per item:
 - `todo_id`
 - `title`
@@ -114,12 +116,31 @@ Required TODO fields per item:
 - `owner_hint` (`main_agent`, `subagent`, `crew`, or `unspecified`)
 - `verification_hint`
 
+Recommended execution-tracking fields carried by the same canonical TODO identity:
+- `status`
+- `notes?`
+- `order_index?`
+
 Rules:
 - TODO order is the default execution order unless dependencies require otherwise.
 - Dependencies may further constrain order.
 - TODOs are carried forward into execution after approval.
 - Users may edit, add, remove, or reorder TODOs before approval.
 - Deep Plan editing in source markdown must update the normalized TODO projection before execution begins.
+- `todowrite` and `todoread` MUST use this same normalized schema instead of a separate checklist-only shape.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+#### Live execution tracking
+The sticky plan panel is the authoritative plan/TODO view for the thread.
+
+Rules:
+- Inline chat updates are lightweight milestones, not a competing source of truth.
+- Thread/run-level plan state MUST distinguish at least `draft`, `approved`, `executing`, `completed`, `blocked`, and `superseded`.
+- Replans or revisions MUST create an explicit new draft/revision state rather than silently rewriting historical progress.
+- The same TODO contract must remain consumable by single-agent, subagent, and crew execution.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 ### 8.7 Review loop for planning artifacts
 

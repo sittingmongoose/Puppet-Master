@@ -19,24 +19,30 @@ PT control contract:
 ### 2. Plan vs Deep Plan visible behavior
 
 **Plan** UI expectations:
-- plan panel remains visible in chat
-- panel shows written plan summary + TODO list
-- `Open in Editor` is available but not mandatory as the default landing surface
+- lightweight plan artifact in thread
+- sticky plan panel remains visible in chat
+- normalized TODO list is visible before approval
+- users may revise TODO structure before approval
+- execution begins only after explicit approval
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
 
 **Deep Plan** UI expectations:
-- the resulting plan document opens automatically in an editor / preview-capable document surface
-- the document is rendered using the shared markdown/mermaid pipeline
-- the source remains canonical markdown / Mermaid text
-- if the document is still a non-persisted draft, `open_source` uses a transient `generated://<artifact_id>` buffer
+- richer planning artifact opens in a preview-capable document/editor surface
+- the same normalized TODO contract remains visible in the thread plan panel
+- document review, annotations, and targeted revision remain available
+- Deep Plan remains more intensive than Plan at the same PT
 
-Required visible actions when applicable:
-- `Continue Planning`
-- `Open in Editor`
-- `Execute`
-- `Execute with Crew`
-- `Queue Execution` (only when another run is active in the same thread)
-- `Save As`
-- `Use Chain Wizard` / `Add a new Feature or Enhancement` when recommended
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Crosswalk.md
+
+**Shared TODO tracker rules:**
+- the sticky plan panel is the authoritative TODO tracker
+- inline chat updates are milestone-style, not a competing tracker
+- TODO statuses support at least `pending`, `in_progress`, `completed`, `blocked`, and `skipped`
+- the same TODO identity must survive single-agent, subagent, and crew execution
+- plan state transitions (`draft`, `approved`, `executing`, `completed`, `blocked`, `superseded`) must remain visible and restorable
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
 
 ### 3. Deep Plan review in editor / Embedded Document Pane
 

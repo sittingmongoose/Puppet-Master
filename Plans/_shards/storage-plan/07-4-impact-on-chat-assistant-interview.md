@@ -1,17 +1,54 @@
 ## 4. Impact on chat (Assistant / Interview)
 
-Chat persistence and search are implemented on top of this storage stack; the chat UX plan (assistant-chat-design.md) does not assume a specific backend, but implementation should align as follows.
+Assistant and Interview surfaces persist thread-local state, activity traces, and reviewable history, but they do not become the canonical owner of runtime identity.
 
-| Chat requirement | Storage implementation |
-|------------------|------------------------|
-| **Thread list + per-thread metadata** (§11) | **redb** `sessions`: `thread.{thread_id}`, `thread_list.{project_id}`. |
-| **Full thread content** (messages, thought streams, code blocks, plan/todo, queue state) (§11) | Canonical: **seglog** (`chat.message` and related events). Projectors can materialize thread state or slices into redb for fast load; full history replayable from seglog. |
-| **Chat history search -- human** (§10) | **Tantivy** chat index; UI search queries Tantivy. |
-| **Chat history search -- agent** (§10) | Same Tantivy index or API over it; context pipeline or MCP/tool queries the index. |
-| **Resume / rewind** (§11) | **redb** `checkpoints`: `thread_checkpoint.{thread_id}`; replay or slice from seglog as needed. |
-| **Virtualization / load older** (§24) | UI fetches slices; backend pages from redb projections or seglog-derived views. |
-| **Context usage / rate limits** (§12) | **redb** rollups (analytics scan) for dashboard and chat header. |
-| **Per-thread usage (context circle + thread Usage tab)** (§12, usage-feature.md §5) | **seglog** `usage.event` includes **`thread_id`** so per-thread usage can be aggregated (tokens, cost). Optional: projector materializes per-thread rollup into redb (e.g. `rollups.thread_usage.{thread_id}`) for fast context circle and thread Usage tab; or UI aggregates from seglog/JSONL filtered by thread_id. |
+### 4.1 Shared runtime identity consumption
+Chat/activity/question/todo records may display runtime identity, but the canonical requested/effective snapshot comes from the owner docs.
 
----
+Rules:
+- thread/activity projections consume frozen requested/effective runtime snapshots captured for the execution
+- chat must not recompute historical runtime state from current settings
+- assistant/chat-local state may reference runtime snapshots, but it must not rename or re-own the shared schema
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
+
+### 4.2 Question and clarification state
+Structured question flows may span one or many questions.
+
+Rules:
+- `requirements.clarification_requested` and related clarification records retain canonical `question_ids[]`
+- thread-scoped questionnaire drafts persist only bounded structured answer data needed to restore the flow
+- do not persist arbitrary widget/UI runtime state for question forms
+- resolved question flows persist explicit outcome state (`submitted`, `dismissed`, `timed_out`, or equivalent) rather than ambiguous partial state
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md
+
+### 4.3 Plan and TODO state
+`chat.plan_todo_updated` is the canonical event family for thread-visible plan and TODO state.
+
+Required payload shape:
+- `thread_id`
+- `plan_state`
+- `plan_revision_id?`
+- `todos[]` using the normalized TODO schema
+- `updated_by?`
+- `source?`
+
+Rules:
+- the same TODO identity persists across draft, approval, execution, completion, blocking, and supersession
+- structured revision/status history must be sufficient to restore the sticky plan panel honestly after reload/restart
+- inline milestone updates in chat are derived from this state; they are not a separate source of truth
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
+
+### 4.4 Activity transparency payloads
+`tool.invoked` / `tool.denied` payloads may attach bounded feature-specific metadata under `payload.meta`.
+
+Recommended chat-facing additions include:
+- web activity meta (`web_operation`, `support_tier`, `execution_path`, `sources_ref`, `provider_fallback_summary`)
+- question-flow refs (`question_ids[]`, questionnaire state refs when needed)
+- command-card preview refs and session-linkage metadata
+- plan/todo tracker refs
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
 

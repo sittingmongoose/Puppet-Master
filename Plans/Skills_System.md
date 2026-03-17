@@ -20,7 +20,7 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 - Permission model + tool keys: `Plans/Permissions_System.md` (`skill`, `external_directory`)
 - Persona schema + default_skill_refs: `Plans/Personas.md#PERSONA-SCHEMA`
 - Context compiler + skill bundling: `Plans/FileSafe.md` Part B
-- GUI requirements: `Plans/FinalGUISpec.md` §7.4.16 Skills tab
+- GUI requirements: `Plans/FinalGUISpec.md` §7.4B-§7.4C (Agent Config > Skills)
 - OpenCode baseline (skills): `Plans/OpenCode_Deep_Extraction.md` §7F
 
 ---
@@ -193,27 +193,42 @@ ContractRef: ContractName:Plans/Permissions_System.md
 ---
 
 ## 6. GUI requirements
-### 6.1A Catalog-installed skill lifecycle
 
-Catalog-installed skills remain canonical discovered skills after installation.
+Skill management lives in `Agent Config > Skills`.
+
+### 6.1 Management surface
+The Skills tab is the canonical management surface for installed, bundled, and imported skills.
+
+Required capabilities:
+- show a browseable catalog of currently available skills
+- distinguish bundled PM skills, imported skills, and catalog-installed skills
+- show readiness / validation state and missing-runtime requirements
+- expose management actions in the catalog itself
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+
+### 6.2 Import and install flows
+Required import/install flows:
+- drag/drop skill folder or file import
+- file-picker import
+- Skill Store launcher for browse/install-only flows
 
 Rules:
-- install/update/remove actions use the same discovery, validation, and shadowing model already defined here
-- the GUI must distinguish catalog-installed skills from local/manual skills
-- removal/update behavior is explicit when a skill is currently referenced by a Persona or active compiled context policy
-- uninstalling a catalog item must not silently remove a higher-priority local skill that shadows it or is shadowed by it
+- imported metadata populates the catalog entry
+- validation runs immediately on import
+- simple single-file imports may be wrapped into a generated enclosing folder when needed by the runtime
 
-<a id="GUI-SKILLS"></a>
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
 
-The **Skills** tab in Settings MUST implement the GUI behavior described in `Plans/FinalGUISpec.md` [§7.4.16 Skills tab](Plans/FinalGUISpec.md#SKILLS-TAB). This SSOT adds the subsystem-specific requirements:
+### 6.3 Slash and runtime boundary
+`/skill` is a lightweight invocation helper only.
 
-1. **Source column:** Must label skills as Project/Global and indicate which root they came from (`.puppet-master`, `.claude`, `.agents`).
-2. **Validation status:** Must show invalid skills with error messages (frontmatter parse errors, missing required fields, directory mismatch).
-3. **Shadowing indicator:** Must show when a skill is shadowed by a higher-priority root (§3.2) and allow users to navigate to the shadowed copies.
+Rules:
+- skill management MUST NOT move into a `/skills` management family
+- runtime skill access remains the `skill` tool and the skill registry
+- the GUI must preserve the distinction between “discovered” and “actually runnable on PM”
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md
-
----
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md
 
 ## 7. Baseline alignment (OpenCode)
 

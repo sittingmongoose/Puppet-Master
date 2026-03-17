@@ -262,107 +262,59 @@ There are **two separate ELI5 toggles**; they are independent and must not be co
 <a id="5"></a>
 ## 5. Commands (slash commands and custom commands)
 
-This section defines the **reserved slash commands** — built-in actions invoked via `/` in chat. For **User Commands** (user-authored command presets with templated prompts, stored as `.md` files), see `Plans/Commands_System.md` (canonical SSOT). User Commands and reserved slash commands share the chat `/` autocomplete surface; reserved names take precedence and MUST NOT be overridden.
+The reserved slash-command surface is canonical and non-overridable.
 
-**Distinction:** Reserved slash commands listed below are **UICommand dispatch actions** (each has a `cmd.chat.*` ID in `Plans/UI_Command_Catalog.md` §2.7). User Commands are **prompt presets** — they resolve a template and submit it as a prompt. The two concepts are orthogonal; see `Plans/Commands_System.md` §1.2 for the full distinction.
+### 5.1 Reserved built-ins
+Reserved built-ins for Assistant Chat are:
+- `/new`
+- `/model`
+- `/effort`
+- `/mode`
+- `/export`
+- `/compact`
+- `/stop`
+- `/resume`
+- `/rewind`
+- `/revert`
+- `/share`
+- `/settings`
+- `/doctor`
+- `/help`
+- `/web`
+- `/skill`
 
-ContractRef: ContractName:Plans/Commands_System.md#DEF-UICOMMAND-DISTINCTION, ContractName:Plans/UI_Command_Catalog.md
+Rules:
+- Reserved built-ins MUST be visible in the slash-command catalog and settings surfaces.
+- Reserved built-ins MUST NOT be overridden by User Commands.
+- `/cancel` is a deprecated alias of `/stop` and MUST NOT carry separate semantics.
+- `/clear` is not part of the canonical reserved Assistant Chat set and MUST NOT remain a default built-in unless a later packet explicitly reintroduces it.
 
-- **Slash commands in the GUI:** The app supports **slash commands** (e.g. `/new`, `/model`, `/export`, `/compact`, `/stop`) invoked by typing `/` in chat or via a command palette. Unlike CLIs, slash commands here are a first-class GUI feature so the user can run actions without leaving the chat.
-- **User Commands (presets):** Users can define custom prompt-template commands stored as `.md` files at project level (`.puppet-master/commands/<name>.md`) or global level (`~/.config/puppet-master/commands/<name>.md`). Full schema, template syntax, permissions integration, and GUI requirements are specified in `Plans/Commands_System.md` (SSOT). Custom commands appear in the `/` autocomplete popup alongside reserved commands, prefixed with `/x-` by convention.
-- **No conflicting names:** The app does **not** allow the user to define a custom command whose name clashes with a reserved command; if they try, the UI explains why (e.g. "This name is reserved for a built-in command"). Enforcement rules: `Plans/Commands_System.md` §2.4.
-- **Reserved Slash Commands (Canonical List):**
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md
 
-| Command | Action | Scope |
-|---------|--------|-------|
-| `/new` | Start a new thread | Chat |
-| `/model` | Switch model for next turn | Chat |
-| `/effort` | Set effort/reasoning level | Chat |
-| `/mode` | Switch mode (Ask/Plan/Interview/BrainStorm/Crew) | Chat |
-| `/export` | Export thread as Markdown/JSON | Chat |
-| `/clear` | Clear current thread history | Chat |
-| `/help` | Show available commands | Global |
-| `/settings` | Open settings panel | Global |
-| `/doctor` | Run Doctor health checks | Global |
-| `/cancel` | Cancel current run | Chat |
-| `/stop` | Stop streaming response | Chat |
+### 5.2 `/web` and `/skill`
+`/web` is one canonical command family with these subcommands:
+- `/web search <query>`
+- `/web extract <url>`
+- `/web research <task>`
+- `/web crawl <url>`
+- `/web map <url>`
 
-User-defined custom commands MUST NOT use any reserved command name. Custom commands are prefixed with `/x-` by convention (e.g., `/x-deploy`).
+Natural-language requests for searching, extracting, researching, crawling, or mapping the web MUST route through the same internal dispatcher as `/web`, not a parallel feature-local path.
 
-This list is the SSOT for reserved slash commands. The canonical machine-readable list is in `Plans/UI_Command_Catalog.md`. For User Commands (presets), the SSOT is `Plans/Commands_System.md`.
+`/skill` is a lightweight invocation helper for loading or invoking an installed skill. Skill management remains in `Agent Config > Skills` and MUST NOT move into a `/skills` management family.
 
-### 5.1 Git & GitHub Slash Commands
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Skills_System.md, ContractName:Plans/FinalGUISpec.md
 
-Git and GitHub slash commands are split by surface ownership.
+### 5.3 Git & GitHub command boundary
+Git and GitHub prefixes remain reserved and route to the canonical source-control / GitHub command surfaces rather than to user-defined command overrides.
 
-### Source Control commands
-- `/git` and related git-local operations target the Source Control surface and reuse the same code path as Source Control actions.
-- Chat git commands may open or focus Source Control with repo/worktree context when a visual follow-up is needed.
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md
 
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md
+### 5.4 Custom command boundary
+User Commands may complement built-ins, but they do not replace or suppress the canonical Assistant Chat command set. PM-native Ask and Plan behavior remains authoritative even when an upstream reference product handles modes or permissions differently.
 
-### GitHub Actions commands
-- `/actions` and `/actions logs` target the GitHub Actions surface and must mirror its run/log/admin failure semantics.
-- Chat responses for Actions runs must preserve workflow/run/job/step identity so the user can continue in the GitHub Actions surface without losing context.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Commands_System.md, ContractName:Plans/OpenCode_Deep_Extraction.md
 
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
-
-### Surface boundary rule
-- Chat must not present the old combined Git/GitHub panel model as canonical.
-- When the user asks to inspect repo state, route to Source Control semantics.
-- When the user asks to inspect hosted workflows or GitHub Actions logs/settings, route to GitHub Actions semantics.
-
-ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FileManager.md
-
-### 7.1 Capability introspection (`capabilities.get`)
-
-When the user asks about available capabilities, features, or what Puppet Master can do, the Assistant MUST call `capabilities.get` and present the results as a structured list of **enabled** capabilities, **disabled** capabilities with their disabled reasons, and setup guidance (setup hints). This ensures the user gets an accurate, real-time answer rather than a stale or generic one.
-
-ContractRef: ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM
-
-### 7.2 Natural-language model override (per-message only)
-
-The user may specify a per-message model override inline in their prompt (e.g., *"generate an image using Nano Banana Pro"*). This override applies to the **current `media.generate` invocation only** and MUST NOT change the persistent model configured in Settings. Resolution order: alias → exact model ID → exact displayName → else `MODEL_UNAVAILABLE`. For the full slot-extraction grammar and resolution rules, see `Plans/Media_Generation_and_Capabilities.md` §3.4 (SSOT).
-
-ContractRef: ToolID:media.generate, ContractName:Plans/Media_Generation_and_Capabilities.md#SLOT-EXTRACTION
-
-### 7.3 Media generation invocation model
-
-Media generation (Image, Video, TTS, Music) is invoked primarily by **natural language** — the user describes what they want in the chat, and the Assistant extracts structured parameters via the slot-extraction grammar (`Plans/Media_Generation_and_Capabilities.md` §3). The **capability picker dropdown** in the composer (see `Plans/FinalGUISpec.md` §7.16) is a convenience helper that inserts a guided prompt; it does not bypass the natural-language pipeline.
-
-ContractRef: ToolID:media.generate, ContractName:Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE
-
-### 7.4 External link navigation and repo import (MVP — separate from project-workspace search)
-
-This subsection defines **network-based navigation** (web pages, GitHub links, docs) and **external repo import** as an explicit, user-requested capability. It is **separate** from default **project workspace / project root** search (codesearch, chatsearch, logsearch), which is always scoped to the current project unless the user explicitly asks to go external.
-
-#### 7.4.1 Link navigation: fetch + cite
-
-- **Navigate / fetch:** When the user provides a link (HTTP/HTTPS) and asks the assistant to read it, the assistant MAY invoke `webfetch` to retrieve the content (subject to `webfetch` permissions and allow/deny rules in `Plans/Permissions_System.md` and FileSafe URL rules).
-- **Citations:** When fetched content is used for claims, the assistant MUST include citations (URLs and titles) consistent with the cited web-search contract in `Plans/newtools.md §8.2.1`.
-- **Audit trail:** Each `webfetch` MUST emit an audit entry in the thread (see §13): URL fetched, HTTP status (if known), bytes fetched or truncation note, and whether content was used as a source.
-
-#### 7.4.2 External repo import: bring a repo into the project so it can be searched
-
-- **User intent required:** Importing a repo is only performed when the user explicitly requests it (e.g., "Pull this repo in so you can inspect it" / "Clone this repo into the project").
-- **Resulting scope:** After import, the repo becomes part of the **project workspace** (as a new project, an added workspace root, or a temporary mount) and can then be searched using the **project-scoped** code/log/chat retrieval features described in §10 and §17.
-- **Allowed sources:** MVP supports GitHub repositories; additional hosts (GitLab, Bitbucket, arbitrary git remote) are permitted only if explicitly enabled via Settings/Permissions allowlists.
-- **Two acquisition paths (both allowed):**
-  1. **GitHub API assisted:** Use `GitHubApiTool` (Plans/Tools.md) to resolve repository metadata and determine clone/download URLs (auth per `Plans/GitHub_API_Auth_and_Flows.md`). Then perform an authenticated clone/download using the resolved URL (see below).
-  2. **Direct git clone:** Use `bash` to execute `git clone` from an HTTPS remote when permitted (still subject to network/tool approval, FileSafe guards, and audit trail).
-- **No `gh` rule:** GitHub CLI (`gh`) remains forbidden for GitHub operations (Plans/Tools.md: GitHubApiTool rules).
-- **Private repos / auth:** Private repository import MUST require explicit user approval and an authenticated method (GitHub auth realm `github_api` per `Plans/Contracts_V0.md` + `Plans/GitHub_API_Auth_and_Flows.md`). If auth is missing/expired, the assistant must guide the user through the supported login flow rather than attempting unauthenticated access.
-- **Destination and exposure:** Import destinations MUST be under configured workspace roots and must respect external-directory constraints (Permissions `external_directory`). The assistant must never import into a path that violates FileSafe path rules. Imported repos must not silently overwrite existing directories; require explicit confirmation when destination exists.
-- **Indexing:** Imported repo contents are eligible for the code index (Tantivy + LSP + ripgrep per Plans/storage-plan.md + Plans/Tools.md) after import completes; indexing progress should be visible (optional spinner/indicator).
-- **Audit trail:** Repo import MUST be recorded in the thread (see §13): source URL / repo identifier, chosen acquisition path (API-assisted vs direct clone), destination path, and a summary of what was imported (commit/branch if known).
-- **Settings & permissions:** External repo import must be controllable via:
-  - Tool permissions (`webfetch`, `websearch`, `bash`, `GitHubApiTool`, and `repo.import` if implemented as a dedicated tool).
-  - Host allowlist / denylist for network destinations (Settings/Permissions; default action for unknown hosts remains `ask`).
-  - **Secrets policy (mandatory):** All persisted chat/log/index content MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (strict secrets scrubbing before seglog/redb/Tantivy/blob persistence). An optional additional “secret-ish” heuristic redaction setting exists for extra masking (default OFF; see Plans/storage-plan.md + FinalGUISpec.md).
-
-ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md
-
----
 ## 8. Plan Mode, Deep Plan Mode, and Plan Thoroughness (PT)
 
 ### 8.1 Canonical planning model
@@ -471,6 +423,8 @@ Optional but allowed sections:
 
 Both Plan and Deep Plan MUST emit a normalized TODO list even when the visible artifact is markdown-first.
 
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
 Required TODO fields per item:
 - `todo_id`
 - `title`
@@ -479,12 +433,31 @@ Required TODO fields per item:
 - `owner_hint` (`main_agent`, `subagent`, `crew`, or `unspecified`)
 - `verification_hint`
 
+Recommended execution-tracking fields carried by the same canonical TODO identity:
+- `status`
+- `notes?`
+- `order_index?`
+
 Rules:
 - TODO order is the default execution order unless dependencies require otherwise.
 - Dependencies may further constrain order.
 - TODOs are carried forward into execution after approval.
 - Users may edit, add, remove, or reorder TODOs before approval.
 - Deep Plan editing in source markdown must update the normalized TODO projection before execution begins.
+- `todowrite` and `todoread` MUST use this same normalized schema instead of a separate checklist-only shape.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+#### Live execution tracking
+The sticky plan panel is the authoritative plan/TODO view for the thread.
+
+Rules:
+- Inline chat updates are lightweight milestones, not a competing source of truth.
+- Thread/run-level plan state MUST distinguish at least `draft`, `approved`, `executing`, `completed`, `blocked`, and `superseded`.
+- Replans or revisions MUST create an explicit new draft/revision state rather than silently rewriting historical progress.
+- The same TODO contract must remain consumable by single-agent, subagent, and crew execution.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 ### 8.7 Review loop for planning artifacts
 
@@ -720,55 +693,64 @@ Required content for the thread Usage surface:
 - link to app-wide Usage with the same thread/run filters in scope
 ## 13. Activity transparency: search, bash, and file activity
 
-### 13.1 Retrieval audit (Auto Retrieval + project indices)
+Activity transparency uses a shared inline operation-card family rather than isolated one-off widgets.
 
-Auto-retrieval and agent-callable search tools MUST be visible in the thread audit trail (in addition to web search):
+### 13.1 Operation-card family
+Canonical card types are:
+- command / bash activity
+- web activity
+- files explored
+- files changed
+- code diffs
+- subagent activity
 
-- **Auto Retrieval audit entry:** When the context pipeline performs auto retrieval (chat/code/logs), insert a collapsible audit block labeled e.g. **“Auto Retrieval”** with:
-  - sources used (Chat / Code / Logs),
-  - query strings (or derived query rationale) per source,
-  - scope summary (“project-only”, optionally thread filter),
-  - counts (“searched N messages / M files / K log events; returned R snippets”),
-  - truncation notes when caps are hit (bytes/token caps, hit caps).
-- **Agent search tool audit entry:** Any invocation of `chatsearch`, `codesearch`, `logsearch`, or `logread` must emit a similar audit block with the tool name, query/filters, and summary counts.
-- **Linkage to Auto Retrieval chip:** The most recent auto-retrieval audit entry is the “details” target for the Auto Retrieval chip popover (§12.1).
+Rules:
+- Cards are inline with the assistant narrative.
+- Each card has a compact summary, expandable details, status badge, and a primary open/focus action appropriate to the card type.
+- Command cards use `Open in Terminal` / `Show Terminal` as the primary action.
+- Search/web cards open sources/results/detail views.
+- Diff/edit cards open the relevant file or diff view in the editor.
 
-### 13.2 Context Lens audit (mute / focus / subcompact)
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/Tools.md
 
-Context Lens actions (see §17) change what the agent sees and MUST be auditable:
+### 13.2 Web activity and provenance
+Assistant Chat uses distinct web activity labels:
+- `Searching Web`
+- `Extracting Site`
+- `Researching Web`
+- `Crawling Site`
+- `Mapping Site`
+- `Reading Site`
 
-- When Context Lens is activated/deactivated, insert a lightweight audit entry: mode and timestamp.
-- When message selection changes (messages muted/focused/subcompacted), emit `context.overlay.updated` with counts and a link/affordance to review the selected messages (UI can highlight them).
-- When Subcompact generates or updates a summary block, persist:
-  - the message_id list (or range) covered,
-  - the summary text (or a pointer/blob ref if very large),
-  - who initiated it (user action),
-  - and a “Revert subcompact” action (UICommand) that restores original inclusion semantics.
+Rules:
+- `Reading Site` is reserved for PM-native Site Reader work.
+- Search/result provenance MUST distinguish search snippets, extracts, site-reader output, research synthesis, crawl results, and map results.
+- The final Sources block MUST deduplicate repeated URLs while preserving the strongest provenance badge per source.
+- Provider fallback or support-tier changes MUST be visible in the related activity card.
 
-ContractRef: ContractName:Plans/assistant-chat-design.md#17-context-truncation, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
-- **Audit trail:** Everything the agent does in the thread that affects context or the system (searches, **bash commands and scripts**, file reads/edits, tool calls) must form a **full audit trail** in the thread: what was run, when, and what the outcome was. Commands entered and scripts run are first-class entries; persist them with the thread (§11) so the user can scroll back and see exactly what was executed. Much of this detail should be **collapsible** (see "Collapsible sections" below) so the thread stays scannable while still preserving the complete record.
-- **Internet/web search -- show search and links:** When the agent performs an **internet or web search** (e.g. via cited web search tool per §7), the thread must **show that a search was performed** and **show the links** (sources/URLs) that were used. Display can be **collapsible**: when collapsed, show a summary (e.g. "Web search: 3 sources" or "Web search: &lt;query&gt; -- 3 links"); when expanded, show the **search query** and the **list of links** (title + URL per source). Same Sources list as in cited web search output; persist with the thread (§11). Align with Plans/newtools.md §8.2.1 (cited web search).
-- **Show what it searched:** The chat must **show what was searched** whenever the agent (or the system) performs a search. For chat-history search, web search, file search, or other search actions, the thread should display the **search query** (or scope) and, where appropriate, a short summary of what was searched (e.g. "Searched: 3 threads, 12 messages" or "Web search: ..."). This gives the user visibility into what context the agent used.
-- **Bash and commands -- audit trail:** The Assistant must be able to **use bash** (run shell commands and scripts) when not in read-only mode (e.g. in Plan execution or Agent mode). Every **command entered** and **script run** must appear in the thread as part of the audit trail: the command/script text and the outcome (stdout/stderr, or a summary with expandable full output). Execution is subject to permissions (YOLO vs regular approval) and to FileSafe/guards where applicable. Bash blocks in the thread should be **collapsible** (e.g. show "Ran: `cargo test`" or "3 commands" when collapsed; expand to show full command(s) and output). Persist commands and output with the thread so the audit trail is complete.
-  - **Execution limits:** Bash timeout, output truncation, and CWD semantics are defined canonically in `Plans/Tools.md` §3.5.
-  - **Thread disclosure on truncation:** If bash output is truncated because it exceeds the canonical output cap, the thread must show that truncation occurred and provide a pointer to the persisted full-output record (seglog/log viewer), rather than pretending the shown output is complete.
-- **Files explored in the thread:** For each agent turn (or run), the thread should show **which files the agent explored** (read or opened for context). Display a concise list or summary in the thread -- e.g. "Read: `src/main.rs`, `docs/ARCHITECTURE.md`" -- so the user knows what the agent had access to.
-- **What it changed in the thread:** The thread should show **what the agent changed** -- files edited, created, or deleted, with enough detail to understand the impact (e.g. "Edited: `src/lib.rs` (lines 12-45)", "Created: `tests/foo.rs`"). This can be a summary line per file or an expandable diff/list. Together with "files explored", this gives a clear **audit trail** in the thread: what was read, what was run (bash), and what was changed. All of this (search, bash, files explored, files changed, code block diffs) is part of the thread and **must persist** with the thread per §11.
-- **Document review content policy:** For requirements/interview document workflows, chat audit entries summarize document updates and findings but do not inline full document bodies. Long artifacts are reviewed in File Editor or embedded document pane.
-- **Code block and diff presentation in chat (Cursor-style):** When the agent proposes or applies file changes, present them in the thread as **code block diffs** in a **Cursor-style** layout: (1) **Filename** and **diff count** (e.g. `path/to/file.rs` **+12 −3** for 12 lines added, 3 removed). (2) **Line-by-line diff**: removed lines shown with a **minus** prefix (e.g. red or distinct styling), added lines with a **plus** prefix (e.g. green or distinct styling). (3) Optional summary lines (e.g. "Explored 2 files, 2 searches") for file/search activity. Blocks can be **collapsible** when long (collapse to filename + count; expand to show full diff). Persist full diff content with the thread (§11). Reference: Cursor in-chat diff UI (filename + +N −M, then −/+ lines).
-- **Click to open in editor:** Clicking a **file path** anywhere in the thread (files-touched strip, "Read:" / "Edited:" lines, or a **code block** filename/header) **opens that file in the in-app IDE-style editor** (Plans/FileManager.md). When the target is a code block or diff that has **line or range information**, the editor opens that file and **scrolls to the relevant line or range**. This applies to: filename in the files-touched strip, "Read: path" and "Edited: path" in activity transparency, and the filename/header of inline code blocks and diffs. Single behavior: all such clicks open in the same editor; no separate "preview" vs "edit" for this action.
-- **Thinking/reasoning toggle:** When the normalized stream (Plans/newfeatures.md) provides **thinking** (or reasoning) events, the Assistant chat UI must show them in a **collapsible** area with a **toggle to show/hide**. **Thought streams default to collapsed** because they are typically long; the user can expand when they want to read the reasoning. Same behavior for Interview when thought stream is present. **Thought streams must persist** with the thread (see §11) so they remain visible when scrolling back or re-opening the thread; **Thought Stream Collapse (Resolved):** **Per-entry** collapse state. Each thought stream entry starts **collapsed** by default (showing only the first line as a summary). The user can expand individual entries by clicking. Collapse state is not persisted — all entries reset to collapsed on thread reload. A global "Expand all / Collapse all" toggle may be added post-MVP as a convenience. Align with Plans/newfeatures.md §12, §15.6.
-- **Collapsible sections -- default state:** Much of the detailed content in the thread should be **collapsible** so the thread stays scannable while preserving the full audit trail. When collapsed, show a short summary (e.g. "Thought stream (expand)", "Ran: `cargo test`", "3 files changed"). **Defaults:**
-  - **Thought streams:** **Default collapsed** (typically long).
-  - **Bash / command blocks:** Collapsible; when collapsed show command summary or count (e.g. "1 command" or "Ran: `cargo test`").
-  - **Code block diffs:** Collapsible when long; when collapsed show filename + +N −M; expand to show full line-by-line diff (Cursor-style).
-  - **Web search / links:** Collapsible; when collapsed show "Web search: N sources" or query + count; expand to show query and list of links (title + URL).
-  - **Files explored / files changed:** Can be a single collapsed "N files read" / "N files changed" with expand to list.
-  User can expand any section to see full content; persistence (§11) stores everything so the full record is always available.
-- **Revert last agent edit:** The user can **revert the last agent edit** (or "Revert file X") from the thread -- tied to activity transparency and Git/restore points (Plans/newfeatures.md §8, §15.3) so the user can undo agent file changes without leaving the chat.
-- **Agent-requested rollback:** Agents can **request** a rollback (e.g. "revert my last edit" or "restore to previous point") via a designated tool call exposed in the agent's tool set. The tool is request-only — the app does not perform the restore immediately. Instead, the app shows a **user confirmation step** (optionally showing affected files, conflict status, and diff). After the user confirms, the app performs the restore (writes snapshot content back, updates app/chat state per §8 rollback flow), then sends a **refresh notification** to the editor and chat so they reload affected buffers and state. This uses the same restore pipeline as user-initiated "revert last agent edit." **Tiered scope:** narrow (last turn) or broader (specific restore point); broader requests require user confirmation and may be limited to same-session or last N points. See Plans/newfeatures.md §8 for store location (redb, not filesystem), read-only agent constraint (tool registry), tiered undo, and conflict handling (§23.4). **Relationship to rewind (§11):** "Rewind" is user-initiated message-level restore; agent-requested rollback uses the same restore-point infrastructure but is agent-initiated with a mandatory user confirmation gate.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
 
----
+### 13.3 Bash and terminal ownership
+Assistant Chat may preview shell-backed work inline, but the canonical interactive session remains the Terminal surface.
+
+Rules:
+- one inline command card per command invocation
+- collapsed preview defaults to 5 lines; expanded preview defaults to 15 lines
+- `Open in Terminal` focuses the same live session rather than spawning a fresh shell
+- chat owns a compact audit/preview view; Terminal owns the canonical interactive PTY session
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+### 13.4 Shared runtime identity display
+Assistant Chat may display requested/effective runtime identity, but it must consume the owner-doc shared runtime model rather than invent assistant-local fields.
+
+Rules:
+- compact cards may show only the most important requested/effective delta
+- expanded views may link to usage/history/details
+- historical thread/activity views MUST show frozen requested/effective runtime state captured for that execution
+- assistant/chat MUST NOT introduce local replacements such as `active_model`, `actual_model`, or `assistant_runtime_state`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
 
 ## 14. Subagents & Crew
 
@@ -845,19 +827,38 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#17-context-truncation, 
 
 ## 16. Interview Phase UX (Chat Surface)
 
-When the chat is in **Interview** mode (interview flow):
+When the chat is in **Interview** mode, it uses the same shared question system that powers assistant clarification flows and builder clarification flows.
 
-- **Thought stream:** Show the **thought stream** (reasoning/chain-of-thought from the model) so the user sees how the interviewer is thinking.
-- **Message strip:** Show the **message strip** (current Q&A or phase messages) in addition to phase progress.
-- **Question UI:** When the interviewer asks a question, present:
-  - **Several suggested options** (e.g. buttons or selectable chips).  
-  - A **"Something else"** control that reveals a **text bar** where the user can type a freeform response.  
-- This keeps navigation quick for common answers while allowing any custom answer.
-- **Contract Layer outputs (completion surface):** When the interview completes (or when a phase boundary produces artifacts), the Interview surface must provide a read-only **Outputs** card/pane listing the canonical user-project artifact set under `.puppet-master/project/` (requirements, Project Contract Pack with `contracts/index.json`, `plan.md` (human-readable), **sharded plan graph** under `plan_graph/` (**index + node shards**), `acceptance_manifest.json`, and validator status). These outputs are **persisted canonically in seglog** and surfaced here via projection into `.puppet-master/project/...` (do not assume anything about the user project’s own folder layout). Each entry must be click-to-open via the File Manager/editor surface (Plans/FileManager.md). Authoritative artifact contract: `Plans/Project_Output_Artifacts.md` (do not duplicate schemas here).
-- **Runtime visibility:** Active Interview stage/subagent blocks in chat must show the effective Persona, selection reason, effective platform, effective model, optional variant/effort, and any skipped unsupported Persona controls. Chat may render these inline or in expandable details, but the fields must remain visible without leaving the Interview surface.
-- **Activity-pane parity:** When Interview document creation or Multi-Pass Review is active, chat and the Interview activity pane must consume the same underlying run state. Chat may use conversational rendering, but it must expose the same runtime visibility fields as the activity pane for the active work block.
+### Shared question system baseline
+Each question flow shows:
+- question text
+- suggested options as buttons/chips when provided
+- a mandatory `Something else` / freeform path when freeform is allowed
+- current draft answer state
 
----
+Rules:
+- the Interview question UI is the baseline visual pattern for reusable question cards across Assistant, Interviewer, and requirements/document-builder flows
+- questions are required by default unless explicitly marked optional
+- a question flow may contain multiple questions in one questionnaire
+- users may answer in any order and revise answers before final submission
+- dismissing a questionnaire pauses that conversational branch and returns an explicit dismissed state; it does not fabricate a submitted answer set
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/chain-wizard-flexibility.md
+
+### Clarification and resume behavior
+Structured clarification flows MUST preserve question identity and resume deterministically.
+
+Rules:
+- `clarification_request` and related wizard/thread surfaces may point at a multi-question questionnaire, not only one prompt at a time
+- `question_ids[]` remain the canonical cross-surface identifiers for clarification work
+- thread resume and wizard resume must restore the same outstanding questionnaire state or its resolved outcome
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/storage-plan.md
+
+### Runtime visibility
+Active Interview work blocks must show the effective runtime state required by the shared runtime owner docs.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
 
 ## 17. Context & Truncation
 

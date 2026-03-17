@@ -1598,6 +1598,18 @@ ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Pla
 
 ### 15.5 Clarification round cap
 
+### 15.6 Shared questionnaire alignment
+Clarification flows consume the shared question system used by Assistant Chat and Interview rather than a wizard-only prompt shape.
+
+Rules:
+- a clarification request may represent one question or a multi-question questionnaire
+- `question_ids[]` remain the canonical stable identifiers for clarification items across report, wizard, and thread surfaces
+- required questions block final submit
+- dismiss pauses the clarification flow rather than fabricating a successful answer set
+- resume behavior restores the outstanding questionnaire state or the persisted resolved outcome
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+
 A clarification cycle is one complete sequence of:
 1. a report with non-empty `needs_user_clarification[]`,
 2. user answer submission,

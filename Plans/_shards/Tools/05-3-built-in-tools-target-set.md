@@ -17,11 +17,15 @@ The following built-in tools are the **target set** for the central tool registr
 | **multiedit** | Multiple edits in one operation (batch string replacements) | (same as `edit`) | OpenCode: edit permission covers edit, write, patch, multiedit. |
 | **webfetch** | Fetch web content from a URL | `webfetch` | URL allowlist/denylist (FileSafe); timeout; size cap. Document which domains are contacted. |
 | **websearch** | Search the web (discovery) | `websearch` | When enabled (env or config); may use Exa or cited-search MCP (newtools §8.2.1). |
-| **question** | Ask the user questions during execution | `question` | Header, text, options + freeform. Only meaningful when HITL/UI can show prompt. |
+| **webextract** | Extract a target page/site | `webextract` | Targeted site/page extraction with audit visibility. |
+| **webresearch** | Run multi-source web research | `webresearch` | Research synthesis with explicit provenance and support-tier disclosure. |
+| **webcrawl** | Crawl a site or section | `webcrawl` | Multi-page crawl; bounded by permission and fan-out limits. |
+| **webmap** | Map site structure | `webmap` | Site-structure discovery with bounded traversal. |
+| **question** | Ask the user structured questions during execution | `question` | Supports both single-question and multi-question questionnaire flows. Only meaningful when HITL/UI can show prompts. |
 | **skill** | Load a skill (e.g. SKILL.md) into the conversation | `skill` | Path or name → content; validate path is under allowed roots. |
-| **todowrite** | Create/update task lists during the session | `todowrite` | Subagent default: disabled (OpenCode). Single todo state per run/session. |
-| **todoread** | Read current todo list state | `todoread` | Subagent default: disabled. |
-| **lsp** (MVP) | LSP operations: definition, hover, references; rename (with user approval) | `lsp` | No feature flag; available when LSP client is enabled. See §3.4.1 LSP tool (MVP). |
+| **todowrite** | Create/update normalized plan TODO state during the session | `todowrite` | Uses the canonical normalized TODO schema. Subagent default: deny unless explicitly re-enabled. |
+| **todoread** | Read current normalized plan TODO state | `todoread` | Returns the canonical normalized TODO schema. Subagent default: deny unless explicitly re-enabled. |
+| **lsp** (MVP) | LSP read/navigation operations plus approval-gated rename | `lsp` | No feature flag; available when LSP client is enabled. Canonical read operations include definition, references, hover, document/workspace symbol, implementation, and call hierarchy. See §3.4.1 and §3.5E. |
 | **task** | Launch subagents (matches subagent type) | `task` | **subagent_type** must be one of the **canonical 42 subagents** documented in Plans (orchestrator-subagent-integration.md §4, interview-subagent-integration.md). Validate with subagent_registry; see §3.6. |
 | **chatsearch** | Search project chat history (threads/messages) via Tantivy chat index | `chatsearch` | Project-only scope; supports filters (thread_id/time); result/hit limits per §3.5. Used for agent search + auto retrieval. |
 | **codesearch** | Code search within the **project workspace / project root** | `codesearch` | MVP backend is multi-tier: Tantivy code index + LSP workspace/symbol + ripgrep fallback. Result and timeout limits per §3.5. |
@@ -51,11 +55,11 @@ With **LSP MVP** (Plans/LSPSupport.md), the following tools are **enhanced or ne
 
 | Tool | Effect of LSP MVP |
 |------|-------------------|
-| **lsp** | **Promoted to MVP** (no longer experimental/feature-flagged). Agents can invoke `lsp.references`, `lsp.definition`, `lsp.hover` (and optionally `lsp.rename` with user approval) so they can reason about code ("find all usages," "what type is this," "rename with confirm"). Requires a running LSP server for the project language. When no server is available, the lsp tool returns no results or a clear "LSP unavailable" response. See Plans/LSPSupport.md §9.1 (Promote lsp tool to MVP). |
+| **lsp** | **Promoted to MVP** (no longer experimental/feature-flagged). Agents can invoke canonical read/navigation operations including definition, references, hover, document/workspace symbols, implementation, and call hierarchy. `lsp.rename` remains approval-gated. Requires a running LSP server for the project language. When no server is available, the lsp tool returns no results or a clear "LSP unavailable" response. See Plans/LSPSupport.md §9.1. |
 | **codesearch** | **Enhanced** when LSP is available: can use LSP `workspace/symbol` (and optionally `documentSymbol`) for **symbol-aware search** (find by symbol name, kind, and location) in addition to text-based search. Fallback: text-based or indexed search when LSP is disabled or no server for the language. |
 | **read** / **grep** / **edit** (context) | **Context enrichment:** Assistant/Interview context can include a **summary of current LSP diagnostics** for @'d or open files (errors/warnings with file, line, message, severity). Agents then see linter/type errors when using read/grep/edit and can suggest fixes. Not a new tool; the context passed to the agent is enhanced (Plans/LSPSupport.md §5.1). |
 
-**Implementation note:** The lsp tool should be implemented to call the same LSP client used by the editor and Chat (diagnostics, hover, definition, references, rename). Permission for `lsp` follows the same allow/deny/ask model; default allow (or ask for `lsp.rename`).
+**Implementation note:** The lsp tool should be implemented to call the same LSP client used by the editor and Chat (diagnostics, hover, definition, references, symbols, implementation, call hierarchy, rename). Permission for `lsp` follows the same allow/deny/ask model; default allow for read/navigation operations, with separate approval for `lsp.rename`.
 
 #### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval
 
@@ -65,28 +69,132 @@ With **LSP MVP** (Plans/LSPSupport.md), the following tools are **enhanced or ne
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `operation` | string | yes | One of: `"references"`, `"definition"`, `"hover"`, `"rename"`. |
+| `operation` | string | yes | One of the canonical LSP operations from §3.5E. MVP read/navigation operations include `"references"`, `"definition"`, `"hover"`, `"documentSymbol"`, `"workspaceSymbol"`, `"implementation"`, `"prepareCallHierarchy"`, `"incomingCalls"`, `"outgoingCalls"`, plus approval-gated `"rename"`. |
 | `path` | string | yes | File path (project-relative or absolute) containing the symbol. |
 | `position` | object | yes for definition, hover, references | `{ "line": number (0-based), "character": number (0-based) }`. |
 | `newName` | string | yes for rename | New symbol name when `operation` is `"rename"`. |
 
-**LSP methods:** `textDocument/references`, `textDocument/definition`, `textDocument/hover`; for rename: call `textDocument/prepareRename` first when supported -- if it fails or is unsupported, do not call `textDocument/rename` (return structured error to agent); otherwise `textDocument/rename`.
+**LSP methods:** `textDocument/references`, `textDocument/definition`, `textDocument/hover`, `textDocument/documentSymbol`, `workspace/symbol`, `textDocument/implementation`, `textDocument/prepareCallHierarchy`, `callHierarchy/incomingCalls`, and `callHierarchy/outgoingCalls`; for rename: call `textDocument/prepareRename` first when supported -- if it fails or is unsupported, do not call `textDocument/rename` (return structured error to agent); otherwise `textDocument/rename`.
 
-**Permission:** Read-only operations (`references`, `definition`, `hover`) use permission key `lsp`; default **allow**. The **rename** operation applies workspace edits; require **user approval** before applying (see below).
+**Permission:** Read/navigation operations use permission key `lsp`; default **allow**. The **rename** operation applies workspace edits; require **user approval** before applying (see below).
 
 **Rename approval (HITL):** When `operation` is `"rename"`:
 1. Call LSP `textDocument/prepareRename` then `textDocument/rename` to obtain the list of edits.
 2. Return to the agent a result **pending approval**: e.g. `{ "status": "pending_approval", "operation": "rename", "edits": [...], "summary": "Rename 'foo' to 'bar' in N locations" }`.
 3. Assistant approval flow (or HITL at tier boundary in Orchestrator) presents "Apply rename?"; on approve, apply via `workspace/applyEdit` (FileSafe). On reject, return `{ "status": "rejected" }` to the agent.
 
-So: **definition**, **hover**, **references** return results directly; **rename** returns `pending_approval` and actual apply is only after user approval.
+So: read/navigation operations return results directly; **rename** returns `pending_approval` and actual apply is only after user approval.
 
-**Integration with LSP client:** Tool implementation calls the same LSP client as the editor (e.g. `src/lsp/client.rs`). Client must expose: `get_definition(uri, position)`, `get_hover(uri, position)`, `get_references(uri, position)`, `get_rename_edits(uri, position, new_name)`. Apply **request timeout** (default 10s; config key e.g. `lsp.toolTimeoutMs` in implementation). On timeout or error, return a structured error to the agent.
+**Integration with LSP client:** Tool implementation calls the same LSP client as the editor (e.g. `src/lsp/client.rs`). Client must expose the canonical read/navigation calls plus `get_rename_edits(uri, position, new_name)`. Apply **request timeout** (default 10s; config key e.g. `lsp.toolTimeoutMs` in implementation). On timeout or error, return a structured error to the agent.
 
 **Optional LSP sub-operations (post-MVP):** `lsp.format` (textDocument/formatting, rangeFormatting) and `lsp.code_action` (textDocument/codeAction → workspace/applyEdit) can be added so agents can "format file X" or "apply quick fix"; both write buffers and should require **ask** (or user approval). See Plans/LSPSupport.md §9.1.
 
 ### 3.5 Per-tool semantics (I/O, errors, limits)
 ### 3.5A `skill` tool runtime contract
+
+### 3.5B `question` tool runtime contract
+The simplified single-string `question` contract is superseded by a two-mode contract.
+
+Canonical modes:
+- `single_question`
+- `questionnaire`
+
+Recommended input envelope:
+- `mode`
+- `header?`
+- `prompt?`
+- `questions: Array<QuestionItem>`
+
+`QuestionItem` minimum fields:
+- `question_id`
+- `question`
+- `description?`
+- `options?`
+- `required?` (default `true`)
+- `multi_select?` (default `false`)
+- `allow_freeform?` / `allow_other?` (default `true`)
+- `placeholder?`
+- `default_values?`
+
+Recommended output envelope:
+- `status: "answered" | "submitted" | "dismissed" | "timed_out" | "unavailable"`
+- `answers: Array<{ question_id, values: string[], source?: "option" | "other" | "freeform" }>`
+- `answer_text?` only as backward-compatible sugar for true single-question callers
+
+Rules:
+- multi-question flows are first-class, not an edge case
+- users may answer in any order
+- required questions block final submit
+- headless / HITL-unavailable paths return `unavailable` rather than fabricated answers
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+
+### 3.5C `todowrite` and `todoread` runtime contract
+The simplified checklist-only todo tool shapes are superseded by the normalized TODO schema used by planning outputs.
+
+Canonical TODO item fields:
+- `todo_id`
+- `title`
+- `summary`
+- `status`
+- `dependencies[]`
+- `owner_hint`
+- `verification_hint`
+- `notes?`
+- `order_index?`
+
+Canonical status set:
+- `pending`
+- `in_progress`
+- `completed`
+- `blocked`
+- `skipped`
+
+Rules:
+- `todowrite` may create, reorder, and update statuses or notes
+- `todoread` returns the current normalized list for the active thread/run
+- the same schema must survive single-agent, subagent, and crew execution
+- subagent default remains deny unless explicitly re-enabled by run config
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+
+### 3.5D Web operation family runtime contract
+The canonical web tool family is expanded beyond `websearch` and `webfetch`.
+
+Canonical operations:
+- `websearch`
+- `webfetch`
+- `webextract`
+- `webresearch`
+- `webcrawl`
+- `webmap`
+
+Rules:
+- `Reading Site` remains the PM-native Site Reader path rather than a provider-local synonym
+- provider support is disclosed as `native`, `pm_composed`, or `unsupported`
+- natural-language requests and `/web` subcommands route to the same dispatcher
+- provider fallback and evidence provenance remain visible in activity/audit surfaces
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+### 3.5E LSP tool runtime reconciliation
+The `lsp` tool surface is widened beyond the minimal MVP read trio.
+
+Recommended read operations:
+- `goToDefinition`
+- `findReferences`
+- `hover`
+- `documentSymbol`
+- `workspaceSymbol`
+- `goToImplementation`
+- `prepareCallHierarchy`
+- `incomingCalls`
+- `outgoingCalls`
+
+Write-like operation retained:
+- `rename` with explicit approval before apply
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FinalGUISpec.md
 
 The `skill` tool is the canonical on-demand runtime skill access mechanism.
 
@@ -154,17 +262,32 @@ Canonical input/output shapes align with [OpenCode built-in tools](https://openc
 | **multiedit** | `edits: Array<{ path, old_string, new_string }>` | `results: Array<{ path, updated }>` | Same as edit per item; first failure fails batch | Max edits per call (e.g. 50); same file size cap as edit |
 | **webfetch** | `url: string` | `content: string`, `status?: number` | URL not in allowlist / in denylist (FileSafe), timeout, HTTP error | Timeout (e.g. 30s); response size cap (e.g. 1 MiB); document domains in audit |
 | **websearch** | `query: string` | `results: Array<{ title, url, snippet }>` | Provider disabled or unavailable, rate limit, permission denied | Result limit (e.g. 10); optional query rate limit |
-| **question** | `header?: string`, `text: string`, `options?: string[]` | `answer: string` | HITL unavailable (headless) → return "HITL unavailable" or default | N/A (blocking until user responds or timeout) |
+| **webextract** | `url: string` | extracted page/site content + provenance refs | Permission denied, target unavailable, timeout | Same bounded network and response-size constraints as web tools generally |
+| **webresearch** | `task: string` | multi-source research result + sources/provenance | Provider disabled or unavailable, rate limit, permission denied | Result count and research-budget limits |
+| **webcrawl** | `url: string` | crawl results + traversed-source refs | Permission denied, timeout, crawl fan-out capped | Traversal/fan-out limit plus timeout |
+| **webmap** | `url: string` | site map / structure summary + source refs | Permission denied, timeout | Traversal/fan-out limit plus timeout |
+| **question** | `mode`, `header?`, `prompt?`, `questions[]` | `status`, `answers[]`, optional backward-compatible `answer_text?` | HITL unavailable (headless) → `unavailable`; dismiss/time-out are explicit outcomes | Blocking until user responds, dismisses, times out, or HITL is unavailable |
 | **skill** | `path_or_name: string` | `content: string`, `name: string` | Path outside allowed roots, file not found, permission denied | Size cap (e.g. 64 KiB); path under allowed roots only |
-| **todowrite** | `todos: Array<{ id?, content, status? }>` | `ack: boolean` | Subagent default deny; permission denied | Single todo list per run/session |
-| **todoread** | -- | `todos: Array<{ id, content, status }>` | Subagent default deny; permission denied | N/A |
-| **lsp** | `operation: "references"\|"definition"\|"hover"\|"rename"`, `path: string`, `position: { line, character }`, `newName?` (rename only) | references/definition: `locations: Array<{ path, range }>`; hover: `contents: string`; rename: `pending_approval` + edits or `rejected` | LSP unavailable, no server for language, timeout, invalid path/position, server crash mid-call | Timeout per request (e.g. 10s); return "LSP unavailable" or "LSP server error" on disconnect/crash |
+| **todowrite** | `todos: Array<{ todo_id, title, summary, status, dependencies[]?, owner_hint?, verification_hint?, notes?, order_index? }>` | normalized todo-state acknowledgment / updated state | Subagent default deny; permission denied | Single normalized todo list per run/session/thread |
+| **todoread** | -- | `todos: Array<{ todo_id, title, summary, status, dependencies[]?, owner_hint?, verification_hint?, notes?, order_index? }>` | Subagent default deny; permission denied | N/A |
+| **lsp** | canonical `operation`, `path`, operation-specific params, `newName?` (rename only) | operation-specific read/navigation result; rename: `pending_approval` + edits or `rejected` | LSP unavailable, no server for language, timeout, invalid path/position, server crash mid-call | Timeout per request (e.g. 10s); return "LSP unavailable" or "LSP server error" on disconnect/crash |
 | **task** | `subagent_type: string`, `prompt: string`, ... | `result: object` (subagent output) | Tool denied, subagent type unknown (not in canonical 42), launch failure | Per run config (max concurrent subagents etc.); validate subagent_type with subagent_registry (§3.6) |
 | **codesearch** | `query: string`, `path?: string` | `results: Array<{ path, line, snippet }>` or symbol results when LSP available | Permission denied, search backend unavailable | Result limit (e.g. 100); timeout (e.g. 15s) |
 
 **LSP sub-operations:** For `lsp`, `operation` determines the LSP method and return shape: `references` → `textDocument/references`; `definition` → `textDocument/definition`; `hover` → `textDocument/hover`; `rename` → `textDocument/prepareRename` + `textDocument/rename`, result pending user approval (§3.4.1). When the LSP server crashes or disconnects mid-call, return a structured error (e.g. `{ "error": "lsp_unavailable", "message": "LSP server closed or timed out" }`) so the agent can retry or fall back.
 
 ### 3.6 Task tool and the 42 subagents (Plans)
+
+### 3.6A Task runtime addendum
+The `task` tool launches resumable delegated runs rather than opaque fire-and-forget work.
+
+Rules:
+- task invocations should preserve a stable delegated run/task identity so later history and UI surfaces can correlate follow-ups and results
+- task runs inherit a narrowed-or-equal permission snapshot rather than inventing a looser child policy
+- top-level assistant flows remain the owner of direct user questionnaire prompting unless runtime explicitly delegates that boundary
+- subagent assumptions about `todowrite` / `todoread` availability must honor the subagent-default deny policy unless run config explicitly overrides it
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
 
 The **task** tool launches a subagent by type. The **subagent_type** parameter must be one of the **canonical 42 subagents** documented in the Plans folder:
 

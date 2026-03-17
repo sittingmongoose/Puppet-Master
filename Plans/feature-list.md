@@ -33,105 +33,25 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipe
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Executor_Protocol.md
 ### 2. Chat and assistant
 
-**Chat modes.** Ask (read-only; no edits, no execution). Plan (read-only until execute; clarifying questions required, then research, then plan + todo; execute after approval). Interview (switch to interview flow; reduced phases when from Assistant; at end: Do now or Add to queue). BrainStorm (multi-model, shared context, subagents communicate; on execute chat switches to Agent mode). Crew (invoke crew with Plan; must work together). **Chat controls (OpenCode-style):** platform dropdown, model dropdown (customizable -- dynamic discovery + manage models), reasoning/effort when platform supports it; in chat header or footer; context passed on switch; apply to next turn. Many features require a project.
+**Chat modes.** Ask is read-only analysis. Plan is read-only until explicit execution and requires clarifying questions, research, and visible plan + TODO output before approval. Interview uses the shared question system. BrainStorm coordinates one Q&A/research phase before one plan. Crew consumes the same approved plan/TODO contract.
 
-**Bash capability.** The Assistant can run shell commands (bash) when not in read-only mode (e.g. in Plan execution or Agent mode). Execution is subject to permissions (YOLO vs regular approval) and to FileSafe/guards. Bash output (stdout/stderr) is visible in the thread.
+**Chat controls.** Copy icons are always visible. `Stop`, `Edit`, and `Resend` apply only to the latest user message, with stop as immediate cancel and edit/resend rewinding later work. When scrolled away from the bottom, chat shows a jump-to-latest control with unseen-count badge.
 
-**Plan mode depth and rules.** Depth: Shallow, Regular, or Deep (controls clarifying questions and research length). Clarifying questions always required before plan creation. "Add to queue" only in Interview, not default Plan. Plan panel shows written plan and todo list. Execution after approval via same engine (fresh process per step). Parallelization when possible; user can disable in settings.
+**Slash commands.** Canonical reserved built-ins are `/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact`, `/stop`, `/resume`, `/rewind`, `/revert`, `/share`, `/settings`, `/doctor`, `/help`, `/web`, and `/skill`. `/cancel` is an alias path to `/stop`. Reserved built-ins are not overridable by custom commands.
 
-**ELI5 (two toggles, independent).** App-level control is **Interaction Mode (Expert/ELI5)** (default: ELI5 **ON**) and selects tooltip/interviewer copy variants. Chat-level control is **Chat ELI5** (default: **OFF**, Expert/default LLM behavior) and only changes assistant style instructions for that chat thread/session. Both toggles are stored and applied separately. In-scope authored copy must be dual-variant (Expert + ELI5) per `Plans/FinalGUISpec.md` §7.4.0 checklist.
+**Web and Site Reader.** `/web` exposes `search`, `extract`, `research`, `crawl`, and `map`. User-facing activity labels distinguish `Searching Web`, `Extracting Site`, `Researching Web`, `Crawling Site`, `Mapping Site`, and PM-native `Reading Site`. Final answers preserve source provenance and fallback visibility.
 
-**Permissions: YOLO vs Regular.** YOLO: max permissions, no prompts. Regular: approve once or approve for session. Per session/chat. Do not persist "approve for session" across restarts.
+**Question system.** PM supports both single-question and multi-question questionnaire flows. Users may answer in any order, required questions block submit, drafts auto-save, and dismiss pauses the flow explicitly.
 
-**Message submission (Steer vs Queue).** Steer mode: Enter submits now; Tab or "Queue" queues when busy. Queue mode: Enter queues when busy. Interrupt = send new message (steer). Stop = cancel run, no message. Queued messages above input (max 2, FIFO); each with edit, "Send now," remove. Clear queue. Keyboard shortcuts and command palette. Error state: Retry/Cancel; suggest switch platform/model on failure.
+**Plan and TODO tracking.** Plan/Deep Plan emit normalized TODOs. The sticky plan panel is the authoritative tracker; inline chat updates are lightweight milestones. `todowrite` / `todoread` use the same normalized TODO schema.
 
-**Slash commands and custom commands.** Built-in reserved: /new, /model, /export, /compact, /stop, /resume, /rewind, /revert, /share. Application- and project-wide; user-customizable near Rules. No conflicting names with built-ins.
+**Terminal and activity transparency.** Chat uses shared inline operation cards for commands, web work, file reads/changes, diffs, and subagent activity. Command cards preview shell-backed activity inline, while the canonical interactive session remains the Terminal surface and `Open in Terminal` focuses the same live session.
 
-**Teach.** Assistant explains how Puppet Master works from docs (REQUIREMENTS.md, ARCHITECTURE.md, AGENTS.md, GUI_SPEC.md, platform CLI sections, mode descriptions). The documentation that Teach uses must be built when the rest of the project is built so it is always available. Optional tips/snippets and "How does [X] work?" flows in chat. No separate Teach UI.
+**Skills.** Skill management lives in `Agent Config > Skills`; Skill Store is browse/install only. `/skill` is a lightweight invocation helper, not a management family.
 
-**Attachments, web search, extensibility.** Files and photos; paste and drag-drop. Web search with citations (inline + Sources list); full spec in newtools. MCP/plugins same as rest of app. All providers support image attachments as input context; image generation is available via Cursor-native generation (Cursor; no Gemini credentials required) or Gemini media generation on non-Cursor backends using the same requested/effective auth/account resolution model as standard Gemini usage.
+**Runtime identity display.** Chat displays shared requested/effective runtime state and frozen historical snapshots, but assistant/chat docs do not own the runtime identity schema.
 
-**File Manager, IDE-style editor, and @ mention.** @ in prompt opens autocomplete (recent/modified files, folder nav). Insert path or @path; resolve when building prompt. File Manager: pop-out side window; selecting a file opens it in the **in-app IDE-style editor**. **IDE-style editor (MVP):** center-left File Editor strip; **tabs** for open files (GUI setting **max editor tabs**, default e.g. 20-30, for LRU cap); **split panes** (multiple editor groups); **drag editor out to own window and back** (detach/snap, same as File Manager and Chat); editable content, Save (Ctrl+S), unsaved indicator, line numbers, go-to-line/range, basic syntax highlighting; open from File Manager or from chat. **LSP (MVP):** diagnostics, hover, completion, inlay hints, semantic highlighting, code actions, code lens, signature help; status in status bar; per-server enable/disable and custom servers via Settings > LSP (Plans/LSPSupport.md). **Chat Window LSP (MVP):** diagnostics in Assistant/Interview context; @ symbol with LSP workspace/symbol; code blocks in messages with hover and click-to-definition; Problems link from Chat (Plans/LSPSupport.md §5.1, assistant-chat-design §9.1). **Additional LSP enhancements (Plans/LSPSupport.md §9.1):** find references, rename symbol, format document/selection; go to type definition, go to implementation, document links, call hierarchy, folding/selection range; Chat "Fix all," "Rename X to Y," "Where is this used?," "Format file," copy type to chat; optional LSP diagnostics verification gate and LSP snapshot in evidence; Interview "structure of file" via documentSymbol; promote lsp tool when ready. **Terminal:** tabs for multiple terminal sessions in bottom panel. **Browser:** in-shell browser tabs plus detached preview/browser windows. **Language/framework presets** (JetBrains-style): tools downloaded when project added or from interview flow; run/debug, modal editing, remote SSH, review/1-click apply, etc. Full list in Plans/FileManager.md §10-§11. **Click to open in editor:** clicking a file path (files-touched strip, "Read:" / "Edited:", or code block filename) in chat opens that file in the editor; when line/range is known, scroll to it. Activity "Read: file" and code blocks open in editor; context files as chips; drag file into chat to attach.
-
-**Chat history search.** Human search across chats/history (UI). Agent search via tool/MCP or index in context pipeline for prior messages/sessions.
-
-**Threads and chat management.** Multiple threads in one chat UI. New thread (plus). Thread state (Working/Completed). Rename, archive, delete (with confirm). Resume and rewind (restore to message). Session share (bundle, no secrets). Copy message (selectable/Copy action). Run-complete notification (other thread) with setting to disable. Max concurrent runs per thread (default 10); per-platform concurrency caps also apply (see FinalGUISpec §7.4.7). Plan panel per thread. Persistence: thread list, messages, queue, plan/todo.
-
-**Context usage display.** Streaming when platform supports. Tokens, context window, rate limits in header/strip/status. Rate limit hit: clear message and option to switch platform/model.
-
-**Activity transparency.** Show search query/scope; bash when not read-only (subject to permissions/FileSafe); files read and changed per turn; thinking/reasoning collapsible toggle; revert last agent edit (Git/restore points).
-
-**Subagents and Crew.** Auto or user-requested subagents. Crew via button or "use a crew." Crew + Plan must work (e.g. execute plan with crew).
-
-**Plan + Crew execution.** Plan + todo; execute with single agent, Crew, or agent+subagents; user or manager chooses. "Execute with crew" after plan. Crew can work from existing or new plan; plan format consumable by both.
-
-**Interview phase UX (chat).** Thought stream; message strip; question UI with suggested options and "Something else" freeform.
-
-**Context and truncation.** Minimize truncation; VBW/GSD-style strategies; context compilation for chat; user-triggered "Compact session"; re-pack on model switch (last N turns + summary, platform_specs limits).
-
-**BrainStorm mode.** Single coordinated Q&A/research then one plan; on execute chat switches to Agent mode. Execute by single agent, crew, or agent+subagents. Subagents can "talk to each other" before merge.
-
-**Documentation audience (AI Overseer).** Interview output (PRD, AGENTS.md, etc.) for AI Overseer: unambiguous, wire-explicit, DRY in generated content; no partially complete components.
-
-**Dashboard warnings and CtAs.** Warnings and Calls to Action on Dashboard; addressable via Assistant (e.g. "approve and continue," "run suggested fix"). HITL: CtA on Dashboard plus new thread with appropriate name. "Continue in Assistant" with run summary and context when orchestrator completes or pauses.
-
-**Live testing tools and hot reload.** Assistant can request "start hot reload dev mode" or "run tests in watch mode"; results in IDE panes.
-
-
-#### Scan additions (auto-import: chat/assistant)
-##### Plans/Multi-Account.md
-- **Account list with status chips.** Config view lists accounts with active indicator, usage, cooldown/rate-limit, auth chip (Multi-Account §9.2).
-- **Account reorder.** Optional reorder affecting next-in-order selection (Multi-Account §9.2).
-- **Add account UI flow.** Platform login flow creating new profile/config dir and registry entry (Multi-Account §9.1).
-- **Manual path controls for CLI tools.** Manual path checkbox + native file picker for Cursor/Claude rows (Multi-Account §9.1).
-- **Per-account usage bars.** Usage view shows 5h/7d usage per account with reset times (Multi-Account §9.3).
-- **Provider-specific usage/auth behaviors.** Detailed per-provider usage/auth API behaviors for Claude/Codex/Gemini/Copilot/Cursor (Multi-Account §6).
-- **Remove account UI flow.** Remove account with confirmation when active (Multi-Account §9.1).
-- **Set active / use for next run.** Control to designate active account or just for next run (Multi-Account §9.2).
-- **Setup/Doctor multi-account visibility contract.** Setup and Doctor show consistent per-platform multi-account summaries (active, count, cooldown, auth freshness) (Multi-Account §9.1).
-- **Tool readiness integration in Setup.** Setup/Doctor show install state rows for Cursor CLI/Claude CLI/Playwright runtime (Multi-Account §9.1).
-
-##### Plans/Personas.md
-- **Global persona storage layout.** Store as ~/.config/puppet-master/personas/<id>/PERSONA.md (Personas §2.2).
-- **Persona YAML frontmatter schema.** Frontmatter fields incl default_platform/default_model/default_variant/temperature/top_p/reasoning_effort/talkativeness/default_skill_refs/disabled_plugins/preferred_tools/discouraged_tools/tool_usage_guidance/aliases/tags (Personas §3.1-3.2; Persona Runtime Contract Expansion).
-- **Persona context injection pipeline.** Persona markdown body prepended into Instruction Bundle + applies skills/permission profile (Personas §5.2).
-- **Persona create/edit form.** GUI editor fields: id/name/description/default_mode/default_permissions_profile/default_platform/default_model/default_variant/temperature/top_p/reasoning_effort/talkativeness/default_skill_refs/preferred_tools/discouraged_tools/tool_usage_guidance/aliases/tags + markdown body (Personas §4.1; Persona Runtime Contract Expansion).
-- **Persona talkativeness control.** Persona settings expose a fixed six-step talk scale: Talk a lot more, Talk more, Talk a little more, Model default, Talk a little less, Talk less; this adjusts response expansiveness/collaboration style without depending on sampling knobs (Personas §3.2/§5.2; Prompt_Pipeline §6.5-§6.9).
-- **Persona resolution order.** Project-local overrides global; warn on unresolved persona selection (Personas §2.3).
-- **Persona scope selector.** Choose project-local vs global scope for persona storage (Personas §4.1).
-- **Persona validation rules.** ID regex, folder-name matching, reserved IDs, blocking save on validation errors (Personas §3.3/§6).
-- **Personas management UI.** Settings card to list/create/edit/delete personas with schema validation (Personas §4.1).
-- **Project-local persona storage layout.** Store as .puppet-master/personas/<id>/PERSONA.md (Personas §2.1).
-- **Reserved persona ID enforcement.** Reject reserved IDs (e.g., explorer/researcher) in creation/selection logic (Personas §6).
-- **Built-in collaboration/research personas.** First-class built-ins include collaborator, general-purpose, explorer, researcher, and deep-researcher, with explorer replacing stale explore naming (Personas Runtime Contract Expansion).
-- **Auto/manual/hybrid persona mode.** Major surfaces support manual, auto, and hybrid Persona selection modes with visible effective Persona output (Personas §10.10).
-- **Natural-language persona invocation.** Users can summon Personas via phrasing like "Use Explorer", "Switch to Collaborator", or "Be a Rust engineer", with alias/fuzzy matching and scoped overrides (Personas §10.9).
-- **Requested vs effective persona runtime state.** Runs/sub-runs/phases/tiers record requested_persona, effective_persona, selection source/reason, and applied/skipped Persona controls (Personas §10.11).
-
-##### Plans/assistant-chat-design.md
-- **Context circle pop-out + compact now.** Context usage UI with pop-out detailed breakdown and a `Compact Now` action (Assistant chat design §25).
-- **Per-pass validation model/provider selectors.** Settings UI to select provider+model per validation pass (Pass 1/2/3) with audit mirroring to reports (Assistant chat design §26).
-- **Chat Persona mode + effective Persona display.** Chat supports manual/auto/hybrid Persona modes and must always show effective Persona + selection reason instead of opaque Auto state (Assistant chat design §27).
-- **Natural-language Persona summons in chat.** Chat recognizes explicit requests like `Use Explorer` or `Answer as a technical writer` as Persona overrides with turn/session scope semantics (Assistant chat design §27.3).
-- **Chat Persona aliases and fuzzy matching.** Persona requests resolve through canonical IDs, display names, aliases, and normalized natural-language forms (Assistant chat design §27.4).
-- **Subagent blocks show effective Persona/model/platform.** In-thread subagent blocks display effective Persona, platform, model, and skipped unsupported Persona controls when relevant (Assistant chat design §27.6-§27.7).
-- **Thread attention_required + clarification requests.** Thread state `attention_required` with structured clarification_request forms (yes/no, single/multi-choice, free text) and bounded clarification loops (Assistant chat design §11).
-- **Deep Plan annotations + document-selection attachments.** Deep Plan review uses durable annotations plus thread-scoped `document_selection_context` chips instead of a note-only/browser-only split (Assistant chat design §8.7, §28.4A).
-
-##### Plans/assistant-memory-subsystem.md
-- **Deterministic memory verification.** Auto/manual verification rules tied to evidence (build/test/commits/artifacts), with verified-only injection defaults (Assistant memory subsystem verification).
-- **Evidence-backed memory gists.** MemoryGist model with claims, verification states, evidence refs, decay/activation scoring, and capsule assembly (Assistant memory subsystem).
-- **Memory gist review UI.** GUI panel to filter/verify/edit/pin/discard gists and manage token budgets + maintenance ops (Assistant memory subsystem UI).
-
-##### Plans/human-in-the-loop.md
-- **HITL approve/reject button label contract.** Deterministic button labels and reject CTAs (Approve & Continue / Reject / Cancel Run etc.) (HITL Button Labels).
-- **HITL checkpoint/approval persistence schema.** Persist awaiting_approval/approved/rejected state in redb for recovery (HITL redb).
-- **HITL seglog event emission.** Emit explicit events for HITL pauses/approvals in seglog ledger (HITL Implementation Hooks).
-- **HITL vs PAUSE.md coexistence.** HITL gates and pause-file mechanism are independent and can coexist (HITL relation to existing pause).
-- **Optional interview-phase HITL gates.** Future extension: HITL gates for interview flow phases with separate setting (HITL Optional Interview).
-- **Run resumption on restore while paused.** On reopen, run remains waiting for approval until user acts (HITL hooks).
-- **Tier-boundary HITL semantics.** Explicit phase/task/subtask boundary semantics for approval pause points after end verification (HITL Tier Boundaries).
----
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md
 
 ### 3. GUI layout and shell (Composergui6 / Plans/FinalGUISpec.md)
 

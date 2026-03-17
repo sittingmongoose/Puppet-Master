@@ -235,40 +235,41 @@ Covered operations:
 
 ## 5. Tool permission keys
 
-<a id="TOOL-KEYS"></a>
+The permission engine resolves canonical tool keys, not provider-native names.
 
-The following permission keys are recognized by the policy engine. Each key corresponds to a built-in tool or a special guard. MCP-discovered and custom tools use their registered names as permission keys; unknown tools default to `ask` (§7).
-
-Rule: Every built-in tool and special guard MUST have exactly one entry in this table. The table is the canonical key list.
-
-ContractRef: ContractName:Plans/Tools.md, PolicyRule:Decision_Policy.md§2
-
-| Key | Category | Scope | Notes |
-|-----|----------|-------|-------|
-| `read` | File I/O | Read file contents | Granular: path patterns |
-| `edit` | File I/O | Create/modify/delete files | Granular: path patterns. Covers `write`, `patch`, `multiedit` (same permission). |
-| `glob` | Search | File name pattern matching | Granular: path patterns |
+| Key | Category | Meaning | Notes |
+|---|---|---|---|
+| `read` | Read | Read file content | Granular: path patterns; `.env` deny defaults apply |
+| `edit` | Write | Modify or create project files | Shared with write/patch/multiedit |
+| `glob` | Search | File-name pattern matching | Granular: path patterns |
 | `grep` | Search | Content search | Granular: path patterns |
 | `list` | Search | Directory listing | Granular: path patterns |
-| `bash` | Execution | Shell command execution | Granular: command patterns. FileSafe applies after. |
-| `task` | Execution | Subagent launch | Granular: subagent type patterns |
-| `skill` | Context | Load skill content | Granular: skill ID patterns |
-| `lsp` | IDE | Language server operations | Read-only ops `allow` by default; `rename` requires separate approval (`Plans/Tools.md` §3.4.1). |
+| `bash` | Execution | Shell command execution | Granular: command patterns; FileSafe applies after policy |
+| `task` | Execution | Launch delegated/subagent work | Granular: subagent type patterns |
+| `question` | Interaction | Ask the user for structured input | Interactive-surface tool; may resolve to `unavailable` when HITL is absent |
+| `skill` | Context | Load or invoke skill content | Granular: skill ID patterns |
+| `lsp` | IDE | Language-server operations | Read operations default allow; write-like rename requires separate approval |
 | `webfetch` | Network | Fetch URL content | Granular: URL patterns |
-| `websearch` | Network | Web search | Granular: query patterns |
-| `codesearch` | Search | Project workspace code/symbol search | Low risk; read-only |
-| `chatsearch` | Search | Project chat history search | Low risk; read-only; supports thread/time filters |
-| `logsearch` | Search | Project logs (summary) search | Read-only; returns refs to full payload |
-| `logread` | Logs | Read full log payload by ref | May contain sensitive data; default `ask` recommended |
-| `repo.import` | Workspace | Import external repo into project workspace | Requires explicit user intent; network + filesystem effects; default `ask` recommended |
-| `capabilities.get` | Introspection | Capability listing across media + provider tools | Read-only introspection; low risk |
-| `media.generate` | Generation | Image/video/tts/music generation | Content generation operation; user-facing output |
-| `todoread` | State | Read task state | Subagent default: `deny` |
-| `todowrite` | State | Write task state | Subagent default: `deny` |
-| `external_directory` | Guard | Paths outside working roots | See §4.2 |
+| `websearch` | Network | Search the web | Granular: query patterns |
+| `webextract` | Network | Extract a target page/site | Granular: URL / host patterns |
+| `webresearch` | Network | Multi-source research synthesis | Granular: query/task patterns |
+| `webcrawl` | Network | Multi-page crawl | Granular: URL / host patterns |
+| `webmap` | Network | Site map / structure extraction | Granular: URL / host patterns |
+| `codesearch` | Search | Project code/symbol search | Low risk; read-only |
+| `chatsearch` | Search | Project chat history search | Read-only |
+| `logsearch` | Search | Log summary search | Read-only |
+| `logread` | Logs | Full log payload read by ref | May expose large or sensitive payloads |
+| `repo.import` | Workspace | Import external repo into workspace | Network + filesystem impact |
+| `capabilities.get` | Introspection | Capability listing | Read-only |
+| `media.generate` | Generation | Image/video/tts/music generation | Quota/cost bearing operation |
+| `todoread` | State | Read plan/todo tracker state | Subagent default: `deny` |
+| `todowrite` | State | Write plan/todo tracker state | Subagent default: `deny` |
+| `external_directory` | Guard | Access outside working roots | See §4.2 |
 | `doom_loop` | Guard | Identical repeated calls | See §4.1 |
+| `external_publish_side_effect` | Guard | Remote publication / remote repo mutation | Non-bypassable special guard |
 
----
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/FileSafe.md
+
 ## 6. Ask flow semantics
 
 <a id="ASK-FLOW"></a>
@@ -304,7 +305,6 @@ ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
 ## 7. Deterministic defaults
 
 ### 7A. Preview/browser trust-tier capability matrix (2026-03-08)
-
 Preview/browser trust tiers are runtime capability gates. They do not replace tool permissions; they constrain what preview surfaces themselves are allowed to do.
 
 | Capability | `generated_restricted` | `workspace_preview` | `external_browse` |
@@ -323,53 +323,43 @@ Preview/browser trust tiers are runtime capability gates. They do not replace to
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/newfeatures.md, ContractName:Plans/assistant-chat-design.md
 
-Rules:
-- Requested vs effective selection/revision capability MUST be visible when the runtime downgrades a requested path.
-- `generated_restricted` and `workspace_preview` MUST NOT share storage/cookies by default.
-- `external_browse` MUST NOT inherit durable annotation or source-mutation privileges from workspace preview.
-- A GUI toggle or browser feature MUST NOT expand trust-tier capabilities beyond this matrix without an explicit plan update.
-
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md
-
-<a id="DEFAULTS"></a>
-
-When no rule matches at any precedence layer (§2.4), the following defaults apply. This table is the single source of truth for default permissions.
-
-Rule: Every tool permission key from §5 MUST have exactly one default in this table.
-
-ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Tools.md
+When no rule matches at any precedence layer, the following tool defaults apply.
 
 | Key | Default | Rationale |
-|-----|---------|-----------|
+|---|---|---|
 | `read` | `allow` | Read-only; `.env` deny via §7.1 |
 | `edit` | `ask` | File mutations require approval |
 | `glob` | `allow` | Read-only search |
 | `grep` | `allow` | Read-only search |
 | `list` | `allow` | Read-only listing |
 | `bash` | `ask` | Shell execution; high risk |
-| `task` | `ask` | Subagent launch; resource cost |
+| `task` | `ask` | Delegated/subagent launch; resource cost |
+| `question` | `allow` | Interactive clarification tool; runtime may still return `unavailable` when HITL is absent |
 | `skill` | `allow` | Context injection; low risk |
 | `lsp` | `allow` | Read-only IDE operations |
 | `webfetch` | `ask` | Network access |
 | `websearch` | `ask` | Network access |
+| `webextract` | `ask` | Network access over concrete targets |
+| `webresearch` | `ask` | Networked multi-source research |
+| `webcrawl` | `ask` | Potential fan-out crawl |
+| `webmap` | `ask` | Potential fan-out site mapping |
 | `codesearch` | `allow` | Read-only project code search |
 | `chatsearch` | `allow` | Read-only project chat index search |
 | `logsearch` | `allow` | Read-only log-summary search |
 | `logread` | `ask` | Full log payload may contain sensitive data |
-| `repo.import` | `ask` | Imports external code into workspace; network + filesystem impact |
-| `capabilities.get` | `allow` | Read-only capability introspection |
+| `repo.import` | `ask` | External code import + network impact |
+| `capabilities.get` | `allow` | Read-only introspection |
 | `media.generate` | `ask` | External API generation; quota/cost impact |
 | `todoread` | `allow` | State read (subagent: `deny`) |
-| `todowrite` | `allow` | State write (subagent: `deny`) |
+| `todowrite` | `allow` | State write for plan/todo tracking (subagent: `deny`) |
 | `external_directory` | `ask` | Paths outside project roots |
 | `doom_loop` | `ask` | Identical repeated calls |
-| `external_publish_side_effect` | `ask` | Remote publication and remote repo mutation require explicit approval even in fast/autonomous modes |
+| `external_publish_side_effect` | `ask` | Remote publication and remote repo mutation require explicit approval |
 | *(any unknown tool)* | `ask` | Safe default for new/MCP tools |
 
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
+
 ### 7.1 Default `.env` deny rules
-
-<a id="DEFAULT-ENV-DENY"></a>
-
 The `read` tool has built-in granular defaults that protect sensitive environment files:
 
 ```toml
@@ -380,34 +370,34 @@ The `read` tool has built-in granular defaults that protect sensitive environmen
 "*.env.example" = "allow"
 ```
 
-These defaults apply at the lowest precedence layer. Any explicit rule at a higher layer (global, project, Persona) overrides them. The `.env.example` allowance is intentional — example files contain no secrets.
+These defaults apply at the lowest precedence layer. Any explicit rule at a higher layer overrides them. The `.env.example` allowance is intentional because example files contain no secrets.
 
-ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
+ContractRef: ContractName:Plans/FileSafe.md, PolicyRule:no_secrets_in_storage
 
----
 ## 8. Resolution algorithm
 
-<a id="RESOLUTION"></a>
+The policy engine evaluates permission for a single tool invocation using this deterministic order.
 
-The policy engine evaluates permission for a single tool invocation using the following deterministic algorithm. Steps are executed in order; the first step that produces a result terminates the algorithm unless a special guard later applies a more restrictive outcome.
+1. **Mode override:**
+   - If the run mode is `yolo`, return `allow` for tool-permission evaluation only. Non-bypassable special guards are still evaluated later.
+   - If the run mode is `ask` or `plan`, and the tool mutates project/workspace state or launches delegated execution (`edit`, `bash`, `task`, `repo.import`, `media.generate`), return `deny`.
+   - State-only planning helpers (`question`, `todoread`, `todowrite`) and web research tools do not enter the blanket `ask`/`plan` deny set; they continue through normal resolution.
+2. **Session cache (Assistant only):** if this tool+context matches a session-scoped `allow` rule, return `allow` unless a non-bypassable special guard overrides it.
+3. **Persona overrides:** if the active Persona has a matching rule, use it.
+4. **Project-level rules:** if `.puppet-master/permissions.toml` contains a matching rule, use it.
+5. **Global-level rules:** if the global permissions file contains a matching rule, use it.
+6. **Defaults:** use the default from §7.
+7. **Special guards:** evaluate `external_directory`, `doom_loop`, and `external_publish_side_effect`. If a guard is more restrictive than the earlier result, the guard wins.
 
-Rule: Given identical inputs (tool name, invocation context, config, mode, session state), the algorithm MUST always produce the same result.
+ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3, ContractName:Plans/Run_Modes.md
 
-ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3
+Rules:
+- PM-native Ask and Plan semantics are authoritative; do not relax them by analogy to OpenCode.
+- Plan remains read-only with respect to project files, but it may still use clarifying questions, web research, and plan/TODO state tracking.
+- A permission outcome for historical activity must be reconstructable from the persisted snapshot and event trail rather than recomputed from current settings.
 
-1. **Mode override:** If the run mode is `yolo`, return `allow` for tool-permission evaluation only. Non-bypassable special guards are still evaluated in step 7 and may still require approval. If the run mode is `ask` or `plan`, and the tool is mutating (`edit`, `bash`, `task`, `webfetch`, `websearch`, `repo.import`, `media.generate`, `todowrite`), return `deny`.
-2. **Session cache (Assistant only):** If this tool+context matches a session-scoped `allow` rule (from prior `always` responses), return `allow`, except that session-scoped allows MUST NOT suppress non-bypassable special guards.
-3. **Persona overrides:** If the active Persona has a `default_permissions_profile` that contains a matching rule for this tool+context, use it.
-4. **Project-level rules:** If `.puppet-master/permissions.toml` in the active project contains a matching rule, use it.
-5. **Global-level rules:** If `~/.config/puppet-master/permissions.toml` contains a matching rule, use it.
-6. **Defaults:** Use the default from §7 (including §7.1 granular defaults for `read`).
-7. **Special guards:** After steps 1–6, additionally evaluate `external_directory` (§4.2), `doom_loop` (§4.1), and `external_publish_side_effect` (§4.3). If a guard triggers and its action is more restrictive than the result from steps 1–6 (`deny` > `ask` > `allow`), the guard action wins. `external_publish_side_effect` is non-bypassable and cannot be satisfied by a generic prior allow; it requires approval scoped to the exact remote side effect being attempted.
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-**Post-resolution:** If the result is `allow` (or `ask` approved), FileSafe guards (`Plans/FileSafe.md`) are evaluated as a separate layer. A tool may be permission-allowed but FileSafe-blocked.
-
-ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md
-
----
 ## 9. Persistence and storage
 
 <a id="PERSISTENCE"></a>

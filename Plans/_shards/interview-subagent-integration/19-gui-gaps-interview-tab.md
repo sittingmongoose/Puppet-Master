@@ -2,6 +2,18 @@
 The Config view Interview tab is the canonical execution-affecting control surface for interview behavior. This section replaces the prior “gaps” framing with the final runtime contract.
 
 ### Activity and progress visibility
+
+### Shared question-system alignment
+Interview question UX is the baseline visual and behavioral pattern for the shared PM question system.
+
+Rules:
+- Interview may emit one question or a structured questionnaire
+- suggested-option chips and `Something else` / freeform remain baseline affordances when applicable
+- question identity remains stable across interview, assistant clarification, and requirements-builder clarification flows
+- the shared `question` tool contract can drive Interview-style multi-question flows without inventing Interview-only payload shapes
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/chain-wizard-flexibility.md
+
 Interview document generation and Multi-Pass Review MUST surface the same underlying progress stream in two synchronized surfaces when the user is on the Interview page:
 - interviewer chat is the primary streaming surface
 - the Interview page agent activity pane mirrors the same event source in structured form
