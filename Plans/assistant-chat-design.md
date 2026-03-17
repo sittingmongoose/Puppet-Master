@@ -207,10 +207,9 @@ There are **two separate ELI5 toggles**; they are independent and must not be co
 - **Keyboard shortcuts:** Chat actions (Send, New thread, Stop, focus composer, Clear queue, etc.) must be reachable via **keyboard shortcuts** and/or the **command palette**. See Plans/newfeatures.md §11.
 - **Clear queue:** The user can **clear the entire queue** (e.g. "Clear queue" action when one or more messages are queued), removing all queued messages at once.
 - **Stop the agent:** The user must be able to **stop** the agent at any time (e.g. a "Stop" button or shortcut). Stop **cancels** the current run and does **not** send any message. Stopping does not remove queued messages; the next queued message can be processed after stop, or the user can edit/remove queued messages or clear the queue.
-- **Error and failure UX:** When the CLI fails, times out, or returns an error, the thread must show a **clear error state**: the error message (or a user-friendly summary) and, where applicable, **Retry** and **Cancel** (or Dismiss) actions. Retry re-sends the last user message (or re-runs the same request); Cancel dismisses the error and leaves the queue unchanged. Failed runs do not consume a queued message unless the user explicitly retries; the queue remains so the user can edit, send now, or clear. If the failure was due to a platform or network issue, the UI can suggest switching platform or model (see §12 rate limit hit).
+- **Error and failure UX:** When the CLI fails, times out, or returns an error, the thread must show a **clear error state**: the error message (or a user-friendly summary) and, where applicable, **Resend** and **Cancel** (or Dismiss) actions. `Resend` replays the latest eligible user message using the canonical history-aware resend path; Cancel dismisses the error and leaves the queue unchanged. Failed runs do not consume a queued message unless the user explicitly resends; the queue remains so the user can edit, send now, or clear. If the failure was due to a platform or network issue, the UI can suggest switching platform or model (see §12 rate limit hit).
 
 ### 4.1 Chat footer, queue UI, and files touched -- implementation detail
-
 **GUI updates**
 
 - **Footer container:** Add a **chat footer** region at the bottom of the chat view that hosts, in order (top to bottom): (1) pending queued messages strip, (2) composer (text entry), (3) status line for active subagent count, (4) files-touched strip. The footer is **per thread** -- when the user switches threads, it shows that thread's queue, count, and files. Use existing widget patterns (e.g. selectable labels for file paths, styled buttons for Edit / Send now / Cancel) per `docs/gui-widget-catalog.md`; tag new reusable pieces with `// DRY:WIDGET:...`.
@@ -230,6 +229,8 @@ There are **two separate ELI5 toggles**; they are independent and must not be co
   - **Subagent lifecycle:** Events (or state) that indicate "subagent X started for thread T" and "subagent X finished for thread T" so the UI can compute active count and show persona/task in the thread (see §14.1).
   - **File change events:** Per-thread accumulation of file edits (path + optional add/delete counts) so the footer can show files touched without re-scanning the filesystem on every paint.
 - **Persistence:** Queue state is per-thread and must be persisted (e.g. with thread list and messages) so after app restart the user sees the same queued messages if the run was not active. Active count and files touched are derived from run state; if the run is not persisted mid-flight, on restart show 0 active and last known files touched (or empty).
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md
 
 **Examples (unchanged)**
 
@@ -257,9 +258,38 @@ There are **two separate ELI5 toggles**; they are independent and must not be co
 | **Edit queued message (Resolved)** | Inline expand. | Clicking "Edit" on a queued message expands the row in-place into an editable text field pre-filled with the original message. Below the field: [Save] and [Cancel] buttons. No modal, no popover. While editing, the message remains in queue position. Saving replaces the queued message content; cancelling restores the original. |
 | **Accessibility** | Footer has many interactive elements. | Ensure focus order, keyboard activation for Edit/Send now/Cancel, and screen-reader-friendly labels (e.g. "Edit queued message 1", "Send now (steer)", "Remove from queue"). |
 
----
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
 
-<a id="5"></a>
+#### Message-level hover actions and resend contract
+
+Message-level controls use a hover/focus row directly below the message body.
+
+Rules:
+- the row is hidden until hover or keyboard focus and does not create permanent always-visible chrome under every message
+- the left cluster is icon-only message actions
+- the right cluster is compact runtime summary plus the info icon
+- `Copy` is available on every message
+- `Edit` and `Resend` are available only on the most recent user-sent message
+- this subsection supersedes earlier message-level `Retry` wording in this document
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+`Resend` is a history-aware replay action, not transport retry.
+
+Rules:
+- `Resend` rewinds the thread to the selected latest user message, discards later generated assistant/subagent/runtime history after that point, and replays that user message
+- `Resend` is distinct from provider retry, network retry, backoff, or error recovery terminology
+- if the selected message is no longer the most recent user message, `Resend` is unavailable rather than silently retargeted
+- `Edit` restores the selected latest user message into the composer for user modification before submission
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+Compact runtime summary rules:
+- compact display label is one of `Ask`, `Agent`, `Plan`, or `Deep Plan`
+- compact row shows the resolved display label, model, and either assistant thinking time/duration or the user timestamp
+- the info icon opens the message runtime popover
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
 ## 5. Commands (slash commands and custom commands)
 
 The reserved slash-command surface is canonical and non-overridable.
@@ -687,23 +717,56 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Acc
 - project/session browsing may open or focus a thread, but active-thread navigation remains local to the chat shell
 - blocked, queued, and background states must remain visible through badges and attention surfaces even when the thread is not active
 ## 12. Context usage display
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md
-
-Per-thread usage uses one canonical detail surface.
+Per-thread context uses one compact chat entrypoint and one canonical detailed surface.
 
 Rules:
 - the context indicator lives in the chat header for the active thread
-- hover shows summary values
-- activation opens the thread Usage surface in the chat side panel or equivalent canonical in-shell region
-- a separate detached usage pop-out is not the canonical model
-- streaming updates may show in-progress or updating states, but must converge into the same canonical Usage surface
-- the same thread Usage identity is used by cost_usage artifact deep-links and app-wide Usage navigation
+- hovering the indicator opens a lightweight status module
+- the hover module shows `Usage`, `Tokens`, estimated `Cost`, and a bottom action labeled `More Details`
+- clicking the context indicator does not compact immediately; it reveals the `Compact Now` action
+- choosing `Compact Now` triggers the canonical compaction pipeline immediately
+- choosing `More Details` opens or focuses the thread-scoped Context Detail Pane in an editor tab
+- one Context Detail Pane tab exists per thread; repeated opens focus the existing tab instead of opening duplicates
+- app-wide Usage remains a separate surface and is not replaced by the thread-scoped Context Detail Pane
+- earlier thread-Usage-in-side-panel or detached-pop-out wording is superseded by this model
 
-Required content for the thread Usage surface:
-- total tokens and context-window fill when available
-- input/output/reasoning/cache breakdown when reported
-- per-turn or per-segment history when the upstream usage record supports it
-- link to app-wide Usage with the same thread/run filters in scope
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+The Context Detail Pane is the canonical detailed per-thread context surface.
+
+Required structure:
+- top-level view toggle: `Curated` and `Raw`
+- `Curated` view sections: `Overview`, `Breakdown`, and `Messages`
+- `Raw` view exposes full serialized payload inspection for the thread and for individual messages
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FileManager.md
+
+`Overview` must show:
+- thread title or session title
+- message counts
+- headline provider, model, mode, persona, and worker summary
+- headline token, context, and estimated-cost metrics
+
+`Breakdown` must show:
+- context-usage bar
+- token buckets
+- grouped breakdowns by role, tool activity, and provider/model when available
+
+`Messages` must show:
+- one expandable row per message
+- compact row fields for role, worker type, mode, model, time or duration, total tokens, and estimated cost when known
+- expanded per-message details with provider, model, effort, persona, token breakdown, context usage, cost, relevant requested/effective deltas, and notable tool or part summary
+- raw payload access without leaving the message row
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
+Cost and freshness rules:
+- per-thread cost is labeled `Estimated Cost` unless provider-authoritative cost exists
+- hover and detail surfaces may show in-progress or updating states while a turn is streaming
+- partial streaming updates must not present final totals before they are known
+- raw views may expose lower-level buckets, receipts, or normalization details used to derive the estimate
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 ## 13. Activity transparency: search, bash, and file activity
 
 Activity transparency uses a shared inline operation-card family rather than isolated one-off widgets.
@@ -758,13 +821,41 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan
 Assistant Chat may display requested/effective runtime identity, but it must consume the owner-doc shared runtime model rather than invent assistant-local fields.
 
 Rules:
-- compact cards may show only the most important requested/effective delta
-- expanded views may link to usage/history/details
-- historical thread/activity views MUST show frozen requested/effective runtime state captured for that execution
-- assistant/chat MUST NOT introduce local replacements such as `active_model`, `actual_model`, or `assistant_runtime_state`
+- compact chat surfaces may show only the material display summary needed for that moment
+- the message-under-row summary uses the resolved user-facing mode label, model, and time or duration
+- the mode display label is derived from canonical shared fields rather than from assistant-local string assembly
+- compact chat surfaces do not show version and do not show `current` or `frozen` wording
+- historical thread/activity views show frozen requested/effective runtime state captured for that execution
+- assistant/chat MUST NOT introduce local replacement fields such as `active_model`, `actual_model`, or `assistant_runtime_state`
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
 
+Message runtime popover fields are closed to:
+- `Mode`
+- `Provider`
+- `Model`
+- `Effort`
+- `Persona`
+- `Worker`
+- `Tokens`
+- `Context`
+
+Label rules:
+- `Mode` uses the normalized user-facing labels `Ask`, `Agent`, `Plan`, and `Deep Plan`
+- `Worker` is `Agent` or `Subagent`
+- `Tokens` shows compact total and may disclose breakdown on expansion or in the detailed pane
+- `Context` shows used, limit, and percentage when known
+- assistant rows show thinking time or duration; user rows show timestamp
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
+
+Display mapping rules:
+- `Deep Plan` is shown when the effective overlay is `deep_plan`
+- `Plan` is shown when the effective overlay is `plan` and the runtime posture is planning
+- `Ask` is shown when the effective runtime posture is `ask` and no higher planning overlay is active
+- `Agent` is shown for normal execution posture when no higher planning overlay is active
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
 ## 14. Subagents & Crew
 
 - **Automatic subagents:** The chat can **automatically spawn subagents** when it determines that a task benefits from specialized help (e.g. research, code review, debugging). Logic should align with orchestrator subagent selection where applicable (e.g. `subagent_registry`, task type).
@@ -780,50 +871,32 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipel
 - **Crew + Plan:** Plan mode and Crew mode **must work together**: e.g. user can run Plan mode and then execute the plan with a crew, or run a crew for a planned set of steps. See §15.
 
 ### 14.1 Subagent visibility in thread -- implementation detail
+Subagent entries remain inline thread objects rather than sidebar-only state.
 
-**GUI updates**
+Required visible fields are:
+- persona display name
+- short task label
+- effective model when known
+- time or duration state
+- worker indicator showing that the entry is a subagent activity block
 
-- **In-thread indicator:** When a subagent is active, the **message stream** (same area as user/assistant messages) must show an **inline block** (or message-like row) that includes:
-  - **Persona name** (e.g. "Rust Expert", "Technical Writer") -- from `subagent_registry` or persona config; use the same display name used elsewhere (e.g. crew/subagent list).
-  - **What they're working on** -- short task label (e.g. "Reviewing `src/lib.rs`", "Researching best practices for error handling"). One line is enough; optional expand for detail.
-- **Placement:** Show the indicator **when the subagent run starts** (e.g. at the point in the thread where the system hands off to that subagent). Optionally update the same block when the task label changes (e.g. "Reviewing..." → "Writing summary") or leave it static until the subagent finishes. When the subagent finishes, the block **remains in the thread** as a permanent history entry (e.g. "Rust Expert -- Reviewing \`src/lib.rs\`" or "Rust Expert -- completed"); it is **not** removed. Main requirement: visibility **while** active and **persistence in thread history** so scrolling back or re-opening the thread shows which subagents were used and when.
-- **Visual treatment:** Differentiate from regular user/assistant messages (e.g. secondary background, icon, or "Subagent" chip) so the user can scan quickly. Use existing widgets (e.g. `status_badge`, `selectable_label`) where possible; tag new ones with `// DRY:WIDGET:...`.
-- **Multiple subagents:** If several subagents are active at once, show one block per subagent (or a compact "2 subagents: Rust Expert (reviewing ...), Technical Writer (drafting ...)"). Align with footer "active subagent count" (§4.1) so the number matches the number of blocks shown.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
 
-**Backend updates**
+Visual treatment rules:
+- subagent blocks stay in the same base card family as assistant/agent activity entries
+- subagent blocks use a subtle alternate accent, border, chip, or similar flourish so the user can distinguish them at a glance
+- active subagent blocks may use a distinct running animation from the primary active agent animation
+- the distinction must remain subtle; this is not a separate radically different layout system
+- completed subagent blocks remain in thread history as first-class persisted entries
 
-- **Data per active subagent:** For each active subagent in a thread, the backend (or event stream) must provide:
-  - **Persona id or name** -- to resolve to display name via `subagent_registry` or persona config.
-  - **Task label** -- short string describing what they're working on (e.g. step title, first message snippet, or "Working on step 2"). If the execution layer does not provide this, derive from: plan step title, tool call name, or "Working..." as fallback.
-- **Events:** Emit (or model in unified events) **subagent_start** and **subagent_end** (or equivalent) with `thread_id`, `subagent_id`/persona name, and optional `task_label`. The chat view subscribes and inserts/updates the in-thread indicator. Optionally **task_progress** events to update "what they're working on" without a new block.
-- **Source of task label:** Orchestrator/crew runtime (Plans/orchestrator-subagent-integration.md) should pass a **task label** when delegating to a subagent (e.g. "Review `src/lib.rs`", "Research error-handling patterns"). If not available, UI shows persona name only or "Working..." until the first tool call or message can be used as a proxy label.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
 
-**Examples (unchanged)**
+Multiple-subagent rules:
+- each active subagent may render as its own block, or the UI may collapse to a compact grouped state when several are active at once
+- whichever presentation is used, the footer active-subagent count and inline blocks must stay consistent
+- persisted history keeps the specific subagent entries rather than only the grouped summary count
 
-- "**Rust Expert** -- Reviewing `src/lib.rs`"
-- "**Technical Writer** -- Researching best practices for API docs"
-- "**Code Reviewer** -- Checking test coverage"
-
-**Gaps and missing details**
-
-| Gap | Description | Recommendation |
-|-----|-------------|----------------|
-| **Task label optional** | Some runs may not have a step title or task label. | Require execution layer to set a default (e.g. "Working..." or first tool/message summary). GUI must handle empty/missing label (show only persona name). |
-| **Order in thread** | Subagent blocks interleaved with assistant messages; order must be clear. | Order by **event time** so the subagent block appears at the position in the thread where the handoff happened. |
-| **Persistence** | When thread is persisted and re-opened, do we show past subagent blocks? | **Yes.** Subagent blocks are first-class thread history: persist as part of thread message/event history so "Rust Expert reviewed ..." remains visible after reload and when scrolling back. Requirement: chat thread history **keeps** all subagents used in that thread. |
-| **Interview vs Assistant** | Interview may use different subagent naming or flow. | Use same persona display names from `subagent_registry`; task label can be phase-specific (e.g. "Phase: Architecture -- Researching patterns"). |
-
-**Potential issues**
-
-| Issue | Risk | Mitigation |
-|-------|------|------------|
-| **Flicker** | Subagent starts and ends quickly; block appears and disappears. | Keep a short "just finished" state (e.g. "Rust Expert -- completed") for a few seconds, or leave a collapsed summary line so the user saw that someone worked. |
-| **Long task labels** | "Researching best practices for error handling in async Rust and ..." truncates badly. | Truncate with tooltip or "..." (e.g. max 40-50 chars); full text on hover or expand. |
-| **No persona display name** | Unknown subagent id or missing from registry. | Fallback: show raw id or "Subagent" so the slot is never empty. |
-| **Concurrent subagents** | Several blocks in a row; thread gets long. | Allow collapsing "N subagents active" to one line when more than 2-3, with expand to list; or keep one block per subagent but use compact layout. |
-
----
-
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orchestrator-subagent-integration.md
 ## 15. Plan Mode + Crew Mode
 
 - Plan mode produces a **plan + todo list**. Execution of that plan can be:
@@ -1169,7 +1242,7 @@ All of the following are **MVP requirements** and are already reflected in the m
 22. **Concurrent threads** -- §11: setting, **default 10** max concurrent runs. Per-platform concurrency caps also apply (see `Plans/FinalGUISpec.md` §7.4.7); the more restrictive limit wins.
 23. **Custom vs built-in commands** -- §5: no conflicting names; UI explains why if user tries.
 24. **Plan panel scope** -- §11: plan panel **per thread**. **Accessibility** is **not MVP**.
-25. **Error and failure UX** -- §4: clear error state, Retry/Cancel, queue unchanged unless user retries; suggest switch platform/model when appropriate.
+25. **Error and failure UX** -- §4: clear error state, Resend/Cancel, queue unchanged unless user resends; suggest switch platform/model when appropriate.
 26. **Orchestrator to Assistant handoff** -- §21: Dashboard offers "Continue in Assistant" with run summary and context when orchestrator completes or pauses.
 
 ### 23.5 Previously open gaps (now closed)
@@ -1178,7 +1251,7 @@ The following were the last open gaps; they are now specified in the main body. 
 
 | Area | Status |
 |------|--------|
-| **Error and failure UX** | Now in §4: thread shows error state, Retry/Cancel, queue unchanged unless user retries; suggest switch platform/model when appropriate. |
+| **Error and failure UX** | Now in §4: thread shows error state, Resend/Cancel, queue unchanged unless user resends; suggest switch platform/model when appropriate. |
 | **Orchestrator → Assistant handoff** | Now in §21: Dashboard offers "Continue in Assistant" with run summary and context when orchestrator completes or pauses. |
 
 **Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (§23.4). No remaining gaps; **accessibility** is explicitly not MVP.
@@ -1248,7 +1321,7 @@ The canonical thread-usage behavior now lives in `## 12. Context usage display` 
 Historical note:
 - compact-now behavior remains valid when backed by canonical compaction commands
 - the detached usage pop-out is no longer canonical
-- any old command IDs or persistence keys that exist only for the pop-out model are superseded by the canonical thread Usage surface and its stable command IDs
+- any old command IDs or persistence keys that exist only for the pop-out model are superseded by the canonical thread-scoped Context Detail Pane/editor-tab model and its stable command IDs
 ## 26. Per-Pass Validation Model/Provider Settings (Invariant Sweep)
 
 > **Addendum — 2026-02-25**
@@ -1622,31 +1695,9 @@ Required consequence:
 ## 29. Natural-language Mode Invocation and Wizard Escalation (2026-03-08)
 
 ### 29.1 Natural-language mode invocation
+Natural-language mode invocation resolves workflow identity and runtime posture separately.
 
-Assistant Chat MUST support natural-language requests that set planning/workflow or runtime posture.
-
-Supported examples:
-- `use ask mode`
-- `don't edit anything`
-- `just inspect this`
-- `use plan mode`
-- `make a plan for this`
-- `use deep plan for this feature`
-- `switch to regular mode`
-- `use yolo for this`
-
-Resolution order:
-1. exact canonical alias / exact pattern
-2. normalized form
-3. fuzzy match
-4. narrow inference only when confidence is high
-
-Ambiguity behavior:
-- if one reliable match exists, resolve directly
-- if confidence is high enough for a safe best guess, resolve and disclose
-- otherwise ask for clarification
-
-Required requested/effective fields:
+Required requested/effective fields are:
 - `requested_mode_overlay`
 - `effective_mode_overlay`
 - `requested_runtime_mode`
@@ -1657,19 +1708,23 @@ Required requested/effective fields:
 - `selection_reason`
 - `override_scope`
 
-Scope defaults:
-- `for this`, `for this answer`, `right now` -> turn scope
-- `from now on`, `in this chat`, `for this session` -> session scope
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
 
-Ask-mode support is mandatory:
-- requests like `use ask mode`, `don't edit`, and `just inspect` MUST resolve to canonical runtime `ask`
-- the UI must surface that Ask mode is active and read-only
+Canonical enum closure:
+- `requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `interview`, `brainstorm`, and `crew`
+- `requested_runtime_mode` and `effective_runtime_mode` are closed to the canonical runtime postures from `Plans/Run_Modes.md`
+- `deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning
 
-Planning-mode support is mandatory:
-- `use plan mode` resolves to workflow overlay `Plan` + runtime `plan`
-- `use deep plan` resolves to workflow overlay `Deep Plan` + runtime `plan`
-- explicit PT phrases such as `do a comprehensive deep plan` should resolve `requested_plan_thoroughness = Comprehensive`
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
 
+Resolution rules:
+- `use ask mode`, `don't edit`, and `just inspect` resolve to `effective_mode_overlay = none` and canonical runtime `ask`
+- `use plan mode` resolves to `effective_mode_overlay = plan` and canonical runtime `plan`
+- `use deep plan` resolves to `effective_mode_overlay = deep_plan` and canonical runtime `plan`
+- `use agent mode` clears planning overlays and resolves to the normal execution posture for the thread, preserving explicit permission posture such as `regular` or `yolo`
+- compact display labels are derived from the effective overlay plus runtime posture so the visible label can still be `Ask`, `Agent`, `Plan`, or `Deep Plan`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
 ### 29.2 Assistant recommendation of Chain Wizard
 
 Assistant chat should proactively recommend the Chain Wizard when the user appears to be asking for:

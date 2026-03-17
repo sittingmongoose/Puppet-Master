@@ -102,24 +102,37 @@ The app will expose a **Usage** section that gives users clear, persistent visib
 - **Retention:** Policy for how long to keep usage/ledger data (e.g. file-based or redb-backed) to bound disk use while supporting 5h/7d and historical views.
 
 ### 5. Per-thread usage in Chat (OpenCode-style)
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md
-
-Per-thread usage is a canonical in-shell surface.
+Per-thread context/usage in chat is a split inspect/action affordance rather than a direct jump to a chat-shell usage panel.
 
 Rules:
-- chat header context indicator is always the entrypoint
-- hover shows summary metrics
-- activation opens the thread Usage surface in the chat shell
-- a detached usage pop-out is not canonical
-- the same usage identity powers thread Usage, app-wide Usage, and cost_usage artifact deep-links
+- the chat header context circle is always the entrypoint for per-thread context state
+- hover opens a lightweight status module showing `Usage`, `Tokens`, estimated `Cost`, and `More Details`
+- click reveals the `Compact Now` action instead of immediately opening the detail surface
+- selecting `Compact Now` dispatches the canonical compaction command for that thread
+- selecting `More Details` opens or focuses the thread-scoped Context Detail Pane in an editor tab
+- app-wide Usage remains the canonical aggregated platform view and is not replaced by this thread-scoped pane
 - mid-stream updates are allowed but must use explicit in-progress states until final usage totals are known
 
-Thread Usage content:
-- total tokens
-- context-window fill percentage when known
-- input/output/reasoning/cache breakdown when reported
-- per-turn or per-segment usage history when available
-- direct navigation to app-wide Usage preserving filters
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+The Context Detail Pane must support both curated inspection and raw payload inspection.
+
+Required content:
+- curated overview of thread counts, provider/model/mode/persona, and headline tokens/context/estimated cost
+- grouped context and token breakdowns
+- per-message inspection with human-readable fields first
+- raw payload toggles for the full thread and for individual messages
+- drill-downs by mode, provider, model, and other shared runtime identity dimensions when available
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md
+
+Estimated-cost rule:
+- per-thread chat cost uses the OpenCode-style normalization formula as the baseline approximation
+- reasoning tokens are charged at the output-token rate for the estimate
+- cache read and cache write buckets are included when pricing metadata exists
+- provider-sensitive cache normalization caveats must remain visible in raw/debug paths and must not be hidden behind authoritative wording in the chat UI
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
 ### Cursor -- API (usage/account only; not for model invocation)
 
 - **Distinction:** The **Cursor API** is for **augmenting usage/account data only** -- usage, limits, plan, billing, etc. We **do not** use it to engage with the platform to run models. Model invocation stays **CLI + OAuth** (subscription auth only). AGENTS.md "No API available" refers to "no API for invoking models"; the Cursor API that exists is a different surface (usage/account/limits) and does not conflict with our "CLI-only for execution, OAuth for auth" policy.
@@ -171,15 +184,21 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 ## Data and Backend (conceptual)
 ### Cost_usage runtime artifact and Show in Ledger / Show in Usage
+The `cost_usage` runtime artifact is an attribution record only. It uses the same canonical usage pipeline and schema as `usage.event`.
 
-The **cost_usage** runtime artifact (see Plans/Runtime_Artifacts_Panel.md and Plans/storage-plan.md) is an **attribution record** only. It uses the **same canonical usage pipeline and schema** as `usage.event` (tokens_in, tokens_out, reasoning_tokens, cost, platform/provider, model). There is no second store; the Ledger and Usage page consume the same data.
+Required actions for `cost_usage` items are:
+- `Show in Ledger` — navigate to the canonical Ledger surface with the matching usage identity in scope
+- `Show in Usage` — navigate to app-wide Usage or to the thread-scoped Context Detail Pane depending on artifact scope, preserving the same thread/run filters
 
-**Artifacts panel actions for cost_usage items:** For each cost_usage artifact, the Artifacts panel MUST offer:
-- **Show in Ledger** — Navigate to the Usage area (Ledger tab or Ledger view) with filters set so the canonical usage.event for this cost is visible (e.g. by usage_event_seq or usage_event_ref, or by run_id/thread_id/timestamp).
-- **Show in Usage** — Navigate to the Usage page (or thread Usage tab when the cost is for that thread) with the same event in scope (e.g. selected or scrolled into view).
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 
-Implementation note: If the cost_usage payload includes `usage_event_seq` or `usage_event_ref`, the GUI can pass it to the Usage/Ledger view to scroll to or highlight that row. Otherwise open Usage/Ledger filtered by run_id/thread_id/ts.
+Rules:
+- thread-scoped cost usage does not open a chat side-panel usage surface
+- thread-scoped cost usage lands on the same Context Detail Pane used by the chat context circle `More Details` action
+- app-wide cost usage lands on the app-wide Usage surface
+- the artifact does not create a second token or cost model outside the canonical usage schema
 
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
 ### OpenCode (product) usage pipeline reference
 
 For implementers: the flow by which usage is collected and stored can be referenced from the OpenCode product (anomalyco/opencode repo). Conceptual flow: **provider response** → adapter → **LanguageModelV2Usage** (or equivalent) → **getUsage-style normalization** (e.g. Session.getUsage) → **processor** applies on finish-step to assistant message + step-finish part; **UI reads from messages** and/or usage.event. Key paths in that repo: session-context-metrics (UI metrics from messages), processor finish-step (where token/cost is applied to message), Session.getUsage (normalization). Puppet Master does not replicate this exactly; all providers (CLI-bridged, OpenCode provider, Codex, Gemini, Copilot) normalize to the same usage.event / message usage shape; collection mechanism differs per provider. OpenCode the **provider** (Plans/Provider_OpenCode.md) is one transport; OpenCode the **product** is the reference for "how message-level usage becomes stored usage."
@@ -198,17 +217,23 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Arti
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md§2
 ## GUI Placement Options
-The GUI placement model is now fixed.
+The GUI placement model is fixed.
 
 Canonical placement:
-- app-wide Usage is its own page/view
-- compact usage visibility appears in shell/status surfaces where appropriate
-- thread Usage lives inside the chat shell as the canonical per-thread detail surface
-- artifact deep-links and chat usage activation land on those same canonical surfaces
+- app-wide Usage is its own page or view
+- compact usage visibility appears in shell and status surfaces where appropriate
+- thread-scoped context detail lives in the chat flow as the context circle plus the editor-tab Context Detail Pane
+- artifact deep-links and chat usage activation land on those same canonical surfaces based on scope
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
 
 Non-canonical after this section:
-- unresolved Option A/B/C placement language
-- "tab or panel or pop-out" phrasing that leaves the implementation to guess
+- thread Usage in the chat shell or side panel as the primary detailed surface
+- detached usage pop-out as the canonical thread detail model
+- direct click on the context circle opening the detail pane without the hover/click split
+- unresolved `tab or panel or pop-out` phrasing that leaves the implementation guessing
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md
 ## Gaps (Current State vs. Desired)
 
 ### Gap 1: 5h/7d not in GUI

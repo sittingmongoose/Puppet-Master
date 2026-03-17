@@ -272,7 +272,8 @@ The following rows are required for the promoted Section 15 feature set in addit
 |---|---|---|---|---|
 | Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
 | Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
-| Thread context indicator | `cmd.chat.open_thread_usage` | chat header | chat layout controller | Focus canonical thread Usage surface |
+| Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
+| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header click affordance | chat runtime controller | Trigger canonical thread compaction |
 | Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
 | Browser toolbar share button | `cmd.browser.share_with_agent` | browser chrome | browser context controller | Mark current browser subject shared with active thread |
 | Browser toolbar revoke button | `cmd.browser.revoke_share_with_agent` | browser chrome / attention center | browser context controller | Clear shared-with-agent state |
@@ -282,7 +283,6 @@ The following rows are required for the promoted Section 15 feature set in addit
 | Catalog remove button | `cmd.catalog.remove_item` | catalog UI | catalog lifecycle controller | Remove item using subsystem-specific active-item rules |
 
 This section is normative and not an example/template section.
-
 ## Source Control, GitHub Actions, and Docker Manager Wiring Addendum (2026-03-12)
 
 Minimum required new rows for the final packet apply:
