@@ -290,7 +290,14 @@
     - agent-driven browser session for testing, browsing, or autonomous web-app interaction
     - visible/watchable by default; should not be a silent hidden worker if the agent is actively doing browser work
     - ephemeral by default, evidence-producing, not auto-restored as a normal workspace tab
-    - user can pause/stop/take over; explicit policy still needed for whether takeover converts it into a normal browser tab
+    - user can pause/stop/take over
+    - locked takeover rule: if the user attempts direct interaction while the agent is active, PM should prompt whether to take over
+    - prompt actions:
+      - `Take over and pause agent`
+      - `Let agent continue`
+      - `Stop agent and keep browser`
+    - default highlighted action: `Take over and pause agent`
+    - explicit policy still needed for whether takeover converts it into a normal browser tab or just pauses automation in place
   - **`auth_session`**
     - isolated browser session for login/device/browser auth flows
     - visible while active, but not treated as normal browsing state
@@ -328,6 +335,11 @@
 - Browser instances should open in **editor/workspace tabs**.
 - Local HTML opening should support explicit user actions like **Open in Browser**, and agents should be able to open HTML/browser targets through the same canonical path.
 - `Open in Detached Browser` is a kept secondary action the user likes, but it is not the default browser host.
+- `automation_session` direct user interaction should trigger a takeover prompt with:
+  - `Take over and pause agent`
+  - `Let agent continue`
+  - `Stop agent and keep browser`
+- Default highlighted takeover action should be `Take over and pause agent`.
 - Current working model is:
   - `workspace_preview` = normal visible browser tab in the editor/workspace strip
   - `detached_preview` = optional detached version of that
@@ -360,6 +372,7 @@
 - Do we want channel-based browser runtimes (stable only vs stable/beta/dev) or a single pinned runtime stream?
 - Should HTML files also support one-click split behavior like `Open in Browser Split`, or should split view be a second-step action after opening the browser tab?
 - What exact role, if any, should the bottom-panel browser surface keep after shifting the primary browser host into editor/workspace tabs?
+- On takeover of an `automation_session`, does the session remain classified as `automation_session` in a paused/manual state, or does it normalize into `workspace_preview` after takeover?
 
 ## Packetization Notes
 - This ledger is only seeded with topic, constraints, and initial framing.
@@ -403,3 +416,4 @@
 - Be precise in wording: "less reliable" for Wry means feature-parity/guarantee limitations, not total non-functionality.
 - Future recommendations should stop hedging unless new evidence makes CEF-class integration clearly impractical; the user has already expressed willingness to pay the heavier cost for capability/reliability.
 - Reconciliation must explicitly address the conflict between current bottom-panel-browser assumptions and the newly locked editor-tab browser direction.
+- Takeover should feel intentional and safe; accidental clicks should not silently corrupt or hijack the agent's live browser run.
