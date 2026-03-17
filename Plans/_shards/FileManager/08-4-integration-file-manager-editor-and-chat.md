@@ -6,11 +6,35 @@
 
 ### 4.1 Open-file contract
 
-**Done when:** All callers (chat, File Manager, Ctrl+P) use one handler; request shape and defaults as specified; response is add/switch tab + optional scroll/highlight; floating editor receives focus and file. **Implement §4.1 before §2 (editor), §1 (File Manager open), §5 (click-to-open).** Editor is the single target; contract is the API. **Response on failure:** If open fails (not found, permission, too large, binary), return or signal error; caller shows message; do not add tab with broken state. **Path outside project:** AutoDecision: reject (after canonicalization) unless under the current project root. **Response shape:** Success: tab added or focused; optional payload for line/range applied. Failure: error code + message (e.g. FileNotFound, PermissionDenied, FileTooLarge).
+Source-open behavior uses two canonical contracts.
 
-ContractRef: Plans/assistant-chat-design.md §4.1, Plans/Tools.md §2.5, Plans/FileSafe.md
+### OpenFile
+`OpenFile` remains the path-based editor open contract.
 
-All "open file" actions (chat click-to-open, File Manager selection, quick open Ctrl+P) use a **single internal contract** and one code path. **Request shape:** `OpenFile { path: PathBuf, line?: number, range?: { start: number, end: number }, target_group?: 'active' | 'other' | 'new' }`. **Defaults:** `line` and `range` are 1-based inclusive; `target_group` defaults to **active** (focused editor group). If the editor is floating, the target is still the single editor surface -- focus the floating window and open the file there. **Response:** Add or switch to the tab for `path` in the target group; if `line` or `range` is set, scroll to and optionally highlight that range (§2.3). AutoDecision: canonicalize and validate `path` under the current project root (including symlink escape); reject otherwise. Implementors: one function/handler for all callers.
+Required fields are:
+- `path`
+- `line?`
+- `range?`
+- `target_group?`
 
----
+### OpenSubject
+`OpenSubject` is the identity-native source-open contract.
 
+Required fields are:
+- `subject_id`
+- `open_intent`
+
+Rules:
+- `subject_id` is closed to `doc:<document_id>` and `artifact:<artifact_id>`
+- `OpenSubject` resolves to the best source realization, including `OpenFile` or a transient `generated://<artifact_id>` buffer
+- `OpenSubject` is used for artifact-backed and generated subjects that do not have a stable workspace path
+- `OpenFile` remains the canonical contract for real workspace documents
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+Route/open rules:
+- shell navigation uses `route_target`
+- source realization uses `OpenSubject` or `OpenFile`
+- `resume_url` is serialized transport only and does not replace the canonical route/open split
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md

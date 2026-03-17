@@ -83,11 +83,13 @@ Required payload additions:
 - `chat.subagent_completed` MUST include the same fields plus completion `status`.
 - `run.persona_stage_changed` MUST carry:
   - `persona_stage`
-  - `tier_id`
+  - `run_id`
+  - `node_id?`
+  - `attempt_id?`
   - the full Persona/runtime snapshot active for that stage transition.
 
 Approval visibility rule:
-- If a HITL approval request is raised for a tier that has already resolved Persona/runtime state, `hitl.approval_requested` SHOULD include the current tier's `persona_runtime_snapshot` so approval UI and replay can display what the user is approving.
+- If an approval-blocked episode is raised after Persona/runtime state has already resolved, the persisted blocked record SHOULD include or reference the current Persona/runtime snapshot so approval UI and replay can display what the user is approving.
 
 **Event envelope (per record):** Persisted seglog records MUST use `Plans/Contracts_V0.md#EventRecord`. Each appended record is a single line or frame so we can tail easily. Recommended persisted format: **newline-delimited JSON** (NDJSON).
 
@@ -112,9 +114,9 @@ Approval visibility rule:
 |------|---------|----------------------|
 | `chat.message` | User or assistant message appended to a thread | `thread_id`, `role`, `content`, `message_id`, optional `attachments`, `model`. For **assistant** messages, optional **`usage`** (e.g. `tokens_in`, `tokens_out`, `cost`, `reasoning_tokens`) so per-thread usage can be derived from messages without querying usage.event; canonical usage remains `usage.event` with `thread_id`. |
 | `chat.thread_created` | New thread | `thread_id`, `project_id`, `title` |
-| `run.started` | Orchestrator or Assistant run started | `run_id`, `thread_id`, `platform`, `tier_id`, `mode`, `strategy`, `strategy_resolution_reason` |
+| `run.started` | Orchestrator or Assistant run started | `run_id`, `project_id`, optional `thread_id`, `mode`, `strategy`, `strategy_resolution_reason`, optional requested/effective runtime snapshot refs |
 | `run.completed` | Run finished (success or failure) | `run_id`, `status`, `outcome`, optional `stop_reason`, optional `budget_key`, optional `budget_limit`, optional `observed_value`, optional **`usage`** (summary for this run: e.g. `tokens_in`, `tokens_out`, `cost`, `thread_id`) so consumers can get run-level usage without scanning `usage.event`. Canonical per-request usage remains `usage.event`; `run.completed.usage` is a convenience snapshot for dashboards and thread Usage tab. |
-| `usage.event` | Token/request/error event for Usage/Ledger | `platform`, `tokens_in`, `tokens_out`, `session_id`, **`thread_id`** (Assistant/Interview thread), `tier_id`, `timestamp`, optional `cost`, `reasoning_tokens`, `cache_read`, `cache_write` |
+| `usage.event` | Token/request/error event for Usage/Ledger | `usage_event_ref`, optional `run_id`, optional `thread_id`, optional `node_id`, optional `attempt_id`, `platform`, `tokens_in`, `tokens_out`, `timestamp`, optional `cost`, `reasoning_tokens`, `cache_read`, `cache_write` |
 | `tool.invoked` | Tool call (for analytics) | `tool_name`, `latency_ms`, `run_id`; optional **`success`** (bool), **`error`** (string), **`thread_id`** for error rate and Usage tool widget (Plans/Tools.md §8.0). |
 | `tool.denied` | Tool call blocked by policy (optional) | `tool_name`, `run_id`, `reason` (e.g. "permission_denied", "user_declined") for audit (Plans/Tools.md §8.0). |
 
@@ -126,13 +128,13 @@ Approval visibility rule:
 | `chat.thread_archived`, `chat.thread_deleted` | Archive (hide but keep searchable) or permanent delete (§11) | `thread_id`, optional `project_id` |
 | `chat.plan_todo_updated` | Plan and todo per thread (§11) | `thread_id`, plan/todo payload |
 | `chat.subagent_started`, `chat.subagent_completed` | Subagent lifecycle in thread (§14.1) | `thread_id`, `subagent_id` or persona name, optional `task_label` |
-| `run.tier_started`, `run.tier_completed` | Tier boundaries for replay (orchestrator) | `run_id`, `tier` (phase/task/subtask) |
+| `run.tier_started`, `run.tier_completed` | Compatibility replay events for legacy tier-boundary views | `run_id`, optional `node_id`, optional `work_package_id`, optional `feature_seam_id`, optional derived tier label |
 | `run.iteration_started`, `run.iteration_completed` | Iteration boundaries | `run_id`, `iteration_id`, `status` |
 | `run.verification_result` | Verification passed/failed | `run_id`, `tier`, `passed`, optional details |
 | `interview.started`, `interview.completed` | Interview session | `interview_id`, `project_id`, optional `thread_id` |
 | `interview.phase_started`, `interview.phase_completed` | Interview phase | `interview_id`, `phase`, optional result |
 | `interview.document_generated` | Interview artifact for projectors/Tantivy | `interview_id`, `doc_type`, `path` or content ref |
-| `hitl.approval_requested`, `hitl.approved`, `hitl.rejected`, `hitl.cancelled` | HITL at tier boundary (human-in-the-loop.md) | `request_id`, `run_id`, `tier_id`, `tier_type`, `request_kind`, `message`, `allowed_actions`, `timestamp`; resolution events add `resolution`, optional `reject_resolution`, optional `rationale` |
+| `hitl.approval_requested`, `hitl.approved`, `hitl.rejected`, `hitl.cancelled` | Compatibility approval event family for blocked runtime state | optional `request_id` for lineage, `run_id`, `node_id`, `blocked_sequence`, `message`, ordered `allowed_action_ids[]`, `timestamp`; resolution events add `resolution`, optional `reject_resolution`, optional `rationale` |
 | `editor.file_opened`, `editor.file_closed`, `editor.tab_switched`, `editor.buffer_saved`, `editor.buffer_reverted` | Editor lifecycle (FileManager.md §2.9) | `project_id`, `path` or `path_hash`, optional tab index / session_id |
 | `restore_point.created` | Auto-snapshot before turn/tool mutation (newfeatures.md §8) | `restore_point_id`, `project_id`, `turn_id` or `iteration_id`, `timestamp`, `file_snapshots` list: `{ path, content_hash, blob_ref }` (or inline marker for small blobs) |
 | `restore_point.pruned` | Retention cleanup of old restore points (§8) | `restore_point_id`, `project_id`, `reason` (e.g. `age_exceeded`, `count_exceeded`) |
@@ -140,10 +142,10 @@ Approval visibility rule:
 | `rollback.confirmed` | User confirms rollback (§8) | `restore_point_id`, `conflicts` (list of conflicted files, may be empty) |
 | `rollback.completed` | Rollback applied successfully (§8) | `restore_point_id`, `files_restored` (list of paths written back) |
 | `rollback.cancelled` | User cancelled rollback (§8) | `restore_point_id`, optional `reason` |
-| `config.validation.passed`, `config.validation.warning`, `config.validation.failed` | Tier-start config wiring validation result | `run_id`, `tier_id`, `tier_type`, requested/effective platform/model/runtime fields, `issues[]` |
-| `run.persona_stage_changed` | Tier-internal Persona/runtime stage transition | `run_id`, `tier_id`, `persona_stage`, requested/effective Persona/runtime snapshot, `selection_reason` |
+| `config.validation.passed`, `config.validation.warning`, `config.validation.failed` | Runtime execution-unit config validation result | `run_id`, optional `node_id`, optional `attempt_id`, requested/effective platform/model/runtime fields, `issues[]` |
+| `run.persona_stage_changed` | Runtime Persona/runtime stage transition | `run_id`, optional `node_id`, optional `attempt_id`, `persona_stage`, requested/effective Persona/runtime snapshot, `selection_reason` |
 | `platform.capability_evaluated` | Platform capability snapshot + gating decision | `run_id`, `platform`, `snapshot`, `precedence_source`, `gated_features[]` |
-| `run.qa_cycle_started`, `run.qa_cycle_completed` | Autonomous QA loop lifecycle | `run_id`, `tier_id`, `cycle`, `blocking_findings`, `outcome` |
+| `run.qa_cycle_started`, `run.qa_cycle_completed` | Autonomous QA loop lifecycle | `run_id`, optional `node_id`, optional `attempt_id`, `cycle`, `blocking_findings`, `outcome` |
 | `crew.started`, `crew.member_started`, `crew.member_completed`, `crew.message_posted`, `crew.completed` | Crew lifecycle and shared-board traffic | `crew_id`, `run_id`, member ids, message metadata, lifecycle status |
 | `run.background_enqueued`, `run.background_state_changed` | Background / async run queue lifecycle | `run_id`, `project_id`, `thread_id`, `state`, `queue_position`, optional `worktree_path`, optional `branch_name` |
 
@@ -283,19 +285,68 @@ This addendum defines the persistence required for Source Control, GitHub Action
 ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md, PolicyRule:no_secrets_in_storage
 
 ### Required redb keys
-- `source_control.project_state.{project_id}` -> `{ active_subview, selected_repo_id, selected_worktree_id?, history_filter?, graph_filter?, graph_layout?, compare_target?, auto_fetch_interval_s, conflict_presentation }`
-- `github_actions.project_state.{project_id}` -> `{ active_subview, current_branch_ref?, pinned_workflow_ids[], refresh_interval_s, last_opened_run_id?, last_opened_job_id?, admin_scope_selection?, log_display_mode? }`
-- `docker_manager.project_state.{project_id}` -> `{ active_subview, selected_runtime, selected_context?, selected_compose_project?, selected_registry?, requested_auth_mode?, selected_namespace?, selected_repository?, tag_template?, push_policy?, last_validation_snapshot?, last_publish_result_id?, template_repo_id?, kubernetes_focus? }`
-- `orchestrator.receipt.{run_id}.{attempt_id}` -> `{ repo_id?, worktree_id?, branch_ref?, commit_range?, workflow_refs?, docker_refs?, kubernetes_refs?, usage_event_ref? }`
 
-ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/usage-feature.md
+The promoted orchestrator/runtime rewrite requires durable record and projection families that do not depend on `tier_id` as the primary cross-surface key.
 
-- `provider_accounts.project_policy.{project_id}.{provider_id}` -> `{ enabled, default_switch_mode, default_threshold, selection_mode, default_auth_surface_order[], manual_preferred_account_id?, role_policy_refs[], updated_at_utc }`
-- `provider_accounts.account.{project_id}.{provider_id}.{account_id}` -> `{ label, auth_surface, provider_identity?, credential_ref, enabled, priority, threshold_override?, switch_mode_override?, cooldown_until?, retry_budget?, configured_project_id?, allowed_roles?, disallowed_roles?, credential_state, configuration_state, availability_state, last_validated_at_utc? }`
-- `provider_accounts.run_snapshot.{run_id}.{provider_id}` -> `{ auth_surface_order[], eligible_account_ids[], policy_hash, snapshot_created_at_utc }`
-- `provider_accounts.health.{project_id}.{provider_id}.{account_id}` -> `{ last_usage_signal_at_utc?, usage_source_kind?, signal_confidence?, projected_remaining?, reset_at?, hard_failure_reason?, recent_switch_reason? }`
+Required canonical record and projection families include:
+- `attempt_record.v1:{project_id}:{run_id}:{node_id}:{attempt_id}`
+- `blocked_projection.v1:{project_id}:{run_id}:{node_id}:{blocked_sequence}`
+- `artifacts_index.v1:{project_id}:{artifact_id}`
+- `lane_record.v1:{project_id}:{lane_id}`
+- `lane_projection.v1:{project_id}:{lane_id}`
+- `worktree_record.v1:{project_id}:{worktree_id}`
+- `worktree_projection.v1:{project_id}:{worktree_id}`
+- `concern_record.v1:{project_id}:{concern_id}`
+- `project_summary.v1:{project_id}`
+- `project_attention_item.v1:{project_id}:{attention_item_id}`
+- `account_pressure_episode.v1:{provider_id}:{account_id}:{episode_id}`
+- `account_switch_event.v1:{provider_id}:{event_id}`
 
-ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, PolicyRule:no_secrets_in_storage
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Multi-Account.md
+
+Required identity and attribution fields across runtime-linked record families include:
+- `project_id`
+- `run_id`
+- `node_id?`
+- `attempt_id?`
+- `blocked_sequence?`
+- `feature_seam_id?`
+- `work_package_id?`
+- `lane_id?`
+- `worktree_id?`
+- `execution_role?`
+- `requested_account_policy?`
+- `requested_account_id?`
+- `requested_account_binding?`
+- `effective_account_id?`
+- `account_switch_reason?`
+- `provider_attempt_ref?`
+- `usage_event_ref?`
+- `operational_identity?`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
+
+Projection-state families must expose both freshness and health:
+- `projection_freshness`: `current | refreshing | stale`
+- `projection_health`: `healthy | degraded | unavailable`
+
+Rules:
+- stale and degraded are different states and must not collapse into one generic trust field
+- mutating actions must revalidate or gate when projections are stale, degraded, or unavailable
+- record-backed inspection in History and Ledger remains available even when summary projections lose trust
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FinalGUISpec.md
+
+Historical restore and preview identities remain subject-first:
+- `doc:<document_id>`
+- `artifact:<artifact_id>`
+
+Rules:
+- `resume_url` persists serialized transport only
+- route restoration resolves through canonical record identity, not through feature-local ad hoc payloads
+- `tier_runtime_record` may survive only as a derived compatibility projection; it is not canonical runtime identity
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Contracts_V0.md
 ### Naming and migration rules
 - `docker_manage_surface_state` is legacy naming and MUST migrate to `docker_manager.project_state.{project_id}`.
 - `requested_auth_mode` and `effective_*` snapshots remain separate fields.

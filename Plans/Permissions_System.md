@@ -467,20 +467,24 @@ ContractRef: ContractName:Plans/Tools.md
 ## 10. GUI requirements
 ### 10.10 Effective-state disclosure requirements
 
-Permissions-adjacent UI must show effective-state disclosure when runtime capability differs from requested configuration.
+Permission disclosure must align with the shared requested/effective state model and the shared projection-state vocabulary.
 
-Minimum disclosure surfaces:
-- Permissions tab rows for unavailable or downgraded MCP/tool entries
-- Persona-related surfaces when a Persona-selected permission profile is not what ultimately applies
-- browser trust-tier and restricted-preview surfaces when capability falls back to a safer mode
-- project-switch transitions when the newly active project changes the applicable permission result set
+Disclosures must separate:
+- inherited / overridden
+- requested
+- effective
+- honored / skipped / clamped
+- `projection_freshness`
+- `projection_health`
 
-<a id="GUI-PERMISSIONS"></a>
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
 
-The Permissions settings screen is a dedicated tab in the unified Settings page (`Plans/FinalGUISpec.md` §7.4). All GUI surfaces described here are normative; `Plans/FinalGUISpec.md` references this section as the SSOT for permissions GUI behavior.
+Rules:
+- stale or degraded projections do not become authoritative just because they are visible in the UI
+- mutating actions must revalidate or gate when permission-relevant projections are stale, degraded, or unavailable
+- blocked/recovery action visibility must use `allowed_action_ids[]` and blocked-episode identity rather than legacy request-era fields
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md
-
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/FinalGUISpec.md
 ### 10.1 Dedicated Permissions tab
 
 A **Permissions** tab in Settings MUST provide the following sections as collapsible cards.

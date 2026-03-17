@@ -442,88 +442,154 @@ ContractRef: ContractName:Plans/Contracts_V0.md#ContextInjectionToggles, PolicyR
 
 ## 6. HITLRequest
 
-**Definition:** `HITLRequest` is the canonical persisted/requestable contract for a human-approval pause at an orchestrator boundary.
+Approval and recovery are anchored to runtime blocked episodes rather than to tier-boundary request objects.
 
-**Minimum fields:**
-```json
-{
-  "request_id": "HITL-...",
-  "run_id": "PM-...",
-  "tier_id": "subtask-001",
-  "tier_type": "subtask",
-  "request_kind": "tier_boundary_approval",
-  "message": "Subtask complete — approval required to continue.",
-  "allowed_actions": ["approve_continue", "reject", "cancel_run"]
-}
-```
+### 6.1 Canonical blocked-episode approval anchor
+Required runtime-facing fields are:
+- `run_id`
+- `node_id`
+- `blocked_sequence`
+- `attempt_id?`
+- `blocked_reason_code`
+- `allowed_action_ids[]`
+- `approval_scope_key`
+- `approver_identity?`
+- `detail_ref?`
 
 Rules:
-- `request_kind` is `tier_boundary_approval` for V0.
-- `allowed_actions[]` is the HITL-only action list contract for approval requests.
-- runtime blocked/recovery payloads use ordered `allowed_action_ids[]` instead.
-- `recovery_options[]` is not canonical runtime vocabulary.
-- `hitl.approval_requested`, `hitl.approved`, `hitl.rejected`, and `hitl.cancelled` events MUST carry a stable `request_id`.
-- rejections MAY add `reject_resolution` (`rerun | skip | abort`) and optional `rationale`.
+- `waiting_approval` is a blocked runtime state, not a separate orchestration ontology.
+- `blocked_sequence` is the canonical approval anchor for resume, approve, decline, skip, abort, and retry flows.
+- `allowed_action_ids[]` is canonical. `allowed_actions[]` is not canonical.
+- `request_id` is compatibility lineage only and MUST NOT be the primary approval target.
 
-ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
 
-Compatibility rule:
-- Cross-document readers MUST NOT treat HITL `allowed_actions[]` as the canonical runtime blocked-action field.
-- The canonical runtime blocked-action field remains `allowed_action_ids[]` in blocked projections and blocked events.
+### 6.2 Scope and persistence rules
+Rules:
+- approvals bind to canonical runtime identity first: `run_id`, `node_id`, `blocked_sequence`, and `attempt_id?`
+- a blocked-episode approval does not imply a broader policy approval unless the `approval_scope_key` says so explicitly
+- unresolved blocked episodes survive restart and are rehydrated rather than reminted opportunistically
+- a failed approval attempt or failed switch of recovery action remains historically material and must persist in records/history
 
-ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Progression_Gates.md
 
+### 6.3 Compatibility boundary
+Older request-centric payloads may continue to carry `request_id` for lineage and migration, but any consumer that mutates runtime state must resolve through the blocked-episode identity model.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
 ## 7. UICommand
-UI actions that trigger non-trivial logic MUST be expressed as UI commands with stable IDs.
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md#UICommand
+`UICommand` is the canonical command envelope. Shared navigation and identity-open primitives sit underneath public wrapper commands rather than beside them.
 
 ### 7.1 UICommand envelope
-```json
-{
-  "command_id": "cmd.github.connect",
-  "issued_at": "2026-02-23T00:00:00Z",
-  "origin": "ui",
-  "correlation_id": "UI-...",
-  "args": {}
-}
-```
+Required envelope fields are:
+- `command_id`
+- `command_kind`
+- `args`
+- `context?`
+- `normalization?`
+
+`command_kind` is closed to:
+- `shell_view`
+- `navigation_wrapper`
+- `domain_action`
+
+`normalization` is closed to:
+- `wrapper`
+- `deprecated_alias`
 
 Rules:
-- `command_id` MUST be a stable string ID (e.g., `cmd.github.connect`, `cmd.lsp.goto_definition`).
-- The UI MUST dispatch commands; it MUST NOT implement business logic directly.
-- Implementations MUST record command dispatch as events (event type is implementation-defined, but MUST be persisted in seglog using `EventRecord`).
+- deprecated aliases point at `alias_of_command_id`
+- stable wrapper commands point at `normalizes_to_contract`
+- wrapper commands remain user-facing command IDs; they do not disappear behind a public `cmd.nav.*` family
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md#EventRecord
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Crosswalk.md
 
-<a id="WiringEntry"></a>
-### 7.2 WiringEntry -- wiring matrix row contract
-**Definition:** `WiringEntry` is the canonical shape of a wiring matrix row that binds a UI element to a UICommand handler with expected events and acceptance checks.
+### 7.2 `route_target`
+`route_target` is the canonical navigation-and-focus contract.
 
-**Required fields:**
-```json
-{
-  "ui_element_id": "btn.github.connect",
-  "ui_location": "Settings > GitHub/Auth",
-  "ui_command_id": "cmd.github.connect",
-  "handler_location": "handlers::github_auth::connect",
-  "expected_event_types": ["auth.github.device_code.issued", "auth.github.authenticated"],
-  "acceptance_checks": ["Handler registered in dispatcher", "Dispatch emits expected events"],
-  "evidence_required": "Test exercising cmd.github.connect dispatch returns expected events"
-}
-```
+Required fields:
+- `target_kind`
+- `project_id`
+
+Allowed focus fields:
+- `focused_run_id`
+- `thread_id`
+- `tab_id`
+- `inspector_target`
+
+Exactly one selector is required:
+- `subject_id`
+- or `object_kind` + `object_id`
+
+`target_kind` is closed to:
+- `primary_view`
+- `side_panel`
+- `bottom_panel`
+- `embedded_surface`
+- `page_tab`
+
+`subject_id` is closed to:
+- `doc:<document_id>`
+- `artifact:<artifact_id>`
+
+`object_kind` is closed to:
+- `thread`
+- `message`
+- `wizard`
+- `usage_event`
+- `run`
+- `node`
+- `attempt`
+- `scheduler_pass`
+- `blocked_episode`
+- `safe_point`
+- `remediation`
+- `feature_seam`
+- `work_package`
+- `lane`
+- `worktree`
+- `concern`
+- `promotion`
+- `graph_patch`
+- `graph_generation`
+
+`inspector_target` is closed to:
+- `summary`
+- `evidence`
+- `artifacts`
+- `history`
+- `reviews`
+- `usage`
+- `lineage`
+- `details`
 
 Rules:
-- `ui_command_id` MUST reference a stable ID from `Plans/UI_Command_Catalog.md`.
-- `expected_event_types` MUST match the command's declared expected events in the catalog.
-- `acceptance_checks` MUST contain at least one testable assertion.
-- In machine-readable matrix artifacts, each row is stored under `entries.<ui_element_id>` and the row's `ui_element_id` value MUST match that key.
-- Full schema: `Plans/Wiring_Matrix.schema.json`.
+- `project_id` is required
+- route activation must override remembered shell state when needed to reveal the requested object, scope, and destination surface
+- route activation may reuse remembered shell state when that state still reveals the requested object cleanly
+- `resume_url` is serialized transport only and decodes to `route_target`; it is not a stronger parallel primitive
 
-ContractRef: ContractName:Plans/UI_Wiring_Rules.md, SchemaID:Wiring_Matrix.schema.json, ContractName:Plans/UI_Command_Catalog.md, Invariant:INV-011, Invariant:INV-012
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
 
----
+### 7.3 `OpenSubject`
+`OpenSubject` is the canonical identity-native source-open contract.
 
+Required fields:
+- `subject_id`
+- `open_intent`
+
+`open_intent` is closed to:
+- `open_source`
+- `open_preview`
+- `open_review`
+
+Rules:
+- `OpenSubject` resolves canonical identity to the best source realization
+- `OpenSubject` may resolve to `OpenFile` or to a transient `generated://<artifact_id>` buffer
+- transport details do not belong in the `OpenSubject` contract itself
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 ## 8. UI Scaling
 
 The application exposes a user-facing UI scale setting (Settings → General tab).
@@ -774,7 +840,7 @@ Minimum payload:
 
 Add the following canonical runtime event families and required fields.
 
-### `scheduler.pass`
+### `scheduler.pass` (minimum addendum fields)
 Required fields:
 - `run_id`
 - `thread_id`
@@ -909,7 +975,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_C
 
 This section supersedes packet-era naming and field drift wherever conflicts remain.
 
-### `scheduler.pass`
+### `scheduler.pass` (canonicalized)
 Required fields:
 - `scheduler_pass_id`
 - `run_id`

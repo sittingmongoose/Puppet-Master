@@ -18,12 +18,12 @@
 - **Phase**
   - v1 if we already parse errors; low effort.
 
-### Enhancement 3: Per-tier usage in Config
+### Enhancement 3: Per-run and execution-scope usage in Config
 
 - **Benefit**
-  - In tier config, "This tier used X tokens / Y requests in last 7d" helps users see which tier burns the most and adjust platform or model.
+  - In execution settings, "This run / node / package used X tokens / Y requests in last 7d" helps users see which execution scope burns the most and adjust platform or model.
 - **Notes**
-  - Aggregate from `usage.jsonl` by `tier_id`; orchestrator already writes `tier_id`. Requires shared aggregation API or module used by both Usage and Config.
+  - Aggregate from canonical usage identity (`usage_event_ref`, `run_id`, `node_id`, `attempt_id`, and related runtime attribution fields) rather than by `tier_id`. Requires a shared aggregation API or module used by both Usage and Config.
 - **Phase**
   - Post-v1 once 5h/7d and Ledger are stable.
 

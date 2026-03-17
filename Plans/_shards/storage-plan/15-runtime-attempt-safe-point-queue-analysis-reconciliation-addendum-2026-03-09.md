@@ -6,7 +6,7 @@ Storage and projections MUST persist the scheduler and recovery model without am
 - `attempt_count` = total dispatch attempts for the node in the run, including the first attempt
 - `retry_count` = `attempt_count - 1`
 
-### Projection rules
+### Projection rules (reconciled)
 - run-graph and orchestrator projections MUST resolve by `attempt_id`, not only `node_id`
 - blocked projections remain historical after resolution; unblocking does not overwrite prior blocked rows
 - `ready_since_utc` survives projection refresh only while the node remains continuously ready

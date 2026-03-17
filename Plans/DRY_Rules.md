@@ -33,17 +33,27 @@ ContractRef: SchemaID:Spec_Lock.json, Primitive:Crosswalk, PolicyRule:Decision_P
 ---
 
 ## 2. Don't duplicate canonical contracts
-Plans MUST reference canonical contracts rather than restating them.
 
-Examples:
-- Event envelope → `Plans/Contracts_V0.md#EventRecord`
-- UI commands → `Plans/Contracts_V0.md#UICommand` + `Plans/UI_Command_Catalog.md`
-- Auth state/events → `Plans/Contracts_V0.md#AuthState` and provider auth plan
+A doc that consumes orchestration, routing, runtime identity, approval, or worktree/lane behavior must consume the owning contract rather than restating feature-local canon.
 
-ContractRef: ContractName:Contracts_V0.md
+Rules:
+- owner docs are updated before consumer docs when canon changes
+- stale canonical text must be replaced or retired; append-only clarification is not sufficient when old text would remain misleading
+- a consumer doc must not preserve an older model as a peer option once a replacement canon exists
+- summary, checklist, and feature-list mirrors do not re-own canon and must be reconciled after owner docs change
 
----
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Progression_Gates.md
 
+The following concepts are owner-routed and must not be re-owned by consumers:
+- blocked-episode approval identity
+- requested/effective runtime identity
+- account-binding semantics and switch history
+- `route_target` and `OpenSubject`
+- lane/worktree lifecycle semantics
+- concern lifecycle and lineage
+- graph-generation lineage and graph-patch semantics
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
 ## 3. "Index-only" guidance
 A plan MAY include an index/list of IDs (event kinds, UI command IDs, tool IDs) but MUST NOT redefine schemas owned elsewhere.
 

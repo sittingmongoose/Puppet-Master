@@ -248,11 +248,11 @@ Cross-surface requested/effective Persona precedence is canonically defined in `
 
 This section defines only how **Orchestrator auto mode** produces candidate Persona IDs before the global prompt-pipeline precedence is applied:
 
-1. **Plan/tier hard requirement:** If the PRD or plan contains a hard Persona/subagent requirement for the current tier item, emit that candidate first.
-2. **Orchestrator auto candidate generation:** If no hard requirement exists, the Orchestrator's selector generates candidates from project context, language, domain, framework, tier level, and operation type.
+1. **Plan/execution hard requirement:** If the PRD or plan contains a hard Persona/subagent requirement for the current execution unit, emit that candidate first.
+2. **Orchestrator auto candidate generation:** If no hard requirement exists, the Orchestrator's selector generates candidates from project context, language, domain, framework, actor type, operation type, and scope level.
 3. **Orchestrator config constraints:** Disabled/required/override lists may narrow or replace the Orchestrator-generated candidate set as defined in `Plans/orchestrator-subagent-integration.md`.
 
-The candidate produced here becomes a `plan_or_tier_default` or `auto_surface_resolver` input to the global requested/effective Persona resolution flow; it does **not** bypass manual selection, scoped natural-language overrides, or higher-priority run-envelope inputs.
+The candidate produced here becomes a `surface_default` or `auto_surface_resolver` input to the global requested/effective Persona resolution flow; it does **not** bypass manual selection, scoped natural-language overrides, or higher-priority run-envelope inputs.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md#PERSONA-SELECTION-SOURCE-ENUM, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Personas.md#STORAGE-LAYOUT
 
@@ -410,280 +410,36 @@ ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Progression_Gate
 **AC-P07:** The GUI Personas management card MUST validate the schema on save and block saves with validation errors.
 ## 10. Persona Runtime Contract Expansion (2026-03-06)
 
-This addendum expands the Persona system so it can serve as Puppet Master's canonical equivalent of the OpenCode runtime `agent` object while preserving Puppet Master terminology.
+Persona remains part of the shared requested/effective runtime identity model.
 
-### 10.1 Canonical terminology and invariants
-
-- **Persona** remains the canonical stored contract.
-- **Agent** remains the canonical term for a running AI execution instance.
-- **Subagent** remains the canonical term for a delegated Agent.
-- Provider-native terms such as OpenCode `agent`, OpenCode `subagent`, Claude Code subagents, or Cursor agent naming are **reference/baseline terms only** and MUST NOT replace Puppet Master terminology in SSOT docs.
-- A Persona may be attached to:
-  - a primary Assistant run,
-  - an Interview phase/stage run,
-  - a Requirements Builder stage/pass run,
-  - an Orchestrator tier run,
-  - or a delegated Subagent run.
-
-### 10.2 Persona is broader than prompt text
-
-A Persona is not merely a prompt overlay. It is a **behavior-and-runtime contract** that may define:
-
-- identity and expertise,
-- collaboration style and communication behavior,
-- workflow/process guidance,
-- tool guidance and tool preference,
-- preferred platform/model/variant,
-- optional runtime control preferences (`temperature`, `top_p`, `reasoning_effort`) when the provider supports them,
-- optional skill/plugin defaults,
-- and UI metadata for selection and display.
-
-Rule: The Persona body remains the primary instruction content, but the frontmatter/runtime metadata are equally normative for effective run assembly.
-
-### 10.3 Persona behavior style is part of Persona, not a separate overlay
-
-The following user-facing behavior characteristics are treated as Persona content, not as a separate style system:
-
-- engaged,
-- creative,
-- collaborative,
-- exploratory,
-- willing to talk more,
-- more proactive in offering solutions.
-
-Resolved decision: **Collaborator** is a first-class built-in Persona and owns those user-facing interaction traits.
-
-### 10.4 Schema expansion (additive)
-
-Extend the Persona schema with the following optional fields:
-
-```yaml
----
-id: "collaborator"
-name: "Collaborator"
-description: "User-facing, engaged planning and clarification persona."
-default_mode: "regular"
-default_platform: null
-default_model: null
-default_variant: null
-temperature: null
-top_p: null
-reasoning_effort: null
-default_skill_refs: []
-disabled_plugins: []
-preferred_tools: []
-discouraged_tools: []
-tool_usage_guidance: ""
-tags: ["general", "collaboration", "user-facing"]
-aliases: ["collab", "discussion", "planner"]
----
-```
-
-#### Added/clarified fields
-
-| Field | Type | Meaning |
-|---|---|---|
-| `default_platform` | `string | null` | Preferred provider/platform for this Persona. |
-| `default_model` | `string | null` | Preferred provider/model identifier for this Persona. |
-| `default_variant` | `string | null` | Preferred variant or model preset. |
-| `temperature` | `number | null` | Preferred sampling temperature when supported by the active provider transport. |
-| `top_p` | `number | null` | Preferred nucleus sampling value when supported. |
-| `reasoning_effort` | `string | null` | Preferred provider-specific effort/reasoning level when supported. |
-| `preferred_tools` | `string[]` | Tools the Persona should proactively prefer. Guidance only by default. |
-| `discouraged_tools` | `string[]` | Tools the Persona should avoid unless needed. Guidance only by default. |
-| `tool_usage_guidance` | `string` | Freeform strategy guidance for tool selection/execution. |
-| `aliases` | `string[]` | Natural-language invocation aliases and display synonyms. |
-
-Rules:
-- These fields are **preferences/guidance** unless another subsystem elevates them to enforcement.
-- Unsupported provider controls are skipped, recorded, and surfaced to the user; they are never silently assumed to have been honored.
-- `preferred_tools`, `discouraged_tools`, and `tool_usage_guidance` do **not** replace Permissions allow/ask/deny enforcement.
-
-### 10.5 Persona import baseline from provider-native agent files
-
-Provider-native agent files (such as `.claude/agents/*.md`) are valid **seed/import material** for Personas, but they are never canonical runtime storage.
-
-Import rules:
-- Useful behavioral/process guidance in those files SHOULD be preserved when imported.
-- Tool guidance and workflow checklists MAY be translated into Persona fields/body sections.
-- Provider-native fields or assumptions that are not portable MUST be normalized into Puppet Master's provider-capability-aware representation.
-- Imported artifacts are saved only into Puppet Master Persona storage paths.
-
-### 10.6 Provider-native OpenCode baseline (informative but normative for delta design)
-
-OpenCode's runtime `Agent.Info` object bundles:
-- prompt,
-- mode,
-- permissions,
-- model,
-- variant,
-- temperature,
-- topP,
-- options,
-- steps,
-- and description/name.
-
-OpenCode then:
-- resolves the selected agent by name,
-- chooses model via explicit request -> agent model -> last-used model,
-- injects `agent.prompt` into system prompt assembly,
-- merges runtime options/variant,
-- and applies tool permission checks through merged agent/session rules.
-
-Puppet Master SHOULD mirror the **mechanics** of that assembly through Personas while keeping Puppet Master terminology and permission separation.
-
-### 10.7 New built-in Personas that MUST be fully defined
-### 10.7.1 Canonical built-in Persona minima
-
-Until the full built-in `PERSONA.md` files are published, the following minima are normative and MUST be preserved by implementation:
-
-| Persona ID | Primary job | Default mode | Default talkativeness | Tool stance | Primary auto-selection cues |
-|---|---|---|---|---|---|
-| `collaborator` | User-facing clarification, planning, tradeoff discussion | `regular` | `talk_more` | Prefer questions, synthesis, and lightweight inspection before execution | ambiguity, intake, planning, conversation-heavy work |
-| `general-purpose` | Broad fallback execution Persona | `regular` | `model_default` | Balanced; no special tool bias beyond Permissions | final fallback when no better Persona resolves |
-| `explorer` | Read-oriented repository and artifact investigation | `regular` | `talk_a_little_less` | Prefer read/search/inspect tools; avoid edits unless explicitly requested | repo discovery, read-only investigation, tracing |
-| `researcher` | Focused external research and synthesis | `regular` | `talk_more` | Prefer retrieval/research flows and synthesis over code execution | web/source gathering, factual comparison |
-| `deep-researcher` | Broader or multi-source research with heavier synthesis | `regular` | `talk_more` | Same as `researcher`, but for deeper/more expensive synthesis | broad research asks, deeper evidence gathering |
-| `technical-writer` | Human-readable documentation and structured drafting | `regular` | `talk_a_little_more` | Prefer document-editing and summarization flows | drafting specs, docs, handoff artifacts |
-| `requirements-quality-reviewer` | Requirements completeness and ambiguity review | `regular` | `talk_a_little_less` | Review-oriented; should not silently become the drafting Persona | requirements QA, acceptance coverage review |
-| `security-engineer` | Implementation-focused security work | `regular` | `model_default` | Execution-oriented security remediation | security fixes, hardening implementation |
-| `security-auditor` | Security review and findings generation | `regular` | `talk_a_little_less` | Audit/review-oriented; prefer evidence before remediation | security audits, threat/risk review |
-| `devops-engineer` | Deployment, infra, CI/CD, operations implementation | `regular` | `model_default` | Execution-oriented infra/tooling work | CI/CD, deploy, infra automation |
-| `sre` | Reliability, production-readiness, operational validation | `regular` | `talk_a_little_less` | Verification and reliability review over feature drafting | production-readiness, incident/risk validation |
-
-Implementation rule:
-- Built-in `PERSONA.md` files shipped by Puppet Master MUST match these minima.
-- Surface-specific mappings may refine *when* one of these Personas is chosen, but they MUST NOT redefine the Persona's core job or invert its tool stance.
-
-
-The following built-ins are now first-class and MUST be fleshed out in Persona storage and UI:
-
-- `collaborator`
-- `general-purpose`
-- `explorer`
-- `researcher`
-- `deep-researcher`
-
-The following existing or planned Personas also require sharpened contracts:
-
-- `technical-writer`
-- `requirements-quality-reviewer`
-- `security-engineer`
-- `security-auditor`
-- `devops-engineer`
-- `sre`
-
-### 10.8 Canonical explorer naming
-
-Resolved naming rule:
-- Puppet Master standardizes on **`explorer`** as the canonical Persona ID and display concept.
-- Stale uses of `explore` in plans/registry/examples are legacy/OpenCode carryover and MUST be normalized to `explorer`.
-- `explore` MAY be accepted as an **input alias only** (for natural-language requests, imports, or migration), but persistence, config storage, registry rows, and UI display MUST always normalize to `explorer`.
-
-### 10.9 Natural-language Persona invocation
-
-Users may explicitly summon Personas by natural language in Chat and other interactive surfaces.
-
-Examples:
-- "Use Explorer"
-- "Switch to Collaborator"
-- "Be a Rust engineer"
-- "Answer as a technical writer"
-- "Use the security auditor for this"
-
-#### Resolution requirements
-
-- Natural-language Persona invocation resolves against:
-  - canonical Persona IDs,
-  - display names,
-  - aliases,
-  - and fuzzy normalized forms (for example `rust engineer` -> `rust-engineer`).
-- On success, the invocation creates a `requested_persona` override.
-- The runtime must record `persona_selection_source = user_natural_language`.
-- Ambiguous matches should trigger a clarification flow only when deterministic alias/ID resolution cannot safely choose a single Persona.
-
-#### Scope defaults
-
-Default scope resolution:
-- one-shot phrasing such as "for this answer", "for this", "right now" -> **turn scope**,
-- persistent phrasing such as "from now on", "in this chat", "for this session" -> **session scope**.
-
-Optional explicit scopes may also be supported:
-- run scope,
-- task scope,
-- subagent scope.
-
-### 10.10 Auto/manual/hybrid Persona selection
-
-Every major execution surface supports Persona selection modes:
-
-- `manual`
-- `auto`
-- `hybrid`
-
-Definitions:
-- **manual:** user/config chooses Persona directly and auto selection is not used unless fallback is required.
-- **auto:** system resolver chooses Persona based on context/task/surface.
-- **hybrid:** auto chooses initial Persona, but the user may lock or override it.
-
-Auto mode MUST NOT be opaque. The system must always expose:
-- effective Persona,
-- why it was chosen,
-- and whether the current effective Persona came from auto, explicit user request, config, or plan/tier assignment.
-
-### 10.11 Effective Persona Resolution Record (cross-reference)
-### 10.11A Runtime identity surfaces
-ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
-
-### 10.11B Requested vs effective Persona display
-
-Persona-facing UI must disclose requested vs effective Persona state whenever the final runtime Persona differs from the requested selection.
-
-Minimum requirements:
-- show both requested and effective Persona when they differ
-- show a concise selection reason or override reason
-- keep this visible on surfaces where the difference materially affects runtime behavior, especially chat, orchestrator, and settings surfaces that expose Persona selection or compatibility
-- project switching must recalculate and redisplay effective Persona state for the new project context
-
-Requested and effective persona/runtime identity must remain visible outside the prompt pipeline.
-
-Required runtime-facing fields for execution and UI surfaces:
-- `requested_persona_id`
-- `effective_persona_id`
-- `selection_reason`
-- `effective_platform`
-- `effective_model`
-
-These fields are consumed by Run Graph, Orchestrator, Interview, and chat blocked/recovery surfaces. They must come from the canonical runtime record rather than surface-local reconstruction.
-
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/interview-subagent-integration.md
-
-This document declares the Persona-owned fields of the runtime selection record. The full cross-system record is defined jointly with `Plans/Models_System.md` and `Plans/Prompt_Pipeline.md`.
-
-Every run/sub-run/phase/tier/pass MUST carry at minimum:
-
+Canonical persisted/runtime fields remain:
 - `requested_persona`
 - `effective_persona`
 - `persona_selection_source`
 - `selection_reason`
-- `applied_persona_controls[]`
-- `skipped_persona_controls[]`
+- `persona_override_scope`
+- `persona_override_owner_id`
+- applied/skipped control fields from the shared runtime contract
 
-Shared-record note: `Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD` is the canonical cross-system record definition; this section owns only the Persona-specific fields within that shared structure.
+Rules:
+- `requested_persona_id` and `effective_persona_id` are not canonical persisted field names
+- requested/effective, inherited/overridden, and honored/skipped/clamped remain distinct concepts
+- historical views use frozen captured runtime identity rather than recomputing persona from current settings
 
-`selection_reason` examples:
-- `Auto: Rust repo + code-edit task`
-- `Auto: interview questioning stage`
-- `User requested via natural language`
-- `Tier default: iteration execution`
-- `Fallback: preferred Persona unavailable`
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md
 
-### 10.12 Acceptance criteria addendum
+Auto-resolution precedence is:
+1. explicit manual/run override
+2. scoped natural-language override
+3. surface-specific explicit mapping
+4. surface auto resolver candidate
+5. config default
+6. canonical fallback
 
-Add the following acceptance criteria to Persona implementation work:
+Rules:
+- actor type outranks stack hints
+- operation type outranks stack hints
+- governance/review/corroboration personas do not collapse into implementation personas merely because repo language hints are strong
+- `persona_override_owner_id` must align to thread/run/node/attempt/actor lineage rather than to `tier_id`
 
-- A Persona may request platform/model/variant/runtime controls, and unsupported controls MUST be skipped with explicit recording and UI disclosure.
-- Auto mode must always show the effective Persona and selection reason; it must never display only `Auto` with no resolution detail.
-- Natural-language Persona invocation must resolve deterministically to a requested Persona override or trigger clarification when ambiguous.
-- Puppet Master storage remains the only canonical Persona storage. Editing Personas MUST NOT mutate provider-native directories.
-- Canonical built-in Persona naming MUST use `explorer`, not `explore`.
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Crosswalk.md

@@ -14,6 +14,23 @@
 This project is moving to a single, deterministic "agent loop" architecture where every backend is just a **Provider** behind one unified session/event store, tool registry, and patch/edit pipeline (so CLI-bridged providers don't become special-case chaos). This is intentionally adapting much of **OpenCode's architecture** (provider abstraction, centralized config, session orchestration, tool registry) to address current pain points and make the main engine deterministic and reliable. [web:7][web:11][web:69][web:71]
 
 ### What's changing (high level)
+
+### Orchestrator rewrite canonicalization lock (2026-03-17)
+The orchestrator rewrite is now locked to these cross-doc decisions:
+- node graph is the canonical execution model
+- `Feature Seam` and `Work Package` are first-class graph-owned objects
+- `Node` remains the smallest executable unit
+- `Package Overseer` and `Seam Overseer` are governance roles, not hidden schedulers
+- `Locally Complete`, `Available to Seam`, and `Seam Complete` remain distinct promotion states
+- weak integration remains first-class and blocks seam completion when integration quality is insufficient
+- graph patching creates a new graph generation while preserving historical superseded paths as visible lineage
+- Orchestrator is tab-first with `Progress`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`
+- `Progress` is the only widget-composed Orchestrator tab
+- Source Control remains compact and worktree-first while Orchestrator carries lane/package/seam operational context
+- shared requested/effective runtime identity spans conversational actors and orchestration actors without collapsing them into one ontology
+- `route_target` and `OpenSubject` are canonical navigation/source-open primitives
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Crosswalk.md
 - **GUI rewrite:** Desktop UI is switching to Rust + Slint, with Slint's cross-platform **winit backend** for Windows/macOS/Linux. [web:149]
 - **Renderer decision (locked):** default is **winit + Skia**, fallback GPU is **winit + FemtoVG-wgpu**, and we keep an emergency software fallback for compatibility; selection can be controlled via Slint's backend selection mechanisms (e.g., `BackendSelector` and/or `SLINT_BACKEND`). [web:48][web:149]
 - **Theme behavior (locked):** theme switching will be supported, but it's acceptable to require an app **restart**; we will offer both a "Puppet Master default" look and a "Basic theme."

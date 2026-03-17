@@ -259,17 +259,36 @@ Rules:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md#AuthPolicy, ContractName:Plans/usage-feature.md
 ## 7. Runner / orchestration contract
-- Before any provider-using attempt/message starts, resolve execution role, requested provider/model/effort/persona/auth mode/account policy, and the provider capability block.
-- Resolve allowed auth surfaces first, then the eligible account pool.
-- Spawn or call the provider with the resolved effective account context only.
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/storage-plan.md
+The multi-account contract applies across assistant, interviewer, builders, overseers, and node workers.
 
-- This contract applies to assistant, interviewer, requirements builder, PRD builder, overseers, node workers, and provider-backed chat/tool turns. It is not limited to Orchestrator node execution.
-- On rate-limit, auth failure, or exhaustion, record account health changes and re-resolve on the next boundary.
-- Claude-specific session migration remains provider-specific behavior and does not change the generic boundary rule.
+Rules:
+- multi-account auto-switching is on by default for provider-using actors
+- provider selection is provider-aware, account-aware, and role-aware
+- same-provider accounts are not interchangeable
+- manual set-active is an override/debug control rather than the main execution model
 
-ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/usage-feature.md
+
+Required account-binding/runtime fields are:
+- `requested_account_policy`
+- `requested_account_id?`
+- `requested_account_binding?`
+- `effective_account_id?`
+- `account_switch_reason?`
+- `execution_role`
+
+`requested_account_binding` is closed to:
+- `none`
+- `preferred`
+- `required`
+
+Rules:
+- `requested_account_policy` alone is not enough to explain concrete account selection
+- failed or blocked switch decisions remain historically material even when `effective_account_id` does not change
+- durable switch and pressure history is persisted through `account_switch_event` and `account_pressure_episode`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Models_System.md
 ## 8. Usage and pick-best
 - Usage/account pressure plugs into the shared usage model; do not create a parallel quota system for multi-account routing.
 - Every provider-using interaction may update account health.

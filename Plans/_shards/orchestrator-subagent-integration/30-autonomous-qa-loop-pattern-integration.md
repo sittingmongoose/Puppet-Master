@@ -353,7 +353,7 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 5. **Better Commit History**: Amended commits for rework keep history clean
 6. **Phase Discipline**: Prevents jumping ahead to next phase prematurely
 
-### Implementation Considerations
+### Autonomous QA loop implementation considerations
 
 1. **Progress File Format**: Use Markdown with status symbols for readability
 2. **Inspector Feedback**: Prepend feedback to task files so subagents see it first

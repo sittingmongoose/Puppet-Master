@@ -17,22 +17,20 @@ This checklist is the single auditable summary that verifies the 2026-02-23 GUI 
 
 ## Verification Table
 
-| Requirement | Source of Truth (REF) | Verification Status | Notes |
-|---|---|---|---|
-| Cross-cutting widget system: unified catalog, grid resizing, preconfigured defaults | `Plans/Widget_System.md` sections 2, 3, 6, 7 | PASS | Covers canonical widget IDs, responsive 2/3/4-column grid behavior, layout persistence, and dashboard key migration. |
-| Usage page: dedicated, fully widget-composed, Multi-Account widget | `Plans/usage-feature.md` section `Widget-Composed Page Layout`; `Plans/Widget_System.md` section 2.2 | PASS | Usage is fully widget-composed; `widget.multi_account` is first-class and reusable on Dashboard. |
-| Chat context usage ring enhancements: `Compact Now` + pop-out detail | `Plans/assistant-chat-design.md` section 25 | PASS | `cmd.chat.compact_context`, pop-out detailed usage view, and keyboard/accessibility behavior are specified. |
-| Dashboard upgrade: card grid -> widget grid + add-widget flow | `Plans/FinalGUISpec.md` Appendix C; `Plans/Widget_System.md` sections 3 and 4 | PASS | Dashboard layout migration and add-widget behavior are explicitly defined with redb key transition details. |
-| Orchestrator page: single page with 6 tabs | `Plans/Orchestrator_Page.md` sections 2 and 3 | PASS | Tabs are Progress, Tiers, Node Graph Display, Evidence, History, Ledger. |
-| Node Graph Display: Airflow-style DAG spec with contract + presets + 8-section detail panel + HITL controls + Slint implementation guide | `Plans/Run_Graph_View.md` sections 2, 6, 7, 9, 14, 17, 18 | PASS | Includes 5 layout presets, C1-C8 detail sections, HITL actions, data model contract, Slint implementation guide, and acceptance criteria. |
-| Summary verification coverage + image references | `Plans/Run_Graph_View.md` references section; `Concepts/dag_run_graph.png`; `Concepts/dag_run_graph1.png` | PASS | Reference images are present and linked by the run-graph specification. |
-| Preview + Build controls on operational surfaces | `Plans/FinalGUISpec.md` §7.2; `Plans/Orchestrator_Page.md` §4.5; `Plans/newtools.md` §14.6 | PASS | Dashboard and orchestrator status surfaces define Preview/Build actions with artifact/session summaries. |
-| Docker runtime + DockerHub settings contract | `Plans/FinalGUISpec.md` §7.4.8; `Plans/newtools.md` §14.7 | PASS | Advanced settings specify containers/registry defaults, auth mode, and publish policy. |
-| GitHub Actions generation settings contract | `Plans/FinalGUISpec.md` §7.4.9; `Plans/newtools.md` §14.8; `Plans/UI_Command_Catalog.md` §2.5 | PASS | Advanced settings specify workflow templates, secrets checklist, preview/apply flow, and command IDs. |
-| Automation migration (legacy Iced reference -> Slint runtime target) | `Plans/newtools.md` §14.9; `Plans/rewrite-tie-in-memo.md` | PASS | Migration boundary is explicit: keep evidence/tooling contracts while targeting Slint runtime semantics. |
-| UI scaling migration (legacy Iced custom scaling -> Slint native scaling) | `Plans/FinalGUISpec.md` §7.4 and §16.2; `Plans/rewrite-tie-in-memo.md` | PASS | UI scale remains a UX setting; Slint sections now lock scaling to native Slint scale-factor paths and avoid porting token-multiplication layers. |
-| Remove experimental settings (GUI section, config key, CLI flags) | `Plans/rewrite-tie-in-memo.md`; `Plans/FinalGUISpec.md` §7 (Advanced) | PASS when implemented | "Experimental features" section and `tooltip.experimental_*` tooltips are omitted in the Slint GUI; per-platform `experimentalEnabled` config and experimental CLI flags are not implemented. |
+| Area | Required canonical state | Verification status rule |
+|---|---|---|
+| Orchestrator tabs | `Progress`, `Seams`, `Node Graph`, `Evidence`, `History`, `Ledger` | Fail if `Tiers` remains canonical or if non-Progress tabs remain widget canvases |
+| Widget hostability | Dashboard, Usage, and Orchestrator `Progress` only | Fail if `Seams`, `Node Graph`, `Evidence`, `History`, or `Ledger` are still treated as widgetized |
+| Runtime approval identity | blocked-episode identity with `run_id`, `node_id`, `blocked_sequence`, `attempt_id?`, `allowed_action_ids[]` | Fail if `request_id`, `tier_id`, or `allowed_actions[]` remain primary |
+| Runtime identity display | inherited/overridden, requested/effective, honored/skipped/clamped | Fail if compact or detailed surfaces collapse these states |
+| Projection state | `projection_freshness` and `projection_health` | Fail if trust is still modeled as one overloaded field |
+| Usage correlation | `usage_event_ref` and runtime attribution fields | Fail if Orchestrator/Graph/Usage still correlate primarily by `tier_id` |
+| Source-open behavior | `route_target`, `OpenSubject`, `OpenFile` split | Fail if path-only open is still treated as universal |
+| Source Control boundary | narrow worktree-first Source Control; operational lane/package/seam Orchestrator | Fail if Source Control becomes lane-first canon or Orchestrator duplicates raw worktree inventory |
+| Graph lineage | graph patches create new generations and retain superseded visible paths | Fail if graph patching still rewrites in place conceptually |
+| Concern model | first-class concern lifecycle and lineage | Fail if concerns remain buried in reviews/alerts only |
 
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/FileManager.md
 ## Command Catalog Coverage Check
 
 The following command groups introduced by the 2026-02-23 docs are now listed in the canonical command registry:

@@ -67,7 +67,7 @@ The existing `dashboard_layout:v1` redb key (section 15.1) stores a simple card-
 1. **On first load** after the widget system upgrade:
    - Check if `dashboard_layout:v1` exists and `widget_layout:v1:dashboard` does NOT exist.
    - If so: read the card ID list from `dashboard_layout:v1`, map each card ID to its corresponding Widget Catalog ID (per the table in C.2), assign default grid positions and sizes, and write the result as `widget_layout:v1:dashboard`.
-   - Keep `dashboard_layout:v1` as backup (do NOT delete it).
+   - Treat `dashboard_layout:v1` as deprecated migration input only; it does not remain canonical after migration completes.
 2. **Future reads** use `widget_layout:v1:dashboard` only.
 3. If both keys exist, `widget_layout:v1:dashboard` takes precedence.
 

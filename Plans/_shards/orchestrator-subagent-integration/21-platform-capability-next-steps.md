@@ -1,4 +1,4 @@
-## Next Steps
+## Platform capability next steps
 
 1. Review and approve this plan
 2. Implement Phase 1 (Project Context Detection)

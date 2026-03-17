@@ -18,24 +18,27 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/
 
 ## 1. Role definitions
 
-### 1.1 Builder
-Builder implements the node objective, produces declared outputs, and transitions node status:
-`queued -> in_progress -> verify_pending`.
+### 1.1 Builder / node worker
+The execution worker that performs the node attempt.
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/plan_graph.schema.json
+### 1.2 Verifier / reviewer / corroborator
+The execution-support actors that review, verify, or corroborate work products without becoming the scheduler.
 
-### 1.2 Verifier
-Verifier runs node acceptance checks, writes evidence at `evidence_pointer`, and writes `verifier_result`.
+### 1.3 Package Overseer
+Local governance for one `Work Package`.
 
-ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/evidence.schema.json
+### 1.4 Seam Overseer
+Cross-package integration governance for one `Feature Seam`.
 
-### 1.3 Overseer
-The **Overseer** (see Plans/Glossary.md) selects the next ready node, dispatches Builder/Verifier, and applies automatic completion status transitions after verification output is available.
+### 1.5 Runtime scheduler
+The canonical owner of readiness, blocked state, transitions, retry budgets, wakeups, and dispatch.
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, PolicyRule:Decision_Policy.md§2
+Rules:
+- overseers are governance actors, not hidden second schedulers
+- most node execution may be performed through overseer-spawned node workers, but runtime still owns canonical execution state
+- conversational actors that share runtime identity semantics do not become orchestration nodes, packages, or seams
 
----
-
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/orchestrator-subagent-integration.md
 ## 2. Deterministic readiness
 
 Overseer MUST read node execution state from the canonical node document:
@@ -106,21 +109,35 @@ ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/Executo
 
 ## 5. Node execution fields
 
-- `status`
-  - lifecycle state enum: `queued | in_progress | verify_pending | verified | done | failed`
-- `evidence_pointer`
-  - object: `{ "kind": "filesystem_path" | "seglog_ref", "ref": "<string>" }`
-- `verifier_result`
-  - object containing `outcome` (`pending | pass | fail`), optional `timestamp_utc`, optional `message`
-- `decision_refs`
-  - array of decision IDs/references; empty array is valid
-- `spec_lock_requirements`
-  - object containing schema-version keys that must match Spec Lock before readiness can evaluate true
+The canonical dispatch/runtime packet carries `execution_unit_context`.
 
-ContractRef: ContractName:Plans/plan_graph.schema.json, ContractName:Plans/project_plan_node.schema.json, ContractName:Plans/Spec_Lock.json
+Required fields are:
+- `project_id`
+- `run_id`
+- `node_id`
+- `attempt_id`
+- `feature_seam_id?`
+- `work_package_id?`
+- `lane_id?`
+- `worktree_id?`
+- `blocked_sequence?`
+- `safe_point_id?`
+- `remediation_root_id?`
+- `graph_generation_id?`
+- `execution_role`
+- requested/effective runtime identity snapshot fields
+- requested/effective account-binding fields
+- `operational_identity?`
+- `allowed_action_ids[]?`
 
----
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
+Rules:
+- `TierContext` does not remain the canonical execution context
+- any surviving decomposition or view context is derived and non-canonical
+- mutation, audit, blocked actions, and routing resolve through runtime identity anchored by run/node/attempt/blocked-sequence lineage
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
 ## 6. Overseer dispatch algorithm (deterministic)
 
 1. Evaluate readiness predicate over all queued nodes.
@@ -432,58 +449,6 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Progression_
 ### Attempt identity rule
 Every retry, resume-after-prerequisite, or safe-point-restored rerun creates a new `attempt_id`. Prior attempts remain immutable historical records.
 ## Unified Runtime Scheduler and Attempt Lifecycle Reconciliation Addendum (2026-03-09)
-
-This section supersedes earlier lexical-dispatch, attempt-reuse, and mixed blocked/failure wording in this file.
-
-### Scheduler selection
-- Canonical dispatch uses the scored ready-set tuple `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`.
-- Lexicographic `node_id` ordering is only the final tiebreak and MUST NOT remain the active standalone scheduler rule.
-- Slot shortage produces `non_selected_reason = capacity_deferred`; it does not create blocked state.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md
-
-### Wake reasons and coalescing
-Canonical `wake_reason` values are:
-- `node_completed`
-- `verification_completed`
-- `approval_resolved`
-- `clarification_resolved`
-- `auth_recovered`
-- `backoff_expired`
-- `remediation_completed`
-- `replan_applied`
-- `restore_completed`
-- `capacity_changed`
-- `startup_recovered`
-- `watchdog_recheck`
-
-If multiple triggers coalesce into one scheduler pass, persist the first as `wake_reason` and the rest as `secondary_wake_reasons[]`.
-
-### Outcome families
-- `failure_class` is only for classified attempt outcomes.
-- `blocked_reason_code` is only for unresolved prerequisites or intentionally prevented work.
-- A blocked episode may carry `failure_class?` only when a failed attempt produced the blocked state.
-
-### Attempt identity
-- Every dispatch creates a new `attempt_id`.
-- Retry, prerequisite resume, remediation rerun, and safe-point-restored rerun always create new attempts.
-- Prior attempts remain immutable history.
-
-### Mutation capability and safe points
-- `mutation_capable` is sourced from the tool registry and propagated into the node plan record.
-- Mutation-capable attempts create a safe point before execution unless policy explicitly says the attempt is non-mutating despite tool capability.
-- `requires_safe_point_restore = true` on a blocked payload overrides generic rerun defaults.
-
-### Capacity inputs
-`available_slots` comes from one deterministic runtime view that combines run ceiling, lane ceilings, provider/resource saturation, remediation reservations, and worktree isolation constraints.
-
-### Run-level deferred rule
-- If any node is runnable, the run remains active.
-- If no node is runnable and blocked/backoff/prerequisite-waiting work exists, the run is deferred/waiting rather than terminal.
-- The next prerequisite resolution, backoff expiry, restore completion, remediation completion, or capacity change MUST wake the scheduler.
-
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
-## Canonical Runtime Scheduler and Attempt Lifecycle
 
 This section supersedes earlier lexical-dispatch, attempt-reuse, and mixed blocked/failure wording in this file.
 

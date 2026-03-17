@@ -1,6 +1,6 @@
 ## Platform-Specific Capabilities & Extensions
 
-### Overview
+### Platform capability overview
 
 Runtime integration is provider-first; transport varies by ProviderTransport (CLI-bridged, direct-provider, server-bridged). Platform capability work in this plan is limited to:
 - native CLI features (flags, modes, output schemas)

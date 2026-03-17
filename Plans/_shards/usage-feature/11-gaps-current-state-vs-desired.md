@@ -31,50 +31,41 @@
 The canonical fix is a single normalized `UsageRecord` contract shared by Ledger, Usage, Run Graph, and Orchestrator surfaces.
 
 ### Canonical UsageRecord fields
-Required fields:
-- `run_kind`
-- `run_id`
-- `tier_id`
-- `attempt_id?`
+
+Canonical usage identity is runtime-first, not tier-first.
+
+Required usage attribution fields are:
+- `usage_event_ref`
+- `project_id`
+- `run_id?`
 - `thread_id?`
-- `effective_platform`
-- `effective_model`
-- `effective_auth_mode?`
+- `node_id?`
+- `attempt_id?`
+- `execution_role?`
+- `provider_id?`
 - `effective_account_id?`
-- `input_tokens`
-- `output_tokens`
-- `total_tokens`
-- `estimated_cost?`
-- timestamps sufficient for rollups and ordering
+- `provider_attempt_ref?`
+- `artifact_id?`
+- `receipt_refs?`
+- cost/token/quota payloads
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+Rules:
+- `tier_id` does not remain the primary usage correlation key
+- usage pivots from graph, artifacts, chat, and Orchestrator resolve through canonical usage identity and route contracts
+- usage history must distinguish requested/effective account/runtime behavior when that affects cost or quota outcomes
 
-Optional but recommended attribution fields:
-- `provider_account_id?`
-- `usage_source_kind`
-- `signal_confidence`
-- `effective_project_id?`
-- `currency?`
-- `prompt_cache_hit?` / similar optimization counters when available
-
-Ownership and consumption:
-- Ledger reads normalized `UsageRecord` projections rather than ad hoc log parsing
-- Usage page rollups are derived from the same record family
-- Run Graph and Orchestrator aggregate by `tier_id` and `attempt_id?` from the same contract
-- Interview, assistant, builder, and orchestrator runs share the same schema; `run_kind` distinguishes workflow families without creating parallel usage systems
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md
-
-Rule:
-- There is one usage schema. Compatibility shims may ingest older sources, but new runtime surfaces MUST NOT define alternate token/model/auth/account attribution records.
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
 ### Ownership and consumption
-- Ledger reads normalized `UsageRecord` projections rather than ad hoc log parsing
-- Usage page rollups are derived from the same record family
-- Run Graph and Orchestrator aggregate by `tier_id` and `attempt_id?` from the same contract
-- Interview and orchestrator runs share the same schema; `run_kind` distinguishes workflow families without creating parallel usage systems
 
+Usage remains a shared surface consumed by chat, runtime, Orchestrator, and Source Control-adjacent artifacts.
+
+Rules:
+- graph and Orchestrator consumers must stop aggregating by `tier_id`
+- `Show in Usage` pivots route through usage identity and `route_target`
+- account pressure and account-switch history remain visible as shared provider-runtime behavior, not as a second quota system
+- stale/degraded usage projections must disclose `projection_freshness` and `projection_health` before live actions rely on them
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
 ### Rule
 There is one usage schema. Compatibility shims may ingest older sources, but new runtime surfaces MUST NOT define alternate token/model attribution records.
 

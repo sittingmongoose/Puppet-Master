@@ -445,22 +445,34 @@ These Persona preferences participate in effective run assembly but MUST pass th
 
 ### 10.2 Effective selection fields (cross-system runtime contract)
 
-Every run/sub-run/phase/tier/pass MUST persist:
+Effective model/runtime selection is part of the shared requested/effective identity contract.
 
+Required cross-system fields are:
 - `requested_platform`
 - `effective_platform`
 - `requested_model`
 - `effective_model`
 - `requested_variant`
 - `effective_variant`
-- `effective_temperature`
-- `effective_top_p`
-- `effective_reasoning_effort`
-- `applied_persona_controls[]`
-- `skipped_persona_controls[]`
+- `requested_auth_mode`
+- `effective_auth_mode`
+- `requested_account_policy`
+- `requested_account_id?`
+- `requested_account_binding?`
+- `effective_account_id?`
+- `effective_provider_identity?`
+- `account_switch_reason?`
+- `execution_role`
+- `selection_reason`
 
-These are recorded in addition to the Persona fields declared in `Plans/Personas.md`.
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md
 
+Rules:
+- model selection does not collapse provider/account identity, execution role, and operational identity into one field
+- support and disclosure must show whether a requested control was honored, skipped, or clamped
+- same-provider accounts are not interchangeable for selection or history purposes
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md
 ### 10.3 Selection precedence (expanded)
 
 The effective model/runtime selection chain is:

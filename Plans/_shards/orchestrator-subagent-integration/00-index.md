@@ -26,7 +26,7 @@ Canonical source: [Plans/orchestrator-subagent-integration.md](../../orchestrato
 - [18-avoiding-built-but-not-wired.md](18-avoiding-built-but-not-wired.md) — ## Avoiding "Built but Not Wired"
 - [19-start-and-end-verification-at-phase-task-and-subtask.md](19-start-and-end-verification-at-phase-task-and-subtask.md) — ## Start and End Verification at Phase, Task, and Subtask
 - [20-considerations.md](20-considerations.md) — ## Considerations
-- [21-next-steps.md](21-next-steps.md) — ## Next Steps
+- [21-platform-capability-next-steps.md](21-platform-capability-next-steps.md) — ## Platform capability next steps
 - [22-implementation-notes-where-code-lives-and-what-to-add.md](22-implementation-notes-where-code-lives-and-what-to-add.md) — ## Implementation Notes (Where Code Lives and What to Add)
 - [23-parallel-execution-subagent-integration.md](23-parallel-execution-subagent-integration.md) — ## Parallel Execution & Subagent Integration
 - [24-platform-specific-capabilities-extensions.md](24-platform-specific-capabilities-extensions.md) — ## Platform-Specific Capabilities & Extensions
@@ -34,7 +34,7 @@ Canonical source: [Plans/orchestrator-subagent-integration.md](../../orchestrato
 - [26-updated-implementation-architecture.md](26-updated-implementation-architecture.md) — ## Updated Implementation Architecture
 - [27-benefits-of-platform-capabilities.md](27-benefits-of-platform-capabilities.md) — ## Benefits of Platform Capabilities
 - [28-implementation-considerations.md](28-implementation-considerations.md) — ## Implementation Considerations
-- [29-next-steps-2.md](29-next-steps-2.md) — ## Next Steps
+- [29-next-steps.md](29-next-steps.md) — ## Next Steps
 - [30-autonomous-qa-loop-pattern-integration.md](30-autonomous-qa-loop-pattern-integration.md) — ## Autonomous QA Loop Pattern Integration
 - [31-change-summary.md](31-change-summary.md) — ## Change Summary
 - [32-persona-and-effective-runtime-resolution-addendum-2026-03-06.md](32-persona-and-effective-runtime-resolution-addendum-2026-03-06.md) — ## Persona and Effective Runtime Resolution Addendum (2026-03-06)

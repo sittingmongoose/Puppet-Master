@@ -1,24 +1,24 @@
 ## Implementation Phases
 
-### Phase 1: Project Context Detection
+### Implementation note: Phase 1 - Project Context Detection
 - [ ] Implement `ProjectContext` detection
 - [ ] Language detection from codebase files
 - [ ] Framework detection
 - [ ] Domain inference from task descriptions
 
-### Phase 2: Subagent Selector
+### Implementation note: Phase 2 - Subagent Selector
 - [ ] Implement `SubagentSelector` with tier-level selection logic
 - [ ] Language-to-subagent mapping
 - [ ] Framework-to-subagent mapping
 - [ ] Domain-to-subagent mapping
 
-### Phase 3: Orchestrator Integration
+### Implementation note: Phase 3 - Orchestrator Integration
 - [ ] Add subagent selection to orchestrator
 - [ ] Build tier context from tier nodes
 - [ ] Invoke subagents via platform runners
 - [ ] Handle subagent responses
 
-### Phase 4: Error Pattern Detection
+### Implementation note: Phase 4 - Error Pattern Detection
 - [ ] Detect error patterns from iteration outputs
 - [ ] Automatically invoke debugger/security-auditor/etc.
 - [ ] Pattern-based subagent selection

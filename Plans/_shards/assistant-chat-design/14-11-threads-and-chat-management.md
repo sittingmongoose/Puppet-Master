@@ -4,10 +4,23 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 Threads and chat management are persistent shell behaviors.
 
 ### Canonical navigation model
-- the thread list is a persistent sidebar or equivalent persistent shell region
-- the user may resize or collapse it, but not replace it with a transient-only overlay model
-- switching threads preserves scroll position, pending-input draft state, and side-panel tab state per thread where applicable
 
+Assistant Chat consumes the shared navigation and runtime identity contracts rather than defining chat-local replacements.
+
+Rules:
+- routed opens resolve through `route_target`
+- source opens resolve through `OpenSubject` or `OpenFile`
+- thread usage, artifact usage, ledger pivots, wizard resume, and object-focused opens use the same internal route model
+- `resume_url` is serialized transport only and must not outgrow the canonical route contract
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
+
+Runtime identity display rules:
+- chat may display requested/effective runtime identity and projection state
+- chat must not define assistant-local replacements for the owner-doc field set
+- historical thread/activity views use frozen requested/effective runtime snapshots captured for the execution
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md
 ### Branching conversations
 - restore-and-branch creates a new `thread_id` and `branch_id` linked to the source restore point and source thread
 - branch labels are visible in history and thread navigation

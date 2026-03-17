@@ -56,202 +56,51 @@ ContractRef: ContractName:Contracts_V0.md, SchemaID:Spec_Lock.json
 
 ## 3. Ownership boundaries
 
-<a id="3.1"></a>
-### 3.1 GitHubApiTool
-**Owner:** Tooling domain (`Plans/Tools.md`).
+Ownership boundaries are explicit so downstream docs cannot re-own orchestration canon accidentally.
 
-**Definition (boundary only):** `GitHubApiTool` is the *only* permitted interface for GitHub HTTPS API calls.
+### 3.1 Runtime orchestration ownership
+Canonical runtime orchestration ownership is:
+- `Executor_Protocol.md` owns dispatch-time execution context and runtime role boundaries
+- `Contracts_V0.md` owns persisted contract shapes, blocked-episode identity, command envelopes, `route_target`, and `OpenSubject`
+- `storage-plan.md` owns durable record and projection families
+- `Prompt_Pipeline.md` owns requested/effective runtime identity resolution semantics
 
-Rules:
-- GitHub operations MUST be implemented via GitHub HTTPS API calls and OAuth access tokens.
-- The GitHub CLI is forbidden for auth/status/repo/fork/PR operations.
-- Auth flows are owned by `Plans/GitHub_API_Auth_and_Flows.md`; this section only assigns ownership.
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
-ContractRef: ToolID:GitHubApiTool, SchemaID:Spec_Lock.json#github_operations, ContractName:Contracts_V0.md#AuthEvent
+### 3.2 Orchestrator ownership
+Canonical Orchestrator ownership is:
+- node graph is the execution model
+- `Feature Seam` and `Work Package` are graph-owned objects
+- `Node` is the smallest executable unit
+- `Package Overseer` and `Seam Overseer` are governance roles; runtime remains the canonical owner of readiness, blockers, transitions, retry budgets, and dispatch
 
----
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
 
-### 3.2 UICommand
-**Owner:** UI domain (UI catalog + typed commands).
+### 3.3 Navigation and source-open ownership
+Canonical navigation/source-open ownership is:
+- `Contracts_V0.md` owns `route_target` and `OpenSubject`
+- `FileManager.md` owns `OpenFile`
+- `storage-plan.md` owns persisted subject identity and restore joins
+- `FinalGUISpec.md` owns shell realization and destination-surface behavior
 
-Rules:
-- The UI MUST dispatch stable command IDs; it MUST NOT implement business logic.
-- Command IDs are canonical in `Plans/UI_Command_Catalog.md`.
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
-ContractRef: Primitive:UICommand, ContractName:Contracts_V0.md#UICommand
+### 3.4 Source Control and lane/worktree ownership
+Canonical source-control ownership is:
+- Source Control is worktree-first and compact
+- Orchestrator is lane/package/seam operational view
+- `worktree` remains the concrete Git/filesystem backing object
+- `lane` is the primary operational orchestration object bound to package execution and historical lineage
 
----
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Orchestrator_Page.md
 
-### 3.3 Provider
-**Owner:** Provider domain (Provider runners, capability probing, normalized stream).
+### 3.5 Projection-state ownership
+Projection-state ownership is:
+- `projection_freshness` is closed to `current | refreshing | stale`
+- `projection_health` is closed to `healthy | degraded | unavailable`
+- projection state qualifies UI trust and action gating; it does not replace canonical runtime truth
 
-Rules:
-- Provider-specific discovery/auth/model logic MUST live in Provider-owned modules and contracts.
-- Plans may reference provider behavior, but MUST NOT hardcode provider CLI details outside Provider SSOT.
-
-ContractRef: Primitive:Provider, ContractName:Plans/CLI_Bridged_Providers.md
-
----
-
-### 3.4 PatchPipeline
-**Owner:** PatchPipeline domain.
-
-Rules:
-- Git primitives (worktrees, remotes, push) are local-git owned; hosting operations are GitHub API owned per Spec Lock.
-- PatchPipeline owns the transactional `patch -> apply -> verify -> rollback` reliability contract for code/document mutations.
-- Transactional rollback in PatchPipeline is distinct from user-facing restore-point rewind in chat/history flows; docs MUST NOT use the terms interchangeably.
-- PatchPipeline verification outcomes feed the central evidence/Verifier flow and MUST remain transport/provider independent.
-
-ContractRef: Primitive:PatchPipeline, SchemaID:Spec_Lock.json#github_operations, ContractName:Plans/WorktreeGitImprovement.md
-
----
-
-### 3.5 SessionStore
-**Owner:** Storage domain (`Plans/storage-plan.md`).
-
-Rules:
-- Persistent event envelope contracts are owned by `Plans/Contracts_V0.md`.
-- Secrets are forbidden from persistent stores (see invariants).
-
-ContractRef: Primitive:SessionStore, ContractName:Contracts_V0.md#EventRecord
-
----
-
-<a id="3.6"></a>
-### 3.6 AuthState
-**Owner:** Contracts + provider-specific auth plan.
-
-Rules:
-- `AuthState` and auth event types are defined in `Plans/Contracts_V0.md`.
-- Provider-specific auth flows (GitHub device flow) are defined in `Plans/GitHub_API_Auth_and_Flows.md`.
-- Tokens MUST NOT be persisted in `AuthState`; tokens live only in the OS credential store.
-
-ContractRef: ContractName:Contracts_V0.md#AuthState, Plans/Architecture_Invariants.md#INV-002
-
----
-
-### 3.7 DocumentPane
-**Owner:** GUI interaction contract in `Plans/FinalGUISpec.md`, editor/buffer contract in `Plans/FileManager.md`.
-
-Rules:
-- The embedded document pane is a dedicated GUI primitive, separate from chat and separate from the agent activity pane.
-- Document-pane edits MUST target the same file buffer/history contract as the File Editor.
-- Plan graph appears in the pane as a read-only rendered view, not raw JSON editing.
-- The document pane MUST support **live multi-document preview** during document generation and targeted revision runs:
-  - doc list grows mid-run as new artifacts are created,
-  - per-doc status badges include `writing…`, `draft`, `needs-review`, `changes-requested`, `approved`,
-  - follow-active toggle default ON (auto-follow active written doc),
-  - selected-doc stability when follow is OFF (no focus stealing).
-- While a doc is `writing…`, it MUST be read-only to prevent dueling writes; this rule is coordinated with the shared-buffer contract (`Plans/FileManager.md` §2.4.1).
-- The document pane MUST support anchored **Inline Notes** (highlight + note) with robust selectors and deterministic re-anchoring; see Primitive:DocumentInlineNotes.
-
-ContractRef: Primitive:DocumentPane, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md
-
----
-
-### 3.8 DocumentReviewSurface
-**Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; message contract in `Plans/assistant-chat-design.md`.
-
-Rules:
-- Full document bodies MUST NOT be rendered in chat.
-- Review guidance MUST use the same tri-location pattern: editor open, clickable file path, and embedded document pane entry.
-- Wizard and Interview pages MUST expose preview-surface review summaries before final approval.
-- The same review-surface semantics MUST be used for initial multi-doc review and targeted revision follow-ups; page-specific copy may differ, but routing and approval meaning MUST remain identical.
-
-ContractRef: Primitive:DocumentReviewSurface, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/assistant-chat-design.md
-
----
-
-### 3.9 ReviewFindingsSummary
-**Owner:** Workflow-level findings semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; rendering placement in `Plans/FinalGUISpec.md`.
-
-Rules:
-- Multi-Pass outputs MUST include findings (gaps, consistency issues, missing information), not only revised content.
-- Findings summary MUST be shown in chat and in the page preview section before approval.
-- Findings summary schema and persistence MUST align with storage contracts.
-- Findings summary is a canonical workflow artifact, not a GUI-only convenience. At minimum it MUST preserve review run identity, per-doc findings counts, unresolved items, and any revised-artifact reference needed by the final approval gate.
-- GUI-local views of findings summaries MUST map back to the canonical storage-plan bundle/review contract and MUST NOT invent competing persistence shapes.
-
-ContractRef: Primitive:ReviewFindingsSummary, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
-
----
-
-### 3.10 ReviewApprovalGate
-**Owner:** Workflow approval semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; canonical artifact expression in `Plans/Project_Output_Artifacts.md`.
-
-Rules:
-- Revised document handoff MUST pass through one final approval gate per review run.
-- Preconditions MUST include findings-summary visibility before decision capture.
-- Approval decision artifacts MUST be restorable in recovery flows.
-- `Accept | Reject | Edit` is the only final gate model for this review family unless a higher-precedence SSOT explicitly states otherwise.
-
-ContractRef: Primitive:ReviewApprovalGate, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Project_Output_Artifacts.md
-
----
-
-### 3.11 DocumentCheckpoint
-**Owner:** Storage contract in `Plans/storage-plan.md` and artifact taxonomy in `Plans/Project_Output_Artifacts.md`; UI entry points in `Plans/FileManager.md` and `Plans/FinalGUISpec.md`.
-
-Rules:
-- Document checkpoints are coarse restore points (for example before Multi-Pass, after user edit), not per-keystroke undo history.
-- Checkpoints MUST be persisted so recovery can restore document state and approval stage.
-- Restore actions from the document pane MUST use the same open-file/buffer refresh pipeline as File Editor.
-
-ContractRef: Primitive:DocumentCheckpoint, ContractName:Plans/storage-plan.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
-
----
-
-### 3.12 WidgetCatalog
-**Owner:** Widget domain (`Plans/Widget_System.md`).
-
-Rules:
-- The widget catalog is the single source of truth for all portable page widgets (dashboard, usage, orchestrator tab widgets).
-- Widget IDs are stable strings (format: `widget.{name}`).
-- Atomic UI components (buttons, inputs, badges) remain owned by `Plans/FinalGUISpec.md` section 8; page widgets are composed from those components.
-- All widget-composed pages (Dashboard, Usage, Orchestrator widget tabs) MUST reference `Plans/Widget_System.md` for layout, add-widget flow, and persistence.
-
-ContractRef: Primitive:WidgetCatalog, ContractName:Plans/Widget_System.md
-
----
-
-### 3.13 RunGraphView
-**Owner:** Run Graph domain (`Plans/Run_Graph_View.md`).
-
-Rules:
-- The Node Graph Display is a full-page tab on the Orchestrator page; it is NOT a widget and is NOT in the widget catalog.
-- Data model contract (Rust structs: `RunGraphMeta`, `GraphNode`, `GraphEdge`, etc.) is owned by this document.
-- State-to-color mapping uses theme tokens (`Theme.graph-*`); these tokens are additions to the theme system owned by `Plans/FinalGUISpec.md` section 6.
-
-ContractRef: Primitive:RunGraphView, ContractName:Plans/Run_Graph_View.md
-
----
-
-### 3.14 OrchestratorPage
-**Owner:** Orchestrator page domain (`Plans/Orchestrator_Page.md`).
-
-Rules:
-- The Orchestrator is a single top-level page with 6 tabs (Progress, Tiers, Node Graph Display, Evidence, History, Ledger).
-- Widget-based tabs reference `Plans/Widget_System.md` for layout mechanics.
-- The Node Graph Display tab references `Plans/Run_Graph_View.md`.
-- This page replaces former separate views (Tiers, Evidence, History) and adds Ledger as a tab.
-- Data source documentation for live status is owned by this document (section 12).
-
-ContractRef: Primitive:OrchestratorPage, ContractName:Plans/Orchestrator_Page.md
-
----
-
-### 3.15 UIScaling
-**Owner:** UI scaling domain (`Plans/Contracts_V0.md` §8, `Plans/FinalGUISpec.md` §7.4 and §16.2).
-
-Rules:
-- UI scale (0.75–1.5) MUST use Slint native window/global scale factor; per-token manual scaling MUST NOT be ported.
-- Four preset buttons (75 %, 90 %, 100 %, 110 %) in Settings → General.
-- Editor text zoom is independent of app-level UI scale.
-
-ContractRef: Primitive:UIScaling, ContractName:Plans/Contracts_V0.md#8
-
----
-
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md
 ## References
 - `Plans/Spec_Lock.json`
 - `Plans/DRY_Rules.md`

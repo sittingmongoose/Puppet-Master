@@ -17,9 +17,8 @@ This section is the canonical persistence contract for runtime recovery, blocked
 - `scheduler_pass_record`: key = `run_id`, `scheduler_pass_id`
 - `blocked_projection`: key = `run_id`, `node_id`, `blocked_sequence`
 - `attempt_record`: key = `run_id`, `node_id`, `attempt_id`
-- `tier_runtime_record`: key = `run_id`, `tier_id`
-- `usage_record`: key = `run_id`, `tier_id`, `attempt_id?`, `usage_sequence`
-- `evidence_record`: key = `run_id`, `tier_id`, `evidence_id`
+- `usage_record`: key = `run_id`, `attempt_id?`, `usage_sequence`
+- `evidence_record`: key = `run_id`, `node_id?`, `evidence_id`
 - `wizard_runtime_state`: key = `wizard_id`
 - `safe_point_restore_record`: key = `safe_point_id`, `restore_sequence`
 - `thread_blocked_notice`: key = `thread_id`, `blocked_sequence`
@@ -49,20 +48,18 @@ ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/u
 ### Canonical records
 1. `attempt_record`
    - fields include `scheduler_pass_id`, requested/effective persona snapshot refs, requested/effective model snapshot refs, requested/effective permission snapshot refs, `requested_auth_mode?`, `effective_auth_mode?`, `requested_account_policy?`, `effective_account_id?`, `effective_project_id?`, `account_switch_reason?`, `replan_generation`, `mutation_capable`, `safe_point_id?`, `provider_attempt_ref?`, remediation lineage refs, and terminal outcome fields
-2. `tier_runtime_record`
-   - fields include `run_id`, `tier_id`, current state, requested/effective persona/platform/model, `requested_auth_mode?`, `effective_auth_mode?`, `effective_account_id?`, latest progress markers, queue-analysis refs, and pointers to current attempt or blocked episode when active
-3. `blocked_projection`
+2. `blocked_projection`
    - fields include `blocked_reason_code`, ordered `allowed_action_ids[]`, `preserved_local_work`, `requires_safe_point_restore?`, prerequisite metadata, `failure_class?`, `detail_ref?`, `attempt_id?`, and `thread_id?`
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md#EventRecord
 
-4. `usage_record`
-   - fields include `run_kind`, `run_id`, `tier_id`, `attempt_id?`, `thread_id?`, `effective_platform`, `effective_model`, `effective_auth_mode?`, `effective_account_id?`, `provider_account_id?`, `usage_source_kind?`, `signal_confidence?`, `effective_project_id?`, `input_tokens`, `output_tokens`, `total_tokens`, `estimated_cost?`, and usage timestamps suitable for rollups and ledger views
-5. `evidence_record`
+3. `usage_record`
+   - fields include `run_kind`, `run_id`, `node_id?`, `attempt_id?`, `thread_id?`, `usage_event_ref?`, `effective_platform`, `effective_model`, `effective_auth_mode?`, `effective_account_id?`, `provider_account_id?`, `usage_source_kind?`, `signal_confidence?`, `effective_project_id?`, `input_tokens`, `output_tokens`, `total_tokens`, `estimated_cost?`, and usage timestamps suitable for rollups and ledger views
+4. `evidence_record`
    - fields include `summary`, `summary_kind?`, evidence refs, and any parent-summary/handoff refs needed by completed-prose surfaces
-6. `thread_blocked_notice`
+5. `thread_blocked_notice`
    - fields include `node_id?`, `attempt_id?`, active blocked metadata, `message_id`, and `resume_url?`
-7. `wizard_runtime_state`
+6. `wizard_runtime_state`
    - fields include `wizard_status`, `wizard_step`, `blocked_reason_code?`, `clarification_round_count`, `report_ref?`, `resume_url?`, `decomposition_degraded`, `degradation_reason?`, and `replan_generation?`
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Orchestrator_Page.md
