@@ -1532,6 +1532,17 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 
 ### 4. Canonical list of subagent names
 
+### Delegated tool-contract alignment
+Delegated runtime behavior stays aligned with the centralized Assistant Chat and tool-contract model rather than defining orchestrator-local variants.
+
+Rules:
+- `task` launches delegated runs with narrowed-or-equal permission snapshots rather than freeform child policy
+- `todowrite` and `todoread` stay denied by default for subagent runs unless run config explicitly re-enables them
+- delegated execution consumes the same normalized TODO schema as approved chat planning output
+- direct user questionnaire prompting stays on the top-level assistant/question-flow surface unless runtime explicitly delegates that boundary
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
+
 **Clarification:** `DRY:DATA:subagent_registry` is the canonical list for **delegated subagent/task-tool execution**, not the complete set of valid runtime Personas.
 
 Non-delegated surface resolution (Chat, Interview, Requirements Builder, Orchestrator planning/review frames, and natural-language Persona resolution) MUST validate against the broader `persona_registry` defined in `Plans/Personas.md` §7.

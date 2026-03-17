@@ -92,12 +92,34 @@ When resolving a command by name:
 
 ### 2.4 Name collision rules
 
-- User Commands MUST NOT use any reserved slash-command name from `Plans/assistant-chat-design.md` §5 (i.e., `new`, `model`, `effort`, `mode`, `export`, `clear`, `help`, `settings`, `doctor`, `cancel`, `stop`) **unless** the command's frontmatter sets `override_builtin: true` (§3.2). When `override_builtin: true` is set, the User Command replaces the built-in slash command for that name; the built-in behavior is suppressed for the session scope where the override is active.
-- User Commands MUST NOT use any reserved git/GitHub command prefix from `Plans/assistant-chat-design.md` §5.1 (i.e., names beginning with `git` or `actions`). The `override_builtin` flag does not apply to git/GitHub prefixes; these are unconditionally reserved.
-- By convention, user-defined commands use the `/x-` prefix (e.g., `/x-deploy`, `/x-review`). The prefix is not enforced at the storage layer; it is enforced at the invocation layer when the user types `/` in chat.
-- A project-local command with the same name as a global command overrides it (project wins).
+Reserved Assistant Chat slash-command names are canonical and non-overridable.
 
-ContractRef: ContractName:Plans/assistant-chat-design.md#5
+Reserved names:
+- `new`
+- `model`
+- `effort`
+- `mode`
+- `export`
+- `compact`
+- `stop`
+- `resume`
+- `rewind`
+- `revert`
+- `share`
+- `settings`
+- `doctor`
+- `help`
+- `web`
+- `skill`
+
+Rules:
+- User Commands MUST NOT use any reserved Assistant Chat slash-command name.
+- `override_builtin` MUST NOT be used to replace or suppress reserved Assistant Chat built-ins.
+- `/cancel` is treated as an alias/deprecation path for `/stop`, not as a separate reserved command with independent semantics.
+- `/clear` is not part of the canonical reserved set and MUST NOT be treated as a built-in shadow target.
+- Reserved git/GitHub prefixes remain unconditionally reserved and cannot be overridden.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md
 
 ### 2.5 Name validation
 
@@ -135,17 +157,18 @@ override_builtin: false
 
 ### 3.2 Field definitions
 
-| Field | Required | Type | Description |
-|-------|----------|------|-------------|
-| `description` | **Required** | `string` | Human-readable description shown in autocomplete and command list. Max 200 characters. |
-| `persona` | Optional | `string` or `null` | Persona ID to use for this command's run. Resolved via `Plans/Personas.md` §2.3. If omitted or `null`, uses the current session Persona. |
-| `mode` | Optional | `string` enum or `null` | Run mode override (`ask`, `plan`, `regular`, `yolo`) per `Plans/Run_Modes.md`. If omitted, inherits from session. |
-| `model` | Optional | `string` or `null` | Model override in `provider_id/model_id` format. If omitted, inherits from session. |
-| `subtask` | Optional | `boolean` | If `true`, the command runs as a child run (subagent task) rather than a primary prompt. Default: `false`. See §4.2. |
-| `permissions_profile_override` | Optional | `string` or `null` | Named permissions profile to apply for this command's run. References a profile from `Plans/Permissions_System.md` §9. If omitted, inherits from Persona or session. |
-| `override_builtin` | Optional | `boolean` | If `true`, this User Command is allowed to use a name that matches a reserved slash command (§2.4). Default: `false`. When `true`, the User Command replaces the built-in behavior for that name. A GUI warning is displayed on save and at invocation time (§6.1.6). |
+| Field | Required | Type | Meaning |
+|---|---|---|---|
+| `name` | Required | `string` | Invocation name. Must pass validation and MUST NOT collide with reserved Assistant Chat built-ins or reserved git/GitHub prefixes. |
+| `description` | Required | `string` | Short user-facing description. |
+| `arguments` | Optional | `array<object>` | Positional argument schema for validation/help. |
+| `persona_override` | Optional | `string` | Requested Persona override for the command execution context. |
+| `mode_override` | Optional | `string` | Requested runtime mode override when allowed by the owning surface. |
+| `model_override` | Optional | `string` | Requested model override. |
+| `permissions_profile_override` | Optional | `string` | Permissions profile override, subject to the central permission system. |
+| `override_builtin` | Optional | `boolean` | Reserved for future non-chat extension points. It MUST NOT override canonical Assistant Chat built-ins or reserved git/GitHub prefixes. |
 
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Personas.md#PERSONA-SCHEMA, ContractName:Plans/Permissions_System.md#PERSISTENCE
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md
 
 ### 3.3 Template body
 
@@ -325,7 +348,7 @@ Sorted alphabetically by name; project-local entries sort before global when nam
 - **Model** (dropdown populated from model discovery, or null/inherit)
 - **Subtask** (toggle; default off)
 - **Permissions profile override** (dropdown populated from permission profiles, or null)
-- **Override built-in** (toggle; default off; visible only in Expert mode; when toggled on for a name that matches a reserved slash command, a warning banner is shown: "This command overrides the built-in /<name> slash command.")
+- **Override built-in** (toggle; default off; visible only in Expert mode; reserved Assistant Chat slash commands fail validation even if this toggle is enabled, because `override_builtin` does not apply to canonical reserved chat commands.)
 - **Template body** (Markdown editor with syntax highlighting for `$ARGUMENTS`, `$N`, `@path`, `` !`cmd` `` patterns)
 
 Scope selector: project-local or global.
@@ -340,7 +363,7 @@ Delete button with confirmation modal. Deleting a project-local command that ove
 
 #### 6.1.6 Schema validation on save
 
-On every save, validate the command file against the schema (§3). Display inline errors for: reserved name collision (unless `override_builtin: true`), invalid name format, missing description, invalid mode value, invalid model format. When `override_builtin: true` is set and the name matches a reserved slash command, display a non-blocking warning: "This command overrides the built-in /<name> command. The built-in behavior will be suppressed when this command is active." Block save until errors (not warnings) are resolved.
+On every save, validate the command file against the schema (§3). Display inline errors for: reserved name collision, invalid name format, missing description, invalid mode value, and invalid model format. If `override_builtin: true` is set while the command name matches a reserved Assistant Chat slash command, display a validation error explaining that `override_builtin` does not apply to canonical reserved chat commands. Block save until errors are resolved.
 
 ### 6.2 Dry-run preview
 
@@ -407,7 +430,7 @@ OpenCode loads commands from four sources: built-in commands (`init`, `review`),
 4. **No built-in commands:** OpenCode bundles `init` and `review` as built-in commands. Puppet Master does not bundle built-in User Commands; equivalent functionality is provided through reserved slash commands (`Plans/assistant-chat-design.md` §5) and Orchestrator actions.
 5. **MCP prompt integration:** OpenCode auto-converts MCP prompts to commands. Puppet Master treats MCP prompts as a separate mechanism; they are not auto-registered as User Commands.
 6. **GUI management:** OpenCode has no GUI for command management. Puppet Master provides a full Commands settings screen (§6).
-7. **Built-in command override policy:** OpenCode allows custom commands to freely override built-in commands by name. Puppet Master disallows overriding reserved slash commands by default; a User Command may override a built-in only when its frontmatter explicitly sets `override_builtin: true` (§3.2). When active, a GUI warning is displayed on save and at invocation time (§6.1.6). Git/GitHub command prefixes cannot be overridden under any circumstance.
+7. **Built-in command override policy:** OpenCode allows custom commands to freely override built-in commands by name. Puppet Master does not allow User Commands to override canonical reserved Assistant Chat slash commands. The `override_builtin` field is reserved for future non-chat extension points and MUST NOT be used to bypass reserved chat-command or reserved git/GitHub prefix rules.
 
 ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
 
@@ -449,7 +472,7 @@ ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/Progressi
 **AC-CMD09:** Every User Command MUST appear in the command palette and the chat slash-command autocomplete unless the command is unresolved.
 
 <a id="AC-CMD10"></a>
-**AC-CMD10:** User Commands MUST NOT override reserved slash commands unless `override_builtin: true` is set in the command's frontmatter. When `override_builtin: true` is set, the built-in behavior for that name MUST be suppressed and the User Command MUST take precedence. Git/GitHub command prefixes MUST NOT be overridable regardless of the `override_builtin` flag.
+**AC-CMD10:** User Commands MUST NOT override reserved Assistant Chat slash commands. `override_builtin` MUST NOT enable overriding canonical reserved chat commands or reserved git/GitHub prefixes.
 
 ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Commands_System.md#COMMAND-SCHEMA
 
