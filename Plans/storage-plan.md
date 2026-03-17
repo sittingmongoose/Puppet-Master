@@ -180,7 +180,7 @@ Approval visibility rule:
 | `chat.message` | User or assistant message appended to a thread | `thread_id`, `role`, `content`, `message_id`, optional `attachments`, `model`. For **assistant** messages, optional **`usage`** (e.g. `tokens_in`, `tokens_out`, `cost`, `reasoning_tokens`) so per-thread usage can be derived from messages without querying usage.event; canonical usage remains `usage.event` with `thread_id`. |
 | `chat.thread_created` | New thread | `thread_id`, `project_id`, `title` |
 | `run.started` | Orchestrator or Assistant run started | `run_id`, `project_id`, optional `thread_id`, `mode`, `strategy`, `strategy_resolution_reason`, optional requested/effective runtime snapshot refs |
-| `run.completed` | Run finished (success or failure) | `run_id`, `status`, `outcome`, optional `stop_reason`, optional `budget_key`, optional `budget_limit`, optional `observed_value`, optional **`usage`** (summary for this run: e.g. `tokens_in`, `tokens_out`, `cost`, `thread_id`) so consumers can get run-level usage without scanning `usage.event`. Canonical per-request usage remains `usage.event`; `run.completed.usage` is a convenience snapshot for dashboards and thread Usage tab. |
+| `run.completed` | Run finished (success or failure) | `run_id`, `status`, `outcome`, optional `stop_reason`, optional `budget_key`, optional `budget_limit`, optional `observed_value`, optional **`usage`** (summary for this run: e.g. `tokens_in`, `tokens_out`, `cost`, `thread_id`) so consumers can get run-level usage without scanning `usage.event`. Canonical per-request usage remains `usage.event`; `run.completed.usage` is a convenience snapshot for dashboards and the thread-scoped Context Detail Pane. |
 | `usage.event` | Token/request/error event for Usage/Ledger | `usage_event_ref`, optional `run_id`, optional `thread_id`, optional `node_id`, optional `attempt_id`, `platform`, `tokens_in`, `tokens_out`, `timestamp`, optional `cost`, `reasoning_tokens`, `cache_read`, `cache_write` |
 | `tool.invoked` | Tool call (for analytics) | `tool_name`, `latency_ms`, `run_id`; optional **`success`** (bool), **`error`** (string), **`thread_id`** for error rate and Usage tool widget (Plans/Tools.md §8.0). |
 | `tool.denied` | Tool call blocked by policy (optional) | `tool_name`, `run_id`, `reason` (e.g. "permission_denied", "user_declined") for audit (Plans/Tools.md §8.0). |
@@ -508,8 +508,8 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/
 - [ ] **Wire chat persistence:** thread list and thread content write to seglog; read from redb (session metadata) and seglog or redb snapshots for full thread load (per assistant-chat-design.md).
 - [ ] **Wire editor state:** open tabs, active tab, scroll/cursor per FileManager.md §2.9 into redb `editor` namespace.
 - [ ] **Wire Usage/dashboard:** read 5h/7d and rollups from redb; trigger analytics scan on interval or when Usage view opens (per usage-feature.md).
-- [ ] **Emit usage.event with thread_id:** When recording usage for Assistant or Interview runs, include **thread_id** in the event payload so per-thread usage (context circle, thread Usage tab) can be aggregated from seglog or usage.jsonl (usage-feature.md §5, assistant-chat-design §12).
-- [ ] **Emit run.completed with optional usage snapshot:** When a run finishes, include optional **usage** in the `run.completed` payload (tokens_in, tokens_out, cost, thread_id) so dashboards and thread Usage tab can use run-level usage without scanning usage.event. Canonical per-request data remains usage.event.
+- [ ] **Emit usage.event with thread_id:** When recording usage for Assistant or Interview runs, include **thread_id** in the event payload so per-thread usage (context circle, thread-scoped Context Detail Pane) can be aggregated from seglog or usage.jsonl (usage-feature.md §5, assistant-chat-design §12).
+- [ ] **Emit run.completed with optional usage snapshot:** When a run finishes, include optional **usage** in the `run.completed` payload (tokens_in, tokens_out, cost, thread_id) so dashboards and the thread-scoped Context Detail Pane can use run-level usage without scanning usage.event. Canonical per-request data remains usage.event.
 
 ---
 
@@ -518,15 +518,29 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/
 Assistant and Interview surfaces persist thread-local state, activity traces, and reviewable history, but they do not become the canonical owner of runtime identity.
 
 ### 4.1 Shared runtime identity consumption
-Chat/activity/question/todo records may display runtime identity, but the canonical requested/effective snapshot comes from the owner docs.
+Chat, activity, question, todo, and thread-context-detail projections may display runtime identity, but the canonical requested/effective snapshot comes from the owner docs.
 
 Rules:
-- thread/activity projections consume frozen requested/effective runtime snapshots captured for the execution
-- chat must not recompute historical runtime state from current settings
+- thread and activity projections consume frozen requested/effective runtime snapshots captured for the execution
+- the shared snapshot now includes workflow-overlay and runtime-posture fields rather than forcing chat to reconstruct planning identity from local heuristics
+- chat and thread-context-detail projections must not recompute historical runtime state from current settings
 - assistant/chat-local state may reference runtime snapshots, but it must not rename or re-own the shared schema
+- earlier references in this document to a `thread Usage tab` or equivalent per-thread usage tab now refer to the thread-scoped Context Detail Pane/editor-tab surface
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
 
+Thread Context Detail Pane projections consume at minimum:
+- `chat.message` records and any stored message usage snapshots
+- `usage.event` records with `thread_id`
+- `run.completed.usage` snapshots when present
+- persisted tool or activity payloads needed for per-message inspection and raw views
+
+Rules:
+- compact chat surfaces may derive display labels such as `Ask`, `Agent`, `Plan`, and `Deep Plan`, but only from frozen shared fields
+- thread-scoped cost remains an estimated or provider-authoritative value according to the canonical usage pipeline; the detail pane does not invent a second cost model
+- raw per-message views may expose provider/runtime metadata needed for audit and debugging without reclassifying those fields as chat-facing compact copy
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
 ### 4.2 Question and clarification state
 Structured question flows may span one or many questions.
 

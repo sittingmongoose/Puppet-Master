@@ -31,12 +31,12 @@ ContractRef: Primitive:UICommand, ContractName:Contracts_V0.md#UICommand
 ### 2.0A Promoted Section 15 command families
 
 The command catalog MUST include stable IDs for the following families:
-ContractRef: UICommand:cmd.project.switch_active_tab, UICommand:cmd.project.open_in_new_workspace_tab, UICommand:cmd.workspace_tab.create, UICommand:cmd.workspace_tab.close, UICommand:cmd.chat.open_thread_usage, UICommand:cmd.browser.share_with_agent, UICommand:cmd.browser.revoke_share_with_agent, UICommand:cmd.dev.start_session, UICommand:cmd.dev.stop_session, UICommand:cmd.catalog.install_item, UICommand:cmd.catalog.update_item, UICommand:cmd.catalog.remove_item, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+ContractRef: UICommand:cmd.project.switch_active_tab, UICommand:cmd.project.open_in_new_workspace_tab, UICommand:cmd.workspace_tab.create, UICommand:cmd.workspace_tab.close, UICommand:cmd.chat.open_thread_context_details, UICommand:cmd.browser.share_with_agent, UICommand:cmd.browser.revoke_share_with_agent, UICommand:cmd.dev.start_session, UICommand:cmd.dev.stop_session, UICommand:cmd.catalog.install_item, UICommand:cmd.catalog.update_item, UICommand:cmd.catalog.remove_item, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 - project switching and project open-in-new-workspace-tab
 - workspace tab create/close/reopen/move/focus
 - detached window open/reattach/close for supported surfaces
 - branch-from-restore and branch-open
-- thread Usage activation
+- thread context detail activation and compaction
 - browser open/focus/detach/share-with-agent/revoke-share
 - dev session start/stop/restart/show-output/show-ports
 - catalog install/update/remove/enable/disable/apply-later
@@ -194,13 +194,18 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator
 ### 2.6 Chat context usage commands
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
-| `cmd.chat.compact_context` | `{ thread_id }` | `context.compaction.started`, `context.compaction.completed` | Chat header context indicator + thread Usage surface |
-| `cmd.chat.open_thread_usage` | `{ thread_id }` | layout/UI state only | Chat header context indicator + thread Usage surface |
-| `cmd.chat.focus_thread_usage` | `{ thread_id }` | layout/UI state only | Chat side panel / thread Usage surface |
-| `cmd.chat.close_thread_usage` | `{ thread_id }` | layout/UI state only | Chat side panel / thread Usage surface |
+| `cmd.chat.compact_context` | `{ thread_id }` | `context.compaction.started`, `context.compaction.completed` | Chat context circle click affordance, command palette |
+| `cmd.chat.open_thread_context_details` | `{ thread_id }` | layout/UI state only | Chat context hover module, artifact deep-links |
+| `cmd.chat.focus_thread_context_details` | `{ thread_id }` | layout/UI state only | Editor tab / thread Context Detail Pane |
+| `cmd.chat.close_thread_context_details` | `{ thread_id }` | layout/UI state only | Editor tab / thread Context Detail Pane |
 
-`cmd.chat.open_usage_popout` and `cmd.chat.close_usage_popout` are superseded and MUST NOT remain canonical IDs.
-ContractRef: UICommand:cmd.chat.open_thread_usage, UICommand:cmd.chat.focus_thread_usage, UICommand:cmd.chat.close_thread_usage, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md
+Rules:
+- hover-summary disclosure is passive UI and does not require its own stable command ID
+- choosing `More Details` dispatches `cmd.chat.open_thread_context_details`
+- clicking the circle may reveal `Compact Now` locally, but `cmd.chat.compact_context` is dispatched only when the user actually chooses that action
+- `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` are superseded and MUST NOT remain canonical IDs
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 ### 2.6A Render / browser preview commands
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
@@ -216,6 +221,22 @@ ContractRef: UICommand:cmd.chat.open_thread_usage, UICommand:cmd.chat.focus_thre
 | `cmd.catalog.install_item` | `{ item_type, item_id, version? }` | `catalog.install.started`, `catalog.install.completed` | Catalog |
 | `cmd.catalog.update_item` | `{ item_type, item_id, target_version? }` | `catalog.update.started`, `catalog.update.completed` | Catalog |
 | `cmd.catalog.remove_item` | `{ item_type, item_id }` | `catalog.remove.started`, `catalog.remove.completed` | Catalog |
+
+#### Chat message action commands
+
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.chat.copy_message` | `{ thread_id, message_id }` | no persisted domain event | Message hover row |
+| `cmd.chat.edit_last_user_message` | `{ thread_id, message_id }` | layout/UI state only | Message hover row, composer |
+| `cmd.chat.resend_last_user_message` | `{ thread_id, message_id }` | runtime/thread rewind plus normal run-start events | Message hover row |
+
+Rules:
+- `cmd.chat.copy_message` is valid for any message in the thread
+- `cmd.chat.edit_last_user_message` and `cmd.chat.resend_last_user_message` are valid only for the most recent user-sent message in that thread
+- `cmd.chat.resend_last_user_message` rewinds/discards later generated work after that user message and then replays the message; it is not a transport retry alias
+- `cmd.chat.rewind` remains the explicit history-navigation command and is not silently renamed to `Resend`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
 ### 2.7 Chat slash commands (reserved)
 
 Reserved Assistant Chat slash commands use stable canonical UI command IDs.
@@ -277,7 +298,7 @@ Cross-surface navigation commands remain domain-readable wrappers.
 
 Canonical examples are:
 - `cmd.project.open`
-- `cmd.chat.focus_thread_usage`
+- `cmd.chat.focus_thread_context_details`
 - `cmd.artifacts.show_in_usage`
 - `cmd.artifacts.show_in_ledger`
 - `cmd.orchestrator.open_in_source_control`

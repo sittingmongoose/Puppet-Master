@@ -1,31 +1,9 @@
 ## 29. Natural-language Mode Invocation and Wizard Escalation (2026-03-08)
 
 ### 29.1 Natural-language mode invocation
+Natural-language mode invocation resolves workflow identity and runtime posture separately.
 
-Assistant Chat MUST support natural-language requests that set planning/workflow or runtime posture.
-
-Supported examples:
-- `use ask mode`
-- `don't edit anything`
-- `just inspect this`
-- `use plan mode`
-- `make a plan for this`
-- `use deep plan for this feature`
-- `switch to regular mode`
-- `use yolo for this`
-
-Resolution order:
-1. exact canonical alias / exact pattern
-2. normalized form
-3. fuzzy match
-4. narrow inference only when confidence is high
-
-Ambiguity behavior:
-- if one reliable match exists, resolve directly
-- if confidence is high enough for a safe best guess, resolve and disclose
-- otherwise ask for clarification
-
-Required requested/effective fields:
+Required requested/effective fields are:
 - `requested_mode_overlay`
 - `effective_mode_overlay`
 - `requested_runtime_mode`
@@ -36,19 +14,23 @@ Required requested/effective fields:
 - `selection_reason`
 - `override_scope`
 
-Scope defaults:
-- `for this`, `for this answer`, `right now` -> turn scope
-- `from now on`, `in this chat`, `for this session` -> session scope
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
 
-Ask-mode support is mandatory:
-- requests like `use ask mode`, `don't edit`, and `just inspect` MUST resolve to canonical runtime `ask`
-- the UI must surface that Ask mode is active and read-only
+Canonical enum closure:
+- `requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `interview`, `brainstorm`, and `crew`
+- `requested_runtime_mode` and `effective_runtime_mode` are closed to the canonical runtime postures from `Plans/Run_Modes.md`
+- `deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning
 
-Planning-mode support is mandatory:
-- `use plan mode` resolves to workflow overlay `Plan` + runtime `plan`
-- `use deep plan` resolves to workflow overlay `Deep Plan` + runtime `plan`
-- explicit PT phrases such as `do a comprehensive deep plan` should resolve `requested_plan_thoroughness = Comprehensive`
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
 
+Resolution rules:
+- `use ask mode`, `don't edit`, and `just inspect` resolve to `effective_mode_overlay = none` and canonical runtime `ask`
+- `use plan mode` resolves to `effective_mode_overlay = plan` and canonical runtime `plan`
+- `use deep plan` resolves to `effective_mode_overlay = deep_plan` and canonical runtime `plan`
+- `use agent mode` clears planning overlays and resolves to the normal execution posture for the thread, preserving explicit permission posture such as `regular` or `yolo`
+- compact display labels are derived from the effective overlay plus runtime posture so the visible label can still be `Ask`, `Agent`, `Plan`, or `Deep Plan`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
 ### 29.2 Assistant recommendation of Chain Wizard
 
 Assistant chat should proactively recommend the Chain Wizard when the user appears to be asking for:

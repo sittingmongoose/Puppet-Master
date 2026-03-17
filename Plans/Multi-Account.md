@@ -340,13 +340,15 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipel
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/rewrite-tie-in-memo.md
 
 ### 9.4 In-session / status surfaces
+In-session and status surfaces must stay aligned with the shared requested/effective runtime model.
 
-- Status bars, thread headers, and run/session context surfaces show the current effective account, current effective auth mode, and relevant cooldown/pressure state when supported.
-- Approaching-limit warnings are account-specific where the provider exposes enough detail.
-- Media actions follow the same effective-auth/effective-account resolution model as normal Gemini usage; they are not a separate account system.
+Rules:
+- status bars, thread headers, and run/session context surfaces show the current effective account, current effective auth mode, and relevant cooldown or pressure state when supported
+- the compact chat message popover may stay smaller than the full detailed runtime inspector, but the richer Context Detail Pane and other detailed inspectors must still expose effective account/auth details when supported
+- approaching-limit warnings remain account-specific where the provider exposes enough detail
+- media actions follow the same effective-auth/effective-account resolution model as normal Gemini usage; they are not a separate account system
 
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/FinalGUISpec.md
-
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/storage-plan.md
 ### 9.5 Notifications
 
 - Auto-switch notifications MUST identify the effective account selected and why (for example `threshold_preemptive_switch`, `hard_exhaustion`, `rate_limit_pressure`, `account_unavailable`, or `policy_disallowed_current_account`).

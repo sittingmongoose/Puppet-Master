@@ -25,24 +25,37 @@
 - **Retention:** Policy for how long to keep usage/ledger data (e.g. file-based or redb-backed) to bound disk use while supporting 5h/7d and historical views.
 
 ### 5. Per-thread usage in Chat (OpenCode-style)
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md
-
-Per-thread usage is a canonical in-shell surface.
+Per-thread context/usage in chat is a split inspect/action affordance rather than a direct jump to a chat-shell usage panel.
 
 Rules:
-- chat header context indicator is always the entrypoint
-- hover shows summary metrics
-- activation opens the thread Usage surface in the chat shell
-- a detached usage pop-out is not canonical
-- the same usage identity powers thread Usage, app-wide Usage, and cost_usage artifact deep-links
+- the chat header context circle is always the entrypoint for per-thread context state
+- hover opens a lightweight status module showing `Usage`, `Tokens`, estimated `Cost`, and `More Details`
+- click reveals the `Compact Now` action instead of immediately opening the detail surface
+- selecting `Compact Now` dispatches the canonical compaction command for that thread
+- selecting `More Details` opens or focuses the thread-scoped Context Detail Pane in an editor tab
+- app-wide Usage remains the canonical aggregated platform view and is not replaced by this thread-scoped pane
 - mid-stream updates are allowed but must use explicit in-progress states until final usage totals are known
 
-Thread Usage content:
-- total tokens
-- context-window fill percentage when known
-- input/output/reasoning/cache breakdown when reported
-- per-turn or per-segment usage history when available
-- direct navigation to app-wide Usage preserving filters
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+The Context Detail Pane must support both curated inspection and raw payload inspection.
+
+Required content:
+- curated overview of thread counts, provider/model/mode/persona, and headline tokens/context/estimated cost
+- grouped context and token breakdowns
+- per-message inspection with human-readable fields first
+- raw payload toggles for the full thread and for individual messages
+- drill-downs by mode, provider, model, and other shared runtime identity dimensions when available
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md
+
+Estimated-cost rule:
+- per-thread chat cost uses the OpenCode-style normalization formula as the baseline approximation
+- reasoning tokens are charged at the output-token rate for the estimate
+- cache read and cache write buckets are included when pricing metadata exists
+- provider-sensitive cache normalization caveats must remain visible in raw/debug paths and must not be hidden behind authoritative wording in the chat UI
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
 ### Cursor -- API (usage/account only; not for model invocation)
 
 - **Distinction:** The **Cursor API** is for **augmenting usage/account data only** -- usage, limits, plan, billing, etc. We **do not** use it to engage with the platform to run models. Model invocation stays **CLI + OAuth** (subscription auth only). AGENTS.md "No API available" refers to "no API for invoking models"; the Cursor API that exists is a different surface (usage/account/limits) and does not conflict with our "CLI-only for execution, OAuth for auth" policy.

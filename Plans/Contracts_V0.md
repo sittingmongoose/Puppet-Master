@@ -34,11 +34,14 @@ ContractRef: ContractName:Plans/Contracts_V0.md
 <a id="1.1"></a>
 <a id="EventRecord"></a>
 ### 1.1 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)
-#### Persona/runtime snapshot payload contract
-The following object is the canonical persisted payload fragment for any event that claims to expose requested/effective Persona, runtime-resolution, or provider auth/account identity state:
+The following object is the canonical persisted payload fragment for any event that claims to expose requested/effective Persona, runtime-resolution, workflow-overlay, or provider auth/account identity state:
 
 ```json
 {
+  "requested_mode_overlay": "deep_plan",
+  "effective_mode_overlay": "deep_plan",
+  "requested_runtime_mode": "plan",
+  "effective_runtime_mode": "plan",
   "requested_persona": "rust-engineer",
   "effective_persona": "rust-engineer",
   "persona_selection_source": "auto_surface_resolver",
@@ -69,25 +72,21 @@ The following object is the canonical persisted payload fragment for any event t
 ```
 
 Rules:
-- `requested_persona` and `effective_persona` remain the canonical persisted field names across all surfaces. They store canonical Persona IDs.
-- Persisted payloads MUST NOT introduce parallel canonical fields named `requested_persona_id` or `effective_persona_id`. Older readers may accept them only as migration aliases before normalization.
-- `requested_auth_mode` and `effective_auth_mode` are the canonical persisted auth-surface fields for provider-using runs.
+- `requested_mode_overlay`, `effective_mode_overlay`, `requested_runtime_mode`, and `effective_runtime_mode` are canonical persisted field names for chat/runtime workflow and posture identity
+- `requested_persona` and `effective_persona` remain the canonical persisted persona field names across all surfaces
+- persisted payloads MUST NOT introduce parallel canonical fields named `requested_persona_id` or `effective_persona_id`
+- `requested_auth_mode` and `effective_auth_mode` are the canonical persisted auth-surface fields for provider-using runs
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Models_System.md
 
-- `requested_account_policy` stores the requested routing/control policy (`project_default`, role override, manual preferred-account override, or equivalent), while `effective_account_id` identifies the provider account actually used.
-- `effective_account_label`, `effective_provider_identity`, and `effective_project_id` are optional non-secret disclosure fields for audit/UI correlation only.
-- `effective_provider_identity` is provider-native identity metadata only; it MUST NOT replace the canonical internal `account_id`.
+Additional rules:
+- `deep_plan` MUST survive the overlay fields and MUST NOT disappear from persisted records solely because the runtime posture is planning
+- `requested_account_policy` stores the requested routing/control policy while `effective_account_id` identifies the provider account actually used
+- `effective_account_label`, `effective_provider_identity`, and `effective_project_id` are optional non-secret disclosure fields for audit/UI correlation only
+- `effective_provider_identity` is provider-native identity metadata only and MUST NOT replace the canonical internal `account_id`
+- `run.started` and `run.completed` MUST include the full snapshot when the run reaches prompt/runtime assembly and when it completes
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage
-
-- `run.started` MUST include the full snapshot when a run reaches prompt/runtime assembly.
-- `run.completed` MUST include the final effective snapshot used by the completed run.
-- `chat.subagent_started`, `chat.subagent_completed`, `run.tier_started`, `run.tier_completed`, and `run.persona_stage_changed` MUST either inline these fields or carry them as a child object named `persona_runtime_snapshot`.
-- If a run proceeds without auth/account specificity, the auth/account fields MAY be null as long as `selection_reason` explicitly records the fallback or omission.
-- Secrets, API keys, refresh tokens, access tokens, bearer tokens, and credential payloads MUST NEVER appear in this snapshot fragment.
-
-ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage
 ### 1.2 EventEnvelopeV1 -- minimal compatibility envelope
 `EventEnvelopeV1` is the minimal event envelope used by some plans as an intermediate format.
 

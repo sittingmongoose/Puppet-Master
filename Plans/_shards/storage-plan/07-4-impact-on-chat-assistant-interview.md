@@ -3,15 +3,29 @@
 Assistant and Interview surfaces persist thread-local state, activity traces, and reviewable history, but they do not become the canonical owner of runtime identity.
 
 ### 4.1 Shared runtime identity consumption
-Chat/activity/question/todo records may display runtime identity, but the canonical requested/effective snapshot comes from the owner docs.
+Chat, activity, question, todo, and thread-context-detail projections may display runtime identity, but the canonical requested/effective snapshot comes from the owner docs.
 
 Rules:
-- thread/activity projections consume frozen requested/effective runtime snapshots captured for the execution
-- chat must not recompute historical runtime state from current settings
+- thread and activity projections consume frozen requested/effective runtime snapshots captured for the execution
+- the shared snapshot now includes workflow-overlay and runtime-posture fields rather than forcing chat to reconstruct planning identity from local heuristics
+- chat and thread-context-detail projections must not recompute historical runtime state from current settings
 - assistant/chat-local state may reference runtime snapshots, but it must not rename or re-own the shared schema
+- earlier references in this document to a `thread Usage tab` or equivalent per-thread usage tab now refer to the thread-scoped Context Detail Pane/editor-tab surface
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
 
+Thread Context Detail Pane projections consume at minimum:
+- `chat.message` records and any stored message usage snapshots
+- `usage.event` records with `thread_id`
+- `run.completed.usage` snapshots when present
+- persisted tool or activity payloads needed for per-message inspection and raw views
+
+Rules:
+- compact chat surfaces may derive display labels such as `Ask`, `Agent`, `Plan`, and `Deep Plan`, but only from frozen shared fields
+- thread-scoped cost remains an estimated or provider-authoritative value according to the canonical usage pipeline; the detail pane does not invent a second cost model
+- raw per-message views may expose provider/runtime metadata needed for audit and debugging without reclassifying those fields as chat-facing compact copy
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
 ### 4.2 Question and clarification state
 Structured question flows may span one or many questions.
 

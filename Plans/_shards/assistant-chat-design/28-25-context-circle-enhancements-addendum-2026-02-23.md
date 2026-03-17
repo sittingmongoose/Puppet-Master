@@ -4,4 +4,4 @@ The canonical thread-usage behavior now lives in `## 12. Context usage display` 
 Historical note:
 - compact-now behavior remains valid when backed by canonical compaction commands
 - the detached usage pop-out is no longer canonical
-- any old command IDs or persistence keys that exist only for the pop-out model are superseded by the canonical thread Usage surface and its stable command IDs
+- any old command IDs or persistence keys that exist only for the pop-out model are superseded by the canonical thread-scoped Context Detail Pane/editor-tab model and its stable command IDs

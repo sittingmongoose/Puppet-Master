@@ -83,16 +83,21 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Crosswalk.md,
 ## 6. reasoning_tokens and cost_usage
 **reasoning_tokens:** Required in the usage/cost_usage schema (integer, minimum 0). In the UI, display the field only when value > 0.
 
-**cost_usage artifact:** Attribution record only. It uses the same canonical usage identity and normalized fields as the Usage page, thread Usage surface, Ledger, Run Graph, and Orchestrator usage displays.
+**cost_usage artifact:** Attribution record only. It uses the same canonical usage identity and normalized fields as the app-wide Usage page, the thread-scoped Context Detail Pane, Ledger, Run Graph, and Orchestrator usage displays.
 
 Required actions for `cost_usage` items:
 - **Show in Ledger** — navigate to the canonical Ledger surface with the matching usage identity in scope
-- **Show in Usage** — navigate to either app-wide Usage or the canonical thread Usage surface depending on the artifact scope, preserving the same run/thread filters
+- **Show in Usage** — navigate to either app-wide Usage or the canonical thread Context Detail Pane depending on artifact scope, preserving the same run/thread filters
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
 
 Rules:
 - cost_usage artifacts do not create an artifact-local usage model
-- thread-scoped cost_usage artifacts land on the same canonical thread Usage surface used by the chat context indicator
+- thread-scoped cost_usage artifacts land on the same Context Detail Pane used by the chat context indicator `More Details` action
 - app-wide cost_usage artifacts land on the canonical Usage page
+- when cost is derived from normalized token buckets rather than authoritative provider pricing, user-facing thread surfaces label it as `Estimated Cost`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
 ## 7. JSON schemas (all required)
 
 **Envelope:** Plans/runtime_artifact_envelope.schema.json (`$id`: pm.runtime_artifact.envelope.v1). Common payload fields for all runtime artifact events.

@@ -86,7 +86,7 @@ All of the following are **MVP requirements** and are already reflected in the m
 22. **Concurrent threads** -- §11: setting, **default 10** max concurrent runs. Per-platform concurrency caps also apply (see `Plans/FinalGUISpec.md` §7.4.7); the more restrictive limit wins.
 23. **Custom vs built-in commands** -- §5: no conflicting names; UI explains why if user tries.
 24. **Plan panel scope** -- §11: plan panel **per thread**. **Accessibility** is **not MVP**.
-25. **Error and failure UX** -- §4: clear error state, Retry/Cancel, queue unchanged unless user retries; suggest switch platform/model when appropriate.
+25. **Error and failure UX** -- §4: clear error state, Resend/Cancel, queue unchanged unless user resends; suggest switch platform/model when appropriate.
 26. **Orchestrator to Assistant handoff** -- §21: Dashboard offers "Continue in Assistant" with run summary and context when orchestrator completes or pauses.
 
 ### 23.5 Previously open gaps (now closed)
@@ -95,7 +95,7 @@ The following were the last open gaps; they are now specified in the main body. 
 
 | Area | Status |
 |------|--------|
-| **Error and failure UX** | Now in §4: thread shows error state, Retry/Cancel, queue unchanged unless user retries; suggest switch platform/model when appropriate. |
+| **Error and failure UX** | Now in §4: thread shows error state, Resend/Cancel, queue unchanged unless user resends; suggest switch platform/model when appropriate. |
 | **Orchestrator → Assistant handoff** | Now in §21: Dashboard offers "Continue in Assistant" with run summary and context when orchestrator completes or pauses. |
 
 **Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (§23.4). No remaining gaps; **accessibility** is explicitly not MVP.

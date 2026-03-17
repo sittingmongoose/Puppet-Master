@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.evidence.schema.v1",
   "evidence_id": "plan-sharding-2026-03-17",
-  "created_at_utc": "2026-03-17T06:35:21.409113+00:00",
+  "created_at_utc": "2026-03-17T19:10:26.709168+00:00",
   "node": {
     "node_id": "plan-sharding"
   },
@@ -989,111 +989,19 @@
     },
     {
       "path": "Plans/_shards/Run_Graph_View/02-1-scope-and-canonical-role.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/02-table-of-contents.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/03-1-scope-and-placement.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/Run_Graph_View/03-2-layout.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/04-2-layout-three-regions.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/Run_Graph_View/04-3-node-detail-inspector.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/05-3-top-bar-run-header.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/Run_Graph_View/05-4-data-model-and-identity.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/06-4-left-dag-graph-panel.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/07-5-right-node-table.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/08-6-right-selected-node-detail-panel.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/09-7-data-model-contract-rust-structs.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/10-10-interactions.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/11-11-performance-requirements.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/12-12-real-time-update-strategy.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/13-13-theme-integration.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/14-14-slint-implementation-guide.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/15-15-accessibility.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/16-16-persistence.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/17-17-uicommand-ids.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/18-18-acceptance-criteria.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/19-19-references.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/20-scheduler-analysis-and-remediation-visibility-addendum-2026-03-08.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/21-queue-analysis-attempt-lineage-ui-addendum-2026-03-09.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/22-queue-analysis-attempt-lineage-reconciliation-addendum-2026-03-09.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/23-runtime-scheduler-blocked-view-contract.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/Run_Graph_View/24-blocked-state-rendering-and-recovery-addendum.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/Run_Graph_View/manifest.json",
@@ -1724,12 +1632,8 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/newfeatures/03-rewrite-alignment-2026-02-21.md",
-      "change_type": "deleted"
-    },
-    {
       "path": "Plans/_shards/newfeatures/03-rewrite-alignment-2026-03-17.md",
-      "change_type": "added"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/newfeatures/04-executive-summary.md",
@@ -1737,119 +1641,7 @@
     },
     {
       "path": "Plans/_shards/newfeatures/05-high-level-feature-themes.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/05-table-of-contents.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/06-1-automatic-task-decomposition-and-orchestration-flow.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/07-2-background-async-agents-with-queue-and-git-isolation.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/08-3-persistent-rate-limit-and-usage-visibility.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/09-4-session-and-crash-recovery.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/10-5-protocol-normalization-for-multi-provider-streaming.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/11-6-plugin-and-skills-extensibility.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/12-7-analytics-and-usage-dashboard.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/13-8-history-and-rollback-restore-points.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/14-9-hook-system-event-hooks.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/15-10-auto-compaction-and-context-thresholds.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/16-11-keyboard-first-and-command-palette.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/17-12-stream-event-visualization-and-thinking-display.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/18-13-bounded-buffers-and-process-isolation.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/19-14-database-and-persistence-structured-state.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/20-15-additional-feature-ideas.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/21-16-phasing-and-dependencies.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/22-17-relationship-to-existing-plans-and-cross-reference.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/23-18-task-status-log.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/24-19-technical-analysis-how-these-mechanisms-work.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/25-20-human-in-the-loop-hitl-mode.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/26-21-updating-puppet-master.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/27-22-cross-device-sync.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/28-23-gaps-and-potential-issues.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/29-runtime-safe-point-clarification-addendum-2026-03-08.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/30-user-facing-recovery-semantics-addendum-2026-03-09.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/31-user-facing-runtime-recovery-semantics-consolidation-addendum-2026-03-09.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/newfeatures/32-safe-point-restore-point-crash-recovery-alignment-addendum.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/newfeatures/manifest.json",
@@ -2044,12 +1836,8 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/21-next-steps.md",
-      "change_type": "deleted"
-    },
-    {
       "path": "Plans/_shards/orchestrator-subagent-integration/21-platform-capability-next-steps.md",
-      "change_type": "added"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/22-implementation-notes-where-code-lives-and-what-to-add.md",
@@ -2080,12 +1868,8 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/orchestrator-subagent-integration/29-next-steps-2.md",
-      "change_type": "deleted"
-    },
-    {
       "path": "Plans/_shards/orchestrator-subagent-integration/29-next-steps.md",
-      "change_type": "added"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/30-autonomous-qa-loop-pattern-integration.md",

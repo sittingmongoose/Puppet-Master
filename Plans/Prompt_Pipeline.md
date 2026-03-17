@@ -336,10 +336,13 @@ Examples of required auto behavior:
 Rule: auto mode MUST always expose the selected effective Persona and reason. It MUST NEVER emit an opaque `Auto` state with no resolved output.
 
 ### 6.5 Effective resolution record
-
 The effective resolution record captures the frozen requested/effective runtime identity used for a specific execution handoff.
 
 Required fields are:
+- `requested_mode_overlay`
+- `effective_mode_overlay`
+- `requested_runtime_mode`
+- `effective_runtime_mode`
 - `requested_persona`
 - `effective_persona`
 - `persona_selection_source`
@@ -373,24 +376,15 @@ Required fields are:
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md
 
 Rules:
-- requested and effective values are both mandatory runtime concepts and must not collapse into one field
-- historical views must show the frozen requested/effective record captured for that execution and must not recompute from current settings
+- requested and effective values remain mandatory runtime concepts and must not collapse into one field
+- overlay identity and runtime posture are both required so historical views can preserve `deep_plan` without redefining the canonical runtime-posture family
+- `requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `interview`, `brainstorm`, and `crew`
+- runtime posture values remain governed by `Plans/Run_Modes.md`
+- historical views show the frozen record captured for that execution and do not recompute from current settings
 - `requested_persona_id` and `effective_persona_id` are not canonical persisted field names
 - actor type and operation type outrank stack hints in auto-resolution
 
-ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
-
-Precedence is closed to:
-1. explicit manual/run override
-2. scoped natural-language override
-3. surface-specific explicit mapping
-4. surface auto resolver candidate
-5. config default
-6. canonical fallback
-
-`persona_override_owner_id` must align to thread/run/node/attempt/actor lineage. `tier_id` does not remain a canonical owner anchor.
-
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Decision_Policy.md
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Personas.md, ContractName:Plans/FinalGUISpec.md
 ### 6.6 Provider capability filtering stage
 
 Persona controls must pass through provider capability filtering before prompt/model execution.

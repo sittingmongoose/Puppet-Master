@@ -38,3 +38,15 @@ Route/open rules:
 - `resume_url` is serialized transport only and does not replace the canonical route/open split
 
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+#### Thread context detail documents
+
+The thread-scoped Context Detail Pane may be realized as a generated editor-tab document.
+
+Rules:
+- shell destination and focus are owned by `route_target`
+- generated document realization for the Context Detail Pane uses the canonical `OpenSubject` path rather than raw-path guessing
+- repeated opens for the same thread reuse the existing tab identity instead of opening duplicate tabs
+- the implementation may back the tab with a generated document id rather than a workspace file path, but the route/open split remains canonical
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md

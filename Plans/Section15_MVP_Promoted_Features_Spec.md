@@ -73,16 +73,17 @@ Rules:
 - restore-and-branch creates a visible alternate thread/session lineage with stable labels and origin metadata
 
 ### 1.5 Thread usage surface
-
-Per-thread usage uses one canonical detail surface.
+Per-thread context detail uses one compact inspect/action entrypoint plus one canonical detailed surface.
 
 Rules:
 - the chat header context indicator is always visible for the active thread
-- hover shows summary information
-- activation opens the thread Usage surface owned by chat/usage integration
+- hover shows summary information for `Usage`, `Tokens`, and estimated `Cost`, plus `More Details`
+- click reveals `Compact Now` rather than immediately navigating away
+- `More Details` opens or focuses the thread-scoped Context Detail Pane in an editor tab
 - a detached usage pop-out is not the canonical model
-- app-wide Usage and thread Usage are linked by shared usage identity and filters
+- app-wide Usage and the Context Detail Pane remain linked by shared usage identity and filters
 
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md, ContractName:Plans/UI_Command_Catalog.md
 ### 1.6 Dev-loop and terminal surface model
 
 The dev loop is session-oriented.
@@ -192,12 +193,12 @@ Rules:
 - it is the main browse/history surface across projects, while active-thread navigation remains available directly in chat
 
 ### 3.9 Mid-Stream Token and Context Updates
-
-- context/usage indicators may update during streaming
+- context and usage indicators may update during streaming
 - partial updates must not invent final totals before the platform reports them
-- the user sees stable in-progress states such as updating/streaming rather than flickering totals
-- final per-thread usage lands in the same canonical thread Usage surface used outside streaming
+- the user sees stable in-progress states such as updating or streaming rather than flickering totals
+- final per-thread context and usage state lands in the same canonical Context Detail Pane used outside streaming
 
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
 ### 3.10 Multi-Tab and Multi-Window
 
 - workspace tabs are first-class and persist order, active tab, per-tab project identity, and local shell state
@@ -212,7 +213,7 @@ Rules:
 
 ### 3.12 Know Where Your Tokens Go (Analytics Framing)
 
-- app-wide Usage and thread Usage share one normalized usage contract
+- app-wide Usage and the thread-scoped Context Detail Pane share one normalized usage contract
 - cost_usage artifacts deep-link into canonical Usage/Ledger surfaces rather than an artifact-local model
 - token and cost framing must make per-thread, per-run, and per-model attribution explainable without duplicating data sources
 
@@ -256,17 +257,17 @@ Rules:
 - browser behavior must account for Slint + Wry/WKWebView/WebView2/WebKitGTK differences across Linux, macOS, and Windows without collapsing the surface model
 
 ## 4. Command families required by the promoted features
-
 The UI command catalog must expose stable commands for:
 - project switch and project open-in-new-workspace-tab
 - workspace tab create/close/reopen/move/focus
 - detached window open/attach/close for supported surfaces
-- thread Usage activation
+- thread context detail open/focus/close and context compaction actions
 - branch-from-restore and branch-open actions
 - browser open/focus/detach/share-with-agent/revoke-share
 - dev session start/stop/restart/show-output/show-ports
 - catalog install/update/remove/enable/disable/apply-later actions
 
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md
 ## 5. Persistence and restore rules
 
 - project restore uses stable `project_id`, not raw path alone

@@ -311,6 +311,18 @@ Route/open rules:
 - `resume_url` is serialized transport only and does not replace the canonical route/open split
 
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+#### Thread context detail documents
+
+The thread-scoped Context Detail Pane may be realized as a generated editor-tab document.
+
+Rules:
+- shell destination and focus are owned by `route_target`
+- generated document realization for the Context Detail Pane uses the canonical `OpenSubject` path rather than raw-path guessing
+- repeated opens for the same thread reuse the existing tab identity instead of opening duplicate tabs
+- the implementation may back the tab with a generated document id rather than a workspace file path, but the route/open split remains canonical
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
 ## 5. Click-to-open from chat
 
 **Done when:** Click on path or code block in files-touched strip, activity line, or diff header opens file in editor at line/range when available; already-open file focuses existing tab. **Depends on** §4.1 and §2; chat only invokes open-file contract. **If file not found:** Open-file contract returns error; chat or editor shows brief message (e.g. "File not found").

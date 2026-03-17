@@ -11,8 +11,8 @@
 - [ ] **Wire chat persistence:** thread list and thread content write to seglog; read from redb (session metadata) and seglog or redb snapshots for full thread load (per assistant-chat-design.md).
 - [ ] **Wire editor state:** open tabs, active tab, scroll/cursor per FileManager.md §2.9 into redb `editor` namespace.
 - [ ] **Wire Usage/dashboard:** read 5h/7d and rollups from redb; trigger analytics scan on interval or when Usage view opens (per usage-feature.md).
-- [ ] **Emit usage.event with thread_id:** When recording usage for Assistant or Interview runs, include **thread_id** in the event payload so per-thread usage (context circle, thread Usage tab) can be aggregated from seglog or usage.jsonl (usage-feature.md §5, assistant-chat-design §12).
-- [ ] **Emit run.completed with optional usage snapshot:** When a run finishes, include optional **usage** in the `run.completed` payload (tokens_in, tokens_out, cost, thread_id) so dashboards and thread Usage tab can use run-level usage without scanning usage.event. Canonical per-request data remains usage.event.
+- [ ] **Emit usage.event with thread_id:** When recording usage for Assistant or Interview runs, include **thread_id** in the event payload so per-thread usage (context circle, thread-scoped Context Detail Pane) can be aggregated from seglog or usage.jsonl (usage-feature.md §5, assistant-chat-design §12).
+- [ ] **Emit run.completed with optional usage snapshot:** When a run finishes, include optional **usage** in the `run.completed` payload (tokens_in, tokens_out, cost, thread_id) so dashboards and the thread-scoped Context Detail Pane can use run-level usage without scanning usage.event. Canonical per-request data remains usage.event.
 
 ---
 

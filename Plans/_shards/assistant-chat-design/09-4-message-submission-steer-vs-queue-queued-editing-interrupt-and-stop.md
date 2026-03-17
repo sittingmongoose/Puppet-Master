@@ -20,10 +20,9 @@
 - **Keyboard shortcuts:** Chat actions (Send, New thread, Stop, focus composer, Clear queue, etc.) must be reachable via **keyboard shortcuts** and/or the **command palette**. See Plans/newfeatures.md §11.
 - **Clear queue:** The user can **clear the entire queue** (e.g. "Clear queue" action when one or more messages are queued), removing all queued messages at once.
 - **Stop the agent:** The user must be able to **stop** the agent at any time (e.g. a "Stop" button or shortcut). Stop **cancels** the current run and does **not** send any message. Stopping does not remove queued messages; the next queued message can be processed after stop, or the user can edit/remove queued messages or clear the queue.
-- **Error and failure UX:** When the CLI fails, times out, or returns an error, the thread must show a **clear error state**: the error message (or a user-friendly summary) and, where applicable, **Retry** and **Cancel** (or Dismiss) actions. Retry re-sends the last user message (or re-runs the same request); Cancel dismisses the error and leaves the queue unchanged. Failed runs do not consume a queued message unless the user explicitly retries; the queue remains so the user can edit, send now, or clear. If the failure was due to a platform or network issue, the UI can suggest switching platform or model (see §12 rate limit hit).
+- **Error and failure UX:** When the CLI fails, times out, or returns an error, the thread must show a **clear error state**: the error message (or a user-friendly summary) and, where applicable, **Resend** and **Cancel** (or Dismiss) actions. `Resend` replays the latest eligible user message using the canonical history-aware resend path; Cancel dismisses the error and leaves the queue unchanged. Failed runs do not consume a queued message unless the user explicitly resends; the queue remains so the user can edit, send now, or clear. If the failure was due to a platform or network issue, the UI can suggest switching platform or model (see §12 rate limit hit).
 
 ### 4.1 Chat footer, queue UI, and files touched -- implementation detail
-
 **GUI updates**
 
 - **Footer container:** Add a **chat footer** region at the bottom of the chat view that hosts, in order (top to bottom): (1) pending queued messages strip, (2) composer (text entry), (3) status line for active subagent count, (4) files-touched strip. The footer is **per thread** -- when the user switches threads, it shows that thread's queue, count, and files. Use existing widget patterns (e.g. selectable labels for file paths, styled buttons for Edit / Send now / Cancel) per `docs/gui-widget-catalog.md`; tag new reusable pieces with `// DRY:WIDGET:...`.
@@ -43,6 +42,8 @@
   - **Subagent lifecycle:** Events (or state) that indicate "subagent X started for thread T" and "subagent X finished for thread T" so the UI can compute active count and show persona/task in the thread (see §14.1).
   - **File change events:** Per-thread accumulation of file edits (path + optional add/delete counts) so the footer can show files touched without re-scanning the filesystem on every paint.
 - **Persistence:** Queue state is per-thread and must be persisted (e.g. with thread list and messages) so after app restart the user sees the same queued messages if the run was not active. Active count and files touched are derived from run state; if the run is not persisted mid-flight, on restart show 0 active and last known files touched (or empty).
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md
 
 **Examples (unchanged)**
 
@@ -70,6 +71,35 @@
 | **Edit queued message (Resolved)** | Inline expand. | Clicking "Edit" on a queued message expands the row in-place into an editable text field pre-filled with the original message. Below the field: [Save] and [Cancel] buttons. No modal, no popover. While editing, the message remains in queue position. Saving replaces the queued message content; cancelling restores the original. |
 | **Accessibility** | Footer has many interactive elements. | Ensure focus order, keyboard activation for Edit/Send now/Cancel, and screen-reader-friendly labels (e.g. "Edit queued message 1", "Send now (steer)", "Remove from queue"). |
 
----
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
 
-<a id="5"></a>
+#### Message-level hover actions and resend contract
+
+Message-level controls use a hover/focus row directly below the message body.
+
+Rules:
+- the row is hidden until hover or keyboard focus and does not create permanent always-visible chrome under every message
+- the left cluster is icon-only message actions
+- the right cluster is compact runtime summary plus the info icon
+- `Copy` is available on every message
+- `Edit` and `Resend` are available only on the most recent user-sent message
+- this subsection supersedes earlier message-level `Retry` wording in this document
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+`Resend` is a history-aware replay action, not transport retry.
+
+Rules:
+- `Resend` rewinds the thread to the selected latest user message, discards later generated assistant/subagent/runtime history after that point, and replays that user message
+- `Resend` is distinct from provider retry, network retry, backoff, or error recovery terminology
+- if the selected message is no longer the most recent user message, `Resend` is unavailable rather than silently retargeted
+- `Edit` restores the selected latest user message into the composer for user modification before submission
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+Compact runtime summary rules:
+- compact display label is one of `Ask`, `Agent`, `Plan`, or `Deep Plan`
+- compact row shows the resolved display label, model, and either assistant thinking time/duration or the user timestamp
+- the info icon opens the message runtime popover
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md

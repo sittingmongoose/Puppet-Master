@@ -26,67 +26,46 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 ---
 
 ## 1. Canonical mode definitions
+### 1.0 Runtime mode and workflow-overlay separation
 
-A **Mode** determines the permission posture, write policy, CLI-bridged execution strategy, budget envelope, and context-management behavior for a Puppet Master run.
-
-Exactly four modes exist. Each is normative and referenced by its anchor ID.
-
-ContractRef: ContractName:Plans/Run_Modes.md, PolicyRule:Decision_Policy.md§2
-
-<a id="MODE-ask"></a>
-### 1.1 `ask`
-- **Intent:** Read-only investigation. The provider answers questions, reads files, and searches code but performs no mutations.
-- **Writes allowed:** false.
-- **Permission posture:** All mutating tools (`edit`, `bash`, `write`, etc.) are set to `deny`. Read-only tools (`read`, `grep`, `glob`, `webfetch`, `websearch`) follow the permission table in `Plans/Tools.md` §10.2.
-- **CLI-bridged strategy:** HTE (Hosted Tool Execution).
-- **Delegated tool execution:** Prohibited.
-
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md
-
-<a id="MODE-plan"></a>
-### 1.2 `plan`
-#### Planning-overlay clarification (2026-03-08)
-
-Assistant Chat now distinguishes between **Plan** and **Deep Plan** as workflow overlays, but both overlays still normalize to canonical runtime mode **`plan`** while planning.
+Runtime modes remain the canonical execution-posture family.
 
 Rules:
-- `Plan` and `Deep Plan` do **not** create new runtime-mode enum values.
-- `Plan Thoroughness (PT)` is a workflow-level setting; it does **not** create a new runtime mode.
-- Runtime `plan` remains read-only with respect to project files.
-- Planning artifacts may exist as Puppet Master-controlled drafts / transient generated buffers and may be opened in the editor without violating the read-only project-file rule.
-- Planning-time runs may not widen themselves into execution authority; the user must explicitly approve a transition into `regular` or `yolo`.
-- Natural-language requests such as `use ask mode`, `use plan mode`, and `use deep plan` resolve to canonical runtime modes and workflow overlays rather than inventing ad hoc execution states.
+- runtime modes are closed to `ask`, `plan`, `regular`, and `yolo`
+- workflow identity is preserved separately through `requested_mode_overlay` and `effective_mode_overlay`
+- overlay identity may be richer than runtime posture; for example `deep_plan` remains visible in the overlay fields while the runtime posture is still planning
+- chat-facing labels such as `Ask`, `Agent`, `Plan`, and `Deep Plan` are display derivations over shared overlay/runtime fields, not a replacement runtime schema
 
-- **Intent:** Read-only planning output. The provider produces a structured plan but performs no mutations to project files.
-- **Writes allowed:** false (plan output is an artifact returned to the caller, not written to the project workspace).
-- **Permission posture:** Identical to `ask` for project files. The provider may write to its own plan-output surface (e.g., plan artifacts under Puppet Master's control) but not to project source.
-- **CLI-bridged strategy:** HTE (Hosted Tool Execution).
-- **Delegated tool execution:** Prohibited.
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md
+### 1.1 `ask`
+`ask` is the read-only inspection and explanation posture.
 
-<a id="MODE-regular"></a>
+Rules:
+- no project mutation or execution authority is implied
+- compact chat display may label this as `Ask`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md
+
+### 1.2 `plan`
+`plan` is the read-only planning posture.
+
+Rules:
+- planning remains read-only with respect to project files
+- `plan` posture may be paired with `plan` or `deep_plan` overlay identity
+- overlay identity, plan thoroughness, and later execution handoff remain preserved separately from the runtime posture itself
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
 ### 1.3 `regular`
-- **Intent:** Standard interactive or autonomous execution with controlled write permissions.
-- **Writes allowed:** conditional — subject to per-tool permission rules (`allow`/`deny`/`ask`) and FileSafe guards.
-- **Permission posture:** Follows the full permission table (`Plans/Tools.md` §10.2). Mutating tools default to `ask` unless the user or run config explicitly sets `allow`.
-- **CLI-bridged strategy:** HTE by default. DAE (Delegated Agent Execution) only when **both** conditions hold: (a) explicit opt-in via config key `cli_bridged_strategy: "dae"`, and (b) policy allows DAE for the active provider.
-- **Delegated tool execution:** Prohibited unless DAE is opted in per above.
+`regular` is the standard execution posture with normal approvals.
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Providers.md
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
 
-<a id="MODE-yolo"></a>
 ### 1.4 `yolo`
-- **Intent:** Maximum-automation execution. The provider runs with full write permissions; no per-call approval prompts.
-- **Writes allowed:** true.
-- **Permission posture:** All tools set to `allow` (no `ask` prompts). FileSafe guards remain mandatory as the primary protection layer (see `Plans/FileSafe.md` §10a).
-- **CLI-bridged strategy:** DAE (Delegated Agent Execution) allowed. Guardrails and end-of-run scans are mandatory (see §5).
-- **Delegated tool execution:** Allowed under DAE with mandatory reconciliation and policy enforcement.
+`yolo` is the full-automation execution posture.
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md, ContractName:Plans/assistant-chat-design.md
-
----
-
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md
 ## 2. CLI-bridged execution strategies
 
 Two mutually exclusive execution semantics apply when Puppet Master invokes a CLI-bridged provider (see `Plans/CLI_Bridged_Providers.md` for the Provider facade contract).

@@ -1,0 +1,405 @@
+# Working Ledger
+
+## Work Item
+- `w-20260317-181906`
+
+## Mode
+- `research`
+
+## Topic / Scope
+- Review and strengthen the built-in browser capabilities that are currently specced in the Plans docs.
+
+## Objective
+- Preserve the current topic and immediate constraints before deeper research begins.
+- Create durable execution memory for later research, reconciliation, and packetization.
+
+## Constraints / Non-Goals
+- Do not make planning-doc changes during this work item init step.
+- Do not treat this ledger as canonical or a source of truth.
+- Avoid broad repo scanning until the topic is worked more concretely.
+- Research is now allowed and is expected to be significant, including targeted web research and external repo comparison.
+- The built-in browser topic is explicitly separate from `web_search`, `web_fetch`, and the lighter read-website/site-reader feature.
+
+## Key Facts and Findings
+- Topic is known: built-in browser capabilities in the Plans docs need review and expansion.
+- No existing `work_id` was established in the chat before this init step.
+- This work item is being initialized as a pre-packetize research item.
+- User wants a full rethink across capability breadth, behavior contracts/state model, UX flows, safety/permissions, and chat/planning integration, but at the planning-doc research layer rather than implementation.
+- The intended browser is a true built-in interactive browser the agent can control, not just a webpage reader.
+- Required/desired capabilities called out by user:
+  - render/open HTML files and browser-handled content
+  - allow user to highlight/select browser content and send it to the agent as context
+  - allow the agent to control and fully navigate/use web apps or websites
+  - allow the agent to take screenshots while using the browser
+  - provide direct DevTools access in the built-in browser
+  - work across Linux, macOS, and Windows in a Rust + Slint app
+- Existing plan docs already define important browser-adjacent contracts:
+  - browser surface classes: `workspace_preview`, `detached_preview`, `automation_session`, `auth_session`
+  - tab-first in-shell browser model with detached windows outside tab cap
+  - explicit no-silent-retargeting/no LRU-reuse behavior when browser tab cap is reached
+  - `browser_element_context` as the canonical attachment for browser element capture into chat
+  - separate trust tiers (`generated_restricted`, `workspace_preview`, `external_browse`) with different capture/devtools/storage rules
+- Existing browser spec appears stronger on container identity, persistence, and trust boundaries than on full agent-driven browsing, screenshots, automation control, and DevTools workflow details.
+- `Plans/newfeatures.md` appears to be referenced by other docs for browser details, but current targeted search did not surface the cited browser section, suggesting stale or drifted cross-references.
+- The site-reading path is canonically separate from the built-in browser:
+  - `Reading Site` is reserved for the PM-native Site Reader path
+  - browser browsing/click-to-context should not silently collapse into Site Reader terminology
+- A local capability anchor *does* exist in `Plans/FileManager.md`:
+  - the Assistant can drive the built-in browser: navigate, click, type, scroll, take screenshots, and read console/network
+  - however that statement still points at the stale `Plans/newfeatures.md §15.18` boundary as the supposed owner contract
+- DevTools is present in permissions/trust-tier policy (`allow when user explicitly opens DevTools`) but is not yet clearly specified as a concrete browser UX/tool contract.
+- External/browser-stack research findings:
+  - `wry` is the current lightweight Rust-native webview path already assumed by existing plans; it supports child webviews, JS init/eval, IPC, custom protocols, and DevTools support via feature/build mode, but underlying engines differ by platform (WebView2, WKWebView, WebKitGTK) and Linux integration has GTK/X11/Wayland wrinkles.
+  - `Playwright` remains the strongest mature automation stack for navigation, clicks, typing, multi-tab flows, screenshots, tracing, and browser contexts across Linux/macOS/Windows.
+  - `Playwright MCP` is notable because it supports persistent profiles, CDP endpoints, extension attach-to-existing-browser flows, optional `vision` / `pdf` / `devtools` capabilities, and emphasizes accessibility snapshots over pure screenshots.
+  - `Chrome DevTools MCP` is notable because it directly exposes live Chrome inspection/debugging, screenshots, console/network/performance insights, and can attach to a running browser by URL; it is a strong reference for control-plane/tool taxonomy, but not an embedded browser foundation.
+  - `BrowserMCP/mcp` is useful conceptually for real-profile/local-browser control, but its repo explicitly says it currently cannot be built standalone; better as reference than direct dependency.
+  - `Saik0s/mcp-browser-use` wraps a browser-use agent behind an HTTP MCP daemon and includes task/observability/dashboard ideas, but it depends on its own LLM/browser-agent loop, making it a poor core architecture if Puppet Master wants PM's own agent to own reasoning/control directly.
+  - `chromiumoxide` is a meaningful Rust-native option for Chrome/Chromium control over CDP (launch or attach to running browser) and could be a serious automation/backend candidate for screenshots + deeper browser control in Rust.
+  - CEF-class embedding remains the cleanest route to a truly uniform in-app Chromium browser with stronger DevTools/screenshot potential, but the Rust ecosystem is fragmented; one modern library (`wef`) explicitly warns that CEF can add ~1 GB to app size and says its own product still uses Wry for now.
+- User raised two critical product-architecture clarifiers:
+  - in a hybrid model, would the user actually see the agent doing browser work when the deeper Chromium backend is used?
+  - would hybrid still require bundling/installing Chromium anyway, reducing the practical advantage over CEF-class embedding?
+- Important clarification to preserve:
+  - "Wry is less reliable" should be interpreted as weaker cross-platform parity and weaker guarantees for deep browser-control features, not as "basic browser functionality does not work at all."
+- User resolved the architecture bias:
+  - prefer a **CEF-class embedded Chromium** solution
+  - rationale: it is the only option the user considers likely to deliver the full browser feature set reliably
+  - the ability for the user to **watch the agent work/test in the browser** is a major product win and should be treated as a first-class design goal, not a side effect
+- New UX/model direction from user:
+  - browser instances should open in **editor tabs**
+  - this implies the browser should behave more like a first-class document/workspace surface than a bottom-panel-only utility tab
+  - local HTML opening should be explicit and easy from File Manager and from agent actions
+  - `Open in Detached Browser` is liked as an explicit optional action, not the default host path
+- This decision materially changes the recommendation posture:
+  - CEF-class browser becomes the design center rather than a heavy fallback
+  - lighter Wry/hybrid approaches become comparison/background material rather than the default recommendation
+- Additional external confirmation:
+  - modern CEF wrapper `wef` exists and supports cross-platform embedding + offscreen rendering, but explicitly warns that CEF can add roughly ~1 GB of app size and still calls itself experimental
+  - `wef` uses an auto-downloaded CEF binary distribution via `cargo-wef`, reinforcing that packaging/update/install strategy must be explicitly specified if PM chooses this path
+- Official CEF documentation confirms:
+  - CEF is designed around **binary distributions** for each platform, not only source builds
+  - those binary distributions contain shared libraries, resources, helper/subprocess pieces, headers/wrappers, and sample apps
+  - CEF uses a **multi-process** architecture; the main app may be spawned multiple times for subprocess roles or may use a separate subprocess executable
+  - CEF explicitly calls out improved automated UI testing via DevTools remote debugging protocol and ChromeDriver support
+- Distribution implication:
+  - CEF does **not** need to be "compiled into" one monolithic PM executable/installer artifact
+  - however the final installed PM app still needs the full matching CEF runtime bundle on disk, adjacent/in-bundle with the app in a version-synchronized layout
+- Targeted repo inspection confirms current installer/build scripts are **not** doing runtime download/install orchestration today:
+  - Windows NSIS installer currently copies only the built `puppet-master.exe`
+  - macOS DMG builder currently creates a `.app` bundle around the built binary and resources
+  - Linux DEB/RPM builders currently package only the built binary, desktop entry, and icon
+  - current installer flow is therefore effectively **full/offline app packaging**, not "download browser runtime during install"
+- Important nuance on "lighter Chromium":
+  - there is no clearly official/safe "tiny CEF runtime" path that preserves the full browser + DevTools + reliability target
+  - bundle trimming is possible mainly around locales, dictionaries, optional plugins/features, and some resources
+  - aggressive stripping is risky and not the design center if PM wants full browser capability and reliability
+  - so PM would likely still be using a substantially full Chromium/CEF runtime, even if distributed via a bootstrap installer
+
+## Gaps / Problems Identified
+- Browser-related spec is fragmented across multiple docs (`FinalGUISpec.md`, `FileManager.md`, `Section15_MVP_Promoted_Features_Spec.md`, `assistant-chat-design.md`, `Prompt_Pipeline.md`, `Permissions_System.md`, `storage-plan.md`, likely `Tools.md`/`newtools.md`).
+- There is already a coherent preview/browser surface taxonomy, but the execution contract for agent-controlled interactive browsing is not yet clearly centralized.
+- Current docs appear to conflate or at least heavily intertwine:
+  - local HTML preview/hot reload
+  - built-in browser click-to-context
+  - browser/tool-based automation or verifier flows
+  - generic read-webpage/site-reader behavior
+- Browser-to-agent context capture is defined structurally, but not yet fully as a user-visible lifecycle (selection/highlight mode, share scope, revoke timing, multi-selection, persistence, screenshots with capture, etc.).
+- Agent-control expectations from the user (full navigation/use of websites/web apps, screenshots, DevTools access) are not yet visibly locked into the core browser spec from the inspected docs.
+- More precise nuance after deeper read:
+  - screenshots + console/network are promised in `FileManager.md`
+  - DevTools is permitted in policy
+  - but the canonical owner doc for those capabilities is still missing or stale
+- Cross-platform browser runtime differences are acknowledged (`Wry` / WebView2 / WKWebView / WebKitGTK), but fallback behavior and effective capability disclosure for browser features are still under-specified.
+- Stale references likely exist (`Plans/newfeatures.md §15.18`) and need reconciliation during downstream planning.
+- Existing plans still appear too optimistic about "same WebView" doing all of:
+  - local HTML preview
+  - user click-to-context
+  - agent-driven browser automation
+  - screenshots
+  - console/network inspection
+  - DevTools
+  across Linux/macOS/Windows without a deeper backend split or capability disclosure model.
+- There is still no cleanly centralized answer to whether PM should use:
+  - OS webviews only
+  - embedded Chromium/CEF
+  - Playwright/CDP sidecar
+  - Rust-native CDP backend (`chromiumoxide`)
+  - or a hybrid by browser surface/session class.
+- The hybrid concept is still underspecified at the UX layer:
+  - same visible browser session the user watches
+  - separate visible automation window/tab
+  - hidden/ephemeral automation session with optional "open/watch" affordance
+  These have very different product implications.
+- Packaging/install implications need explicit treatment:
+  - hybrid may still require bundling or first-run installation of Chromium/Chrome-for-Testing for the deeper backend
+  - if so, the "lighter than CEF" argument must be stated carefully as integration/runtime complexity tradeoff, not as "no Chromium needed"
+- With CEF now favored, the unresolved questions shift:
+  - which CEF integration path/binding strategy is realistic for Rust + Slint?
+  - how should PM package/update the CEF runtime on Linux/macOS/Windows?
+  - how should PM surface and manage the browser's multi-process model, crash/restart behavior, sandboxing, codecs/PDF/runtime dependencies, and DevTools availability?
+- Need to define the **watchability contract**:
+  - if the agent is testing or browsing, what exact browser surface does the user watch?
+  - how does take-over, pause, or inspection work while the agent is active?
+  - does the agent operate in the same visible tab/window by default or in a distinct but visible automation/browser session?
+- Need explicit installer/update policy:
+  - versioned runtime-bundle layout and replacement rules
+  - signature/hash verification for shipped CEF artifacts
+  - atomic update rules so all CEF-matched files move together
+- Need explicit runtime-layout rules per platform:
+  - Windows: DLLs/resources/helper EXEs
+  - macOS: framework/bundle structure
+  - Linux: shared objects/resources/helper processes and distro dependency story
+- Current installer scripts and package metadata still assume a simple native binary app; they do not yet model shipping a browser runtime bundle, helper executables, or versioned browser resources.
+- Need to decide whether PM wants:
+  - a mostly-full CEF runtime with only modest trimming
+  - or a more aggressively pruned bundle that may sacrifice some browser capabilities/features
+  Current user preference strongly points to the former.
+- Implementation-readiness gap summary:
+  - architecture is mostly locked, but the concrete contracts are not yet centralized enough for a team to implement without guessing
+  - the main remaining work is not "which browser?" but "what exactly are the browser session types, APIs, UX rules, persistence rules, packaging rules, and acceptance criteria?"
+- Current plans likely still assume the Browser tab in the **bottom panel** is the primary in-shell browser host; user direction now suggests the primary host should instead be **editor/workspace tabs**.
+- Need to reconcile whether the bottom browser surface remains:
+  - removed as primary host
+  - repurposed for DevTools/evidence/live activity
+  - or retained only as an alternate docking mode
+
+## Candidate Fixes / Design Directions
+- Start with targeted reading of browser-related planning docs once research is allowed.
+- Identify whether current browser capability coverage is fragmented across multiple planning docs.
+- Evaluate whether the built-in browser should be framed as a core capability set, a tool family, or a layered feature surface.
+- Capture capability contracts, user-visible flows, limits, fallbacks, and provider/platform differences as soon as they emerge.
+- Likely strengthen the spec by separating four layers explicitly:
+  - browser surface/container model
+  - browser runtime engine + platform capability matrix
+  - user interaction model (browse, inspect, highlight, share, revoke, detach, restore)
+  - agent/browser control model (navigate, click, type, screenshot, inspect, devtools/CDP-equivalent, evidence)
+- Likely add explicit requested vs effective browser capability disclosure, mirroring the shared runtime identity model already used elsewhere.
+- Likely formalize a distinct boundary between:
+  - lightweight site-reader/web-fetch/read-webpage features
+  - full interactive built-in browser
+  - ephemeral automation/auth sessions
+- Likely define screenshots/devtools/automation as first-class browser capabilities rather than incidental tool add-ons.
+- Evaluate whether MCP browser projects are best treated as:
+  - reference implementations for protocol/capability shape
+  - vendorable subsystems
+  - optional backend drivers behind a PM-owned browser contract
+  - or poor fits for an integrated native browser
+- Candidate architecture directions are now clearer:
+  - **Option A: Wry-only built-in browser**
+    - best for lightweight embedding and existing plan continuity
+    - weakest for uniform screenshots/devtools/network/automation semantics across platforms
+  - **Option B: Full CEF/Chromium embedded browser**
+    - best conceptual fit for a "real built-in browser" with stronger uniformity
+    - highest binary, packaging, and Rust integration cost; probably too heavy for early implementation unless browser power is treated as a flagship differentiator
+  - **Option C: Hybrid recommended shape**
+    - keep Wry/OS-webview style surface for lightweight `workspace_preview` / HTML preview continuity
+    - add a stronger Chromium/CDP automation backend (Playwright or `chromiumoxide`, possibly attachable to a visible browser session) for agent control, screenshots, console/network, traces, and auth/automation sessions
+    - expose requested vs effective capabilities per browser session/surface so platform/runtime differences are visible instead of hidden
+  - **Option D: MCP-derived sidecar architecture**
+    - borrow control plane ideas from Chrome DevTools MCP / Playwright MCP
+    - but keep PM-native browser contract and permissions model rather than outsourcing core product semantics to an MCP package
+- Current recommendation direction:
+  - do **not** make BrowserMCP or browser-use the core architecture
+  - treat Chrome DevTools MCP / Playwright MCP as reference models for tool/capability design
+  - strongly consider a hybrid model before committing to a full CEF rewrite
+- Architecture recommendation is now user-locked:
+  - **CEF-class embedded Chromium is the preferred direction**
+  - spec work should optimize for:
+    - full reliable browser capability breadth
+    - user-visible live browser activity when the agent is working/testing
+    - strong DevTools / screenshot / console / network / web-app compatibility
+- Revised recommendation direction:
+  - keep the existing browser surface-class taxonomy
+  - replace backend ambiguity with a CEF-centered runtime contract
+  - use Playwright/CDP/MCP projects as inspiration for automation/control semantics, not as the core browser runtime
+  - explicitly accept packaging/runtime cost as a trade for capability and reliability
+- New likely spec themes to flesh out:
+  - visible agent-driven browser sessions
+  - DevTools integration model
+  - screenshot/evidence pipeline from the built-in browser
+  - browser process lifecycle and crash recovery
+  - browser runtime distribution/update strategy
+- Provisional packaging recommendation:
+  - CEF runtime should be treated as a **versioned PM-managed runtime bundle**
+  - PM should not rely on a system-wide shared CEF installation
+  - PM updates should replace the CEF runtime bundle atomically, not piecewise
+- Provisional bundle-size recommendation:
+  - assume PM ships a **mostly full** CEF runtime by default
+  - allow **safe trimming only** for clearly non-essential assets (extra locales, unused dictionaries, optional components PM explicitly does not support)
+  - do not design around an aggressively stripped Chromium if the product promise is full reliable browser capability + DevTools + watchable agent testing
+- Implementation-readiness checklist to carry into reconciliation:
+  - **1. Canonical owner doc + cross-reference cleanup**
+    - pick the SSOT browser spec doc
+    - move stale `Plans/newfeatures.md §15.18` dependencies to real current owners
+  - **2. Browser session model**
+    - define exact behavior for `workspace_preview`, `detached_preview`, `automation_session`, `auth_session`
+    - define which sessions are visible, persistent, restorable, shareable with agent, and user-takeover capable
+  - **3. Agent control contract**
+    - enumerate supported actions: navigate, click, type, select, drag/drop, scroll, keypress, file upload/download, multi-tab/window, wait conditions, screenshot, console, network, DOM inspect, DevTools attach/open
+    - define requested vs effective capabilities and blocked outcomes
+  - **4. Watchability / takeover UX**
+    - what browser surface the user watches while the agent works
+    - pause/stop/take-over semantics
+    - whether the agent can continue after user manual intervention
+  - **5. Click/highlight/share model**
+    - exact UX for selecting/highlighting browser content and sending it to chat
+    - multi-selection, revoke/share scope, screenshot-with-selection rules
+  - **6. DevTools model**
+    - embedded vs detached DevTools
+    - who can open it, when, and what agent/browser introspection flows are exposed
+  - **7. Screenshot / evidence / artifacts**
+    - whether browser screenshots and traces use the same artifact pipeline as GUI automation
+    - naming, retention, manifest shape, chat rendering, privacy redaction rules
+  - **8. Persistence + isolation**
+    - browser history, cookies, storage, auth sessions, per-project isolation, restore eligibility, crash recovery
+  - **9. Runtime/process lifecycle**
+    - helper/subprocess layout, startup, shutdown, crash detection, restart policy, sandboxing, diagnostics surfaces
+  - **10. Distribution + runtime layout**
+    - per-platform runtime bundle layout, update rules, signature/hash verification, uninstall/removal behavior
+  - **11. Platform guarantee matrix**
+    - explicit Linux/macOS/Windows guarantees and any degraded-but-supported behavior
+  - **12. Permissions + safety**
+    - permission keys, trust tiers, agent-vs-user authority, auth/session sensitivity rules, no-silent-fallback blocked semantics
+  - **13. Commands + UI surfaces**
+    - command catalog expansion for inspect/screenshot/devtools/automation actions
+    - exact browser chrome controls, status indicators, and activity disclosure
+  - **14. Acceptance criteria + test plan**
+    - scenario-driven criteria for local HTML preview, web app interaction, screenshots, DevTools, auth flow, crash recovery, restore, and cross-platform packaging
+- New provisional UX recommendation:
+  - make **editor/workspace tabs** the primary host for browser instances
+  - local HTML behavior should be:
+    - default `Open` = source editor
+    - explicit `Open in Browser` from File Manager context menu
+    - optional `Open in Detached Browser` as a secondary explicit action
+    - editor toolbar/action for current HTML file: `Open in Browser`
+    - agent can invoke the same canonical open command on a file target
+  - browser tabs should be first-class alongside code/editor tabs, not hidden in a utility panel
+  - if a bottom-panel browser surface remains, it should have a different job (for example DevTools, live activity, or secondary inspection), not be the primary browsing model
+- Candidate browser session model under the tab-first CEF design:
+  - **`workspace_preview`**
+    - primary user-facing browser/editor tab for local HTML files and normal in-app browsing
+    - opened by explicit actions like `Open in Browser`
+    - project-scoped, restorable, shareable to chat, and user-owned by default
+    - agent may operate it when allowed, but it remains a normal visible workspace/browser tab rather than a hidden automation surface
+  - **`detached_preview`**
+    - same conceptual subject as `workspace_preview`, but opened in a detached native window
+    - created explicitly by `Open in Detached Browser` or detach action from an existing browser/editor tab
+    - eligible for restore only where detached-window restore is supported
+  - **`automation_session`**
+    - agent-driven browser session for testing, browsing, or autonomous web-app interaction
+    - visible/watchable by default; should not be a silent hidden worker if the agent is actively doing browser work
+    - ephemeral by default, evidence-producing, not auto-restored as a normal workspace tab
+    - user can pause/stop/take over; explicit policy still needed for whether takeover converts it into a normal browser tab
+  - **`auth_session`**
+    - isolated browser session for login/device/browser auth flows
+    - visible while active, but not treated as normal browsing state
+    - separate storage/cookie boundary from normal workspace browsing
+    - not auto-restored, not general-purpose browsing, and more restricted for capture/share/evidence
+- If hybrid remains favored, the spec should choose one of three explicit visibility models:
+  - **Watchable hybrid:** agent drives a PM-visible Chromium automation session/window so the user can watch/take over
+  - **Attachable hybrid:** agent may use a background Chromium session, but PM provides an explicit "open live browser session" / "watch run" action
+  - **Hidden utility hybrid:** Chromium backend is for auth/testing/evidence only, not normal user-visible browsing
+- If Wry-only remains in play, the spec should explicitly say it is acceptable only if PM tolerates requested/effective degradation for screenshots, DevTools, console/network inspection, and advanced automation on some platforms.
+
+## Impacted Docs
+- `Plans/FinalGUISpec.md`
+- `Plans/FileManager.md`
+- `Plans/Section15_MVP_Promoted_Features_Spec.md`
+- `Plans/assistant-chat-design.md`
+- `Plans/Prompt_Pipeline.md`
+- `Plans/Permissions_System.md`
+- `Plans/storage-plan.md`
+- `Plans/newfeatures.md` (likely stale reference target / drift check)
+- `Plans/newtools.md` (browser verifier / automation overlap)
+- `Plans/Tools.md` (tool vs surface boundary still needs targeted confirmation)
+- `Plans/UI_Command_Catalog.md` (browser open/focus/detach/share/revoke commands exist, but no richer command family yet for inspect/screenshot/devtools/automation actions)
+
+## Decisions Already Resolved
+- Work item mode is `research`.
+- The topic framing is about built-in browser capabilities already specced in Plans docs, not a broad unrelated browser audit.
+- This review is explicitly separate from `web_search`, `web_fetch`, and the read-website/site-reader feature.
+- Research should include both local plan-doc archaeology and external ecosystem research/comparison.
+- The user wants substantial expansion, not just light cleanup.
+- Browser architecture bias is now **CEF-class embedded Chromium** rather than Wry-centered or hybrid.
+- User-visible watchability of the agent browsing/testing is an important product goal and should influence session/UX design.
+- PM should assume a **mostly full CEF runtime** by default; only modest safe trimming is desirable.
+- Current installers are effectively **full/offline-style package builders** today.
+- Browser instances should open in **editor/workspace tabs**.
+- Local HTML opening should support explicit user actions like **Open in Browser**, and agents should be able to open HTML/browser targets through the same canonical path.
+- `Open in Detached Browser` is a kept secondary action the user likes, but it is not the default browser host.
+- Current working model is:
+  - `workspace_preview` = normal visible browser tab in the editor/workspace strip
+  - `detached_preview` = optional detached version of that
+  - `automation_session` = visible/watchable agent browser
+  - `auth_session` = isolated auth browser
+
+## Open Questions / Uncertainties
+- What should be the canonical owner doc for the browser behavior contract versus cross-references?
+- Should the built-in browser be embedded by default, detached by default on some platforms, or modeled as requested-vs-effective depending on platform/runtime support?
+- What exact agent control contract is desired: DOM-level actions only, full browser automation/session control, DevTools protocol access, network inspection, console capture, storage/cookie control, file upload/download, multi-tab/window control?
+- How should user-highlight/send-to-agent coexist with agent-driven inspection and screenshot capture?
+- What level of persistence is desired for browser history, cookies, auth state, and per-project browsing isolation?
+- Should screenshots/evidence be modeled through the same artifact/evidence pipeline used by GUI automation tools?
+- Which existing read-webpage/headless-chrome concepts are reusable versus intentionally separate?
+- Which external engine/backend approach is the best fit for Rust + Slint cross-platform constraints?
+- Should `workspace_preview` and `automation_session` intentionally use different runtime backends?
+- If PM keeps Wry for visible browser tabs, how much requested/effective degradation is acceptable on Linux/macOS/Windows for screenshots, DevTools, console/network inspection, and automation depth?
+- Does the product require "agent drives the exact same visible in-app browser tab the user sees" as a hard rule, or is "agent drives a PM-owned browser session surfaced in-browser when needed" acceptable?
+- How strongly should packaging/binary size constrain the solution? CEF-class paths look powerful but materially heavier.
+- For hybrid, is user-visible live watching of the agent a product requirement or just a nice-to-have?
+- If a Chromium backend is required, should PM bundle it, install it on first use, or attach to an existing local Chrome/Edge/Chromium when available?
+- Is "works for basic browsing/preview/click-to-context" enough for Wry-only, or does the product require stronger guarantees for web-app automation and diagnostics?
+- Which Rust/CEF integration strategy is most credible for PM:
+  - existing wrapper like `wef`
+  - lower-level bindings + PM-owned shim
+  - direct CEF integration with a custom bridge
+- Should PM support offscreen rendering, native child-window embedding, or both?
+- How should visible agent browsing/testing map onto the existing browser surface classes (`workspace_preview`, `detached_preview`, `automation_session`, `auth_session`) under a CEF-centered design?
+- What should be the default update/distribution story for the Chromium runtime across Linux/macOS/Windows?
+- Do we want channel-based browser runtimes (stable only vs stable/beta/dev) or a single pinned runtime stream?
+- Should HTML files also support one-click split behavior like `Open in Browser Split`, or should split view be a second-step action after opening the browser tab?
+- What exact role, if any, should the bottom-panel browser surface keep after shifting the primary browser host into editor/workspace tabs?
+
+## Packetization Notes
+- This ledger is only seeded with topic, constraints, and initial framing.
+- Update after meaningful research clusters, contradictions, or design decisions.
+- Keep enough detail here to survive context compaction later.
+- First research cluster captured:
+  - core local docs found
+  - browser surface classes/trust tiers/persistence model identified
+  - likely drifted/stale cross-reference to `Plans/newfeatures.md §15.18`
+  - probable gap between container/trust model and full agent-control/browser-runtime contract
+- Second research cluster captured:
+  - canonical separation between built-in browser and Site Reader confirmed
+  - local spec promise for agent-driven browser actions found in `FileManager.md`
+  - external ecosystem comparison completed (Wry, Playwright, Playwright MCP, Chrome DevTools MCP, BrowserMCP, browser-use, `chromiumoxide`, modern CEF wrappers)
+  - emerging recommendation is hybrid/PM-owned browser contract rather than directly adopting an MCP browser project as the core
+- Third research/design-decision cluster captured:
+  - user explicitly chose the CEF-class direction for reliability and full capability
+  - "user can watch the agent browse/test" is now a core product requirement signal
+  - next research pass should focus on CEF runtime/UX/packaging contracts rather than comparing lightweight alternatives
+- Fourth research cluster captured:
+  - official CEF docs confirm binary-distribution model, multi-process runtime, and remote-debugging/testing relevance
+  - installer does not need Chromium compiled into one monolithic executable
+  - installed PM still requires a full matching CEF runtime bundle on disk
+- Fifth research/design-decision cluster captured:
+  - user considers the current direction locked
+  - locked direction is CEF-class, watchable agent browsing/testing, and a mostly-full runtime rather than aggressively stripped Chromium
+  - current installer reality (full/offline style) should be treated as baseline context during reconciliation
+- Sixth research/design-decision cluster captured:
+  - user asked what remains to reach implementation readiness
+  - answer is now framed as a concrete readiness checklist spanning SSOT ownership, session model, agent contract, watchability, DevTools, artifacts, persistence, lifecycle, packaging, platform guarantees, permissions, commands/UI, and acceptance criteria
+
+## Do-Not-Forget Details
+- Track terminology decisions, precedence rules, requested vs effective state, platform differences, fallbacks, and user-visible behavior once research begins.
+- Record contradictions explicitly rather than smoothing them over.
+- Do not cite or reference this ledger from planning docs.
+- Keep browser surface separate from site-reader/web-fetch capability even when both may share some underlying Chromium/CDP technology.
+- Track whether screenshots, DevTools, DOM capture, and automation should be user-visible browser actions, agent tools, or both.
+- Track whether browser capabilities need a per-platform requested/effective disclosure surface similar to other runtime capabilities.
+- Track stale-reference cleanup carefully: several docs lean on `Plans/newfeatures.md §15.18`, but that does not currently look like a reliable canonical anchor.
+- If recommending hybrid backends, preserve the existing browser surface-class model rather than replacing it with a single monolithic "browser engine" concept.
+- Be precise in wording: "less reliable" for Wry means feature-parity/guarantee limitations, not total non-functionality.
+- Future recommendations should stop hedging unless new evidence makes CEF-class integration clearly impractical; the user has already expressed willingness to pay the heavier cost for capability/reliability.
+- Reconciliation must explicitly address the conflict between current bottom-panel-browser assumptions and the newly locked editor-tab browser direction.

@@ -52,10 +52,38 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan
 Assistant Chat may display requested/effective runtime identity, but it must consume the owner-doc shared runtime model rather than invent assistant-local fields.
 
 Rules:
-- compact cards may show only the most important requested/effective delta
-- expanded views may link to usage/history/details
-- historical thread/activity views MUST show frozen requested/effective runtime state captured for that execution
-- assistant/chat MUST NOT introduce local replacements such as `active_model`, `actual_model`, or `assistant_runtime_state`
+- compact chat surfaces may show only the material display summary needed for that moment
+- the message-under-row summary uses the resolved user-facing mode label, model, and time or duration
+- the mode display label is derived from canonical shared fields rather than from assistant-local string assembly
+- compact chat surfaces do not show version and do not show `current` or `frozen` wording
+- historical thread/activity views show frozen requested/effective runtime state captured for that execution
+- assistant/chat MUST NOT introduce local replacement fields such as `active_model`, `actual_model`, or `assistant_runtime_state`
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
 
+Message runtime popover fields are closed to:
+- `Mode`
+- `Provider`
+- `Model`
+- `Effort`
+- `Persona`
+- `Worker`
+- `Tokens`
+- `Context`
+
+Label rules:
+- `Mode` uses the normalized user-facing labels `Ask`, `Agent`, `Plan`, and `Deep Plan`
+- `Worker` is `Agent` or `Subagent`
+- `Tokens` shows compact total and may disclose breakdown on expansion or in the detailed pane
+- `Context` shows used, limit, and percentage when known
+- assistant rows show thinking time or duration; user rows show timestamp
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
+
+Display mapping rules:
+- `Deep Plan` is shown when the effective overlay is `deep_plan`
+- `Plan` is shown when the effective overlay is `plan` and the runtime posture is planning
+- `Ask` is shown when the effective runtime posture is `ask` and no higher planning overlay is active
+- `Agent` is shown for normal execution posture when no higher planning overlay is active
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
