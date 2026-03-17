@@ -154,94 +154,43 @@ ContractRef: ContractName:Plans/Widget_System.md#11, ContractName:Plans/Contract
 ---
 
 ### 2.4 Run Graph commands
-These IDs are required by `Plans/Run_Graph_View.md`.
 
-| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
-|---|---|---|---|
-| `cmd.graph.select_node` | `{ node_id }` | no persisted domain event (selection state update) | Orchestrator > Node Graph Display |
-| `cmd.graph.deselect` | `{}` | no persisted domain event (selection state update) | Orchestrator > Node Graph Display |
-| `cmd.graph.zoom` | `{ level }` | no persisted domain event (viewport state update) | Orchestrator > Node Graph Display |
-| `cmd.graph.fit_to_screen` | `{}` | no persisted domain event (viewport state update) | Orchestrator > Node Graph Display |
-| `cmd.graph.layout_preset` | `{ preset }` | no persisted domain event (layout state update) | Orchestrator > Node Graph Display |
-| `cmd.graph.focus_node` | `{ node_id }` | no persisted domain event (viewport state update) | Orchestrator > Node Graph Display |
-| `cmd.graph.filter` | `{ states, search }` | no persisted domain event (filter state update) | Orchestrator > Node Graph Display |
-| `cmd.graph.retry_node` | `{ node_id }` | `tool.invoked` or `tool.denied`; run-state events emitted by orchestrator | Orchestrator > Node Graph Display |
-| `cmd.graph.replan_node` | `{ node_id }` | `tool.invoked` or `tool.denied`; run-state events emitted by orchestrator | Orchestrator > Node Graph Display |
-| `cmd.graph.reopen_node` | `{ node_id }` | run-state events emitted by orchestrator | Orchestrator > Node Graph Display |
-| `cmd.graph.approve_hitl` | `{ request_id, node_id, rationale }` | `hitl.approved` | Orchestrator > Node Graph Display |
-| `cmd.graph.deny_hitl` | `{ request_id, node_id, rationale, resolution? }` | `hitl.rejected` | Orchestrator > Node Graph Display |
+Canonical Run Graph and runtime recovery commands are:
+- `cmd.runtime.approve`
+- `cmd.runtime.decline`
+- `cmd.runtime.retry_from_safe_point`
+- `cmd.runtime.retry_fresh`
+- `cmd.runtime.open_attempt_details`
+- `cmd.runtime.open_queue_analysis`
+- `cmd.runtime.open_safe_point`
+- `cmd.runtime.open_remediation`
+- `cmd.runtime.open_blocked_episode`
 
-ContractRef: ContractName:Plans/Run_Graph_View.md#17, ContractName:Plans/Contracts_V0.md#UICommand
+Rules:
+- graph approval and recovery commands target blocked/runtime identity, not `request_id`
+- `cmd.graph.approve_hitl` and `cmd.graph.deny_hitl` do not remain canonical command IDs
+- any graph-facing wrapper command normalizes to the runtime command family and canonical `route_target` semantics
 
----
-
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Run_Graph_View.md
 ### 2.5 Orchestrator page commands
-#### 2.5A Source Control commands
 
-| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
-|---|---|---|---|
-| `cmd.source_control.switch_subview` | `{ subview }` | layout/UI state only | Source Control |
-| `cmd.source_control.select_repo` | `{ repo_id }` | layout/UI state only | Source Control |
-| `cmd.source_control.select_worktree` | `{ worktree_id }` | layout/UI state only | Source Control, Orchestrator |
-| `cmd.source_control.open_history_commit` | `{ repo_id, commit }` | layout/UI state only | Source Control |
-| `cmd.source_control.open_graph_commit` | `{ repo_id, commit }` | layout/UI state only | Source Control |
-| `cmd.source_control.compare_refs` | `{ repo_id, left_ref, right_ref, worktree_id? }` | layout/UI state only | Source Control |
-| `cmd.source_control.resolve_conflict` | `{ repo_id, path, worktree_id? }` | no persisted domain event (navigation/open action) | Source Control, File Editor |
-| `cmd.git.worktree.open` | `{ worktree_id }` | no persisted domain event (navigation/open action) | Source Control |
-| `cmd.git.worktree.compare` | `{ worktree_id, compare_target? }` | layout/UI state only | Source Control |
-| `cmd.git.worktree.recover` | `{ worktree_id }` | `tool.invoked` or `tool.denied`; runtime events emitted by orchestrator/worktree manager | Source Control, Orchestrator |
-| `cmd.git.worktree.prune` | `{ worktree_id }` | `tool.invoked` or `tool.denied`; runtime events emitted by orchestrator/worktree manager | Source Control |
+Canonical Orchestrator commands are:
+- `cmd.orchestrator.focus_object`
+- `cmd.orchestrator.focus_run`
+- `cmd.orchestrator.open_graph_generation`
+- `cmd.orchestrator.open_graph_patch`
+- `cmd.orchestrator.open_concern`
+- `cmd.orchestrator.open_promotion`
+- `cmd.orchestrator.open_review`
+- `cmd.orchestrator.open_corroboration`
+- `cmd.orchestrator.open_in_source_control`
 
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Contracts_V0.md
+Rules:
+- Orchestrator object opens are route-consuming navigation wrappers, not layout-only commands
+- cross-tab deep links preserve `project_id`, `focused_run_id`, object identity, and inspector focus
+- commands that pivot into Source Control or Usage remain public wrapper commands and normalize internally to canonical route/open contracts
 
-#### 2.5B GitHub Actions commands
-
-| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
-|---|---|---|---|
-| `cmd.github.actions.switch_subview` | `{ subview }` | layout/UI state only | GitHub Actions |
-| `cmd.github.actions.focus_current_branch` | `{ repo_id, branch, worktree_id? }` | layout/UI state only | GitHub Actions |
-| `cmd.github.actions.refresh` | `{ repo_id, scope? }` | no persisted domain event (API fetch + cache) | GitHub Actions |
-| `cmd.github.actions.rerun` | `{ workflow_run_id }` | `github.actions.rerun.started`, terminal: `github.actions.rerun.completed` or `github.actions.rerun.failed` or `github.actions.rerun.blocked` | GitHub Actions |
-| `cmd.github.actions.cancel` | `{ workflow_run_id }` | `github.actions.cancel.started`, terminal: `github.actions.cancel.completed` or `github.actions.cancel.failed` or `github.actions.cancel.blocked` | GitHub Actions |
-| `cmd.github.actions.pin_workflow` | `{ workflow_id, pinned }` | layout/UI state only | GitHub Actions |
-| `cmd.github.actions.dispatch` | `{ workflow_id, ref, inputs? }` | `github.actions.dispatch.started`, terminal: `github.actions.dispatch.completed` or `github.actions.dispatch.failed` or `github.actions.dispatch.blocked` | GitHub Actions |
-| `cmd.github.actions.upsert_secret` | `{ scope, name, value, environment? }` | `github.actions.secret.updated` or `github.actions.secret.update_failed` or `github.actions.secret.update.blocked` | GitHub Actions |
-| `cmd.github.actions.delete_secret` | `{ scope, name, environment? }` | `github.actions.secret.deleted` or `github.actions.secret.delete_failed` | GitHub Actions |
-| `cmd.github.actions.upsert_variable` | `{ scope, name, value, environment? }` | `github.actions.variable.updated` or `github.actions.variable.update_failed` or `github.actions.variable.update.blocked` | GitHub Actions |
-| `cmd.github.actions.delete_variable` | `{ scope, name, environment? }` | `github.actions.variable.deleted` or `github.actions.variable.delete_failed` | GitHub Actions |
-| `cmd.github.actions.upsert_environment` | `{ name, protection_rules?, reviewers? }` | `github.actions.environment.updated` or `github.actions.environment.update_failed` or `github.actions.environment.update.blocked` | GitHub Actions |
-| `cmd.github.actions.delete_environment` | `{ name }` | `github.actions.environment.deleted` or `github.actions.environment.delete_failed` | GitHub Actions |
-
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md
-
-#### 2.5C Docker Manager commands
-
-| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
-|---|---|---|---|
-| `cmd.docker_manager.switch_subview` | `{ subview }` | layout/UI state only | Docker Manager |
-| `cmd.docker.container.open` | `{ container_id }` | layout/UI state only | Docker Manager |
-| `cmd.docker.container.start` | `{ container_id }` | `docker.container.started` or `docker.container.start_failed` | Docker Manager |
-| `cmd.docker.container.stop` | `{ container_id }` | `docker.container.stopped` or `docker.container.stop_failed` | Docker Manager |
-| `cmd.docker.container.restart` | `{ container_id }` | `docker.container.restarted` or `docker.container.restart_failed` | Docker Manager |
-| `cmd.docker.container.remove` | `{ container_id, force? }` | `docker.container.removed` or `docker.container.remove_failed` or `docker.container.remove.blocked` | Docker Manager |
-| `cmd.docker.container.logs` | `{ container_id, follow? }` | no persisted domain event (log open/follow) | Docker Manager, Orchestrator |
-| `cmd.docker.container.inspect` | `{ container_id }` | layout/UI state only | Docker Manager |
-| `cmd.docker.image.pull` | `{ registry?, namespace?, repository, tag? }` | `docker.image.pull.started`, terminal: `docker.image.pull.completed` or `docker.image.pull.failed` | Docker Manager |
-| `cmd.docker.image.push` | `{ image_ref }` | `docker.publish.started`, terminal: `docker.publish.completed` or `docker.publish.failed` or `docker.publish.blocked` | Docker Manager |
-| `cmd.docker.image.tag` | `{ source_ref, target_ref }` | `docker.image.tagged` or `docker.image.tag_failed` | Docker Manager |
-| `cmd.docker.image.remove` | `{ image_ref, force? }` | `docker.image.removed` or `docker.image.remove_failed` or `docker.image.remove.blocked` | Docker Manager |
-| `cmd.docker.compose.up` | `{ project_id, profile?, services? }` | `docker.compose.started` or `docker.compose.failed` | Docker Manager |
-| `cmd.docker.compose.down` | `{ project_id, remove_orphans? }` | `docker.compose.stopped` or `docker.compose.stop_failed` | Docker Manager |
-| `cmd.docker.compose.logs` | `{ project_id, services?, follow? }` | no persisted domain event (log open/follow) | Docker Manager |
-| `cmd.docker.bake.run` | `{ target?, file? }` | `docker.bake.started`, terminal: `docker.bake.completed` or `docker.bake.failed` | Docker Manager |
-| `cmd.docker.k8s.apply` | `{ context, namespace, manifest_ref }` | `docker.k8s.apply.started`, terminal: `docker.k8s.apply.completed` or `docker.k8s.apply.failed` or `docker.k8s.apply.blocked` | Docker Manager |
-| `cmd.docker.k8s.rollout_status` | `{ context, namespace, workload_ref }` | no persisted domain event (status fetch) | Docker Manager |
-| `cmd.docker.k8s.logs` | `{ context, namespace, workload_ref, follow? }` | no persisted domain event (log open/follow) | Docker Manager |
-| `cmd.docker.k8s.exec` | `{ context, namespace, workload_ref, container?, command? }` | `docker.k8s.exec.started`, terminal: `docker.k8s.exec.completed` or `docker.k8s.exec.failed` or `docker.k8s.exec.blocked` | Docker Manager |
-| `cmd.docker.k8s.port_forward` | `{ context, namespace, workload_ref, local_port, remote_port }` | `docker.k8s.port_forward.started`, terminal: `docker.k8s.port_forward.stopped` or `docker.k8s.port_forward.failed` | Docker Manager |
-
-ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md, ContractName:Plans/Permissions_System.md
-
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
 ### 2.6 Chat context usage commands
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
@@ -324,18 +273,22 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and
 ---
 ### 2.8A Side-panel and artifacts navigation commands
 
-| Command | Payload | Event / persistence | Notes |
-|---|---|---|---|
-| `cmd.panel.switch` | `{ "panel_id": "source_control" | "github_actions" | "docker_manager" | "artifacts" | "chat" | "files" | "run_debug", "project_id": "<optional>", "context?": { "repo_id?": "<optional>", "worktree_id?": "<optional>", "workflow_run_id?": "<optional>", "publish_result_id?": "<optional>", "k8s_ref?": "<optional>" } }` | Layout/UI state only; no domain event required. | Single side-panel slot; last-click wins. |
-| `cmd.artifacts.open_panel` | `{ "project_id": "<optional>", "filter": { "artifact_type": "<optional>", "task_id": "<optional>" } }` | Layout/UI state only; no domain event required. | Opens or focuses the Artifacts panel. |
-| `cmd.artifacts.show_in_ledger` | `{ "artifact_id": "<required>", "usage_event_ref": "<optional>", "run_id": "<optional>", "thread_id": "<optional>" }` | Layout/UI state only; no domain event required. | Opens canonical Ledger / Usage-linked state. |
-| `cmd.artifacts.show_in_usage` | `{ "artifact_id": "<required>", "usage_event_ref": "<optional>", "run_id": "<optional>", "thread_id": "<optional>" }` | Layout/UI state only; no domain event required. | Opens canonical Usage state. |
-| `cmd.orchestrator.open_in_source_control` | `{ run_id, attempt_id?, repo_id?, worktree_id?, commit_range? }` | Layout/UI state only; no domain event required. | Cross-surface Orchestrator pivot. |
-| `cmd.orchestrator.open_in_github_actions` | `{ run_id, workflow_run_id?, job_id?, step_id? }` | Layout/UI state only; no domain event required. | Cross-surface Orchestrator pivot. |
-| `cmd.orchestrator.open_in_docker_manager` | `{ run_id, publish_result_id?, runtime_ref?, k8s_ref? }` | Layout/UI state only; no domain event required. | Cross-surface Orchestrator pivot. |
+Cross-surface navigation commands remain domain-readable wrappers.
 
-ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
+Canonical examples are:
+- `cmd.project.open`
+- `cmd.chat.focus_thread_usage`
+- `cmd.artifacts.show_in_usage`
+- `cmd.artifacts.show_in_ledger`
+- `cmd.orchestrator.open_in_source_control`
 
+Rules:
+- wrapper commands stay public and readable
+- wrapper commands declare normalization metadata rather than inventing ad hoc route payloads
+- deprecated aliases are modeled distinctly from stable wrappers
+- the catalog does not require a large public `cmd.nav.*` family to achieve route consistency
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Crosswalk.md
 ## References
 - `Plans/Contracts_V0.md#UICommand`
 - `Plans/GitHub_API_Auth_and_Flows.md`

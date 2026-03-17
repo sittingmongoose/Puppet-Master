@@ -11,35 +11,34 @@ This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.
 
 ## Anti-drift layer (required reading order)
-To prevent agent drift while building Puppet Master autonomously, these are the **canonical SSOT** inputs and gates. Other plans MUST reference these instead of redefining them.
 
-ContractRef: SchemaID:Spec_Lock.json, ContractName:Plans/DRY_Rules.md#7
+Required reading order for the orchestrator rewrite canon-collapse is:
+1. `Plans/rewrite-tie-in-memo.md`
+2. `Plans/Decision_Log.md`
+3. `Plans/DRY_Rules.md`
+4. `Plans/Crosswalk.md`
+5. `Plans/Contracts_V0.md`
+6. `Plans/storage-plan.md`
+7. `Plans/Prompt_Pipeline.md`
+8. `Plans/Executor_Protocol.md`
+9. `Plans/Decision_Policy.md`
+10. `Plans/Progression_Gates.md`
 
-1. `Plans/Spec_Lock.json` — locked decisions + schema version pins + SSOT hashes
-2. `Plans/Contracts_V0.md` — canonical contracts (event envelope, tool events, UICommand, auth)
-3. `Plans/Crosswalk.md` — ownership boundaries for primitives
-4. `Plans/DRY_Rules.md` — DRY + ContractRef rule (no unreferenced operational requirements)
-5. `Plans/Glossary.md` — canonical terms (platform naming, primitives)
-6. `Plans/Decision_Policy.md` — deterministic decision policy + SpecLock Update Protocol
-7. Machine-checkable schemas (doc-linked artifacts):
-   - `Plans/plan_graph.schema.json` + `Plans/plan_graph.json` (self-build plan graph; required node execution metadata + deterministic `execution_ordering`)
-   - `Plans/project_plan_graph_index.schema.json` + `Plans/project_plan_node.schema.json` (user-project sharded plan graph; required node execution metadata + deterministic `execution_ordering`)
-   - `Plans/contracts_index.schema.json` (user-project contract pack index)
-   - `Plans/acceptance_manifest.schema.json` (user-project acceptance manifest)
-   - `Plans/evidence.schema.json` (evidence bundle)
-   - `Plans/change_budget.schema.json` (change budget)
-   - `Plans/auto_decisions.schema.json` + `Plans/auto_decisions.jsonl` (autonomous decisions)
-   - `Plans/Wiring_Matrix.schema.json` (wiring matrix entries)
-8. `Plans/UI_Command_Catalog.md` — stable UI command IDs (layout may change; command IDs do not)
-9. `Plans/Architecture_Invariants.md` — architecture invariants (autonomous checks)
-10. `Plans/Progression_Gates.md` — deterministic PASS/FAIL gates + Verifier role
-11. `Plans/Executor_Protocol.md` — deterministic next-ready selection + role boundaries + auto mark-done semantics
-12. Verifier command: `python3 scripts/pm-plans-verify.py run-gates`
+Primary consumer docs then follow:
+- `Plans/Orchestrator_Page.md`
+- `Plans/Run_Graph_View.md`
+- `Plans/FinalGUISpec.md`
+- `Plans/UI_Command_Catalog.md`
+- `Plans/Widget_System.md`
+- `Plans/usage-feature.md`
+- `Plans/FileManager.md`
 
-**Scope boundary (do not conflate):**
-- `Plans/plan_graph.*` is for **Puppet Master self-build** plan nodes.
-- User-project output artifacts live under `.puppet-master/project/*` and are specified by `Plans/Project_Output_Artifacts.md`.
+Rules:
+- owner docs are reconciled before consumer docs
+- consumer docs must not preserve stale tier-era or request-era canon as peer alternatives
+- summary and checklist mirrors are reconciled after owner and primary consumer docs
 
+ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Progression_Gates.md
 ## Rewrite tie-in (2026-02-21)
 The project is intentionally adapting an OpenCode-style architecture and is mid-transition to a deterministic agent-loop core with:
 - **Providers** behind one unified **event model**

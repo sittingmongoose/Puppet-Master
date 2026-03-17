@@ -28,46 +28,34 @@ ContractRef: Invariant:INV-010
 ---
 
 ## 2. Core terms
-### Source control, CI, and container orchestration terms
 
-**Source Control**
-The Git-first operational surface for repository changes, history, graph, branches/stash, and worktrees.
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md
+### Orchestrator rewrite terms
+- **Feature Seam**: a first-class graph-owned integration object representing one cross-package feature boundary.
+- **Work Package**: a first-class graph-owned execution/governance object representing package-local work within a seam.
+- **Package Overseer**: the governance actor responsible for one work package.
+- **Seam Overseer**: the governance actor responsible for cross-package integration inside one feature seam.
+- **Weak Integration**: an integration-quality failure family that includes wiring problems, workflow gaps, state/contract mismatches, GUI/runtime mismatch, and architecture drift.
+- **Promotion**: a governance/runtime state transition family that includes package availability and seam completion rather than a single generic “done” flag.
+- **Corroboration**: deterministic major-claim acceptance using the `2-of-3` model of original claim plus two corroborators.
+- **Graph Patch**: a formal structural replan that creates a new graph generation rather than mutating the prior graph in place.
+- **Graph Generation**: one graph lineage generation created by original planning or later graph patching.
+- **Lane**: the orchestration-facing operational identity bound to package execution and historical lineage.
+- **Worktree**: the concrete Git/filesystem backing object used by Source Control and lane execution.
+- **Concern**: a first-class durable issue record with its own lifecycle and lineage.
 
-**GitHub Actions**
-The GitHub-hosted workflow and admin surface for Current Branch runs, Workflows, and Settings.
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/storage-plan.md
 
-**Docker Manager**
-The operational surface for containers, images, compose, registries, build/bake, Publish / Unraid, and project-focused Kubernetes.
-ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md
+### Runtime and routing terms
+- **Blocked Episode**: one runtime-owned blocked period anchored by `run_id`, `node_id`, and `blocked_sequence`.
+- **Execution Role**: the actor-role identity used for runtime disclosure and audit, distinct from provider/account identity.
+- **Operational Identity**: the side-effect or target-context identity used for external operations, distinct from provider/account identity.
+- **Requested vs Effective**: the distinction between what was asked for and what actually ran.
+- **projection_freshness**: `current | refreshing | stale`.
+- **projection_health**: `healthy | degraded | unavailable`.
+- **route_target**: the canonical navigation-and-focus contract.
+- **OpenSubject**: the canonical identity-native source-open contract.
 
-**Operation receipt**
-A canonical runtime-linked record that preserves the cross-surface identity of a run/attempt action and its resulting SCM, workflow, runtime, publish, or usage references.
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
-
-### Shell and workspace terms
-
-
-- **workspace tab** — the primary in-window working context. Holds one active project plus local shell state such as active thread, side-panel state, browser tabs, terminal sessions, and dev-session references.
-- **detached window** — a secondary top-level window linked to a parent workspace tab or detached-surface record. It is not the primary shell identity.
-- **project/session browser** — a shell surface for browsing projects and their sessions/runs/threads across the app.
-- **attention center** — the canonical shell surface for background, blocked, or action-needed items that must remain visible outside the currently active thread or project.
-
-### Browser and preview terms
-
-- **workspace_preview** — in-shell browser/preview tab linked to a project and workspace tab.
-- **detached_preview** — detached browser/preview window linked to a project and workspace tab.
-- **automation_session** — ephemeral browser session used for automation/tooling and not promoted automatically into the persistent shell model.
-- **auth_session** — ephemeral browser session used for auth/device/browser login flows and not restored as a persistent shell browser tab.
-- **shared_with_agent** — state marking that a browser/preview subject has been explicitly shared with the active agent/thread and can be revoked.
-
-### Runtime resolution terms
-
-- **requested state** — the configuration or selection asked for by the user, command, Persona, project, or settings surface.
-- **effective state** — the configuration or capability actually resolved at runtime after platform, provider, permission, health, and policy evaluation.
-- **branch lineage** — the explicit relationship between a branched thread/session and its source restore point or source thread.
-- **dev session** — the canonical lifecycle record for a project-linked dev server, watcher, hot-reload, live-reload, or test-watch run.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileManager.md
 ## 3. Anti-drift documents
 - **Spec Lock** -- `Plans/Spec_Lock.json`; locked decisions that MUST NOT drift.
 - **Crosswalk** -- `Plans/Crosswalk.md`; ownership boundaries for primitives.

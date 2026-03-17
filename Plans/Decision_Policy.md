@@ -224,61 +224,30 @@ ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, PolicyRule:Decis
 
 ## Runtime Decision Rules Addendum (2026-03-08)
 
-### 1. No hidden scheduler heuristics
+### 1. No hidden orchestration fallbacks
+Runtime and consumer docs must not preserve tier-era or request-era canon as silent fallback behavior once replacement canon is locked.
 
-Scheduler selection logic must be explicit, deterministic, and inspectable.
+ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Crosswalk.md
 
-Required rule:
-- if a scheduler signal materially affects dispatch order, it must be defined normatively and exposed via observability
+### 2. Deterministic blocked and approval identity
+Blocked and approval decisions resolve through runtime blocked episodes.
 
-Therefore:
-- critical-path weighting is not permitted as an implicit MVP scheduler heuristic
-- hidden or provider-specific queue reordering is not permitted
+Rules:
+- blocked actions target `run_id`, `node_id`, `blocked_sequence`, and `attempt_id?`
+- `request_id` is lineage/compatibility only
+- `allowed_action_ids[]` is canonical
 
-### 2. No blind retries
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/UI_Command_Catalog.md
 
-The system MUST classify the outcome before retrying.
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md
+### 3. No silent runtime identity collapse
+Provider/account identity, execution role, and operational identity remain distinct.
 
-Required rule:
-- a failed or blocked attempt cannot be retried by generic default behavior
-- retry requires a class-defined path in the shared failure matrix
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Models_System.md
 
-### 3. No silent degradation after canonical lock
+### 4. Projection-state action policy
+Mutating actions must not rely silently on stale or degraded projections.
 
-Draft/pre-canonical decomposition may degrade with evidence.
-Canonical execution artifacts may not silently degrade.
-
-Required rule:
-- invalid canonical graphs are integrity failures and must stop execution until repaired
-
-### 4. Blocked vs failed outcome policy
-
-If the system intentionally does not execute an action because a guard, approval, or confirmation requirement blocked it, the outcome is `blocked`, not `failed`.
-
-This includes:
-- permission denial
-- user decline
-- headless ask denial
-- FileSafe blocks
-- external publish side-effect confirmation blocks
-- auth refresh requirements when the remote side effect did not execute
-
-### 5. Wizard clarification escalation policy
-
-`attention_required` and `blocked` are distinct policy states.
-
-Required distinction:
-- `attention_required`: clarification can continue within the current cycle
-- `blocked`: clarification rounds are exhausted; the system must stop automatic rewrite/advance and require new explicit user input
-
-### 6. Acceptance criteria
-
-- Scheduler heuristics are inspectable.
-- Blind generic retries are disallowed.
-- Canonical graph degradation is forbidden.
-- Intentional non-execution is modeled as blocked, not failed.
-- Wizard blocked escalation is policy-distinct from attention_required.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FinalGUISpec.md
 ## Runtime Recovery Deterministic Defaults Reconciliation Addendum (2026-03-09)
 
 Where higher-precedence sources do not decide, use these defaults:

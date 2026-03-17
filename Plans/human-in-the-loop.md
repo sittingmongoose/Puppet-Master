@@ -21,23 +21,33 @@ HITL semantics are part of the deterministic agent-loop core described in `Plans
 
 ### Canonical HITL request contract
 
-HITL pauses use one canonical request record:
-- `request_id` (stable approval request ID)
+The canonical human-in-the-loop contract is a blocked-runtime overlay, not a separate request-centric orchestration model.
+
+Required runtime-facing fields are:
 - `run_id`
-- `tier_id`
-- `tier_type` (`phase | task | subtask`)
-- `request_kind = "tier_boundary_approval"`
-- `message`
-- ordered `allowed_action_ids[]`
+- `node_id`
+- `blocked_sequence`
+- `attempt_id?`
+- `blocked_reason_code`
+- `allowed_action_ids[]`
+- `approval_scope_key`
+- `detail_ref?`
+- `approver_identity?`
 
-Canonical events are:
-- `hitl.approval_requested`
-- `hitl.approved`
-- `hitl.rejected`
-- `hitl.cancelled`
+Rules:
+- `waiting_approval` is the canonical blocked reason for approval pauses
+- `cmd.runtime.approve` and `cmd.runtime.decline` are the canonical approval/decline commands
+- `cmd.graph.approve_hitl` and `cmd.graph.deny_hitl` do not remain live canon
+- `request_id` may persist for compatibility lineage only and must not remain the primary action target
 
-All four events MUST carry the same `request_id` so replay, UI restoration, and command dispatch are deterministic across restart.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
 
+Action-family rules:
+- approve/continue resumes the blocked episode using the runtime-owned action set
+- decline keeps the blocked decision historically visible and records the chosen compensating action when one exists
+- skip, abort, retry from safe point, and retry fresh remain action-family decisions surfaced through `allowed_action_ids[]`
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Graph_View.md
 ## Executive Summary
 
 **Human-in-the-Loop (HITL) mode** lets the user require explicit human approval at selected tier boundaries. The orchestrator completes all work within the current tier (phase, task, or subtask), then **pauses at the boundary** until the human reviews and approves before proceeding to the next phase, task, or subtask. HITL is a **setting**: it can be enabled independently at phase level, task level, and subtask level. All HITL toggles are **off by default**.
@@ -58,14 +68,14 @@ ContractRef: PolicyRule:Decision_Policy.md§4, Gate:GATE-001
 
 ## Tier Boundaries (DRY)
 
-Tier boundaries are **not** redefined in this plan. They are defined in Plans/orchestrator-subagent-integration.md:
+Tier boundaries are not a co-equal execution model.
 
-- **Phase boundary:** After all tasks (and their subtasks/iterations) in the current phase are complete; before starting the next phase.
-- **Task boundary:** After all subtasks (and their iterations) in the current task are complete; before starting the next task.
-- **Subtask boundary:** After all iterations in the current subtask are complete; before starting the next subtask.
+Rules:
+- approvals do not bind to `tier_id` as the canonical execution scope
+- any surviving tier or phase labels are derived grouping/view concepts only
+- approval and recovery flows bind to runtime blocked episodes anchored by `run_id`, `node_id`, `blocked_sequence`, and `attempt_id?`
 
-HITL only specifies **where** to pause (at these boundaries) and **what** the human must do (review and explicitly approve). The **definition** of "phase," "task," and "subtask" remains in Plans/orchestrator-subagent-integration.md and implementation code.
-
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md
 ## Settings Model
 
 ### Three Independent Toggles
@@ -165,17 +175,17 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md
 
 When implementing:
 
-1. **Config:** Add HITL flags to the same config that the orchestrator uses for tier execution; ensure GUI reads/writes the same fields.
-2. **GUI settings:** Provide HITL as a setting in the GUI: user turns HITL on and configures which tiers (phase / task / subtask) it is enabled for. Persist to config; orchestrator reads from config.
-3. **Orchestrator run loop:** After "end verification" for a given tier (phase/task/subtask), if the corresponding HITL toggle is ON, transition to a "waiting for approval" state and do not advance until the user approves.
-4. **Dashboard CtAs:** When paused for HITL, add a warning or Call to Action on the Dashboard that prompts the user to interact (e.g. "Phase complete -- approval required"). This CtA is addressable via the Assistant (see assistant-chat-design.md) or via a direct Dashboard control ("Approve & continue").
-5. **Persistence:** If the app is closed while paused for HITL, on restore the run should still be in "waiting for approval" so the user can approve or cancel after reopening (align with Plans/newfeatures.md §4 recovery/snapshot requirements).
+1. **Config:** Add HITL flags to the same config that the runtime uses for approval/blocking policy; ensure GUI reads and writes the same fields.
+2. **GUI settings:** Provide HITL as a setting in the GUI with approval-policy controls that map to runtime blocked episodes rather than to tier-only toggles.
+3. **Runtime loop:** When a node/package/seam approval prerequisite is reached, transition to `waiting_approval` and do not advance until the user resolves the blocked episode.
+4. **Dashboard CtAs:** When paused for approval, add a warning or Call to Action on the Dashboard that prompts the user to interact. This CtA is addressable via the Assistant (see assistant-chat-design.md) or via a direct Dashboard control.
+5. **Persistence:** If the app is closed while paused for approval, on restore the run should still expose the same blocked episode so the user can approve, decline, retry, skip, or abort after reopening.
 ContractRef: ContractName:Plans/newfeatures.md, ContractName:Plans/storage-plan.md
 
-**Seglog:** Emit a HITL event when the run pauses for approval and when the user approves/rejects (event type, tier, timestamp, outcome). This makes approval history replayable and auditable.
+**Seglog:** Emit approval/blocking events when the runtime enters `waiting_approval` and when the user resolves the blocked episode. This makes approval history replayable and auditable.
 ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord
 
-**redb:** Persist **checkpoint/approval state** in redb (e.g. run or session table or a dedicated HITL state): `request_id`, current `run_id`, `tier_id`, `tier_type`, `request_kind`, `allowed_actions`, status = awaiting_approval | approved | rejected | cancelled, and timestamps/rationale as applicable. On restore, read this state so the UI shows 'waiting for approval' and the user can approve or cancel. Align with Plans/storage-plan.md checkpoints in redb.
+**redb:** Persist blocked/approval state in redb using canonical runtime identity: `run_id`, `node_id`, `blocked_sequence`, `attempt_id?`, `blocked_reason_code`, ordered `allowed_action_ids[]`, outcome state, and timestamps/rationale as applicable. On restore, read this state so the UI shows the same actionable blocked episode rather than a generic paused state.
 ContractRef: ContractName:Plans/storage-plan.md
 
 ## Optional: Interview Flow
@@ -287,35 +297,3 @@ After decline/reject, the surface MUST choose among:
 - `Start fresh attempt` when no valid safe point exists or policy forbids restore
 - `Replan` when the canonical classification is `replan_required`
 - `Skip node` only when the node contract explicitly allows skip without violating graph integrity
-
-## Canonical HITL Request and Persistence Correction
-This section is the canonical HITL request and persistence contract.
-
-### Canonical runtime-facing fields
-Every HITL request or blocked projection exposed to runtime-facing surfaces MUST use:
-- `blocked_reason_code`
-- ordered `allowed_action_ids[]`
-- `blocked_sequence` where blocked episodes are enumerated
-- `preserved_local_work`
-- `requires_safe_point_restore?`
-- prerequisite metadata needed to bind the recovery action
-- `failure_class?` only when the blocked state originates from a classified failed attempt
-- `detail_ref?` when drill-down evidence or logs exist
-
-Deprecated field names such as `allowed_actions[]` are compatibility-only and MUST NOT appear in new canonical schemas.
-
-### Waiting approval semantics
-`waiting_approval` is a blocked/runtime overlay, not a replacement node lifecycle state.
-- nodes remain in their graph-progress lifecycle while the runtime overlay indicates approval is pending
-- GUI, chat, and scheduler surfaces render recovery state from the blocked projection rather than by mutating the canonical node lifecycle taxonomy
-
-### Action-family rules
-Visible labels may vary by surface, but they MUST bind to canonical `allowed_action_ids[]` and the shared runtime recovery commands.
-- approval and decline remain first-class actions
-- restart/fresh-attempt, safe-point restore, replan, skip, and abort behavior come from the same canonical runtime action set used elsewhere
-- HITL MUST NOT invent a parallel action schema that diverges from the runtime command catalog
-
-### Persistence rule
-HITL requests and blocked episodes persist as canonical blocked/runtime records so restoration after interruption returns the user to the same actionable state rather than a generic paused state.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Executor_Protocol.md

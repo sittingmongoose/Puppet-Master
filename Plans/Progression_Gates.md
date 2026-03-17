@@ -160,28 +160,27 @@ ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/DRY_Rules.md#
 
 <a id="GATE-010"></a>
 ## GATE-010 -- Wiring matrix validation
-**Pass condition:** The UI wiring matrix is complete, valid, and testable:
-1. `Plans/Wiring_Matrix.schema.json` parses as valid JSON Schema.
-2. All wiring matrix artifacts validate against `Plans/Wiring_Matrix.schema.json`.
-3. Every wiring entry key is a unique `ui_element_id`, and each row's `ui_element_id` value matches its containing key.
-4. Every `UICommandID` in `Plans/UI_Command_Catalog.md` has at least one wiring matrix entry.
-5. Every wiring matrix entry's `handler_location` resolves to an existing module/function in the codebase; unresolved entries are listed in evidence with `ui_element_id`, `ui_command_id`, `handler_location`, and inspected candidate files/modules.
-6. Every wiring matrix entry with non-empty `expected_event_types` has a corresponding test that exercises command dispatch and verifies the declared events are emitted.
-7. Dispatcher tests prove unknown `command_id` values return a structured error and emit no domain events.
-8. Handler modules pass an architectural lint that rejects imports/references to UI widget or view namespaces.
-9. UI/view-layer code passes an architectural lint that rejects direct state mutation outside dispatcher/projection/store boundaries.
-10. No dead commands: UICommandIDs referenced in code but absent from the catalog are flagged.
 
-Required evidence:
-- Evidence bundle conforming to `Plans/evidence.schema.json` with `checks[]` entries for schema validation, coverage, handler resolution, and event emission tests.
+`GATE-010` verifies canonical command binding and route-aware navigation normalization.
 
-**Script enforcement status:** Not yet enforced by `run-gates`; targeted for inclusion after wiring matrix is populated with non-example entries.
+The gate must fail when any of the following are true:
+- a public wrapper command lacks declared normalization metadata
+- a deprecated alias is treated as an independent canonical command
+- a routed command bypasses the canonical `route_target` / `OpenSubject` contract family
+- a command row claims layout-only semantics while actually targeting a runtime object, usage object, or cross-surface focus action
+- a command/action payload still keys approval or usage correlation by `request_id` or `tier_id` where blocked/runtime or usage identity is canonical
 
-ContractRef: SchemaID:Wiring_Matrix.schema.json, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/UI_Command_Catalog.md, Invariant:INV-011, Invariant:INV-012
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Crosswalk.md
 
----
+Evidence for this gate must capture:
+- command ID
+- command kind
+- normalization metadata when present
+- handler binding
+- emitted target contract or action family
+- failure reason when the row is invalid
 
-<a id="GATE-011"></a>
+ContractRef: ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/evidence.schema.json, ContractName:Plans/Wiring_Matrix.schema.json
 ## GATE-011 -- Requirements traceability coverage
 
 **Pass conditions (ALL must hold; deterministic, no soft thresholds, no flag-driven overrides):**
@@ -325,53 +324,21 @@ ContractRef: SchemaID:pm.auto_decisions.schema.v1, Gate:GATE-013, SchemaID:evide
 
 <a id="GATE-014"></a>
 ## GATE-014 -- Document Set packaging verification
-**Pass conditions (ALL must hold):**
-1. For each Markdown/text artifact under `.puppet-master/**` that reaches Document Packaging Policy triggers, a `.docset/` directory exists at `<original_path>.docset/` with:
-   - `00-index.md`
-   - `manifest.json`
-   - ordered shard files
-   - `evidence/` audit outputs
-2. Reconstruction proof passes: concatenated shard bytes in manifest order produce source `sha256` equality.
-3. Line accounting passes: each source line is covered exactly once (no gaps, no overlaps).
-4. Index/manifest exact match passes: shard ordering, links, existence checks, and no extra shard files.
-5. Idempotency passes: regenerate twice with same source yields no diffs.
-6. Clean-room determinism passes: regeneration in a clean directory yields byte-identical outputs and matching hashes.
-7. Pointer stub acceptance: the original artifact file path MUST contain a valid pointer stub with:
-    - the `docset_entrypoint` field matching `<filename>.docset/00-index.md`
-    - the `source_sha256` field matching `manifest.json` `source_sha256`
-    - a `verify_command` field
-   - verifier checks map pointer-stub labels as follows:
-     - `Entrypoint` line → `docset_entrypoint`
-     - `Source SHA-256` line → `source_sha256`
-     - `Verify` line → `verify_command`
 
-ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
+`GATE-014` verifies packet completeness against the reconciled impacted-doc set.
 
-**Fail condition:** Any pass condition (1–7) fails, or any of the following:
-- A triggered artifact is left unpackaged (no `.docset/` exists and file exceeds budget).
-- A pointer stub exists but the corresponding `.docset/` directory is missing.
-- A `.docset/` directory exists but the pointer stub `source_sha256` does not match `manifest.json` `source_sha256`.
+The gate must fail when any of the following are true:
+- a doc marked MUST CHANGE is absent from the packet
+- a doc marked MUST RECONCILE is absent from the packet
+- a packet uses append-only placement where canon replacement/retirement is required
+- a packet targets a structured container indirectly instead of replacing the owning headed section with the final canonical content
+- a packet preserves stale tier-era or request-era canonical text as a peer option rather than collapsing to the replacement canon
 
-ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014
+ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
 
-Required evidence:
-- Evidence bundle entries for each triggered artifact that include:
-  - reconstruction hash report
-  - line accounting report
-  - index/manifest parity report
-  - idempotency report
-  - clean-room parity report
-  - pointer stub validation report (entrypoint matches, sha256 matches, verify command present)
-- Evidence detail lists MUST be exhaustive for full shard sets (no sampling).
+Verification-only docs may be absent from the packet only when the reconciliation pass explicitly confirmed they do not require edits for the current change set.
 
-ContractRef: SchemaID:evidence.schema.json, Gate:GATE-014
-
-**Script enforcement status:** Not yet enforced by `run-gates`; targeted for inclusion after Document Set artifact generation is integrated.
-
-ContractRef: Gate:GATE-014, SchemaID:evidence.schema.json, ContractName:Plans/Document_Packaging_Policy.md, PolicyRule:Decision_Policy.md§2
-
----
-
+ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/00-plans-index.md, ContractName:Plans/feature-list.md
 ## References
 - `Plans/DRY_Rules.md`
 - `Plans/Architecture_Invariants.md`
@@ -490,18 +457,6 @@ The gate rule MUST:
 3. Verify that `allowed_action_ids[]` is used in all canonical blocked payloads, HITL contracts, FileSafe contracts, and container publishing contracts.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/DRY_Rules.md
-
-## Runtime Recovery Canonicalization Gate Addendum
-
-The runtime recovery sweep MUST fail if any doc:
-- uses `allowed_actions[]` or `recovery_options[]` in a prescriptive runtime-facing context
-- uses `analysis_id` as canonical queue-analysis identity instead of `scheduler_pass_id`
-- leaves stale canonical text in owner docs while only appending a contradictory later note
-- treats blocked reasons as `failure_class` values in runtime policy or consumer contracts
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Crosswalk.md
-
-Accept deprecated names only inside deprecation notices, migration notes, or gate rules that detect them as defects.
 
 ## Runtime Recovery Canonicalization Gate Addendum
 

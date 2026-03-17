@@ -132,10 +132,22 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator
 
 ### A.5 Surface boundary rule
 
-GitHub-hosted workflow/admin behavior does not belong to Source Control and MUST route to the GitHub Actions surface.
+Source Control, Orchestrator, and GitHub surfaces keep distinct responsibilities.
 
-ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+Rules:
+- Source Control owns Git-native worktree inspection and mutation actions
+- Orchestrator owns lane/package/seam operational context, lineage, and governance state
+- GitHub surfaces own remote platform state and remote receipt lineage
+- cross-surface opens route through canonical route/open contracts rather than feature-local payloads
 
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Contracts_V0.md
+
+Remote-operation receipts must retain linkage to:
+- local runtime identity when applicable
+- local worktree/lane identity when applicable
+- remote workflow/PR/action identity
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md
 ## B. GitHub API Integration
 
 GitHub API is used for hosting operations only (repository management, PR, Issues,

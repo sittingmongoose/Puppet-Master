@@ -47,10 +47,39 @@ The **Artifacts panel** is the single place to see everything agents produced du
 
 ## 5. Canonical IDs and task_id rule
 
-**Canonical ID set:** artifact_id, run_id, thread_id, task_id (per rule below), linked_artifact_id, logical_artifact_id. Format (e.g. UUID, prefixed) must be specified in implementation; see Plans/Contracts_V0.md for run_id/thread_id.
+Runtime artifacts are attempt-native, bridge-aware records.
 
-**task_id rule (deterministic):** Present in payload **when the run has task/subtask granularity**; **otherwise omit from payload.** No "optional" wording; not conditional on "if available."
+Required common envelope fields include:
+- `artifact_id`
+- `artifact_kind`
+- `logical_artifact_id?`
+- `linked_artifact_id?`
+- `project_id`
+- `run_id`
+- `thread_id?`
+- `node_id?`
+- `attempt_id?`
+- `execution_role?`
+- `provider_attempt_ref?`
+- `usage_event_ref?`
+- `repo_id?`
+- `worktree_id?`
+- `branch_ref?`
+- `workflow_refs?`
+- `docker_refs?`
+- `kubernetes_refs?`
+- `operational_identity?`
+- `detail_ref?`
+- `content_ref?`
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md
+
+Rules:
+- `attempt_id` is the canonical local execution anchor
+- bridge refs such as `provider_attempt_ref`, `usage_event_ref`, and receipt refs remain joins rather than replacement primary keys
+- runtime artifact open flows resolve through `OpenSubject` and route/open contracts rather than through feature-local path guessing
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/FinalGUISpec.md
 ## 6. reasoning_tokens and cost_usage
 **reasoning_tokens:** Required in the usage/cost_usage schema (integer, minimum 0). In the UI, display the field only when value > 0.
 

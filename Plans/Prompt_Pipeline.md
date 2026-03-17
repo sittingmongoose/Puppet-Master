@@ -212,7 +212,7 @@ Before final prompt payload emission, the runtime MUST resolve:
 3. **Persona selection mode**
    manual / auto / hybrid.
 4. **Requested Persona**
-   From explicit UI selection, structured config, plan/tier assignment, natural-language invocation, or none.
+   From explicit UI selection, structured config, surface assignment, natural-language invocation, or none.
 5. **Effective Persona**
    After resolver, alias normalization, fallback, and provider availability checks.
 6. **Requested/effective runtime controls**
@@ -230,7 +230,7 @@ Before final prompt payload emission, the runtime MUST resolve:
 `persona_selection_source` MUST be one of:
 - `manual_ui`
 - `auto_surface_resolver`
-- `plan_or_tier_default`
+- `surface_default`
 - `config_default`
 - `user_natural_language`
 - `fallback`
@@ -246,14 +246,14 @@ When multiple Persona-selection inputs exist, the runtime MUST compute `requeste
 2. **Active scoped natural-language override**
    A previously resolved natural-language override whose scope still applies to the current execution. If multiple active scoped overrides apply, the most specific owner wins:
    - `subagent`
-   - `task`
+   - `node`
    - `run`
    - `turn`
    - `session`
 3. **Surface-specific explicit mapping**
-   A configured Interview stage override, Builder stage/pass override, Orchestrator tier override, or equivalent mapped Persona source.
+   A configured Interview stage override, Builder stage/pass override, Orchestrator execution-scope override, or equivalent mapped Persona source.
 4. **Surface auto resolver candidate**
-   The Persona proposed by the active surface resolver based on stage/tier/task/repo context.
+   The Persona proposed by the active surface resolver based on actor type, operation type, scope level, and repo context.
 5. **Config default**
    A project/global default Persona configured for the surface.
 6. **Canonical fallback**
@@ -269,7 +269,7 @@ Required lifecycle rules:
 - `turn` scope expires after the next eligible execution on the same thread/surface.
 - `session` scope remains active until cleared or replaced within the same thread/session.
 - `run` scope applies only to the current run tree.
-- `task` scope applies only to the owning task/tier item.
+- `node` scope applies only to the owning execution unit.
 - `subagent` scope applies only to the targeted delegated child run.
 
 If a scoped override no longer has a valid owner object, it MUST be discarded before resolution and recorded as expired rather than silently reused.
@@ -336,85 +336,61 @@ Examples of required auto behavior:
 Rule: auto mode MUST always expose the selected effective Persona and reason. It MUST NEVER emit an opaque `Auto` state with no resolved output.
 
 ### 6.5 Effective resolution record
-<a id="EFFECTIVE-RESOLUTION-RECORD"></a>
 
-Every prompt assembly run MUST produce an effective resolution record containing at least:
+The effective resolution record captures the frozen requested/effective runtime identity used for a specific execution handoff.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Multi-Account.md
-
+Required fields are:
 - `requested_persona`
 - `effective_persona`
 - `persona_selection_source`
 - `selection_reason`
-- `persona_override_scope` (`none | turn | session | run | task | subagent`)
-- `persona_override_owner_id` (`thread_id | run_id | tier_id | subagent_run_id | null` depending on scope)
+- `persona_override_scope`
+- `persona_override_owner_id`
 - `requested_platform`
 - `effective_platform`
 - `requested_model`
 - `effective_model`
 - `requested_variant`
 - `effective_variant`
-- `requested_auth_mode?`
-- `effective_auth_mode?`
-- `requested_account_policy?`
+- `requested_auth_mode`
+- `effective_auth_mode`
+- `requested_account_policy`
+- `requested_account_id?`
+- `requested_account_binding?`
 - `effective_account_id?`
 - `effective_account_label?`
 - `effective_provider_identity?`
-- `effective_project_id?`
 - `account_switch_reason?`
-- `effective_temperature`
-- `effective_top_p`
-- `effective_reasoning_effort`
-- `effective_talkativeness`
+- `effective_temperature?`
+- `effective_top_p?`
+- `effective_reasoning_effort?`
+- `effective_talkativeness?`
 - `applied_persona_controls[]`
 - `skipped_persona_controls[]`
+- `execution_role`
+- `operational_identity?`
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Multi-Account.md
-
-`applied_persona_controls[]` element schema:
-```json
-{
-  "control": "temperature",
-  "requested_value": 0.2,
-  "effective_value": 0.2,
-  "source": "persona",
-  "reason": "supported by selected provider/model"
-}
-```
-
-`skipped_persona_controls[]` element schema:
-```json
-{
-  "control": "reasoning_effort",
-  "requested_value": "high",
-  "effective_value": null,
-  "provider": "cursor",
-  "model": "anthropic/claude-sonnet-4",
-  "reason": "selected transport/model does not expose effort control",
-  "fallback_behavior": "omit_control"
-}
-```
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md
 
 Rules:
-- `selection_reason` MUST be a one-line human-readable explanation suitable for direct UI display.
-- `applied_persona_controls[]` and `skipped_persona_controls[]` MUST be sufficient to power GUI/runtime disclosure without requiring undocumented side fields.
-- If a requested control is clamped rather than fully honored, record it in `applied_persona_controls[]` with both requested and effective values.
-- If no scoped override is active, `persona_override_scope = none` and `persona_override_owner_id = null`.
+- requested and effective values are both mandatory runtime concepts and must not collapse into one field
+- historical views must show the frozen requested/effective record captured for that execution and must not recompute from current settings
+- `requested_persona_id` and `effective_persona_id` are not canonical persisted field names
+- actor type and operation type outrank stack hints in auto-resolution
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md#EventRecord
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
 
-Auth/account resolution rules:
-- auth/account resolution occurs before attempt/message dispatch for every provider-using role
-- explicit `oauth` and explicit `api_key` requests MUST NOT silently cross-fallback
-- `auto` uses the policy-configured auth-surface preference order
-- load provider capability block, then eligible auth surfaces, then eligible account pool, then prefer the current healthy account before falling back to the highest-priority eligible alternative
-- if no eligible account exists, emit an explicit blocked/degraded reason rather than hiding the failure behind a silent fallback
+Precedence is closed to:
+1. explicit manual/run override
+2. scoped natural-language override
+3. surface-specific explicit mapping
+4. surface auto resolver candidate
+5. config default
+6. canonical fallback
 
-ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md, PolicyRule:Decision_Policy.md§3
+`persona_override_owner_id` must align to thread/run/node/attempt/actor lineage. `tier_id` does not remain a canonical owner anchor.
 
-This record is the canonical cross-system effective runtime record referenced by `Plans/Personas.md`, `Plans/Models_System.md`, `Plans/storage-plan.md`, and UI/runtime consumers. It MUST be available to event/history/UI consumers and to any payload that claims to expose requested/effective Persona/runtime state.
-
-ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Decision_Policy.md
 ### 6.6 Provider capability filtering stage
 
 Persona controls must pass through provider capability filtering before prompt/model execution.

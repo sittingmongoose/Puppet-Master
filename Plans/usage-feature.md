@@ -185,22 +185,6 @@ Implementation note: If the cost_usage payload includes `usage_event_seq` or `us
 For implementers: the flow by which usage is collected and stored can be referenced from the OpenCode product (anomalyco/opencode repo). Conceptual flow: **provider response** → adapter → **LanguageModelV2Usage** (or equivalent) → **getUsage-style normalization** (e.g. Session.getUsage) → **processor** applies on finish-step to assistant message + step-finish part; **UI reads from messages** and/or usage.event. Key paths in that repo: session-context-metrics (UI metrics from messages), processor finish-step (where token/cost is applied to message), Session.getUsage (normalization). Puppet Master does not replicate this exactly; all providers (CLI-bridged, OpenCode provider, Codex, Gemini, Copilot) normalize to the same usage.event / message usage shape; collection mechanism differs per provider. OpenCode the **provider** (Plans/Provider_OpenCode.md) is one transport; OpenCode the **product** is the reference for "how message-level usage becomes stored usage."
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Provider_OpenCode.md, PolicyRule:Decision_Policy.md§2
-### Cost_usage runtime artifact and Show in Ledger / Show in Usage
-
-The **cost_usage** runtime artifact (see Plans/Runtime_Artifacts_Panel.md and Plans/storage-plan.md) is an **attribution record** only. It uses the **same canonical usage pipeline and schema** as `usage.event` (tokens_in, tokens_out, reasoning_tokens, cost, platform/provider, model). There is no second store; the Ledger and Usage page consume the same data.
-
-**Artifacts panel actions for cost_usage items:** For each cost_usage artifact, the Artifacts panel MUST offer:
-- **Show in Ledger** — Navigate to the Usage area (Ledger tab or Ledger view) with filters set so the canonical usage.event for this cost is visible (e.g. by usage_event_seq or usage_event_ref, or by run_id/thread_id/timestamp).
-- **Show in Usage** — Navigate to the Usage page (or thread Usage tab when the cost is for that thread) with the same event in scope (e.g. selected or scrolled into view).
-
-Implementation note: If the cost_usage payload includes `usage_event_seq` or `usage_event_ref`, the GUI can pass it to the Usage/Ledger view to scroll to or highlight that row. Otherwise open Usage/Ledger filtered by run_id/thread_id/ts.
-
-### OpenCode (product) usage pipeline reference
-
-For implementers: the flow by which usage is collected and stored can be referenced from the OpenCode product (anomalyco/opencode repo). Conceptual flow: **provider response** → adapter → **LanguageModelV2Usage** (or equivalent) → **getUsage-style normalization** (e.g. Session.getUsage) → **processor** applies on finish-step to assistant message + step-finish part; **UI reads from messages** and/or usage.event. Key paths in that repo: session-context-metrics (UI metrics from messages), processor finish-step (where token/cost is applied to message), Session.getUsage (normalization). Puppet Master does not replicate this exactly; all providers (CLI-bridged, OpenCode provider, Codex, Gemini, Copilot) normalize to the same usage.event / message usage shape; collection mechanism differs per provider. OpenCode the **provider** (Plans/Provider_OpenCode.md) is one transport; OpenCode the **product** is the reference for "how message-level usage becomes stored usage."
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Provider_OpenCode.md, PolicyRule:Decision_Policy.md§2
-
 ### Backend implementation notes
 - **Data layer:** Reuse and extend existing usage/plan-detection logic. Expose a clear current-usage contract per platform that the GUI can poll or subscribe to.
 - **Primary input:** aggregate from `usage.jsonl` / canonical usage projections.
@@ -258,50 +242,41 @@ Non-canonical after this section:
 The canonical fix is a single normalized `UsageRecord` contract shared by Ledger, Usage, Run Graph, and Orchestrator surfaces.
 
 ### Canonical UsageRecord fields
-Required fields:
-- `run_kind`
-- `run_id`
-- `tier_id`
-- `attempt_id?`
+
+Canonical usage identity is runtime-first, not tier-first.
+
+Required usage attribution fields are:
+- `usage_event_ref`
+- `project_id`
+- `run_id?`
 - `thread_id?`
-- `effective_platform`
-- `effective_model`
-- `effective_auth_mode?`
+- `node_id?`
+- `attempt_id?`
+- `execution_role?`
+- `provider_id?`
 - `effective_account_id?`
-- `input_tokens`
-- `output_tokens`
-- `total_tokens`
-- `estimated_cost?`
-- timestamps sufficient for rollups and ordering
+- `provider_attempt_ref?`
+- `artifact_id?`
+- `receipt_refs?`
+- cost/token/quota payloads
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+Rules:
+- `tier_id` does not remain the primary usage correlation key
+- usage pivots from graph, artifacts, chat, and Orchestrator resolve through canonical usage identity and route contracts
+- usage history must distinguish requested/effective account/runtime behavior when that affects cost or quota outcomes
 
-Optional but recommended attribution fields:
-- `provider_account_id?`
-- `usage_source_kind`
-- `signal_confidence`
-- `effective_project_id?`
-- `currency?`
-- `prompt_cache_hit?` / similar optimization counters when available
-
-Ownership and consumption:
-- Ledger reads normalized `UsageRecord` projections rather than ad hoc log parsing
-- Usage page rollups are derived from the same record family
-- Run Graph and Orchestrator aggregate by `tier_id` and `attempt_id?` from the same contract
-- Interview, assistant, builder, and orchestrator runs share the same schema; `run_kind` distinguishes workflow families without creating parallel usage systems
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md
-
-Rule:
-- There is one usage schema. Compatibility shims may ingest older sources, but new runtime surfaces MUST NOT define alternate token/model/auth/account attribution records.
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
 ### Ownership and consumption
-- Ledger reads normalized `UsageRecord` projections rather than ad hoc log parsing
-- Usage page rollups are derived from the same record family
-- Run Graph and Orchestrator aggregate by `tier_id` and `attempt_id?` from the same contract
-- Interview and orchestrator runs share the same schema; `run_kind` distinguishes workflow families without creating parallel usage systems
 
+Usage remains a shared surface consumed by chat, runtime, Orchestrator, and Source Control-adjacent artifacts.
+
+Rules:
+- graph and Orchestrator consumers must stop aggregating by `tier_id`
+- `Show in Usage` pivots route through usage identity and `route_target`
+- account pressure and account-switch history remain visible as shared provider-runtime behavior, not as a second quota system
+- stale/degraded usage projections must disclose `projection_freshness` and `projection_health` before live actions rely on them
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
 ### Rule
 There is one usage schema. Compatibility shims may ingest older sources, but new runtime surfaces MUST NOT define alternate token/model attribution records.
 
@@ -455,12 +430,12 @@ ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpe
 - **Phase**
   - v1 if we already parse errors; low effort.
 
-### Enhancement 3: Per-tier usage in Config
+### Enhancement 3: Per-run and execution-scope usage in Config
 
 - **Benefit**
-  - In tier config, "This tier used X tokens / Y requests in last 7d" helps users see which tier burns the most and adjust platform or model.
+  - In execution settings, "This run / node / package used X tokens / Y requests in last 7d" helps users see which execution scope burns the most and adjust platform or model.
 - **Notes**
-  - Aggregate from `usage.jsonl` by `tier_id`; orchestrator already writes `tier_id`. Requires shared aggregation API or module used by both Usage and Config.
+  - Aggregate from canonical usage identity (`usage_event_ref`, `run_id`, `node_id`, `attempt_id`, and related runtime attribution fields) rather than by `tier_id`. Requires a shared aggregation API or module used by both Usage and Config.
 - **Phase**
   - Post-v1 once 5h/7d and Ledger are stable.
 
