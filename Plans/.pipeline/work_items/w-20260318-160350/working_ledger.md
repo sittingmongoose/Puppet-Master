@@ -68,6 +68,13 @@
   - IME/input/Unicode/accessibility behavior
   - clipboard, permissions, packaging, and escape-sequence quirks
 - Final synthesis should explicitly recommend a platform capability matrix and platform-specific acceptance criteria rather than assuming one common happy path.
+- Current terminal scope is standard terminal behavior and compatibility, not terminal-owned assistant overlays.
+- The terminal must be strong enough for users to run terminal-native CLI tools naturally inside it without PM adding a second assistant UX layer inside the terminal itself.
+- Rich text handling is a first-class terminal requirement:
+  - reliable text selection in terminal body/output
+  - reliable copy and paste in both output and input areas
+  - strong keyboard and mouse navigation through terminal text
+  - vertical cursor movement through wrapped multi-line input, not just left/right traversal
 - Current recommended framing:
   - default shell starts with one bottom terminal section
   - user may spawn a second terminal section
@@ -110,6 +117,8 @@
   - internal terminal theme schema should be explicit and semantic, not just imported ANSI tables
   - theme previews/search/light-dark pairing/contrast indicators are desirable
   - instant apply/revert and colorspace normalization matter
+  - curated theme catalogs feel stronger than ad hoc color controls
+  - settings can double as discoverability surfaces when commands/shortcuts/behaviors are exposed clearly
 - Early trust/safety findings:
   - users strongly value visible command execution and approval models
   - “pre-run edit / approve / reject / trust” flows are compelling for AI-driven terminal work
@@ -136,6 +145,8 @@
   - close/interruption/recovery behavior for active terminal sessions
   - restore semantics beyond tab metadata
   - settings ownership for terminal default cwd, visual theme, color palette, and behavior defaults
+  - how Terminal settings expose commands, shortcuts, and behaviors as both configuration and built-in cheat sheet/documentation
+  - theme catalog shape, including PM-aligned presets versus broader novelty/fun presets
   - remote terminal behavior and how it differs from remote editing
   - explicit interaction contracts among Terminal, Output, Problems, Ports, and Debug
 - `Plans/storage-plan.md` did not show obvious terminal-state ownership in the initial targeted search, suggesting storage ownership may still need reconciliation against `FinalGUISpec`'s logical/UI persistence table.
@@ -148,8 +159,14 @@
   - explicit render modes (interactive/log/plain/export)
   - renderer capability/fallback matrix
   - Unicode/IME/accessibility acceptance criteria
-  - kill/interrupt/trust flows for AI-issued commands
+  - selection/copy/paste/input-navigation acceptance criteria
+  - shortcut/command discoverability and remapping contract
+  - terminal interaction-mode contract across live input, scrollback review, selection, search, and full-screen TUI capture
 - There is still a risk of overfitting to flashy or adjacent projects that are not full desktop terminal references; final synthesis should weight evidence by relevance.
+- Follow-up web research strengthened the performance/architecture conclusion:
+  - DOM/React/webview-style terminal rendering frequently correlates with flicker, scroll jumps, selection breakage, and input lag because terminal output is a high-frequency mutable grid rather than normal document UI
+  - PM should avoid a DOM-style terminal rendering architecture for the terminal core
+  - native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer work are strongly reinforced as the right direction
 
 ## Candidate Fixes / Design Directions
 - Treat terminal design as a shell subsystem with its own explicit contract, not as scattered bottom-panel behavior.
@@ -167,24 +184,260 @@
 - Use `Open in Terminal` as an idempotent same-session focus action whenever a PTY-backed session already exists.
 - Separate terminal transcript persistence questions from tab metadata persistence; current docs only lock the latter.
 - Reconcile terminal ownership with Output / Problems / Ports / Debug so the user-visible boundary between these surfaces is explicit.
+- Surface-boundary draft:
+  - Terminal:
+    - owns live PTY-backed interaction
+    - owns shell input/output, interactive CLI/TUI runtime, scrollback review, command blocks, rerun/restart, and session lifecycle
+    - is the canonical place for anything that requires stdin/tty semantics or real shell interactivity
+  - Output:
+    - owns non-interactive process/log surfaces that do not need live PTY interaction
+    - owns structured build/run/test/task output summaries when PM chooses not to route that work through a user-facing terminal session
+    - may link back to a terminal session when the underlying work actually ran in Terminal
+  - Problems:
+    - owns normalized diagnostics/errors/warnings with file/line/code semantics
+    - receives structured issues from compilers, linters, language servers, test runners, or terminal-derived parsers
+    - does not replace the terminal transcript; it presents extracted actionable issues
+  - Debug:
+    - owns debugger state, call stack, breakpoints, watches, stepping controls, and debug-console-specific interactions
+    - may coexist with a terminal used by the debug target, but terminal and debug console remain different surfaces
+  - Ports:
+    - owns discovered/listening/forwarded service endpoints and related actions (open browser, copy URL, stop forwarding if supported)
+    - can derive from dev sessions or terminal-run processes, but does not replace the terminal that launched them
+  - Browser/preview if relevant:
+    - owns rendered app/site preview
+    - may be launched from or linked to a terminal/dev session, but remains a separate surface
+- Follow-up official-doc validation:
+  - major IDE/editor patterns do in fact keep Terminal, Output, Problems, Debug Console, and Ports/Services as distinct surfaces
+  - Terminal is consistently treated as the interactive shell/runtime surface
+  - Output/Run views are consistently treated as non-interactive or IDE-managed output surfaces
+  - Problems/inspection views are consistently treated as structured diagnostic surfaces rather than transcript surfaces
+  - Debug consoles are consistently scoped to active debugger runtime/evaluation, not general shell work
+  - Ports/Services views are consistently treated as extracted service/endpoint management surfaces, not replacements for the launching terminal
+- Boundary behavior implications:
+  - terminal-originated work can emit secondary artifacts into Problems/Ports/Output without surrendering terminal ownership of the live session
+  - terminal should remain reviewable even when structured issues or ports are extracted elsewhere
+  - a user seeing a problem/port/output item should have a route back to the originating session when one exists
+  - PM should prefer extraction and linking across surfaces over duplicating or moving the canonical runtime surface
+- Routing-policy draft:
+  - route work to Terminal when:
+    - it needs stdin/tty interaction
+    - it is long-running and users benefit from watching or controlling it live
+    - it is shell-native/CLI-native work where session continuity matters
+    - it may evolve into interactive/TUI behavior
+    - PM agents are performing visible shell automation that should remain inspectable/auditable as live terminal work
+  - route work to Output when:
+    - it is non-interactive
+    - it is short-lived or summary-oriented
+    - the user primarily needs logs/results rather than shell control
+    - PM is surfacing structured task/build/test output without requiring a PTY
+  - route derived issues to Problems when:
+    - output can be normalized into actionable diagnostics
+    - file/line/code/location semantics exist
+  - route discovered service endpoints to Ports when:
+    - a running process exposes a browsable or forwardable endpoint
+  - hidden/background execution should be the exception, not the default:
+    - acceptable when the task is truly infrastructure-like and the user does not need terminal semantics
+    - not acceptable as a way to bypass terminal ownership for shell-like or agent-driven shell work that users would reasonably expect to inspect/control
+  - if PM starts work outside Terminal but later determines the user needs live control, there should be a path to reveal/focus the canonical related terminal session when one exists
+- Command-structure draft:
+  - PM should model prompt marks / command boundaries / command blocks as canonical terminal metadata when the shell/session can provide them, with graceful degradation when it cannot
+  - command block = one prompt-to-completion unit, including:
+    - prompt/start marker
+    - command text when known
+    - streamed output region
+    - completion/exit marker when known
+    - per-command metadata
+  - per-command metadata should include when available:
+    - command text
+    - start time
+    - end time / duration
+    - exit status
+    - cwd
+    - shell/profile context
+  - sticky headers should surface the current/nearest command block while scrolling through long output
+  - command-block actions should include at least:
+    - copy command
+    - copy output
+    - copy full block
+    - rerun
+    - restart session context when appropriate
+    - reveal originating pane/session if accessed from another surface
+  - navigation affordances should include:
+    - previous/next command block
+    - previous/next failed command block
+    - jump to latest command block
+  - degradation rules:
+    - if shell integration is partial, PM should still support approximate blocks where possible without lying about precision
+    - if shell integration is absent, PM must fall back to plain terminal transcript behavior rather than inventing fake exact command boundaries
+  - visual rules:
+    - command blocks/separators should aid scanning without hijacking normal shell behavior
+    - sticky headers and markers must be lightweight enough not to destabilize layout or selection
+- Cross-surface feature patterns worth adopting:
+  - Output:
+    - channels or per-task tabs
+    - filter/search within output
+    - pin/preserve important runs
+    - follow-vs-pause behavior for live logs
+    - rerun/reveal-origin actions
+  - Problems:
+    - grouping by file/tool/severity
+    - dedupe and collapse repeated issues
+    - filtering scopes such as current file/errors only/current tool
+    - jump from problem to code and, when relevant, back to originating run/session
+  - Debug Console:
+    - clear separation between debug REPL/evaluation and plain program stdout/stderr
+    - history of evaluated expressions/commands
+    - richer rendering of values/objects than raw terminal text alone
+  - Ports/Services:
+    - auto-discovery of endpoints
+    - labels derived from process/service identity
+    - open/copy URL actions
+    - route back to originating session or dev-service context
+  - Cross-surface linking is one of the strongest repeated ideas:
+    - specialized surfaces stay specialized, but users can always navigate back to the live origin when one exists
 - Strong candidate hierarchy for the SSOT:
   - shell owns one or two terminal sections/components
   - each terminal section owns an ordered set of terminal tabs
   - each terminal tab owns an ordered set of up to 4 quadrants/panes
   - each quadrant/pane hosts one live terminal session at a time
   - detach/pop-out moves a terminal section into a dedicated window without inventing a different terminal product model
+- Recommended identity and reuse contract draft:
+  - `terminal_section_id`:
+    - identifies one terminal container owned by the shell
+    - survives docking, undocking, resizing, and moving between shell zones/windows
+    - detached state changes presentation only, not identity
+    - max two active sections at a time; detached sections still count toward that cap
+  - `terminal_tab_id`:
+    - identifies a reusable terminal workspace inside a section
+    - owns tab label, ordering, pane layout, layout style, tab-scoped defaults, and restore metadata
+    - tab identity survives pane reordering and session exit
+    - tab reorder changes order only, not identity
+  - `terminal_pane_id`:
+    - identifies a stable pane slot within a tab
+    - owns pane label, placement, and attachment to exactly one live session at a time
+    - pane reorder moves the pane identity together with its currently attached session
+  - `terminal_session_id`:
+    - identifies the live PTY-backed runtime session
+    - one session may be attached to only one pane at a time
+    - session survives pane resize, pane move, tab move, section detach, and section reattach
+    - session exit does not delete tab/pane identity; the pane remains as an exited session surface until reused or cleared
+  - creation rules:
+    - opening Terminal with no existing terminal state should create the primary section, one tab, one pane, and one live session
+    - creating a new tab should create a new tab with one pane and a new session
+    - splitting a pane should create a new pane with a new session seeded from the source pane's resolved cwd/profile when available
+    - creating a second section should create a new section with at least one tab/pane/session unless explicitly created as an empty shell surface
+  - reuse rules:
+    - `Open in Terminal` should focus the existing bound session when one exists, and create a new terminal/session when no terminal structure exists yet
+    - focusing/moving/detaching/reattaching terminal UI must reuse the same underlying sessions rather than spawning replacements
+    - actions that explicitly mean "new terminal" create a new session
+    - actions that mean "show/focus terminal" reuse existing visible or most-recent session context
+    - agent/tool handoff should target an existing session when the initiating workflow is already bound to one; otherwise it should create a clearly scoped new session through the canonical terminal subsystem
+  - binding semantics draft:
+    - `Show Terminal`:
+      - reveals and focuses terminal UI only
+      - never creates a new session if any terminal structure already exists for the project
+      - if the project has no terminal structure yet, it creates the default first section/tab/pane/session
+    - `Open in Terminal`:
+      - if the originating workflow/thread/tool already has a bound `terminal_session_id`, focus that exact session
+      - otherwise, if there is an obvious current workspace-bound target pane/session, reuse it
+      - if no terminal structure exists yet for the project, create the default first section/tab/pane/session and bind the initiating workflow to it
+      - otherwise create a new session through the canonical terminal subsystem and bind the initiating workflow to it
+      - `Open in Terminal` should prefer exact same-session continuity over "nearest visible terminal" convenience
+    - `New Terminal`:
+      - always creates a fresh live session in a new pane/tab according to the invoked action variant
+      - never silently reuses an existing session
+    - `Split Terminal` / split-pane actions:
+      - always create a new pane with a new session
+      - inherit source-pane cwd/profile defaults when appropriate, but not process state
+    - agent handoff:
+      - PM agents performing shell-like work should attach to an existing bound terminal session when one already represents that workflow
+      - if no appropriate binding exists, PM creates a clearly scoped new session and records that binding for follow-up actions
+      - agent follow-up actions must continue targeting the same bound session unless the user explicitly requests a fresh terminal/session
+      - background or long-running agent work should remain visible through the canonical terminal session rather than being hidden in a separate shell path
+  - exited-session binding:
+      - `Show Terminal` may focus an exited pane for review without restarting it
+      - actions that explicitly imply runtime work from an exited pane should offer rerun/restart/replace semantics instead of silently swapping in a fresh shell
+  - close/exit rules:
+    - closing a pane with a running session requires terminal-consistent confirmation behavior
+    - closing a pane with an exited session removes the pane unless product rules preserve it for review/restart
+    - session exit should leave enough metadata for rerun/restart/copy-output review flows
+    - when a pane is removed, remaining panes in the tab should automatically rebalance and resize to a valid remaining layout rather than leaving dead empty quadrants behind
+    - layout rebalance should preserve the surviving pane identities and sessions
+    - stop/close action ladder should be explicit:
+      - interrupt = stop current foreground work while preserving session
+      - terminate = end the current session/process more explicitly while preserving pane identity and review state
+      - kill process tree = force-stop the full process tree for the session
+      - close pane/tab/section = workspace-structure action, not just a process action
+    - confirmation behavior should scale with risk:
+      - running pane close requires confirmation
+      - tab/section close should summarize contained live sessions before destructive close
+      - app quit with live sessions should surface an explicit decision rather than silently dropping runtime state
+    - close actions must not be silently treated as kill actions without telling the user
+  - persistence rules:
+    - terminal layout must persist across closing and reopening Puppet Master
+    - persistence scope is per project
+    - persisted state should include sections, tabs, pane arrangement, layout style, labels, dock/detach state, and enough session metadata to restore terminal structure coherently
+    - per-project restore should reopen the saved terminal layout rather than resetting to a default single-pane layout every launch
+  - restore/reopen semantics draft:
+    - on project reopen, PM restores the saved terminal structure first:
+      - sections
+      - tabs
+      - panes
+      - layout style and sizes
+      - labels
+      - docked vs detached presentation
+      - tab/session cwd and profile metadata where available
+    - PM should not pretend it can transparently resume arbitrary dead OS processes after full app shutdown unless the runtime/session model explicitly supports that
+    - restored panes may come back in one of at least two clear states:
+      - live/restored session attached
+      - exited/disconnected session surface with preserved metadata and rerun/restart actions
+    - if a session cannot be restored live, PM should preserve the pane/tab structure and present an honest restorable/exited state instead of silently replacing it with a fresh shell
+    - restore should prefer structural continuity over fake runtime continuity
+  - rerun/restart semantics draft:
+    - rerun should mean "repeat the last completed command or restart the exited terminal session context in this pane" according to what metadata is available
+    - restart should create a new live session in the same pane identity, preserving the pane/tab/workspace context
+    - rerun/restart actions should preserve resolved cwd/profile/env defaults when possible
+    - rerun/restart should not silently move work into a different pane or different tab
+  - exited-session behavior draft:
+    - an exited session should remain reviewable until the user clears, replaces, reruns, or closes it
+    - exited panes should expose clear status and last-known metadata (exit state, cwd if known, command-block history if available)
+    - exited panes participate in per-project restore as exited panes unless a live restore path is supported
+  - dev-session relationship:
+    - `dev_session_id` remains a sibling concept, not a replacement for terminal session identity
+    - one dev session may reference one or more terminal sessions
+    - terminal sessions can exist without a dev session
 - Treat default cwd as a resolved setting with at least:
   - default = active project root
   - user override via Terminal settings
-  - possible future command/session-specific overrides
+  - explicit tab/session overrides when the product model calls for them
 - Treat terminal appearance and default behaviors as owned by a dedicated Terminal settings section rather than scattering them across General settings.
+- Terminal settings should expose layout preferences in addition to appearance/behavior settings.
+- Layout settings should include support for column-oriented pane arrangements, not just quadrant-style splits.
+- Terminal settings should also act as a discoverability and learning surface:
+  - expose commands, shortcuts, and behaviors in a browsable/remappable form
+  - make the settings page serve as an in-product cheat sheet for what terminal actions exist and how to trigger them
+  - keep command names, shortcut bindings, and behavior descriptions explicit so users can actually learn the terminal
+  - prioritize true terminal operations in shortcut discoverability (search, selection, copy/paste, scrollback, block navigation, viewport movement, font zoom, clear/reset) rather than mostly layout-management actions
+  - distinguish terminal-owned shortcuts from shell/TUI-owned keys so PM does not steal common shell interaction patterns unnecessarily
+  - terminal-owned shortcut inventory should explicitly cover real terminal actions such as search, next/previous match, scrollback paging, top/bottom jump, command-block navigation, copy variants, paste, clear/reset, link/path open, and zoom controls
+  - terminal shortcut bindings must coexist cleanly with Puppet Master app-level shortcuts; one binding cannot ambiguously trigger both a PM shell action and a terminal action
+- Terminal settings should include a curated theme gallery, not just low-level color settings.
+- Theme offering should include:
+  - terminal presets matched to the 4 core PM themes
+  - a broader catalog of additional polished themes
+  - some intentionally fun/funky/cool presets so terminal personalization feels expressive rather than purely utilitarian
+- Theme selection UX should support:
+  - preview before apply
+  - fast switching/search
+  - clear readability/contrast signals
+  - instant apply/revert
 - Preferred design baseline for now:
   - hybrid dock model + workspace-like terminal tabs
 - Why this is currently favored:
   - preserves a simple default mental model
   - supports advanced layouts without forcing them on everyone
   - matches the user's interest in a more flexible, less generic terminal layout
-  - provides a natural home for labels, layouts, cwd defaults, and future task affinity per tab/workspace
+  - provides a natural home for labels, layouts, cwd defaults, and task affinity per tab/workspace
 - Research execution model:
   - let sub-agents perform source-specific repo/code/issue/community research
   - main coordinator owns ledger updates and eventual anonymized synthesis
@@ -192,34 +445,83 @@
 - Provisional SSOT architecture direction validated by multiple sources:
   - layer 1: PTY/session/process transport
   - layer 2: VT/ANSI/grid/buffer engine
-  - layer 3: shell-integration metadata (prompt marks, command boundaries, exit status, cwd, optional trust/approval metadata)
-  - layer 4: workspace/session UI (sections, tabs, quadrants, detached windows, command palette, search, blocks/separators)
-  - layer 5: optional smart overlays (AI, quick fixes, suggestions, metrics, exports, plugins)
+  - layer 3: shell-integration metadata (prompt marks, command boundaries, exit status, cwd, recent command/directory metadata)
+  - layer 4: workspace/session UI (sections, tabs, quadrants, detached windows, command palette, search, blocks/separators, sticky headers, badges, quick actions)
+  - PM built-in agents must control terminal sessions through the same canonical terminal subsystem rather than bypassing it with ad hoc shell execution paths
+- Web research reinforced an additional architectural rule:
+  - terminal rendering should be a native grid/buffer renderer, not a React/DOM-style document renderer
+  - scroll position, selection state, and cursor/input state should be terminal-model state, not fragile byproducts of DOM nodes
+  - PTY I/O, parse work, and buffer mutations should stay decoupled from UI layout/reconciliation work
+  - the terminal should remain its own rendering/engine subsystem even if visually hosted inside the Slint application shell
+  - Slint should own surrounding app shell/layout/chrome, while the terminal keeps a specialized engine/renderer path optimized for terminal semantics
 - Strong candidate defaults based on repeated external evidence:
   - keep shell keystrokes flowing directly to the PTY; do not replace shell line editing with app-owned interception
   - support regular + alternate buffer explicitly
   - use bounded scrollback with viewport/diff rendering and throttled paint
+  - render only the visible terminal viewport plus overscan while keeping full logical scrollback in engine state
   - persist layout/session metadata separately from large transcript state
   - make renderer fallback explicit (GPU preferred, safe fallback available)
+  - keep frame pacing explicit and avoid repainting on every tiny output mutation
   - make log/plain/export mode explicit instead of assuming rich terminal rendering everywhere
   - ship visible command history/log and optional command separators/blocks
   - support session revive/reconnect and clear attach/detach semantics
-  - build selective context forwarding (`last command only`, command block, summary) rather than dumping whole terminal history into AI context
+  - invest in strong selection, copy, paste, and navigation behavior rather than app-owned assistant overlays inside the terminal
+  - keep terminal automation/control as a backend capability for PM agents without turning the terminal itself into a second assistant product surface
+  - define explicit interaction modes so shortcut precedence and mouse/keyboard behavior stay predictable:
+    - live-input mode
+    - scrollback-review mode
+    - selection-active mode
+    - search-active mode
+    - TUI-capture mode
+  - recommended interaction contract draft:
+    - live-input mode:
+      - typing and ordinary editing keys go directly to the PTY
+      - wrapped multi-line input supports stable up/down cursor movement by visible row, not only left/right traversal
+      - terminal-owned shortcuts stay in a conservative reserved set (search, copy/paste, scrollback, zoom, clear/reset, block navigation)
+    - scrollback-review mode:
+      - begins when the user scrolls away from live bottom or invokes an explicit review/search action
+      - new output must not yank viewport back to live position
+      - user gets an explicit return-to-live action
+    - selection-active mode:
+      - selection anchors live in terminal buffer coordinates, not painted row objects
+      - streaming output must not collapse or corrupt the active selection
+      - command-block selection and whole-output/whole-command copy flows should be first-class
+    - search-active mode:
+      - search input is terminal-owned rather than shell-owned
+      - results remain stable while output continues
+      - next/previous result and exit-search actions are explicit
+    - TUI-capture mode:
+      - full-screen or mouse-capturing TUIs own most keyboard/mouse input
+      - normal terminal mouse selection should work in the terminal body whenever a TUI is not actively capturing mouse input
+      - explicit override gestures are only needed when a running TUI has taken over mouse input and the user wants terminal-level text selection instead
+      - when PM detects or strongly suspects TUI mouse capture, the terminal should provide a visible contextual hint explaining how to return to terminal-level selection/copy behavior
 - Strong candidate PM-native features inspired by repeated findings:
-  - monitored terminals with visible agent attachment
-  - pre-run edit/approve/reject/trust for AI commands
   - command sticky scroll / prompt marks / overview markers
   - recent command and recent directory recall
   - explicit remote-context badges and shell/profile diagnostics
   - theme gallery with contrast indicators and paired variants
   - command-output quick fixes / rerun / copy-output actions
+  - reliable selection/copy/paste in output and input areas
+  - explicit mouse-driven selection/copy/paste support in the terminal body and input/writing area
+  - visible contextual guidance when TUI capture changes normal mouse behavior
+  - strong wrapped-line input navigation with up/down movement and robust cursor positioning
+  - curated terminal theme catalog with PM-matched and expressive presets
+  - stable automation hooks so PM agents can open/focus/reuse sessions, send input, interrupt, resize, capture structured terminal state, and perform task automation through the canonical terminal surface
+  - explicit keyboard-selection and command-block selection flows that remain stable during output streaming
 - Performance guidance now strongly validated:
   - avoid DOM/string-concatenation-style render models
   - keep heavy work off the UI thread
   - throttle high-frequency updates and decouple collection cadence from paint cadence
+  - preserve scroll position, selection state, and cursor stability during output bursts
+  - avoid layout reflow as a rendering primitive for terminal updates
+  - viewport virtualization is beneficial when it means painting only visible rows from a stable terminal buffer; it becomes harmful when implemented as DOM/list virtualization that recycles UI nodes and destabilizes selection/scroll state
+  - make selection and scroll behavior part of the terminal engine contract rather than ad hoc UI behavior
+  - selection anchors, search hits, cursor coordinates, and wrapped-line navigation should be computed from terminal buffer state, not inferred from painted rows
   - test WSL/Windows/Wayland/macOS IME and GPU edge cases early
   - treat huge-output paths, search, and scrollback navigation as first-class benchmarks
   - prefer async cached providers/widgets over synchronous shell callbacks on repaint
+  - GPU acceleration helps with grid drawing/compositing/scrolling, but does not rescue a bad rendering architecture; stable terminal-model state is more fundamental than GPU alone
+  - observability should be built in for debugging terminal issues: lifecycle events, renderer/PTY errors, resize/focus/attach transitions, performance counters, and structured command/session metadata
 - Capability/render-mode guidance:
   - interactive rich mode
   - plain/log/CI mode
@@ -256,8 +558,16 @@
 - Tabs and quadrants can be renamed/labeled.
 - Default terminal working directory is the project root unless the user changes the default in settings.
 - Settings needs a dedicated Terminal section, including appearance/theme/color and default terminal behaviors.
+- Terminal settings should also expose commands, shortcuts, and behaviors as a built-in cheat sheet and remapping surface.
+- Terminal shortcut behavior must reconcile with PM-wide shortcuts through explicit scope and precedence rules.
+- PM built-in agents must be able to fully control terminal sessions for automation tasks through the canonical terminal subsystem.
 - Provisional recommended layout direction is a hybrid dock model with workspace-like terminal tabs.
 - We should stay open to better/cooler layout ideas later rather than freezing the first workable layout too early.
+- Removing/killing a pane should automatically rebalance and resize the remaining panes in the tab.
+- Terminal layouts must support column-oriented arrangements, not just quadrant-style splits.
+- Terminal layout should persist across closing and reopening Puppet Master on a per-project basis.
+- Adopt the cross-surface feature set discussed for Output, Problems, Debug Console, and Ports/Services.
+- Cross-surface linking back to the originating live session/workflow is part of the intended PM model, not an optional enhancement.
 - Terminal support for macOS, Linux, and Windows is required, not optional.
 - The first 50 topic targets are defined by the first 50 repositories shown across GitHub topic pages 1-3 at research kickoff time.
 - Research is being executed in fleet mode with one background agent per target/competitor.
@@ -279,8 +589,14 @@
 - How should dev sessions map onto terminal sessions: one-to-one, one-to-many, or sibling identities?
 - What persistence and recovery guarantees should exist for terminal sections, tabs, quadrant layout, labels, content, scrollback, working directory, env, process tree, and pane layout?
 - What exactly belongs in Terminal settings, and which settings are global defaults versus per-project or per-session overrides?
+- Which PM-wide shortcuts remain reserved even when terminal focus is active, and which actions become terminal-scoped while focused?
+- What is the exact shortcut precedence model across PM global bindings, terminal-local bindings, shell input, and full-screen TUI key handling?
+- What is the exact mode-switch contract between live-input, selection, search, scrollback-review, and TUI-capture states?
+- Which selection behaviors are canonical: linear only or linear + rectangular, copy-on-select, trailing-whitespace trimming, selection persistence during streaming, and shift-mouse override in TUI mode?
+- Which actions are always available as reserved terminal shortcuts even during focused shell input, and which must be fully suppressed in TUI-capture mode?
 - Should PM treat command blocks / prompt marks as always-on canonical terminal metadata, or as an optional shell-integration enhancement that degrades gracefully?
 - Should PM support transcript persistence/replay in-product, or keep transcript durability lightweight and focus on command-block/history artifacts instead?
+- How should terminal observability integrate with PM logging, diagnostics, snapshots, and rollback systems without pretending PM can rollback arbitrary live PTY state?
 - How much plugin/extensibility surface should terminal expose at v1 without recreating the maintenance burden seen in very broad plugin architectures?
 - Should PM support browser/remoted terminal attach later, and if so, is that a sibling transport layer rather than part of the first desktop-only SSOT?
 - What platform-specific constraints or capability differences matter for PTY hosting, detach/reattach, clipboard, and accessibility?
