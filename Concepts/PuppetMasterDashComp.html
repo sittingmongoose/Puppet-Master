@@ -6,7 +6,7 @@
   <title>Puppet Master - Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Orbitron:wght@700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     .wizard-doc-pill { cursor: pointer; }
     /* --- REDESIGNED WIZARD & CHAT SYSTEM --- */
@@ -16,14 +16,14 @@
     [data-theme^="basic"] .msg-focused { border-color: var(--accent-blue) !important; background: rgba(0, 71, 171, 0.1) !important; }
     
     .role-badge { font-family: var(--display-font); font-size: 9px; padding: 2px 8px; border-radius: 4px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-    .role-assistant { background: var(--accent-blue); color: #fff; }
+    .role-assistant { background: var(--accent-blue); color: #F5F0E8; }
     .role-interviewer { background: var(--accent-lime); color: #1a1a1a; }
     .role-builder { background: var(--accent-blue); color: var(--surface); }
     
     .chat-dropdown-popover { position: absolute; bottom: 30px; left: 0; width: 240px; background: var(--surface-elevated); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 100; animation: slideUp 0.2s ease-out; }
     .chat-dropdown-popover.active { display: flex; }
     .chat-dropdown-search { padding: var(--sm); border-bottom: 1px solid var(--border-light); }
-    .chat-dropdown-search input { width: 100%; background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px; padding: 4px var(--sm); color: var(--text-primary); font-size: 11px; outline: none; }
+    .chat-dropdown-search input { width: 100%; background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px; padding: 4px var(--sm); color: var(--text-primary); font-size: 11px; }
     .chat-dropdown-list { max-height: 200px; overflow-y: auto; padding: var(--xs); }
     .chat-dropdown-item { padding: var(--sm) var(--md); font-size: 12px; cursor: pointer; border-radius: 4px; display: flex; align-items: center; gap: var(--sm); }
     .chat-dropdown-item:hover { background: var(--surface); }
@@ -42,6 +42,8 @@
       --display-font: 'Orbitron', sans-serif;
       --body-font: 'Rajdhani', sans-serif;
       --base-font-size: 14px;
+      --line-height: 1.4;
+      --letter-spacing: normal;
       --grid-gap: 24px;
     }
 
@@ -103,7 +105,7 @@
       --background: #EAECEF;
       --surface: #FFFFFF;
       --surface-elevated: #FFFFFF;
-      --text-primary: #000000;
+      --text-primary: #1A1A1A;
       --text-secondary: #3B3B3B;
       --text-muted: #666666;
       --border: #C4C4C4;
@@ -119,8 +121,11 @@
       --graph-planning: #2196F3;
       --graph-gating: #9C27B0;
       --shadow: none;
-      --display-font: '"Bricolage Grotesque"', system-ui, sans-serif;
-      --body-font: '"Bricolage Grotesque"', system-ui, sans-serif;
+      --base-font-size: 15px;
+      --line-height: 1.6;
+      --letter-spacing: 0.02em;
+      --display-font: 'Inter', system-ui, sans-serif;
+      --body-font: 'Inter', system-ui, sans-serif;
       --border-radius: 4px;
       --border-width: 1px;
       --grid-gap: 24px;
@@ -146,15 +151,18 @@
       --graph-planning: #2196F3;
       --graph-gating: #9C27B0;
       --shadow: none;
-      --display-font: '"Bricolage Grotesque"', system-ui, sans-serif;
-      --body-font: '"Bricolage Grotesque"', system-ui, sans-serif;
+      --base-font-size: 15px;
+      --line-height: 1.6;
+      --letter-spacing: 0.02em;
+      --display-font: 'Inter', system-ui, sans-serif;
+      --body-font: 'Inter', system-ui, sans-serif;
       --border-radius: 4px;
       --border-width: 1px;
       --grid-gap: 24px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; overflow: hidden; font-family: var(--body-font); font-size: var(--base-font-size); color: var(--text-primary); background: var(--background); }
+    html, body { height: 100%; overflow: hidden; font-family: var(--body-font); font-size: var(--base-font-size); color: var(--text-primary); background: var(--background); line-height: var(--line-height); letter-spacing: var(--letter-spacing); }
     button:focus-visible, .title-bar .page-tabs .page-tab:focus-visible, .orch-tab:focus-visible,
     input:focus-visible, select:focus-visible, textarea:focus-visible {
       outline: 2px solid var(--accent-blue);
@@ -478,7 +486,7 @@
     }
     .dashboard-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: var(--grid-gap, 24px);
       flex: 1;
       overflow-y: auto;
@@ -716,7 +724,7 @@
     .chat-thread-item.active {
       background: var(--surface-elevated);
       color: var(--text-primary);
-      border: 2px solid var(--accent-blue); /* Default role color, can be overridden by specific classes */
+      border: var(--border-width) solid var(--accent-blue); /* Keep border width stable to avoid wrapping jitter */
     }
     [data-theme^="retro"] .chat-thread-item.active {
       box-shadow: 4px 4px 0 var(--accent-blue);
@@ -829,8 +837,8 @@
     .chat-thread-item.role-assistant.active { border-color: var(--text-primary); }
     [data-theme^="retro"] .chat-thread-item.role-assistant.active { border-color: var(--accent-lime); box-shadow: 4px 4px 0 var(--accent-lime); }
     .chat-thread-item.role-assistant .thread-title { color: var(--text-primary); }
-    [data-theme="retro-dark"] .chat-thread-item.role-assistant .thread-title { color: #fff; }
-    [data-theme="retro-light"] .chat-thread-item.role-assistant .thread-title { color: #000; }
+    [data-theme="retro-dark"] .chat-thread-item.role-assistant .thread-title { color: var(--text-primary); }
+    [data-theme="retro-light"] .chat-thread-item.role-assistant .thread-title { color: var(--surface); }
     .chat-thread-item.role-assistant .thread-working-pulse, .chat-thread-item.role-assistant .thread-status-unread { color: var(--text-primary); }
     [data-theme^="retro"] .chat-thread-item.role-assistant .thread-working-pulse, [data-theme^="retro"] .chat-thread-item.role-assistant .thread-status-unread { color: var(--accent-lime); }
     
@@ -1339,14 +1347,14 @@
     }
     [data-theme="retro-dark"] .pixel-grid {
       background-image:
-        linear-gradient(rgba(224,224,224,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(224,224,224,0.04) 1px, transparent 1px);
+        linear-gradient(rgba(224,224,224,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(224,224,224,0.03) 1px, transparent 1px);
       background-size: 3px 3px;
     }
     [data-theme="retro-light"] .pixel-grid {
       background-image:
-        linear-gradient(rgba(26,26,26,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(26,26,26,0.02) 1px, transparent 1px);
+        linear-gradient(rgba(26,26,26,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,26,26,0.015) 1px, transparent 1px);
       background-size: 3px 3px;
     }
     [data-theme="basic-light"] .pixel-grid,
@@ -1604,7 +1612,7 @@
       transition: border-color 0.2s ease;
     }
     [data-theme^="retro"] .wizard-input, [data-theme^="retro"] .wizard-select { border-radius: 0; }
-    .wizard-input:focus, .wizard-select:focus { outline: none; border-color: var(--accent-blue); }
+    .wizard-input:focus, .wizard-select:focus { border-color: var(--accent-blue); }
     [data-theme^="retro"] .wizard-input:focus, [data-theme^="retro"] .wizard-select:focus { border-color: var(--accent-lime); }
 
     /* Binder Layout for Documents */
@@ -1750,8 +1758,8 @@
       font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: bold; text-transform: uppercase;
       display: inline-block; width: fit-content;
     }
-    .annotation-status.open { background: var(--accent-orange); color: #000; }
-    .annotation-status.resolved { background: var(--graph-passed); color: #000; }
+    .annotation-status.open { background: var(--accent-orange); color: #1A1A1A; }
+    .annotation-status.resolved { background: var(--graph-passed); color: #1A1A1A; }
     
     .text-selection-palette {
       position: absolute;
@@ -2018,7 +2026,7 @@
     .orch-prose-block.collapsed .orch-prose-block-body { display: none; }
     .orch-prose-badge { font-size: 10px; padding: 1px var(--xs); border-radius: var(--border-radius); }
     .orch-prose-passed { background: var(--graph-passed); color: #1A1A1A; }
-    .orch-prose-failed { background: var(--graph-failed); color: #fff; }
+    .orch-prose-failed { background: var(--graph-failed); color: #F5F0E8; }
     .orch-prose-dur { margin-left: auto; color: var(--text-muted); font-size: 11px; }
     .orch-prose-meta { font-size: 11px; color: var(--text-muted); margin-top: var(--xs); }
     .orch-card {
@@ -2336,10 +2344,10 @@
       cursor: pointer;
       font-size: 11px;
     }
-    .orch-rungraph-node.graph-pending { background: var(--graph-pending); color: #fff; border-color: var(--graph-pending); }
+    .orch-rungraph-node.graph-pending { background: var(--graph-pending); color: #F5F0E8; border-color: var(--graph-pending); }
     .orch-rungraph-node.graph-running { background: var(--graph-running); color: #1A1A1A; border-color: var(--graph-running); }
     .orch-rungraph-node.graph-passed { background: var(--graph-passed); color: #1A1A1A; border-color: var(--graph-passed); }
-    .orch-rungraph-node.graph-failed { background: var(--graph-failed); color: #fff; border-color: var(--graph-failed); }
+    .orch-rungraph-node.graph-failed { background: var(--graph-failed); color: #F5F0E8; border-color: var(--graph-failed); }
     .orch-rungraph-node.selected { border-width: 4px; border-color: var(--accent-lime); }
     [data-theme="basic-light"] .orch-rungraph-node.selected,
     [data-theme="basic-dark"] .orch-rungraph-node.selected { border-color: var(--accent-blue); }
@@ -2355,7 +2363,7 @@
     .orch-state-pending { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><circle fill="%23fff" cx="6" cy="6" r="1.5"/></svg>'); }
     .orch-state-failed { background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path fill="%23fff" d="M2 2l8 8M10 2L2 10"/></svg>'); }
     .orch-rungraph-node-badge, .orch-rungraph-node-hitl, .orch-rungraph-node-blocked { position: absolute; top: 4px; right: 4px; z-index: 2; }
-    .orch-rungraph-node-attempt { width: 16px; height: 16px; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="%231A1A1A" stroke="%23E0E0E0" stroke-width="1"/><path d="M4 12a8 8 0 1 0 8-8 8 8 0 0 0-6 2.4L4 9" fill="none" stroke="%23E0E0E0" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 4v5h5" fill="none" stroke="%23E0E0E0" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>') center/contain no-repeat; color: #fff; font-size: 9px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
+    .orch-rungraph-node-attempt { width: 16px; height: 16px; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="%231A1A1A" stroke="%23E0E0E0" stroke-width="1"/><path d="M4 12a8 8 0 1 0 8-8 8 8 0 0 0-6 2.4L4 9" fill="none" stroke="%23E0E0E0" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 4v5h5" fill="none" stroke="%23E0E0E0" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>') center/contain no-repeat; color: #F5F0E8; font-size: 9px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
     .orch-rungraph-node-hitl { width: 16px; height: 16px; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2z" fill="%23FFEB3B" stroke="%231A1A1A" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 9v5M12 17h.01" stroke="%231A1A1A" stroke-width="2.5" stroke-linecap="round"/></svg>') center/contain no-repeat; animation: orch-hitl-pulse 1.2s ease-in-out infinite; }
     .orch-rungraph-node-blocked { width: 16px; height: 16px; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 2h8l6 6v8l-6 6H8l-6-6V8l6-6z" fill="%23F44336" stroke="%23fff" stroke-width="1.5" stroke-linejoin="round"/><line x1="7" y1="12" x2="17" y2="12" stroke="%23fff" stroke-width="3" stroke-linecap="round"/></svg>') center/contain no-repeat; }
     @keyframes orch-hitl-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.2); } }
@@ -2600,7 +2608,6 @@
       border-radius: var(--border-radius);
       color: var(--text-primary);
       cursor: pointer;
-      outline: none;
     }
     .page-projects .projects-toolbar select:focus { border-color: var(--accent-lime); }
     [data-theme="basic-light"] .page-projects .projects-toolbar select:focus,
@@ -2757,7 +2764,7 @@
     }
     .project-action-btn.danger:hover {
       background: var(--accent-magenta);
-      color: #fff;
+      color: #F5F0E8;
       border-color: var(--accent-magenta);
     }
     .project-action-btn svg { width: 14px; height: 14px; fill: currentColor; }
@@ -3035,7 +3042,6 @@
       font-size: 13px;
     }
     .settings-search-input:focus {
-      outline: none;
       border-color: var(--accent-blue);
     }
     [data-theme="retro-dark"] .settings-search-input:focus {
@@ -3114,7 +3120,6 @@
       border-width: var(--border-width);
     }
     .settings-search-input:focus {
-      outline: none;
       border-color: var(--accent-blue);
     }
     [data-theme^="retro"] .settings-search-input:focus {
@@ -3277,7 +3282,6 @@
       cursor: pointer;
       background: var(--surface-elevated);
       border-bottom: 1px solid transparent;
-      outline: none;
     }
     .settings-inspector-panel details[open] summary {
       border-bottom-color: var(--border-light);
@@ -3614,9 +3618,9 @@
       flex: none; /* Prevents widgets from shrinking or growing */
     }
     [data-theme^="retro"] .bento-widget { border-radius: 0; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); border-width: 2px; }
-    .bento-widget.size-1x1 { width: 220px; height: 220px; }
-    .bento-widget.size-2x1 { width: calc(440px + var(--lg)); height: 220px; }
-    .bento-widget.size-2x2 { width: calc(440px + var(--lg)); height: calc(440px + var(--lg)); }
+    .bento-widget.size-1x1 { width: 220px; height: 220px; grid-column: span 1; grid-row: span 1; }
+    .bento-widget.size-2x1 { width: calc(440px + var(--lg)); height: 220px; grid-column: span 2; grid-row: span 1; }
+    .bento-widget.size-2x2 { width: calc(440px + var(--lg)); height: calc(440px + var(--lg)); grid-column: span 2; grid-row: span 2; }
     
     .widget-header {
       display: flex;
@@ -3712,7 +3716,7 @@
       width: 280px;
       min-width: 240px;
       background: var(--surface);
-      border-right: var(--border-width) solid var(--border);
+      border-right: 0 solid transparent;
       display: flex;
       flex-direction: column;
       min-height: 0;
@@ -3862,7 +3866,7 @@
     .msg-control-btn svg { width: 14px; height: 14px; }
 
     .jump-to-latest { position: absolute; bottom: 80px; right: 20px; background: var(--accent-blue); color: var(--surface); border-radius: 20px; padding: 4px 12px; font-size: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2); z-index: 10; display: flex; align-items: center; gap: 4px; }
-    [data-theme^="retro"] .jump-to-latest { background: var(--accent-lime); color: #000; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); border-radius: 0; }
+    [data-theme^="retro"] .jump-to-latest { background: var(--accent-lime); color: #1A1A1A; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); border-radius: 0; }
 
     .activity-card { background: var(--surface); border: 1px solid var(--border-light); border-left: 3px solid var(--text-muted); border-radius: 6px; padding: var(--sm) var(--md); margin-top: var(--sm); font-size: 11px; display: flex; flex-direction: column; gap: var(--xs); }
     [data-theme^="retro"] .activity-card { border-radius: 0; }
@@ -3890,6 +3894,9 @@
     .todo-status.done { background: var(--graph-passed); border-color: var(--graph-passed); }
     .todo-status.working { background: var(--accent-orange); border-color: var(--accent-orange); animation: pulse 1.5s infinite; }
 
+    /* Intentionally no blanket Basic-theme animation suppression.
+       Your authored motion and entrance animations should remain visible. */
+
 </style>
 </head>
 <body>
@@ -3901,13 +3908,13 @@
         <span>&#9660;</span>
       </div>
       <nav class="page-tabs">
-        <span class="page-tab active" tabindex="0" data-page="dashboard">Home</span>
-        <span class="page-tab" tabindex="0" data-page="projects">Projects</span>
-        <span class="page-tab" tabindex="0" data-page="wizard">Wizard</span>
-        <span class="page-tab" tabindex="0" data-page="orchestrator">Orchestrator</span>
-        <span class="page-tab" tabindex="0" data-page="usage">Usage</span>
-        <span class="page-tab" tabindex="0" data-page="agent-config">Agent Config</span>
-        <span class="page-tab" tabindex="0" data-page="settings">Settings</span>
+        <span class="page-tab active" id="tab-dashboard" role="tab" tabindex="0" aria-selected="true" aria-controls="panel-dashboard" data-page="dashboard">Home</span>
+        <span class="page-tab" id="tab-projects" role="tab" tabindex="0" aria-selected="false" aria-controls="panel-projects" data-page="projects">Projects</span>
+        <span class="page-tab" id="tab-wizard" role="tab" tabindex="0" aria-selected="false" aria-controls="panel-wizard" data-page="wizard">Wizard</span>
+        <span class="page-tab" id="tab-orchestrator" role="tab" tabindex="0" aria-selected="false" aria-controls="panel-orchestrator" data-page="orchestrator">Orchestrator</span>
+        <span class="page-tab" id="tab-usage" role="tab" tabindex="0" aria-selected="false" aria-controls="panel-usage" data-page="usage">Usage</span>
+        <span class="page-tab" id="tab-agent-config" role="tab" tabindex="0" aria-selected="false" aria-controls="panel-agent-config" data-page="agent-config">Agent Config</span>
+        <span class="page-tab" id="tab-settings" role="tab" tabindex="0" aria-selected="false" aria-controls="panel-settings" data-page="settings">Settings</span>
       </nav>
       <div class="title-spacer"></div>
       <input type="text" class="search-bar" placeholder="Search files, commands, settings...">
@@ -4033,7 +4040,7 @@
                   </div>
                   <div class="file" style="font-size:11px; padding:4px 0;">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                      <b>feature/gui-update</b> <span class="status-badge" style="font-size:9px; padding:1px 4px; background:var(--accent-orange); color:#000;">Stale</span>
+                      <b>feature/gui-update</b> <span class="status-badge" style="font-size:9px; padding:1px 4px; background:var(--accent-orange); color:#1A1A1A;">Stale</span>
                     </div>
                     <div style="color:var(--text-muted); margin-top:2px;">/.puppet-master/worktrees/wt-1</div>
                     <div style="margin-top:4px;"><a href="#" style="color:var(--accent-blue);">Recover</a> | <a href="#" style="color:var(--accent-magenta);">Prune</a></div>
@@ -4198,7 +4205,7 @@
         <div class="center-row">
           <div class="content-wrapper">
             <main class="primary-content">
-          <div class="page page-dashboard active">
+          <div class="page page-dashboard active" id="panel-dashboard">
           <div class="resizer-col" id="leftPanelResizer"></div>
           <div class="editor-view pane-container" id="editorView" style="display:flex; flex-direction:row; gap:2px; flex:1; position:relative;">
             <div class="pane-header-drag" draggable="true" data-pane="editorView" style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); width:40px; height:10px; background:var(--border-light); border-radius:4px; cursor:grab; z-index:50;"></div>
@@ -4256,7 +4263,7 @@ impl Dashboard {
               <button class="customize-widgets-btn" style="padding: var(--xs) var(--md); font-size: 11px; background: var(--surface-elevated); border: var(--border-width) solid var(--border); border-radius: var(--border-radius); cursor: pointer; color: var(--text-primary);">Customize</button>
             </div>
           </div>
-          <div class="bento-dashboard" style="flex: 1; overflow-y: auto; padding: var(--md); display: flex; flex-wrap: wrap; gap: var(--lg); align-content: flex-start;">
+          <div class="bento-dashboard" style="flex: 1; overflow-y: auto; padding: var(--md); display: grid; grid-template-columns: repeat(2, 220px); grid-auto-rows: 220px; gap: var(--lg); align-content: flex-start;">
             <div id="dashGridMain" style="display:contents;">
                 <div class="bento-widget size-2x2">
                   <div class="widget-header">
@@ -4409,7 +4416,7 @@ impl Dashboard {
                 </div>
             </div>
             <div id="dashGridMonitoring" style="display:none;">
-                <div class="bento-widget size-2x2" style="width:100%;">
+                <div class="bento-widget size-2x2">
                     <div class="widget-header">
                         <span class="widget-title">Active Nodes</span>
                     </div>
@@ -4428,7 +4435,7 @@ impl Dashboard {
                         </div>
                     </div>
                 </div>
-                <div class="bento-widget size-2x1" style="width:100%; margin-top:var(--lg);">
+                <div class="bento-widget size-2x1">
                     <div class="widget-header">
                         <span class="widget-title">Container Health</span>
                     </div>
@@ -4440,7 +4447,7 @@ impl Dashboard {
                     </div>
                     <div style="font-size:10px; color:var(--text-muted); margin-top:var(--xs);">8 active swarms | 1 degraded</div>
                 </div>
-                <div class="bento-widget size-2x1" style="width:100%; margin-top:var(--lg);">
+                <div class="bento-widget size-2x1">
                     <div class="widget-header">
                         <span class="widget-title">Network Traffic</span>
                     </div>
@@ -4452,21 +4459,21 @@ impl Dashboard {
                         <span>Ingress: 1.2 MB/s</span><span>Egress: 450 KB/s</span>
                     </div>
                 </div>
-                <div class="bento-widget size-1x1" style="width: calc(50% - (var(--lg) / 2)); margin-top:var(--lg);">
+                <div class="bento-widget size-1x1">
                     <div class="widget-header">
                         <span class="widget-title">Database Load</span>
                     </div>
                     <div style="font-size:24px; color:var(--accent-blue);">42 qps</div>
                     <div style="font-size:10px; color:var(--text-muted);">Avg response: 12ms</div>
                 </div>
-                <div class="bento-widget size-1x1" style="width: calc(50% - (var(--lg) / 2)); margin-top:var(--lg); margin-left:var(--lg);">
+                <div class="bento-widget size-1x1">
                     <div class="widget-header">
                         <span class="widget-title">Error Rates</span>
                     </div>
                     <div style="font-size:24px; color:var(--accent-orange);">0.02%</div>
                     <div style="font-size:10px; color:var(--text-muted);">Last 24h: 12 exceptions</div>
                 </div>
-                <div class="bento-widget size-2x1" style="width:100%; margin-top:var(--lg);">
+                <div class="bento-widget size-2x1">
                     <div class="widget-header">
                         <span class="widget-title">Memory Allocation</span>
                     </div>
@@ -4477,14 +4484,14 @@ impl Dashboard {
                         <div class="progress-bar"><div class="fill" style="width: 55%"></div></div>
                     </div>
                 </div>
-                <div class="bento-widget size-1x1" style="margin-top:var(--lg);">
+                <div class="bento-widget size-1x1">
                     <div class="widget-header">
                         <span class="widget-title">Storage Usage</span>
                     </div>
                     <div style="font-size:24px; color:var(--accent-blue);">62%</div>
                     <div class="progress-bar"><div class="fill" style="width: 62%"></div></div>
                 </div>
-                <div class="bento-widget size-1x1" style="margin-top:var(--lg); margin-left:var(--lg);">
+                <div class="bento-widget size-1x1">
                     <div class="widget-header">
                         <span class="widget-title">Uptime History</span>
                     </div>
@@ -4501,7 +4508,7 @@ impl Dashboard {
           </div>
           </div>
           </div> <!-- End page-dashboard -->
-          <div class="page page-projects">
+          <div class="page page-projects" id="panel-projects">
             <nav class="projects-breadcrumb" aria-label="Breadcrumb">Home &gt; <span class="current">Projects</span></nav>
             <div class="projects-header-bento">
               <h1 class="projects-title">Projects</h1>
@@ -4543,7 +4550,7 @@ impl Dashboard {
               
               <div style="position:relative; display:flex; align-items:center;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute; left:10px; color:var(--text-muted);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                <input type="text" placeholder="Search projects..." style="padding:6px 12px 6px 32px; font-size:13px; background:var(--surface); border:1px solid var(--border-light); border-radius:var(--border-radius); color:var(--text-primary); outline:none;">
+                <input type="text" placeholder="Search projects..." style="padding:6px 12px 6px 32px; font-size:13px; background:var(--surface); border:1px solid var(--border-light); border-radius:var(--border-radius); color:var(--text-primary);">
               </div>
             </div>
 
@@ -4780,7 +4787,7 @@ impl Dashboard {
             </div>
 
           </div>
-          <div class="page page-wizard">
+          <div class="page page-wizard" id="panel-wizard">
 
             <div class="wizard-global-nav">
               <div class="wizard-nav-step active" data-step-target="0" data-nav-step="0">
@@ -5241,27 +5248,27 @@ impl Dashboard {
             </div>
 
           </div>
-          <div class="page page-orchestrator">
+          <div class="page page-orchestrator" id="panel-orchestrator">
             <div class="orch-header">
               <span class="orch-title">Orchestrator</span>
               <span class="orch-status-badge">Idle</span>
               <span class="orch-elapsed">0:00</span>
             </div>
             <div class="orch-tabs">
-              <span class="orch-tab active" tabindex="0" data-tab="progress">Progress<span class="orch-tab-badge" id="orchTabBadgeProgress" aria-hidden="true">(0)</span></span>
-              <span class="orch-tab" tabindex="0" data-tab="tiers">Tiers</span>
-              <span class="orch-tab" tabindex="0" data-tab="node_graph">Node Graph Display<span class="orch-tab-badge orch-tab-badge-dot" id="orchTabBadgeNodeGraph" aria-hidden="true" title="HITL pending" style="display: none;"></span></span>
-              <span class="orch-tab" tabindex="0" data-tab="evidence">Evidence<span class="orch-tab-badge" id="orchTabBadgeEvidence" aria-hidden="true">0</span></span>
-              <span class="orch-tab" tabindex="0" data-tab="history">History</span>
-              <span class="orch-tab" tabindex="0" data-tab="ledger">Ledger</span>
+              <span class="orch-tab active" id="orch-tab-progress" role="tab" tabindex="0" aria-selected="true" aria-controls="orch-panel-progress" data-tab="progress">Progress<span class="orch-tab-badge" id="orchTabBadgeProgress" aria-hidden="true">(0)</span></span>
+              <span class="orch-tab" id="orch-tab-tiers" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-tiers" data-tab="tiers">Tiers</span>
+              <span class="orch-tab" id="orch-tab-node_graph" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-node_graph" data-tab="node_graph">Node Graph Display<span class="orch-tab-badge orch-tab-badge-dot" id="orchTabBadgeNodeGraph" aria-hidden="true" title="HITL pending" style="display: none;"></span></span>
+              <span class="orch-tab" id="orch-tab-evidence" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-evidence" data-tab="evidence">Evidence<span class="orch-tab-badge" id="orchTabBadgeEvidence" aria-hidden="true">0</span></span>
+              <span class="orch-tab" id="orch-tab-history" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-history" data-tab="history">History</span>
+              <span class="orch-tab" id="orch-tab-ledger" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-ledger" data-tab="ledger">Ledger</span>
             </div>
             <div class="orch-content">
-              <div class="orch-tab-content active" data-tab="progress">
+              <div class="orch-tab-content active" id="orch-panel-progress" data-tab="progress">
                 <div class="dashboard-grid" style="padding:var(--md);">
                   <div class="bento-card cta-card" style="grid-column: span 2; border-left-color: var(--accent-blue);">
                     <div class="orch-card-title" style="font-family:var(--display-font); font-size:14px; margin-bottom:var(--md);">ORCHESTRATOR STATUS</div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--md);">
-                      <span class="status-badge" style="background:var(--accent-lime); color:#000; padding:4px 8px; font-size:12px;">Running</span>
+                      <span class="status-badge" style="background:var(--accent-lime); color:#1A1A1A; padding:4px 8px; font-size:12px;">Running</span>
                       <span style="font-size:12px; color:var(--text-muted);">Elapsed: 12m 34s</span>
                     </div>
                     <div class="orchestrator-buttons" style="display:flex; gap:var(--sm); flex-wrap:wrap;">
@@ -5330,7 +5337,7 @@ impl Dashboard {
                   </div>
                 </div>
               </div>
-              <div class="orch-tab-content" data-tab="tiers">
+              <div class="orch-tab-content" id="orch-panel-tiers" data-tab="tiers">
                 <div class="orch-tiers-layout">
                   <div class="orch-tiers-toolbar orch-toolbar">
                     <select class="orch-filter" aria-label="Expand depth"><option>Expand: 1 level</option><option>Expand: 2 levels</option><option>Expand: 3 levels</option><option>Expand: All</option></select>
@@ -5426,7 +5433,7 @@ impl Dashboard {
                   </div>
                 </div>
               </div>
-              <div class="orch-tab-content" data-tab="node_graph">
+              <div class="orch-tab-content" id="orch-panel-node_graph" data-tab="node_graph">
                 <div class="orch-node-graph-wrap">
                   <div class="orch-rungraph-empty" id="orchGraphPlaceholder" style="display: none;">
                     <p>No active run. Start an orchestrator run to see the graph.</p>
@@ -5520,7 +5527,7 @@ impl Dashboard {
                                 <summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C1 Node Summary</summary>
                                 <div style="padding:var(--sm) var(--md); font-size:11px;">
                                   <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2.2</b></div>
-                                  <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--accent-lime); color:#000; padding:1px 4px; font-size:9px;">Running</span></div>
+                                  <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--accent-lime); color:#1A1A1A; padding:1px 4px; font-size:9px;">Running</span></div>
                                   <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Attempts</span> <b>1 (Retry 0)</b></div>
                                   <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Safe-Point ID</span> <b style="color:var(--accent-blue);">sp-49a8f</b></div>
                                   <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Worktree</span> <b>wt-2</b></div>
@@ -5576,7 +5583,7 @@ impl Dashboard {
                   </div>
                 </div>
               </div>
-              <div class="orch-tab-content" data-tab="evidence">
+              <div class="orch-tab-content" id="orch-panel-evidence" data-tab="evidence">
                 <div class="orch-evidence-layout">
                   <div class="orch-evidence-main">
                     <div class="orch-toolbar">
@@ -5607,7 +5614,7 @@ impl Dashboard {
                   </div>
                 </div>
               </div>
-              <div class="orch-tab-content" data-tab="history">
+              <div class="orch-tab-content" id="orch-panel-history" data-tab="history">
                 <div class="orch-history-toolbar orch-toolbar">
                   <span>Last 7 days</span>
                   <select class="orch-filter" aria-label="Filter by status"><option>Status: All</option><option>Complete</option><option>Failed</option><option>Running</option></select>
@@ -5628,7 +5635,7 @@ impl Dashboard {
                   </tbody>
                 </table>
               </div>
-              <div class="orch-tab-content" data-tab="ledger">
+              <div class="orch-tab-content" id="orch-panel-ledger" data-tab="ledger">
                 <div class="orch-ledger-toolbar orch-toolbar">
                   <span>Window: 5h</span>
                   <select class="orch-filter" aria-label="Filter by event type"><option>Event: All</option><option>Completion</option><option>Tool</option></select>
@@ -5655,13 +5662,13 @@ impl Dashboard {
               </div>
             </div>
           </div>
-          <div class="page page-usage">
+          <div class="page page-usage" id="panel-usage">
             <div class="stub-page">
               <h2 class="stub-title">Usage</h2>
               <p class="stub-desc">Usage, metrics, evidence, history. Will map to spec.</p>
             </div>
           </div>
-          <div class="page page-agent-config">
+          <div class="page page-agent-config" id="panel-agent-config">
             <div class="settings-a-layout" style="display:flex; height:100%;">
               <div class="settings-sidebar" style="width:200px; border-right:1px solid var(--border-light); background:var(--surface-elevated); padding:var(--lg) 0;">
                 <div class="settings-group-header">Agent Configuration</div>
@@ -5736,7 +5743,7 @@ impl Dashboard {
             </div>
           </div>
 
-          <div class="page page-settings">
+          <div class="page page-settings" id="panel-settings">
             <div class="settings-a-layout">
               <div class="settings-sidebar">
                 <a href="#a-all" class="settings-tab active" data-filter="all">All Settings</a>
@@ -5888,7 +5895,7 @@ impl Dashboard {
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Health & Doctor</div>
                     <div class="bento-desc">System diagnostics and workspace cleanup.</div>
                     <div class="bento-surface row">
-                      <div class="status-badge success" style="align-self: flex-start; padding: 4px 8px; border-radius: 4px; background: var(--graph-passed); color: #000; font-size: 11px; margin-bottom: 4px;">All Systems Go</div>
+                      <div class="status-badge success" style="align-self: flex-start; padding: 4px 8px; border-radius: 4px; background: var(--graph-passed); color: #1A1A1A; font-size: 11px; margin-bottom: 4px;">All Systems Go</div>
                       <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Platform Filter <select style="width: 100%;"><option>All</option><option>Linux</option><option>macOS</option><option>Windows</option></select></label>
                       <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Log Retention (days) <input type="number" value="7" style="width: 100%;"></label>
                       <label style="width: 100%;"><input type="checkbox" checked> Auto-clean on exit</label>
@@ -6297,11 +6304,11 @@ impl Dashboard {
                 <details open>
                   <summary>Providers</summary>
                   <div class="details-content">
-                    <div class="status-badge success" style="display:inline-block;padding:2px 6px;border-radius:4px;background:var(--graph-passed);color:#000;font-size:10px;margin-bottom:8px;">GitHub Connected</div>
+                    <div class="status-badge success" style="display:inline-block;padding:2px 6px;border-radius:4px;background:var(--graph-passed);color:#1A1A1A;font-size:10px;margin-bottom:8px;">GitHub Connected</div>
                     <button class="wizard-btn">Logout GitHub</button>
                     <label>Auth realm split <select><option>github_api</option><option>copilot_github</option></select></label>
                     <div style="margin-top:var(--md); padding:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);">
-                      <div style="font-weight:600; font-size:12px; margin-bottom:var(--xs); display:flex; justify-content:space-between;">Google Gemini <span class="status-badge" style="background:var(--accent-lime); color:#000; padding:1px 4px; font-size:9px;">Connected</span></div>
+                      <div style="font-weight:600; font-size:12px; margin-bottom:var(--xs); display:flex; justify-content:space-between;">Google Gemini <span class="status-badge" style="background:var(--accent-lime); color:#1A1A1A; padding:1px 4px; font-size:9px;">Connected</span></div>
                       <label>Requested Auth Mode <select style="width:100%; margin-top:4px; margin-bottom:8px;"><option>Auto</option><option>OAuth</option><option>API Key</option></select></label>
                       <div style="font-size:11px; margin-top:var(--sm); color:var(--text-secondary); display:flex; flex-direction:column; gap:2px;">
                         <div>Effective Account: <span style="color:var(--text-primary);">user@domain.com</span></div>
@@ -6327,7 +6334,7 @@ impl Dashboard {
                 <details open>
                   <summary>Diagnostics</summary>
                   <div class="details-content">
-                    <div class="status-badge success" style="display:inline-block;padding:2px 6px;border-radius:4px;background:var(--graph-passed);color:#000;font-size:10px;margin-bottom:8px;">All Systems Go</div>
+                    <div class="status-badge success" style="display:inline-block;padding:2px 6px;border-radius:4px;background:var(--graph-passed);color:#1A1A1A;font-size:10px;margin-bottom:8px;">All Systems Go</div>
                     <label>Platform filter <select><option>All</option><option>Linux</option><option>macOS</option><option>Windows</option></select></label>
                     <button class="wizard-btn">Run Doctor Checks</button>
                     <label><input type="checkbox" checked> CLI Tools</label>
@@ -6596,7 +6603,7 @@ impl Dashboard {
               </div>
               <div style="display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px; padding: 2px var(--sm);">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                <input type="text" placeholder="Search messages & threads..." style="width: 100%; border: none; background: transparent; padding: 4px; color: var(--text-primary); font-size: 11px; outline: none;">
+                <input type="text" placeholder="Search messages & threads..." style="width: 100%; border: none; background: transparent; padding: 4px; color: var(--text-primary); font-size: 11px;">
               </div>
             </div>
 
@@ -6765,7 +6772,7 @@ impl Dashboard {
 </div>
 
                     <div class="composer-chips-container" style="display:flex; flex-wrap:wrap; padding:0 var(--sm);"></div>
-                    <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; outline:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
+                    <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
                     
                     <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm); border-top: 1px solid var(--border-light);">
                       <div style="display:flex; gap:var(--sm); align-items:center;">
@@ -6974,7 +6981,7 @@ impl Dashboard {
               </div>
               <div style="display: flex; align-items: center; background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px; padding: 2px var(--sm);">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                <input type="text" placeholder="Search messages & threads..." style="width: 100%; border: none; background: transparent; padding: 4px; color: var(--text-primary); font-size: 11px; outline: none;">
+                <input type="text" placeholder="Search messages & threads..." style="width: 100%; border: none; background: transparent; padding: 4px; color: var(--text-primary); font-size: 11px;">
               </div>
             </div>
 
@@ -7215,7 +7222,7 @@ impl Dashboard {
 </div>
 
                     <div class="composer-chips-container" style="display:flex; flex-wrap:wrap; padding:0 var(--sm);"></div>
-                    <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; outline:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
+                    <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
                     
                     <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm); border-top: 1px solid var(--border-light);">
                       <div style="display:flex; gap:var(--sm); align-items:center;">
@@ -7397,11 +7404,11 @@ impl Dashboard {
     };
 
     window.orchNodeDetailContent = {
-      '1': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>1</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Phase</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-passed); color:#000; padding:1px 4px; font-size:9px;">Passed</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>1m 20s</b></div></div></details>',
-      '2': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Phase</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-running); color:#000; padding:1px 4px; font-size:9px;">Running</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>0m 45s</b></div></div></details>',
-      '2.1': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2.1</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Task</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-passed); color:#000; padding:1px 4px; font-size:9px;">Passed</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Attempts</span> <b>2</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>0m 22s</b></div></div></details>',
-      '2.2': '<div style="margin-bottom:var(--sm); font-size:10px; padding:2px 6px; background:rgba(255,255,255,0.1); border-radius:12px; color:var(--text-muted); display:inline-block;">Runtime: v1.2.5 (Current) • db-admin</div><details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C1 Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2.2</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--accent-lime); color:#000; padding:1px 4px; font-size:9px;">Running</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Attempts</span> <b>1 (Retry 0)</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Safe-Point ID</span> <b style="color:var(--accent-blue);">sp-49a8f</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Worktree</span> <b>wt-2</b></div><div style="margin-top:var(--sm); border-top:1px dashed var(--border-light); padding-top:4px;"><span style="color:var(--text-secondary);">Queue Analysis:</span><div style="color:var(--text-muted); margin-top:2px;">Last wake: Dependency Resolved</div></div></div></details><details class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C2 Plan Mapping</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="color:var(--text-secondary); margin-bottom:4px;">Breadcrumb: Phase 2 &gt; Task 2 &gt; Subtask 2</div><button class="wizard-btn" style="font-size:9px; padding:2px 6px;">Open plan at section</button></div></details><details class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C3 Worker Activity</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div><span style="color:var(--text-secondary);">Identity:</span> rust-engineer</div><div><span style="color:var(--text-secondary);">Model:</span> Claude sonnet-4.5</div><div style="margin-top:var(--xs);"><a href="#" style="color:var(--accent-blue);">View logs...</a></div></div></details><details class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C6 HITL &amp; Recovery</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="color:var(--text-muted); margin-bottom:var(--sm);">No pending approvals.</div><div style="border-top:1px dashed var(--border-light); padding-top:var(--sm); display:flex; flex-direction:column; gap:var(--xs);"><button class="wizard-btn" style="font-size:10px;">Retry from safe point</button><button class="wizard-btn" style="font-size:10px;">Start fresh attempt</button></div></div></details>',
-      '2.3': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2.3</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Task</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-pending); color:#fff; padding:1px 4px; font-size:9px;">Pending</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Blocked</span> <b>Yes</b></div><div style="color:var(--text-muted); margin-top:var(--sm);">Waiting on Task 2.2 completion.</div></div></details>'
+      '1': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>1</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Phase</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-passed); color:#1A1A1A; padding:1px 4px; font-size:9px;">Passed</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>1m 20s</b></div></div></details>',
+      '2': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Phase</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-running); color:#1A1A1A; padding:1px 4px; font-size:9px;">Running</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>0m 45s</b></div></div></details>',
+      '2.1': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2.1</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Task</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-passed); color:#1A1A1A; padding:1px 4px; font-size:9px;">Passed</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Attempts</span> <b>2</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>0m 22s</b></div></div></details>',
+      '2.2': '<div style="margin-bottom:var(--sm); font-size:10px; padding:2px 6px; background:rgba(255,255,255,0.1); border-radius:12px; color:var(--text-muted); display:inline-block;">Runtime: v1.2.5 (Current) • db-admin</div><details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C1 Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2.2</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--accent-lime); color:#1A1A1A; padding:1px 4px; font-size:9px;">Running</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Attempts</span> <b>1 (Retry 0)</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Safe-Point ID</span> <b style="color:var(--accent-blue);">sp-49a8f</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Worktree</span> <b>wt-2</b></div><div style="margin-top:var(--sm); border-top:1px dashed var(--border-light); padding-top:4px;"><span style="color:var(--text-secondary);">Queue Analysis:</span><div style="color:var(--text-muted); margin-top:2px;">Last wake: Dependency Resolved</div></div></div></details><details class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C2 Plan Mapping</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="color:var(--text-secondary); margin-bottom:4px;">Breadcrumb: Phase 2 &gt; Task 2 &gt; Subtask 2</div><button class="wizard-btn" style="font-size:9px; padding:2px 6px;">Open plan at section</button></div></details><details class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C3 Worker Activity</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div><span style="color:var(--text-secondary);">Identity:</span> rust-engineer</div><div><span style="color:var(--text-secondary);">Model:</span> Claude sonnet-4.5</div><div style="margin-top:var(--xs);"><a href="#" style="color:var(--accent-blue);">View logs...</a></div></div></details><details class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">C6 HITL &amp; Recovery</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="color:var(--text-muted); margin-bottom:var(--sm);">No pending approvals.</div><div style="border-top:1px dashed var(--border-light); padding-top:var(--sm); display:flex; flex-direction:column; gap:var(--xs);"><button class="wizard-btn" style="font-size:10px;">Retry from safe point</button><button class="wizard-btn" style="font-size:10px;">Start fresh attempt</button></div></div></details>',
+      '2.3': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2.3</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Task</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-pending); color:#F5F0E8; padding:1px 4px; font-size:9px;">Pending</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Blocked</span> <b>Yes</b></div><div style="color:var(--text-muted); margin-top:var(--sm);">Waiting on Task 2.2 completion.</div></div></details>'
     };
 
     window.switchToChatThread = function(threadId) {
@@ -7799,7 +7806,7 @@ impl Dashboard {
                     } else if (ext === 'toml') {
                         fakeCode += `# configuration for ${filename}\n\n[orchestrator]\nprofile = \"dev\"\nmax_parallel_plans = 4\n\n[unraid]\nurl = \"http://unraid.local\"\nshares = [\"puppet-artifacts\", \"puppet-cache\"]\n`;
                     } else {
-                        fakeCode += `// Generic content for ${filename}\n\nfunction init() {\n  console.log(\"Initialized ${filename} in the fake editor view\");\n}\n`;
+                        fakeCode += `// Generic content for ${filename}\n\nfunction init() {\n  // No-op (removed debug logging)\n}\n`;
                     }
 
                     codeTarget.innerHTML = fakeCode.replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -7963,6 +7970,16 @@ impl Dashboard {
           document.querySelectorAll('.primary-content > .page').forEach(function(p) {
             p.classList.toggle('active', p.classList.contains('page-' + pageId));
           });
+          document.querySelectorAll('.page-tab').forEach(function(t) {
+            t.setAttribute('aria-selected', t.classList.contains('active') ? 'true' : 'false');
+          });
+        });
+
+        tab.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+            e.preventDefault();
+            this.click();
+          }
         });
       });
 
@@ -8019,6 +8036,17 @@ impl Dashboard {
             c.classList.remove('active');
             if (c.getAttribute('data-tab') === tabId) { c.classList.add('active'); }
           });
+
+          parent.querySelectorAll('.orch-tab').forEach(function(t) {
+            t.setAttribute('aria-selected', t.classList.contains('active') ? 'true' : 'false');
+          });
+        });
+
+        tab.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+            e.preventDefault();
+            this.click();
+          }
         });
       });
 
@@ -8136,7 +8164,7 @@ impl Dashboard {
       }
       showPaletteAtRange(range, docView);
     } catch (err) {
-      console.error("Palette positioning error:", err);
+      // Avoid noisy runtime console output.
     }
   }
 

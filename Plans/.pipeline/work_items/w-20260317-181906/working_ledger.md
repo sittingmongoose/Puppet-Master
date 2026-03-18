@@ -303,6 +303,30 @@
     - visible while active, but not treated as normal browsing state
     - separate storage/cookie boundary from normal workspace browsing
     - not auto-restored, not general-purpose browsing, and more restricted for capture/share/evidence
+- Candidate click/highlight/share-to-chat model:
+  - browser capture should **not** silently inject context into chat on ordinary clicks
+  - default browsing mode remains normal browsing/selection behavior
+  - capture is explicit and should produce **pending composer chips**, not auto-send a message
+  - two primary capture paths:
+    - **Text selection path**
+      - user highlights text on the page
+      - browser chrome/context action offers `Add Selection to Chat`
+      - PM creates a removable chat chip with bounded selected text + source URL + basic anchor/DOM context
+    - **Element pick path**
+      - user enters explicit `Pick Element for Chat` mode from browser chrome or shortcut
+      - hovered element gets visible outline/highlight
+      - click captures structured element context and creates a removable chat chip
+  - chips attach to the currently active composer/thread; if no composer/thread is active, PM should open a **new chat thread** and place the chips there
+  - capture remains revocable until send; users can remove individual chips before submitting
+  - multi-capture is allowed; multiple selections/elements can accumulate as chips for one message
+  - screenshots are optional explicit adds, not automatic side effects of every capture
+  - PM should support both:
+    - standalone screenshot add
+    - one-click combined capture actions like `Add Selection + Screenshot` / `Add Element + Screenshot`
+  - automation sessions should support the same capture model, but direct capture while agent is actively driving must still honor the takeover prompt rule
+- Candidate browser attachment shapes:
+  - retain `browser_element_context` for structured element picks
+  - likely add a second browser-specific typed attachment for text selections (instead of overloading native `document_selection_context`, since browser selections are not native document-source selections)
 - If hybrid remains favored, the spec should choose one of three explicit visibility models:
   - **Watchable hybrid:** agent drives a PM-visible Chromium automation session/window so the user can watch/take over
   - **Attachable hybrid:** agent may use a background Chromium session, but PM provides an explicit "open live browser session" / "watch run" action
@@ -340,11 +364,54 @@
   - `Let agent continue`
   - `Stop agent and keep browser`
 - Default highlighted takeover action should be `Take over and pause agent`.
+- Browser share-to-chat should be explicit, chip-based, and non-auto-send.
+- Current preferred share model supports two capture paths:
+  - text selection → `Add Selection to Chat`
+  - element pick mode → structured `browser_element_context`
+- If no composer/thread is active, browser capture should open a **new chat thread** and place the chips there.
+- Screenshot behavior should support both:
+  - standalone screenshot capture
+  - one-click combined capture with selection/element context
+- Screenshot scope should support both:
+  - full visible browser viewport
+  - clipped region around the selected element/text
+- Default combined capture action should be **context + clipped screenshot**
+- Full-viewport combined capture should remain available as a **different explicit action/selection**, not a hidden option or remembered preference
+- Preferred browser-capture labels are:
+  - `Add Selection to Chat`
+  - `Add Selection + Screenshot`
+  - `Add Selection + Full Screenshot`
+  - `Pick Element for Chat`
+  - `Pick Element + Screenshot`
+  - `Pick Element + Full Screenshot`
+  - `Add Screenshot to Chat`
+  - `Add Full Screenshot to Chat`
 - Current working model is:
   - `workspace_preview` = normal visible browser tab in the editor/workspace strip
   - `detached_preview` = optional detached version of that
   - `automation_session` = visible/watchable agent browser
   - `auth_session` = isolated auth browser
+- Candidate DevTools model:
+  - support **both docked and detached DevTools**
+  - docked DevTools should be the normal/default path
+  - docked DevTools should live inside the current browser tab/session surface, like standard browser DevTools
+  - user should be able to toggle dock position (for example bottom or side)
+  - detached DevTools should remain an explicit alternate layout action, not a more powerful mode
+  - detached DevTools remains available as a separate window action
+  - automation sessions should support DevTools attach/open when permitted
+  - this is now preferred over using the global bottom panel as the default DevTools host
+- Candidate persistence + isolation model:
+  - `workspace_preview` should use a **project-scoped persistent browser profile/store**
+  - `detached_preview` should share the same underlying profile/state as its originating `workspace_preview` subject unless explicitly opened as a separate browsing session
+  - `automation_session` should use a **separate ephemeral profile by default**
+  - `auth_session` should use a **separate isolated auth profile/store**
+  - cookies/local storage/session storage should not silently bleed between normal workspace browsing, automation, and auth
+  - restore should reopen `workspace_preview` / eligible `detached_preview` containers, but not auto-resume live automation/auth sessions
+  - explicit user actions may promote or copy state between session classes, but never as a hidden side effect
+  - user-confirmed promotion from `automation_session` into normal browsing state is allowed
+  - promotion should do both:
+    - copy/promote relevant browser state into the normal persistent browsing profile/store
+    - convert the current visible automation browser into a normal browser tab/session
 
 ## Open Questions / Uncertainties
 - What should be the canonical owner doc for the browser behavior contract versus cross-references?
@@ -371,8 +438,14 @@
 - What should be the default update/distribution story for the Chromium runtime across Linux/macOS/Windows?
 - Do we want channel-based browser runtimes (stable only vs stable/beta/dev) or a single pinned runtime stream?
 - Should HTML files also support one-click split behavior like `Open in Browser Split`, or should split view be a second-step action after opening the browser tab?
+- Should docked DevTools be single-instance-for-focused-browser, or support multiple pinned DevTools tabs?
+- Which DevTools actions are first-class in PM chrome versus only exposed inside the DevTools UI itself?
 - What exact role, if any, should the bottom-panel browser surface keep after shifting the primary browser host into editor/workspace tabs?
 - On takeover of an `automation_session`, does the session remain classified as `automation_session` in a paused/manual state, or does it normalize into `workspace_preview` after takeover?
+- What should be the exact second browser attachment type for text selections:
+  - new browser-specific selection attachment
+  - or reuse/extend an existing attachment contract?
+- What should the exact user-facing labels be for the alternate screenshot actions?
 
 ## Packetization Notes
 - This ledger is only seeded with topic, constraints, and initial framing.
@@ -403,6 +476,19 @@
 - Sixth research/design-decision cluster captured:
   - user asked what remains to reach implementation readiness
   - answer is now framed as a concrete readiness checklist spanning SSOT ownership, session model, agent contract, watchability, DevTools, artifacts, persistence, lifecycle, packaging, platform guarantees, permissions, commands/UI, and acceptance criteria
+- Seventh research/design-decision cluster captured:
+  - click/highlight/share flow is converging on an explicit chip-based model rather than automatic context injection
+  - recommended capture split is text selection path + element pick path
+  - likely needs a second browser-specific attachment type in addition to `browser_element_context`
+- Eighth research/design-decision cluster captured:
+  - screenshot capture is not either/or
+  - PM should support standalone screenshots and one-click combined context+ screenshot capture
+- Ninth research/design-decision cluster captured:
+  - screenshot scope is also not either/or
+  - PM should support both full-viewport and clipped-region screenshot capture
+- Tenth research/design-decision cluster captured:
+  - default combined capture should be context + clipped screenshot
+  - full viewport should remain available as a separate explicit action, not a buried option
 
 ## Do-Not-Forget Details
 - Track terminology decisions, precedence rules, requested vs effective state, platform differences, fallbacks, and user-visible behavior once research begins.
@@ -417,3 +503,4 @@
 - Future recommendations should stop hedging unless new evidence makes CEF-class integration clearly impractical; the user has already expressed willingness to pay the heavier cost for capability/reliability.
 - Reconciliation must explicitly address the conflict between current bottom-panel-browser assumptions and the newly locked editor-tab browser direction.
 - Takeover should feel intentional and safe; accidental clicks should not silently corrupt or hijack the agent's live browser run.
+- Browser capture should also feel intentional and safe; ordinary browsing clicks should not unexpectedly create or send chat context.
