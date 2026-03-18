@@ -1,0 +1,316 @@
+# Working Ledger
+
+## Work Item
+- `w-20260318-160350`
+
+## Mode
+- `research`
+
+## Topic / Scope
+- Fully flesh out the terminal.
+
+## Objective
+- Preserve research and design context for terminal planning work before packetization.
+- Keep a durable execution-memory record that can survive long chats and context compaction.
+
+## Constraints / Non-Goals
+- Web research is now allowed for this work item.
+- Do not edit planning docs during research mode.
+- This ledger is execution memory only; it is not canonical and must not be cited in planning docs.
+- The terminal must support macOS, Linux, and Windows.
+
+## Key Facts and Findings
+- The current topic is the terminal.
+- The user wants the terminal to be fully fleshed out.
+- Targeted `Plans/**` review has begun; no broad repo sweep performed.
+- `Plans/Section15_MVP_Promoted_Features_Spec.md` currently acts as the strongest shell-level owner for terminal placement and shell/session identities.
+- Workspace tabs are the primary shell; bottom-panel runtime surfaces include terminal, problems, output, debug console, ports, and embedded browser preview when applicable.
+- Secondary shell surfaces explicitly include a detached terminal window.
+- Stable identities already include `terminal_session_id` and `dev_session_id`; terminal and dev concepts are expected to be first-class persisted/runtime identities.
+- The dev loop is session-oriented: one dev session per active dev-server/watcher/test-watch lifecycle for a workspace tab and project; shell surfaces summarize it while terminal/output/ports carry detail.
+- Assistant chat already defines terminal ownership rules: one command card per invocation, preview defaults of 5 collapsed lines and 15 expanded lines, and `Open in Terminal` must focus the same live session rather than create a new shell.
+- Verified terminology/ownership contract: chat is a compact audit/preview surface; Terminal owns the canonical interactive PTY session.
+- `Plans/FinalGUISpec.md` assumes the bottom panel contains six runtime tabs overall: Terminal, Problems, Output, Ports, Browser, and Debug.
+- `Plans/FinalGUISpec.md` persists `terminal_state:v1` as terminal tab metadata only: tab list, name, pinned flag, and PTY config; terminal content is explicitly not persisted there.
+- `Plans/FinalGUISpec.md` also assumes 4-split terminal layout ratios live in shell layout state and that high-volume terminal output uses ring-buffer/virtualized rendering with 30fps batching.
+- `Plans/FileManager.md` acknowledges terminal tabs and pin semantics, but terminal details are mostly referenced rather than fully specified there.
+- `Plans/FileManager.md` keeps remote editing in MVP while remote terminal/run-debug is deferred or optional, which matters for terminal scope boundaries.
+- `Plans/Run_Modes.md` defines canonical shell-fingerprint failure budgeting using `(tool_name, normalized_command, normalized_cwd)`; this is an execution policy contract adjacent to terminal behavior.
+- `Plans/Multi-Account.md` treats PTY/runtime signals as one input into provider/account health for CLI-backed providers such as Claude Code.
+- User clarified additional baseline terminal requirements:
+  - terminal defaults to the bottom of the GUI
+  - terminal can be detached/popped into its own window
+  - terminal can be moved around within the GUI and resized
+  - one terminal view supports up to 4 terminals in a quadrant layout
+  - tabs exist above the quadrant layout, so one terminal section can have multiple tabs and each tab can host up to 4 quadrants
+  - the shell can host 2 terminal sections/components at once
+  - tabs and quadrants can be reordered
+  - tabs and quadrants can be renamed/labeled
+  - terminal default working directory is the project root
+  - the default working directory must be user-configurable in Settings
+  - Settings needs a dedicated Terminal section covering appearance/theme/color and default behaviors
+- User notes imply the terminal model needs to distinguish:
+  - terminal section/component
+  - terminal tab within a section
+  - quadrant/pane within a tab
+  - detached terminal window hosting one of those sections or equivalent view state
+- User agreed with a provisional layout direction:
+  - hybrid dock model
+  - workspace-like terminal tabs
+- Cross-platform support is a hard product requirement:
+  - macOS
+  - Linux
+  - Windows
+- Cross-platform findings must be treated as first-class design input for:
+  - PTY/session/process-host strategy
+  - renderer fallback and GPU robustness
+  - shell/profile/cwd/env handling
+  - IME/input/Unicode/accessibility behavior
+  - clipboard, permissions, packaging, and escape-sequence quirks
+- Final synthesis should explicitly recommend a platform capability matrix and platform-specific acceptance criteria rather than assuming one common happy path.
+- Current recommended framing:
+  - default shell starts with one bottom terminal section
+  - user may spawn a second terminal section
+  - sections may dock bottom, right, or detach
+  - terminal tabs act more like reusable terminal workspaces than flat one-session tabs
+- Research operation has been decomposed into a fleet:
+  - first 50 targets were locked from GitHub topic listing pages 1-3 in listing order
+  - 7 additional competitor tracks were added
+  - 57 per-target research todos are active in parallel
+  - 1 synthesis todo exists and depends on all per-target research todos
+- The top-50 topic targets are currently tracked as `topic-01` through `topic-50`.
+- Competitor tracks are currently tracked as:
+  - `competitor-cursor`
+  - `competitor-kiro`
+  - `competitor-trae`
+  - `competitor-antigravity`
+  - `competitor-vscode`
+  - `competitor-opencode`
+  - `competitor-jetbrains`
+- The synthesis todo is `synthesize-terminal-research`.
+- Broad research is now actively returning results from both dedicated terminal products and adjacent terminal-heavy tools/IDEs.
+- Cross-source patterns already repeated across many completed targets:
+  - strong separation between terminal engine/emulator, PTY/process host, and UI shell/chrome
+  - shell integration metadata is high leverage: prompt/command/exit markers, command blocks, sticky scroll, decorations, recent-command navigation
+  - session/process lifetime should be independent from UI lifetime
+  - bounded scrollback/history and diff-based redraw are table stakes
+  - GPU rendering is valuable, but only with robust fallback and transparent handling of context-loss/platform issues
+  - attach/detach/revive/reconnect patterns recur in the most polished products
+  - command logs / operation visibility significantly improve trust
+  - explicit render/output modes matter: rich interactive vs plain/log/CI-safe vs machine-readable export
+  - IME/accessibility/Unicode-width correctness repeatedly show up as product-critical, not edge polish
+  - plugin/extensibility is valuable, but very broad plugin APIs often become compatibility/performance debt
+- Strong terminal-specific findings from early completed references:
+  - command/prompt marks unlock navigation, rerun, sticky scroll, command blocks, copy-output, and “last command only” capture
+  - command-block / separator UX is repeatedly validated, but only when it does not intercept normal shell editing
+  - session restore / detach / attach / move-across-window behavior is a meaningful quality differentiator
+  - tab groups, split panes, and persistent workspace/session layouts are repeatedly praised
+  - explicit remote context / SSH / WSL / shell-profile awareness is important for trust and correctness
+- Early theming/settings findings:
+  - internal terminal theme schema should be explicit and semantic, not just imported ANSI tables
+  - theme previews/search/light-dark pairing/contrast indicators are desirable
+  - instant apply/revert and colorspace normalization matter
+- Early trust/safety findings:
+  - users strongly value visible command execution and approval models
+  - “pre-run edit / approve / reject / trust” flows are compelling for AI-driven terminal work
+  - hard interrupt/kill/cancel primitives are non-negotiable
+- Completed/validated research items so far include at least:
+  - `topic-01`, `topic-02`, `topic-03`, `topic-07`, `topic-08`, `topic-09`, `topic-10`, `topic-11`, `topic-13`, `topic-18`, `topic-19`, `topic-21`, `topic-24`, `topic-26`, `topic-28`, `topic-29`, `topic-34`, `topic-35`, `topic-38`, `topic-43`, `topic-45`
+  - `competitor-cursor`, `competitor-kiro`, `competitor-vscode`, `competitor-jetbrains`
+- One fleet task (`topic-36`) failed without updating SQL and was re-dispatched; coordinator must keep checking for any other mismatches between agent completion and SQL status.
+
+## Gaps / Problems Identified
+- No single dedicated terminal SSOT was found in the initial targeted read; terminal behavior is fragmented across shell, chat, GUI, file-manager, run-mode, and multi-account docs.
+- Core terminal product behavior is still underspecified compared with how strongly other docs depend on it.
+- Missing or weakly defined areas include:
+  - terminal section/tab/quadrant hierarchy and their stable identities
+  - terminal tab/session lifecycle and creation sources
+  - session reuse vs new-session rules
+  - detach/reattach behavior for terminal windows
+  - how two terminal sections are surfaced in the shell and whether they are symmetric peers
+  - reorder semantics for sections, tabs, and quadrants
+  - rename/label contract and whether labels are user-only or may reflect command/session metadata
+  - stdin/TTY-required command routing behavior
+  - relationship between terminal sessions and dev sessions
+  - whether terminal sessions are thread-scoped, project-scoped, workspace-tab-scoped, or some combination
+  - close/interruption/recovery behavior for active terminal sessions
+  - restore semantics beyond tab metadata
+  - settings ownership for terminal default cwd, visual theme, color palette, and behavior defaults
+  - remote terminal behavior and how it differs from remote editing
+  - explicit interaction contracts among Terminal, Output, Problems, Ports, and Debug
+- `Plans/storage-plan.md` did not show obvious terminal-state ownership in the initial targeted search, suggesting storage ownership may still need reconciliation against `FinalGUISpec`'s logical/UI persistence table.
+- The agreed direction is still conceptual; it needs explicit rules for docking zones, second-section spawning/visibility, and what "workspace-like" formally means.
+- Final synthesis must anonymize source project names in user-facing discussion even though the research queue tracks concrete source targets internally.
+- The in-repo planning docs are still missing explicit answers for several patterns now strongly validated by external research:
+  - prompt/command mark model
+  - command-block / separator model
+  - revive / reconnect / attach / detach semantics
+  - explicit render modes (interactive/log/plain/export)
+  - renderer capability/fallback matrix
+  - Unicode/IME/accessibility acceptance criteria
+  - kill/interrupt/trust flows for AI-issued commands
+- There is still a risk of overfitting to flashy or adjacent projects that are not full desktop terminal references; final synthesis should weight evidence by relevance.
+
+## Candidate Fixes / Design Directions
+- Treat terminal design as a shell subsystem with its own explicit contract, not as scattered bottom-panel behavior.
+- Define a layered model:
+  - shell placement and navigation
+  - terminal section/component model
+  - terminal session identity and lifecycle
+  - tab/quadrant/window model
+  - command handoff contract from chat and tools
+  - dev-session relationship
+  - settings/defaults/theming model
+  - persistence/restore/recovery
+  - remote/provider/platform variants
+- Preserve the already-verified shell-first rule: chat previews and audits, Terminal owns live PTY state.
+- Use `Open in Terminal` as an idempotent same-session focus action whenever a PTY-backed session already exists.
+- Separate terminal transcript persistence questions from tab metadata persistence; current docs only lock the latter.
+- Reconcile terminal ownership with Output / Problems / Ports / Debug so the user-visible boundary between these surfaces is explicit.
+- Strong candidate hierarchy for the SSOT:
+  - shell owns one or two terminal sections/components
+  - each terminal section owns an ordered set of terminal tabs
+  - each terminal tab owns an ordered set of up to 4 quadrants/panes
+  - each quadrant/pane hosts one live terminal session at a time
+  - detach/pop-out moves a terminal section into a dedicated window without inventing a different terminal product model
+- Treat default cwd as a resolved setting with at least:
+  - default = active project root
+  - user override via Terminal settings
+  - possible future command/session-specific overrides
+- Treat terminal appearance and default behaviors as owned by a dedicated Terminal settings section rather than scattering them across General settings.
+- Preferred design baseline for now:
+  - hybrid dock model + workspace-like terminal tabs
+- Why this is currently favored:
+  - preserves a simple default mental model
+  - supports advanced layouts without forcing them on everyone
+  - matches the user's interest in a more flexible, less generic terminal layout
+  - provides a natural home for labels, layouts, cwd defaults, and future task affinity per tab/workspace
+- Research execution model:
+  - let sub-agents perform source-specific repo/code/issue/community research
+  - main coordinator owns ledger updates and eventual anonymized synthesis
+  - avoid concurrent ledger writes from sub-agents
+- Provisional SSOT architecture direction validated by multiple sources:
+  - layer 1: PTY/session/process transport
+  - layer 2: VT/ANSI/grid/buffer engine
+  - layer 3: shell-integration metadata (prompt marks, command boundaries, exit status, cwd, optional trust/approval metadata)
+  - layer 4: workspace/session UI (sections, tabs, quadrants, detached windows, command palette, search, blocks/separators)
+  - layer 5: optional smart overlays (AI, quick fixes, suggestions, metrics, exports, plugins)
+- Strong candidate defaults based on repeated external evidence:
+  - keep shell keystrokes flowing directly to the PTY; do not replace shell line editing with app-owned interception
+  - support regular + alternate buffer explicitly
+  - use bounded scrollback with viewport/diff rendering and throttled paint
+  - persist layout/session metadata separately from large transcript state
+  - make renderer fallback explicit (GPU preferred, safe fallback available)
+  - make log/plain/export mode explicit instead of assuming rich terminal rendering everywhere
+  - ship visible command history/log and optional command separators/blocks
+  - support session revive/reconnect and clear attach/detach semantics
+  - build selective context forwarding (`last command only`, command block, summary) rather than dumping whole terminal history into AI context
+- Strong candidate PM-native features inspired by repeated findings:
+  - monitored terminals with visible agent attachment
+  - pre-run edit/approve/reject/trust for AI commands
+  - command sticky scroll / prompt marks / overview markers
+  - recent command and recent directory recall
+  - explicit remote-context badges and shell/profile diagnostics
+  - theme gallery with contrast indicators and paired variants
+  - command-output quick fixes / rerun / copy-output actions
+- Performance guidance now strongly validated:
+  - avoid DOM/string-concatenation-style render models
+  - keep heavy work off the UI thread
+  - throttle high-frequency updates and decouple collection cadence from paint cadence
+  - test WSL/Windows/Wayland/macOS IME and GPU edge cases early
+  - treat huge-output paths, search, and scrollback navigation as first-class benchmarks
+  - prefer async cached providers/widgets over synchronous shell callbacks on repaint
+- Capability/render-mode guidance:
+  - interactive rich mode
+  - plain/log/CI mode
+  - machine-readable/export mode
+  - degraded ASCII/low-capability mode
+  - maybe explicit showcase/spectacle mode if PM wants a visually richer variant without burdening daily-driver defaults
+
+## Impacted Docs
+- `Plans/Section15_MVP_Promoted_Features_Spec.md`
+- `Plans/assistant-chat-design.md`
+- `Plans/FinalGUISpec.md`
+- `Plans/FileManager.md`
+- `Plans/Run_Modes.md`
+- `Plans/Multi-Account.md`
+- `Plans/storage-plan.md` (possible ownership/reconciliation gap)
+- likely future SSOT/coverage touchpoints once reconciliation begins:
+  - terminal-specific owner doc (new or expanded)
+  - `Plans/Tools.md` / agent command flows
+  - any future settings/theming doc that owns terminal-specific configuration
+  - any future browser/remote/session transport docs if web/remote terminal access becomes first-class
+
+## Decisions Already Resolved
+- This work item is in `research` mode.
+- Work item status should remain `active` during ongoing research.
+- Initial scope work should prefer targeted reading over a broad repo sweep.
+- Existing verified product direction is shell-first terminal ownership rather than chat-owned PTY ownership.
+- Terminal defaults to the bottom of the GUI.
+- The user can detach/pop out terminal UI into its own window.
+- The user can move and resize terminal UI within the GUI.
+- One terminal view supports up to 4 quadrants.
+- A terminal section can have multiple tabs, each tab with up to 4 quadrants.
+- The shell can host 2 terminal sections/components.
+- Tabs and quadrants can be reordered.
+- Tabs and quadrants can be renamed/labeled.
+- Default terminal working directory is the project root unless the user changes the default in settings.
+- Settings needs a dedicated Terminal section, including appearance/theme/color and default terminal behaviors.
+- Provisional recommended layout direction is a hybrid dock model with workspace-like terminal tabs.
+- We should stay open to better/cooler layout ideas later rather than freezing the first workable layout too early.
+- Terminal support for macOS, Linux, and Windows is required, not optional.
+- The first 50 topic targets are defined by the first 50 repositories shown across GitHub topic pages 1-3 at research kickoff time.
+- Research is being executed in fleet mode with one background agent per target/competitor.
+- The synthesis step should run only after all per-target research todos are completed or explicitly blocked.
+- External research is now producing enough signal that final synthesis should prioritize repeated patterns over one-off novelty.
+
+## Open Questions / Uncertainties
+- What exact terminal surfaces are in scope for this fleshing-out pass beyond the now-confirmed bottom/detached/movable/resizable shell model: dashboard terminal, mini/inline terminal, remote terminal, debug console adjacency, ports integration?
+- What behaviors are replacements versus additive extensions to the already-documented shell-first model?
+- Are the 2 terminal sections always visible peers, user-toggleable instances, or dockable sections that may live in different shell zones?
+- Which dock targets are canonical for terminal sections: bottom, right, left, detached, maybe center split?
+- What makes a terminal tab "workspace-like" in the formal contract: pane arrangement only, or also labels, cwd defaults, task roles, restart behavior, and restore semantics?
+- What is the canonical identity model for section, tab, quadrant, and live terminal session?
+- Does reordering quadrants move live sessions with them or only visual slots?
+- What should rename/label defaults be: generated labels, command-derived labels, cwd-derived labels, or untitled until changed?
+- What is the canonical session ownership model: workspace tab, project, thread, run, or user-created terminal instance?
+- When does a command invocation get a PTY-backed terminal session versus remaining inline-only?
+- Which actions must reuse an existing terminal session, and what identity determines "same session"?
+- How should dev sessions map onto terminal sessions: one-to-one, one-to-many, or sibling identities?
+- What persistence and recovery guarantees should exist for terminal sections, tabs, quadrant layout, labels, content, scrollback, working directory, env, process tree, and pane layout?
+- What exactly belongs in Terminal settings, and which settings are global defaults versus per-project or per-session overrides?
+- Should PM treat command blocks / prompt marks as always-on canonical terminal metadata, or as an optional shell-integration enhancement that degrades gracefully?
+- Should PM support transcript persistence/replay in-product, or keep transcript durability lightweight and focus on command-block/history artifacts instead?
+- How much plugin/extensibility surface should terminal expose at v1 without recreating the maintenance burden seen in very broad plugin architectures?
+- Should PM support browser/remoted terminal attach later, and if so, is that a sibling transport layer rather than part of the first desktop-only SSOT?
+- What platform-specific constraints or capability differences matter for PTY hosting, detach/reattach, clipboard, and accessibility?
+- How should terminal behavior interact with chat, agents, planning workflows, run/debug, and remote SSH?
+- Will the final synthesis need one or more internal grouping schemes (emulator-style, IDE-style, TUI/workflow-style, shell/prompt-style) so that weaker topic hits do not distort terminal-specific conclusions?
+
+## Packetization Notes
+- Not ready for reconciliation or packetization yet.
+- Initial terminal-doc discovery cluster is complete.
+- The work is currently in the broad research harvest phase.
+- Next operational step is to collect agent completions, verify SQL status transitions, and then launch the synthesis todo once all prerequisite research todos are done or blocked.
+- When enough research is harvested, synthesize by weighted themes rather than by source list so the anonymized output remains useful.
+
+## Do-Not-Forget Details
+- Capture terminology decisions as they emerge.
+- Capture defaults, contracts, state transitions, and non-goals.
+- Capture user-visible behavior, fallback behavior, and failure handling.
+- Capture precedence or override rules if terminal settings or modes can conflict.
+- Capture contradictions between existing docs once repo reading begins.
+- Preserve the distinction between shell sessions, terminal sessions, and dev sessions unless a doc explicitly collapses them.
+- Preserve the distinction between requested and effective state if terminal/provider/platform capabilities diverge.
+- Track idempotent same-session handoff rules for `Open in Terminal` / `Show Terminal`.
+- Do not let “terminal tab” and “terminal quadrant” collapse into the same concept.
+- Keep room for two terminal sections/components as first-class shell state, not as an afterthought.
+- Avoid settling for a bland IDE-clone terminal if a more expressive PM-native layout remains understandable.
+- Keep user-facing synthesis anonymized even though source tracking is concrete internally.
+- Re-check any agent that completed without changing SQL; SQL remains the source of truth.
+- Require an explicit cross-platform capability matrix and acceptance criteria for macOS/Linux/Windows before terminal SSOT is considered complete.
+- Distinguish:
+  - terminal transcript state
+  - command-block/history metadata
+  - layout/session metadata
+  - settings/theme defaults
