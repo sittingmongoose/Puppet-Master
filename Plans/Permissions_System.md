@@ -305,23 +305,43 @@ ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
 ## 7. Deterministic defaults
 
 ### 7A. Preview/browser trust-tier capability matrix (2026-03-08)
-Preview/browser trust tiers are runtime capability gates. They do not replace tool permissions; they constrain what preview surfaces themselves are allowed to do.
+Preview/browser policy combines preview-runtime boundary rules with browser action permissions. Generated Markdown/Mermaid previews remain restricted preview surfaces; browser-capable sessions use the explicit browser permission-layer model and requested/effective disclosure.
 
-| Capability | `generated_restricted` | `workspace_preview` | `external_browse` |
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+
+| Capability or behavior | `generated_restricted` preview surfaces | browser-capable sessions (`workspace_preview`, `detached_preview`, `automation_session`, `auth_session`) | Notes |
 |---|---|---|---|
-| App-bundled JS required for rendering | allow | allow | allow |
-| Arbitrary remote network fetches from page content | deny | deny unless user explicitly navigated to allowed workspace preview origin | user-driven only |
-| Local asset loading from active workspace preview root | deny | allow | deny by default |
-| Cookies / local storage reuse | deny | allow, project-scoped only | separate store from workspace preview |
-| Preview mutation bridge (`request_edit`) | allow only through narrow v1 preview bridge | deny by default | deny |
-| Durable document annotations from rendered selection | allow only when runtime can map the selection to canonical source text or a stable semantic anchor | allow only for workspace-backed docs with the same mapping guarantee | deny |
-| Forward bounded selection to page-owned chat as `document_selection_context` | allow | allow when subject is workspace-backed | deny; use `browser_element_context` instead |
-| Open source / export bridge | allow | allow when subject is workspace-backed | deny unless the page is a workspace preview |
-| Inspect / capture element context | deny | allow | allow, user-triggered only |
-| DevTools | deny | allow when user explicitly opens DevTools | allow when user explicitly opens DevTools |
-| Arbitrary host/file API access | deny | deny | deny |
+| App-bundled JS required for rendering | allow | allow | preview and browser surfaces may use app-bundled support assets |
+| Arbitrary remote network fetches from page content | deny | allow only when the active browser session/runtime policy permits the navigation and the resulting capability set | preview restrictions remain narrower than browser navigation permissions |
+| Local asset loading from active workspace preview root | deny except app-controlled preview assets | allow for workspace-backed HTML/browser subjects under the browser runtime contract | workspace-backed HTML preview is a browser-capable surface, not a generated preview |
+| Cookies / local storage reuse | deny | allow or deny based on `profile_scope` and session class; no silent bleed across profile scopes | auth and automation remain isolated by default |
+| Preview mutation bridge (`request_edit`) | allow only through the narrow preview bridge when deterministic source mapping exists | deny by default on browser surfaces; browser capture does not imply mutation privileges | source mutation and browser interaction remain separate privileges |
+| Durable document annotations from rendered selection | allow only when runtime can map the selection to canonical source text or a stable semantic anchor | allow only for workspace-backed docs with the same mapping guarantee | browser capture alone does not create annotations |
+| Forward bounded browser text selection to chat | n/a | allow only through explicit `browser_selection_context` capture actions | browser text selection does not use `document_selection_context` |
+| Inspect / capture element context | deny | allow through explicit user action and within resolved permission state | element capture remains explicit and user-visible |
+| DevTools | deny | allow when the user explicitly opens DevTools | docked vs detached is a layout choice, not a capability tier |
+| Arbitrary host/file API access | deny | deny unless separately authorized through explicit tool/permission surfaces | browser surfaces do not implicitly gain host/file APIs |
 
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/newfeatures.md, ContractName:Plans/assistant-chat-design.md
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
+
+Browser action permission layers:
+
+| Browser action family | Effective layer | Default behavior | Notes |
+|---|---|---|---|
+| navigation / readback (`navigate`, `back`, `reload`, `snapshot`, `screenshot`, `console`, `network`) | always_allowed | allow when the browser runtime is healthy | still blocked by `runtime_unavailable` or recovery state |
+| explicit share/capture actions | always_allowed | allow | capture is user-triggered and does not auto-send hidden chat messages |
+| interaction, tab management, viewport, upload, dialog, trace, and video control | session_granted | ask/allow based on the resolved session permission snapshot | applies to agent/tool-driven interaction, not ordinary local user clicks |
+| auth-flow mutation, storage import/export, cookie/storage mutation, offline/mock routing, download execution, and promotion into normal browsing | explicit_confirmation | deny until explicitly confirmed | treated as high-risk state mutation |
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
+
+Requested versus effective browser disclosure requirements:
+- every browser session must disclose `requested_browser_runtime` and `effective_browser_runtime`
+- every browser session must disclose `requested_capabilities`, `effective_capabilities`, `capability_degradations`, and `blocked_actions`
+- every browser session must disclose `session_class`, `permission_tier`, `profile_scope`, `restore_policy`, and `takeover_state`
+- browser degradation reasons use explicit values such as `platform_unsupported`, `runtime_unavailable`, `permission_not_granted`, `session_class_restricted`, and `temporarily_unavailable_after_recovery`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
 When no rule matches at any precedence layer, the following tool defaults apply.
 

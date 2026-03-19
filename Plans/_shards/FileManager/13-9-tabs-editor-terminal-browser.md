@@ -1,14 +1,17 @@
 ## 9. Tabs: Editor, Terminal, Browser
 
 ### 9A. Browser tab and detached preview normalization (2026-03-08)
-The canonical browser container model is tab-first for in-shell browsing.
+The canonical browser container model is editor/workspace-tab-first for in-shell browsing.
 
 Rules:
-- in-shell browser uses browser tabs, not a free-floating browser-instance pool
+- in-shell normal browsing uses browser tabs in the editor/workspace surface, not a free-floating browser-instance pool
 - detached preview/browser windows are first-class and outside the in-shell browser-tab cap
+- bottom-panel browser hosting is not canonical behavior
 - LRU browser-instance reuse is not canonical behavior
-- when the browser cap is reached, the user gets an explicit choice or a deterministic command failure; the app must not silently replace the current preview subject
-- browser tab identity is distinct from preview-session identity so the same preview subject may exist in multiple containers without persistence ambiguity
+- when the browser cap is reached, the user gets an explicit choice or deterministic command failure; the app must not silently replace the current preview subject
+- `automation_session` and `auth_session` are not counted as normal in-shell browser tabs
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 ### 10.1 Editor UX (text/code)
 
 - **Minimap:** Small overview of the file in the right gutter for quick scrolling and orientation (e.g. VS Code-style).
@@ -52,9 +55,9 @@ Rules:
 
 ### 10.6 Cursor/agent-related
 
-- **In-app browser + click-to-context:** Already in §8 and newfeatures.md §15.18.
+- **In-app browser + click-to-context:** Already in §8 and `Plans/Section15_MVP_Promoted_Features_Spec.md` §3.18.
 - **Visual design sidebar:** Sidebar for the **HTML/preview** workflow: theme (light/dark), visual controls for CSS (shadow, opacity, borders, colors, dimensions, layout), drag-and-drop element rearrangement, component prop inspection. **One-click apply** changes from sidebar to code (e.g. update HTML/CSS in editor). Complements hot reload (§8.2).
-- **Agent-driven browser actions:** The Assistant (or agent) can **drive the built-in browser**: navigate, click, type, scroll, take screenshots, read console/network. Same WebView as §8; actions gated by tool policy and user permissions (assistant-chat-design). **Browser/Assistant boundary:** The interface (how chat/Assistant sends commands and receives results) and security constraints are defined in Plans/newfeatures.md §15.18; this plan assumes that boundary is implemented there.
+- **Agent-driven browser actions:** The Assistant (or agent) can **drive the built-in browser**: navigate, click, type, scroll, take screenshots, read console/network. Same browser surface as §8; actions gated by tool policy and user permissions (assistant-chat-design). **Browser/Assistant boundary:** The interface (how chat/Assistant sends commands and receives results) and security constraints are defined in `Plans/Section15_MVP_Promoted_Features_Spec.md` §3.18 plus the reconciled chat/prompt/permission/storage browser docs; this plan assumes that boundary is implemented there.
 
 ### 10.7 OpenCode-inspired
 
@@ -251,8 +254,8 @@ Use this list when deriving an implementation plan; order aligns with §6 Implem
 - 11. **Click-to-open from chat:** Paths and code blocks in chat open file via open-file contract; line/range scroll/highlight; already-open file → focus existing tab.
 - 12. **Drag-and-drop (File Manager):** Drop onto tree (copy into folder); drag out (copy to OS); name conflict handling; progress and error feedback; security (target under project root).
 - 13. **Editor enhancements (non-LSP):** Line numbers, go-to-line, syntax highlighting, split panes, persistence (tabs, scroll/cursor, max tabs), large-file threshold and hard cap, transient UI states, accessibility.
-- 14. **Image viewer & HTML preview:** Image tab/viewer; HTML open in browser; hot reload with debounce (default 400 ms); click-to-context when viewing HTML (per newfeatures.md §15.18).
-- 15. **Tabs (Terminal, Browser):** Terminal tabs; browser instance cap and reuse/LRU policy.
+- 14. **Image viewer & HTML preview:** Image tab/viewer; HTML open in browser; hot reload with debounce (default 400 ms); click-to-context when viewing HTML (per `Plans/Section15_MVP_Promoted_Features_Spec.md` §3.18).
+- 15. **Tabs (Terminal, Browser):** Terminal tabs; browser tab/session cap and explicit over-cap behavior.
 - 16. **Optional / later:** Recover unsaved; Save As; Revert last agent edit (contract + refresh notification); "Open in" other/new group; Git status strip; modal editing; remote SSH; review rules storage; combined presets.
 
 ### 12.6 Multi-agent review -- addressed in main body

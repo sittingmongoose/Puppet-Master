@@ -18,11 +18,13 @@
 
 ## Summary
 
-The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the same project context; chat integrates via @ mention and **click-to-open** (file paths and code blocks in the thread open in the editor). Full behavior and MVP scope are defined below.
+The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the same project context; chat integrates via @ mention and **click-to-open** so file paths and code blocks in the thread open in the editor. Full behavior and MVP scope are defined below.
 
-This plan also covers **image viewing** and **HTML-in-browser preview with hot reload**; **split editor panes**; **drag editor out to its own window and back** (detach/snap); **tabs** in the editor and Terminal and **browser tabs plus detached preview windows**; **language/framework presets** (JetBrains-style, with tool download on project add or interview); and a full set of **editor enhancements** (UX, navigation & search, layout, run/debug, modal editing, remote SSH, agent/design sidebar, OpenCode-style cache/watcher, Graphite-style review). **LSP (Language Server Protocol) is in scope for MVP**: diagnostics, hover, autocomplete, go-to-definition, and symbol search use language servers when available for the current preset; see **§10.10**. Full LSP integration in the **Chat Window** (diagnostics in context, @ symbol with LSP, code-block hover/go-to-definition) is in **Plans/LSPSupport.md §5.1** and **Plans/assistant-chat-design.md §9.1**.
+This plan also covers **image viewing** and **HTML-in-browser preview with hot reload**; **split editor panes**; **drag editor out to its own window and back** (detach/snap); **tabs** in the editor and Terminal and **browser tabs plus detached preview windows**; **language/framework presets**; and the editor enhancement set. **LSP (Language Server Protocol) is in scope for MVP**: diagnostics, hover, autocomplete, go-to-definition, and symbol search use language servers when available for the current preset; see **§10.10**. Full LSP integration in the **Chat Window** remains in **Plans/LSPSupport.md §5.1** and **Plans/assistant-chat-design.md §9.1**.
 
-**Scope of this document:** This spec defines File Manager, editor, @ mention, click-to-open, image/HTML preview, tabs, and editor enhancements. It defers chat UX details to Plans/assistant-chat-design.md, layout to Plans/feature-list.md (GUI layout) and Plans/FinalGUISpec.md, and browser click-to-context/agent actions to Plans/newfeatures.md §15.18. Storage terms (**redb**, **seglog**, project storage design) are defined in rewrite-tie-in-memo and project storage design docs.
+**Scope of this document:** This spec defines File Manager, editor, @ mention, click-to-open, image/HTML preview, tabs, and editor enhancements. It defers chat UX details to `Plans/assistant-chat-design.md`, layout to `Plans/FinalGUISpec.md`, and browser click-to-context / agent-driven browser actions to the promoted browser owner in `Plans/Section15_MVP_Promoted_Features_Spec.md` plus the reconciled browser chat, prompt, permission, and storage docs. Storage terms (`redb`, `seglog`, project storage design) are defined in rewrite-tie-in and storage-plan docs.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
 
 ### Definitions
 
@@ -387,48 +389,68 @@ Implement in roughly this order so that contracts and single sources of truth ex
 ### 8.2 HTML in browser and hot reload
 
 ### 8.2A Rewrite normalization for HTML/browser preview (2026-03-08)
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
-
-HTML preview and browser preview use the canonical browser surface classes.
+HTML preview and browser preview use the canonical browser session-class model and the same PM browser runtime as the built-in browser feature.
 
 Rules:
-- file-backed HTML preview uses `workspace_preview` or `detached_preview`
+- `Open` keeps the file in source/editor mode
+- `Open in Browser` opens the file in a `workspace_preview`
+- `Open in Detached Browser` opens the file in a `detached_preview`
+- split browser layout is a second-step layout action after opening, not a separate open command
+- file-backed HTML preview is editor-tab-first rather than bottom-panel-first
 - preview subject identity is not silently retargeted by over-cap behavior
 - multiple browser tabs may render distinct preview subjects inside the shell
 - preview restore is scoped by project and workspace tab
 - auth and automation browser sessions do not become file-manager preview tabs automatically
-- click-to-context from HTML preview uses the same capture and share/revoke model as the main browser feature
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 ### 8.3 Same browser surface as built-in browser and click-to-context
 
-The HTML preview uses the **same built-in browser** as in **Plans/newfeatures.md §15.18** (Built-in Browser and Click-to-Context). One WebView/browser panel for: (1) Local HTML preview and hot reload (§8.2), (2) **Click-to-context for the Assistant**: user can **click on parts of the page** and **send that element's context to the Assistant chat** (DOM, attributes, rect, etc.) via the same mechanism as §15.18 (modifier key or "Send element to chat" toggle). When viewing your HTML design in this browser, you can click an element and add it as context for the next message. Edit → Save → hot reload → click section → send to Assistant. Element context schema, capture mode, security, and Assistant integration are in newfeatures.md §15.18. **Web app testing:** Same browser surface aligns with web app testing/verification (Playwright, browser verifier, GUI tool catalog per feature-list and newtools.md).
+HTML preview uses the same built-in browser defined by the promoted browser owner spec rather than a separate WebView or a stale `newfeatures.md` authority path.
+
+- local HTML preview, normal browsing, screenshots, console/network inspection, DevTools, and watchable browser testing all use the same PM browser runtime and session-class model
+- `workspace_preview` and `detached_preview` cover normal file-backed HTML browsing
+- `automation_session` covers watchable agent-driven browser testing and verification with separate ephemeral state by default
+- `auth_session` covers PM-owned auth and provider/device flows without silently turning into a normal preview tab
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/newtools.md, ContractName:Plans/storage-plan.md
 
 ### 8.4 Click-to-context when viewing HTML
 
-When viewing a local HTML file in the built-in browser, clicking an element still sends `browser_element_context` to the Assistant. The Assistant receives a structured element summary (`tag`, `id`, `class`, `text`, `role`, `rect`, `parent path`, optional HTML snippet) so the user can ask for changes or explanations about that part of the page.
+Click-to-context in HTML/browser mode is explicit and uses the same browser capture model as the main built-in browser.
 
-ContractRef: ContractName:Plans/newfeatures.md, ContractName:Plans/assistant-chat-design.md
+- text selection uses `browser_selection_context`
+- element pick uses `browser_element_context`
+- capture creates removable composer chips and never silently submits a message
+- when no writable active thread/composer exists, PM opens a new thread and places the chips there
+- the default combined capture is context plus clipped screenshot; full-page combined capture remains explicit
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 Boundary rules:
-- This HTML/browser path remains separate from native document review selection handoff.
-- Native document surfaces use `document_selection_context` and may also support durable annotations when deterministic source mapping exists.
-- Browser/HTML click-to-context does not imply durable annotations or `Resubmit with Annotations` semantics.
-- Capture privilege and source-mutation privilege remain separate even for workspace-backed HTML preview.
+- the HTML/browser path remains separate from native document review selection handoff
+- native document surfaces use `document_selection_context` and may support durable annotations only when deterministic source mapping exists
+- browser/HTML click-to-context does not imply durable annotations or `Resubmit with Annotations` semantics
+- capture privilege and source-mutation privilege remain separate even for workspace-backed HTML preview
+- ordinary browsing clicks must not unexpectedly create or send chat context
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/rewrite-tie-in-memo.md
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md
 
 ---
 
 ## 9. Tabs: Editor, Terminal, Browser
 
 ### 9A. Browser tab and detached preview normalization (2026-03-08)
-The canonical browser container model is tab-first for in-shell browsing.
+The canonical browser container model is editor/workspace-tab-first for in-shell browsing.
 
 Rules:
-- in-shell browser uses browser tabs, not a free-floating browser-instance pool
+- in-shell normal browsing uses browser tabs in the editor/workspace surface, not a free-floating browser-instance pool
 - detached preview/browser windows are first-class and outside the in-shell browser-tab cap
+- bottom-panel browser hosting is not canonical behavior
 - LRU browser-instance reuse is not canonical behavior
-- when the browser cap is reached, the user gets an explicit choice or a deterministic command failure; the app must not silently replace the current preview subject
-- browser tab identity is distinct from preview-session identity so the same preview subject may exist in multiple containers without persistence ambiguity
+- when the browser cap is reached, the user gets an explicit choice or deterministic command failure; the app must not silently replace the current preview subject
+- `automation_session` and `auth_session` are not counted as normal in-shell browser tabs
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 ### 10.1 Editor UX (text/code)
 
 - **Minimap:** Small overview of the file in the right gutter for quick scrolling and orientation (e.g. VS Code-style).
@@ -472,9 +494,9 @@ Rules:
 
 ### 10.6 Cursor/agent-related
 
-- **In-app browser + click-to-context:** Already in §8 and newfeatures.md §15.18.
+- **In-app browser + click-to-context:** Already in §8 and `Plans/Section15_MVP_Promoted_Features_Spec.md` §3.18.
 - **Visual design sidebar:** Sidebar for the **HTML/preview** workflow: theme (light/dark), visual controls for CSS (shadow, opacity, borders, colors, dimensions, layout), drag-and-drop element rearrangement, component prop inspection. **One-click apply** changes from sidebar to code (e.g. update HTML/CSS in editor). Complements hot reload (§8.2).
-- **Agent-driven browser actions:** The Assistant (or agent) can **drive the built-in browser**: navigate, click, type, scroll, take screenshots, read console/network. Same WebView as §8; actions gated by tool policy and user permissions (assistant-chat-design). **Browser/Assistant boundary:** The interface (how chat/Assistant sends commands and receives results) and security constraints are defined in Plans/newfeatures.md §15.18; this plan assumes that boundary is implemented there.
+- **Agent-driven browser actions:** The Assistant (or agent) can **drive the built-in browser**: navigate, click, type, scroll, take screenshots, read console/network. Same browser surface as §8; actions gated by tool policy and user permissions (assistant-chat-design). **Browser/Assistant boundary:** The interface (how chat/Assistant sends commands and receives results) and security constraints are defined in `Plans/Section15_MVP_Promoted_Features_Spec.md` §3.18 plus the reconciled chat/prompt/permission/storage browser docs; this plan assumes that boundary is implemented there.
 
 ### 10.7 OpenCode-inspired
 
@@ -671,8 +693,8 @@ Use this list when deriving an implementation plan; order aligns with §6 Implem
 - 11. **Click-to-open from chat:** Paths and code blocks in chat open file via open-file contract; line/range scroll/highlight; already-open file → focus existing tab.
 - 12. **Drag-and-drop (File Manager):** Drop onto tree (copy into folder); drag out (copy to OS); name conflict handling; progress and error feedback; security (target under project root).
 - 13. **Editor enhancements (non-LSP):** Line numbers, go-to-line, syntax highlighting, split panes, persistence (tabs, scroll/cursor, max tabs), large-file threshold and hard cap, transient UI states, accessibility.
-- 14. **Image viewer & HTML preview:** Image tab/viewer; HTML open in browser; hot reload with debounce (default 400 ms); click-to-context when viewing HTML (per newfeatures.md §15.18).
-- 15. **Tabs (Terminal, Browser):** Terminal tabs; browser instance cap and reuse/LRU policy.
+- 14. **Image viewer & HTML preview:** Image tab/viewer; HTML open in browser; hot reload with debounce (default 400 ms); click-to-context when viewing HTML (per `Plans/Section15_MVP_Promoted_Features_Spec.md` §3.18).
+- 15. **Tabs (Terminal, Browser):** Terminal tabs; browser tab/session cap and explicit over-cap behavior.
 - 16. **Optional / later:** Recover unsaved; Save As; Revert last agent edit (contract + refresh notification); "Open in" other/new group; Git status strip; modal editing; remote SSH; review rules storage; combined presets.
 
 ### 12.6 Multi-agent review -- addressed in main body
@@ -973,44 +995,56 @@ Mermaid behavior in the editor/file manager:
 ### 14.6 HTML preview and hot reload
 
 Full HTML/browser mode must support:
-
 - relative asset resolution
 - local script execution appropriate to a workspace preview
-- reload / hot reload
-- click-to-context integration when the browser surface is used in that mode
-- detached browser window fallback
+- reload and hot reload
+- explicit click-to-context and explicit capture-to-chat actions when the browser surface is used in that mode
+- screenshots, console/network read, and DevTools access through the canonical browser model
+- detached browser open without changing the underlying preview subject identity
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md
 
 Hot reload scope:
-
 - watch the HTML file itself
 - watch linked local CSS/JS/image assets under the preview contract
-- debounce reloads to avoid thrash
+- debounce reloads to avoid thrash (default 400 ms remains acceptable)
 - preserve scroll/location when reasonable
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/rewrite-tie-in-memo.md
 
 ### 14.7 Error and fallback behavior
 
 Required fallback rules:
+- if the PM browser runtime is unavailable or damaged, present explicit `runtime_unavailable` remediation and keep source/native surfaces usable
+- if normal embedding is temporarily unavailable, the product may use the detached window path on the same PM browser model rather than silently falling through to an unrelated legacy browser runtime
+- if Mermaid parse/render fails, show source plus explicit render error; do not silently drop the diagram
+- if Markdown preview generation fails, keep source editor usable and show a visible preview error state
+- if a preview edit cannot be reversed into a safe source patch, focus source rather than mutating preview state
+- if browser or browser-subprocess crash occurs, preserve recoverable metadata and any completed browser evidence when possible
 
-- If browser embedding is unavailable, open detached preview/browser window instead.
-- If Mermaid parse/render fails, show source plus explicit render error; do not silently drop the diagram.
-- If Markdown preview generation fails, keep source editor usable and show a visible preview error state.
-- If HTML preview runtime requirements are missing on Linux, present a clear missing-runtime state instead of a broken blank pane.
-- If a preview edit cannot be reversed into a safe source patch, focus source rather than mutating preview state.
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 ### 14.8 Non-goals
 
-- No hidden diagram object model.
-- No promise that all preview surfaces are embedded in-process panes on every platform.
-- No arbitrary WYSIWYG DOM editing for Markdown/HTML as an MVP requirement.
+- no hidden diagram object model
+- no promise that every preview surface is embedded in-process in the same way on every platform
+- no arbitrary WYSIWYG DOM editing for Markdown/HTML as an MVP requirement
+- no bottom-panel-primary browser model
+- no silent automatic chat-context injection from browser clicks or selection
+- no alternate stale browser authority outside the promoted Section 15 owner and reconciled subsystem docs
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
 
 ### 14.9 Acceptance criteria
 
-- Opening a Markdown file supports source, preview, split, and detached preview without changing canonical source storage.
-- Mermaid fenced blocks render natively in Markdown preview and can export SVG/PNG.
-- `.mmd` files support source editing plus detached/native preview.
-- HTML files support source editing and full rendered browser-like viewing with local asset resolution.
-- Image files render natively and can detach/open without going through the browser runtime.
-- Preview actions either apply validated text patches or deterministically fall back to source focus.
+- opening an HTML file supports source editing, `Open in Browser`, `Open in Detached Browser`, and browser split as a second-step layout action without changing canonical source storage
+- HTML files support full rendered browser-like viewing with local asset resolution, explicit click-to-context, screenshots, and DevTools access on the canonical PM browser model
+- watchable browser automation runs use a visible `automation_session` that the user can safely pause, stop-and-keep, or promote to normal browsing
+- browser evidence capture routes screenshots, traces, videos, and recordings into the shared runtime artifact pipeline
+- browser recovery uses `Reopen`, `Retry`, and `Keep Closed`, and completed browser evidence survives when possible
+- image files still render natively and do not require the browser runtime
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md
 
 ## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)
 File/artifact browsing must support the new runtime artifacts and reports produced by scheduler/remediation flows while preserving canonical runtime identity.

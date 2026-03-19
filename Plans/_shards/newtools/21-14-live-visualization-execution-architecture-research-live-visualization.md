@@ -6,109 +6,156 @@ This section defines the deterministic architecture for **non-headless visual ex
 
 **Unified orchestrator flow (all platforms):**
 1. **Select provider/tool profile** from interview + detected stack:
-   - `web.playwright.visible`
+   - `web.pm_browser.visible`
+   - `web.playwright.attach_existing` (backend/compat path, not the primary product model)
    - `desktop.appium.windows` / `desktop.appium.mac2`
    - `ios.appium.xcuitest.simulator` (optional `ios.xcode.preview`)
    - `android.appium.uiautomator2.emulator`
 2. **Preflight checks** run (see §14.2). If any hard dependency fails, degrade per §14.3.
 3. **Launch visible target** and emit `live.session.started` with:
    - `run_id`, `platform`, `provider`, `pid/session_id`, `display_target`, `artifact_root`
-4. **Execute interactions** through scenario/action catalog (same contract as headless; only backend driver differs).
-5. **Capture evidence in parallel** (timeline + screenshots + optional recording/trace) into `.puppet-master/evidence/gui-automation/<run_id>/`.
+   - `browser_session_id?` and `session_class?` when the visible target is the PM built-in browser
+4. **Execute interactions** through the scenario/action catalog (same contract as headless; only backend driver differs).
+5. **Capture evidence in parallel** (timeline + screenshots + optional recording/trace) into the shared runtime artifact pipeline.
 6. **Stream progress to chat** with low-latency status cards:
-   - current step, pass/fail, latest thumbnail, "open live window/simulator/emulator" hints.
+   - current step, pass/fail, latest thumbnail, and open/focus hints for the live target
 7. **Finalize run** with `manifest.json`, `summary.md`, `checks.json`, then emit `live.session.completed`.
 8. **Render evidence in chat** using §13 media rules (inline image/video + deterministic fallback links).
 
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
+
 **Platform-specific launch contracts:**
-
 - **Web apps (local browser run/attach):**
-  - Primary: Playwright headed run (`npx playwright test --headed`) for visible browser execution.[LV1]
-  - Attach mode: connect to an existing local Chromium endpoint (CDP) when user wants to watch an already-open browser/profile.
-  - Evidence: Playwright screenshots/video/trace config mapped into §13 manifest fields.[LV1]
-
+  - Primary product path: PM built-in browser `automation_session` for visible browser execution and watchable automation.
+  - Backend/compat attach path: external Playwright/CDP attach when the user explicitly wants to watch an already-open browser/profile or when the implementation uses Playwright as a backend adapter.
+  - Evidence: screenshots/video/trace/structured snapshot semantics must map into the shared artifact contract regardless of backend implementation.
 - **Desktop apps (native launch + visible state capture):**
-  - Windows: Appium Windows Driver with `appium:app` (launch) or `appium:appTopLevelWindow` (attach existing window).[LV4]
-  - macOS: Appium `mac2` driver (`appium driver install mac2`) for native visible automation.[LV3]
-  - Evidence: `GET /screenshot` each checkpoint + optional recording pipeline when driver/plugin supports it.[LV3]
-
+  - Windows: Appium Windows Driver with `appium:app` (launch) or `appium:appTopLevelWindow` (attach existing window).
+  - macOS: Appium `mac2` driver for native visible automation.
 - **iOS (Xcode previews and/or simulator runs):**
-  - Preview mode: Xcode previews for rapid visual iteration of UI states (non-automation viewing mode).[LV6]
-  - Automation mode: Appium XCUITest simulator session (`platformName=iOS`, `automationName=XCUITest`, `deviceName`, `platformVersion`).[LV5]
-  - Evidence: `mobile: startXCTestScreenRecording` / `stopXCTestScreenRecording` + screenshots; simulator cleanup semantics preserved.[LV5]
-
+  - Preview mode: Xcode previews for rapid visual iteration of UI states.
+  - Automation mode: Appium XCUITest simulator session.
 - **Android (emulator-driven runs):**
-  - Launch emulator with deterministic AVD profile (`appium:avd`, launch/ready timeouts), then run UiAutomator2 session.[LV7]
-  - Optional direct emulator lifecycle via Android emulator CLI for boot/teardown control.[LV8]
-  - Evidence: screenshot + MediaProjection recording (`mobile: startMediaProjectionRecording` / stop) into run artifacts.[LV7]
+  - Launch emulator with deterministic AVD profile, then run UiAutomator2 session.
+  - Optional direct emulator lifecycle via Android emulator CLI remains valid.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 ### 14.2 Runtime dependencies and environment checks
 
-Add Doctor preflight category: **`doctor.live_visualization`**.
+Add Doctor preflight categories:
+- `doctor.live_visualization`
+- `doctor.browser.runtime` for the PM built-in browser runtime health required by visible browser sessions
 
 **Required checks (deterministic):**
 - **Common**
-  - Node/npm available (for JS-based providers and MCP servers).
-  - Writable evidence path `.puppet-master/evidence/gui-automation/`.
-  - Display availability check (`DISPLAY`/Wayland on Linux, desktop session on macOS/Windows) unless provider supports virtual displays.
-- **Web**
-  - Playwright installed and browser binaries present.
-  - Target dev server reachable (health URL or configured port).
+  - Node/npm available where JS-based providers or MCP servers need them
+  - writable evidence/runtime artifact path
+  - display availability check (`DISPLAY`/Wayland on Linux, desktop session on macOS/Windows) unless the selected provider explicitly supports an alternative
+- **Web / PM built-in browser**
+  - PM-managed bundled browser runtime is present, healthy, and version-matched
+  - PM browser startup path is healthy for the current desktop session
+  - editor-tab browser host and detached browser host can both be validated under the same PM browser abstraction
+  - target dev server or requested page origin is reachable when the run expects local web content
 - **Desktop**
-  - Appium server reachable.
-  - Windows mode: WinAppDriver present/reachable.
-  - macOS mode: `appium driver list --installed` includes `mac2`.[LV3]
+  - Appium server reachable
+  - Windows mode: WinAppDriver present/reachable
+  - macOS mode: `appium driver list --installed` includes `mac2`
 - **iOS**
-  - Xcode CLI tools installed (`xcode-select -p`), simulator runtime exists.
-  - Appium XCUITest driver installed; WebDriverAgent build prerequisites pass.
-  - If preview mode selected, Xcode previews capability present in local toolchain.[LV6]
+  - Xcode CLI tools installed, simulator runtime exists
+  - Appium XCUITest driver installed; WebDriverAgent prerequisites pass
+  - if preview mode is selected, Xcode previews capability is present
 - **Android**
-  - Android SDK + emulator + adb available.
-  - Requested AVD exists and boots within timeout.
-  - UiAutomator2 driver installed; device/emulator visible to adb.
+  - Android SDK + emulator + adb available
+  - requested AVD exists and boots within timeout
+  - UiAutomator2 driver installed; device/emulator visible to adb
 
-**Preflight output contract:** emit machine-readable failures:
-`{ code, severity, dependency, expected, observed, remediation }`.
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+**Preflight output contract:** emit machine-readable failures as `{ code, severity, dependency, expected, observed, remediation }`.
+
+PM browser runtime failures map to `runtime_unavailable` in requested/effective browser capability disclosure when a PM browser session is involved.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
 ### 14.3 Coexistence with headless mode (default/CI fallback policy)
 
 Policy:
-- **Default local policy:** `visual_mode = auto`.
-  - Prefer visible mode when interactive desktop session is available.
-  - Fall back to headless if a required visual dependency is missing.
-- **CI default policy:** `visual_mode = headless` unless explicitly overridden.
-  - Rationale: deterministic CI stability and no hard display dependency.
+- **Default local policy:** `visual_mode = auto`
+  - prefer visible mode when an interactive desktop session is available
+  - fall back to headless if a required visible dependency is missing
+- **CI default policy:** `visual_mode = headless` unless explicitly overridden
 - **Manual override:**
-  - `visual_mode = forced_visible` → fail fast if visible prerequisites missing.
-  - `visual_mode = forced_headless` → skip all visible launch steps.
+  - `visual_mode = forced_visible` -> fail fast if visible prerequisites are missing
+  - `visual_mode = forced_headless` -> skip all visible launch steps
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Permissions_System.md
+
+For browser-capable web runs:
+- the visible path is the PM built-in browser `automation_session`
+- missing PM browser runtime prerequisites surface as `runtime_unavailable`
+- forced-visible mode must fail fast rather than silently swapping to a different browser product model
+- headless fallback remains valid for CI or explicitly headless flows, but it does not redefine the visible browser UX contract
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 **Required run metadata fields:**
 - `requested_visual_mode` (`auto|forced_visible|forced_headless`)
 - `effective_visual_mode` (`visible|headless`)
-- `fallback_reason` (nullable string enum, e.g., `missing_display`, `simulator_unavailable`, `emulator_boot_timeout`)
+- `fallback_reason` (nullable string enum such as `missing_display`, `runtime_unavailable`, `simulator_unavailable`, or `emulator_boot_timeout`)
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
 
 ### 14.4 Deterministic additions required in this plan file
 
-Implementation MUST add the following concrete schema/config entries:
-ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#config-wiring, ContractName:Plans/Contracts_V0.md#EventRecord
+Implementation MUST include these concrete schema/config entries:
 
 1. **`InterviewGuiConfig` + `InterviewOrchestratorConfig` fields**
    - `live_visualization_enabled: bool`
    - `visual_mode: "auto" | "forced_visible" | "forced_headless"`
    - `visual_targets: { web?: bool, desktop?: bool, ios?: "preview"|"simulator"|"both", android?: bool }`
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#config-wiring, ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
 2. **`GuiToolCatalog` capability flags**
-   - `supports_visible_run`, `supports_attach_existing`, `supports_recording`, `requires_display_server`.
+   - `supports_visible_run`
+   - `supports_attach_existing`
+   - `supports_recording`
+   - `requires_display_server`
+   - `supports_pm_built_in_browser_visible`
+   - `supports_pm_browser_focus_or_reopen`
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
 3. **Test strategy schema extension (additive)**
-   - `test_type` include `visual_web`, `visual_desktop`, `visual_ios`, `visual_android`.
-   - optional `visual_launch_command`, `attach_command`, `evidence_capture_mode`.
+   - `test_type` includes `visual_web`, `visual_desktop`, `visual_ios`, `visual_android`
+   - optional `visual_launch_command`, `attach_command`, and `evidence_capture_mode`
+
+ContractRef: ContractName:Plans/test-strategy.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
 4. **Seglog events**
-   - `live.session.started`, `live.step.updated`, `live.artifact.created`, `live.session.completed`, `live.session.degraded`.
+   - `live.session.started`
+   - `live.step.updated`
+   - `live.artifact.created`
+   - `live.session.completed`
+   - `live.session.degraded`
+   - visible browser runs additionally carry `browser_session_id?` and `session_class?` when the target is the PM built-in browser
+
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
 5. **Doctor checks**
-   - `doctor.live_visualization` (platform dependency checks)
-   - `doctor.live_visualization.evidence` (media + manifest integrity reuse from §13)
+   - `doctor.live_visualization`
+   - `doctor.live_visualization.evidence`
+   - `doctor.browser.runtime`
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
 6. **Chat renderer contract**
-   - New card type `live_run_card` (status, current step, latest thumbnail, open-target action).
-   - Must resolve to artifact links using `manifest.json` IDs only (no raw path guessing).
+   - `live_run_card` remains the live status card type
+   - open/focus actions for PM browser runs resolve through `browser_session_id` when present rather than raw path guessing
+   - artifact links resolve through manifest IDs only
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
 
 ---
 

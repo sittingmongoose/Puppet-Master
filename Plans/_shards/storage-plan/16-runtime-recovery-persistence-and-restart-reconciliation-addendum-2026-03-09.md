@@ -4,13 +4,28 @@
 Restore eligibility:
 - workspace tabs restore independently with project identity, active surface, and local shell state
 - detached windows restore only when their surface class and platform support allow it
-- in-shell browser tabs restore by project and workspace tab
-- auth sessions and automation sessions do not auto-restore as shell browser tabs
+- `workspace_preview` restores by project and workspace tab
+- `detached_preview` restores with its originating normal browsing session when supported
+- `automation_session` and `auth_session` do not silently resume active live work after restart
 - terminal sessions and dev sessions restore as records of prior state; a live process is not presumed healthy after restart without verification
 
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+
+Browser recovery rules:
+- browser crash or runtime loss preserves recoverable metadata and any completed evidence artifacts when possible
+- reopened automation/auth sessions return as stopped or attention-required rather than as silently running live sessions
+- `Reopen`, `Retry`, and `Keep Closed` are the canonical recovery actions for failed browser sessions
+- promotion from paused automation into normal browsing copies/promotes eligible state into a normal browser profile and changes future restore behavior accordingly
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md
+
 Project-switch rule:
-- switching projects recalculates effective tool/MCP/persona/browser capability state for the new project context
+- switching projects recalculates effective tool, MCP, Persona, and browser capability state for the new project context
 - background activity from the previous project remains queryable and visible through its own project/workspace identities rather than being collapsed into the new active project
+- browser requested/effective state snapshots remain frozen per runtime record and MUST NOT be recomputed from current settings
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/usage-feature.md
+
 This section is the canonical persistence contract for runtime recovery, blocked episodes, usage attribution, and runtime identity needed by Orchestrator, Run Graph, HITL, and chat surfaces.
 
 ### Canonical keys

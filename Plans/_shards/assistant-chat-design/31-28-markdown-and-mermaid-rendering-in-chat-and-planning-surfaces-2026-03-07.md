@@ -54,11 +54,49 @@ Chat/planning rendering needs one explicit source model for non-file content.
 
 ### 28.4A Element-context attachment contract
 
-Rendered selection capture uses two canonical typed attachments:
+Rendered selection capture uses three canonical typed attachments:
 - `attachment_type = browser_element_context` for browser / HTML element capture
+- `attachment_type = browser_selection_context` for browser text selection capture
 - `attachment_type = document_selection_context` for native document selections forwarded into chat
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileManager.md, ContractName:Plans/newfeatures.md
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+`browser_element_context` required fields:
+- `attachment_id`
+- `schema_version`
+- `browser_session_id`
+- `session_class`
+- `page_url`
+- `tag_name`
+- `element_ref?`
+- bounded `text_content?`
+- `role?`
+- `rect`
+- `parent_path?`
+- `html_excerpt?`
+- `requested_target`
+- `effective_target?`
+- `captured_at`
+- `truncation_state`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+
+`browser_selection_context` required fields:
+- `attachment_id`
+- `schema_version`
+- `origin_kind`
+- `source_surface`
+- `browser_session_id`
+- `session_class`
+- `page_url`
+- bounded `selected_text`
+- `selection_anchor?`
+- `requested_target`
+- `effective_target?`
+- `captured_at`
+- `truncation_state`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
 `document_selection_context` required fields:
 - `attachment_id`
@@ -83,26 +121,41 @@ Composer behavior:
 - capture creates a visible pending composer chip/card immediately visible to the user
 - chips are stored in composer-prep state keyed by `thread_id`, never as global chat state
 - the chip is attached to the next submitted user message by default and the user may remove it before send
-- capturing a selection MUST NOT silently inject a hidden message into the thread
+- capturing browser context MUST NOT silently inject a hidden message into the thread
 - hidden chat panels do not auto-open by default; the owning chat surface may pulse/badge and show a toast instead
 - if the owning thread is terminal or non-writable, create a new thread in the same owning surface and record both `requested_target` and `effective_target`
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
 
+Browser capture actions exposed to users are:
+- `Add Selection to Chat`
+- `Add Selection + Screenshot`
+- `Add Selection + Full Screenshot`
+- `Pick Element for Chat`
+- `Pick Element + Screenshot`
+- `Pick Element + Full Screenshot`
+- `Add Screenshot to Chat`
+- `Add Full Screenshot to Chat`
+
+The default combined capture is context plus clipped screenshot.
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
 Prompt assembly:
-- both structured attachment types are serialized before the user's freeform message text
+- all three structured attachment types are serialized before the user's freeform message text
 - `document_selection_context` serializes bounded provenance, anchor, and excerpt fields first; it MUST NOT inject raw unbounded document bodies
+- `browser_element_context` and `browser_selection_context` serialize bounded provenance first and MUST NOT inject raw unbounded DOM/page bodies
 - blocked or expired chips MUST NOT be serialized as successful user attachments
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
 
 Persistence and audit:
 - submitted attachments persist as part of the submitted user message record
 - pending composer chips may persist across restart per thread until sent or removed; if they cannot be restored safely they return as blocked/expired, not silently dropped
-- search/indexing stores bounded summary fields only; do not index unbounded raw document text
+- search/indexing stores bounded summary fields only; do not index unbounded raw document text or unbounded browser DOM dumps
 - captures and blocks must be visible in thread history or audit views as user-supplied context, including source provenance and requested/effective target
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Crosswalk.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md
 
 ### 28.5 Structured editing rules
 

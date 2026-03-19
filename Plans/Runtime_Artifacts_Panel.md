@@ -107,14 +107,38 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usa
 Implementation MUST validate every runtime_artifact.* event payload against the envelope and the matching type schema before appending to seglog and before writing to the artifacts index.
 
 ## 8. Browser recordings
-Browser recordings must preserve the canonical browser surface distinction.
+Browser recordings and adjacent browser evidence must preserve the canonical browser session distinction.
 
 Rules:
-- a recording created from `workspace_preview` or `detached_preview` retains the owning project/workspace identity
-- a recording created from automation or auth flows does not imply that the underlying browser session is a persistent shell browser tab
-- actions such as Send to Chat or Open must route back to the owning canonical surface model rather than inventing a separate browser-recording shell
+- a recording created from `workspace_preview` or `detached_preview` retains the owning project/workspace/browser-session identity
+- a recording created from `automation_session` or `auth_session` does not imply that the underlying browser session is a persistent shell browser tab
+- screenshots, structured snapshots, traces, videos, and recordings emitted from browser sessions route through the shared runtime artifact pipeline rather than a browser-only store
+- actions such as `Send to Chat`, `Open`, or `Focus Browser` must route back to the owning canonical browser session rather than inventing a separate artifact-owned browser shell
 
-Browser recordings are a **required** artifact type (runtime_artifact.browser_recording). Source: GUI automation runs (e.g. Playwright) from Orchestrator or Chat. Stored under canonical evidence path; list shows thumbnail, duration, run/session id, timestamp. Detail: in-panel video player or "Open in default app"; optional timeline with key events. Actions: Copy path, Export, Send to Chat as needed.
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+
+Browser evidence artifacts MUST carry enough metadata to rejoin the owning browser session and project context.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
+
+Minimum fields are:
+- `artifact_id`
+- `project_id`
+- `browser_session_id`
+- `session_class`
+- `profile_scope`
+- `workspace_tab_id?`
+- `capture_scope?`
+- `created_at_utc`
+- any owning `run_id` / `thread_id` refs already required by the shared artifact envelope
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
+
+`runtime_artifact.browser_recording` remains a required artifact type. Browser screenshots, traces, and videos emitted from browser sessions must align with the same ownership and open/focus semantics even when their concrete artifact type differs from `browser_recording`.
+
+Completed browser evidence should survive crash and recovery when possible.
+
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
 ## 9. All differentiators MVP
 

@@ -65,21 +65,30 @@ ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FileSafe.md
 
 ### 1.2A Structured attachment normalization for browser element context
 
-Before final conversation payload emission, the prompt pipeline MUST normalize structured user attachments created by the chat/composer surface and native document review surfaces.
+Before final conversation payload emission, the prompt pipeline MUST normalize structured user attachments created by chat/composer surfaces, browser surfaces, and native document review surfaces.
 
 For `browser_element_context` attachments:
 - normalization occurs after context compilation and before final conversation serialization
 - the structured attachment is serialized before the user's freeform message text
-- bounded fields are serialized first: `tagName`, `id`, `className`, `textContent`, `role`, `rect`, `parentPath`
-- optional truncated HTML is included only if still within attachment budget
+- bounded fields are serialized first: `tag_name`, `element_ref?`, bounded `text_content?`, `role?`, `rect`, `parent_path?`
+- optional truncated HTML excerpt is included only if still within attachment budget
 - attachment metadata MUST record when truncation occurred
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/newfeatures.md
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md
+
+For `browser_selection_context` attachments:
+- normalization occurs after context compilation and before final conversation serialization
+- attachments are serialized in stable thread-prep order before the user's freeform message text
+- bounded fields are serialized first: `browser_session_id`, `session_class`, `page_url`, bounded `selected_text`, `selection_anchor?`, `requested_target`, `effective_target?`, and `truncation_state`
+- raw unbounded DOM dumps or page bodies MUST NOT be injected into the prompt through this attachment path
+- blocked or expired chips MUST NOT be serialized as successful user attachments
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
 For `document_selection_context` attachments:
 - normalization occurs after context compilation and before final conversation serialization
 - attachments are serialized in stable thread-prep order before the user's freeform message text
-- bounded fields are serialized first: `source_surface`, `bundle_id?`, `doc_id`, `doc_path/display_name`, bounded `selected_text`, anchor data, `requested_target`, `effective_target?`, `sensitivity_state`, `truncation_state`
+- bounded fields are serialized first: `source_surface`, `bundle_id?`, `doc_id`, `doc_path/display_name`, bounded `selected_text`, anchor data, `requested_target`, `effective_target?`, `sensitivity_state`, and `truncation_state`
 - raw unbounded document bodies MUST NOT be injected into the prompt through this attachment path
 - blocked or expired chips MUST NOT be serialized as successful user attachments
 
@@ -87,27 +96,35 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/sto
 
 This keeps browser capture and native document selection handoff deterministic across chat, document review, preview, and prompt assembly implementations.
 
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
 <a id="ASSEMBLY-PIPELINE"></a>
 
 The prompt MUST be assembled in this stage order:
 
-1. **Resolve run config and surface context**: finalize run envelope (tier/mode/platform/model), identify the active surface, and load the permissions snapshot.
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/Plugins_System.md
+
+1. **Resolve run config and surface context**: finalize the run envelope (tier/mode/platform/model), identify the active surface, and load the permissions snapshot.
 2. **Resolve Persona selection inputs**: detect Persona mode (`manual` / `auto` / `hybrid`), inspect natural-language Persona requests, and compute the requested Persona when present.
 3. **Resolve effective Persona and runtime state**: resolve Persona files, aliases, requested/effective platform/model/variant/runtime controls, and provider capability filtering.
 4. **Resolve skills**: resolve `default_skill_refs` and compute skill bundle inputs.
-5. **Compile context**: invoke the context compiler to produce compiled context artifacts (role-specific) and an "Injected Context" breakdown.
-6. **Assemble Instruction Bundle**: combine rules + Persona instructions + compiled context references + effective runtime metadata needed for observability.
-7. **Apply plugin prompt transforms** (optional): allow plugins to inject context or replace the prompt (per `Plans/Plugins_System.md`).
-8. **Attach tool schemas**: include the canonical tool registry definitions and any custom tools.
+5. **Compile context**: invoke the context compiler to produce compiled context artifacts and an `Injected Context` breakdown.
+6. **Normalize structured attachments**: normalize browser and native selection attachments and stage them in deterministic thread-prep order.
+7. **Assemble Instruction Bundle**: combine rules, Persona instructions, compiled context references, normalized attachment payloads, and effective runtime metadata needed for observability.
+8. **Apply plugin transforms and attach tool schemas**: apply allowed plugin prompt transforms, then include canonical tool definitions and any custom tool schemas.
 9. **Finalize**: emit the final prompt payload and effective-resolution metadata to the provider runner and event/history surfaces.
 
-Rule: Stages 1–9 MUST be deterministic given the same inputs and filesystem state.
+Rule: stages 1–9 MUST be deterministic given the same inputs and filesystem state.
+
+ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Tools.md, PolicyRule:Decision_Policy.md§3
 
 Additional orchestration rules:
-- Mode-specific context overlays are applied during **Stage 5 / Compile context**, before attachments and the Injected Context breakdown are emitted. `ask` and `plan` use the `read_only` overlay; `plan` additionally applies `plan_output_scaffold_v1`; `regular` and `yolo` use `full_execution`. Child/subagent/rotated runs may narrow an inherited overlay, but they MUST NOT widen a read-only overlay into `full_execution`.
-- When the active surface is **Orchestrator** or a delegated child/subagent run, the Instruction Bundle MUST carry the canonical orchestration flow contract `assess → understand → decompose → act → verify`. Work that resolves to one or two atomic steps may proceed directly from understanding to action, but work that requires three or more atomic steps MUST emit an explicit plan before action. This prompt-level orchestration flow MUST NOT create new execution tiers beyond Phase / Task / Subtask / Iteration.
+- mode-specific context overlays are applied during **Stage 5 / Compile context**, before structured attachments and the Injected Context breakdown are emitted
+- `ask` and `plan` use the `read_only` overlay; `plan` additionally applies `plan_output_scaffold_v1`; `regular` and `yolo` use `full_execution`
+- child/subagent/rotated runs may narrow an inherited overlay, but they MUST NOT widen a read-only overlay into `full_execution`
+- when the active surface is **Orchestrator** or a delegated child/subagent run, the Instruction Bundle MUST carry the canonical orchestration flow contract `assess -> understand -> decompose -> act -> verify`
 
-ContractRef: ContractName:Plans/Plugins_System.md, PolicyRule:Decision_Policy.md§3
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
 
 ### 1.3 Instruction Bundle structure
 

@@ -142,42 +142,54 @@ Mermaid behavior in the editor/file manager:
 ### 14.6 HTML preview and hot reload
 
 Full HTML/browser mode must support:
-
 - relative asset resolution
 - local script execution appropriate to a workspace preview
-- reload / hot reload
-- click-to-context integration when the browser surface is used in that mode
-- detached browser window fallback
+- reload and hot reload
+- explicit click-to-context and explicit capture-to-chat actions when the browser surface is used in that mode
+- screenshots, console/network read, and DevTools access through the canonical browser model
+- detached browser open without changing the underlying preview subject identity
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md
 
 Hot reload scope:
-
 - watch the HTML file itself
 - watch linked local CSS/JS/image assets under the preview contract
-- debounce reloads to avoid thrash
+- debounce reloads to avoid thrash (default 400 ms remains acceptable)
 - preserve scroll/location when reasonable
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/rewrite-tie-in-memo.md
 
 ### 14.7 Error and fallback behavior
 
 Required fallback rules:
+- if the PM browser runtime is unavailable or damaged, present explicit `runtime_unavailable` remediation and keep source/native surfaces usable
+- if normal embedding is temporarily unavailable, the product may use the detached window path on the same PM browser model rather than silently falling through to an unrelated legacy browser runtime
+- if Mermaid parse/render fails, show source plus explicit render error; do not silently drop the diagram
+- if Markdown preview generation fails, keep source editor usable and show a visible preview error state
+- if a preview edit cannot be reversed into a safe source patch, focus source rather than mutating preview state
+- if browser or browser-subprocess crash occurs, preserve recoverable metadata and any completed browser evidence when possible
 
-- If browser embedding is unavailable, open detached preview/browser window instead.
-- If Mermaid parse/render fails, show source plus explicit render error; do not silently drop the diagram.
-- If Markdown preview generation fails, keep source editor usable and show a visible preview error state.
-- If HTML preview runtime requirements are missing on Linux, present a clear missing-runtime state instead of a broken blank pane.
-- If a preview edit cannot be reversed into a safe source patch, focus source rather than mutating preview state.
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 ### 14.8 Non-goals
 
-- No hidden diagram object model.
-- No promise that all preview surfaces are embedded in-process panes on every platform.
-- No arbitrary WYSIWYG DOM editing for Markdown/HTML as an MVP requirement.
+- no hidden diagram object model
+- no promise that every preview surface is embedded in-process in the same way on every platform
+- no arbitrary WYSIWYG DOM editing for Markdown/HTML as an MVP requirement
+- no bottom-panel-primary browser model
+- no silent automatic chat-context injection from browser clicks or selection
+- no alternate stale browser authority outside the promoted Section 15 owner and reconciled subsystem docs
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
 
 ### 14.9 Acceptance criteria
 
-- Opening a Markdown file supports source, preview, split, and detached preview without changing canonical source storage.
-- Mermaid fenced blocks render natively in Markdown preview and can export SVG/PNG.
-- `.mmd` files support source editing plus detached/native preview.
-- HTML files support source editing and full rendered browser-like viewing with local asset resolution.
-- Image files render natively and can detach/open without going through the browser runtime.
-- Preview actions either apply validated text patches or deterministically fall back to source focus.
+- opening an HTML file supports source editing, `Open in Browser`, `Open in Detached Browser`, and browser split as a second-step layout action without changing canonical source storage
+- HTML files support full rendered browser-like viewing with local asset resolution, explicit click-to-context, screenshots, and DevTools access on the canonical PM browser model
+- watchable browser automation runs use a visible `automation_session` that the user can safely pause, stop-and-keep, or promote to normal browsing
+- browser evidence capture routes screenshots, traces, videos, and recordings into the shared runtime artifact pipeline
+- browser recovery uses `Reopen`, `Retry`, and `Keep Closed`, and completed browser evidence survives when possible
+- image files still render natively and do not require the browser runtime
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md
 

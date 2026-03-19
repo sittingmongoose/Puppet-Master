@@ -11,34 +11,51 @@
 ### 8.2 HTML in browser and hot reload
 
 ### 8.2A Rewrite normalization for HTML/browser preview (2026-03-08)
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
-
-HTML preview and browser preview use the canonical browser surface classes.
+HTML preview and browser preview use the canonical browser session-class model and the same PM browser runtime as the built-in browser feature.
 
 Rules:
-- file-backed HTML preview uses `workspace_preview` or `detached_preview`
+- `Open` keeps the file in source/editor mode
+- `Open in Browser` opens the file in a `workspace_preview`
+- `Open in Detached Browser` opens the file in a `detached_preview`
+- split browser layout is a second-step layout action after opening, not a separate open command
+- file-backed HTML preview is editor-tab-first rather than bottom-panel-first
 - preview subject identity is not silently retargeted by over-cap behavior
 - multiple browser tabs may render distinct preview subjects inside the shell
 - preview restore is scoped by project and workspace tab
 - auth and automation browser sessions do not become file-manager preview tabs automatically
-- click-to-context from HTML preview uses the same capture and share/revoke model as the main browser feature
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 ### 8.3 Same browser surface as built-in browser and click-to-context
 
-The HTML preview uses the **same built-in browser** as in **Plans/newfeatures.md §15.18** (Built-in Browser and Click-to-Context). One WebView/browser panel for: (1) Local HTML preview and hot reload (§8.2), (2) **Click-to-context for the Assistant**: user can **click on parts of the page** and **send that element's context to the Assistant chat** (DOM, attributes, rect, etc.) via the same mechanism as §15.18 (modifier key or "Send element to chat" toggle). When viewing your HTML design in this browser, you can click an element and add it as context for the next message. Edit → Save → hot reload → click section → send to Assistant. Element context schema, capture mode, security, and Assistant integration are in newfeatures.md §15.18. **Web app testing:** Same browser surface aligns with web app testing/verification (Playwright, browser verifier, GUI tool catalog per feature-list and newtools.md).
+HTML preview uses the same built-in browser defined by the promoted browser owner spec rather than a separate WebView or a stale `newfeatures.md` authority path.
+
+- local HTML preview, normal browsing, screenshots, console/network inspection, DevTools, and watchable browser testing all use the same PM browser runtime and session-class model
+- `workspace_preview` and `detached_preview` cover normal file-backed HTML browsing
+- `automation_session` covers watchable agent-driven browser testing and verification with separate ephemeral state by default
+- `auth_session` covers PM-owned auth and provider/device flows without silently turning into a normal preview tab
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/newtools.md, ContractName:Plans/storage-plan.md
 
 ### 8.4 Click-to-context when viewing HTML
 
-When viewing a local HTML file in the built-in browser, clicking an element still sends `browser_element_context` to the Assistant. The Assistant receives a structured element summary (`tag`, `id`, `class`, `text`, `role`, `rect`, `parent path`, optional HTML snippet) so the user can ask for changes or explanations about that part of the page.
+Click-to-context in HTML/browser mode is explicit and uses the same browser capture model as the main built-in browser.
 
-ContractRef: ContractName:Plans/newfeatures.md, ContractName:Plans/assistant-chat-design.md
+- text selection uses `browser_selection_context`
+- element pick uses `browser_element_context`
+- capture creates removable composer chips and never silently submits a message
+- when no writable active thread/composer exists, PM opens a new thread and places the chips there
+- the default combined capture is context plus clipped screenshot; full-page combined capture remains explicit
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 Boundary rules:
-- This HTML/browser path remains separate from native document review selection handoff.
-- Native document surfaces use `document_selection_context` and may also support durable annotations when deterministic source mapping exists.
-- Browser/HTML click-to-context does not imply durable annotations or `Resubmit with Annotations` semantics.
-- Capture privilege and source-mutation privilege remain separate even for workspace-backed HTML preview.
+- the HTML/browser path remains separate from native document review selection handoff
+- native document surfaces use `document_selection_context` and may support durable annotations only when deterministic source mapping exists
+- browser/HTML click-to-context does not imply durable annotations or `Resubmit with Annotations` semantics
+- capture privilege and source-mutation privilege remain separate even for workspace-backed HTML preview
+- ordinary browsing clicks must not unexpectedly create or send chat context
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/rewrite-tie-in-memo.md
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md
 
 ---
 

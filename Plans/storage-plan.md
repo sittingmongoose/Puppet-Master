@@ -290,18 +290,38 @@ Preview persistence MUST support both document-backed and artifact-backed subjec
 - `preview_subject_id = doc:<document_id>` or `artifact:<artifact_id>`
 
 **Required redb keys**
-- `preview_state.v1:{project_id}:{preview_subject_id}` -> JSON `{ preview_mode, last_preview_session_id, last_attached_surface, trust_tier, export_preferences, scroll_sync_enabled, last_error }`
+- `preview_state.v1:{project_id}:{preview_subject_id}` -> JSON `{ preview_mode, last_preview_session_id, last_attached_surface, preview_surface_kind, export_preferences, scroll_sync_enabled, last_error }`
 - `preview_source_artifact.v1:{project_id}:{artifact_id}` -> JSON `{ artifact_kind, source_kind, origin_surface, thread_id?, message_id?, source_revision, source_text_ref, backing_document_id?, last_saved_path? }`
 
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
 **Projector rule**
-- Existing lifecycle events may continue to carry `document_id` or `artifact_id`, but projectors MUST derive `preview_subject_id` deterministically for restore and UI-state joins.
+- lifecycle events may continue to carry `document_id` or `artifact_id`, but projectors MUST derive `preview_subject_id` deterministically for restore and UI-state joins
+- restore MUST NOT require a historical live browser/webview instance or persisted DOM state
 
-**Restore rules**
-- Document-backed restore reopens the workspace document path/buffer.
-- Artifact-backed restore reopens a transient `generated://<artifact_id>` source buffer unless a `backing_document_id` has since been assigned.
-- Restore MUST NOT require a historical live webview instance or persisted DOM state.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md
 
-Preview/browser rendering requires both durable UI state and replayable lifecycle events.
+##### Browser session state and profile isolation
+
+Browser-capable sessions persist separately from preview-subject identity.
+
+**Required redb keys**
+- `browser_session_state.v1:{project_id}:{browser_session_id}` -> JSON `{ session_class, workspace_tab_id?, preview_subject_id?, requested_browser_runtime, effective_browser_runtime, requested_capabilities, effective_capabilities, capability_degradations, blocked_actions, permission_tier, profile_scope, restore_policy, takeover_state, last_selected_tab?, last_error? }`
+- `browser_profile_state.v1:{project_id}:{profile_scope}` -> JSON `{ history, bookmarks, cookie_store_ref?, local_storage_ref?, session_storage_ref? }`
+- `browser_profile_state.external.v1:{profile_scope}` -> JSON `{ history, bookmarks }` for explicitly separate detached or other externalized non-project browsing profiles when supported
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
+
+Partitioning rules:
+- `workspace_preview` uses project-scoped persistent browser state
+- `detached_preview` shares the originating normal-browsing state unless the user explicitly creates separate detached state
+- `automation_session` uses separate ephemeral profile state by default
+- `auth_session` uses isolated auth/profile state
+- browser state MUST NOT silently bleed across profile scopes
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
+
+##### Browser lifecycle events and payloads
 
 **Required seglog event types**
 - `preview.session.created`
@@ -313,26 +333,30 @@ Preview/browser rendering requires both durable UI state and replayable lifecycl
 - `preview.session.exported`
 - `preview.action.requested`
 - `preview.action.completed`
-- `browser.element_captured`
+- `browser.session.created`
+- `browser.session.state_changed`
+- `browser.session.takeover_state_changed`
+- `browser.session.promoted`
+- `browser.session.closed`
+- `browser.context_captured`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 **Minimum event payloads**
-- `preview.session.*`: `project_id`, `preview_session_id`, `document_id` or `artifact_id`, `source_kind`, `trust_tier`, `transport_mode`, `attached_surface`, `source_revision`, optional `error_code`
+- `preview.session.*`: `project_id`, `preview_session_id`, `preview_subject_id`, `source_kind`, `preview_surface_kind`, `transport_mode`, `attached_surface`, `source_revision`, optional `error_code`
 - `preview.action.*`: `project_id`, `preview_session_id`, `node_id`, `operation`, `result_code`, optional `patch_summary`
-- `browser.element_captured`: `project_id`, optional `thread_id`, optional `preview_session_id`, `origin_kind`, `page_url`, `capture_id`, bounded summary payload
+- `browser.session.*`: `project_id`, `browser_session_id`, `session_class`, `workspace_tab_id?`, `preview_subject_id?`, `requested_browser_runtime`, `effective_browser_runtime`, `requested_capabilities`, `effective_capabilities`, `capability_degradations`, `blocked_actions`, `permission_tier`, `profile_scope`, `restore_policy`, `takeover_state`, optional `error_code`
+- `browser.context_captured`: `project_id`, optional `thread_id`, `browser_session_id`, `session_class`, `capture_kind`, `capture_id`, `page_url`, bounded summary payload
+- browser-linked `runtime_artifact.*` records for screenshots, traces, videos, and recordings MUST carry `browser_session_id` and `session_class` when they originate from a browser session
 
-**Recommended redb placement**
-- `preview_state.v1:{project_id}:{document_id}` -> JSON `{ preview_mode, last_preview_session_id, last_attached_surface, trust_tier, export_preferences, scroll_sync_enabled, last_error }`
-- `browser_state.v1:{project_id}` -> JSON `{ tabs, history, bookmarks, last_selected_tab, inspect_mode_defaults }`
-- `browser_state_external.v1` -> JSON `{ history, bookmarks }` for optional user-opened external browsing that is not workspace-scoped
-- `preview_exports.v1:{project_id}` -> JSON `{ last_directory, last_format, last_theme, last_background }`
-
-**Partitioning rule**
-- Workspace preview/browser state MUST be partitioned per project.
-- External browsing state, if supported, MUST NOT share cookies/history/storage with workspace preview state by default.
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 **Restore rule**
-- redb restores browser/preview UI intent and recent state.
-- seglog remains the canonical source for lifecycle/audit history.
+- redb restores browser/preview UI intent and recent state
+- seglog remains the canonical source for lifecycle/audit history
+- requested/effective browser runtime/capability snapshots are persisted as frozen runtime history and are not recomputed heuristically from current settings
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
 
 #### Additions: Container publish / DockerHub / Unraid persistence contract
 
@@ -803,13 +827,28 @@ Storage and projections MUST persist the scheduler and recovery model without am
 Restore eligibility:
 - workspace tabs restore independently with project identity, active surface, and local shell state
 - detached windows restore only when their surface class and platform support allow it
-- in-shell browser tabs restore by project and workspace tab
-- auth sessions and automation sessions do not auto-restore as shell browser tabs
+- `workspace_preview` restores by project and workspace tab
+- `detached_preview` restores with its originating normal browsing session when supported
+- `automation_session` and `auth_session` do not silently resume active live work after restart
 - terminal sessions and dev sessions restore as records of prior state; a live process is not presumed healthy after restart without verification
 
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+
+Browser recovery rules:
+- browser crash or runtime loss preserves recoverable metadata and any completed evidence artifacts when possible
+- reopened automation/auth sessions return as stopped or attention-required rather than as silently running live sessions
+- `Reopen`, `Retry`, and `Keep Closed` are the canonical recovery actions for failed browser sessions
+- promotion from paused automation into normal browsing copies/promotes eligible state into a normal browser profile and changes future restore behavior accordingly
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md
+
 Project-switch rule:
-- switching projects recalculates effective tool/MCP/persona/browser capability state for the new project context
+- switching projects recalculates effective tool, MCP, Persona, and browser capability state for the new project context
 - background activity from the previous project remains queryable and visible through its own project/workspace identities rather than being collapsed into the new active project
+- browser requested/effective state snapshots remain frozen per runtime record and MUST NOT be recomputed from current settings
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/usage-feature.md
+
 This section is the canonical persistence contract for runtime recovery, blocked episodes, usage attribution, and runtime identity needed by Orchestrator, Run Graph, HITL, and chat surfaces.
 
 ### Canonical keys
