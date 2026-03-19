@@ -181,7 +181,7 @@ Storage and runtime projectors may derive `preview_subject_id = doc:<document_id
 
 #### PreviewSession lifecycle and identity contract
 
-`PreviewSession` is a durable runtime contract, not just a bag of fields.
+`PreviewSession` is a durable runtime contract for rendered subject identity, but browser-capable surfaces layer a distinct browser-session identity on top of preview identity so that browser tabs, detached windows, automation sessions, and auth sessions do not collapse into one broad preview-instance model.
 
 **Lifecycle states**
 - `created`
@@ -192,49 +192,65 @@ Storage and runtime projectors may derive `preview_subject_id = doc:<document_id
 - `error`
 - `closed`
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
+
 **Identity rules**
-- Moving the same document between inline preview, split preview, browser tab, and detached window keeps the same `preview_session_id` when all of the following remain unchanged:
-  - `document_id` or `artifact_id`
-  - `source_revision`
-  - `trust_tier`
-  - `transport_mode`
-- A new `preview_session_id` MUST be created when any of those change.
-- Detaching is an attachment change, not a new session, unless the platform fallback requires a transport restart.
+- moving the same preview subject between source-linked preview surfaces keeps the same `preview_session_id` when `preview_subject_id`, `source_revision`, `preview_surface_kind`, and `transport_mode` remain unchanged
+- browser-capable surfaces additionally carry a distinct `browser_session_id` and `session_class`
+- detaching normal browsing is an attachment change, not a new preview subject, unless the user explicitly creates separate detached state
+- `bottom_panel_browser` is not a canonical attachment target
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
 
 **Attachment rules**
-- A single `PreviewSession` MAY be visible in multiple read-only surfaces at the same time.
-- Only one attachment may hold mutation-capable focus at a time.
-- `attached_surface` is the currently focused attachment; additional viewers are tracked as secondary attachments in runtime state.
+- a single `PreviewSession` MAY be visible in multiple read-only surfaces at the same time
+- only one attachment may hold mutation-capable focus at a time
+- `attached_surface` is the currently focused attachment; additional viewers are tracked as secondary attachments in runtime state
+- canonical attachment targets are `chat_card`, `editor_preview`, `embedded_doc_pane`, `editor_browser_tab`, and `detached_window`
 
-**Required transitions**
-- `created -> loading -> ready`
-- `ready -> stale` when source revision changes
-- `stale -> loading -> ready` on successful reload
-- `ready -> degraded` when the preferred embedded path fails but detached/native fallback still works
-- `loading|ready|stale -> error` when preview generation or runtime startup fails without a usable fallback
-- any non-closed state -> `closed` on explicit close or document disposal
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
 **Persistence and audit expectations**
-- The app MUST persist enough state to restore the user's last preview mode, last successful attachment target, and last visible preview error per document.
-- The app MUST NOT persist live DOM state or browser storage as part of `PreviewSession` state.
-- Preview lifecycle changes MUST emit canonical events in storage-plan.md and be invocable through canonical UI commands in UI_Command_Catalog.md.
+- the app MUST persist enough state to restore the user's last preview mode, last successful attachment target, and last visible preview error per subject
+- the app MUST NOT persist live DOM state or browser storage as part of `PreviewSession` state
+- preview lifecycle changes MUST emit canonical events in `storage-plan.md` and be invocable through canonical UI commands in `UI_Command_Catalog.md`
+- browser-linked runtime artifacts retain explicit `browser_session_id` and `session_class` linkage rather than inventing a separate browser-recording shell
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 **Minimum restore rule**
-- On restart, the product restores preview intent (`none`, `inline`, `split`, `browser_tab`, `detached`) and reconstructs a new live runtime session as needed; it does not attempt to deserialize an old live webview.
+- on restart, the product restores preview intent (`none`, `inline`, `split`, `browser_tab`, `detached`) and reconstructs a new live runtime session as needed; it does not attempt to deserialize an old live browser instance
+- normal browser sessions restore according to profile scope and session class
+- live automation/auth sessions do not silently resume active work after restart
 
-All rendered surfaces use a shared **PreviewSession** model. Minimum state:
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Permissions_System.md
 
+Minimum preview-layer state:
 - `preview_session_id`
-- `document_id` or `artifact_id`
+- `preview_subject_id`
 - `source_kind` (`markdown`, `mermaid`, `html`, `svg`, `image`, `generated_doc`, `browser_page`)
-- `trust_tier` (`generated_restricted`, `workspace_browser`)
-- `transport_mode` (`internal_preview_origin`, `localhost_browser_preview`, `native_image_surface`)
+- `preview_surface_kind` (`generated_restricted`, `browser_capable`, `native_image_surface`)
+- `transport_mode` (`internal_preview_origin`, `browser_runtime`, `native_image_surface`)
 - `source_revision`
 - `preview_revision`
-- `attached_surface` (`chat_card`, `editor_preview`, `embedded_doc_pane`, `bottom_panel_browser`, `detached_window`)
-- `capabilities` (for example: `can_export_svg`, `can_export_png`, `can_reload`, `can_open_source`, `can_request_structured_edit`, `can_click_to_context`)
+- `attached_surface`
+- `capabilities`
 
-This state model is shared so that reload, export, click-to-context, detached-open, and source navigation do not diverge by surface.
+Browser-session overlay state:
+- `browser_session_id`
+- `session_class`
+- `requested_browser_runtime`
+- `effective_browser_runtime`
+- `requested_capabilities`
+- `effective_capabilities`
+- `capability_degradations`
+- `blocked_actions`
+- `permission_tier`
+- `profile_scope`
+- `restore_policy`
+- `takeover_state`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md
 
 ### Transport and trust split
 
@@ -294,36 +310,32 @@ To keep implementations aligned, the rewrite uses these canonical libraries unle
 
 #### Platform runtime matrix and degraded-mode UX
 
-The rendering system must define runtime expectations per platform.
+The rendering system must define one browser product model across supported desktop platforms: a PM-managed pinned bundled CEF-class Chromium runtime with editor-tab primary hosting and first-class detached windows.
 
 | Platform | Embedded browser status | Guaranteed path | Runtime dependency | Required degraded UX |
 |---|---|---|---|---|
-| Windows | Supported when WebView2 is available | Detached browser/preview window | WebView2 runtime | Show explicit missing-WebView2 state with remediation; offer detached retry if embedded attach fails |
-| macOS | Supported through native webview stack | Detached browser/preview window | System webview runtime | Show explicit startup error and keep source/native surfaces usable |
-| Linux X11 | Embedded path may be supported | Detached browser/preview window | GTK/WebKitGTK runtime | Show missing-runtime remediation; do not leave a blank embedded pane |
-| Linux Wayland | Detached-first; embedding is optional/adapter-specific | Detached browser/preview window | GTK/WebKitGTK runtime plus any adapter bridge requirements | Prefer detached immediately; do not assume hidden/precreated embedded panes |
+| Windows | supported through the PM-managed bundled Chromium runtime | editor-tab browser plus detached window on the same PM browser model | PM-managed bundled Chromium runtime | show `runtime_unavailable` remediation and keep source/native surfaces usable |
+| macOS | supported through the PM-managed bundled Chromium runtime | editor-tab browser plus detached window on the same PM browser model | PM-managed bundled Chromium runtime | show `runtime_unavailable` remediation and keep source/native surfaces usable |
+| Linux X11 | supported through the PM-managed bundled Chromium runtime | editor-tab browser plus detached window on the same PM browser model | PM-managed bundled Chromium runtime plus platform prerequisites required by the chosen embedding path | show `runtime_unavailable` remediation and keep source/native surfaces usable |
+| Linux Wayland | supported through the same PM browser abstraction with platform-specific embedding details hidden behind the PM bridge | editor-tab browser plus detached window on the same PM browser model | PM-managed bundled Chromium runtime plus platform prerequisites required by the chosen embedding path | show `runtime_unavailable` remediation and keep source/native surfaces usable |
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
 
 **Required doctor/preflight checks**
-- browser runtime available
-- preview server startable
-- Linux GTK/WebKit prerequisites present where applicable
-- detached-window fallback path healthy
+- bundled browser runtime is present and healthy
+- browser runtime version matches the app-managed expected runtime set
+- browser startup path is healthy for the current platform session
+- editor-tab browser host and detached browser host can both be validated under the same PM browser abstraction
+
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
 
 **Required degraded behavior**
-- Generated Markdown/Mermaid preview failure must keep source usable.
-- HTML/browser embedding failure must attempt detached fallback before declaring the feature unavailable.
-- Missing runtime states must use explicit user-facing copy and remediation guidance.
-- Blank panes and screenshot-only substitution are not acceptable steady-state fallback behavior for browser-class surfaces.
+- generated Markdown/Mermaid preview failure must keep source usable
+- browser runtime failure must use explicit user-facing remediation and MUST NOT silently swap to an unrelated legacy webview/browser model
+- blank panes and screenshot-only substitution are not acceptable steady-state fallback behavior for browser-class surfaces
+- browser capability degradations must remain visible through requested/effective runtime disclosure rather than being hidden behind platform heuristics
 
-- **Detached preview/browser windows are first-class and are the only cross-platform guaranteed path.**
-- Embedded webviews are an optimization only and may be enabled where the platform adapter proves robust.
-- Linux Wayland must not be blocked on raw child-webview embedding. Detached-first or GTK-bridged behavior is acceptable behind the same abstraction.
-- Linux support must explicitly own:
-  - GTK initialization
-  - GTK/WebKit event-loop advancement rules
-  - runtime dependency/install contract
-  - failure and degraded-mode UX when preview runtime requirements are unavailable
-- Do not assume hidden pre-created preview panes are available on Wayland.
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
 
 ### Source/preview mapping and edit contract
 

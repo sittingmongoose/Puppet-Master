@@ -1,0 +1,17 @@
+Packet Shape Report
+run_id: r-20260317-181906-02
+status: BLOCKED
+
+Blockers
+
+1)
+path: Plans/Prompt_Pipeline.md
+anchor: ### 1.2A Structured attachment normalization for browser element context
+reason: contractref_too_far_from_operational_requirement
+brief fix direction: In packet content for this anchor, add or move an executable `ContractRef:` line so it appears within 10 subsequent lines after `The prompt MUST be assembled in this stage order:`.
+
+2)
+path: Plans/Runtime_Artifacts_Panel.md
+anchor: ## 8. Browser recordings
+reason: contractref_too_far_from_operational_requirement
+brief fix direction: In packet content for this anchor, add or move an executable `ContractRef:` line so it appears within 10 subsequent lines after `Browser evidence artifacts MUST carry enough metadata to rejoin the owning browser session and project context.`.

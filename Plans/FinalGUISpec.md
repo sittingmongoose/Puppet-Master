@@ -1471,21 +1471,29 @@ This addendum locks how Markdown, Mermaid, HTML, SVG, and image rendering appear
 
 ### Surface inventory impact
 
-The rewrite must treat rendering as a shared capability across these existing surfaces:
+The rewrite must treat browser-capable rendering as a shared capability across these surfaces:
 
-- **Chat Panel**: rendered Markdown text, native Mermaid cards, source toggle/open actions.
-- **File Editor**: source mode, split preview mode, detached preview mode, HTML browser mode.
-- **Embedded Document Pane**: preview-capable document review surface using the same PreviewSession contract.
-- **Bottom Panel Browser tab**: browser-like HTML/workspace preview and click-to-context surface.
-- **Detached windows**: first-class preview/browser windows for platforms where embedding is not the correct guarantee.
+- **Chat Panel**: rendered Markdown text, Mermaid cards, source toggle/open actions, and explicit browser-derived capture chips routed into chat
+- **File Editor**: source mode, split preview mode, detached preview mode, and browser mode for HTML/workspace browsing
+- **Embedded Document Pane**: preview-capable document review surface using the same rendering and preview identity contract
+- **Editor-tab Browser surface**: the canonical in-shell host for `workspace_preview`
+- **Detached preview/browser windows**: first-class `detached_preview` surfaces linked to the originating browser subject
+- **Automation/Auth browser windows**: visible `automation_session` and `auth_session` surfaces that are not counted as normal in-shell browser tabs
+- **Bottom-panel browser-adjacent surfaces**: optional logs, evidence, downloads, console/network summaries, or DevTools-adjacent panes that do not own the canonical browsing session
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
 
 ### GUI behavior rules
 
-- Detached preview/browser windows are part of the intended UX, not a degraded workaround.
-- Embedded browser/preview panes may exist where supported, but GUI flows must remain valid when the preview opens in a separate window.
-- Markdown and Mermaid previews should visually match app theming while remaining clearly distinct from editable source.
-- HTML/browser mode must visually read as a browser-capable surface rather than as a static Markdown preview.
-- Image viewing remains native and should not inherit unnecessary browser chrome.
+- detached preview/browser windows are part of the intended UX and are not described as degraded workarounds
+- the editor/workspace tab surface is the canonical in-shell host for normal browsing and HTML preview
+- the bottom panel must not be described as the primary browser host
+- HTML/browser mode must visually read as a real browser-capable surface rather than as a static Markdown preview
+- users must be able to watch agent-driven browser/testing sessions live when automation is running visibly
+- docked DevTools is the default and lives inside the currently focused browser session surface; detached DevTools is an alternate layout
+- image viewing remains native and must not inherit unnecessary browser chrome
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 ### Chat panel behavior
 
@@ -1523,20 +1531,33 @@ Required actions:
 
 ### Bottom panel browser behavior
 
-The Browser tab is the primary in-shell host for full HTML/browser previews and click-to-context workflows.
+The bottom panel is not the canonical host for normal browsing, HTML preview, or click-to-context workflows.
 
-Required behavior:
+Allowed bottom-panel browser-adjacent roles are:
+- console/network summaries for the focused browser session
+- downloads, trace/video progress, and evidence activity tied to the focused browser session
+- automation activity, step status, or capture status linked to a visible browser session
+- DevTools-adjacent panes that complement the focused browser session without becoming a separate browser host
 
-- use the browser/runtime transport contract rather than Markdown preview transport
-- preserve navigation/reload state within the tab
-- support detached-open without changing the underlying PreviewSession identity
-- keep trust-tier boundaries distinct from generated Markdown/Mermaid previews
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md
+
+Rules:
+- actions surfaced from the bottom panel must focus or act on the owning browser session rather than invent a separate browser identity
+- browser open, detached-open, takeover, promotion, and recovery actions always target the canonical browser session model
+- the bottom panel may expose `Open DevTools`, `Focus Browser`, or evidence actions, but it does not own the primary browsing session
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md
 
 ### Windowing and platform behavior
 
-- GUI copy must not imply that every preview is embedded inline on every platform.
-- Linux Wayland behavior must remain correct when the product opens a detached preview/browser window rather than embedding.
-- The UI must not rely on hidden pre-created browser panes to feel responsive on platforms where hidden-window behavior is constrained.
+- the browser runtime expectation is a PM-managed pinned bundled CEF-class Chromium runtime on Windows, macOS, and Linux
+- native child-window embedding is the baseline host strategy; offscreen rendering is secondary
+- detached browser and detached DevTools windows are first-class surfaces linked to the owning browser session
+- GUI copy must not imply that the browser is only available through detached fallback windows or platform-specific system-webview assumptions
+- when the bundled browser runtime is damaged or unavailable, the UI must surface `runtime_unavailable` with remediation and keep source/native surfaces usable
+- the UI must not rely on hidden pre-created browser panes to feel responsive on platforms where hidden-window behavior is constrained
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Permissions_System.md
 
 ### Performance and accessibility
 
@@ -1547,10 +1568,14 @@ Required behavior:
 
 ### Acceptance criteria addendum
 
-- The same document can move between chat card, editor preview, embedded doc pane, bottom browser tab, and detached preview without inventing separate rendering contracts.
-- Mermaid diagrams render consistently across chat, editor, and planning/doc surfaces.
-- HTML rendered mode behaves like a browser/workspace preview, not a static screenshot.
-- Platform limitations may change whether a preview is embedded or detached, but they must not remove the feature.
+- the same logical subject can move between chat card, editor preview, embedded doc pane, editor-tab browser, detached preview, and detached browser without inventing separate rendering contracts
+- Mermaid diagrams render consistently across chat, editor, and planning/doc surfaces
+- HTML rendered mode behaves like a real browser/workspace preview, not a static screenshot
+- the bottom panel is not required as the primary browser host for the feature to work
+- platform limitations may change embedding details, but they must not remove the feature or hide requested/effective browser capability differences
+- users can watch a live `automation_session`, safely take over, and promote it to normal browsing without losing the visible browser
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
 
 ## Assistant Planning UX Addendum (2026-03-08)
 

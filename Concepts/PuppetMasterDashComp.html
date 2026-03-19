@@ -1825,6 +1825,145 @@
     .highlight-selection { background: rgba(0, 150, 255, 0.3); border-bottom: 2px dashed var(--accent-blue); }
     .selectable-doc { user-select: text; }
 
+    /* ── Browser Tab Content (workspace_preview / automation_session) ── */
+    .browser-tab-content {
+      display: flex; flex-direction: column; flex: 1; min-height: 0;
+      background: var(--surface); border: 1px solid var(--border-light);
+    }
+    .browser-toolbar {
+      display: flex; align-items: center; gap: var(--xs); padding: 3px var(--sm);
+      background: var(--surface-elevated); border-bottom: 1px solid var(--border-light);
+      height: 32px; flex-shrink: 0;
+    }
+    .browser-nav-btn, .browser-action-btn {
+      background: none; border: none; color: var(--text-secondary); cursor: pointer;
+      padding: 3px; border-radius: 4px; display: flex; align-items: center; justify-content: center;
+    }
+    .browser-nav-btn:hover, .browser-action-btn:hover { background: var(--surface); color: var(--text-primary); }
+    .browser-action-btn.active-tool { color: var(--accent-blue); background: rgba(0,150,255,0.1); }
+    .browser-address-bar {
+      flex: 1; background: var(--surface); border: 1px solid var(--border-light); border-radius: 4px;
+      padding: 2px 8px; font-family: var(--mono-font); font-size: 11px; color: var(--text-primary);
+      outline: none;
+    }
+    .browser-address-bar:focus { border-color: var(--accent-blue); }
+    .browser-session-badge {
+      font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 8px;
+      font-family: var(--display-font); letter-spacing: 0.5px; white-space: nowrap;
+    }
+    .browser-session-badge.workspace { background: var(--accent-lime); color: #1A1A1A; }
+    .browser-session-badge.detached { background: var(--accent-blue); color: #fff; }
+    .browser-session-badge.automation { background: var(--accent-orange); color: #1A1A1A; }
+    .browser-session-badge.auth { background: var(--accent-magenta); color: #fff; }
+    .browser-cap-indicator {
+      font-size: 9px; color: var(--text-muted); font-family: var(--mono-font);
+      padding: 1px 4px; border: 1px solid var(--border-light); border-radius: 4px;
+    }
+    .browser-toolbar-sep { width: 1px; height: 16px; background: var(--border-light); margin: 0 2px; }
+    .browser-viewport {
+      flex: 1; overflow: auto; background: #ffffff; position: relative;
+    }
+    .browser-viewport * { transition: outline 0.1s ease; }
+    .browser-viewport [data-pickable]:hover {
+      outline: 2px dashed rgba(0, 120, 255, 0.6); outline-offset: 2px; cursor: crosshair;
+    }
+
+    /* Automation Banner */
+    .browser-automation-banner {
+      display: flex; align-items: center; justify-content: space-between; gap: var(--sm);
+      padding: 4px var(--md); background: rgba(255, 127, 39, 0.95); color: #1A1A1A;
+      font-size: 11px; font-weight: 600; flex-shrink: 0;
+    }
+    .browser-automation-banner .auto-status { display: flex; align-items: center; gap: var(--xs); }
+    .browser-automation-banner .auto-status .wizard-activity-pulse { width: 6px; height: 6px; }
+    .browser-automation-banner .auto-controls { display: flex; gap: var(--xs); }
+    .browser-takeover-btn {
+      background: rgba(0,0,0,0.15); border: 1px solid rgba(0,0,0,0.2); color: #1A1A1A;
+      padding: 2px 8px; font-size: 10px; font-weight: 600; cursor: pointer; border-radius: 4px;
+      font-family: var(--body-font);
+    }
+    .browser-takeover-btn:hover { background: rgba(0,0,0,0.25); }
+    .browser-takeover-btn.danger { background: rgba(220,38,38,0.8); color: #fff; border-color: rgba(220,38,38,0.9); }
+    .browser-takeover-btn.danger:hover { background: rgba(220,38,38,1); }
+
+    /* Browser Permissions Panel */
+    .browser-permissions-panel {
+      background: var(--surface-elevated); border-bottom: 1px solid var(--border-light);
+      padding: var(--sm) var(--md); font-size: 11px; flex-shrink: 0; max-height: 180px; overflow-y: auto;
+    }
+    .browser-permissions-panel .perm-title { font-weight: 700; font-family: var(--display-font); font-size: 10px; margin-bottom: var(--xs); }
+    .perm-kv-row {
+      display: flex; justify-content: space-between; align-items: baseline; padding: 2px 0;
+      border-bottom: 1px solid var(--border-light); gap: var(--md);
+    }
+    .perm-kv-label { color: var(--text-secondary); font-size: 10px; white-space: nowrap; }
+    .perm-kv-value { color: var(--text-primary); font-size: 10px; text-align: right; font-family: var(--mono-font); }
+    .perm-kv-value.matched { color: var(--accent-lime); }
+    .perm-kv-value.degraded { color: var(--accent-orange); }
+    .perm-kv-value.blocked { color: var(--accent-magenta); }
+
+    /* Bottom Panel Browser Sub-tabs */
+    .browser-bottom-content { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+    .browser-bottom-subtabs {
+      display: flex; gap: 0; border-bottom: 1px solid var(--border-light);
+      background: var(--surface-elevated); padding: 0 var(--sm); flex-shrink: 0;
+    }
+    .browser-bottom-subtabs .subtab {
+      padding: 3px 10px; font-size: 10px; font-weight: 600; color: var(--text-muted);
+      cursor: pointer; border-bottom: 2px solid transparent; font-family: var(--display-font);
+    }
+    .browser-bottom-subtabs .subtab:hover { color: var(--text-primary); }
+    .browser-bottom-subtabs .subtab.active { color: var(--accent-blue); border-bottom-color: var(--accent-blue); }
+    .browser-console-pane, .browser-network-pane, .browser-evidence-pane {
+      flex: 1; overflow-y: auto; padding: var(--sm); font-size: 11px; font-family: var(--mono-font);
+      background: #0d1117; color: #c9d1d9;
+    }
+    .console-line { padding: 1px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .console-line.warn { color: #d29922; }
+    .console-line.error { color: #f85149; }
+    .console-line.info { color: #58a6ff; }
+    .network-table { width: 100%; border-collapse: collapse; }
+    .network-table th {
+      text-align: left; padding: 3px 8px; font-size: 10px; color: var(--text-muted);
+      border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: 600;
+    }
+    .network-table td { padding: 3px 8px; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .network-table .status-ok { color: #3fb950; }
+    .network-table .status-redirect { color: #d29922; }
+    .network-table .status-err { color: #f85149; }
+    .evidence-item {
+      display: flex; align-items: center; gap: var(--sm); padding: 4px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .evidence-item .ev-icon { color: var(--accent-blue); font-size: 10px; }
+    .evidence-item .ev-label { flex: 1; }
+    .evidence-item .ev-time { color: var(--text-muted); font-size: 10px; }
+
+    /* Composer Chip Variants for Browser Context */
+    .composer-chip.browser-selection { border-color: var(--accent-blue); background: rgba(0,150,255,0.08); }
+    .composer-chip.browser-selection::before { content: "SEL"; font-size: 8px; font-weight: 700; color: var(--accent-blue); margin-right: 2px; }
+    .composer-chip.element-pick { border-color: var(--accent-orange); background: rgba(255,127,39,0.08); }
+    .composer-chip.element-pick::before { content: "EL"; font-size: 8px; font-weight: 700; color: var(--accent-orange); margin-right: 2px; }
+    .composer-chip.screenshot-chip { border-color: var(--accent-magenta); background: rgba(189,22,218,0.08); }
+    .screenshot-thumb {
+      display: inline-flex; align-items: center; gap: var(--xs); padding: 4px 8px;
+      background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 4px;
+      font-size: 10px; color: var(--text-secondary); margin: var(--xs) 0;
+    }
+    .screenshot-thumb .thumb-preview {
+      width: 48px; height: 32px; background: #e0e0e0; border-radius: 2px;
+      display: flex; align-items: center; justify-content: center; color: #999; font-size: 14px;
+    }
+
+    /* Retro theme overrides for browser elements */
+    [data-theme^="retro"] .browser-session-badge { border-radius: 0; }
+    [data-theme^="retro"] .browser-address-bar { border-radius: 0; }
+    [data-theme^="retro"] .browser-takeover-btn { border-radius: 0; }
+    [data-theme^="retro"] .browser-bottom-subtabs .subtab { font-family: var(--display-font); }
+    [data-theme^="retro"] .browser-viewport [data-pickable]:hover { outline-style: solid; outline-color: var(--accent-lime); }
+    [data-theme^="retro"] .composer-chip.browser-selection { border-color: var(--accent-lime); }
+    [data-theme^="retro"] .composer-chip.browser-selection::before { color: var(--accent-lime); }
+
     /* Timeline / Agent Activity */
     .wizard-activity-floating {
       position: absolute;
@@ -4446,14 +4585,128 @@ impl Dashboard {
 
             <div class="editor-pane" id="editorPane2">
               <div class="editor-tabs">
-                <span class="tab active">config.rs <span class="dot">*</span> <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                <span class="tab active" data-tab-type="code" id="configRsTab" onclick="switchEditorPane2Tab('code')">config.rs <span class="dot">*</span> <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                <span class="tab" data-tab-type="browser" data-session-class="workspace_preview" id="browserPreviewTab" onclick="switchEditorPane2Tab('browser')">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:2px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                  localhost:3000
+                  <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </span>
+                <span class="tab" data-tab-type="automation" data-session-class="automation_session" id="automationBrowserTab" onclick="switchEditorPane2Tab('automation')" style="display:none;">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2" style="vertical-align:middle; margin-right:2px;"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                  [auto] test-runner
+                </span>
               </div>
-              <div class="editor-area">
+              <div class="editor-area" id="editorPane2Code">
                 <div class="editor-gutter">1<br>2<br>3<br>4</div>
                 <div class="editor-code">pub fn load_config() -> Config {
     Config::default()
 }</div>
                 <div class="editor-minimap"></div>
+              </div>
+
+              <!-- Browser Tab Content (hidden until browser tab clicked) -->
+              <div class="browser-tab-content" id="browserTabContent" style="display:none; flex:1; flex-direction:column;">
+                <!-- Browser Toolbar -->
+                <div class="browser-toolbar">
+                  <button class="browser-nav-btn" title="Back"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+                  <button class="browser-nav-btn" title="Forward"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                  <button class="browser-nav-btn" title="Reload"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+                  <input class="browser-address-bar" id="browserAddressBar" value="http://localhost:3000" readonly>
+                  <span class="browser-session-badge workspace" id="browserSessionBadge">workspace_preview</span>
+                  <span class="browser-cap-indicator">Tabs: 1/4</span>
+                  <div class="browser-toolbar-sep"></div>
+                  <button class="browser-action-btn" title="Pick Element for Chat" onclick="addBrowserChipToChat('element-pick','&lt;button.submit&gt;')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="M13 13l6 6"/></svg></button>
+                  <button class="browser-action-btn" title="Add Selection to Chat" onclick="addBrowserChipToChat('browser-selection','Login form styles')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3"/><path d="M20 7V4h-3"/><path d="M4 17v3h3"/><path d="M20 17v3h-3"/></svg></button>
+                  <button class="browser-action-btn" title="Screenshot to Chat" onclick="addBrowserChipToChat('screenshot-chip','screenshot-page.png')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></button>
+                  <div class="browser-toolbar-sep"></div>
+                  <button class="browser-action-btn" title="Toggle DevTools" onclick="toggleBottomBrowserTab()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+                  <button class="browser-action-btn" title="Detach to Window"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
+                  <button class="browser-action-btn" title="Share with Agent"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+                  <button class="browser-action-btn" title="Permissions" onclick="document.getElementById('browserPermissionsPanel').style.display = document.getElementById('browserPermissionsPanel').style.display === 'none' ? 'block' : 'none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></button>
+                </div>
+
+                <!-- Permissions Panel (collapsible) -->
+                <div class="browser-permissions-panel" id="browserPermissionsPanel" style="display:none;">
+                  <div class="perm-title">REQUESTED vs EFFECTIVE</div>
+                  <div class="perm-kv-row"><span class="perm-kv-label">browser_runtime</span><span class="perm-kv-value matched">chromium-headless &rarr; chromium-headless</span></div>
+                  <div class="perm-kv-row"><span class="perm-kv-label">capabilities</span><span class="perm-kv-value degraded">[nav, cookies, localStorage, devtools] &rarr; [nav, cookies, localStorage]</span></div>
+                  <div class="perm-kv-row"><span class="perm-kv-label">degradation</span><span class="perm-kv-value blocked">devtools &mdash; permission_not_granted</span></div>
+                  <div class="perm-kv-row"><span class="perm-kv-label">blocked_actions</span><span class="perm-kv-value matched">none</span></div>
+                  <div class="perm-kv-row"><span class="perm-kv-label">permission_tier</span><span class="perm-kv-value">standard</span></div>
+                  <div class="perm-kv-row"><span class="perm-kv-label">profile_scope</span><span class="perm-kv-value">project</span></div>
+                  <div class="perm-kv-row"><span class="perm-kv-label">restore_policy</span><span class="perm-kv-value">reopen_on_restart</span></div>
+                  <div class="perm-kv-row"><span class="perm-kv-label">takeover_state</span><span class="perm-kv-value matched">user_control</span></div>
+                </div>
+
+                <!-- Automation Banner (hidden by default) -->
+                <div class="browser-automation-banner" id="automationBanner" style="display:none;">
+                  <div class="auto-status">
+                    <div class="wizard-activity-pulse" id="autoPulse" style="width:6px; height:6px;"></div>
+                    <span id="autoStatusText">Agent Controlling Browser &mdash; Running test: login flow verification</span>
+                  </div>
+                  <div class="auto-controls">
+                    <button class="browser-takeover-btn" onclick="handleTakeover('pause')">Pause Agent</button>
+                    <button class="browser-takeover-btn" onclick="handleTakeover('continue')">Let Agent Continue</button>
+                    <button class="browser-takeover-btn danger" onclick="handleTakeover('stop')">Stop Agent &amp; Keep Browser</button>
+                  </div>
+                </div>
+
+                <!-- Fake Website Viewport -->
+                <div class="browser-viewport" id="browserViewport">
+                  <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a2e; margin: 0; background: #fff;">
+                    <!-- Navbar -->
+                    <nav data-pickable style="display:flex; justify-content:space-between; align-items:center; padding:12px 24px; background:#1a1a2e; color:#fff;">
+                      <div style="font-weight:700; font-size:16px; letter-spacing:1px;">MyApp</div>
+                      <div style="display:flex; gap:20px; font-size:13px;">
+                        <a data-pickable href="#" style="color:#e0e0e0; text-decoration:none;" onmouseover="this.style.color='#64ffda'" onmouseout="this.style.color='#e0e0e0'">Home</a>
+                        <a data-pickable href="#" style="color:#e0e0e0; text-decoration:none;" onmouseover="this.style.color='#64ffda'" onmouseout="this.style.color='#e0e0e0'">About</a>
+                        <a data-pickable href="#" style="color:#e0e0e0; text-decoration:none;" onmouseover="this.style.color='#64ffda'" onmouseout="this.style.color='#e0e0e0'">Login</a>
+                      </div>
+                    </nav>
+                    <!-- Hero -->
+                    <section data-pickable style="padding:40px 24px; text-align:center; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:#fff;">
+                      <h1 data-pickable style="font-size:28px; margin:0 0 8px 0; font-weight:700;">Welcome to MyApp</h1>
+                      <p data-pickable style="font-size:14px; margin:0 0 16px 0; opacity:0.9;">Build, test, and deploy with confidence.</p>
+                      <button data-pickable style="background:#64ffda; color:#1a1a2e; border:none; padding:10px 24px; font-size:13px; font-weight:600; border-radius:6px; cursor:pointer;" onmouseover="this.style.background='#4de8c2'" onmouseout="this.style.background='#64ffda'">Get Started</button>
+                    </section>
+                    <!-- Login Form -->
+                    <section data-pickable style="max-width:360px; margin:24px auto; padding:24px; background:#f8f9fa; border-radius:8px; border:1px solid #e9ecef;">
+                      <h2 data-pickable style="font-size:18px; margin:0 0 16px 0; color:#1a1a2e;">Sign In</h2>
+                      <div style="margin-bottom:12px;">
+                        <label data-pickable style="display:block; font-size:12px; color:#6c757d; margin-bottom:4px;">Email</label>
+                        <input data-pickable type="email" placeholder="user@example.com" style="width:100%; padding:8px 12px; border:1px solid #ced4da; border-radius:4px; font-size:13px; box-sizing:border-box; outline:none;" onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#ced4da'">
+                      </div>
+                      <div style="margin-bottom:16px;">
+                        <label data-pickable style="display:block; font-size:12px; color:#6c757d; margin-bottom:4px;">Password</label>
+                        <input data-pickable type="password" placeholder="Enter password" style="width:100%; padding:8px 12px; border:1px solid #ced4da; border-radius:4px; font-size:13px; box-sizing:border-box; outline:none;" onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#ced4da'">
+                      </div>
+                      <button data-pickable class="login-submit-btn" style="width:100%; padding:10px; background:#667eea; color:#fff; border:none; border-radius:4px; font-size:13px; font-weight:600; cursor:pointer;" onmouseover="this.style.background='#5a6fd6'" onmouseout="this.style.background='#667eea'">Sign In</button>
+                      <p data-pickable style="text-align:center; font-size:11px; color:#6c757d; margin:12px 0 0 0;">Don't have an account? <a href="#" style="color:#667eea;">Sign up</a></p>
+                    </section>
+                    <!-- Features -->
+                    <section data-pickable style="display:flex; gap:16px; padding:24px; max-width:720px; margin:0 auto;">
+                      <div data-pickable style="flex:1; padding:16px; background:#fff; border:1px solid #e9ecef; border-radius:6px; text-align:center;">
+                        <div style="font-size:24px; margin-bottom:8px;">&#9889;</div>
+                        <h3 data-pickable style="font-size:14px; margin:0 0 4px 0;">Fast</h3>
+                        <p style="font-size:11px; color:#6c757d; margin:0;">Sub-second builds with incremental compilation.</p>
+                      </div>
+                      <div data-pickable style="flex:1; padding:16px; background:#fff; border:1px solid #e9ecef; border-radius:6px; text-align:center;">
+                        <div style="font-size:24px; margin-bottom:8px;">&#128274;</div>
+                        <h3 data-pickable style="font-size:14px; margin:0 0 4px 0;">Secure</h3>
+                        <p style="font-size:11px; color:#6c757d; margin:0;">Memory-safe by default with Rust backend.</p>
+                      </div>
+                      <div data-pickable style="flex:1; padding:16px; background:#fff; border:1px solid #e9ecef; border-radius:6px; text-align:center;">
+                        <div style="font-size:24px; margin-bottom:8px;">&#128640;</div>
+                        <h3 data-pickable style="font-size:14px; margin:0 0 4px 0;">Deploy</h3>
+                        <p style="font-size:11px; color:#6c757d; margin:0;">One-click deploy to Docker and Unraid.</p>
+                      </div>
+                    </section>
+                    <!-- Footer -->
+                    <footer data-pickable style="text-align:center; padding:16px; font-size:11px; color:#adb5bd; border-top:1px solid #e9ecef; margin-top:16px;">
+                      &copy; 2026 MyApp Inc. All rights reserved. | <a href="#" style="color:#667eea;">Privacy</a> | <a href="#" style="color:#667eea;">Terms</a>
+                    </footer>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -4505,6 +4758,17 @@ impl Dashboard {
                     <div class="cdp-kv-row" style="padding-left:var(--md);"><span class="cdp-kv-label">Assistant</span><span class="cdp-kv-value">18,100</span></div>
                     <div class="cdp-kv-row" style="padding-left:var(--md);"><span class="cdp-kv-label">System</span><span class="cdp-kv-value">8,200</span></div>
                     <div class="cdp-kv-row" style="padding-left:var(--md);"><span class="cdp-kv-label">Tool</span><span class="cdp-kv-value">3,480</span></div>
+                  </div>
+
+                  <!-- Browser Context -->
+                  <div class="cdp-section" style="border-top: 1px solid var(--border-light);">
+                    <div class="cdp-section-title">Browser Context</div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Active Sessions</span><span class="cdp-kv-value">2</span></div>
+                    <div class="cdp-kv-row" style="padding-left:var(--md);"><span class="cdp-kv-label">workspace_preview</span><span class="cdp-kv-value" style="color:var(--accent-lime);">localhost:3000</span></div>
+                    <div class="cdp-kv-row" style="padding-left:var(--md);"><span class="cdp-kv-label">automation_session</span><span class="cdp-kv-value" style="color:var(--accent-orange);">test-runner (paused)</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Captured Elements</span><span class="cdp-kv-value">3</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Screenshots</span><span class="cdp-kv-value">1</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Traces</span><span class="cdp-kv-value">1</span></div>
                   </div>
 
                   <!-- Messages -->
@@ -6736,6 +7000,30 @@ impl Dashboard {
                     <button class="wizard-btn">Granular rule editor</button>
                   </div>
                 </details>
+                <details>
+                  <summary>Browser Permissions</summary>
+                  <div class="details-content">
+                    <label>Requested Runtime <input type="text" value="chromium-headless" readonly style="opacity:0.7;"></label>
+                    <label>Effective Runtime <input type="text" value="chromium-headless" readonly style="opacity:0.7;"></label>
+                    <label>Permission Tier <select><option selected>Standard</option><option>Elevated</option><option>Restricted</option></select></label>
+                    <label>Browser Tab Cap <input type="number" value="4" min="1" max="8"></label>
+                    <label>Restore Policy <select><option selected>Reopen on restart</option><option>Keep closed</option><option>Ask</option></select></label>
+                    <label><input type="checkbox" checked> Allow DevTools</label>
+                    <label><input type="checkbox" checked> Allow Navigation</label>
+                    <label><input type="checkbox" checked> Allow Cookie Access</label>
+                    <label><input type="checkbox"> Allow Automation Takeover</label>
+                    <div style="margin-top:var(--sm); padding:var(--sm); background:var(--surface); border:1px solid var(--border-light); border-radius:4px; font-size:11px;">
+                      <div style="font-weight:600; margin-bottom:var(--xs); font-size:10px;">Capability Degradations</div>
+                      <div style="color:var(--accent-orange); font-size:10px;">devtools &mdash; permission_not_granted</div>
+                      <div style="color:var(--text-muted); font-size:10px; margin-top:2px;">No other degradations active</div>
+                    </div>
+                    <div style="margin-top:var(--sm); display:flex; gap:var(--sm);">
+                      <button class="wizard-btn" style="font-size:10px;">Reopen</button>
+                      <button class="wizard-btn" style="font-size:10px;">Retry</button>
+                      <button class="wizard-btn" style="font-size:10px;">Keep Closed</button>
+                    </div>
+                  </div>
+                </details>
               </div>
 
               <!-- Personas View -->
@@ -7085,6 +7373,21 @@ impl Dashboard {
                       <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
                     </div>
                   </div>
+
+                  <div class="chat-thread-item role-assistant" data-thread="thread8" onclick="switchToChatThread('thread8')">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">5m</span>
+                      <div class="thread-title">Browser Testing Flow</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
+                      <div class="thread-summary">Testing login flow with browser...<br>Agent running automation session.</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -7252,12 +7555,12 @@ impl Dashboard {
           <div class="pane-header-drag" draggable="true" data-pane="bottomPanel" style="position:absolute; top:-8px; left:50%; transform:translateX(-50%); width:40px; height:6px; background:var(--border-light); border-radius:4px; cursor:grab; z-index:50;"></div>
           <div class="bottom-tabs">
             <div class="bottom-tabs-left">
-              <span class="tab active">Terminal</span>
-              <span class="tab">Problems</span>
-              <span class="tab">Output</span>
-              <span class="tab">Ports</span>
-              <span class="tab">Browser</span>
-              <span class="tab">Debug</span>
+              <span class="tab active" data-bottom-tab="terminal" onclick="switchBottomTab('terminal')">Terminal</span>
+              <span class="tab" data-bottom-tab="problems" onclick="switchBottomTab('problems')">Problems</span>
+              <span class="tab" data-bottom-tab="output" onclick="switchBottomTab('output')">Output</span>
+              <span class="tab" data-bottom-tab="ports" onclick="switchBottomTab('ports')">Ports</span>
+              <span class="tab" data-bottom-tab="browser" onclick="switchBottomTab('browser')">Browser</span>
+              <span class="tab" data-bottom-tab="debug" onclick="switchBottomTab('debug')">Debug</span>
             </div>
             <div class="bottom-tabs-right">
               <select id="terminalGroupSelect" title="Terminal group">
@@ -7269,7 +7572,7 @@ impl Dashboard {
             </div>
           </div>
           <div class="bottom-tabs-content">
-            <div class="terminal-grid-flex" data-group="build" style="display:flex; flex-direction:column; flex:1; min-height:0; gap:1px; background:var(--border);">
+            <div class="terminal-grid-flex" id="bottomTerminalContent" data-group="build" style="display:flex; flex-direction:column; flex:1; min-height:0; gap:1px; background:var(--border);">
               <div style="display:flex; flex:1; min-height:0; gap:1px;">
                   <div class="terminal-pane" id="term1" style="flex:1; background:#0d1117;">
                     <div class="line">$ cargo build</div>
@@ -7299,6 +7602,69 @@ impl Dashboard {
                     <div class="line">a3f2c1d feat: add auth handler</div>
                     <div class="line">b7e4a09 refactor: provider trait</div>
                   </div>
+              </div>
+            </div>
+
+            <!-- Browser Bottom Content (Console / Network / Evidence) -->
+            <div class="browser-bottom-content" id="bottomBrowserContent" style="display:none; flex:1; min-height:0;">
+              <div class="browser-bottom-subtabs">
+                <span class="subtab active" data-browser-subtab="console" onclick="switchBrowserSubtab('console')">Console</span>
+                <span class="subtab" data-browser-subtab="network" onclick="switchBrowserSubtab('network')">Network</span>
+                <span class="subtab" data-browser-subtab="evidence" onclick="switchBrowserSubtab('evidence')">Evidence</span>
+              </div>
+              <div class="browser-console-pane" id="browserConsolePane" style="flex:1; overflow-y:auto;">
+                <div class="console-line info">[HMR] Waiting for update signal from WDS...</div>
+                <div class="console-line">console.log("App initialized")</div>
+                <div class="console-line info">[HMR] Module updated: ./src/App.tsx</div>
+                <div class="console-line">fetch: GET /api/user &rarr; 200 (14ms)</div>
+                <div class="console-line">fetch: GET /api/config &rarr; 200 (8ms)</div>
+                <div class="console-line warn">Warning: Each child in a list should have a unique "key" prop.</div>
+                <div class="console-line">fetch: POST /api/auth/login &rarr; 200 (142ms)</div>
+                <div class="console-line error">console.error("Failed to load resource: /api/notifications 404")</div>
+                <div class="console-line">fetch: GET /api/dashboard &rarr; 200 (22ms)</div>
+                <div class="console-line info">[WDS] Live Reloading enabled.</div>
+              </div>
+              <div class="browser-network-pane" id="browserNetworkPane" style="display:none; flex:1; overflow-y:auto;">
+                <table class="network-table">
+                  <thead><tr><th>Status</th><th>Method</th><th>URL</th><th>Time</th><th>Size</th></tr></thead>
+                  <tbody>
+                    <tr><td class="status-ok">200</td><td>GET</td><td>/</td><td>42ms</td><td>3.2KB</td></tr>
+                    <tr><td class="status-ok">200</td><td>GET</td><td>/static/css/main.css</td><td>18ms</td><td>1.1KB</td></tr>
+                    <tr><td class="status-ok">200</td><td>GET</td><td>/static/js/bundle.js</td><td>56ms</td><td>142KB</td></tr>
+                    <tr><td class="status-ok">200</td><td>GET</td><td>/api/user</td><td>14ms</td><td>245B</td></tr>
+                    <tr><td class="status-ok">200</td><td>POST</td><td>/api/auth/login</td><td>142ms</td><td>1.8KB</td></tr>
+                    <tr><td class="status-redirect">304</td><td>GET</td><td>/favicon.ico</td><td>3ms</td><td>&mdash;</td></tr>
+                    <tr><td class="status-err">404</td><td>GET</td><td>/api/notifications</td><td>22ms</td><td>52B</td></tr>
+                    <tr><td class="status-ok">200</td><td>GET</td><td>/api/dashboard</td><td>22ms</td><td>890B</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="browser-evidence-pane" id="browserEvidencePane" style="display:none; flex:1; overflow-y:auto;">
+                <div class="evidence-item">
+                  <span class="ev-icon">&#128247;</span>
+                  <span class="ev-label">screenshot-login-page.png &mdash; Full page capture</span>
+                  <span class="ev-time">2m ago</span>
+                </div>
+                <div class="evidence-item">
+                  <span class="ev-icon">&#9670;</span>
+                  <span class="ev-label">&lt;button.login-submit-btn&gt; &mdash; Login form submit button</span>
+                  <span class="ev-time">3m ago</span>
+                </div>
+                <div class="evidence-item">
+                  <span class="ev-icon">&#9998;</span>
+                  <span class="ev-label">"Welcome to MyApp" &mdash; hero heading text selection</span>
+                  <span class="ev-time">5m ago</span>
+                </div>
+                <div class="evidence-item">
+                  <span class="ev-icon">&#128247;</span>
+                  <span class="ev-label">screenshot-error-state.png &mdash; Validation error capture</span>
+                  <span class="ev-time">8m ago</span>
+                </div>
+                <div class="evidence-item">
+                  <span class="ev-icon">&#128250;</span>
+                  <span class="ev-label">trace-login-flow.zip &mdash; Automation session recording</span>
+                  <span class="ev-time">12m ago</span>
+                </div>
               </div>
             </div>
           </div>
@@ -7507,6 +7873,21 @@ impl Dashboard {
                     <div class="thread-bottom-row">
                       <div class="thread-status-col"><div class="thread-status-draft"></div></div>
                       <div class="thread-summary">Generated full MVP specification.<br>Awaiting approval on Phase 2 plan.</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+
+                  <div class="chat-thread-item role-assistant" data-thread="thread8" onclick="switchToChatThread('thread8')">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">5m</span>
+                      <div class="thread-title">Browser Testing Flow</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
+                      <div class="thread-summary">Testing login flow with browser...<br>Agent running automation session.</div>
                     </div>
                     <div class="thread-hover-actions">
                       <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
@@ -7861,7 +8242,8 @@ impl Dashboard {
   </div><div class="interview-chips" style="display:none;" style="display:flex; flex-wrap:wrap; gap:var(--sm); margin-top:var(--sm);"><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">React</div><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">Slint</div><div class="interview-chip" style="padding:4px 8px; background:var(--surface-elevated); border:1px solid var(--border); font-size:11px; cursor:pointer; border-radius:16px;">Let AI Decide</div></div><div class="message user"><div class="msg-body">Let's go with Slint, since the rest of the application is migrating to it.</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="msg-control-btn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button><button class="msg-control-btn" title="Resend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>Gemini</span><span class="sep">&middot;</span><span>Gemini 3.1 Pro</span><span class="sep">&middot;</span><span>10:12 AM</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Gemini</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Gemini 3.1 Pro</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">interviewer</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">340</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">7.2k / 1M</span></div></div></div></div></div><div class="message assistant"><div class="msg-body">Perfect. I'll make sure the spec specifies Slint for the new phase tracker. I will generate a state machine model for the interview phases so we can visualize the flow before implementation.</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>Gemini</span><span class="sep">&middot;</span><span>Gemini 3.1 Pro</span><span class="sep">&middot;</span><span>7s</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Gemini</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Gemini 3.1 Pro</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">interviewer</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">1,880</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">8.9k / 1M</span></div></div></div></div></div>` },
       'thread5': { role: 'assistant', title: 'ASSISTANT', mode: 'ask', html: `<div style="text-align:center; font-size:10px; color:var(--text-muted); margin-bottom:var(--sm);">Context Lens Active</div><div class="message user" style="opacity: 0.6; position:relative;"><div class="msg-body" style="border:none; box-shadow:none;"><div style="position:absolute; top:-8px; right:-8px; background:var(--surface); border:1px solid var(--border); font-size:9px; padding:2px 4px; border-radius:4px; color:var(--text-primary);">Muted</div>Here is the old log file...</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>Copilot</span><span class="sep">&middot;</span><span>Sonnet 4.6</span><span class="sep">&middot;</span><span>11:30 AM</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Copilot</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">default</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">280</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">5.4k / 200k</span></div></div></div></div></div><div class="message assistant"><div class="msg-body">I understand. I am analyzing the dependency graph context you provided.</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>Copilot</span><span class="sep">&middot;</span><span>Sonnet 4.6</span><span class="sep">&middot;</span><span>3s</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Copilot</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">default</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">960</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">6.2k / 200k</span></div></div></div></div></div><div class="message user msg-focused" style="position:relative; background:transparent;"><div class="msg-body"><div style="position:absolute; top:-8px; right:-8px; background:var(--accent-blue); color:var(--surface); font-size:9px; padding:2px 4px; border-radius:4px;">Focused</div>Focus strictly on the circular dependency error block near the bottom of that output.</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="msg-control-btn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button><button class="msg-control-btn" title="Resend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>Copilot</span><span class="sep">&middot;</span><span>Sonnet 4.6</span><span class="sep">&middot;</span><span>11:32 AM</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Copilot</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">default</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">440</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">8.1k / 200k</span></div></div></div></div></div><div class="message assistant"><div class="msg-body">I see the issue. The circular dependency is occurring between <code>orchestrator.rs</code> and <code>agent_manager.rs</code>. <code>orchestrator</code> imports <code>AgentManager</code> to dispatch tasks, but <code>agent_manager</code> is trying to import the <code>OrchestratorState</code> enum directly from the orchestrator.<br><br>To resolve this, we should extract the state enums into a shared <code>types.rs</code> or <code>state.rs</code> module that both can depend on without referencing each other. Shall I implement this refactor?</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>Copilot</span><span class="sep">&middot;</span><span>Sonnet 4.6</span><span class="sep">&middot;</span><span>11s</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Copilot</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">default</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">3,640</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">12.0k / 200k</span></div></div></div></div></div>` },
       'thread6': { role: 'assistant', title: 'ASSISTANT', mode: 'ask', html: `<div class="message user"><div class="msg-body">Update the build script so it automatically copies the generated config file to the output directory.</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>OpenCode</span><span class="sep">&middot;</span><span>GPT-5.3 Codex</span><span class="sep">&middot;</span><span>4:15 PM</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">OpenCode</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">GPT-5.3 Codex</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">default</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">350</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">2.8k / 128k</span></div></div></div></div></div><div class="message assistant"><div class="msg-body">I have modified <code>build.rs</code> to include the copy step. Let me run the build to test it.</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>OpenCode</span><span class="sep">&middot;</span><span>GPT-5.3 Codex</span><span class="sep">&middot;</span><span>5s</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">OpenCode</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">GPT-5.3 Codex</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">default</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">1,420</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">4.0k / 128k</span></div></div></div></div></div><div class="message assistant" style="border-color: var(--accent-magenta);"><div class="msg-body"><b>FileSafe Blocked Action</b><br>The tool attempted to write to <code>/etc/config.json</code>, which is outside the allowed project sandbox.<br><br>Do you want to allow this write operation?</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>OpenCode</span><span class="sep">&middot;</span><span>GPT-5.3 Codex</span><span class="sep">&middot;</span><span>2s</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">OpenCode</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">GPT-5.3 Codex</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">default</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">780</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">5.2k / 128k</span></div></div></div></div></div><div class="message user"><div class="msg-body">Oh, wait. No, it should write to <code>./dist/config.json</code> locally. Let me turn on YOLO mode so you can just fix it and run it.</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="msg-control-btn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button><button class="msg-control-btn" title="Resend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>OpenCode</span><span class="sep">&middot;</span><span>GPT-5.3 Codex</span><span class="sep">&middot;</span><span>4:18 PM</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">OpenCode</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">GPT-5.3 Codex</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">default</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">520</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">6.4k / 128k</span></div></div></div></div></div><div class="message assistant"><div class="msg-body">Understood. YOLO mode is active. I've corrected the path in <code>build.rs</code> to target <code>./dist/config.json</code> and executed the build script. The file was successfully copied to the local distribution folder.</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>OpenCode</span><span class="sep">&middot;</span><span>GPT-5.3 Codex</span><span class="sep">&middot;</span><span>9s</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">OpenCode</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">GPT-5.3 Codex</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">default</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">2,960</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">9.8k / 128k</span></div></div></div></div></div>` },
-      'thread7': { role: 'prd', title: 'PRD BUILDER', html: `<div class="message assistant"><div class="msg-body">I've drafted the preliminary PRD for the "Multi-tenant Refactor" based on the requirements doc we built earlier.<div style="margin-top:var(--md); padding:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated); display:flex; align-items:center; gap:var(--sm); font-size:11px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Opened <b>multi-tenant-refactor.md</b> in Binder</div></div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>Cursor</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>12s</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Cursor</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">prd-builder</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">3,890</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">10.2k / 200k</span></div></div></div></div></div><div class="message user"><div class="msg-body">Looks good, but can you add a section specifically detailing the migration strategy for existing active users? We can't have downtime during the deployment.</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="msg-control-btn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button><button class="msg-control-btn" title="Resend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>Cursor</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>9:50 AM</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Cursor</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">prd-builder</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">710</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">8.4k / 200k</span></div></div></div></div></div><div class="message assistant"><div class="msg-body">Absolutely. I have added a new section "4.3 Zero-Downtime Migration Strategy". It outlines a multi-phase rollout: first dual-writing to the new Workspace tables, then backfilling historical data, and finally flipping the read path. I've updated the document in the Binder.</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>Cursor</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>10s</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Cursor</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">prd-builder</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">2,740</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">14.8k / 200k</span></div></div></div></div></div>` }
+      'thread7': { role: 'prd', title: 'PRD BUILDER', html: `<div class="message assistant"><div class="msg-body">I've drafted the preliminary PRD for the "Multi-tenant Refactor" based on the requirements doc we built earlier.<div style="margin-top:var(--md); padding:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated); display:flex; align-items:center; gap:var(--sm); font-size:11px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Opened <b>multi-tenant-refactor.md</b> in Binder</div></div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>Cursor</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>12s</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Cursor</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">prd-builder</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">3,890</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">10.2k / 200k</span></div></div></div></div></div><div class="message user"><div class="msg-body">Looks good, but can you add a section specifically detailing the migration strategy for existing active users? We can't have downtime during the deployment.</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="msg-control-btn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button><button class="msg-control-btn" title="Resend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>Cursor</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>9:50 AM</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Cursor</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">prd-builder</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">710</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">8.4k / 200k</span></div></div></div></div></div><div class="message assistant"><div class="msg-body">Absolutely. I have added a new section "4.3 Zero-Downtime Migration Strategy". It outlines a multi-phase rollout: first dual-writing to the new Workspace tables, then backfilling historical data, and finally flipping the read path. I've updated the document in the Binder.</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Ask</span><span class="sep">&middot;</span><span>Cursor</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>10s</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Ask</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Cursor</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">prd-builder</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">2,740</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">14.8k / 200k</span></div></div></div></div></div>` },
+      'thread8': { role: 'assistant', title: 'ASSISTANT', mode: 'agent', html: `<div class="message user"><div class="msg-body"><div style="display:flex; flex-wrap:wrap; gap:var(--xs); margin-bottom:var(--sm);"><span class="composer-chip browser-selection">Login form styles <span class="close-chip">&times;</span></span><span class="composer-chip element-pick">&lt;button.submit&gt; <span class="close-chip">&times;</span></span></div>I shared the login form from the browser preview. Can you review the accessibility and styling?</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="msg-control-btn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>3:42 PM</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">accessibility-tester</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">890</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">4.2k / 200k</span></div></div></div></div></div><div class="message assistant"><div class="msg-body"><div style="background:var(--surface-elevated); border:1px solid var(--border-light); padding:var(--sm) var(--md); border-radius:4px; display:flex; justify-content:space-between; align-items:center; font-size:11px; margin-bottom:var(--sm);"><span style="display:flex; align-items:center; gap:var(--xs);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10"/></svg> <b>browser_element_inspect</b>: &lt;button.login-submit-btn&gt;</span><span style="color:var(--text-muted);">analyzed</span></div>I can see the login form you selected. The submit button has several accessibility issues:<br><br>1. <b>No visible focus ring</b> &mdash; the <code>:focus</code> style is missing, keyboard users cannot tell when the button is focused<br>2. <b>Insufficient color contrast</b> &mdash; <code>#667eea</code> on white text is 4.1:1, fails WCAG AA for normal text<br>3. <b>No <code>aria-label</code></b> &mdash; the button text is fine, but the form lacks <code>aria-describedby</code> for error states<br><br>Recommended fix:<pre style="font-size:10px; background:var(--surface); padding:var(--sm); border-radius:4px; overflow-x:auto; margin-top:var(--sm);">.login-submit-btn:focus {\n  outline: 2px solid #667eea;\n  outline-offset: 2px;\n}\n.login-submit-btn {\n  background: #4a5bc7; /* 4.5:1 contrast */\n}</pre></div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>8s</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">accessibility-tester</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">3,450</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">8.6k / 200k</span></div></div></div></div></div><div class="message user"><div class="msg-body">Here is a screenshot of the full page for reference<div class="screenshot-thumb" style="margin-top:var(--sm);"><div class="thumb-preview">&#128247;</div><span>screenshot-login-page.png <span style="color:var(--text-muted);">(1920&times;1080)</span></span></div></div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>3:44 PM</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">accessibility-tester</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">1,280</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">10.1k / 200k</span></div></div></div></div></div><div class="message assistant"><div class="msg-body">Thanks for the screenshot. I can see the full page layout now. I will run an automated accessibility test on the login flow.<div style="background:var(--surface-elevated); border:1px solid var(--accent-orange); padding:var(--sm) var(--md); border-radius:4px; display:flex; justify-content:space-between; align-items:center; font-size:11px; margin-top:var(--sm);"><span style="display:flex; align-items:center; gap:var(--xs);"><div class="wizard-activity-pulse" style="width:6px; height:6px;"></div> <b>Automation</b>: Starting login flow verification</span><span style="color:var(--text-muted);">workspace_preview &rarr; automation_session</span></div></div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>4s</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">accessibility-tester</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">2,100</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">12.4k / 200k</span></div></div></div></div></div><div class="message assistant" style="border-color: var(--accent-orange);"><div class="msg-body" style="font-size:11px; color:var(--text-secondary);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2" style="vertical-align:middle; margin-right:4px;"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg> Agent took control of browser &mdash; <b>automation_session</b> active</div></div><div class="message user"><div class="msg-body">I paused the agent to inspect the failed password validation manually. The error was visible in the console &mdash; the min-length check was rejecting the test input.</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="msg-control-btn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>3:46 PM</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">accessibility-tester</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">620</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">14.0k / 200k</span></div></div></div></div></div><div class="message assistant"><div class="msg-body"><div style="background:var(--surface-elevated); border:1px solid var(--accent-blue); padding:var(--sm) var(--md); border-radius:4px; display:flex; justify-content:space-between; align-items:center; font-size:11px; margin-bottom:var(--sm);"><span style="display:flex; align-items:center; gap:var(--xs);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> <b>takeover_state</b>: user_paused &rarr; resumed</span><span style="color:var(--accent-lime);">OK</span></div>I see the validation issue. The password field requires 8+ characters but the test data was using <code>"test"</code> (4 chars). I have updated the test fixture to use <code>"testpass123"</code> and the flow now passes.<br><br>Resuming automation &mdash; running remaining checks: tab order, ARIA roles, error-state announcements.</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>12s</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">accessibility-tester</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">4,820</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">18.2k / 200k</span></div></div></div></div></div>` }
     };
 
     window.orchNodeDetailContent = {
@@ -7913,7 +8295,8 @@ impl Dashboard {
         'thread4': { agents: '0 active subagents', files: '' },
         'thread5': { agents: '0 active subagents', files: '' },
         'thread6': { agents: '0 active subagents', files: 'build.rs <span class="ft-add">+4</span> <span class="ft-del">−2</span></span><span class="ft-file">dist/config.json <span class="ft-add">+1</span> <span class="ft-del">−0</span>' },
-        'thread7': { agents: '0 active subagents', files: 'multi-tenant-refactor.md <span class="ft-add">+124</span> <span class="ft-del">−0</span>' }
+        'thread7': { agents: '0 active subagents', files: 'multi-tenant-refactor.md <span class="ft-add">+124</span> <span class="ft-del">−0</span>' },
+        'thread8': { agents: '1 active subagent', files: 'tests/e2e/login.spec.ts <span class="ft-add">+28</span> <span class="ft-del">−4</span>' }
       };
       var fd = footerData[threadId] || { agents: '0 active subagents', files: '' };
       var hasActive = fd.agents.indexOf('0') !== 0;
@@ -8443,7 +8826,142 @@ impl Dashboard {
             document.querySelectorAll('.settings-inspector-panel').forEach(panel => panel.classList.remove('open'));
         }
       });
-      
+
+      /* ── Browser Tab Switching in Editor Pane 2 ── */
+      window.switchEditorPane2Tab = function(tabType) {
+        var codeArea = document.getElementById('editorPane2Code');
+        var browserContent = document.getElementById('browserTabContent');
+        var configTab = document.getElementById('configRsTab');
+        var browserTab = document.getElementById('browserPreviewTab');
+        var autoTab = document.getElementById('automationBrowserTab');
+        var autoBanner = document.getElementById('automationBanner');
+        var badge = document.getElementById('browserSessionBadge');
+        var addrBar = document.getElementById('browserAddressBar');
+
+        // Deactivate all tabs in pane2
+        document.querySelectorAll('#editorPane2 .editor-tabs .tab').forEach(function(t) { t.classList.remove('active'); });
+
+        if (tabType === 'code') {
+          if (codeArea) codeArea.style.display = '';
+          if (browserContent) browserContent.style.display = 'none';
+          if (configTab) configTab.classList.add('active');
+        } else if (tabType === 'browser') {
+          if (codeArea) codeArea.style.display = 'none';
+          if (browserContent) { browserContent.style.display = 'flex'; }
+          if (browserTab) browserTab.classList.add('active');
+          if (autoBanner) autoBanner.style.display = 'none';
+          if (badge) { badge.className = 'browser-session-badge workspace'; badge.textContent = 'workspace_preview'; }
+          if (addrBar) addrBar.value = 'http://localhost:3000';
+        } else if (tabType === 'automation') {
+          if (codeArea) codeArea.style.display = 'none';
+          if (browserContent) { browserContent.style.display = 'flex'; }
+          if (autoTab) { autoTab.style.display = ''; autoTab.classList.add('active'); }
+          if (autoBanner) autoBanner.style.display = 'flex';
+          if (badge) { badge.className = 'browser-session-badge automation'; badge.textContent = 'automation_session'; }
+          if (addrBar) addrBar.value = 'http://localhost:3000/test-runner';
+        }
+      };
+
+      /* ── Automation Takeover Handlers ── */
+      window.handleTakeover = function(action) {
+        var banner = document.getElementById('automationBanner');
+        var statusText = document.getElementById('autoStatusText');
+        var pulse = document.getElementById('autoPulse');
+        var badge = document.getElementById('browserSessionBadge');
+        var autoTab = document.getElementById('automationBrowserTab');
+
+        if (action === 'pause') {
+          if (statusText) statusText.innerHTML = 'Agent Paused &mdash; User inspecting browser';
+          if (pulse) pulse.style.animationPlayState = 'paused';
+        } else if (action === 'continue') {
+          if (statusText) statusText.innerHTML = 'Agent Controlling Browser &mdash; Running test: login flow verification';
+          if (pulse) pulse.style.animationPlayState = 'running';
+        } else if (action === 'stop') {
+          if (banner) banner.style.display = 'none';
+          if (badge) { badge.className = 'browser-session-badge workspace'; badge.textContent = 'workspace_preview'; }
+          if (autoTab) autoTab.style.display = 'none';
+          // Re-activate the browser preview tab
+          document.querySelectorAll('#editorPane2 .editor-tabs .tab').forEach(function(t) { t.classList.remove('active'); });
+          var browserTab = document.getElementById('browserPreviewTab');
+          if (browserTab) browserTab.classList.add('active');
+        }
+      };
+
+      /* ── Toggle Automation Mode (demo button) ── */
+      window.toggleAutomationMode = function() {
+        var autoTab = document.getElementById('automationBrowserTab');
+        if (autoTab && autoTab.style.display === 'none') {
+          autoTab.style.display = '';
+          switchEditorPane2Tab('automation');
+        } else {
+          switchEditorPane2Tab('browser');
+          if (autoTab) autoTab.style.display = 'none';
+        }
+      };
+
+      /* ── Browser Context to Chat (Composer Chips) ── */
+      window.addBrowserChipToChat = function(chipType, label) {
+        var chip = document.createElement('span');
+        chip.className = 'composer-chip ' + chipType;
+        chip.innerHTML = label + ' <span class="close-chip" onclick="this.parentElement.remove()">&times;</span>';
+        document.querySelectorAll('.composer-chips-container').forEach(function(c) {
+          c.appendChild(chip.cloneNode(true));
+        });
+        // Re-attach close handlers on cloned chips
+        document.querySelectorAll('.composer-chip .close-chip').forEach(function(btn) {
+          btn.onclick = function() { this.parentElement.remove(); };
+        });
+      };
+
+      /* ── Bottom Panel Tab Switching ── */
+      window.switchBottomTab = function(tabName) {
+        // Update tab active state
+        document.querySelectorAll('.bottom-tabs-left .tab').forEach(function(t) {
+          t.classList.toggle('active', t.getAttribute('data-bottom-tab') === tabName);
+        });
+        // Show/hide content
+        var termContent = document.getElementById('bottomTerminalContent');
+        var browserContent = document.getElementById('bottomBrowserContent');
+        if (tabName === 'browser') {
+          if (termContent) termContent.style.display = 'none';
+          if (browserContent) browserContent.style.display = 'flex';
+        } else {
+          if (termContent) termContent.style.display = '';
+          if (browserContent) browserContent.style.display = 'none';
+        }
+      };
+
+      window.toggleBottomBrowserTab = function() {
+        switchBottomTab('browser');
+      };
+
+      /* ── Browser Bottom Sub-tab Switching (Console/Network/Evidence) ── */
+      window.switchBrowserSubtab = function(subtab) {
+        document.querySelectorAll('.browser-bottom-subtabs .subtab').forEach(function(t) {
+          t.classList.toggle('active', t.getAttribute('data-browser-subtab') === subtab);
+        });
+        var console = document.getElementById('browserConsolePane');
+        var network = document.getElementById('browserNetworkPane');
+        var evidence = document.getElementById('browserEvidencePane');
+        if (console) console.style.display = subtab === 'console' ? '' : 'none';
+        if (network) network.style.display = subtab === 'network' ? '' : 'none';
+        if (evidence) evidence.style.display = subtab === 'evidence' ? '' : 'none';
+      };
+
+      /* ── Fake Website Element Pick on Click ── */
+      document.addEventListener('click', function(e) {
+        var pickable = e.target.closest('[data-pickable]');
+        if (pickable && pickable.closest('.browser-viewport')) {
+          e.preventDefault();
+          var tag = pickable.tagName.toLowerCase();
+          var cls = pickable.className ? '.' + pickable.className.split(' ')[0] : '';
+          addBrowserChipToChat('element-pick', '&lt;' + tag + cls + '&gt;');
+          // Brief flash feedback
+          pickable.style.outline = '2px solid #64ffda';
+          setTimeout(function() { pickable.style.outline = ''; }, 600);
+        }
+      });
+
       document.querySelectorAll('.editor-tabs .tab').forEach(function(tab) {
         tab.addEventListener('click', function() {
           document.querySelectorAll('.editor-tabs .tab').forEach(function(t) { t.classList.remove('active'); });

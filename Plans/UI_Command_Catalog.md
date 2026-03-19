@@ -209,18 +209,36 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Fin
 ### 2.6A Render / browser preview commands
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
-| `cmd.browser.open_workspace_preview` | `{ project_id, target, workspace_tab_id }` | layout/UI state only | File preview, Browser tab, Ports |
-| `cmd.browser.open_detached_preview` | `{ project_id, target, source_workspace_tab_id }` | layout/UI state only | File preview, Browser tab |
-| `cmd.browser.focus_browser_tab` | `{ browser_tab_id }` | layout/UI state only | Browser surface |
-| `cmd.browser.detach_browser_tab` | `{ browser_tab_id }` | layout/UI state only | Browser surface |
-| `cmd.browser.share_with_agent` | `{ browser_tab_id, thread_id }` | `browser.context_shared` | Browser chrome, Assistant chat |
-| `cmd.browser.revoke_share_with_agent` | `{ browser_tab_id, thread_id? }` | `browser.context_share_revoked` | Browser chrome, attention surfaces |
+| `cmd.browser.open_workspace_preview` | `{ project_id, target, workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, editor/browser tab |
+| `cmd.browser.open_detached_preview` | `{ project_id, target, source_workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, detached browser |
+| `cmd.browser.focus_browser_tab` | `{ browser_session_id }` | layout/UI state only | editor/browser tab surface |
+| `cmd.browser.detach_browser_tab` | `{ browser_session_id }` | `browser.session.state_changed` | editor/browser tab surface |
+| `cmd.browser.open_devtools` | `{ browser_session_id, mode? }` | layout/UI state only | browser chrome, command palette |
+| `cmd.browser.toggle_devtools_dock` | `{ browser_session_id, dock }` | layout/UI state only | browser chrome, DevTools surface |
+| `cmd.browser.pick_element_for_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_to_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.share_with_agent` | `{ browser_session_id, thread_id }` | `browser.context_shared` | browser chrome, assistant chat |
+| `cmd.browser.revoke_share_with_agent` | `{ browser_session_id, thread_id? }` | `browser.context_share_revoked` | browser chrome, attention surfaces |
+| `cmd.browser.take_over` | `{ browser_session_id, takeover_choice:'pause_agent'|'let_agent_continue'|'stop_agent_keep_browser' }` | `browser.session.takeover_state_changed` | browser takeover prompt, automation banner |
+| `cmd.browser.pause_agent` | `{ browser_session_id }` | `browser.session.takeover_state_changed` | browser chrome, automation banner |
+| `cmd.browser.let_agent_continue` | `{ browser_session_id }` | `browser.session.takeover_state_changed` | browser takeover prompt |
+| `cmd.browser.stop_agent_keep_browser` | `{ browser_session_id }` | `browser.session.takeover_state_changed`, `dev.session.stopped` | browser takeover prompt, browser chrome |
+| `cmd.browser.promote_to_normal_browsing` | `{ browser_session_id, target_workspace_tab_id? }` | `browser.session.promoted` | browser chrome, command palette |
+| `cmd.browser.reopen` | `{ browser_session_id }` | `browser.session.state_changed` | recovery banner, attention center |
+| `cmd.browser.retry` | `{ browser_session_id }` | `browser.session.state_changed` | recovery banner, attention center |
+| `cmd.browser.keep_closed` | `{ browser_session_id }` | `browser.session.closed` | recovery banner, attention center |
 | `cmd.dev.start_session` | `{ project_id, workspace_tab_id, mode, target? }` | `dev.session.started` | Toolbar, Chat, Ports, Terminal |
 | `cmd.dev.stop_session` | `{ dev_session_id }` | `dev.session.stopping`, `dev.session.stopped` | Toolbar, Chat, Ports, Terminal |
 | `cmd.dev.restart_session` | `{ dev_session_id }` | `dev.session.restarting`, `dev.session.started` | Toolbar, Chat, Ports, Terminal |
 | `cmd.catalog.install_item` | `{ item_type, item_id, version? }` | `catalog.install.started`, `catalog.install.completed` | Catalog |
 | `cmd.catalog.update_item` | `{ item_type, item_id, target_version? }` | `catalog.update.started`, `catalog.update.completed` | Catalog |
 | `cmd.catalog.remove_item` | `{ item_type, item_id }` | `catalog.remove.started`, `catalog.remove.completed` | Catalog |
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
 #### Chat message action commands
 
@@ -231,12 +249,13 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Fin
 | `cmd.chat.resend_last_user_message` | `{ thread_id, message_id }` | runtime/thread rewind plus normal run-start events | Message hover row |
 
 Rules:
-- `cmd.chat.copy_message` is valid for any message in the thread
-- `cmd.chat.edit_last_user_message` and `cmd.chat.resend_last_user_message` are valid only for the most recent user-sent message in that thread
+- browser split remains a layout action rather than a first-class `Open in Browser Split` command
+- capture commands create removable composer chips and do not auto-send a hidden message
+- `cmd.browser.take_over` defaults to pausing the agent when the user chooses the default takeover path
+- a paused automation browser remains `automation_session` until `cmd.browser.promote_to_normal_browsing` succeeds
 - `cmd.chat.resend_last_user_message` rewinds/discards later generated work after that user message and then replays the message; it is not a transport retry alias
-- `cmd.chat.rewind` remains the explicit history-navigation command and is not silently renamed to `Resend`
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 ### 2.7 Chat slash commands (reserved)
 
 Reserved Assistant Chat slash commands use stable canonical UI command IDs.

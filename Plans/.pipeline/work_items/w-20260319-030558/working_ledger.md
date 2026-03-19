@@ -1,0 +1,392 @@
+# Working Ledger
+
+## Work Item
+- `w-20260319-030558`
+
+## Mode
+- `research`
+
+## Topic / Scope
+- Improving and finalizing the file manager and editor.
+- Scope explicitly includes diff features, SSH/remote behavior, file-format handling, LSP/language intelligence, HTML/images/SVG/Mermaid/Markdown handling, scrollbar heat maps/change markers, and undo/redo within diff-related flows.
+
+## Objective
+- Preserve durable execution memory for upcoming research on the file manager and editor.
+- Capture constraints, findings, decisions, and open questions as the research discussion progresses.
+- Build a coverage map of what `Plans/**` already specifies before proposing finalization directions.
+
+## Constraints / Non-Goals
+- This ledger is execution memory only and is not canonical.
+- Do not cite, reference, or mention this ledger inside planning docs.
+- Do not write planning-doc changes during research mode.
+
+## Key Facts and Findings
+- Topic established: file manager and editor improvement/finalization.
+- User expanded scope to include:
+  - diff/compare/review features, including undo/redo around diff flows
+  - SSH/remote file-manager and editor behavior
+  - file-format handling and LSP
+  - HTML files, images, SVGs, Mermaid charts, Markdown
+  - scrollbar heat maps / change markers
+- Parallel doc sweeps started across `Plans/**` for:
+  - workspace/file-manager IA
+  - editor behavior
+  - contracts/state constraints
+  - broad term coverage
+  - SSH/remote behavior
+  - file formats and LSP
+  - rich file handling and advanced diff UX
+- Validated remote/SSH specs already present in planning docs:
+  - `Plans/FileManager.md` specifies remote development over SSH with remote path format like `user@host:/path/to/project`.
+  - `Plans/FileManager.md` locks MVP remote scope to **remote edit only**; remote run/debug is later.
+  - `Plans/FileManager.md` specifies connection-loss behavior: show **Connection lost** and offer **Reconnect** or **Work offline (cached)** / **cached files only**.
+  - `Plans/FinalGUISpec.md` specifies SSH connection profiles in `ssh_connections:v1`.
+  - `Plans/FinalGUISpec.md` specifies credentials in system keychain, not config files.
+  - `Plans/FinalGUISpec.md` specifies keep-alive every 30s and reconnect backoff (1s, 2s, 4s, max 30s, max 5 attempts).
+- Validated broad relevance:
+  - `Plans/FileManager.md` already claims in-scope coverage for image viewing, HTML preview with hot reload, split panes, tabs, remote SSH, review/diff-adjacent features, and MVP LSP.
+- Validated core workspace/editor contracts from planning docs:
+  - Shared editor model is **one buffer per normalized file path**, with **one tab per path per editor group** and **shared dirty state across groups**.
+  - `project_id` is the persistence scope boundary for editor/file-manager state; path rebinding should not change identity.
+  - Open-file behavior uses a canonical `OpenFile` contract; click-to-open/chat/file-tree/quick-open are meant to converge on the same open path.
+  - Save is explicit in MVP; no auto-save. Save failure keeps the buffer dirty and surfaces retry / optional Save As.
+  - File-changed-on-disk handling is intentionally combined into a single prompt with a `Show diff` path.
+  - Dirty state must be visible in the tab and a second stable place (status bar or window title).
+- Validated workspace/layout behaviors:
+  - Main shell model includes Activity Bar, primary content, right side panel, bottom panel, title bar, and status bar.
+  - File tree is virtualized, supports 10k+ files, persists expand/collapse per project, and has keyboard navigation + context menu actions.
+  - Editor supports split groups and one floating editor window at a time; same file in multiple groups shares the same buffer.
+  - Session restore is project-scoped and thread/session-aware; thread-specific restoration should prompt instead of silently restoring.
+- Validated file-type and rendering model:
+  - The docs already define a richer file-type matrix than a plain code editor:
+    - Markdown: source editor by default; split/preview/detached preview supported.
+    - Mermaid: source-canonical with native diagram preview/export actions.
+    - HTML: source editor by default with browser-rendered preview / split / detached browser and hot reload.
+    - SVG: native image/vector view preferred, with source editor as alternate.
+    - Raster images: native image view.
+  - Source remains canonical for Markdown/Mermaid/HTML editing flows; preview actions should resolve to bounded text patches rather than bypassing source/save.
+  - Binary and non-UTF-8 files are read-only with explicit reasons; large-file handling uses thresholds, truncation, and a hard cap.
+- Validated LSP model:
+  - MVP LSP scope is broad: diagnostics, hover, autocomplete, go-to-definition, references, rename, formatting-adjacent actions, semantic highlighting, symbols/outline, code actions, code lens, signature help, inlay hints.
+  - LSP is timeout/cancellation-aware, version-aware, and fallback-driven (regex/grep/index when needed).
+  - LSP behavior extends beyond the editor into chat/code blocks and @ symbol flows.
+- Validated diff/review/rich preview behaviors:
+  - Editor diff view exists conceptually with side-by-side or inline/unified compare.
+  - Git/Changes surfaces already define diff mode toggles and staged/unstaged/conflicted file ownership in the Changes view.
+  - Preview/source flows are explicitly shared-buffer-based; preview edits update dirty state, undo/redo history, and source revision.
+  - Apply-suggestion / 1-click apply is supposed to reuse FileSafe patch/apply/verify/rollback flow.
+  - Annotation model is source-anchored and deterministic; rendered DOM state is not canonical for durable anchors.
+- Broad sweep meta-findings:
+  - Large parts of the core workspace/editor are already implementation-level or near implementation-level.
+  - Repeatedly surfaced better-specified areas: file tree, tabs/buffers, split panes, save/dirty state, drag/drop, LSP, image/HTML preview, keyboard shortcuts, persistence, click-to-open.
+  - Repeatedly surfaced sparse areas: rename, delete, duplicate, diff/compare UX, patch/conflict handling, symbol-index fallback details, file watcher behavior, remote SSH/LSP, terminal tabs, build/debug integration, session-view restore nuances, file-tree refresh details, bulk operations.
+  - Broad scan strongly reinforces that **remote LSP strategy** is one of the clearest truly critical unresolved decisions.
+- External benchmark research phase started:
+  - Built a 36-target research fleet:
+    - 30 topic-ranked non-mobile editor/editor-engine targets
+    - 6 explicitly requested comparator products
+  - Public-facing notes are intentionally anonymized by target ID rather than product/repo name.
+  - Research targets and per-target findings are tracked in SQL (`research_targets`, `research_findings`) and todos are the operational source of truth.
+  - Fleet execution uses one sub-agent per target.
+  - At least some agents can successfully perform shallow local clones in this environment, so repo-level inspection is not limited to web/API-only reading.
+- Early external findings cluster:
+  - One early comparator result indicates a strong AI-first IDE pattern centered on planning/execution/review across editor, terminal, browser, docs, and integrations.
+  - One early editor-engine result highlights a very useful contrast:
+    - strong embeddability/customization hooks
+    - but fragile worker/path/SSR/shadow-DOM integration
+    - resize/container sizing pain points
+    - diff presented as marker-based split comparison rather than a true merge/diff editor
+  - This reinforces a likely PM design lesson: editor-engine embeddability alone is not enough; PM needs stronger first-class contracts for diff/merge, resize/layout reliability, and host/runtime integration boundaries.
+- Additional early cluster signal:
+  - Another small editor-engine target confirms the same embed-first tradeoff from a different implementation angle:
+    - extremely small API and easy embedding
+    - but selection math, browser quirks, IME behavior, clipboard/caret handling, and accessibility tradeoffs quickly become correctness debt
+  - Early cross-target pattern:
+    - AI-native editor/workbench products are stronger at broad workflow orchestration across multiple surfaces
+    - thin embeddable editor surfaces are stronger at host flexibility
+    - but thin wrappers/mini-editors tend to underdeliver on true diff/merge, accessibility, and robust host/runtime integration
+  - This is an important strategic constraint for PM: if PM wants rich diff/review, accessibility, multiple rendering surfaces, and resilient shared-buffer semantics, it should not overfit to the ergonomics of thin embeddable editor wrappers.
+- Midpoint external synthesis (large sample complete):
+  - More than thirty targets have already completed, and the same archetypes are repeating consistently enough to trust as real signal rather than isolated quirks.
+  - Strong recurring archetypes:
+    - **AI-native/editor-agent products**
+      - strongest at orchestration across editor + terminal + browser + docs + artifacts
+      - emphasize persistent guidance/rules/skills, explicit task state, plan/review loops, and multi-surface workflows
+      - recurring pain points: auth/login friction, session loss/compaction, remote/reconnect brittleness, diff visibility regressions, reliability/performance under load, and autonomy defaults users may not fully trust
+    - **Full IDE/workbench products**
+      - strongest at project/workspace modeling, language/framework autodetection, indexing, reusable diff/viewer pipelines, persisted tabs/splits/windows, and modular extension points
+      - recurring pain points: indexing/startup cost, dumb-mode/disabled-feature states, split/tab complexity, and workspace switching clutter on large projects
+    - **Lightweight native editors/workbenches**
+      - strong patterns: virtualized file trees, docked/persisted panels, incremental background scanning, command-first/plugin-first extensibility, lightweight native feel, and selective state persistence
+      - recurring pain points: plugin compatibility lag, regex-heavy UI blocking, memory growth, rendering/platform bugs, and incomplete split/history/navigation surfaces
+    - **Thin wrappers / embeddable editor engines**
+      - strongest at host/editor separation, small integration footprint, direct access to underlying editor instances, and easy framework embedding
+      - recurring pain points: resize/container fragility, whole-buffer rehighlighting, global shims, worker/path/SSR/shadow-DOM issues, accessibility limitations, weak diff/merge support, and host apps needing deep editor-specific knowledge
+    - **Collaborative / online editors**
+      - strongest at room/share-link onboarding, cursor/presence awareness, simple split source+preview flows, and fast collaborative mental models
+      - recurring pain points: ephemeral or memory-backed state, weak durable storage, reconnect/forced-refresh flows, limited file-tree/workspace models, no synced scrolling, and backend/API dependency risk
+    - **Terminal-native/modal editors**
+      - strongest at command discoverability, small-footprint responsiveness, async/lazy file loading, safe save/reload handling, and cache-conscious text storage
+      - recurring pain points: one-file or low-multi-buffer assumptions, limited marks/block-mode/completion depth, terminal-quirk dependence, and missing broader project/workbench behavior
+- Midpoint external recommendations emerging for PM:
+  - PM should borrow **workflow orchestration, artifact visibility, and explicit task/review state** from AI-native products.
+  - PM should borrow **cached autodetection, reusable diff/viewer pipelines, and persisted split/tab/workspace models** from full IDEs.
+  - PM should be careful not to copy the **thin-wrapper assumption** that embeddability alone solves editor UX; repeated evidence says it does not cover robust diff/merge, accessibility, resizing, or rich shared-buffer semantics.
+  - PM should avoid **ephemeral-by-default collaboration/state models** unless they are very clearly labeled and paired with durable recovery paths.
+  - PM should prefer **lazy/virtualized/project-scoped work** over eager full scans, but it must surface indexing/loading/degraded-mode states honestly so users do not interpret “still indexing” as broken behavior.
+  - PM should treat **remote/reconnect/model-auth resilience** as first-class product work, not edge behavior; this pain recurs heavily in the AI-native and remote-capable cohort.
+
+## Gaps / Problems Identified
+- Current design questions, scope boundaries, and doc impact are not yet enumerated.
+- Relevant contracts, defaults, state rules, and UX expectations are not yet reviewed.
+- Early validated SSH/remote gaps:
+  - remote filesystem abstraction is not locked (`remote proxy` vs `SSHFS-style`)
+  - offline cache semantics are not defined
+  - remote file-watch / refresh semantics are not defined
+  - remote diff behavior is not yet clearly specified
+  - remote LSP architecture is not yet clearly specified
+  - remote permission/read-only handling is not yet clearly specified
+- Cross-doc/editor contract gaps:
+  - Recovery/restore of unsaved buffers is inconsistent: some sections mark it required, while implementation-order/checklist language treats it as optional/later.
+  - Undo/redo semantics across shared-buffer multi-view editing are not explicit.
+  - Save As is mentioned but not fully specified.
+  - Symbol-index invalidation references appear inconsistent / partially editorial.
+  - Preview session lifecycle is not fully locked (when a preview session begins/ends, how many can exist, how it maps to containers).
+- Rich-format / rendering / safety gaps:
+  - HTML preview/browser sandbox and trust model are not clearly specified.
+  - Scroll sync / detailed preview state behavior across source+preview is not fully captured.
+  - Viewer-vs-editor-vs-preview fallback hierarchy is mostly defined, but some edge behavior still needs tightening.
+- Diff/review gaps:
+  - Scrollbar heat maps / minimap / change-marker behavior is effectively not specified.
+  - Diff undo/redo grouping is not specified, especially for patch apply, preview edits, and conflict resolution.
+  - Hunk-level interactions are not specified enough: select hunk, stage/unstage hunk, revert/discard hunk, expand/collapse hunk.
+  - Inline diff annotations/comments and their anchor/reanchor model are not clearly specified.
+  - Conflict merge strategy/UI is still vague (`show conflict UI or reject` is too thin).
+  - Search within diff is not clearly specified.
+- Additional sparse areas highlighted by the broad sweep:
+  - File rename UX/transaction/conflict model
+  - File delete semantics (trash vs permanent delete)
+  - File duplicate behavior
+  - Bulk operations in file manager
+  - File manager refresh mechanism after operations
+  - Session view-state prompt behavior details (`Don't ask again`, thread restore nuances)
+  - Terminal tab model/state persistence
+  - Build-output / debugger integration details
+- External research operational/coverage caveats:
+  - Some comparator products appear to have mixed or limited public source availability, so those targets may rely more heavily on official site/docs and public community feedback than source inspection.
+  - The user asked for clone-based inspection; where direct cloning is not possible or not meaningful, agents should still maximize source-level inspection through available GitHub/web tools and clearly note coverage limits.
+- Midpoint PM-specific caution:
+  - Several targets look attractive at the demo layer because they feel small, fast, or elegant, but repeated issue/community signals show that resize correctness, state restoration, diff fidelity, accessibility, large-file behavior, and remote/session resilience are where many editors quietly fall apart.
+
+## Candidate Fixes / Design Directions
+- Determine whether file manager and editor should be refined independently or as a single integrated workspace flow.
+- Track user-visible behavior, state model, terminology, fallback behavior, and requested vs effective state if those seams arise during research.
+- Treat remote/local as a first-class axis in the final design rather than a bolt-on option.
+- Separate the final model into at least these seams:
+  - workspace/file tree/navigation
+  - editor/buffer/save/dirty behavior
+  - diff/review/compare flows
+  - rich format rendering vs source editing
+  - language intelligence/LSP
+  - SSH/remote capability degradation and recovery
+- Working recommendation: treat the editor as a **shared-buffer, source-canonical workspace** and finalize other surfaces relative to that:
+  - file tree opens/targets buffers
+  - preview surfaces derive from buffers and return bounded patches
+  - diff/review surfaces compare or mutate buffers but do not become separate authorities
+  - remote/SSH changes the authority/source-of-truth and capability model, not the conceptual buffer contract
+- Likely finalization seams that need explicit contracts:
+  - preview session lifecycle and trust tiers
+  - undo/redo grouping model for patch/diff operations
+  - hunk-level diff interaction model
+  - remote save/offline/pending-sync model
+  - read-only reason model and fallback-open actions by file class
+  - remote LSP strategy (local, remote, or deferred/disabled for phase 1 remote editing)
+- External benchmark synthesis should explicitly separate:
+  - ideas from full IDE/workbench products
+  - ideas from embedded editor engines/wrappers
+  - ideas from AI-native/editor-agent products
+  - ideas from collaborative/online editors
+  - ideas from terminal-native editors
+- External synthesis should also preserve a second axis:
+  - **promising ideas worth copying**
+  - **failure modes to actively design against**
+
+## Final External Research Synthesis
+- External benchmark fleet completed in SQL:
+  - all per-target research todos done
+  - synthesis todo done
+  - work item is ready for reconciliation
+- Final external conclusions for PM:
+  - **AI-native/workspace-agent products** consistently validate the value of:
+    - visible plans, task state, artifacts, and provider/model transparency
+    - multi-surface orchestration across editor, terminal, browser, docs, and review
+    - persistent guidance/rules/skills
+  - But they also consistently warn against:
+    - hanging or opaque agents
+    - fragile diff visibility and unreliable apply/review flows
+    - session loss/compaction surprises
+    - remote/auth/reconnect brittleness
+    - autonomy defaults users cannot easily inspect or override
+  - **Full IDE/workbench products** strongly validate:
+    - modular project/workspace models
+    - cached file-type/framework detection
+    - split/tab/window persistence
+    - reusable diff/viewer pipelines instead of one-off UIs
+    - explicit degraded/indexing states
+  - But warn against:
+    - indexing/startup cost
+    - clutter and split/focus complexity
+    - coordination regressions across large service graphs
+  - **Thin wrappers / small embeddable editors** are useful implementation references for host integration seams, but repeated evidence says they are poor direct product models for PM's needs because they repeatedly fail on:
+    - robust diff/merge
+    - accessibility depth
+    - resize/container reliability
+    - large-file behavior
+    - advanced host/runtime integration
+  - **Collaborative/online editors** validate:
+    - share-by-link onboarding
+    - source/preview/output simplicity
+    - presence/cursor awareness
+  - But warn against:
+    - ephemeral state
+    - weak durability/offline recovery
+    - backend/API dependence
+    - security/sanitization risks in preview/rendered surfaces
+  - **Terminal-native/modal editors** validate:
+    - keyboard trust
+    - low-latency workflows
+    - async/lazy loading
+    - careful text/cache design
+  - But warn against:
+    - limited multi-buffer/workspace semantics
+    - shallow language tooling
+    - terminal-specific fragility
+- Final design pressure for PM:
+  - PM should not choose between “AI-native orchestration” and “real editor/workbench depth”; the market evidence says PM needs both.
+  - PM should combine:
+    - IDE-grade workspace/file/diff/language architecture
+    - with AI-native artifact/task/review visibility
+  - PM should be especially deliberate about:
+    - remote/SSH state and resilience
+    - diff/review as first-class editor content
+    - persistence outside chat history
+    - cached autodetection/indexing with honest degraded mode
+    - split/pane rules that stay predictable under load
+- Rust + Slint + cross-platform filter on the benchmark results:
+  - Many benchmark targets provide useful UX ideas but poor implementation references because they rely on DOM/editor-wrapper assumptions, Electron/webview architecture, or platform-specific shell behavior that does not translate cleanly to a Rust + Slint app.
+  - The most portable lessons for PM are architectural, not framework-specific:
+    - shared document/buffer registries
+    - virtualized lazy file trees
+    - persisted workspace/tab/split/view state
+    - reusable diff/review pipelines
+    - background indexing with explicit degraded mode
+    - explicit task/artifact persistence for AI work
+  - The least portable patterns are:
+    - textarea/contenteditable overlay editors as a serious product-core strategy
+    - DOM-first resize/scroll sync assumptions
+    - thin wrapper diff implementations that are marker-based or approximate
+    - Electron-style extension-host assumptions as the default integration model
+    - architectures that hide correctness debt behind browser behavior
+  - PM should likely treat the shell/UI stack as:
+    - Rust core services for workspace, buffers, diff, indexing, persistence, remote/session state, and AI orchestration
+    - Slint for pane layout, tree/list surfaces, review chrome, status/task UI, and cross-platform shell behavior
+    - specialized renderers only where justified (for example browser-like HTML rendering), rather than letting a web editor/runtime define the whole editor architecture
+  - Platform portability pressure is real across:
+    - IME/input behavior
+    - path normalization and symlink semantics
+    - file watching and refresh
+    - drag/drop behavior
+    - font/rendering/DPI differences
+    - remote shell/clipboard/session differences across macOS, Linux, Windows, and WSL-like environments
+- Prioritized PM decisions still surfaced by this research:
+  - finalize workspace model
+  - finalize diff/review model
+  - finalize persistence layers
+  - finalize remote architecture and reconnect semantics
+  - finalize language/framework detection + LSP/indexing model
+  - finalize pane/focus rules
+  - finalize AI autonomy/approval/cost visibility model
+
+## Impacted Docs
+- Confirmed relevant so far:
+  - `Plans/FileManager.md`
+  - `Plans/FinalGUISpec.md`
+- Additional confirmed relevant docs:
+  - `Plans/LSPSupport.md`
+  - `Plans/GitHub_Integration.md`
+  - `Plans/FileSafe.md`
+  - `Plans/Permissions_System.md`
+  - `Plans/storage-plan.md`
+  - `Plans/Contracts_V0.md`
+  - `Plans/Crosswalk.md`
+  - `Plans/newfeatures.md`
+- Likely also relevant based on in-doc references or scope:
+  - `Plans/assistant-chat-design.md`
+
+## Decisions Already Resolved
+- Work item mode is `research`.
+- Topic/scope for this work item is the file manager and editor.
+- Status remains `active` until research is ready for reconciliation.
+- Initial research method is broad parallel doc coverage across `Plans/**`, followed by synthesis and gap mapping.
+- Current evidence strongly suggests the docs already lean toward an integrated workspace contract rather than separate independent file-manager and editor contracts.
+- Current evidence also suggests preview/rendered experiences are intended to be derivative of source/buffer state, not peers with separate canonical state.
+- Current evidence plus the benchmark filter suggest PM should borrow product ideas broadly, but should be much more selective about adopting implementation patterns from web/editor-wrapper products when those patterns undermine cross-platform correctness, diff fidelity, or accessibility.
+
+## Open Questions / Uncertainties
+- Which docs beyond `FileManager.md`, `FinalGUISpec.md`, `LSPSupport.md`, and `assistant-chat-design.md` materially constrain the model.
+- Whether file manager + editor should be finalized as one shared workspace contract or as several linked contracts.
+- How remote/local parity should work for:
+  - save and dirty state
+  - file watches and reload behavior
+  - diff generation and compare targets
+  - LSP execution and fallback
+  - rich previews/renderers
+- What the canonical behavior should be for viewer-vs-editor decisions by file type.
+- How deep diff/review features already go in existing docs vs what still needs specification.
+- Whether the final model should define a single PreviewSession per document or allow multiple concurrent preview sessions/containers.
+- Whether patch apply / preview edit / conflict resolution each create a single undo entry or grouped transactions.
+- Whether diff comments/annotations should attach to source spans only, or whether there is a distinct diff-hunk annotation model.
+- Whether remote HTML preview/hot reload is intentionally degraded to manual refresh, and how visibly that should surface.
+- Whether remote LSP should be:
+  - disabled for initial remote editing
+  - run locally against synced/project-mirrored files
+  - run remotely over an SSH-side bridge/agent
+- Which benchmark patterns will hold up across multiple targets versus being one-off quirks of a single architecture or wrapper.
+- Whether PM should borrow from thin embeddable editor engines at all for any surface, or instead keep those only as implementation references while preserving PM's richer shared-buffer/workbench contract.
+- How much of rich preview/rendering should stay native versus use specialized embedded browser surfaces, especially for HTML and other rendered artifacts, without letting that choice leak back into the core editor model.
+
+## Packetization Notes
+- No packetization-ready synthesis yet.
+- Update after meaningful research clusters and design decisions.
+- A remote/SSH cluster is now partially validated and should be preserved in later reconciliation even if the rest of the scan gets compacted.
+- A strong cluster is now validated around:
+  - shared-buffer/project-scoped editor contracts
+  - source-canonical preview/rendering model
+  - broad LSP coverage with fallback behavior
+  - advanced diff/review gaps being materially less specified than core editing/navigation
+- External benchmark packetization will likely need to preserve findings by archetype, not just by target:
+  - AI-native workbench/IDE
+  - full traditional IDE/workbench
+  - embedded editor engine/wrapper
+  - collaborative/online editor
+  - terminal-native editor
+
+## Do-Not-Forget Details
+- Keep `meta.json` status as `active` during research.
+- Update the ledger after meaningful discovery clusters, contradictions, candidate fixes, and decisions.
+- Record impacted docs under `Plans/**` when known.
+- Preserve terminology decisions, override rules, requested vs effective state, provider/platform differences, fallback behavior, and unresolved questions if they emerge.
+- Watch for inconsistent wording between `Work offline (cached)` and `Work offline (cached files only)`.
+- Watch for whether HTML/image/SVG/Mermaid/Markdown are specified as source-editable, render-previewable, browser-openable, or some combination.
+- Watch for whether scroll heat maps/minimap/change markers are specified for editor only, diff only, or both.
+- Keep the distinction clear between:
+  - canonical source buffer
+  - preview session / rendered surface
+  - diff/review surface
+  - durable annotations anchored to source
+- Keep the distinction clear between:
+  - portable product ideas worth copying
+  - implementation patterns that only make sense in Electron/DOM-heavy products
+  - implementation patterns that are safe for a Rust + Slint, macOS/Linux/Windows product
+- Watch for explicit precedence/load-order rules where app-level config, project config, and runtime capabilities intersect (review rules, permissions, LSP, remote behavior).
+- During external synthesis, keep notes anonymized by target ID in durable work artifacts unless the user explicitly asks for a named mapping.
