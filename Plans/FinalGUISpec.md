@@ -327,7 +327,7 @@ At the top of the primary content area, a breadcrumb strip (20px) shows `Group >
 | `F11` | Step Into (debug) |
 | `Shift+F11` | Step Out (debug) |
 | `Shift+F5` | Stop debug |
-| `Ctrl+Shift+B` | Toggle Browser tab in bottom panel |
+| `Ctrl+Shift+B` | Focus Browser |
 
 **Shortcut registry:** A Rust-side registry maps (modifiers + key) to actions. Platform-specific modifier normalization (Cmd on macOS, Ctrl on Windows/Linux). The "Keyboard shortcuts" help view is auto-generated from this registry.
 
@@ -336,14 +336,28 @@ At the top of the primary content area, a breadcrumb strip (20px) shows `Group >
 ## 5. Panel System
 
 ### 5.1 Detachable Panels
-**Side-panel occupancy contract (one at a time; last-click wins):** The side panel is the single activity-bar-driven side-panel slot. Run & Debug, Git (GitHub), Docker Manage, Source Control, Unraid, Artifacts, Chat, and File Manager can occupy it one at a time. See §4.1 Activity Bar for which icon shows which panel. Detach/re-dock support is limited to the panels listed below.
+**Side-panel occupancy contract (one at a time; last-click wins):** The side panel is the single activity-bar-driven side-panel slot. Run & Debug, Git (GitHub), Docker Manage, Source Control, Unraid, Artifacts, Chat, and File Manager can occupy it one at a time. See §4.1 Activity Bar for which icon shows which panel. Detach and re-dock support is limited to the panels and shell surfaces listed below.
 
-The following panels support detach/re-dock:
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
+
+The following surfaces support detach and re-dock:
 - **Chat panel**
 - **File Manager panel**
-- **Bottom panel** (Terminal/Output)
+- **Primary terminal section**
+- **Secondary terminal section** when opened
 
-Other views (Dashboard, Settings, etc.) remain in the primary content area and are not detachable.
+Other views (Dashboard, Settings, Orchestrator, Source Control, and similar page surfaces) remain in the primary content area and are not generic detachable panels.
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md
+
+### Terminal section presentation rules
+- the primary terminal section defaults to the bottom runtime zone
+- the product may expose a second terminal section either as an additional docked runtime section or as a detached runtime window, but it remains the same canonical terminal-section concept in both cases
+- Output, Problems, Debug Console, and Ports follow the owning terminal or dev-session context; they do not become separately detached mini-shells
+- detaching a terminal section preserves its section identity, tab order, pane tree, and linked session bindings
+- re-docking a terminal section restores it without minting new terminal-session identity
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 ### 5.2 Panel State Machine
 
 Per panel: **DOCKED** <-> **FLOATING**. Same Slint component is used inline when docked or as the root of a separate Slint `Window` when floating.
@@ -366,7 +380,7 @@ enum PanelDock {
 enum DockSide {
     Right,   // default for Chat and File Manager
     Left,    // alternative
-    Bottom,  // for terminal-type panels
+    Bottom,  // for the bottom runtime zone / terminal-section host
 }
 ```
 
@@ -651,12 +665,40 @@ Settings and inspectors separate:
 - honored / skipped / clamped
 
 Rules:
-- detailed runtime identity inspectors must show provider, model, persona, account, and worker-policy requested/effective state
+- detailed runtime identity inspectors must show provider, model, persona, account, worker-policy, and terminal-runtime requested/effective state where relevant
 - compact surfaces may show only material deltas
 - historical views use frozen captured state and do not recompute from current settings
 - chat-facing compact rows and popovers are compact surfaces, not the full detailed inspector tier
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md
+
+### Terminal settings ownership
+Settings owns durable terminal preferences and discoverability. Live session controls remain in terminal chrome and are not hidden inside durable settings.
+
+Terminal settings must include:
+- appearance and theme preset selection for the terminal surface
+- font size, line height, cursor style, cursor blink, and contrast-safe defaults
+- renderer preference and disclosure of effective renderer mode when degraded
+- default shell profile and default working-directory policy
+- transcript retention limits and shell-integration preference disclosure
+- copy, paste, selection, and bell behavior
+- terminal shortcut reference, shortcut remapping, and a built-in terminal cheat sheet
+- defaults for dock position, second-section behavior, and detach behavior
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+### Terminal inspector rules
+Detailed terminal inspectors and banners must disclose, where relevant:
+- `terminal_session_id`
+- `dev_session_id?`
+- session status and exit or stop reason
+- requested and effective renderer mode
+- shell-integration tier
+- capability degradations
+- cwd snapshot and shell profile label
+- restore outcome and transcript-retention tier
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
 
 Chat runtime-inspector rules:
 - the message-under-row compact summary shows resolved mode label, model, and assistant duration or user timestamp
@@ -854,7 +896,7 @@ puppet-master-rs/
 |   +-- panels/                       # Detachable panel content
 |   |   +-- chat_panel.slint
 |   |   +-- file_manager_panel.slint
-|   |   +-- bottom_panel.slint          # Terminal/Problems/Output/Ports/Browser/Debug tabs
+|   |   +-- bottom_panel.slint          # Terminal/Problems/Output/Ports/Debug tabs plus browser-adjacent panes
 |   |   +-- browser_panel.slint         # NEW - Webview host + URL bar + bookmarks
 |   |   +-- debug_panel.slint           # NEW - DAP debug UI (variables, call stack, breakpoints)
 |   +-- windows/                      # Secondary windows
@@ -943,10 +985,9 @@ Chat messages, file trees, log outputs, evidence lists, and other long lists use
 ## 15. Persistence
 
 ### 15.1 redb Schema
-
 | Key | Content | Write Frequency |
 |-----|---------|----------------|
-| `layout:v1` | Panel dock state per panel (docked side + width, or floating position/size); center splits; bottom panel height; 4-split terminal ratios. Single JSON blob for atomic read/write. | On change (debounced 300ms) |
+| `layout:v1` | Panel dock state per panel (docked side + width, or floating position/size); center splits; bottom panel height; terminal-section dock state; detached-terminal geometry; split ratios for terminal sections. Single JSON blob for atomic read/write. | On change (debounced 300ms) |
 | `dashboard_layout:v1` | Ordered list of dashboard card IDs + grid column count | On change (debounced 300ms) |
 | `activity_bar_order:v1` | Ordered list of activity bar item IDs + separator position | On change (debounced 300ms) |
 | `theme:v1` | Current ThemeVariant enum value | On change |
@@ -954,7 +995,7 @@ Chat messages, file trees, log outputs, evidence lists, and other long lists use
 | `onboarding:v1` | Tour completion flag, first-run flags | On change |
 | `collapse_state:v1` | Per-view collapse states for collapsible sections | On change (debounced 300ms) |
 | `custom_layouts:v1` | Named custom layout definitions (up to 5) | On change |
-| `settings:v1` | All app settings and config (replaces YAML file eventually) | On save |
+| `settings:v1` | All app settings and config, including terminal appearance defaults and shortcut preferences | On save |
 | `chat_state:v1` | Unsent input text, queued messages, active thread selection | On change (debounced 200ms) |
 | `wizard_state:v1:{project_id}` | Current wizard step, form data | On change (debounced 300ms) |
 | `document_pane_state:v1:{project_id}:{page_context}` | Embedded document pane state: selected document, selected view (`document | plan_graph`), scroll/cursor state, history selection, approval stage | On change (debounced 200ms) |
@@ -964,25 +1005,27 @@ Chat messages, file trees, log outputs, evidence lists, and other long lists use
 | `slash_commands:v1` | Custom slash commands (application-wide) | On save |
 | `slash_commands:v1:{project_id}` | Custom slash commands (project-wide) | On save |
 | `filetree_state:v1:{project_id}` | Expanded folder paths set, scroll position | On change (debounced 300ms) |
-| `config:v1` | Full app config struct (all Settings tab values including tool_permissions, cleanup, shortcuts overrides, skill_permissions) | On change (debounced 200ms) |
+| `config:v1` | Full app config struct (all Settings tab values including tool permissions, cleanup, shortcuts overrides, skill permissions, and terminal settings) | On change (debounced 200ms) |
 | `projects:v1` | Project registry: list of known projects with paths, detected languages, last-opened timestamps, health status, per-project config overrides | On change |
-| `project_state:v1:{project_id}` | Per-project state snapshot: editor tabs, file tree expansion, chat thread selection, panel layout, active view, language badges, LSP server selection | On change (debounced 300ms) |
+| `project_state:v1:{project_id}` | Per-project state snapshot: editor tabs, file tree expansion, chat thread selection, panel layout, active view, language badges, LSP server selection, and last-focused terminal section or tab refs | On change (debounced 300ms) |
 | `ssh_connections:v1` | SSH connection profiles: name, host, port, username, auth method, last-connected timestamp (passwords stored in system keychain, NOT here) | On save |
 | `debug_configs:v1:{project_id}` | Per-project run/debug configurations (launch.json equivalent), breakpoints (file + line + condition + enabled), debug adapter preferences | On save |
 | `catalog_index:v1` | Cached catalog index: item list with name, version, category, description, installed flag. Timestamp of last refresh. | On catalog refresh |
 | `sync_history:v1` | Last export date, last import date, backup file paths | On export/import |
 | `browser_state:v1` | Browser tab URLs, bookmarks, history (last 100 entries), pinned tabs | On change (debounced 500ms) |
-| `terminal_state:v1` | Terminal tab list: name, pinned flag, PTY config. Does NOT persist terminal content (only tab metadata). | On change (debounced 300ms) |
+| `terminal_state:v1` | GUI-facing projection of per-project terminal workspace state: ordered terminal sections, terminal tabs, pane tree, labels, pin state, selected pane refs, dock/detach presentation, linked dev-session refs, recovery banners, bounded transcript snapshot refs, and command-block summary refs. It never implies live PTY continuity and never stores secrets. | On change (debounced 300ms) |
 | `sound_prefs:v1` | Sound effects master toggle, per-event toggles, volume level | On change |
-| `hotreload_state:v1:{project_id}` | Dev-session reload state, build command, watched paths | On change |
+| `hotreload_state:v1:{project_id}` | Dev-session reload state, build command, watched paths, linked terminal-session refs, and last-known output or ports linkage | On change |
 
-Normative mapping note for review workflows:
-- The canonical durable review/bundle contract is owned by `Plans/storage-plan.md` (`bundle.{bundle_id}`, `doc_registry.{bundle_id}`, `notes_index.{bundle_id}`, `note.{bundle_id}.{note_id}`, `document_pane_state.{bundle_id}`, `final_review_output.{bundle_id}`).
-- GUI-facing keys in this table are logical/UI projections and MUST NOT become competing SSOTs with incompatible field shapes.
-- Findings-summary and final-gate restoration MUST resolve back to the canonical bundle/review records defined in `Plans/storage-plan.md`.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
+
+Normative mapping notes:
+- the canonical durable review/bundle contract is owned by `Plans/storage-plan.md` (`bundle.{bundle_id}`, `doc_registry.{bundle_id}`, `notes_index.{bundle_id}`, `note.{bundle_id}.{note_id}`, `document_pane_state.{bundle_id}`, `final_review_output.{bundle_id}`)
+- GUI-facing keys in this table are logical or UI projections and MUST NOT become competing SSOTs with incompatible field shapes
+- `terminal_state:v1` remains the GUI projection boundary; canonical terminal record families and transcript rules are owned by `Plans/storage-plan.md`
+- findings-summary and final-gate restoration MUST resolve back to the canonical bundle or review records defined in `Plans/storage-plan.md`
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md#3.9, ContractName:Plans/Crosswalk.md#3.10
-
 ### 15.2 seglog Projections (for Usage)
 
 - Usage events (tokens, cost, platform, tier, session, thread_id) appended to seglog
@@ -997,29 +1040,51 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md
 - Ledger search
 
 ### 15.4 Startup Restore
-
 On startup:
-1. Read `layout:v1` from redb -> restore panel positions, sizes, dock states
-2. Read `theme:v1` from redb -> apply theme
-3. Read `dashboard_layout:v1` -> restore card order
-4. Read `activity_bar_order:v1` -> restore icon order
-5. Read `editor_state:v1:{project}` -> restore open tabs
-6. Read `onboarding:v1` -> determine if tour should show
-7. If floating window was on disconnected monitor -> fall back to docked
+1. Read `layout:v1` from redb and restore panel positions, sizes, dock states, and detached-terminal geometry.
+2. Read `theme:v1` from redb and apply theme.
+3. Read `dashboard_layout:v1` and restore card order.
+4. Read `activity_bar_order:v1` and restore icon order.
+5. Read `editor_state:v1:{project}` and restore open tabs.
+6. Read `project_state:v1:{project_id}` and restore the active project-facing shell state.
+7. Read `terminal_state:v1` and restore terminal section layout, tabs, pane tree, labels, and selected focus targets.
+8. Read `hotreload_state:v1:{project_id}` and rehydrate dev-session UI state as historical or verified-live state.
+9. Read `onboarding:v1` and determine whether tour or first-run hints should show.
+10. If a floating or detached window was on a disconnected monitor, fall back to docked presentation or to a safe detached coordinate.
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+Restore rules:
+- terminal restore MUST preserve section, tab, and pane identity before attempting any session liveness verification
+- restored historical sessions may appear immediately, but live-state badges wait for verification
+- startup restore MUST prefer revealing prior selected terminal containers over creating new empty terminals automatically
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
 ### 15.5 Session Recovery
-
 On crash or unexpected shutdown, restore as much state as possible:
-- **Chat state:** Unsent input text, queued messages, and active thread selection are persisted in redb (`chat_state:v1`) on every change (debounced 200ms). On restart, restore the composer content and queue.
-- **Wizard state:** Current wizard step and form data persisted in redb (`wizard_state:v1:{project_id}`). On restart, resume from the last completed step.
-- **Document pane state:** Restore embedded document pane selection and view (`document` or `plan_graph`) from `document_pane_state:v1:{project_id}:{page_context}`.
-- **Document checkpoints:** Restore checkpoint list and selected checkpoint context so user can continue restore/approval workflow.
-- **Review findings + approval state:** Restore findings summary and `awaiting_final_approval` state so interrupted review runs return to findings + final approval UI.
-- **Active project:** Last active project is restored automatically.
-- **Orchestrator state:** If an orchestration was running, show a "Previous run was interrupted" CtA on Dashboard with options: "Resume from last checkpoint" or "Discard and start fresh."
+- **Chat state:** unsent input text, queued messages, and active thread selection are restored from `chat_state:v1`.
+- **Wizard state:** current wizard step and form data resume from `wizard_state:v1:{project_id}`.
+- **Document pane state:** embedded document-pane selection and view (`document` or `plan_graph`) restore from `document_pane_state:v1:{project_id}:{page_context}`.
+- **Document checkpoints:** checkpoint list and selected checkpoint context restore so the user can continue restore or approval workflows.
+- **Review findings and approval state:** findings summary and approval state restore so interrupted review runs return to the correct approval surface.
+- **Active project:** the last active project is restored automatically.
 
----
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md
 
+Terminal and dev-session recovery rules:
+- terminal sections, tabs, panes, labels, pin state, and selected focus restore from durable terminal workspace state
+- terminal sessions restore only as verified-live or historical records; Puppet Master MUST NOT fake live PTY continuity after restart
+- canonical recovery outcomes are `restored_live`, `restored_exited`, `restored_disconnected`, and `restored_without_history`
+- dev sessions restore as workflow records tied to their last-known output, problems, ports, and linked terminal refs
+- restored historical terminals show explicit banners and recovery controls such as restart, replace, or close historical tab
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md
+
+Browser and runtime recovery rules remain aligned:
+- browser sessions preserve their own restore policy and never silently become terminal-owned shells
+- attention surfaces, command cards, and linked runtime panes must pivot back to the restored canonical identity rather than inventing replacement containers
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Contracts_V0.md
 ## 16. Migration Mapping
 
 ### 16.1 Iced View to Slint Location

@@ -309,7 +309,6 @@ This addendum defines the persistence required for Source Control, GitHub Action
 ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md, PolicyRule:no_secrets_in_storage
 
 ### Required redb keys
-
 The promoted orchestrator/runtime rewrite requires durable record and projection families that do not depend on `tier_id` as the primary cross-surface key.
 
 Required canonical record and projection families include:
@@ -325,6 +324,13 @@ Required canonical record and projection families include:
 - `project_attention_item.v1:{project_id}:{attention_item_id}`
 - `account_pressure_episode.v1:{provider_id}:{account_id}:{episode_id}`
 - `account_switch_event.v1:{provider_id}:{event_id}`
+- `terminal_workspace_state.v1:{project_id}:{workspace_tab_id}`
+- `terminal_section_record.v1:{project_id}:{terminal_section_id}`
+- `terminal_tab_record.v1:{project_id}:{terminal_tab_id}`
+- `terminal_pane_record.v1:{project_id}:{terminal_pane_id}`
+- `terminal_session_record.v1:{project_id}:{terminal_session_id}`
+- `terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}`
+- `dev_session_record.v1:{project_id}:{dev_session_id}`
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Multi-Account.md
 
@@ -347,6 +353,12 @@ Required identity and attribution fields across runtime-linked record families i
 - `provider_attempt_ref?`
 - `usage_event_ref?`
 - `operational_identity?`
+- `workspace_tab_id?`
+- `terminal_section_id?`
+- `terminal_tab_id?`
+- `terminal_pane_id?`
+- `terminal_session_id?`
+- `dev_session_id?`
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
 
@@ -369,6 +381,7 @@ Rules:
 - `resume_url` persists serialized transport only
 - route restoration resolves through canonical record identity, not through feature-local ad hoc payloads
 - `tier_runtime_record` may survive only as a derived compatibility projection; it is not canonical runtime identity
+- GUI projection key `terminal_state:v1` remains a GUI-facing projection and MUST resolve back to the canonical terminal record families above rather than replacing them
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Contracts_V0.md
 ### Naming and migration rules

@@ -51,12 +51,40 @@ Settings and inspectors separate:
 - honored / skipped / clamped
 
 Rules:
-- detailed runtime identity inspectors must show provider, model, persona, account, and worker-policy requested/effective state
+- detailed runtime identity inspectors must show provider, model, persona, account, worker-policy, and terminal-runtime requested/effective state where relevant
 - compact surfaces may show only material deltas
 - historical views use frozen captured state and do not recompute from current settings
 - chat-facing compact rows and popovers are compact surfaces, not the full detailed inspector tier
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md
+
+### Terminal settings ownership
+Settings owns durable terminal preferences and discoverability. Live session controls remain in terminal chrome and are not hidden inside durable settings.
+
+Terminal settings must include:
+- appearance and theme preset selection for the terminal surface
+- font size, line height, cursor style, cursor blink, and contrast-safe defaults
+- renderer preference and disclosure of effective renderer mode when degraded
+- default shell profile and default working-directory policy
+- transcript retention limits and shell-integration preference disclosure
+- copy, paste, selection, and bell behavior
+- terminal shortcut reference, shortcut remapping, and a built-in terminal cheat sheet
+- defaults for dock position, second-section behavior, and detach behavior
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+### Terminal inspector rules
+Detailed terminal inspectors and banners must disclose, where relevant:
+- `terminal_session_id`
+- `dev_session_id?`
+- session status and exit or stop reason
+- requested and effective renderer mode
+- shell-integration tier
+- capability degradations
+- cwd snapshot and shell profile label
+- restore outcome and transcript-retention tier
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
 
 Chat runtime-inspector rules:
 - the message-under-row compact summary shows resolved mode label, model, and assistant duration or user timestamp

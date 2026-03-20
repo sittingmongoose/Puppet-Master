@@ -32,37 +32,39 @@ Storage for the rewrite follows a multi-store design: **seglog** as the canonica
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
 
 ### Additional shell/runtime identities required by the promoted Section 15 feature set
-
 The storage model MUST treat the following as first-class identities when the feature is enabled:
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+
 - `workspace_tab_id`
 - `window_id`
 - `browser_tab_id`
 - `preview_session_id`
+- `terminal_section_id`
+- `terminal_tab_id`
+- `terminal_pane_id`
 - `terminal_session_id`
 - `dev_session_id`
 - `branch_id` for branched conversation/session lineage
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
 
 Identity rules:
 - `project_id` is stable across path rebinding and restore operations; raw path is not the canonical identity
 - `workspace_tab_id` is distinct from `project_id`
 - `browser_tab_id` is distinct from `preview_session_id`
+- `terminal_section_id` owns presentation continuity and dock or detach realization
+- `terminal_tab_id` owns tab continuity, label, pin state, and order within a terminal section
+- `terminal_pane_id` owns split-tree slot continuity and visible binding location
+- `terminal_session_id` owns exact PTY continuity
+- `dev_session_id` owns higher-level dev workflow continuity and MUST NOT replace `terminal_session_id` when exact shell reuse is required
 - detached windows and ephemeral automation/auth sessions have separate persistence scope from workspace-tab shell state
 
-| Term | Meaning |
-|------|--------|
-| **seglog** | Single append-only event log (file or segment files). Every run, message, tool use, and usage event is appended here. Canonical source of truth; replay and projections are derived from it. |
-| **redb** | Embedded key-value store (Rust `redb` crate). Durable; used for settings, session/thread metadata, checkpoints, editor state, and analytics rollups. Not the source of truth for event history -- that is seglog. |
-| **Tantivy** | Full-text search engine (Rust). Indices are built by projectors from seglog (e.g. chat messages, docs, log summaries). Queries serve human and agent search. |
-| **Projector** | A process or pipeline that **reads** seglog (tail or full) and **writes** derived state: e.g. seglog → JSONL mirror, seglog → Tantivy index, seglog → redb checkpoints/snapshots. Projectors are **deterministic**: same seglog input ⇒ same output. |
-| **Analytics scan** | A job that scans seglog (or the JSONL mirror) over a time range and computes **aggregates** (e.g. 5h/7d usage, tool latency percentiles, error rates). Results are written to redb for fast dashboard/Usage reads. |
-| **Checkpoint** | A position in seglog (e.g. byte offset or event sequence number) that a projector or scan has processed up to; stored in redb so we can resume without reprocessing from the start. |
-| **project_id** | A stable identifier for a project (repo root). Format: either (a) a UUID (e.g. v4) assigned when the project is first opened, or (b) a deterministic hash of the project root path (e.g. SHA256 truncated to 16 bytes, encoded as hex or base64url). Max length for redb key: e.g. 64 chars. |
-| **path_hash** | A stable, short identifier for a file path within a project. Format: e.g. SHA256(path) truncated to 8 bytes and encoded as hex (16 chars), or a numeric hash encoded for key safety. Used in redb keys where full path would be long (e.g. scroll_cursor, unsaved buffers). |
-| **window** | For rollup keys: literal string `5h`, `7d`, or `24h`. Analytics scan writes one key per (window, platform) for usage and one per window for tool_latency and tool_usage (e.g. `tool_usage.5h`, `tool_usage.7d`). Allowed window values are fixed for MVP. |
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
 
----
+Additional terminal identity rule:
+- command-block and transcript metadata may reference stable per-session command-block identifiers, but command-block identity is subordinate to `terminal_session_id` rather than a peer replacement for it
 
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
 ## 2. How we're going to do it
 
 ### 2.1 File locations and directory layout
@@ -374,7 +376,6 @@ This addendum defines the persistence required for Source Control, GitHub Action
 ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md, PolicyRule:no_secrets_in_storage
 
 ### Required redb keys
-
 The promoted orchestrator/runtime rewrite requires durable record and projection families that do not depend on `tier_id` as the primary cross-surface key.
 
 Required canonical record and projection families include:
@@ -390,6 +391,13 @@ Required canonical record and projection families include:
 - `project_attention_item.v1:{project_id}:{attention_item_id}`
 - `account_pressure_episode.v1:{provider_id}:{account_id}:{episode_id}`
 - `account_switch_event.v1:{provider_id}:{event_id}`
+- `terminal_workspace_state.v1:{project_id}:{workspace_tab_id}`
+- `terminal_section_record.v1:{project_id}:{terminal_section_id}`
+- `terminal_tab_record.v1:{project_id}:{terminal_tab_id}`
+- `terminal_pane_record.v1:{project_id}:{terminal_pane_id}`
+- `terminal_session_record.v1:{project_id}:{terminal_session_id}`
+- `terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}`
+- `dev_session_record.v1:{project_id}:{dev_session_id}`
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Multi-Account.md
 
@@ -412,6 +420,12 @@ Required identity and attribution fields across runtime-linked record families i
 - `provider_attempt_ref?`
 - `usage_event_ref?`
 - `operational_identity?`
+- `workspace_tab_id?`
+- `terminal_section_id?`
+- `terminal_tab_id?`
+- `terminal_pane_id?`
+- `terminal_session_id?`
+- `dev_session_id?`
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
 
@@ -434,6 +448,7 @@ Rules:
 - `resume_url` persists serialized transport only
 - route restoration resolves through canonical record identity, not through feature-local ad hoc payloads
 - `tier_runtime_record` may survive only as a derived compatibility projection; it is not canonical runtime identity
+- GUI projection key `terminal_state:v1` remains a GUI-facing projection and MUST resolve back to the canonical terminal record families above rather than replacing them
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Contracts_V0.md
 ### Naming and migration rules
@@ -823,7 +838,6 @@ Storage and projections MUST persist the scheduler and recovery model without am
 - safe-point restore does not mutate the originating attempt record in place; it leads to a new attempt record tied back by lineage
 ## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)
 ### Promoted Section 15 restore-scope rules
-
 Restore eligibility:
 - workspace tabs restore independently with project identity, active surface, and local shell state
 - detached windows restore only when their surface class and platform support allow it
@@ -834,6 +848,21 @@ Restore eligibility:
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
 
+Terminal restore guarantees:
+- section, tab, pane, label, pin state, selected focus, and linked dev-session refs are `guaranteed_durable`
+- bounded transcript snapshots, command-block metadata, cwd snapshots, shell-integration hints, and derived output or ports linkage are `best_effort_durable`
+- live PTY continuity, unlimited scrollback, active alternate-screen TUI content, and in-flight selection or search highlights are `transient_only`
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Glossary.md, ContractName:Plans/FinalGUISpec.md
+
+Canonical restore outcomes are:
+- `restored_live`
+- `restored_exited`
+- `restored_disconnected`
+- `restored_without_history`
+
+ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md
+
 Browser recovery rules:
 - browser crash or runtime loss preserves recoverable metadata and any completed evidence artifacts when possible
 - reopened automation/auth sessions return as stopped or attention-required rather than as silently running live sessions
@@ -843,14 +872,11 @@ Browser recovery rules:
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md
 
 Project-switch rule:
-- switching projects recalculates effective tool, MCP, Persona, and browser capability state for the new project context
-- background activity from the previous project remains queryable and visible through its own project/workspace identities rather than being collapsed into the new active project
-- browser requested/effective state snapshots remain frozen per runtime record and MUST NOT be recomputed from current settings
+- switching projects recalculates effective tool, MCP, Persona, browser capability, and terminal capability state for the new project context
+- background activity from the previous project remains queryable and visible through its own project and workspace identities rather than being collapsed into the new active project
+- browser and terminal requested/effective state snapshots remain frozen per runtime record and MUST NOT be recomputed from current settings
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/usage-feature.md
-
-This section is the canonical persistence contract for runtime recovery, blocked episodes, usage attribution, and runtime identity needed by Orchestrator, Run Graph, HITL, and chat surfaces.
-
 ### Canonical keys
 - `scheduler_pass_record`: key = `run_id`, `scheduler_pass_id`
 - `blocked_projection`: key = `run_id`, `node_id`, `blocked_sequence`
@@ -860,9 +886,24 @@ This section is the canonical persistence contract for runtime recovery, blocked
 - `wizard_runtime_state`: key = `wizard_id`
 - `safe_point_restore_record`: key = `safe_point_id`, `restore_sequence`
 - `thread_blocked_notice`: key = `thread_id`, `blocked_sequence`
+- `terminal_workspace_state`: key = `project_id`, `workspace_tab_id`
+- `terminal_section_record`: key = `project_id`, `terminal_section_id`
+- `terminal_tab_record`: key = `project_id`, `terminal_tab_id`
+- `terminal_pane_record`: key = `project_id`, `terminal_pane_id`
+- `terminal_session_record`: key = `project_id`, `terminal_session_id`
+- `terminal_command_block`: key = `project_id`, `terminal_session_id`, `command_block_id`
+- `dev_session_record`: key = `project_id`, `dev_session_id`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
 
 `attempt_id?` and `thread_id?` remain fields on `blocked_projection` and are not primary-key components.
 
+Rules:
+- terminal workspace containers use stable terminal section, tab, and pane keys even when their bound sessions are replaced
+- command-block identity is subordinate to the owning `terminal_session_id`
+- `dev_session_record` is workflow-scoped and may link multiple terminal sessions without collapsing them into one key family
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md
 ### Cross-surface receipt record
 
 The runtime receipt record is the canonical bridge between Orchestrator, Source Control, GitHub Actions, Docker Manager, Artifacts, and Usage.
@@ -888,9 +929,6 @@ ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/u
    - fields include `scheduler_pass_id`, requested/effective persona snapshot refs, requested/effective model snapshot refs, requested/effective permission snapshot refs, `requested_auth_mode?`, `effective_auth_mode?`, `requested_account_policy?`, `effective_account_id?`, `effective_project_id?`, `account_switch_reason?`, `replan_generation`, `mutation_capable`, `safe_point_id?`, `provider_attempt_ref?`, remediation lineage refs, and terminal outcome fields
 2. `blocked_projection`
    - fields include `blocked_reason_code`, ordered `allowed_action_ids[]`, `preserved_local_work`, `requires_safe_point_restore?`, prerequisite metadata, `failure_class?`, `detail_ref?`, `attempt_id?`, and `thread_id?`
-
-ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md#EventRecord
-
 3. `usage_record`
    - fields include `run_kind`, `run_id`, `node_id?`, `attempt_id?`, `thread_id?`, `usage_event_ref?`, `effective_platform`, `effective_model`, `effective_auth_mode?`, `effective_account_id?`, `provider_account_id?`, `usage_source_kind?`, `signal_confidence?`, `effective_project_id?`, `input_tokens`, `output_tokens`, `total_tokens`, `estimated_cost?`, and usage timestamps suitable for rollups and ledger views
 4. `evidence_record`
@@ -900,7 +938,18 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, 
 6. `wizard_runtime_state`
    - fields include `wizard_status`, `wizard_step`, `blocked_reason_code?`, `clarification_round_count`, `report_ref?`, `resume_url?`, `decomposition_degraded`, `degradation_reason?`, and `replan_generation?`
 
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Orchestrator_Page.md
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md#EventRecord
+
+7. `terminal_workspace_state`
+   - fields include ordered terminal sections, section presentation (`docked` or `detached`), selected section or tab refs, tab order, pane tree, pane-to-session bindings, labels, pin state, linked `dev_session_id?`, recovery banners, and bounded transcript-snapshot refs used by GUI projection `terminal_state:v1`
+8. `terminal_session_record`
+   - fields include `terminal_session_id`, `project_id`, `workspace_tab_id`, `cwd_snapshot`, `shell_profile_label?`, `shell_integration_tier`, `requested_renderer_mode?`, `effective_renderer_mode`, `capability_degradations[]`, lifecycle state, exit or stop metadata, transcript-retention tier, restore outcome, transcript refs, and linked `dev_session_id?`
+9. `terminal_command_block`
+   - fields include `command_block_id`, transcript anchor refs, observed command label when supported, confidence tier, start and end timestamps, cwd snapshot, exit metadata, and state such as `running`, `succeeded`, `failed`, `terminated`, or `degraded_observation`
+10. `dev_session_record`
+    - fields include `dev_session_id`, intent or mode, lifecycle state, linked terminal session refs, linked Output or Problems or Ports refs, reload mode (`hot_reload` or `live_reload` or `none`), port bindings, and last-known recovery state
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
 ### Counter rule
 - `attempt_count` is the total started attempts for the node in the run
 - `automatic_retry_count`, `prerequisite_resume_count`, `manual_resume_count`, and `remediation_retry_count` remain independent stored counters
@@ -913,8 +962,17 @@ Attempts from older generations, or in-flight attempts that cannot resume after 
 - canonical blocked-action field is `allowed_action_ids[]`
 - canonical persisted references use `*_ref` fields; raw `*_path` naming is compatibility-only
 - requested vs effective persona/platform/model state must remain queryable from runtime records so UI surfaces do not reconstruct it heuristically
+- terminal requested/effective capability disclosure uses explicit fields such as `requested_renderer_mode?`, `effective_renderer_mode`, `shell_integration_tier`, `capability_degradations[]`, `restore_outcome`, and transcript-retention tier
+- `terminal_session_id` is the canonical meaning of same-session shell continuity; `dev_session_id` is higher-level workflow continuity only
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Personas.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+
+Additional rules:
+- GUI projection key `terminal_state:v1` may remain as a compatibility-facing projection name, but canonical storage ownership stays with terminal workspace, session, and command-block records
+- restored historical terminal records MUST NOT be misreported as live sessions solely because durable metadata exists
+- requested terminal presentation preferences do not override the effective restore outcome or effective capability state captured for that historical record
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 ## Permission Snapshot Storage and Safe-Point Namespace Addendum
 
 ### Permission snapshot storage

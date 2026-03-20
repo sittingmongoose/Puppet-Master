@@ -41,13 +41,41 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, Co
 Assistant Chat may preview shell-backed work inline, but the canonical interactive session remains the Terminal surface.
 
 Rules:
-- one inline command card per command invocation
+- one inline command card corresponds to one observed command invocation
 - collapsed preview defaults to 5 lines; expanded preview defaults to 15 lines
-- `Open in Terminal` focuses the same live session rather than spawning a fresh shell
-- chat owns a compact audit/preview view; Terminal owns the canonical interactive PTY session
+- `Open in Terminal` and `Show Terminal` resolve to exact-session reveal when a `terminal_session_id` binding exists
+- chat owns a compact audit and preview layer; Terminal owns the canonical interactive PTY session
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
 
+### Command-card model
+Command cards are transcript-adjacent summaries rather than a second shell implementation.
+
+Rules:
+- cards surface summary, status, and a primary reveal action without pretending to own the full shell lifecycle
+- when shell integration is `rich` or `basic`, command cards may expose cwd, duration, exit code, and command labels according to confidence tier
+- when shell integration is `opaque`, the card MUST degrade to lower-confidence activity disclosure and MUST NOT fabricate exact command text or exact command boundaries
+- transcript continuity remains canonical even when command-card metadata is degraded
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
+
+### Reveal and focus behavior
+- if the referenced terminal session is already visible, `Open in Terminal` and `Show Terminal` simply focus it
+- if the session is hidden inside another pane, tab, or section, the shell reveals the existing pane or tab before creating anything new
+- if only historical state remains, the card opens that historical shell receipt and presents explicit recovery actions instead of silently creating a replacement session
+- explicit `New Terminal` and explicit restart remain separate user-visible actions
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+
+### Status, degradation, and linked-surface behavior
+Command-card status badges may reflect `starting`, `running`, `exited`, `failed`, `terminated`, `disconnected`, `restoring`, and `attention_required`.
+
+Rules:
+- chat preview stays compact even when the terminal transcript is large
+- Output, Problems, Debug Console, and Ports continue to route through the owning terminal or dev-session identity rather than through chat-local state
+- command cards may link to Output, Problems, or Ports when the command or dev session produced those linked surfaces
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
 ### 13.4 Shared runtime identity display
 Assistant Chat may display requested/effective runtime identity, but it must consume the owner-doc shared runtime model rather than invent assistant-local fields.
 

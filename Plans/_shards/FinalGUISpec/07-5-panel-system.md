@@ -1,14 +1,28 @@
 ## 5. Panel System
 
 ### 5.1 Detachable Panels
-**Side-panel occupancy contract (one at a time; last-click wins):** The side panel is the single activity-bar-driven side-panel slot. Run & Debug, Git (GitHub), Docker Manage, Source Control, Unraid, Artifacts, Chat, and File Manager can occupy it one at a time. See §4.1 Activity Bar for which icon shows which panel. Detach/re-dock support is limited to the panels listed below.
+**Side-panel occupancy contract (one at a time; last-click wins):** The side panel is the single activity-bar-driven side-panel slot. Run & Debug, Git (GitHub), Docker Manage, Source Control, Unraid, Artifacts, Chat, and File Manager can occupy it one at a time. See §4.1 Activity Bar for which icon shows which panel. Detach and re-dock support is limited to the panels and shell surfaces listed below.
 
-The following panels support detach/re-dock:
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
+
+The following surfaces support detach and re-dock:
 - **Chat panel**
 - **File Manager panel**
-- **Bottom panel** (Terminal/Output)
+- **Primary terminal section**
+- **Secondary terminal section** when opened
 
-Other views (Dashboard, Settings, etc.) remain in the primary content area and are not detachable.
+Other views (Dashboard, Settings, Orchestrator, Source Control, and similar page surfaces) remain in the primary content area and are not generic detachable panels.
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md
+
+### Terminal section presentation rules
+- the primary terminal section defaults to the bottom runtime zone
+- the product may expose a second terminal section either as an additional docked runtime section or as a detached runtime window, but it remains the same canonical terminal-section concept in both cases
+- Output, Problems, Debug Console, and Ports follow the owning terminal or dev-session context; they do not become separately detached mini-shells
+- detaching a terminal section preserves its section identity, tab order, pane tree, and linked session bindings
+- re-docking a terminal section restores it without minting new terminal-session identity
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 ### 5.2 Panel State Machine
 
 Per panel: **DOCKED** <-> **FLOATING**. Same Slint component is used inline when docked or as the root of a separate Slint `Window` when floating.
@@ -31,7 +45,7 @@ enum PanelDock {
 enum DockSide {
     Right,   // default for Chat and File Manager
     Left,    // alternative
-    Bottom,  // for terminal-type panels
+    Bottom,  // for the bottom runtime zone / terminal-section host
 }
 ```
 

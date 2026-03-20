@@ -5,7 +5,24 @@ Live testing and hot reload are dev-session operations.
 
 Rules:
 - assistant-invoked dev actions map to stable UI commands and visible shell state changes
-- `start hot reload dev mode`, `start dev server`, and `run tests in watch mode` are user-facing intents that must resolve to canonical `cmd.*` IDs in the UI command catalog
-- the chat surface shows whether a dev session is starting, active, failed, stopping, or stopped
-- output routes into the canonical terminal/output/ports surfaces owned by the shell; chat does not create a parallel dev-output model
+- `start hot reload dev mode`, `start dev server`, and `run tests in watch mode` are user-facing intents that resolve to canonical `cmd.dev.*` or terminal command IDs
+- the chat surface shows whether a dev session is starting, active, failed, stopping, stopped, or restored as historical state
+- output routes into the canonical Terminal, Output, Problems, Debug Console, and Ports surfaces owned by the shell; chat does not create a parallel dev-output model
 - project switch or workspace-tab close must surface explicit consequences for any active dev session
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FileManager.md
+
+### Dev-session and terminal binding
+- a dev session may own or link multiple terminal sessions without collapsing them into one PTY identity
+- `Show Output`, `Show Problems`, and `Show Ports` reveal the surfaces linked to the current `dev_session_id`
+- `Open in Terminal` from a dev-status row reveals the primary or last-active `terminal_session_id` for that dev session when one exists
+- stopping a dev session preserves historical shell evidence and linked surface history even when the live process has exited
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+### Project-switch and close rules
+- switching projects recalculates effective shell, tool, and dev-session state for the new project context
+- background activity from the old project remains visible through badges and attention surfaces tied to its own project and session identities
+- closing a workspace tab or terminal tab with an active dev session requires explicit consequence disclosure; Puppet Master MUST NOT silently orphan the background workflow by default
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Run_Modes.md

@@ -21,6 +21,9 @@
 - Do not write planning-doc changes during research mode.
 
 ## Key Facts and Findings
+- New research pass launched: implementation-reference fleet across the previously benchmarked editor/workbench targets plus two extra reference repos, with one background sub-agent per target.
+- Purpose of this pass: move beyond product-surface feature comparison into implementation-pattern review and issue-history validation for PM-critical seams.
+- This pass is explicitly focused on how targets built the behaviors, where their issue history suggests fragility or robustness, and what those patterns imply for a Rust + Slint implementation on macOS, Linux, and Windows.
 - Topic established: file manager and editor improvement/finalization.
 - User expanded scope to include:
   - diff/compare/review features, including undo/redo around diff flows
@@ -135,8 +138,410 @@
   - PM should avoid **ephemeral-by-default collaboration/state models** unless they are very clearly labeled and paired with durable recovery paths.
   - PM should prefer **lazy/virtualized/project-scoped work** over eager full scans, but it must surface indexing/loading/degraded-mode states honestly so users do not interpret “still indexing” as broken behavior.
   - PM should treat **remote/reconnect/model-auth resilience** as first-class product work, not edge behavior; this pain recurs heavily in the AI-native and remote-capable cohort.
+- Resume-discussion synthesis: user asked specifically about the coolest competitor features rather than just high-level archetypes.
+  - Highest-value recurring feature clusters worth preserving for reconciliation:
+    - visible plans/tasks/artifacts/approval state instead of opaque agent activity
+    - multi-surface orchestration across editor + terminal + browser/preview + docs/review
+    - reusable diff/review pipelines with hunk-level actions, not ad hoc one-off compare UIs
+    - project/framework autodetection with dynamic language tooling rather than manual product switching
+    - honest degraded/loading/indexing states instead of silent partial functionality
+    - durable tabs/splits/workspace persistence and recovery
+    - remote/reconnect/offline resilience with explicit cache/read-only/fallback messaging
+    - source-canonical rich previews that can round-trip as bounded text patches
+    - virtualized lazy file trees and background indexing/search
+  - Recurrent “cool but dangerous” patterns:
+    - demo-friendly thin wrappers that hide resize, IME, accessibility, and diff correctness debt
+    - collaboration/state models that feel magical until reconnect or persistence breaks
+- Fleet-mode re-dispatch started on 2026-03-20:
+  - session SQL was seeded with 30 anonymized non-mobile topic targets (`bench-01`..`bench-30`) plus a dependent `fleet-synthesis` todo
+  - one background sub-agent was launched per target in parallel
+  - `bench-03` was marked for an extra-deep pass on language/framework autodetection, indexing, project model, and automatic PM switching implications
+  - durable notes remain anonymized by target ID only
+- First completed external discovery cluster (10 targets done so far) is reinforcing the earlier archetype split with more technical texture:
+  - `bench-01` strengthens the case for a **local-first UI with remote-capable backend/proxy split**, background parsing/highlighting, and a Rust-owned editor core; it also reinforces GPU/platform crash risk and the need for lifecycle-safe save/state handling.
+  - `bench-04` validates **incremental project scanning**, small-module architecture, central command predicates, and line-oriented document state; recurring pain points include plugin compatibility, crashes/regressions, and file-tree/sidebar expectations.
+  - `bench-05` is especially relevant for PM file-manager inspiration: **preview without download, chunked uploads, archive pack/unpack, direct links, per-user roots/read-only modes**, and broad in-browser manage/edit flows; it also warns about monolithic customization debt and auth/path hardening needs.
+  - `bench-06`, `bench-08`, and `bench-15` continue to reinforce the warning that **thin wrapper/overlay editors** are useful for embed ergonomics and prop-driven APIs, but repeatedly accumulate resize/SSR/bundler/worker/styling edge cases and are weak foundations for PM’s deeper diff/workbench ambitions.
+  - `bench-07` validates the appeal of **lightweight collaborative editing with revision/reconnect recovery**, but also highlights the danger of ephemeral persistence, Unicode/IME desync risk, and mobile density constraints.
+  - `bench-11` is a strong signal for **first-class test/diff/task widgets living beside the editor**, JSON/timer-based hot-exit restore, and deep editor affordances on a native desktop stack; it also highlights crash/backup/setup-friction risk for integrated toolchains.
+  - Across the first cluster, recurring feature ideas worth carrying forward include:
+    - local-first speed with explicit remote/offline model
+    - incremental/lazy file discovery and background work
+    - first-class preview/manage operations in the file manager
+    - durable session/hot-exit recovery
+    - native diff/test/task widgets integrated with editing rather than bolted on
+  - Across the first cluster, recurring failure modes to design against include:
+    - crash-prone lifecycle/save edges
+    - thin-wrapper resize/worker/SSR fragility
+    - plugin/integration compatibility drag
+    - ephemeral collaboration state and weak recovery
+    - IME/Unicode and large-input correctness debt
+- Next completed cluster adds stronger signal on AI-wrapped workbenches and fast browser execution loops:
+  - `bench-10` is a useful PM-adjacent pattern: a Rust/Tauri code editor with AI, terminal, Git/LSP, and policy controls organized as focused workspace crates/services. It reinforces the value of **clear service boundaries** (project, terminal, VCS, AI, LSP, remote, extensions) while also surfacing recurring UX friction around file-explorer ergonomics, context menus, and terminal cwd behavior.
+  - `bench-21` reinforces the pattern of an **AI-first desktop wrapper on top of an upstream editor/workbench**, with strong codebase-context/chat/refactor positioning but recurring startup/bootstrap, extension sync, login/account linking, and remote/WSL parity pain. This is an important warning for PM: chat/context polish is not enough if bootstrap, auth, and remote workflows are brittle.
+  - `bench-30` is a good reminder that users love **tight editor-to-execution loops**, language templates, custom input, and easy sharing/export, but browser/API-dependent execution models introduce reliability and persistence fragility.
+  - `bench-09` is one of the stronger “serious IDE” references so far:
+    - layered virtual filesystem abstractions and shared selection/navigation models are powerful patterns for PM’s workspace/file-manager design
+    - smart completion and deep navigation capabilities validate the value of strong indexing/language intelligence
+    - but the downside is equally clear: high-complexity workspace/project models can create hangs, heavy navigation regressions, terminal integration friction, and cross-tool/source-resolution bugs on large or messy projects
+  - Cross-cluster pattern now strengthening:
+    - users repeatedly value visible, immediate workflows (run/test/share/apply) more than abstract flexibility
+    - terminal cwd, file-tree ergonomics, and context handoff between surfaces matter more than they look on a feature checklist
+    - AI/editor shells that depend on heavyweight upstream/editor bootstrap stacks inherit startup, extension, auth, and remote complexity even when the UX story is compelling
+    - IDE-grade project/workspace power is attractive, but PM should adopt it selectively and keep the operational model more legible than the heaviest legacy IDEs
+- `bench-03` deep-dive is one of the strongest design signals in the fleet so far:
+  - it validates treating the product as **one extensible platform with project-driven capability activation**, not separate hard-forked products or rigid personalities
+  - language, framework, build, review, and remote support are best modeled as capability packs/modules that activate when project signals are detected
+  - project open should run explicit detection/import logic and surface multiple plausible interpretations when ambiguity exists
+  - indexing should be a first-class background subsystem with reduced-capability/degraded-mode signaling while indexes warm up
+  - diff/review/hosted-repository workflows can and should live in the same shell as local editing rather than becoming separate tools
+  - remote architecture should prefer a thin local client/launcher with backend attachment/version management rather than pretending remote is just local with different paths
+  - critical PM caution from this target:
+    - autodetection must be visible and overridable, not “magic”
+    - plugin/module breadth can become dependency and dynamic-loading debt fast
+    - indexing and external-model sync can dominate startup and large-workspace responsiveness if not carefully bounded/reused
+- `bench-29` adds a strong collaborative-workspace pattern:
+  - not just shared text, but **multi-file room-based collaboration** with file tree, tabs, presence, chat, run output, settings, and AI actions in one lightweight workspace
+  - strong implementation hint: separate app/file/socket/settings/view state cleanly, and treat remote cursors/selections as decoration/state overlays rather than canonical document content
+  - caution remains consistent with the broader collaborative cohort: backend/runtime outages, weak persistence, and polish/styling regressions quickly erode trust even when the collaboration UX is compelling
+- Fleet completion status:
+  - all 30 benchmark target todos are complete in session SQL
+  - `fleet-synthesis` is complete and persisted in `research_summaries`
+  - aggregate synthesis now strongly supports:
+    - one PM platform with project-driven capability activation
+    - Rust-owned core services with Slint shell/workbench UI
+    - reusable diff/review and source-canonical preview pipelines
+    - explicit degraded/indexing/remote/offline/requested-vs-effective state visibility
+    - copying portable product ideas broadly while avoiding direct adoption of thin-wrapper / Electron / DOM-first implementation assumptions
+  - work item is ready for reconciliation again
+- Research resumed on 2026-03-20 for a **Plans-only review fleet** focused on file manager/editor documentation quality rather than external benchmarks.
+  - user explicitly requested parallel sub-agent review of `Plans/**`, especially around file manager and editor
+  - this pass should stay targeted to planning docs and look for contradictions, under-specified seams, and places where the docs do or do not absorb the fleet research well
+  - likely review seams:
+    - workspace/file-manager/editor core contracts
+    - diff/review/undo/conflict flows
+    - remote/SSH/LSP/autodetection behavior
+    - preview/render/file-type/trust model
+    - cross-doc reconciliation against benchmark synthesis
+- Plans review fleet completion status:
+  - all four seam reviews completed and were persisted to `plans_review_findings`
+  - synthesis summary was persisted to `plans_review_summaries`
+  - highest-confidence doc strengths:
+    - shared-buffer editor/file-tree core behavior is already strong
+    - preview/file-type behavior is mostly well aligned with source-canonical benchmark lessons
+    - local LSP/editor behavior is much stronger than the remaining remote/runtime contracts
+  - highest-priority contradictions/gaps to carry into reconciliation:
+    - shell placement and ownership of editor/browser surfaces
+    - overlapping persistence ownership across FileManager/FinalGUISpec/storage-plan
+    - incomplete mutation contract across user edits, agent edits, preview edits, and FileSafe
+    - remote filesystem/cache/offline/LSP/degraded-state model still under-specified
+    - diff/review contract still missing shared ownership, hunk actions, grouped undo/redo, and conflict UX
+    - preview lifecycle/trust/fallback rules need tightening and stale bottom-panel/snapshot wording should be retired
+  - recommended reconciliation order from the review:
+    - lock shell model
+    - unify open/reveal identity contracts
+    - define mutation matrix and FileSafe applicability
+    - centralize persistence ownership
+    - close freshness/watchers/degraded-state story
+    - then remove stale wording rather than layering more overrides
+  - work item is ready for reconciliation again after this Plans review pass
+- Browser-spec cleanup note for reconciliation (2026-03-20):
+  - Do **not** patch plans ad hoc during research; reconcile these together so the browser story stays internally consistent.
+  - Browser/session architecture itself is considered solid and should remain the canonical direction:
+    - editor/workspace tab surface is the canonical in-shell browser host
+    - canonical session classes remain `workspace_preview`, `detached_preview`, `automation_session`, and `auth_session`
+    - bottom panel is browser-adjacent only (logs, evidence, downloads, console/network summaries, DevTools-adjacent panes), not the primary host
+    - HTML/file preview should keep using the same PM browser runtime/session model as normal browsing
+  - Reconciliation should explicitly retire stale wording in `Plans/FinalGUISpec.md` rather than layering more overrides:
+    - `FinalGUISpec.md:49` still frames Browser as a bottom-panel primary surface
+    - `FinalGUISpec.md:1206` still maps built-in browser / click-to-context to `Bottom Panel Browser tab (§7.20)`
+    - `FinalGUISpec.md:1186` still suggests static HTML snapshot fallback
+    - `FinalGUISpec.md:1188` still suggests static screenshot fallback for browser/webview embedding instability
+  - Preferred reconciliation direction for those stale lines:
+    - rewrite them to match the later canonical browser/session model already present in `FinalGUISpec.md:1539-1555` and `FileManager.md:391-415`
+    - keep fallback language focused on `runtime_unavailable` / degraded browser capability messaging and remediation, not snapshot/screenshot substitution as a pseudo-browser
+    - keep the browser host story singular: workspace/editor-tab-first, detached-window-capable, bottom-panel-adjacent only
+  - Also note one related cross-doc follow-up:
+    - `Section15_MVP_Promoted_Features_Spec.md:758` still contains wording about “the bottom panel as the primary browser host” and should be reconciled to the same canonical language.
+- Terminal-spec review note (2026-03-20):
+  - Terminal specs were checked again after the earlier Plans sweep and they are materially stronger now than the earlier review assumptions implied.
+  - Strong current direction:
+    - terminal is a first-class shell-workspace concept, not a loose set of generic bottom-panel tabs
+    - terminal sections/tabs/panes have stable identity and exact-session reveal behavior
+    - `Open in Terminal` / `Show Terminal` reveal the owning `terminal_session_id` rather than minting a replacement shell
+    - `terminal_state:v1` is explicitly a GUI projection boundary, while `storage-plan.md` owns canonical terminal workspace/session/command-block records
+    - restore semantics are much clearer: live PTY continuity is never faked, historical terminals are explicit, and dev-session identity stays distinct from terminal-session identity
+    - assistant-chat docs now clearly say chat owns only compact shell audit/preview while Terminal owns the canonical interactive PTY session
+    - Output, Problems, Ports, and Debug Console follow the owning terminal/dev-session context rather than becoming separate mini-shells
+  - Reconciliation implication:
+    - earlier “terminal tab model/state persistence” concern should be downgraded; terminal is no longer one of the weakest-specified seams
+    - broader shell reconciliation should incorporate the newer terminal-section model when normalizing editor/browser/terminal placement and multi-surface command routing
+    - terminal/browser anti-collapse rules in `FileManager.md` are especially useful and should be treated as canonical shell-shape guidance
+- User-priority reframing note (2026-03-20):
+  - user correctly pushed back that PM already has orchestration-native visibility and multi-surface workflow concepts; those should not be treated as missing competitor-derived features to “add”
+  - similarly, exact-session terminal reveal is now already part of the strengthened terminal specs, and collaboration is not a desired PM direction
+  - revised feature-fleshing focus should therefore center on the remaining PM-relevant majors:
+    - project-driven capability activation / autodetection
+    - LSP and indexing / degraded-mode contracts
+    - SSH / remote filesystem / cache / offline / remote-LSP behavior
+    - diff/review system including undo/redo, chat-thread diff exposure, hunk actions, and conflict UX
+    - file/media preview and Mermaid / HTML / source-canonical preview lifecycle
+    - gitignore treatment, ignored-file dimming/hiding, and related file-tree operational behavior
+    - file-manager operational features (rename/delete/duplicate/bulk ops/refresh/conflicts)
+    - generated-vs-workspace-file identity and open/save/export behavior
+    - run/test/share loops and environment/runtime action surfaces where they affect editor/file-manager workflows
+  - this reframing should influence the next planning/reconciliation pass: preserve PM-native orchestration strengths, and spend design energy on the editor/file-manager/remote/review/runtime seams that still need implementation-ready contracts
+- Master seam inventory note (2026-03-20):
+  - user clarified that the **universal search bar is project-scoped**, not cross-project, and should search broadly within the current project/shell context, especially Settings
+  - search should therefore be treated as multiple distinct but related product surfaces rather than one blended concept:
+    - **universal search bar** = project-scoped broad search/navigation surface (especially settings, and likely files/symbols/commands/other project-local entities as defined later)
+    - **left search panel** = dedicated project/content search surface
+    - **file manager search bar** = tree/file-manager filtering or location surface
+  - user also explicitly wants the following preserved as named implementation-readiness seams:
+    - desktop ↔ file-manager drag/drop behavior
+    - diff heat map / scrollbar change markers
+    - gitignore and ignored-file dimming/hiding behavior
+  - recommended master seam inventory for the next fleshing pass:
+    - **Strong already / preserve while reconciling**
+      - browser/session model
+      - terminal ownership/session model
+      - basic file/media preview direction
+      - ignored-file dimming baseline
+      - desktop ↔ file-manager drag/drop baseline
+    - **Partially specified / needs tightening**
+      - file/media preview lifecycle and trust/fallback rules
+      - generated-vs-workspace-file identity/open/save/export behavior
+      - source-control integration beyond raw diff
+      - run/test/share loops and environment/runtime action surfaces where they touch editor/file-manager workflows
+      - gitignore/ignored-file behavior across search, quick-open, and other surfaces
+    - **Major seams needing substantial fleshing**
+      - save / dirty / recovery / on-disk change
+      - diff / review / undo / redo / chat-thread diff exposure
+      - diff heat map / minimap / change-marker model
+      - SSH / remote filesystem / cache / offline / remote-LSP behavior
+      - LSP / indexing / project-driven autodetection / degraded-state model
+      - file-manager operations (rename/delete/duplicate/bulk ops/refresh/conflicts)
+      - search architecture (universal search vs left search vs file-manager search)
+      - shell ownership / open / reveal / reuse rules across editor/browser/terminal/artifacts
+- Full master seam map note (2026-03-20):
+  - User direction is explicit: **everything below is MVP and must be brought to implementation-ready quality**. Do not categorize these as later/optional/future.
+  - Use this as the master seam inventory for future fleshing/reconciliation work.
+  - **A. Shell, identity, and routing seams**
+    - shell ownership / placement of editor, browser, terminal, artifacts, side panel, and bottom-panel-adjacent surfaces
+    - open / reveal / reuse rules across `route_target`, `OpenFile`, `OpenSubject`, browser sessions, terminal sessions, artifacts, and generated documents
+    - command routing and shortcut precedence across editor, terminal, browser, chat, file manager, and shell-wide commands
+    - search result actions and reveal behavior (open, reveal in tree, reveal in settings, open at symbol/range, reuse vs split vs detach)
+    - workspace/project switching identity and per-project vs global shell state
+  - **B. Editor core behavior seams**
+    - save / dirty / recovery / on-disk change model
+    - large-file / binary / encoding / read-only and degraded behavior
+    - undo / redo semantics across shared-buffer multi-surface editing
+    - structure-aware editing helpers and semantic edit affordances where adopted
+    - accessibility / IME / input correctness / selection / caret behavior
+    - clipboard / copy-paste / cross-surface transfer behavior
+  - **C. Diff / review / source-control seams**
+    - reusable shared diff/review service across editor, source control, AI apply, and conflict handling
+    - hunk actions (apply/reject/stage/unstage/revert/collapse)
+    - grouped undo/redo for patch/apply/review/conflict flows
+    - chat-thread diff exposure when file changes are relevant
+    - diff annotations/comments and their source anchoring model
+    - search within diff
+    - conflict-resolution UX
+    - diff heat map / scrollbar change markers / minimap model
+    - broader source-control integration beyond raw diff (status, staged/unstaged/conflicted ownership, revert/discard semantics, branch/worktree behavior)
+  - **D. File manager seams**
+    - rename / delete / duplicate / move / copy / bulk operations / refresh / conflict behavior
+    - desktop ↔ file-manager drag/drop behavior
+    - gitignore handling and ignored-file dim/hide behavior
+    - hidden files / dotfiles / inaccessible folders / large-directory behavior
+    - file-manager search bar behavior
+    - generated-vs-workspace-file visibility in the tree
+  - **E. Search seams**
+    - universal search bar = project-scoped broad search/navigation surface, especially settings
+    - left search panel = dedicated project/content search surface
+    - file manager search bar = tree/file-manager filtering/location surface
+    - quick open and symbol search interaction with those surfaces
+    - ignored-file behavior across all search/open surfaces
+    - LSP-backed vs text/index-backed symbol search and degraded behavior
+  - **F. Preview / browser / file-type seams**
+    - Mermaid, Markdown, HTML, SVG, image, and media preview behavior
+    - source-canonical preview/edit bridge
+    - preview session lifecycle and multi-preview ownership
+    - linked-asset reload scope and fallback behavior
+    - browser/session classes and editor-tab-first browser hosting cleanup
+    - preview/browser trust tiers, sandboxing, runtime_unavailable behavior, and capture/mutation boundaries
+    - generated-vs-workspace-file identity, open/save/export behavior, and promotion paths
+  - **G. LSP / indexing / autodetection seams**
+    - project-driven capability activation / autodetection
+    - language/framework/build/preset detection
+    - indexing lifecycle, cache reuse, and degraded/indexing-state disclosure
+    - local LSP feature contract and fallback when unavailable
+    - symbol / outline / rename / code actions / diagnostics boundaries
+    - requested vs effective capability state where detection or runtime limitations change behavior
+  - **H. SSH / remote seams**
+    - remote filesystem model
+    - cache/offline/stale-state semantics
+    - remote file watching / refresh / invalidation
+    - remote diff / git semantics
+    - remote LSP execution/root mapping strategy
+    - remote save / pending-sync / read-only / permission-denied behavior
+    - remote degraded-state disclosure and requested-vs-effective capability state
+  - **I. Terminal / runtime / environment seams**
+    - terminal section/tab/pane model integration with broader shell ownership
+    - run/test/share loops where they intersect editor/file-manager/review workflows
+    - environment/runtime/service action surfaces and cards
+    - Output / Problems / Ports / Debug Console ownership and reveal rules
+    - requested/effective renderer and shell-integration disclosure where relevant
+  - **J. Cross-cutting product seams**
+    - settings / presets / overrides model
+    - freshness / watcher / invalidation model across tree/editor/preview/git/LSP/remote
+    - notifications / prompts / banners / recovery UX
+    - path normalization / symlink / worktree behavior
+    - performance / virtualization budgets across tree, search, chat, diff, terminal, preview, and large results
+  - Practical guidance:
+    - even the seams that are comparatively stronger now (browser/session model, terminal ownership model, drag/drop baseline, ignored-file dimming baseline, basic preview direction) still need to be normalized and carried through reconciliation so they remain implementation-ready and consistent with the rest of the packet
 
 ## Gaps / Problems Identified
+- Early implementation-reference cluster note (2026-03-20):
+  - First completed implementation-reference targets now include `bench-06`, `bench-07`, `bench-08`, `bench-12`, `bench-16`, `bench-18`, and `bench-26`.
+  - Strong pattern already visible: many benchmark repos that feel compelling at the surface level are **not** full workbench references; they are thin editor wrappers, browser-first shared-document apps, or single-file/browser-runner shells.
+  - What is still genuinely useful from this early cluster:
+    - keep the editor adapter thin and let the host/workspace own file/project/runtime identity
+    - preserve selection/caret explicitly when re-highlighting or performing controlled external value updates
+    - avoid feedback loops by using silent/guarded update paths when host state is mirrored back into the live editor
+    - keep split-pane/editor-instance undo ownership explicit rather than accidentally shared
+    - Unicode-aware OT/revision transforms plus cursor rebasing and snapshot persistence are strong reusable Rust-side patterns for any collaborative or remote-edit seam
+    - deterministic extension/file-name based language fallback is useful as a degraded path, but it is not a substitute for real detection/indexing/LSP
+    - separating execution transport from editor state is a good pattern, even when the surrounding product is otherwise too browser-dependent
+  - Repeated negative signal from issue histories and source shape:
+    - DOM/browser-coupled editing repeatedly produces cursor/selection/IME/paste/shadow-root/Firefox edge-case churn
+    - thin wrappers are especially fragile around extension/version boundaries, controlled value sync, diff refresh, and popup/render-root behavior
+    - browser/shared-doc products often stop at URL/session identity and never solve durable file identity, save/export, tree/search, gitignore, diff/review, terminal, or SSH/remote seams
+    - browser-runner products commonly show recurring runtime polling/auth/input reliability issues and still lack the surrounding workspace model PM needs
+    - collaboration-oriented text engines can be technically strong while still being a poor PM reference if they never graduate from anonymous doc IDs to real workspace/file ownership
+  - PM-specific implication from this cluster:
+    - PM should treat any embedded editor surface as a **leaf editing/rendering surface**, not the owner of workspace truth
+    - canonical ownership for file identity, save/recovery, watchers, generated-vs-workspace state, search/indexing, diff/review, gitignore behavior, open/reveal routing, terminal/runtime, and SSH/remote should remain in Rust-side services with the UI bound on top
+    - browser-specific implementation assumptions (DOM roots, service-worker persistence, hidden file inputs, Blob downloads, localStorage identity, query-string routing, browser-only clipboard/selection hacks) should not shape the PM architecture even when they enable fast demos elsewhere
+  - Evidence quality note:
+    - source coverage on this early cluster is already strong due to shallow clones and local inspection
+    - issue-history depth is often partially limited by unauthenticated GitHub API rate limits
+    - some targets had meaningful existing builds/tests or focused seam tests available, but many thin-wrapper/browser-editor repos still rely more on issue history than on deep automated validation for the exact PM seams we care about
+- Second implementation-reference cluster note (2026-03-20):
+  - Additional completed targets now include `bench-23`, `bench-25`, `bench-27`, and `bench-30`, alongside prior browser/editor-wrapper results.
+  - This cluster is more PM-relevant because it starts to show which lightweight editors actually implement **operational local seams** rather than only surface-level editing:
+    - atomic save and watcher-driven external-change handling
+    - persistent search/replace/location histories
+    - explicit command registries / palette routing
+    - renderer-independent text cores (including piece-table style editing)
+    - terminal/build/run routing separated from editing state
+    - per-language workspace heuristics or synthetic-workspace creation for standalone files
+  - Strong PM-positive implementation ideas from this cluster:
+    - keep a reusable Rust text core separate from rendering/UI technology
+    - treat file watching, atomic save, and reload/conflict signaling as first-class services, not editor afterthoughts
+    - maintain explicit histories (search, replace, locations, recent targets) rather than deriving everything from transient UI state
+    - use capability modules around the text core for LSP, build/run, preview, and shell integration instead of baking them into the buffer model
+    - treat execution/runtime transport as a separate seam with clear request/response/error ownership
+  - Repeated limitations remain just as important:
+    - many otherwise promising lightweight editors still lack drag/drop, diff/review, SSH/remote, gitignore-aware traversal, preview/media handling, or durable workspace identity
+    - terminal-first or Unix-native implementations often depend directly on `/bin/sh`, Unix signals, VTE/TTY assumptions, or platform-specific open/reveal commands that do not transfer cleanly to macOS/Linux/Windows parity
+    - minimal browser widgets keep exposing IME/input/cursor/selection fidelity problems even when their tiny scope is otherwise attractive
+    - single-snippet/browser-runner apps stay operationally fragile around runtimes, auth, asset serving, and persistence because the surrounding workspace model is too weak
+  - Issue-history convergence from the first two clusters:
+    - robustness problems tend to concentrate in operational seams, not demo seams: packaging/startup, external-change handling, cursor/undo correctness, runtime polling/auth, file explorer correctness, save/compile loops, and platform integration
+    - tests, when present, are highly informative: focused seam tests around editing primitives, language detection, or wrapper mechanics correlate better with trust than flashy feature claims
+    - repos with small issue volume are not automatically “stable”; sometimes they are simply narrow or lightly used, so PM should still prefer explicit contracts and validation over assuming maturity
+  - PM-specific implication from this second cluster:
+    - the architecture direction is getting clearer: PM should borrow local-operational primitives from the stronger lightweight/native-style targets, but it still needs to layer on the bigger workbench seams itself—workspace identity, file manager operations, diff/review, generated-vs-workspace state, preview/browser lifecycle, gitignore-aware traversal, remote/SSH, and terminal/runtime ownership across the shell
+- Third implementation-reference cluster note (2026-03-20):
+  - Later completions widened the sample beyond tiny editors and browser widgets, especially `bench-05` and `bench-28`.
+  - `bench-05` is useful as a **breadth-of-file-operations** reference:
+    - broad CRUD/archive/upload/preview/edit/search surface area can exist even when the architecture is still basically one server-rooted request layer
+    - this is a strong reminder that PM should preserve broad operational coverage in the file manager, not just elegant navigation
+    - but it is also a warning that wide capability breadth without typed service boundaries leads to ongoing save, upload, encoding, preview, and security-hardening churn
+  - `bench-28` is useful as a **control-plane over delegated IDE backend** reference:
+    - reservation state, container lifecycle, reverse-proxy routing, SSH bootstrap, URI/workspace binding, and launch-time environment synthesis are all real seams worth studying
+    - however, most editor/file-tree/diff/LSP/terminal behavior is delegated to an upstream IDE backend rather than owned natively
+  - Design implication from comparing those two targets:
+    - there are two tempting shortcuts the market keeps taking:
+      - build a very broad file/workspace surface as one server-heavy app
+      - or build a polished control plane while delegating the hard editor/workbench seams to an upstream IDE
+    - PM should learn from both shortcuts without becoming either one:
+      - copy the breadth awareness from the file-heavy systems
+      - copy the explicit runtime/remote control-plane seams from the delegated-backend systems
+      - do **not** collapse PM into a monolithic request layer
+      - do **not** assume the long-term answer is to delegate core editor/file-manager/diff/LSP behavior away if PM’s goal is a strong native Rust + Slint workbench
+  - Cross-cluster robustness pattern now strengthening:
+    - file-manager breadth tends to create correctness/security pressure around uploads, saves, previews, symlinks/paths, encoding, and policy enforcement
+    - remote/container/control-plane products concentrate bugs around runtime startup timing, tunnel/bootstrap instructions, key provisioning, host/container identity mismatches, and environment synthesis
+    - both categories reinforce that PM needs explicit ownership boundaries, not just feature checklists
+  - PM-specific takeaways from this stage:
+    - keep file-manager operations as first-class typed services with strong policy/error handling
+    - treat remote/runtime orchestration as a real control plane with explicit requested vs effective state, launch diagnostics, and recovery paths
+    - if PM ever embeds or interoperates with external editor/workbench engines, keep that as a bounded subsystem rather than the hidden owner of identity, storage, routing, or shell behavior
+- Fourth implementation-reference cluster note (2026-03-20):
+  - A more complete-platform cluster is now visible from `bench-01`, `bench-04`, `bench-09`, `bench-17`, `bench-21`, `bench-29`, and `bench-32`.
+  - Even though these targets look different at the product layer (desktop editor, layered IDE, editor control, collaborative room model, agent workbench), they converge on a few architectural truths:
+    - the serious implementations separate editor/view responsiveness from background work such as file walking, git, indexing, remote RPC, PTY/runtime, or provider-dispatched services
+    - OS-facing behavior keeps coming back as its own seam: open/reveal, dialogs, drag/drop, file watching, URL handoff, path normalization, and process/PTY integration all need platform adapters
+    - identity needs to be explicit and typed (workspace file vs scratch/history/generated/remote/session-bound resource), not inferred indirectly from view placement or path strings alone
+    - ignore handling, search/index walks, and tree visibility often diverge unless they are deliberately unified behind one policy layer
+  - Strong PM-positive patterns from this cluster:
+    - local UI + background worker/proxy split for latency-sensitive editing vs heavier services
+    - service-registered/provider-based seams for file/open/search/undo/terminal/diff/preview routing
+    - explicit document/resource identity enums and persistence keys that preserve local vs remote vs generated distinctions
+    - event-driven platform adapters for file dialogs, reveal/open, drag/drop, and watcher notifications
+    - terminal/runtime sessions treated as reusable long-lived resources, not one-shot command popups
+    - search/history/session-state persistence as a first-class product capability rather than a thin convenience layer
+  - Important cautions from the same cluster:
+    - more complete workbenches still repeatedly struggle with save/recovery, external-change handling, indexing churn, diff roughness, drag/drop crashes, remote bootstrap/security, path normalization, and heavy-refresh performance
+    - Electron/extension-host or CLI-wrapper products often look strong because they inherit mature subsystems, but they also inherit IPC, extension-compatibility, runtime bootstrap, and OS integration fragility
+    - collaboration-first room/file-tree models remain useful for event/state structure but still do not solve PM’s native workspace, diff/review, gitignore, terminal, and durable identity requirements
+    - component-level editor libraries stay useful for editing mechanics only; they are not blueprints for file-manager/search/remote/shell ownership
+  - PM-specific implication from this fourth cluster:
+    - the emerging target architecture is not “a single editor” and not “a shell around somebody else’s editor”; it is a **native workbench with explicit service boundaries**
+    - PM should keep the canonical ownership of identity, storage, search/indexing, diff/review, runtime/terminal, remote, ignore policy, and OS routing in Rust services, with Slint orchestrating the shell and editor-adjacent UI
+    - where external engines or CLIs are reused, they should plug into those boundaries rather than silently define them
+    - this cluster especially strengthens the case for explicit requested-vs-effective state across remote/bootstrap/runtime/indexing seams, because that is where the more complete competitors still leak real operational complexity to users
+- Final implementation-reference synthesis note (2026-03-20):
+  - The full 32-target implementation-reference fleet is complete and persisted in session SQL (`implementation_ref_findings` + `implementation_ref_summaries`).
+  - Cross-fleet conclusion is now firm:
+    - PM should copy the **native workbench with explicit service boundaries** pattern
+    - PM should reinterpret thin-editor/wrapper and IDE-shell lessons as bounded implementation tactics inside a PM-native Rust + Slint architecture
+    - PM should avoid DOM-first core architecture, browser/session identity as workspace truth, approximate diff/review, monolithic request-layer file-manager design, and hidden delegated-backend ownership of core workbench state
+  - Shared Rust core should own:
+    - typed resource identity
+    - buffer/text model
+    - save/recovery/on-disk change transactions
+    - watcher/invalidation normalization
+    - ignore policy
+    - search/indexing/autodetection
+    - LSP brokering
+    - diff/review engine
+    - preview session state
+    - terminal/runtime state
+    - remote/session state machine
+    - command routing and persistence schemas
+  - Platform adapters should own:
+    - native dialogs
+    - OS open/reveal/trash behavior
+    - drag/drop payload translation
+    - watcher backend specifics
+    - PTY/process hosting
+    - keychain/credential access
+    - path/symlink/case-sensitivity queries
+    - clipboard/IME/accessibility bridge details
+    - browser/webview embedding where needed
+  - Highest-priority PM doc reconciliation implications from the synthesis:
+    - unify File Manager and Editor as one shared workspace contract
+    - lock typed identity/open/reveal/save ownership first
+    - fully specify save/dirty/recovery/on-disk change and grouped undo/redo semantics
+    - promote diff/review into shared infrastructure with hunk actions, grouped undo/redo, search-in-diff, conflict UX, and heat-map/change-marker ownership
+    - lock remote as a control plane with explicit requested-vs-effective and degraded-state disclosure across filesystem, LSP/indexing, preview/runtime, and terminal seams
+    - normalize preview/browser/session lifecycle and generated-vs-workspace identity before more packet-level elaboration
+  - Strongest repeated robustness lesson:
+    - the places competitors still fall apart are not the demo seams; they are save/recovery, external-change handling, drag/drop, file explorer correctness, indexing churn, diff fidelity, remote/bootstrap, path normalization, runtime auth/polling, and cross-surface state coherence
+  - This work item is now ready for reconciliation with a materially stronger implementation basis than before the fleet.
 - Current design questions, scope boundaries, and doc impact are not yet enumerated.
 - Relevant contracts, defaults, state rules, and UX expectations are not yet reviewed.
 - Early validated SSH/remote gaps:
@@ -216,6 +621,7 @@
   - all per-target research todos done
   - synthesis todo done
   - work item is ready for reconciliation
+- Research resumed on 2026-03-20 for additional discussion/follow-up; `meta.json` status was reset from `ready_for_reconciliation` back to `active` so downstream stages do not treat this item as closed while research is still in progress.
 - Final external conclusions for PM:
   - **AI-native/workspace-agent products** consistently validate the value of:
     - visible plans, task state, artifacts, and provider/model transparency
@@ -291,6 +697,26 @@
     - Rust core services for workspace, buffers, diff, indexing, persistence, remote/session state, and AI orchestration
     - Slint for pane layout, tree/list surfaces, review chrome, status/task UI, and cross-platform shell behavior
     - specialized renderers only where justified (for example browser-like HTML rendering), rather than letting a web editor/runtime define the whole editor architecture
+  - Copy / avoid / reinterpret framing emerging from the benchmark set:
+    - **Copy directly at the product level**
+      - explicit task/plan/artifact visibility
+      - multi-surface workflows across editor, terminal, preview/browser, docs, and review
+      - virtualized trees, lazy indexing/search, and honest degraded/indexing states
+      - durable workspace persistence: tabs, splits, windows, scroll/cursor, recovery
+      - reusable diff/review pipelines with hunk-level actions and trustworthy apply/revert flows
+      - project/framework autodetection that changes tooling affordances automatically
+      - remote/reconnect/offline messaging that exposes cache/read-only/fallback state clearly
+    - **Avoid copying as implementation defaults**
+      - thin DOM/editor-wrapper assumptions for the whole product architecture
+      - approximate diff/merge implementations that are marker-based or visually convenient but not operationally trustworthy
+      - ephemeral collaboration/session models without durable recovery
+      - Electron/browser behavior assumptions around resize, IME, clipboard, workers, and shadow-DOM/container lifecycles
+      - silent partial failure where indexing/LSP/remote/auth is degraded but the UI pretends everything is normal
+    - **Reinterpret for Rust + Slint**
+      - make buffers, diff, indexing, remote state, and persistence Rust-owned core services
+      - use Slint for workbench/pane/review/task chrome, not as the sole owner of text/render logic
+      - embed specialized renderers only for bounded surfaces like HTML-style preview rather than letting them define the editor core
+      - preserve product ideas from AI-native and IDE tools while reimplementing them in cross-platform-safe native contracts
   - Platform portability pressure is real across:
     - IME/input behavior
     - path normalization and symlink semantics

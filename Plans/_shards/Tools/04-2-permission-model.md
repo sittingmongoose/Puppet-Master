@@ -29,18 +29,32 @@ Config is stored in TOML files at deterministic paths (global: `~/.config/puppet
 FileSafe runs **in addition to** tool permissions. A tool may be **allowed** by permission but still **blocked** by FileSafe. Tool permission = "may the agent call this tool?"; FileSafe = "may this specific invocation proceed?". See `Plans/FileSafe.md`. The policy engine applies both layers in order: permission first, then FileSafe. Full integration order: §10.6.
 
 ### 2.4.1 Central policy engine contract
+Every agent-usable tool attempt MUST pass through one canonical policy engine that resolves permission, approval/HITL, FileSafe, execution, terminal binding when relevant, and result normalization.
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
-Every agent-usable tool attempt MUST pass through one canonical policy engine that resolves permission, approval/HITL, FileSafe, execution, and result normalization.
 
 Canonical order:
 1. resolve tool identity and permission
 2. evaluate `allow` / `ask` / `deny`
 3. if `ask`, resolve approval or headless fallback
 4. apply FileSafe and other invocation validation
-5. execute or reject
-6. normalize the terminal outcome for persistence/analytics
+5. resolve terminal or shell binding for shell-capable actions
+6. execute or reject
+7. normalize the terminal outcome for persistence, analytics, and reveal-linkback behavior
 
-At minimum, the normalized terminal outcome set MUST distinguish:
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+Shell-binding rules:
+- `bash` and any canonical shell-backed execution path resolve through the terminal process-host contract when they create or bind shell state
+- non-interactive or hidden shell execution may suppress opening the terminal UI, but it still binds to canonical terminal-session state when execution actually occurs
+- denied or blocked shell calls do not mint fake live terminal sessions
+- chat command cards and other preview surfaces consume normalized terminal state rather than replacing terminal ownership
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+At minimum, the normalized tool-result taxonomy MUST distinguish:
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
 - `allowed_succeeded`
 - `allowed_runtime_error`
 - `permission_denied`
@@ -52,10 +66,11 @@ At minimum, the normalized terminal outcome set MUST distinguish:
 - `timed_out`
 - `post_scan_failure`
 
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
 This document owns the normalized tool-result taxonomy and policy order. Provider docs emit observations; storage docs persist normalized results.
 
-ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/CLI_Bridged_Providers.md
-
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 ### 2.5 Cross-plan references
 
 | Plan | Relation to tool permissions |

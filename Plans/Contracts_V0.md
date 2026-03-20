@@ -477,7 +477,6 @@ Older request-centric payloads may continue to carry `request_id` for lineage an
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
 ## 7. UICommand
-
 `UICommand` is the canonical command envelope. Shared navigation and identity-open primitives sit underneath public wrapper commands rather than beside them.
 
 ### 7.1 UICommand envelope
@@ -501,6 +500,7 @@ Rules:
 - deprecated aliases point at `alias_of_command_id`
 - stable wrapper commands point at `normalizes_to_contract`
 - wrapper commands remain user-facing command IDs; they do not disappear behind a public `cmd.nav.*` family
+- shell-facing commands may carry terminal-scoped identity args, but those identities still normalize through the canonical route and persistence model
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Crosswalk.md
 
@@ -515,6 +515,12 @@ Allowed focus fields:
 - `focused_run_id`
 - `thread_id`
 - `tab_id`
+- `browser_session_id`
+- `terminal_section_id`
+- `terminal_tab_id`
+- `terminal_pane_id`
+- `terminal_session_id`
+- `dev_session_id`
 - `inspector_target`
 
 Exactly one selector is required:
@@ -527,6 +533,7 @@ Exactly one selector is required:
 - `bottom_panel`
 - `embedded_surface`
 - `page_tab`
+- `detached_window`
 
 `subject_id` is closed to:
 - `doc:<document_id>`
@@ -552,6 +559,12 @@ Exactly one selector is required:
 - `promotion`
 - `graph_patch`
 - `graph_generation`
+- `browser_session`
+- `terminal_section`
+- `terminal_tab`
+- `terminal_pane`
+- `terminal_session`
+- `dev_session`
 
 `inspector_target` is closed to:
 - `summary`
@@ -567,6 +580,8 @@ Rules:
 - `project_id` is required
 - route activation must override remembered shell state when needed to reveal the requested object, scope, and destination surface
 - route activation may reuse remembered shell state when that state still reveals the requested object cleanly
+- terminal routes prefer exact same-session reveal when `terminal_session_id` is supplied and still resolvable
+- historical terminal routes may reveal a historical pane or receipt view, but they MUST NOT synthesize live PTY continuity
 - `resume_url` is serialized transport only and decodes to `route_target`; it is not a stronger parallel primitive
 
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
@@ -587,6 +602,7 @@ Rules:
 - `OpenSubject` resolves canonical identity to the best source realization
 - `OpenSubject` may resolve to `OpenFile` or to a transient `generated://<artifact_id>` buffer
 - transport details do not belong in the `OpenSubject` contract itself
+- terminal, dev-session, and browser-session reveals normalize through `route_target` rather than overloading `OpenSubject`
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 ## 8. UI Scaling

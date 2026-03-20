@@ -54,7 +54,7 @@ puppet-master-rs/
 |   +-- panels/                       # Detachable panel content
 |   |   +-- chat_panel.slint
 |   |   +-- file_manager_panel.slint
-|   |   +-- bottom_panel.slint          # Terminal/Problems/Output/Ports/Browser/Debug tabs
+|   |   +-- bottom_panel.slint          # Terminal/Problems/Output/Ports/Debug tabs plus browser-adjacent panes
 |   |   +-- browser_panel.slint         # NEW - Webview host + URL bar + bookmarks
 |   |   +-- debug_panel.slint           # NEW - DAP debug UI (variables, call stack, breakpoints)
 |   +-- windows/                      # Secondary windows

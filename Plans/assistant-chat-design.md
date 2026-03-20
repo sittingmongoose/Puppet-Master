@@ -810,13 +810,41 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, Co
 Assistant Chat may preview shell-backed work inline, but the canonical interactive session remains the Terminal surface.
 
 Rules:
-- one inline command card per command invocation
+- one inline command card corresponds to one observed command invocation
 - collapsed preview defaults to 5 lines; expanded preview defaults to 15 lines
-- `Open in Terminal` focuses the same live session rather than spawning a fresh shell
-- chat owns a compact audit/preview view; Terminal owns the canonical interactive PTY session
+- `Open in Terminal` and `Show Terminal` resolve to exact-session reveal when a `terminal_session_id` binding exists
+- chat owns a compact audit and preview layer; Terminal owns the canonical interactive PTY session
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
 
+### Command-card model
+Command cards are transcript-adjacent summaries rather than a second shell implementation.
+
+Rules:
+- cards surface summary, status, and a primary reveal action without pretending to own the full shell lifecycle
+- when shell integration is `rich` or `basic`, command cards may expose cwd, duration, exit code, and command labels according to confidence tier
+- when shell integration is `opaque`, the card MUST degrade to lower-confidence activity disclosure and MUST NOT fabricate exact command text or exact command boundaries
+- transcript continuity remains canonical even when command-card metadata is degraded
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
+
+### Reveal and focus behavior
+- if the referenced terminal session is already visible, `Open in Terminal` and `Show Terminal` simply focus it
+- if the session is hidden inside another pane, tab, or section, the shell reveals the existing pane or tab before creating anything new
+- if only historical state remains, the card opens that historical shell receipt and presents explicit recovery actions instead of silently creating a replacement session
+- explicit `New Terminal` and explicit restart remain separate user-visible actions
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+
+### Status, degradation, and linked-surface behavior
+Command-card status badges may reflect `starting`, `running`, `exited`, `failed`, `terminated`, `disconnected`, `restoring`, and `attention_required`.
+
+Rules:
+- chat preview stays compact even when the terminal transcript is large
+- Output, Problems, Debug Console, and Ports continue to route through the owning terminal or dev-session identity rather than through chat-local state
+- command cards may link to Output, Problems, or Ports when the command or dev session produced those linked surfaces
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
 ### 13.4 Shared runtime identity display
 Assistant Chat may display requested/effective runtime identity, but it must consume the owner-doc shared runtime model rather than invent assistant-local fields.
 
@@ -1150,10 +1178,27 @@ Live testing and hot reload are dev-session operations.
 
 Rules:
 - assistant-invoked dev actions map to stable UI commands and visible shell state changes
-- `start hot reload dev mode`, `start dev server`, and `run tests in watch mode` are user-facing intents that must resolve to canonical `cmd.*` IDs in the UI command catalog
-- the chat surface shows whether a dev session is starting, active, failed, stopping, or stopped
-- output routes into the canonical terminal/output/ports surfaces owned by the shell; chat does not create a parallel dev-output model
+- `start hot reload dev mode`, `start dev server`, and `run tests in watch mode` are user-facing intents that resolve to canonical `cmd.dev.*` or terminal command IDs
+- the chat surface shows whether a dev session is starting, active, failed, stopping, stopped, or restored as historical state
+- output routes into the canonical Terminal, Output, Problems, Debug Console, and Ports surfaces owned by the shell; chat does not create a parallel dev-output model
 - project switch or workspace-tab close must surface explicit consequences for any active dev session
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FileManager.md
+
+### Dev-session and terminal binding
+- a dev session may own or link multiple terminal sessions without collapsing them into one PTY identity
+- `Show Output`, `Show Problems`, and `Show Ports` reveal the surfaces linked to the current `dev_session_id`
+- `Open in Terminal` from a dev-status row reveals the primary or last-active `terminal_session_id` for that dev session when one exists
+- stopping a dev session preserves historical shell evidence and linked surface history even when the live process has exited
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+### Project-switch and close rules
+- switching projects recalculates effective shell, tool, and dev-session state for the new project context
+- background activity from the old project remains visible through badges and attention surfaces tied to its own project and session identities
+- closing a workspace tab or terminal tab with an active dev session requires explicit consequence disclosure; Puppet Master MUST NOT silently orphan the background workflow by default
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Run_Modes.md
 ## 23. Gaps, Competitive Comparison, and Enhancements
 
 This section reviews the Assistant & Chat plan for **gaps**, **potential problems**, and **competitive coverage** (vs. OpenCode, Claude Code, Codex, Gemini, Antigravity, Cursor). **All gaps listed below are adopted as MVP:** the main body of this plan (§1-§22) has been updated to include every adopted requirement (slash commands, interrupt vs. stop, up to 2 queued messages FIFO, Plan read-only until execute, thinking toggle, export, compact, model switch UI, resume/rewind, revert last edit, session share, HITL dashboard + thread notification).

@@ -54,6 +54,14 @@ ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Gra
 - **projection_health**: `healthy | degraded | unavailable`.
 - **route_target**: the canonical navigation-and-focus contract.
 - **OpenSubject**: the canonical identity-native source-open contract.
+- **Terminal Section**: the presentation-level terminal container that owns dock/detach state and ordered terminal tabs.
+- **Terminal Tab**: the terminal workspace container that owns title, pin state, order, and selected pane state.
+- **Terminal Pane**: the split-tree slot inside a terminal tab that binds to exactly one live or historical terminal session at a time.
+- **Terminal Session**: the canonical PTY/runtime identity for exact shell continuity.
+- **Dev Session**: the higher-level dev workflow identity that may link multiple terminal, Output, Problems, Debug Console, and Ports surfaces without replacing terminal-session identity.
+- **Command Block**: transcript-layer metadata anchored to one observed command invocation; it is not a replacement for the underlying terminal transcript.
+- **Shell Integration Tier**: the disclosed confidence tier for command/cwd/prompt metadata (`rich | basic | opaque`).
+- **Restore Outcome**: the disclosed recovery result for restored shell state (`restored_live | restored_exited | restored_disconnected | restored_without_history`).
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileManager.md
 ## 3. Anti-drift documents

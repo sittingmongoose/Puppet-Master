@@ -101,7 +101,7 @@ At the top of the primary content area, a breadcrumb strip (20px) shows `Group >
 | `F11` | Step Into (debug) |
 | `Shift+F11` | Step Out (debug) |
 | `Shift+F5` | Stop debug |
-| `Ctrl+Shift+B` | Toggle Browser tab in bottom panel |
+| `Ctrl+Shift+B` | Focus Browser |
 
 **Shortcut registry:** A Rust-side registry maps (modifiers + key) to actions. Platform-specific modifier normalization (Cmd on macOS, Ctrl on Windows/Linux). The "Keyboard shortcuts" help view is auto-generated from this registry.
 
