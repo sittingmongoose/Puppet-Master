@@ -207,6 +207,9 @@ Rules:
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 ### 2.6A Render / browser preview commands
+Browser, terminal, and dev-session commands share one shell/runtime interaction family. Browser commands own browser-session behavior, terminal commands own section or tab or pane or session behavior, and dev commands own dev-workflow behavior.
+
+#### Browser preview and browsing commands
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
 | `cmd.browser.open_workspace_preview` | `{ project_id, target, workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, editor/browser tab |
@@ -231,17 +234,61 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Fin
 | `cmd.browser.reopen` | `{ browser_session_id }` | `browser.session.state_changed` | recovery banner, attention center |
 | `cmd.browser.retry` | `{ browser_session_id }` | `browser.session.state_changed` | recovery banner, attention center |
 | `cmd.browser.keep_closed` | `{ browser_session_id }` | `browser.session.closed` | recovery banner, attention center |
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+
+#### Terminal session and layout commands
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.terminal.show` | `{ project_id, workspace_tab_id?, terminal_session_id?, terminal_tab_id?, terminal_pane_id?, section_id? }` | layout/UI state only | chat command cards, command palette, output/problems/ports linkbacks |
+| `cmd.terminal.new_tab` | `{ project_id, workspace_tab_id, section_id?, cwd?, shell_profile?, title? }` | `terminal.session.created`, `terminal.layout.changed` | terminal header, command palette, toolbar |
+| `cmd.terminal.split_pane` | `{ terminal_tab_id, source_pane_id, split:'horizontal'|'vertical', cwd?, shell_profile?, title? }` | `terminal.session.created`, `terminal.layout.changed` | terminal tab chrome |
+| `cmd.terminal.focus_session` | `{ terminal_session_id }` | layout/UI state only | command cards, output/problems/ports linkbacks |
+| `cmd.terminal.move_tab_to_section` | `{ terminal_tab_id, target_section_id }` | `terminal.layout.changed` | terminal tab context menu |
+| `cmd.terminal.rename_tab` | `{ terminal_tab_id, title }` | `terminal.layout.changed` | terminal tab chrome |
+| `cmd.terminal.pin_tab` | `{ terminal_tab_id, pinned }` | `terminal.layout.changed` | terminal tab chrome |
+| `cmd.terminal.close_pane` | `{ terminal_pane_id, termination_policy? }` | `terminal.layout.changed`, `terminal.session.state_changed` | terminal pane chrome |
+| `cmd.terminal.close_tab` | `{ terminal_tab_id, termination_policy? }` | `terminal.layout.changed`, `terminal.session.state_changed` | terminal tab chrome |
+| `cmd.terminal.clear_scrollback` | `{ terminal_session_id }` | `terminal.session.state_changed` | terminal chrome, command palette |
+| `cmd.terminal.restart_session` | `{ terminal_session_id }` | `terminal.session.restarting`, `terminal.session.created` | terminal chrome, recovery banner |
+| `cmd.terminal.terminate_session` | `{ terminal_session_id }` | `terminal.session.terminating`, `terminal.session.exited` | terminal chrome |
+| `cmd.terminal.kill_session` | `{ terminal_session_id }` | `terminal.session.killed` | terminal chrome, recovery banner |
+| `cmd.terminal.detach_section` | `{ terminal_section_id }` | `terminal.layout.changed` | terminal section chrome, command palette |
+| `cmd.terminal.reattach_section` | `{ terminal_section_id, dock_target? }` | `terminal.layout.changed` | detached terminal window, command palette |
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+
+#### Dev-session commands
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
 | `cmd.dev.start_session` | `{ project_id, workspace_tab_id, mode, target? }` | `dev.session.started` | Toolbar, Chat, Ports, Terminal |
 | `cmd.dev.stop_session` | `{ dev_session_id }` | `dev.session.stopping`, `dev.session.stopped` | Toolbar, Chat, Ports, Terminal |
 | `cmd.dev.restart_session` | `{ dev_session_id }` | `dev.session.restarting`, `dev.session.started` | Toolbar, Chat, Ports, Terminal |
+| `cmd.dev.show_output` | `{ dev_session_id }` | layout/UI state only | Toolbar, Chat, Output |
+| `cmd.dev.show_problems` | `{ dev_session_id }` | layout/UI state only | Toolbar, Chat, Problems |
+| `cmd.dev.show_ports` | `{ dev_session_id }` | layout/UI state only | Toolbar, Chat, Ports |
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+
+#### Catalog lifecycle commands
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
 | `cmd.catalog.install_item` | `{ item_type, item_id, version? }` | `catalog.install.started`, `catalog.install.completed` | Catalog |
 | `cmd.catalog.update_item` | `{ item_type, item_id, target_version? }` | `catalog.update.started`, `catalog.update.completed` | Catalog |
 | `cmd.catalog.remove_item` | `{ item_type, item_id }` | `catalog.remove.started`, `catalog.remove.completed` | Catalog |
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
-#### Chat message action commands
+Rules:
+- `Open in Terminal` and `Show Terminal` normalize to `cmd.terminal.show`; they do not imply `cmd.terminal.new_tab`
+- `cmd.terminal.restart_session` replaces runtime identity and rebinds the chosen pane or tab to a new `terminal_session_id`
+- `cmd.terminal.clear_scrollback` preserves runtime identity
+- close commands are layout actions unless `termination_policy` requests runtime shutdown
+- `cmd.dev.show_output`, `cmd.dev.show_problems`, and `cmd.dev.show_ports` reveal surfaces linked to the owning `dev_session_id`
 
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
+
+#### Chat message action commands
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
 | `cmd.chat.copy_message` | `{ thread_id, message_id }` | no persisted domain event | Message hover row |

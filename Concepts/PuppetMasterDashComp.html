@@ -6,7 +6,7 @@
   <title>Puppet Master - Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Orbitron:wght@700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     .wizard-doc-pill { cursor: pointer; }
     /* --- REDESIGNED WIZARD & CHAT SYSTEM --- */
@@ -159,6 +159,1638 @@
       --border-radius: 4px;
       --border-width: 1px;
       --grid-gap: 24px;
+    }
+
+    /* ====================================================================
+       THEMES 5 & 6 — GLASS DARK / GLASS LIGHT
+       Liquid glass panels, colored tints, soft glow, no hard borders
+       ==================================================================== */
+
+    /* --- Glass Dark: deep black base, vivid neon glow --- */
+    [data-theme="glass-dark"] {
+      --background: #050810;
+      --surface: rgba(8, 12, 24, 0.40);
+      --surface-elevated: rgba(15, 20, 35, 0.50);
+      --text-primary: #f0f4f8;
+      --text-secondary: rgba(148, 163, 184, 0.9);
+      --text-muted: rgba(100, 116, 139, 0.7);
+      --border: transparent;
+      --border-light: transparent;
+      --accent-blue: #22d3ee;
+      --accent-magenta: #f472b6;
+      --accent-lime: #2dd4bf;
+      --accent-orange: #fb923c;
+      --graph-pending: rgba(100, 116, 139, 0.6);
+      --graph-running: #fbbf24;
+      --graph-passed: #34d399;
+      --graph-failed: #f87171;
+      --graph-planning: #60a5fa;
+      --graph-gating: #c084fc;
+      --shadow: 0 0 30px rgba(34, 211, 238, 0.10);
+      --display-font: 'Exo 2', 'Inter', system-ui, sans-serif;
+      --body-font: 'Inter', system-ui, sans-serif;
+      --border-radius: 12px;
+      --border-width: 0px;
+      --base-font-size: 14px;
+      --line-height: 1.5;
+      --letter-spacing: 0.01em;
+      --grid-gap: 20px;
+    }
+
+    /* --- Glass Light: bright translucent base, soft glow --- */
+    [data-theme="glass-light"] {
+      --background: #b8c8de;
+      --surface: rgba(180, 215, 235, 0.40);
+      --surface-elevated: rgba(190, 220, 240, 0.55);
+      --text-primary: #1a1a2e;
+      --text-secondary: #3b3b5c;
+      --text-muted: #6b7280;
+      --border: transparent;
+      --border-light: transparent;
+      --accent-blue: #0891b2;
+      --accent-magenta: #db2777;
+      --accent-lime: #0d9488;
+      --accent-orange: #ea580c;
+      --graph-pending: #9ca3af;
+      --graph-running: #d97706;
+      --graph-passed: #059669;
+      --graph-failed: #dc2626;
+      --graph-planning: #2563eb;
+      --graph-gating: #7c3aed;
+      --shadow: 0 0 20px rgba(8, 145, 178, 0.18);
+      --display-font: 'Exo 2', 'Inter', system-ui, sans-serif;
+      --body-font: 'Inter', system-ui, sans-serif;
+      --border-radius: 12px;
+      --border-width: 0px;
+      --base-font-size: 14px;
+      --line-height: 1.5;
+      --letter-spacing: 0.01em;
+      --grid-gap: 20px;
+    }
+
+    /* --- Glass: shared animated background setup --- */
+    [data-theme^="glass"] .app-shell {
+      position: relative;
+      z-index: 1;
+    }
+    [data-theme^="glass"] .app-shell::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      animation: glassRayRotate 30s linear infinite;
+      pointer-events: none;
+    }
+
+    /* --- Glass Dark: animated background --- */
+    [data-theme="glass-dark"] body,
+    [data-theme="glass-dark"] html {
+      background: #050810;
+    }
+    [data-theme="glass-dark"] .app-shell::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 40%, rgba(34, 211, 238, 0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 60% at 80% 20%, rgba(244, 114, 182, 0.20) 0%, transparent 50%),
+        radial-gradient(ellipse 70% 40% at 50% 80%, rgba(45, 212, 191, 0.18) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 50% at 65% 55%, rgba(139, 92, 246, 0.14) 0%, transparent 45%),
+        radial-gradient(ellipse 40% 60% at 10% 70%, rgba(34, 211, 238, 0.12) 0%, transparent 40%),
+        linear-gradient(180deg, #050810 0%, #0a0e1a 30%, #15102e 60%, #1a1535 100%);
+      animation: glassBgShift 20s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    [data-theme="glass-dark"] .app-shell::after {
+      background:
+        conic-gradient(from 0deg at 30% 30%, transparent 0deg, rgba(34, 211, 238, 0.08) 30deg, transparent 60deg),
+        conic-gradient(from 180deg at 70% 70%, transparent 0deg, rgba(244, 114, 182, 0.06) 20deg, transparent 40deg);
+    }
+
+    /* --- Glass Light: animated background --- */
+    [data-theme="glass-light"] body,
+    [data-theme="glass-light"] html {
+      background: #b8c8de;
+    }
+    [data-theme="glass-light"] .app-shell::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 40%, rgba(8, 145, 178, 0.35) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 60% at 80% 20%, rgba(219, 39, 119, 0.25) 0%, transparent 50%),
+        radial-gradient(ellipse 70% 40% at 50% 80%, rgba(13, 148, 136, 0.28) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 50% at 65% 55%, rgba(124, 58, 237, 0.20) 0%, transparent 45%),
+        radial-gradient(ellipse 40% 60% at 10% 70%, rgba(8, 145, 178, 0.22) 0%, transparent 40%),
+        linear-gradient(180deg, #b8c8de 0%, #adc0d6 30%, #a3b8ce 60%, #9eb3c8 100%);
+      animation: glassBgShift 20s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    [data-theme="glass-light"] .app-shell::after {
+      background:
+        conic-gradient(from 0deg at 30% 30%, transparent 0deg, rgba(8, 145, 178, 0.14) 30deg, transparent 60deg),
+        conic-gradient(from 180deg at 70% 70%, transparent 0deg, rgba(219, 39, 119, 0.12) 20deg, transparent 40deg);
+    }
+
+    /* --- Glassmorphic: LIQUID GLASS multi-layer panels --- */
+
+    /* === Content z-index lift (all glass panels) === */
+    [data-theme^="glass"] .bento-card > *,
+    [data-theme^="glass"] .widget-card > *,
+    [data-theme^="glass"] .floating-chat > *,
+    [data-theme^="glass"] .title-bar > *,
+    [data-theme^="glass"] .chat-panel > *,
+    [data-theme^="glass"] .files-panel > *,
+    [data-theme^="glass"] .project-card-bento > * {
+      position: relative;
+      z-index: 3;
+    }
+
+    /* === BENTO CARD — full liquid glass === */
+    [data-theme^="glass"] .bento-card {
+      position: relative;
+      overflow: hidden;
+      border: none;
+      border-radius: 16px;
+    }
+    [data-theme^="glass"] .bento-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      filter: url(#glass-distortion);
+      border-radius: inherit;
+    }
+    [data-theme^="glass"] .bento-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      border-radius: inherit;
+      box-shadow:
+        inset 2px 2px 1px 0 rgba(255, 255, 255, 0.25),
+        inset -1px -1px 1px 1px rgba(255, 255, 255, 0.15);
+      pointer-events: none;
+    }
+    [data-theme^="glass"] .bento-card:hover {
+      box-shadow: 0 0 24px var(--glass-glow-color, rgba(34, 211, 238, 0.2)), 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    /* === WIDGET CARD — full liquid glass === */
+    [data-theme^="glass"] .widget-card {
+      position: relative;
+      overflow: hidden;
+      border: none;
+      border-radius: 12px;
+    }
+    [data-theme^="glass"] .widget-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      filter: url(#glass-distortion);
+      border-radius: inherit;
+    }
+    [data-theme^="glass"] .widget-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      border-radius: inherit;
+      box-shadow:
+        inset 2px 2px 1px 0 rgba(255, 255, 255, 0.25),
+        inset -1px -1px 1px 1px rgba(255, 255, 255, 0.15);
+      pointer-events: none;
+    }
+
+    /* === FLOATING CHAT — full liquid glass === */
+    [data-theme^="glass"] .floating-chat {
+      position: relative;
+      overflow: hidden;
+      border: none;
+      border-radius: 16px;
+    }
+    [data-theme^="glass"] .floating-chat::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      filter: url(#glass-distortion);
+      border-radius: inherit;
+    }
+    [data-theme^="glass"] .floating-chat::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      border-radius: inherit;
+      box-shadow:
+        inset 2px 2px 1px 0 rgba(255, 255, 255, 0.30),
+        inset -1px -1px 1px 1px rgba(255, 255, 255, 0.20);
+      pointer-events: none;
+    }
+
+    /* === PROJECT CARD — full liquid glass === */
+    [data-theme^="glass"] .project-card-bento {
+      position: relative;
+      overflow: hidden;
+      border: none;
+      border-radius: 12px;
+    }
+    [data-theme^="glass"] .project-card-bento::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      filter: url(#glass-distortion);
+      border-radius: inherit;
+    }
+    [data-theme^="glass"] .project-card-bento::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      border-radius: inherit;
+      box-shadow:
+        inset 2px 2px 1px 0 rgba(255, 255, 255, 0.20),
+        inset -1px -1px 1px 1px rgba(255, 255, 255, 0.12);
+      pointer-events: none;
+    }
+
+    /* === TITLE BAR — subtle liquid glass === */
+    [data-theme^="glass"] .title-bar {
+      position: relative;
+      overflow: hidden;
+      border-bottom: none;
+    }
+    [data-theme^="glass"] .title-bar::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      filter: url(#glass-distortion-subtle);
+    }
+    [data-theme^="glass"] .title-bar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      box-shadow:
+        inset 0 2px 1px 0 rgba(255, 255, 255, 0.20),
+        inset 0 -1px 1px 0 rgba(255, 255, 255, 0.10);
+      pointer-events: none;
+    }
+
+    /* === CHAT PANEL — subtle liquid glass === */
+    [data-theme^="glass"] .chat-panel {
+      position: relative;
+      overflow: hidden;
+      border-left: none;
+    }
+    [data-theme^="glass"] .chat-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      filter: url(#glass-distortion-subtle);
+    }
+    [data-theme^="glass"] .chat-panel::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      box-shadow:
+        inset 1px 1px 1px 0 rgba(255, 255, 255, 0.15),
+        inset -1px -1px 1px 0 rgba(255, 255, 255, 0.10);
+      pointer-events: none;
+    }
+
+    /* === FILES PANEL — subtle liquid glass === */
+    [data-theme^="glass"] .files-panel {
+      position: relative;
+      overflow: hidden;
+      border: none;
+    }
+    [data-theme^="glass"] .files-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      filter: url(#glass-distortion-subtle);
+    }
+    [data-theme^="glass"] .files-panel::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      box-shadow:
+        inset 1px 1px 1px 0 rgba(255, 255, 255, 0.20),
+        inset -1px -1px 1px 0 rgba(255, 255, 255, 0.10);
+      pointer-events: none;
+    }
+    [data-theme^="glass"] .files-panel-header {
+      border-left: 4px solid var(--accent-blue);
+      border-bottom: none;
+    }
+
+    /* === SIMPLER PANELS (no SVG filter — too narrow/thin) === */
+    [data-theme^="glass"] .activity-bar {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-right: none;
+      box-shadow: inset -1px 0 1px 0 rgba(255, 255, 255, 0.10);
+    }
+    [data-theme^="glass"] .left-panel {
+      --surface-alt: rgba(10, 14, 23, 0.20);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    [data-theme^="glass"] .chat-thread-sidebar {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-right: none;
+      box-shadow: inset -1px 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+    [data-theme^="glass"] .status-bar {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-top: none;
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.08);
+    }
+    [data-theme^="glass"] .bottom-panel {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    /* --- Glassmorphic: glowing interactive elements --- */
+    [data-theme^="glass"] .title-bar .page-tabs .page-tab.active {
+      background: rgba(34, 211, 238, 0.2);
+      color: #22d3ee;
+      border-color: rgba(34, 211, 238, 0.4);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.3), 0 0 4px rgba(34, 211, 238, 0.15) inset;
+      text-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
+    }
+    [data-theme^="glass"] .activity-bar .icon.active {
+      color: var(--accent-blue);
+      text-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
+    }
+    [data-theme^="glass"] .activity-bar .icon.active::before {
+      background: var(--accent-blue);
+      box-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
+    }
+    [data-theme^="glass"] .wizard-btn {
+      background: rgba(30, 41, 59, 0.25);
+      border: 1px solid rgba(148, 163, 184, 0.08);
+      border-radius: 8px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.10);
+      transition: all 0.25s ease;
+    }
+    [data-theme^="glass"] .wizard-btn:hover:not(:disabled) {
+      background: rgba(34, 211, 238, 0.1);
+      border-color: rgba(34, 211, 238, 0.4);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.2);
+      color: #22d3ee;
+    }
+    [data-theme^="glass"] .wizard-btn.primary {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.3), rgba(45, 212, 191, 0.3));
+      color: #f0f4f8;
+      border: 1px solid rgba(34, 211, 238, 0.5);
+      box-shadow: 0 0 16px rgba(34, 211, 238, 0.2), 0 0 4px rgba(34, 211, 238, 0.1) inset;
+      text-shadow: 0 0 6px rgba(34, 211, 238, 0.4);
+    }
+    [data-theme^="glass"] .wizard-btn.primary:hover:not(:disabled) {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.5), rgba(45, 212, 191, 0.5));
+      box-shadow: 0 0 24px rgba(34, 211, 238, 0.4), 0 0 8px rgba(34, 211, 238, 0.2) inset;
+    }
+    [data-theme^="glass"] .orchestrator-buttons button {
+      background: rgba(30, 41, 59, 0.30);
+      border: 1px solid rgba(148, 163, 184, 0.08);
+      border-radius: 8px;
+    }
+    [data-theme^="glass"] .orchestrator-buttons button.primary {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.25), rgba(45, 212, 191, 0.25));
+      color: #f0f4f8;
+      border-color: rgba(34, 211, 238, 0.4);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.15);
+    }
+
+    /* --- Glassmorphic: status badges --- */
+    [data-theme^="glass"] .status-badge {
+      background: rgba(45, 212, 191, 0.2);
+      color: var(--accent-lime);
+      border: 1px solid rgba(45, 212, 191, 0.4);
+      box-shadow: 0 0 8px rgba(45, 212, 191, 0.2);
+      border-radius: 6px;
+    }
+    [data-theme^="glass"] .status-badge.idle {
+      background: rgba(100, 116, 139, 0.2);
+      color: var(--text-secondary);
+      border-color: rgba(100, 116, 139, 0.3);
+      box-shadow: none;
+    }
+    [data-theme^="glass"] .status-badge.paused {
+      background: rgba(251, 146, 60, 0.2);
+      color: var(--accent-orange);
+      border-color: rgba(251, 146, 60, 0.4);
+      box-shadow: 0 0 8px rgba(251, 146, 60, 0.2);
+    }
+    [data-theme^="glass"] .status-badge.error {
+      background: rgba(244, 114, 182, 0.2);
+      color: var(--accent-magenta);
+      border-color: rgba(244, 114, 182, 0.4);
+      box-shadow: 0 0 8px rgba(244, 114, 182, 0.2);
+    }
+
+    /* --- Glassmorphic: progress bars --- */
+    [data-theme^="glass"] .progress-bar {
+      background: rgba(148, 163, 184, 0.1);
+      border-radius: 4px;
+    }
+    [data-theme^="glass"] .progress-bar .fill {
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-lime));
+      box-shadow: 0 0 8px rgba(34, 211, 238, 0.4);
+      border-radius: 4px;
+    }
+
+    /* --- Glassmorphic: focus states --- */
+    [data-theme^="glass"] button:focus-visible,
+    [data-theme^="glass"] .page-tab:focus-visible,
+    [data-theme^="glass"] .orch-tab:focus-visible,
+    [data-theme^="glass"] input:focus-visible,
+    [data-theme^="glass"] select:focus-visible,
+    [data-theme^="glass"] textarea:focus-visible {
+      outline-color: var(--accent-blue);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.3);
+    }
+
+    /* --- Glassmorphic: chat components --- */
+    [data-theme^="glass"] .chat-thread-item {
+      background: rgba(30, 41, 59, 0.25);
+      border: 1px solid transparent;
+      border-radius: 8px;
+      box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.08);
+      transition: all 0.2s ease;
+    }
+    [data-theme^="glass"] .chat-thread-item:hover {
+      background: rgba(30, 41, 59, 0.45);
+      border-color: rgba(34, 211, 238, 0.15);
+    }
+    [data-theme^="glass"] .chat-thread-item.active {
+      background: rgba(34, 211, 238, 0.08);
+      border-color: rgba(34, 211, 238, 0.4);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.15);
+    }
+    [data-theme^="glass"] .message.assistant .msg-body {
+      background: rgba(30, 41, 59, 0.25);
+      border-left: 2px solid var(--accent-blue);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.08);
+    }
+    [data-theme^="glass"] .message.user .msg-body {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(45, 212, 191, 0.2));
+      color: var(--text-primary);
+      border: 1px solid rgba(34, 211, 238, 0.3);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.1);
+    }
+    [data-theme^="glass"] .chat-modes .mode.active {
+      background: rgba(34, 211, 238, 0.2);
+      color: #22d3ee;
+      border: 1px solid rgba(34, 211, 238, 0.4);
+      box-shadow: 0 0 8px rgba(34, 211, 238, 0.2);
+    }
+    [data-theme^="glass"] .chat-input-area textarea {
+      background: rgba(15, 23, 42, 0.35);
+      border: 1px solid rgba(148, 163, 184, 0.08);
+      border-radius: 8px;
+    }
+    [data-theme^="glass"] .chat-input-area textarea:focus {
+      border-color: rgba(34, 211, 238, 0.4);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.15);
+    }
+    [data-theme^="glass"] .chat-new-thread-btn {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(45, 212, 191, 0.2));
+      color: #f0f4f8;
+      border: 1px solid rgba(34, 211, 238, 0.3);
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(34, 211, 238, 0.15);
+    }
+    [data-theme^="glass"] .message-block {
+      border-left-color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .message-files-touched a {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .chat-footer .context-progress.filled {
+      background: var(--accent-blue);
+      box-shadow: 0 0 4px rgba(34, 211, 238, 0.4);
+    }
+    [data-theme^="glass"] .bottom-tabs .tab.active {
+      color: var(--accent-blue);
+      text-shadow: 0 0 6px rgba(34, 211, 238, 0.4);
+    }
+    [data-theme^="glass"] .steer-queue-toggle span.active {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .message.msg-focused .msg-body {
+      border-color: var(--accent-blue) !important;
+      background: rgba(34, 211, 238, 0.1) !important;
+      box-shadow: 0 0 20px rgba(34, 211, 238, 0.3) !important;
+    }
+
+    /* --- Glass: solid chat components → glass treatment --- */
+    [data-theme^="glass"] .chat-panel-header-stacked {
+      background: transparent;
+      border-bottom: none;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    [data-theme^="glass"] .chat-modes {
+      border-bottom: none;
+    }
+    [data-theme^="glass"] .chat-header-workflow {
+      background: transparent;
+      border-bottom: none;
+    }
+    [data-theme^="glass"] .chat-queue-area {
+      background: transparent;
+      border: none;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    [data-theme^="glass"] .chat-queue-area .queue-item .actions a {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .chat-footer {
+      border-top: none;
+    }
+    [data-theme^="glass"] .chat-footer select {
+      border: none;
+    }
+    [data-theme^="glass"] .chat-footer .context-progress {
+      border: none;
+    }
+    [data-theme^="glass"] .composer-chip {
+      background: transparent;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .chat-thread-sidebar .sidebar-title {
+      border-bottom: none;
+    }
+
+    /* --- Glassmorphic: orchestrator / graph --- */
+    [data-theme^="glass"] .orch-tab.active {
+      border-bottom-color: var(--accent-blue);
+      color: var(--text-primary);
+      text-shadow: 0 0 6px rgba(34, 211, 238, 0.3);
+    }
+    [data-theme^="glass"] .orch-rungraph-node {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    }
+    [data-theme^="glass"] .orch-rungraph-node.graph-pending {
+      background: rgba(100, 116, 139, 0.4);
+      border-color: rgba(100, 116, 139, 0.6);
+    }
+    [data-theme^="glass"] .orch-rungraph-node.graph-running {
+      background: rgba(251, 191, 36, 0.3);
+      border-color: rgba(251, 191, 36, 0.6);
+      box-shadow: 0 0 16px rgba(251, 191, 36, 0.25);
+      color: #fef3c7;
+    }
+    [data-theme^="glass"] .orch-rungraph-node.graph-passed {
+      background: rgba(52, 211, 153, 0.3);
+      border-color: rgba(52, 211, 153, 0.6);
+      color: #d1fae5;
+    }
+    [data-theme^="glass"] .orch-rungraph-node.graph-failed {
+      background: rgba(248, 113, 113, 0.3);
+      border-color: rgba(248, 113, 113, 0.6);
+      box-shadow: 0 0 12px rgba(248, 113, 113, 0.2);
+      color: #fee2e2;
+    }
+    [data-theme^="glass"] .orch-rungraph-node.selected {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 16px rgba(34, 211, 238, 0.4);
+    }
+    [data-theme^="glass"] .orch-tier-node.selected {
+      background: rgba(34, 211, 238, 0.2);
+      color: #22d3ee;
+      border: 1px solid rgba(34, 211, 238, 0.4);
+    }
+    [data-theme^="glass"] .orch-tier-link {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .orch-ledger-usage-link {
+      color: var(--accent-blue);
+    }
+
+    /* --- Glassmorphic: project cards (hover/state overrides) --- */
+    [data-theme^="glass"] .project-card-bento:hover {
+      border-color: rgba(34, 211, 238, 0.4);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 12px rgba(34, 211, 238, 0.15);
+      transform: translateY(-4px);
+    }
+    [data-theme^="glass"] .project-card-bento.current {
+      border-left: 6px solid var(--accent-blue);
+      background: linear-gradient(to right, rgba(34, 211, 238, 0.10), rgba(15, 23, 42, 0.32));
+    }
+    [data-theme^="glass"] .page-projects .projects-actions button:hover {
+      background: rgba(34, 211, 238, 0.15);
+      color: #22d3ee;
+      border-color: rgba(34, 211, 238, 0.4);
+      box-shadow: 0 4px 16px rgba(34, 211, 238, 0.15);
+    }
+    [data-theme^="glass"] .page-projects .projects-actions button.primary {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.25), rgba(45, 212, 191, 0.25));
+      color: #f0f4f8;
+      border-color: rgba(34, 211, 238, 0.4);
+    }
+
+    /* --- Glassmorphic: settings & PSM --- */
+    [data-theme^="glass"] .settings-tab:hover {
+      background: transparent;
+    }
+    [data-theme^="glass"] .settings-tab.active {
+      border-left-color: var(--accent-blue);
+      background: transparent;
+      color: var(--text-primary);
+    }
+    [data-theme^="glass"] .psm-tab:hover {
+      background: transparent;
+    }
+    [data-theme^="glass"] .psm-tab.active {
+      border-left-color: var(--accent-blue);
+      background: transparent;
+    }
+    [data-theme^="glass"] .psm-pane {
+      background: transparent;
+    }
+    [data-theme^="glass"] .psm-field input[type="text"],
+    [data-theme^="glass"] .psm-field select {
+      border: none;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    [data-theme^="glass"] .psm-toggle-row {
+      border: none;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    [data-theme^="glass"] .psm-section-title {
+      border-bottom: none;
+    }
+    [data-theme^="glass"] .psm-footer {
+      background: transparent;
+      border-top: none;
+    }
+    [data-theme^="glass"] .psm-btn {
+      border: none;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    [data-theme^="glass"] .settings-group-header .badge {
+      background: transparent;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    [data-theme^="glass"] .psm-btn.primary {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.3), rgba(45, 212, 191, 0.3));
+      color: #f0f4f8;
+      border-color: rgba(34, 211, 238, 0.4);
+    }
+    [data-theme^="glass"] .bento-action {
+      border-color: rgba(34, 211, 238, 0.4);
+      color: #22d3ee;
+    }
+    [data-theme^="glass"] .bento-action:hover {
+      background: rgba(34, 211, 238, 0.15);
+      color: #f0f4f8;
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.2);
+    }
+    [data-theme^="glass"] .settings-inspector-panel {
+      background: rgba(15, 23, 42, 0.35);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      filter: url(#glass-distortion-subtle);
+      border-radius: 16px 0 0 16px;
+      border-left: none;
+      box-shadow: -12px 0 40px rgba(0, 0, 0, 0.4),
+        inset 1px 1px 1px 0 rgba(255, 255, 255, 0.15);
+    }
+    [data-theme^="glass"] .settings-search-input {
+      background: rgba(15, 23, 42, 0.35);
+      border: 1px solid rgba(148, 163, 184, 0.08);
+      border-radius: 8px;
+    }
+    [data-theme^="glass"] .settings-search-input:focus {
+      border-color: rgba(34, 211, 238, 0.4);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.15);
+    }
+    [data-theme^="glass"] .add-widget-btn:hover,
+    [data-theme^="glass"] .customize-widgets-btn:hover {
+      background: rgba(34, 211, 238, 0.15);
+      color: #22d3ee;
+      border-color: rgba(34, 211, 238, 0.3);
+    }
+
+    /* --- Glassmorphic: wizard & interview --- */
+    [data-theme^="glass"] .wizard-nav-step.active::after {
+      background: var(--accent-blue);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.5);
+    }
+    [data-theme^="glass"] .wizard-nav-step.complete {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .wizard-nav-connector.complete {
+      background: var(--accent-blue);
+    }
+    [data-theme^="glass"] .wizard-form-container {
+      background: rgba(15, 23, 42, 0.30);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      filter: url(#glass-distortion-subtle);
+      border: 1px solid rgba(148, 163, 184, 0.06);
+      border-radius: 12px;
+      box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.15),
+        inset -1px -1px 1px 0 rgba(255, 255, 255, 0.08);
+    }
+    [data-theme^="glass"] .wizard-intent-card {
+      background: rgba(30, 41, 59, 0.30);
+      border: 1px solid transparent;
+      border-radius: 8px;
+    }
+    [data-theme^="glass"] .wizard-intent-card:hover {
+      border-color: rgba(34, 211, 238, 0.4);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.15);
+    }
+    [data-theme^="glass"] .wizard-intent-card.active {
+      border-color: rgba(34, 211, 238, 0.6);
+      background: rgba(34, 211, 238, 0.08);
+      box-shadow: 0 0 16px rgba(34, 211, 238, 0.2);
+    }
+    [data-theme^="glass"] .wizard-input,
+    [data-theme^="glass"] .wizard-select {
+      background: rgba(15, 23, 42, 0.30);
+      border: 1px solid rgba(148, 163, 184, 0.08);
+      border-radius: 8px;
+    }
+    [data-theme^="glass"] .wizard-input:focus,
+    [data-theme^="glass"] .wizard-select:focus {
+      border-color: rgba(34, 211, 238, 0.4);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.15);
+    }
+    [data-theme^="glass"] .wizard-doc-pill {
+      border-radius: 20px;
+    }
+    [data-theme^="glass"] .wizard-doc-pill.active {
+      background: rgba(34, 211, 238, 0.15);
+      border-color: rgba(34, 211, 238, 0.4);
+      color: #22d3ee;
+    }
+    [data-theme^="glass"] .wizard-interview-container {
+      background: rgba(15, 23, 42, 0.30);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      filter: url(#glass-distortion-subtle);
+      border-radius: 12px;
+      box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.12);
+    }
+    [data-theme^="glass"] .interview-phase-step.active {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .interview-phase-step.active .dot {
+      background: var(--accent-blue);
+      box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
+    }
+    [data-theme^="glass"] .msg-bubble {
+      border-radius: 12px;
+    }
+    [data-theme^="glass"] .msg-ai {
+      border-left-color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .msg-user {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(45, 212, 191, 0.2));
+      color: var(--text-primary);
+    }
+    [data-theme^="glass"] .interview-chip {
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.08);
+      background: rgba(30, 41, 59, 0.30);
+    }
+    [data-theme^="glass"] .interview-chip:hover {
+      background: rgba(34, 211, 238, 0.15);
+      color: #22d3ee;
+      border-color: rgba(34, 211, 238, 0.4);
+    }
+    [data-theme^="glass"] .interview-text-input input {
+      border-radius: 8px;
+    }
+
+    /* --- Glassmorphic: misc components --- */
+    [data-theme^="glass"] .pixel-grid {
+      display: none;
+    }
+    [data-theme^="glass"] .preview-build-strip a {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .terminal-output,
+    [data-theme^="glass"] .terminal-pane {
+      background: var(--terminal-bg);
+      color: var(--terminal-fg);
+      box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.06);
+    }
+    [data-theme^="glass"] .panel-header {
+      border-left-color: var(--accent-blue);
+      background: rgba(30, 41, 59, 0.30);
+    }
+    [data-theme^="glass"] .chat-dropdown-popover {
+      background: rgba(15, 23, 42, 0.35);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      filter: url(#glass-distortion-subtle);
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5),
+        inset 2px 2px 1px 0 rgba(255, 255, 255, 0.20),
+        inset -1px -1px 1px 0 rgba(255, 255, 255, 0.10);
+    }
+    [data-theme^="glass"] .chat-dropdown-item.active {
+      background: rgba(34, 211, 238, 0.1);
+    }
+    [data-theme^="glass"] .project-settings-content {
+      background: rgba(15, 23, 42, 0.35);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      filter: url(#glass-distortion-subtle);
+      border-radius: 16px;
+      border: none;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5),
+        inset 2px 2px 1px 0 rgba(255, 255, 255, 0.20),
+        inset -1px -1px 1px 0 rgba(255, 255, 255, 0.12);
+    }
+    [data-theme^="glass"] .bento-widget {
+      background: rgba(15, 23, 42, 0.30);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(148, 163, 184, 0.06);
+      border-radius: 12px;
+      box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.12);
+    }
+    [data-theme^="glass"] .sticky-plan-tracker {
+      border-bottom-color: var(--accent-blue);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+    [data-theme^="glass"] .activity-card {
+      border-radius: 12px;
+      background: rgba(30, 41, 59, 0.25);
+      border: 1px solid transparent;
+      box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.08);
+    }
+    [data-theme^="glass"] .questionnaire-ui {
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.28);
+      border: 1px solid rgba(148, 163, 184, 0.06);
+      box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.10);
+    }
+    [data-theme^="glass"] .runtime-snapshot {
+      border-radius: 12px;
+    }
+    [data-theme^="glass"] .wizard-activity-floating {
+      background: rgba(15, 23, 42, 0.35);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      filter: url(#glass-distortion-subtle);
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 2px 2px 1px 0 rgba(255, 255, 255, 0.18),
+        inset -1px -1px 1px 0 rgba(255, 255, 255, 0.10);
+    }
+    [data-theme^="glass"] .wizard-activity-pulse {
+      background: var(--accent-blue);
+      box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
+    }
+    [data-theme^="glass"] .browser-session-badge { border-radius: 8px; }
+    [data-theme^="glass"] .browser-address-bar { border-radius: 8px; }
+    [data-theme^="glass"] .browser-takeover-btn { border-radius: 8px; }
+    [data-theme^="glass"] .browser-viewport [data-pickable]:hover {
+      outline-color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .composer-chip.browser-selection {
+      border-color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .composer-chip.browser-selection::before {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] input[type="checkbox"] {
+      border-radius: 4px;
+      border: 1px solid rgba(148, 163, 184, 0.10);
+      background: rgba(15, 23, 42, 0.30);
+    }
+    [data-theme^="glass"] input[type="checkbox"]:checked {
+      background: rgba(34, 211, 238, 0.3);
+      border-color: rgba(34, 211, 238, 0.6);
+    }
+    [data-theme^="glass"] .search-toggle.on {
+      background: rgba(34, 211, 238, 0.2);
+      color: #22d3ee;
+      border-color: rgba(34, 211, 238, 0.4);
+    }
+    [data-theme^="glass"] .ai-btn {
+      border-color: rgba(34, 211, 238, 0.4);
+      color: #22d3ee;
+    }
+    [data-theme^="glass"] .ai-btn:hover {
+      background: rgba(34, 211, 238, 0.15);
+      color: #f0f4f8;
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.2);
+    }
+    [data-theme^="glass"] .action-btn:hover {
+      border-color: rgba(34, 211, 238, 0.4);
+      color: #22d3ee;
+    }
+    [data-theme^="glass"] .artifact-item:hover {
+      border-color: rgba(34, 211, 238, 0.3);
+    }
+    [data-theme^="glass"] .artifact-btn:hover {
+      border-color: rgba(34, 211, 238, 0.4);
+      color: #22d3ee;
+    }
+    [data-theme^="glass"] .jump-to-latest {
+      color: var(--accent-blue);
+    }
+
+    /* ======================================================
+       VARIANT-SPECIFIC: Panel tint backgrounds + outer glow
+       ====================================================== */
+
+    /* --- Glass Dark: colored tint backgrounds + neon glow --- */
+    [data-theme="glass-dark"] .title-bar {
+      background: rgba(10, 40, 50, 0.45);
+      box-shadow: 0 0 16px rgba(34, 211, 238, 0.08);
+    }
+    [data-theme="glass-dark"] .files-panel {
+      background: rgba(10, 35, 45, 0.40);
+      box-shadow: 0 0 14px rgba(34, 211, 238, 0.07);
+    }
+    [data-theme="glass-dark"] .chat-panel {
+      background: rgba(20, 15, 50, 0.40);
+      box-shadow: 0 0 14px rgba(139, 92, 246, 0.08);
+    }
+    [data-theme="glass-dark"] .bento-card {
+      background: rgba(8, 30, 42, 0.35);
+      box-shadow: 0 0 20px rgba(34, 211, 238, 0.12), 0 0 40px rgba(34, 211, 238, 0.05);
+    }
+    [data-theme="glass-dark"] .widget-card {
+      background: rgba(8, 28, 38, 0.35);
+      box-shadow: 0 0 16px rgba(34, 211, 238, 0.10), 0 0 32px rgba(34, 211, 238, 0.04);
+    }
+    [data-theme="glass-dark"] .floating-chat {
+      background: rgba(15, 20, 50, 0.40);
+      box-shadow: 0 0 24px rgba(34, 211, 238, 0.15), 0 0 48px rgba(34, 211, 238, 0.06);
+    }
+    [data-theme="glass-dark"] .project-card-bento {
+      background: rgba(8, 25, 38, 0.35);
+      box-shadow: 0 0 16px rgba(34, 211, 238, 0.10), 0 0 32px rgba(34, 211, 238, 0.04);
+    }
+    [data-theme="glass-dark"] .status-bar {
+      background: rgba(5, 25, 35, 0.50);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.06);
+    }
+    [data-theme="glass-dark"] .activity-bar {
+      background: rgba(8, 20, 32, 0.45);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.06);
+    }
+    [data-theme="glass-dark"] .left-panel {
+      background: rgba(6, 18, 28, 0.30);
+    }
+    [data-theme="glass-dark"] .chat-thread-sidebar {
+      background: rgba(10, 20, 40, 0.35);
+      box-shadow: 0 0 10px rgba(34, 211, 238, 0.06);
+    }
+    [data-theme="glass-dark"] .bottom-panel {
+      background: rgba(6, 15, 28, 0.40);
+    }
+    [data-theme="glass-dark"] .files-panel-header {
+      background: rgba(10, 35, 45, 0.30);
+    }
+    [data-theme="glass-dark"] .panel-header {
+      background: rgba(10, 30, 42, 0.35);
+    }
+    [data-theme="glass-dark"] .chat-panel-header-stacked {
+      background: rgba(15, 30, 48, 0.35);
+    }
+    [data-theme="glass-dark"] .chat-header-workflow {
+      background: rgba(15, 25, 42, 0.30);
+    }
+    [data-theme="glass-dark"] .chat-queue-area {
+      background: rgba(12, 28, 42, 0.30);
+    }
+    [data-theme="glass-dark"] .chat-footer {
+      background: rgba(8, 20, 35, 0.30);
+    }
+    [data-theme="glass-dark"] .chat-footer select {
+      background: rgba(10, 25, 40, 0.35);
+    }
+    [data-theme="glass-dark"] .composer-chip {
+      background: rgba(10, 30, 45, 0.30);
+    }
+    [data-theme="glass-dark"] .chat-modes .mode {
+      background: rgba(10, 25, 40, 0.20);
+    }
+    /* Glass Dark: PSM/settings tints */
+    [data-theme="glass-dark"] .psm-tab:hover {
+      background: rgba(10, 28, 42, 0.30);
+    }
+    [data-theme="glass-dark"] .psm-tab.active {
+      background: rgba(10, 35, 48, 0.35);
+      box-shadow: 0 0 8px rgba(34, 211, 238, 0.15);
+    }
+    [data-theme="glass-dark"] .psm-field input[type="text"],
+    [data-theme="glass-dark"] .psm-field select {
+      background: rgba(8, 20, 35, 0.35);
+    }
+    [data-theme="glass-dark"] .psm-toggle-row {
+      background: rgba(10, 22, 38, 0.30);
+    }
+    [data-theme="glass-dark"] .psm-footer {
+      background: rgba(8, 18, 32, 0.30);
+    }
+    [data-theme="glass-dark"] .psm-btn {
+      background: rgba(12, 28, 42, 0.35);
+    }
+    [data-theme="glass-dark"] .settings-tab:hover {
+      background: rgba(10, 28, 42, 0.30);
+    }
+    [data-theme="glass-dark"] .settings-tab.active {
+      background: rgba(34, 211, 238, 0.08);
+      box-shadow: 0 0 10px rgba(34, 211, 238, 0.20);
+    }
+    [data-theme="glass-dark"] .settings-group-header .badge {
+      background: rgba(10, 25, 40, 0.30);
+    }
+
+    /* --- Glass Light: colored tint backgrounds + vivid glow --- */
+    [data-theme="glass-light"] .title-bar {
+      background: rgba(140, 210, 230, 0.40);
+      box-shadow: 0 0 14px rgba(8, 145, 178, 0.14);
+    }
+    [data-theme="glass-light"] .files-panel {
+      background: rgba(130, 205, 220, 0.38);
+      box-shadow: 0 0 12px rgba(8, 145, 178, 0.12);
+    }
+    [data-theme="glass-light"] .chat-panel {
+      background: rgba(170, 160, 215, 0.40);
+      box-shadow: 0 0 12px rgba(124, 58, 237, 0.12);
+    }
+    [data-theme="glass-light"] .bento-card {
+      background: rgba(150, 220, 235, 0.42);
+      box-shadow: 0 0 20px rgba(8, 145, 178, 0.20), 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    [data-theme="glass-light"] .widget-card {
+      background: rgba(150, 215, 235, 0.42);
+      box-shadow: 0 0 16px rgba(8, 145, 178, 0.16), 0 4px 10px rgba(0, 0, 0, 0.04);
+    }
+    [data-theme="glass-light"] .floating-chat {
+      background: rgba(155, 185, 225, 0.42);
+      box-shadow: 0 0 24px rgba(8, 145, 178, 0.22), 0 4px 16px rgba(0, 0, 0, 0.05);
+    }
+    [data-theme="glass-light"] .project-card-bento {
+      background: rgba(150, 215, 235, 0.42);
+      box-shadow: 0 0 16px rgba(8, 145, 178, 0.16), 0 4px 10px rgba(0, 0, 0, 0.04);
+    }
+    [data-theme="glass-light"] .status-bar {
+      background: rgba(185, 220, 240, 0.50);
+      box-shadow: 0 0 10px rgba(8, 145, 178, 0.10);
+    }
+    [data-theme="glass-light"] .activity-bar {
+      background: rgba(155, 200, 225, 0.48);
+      box-shadow: 0 0 10px rgba(8, 145, 178, 0.10);
+    }
+    [data-theme="glass-light"] .left-panel {
+      background: rgba(160, 210, 230, 0.35);
+      box-shadow: 0 0 8px rgba(8, 145, 178, 0.06);
+    }
+    [data-theme="glass-light"] .chat-thread-sidebar {
+      background: rgba(160, 205, 230, 0.42);
+      box-shadow: 0 0 8px rgba(8, 145, 178, 0.10);
+    }
+    [data-theme="glass-light"] .bottom-panel {
+      background: rgba(165, 210, 232, 0.42);
+      box-shadow: 0 0 8px rgba(8, 145, 178, 0.06);
+    }
+    [data-theme="glass-light"] .files-panel-header {
+      background: rgba(140, 200, 220, 0.35);
+      border-bottom: none;
+      box-shadow: 0 0 6px rgba(8, 145, 178, 0.06);
+    }
+    [data-theme="glass-light"] .panel-header {
+      background: rgba(150, 210, 230, 0.38);
+      box-shadow: 0 0 6px rgba(8, 145, 178, 0.06);
+    }
+
+    /* ======================================================
+       VARIANT-SPECIFIC: Bright active/selection glow
+       ====================================================== */
+
+    /* --- Glass Dark: intense neon glow on active/selected --- */
+    [data-theme="glass-dark"] .title-bar .page-tab.active {
+      box-shadow: 0 0 15px rgba(34, 211, 238, 0.5), 0 0 30px rgba(34, 211, 238, 0.2);
+      text-shadow: 0 0 10px rgba(34, 211, 238, 0.8);
+    }
+    [data-theme="glass-dark"] .chat-thread-item.active {
+      box-shadow: 0 0 15px rgba(34, 211, 238, 0.4), 0 0 30px rgba(34, 211, 238, 0.15);
+    }
+    [data-theme="glass-dark"] .chat-input-area textarea:focus {
+      box-shadow: 0 0 14px rgba(34, 211, 238, 0.4);
+      border-color: rgba(34, 211, 238, 0.5);
+    }
+    [data-theme="glass-dark"] .wizard-intent-card.active {
+      box-shadow: 0 0 20px rgba(34, 211, 238, 0.4), 0 0 40px rgba(34, 211, 238, 0.15);
+    }
+    [data-theme="glass-dark"] .settings-tab.active,
+    [data-theme="glass-dark"] .psm-tab.active {
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.3);
+    }
+    [data-theme="glass-dark"] .orch-rungraph-node.selected {
+      box-shadow: 0 0 20px rgba(34, 211, 238, 0.5), 0 0 40px rgba(34, 211, 238, 0.2);
+    }
+    [data-theme="glass-dark"] .chat-modes .mode.active {
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.4), 0 0 24px rgba(34, 211, 238, 0.15);
+    }
+    [data-theme="glass-dark"] .wizard-input:focus,
+    [data-theme="glass-dark"] .wizard-select:focus {
+      box-shadow: 0 0 14px rgba(34, 211, 238, 0.35);
+    }
+    [data-theme="glass-dark"] .settings-search-input:focus {
+      box-shadow: 0 0 14px rgba(34, 211, 238, 0.3);
+    }
+    [data-theme="glass-dark"] .bento-card:hover {
+      box-shadow: 0 0 28px rgba(34, 211, 238, 0.25), 0 0 50px rgba(34, 211, 238, 0.10), 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    /* --- Glass Light: vivid teal glow on active/selected --- */
+    [data-theme="glass-light"] .title-bar .page-tab.active {
+      background: rgba(8, 145, 178, 0.25);
+      color: var(--accent-blue);
+      border-color: rgba(8, 145, 178, 0.35);
+      box-shadow: 0 0 15px rgba(8, 145, 178, 0.50), 0 0 30px rgba(8, 145, 178, 0.20);
+      text-shadow: 0 0 10px rgba(8, 145, 178, 0.6);
+    }
+    [data-theme="glass-light"] .chat-thread-item.active {
+      background: rgba(8, 145, 178, 0.15);
+      border-color: rgba(8, 145, 178, 0.35);
+      box-shadow: 0 0 15px rgba(8, 145, 178, 0.45), 0 0 30px rgba(8, 145, 178, 0.20);
+    }
+    [data-theme="glass-light"] .chat-input-area textarea:focus {
+      border-color: rgba(8, 145, 178, 0.5);
+      box-shadow: 0 0 14px rgba(8, 145, 178, 0.40);
+    }
+    [data-theme="glass-light"] .wizard-intent-card.active {
+      border-color: rgba(8, 145, 178, 0.5);
+      background: rgba(8, 145, 178, 0.15);
+      box-shadow: 0 0 20px rgba(8, 145, 178, 0.45), 0 0 40px rgba(8, 145, 178, 0.20);
+    }
+    [data-theme="glass-light"] .settings-tab.active,
+    [data-theme="glass-light"] .psm-tab.active {
+      background: rgba(8, 145, 178, 0.15);
+      box-shadow: 0 0 14px rgba(8, 145, 178, 0.35);
+      color: var(--accent-blue);
+    }
+    [data-theme="glass-light"] .orch-rungraph-node.selected {
+      box-shadow: 0 0 20px rgba(8, 145, 178, 0.55), 0 0 40px rgba(8, 145, 178, 0.25);
+    }
+    [data-theme="glass-light"] .chat-modes .mode.active {
+      background: rgba(8, 145, 178, 0.20);
+      color: var(--accent-blue);
+      border-color: rgba(8, 145, 178, 0.35);
+      box-shadow: 0 0 12px rgba(8, 145, 178, 0.40);
+    }
+    [data-theme="glass-light"] .wizard-input:focus,
+    [data-theme="glass-light"] .wizard-select:focus {
+      border-color: rgba(8, 145, 178, 0.5);
+      box-shadow: 0 0 14px rgba(8, 145, 178, 0.35);
+    }
+    [data-theme="glass-light"] .settings-search-input:focus {
+      border-color: rgba(8, 145, 178, 0.5);
+      box-shadow: 0 0 14px rgba(8, 145, 178, 0.35);
+    }
+    [data-theme="glass-light"] .bento-card:hover {
+      box-shadow: 0 0 28px rgba(8, 145, 178, 0.30), 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    /* ======================================================
+       Glass Light: inset shine adjustments (brighter white + subtle dark)
+       ====================================================== */
+    [data-theme="glass-light"] .bento-card::after {
+      box-shadow:
+        inset 2px 2px 1px 0 rgba(255, 255, 255, 0.55),
+        inset -1px -1px 1px 1px rgba(0, 0, 0, 0.04);
+    }
+    [data-theme="glass-light"] .widget-card::after {
+      box-shadow:
+        inset 2px 2px 1px 0 rgba(255, 255, 255, 0.55),
+        inset -1px -1px 1px 1px rgba(0, 0, 0, 0.04);
+    }
+    [data-theme="glass-light"] .floating-chat::after {
+      box-shadow:
+        inset 2px 2px 1px 0 rgba(255, 255, 255, 0.60),
+        inset -1px -1px 1px 1px rgba(0, 0, 0, 0.05);
+    }
+    [data-theme="glass-light"] .project-card-bento::after {
+      box-shadow:
+        inset 2px 2px 1px 0 rgba(255, 255, 255, 0.50),
+        inset -1px -1px 1px 1px rgba(0, 0, 0, 0.04);
+    }
+    [data-theme="glass-light"] .title-bar::after {
+      box-shadow:
+        inset 0 2px 1px 0 rgba(255, 255, 255, 0.50),
+        inset 0 -1px 1px 0 rgba(0, 0, 0, 0.04);
+    }
+    [data-theme="glass-light"] .chat-panel::after {
+      box-shadow:
+        inset 1px 1px 1px 0 rgba(255, 255, 255, 0.45),
+        inset -1px -1px 1px 0 rgba(0, 0, 0, 0.04);
+    }
+    [data-theme="glass-light"] .files-panel::after {
+      box-shadow:
+        inset 1px 1px 1px 0 rgba(255, 255, 255, 0.50),
+        inset -1px -1px 1px 0 rgba(0, 0, 0, 0.04);
+    }
+
+    /* ======================================================
+       Glass Light: component overrides (light backgrounds)
+       ====================================================== */
+    [data-theme="glass-light"] .activity-bar .icon.active {
+      text-shadow: 0 0 8px rgba(8, 145, 178, 0.5);
+    }
+    [data-theme="glass-light"] .activity-bar .icon.active::before {
+      box-shadow: 0 0 8px rgba(8, 145, 178, 0.5);
+    }
+    [data-theme="glass-light"] .chat-thread-item {
+      background: rgba(150, 215, 235, 0.38);
+      border-color: transparent;
+      box-shadow: 0 0 8px rgba(8, 145, 178, 0.06);
+    }
+    [data-theme="glass-light"] .chat-thread-item:hover {
+      background: rgba(140, 210, 235, 0.50);
+      border-color: rgba(8, 145, 178, 0.20);
+      box-shadow: 0 0 10px rgba(8, 145, 178, 0.12);
+    }
+    [data-theme="glass-light"] .message.assistant .msg-body {
+      background: rgba(150, 215, 235, 0.40);
+      border-left: 2px solid var(--accent-blue);
+      box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.30);
+    }
+    [data-theme="glass-light"] .message.user .msg-body {
+      background: linear-gradient(135deg, rgba(8, 145, 178, 0.28), rgba(13, 148, 136, 0.28));
+      border: 1px solid rgba(8, 145, 178, 0.30);
+      box-shadow: 0 0 10px rgba(8, 145, 178, 0.18);
+    }
+    [data-theme="glass-light"] .chat-input-area textarea {
+      background: rgba(170, 220, 238, 0.38);
+      border-color: rgba(8, 145, 178, 0.10);
+    }
+    [data-theme="glass-light"] .chat-new-thread-btn {
+      background: linear-gradient(135deg, rgba(8, 145, 178, 0.28), rgba(13, 148, 136, 0.28));
+      color: var(--text-primary);
+      border: 1px solid rgba(8, 145, 178, 0.25);
+      box-shadow: 0 0 10px rgba(8, 145, 178, 0.18);
+    }
+    [data-theme="glass-light"] .chat-panel-header-stacked {
+      background: rgba(150, 210, 230, 0.35);
+      box-shadow: 0 0 8px rgba(8, 145, 178, 0.10);
+    }
+    [data-theme="glass-light"] .chat-header-workflow {
+      background: rgba(155, 210, 230, 0.30);
+    }
+    [data-theme="glass-light"] .chat-queue-area {
+      background: rgba(160, 215, 235, 0.35);
+      box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.25);
+    }
+    [data-theme="glass-light"] .chat-footer {
+      background: rgba(165, 210, 230, 0.30);
+    }
+    [data-theme="glass-light"] .chat-footer select {
+      background: rgba(170, 218, 238, 0.40);
+    }
+    [data-theme="glass-light"] .chat-modes .mode {
+      background: rgba(160, 215, 235, 0.20);
+    }
+    [data-theme="glass-light"] .composer-chip {
+      background: rgba(160, 215, 235, 0.30);
+    }
+    [data-theme="glass-light"] .wizard-btn {
+      background: rgba(155, 215, 235, 0.42);
+      border-color: rgba(8, 145, 178, 0.08);
+      box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.35);
+    }
+    [data-theme="glass-light"] .wizard-btn:hover:not(:disabled) {
+      background: rgba(8, 145, 178, 0.18);
+      border-color: rgba(8, 145, 178, 0.30);
+      box-shadow: 0 0 12px rgba(8, 145, 178, 0.22);
+      color: var(--accent-blue);
+    }
+    [data-theme="glass-light"] .wizard-btn.primary {
+      background: linear-gradient(135deg, rgba(8, 145, 178, 0.35), rgba(13, 148, 136, 0.35));
+      color: var(--text-primary);
+      border: 1px solid rgba(8, 145, 178, 0.40);
+      box-shadow: 0 0 14px rgba(8, 145, 178, 0.25);
+      text-shadow: none;
+    }
+    [data-theme="glass-light"] .wizard-btn.primary:hover:not(:disabled) {
+      background: linear-gradient(135deg, rgba(8, 145, 178, 0.50), rgba(13, 148, 136, 0.50));
+      box-shadow: 0 0 20px rgba(8, 145, 178, 0.40);
+    }
+    [data-theme="glass-light"] .orchestrator-buttons button {
+      background: rgba(160, 215, 235, 0.42);
+      border-color: rgba(8, 145, 178, 0.06);
+    }
+    [data-theme="glass-light"] .orchestrator-buttons button.primary {
+      background: linear-gradient(135deg, rgba(8, 145, 178, 0.28), rgba(13, 148, 136, 0.28));
+      color: var(--text-primary);
+      border-color: rgba(8, 145, 178, 0.30);
+      box-shadow: 0 0 12px rgba(8, 145, 178, 0.15);
+    }
+    [data-theme="glass-light"] .status-badge {
+      border-color: rgba(13, 148, 136, 0.30);
+      box-shadow: 0 0 8px rgba(13, 148, 136, 0.15);
+    }
+    [data-theme="glass-light"] .wizard-form-container {
+      background: rgba(150, 215, 235, 0.42);
+      border-color: rgba(8, 145, 178, 0.06);
+      box-shadow: 0 0 12px rgba(8, 145, 178, 0.10),
+        inset 1px 1px 1px 0 rgba(255, 255, 255, 0.45),
+        inset -1px -1px 1px 0 rgba(0, 0, 0, 0.03);
+    }
+    [data-theme="glass-light"] .wizard-intent-card {
+      background: rgba(155, 220, 238, 0.42);
+      border-color: transparent;
+    }
+    [data-theme="glass-light"] .wizard-intent-card:hover {
+      border-color: rgba(8, 145, 178, 0.30);
+      box-shadow: 0 0 12px rgba(8, 145, 178, 0.20);
+    }
+    [data-theme="glass-light"] .wizard-input,
+    [data-theme="glass-light"] .wizard-select {
+      background: rgba(170, 220, 238, 0.42);
+      border-color: rgba(8, 145, 178, 0.08);
+    }
+    [data-theme="glass-light"] .wizard-interview-container {
+      background: rgba(155, 215, 235, 0.40);
+      box-shadow: 0 0 10px rgba(8, 145, 178, 0.08),
+        inset 1px 1px 1px 0 rgba(255, 255, 255, 0.40);
+    }
+    [data-theme="glass-light"] .wizard-doc-pill.active {
+      background: rgba(8, 145, 178, 0.18);
+      border-color: rgba(8, 145, 178, 0.30);
+      color: var(--accent-blue);
+      box-shadow: 0 0 8px rgba(8, 145, 178, 0.15);
+    }
+    [data-theme="glass-light"] .interview-chip {
+      border-color: rgba(8, 145, 178, 0.06);
+      background: rgba(160, 218, 238, 0.42);
+    }
+    [data-theme="glass-light"] .interview-chip:hover {
+      background: rgba(8, 145, 178, 0.20);
+      color: var(--accent-blue);
+      border-color: rgba(8, 145, 178, 0.30);
+      box-shadow: 0 0 8px rgba(8, 145, 178, 0.15);
+    }
+    [data-theme="glass-light"] .wizard-nav-step.active::after {
+      box-shadow: 0 0 14px rgba(8, 145, 178, 0.5);
+    }
+    [data-theme="glass-light"] .interview-phase-step.active .dot {
+      box-shadow: 0 0 10px rgba(8, 145, 178, 0.5);
+    }
+    /* Glass Light: PSM/settings tints */
+    [data-theme="glass-light"] .psm-tab:hover {
+      background: rgba(150, 210, 230, 0.30);
+    }
+    [data-theme="glass-light"] .psm-tab.active {
+      background: rgba(8, 145, 178, 0.15);
+      box-shadow: 0 0 12px rgba(8, 145, 178, 0.30);
+      color: var(--accent-blue);
+    }
+    [data-theme="glass-light"] .psm-field input[type="text"],
+    [data-theme="glass-light"] .psm-field select {
+      background: rgba(170, 220, 238, 0.42);
+    }
+    [data-theme="glass-light"] .psm-toggle-row {
+      background: rgba(160, 215, 235, 0.35);
+    }
+    [data-theme="glass-light"] .psm-footer {
+      background: rgba(155, 210, 230, 0.30);
+    }
+    [data-theme="glass-light"] .psm-btn {
+      background: rgba(160, 215, 235, 0.40);
+    }
+    [data-theme="glass-light"] .psm-btn.primary {
+      background: linear-gradient(135deg, rgba(8, 145, 178, 0.30), rgba(13, 148, 136, 0.30));
+      color: var(--text-primary);
+      border-color: rgba(8, 145, 178, 0.35);
+      box-shadow: 0 0 10px rgba(8, 145, 178, 0.15);
+    }
+    [data-theme="glass-light"] .settings-tab:hover {
+      background: rgba(150, 210, 230, 0.30);
+      box-shadow: 0 0 6px rgba(8, 145, 178, 0.08);
+    }
+    [data-theme="glass-light"] .settings-tab.active {
+      background: rgba(8, 145, 178, 0.15);
+      box-shadow: 0 0 12px rgba(8, 145, 178, 0.30);
+      color: var(--accent-blue);
+    }
+    [data-theme="glass-light"] .settings-group-header .badge {
+      background: rgba(160, 215, 235, 0.35);
+    }
+    [data-theme="glass-light"] .msg-user {
+      background: linear-gradient(135deg, rgba(8, 145, 178, 0.28), rgba(13, 148, 136, 0.28));
+    }
+    [data-theme="glass-light"] .terminal-output,
+    [data-theme="glass-light"] .terminal-pane {
+      background: var(--terminal-bg);
+      color: var(--terminal-fg);
+      box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.04);
+    }
+    [data-theme="glass-light"] .settings-inspector-panel {
+      background: rgba(155, 210, 230, 0.48);
+      border-left: none;
+      box-shadow: -12px 0 40px rgba(0, 0, 0, 0.08),
+        inset 1px 1px 1px 0 rgba(255, 255, 255, 0.45);
+    }
+    [data-theme="glass-light"] .settings-search-input {
+      background: rgba(175, 220, 238, 0.45);
+      border-color: rgba(8, 145, 178, 0.08);
+    }
+    [data-theme="glass-light"] .chat-dropdown-popover {
+      background: rgba(155, 210, 230, 0.58);
+      border: none;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12),
+        inset 2px 2px 1px 0 rgba(255, 255, 255, 0.55),
+        inset -1px -1px 1px 0 rgba(0, 0, 0, 0.03);
+    }
+    [data-theme="glass-light"] .chat-dropdown-item.active {
+      background: rgba(8, 145, 178, 0.15);
+      box-shadow: 0 0 6px rgba(8, 145, 178, 0.10);
+    }
+    [data-theme="glass-light"] .project-settings-content {
+      background: rgba(160, 210, 230, 0.55);
+      border: none;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12),
+        0 0 12px rgba(8, 145, 178, 0.10),
+        inset 2px 2px 1px 0 rgba(255, 255, 255, 0.35),
+        inset -1px -1px 1px 0 rgba(0, 0, 0, 0.03);
+    }
+    [data-theme="glass-light"] .bento-widget {
+      background: rgba(155, 215, 235, 0.42);
+      border-color: rgba(0, 0, 0, 0.04);
+      box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.25),
+        0 0 8px rgba(8, 145, 178, 0.06);
+    }
+    [data-theme="glass-light"] .activity-card {
+      background: rgba(150, 215, 232, 0.42);
+      border-color: transparent;
+      box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.25),
+        0 0 6px rgba(8, 145, 178, 0.06);
+    }
+    [data-theme="glass-light"] .questionnaire-ui {
+      background: rgba(155, 215, 235, 0.40);
+      border-color: rgba(0, 0, 0, 0.04);
+      box-shadow: inset 1px 1px 1px 0 rgba(255, 255, 255, 0.25),
+        0 0 8px rgba(8, 145, 178, 0.06);
+    }
+    [data-theme="glass-light"] .wizard-activity-floating {
+      background: rgba(160, 218, 235, 0.50);
+      border: none;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
+        0 0 10px rgba(8, 145, 178, 0.08),
+        inset 2px 2px 1px 0 rgba(255, 255, 255, 0.30),
+        inset -1px -1px 1px 0 rgba(0, 0, 0, 0.03);
+    }
+    [data-theme="glass-light"] .wizard-activity-pulse {
+      background: var(--accent-blue);
+      box-shadow: 0 0 8px rgba(8, 145, 178, 0.4);
+    }
+    [data-theme="glass-light"] input[type="checkbox"] {
+      border-color: rgba(8, 145, 178, 0.15);
+      background: rgba(175, 220, 238, 0.42);
+    }
+    [data-theme="glass-light"] input[type="checkbox"]:checked {
+      background: rgba(8, 145, 178, 0.25);
+      border-color: rgba(8, 145, 178, 0.45);
+    }
+    [data-theme="glass-light"] .search-toggle.on {
+      background: rgba(8, 145, 178, 0.15);
+      color: var(--accent-blue);
+      border-color: rgba(8, 145, 178, 0.25);
+    }
+    [data-theme="glass-light"] .bento-action {
+      border-color: rgba(8, 145, 178, 0.25);
+      color: var(--accent-blue);
+    }
+    [data-theme="glass-light"] .bento-action:hover {
+      background: rgba(8, 145, 178, 0.12);
+      color: var(--text-primary);
+      box-shadow: 0 0 10px rgba(8, 145, 178, 0.12);
+    }
+    [data-theme="glass-light"] .project-card-bento:hover {
+      border-color: rgba(8, 145, 178, 0.25);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 0 12px rgba(8, 145, 178, 0.1);
+    }
+    [data-theme="glass-light"] .project-card-bento.current {
+      border-left: 6px solid var(--accent-blue);
+      background: linear-gradient(to right, rgba(8, 145, 178, 0.08), rgba(235, 242, 250, 0.45));
+    }
+    [data-theme="glass-light"] .message.msg-focused .msg-body {
+      border-color: var(--accent-blue) !important;
+      background: rgba(8, 145, 178, 0.08) !important;
+      box-shadow: 0 0 16px rgba(8, 145, 178, 0.2) !important;
+    }
+    [data-theme="glass-light"] .add-widget-btn:hover,
+    [data-theme="glass-light"] .customize-widgets-btn:hover {
+      background: rgba(8, 145, 178, 0.12);
+      color: var(--accent-blue);
+      border-color: rgba(8, 145, 178, 0.2);
+    }
+    [data-theme="glass-light"] .ai-btn {
+      border-color: rgba(8, 145, 178, 0.25);
+      color: var(--accent-blue);
+    }
+    [data-theme="glass-light"] .ai-btn:hover {
+      background: rgba(8, 145, 178, 0.12);
+      color: var(--text-primary);
+      box-shadow: 0 0 10px rgba(8, 145, 178, 0.12);
+    }
+    [data-theme="glass-light"] .page-projects .projects-actions button:hover {
+      background: rgba(8, 145, 178, 0.12);
+      color: var(--accent-blue);
+      border-color: rgba(8, 145, 178, 0.25);
+      box-shadow: 0 4px 12px rgba(8, 145, 178, 0.08);
+    }
+    [data-theme="glass-light"] .page-projects .projects-actions button.primary {
+      background: linear-gradient(135deg, rgba(8, 145, 178, 0.18), rgba(13, 148, 136, 0.18));
+      color: var(--text-primary);
+      border-color: rgba(8, 145, 178, 0.25);
+    }
+    [data-theme="glass-light"] .psm-btn.primary {
+      background: linear-gradient(135deg, rgba(8, 145, 178, 0.20), rgba(13, 148, 136, 0.20));
+      color: var(--text-primary);
+      border-color: rgba(8, 145, 178, 0.25);
+    }
+    [data-theme="glass-light"] .orch-rungraph-node {
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+    [data-theme="glass-light"] .orch-rungraph-node.graph-running {
+      box-shadow: 0 0 12px rgba(217, 119, 6, 0.2);
+    }
+    [data-theme="glass-light"] .orch-rungraph-node.graph-failed {
+      box-shadow: 0 0 10px rgba(220, 38, 38, 0.15);
+    }
+    [data-theme="glass-light"] .sticky-plan-tracker {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    /* --- Glassmorphic: keyframe animations --- */
+    @keyframes glassBgShift {
+      0%   { transform: scale(1) translate(0, 0); }
+      33%  { transform: scale(1.02) translate(-1%, 1%); }
+      66%  { transform: scale(1.01) translate(1%, -0.5%); }
+      100% { transform: scale(1) translate(-0.5%, 0.5%); }
+    }
+    @keyframes glassRayRotate {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes glassGlowPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.4); }
+      70%  { box-shadow: 0 0 0 8px rgba(34, 211, 238, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0); }
+    }
+    [data-theme^="glass"] .chat-thread-item .thread-working-pulse {
+      animation-name: glassGlowPulse;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -601,7 +2233,7 @@
     .terminal-output {
       font-family: 'Consolas', 'Monaco', monospace;
       font-size: 12px;
-      background: #0d1117;
+      background: var(--terminal-bg);
       color: var(--accent-lime);
       padding: var(--md);
       border-radius: var(--border-radius);
@@ -1179,7 +2811,8 @@
 
     .bottom-panel {
       height: 160px;
-      min-height: 24px;
+      min-height: 80px;
+      flex-shrink: 0;
       background: var(--surface);
       border-top: var(--border-width) solid var(--border);
       display: flex;
@@ -1229,25 +2862,37 @@
       font-size: 12px;
     }
     .bottom-tabs-content {
-      flex: 1;
+      flex: 1 1 0%;
       display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      align-content: stretch;
       min-height: 0;
       overflow: hidden;
     }
     .terminal-pane {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
       min-width: 0;
       min-height: 0;
-      overflow-y: auto;
+      overflow: hidden;
       padding: var(--md);
       font-family: 'Consolas', 'Monaco', monospace;
-      font-size: 11px;
-      background: #0d1117;
-      color: var(--accent-lime);
+      font-size: var(--terminal-font-size, 11px);
+      line-height: var(--terminal-line-height, 1.45);
+      background: var(--terminal-bg);
+      color: var(--terminal-fg);
     }
-    .terminal-pane:nth-child(1) { color: var(--accent-lime); }
-    .terminal-pane:nth-child(2) { color: var(--accent-magenta); }
-    .terminal-pane:nth-child(3) { color: var(--accent-orange); }
-    .terminal-pane:nth-child(4) { color: var(--text-secondary); }
+    .terminal-pane-body {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+    }
+    .terminal-pane.pane-accent-1 .line { color: var(--terminal-fg); }
+    .terminal-pane.pane-accent-2 .line { color: var(--terminal-fg-2, var(--accent-magenta)); }
+    .terminal-pane.pane-accent-3 .line { color: var(--terminal-fg-3, var(--accent-orange)); }
+    .terminal-pane.pane-accent-4 .line { color: var(--terminal-fg-4, var(--text-secondary)); }
     .bottom-tabs-content .line,
     .terminal-pane .line { margin: 2px 0; }
     .bottom-tabs-content .line.stderr,
@@ -1255,9 +2900,436 @@
     .bottom-tabs-content .line.info,
     .terminal-pane .line.info { color: var(--accent-orange); }
     .terminal-output,
-    .terminal-pane { scrollbar-width: none; }
+    .terminal-pane-body { scrollbar-width: none; }
     .terminal-output::-webkit-scrollbar,
-    .terminal-pane::-webkit-scrollbar { display: none; }
+    .terminal-pane-body::-webkit-scrollbar { display: none; }
+
+    [data-theme="retro-dark"] {
+      --terminal-bg: #141820;
+      --terminal-fg: #c8f5d0;
+      --terminal-fg-2: #ffb8e8;
+      --terminal-fg-3: #ffd4a8;
+      --terminal-fg-4: #9aa7b5;
+      --terminal-chrome: #1f252d;
+    }
+    [data-theme="retro-light"] {
+      --terminal-bg: #1a2228;
+      --terminal-fg: #b8f0c4;
+      --terminal-fg-2: #e878b8;
+      --terminal-fg-3: #e8a060;
+      --terminal-fg-4: #8a9aaa;
+      --terminal-chrome: #242c34;
+    }
+    [data-theme="basic-light"] {
+      --terminal-bg: #0f1419;
+      --terminal-fg: #e8f4ea;
+      --terminal-fg-2: #c62828;
+      --terminal-fg-3: #e65100;
+      --terminal-fg-4: #78909c;
+      --terminal-chrome: #1a2228;
+    }
+    [data-theme="basic-dark"] {
+      --terminal-bg: #0a0e12;
+      --terminal-fg: #eceff1;
+      --terminal-fg-2: #f48fb1;
+      --terminal-fg-3: #ffb74d;
+      --terminal-fg-4: #90a4ae;
+      --terminal-chrome: #12181f;
+    }
+    [data-theme="glass-dark"] {
+      --terminal-bg: rgba(5, 8, 14, 0.38);
+      --terminal-fg: #a5f3fc;
+      --terminal-fg-2: #f9a8d4;
+      --terminal-fg-3: #fdba74;
+      --terminal-fg-4: #94a3b8;
+      --terminal-chrome: rgba(15, 23, 42, 0.45);
+    }
+    [data-theme="glass-light"] {
+      --terminal-bg: rgba(255, 255, 255, 0.22);
+      --terminal-fg: #0f172a;
+      --terminal-fg-2: #9d174d;
+      --terminal-fg-3: #c2410c;
+      --terminal-fg-4: #475569;
+      --terminal-chrome: rgba(255, 255, 255, 0.35);
+    }
+
+    .pm-tab-model-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--sm);
+      padding: var(--xs) var(--md);
+      font-size: 10px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-light);
+      background: var(--surface-elevated);
+    }
+    .pm-route-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--border-light);
+      font-family: var(--body-font);
+      letter-spacing: 0.02em;
+    }
+    .pm-route-chip.editor { border-left: 3px solid var(--accent-blue); }
+    .pm-route-chip.browser { border-left: 3px solid var(--accent-orange); }
+    .pm-route-chip.terminal { border-left: 3px solid var(--accent-lime); }
+    [data-theme="basic-light"] .pm-route-chip.terminal,
+    [data-theme="basic-dark"] .pm-route-chip.terminal { border-left-color: var(--accent-lime); }
+
+    .terminal-workspace {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      gap: 1px;
+      background: var(--border-light);
+    }
+    .terminal-section {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      background: var(--surface);
+    }
+    .terminal-section-header {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--sm);
+      padding: 4px var(--md);
+      font-size: 10px;
+      background: var(--terminal-chrome);
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .terminal-section-title { font-family: var(--display-font); font-weight: 600; color: var(--text-primary); }
+    .pm-dock-pill {
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+    }
+    .pm-dock-pill.detached { color: var(--accent-orange); border-color: var(--accent-orange); }
+    .terminal-tabstrip {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 2px var(--sm);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border-light);
+      overflow-x: auto;
+    }
+    .terminal-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      border: 1px solid transparent;
+      border-radius: var(--border-radius);
+      white-space: nowrap;
+    }
+    .terminal-tab:hover { color: var(--text-primary); background: var(--surface-elevated); }
+    .terminal-tab.active {
+      color: var(--text-primary);
+      border-color: var(--border-light);
+      background: var(--surface-elevated);
+    }
+    .terminal-tab.pinned::after { content: '\2022'; color: var(--accent-orange); font-weight: bold; margin-left: 2px; }
+    .terminal-tabbar-actions { margin-left: auto; display: flex; gap: 2px; flex-shrink: 0; }
+    .pm-tiny-btn {
+      font-size: 9px;
+      padding: 2px 6px;
+      cursor: pointer;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      color: var(--text-primary);
+      border-radius: var(--border-radius);
+    }
+    .pm-tiny-btn:hover { border-color: var(--accent-lime); }
+    [data-theme^="basic"] .pm-tiny-btn:hover { border-color: var(--accent-blue); }
+
+    .terminal-pane-wrap {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      min-width: 0;
+    }
+    .terminal-split-node { flex: 1; min-height: 0; min-width: 0; }
+    .terminal-pane.pm-pane-focused {
+      outline: 2px solid var(--accent-lime);
+      outline-offset: -2px;
+    }
+    [data-theme^="basic"] .terminal-pane.pm-pane-focused { outline-color: var(--accent-blue); }
+    .terminal-pane-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 6px;
+      font-size: 9px;
+      background: rgba(0,0,0,0.2);
+      border-bottom: 1px solid var(--border-light);
+    }
+    [data-theme^="glass"] .terminal-pane-toolbar {
+      background: rgba(0,0,0,0.15);
+      backdrop-filter: blur(4px);
+    }
+    .pm-identity-chip {
+      font-family: monospace;
+      font-size: 9px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid var(--border-light);
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .pm-identity-chip.copied { border-color: var(--accent-lime); color: var(--accent-lime); }
+    .pm-session-badge {
+      font-size: 9px;
+      padding: 1px 5px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .pm-session-badge.running { background: rgba(0,255,65,0.15); color: var(--accent-lime); }
+    .pm-session-badge.exited { background: rgba(136,136,136,0.2); color: var(--text-muted); }
+    .pm-session-badge.restoring { color: var(--accent-orange); }
+    .pm-recovery-banner {
+      padding: 6px var(--md);
+      font-size: 10px;
+      background: rgba(255, 127, 39, 0.12);
+      border-bottom: 1px solid var(--accent-orange);
+      color: var(--text-primary);
+    }
+    .pm-recovery-banner .pm-tiny-btn { margin-right: 4px; margin-top: 4px; }
+    .pm-inspector-drawer {
+      display: none;
+      padding: var(--sm) var(--md);
+      font-size: 10px;
+      background: var(--surface-elevated);
+      border-top: 1px dashed var(--border-light);
+      max-height: 120px;
+      overflow-y: auto;
+    }
+    .pm-inspector-drawer.open { display: block; }
+    .pm-inspector-kv { display: flex; justify-content: space-between; gap: var(--md); margin: 2px 0; }
+    .pm-inspector-kv span:first-child { color: var(--text-muted); }
+    .pm-degrade-warn { color: var(--accent-orange); }
+
+    [data-theme^="glass"] .terminal-pane,
+    [data-theme^="glass"] .terminal-workspace .terminal-section {
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    [data-theme^="retro"] .terminal-workspace .terminal-pane-body {
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 3px);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pm-terminal-enter { animation: none !important; }
+      [data-theme^="retro"] .terminal-workspace .terminal-pane-body { background-image: none !important; }
+    }
+    .pm-terminal-enter { animation: pmTermEnter 0.45s cubic-bezier(0.25, 1, 0.5, 1) both; }
+    @keyframes pmTermEnter {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .bottom-host-panel {
+      display: none !important;
+      flex: 1 1 0%;
+      flex-direction: column;
+      align-self: stretch;
+      min-height: 0;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .bottom-host-panel.active { display: flex !important; }
+    /* Terminal host: ensure JS-injected workspace always receives a non-zero block height */
+    #bottomTerminalHost.bottom-host-panel.active {
+      flex: 1 1 0%;
+      min-height: 6rem;
+    }
+    #bottomTerminalHost .terminal-workspace {
+      flex: 1 1 auto;
+      min-height: 0;
+      width: 100%;
+      align-self: stretch;
+    }
+    .pm-bottom-linked-header {
+      padding: var(--sm) var(--md);
+      font-size: 10px;
+      border-bottom: 1px solid var(--border-light);
+      background: var(--surface-elevated);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--sm);
+    }
+    .pm-problems-table, .pm-ports-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+    .pm-problems-table th, .pm-problems-table td,
+    .pm-ports-table th, .pm-ports-table td {
+      padding: 4px 8px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .pm-problems-table tr:hover { background: var(--surface-elevated); cursor: pointer; }
+
+    .pm-debug-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      flex: 1;
+      min-height: 0;
+      background: var(--border-light);
+    }
+    .pm-debug-cell {
+      background: var(--surface);
+      padding: var(--sm);
+      font-size: 10px;
+      overflow: auto;
+      min-height: 0;
+    }
+    .pm-debug-cell h4 { margin: 0 0 var(--sm); font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+
+    .pm-command-card {
+      border: 1px solid var(--border-light);
+      border-radius: var(--border-radius);
+      background: var(--surface-elevated);
+      padding: var(--md);
+      margin: var(--sm) 0;
+      font-size: 11px;
+    }
+    .pm-command-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--sm);
+    }
+    .pm-command-card pre {
+      margin: 0;
+      font-size: 10px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 8em;
+      overflow: hidden;
+    }
+    .pm-command-card.expanded pre { max-height: 22em; overflow-y: auto; }
+    .pm-command-card-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--sm); }
+    .pm-link-chip {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 10px;
+      border-radius: 4px;
+      border: 1px solid var(--border-light);
+      cursor: pointer;
+      color: var(--accent-blue);
+    }
+    .pm-link-chip:hover { background: var(--surface); }
+    .pm-dev-session-row {
+      border: 1px solid var(--border);
+      border-radius: var(--border-radius);
+      padding: var(--md);
+      margin: var(--sm) 0;
+      background: var(--surface);
+    }
+    .pm-blocked-banner {
+      border-left: 3px solid var(--accent-magenta);
+      padding: var(--md);
+      margin: var(--sm) 0;
+      background: var(--surface-elevated);
+      font-size: 11px;
+    }
+    .pm-problems-footer {
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .pm-problems-footer:hover { text-decoration: underline; }
+
+    #pmToastStack {
+      position: fixed;
+      bottom: 48px;
+      right: 16px;
+      z-index: 20000;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-width: 320px;
+      pointer-events: none;
+    }
+    .pm-toast {
+      pointer-events: auto;
+      padding: 8px 12px;
+      font-size: 11px;
+      background: var(--surface-elevated);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      animation: pmToastIn 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    @keyframes pmToastIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pm-toast { animation: none !important; }
+    }
+
+    #detachedTerminalWindow {
+      position: fixed;
+      right: 24px;
+      bottom: 80px;
+      width: min(640px, 92vw);
+      height: min(340px, 50vh);
+      z-index: 9500;
+      display: none;
+      flex-direction: column;
+      background: var(--surface);
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    #detachedTerminalWindow.visible { display: flex; }
+    .pm-detached-drag {
+      cursor: grab;
+      padding: 6px var(--md);
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--surface-elevated);
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pm-cmd-log {
+      font-family: monospace;
+      font-size: 9px;
+      max-height: 64px;
+      flex-shrink: 0;
+      overflow-y: auto;
+      padding: 4px;
+      background: var(--surface);
+      border-top: 1px dashed var(--border-light);
+    }
 
     .status-bar {
       height: 24px;
@@ -1916,7 +3988,7 @@
     .browser-bottom-subtabs .subtab.active { color: var(--accent-blue); border-bottom-color: var(--accent-blue); }
     .browser-console-pane, .browser-network-pane, .browser-evidence-pane {
       flex: 1; overflow-y: auto; padding: var(--sm); font-size: 11px; font-family: var(--mono-font);
-      background: #0d1117; color: #c9d1d9;
+      background: var(--terminal-bg); color: var(--terminal-fg);
     }
     .console-line { padding: 1px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
     .console-line.warn { color: #d29922; }
@@ -4269,6 +6341,8 @@
         <option value="retro-light">Retro Light</option>
         <option value="basic-light">Basic Light</option>
         <option value="basic-dark">Basic Dark</option>
+        <option value="glass-dark">Glass Dark</option>
+        <option value="glass-light">Glass Light</option>
       </select>
     </header>
 
@@ -4548,14 +6622,20 @@
       </div>
 
       <div class="center-column">
-        <div class="center-row">
+        <div class="center-row" id="center-row">
           <div class="content-wrapper">
             <main class="primary-content">
           <div class="page page-dashboard active" id="panel-dashboard">
           <div class="resizer-col" id="leftPanelResizer"></div>
-          <div class="editor-view pane-container" id="editorView" style="display:flex; flex-direction:row; gap:2px; flex:1; position:relative;">
+            <div class="editor-view pane-container" id="editorView" style="display:flex; flex-direction:column; gap:0; flex:1; position:relative;">
             <div class="pane-header-drag" draggable="true" data-pane="editorView" style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); width:40px; height:10px; background:var(--border-light); border-radius:4px; cursor:grab; z-index:50;"></div>
-            
+            <div class="pm-tab-model-strip" title="FileManager §9C: distinct route kinds — never collapse editor, browser, and terminal into one generic tab model">
+              <span class="pm-route-chip editor" title="Editor buffer tabs">Editor · file buffers</span>
+              <span class="pm-route-chip browser" title="workspace_preview / browser_session">Workspace · browser tabs</span>
+              <span class="pm-route-chip terminal" title="terminal_section → terminal_tab → terminal_pane → terminal_session_id">Runtime · terminal sections (bottom / detached)</span>
+              <span style="margin-left:auto;opacity:0.85;">Bottom Browser tab = DevTools-style tools for focused session only</span>
+            </div>
+            <div style="display:flex; flex-direction:row; gap:2px; flex:1; min-height:0;">
             <div class="editor-pane" id="editorPane1">
               <div class="editor-tabs">
                 <span class="tab active">app.rs <span class="dot">*</span> <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
@@ -4852,6 +6932,7 @@ impl Dashboard {
   ]
 }</div>
               </div>
+            </div>
             </div>
 
           </div>
@@ -5932,7 +8013,7 @@ impl Dashboard {
                     <div class="orch-card-title" style="font-family:var(--display-font); font-size:12px; margin-bottom:var(--sm); display:flex; justify-content:space-between;">
                       AGENT TERMINAL <button class="wizard-btn" style="padding:2px 4px; font-size:9px;">Clear</button>
                     </div>
-                    <div class="terminal-output" style="flex:1; background:#0d1117; color:var(--text-primary); font-size:11px; padding:var(--sm); border-radius:4px; font-family:monospace; overflow-y:auto; max-height:150px;">
+                    <div class="terminal-output" style="flex:1; background:var(--terminal-bg); color:var(--terminal-fg); font-size:11px; padding:var(--sm); border-radius:4px; font-family:monospace; overflow-y:auto; max-height:150px;">
                       <div style="color:var(--text-muted);">$ cargo check</div>
                       <div>Checking puppet-master v0.1.0</div>
                       <div style="color:var(--accent-lime);">Finished dev [unoptimized + debuginfo] target(s) in 0.12s</div>
@@ -6375,8 +8456,9 @@ impl Dashboard {
                 <a href="#a-formatters" class="settings-tab" data-filter="extensions">Formatters & LSP</a>
                 <a href="#a-commands" class="settings-tab" data-filter="extensions">Commands & Shortcuts</a>
 
-                <div class="settings-group-header">Editor <span class="badge">1</span></div>
+                <div class="settings-group-header">Editor <span class="badge">2</span></div>
                 <a href="#a-editor" class="settings-tab" data-filter="editor">Editor UX & File Manager</a>
+                <a href="#a-terminal" class="settings-tab" data-filter="editor">Terminal &amp; Shell</a>
               </div>
               <div class="settings-content">
                 <div class="settings-search-bar">
@@ -6593,7 +8675,38 @@ impl Dashboard {
                       <label style="width: 100%;"><input type="checkbox" checked> Show minimap</label>
                     </div>
                     <button class="bento-action" style="margin-top: auto;">Configure 10 settings...</button>
-                  </div>                </div>
+                  </div>
+                  <!-- Terminal & Shell (FinalGUISpec §7.4) -->
+                  <div class="bento-card" id="a-terminal" data-inspector-view="terminal" data-category="editor" style="animation: slideInLeft 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 800ms forwards;">
+                    <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="bento-icon"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg> Terminal &amp; Shell</div>
+                    <div class="bento-desc">Durable preferences + shortcut reference (live session controls stay in terminal chrome).</div>
+                    <div class="bento-surface row">
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Surface preset <select id="pmSetTermPreset" onchange="PM_TERMINAL_DEMO.applySettings()"><option value="match-ui">Match UI theme</option><option value="high-contrast">High contrast</option><option value="paper">Paper</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Font size (px) <input type="range" id="pmSetTermFont" min="9" max="16" value="11" oninput="PM_TERMINAL_DEMO.applySettings()"></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Line height <input type="range" id="pmSetTermLH" min="1.1" max="1.8" step="0.05" value="1.45" oninput="PM_TERMINAL_DEMO.applySettings()"></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Cursor <select id="pmSetTermCursor" onchange="PM_TERMINAL_DEMO.applySettings()"><option>block</option><option>underline</option><option>bar</option></select></label>
+                      <label style="width:100%;"><input type="checkbox" id="pmSetTermBlink" checked onchange="PM_TERMINAL_DEMO.applySettings()"> Cursor blink</label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Renderer requested <select id="pmSetTermRenderReq"><option>gpu</option><option>canvas</option></select></label>
+                      <div style="width:100%;font-size:10px;color:var(--text-muted);">Effective renderer: <strong id="pmSetTermRenderEff">canvas (degraded)</strong> — disclosure when policy blocks GPU</div>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Default shell profile <select><option>bash</option><option>zsh</option><option>fish</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">CWD policy <select><option>project root</option><option>last used</option><option>ask</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Transcript retention <select><option>10k lines</option><option>50k lines</option><option>unbounded (risk)</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width:100%;">Shell integration <select><option>rich</option><option>basic</option><option>opaque</option></select> <span style="font-size:9px;color:var(--text-muted);">weak tier limits command cards</span></label>
+                      <label style="width:100%;"><input type="checkbox" checked> Bell notifications</label>
+                      <label style="width:100%;"><input type="checkbox" checked> Copy on select (read-only output)</label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Second terminal section <select><option>stacked dock</option><option>hidden until opened</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Detach behavior <select><option>remember geometry</option><option>center on screen</option></select></label>
+                    </div>
+                    <details style="margin-top:var(--sm);font-size:10px;width:100%;">
+                      <summary style="cursor:pointer;font-weight:600;">Terminal cheat sheet</summary>
+                      <pre style="margin:var(--sm) 0 0;white-space:pre-wrap;font-size:10px;color:var(--text-secondary);">Ctrl+Shift+` — toggle bottom panel
+Ctrl+\ — split pane (demo)
+cmd.terminal.show — reveal existing session (no duplicate PTY)
+cmd.terminal.focus_session — focus stream without layout reveal</pre>
+                    </details>
+                    <button class="bento-action" style="margin-top: auto;">Open full keybinding editor…</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -7232,7 +9345,7 @@ impl Dashboard {
                       </div>
                     </div>
                   </span>
-                  <a href="#" style="color:var(--accent-orange); border: 1px solid var(--accent-orange); display:flex; align-items:center; gap:4px; text-decoration: none; padding:2px 8px; border-radius:4px; font-weight:600;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Issues</a>
+                  <a href="#" onclick="event.preventDefault(); if(window.PM_TERMINAL_DEMO) PM_TERMINAL_DEMO.showBottomTab('problems');" style="color:var(--accent-orange); border: 1px solid var(--accent-orange); display:flex; align-items:center; gap:4px; text-decoration: none; padding:2px 8px; border-radius:4px; font-weight:600; cursor:pointer;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Issues</a>
                 </div>
 
                 <div class="panel-actions" style="display: flex; gap: var(--xs);">
@@ -7255,6 +9368,20 @@ impl Dashboard {
                   </button>
                 </div>
                 <div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm);">
+                  <div class="chat-thread-item role-assistant" data-thread="thread-terminal-demo">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">now</span>
+                      <div class="thread-title">Demo: Terminal &amp; dev loop</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
+                      <div class="thread-summary">Shell-first model · command cards · bottom runtime</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
                   <div class="chat-thread-item active role-assistant" data-thread="thread0" onclick="switchToChatThread('thread0')">
                     <div class="thread-top-row">
                       <span class="thread-timestamp">1m</span>
@@ -7419,6 +9546,7 @@ impl Dashboard {
                     <span class="ft-file">src/components/header.rs <span class="ft-add">+12</span> <span class="ft-del">−3</span></span>
                     <span class="ft-file">styles/main.css <span class="ft-add">+5</span> <span class="ft-del">−2</span></span>
                   </div>
+                  <div class="chat-footer-problems chatFooterProblems" style="display:none; font-size:10px; color:var(--text-secondary); padding-top:2px;"></div>
                 </div>
 
                 <div class="chat-input-area" style="position:relative; padding: var(--xs) var(--md); border-top: 1px solid var(--border-light); display:flex; flex-direction:column; gap:0;">
@@ -7554,59 +9682,88 @@ impl Dashboard {
         <div class="bottom-panel pane-container" id="bottomPanel" style="position:relative;">
           <div class="pane-header-drag" draggable="true" data-pane="bottomPanel" style="position:absolute; top:-8px; left:50%; transform:translateX(-50%); width:40px; height:6px; background:var(--border-light); border-radius:4px; cursor:grab; z-index:50;"></div>
           <div class="bottom-tabs">
-            <div class="bottom-tabs-left">
-              <span class="tab active" data-bottom-tab="terminal" onclick="switchBottomTab('terminal')">Terminal</span>
-              <span class="tab" data-bottom-tab="problems" onclick="switchBottomTab('problems')">Problems</span>
-              <span class="tab" data-bottom-tab="output" onclick="switchBottomTab('output')">Output</span>
-              <span class="tab" data-bottom-tab="ports" onclick="switchBottomTab('ports')">Ports</span>
-              <span class="tab" data-bottom-tab="browser" onclick="switchBottomTab('browser')">Browser</span>
-              <span class="tab" data-bottom-tab="debug" onclick="switchBottomTab('debug')">Debug</span>
+            <div class="bottom-tabs-left" role="tablist" aria-label="Bottom runtime">
+              <span class="tab active" role="tab" aria-selected="true" tabindex="0" data-bottom-tab="terminal" onclick="switchBottomTab('terminal')">Terminal</span>
+              <span class="tab" role="tab" aria-selected="false" tabindex="-1" data-bottom-tab="problems" onclick="switchBottomTab('problems')">Problems</span>
+              <span class="tab" role="tab" aria-selected="false" tabindex="-1" data-bottom-tab="output" onclick="switchBottomTab('output')">Output</span>
+              <span class="tab" role="tab" aria-selected="false" tabindex="-1" data-bottom-tab="ports" onclick="switchBottomTab('ports')">Ports</span>
+              <span class="tab" role="tab" aria-selected="false" tabindex="-1" data-bottom-tab="browser" onclick="switchBottomTab('browser')">Browser</span>
+              <span class="tab" role="tab" aria-selected="false" tabindex="-1" data-bottom-tab="debug" onclick="switchBottomTab('debug')">Debug</span>
             </div>
             <div class="bottom-tabs-right">
-              <select id="terminalGroupSelect" title="Terminal group">
-                <option value="build">Build & Test</option>
+              <select id="terminalGroupSelect" title="Filter terminal tabs by profile" onchange="if(window.PM_TERMINAL_DEMO) PM_TERMINAL_DEMO.setGroupFilter(this.value)">
+                <option value="all">All profiles</option>
+                <option value="build" selected>Build &amp; Test</option>
                 <option value="logs">Logs</option>
                 <option value="shell">Shell</option>
               </select>
-              <button class="collapse-btn" id="collapseBottom">&#9660;</button>
+              <button type="button" class="pm-tiny-btn" title="cmd.palette stub" onclick="if(window.PM_TERMINAL_DEMO) PM_TERMINAL_DEMO.showPaletteHints()">Palette…</button>
+              <button class="collapse-btn" id="collapseBottom" aria-expanded="true" aria-controls="bottomTabsContent">&#9660;</button>
             </div>
           </div>
-          <div class="bottom-tabs-content">
-            <div class="terminal-grid-flex" id="bottomTerminalContent" data-group="build" style="display:flex; flex-direction:column; flex:1; min-height:0; gap:1px; background:var(--border);">
-              <div style="display:flex; flex:1; min-height:0; gap:1px;">
-                  <div class="terminal-pane" id="term1" style="flex:1; background:#0d1117;">
-                    <div class="line">$ cargo build</div>
-                    <div class="line">   Compiling puppet-master v0.1.0</div>
-                    <div class="line">   Compiling slint v1.5.1</div>
-                    <div class="line stderr">error[E0433]: unresolved import `slint`</div>
-                    <div class="line info">  --> src/main.rs:12:5</div>
-                  </div>
-                  <div class="resizer-col" id="termSplitH1"></div>
-                  <div class="terminal-pane" id="term2" style="flex:1; background:#0d1117;">
-                    <div class="line">$ cargo test</div>
-                    <div class="line">running 3 tests</div>
-                    <div class="line">test tests::integration::basic ... ok</div>
-                    <div class="line info">test result: ok. 3 passed</div>
-                  </div>
+          <div class="bottom-tabs-content" id="bottomTabsContent">
+            <div class="bottom-host-panel active terminal-grid-flex" id="bottomTerminalHost" data-group="build" style="flex:1; min-height:0; background:var(--border-light);"><span class="pm-terminal-host-placeholder" style="padding:var(--sm);font-size:11px;color:var(--text-muted);display:block;">Initializing terminal workspace…</span></div>
+
+            <div class="bottom-host-panel" id="bottomProblemsHost">
+              <div class="pm-bottom-linked-header">
+                <span>Linked <code>dev_session_id</code>: <strong id="pmProblemsDevId">dev-sess-vite-01</strong></span>
+                <span><code>terminal_session_id</code>: <strong id="pmProblemsTermId">ts-sess-alpha</strong></span>
+                <button type="button" class="pm-tiny-btn" title="cmd.terminal.show" onclick="PM_TERMINAL_DEMO.revealSession(PM_TERMINAL_DEMO.linkedSessions.problems)">Reveal in Terminal</button>
+                <button type="button" class="pm-tiny-btn" title="cmd.terminal.focus_session" onclick="PM_TERMINAL_DEMO.focusSession(PM_TERMINAL_DEMO.linkedSessions.problems)">Focus shell only</button>
               </div>
-              <div class="resizer-row" id="termSplitV"></div>
-              <div style="display:flex; flex:1; min-height:0; gap:1px;" id="termBottomRow">
-                  <div class="terminal-pane" id="term3" style="flex:1; background:#0d1117;">
-                    <div class="line">[INFO] Agent: Phase 2 Task 3</div>
-                    <div class="line">[OK] Reading src/auth/mod.rs</div>
-                    <div class="line">[OK] 48 lines analyzed</div>
-                  </div>
-                  <div class="resizer-col" id="termSplitH2"></div>
-                  <div class="terminal-pane" id="term4" style="flex:1; background:#0d1117;">
-                    <div class="line">$ git log --oneline -2</div>
-                    <div class="line">a3f2c1d feat: add auth handler</div>
-                    <div class="line">b7e4a09 refactor: provider trait</div>
-                  </div>
+              <div style="flex:1; overflow:auto; padding: var(--sm);">
+                <table class="pm-problems-table" id="pmProblemsTable">
+                  <thead><tr><th>Sev</th><th>Code</th><th>Message</th><th>File</th></tr></thead>
+                  <tbody>
+                    <tr data-session="ts-sess-alpha" onclick="PM_TERMINAL_DEMO.revealSession('ts-sess-alpha')"><td>E</td><td>E0433</td><td>unresolved import `slint`</td><td>src/main.rs:12</td></tr>
+                    <tr data-session="ts-sess-alpha" onclick="PM_TERMINAL_DEMO.revealSession('ts-sess-alpha')"><td>W</td><td>unused</td><td>unused variable `cfg`</td><td>src/config.rs:4</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="bottom-host-panel" id="bottomOutputHost">
+              <div class="pm-bottom-linked-header">
+                <span>Build output &mdash; linked <code>ts-sess-alpha</code></span>
+                <button type="button" class="pm-tiny-btn" onclick="PM_TERMINAL_DEMO.focusSession('ts-sess-alpha')">Focus shell</button>
+                <span class="pm-degrade-warn" title="FinalGUISpec §11.3">Stream throttle: 33ms (30fps)</span>
+              </div>
+              <pre id="pmOutputPre" style="flex:1; margin:0; padding:var(--md); font-size:10px; overflow:auto; font-family:monospace; color:var(--text-primary);">   Compiling puppet-master v0.1.0
+   Compiling slint v1.5.1
+error[E0433]: unresolved import `slint`
+  --> src/main.rs:12:5
+   |
+12 | use slint;
+   |     ^^^^^</pre>
+            </div>
+
+            <div class="bottom-host-panel" id="bottomPortsHost">
+              <div class="pm-bottom-linked-header">
+                <span>Hot reload &mdash; <code id="pmPortsDevId">dev-sess-vite-01</code></span>
+                <label class="pm-tiny-btn" style="display:inline-flex;align-items:center;gap:4px;"><input type="checkbox" checked disabled> Watch active</label>
+                <span style="font-size:9px;color:var(--text-muted);">Excludes node_modules, target, .git, build &middot; cap 5000 paths</span>
+              </div>
+              <div style="flex:1; overflow:auto; padding: var(--sm);">
+                <table class="pm-ports-table">
+                  <thead><tr><th>Port</th><th>Process</th><th>Linked session</th><th>Action</th></tr></thead>
+                  <tbody>
+                    <tr><td>3000</td><td>vite</td><td>ts-sess-gamma</td><td><button type="button" class="pm-tiny-btn" onclick="PM_TERMINAL_DEMO.revealSession('ts-sess-gamma')">Open</button></td></tr>
+                    <tr><td>54112</td><td>debug DAP</td><td>&mdash;</td><td><span style="color:var(--text-muted);">1 session / project</span></td></tr>
+                  </tbody>
+                </table>
               </div>
             </div>
 
             <!-- Browser Bottom Content (Console / Network / Evidence) -->
-            <div class="browser-bottom-content" id="bottomBrowserContent" style="display:none; flex:1; min-height:0;">
+            <div class="browser-bottom-content bottom-host-panel" id="bottomBrowserContent" style="flex:1; min-height:0;">
+              <div class="pm-bottom-linked-header">
+                <span>Focused <code>browser_session</code>:</span>
+                <select id="pmBottomBrowserSessionSelect" style="font-size:10px;max-width:200px;">
+                  <option value="workspace_preview">workspace_preview &mdash; localhost:3000</option>
+                  <option value="automation_session">automation_session &mdash; test-runner</option>
+                </select>
+                <span style="font-size:9px;color:var(--text-muted);">Bottom panel = session-adjacent tools (not canonical browsing host)</span>
+              </div>
               <div class="browser-bottom-subtabs">
                 <span class="subtab active" data-browser-subtab="console" onclick="switchBrowserSubtab('console')">Console</span>
                 <span class="subtab" data-browser-subtab="network" onclick="switchBrowserSubtab('network')">Network</span>
@@ -7667,9 +9824,48 @@ impl Dashboard {
                 </div>
               </div>
             </div>
+
+            <div class="bottom-host-panel" id="bottomDebugHost">
+              <div class="pm-bottom-linked-header">
+                <span>Debug (DAP) &mdash; linked workflow</span>
+                <button type="button" class="pm-tiny-btn" onclick="PM_TERMINAL_DEMO.dispatch('cmd.dev.show_problems',{})">Show Problems</button>
+                <span style="font-size:9px;color:var(--text-muted);">Evaluate timeout 10s &middot; Launch 30s &middot; max 1 debug session / project</span>
+              </div>
+              <div class="pm-debug-grid">
+                <div class="pm-debug-cell">
+                  <h4>Variables</h4>
+                  <div>self = MainWindow { }</div>
+                  <div>ctx = RenderContext</div>
+                </div>
+                <div class="pm-debug-cell">
+                  <h4>Call stack</h4>
+                  <div>main @ main.rs:1</div>
+                  <div>run @ lib.rs:42</div>
+                </div>
+                <div class="pm-debug-cell">
+                  <h4>Breakpoints</h4>
+                  <div><input type="checkbox" checked disabled> main.rs : 12</div>
+                  <div><input type="checkbox" disabled> lib.rs : 40</div>
+                </div>
+                <div class="pm-debug-cell">
+                  <h4>Debug console</h4>
+                  <div style="font-family:monospace;font-size:10px;">&gt; threads<br>1: main (stopped)<br>&gt; </div>
+                </div>
+              </div>
+            </div>
           </div>
+          <div class="pm-cmd-log" id="pmCmdLog" title="Command wiring log" aria-live="polite"></div>
         </div>
       </div>
+    </div>
+
+    <div id="pmToastStack" aria-live="polite"></div>
+    <div id="detachedTerminalWindow" aria-label="Detached terminal section">
+      <div class="pm-detached-drag" id="pmDetachedDrag">
+        <span>Terminal section (detached)</span>
+        <button type="button" class="pm-tiny-btn" onclick="PM_TERMINAL_DEMO.reattachSecondary()">Re-dock</button>
+      </div>
+      <div id="detachedTerminalBody" style="flex:1; min-height:0; display:flex; flex-direction:column;"></div>
     </div>
 
     <footer class="status-bar">
@@ -7738,7 +9934,7 @@ impl Dashboard {
                       </div>
                     </div>
                   </span>
-                  <a href="#" style="color:var(--accent-orange); border: 1px solid var(--accent-orange); display:flex; align-items:center; gap:4px; text-decoration: none; padding:2px 8px; border-radius:4px; font-weight:600;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Issues</a>
+                  <a href="#" onclick="event.preventDefault(); if(window.PM_TERMINAL_DEMO) PM_TERMINAL_DEMO.showBottomTab('problems');" style="color:var(--accent-orange); border: 1px solid var(--accent-orange); display:flex; align-items:center; gap:4px; text-decoration: none; padding:2px 8px; border-radius:4px; font-weight:600; cursor:pointer;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Issues</a>
                 </div>
 
                 <div class="panel-actions" style="display: flex; gap: var(--xs);">
@@ -7761,6 +9957,20 @@ impl Dashboard {
                   </button>
                 </div>
                 <div class="chat-thread-list chatThreadList" style="flex: 1; overflow-y: auto; padding: var(--sm);">
+                  <div class="chat-thread-item role-assistant" data-thread="thread-terminal-demo">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">now</span>
+                      <div class="thread-title">Demo: Terminal &amp; dev loop</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
+                      <div class="thread-summary">Shell-first model · command cards · bottom runtime</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
                   <div class="chat-thread-item active role-assistant" data-thread="thread0" onclick="switchToChatThread('thread0')">
                     <div class="thread-top-row">
                       <span class="thread-timestamp">1m</span>
@@ -8003,6 +10213,7 @@ impl Dashboard {
                     <span class="ft-file">src/components/header.rs <span class="ft-add">+12</span> <span class="ft-del">−3</span></span>
                     <span class="ft-file">styles/main.css <span class="ft-add">+5</span> <span class="ft-del">−2</span></span>
                   </div>
+                  <div class="chat-footer-problems chatFooterProblems" style="display:none; font-size:10px; color:var(--text-secondary); padding-top:2px;"></div>
                 </div>
 
                 <div class="chat-input-area" style="position:relative; padding: var(--xs) var(--md); border-top: 1px solid var(--border-light); display:flex; flex-direction:column; gap:0;">
@@ -8132,11 +10343,824 @@ impl Dashboard {
       </div>
 
 
+  <template id="tplThreadTerminalDemo">
+    <div class="message assistant">
+      <div class="msg-body">Shell-first dev loop: the <strong>canonical transcript and PTY</strong> live in <strong>Terminal</strong> (sections → tabs → panes). Chat command cards are a compact audit layer only — <code>cmd.terminal.show</code> reveals an existing binding instead of minting a duplicate shell.</div>
+      <div class="msg-hover-row">
+        <div class="msg-actions">
+          <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+        </div>
+        <div class="msg-runtime-compact">
+          <span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>9:08</span>
+          <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+          <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">rust-engineer</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">612</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">6.1k / 128k</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="message assistant">
+      <div class="msg-body">
+        <div class="pm-command-card pm-terminal-enter" id="pmCardRich">
+          <div class="pm-command-card-header">
+            <span><strong>run_shell_command</strong> · shell tier <code>rich</code></span>
+            <span class="pm-session-badge exited">exited</span>
+          </div>
+          <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;">cwd ~/projects/puppet-master · 1.24s · exit 101</div>
+          <pre>cargo build --workspace
+   Compiling puppet-master v0.1.0
+error[E0433]: unresolved import `slint`</pre>
+          <div class="pm-command-card-actions">
+            <button type="button" class="pm-tiny-btn" title="cmd.terminal.show — reveal layout + focus" onclick="PM_TERMINAL_DEMO.revealSession('ts-sess-alpha')">Open in Terminal</button>
+            <button type="button" class="pm-tiny-btn" title="cmd.terminal.show" onclick="PM_TERMINAL_DEMO.revealSession('ts-sess-alpha')">Show Terminal</button>
+            <button type="button" class="pm-tiny-btn" title="cmd.terminal.focus_session" onclick="PM_TERMINAL_DEMO.focusSession('ts-sess-alpha')">Focus shell only</button>
+            <button type="button" class="pm-tiny-btn" onclick="document.getElementById('pmCardRich').classList.toggle('expanded')">Expand transcript</button>
+            <span class="pm-link-chip" onclick="PM_TERMINAL_DEMO.showBottomTab('output')">Output</span>
+            <span class="pm-link-chip" onclick="PM_TERMINAL_DEMO.showBottomTab('problems')">Problems</span>
+            <span class="pm-link-chip" onclick="PM_TERMINAL_DEMO.showBottomTab('ports')">Ports</span>
+          </div>
+        </div>
+      </div>
+      <div class="msg-hover-row">
+        <div class="msg-actions">
+          <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+        </div>
+        <div class="msg-runtime-compact">
+          <span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>14s</span>
+          <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+          <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">rust-engineer</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">2,847</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">12.4k / 128k</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="message assistant">
+      <div class="msg-body">
+        <div class="pm-command-card">
+          <div class="pm-command-card-header">
+            <span><strong>Opaque integration</strong></span>
+            <span class="pm-session-badge exited">degraded</span>
+          </div>
+          <div style="font-size:10px;color:var(--text-muted);">Exact command boundaries are not asserted at this tier.</div>
+          <pre>••••••••••••••• (transcript redacted)
+status: completed with warnings</pre>
+          <div class="pm-command-card-actions">
+            <button type="button" class="pm-tiny-btn" onclick="PM_TERMINAL_DEMO.revealSession('ts-sess-beta')">Show Terminal</button>
+          </div>
+        </div>
+      </div>
+      <div class="msg-hover-row">
+        <div class="msg-actions">
+          <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+        </div>
+        <div class="msg-runtime-compact">
+          <span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>6s</span>
+          <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+          <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">default</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">904</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">9.2k / 128k</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="message assistant">
+      <div class="msg-body">
+        <div class="pm-dev-session-row">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <strong>Dev session</strong> <code>dev-sess-vite-01</code>
+            <span class="pm-session-badge running">running</span>
+          </div>
+          <div style="font-size:10px;color:var(--text-secondary);margin-bottom:8px;">vite · watch · linked ports 3000</div>
+          <div class="pm-command-card-actions">
+            <button type="button" class="pm-tiny-btn" onclick="PM_TERMINAL_DEMO.dispatch('cmd.dev.show_output',{})">Show Output</button>
+            <button type="button" class="pm-tiny-btn" onclick="PM_TERMINAL_DEMO.dispatch('cmd.dev.show_problems',{})">Show Problems</button>
+            <button type="button" class="pm-tiny-btn" onclick="PM_TERMINAL_DEMO.dispatch('cmd.dev.show_ports',{})">Show Ports</button>
+            <button type="button" class="pm-tiny-btn" title="last-active terminal_session_id" onclick="PM_TERMINAL_DEMO.revealSession('ts-sess-gamma')">Open in Terminal</button>
+          </div>
+        </div>
+      </div>
+      <div class="msg-hover-row">
+        <div class="msg-actions">
+          <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+        </div>
+        <div class="msg-runtime-compact">
+          <span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>4s</span>
+          <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+          <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">default</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">1,128</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">10.8k / 128k</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="message assistant">
+      <div class="msg-body">
+        <div class="pm-blocked-banner">
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;"><span class="pm-session-badge" style="background:rgba(255,20,147,0.15);color:var(--accent-magenta);">blocked</span><span class="pm-session-badge exited">attention_required</span></div>
+          Runtime paused for policy review. Local terminal layout is preserved.
+          <div class="pm-command-card-actions" style="margin-top:8px;">
+            <button type="button" class="pm-tiny-btn">Resume Wizard</button>
+            <button type="button" class="pm-tiny-btn" onclick="PM_TERMINAL_DEMO.dispatch('cmd.runtime.restore_safe_point_then_retry',{demo:true})">Restore safe point…</button>
+            <button type="button" class="pm-tiny-btn" onclick="PM_TERMINAL_DEMO.dispatch('cmd.chat.branch_from_restore',{demo:true})">Branch from restore</button>
+          </div>
+        </div>
+      </div>
+      <div class="msg-hover-row">
+        <div class="msg-actions">
+          <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+        </div>
+        <div class="msg-runtime-compact">
+          <span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>3s</span>
+          <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+          <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">default</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">1,456</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">11.9k / 128k</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="message user">
+      <div class="msg-body">Footer: use <span class="pm-problems-footer" onclick="PM_TERMINAL_DEMO.showBottomTab('problems')">3 problems</span> to open the Problems panel filtered to this project context.</div>
+      <div class="msg-hover-row">
+        <div class="msg-actions">
+          <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+          <button class="msg-control-btn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
+          <button class="msg-control-btn" title="Resend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button>
+        </div>
+        <div class="msg-runtime-compact">
+          <span>Agent</span><span class="sep">·</span><span>Claude</span><span class="sep">·</span><span>Sonnet 4.6</span><span class="sep">·</span><span>9:12</span>
+          <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+          <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">default</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">228</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">7.4k / 128k</span></div></div>
+        </div>
+      </div>
+    </div>
+  </template>
+
   <div class="pixel-grid" id="pixelGrid"></div>
 
   <script>
+    (function() {
+      'use strict';
+      function logCmd(id, detail) {
+        var el = document.getElementById('pmCmdLog');
+        if (!el) return;
+        var line = document.createElement('div');
+        line.textContent = new Date().toLocaleTimeString() + ' ' + id + (detail != null ? ' ' + JSON.stringify(detail) : '');
+        el.insertBefore(line, el.firstChild);
+        while (el.children.length > 30) el.removeChild(el.lastChild);
+      }
+      function toast(msg) {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          /* still show, skip animation concern */
+        }
+        var stack = document.getElementById('pmToastStack');
+        if (!stack) return;
+        var t = document.createElement('div');
+        t.className = 'pm-toast';
+        t.textContent = msg;
+        stack.appendChild(t);
+        setTimeout(function() { t.remove(); }, 3400);
+      }
+      function countLeaves(tree) {
+        if (!tree) return 0;
+        if (tree.type === 'leaf') return 1;
+        return tree.children.reduce(function(s, c) { return s + countLeaves(c); }, 0);
+      }
+      function removeLeaf(tree, paneId) {
+        if (!tree) return null;
+        if (tree.type === 'leaf') return tree.paneId === paneId ? null : tree;
+        var ch = tree.children.map(function(c) { return removeLeaf(c, paneId); }).filter(Boolean);
+        if (ch.length === 0) return null;
+        if (ch.length === 1) return ch[0];
+        return { type: tree.type, children: ch };
+      }
+      var paneCounter = 0;
+      var defaultLines = {
+        alpha: [
+          { t: 'line', c: '$ cargo build --workspace' },
+          { t: 'line', c: '   Compiling puppet-master v0.1.0' },
+          { t: 'line stderr', c: 'error[E0433]: unresolved import `slint`' },
+          { t: 'line info', c: '  --> src/main.rs:12:5' }
+        ],
+        beta: [{ t: 'line info', c: '[historical transcript — PTY not live after restart]' }],
+        gamma: [
+          { t: 'line', c: '$ vite --host' },
+          { t: 'line info', c: '  VITE v5.4.0  ready in 412 ms' },
+          { t: 'line', c: '  ➜  Local:   http://localhost:3000/' }
+        ],
+        delta: [{ t: 'line', c: '$ git log --oneline -2' }, { t: 'line', c: 'a3f2c1d feat: add auth handler' }]
+      };
+      var state = {
+        groupFilter: 'build',
+        clockTick: 0,
+        secondaryVisible: false,
+        secondaryDetached: false,
+        focusedPaneId: 'tp-a',
+        linkedSessions: { problems: 'ts-sess-alpha', output: 'ts-sess-alpha', ports: 'ts-sess-gamma' },
+        panes: {
+          'tp-a': {
+            id: 'tp-a', sessionId: 'ts-sess-alpha', devSessionId: null, state: 'running', profile: 'build',
+            accent: 1, cwd: '~/projects/puppet-master', profileLabel: 'bash · project',
+            rendererRequested: 'gpu', rendererEffective: 'canvas', shellTier: 'rich',
+            degradations: ['gpu_software_fallback'], restoreOutcome: 'restored_live', durability: 'guaranteed_durable',
+            retentionTier: '10k_lines', commandBlock: { id: 'tcb-8821', life: 'succeeded' },
+            historyBanner: null, inspectorOpen: false, lines: defaultLines.alpha
+          },
+          'tp-b': {
+            id: 'tp-b', sessionId: 'ts-sess-delta', devSessionId: null, state: 'running', profile: 'build',
+            accent: 2, cwd: '~/projects/puppet-master', profileLabel: 'bash · project',
+            rendererRequested: 'gpu', rendererEffective: 'gpu', shellTier: 'rich', degradations: [],
+            restoreOutcome: 'restored_live', durability: 'best_effort_durable', retentionTier: '10k_lines',
+            commandBlock: { id: 'tcb-8822', life: 'running' }, historyBanner: null, inspectorOpen: false, lines: defaultLines.delta
+          },
+          'tp-c': {
+            id: 'tp-c', sessionId: 'ts-sess-alpha', devSessionId: 'dev-sess-vite-01', state: 'running', profile: 'build',
+            accent: 3, cwd: '~/projects/puppet-master', profileLabel: 'agent log',
+            rendererRequested: 'gpu', rendererEffective: 'canvas', shellTier: 'basic', degradations: ['integration_basic'],
+            restoreOutcome: 'restored_live', durability: 'guaranteed_durable', retentionTier: '10k_lines',
+            commandBlock: { id: 'tcb-8823', life: 'running' }, historyBanner: null, inspectorOpen: false,
+            lines: [{ t: 'line', c: '[INFO] Agent: Phase 2 Task 3' }, { t: 'line', c: '[OK] Reading src/auth/mod.rs' }]
+          },
+          'tp-d': {
+            id: 'tp-d', sessionId: 'ts-sess-delta', devSessionId: null, state: 'running', profile: 'build',
+            accent: 4, cwd: '~/projects/puppet-master', profileLabel: 'bash · project',
+            rendererRequested: 'gpu', rendererEffective: 'gpu', shellTier: 'rich', degradations: [],
+            restoreOutcome: 'restored_live', durability: 'guaranteed_durable', retentionTier: '10k_lines',
+            commandBlock: { id: 'tcb-8824', life: 'succeeded' }, historyBanner: null, inspectorOpen: false, lines: defaultLines.delta
+          },
+          'tp-hist': {
+            id: 'tp-hist', sessionId: 'ts-sess-beta', devSessionId: null, state: 'exited', profile: 'shell',
+            accent: 1, cwd: '~', profileLabel: 'zsh',
+            rendererRequested: 'gpu', rendererEffective: 'canvas', shellTier: 'opaque', degradations: ['no_pty_live'],
+            restoreOutcome: 'restored_exited', durability: 'transient_only', retentionTier: 'transcript_snapshot',
+            commandBlock: { id: 'tcb-7701', life: 'failed' },
+            historyBanner: 'Historical shell — restart to attach a live PTY',
+            inspectorOpen: false, lines: defaultLines.beta
+          },
+          'tp-sec': {
+            id: 'tp-sec', sessionId: 'ts-sess-gamma', devSessionId: 'dev-sess-vite-01', state: 'running', profile: 'shell',
+            accent: 1, cwd: '~/projects/puppet-master/ui', profileLabel: 'fish',
+            rendererRequested: 'canvas', rendererEffective: 'canvas', shellTier: 'rich', degradations: [],
+            restoreOutcome: 'restored_live', durability: 'guaranteed_durable', retentionTier: '10k_lines',
+            commandBlock: { id: 'tcb-9001', life: 'running' }, historyBanner: null, inspectorOpen: false, lines: defaultLines.gamma
+          }
+        },
+        sections: {
+          'ts-sec-primary': {
+            id: 'ts-sec-primary', label: 'Primary runtime', docked: true,
+            selectedTabId: 'tt-build',
+            tabs: [
+              { id: 'tt-build', title: 'cargo · workspace', pinned: false, profile: 'build',
+                tree: { type: 'col', children: [
+                  { type: 'row', children: [{ type: 'leaf', paneId: 'tp-a' }, { type: 'leaf', paneId: 'tp-b' }] },
+                  { type: 'row', children: [{ type: 'leaf', paneId: 'tp-c' }, { type: 'leaf', paneId: 'tp-d' }] }
+                ]}
+              },
+              { id: 'tt-hist', title: 'restore · prior shell', pinned: true, profile: 'shell',
+                tree: { type: 'leaf', paneId: 'tp-hist' }
+              }
+            ]
+          },
+          'ts-sec-secondary': {
+            id: 'ts-sec-secondary', label: 'Secondary runtime', docked: true,
+            selectedTabId: 'tt-vite',
+            tabs: [
+              { id: 'tt-vite', title: 'vite dev', pinned: false, profile: 'shell',
+                tree: { type: 'leaf', paneId: 'tp-sec' }
+              }
+            ]
+          }
+        }
+      };
+
+      function findPaneLocation(paneId) {
+        var secs = Object.keys(state.sections).map(function(k) { return state.sections[k]; });
+        for (var si = 0; si < secs.length; si++) {
+          var sec = secs[si];
+          for (var ti = 0; ti < sec.tabs.length; ti++) {
+            var tab = sec.tabs[ti];
+            function walk(n) {
+              if (!n) return false;
+              if (n.type === 'leaf') return n.paneId === paneId;
+              return n.children.some(walk);
+            }
+            if (walk(tab.tree)) return { section: sec, tab: tab };
+          }
+        }
+        return null;
+      }
+
+      function findSessionLocation(sessionId) {
+        for (var pid in state.panes) {
+          if (state.panes[pid].sessionId === sessionId) {
+            var loc = findPaneLocation(pid);
+            if (loc) return { paneId: pid, section: loc.section, tab: loc.tab };
+          }
+        }
+        return null;
+      }
+
+      function renderTranscript(body, lines) {
+        body.innerHTML = '';
+        lines.forEach(function(l) {
+          var d = document.createElement('div');
+          d.className = l.t;
+          d.textContent = l.c;
+          body.appendChild(d);
+        });
+      }
+
+      function renderPane(paneId) {
+        var p = state.panes[paneId];
+        if (!p) return document.createElement('div');
+        var wrap = document.createElement('div');
+        wrap.className = 'terminal-pane pane-accent-' + p.accent + (state.focusedPaneId === paneId ? ' pm-pane-focused' : '');
+        wrap.dataset.paneId = paneId;
+        wrap.tabIndex = state.focusedPaneId === paneId ? 0 : -1;
+        var tb = document.createElement('div');
+        tb.className = 'terminal-pane-toolbar';
+        var chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'pm-identity-chip';
+        chip.title = 'click to copy terminal_session_id';
+        chip.textContent = p.sessionId.slice(0, 14) + '…';
+        chip.onclick = function() {
+          navigator.clipboard.writeText(p.sessionId).catch(function() {});
+          chip.classList.add('copied');
+          setTimeout(function() { chip.classList.remove('copied'); }, 600);
+          logCmd('clipboard', p.sessionId);
+        };
+        tb.appendChild(chip);
+        ['Clear', 'Restart', 'Terminate', 'Kill'].forEach(function(lbl) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'pm-tiny-btn';
+          b.textContent = lbl;
+          b.onclick = function() {
+            var cmd = { Clear: 'cmd.terminal.clear_scrollback', Restart: 'cmd.terminal.restart_session', Terminate: 'cmd.terminal.terminate_session', Kill: 'cmd.terminal.kill_session' }[lbl];
+            logCmd(cmd, { terminal_session_id: p.sessionId });
+            toast(cmd.replace('cmd.terminal.', '') + ' · ' + p.sessionId.slice(0, 8) + '…');
+          };
+          tb.appendChild(b);
+        });
+        var insp = document.createElement('button');
+        insp.type = 'button';
+        insp.className = 'pm-tiny-btn';
+        insp.textContent = 'Inspector';
+        insp.onclick = function() {
+          p.inspectorOpen = !p.inspectorOpen;
+          drawer.classList.toggle('open', p.inspectorOpen);
+        };
+        tb.appendChild(insp);
+        var splitH = document.createElement('button');
+        splitH.type = 'button';
+        splitH.className = 'pm-tiny-btn';
+        splitH.textContent = 'Split H';
+        splitH.onclick = function() { splitActive('horizontal'); };
+        tb.appendChild(splitH);
+        var splitV = document.createElement('button');
+        splitV.type = 'button';
+        splitV.className = 'pm-tiny-btn';
+        splitV.textContent = 'Split V';
+        splitV.onclick = function() { splitActive('vertical'); };
+        tb.appendChild(splitV);
+        var closeP = document.createElement('button');
+        closeP.type = 'button';
+        closeP.className = 'pm-tiny-btn';
+        closeP.textContent = 'Close pane';
+        closeP.onclick = function() { closePane(paneId); };
+        tb.appendChild(closeP);
+        wrap.appendChild(tb);
+        if (p.historyBanner) {
+          var ban = document.createElement('div');
+          ban.className = 'pm-recovery-banner';
+          ban.innerHTML = '<div>' + p.historyBanner + '</div><button type="button" class="pm-tiny-btn">Restart session</button><button type="button" class="pm-tiny-btn">Close historical tab</button>';
+          wrap.appendChild(ban);
+        }
+        var body = document.createElement('div');
+        body.className = 'terminal-pane-body';
+        body.style.flex = '1';
+        body.style.overflow = 'auto';
+        body.style.minHeight = '0';
+        renderTranscript(body, p.lines);
+        wrap.appendChild(body);
+        var drawer = document.createElement('div');
+        drawer.className = 'pm-inspector-drawer' + (p.inspectorOpen ? ' open' : '');
+        drawer.innerHTML =
+          '<div class="pm-inspector-kv"><span>terminal_pane_id</span><span>' + p.id + '</span></div>' +
+          '<div class="pm-inspector-kv"><span>terminal_session_id</span><span>' + p.sessionId + '</span></div>' +
+          (p.devSessionId ? '<div class="pm-inspector-kv"><span>dev_session_id</span><span>' + p.devSessionId + '</span></div>' : '') +
+          '<div class="pm-inspector-kv"><span>renderer</span><span class="' + (p.rendererRequested !== p.rendererEffective ? 'pm-degrade-warn' : '') + '">' + p.rendererRequested + ' → ' + p.rendererEffective + '</span></div>' +
+          '<div class="pm-inspector-kv"><span>shell integration</span><span>' + p.shellTier + '</span></div>' +
+          '<div class="pm-inspector-kv"><span>restore_outcome</span><span>' + p.restoreOutcome + '</span></div>' +
+          '<div class="pm-inspector-kv"><span>durability</span><span>' + p.durability + '</span></div>' +
+          '<div class="pm-inspector-kv"><span>transcript retention</span><span>' + p.retentionTier + '</span></div>' +
+          '<div class="pm-inspector-kv"><span>command_block</span><span>' + p.commandBlock.id + ' · ' + p.commandBlock.life + '</span></div>' +
+          '<div class="pm-inspector-kv"><span>stream throttle</span><span>33ms (30fps)</span></div>';
+        wrap.appendChild(drawer);
+        wrap.onclick = function() {
+          state.focusedPaneId = paneId;
+          renderAll();
+        };
+        return wrap;
+      }
+
+      function renderTree(node) {
+        if (!node) return document.createElement('div');
+        if (node.type === 'leaf') return renderPane(node.paneId);
+        var flexDir = node.type === 'row' ? 'row' : 'column';
+        var box = document.createElement('div');
+        box.className = 'terminal-split-node pm-terminal-enter';
+        box.style.display = 'flex';
+        box.style.flexDirection = flexDir;
+        box.style.flex = '1';
+        box.style.minHeight = '0';
+        box.style.minWidth = '0';
+        box.style.gap = '1px';
+        node.children.forEach(function(ch, i) {
+          if (i > 0) {
+            var rz = document.createElement('div');
+            rz.className = node.type === 'row' ? 'resizer-col pm-term-pane-resizer' : 'resizer-row pm-term-pane-resizer';
+            box.appendChild(rz);
+          }
+          var inner = renderTree(ch);
+          inner.style.flex = '1';
+          box.appendChild(inner);
+        });
+        return box;
+      }
+
+      function renderSection(secId, hostEl) {
+        var sec = state.sections[secId];
+        if (!sec || !hostEl) return;
+        /* Do not clear hostEl here: renderAll() appends primary then secondary into the same
+           container — clearing would erase the first section (primary vanished when secondary is hidden). */
+        var block = document.createElement('div');
+        block.className = 'terminal-section pm-terminal-enter';
+        block.style.flex = secId === 'ts-sec-secondary' && !state.secondaryVisible ? '0' : '1';
+        block.style.minHeight = '0';
+        block.style.display = secId === 'ts-sec-secondary' && !state.secondaryVisible ? 'none' : 'flex';
+        var hdr = document.createElement('div');
+        hdr.className = 'terminal-section-header';
+        var dockLab = state.secondaryDetached && secId === 'ts-sec-secondary' ? 'detached' : 'docked';
+        hdr.innerHTML = '<span class="terminal-section-title">' + sec.label + '</span>' +
+          '<span class="pm-dock-pill ' + (dockLab === 'detached' ? 'detached' : '') + '">' + dockLab + '</span>' +
+          '<span style="font-family:monospace;font-size:9px;opacity:0.85;">' + sec.id + '</span>' +
+          '<span id="pmTermClock-' + secId + '" style="margin-left:auto;font-variant-numeric:tabular-nums;">uptime 00:00</span>' +
+          '<span class="pm-degrade-warn" style="font-size:9px;">renderer eff: canvas on some panes</span>';
+        if (secId === 'ts-sec-primary') {
+          var det = document.createElement('button');
+          det.type = 'button';
+          det.className = 'pm-tiny-btn';
+          det.textContent = state.secondaryVisible ? 'Hide 2nd section' : 'Open 2nd section';
+          det.onclick = function() {
+            state.secondaryVisible = !state.secondaryVisible;
+            logCmd('cmd.terminal.new_tab', { section: 'secondary_toggle' });
+            renderAll();
+          };
+          hdr.appendChild(det);
+        }
+        if (secId === 'ts-sec-secondary' && state.secondaryVisible) {
+          var dbtn = document.createElement('button');
+          dbtn.type = 'button';
+          dbtn.className = 'pm-tiny-btn';
+          dbtn.textContent = state.secondaryDetached ? 'Re-dock' : 'Detach';
+          dbtn.onclick = function() {
+            if (state.secondaryDetached) reattachSecondary();
+            else detachSecondary();
+          };
+          hdr.appendChild(dbtn);
+        }
+        block.appendChild(hdr);
+        var tabs = document.createElement('div');
+        tabs.className = 'terminal-tabstrip';
+        tabs.setAttribute('role', 'tablist');
+        sec.tabs.forEach(function(tab) {
+          if (state.groupFilter !== 'all' && tab.profile !== state.groupFilter) return;
+          var t = document.createElement('button');
+          t.type = 'button';
+          t.className = 'terminal-tab' + (tab.id === sec.selectedTabId ? ' active' : '') + (tab.pinned ? ' pinned' : '');
+          t.setAttribute('role', 'tab');
+          t.setAttribute('aria-selected', tab.id === sec.selectedTabId ? 'true' : 'false');
+          t.textContent = tab.title;
+          t.onclick = function() {
+            sec.selectedTabId = tab.id;
+            logCmd('ui.select_tab', { terminal_tab_id: tab.id });
+            renderAll();
+          };
+          t.oncontextmenu = function(ev) {
+            ev.preventDefault();
+            if (confirm('Context menu demo: pin/unpin?')) {
+              tab.pinned = !tab.pinned;
+              logCmd('cmd.terminal.pin_tab', { terminal_tab_id: tab.id, pinned: tab.pinned });
+              renderAll();
+            }
+          };
+          tabs.appendChild(t);
+        });
+        var tabAct = document.createElement('div');
+        tabAct.className = 'terminal-tabbar-actions';
+        [['+ Tab', newTab], ['Close others', closeOthers], ['Rename', renameTab]].forEach(function(x) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'pm-tiny-btn';
+          b.textContent = x[0];
+          b.onclick = x[1];
+          tabAct.appendChild(b);
+        });
+        var moveB = document.createElement('button');
+        moveB.type = 'button';
+        moveB.className = 'pm-tiny-btn';
+        moveB.textContent = 'Move tab ↔';
+        moveB.onclick = moveTabSection;
+        tabAct.appendChild(moveB);
+        tabs.appendChild(tabAct);
+        block.appendChild(tabs);
+        var curTab = sec.tabs.find(function(t) { return t.id === sec.selectedTabId; });
+        var content = document.createElement('div');
+        content.className = 'terminal-pane-wrap';
+        if (curTab) content.appendChild(renderTree(curTab.tree));
+        block.appendChild(content);
+        hostEl.appendChild(block);
+      }
+
+      function newTab() {
+        logCmd('cmd.terminal.new_tab', { demo: true });
+        var sec = state.sections['ts-sec-primary'];
+        paneCounter++;
+        var np = 'tp-new-' + paneCounter;
+        state.panes[np] = {
+          id: np, sessionId: 'ts-sess-new-' + paneCounter, devSessionId: null, state: 'starting', profile: state.groupFilter === 'all' ? 'build' : state.groupFilter,
+          accent: 1, cwd: '~/projects/puppet-master', profileLabel: 'bash', rendererRequested: 'gpu', rendererEffective: 'canvas',
+          shellTier: 'basic', degradations: [], restoreOutcome: 'restored_live', durability: 'guaranteed_durable', retentionTier: '10k_lines',
+          commandBlock: { id: 'tcb-new', life: 'running' }, historyBanner: null, inspectorOpen: false,
+          lines: [{ t: 'line', c: '$ ' }]
+        };
+        sec.tabs.push({ id: 'tt-' + paneCounter, title: 'shell', pinned: false, profile: state.groupFilter === 'all' ? 'build' : state.groupFilter, tree: { type: 'leaf', paneId: np } });
+        sec.selectedTabId = 'tt-' + paneCounter;
+        toast('New tab · new terminal_session_id');
+        renderAll();
+      }
+
+      function closeOthers() {
+        var sec = state.sections['ts-sec-primary'];
+        sec.tabs = sec.tabs.filter(function(t) { return t.pinned || t.id === sec.selectedTabId; });
+        logCmd('cmd.terminal.close_tab', { policy: 'close_others_respect_pin' });
+        toast('Close others · pinned tabs kept');
+        renderAll();
+      }
+
+      function renameTab() {
+        var sec = state.sections['ts-sec-primary'];
+        var tab = sec.tabs.find(function(t) { return t.id === sec.selectedTabId; });
+        if (!tab) return;
+        var n = prompt('Rename tab', tab.title);
+        if (n) { tab.title = n; logCmd('cmd.terminal.rename_tab', { terminal_tab_id: tab.id }); renderAll(); }
+      }
+
+      function moveTabSection() {
+        var secP = state.sections['ts-sec-primary'];
+        var secS = state.sections['ts-sec-secondary'];
+        var tab = secP.tabs.find(function(t) { return t.id === secP.selectedTabId; });
+        if (!tab || tab.pinned) { toast('Select a non-pinned tab to move'); return; }
+        secP.tabs = secP.tabs.filter(function(t) { return t.id !== tab.id; });
+        secS.tabs.push(tab);
+        secS.selectedTabId = tab.id;
+        state.secondaryVisible = true;
+        logCmd('cmd.terminal.move_tab_to_section', { terminal_tab_id: tab.id, target_section_id: secS.id });
+        toast('Moved tab · presentation only (same session ids)');
+        renderAll();
+      }
+
+      function splitActive(axis) {
+        var loc = findPaneLocation(state.focusedPaneId);
+        if (!loc) return;
+        if (countLeaves(loc.tab.tree) >= 4) { toast('Max 4 panes per tab'); return; }
+        paneCounter++;
+        var np = 'tp-split-' + paneCounter;
+        var fp = state.panes[state.focusedPaneId];
+        state.panes[np] = JSON.parse(JSON.stringify(fp));
+        state.panes[np].id = np;
+        state.panes[np].sessionId = 'ts-sess-split-' + paneCounter;
+        state.panes[np].lines = [{ t: 'line', c: '$ ' }];
+        var leaf = { type: 'leaf', paneId: state.focusedPaneId };
+        var newLeaf = { type: 'leaf', paneId: np };
+        var row = { type: axis === 'horizontal' ? 'row' : 'col', children: [leaf, newLeaf] };
+        function inject(n) {
+          if (!n) return n;
+          if (n.type === 'leaf' && n.paneId === state.focusedPaneId) return row;
+          if (n.children) return { type: n.type, children: n.children.map(inject) };
+          return n;
+        }
+        loc.tab.tree = inject(loc.tab.tree);
+        logCmd('cmd.terminal.split_pane', { split: axis === 'horizontal' ? 'horizontal' : 'vertical' });
+        toast('Split pane · new terminal_session_id');
+        renderAll();
+      }
+
+      function closePane(paneId) {
+        var loc = findPaneLocation(paneId);
+        if (!loc) return;
+        var p = state.panes[paneId];
+        if (p && p.state === 'running') {
+          if (!confirm('Live session attached — close layout only, or terminate? OK = terminate, Cancel = layout only')) {
+            logCmd('cmd.terminal.close_pane', { termination_policy: 'layout_only' });
+          } else {
+            logCmd('cmd.terminal.close_pane', { termination_policy: 'terminate' });
+          }
+        }
+        loc.tab.tree = removeLeaf(loc.tab.tree, paneId);
+        if (!loc.tab.tree) loc.tab.tree = { type: 'leaf', paneId: 'tp-a' };
+        delete state.panes[paneId];
+        toast('Pane tree rebalanced (deterministic collapse)');
+        renderAll();
+      }
+
+      function detachSecondary() {
+        state.secondaryDetached = true;
+        var win = document.getElementById('detachedTerminalWindow');
+        var body = document.getElementById('detachedTerminalBody');
+        var dock = document.getElementById('bottomTerminalHost');
+        if (win && body) {
+          win.classList.add('visible');
+          body.innerHTML = '';
+          renderSection('ts-sec-secondary', body);
+        }
+        logCmd('cmd.terminal.detach_section', { terminal_section_id: 'ts-sec-secondary' });
+        toast('Detached terminal section · identities preserved');
+        renderAll();
+      }
+
+      function reattachSecondary() {
+        state.secondaryDetached = false;
+        var win = document.getElementById('detachedTerminalWindow');
+        if (win) win.classList.remove('visible');
+        logCmd('cmd.terminal.reattach_section', { terminal_section_id: 'ts-sec-secondary' });
+        toast('Re-docked secondary section');
+        renderAll();
+      }
+
+      function renderAll() {
+        var host = document.getElementById('bottomTerminalHost');
+        if (!host) return;
+        try {
+          host.innerHTML = '';
+          var flex = document.createElement('div');
+          flex.className = 'terminal-workspace';
+          flex.style.display = 'flex';
+          flex.style.flexDirection = 'column';
+          flex.style.flex = '1 1 auto';
+          flex.style.minHeight = '0';
+          flex.style.width = '100%';
+          flex.style.alignSelf = 'stretch';
+          renderSection('ts-sec-primary', flex);
+          if (!state.secondaryDetached) renderSection('ts-sec-secondary', flex);
+          host.appendChild(flex);
+          setTimeout(initPaneResizers, 0);
+        } catch (err) {
+          if (typeof console !== 'undefined' && console.error) console.error('PM_TERMINAL_DEMO renderAll', err);
+          host.innerHTML = '';
+          var fail = document.createElement('div');
+          fail.style.padding = 'var(--sm)';
+          fail.style.fontSize = '11px';
+          fail.style.color = 'var(--accent-magenta)';
+          fail.textContent = 'Terminal demo failed to render — check the browser console.';
+          host.appendChild(fail);
+        }
+      }
+
+      function initPaneResizers() {
+        document.querySelectorAll('#bottomTerminalHost .pm-term-pane-resizer').forEach(function(rz) {
+          if (rz.dataset.pmReg) return;
+          rz.dataset.pmReg = '1';
+          var prev = rz.previousElementSibling;
+          var next = rz.nextElementSibling;
+          if (prev && next && window.registerResizer) {
+            window.registerResizer(rz, {
+              isHorizontal: rz.classList.contains('resizer-col'),
+              onMove: function(e) {
+                if (rz.classList.contains('resizer-col') && prev.parentNode) {
+                  var rect = prev.parentNode.getBoundingClientRect();
+                  var total = prev.getBoundingClientRect().width + next.getBoundingClientRect().width;
+                  var pw = e.clientX - prev.getBoundingClientRect().left;
+                  if (pw > 80 && total - pw > 80) {
+                    prev.style.flex = 'none';
+                    next.style.flex = 'none';
+                    prev.style.width = pw + 'px';
+                    next.style.width = (total - pw) + 'px';
+                  }
+                } else if (!rz.classList.contains('resizer-col') && prev.parentNode) {
+                  var rect = prev.parentNode.getBoundingClientRect();
+                  var total = prev.getBoundingClientRect().height + next.getBoundingClientRect().height;
+                  var ph = e.clientY - prev.getBoundingClientRect().top;
+                  if (ph > 40 && total - ph > 40) {
+                    prev.style.flex = 'none';
+                    next.style.flex = 'none';
+                    prev.style.height = ph + 'px';
+                    next.style.height = (total - ph) + 'px';
+                  }
+                }
+              }
+            });
+          }
+        });
+      }
+
+      function expandBottomIfCollapsed() {
+        var bp = document.getElementById('bottomPanel');
+        if (bp && bp.classList.contains('collapsed')) {
+          bp.classList.remove('collapsed');
+          var cb = document.getElementById('collapseBottom');
+          if (cb) cb.setAttribute('aria-expanded', 'true');
+        }
+      }
+
+      window.PM_TERMINAL_DEMO = {
+        state: state,
+        linkedSessions: state.linkedSessions,
+        logCmd: logCmd,
+        toast: toast,
+        renderAll: renderAll,
+        showBottomTab: function(name) {
+          if (window.switchBottomTab) window.switchBottomTab(name);
+          var devMap = { problems: 'cmd.dev.show_problems', ports: 'cmd.dev.show_ports', output: 'cmd.dev.show_output' };
+          if (devMap[name]) logCmd(devMap[name], {});
+        },
+        dispatch: function(cmd, payload) {
+          logCmd(cmd, payload || {});
+          if (cmd.indexOf('show_') !== -1) {
+            var t = cmd.indexOf('problems') !== -1 ? 'problems' : cmd.indexOf('ports') !== -1 ? 'ports' : 'output';
+            if (window.switchBottomTab) window.switchBottomTab(t);
+          }
+          toast(cmd);
+        },
+        revealSession: function(sessionId) {
+          logCmd('cmd.terminal.show', { terminal_session_id: sessionId });
+          var loc = findSessionLocation(sessionId);
+          expandBottomIfCollapsed();
+          if (window.switchBottomTab) window.switchBottomTab('terminal');
+          if (loc) {
+            loc.section.selectedTabId = loc.tab.id;
+            state.focusedPaneId = loc.paneId;
+            var tabEl = null;
+            document.querySelectorAll('.terminal-tab').forEach(function(el) {
+              if (el.textContent === loc.tab.title) tabEl = el;
+            });
+            if (tabEl) {
+              tabEl.classList.add('pm-terminal-enter');
+              setTimeout(function() { tabEl.classList.remove('pm-terminal-enter'); }, 500);
+            }
+            toast('Revealed existing session · no new PTY');
+          } else {
+            toast('Session not in active layout — check historical tab');
+          }
+          renderAll();
+        },
+        focusSession: function(sessionId) {
+          logCmd('cmd.terminal.focus_session', { terminal_session_id: sessionId });
+          expandBottomIfCollapsed();
+          if (window.switchBottomTab) window.switchBottomTab('terminal');
+          var loc = findSessionLocation(sessionId);
+          if (loc) state.focusedPaneId = loc.paneId;
+          renderAll();
+          toast('Focus shell stream · cmd.terminal.focus_session');
+        },
+        setGroupFilter: function(v) {
+          state.groupFilter = v;
+          renderAll();
+        },
+        applySettings: function() {
+          var fs = document.getElementById('pmSetTermFont');
+          var lh = document.getElementById('pmSetTermLH');
+          var cur = document.getElementById('pmSetTermCursor');
+          var blink = document.getElementById('pmSetTermBlink');
+          var eff = document.getElementById('pmSetTermRenderEff');
+          var req = document.getElementById('pmSetTermRenderReq');
+          if (fs) document.documentElement.style.setProperty('--terminal-font-size', fs.value + 'px');
+          if (lh) document.documentElement.style.setProperty('--terminal-line-height', lh.value);
+          if (eff && req) eff.textContent = (req.value === 'gpu' ? 'canvas (degraded)' : 'canvas');
+          document.querySelectorAll('.terminal-pane').forEach(function(el) {
+            el.style.caretColor = cur && cur.value === 'block' ? 'var(--terminal-fg)' : 'transparent';
+          });
+          if (blink && !blink.checked) document.documentElement.style.setProperty('--term-caret-blink', 'none');
+          logCmd('settings.terminal.apply', {});
+        },
+        showPaletteHints: function() {
+          toast('Palette: cmd.terminal.new_tab · detach_section · clear_scrollback');
+          logCmd('cmd.palette.stub', { items: ['cmd.terminal.new_tab', 'cmd.terminal.detach_section'] });
+        },
+        detachSecondary: detachSecondary,
+        reattachSecondary: reattachSecondary,
+        init: function() {
+          try {
+            renderAll();
+          } catch (e) {
+            if (typeof console !== 'undefined' && console.error) console.error('PM_TERMINAL_DEMO init', e);
+          }
+          setInterval(function() {
+            state.clockTick++;
+            ['ts-sec-primary', 'ts-sec-secondary'].forEach(function(sid) {
+              var el = document.getElementById('pmTermClock-' + sid);
+              if (!el) return;
+              var m = Math.floor(state.clockTick / 60);
+              var s = state.clockTick % 60;
+              el.textContent = 'uptime ' + (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+            });
+          }, 1000);
+          if (document.getElementById('pmSetTermFont')) this.applySettings();
+        }
+      };
+    })();
+
     const mockThreads = {
-      'thread0': { role: 'assistant', title: 'DASHBOARD REVAMP', mode: 'agent', html: `<div class="sticky-plan-tracker">
+      'thread0': { role: 'assistant', title: 'DASHBOARD REVAMP', headerTitle: 'ASSISTANT', badgeTitle: 'ASSISTANT', mode: 'agent', html: `<div class="sticky-plan-tracker">
   <div style="font-weight:bold; font-size:12px; margin-bottom:4px; display:flex; justify-content:space-between;">
     <span>Active Plan: Dashboard Revamp</span>
     <span style="font-size:10px; color:var(--text-muted); cursor:pointer;">[Edit]</span>
@@ -8148,7 +11172,7 @@ impl Dashboard {
 
 <div class="message user">
   <div class="msg-body">Please update the dashboard HTML to include the new slash commands and message controls.</div>
-  <div class="msg-hover-row" style="opacity:1;">
+  <div class="msg-hover-row">
     <div class="msg-actions">
       <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
       <button class="msg-control-btn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
@@ -8246,6 +11270,14 @@ impl Dashboard {
       'thread8': { role: 'assistant', title: 'ASSISTANT', mode: 'agent', html: `<div class="message user"><div class="msg-body"><div style="display:flex; flex-wrap:wrap; gap:var(--xs); margin-bottom:var(--sm);"><span class="composer-chip browser-selection">Login form styles <span class="close-chip">&times;</span></span><span class="composer-chip element-pick">&lt;button.submit&gt; <span class="close-chip">&times;</span></span></div>I shared the login form from the browser preview. Can you review the accessibility and styling?</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="msg-control-btn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>3:42 PM</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">accessibility-tester</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">890</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">4.2k / 200k</span></div></div></div></div></div><div class="message assistant"><div class="msg-body"><div style="background:var(--surface-elevated); border:1px solid var(--border-light); padding:var(--sm) var(--md); border-radius:4px; display:flex; justify-content:space-between; align-items:center; font-size:11px; margin-bottom:var(--sm);"><span style="display:flex; align-items:center; gap:var(--xs);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10"/></svg> <b>browser_element_inspect</b>: &lt;button.login-submit-btn&gt;</span><span style="color:var(--text-muted);">analyzed</span></div>I can see the login form you selected. The submit button has several accessibility issues:<br><br>1. <b>No visible focus ring</b> &mdash; the <code>:focus</code> style is missing, keyboard users cannot tell when the button is focused<br>2. <b>Insufficient color contrast</b> &mdash; <code>#667eea</code> on white text is 4.1:1, fails WCAG AA for normal text<br>3. <b>No <code>aria-label</code></b> &mdash; the button text is fine, but the form lacks <code>aria-describedby</code> for error states<br><br>Recommended fix:<pre style="font-size:10px; background:var(--surface); padding:var(--sm); border-radius:4px; overflow-x:auto; margin-top:var(--sm);">.login-submit-btn:focus {\n  outline: 2px solid #667eea;\n  outline-offset: 2px;\n}\n.login-submit-btn {\n  background: #4a5bc7; /* 4.5:1 contrast */\n}</pre></div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>8s</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">accessibility-tester</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">3,450</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">8.6k / 200k</span></div></div></div></div></div><div class="message user"><div class="msg-body">Here is a screenshot of the full page for reference<div class="screenshot-thumb" style="margin-top:var(--sm);"><div class="thumb-preview">&#128247;</div><span>screenshot-login-page.png <span style="color:var(--text-muted);">(1920&times;1080)</span></span></div></div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>3:44 PM</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">accessibility-tester</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">1,280</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">10.1k / 200k</span></div></div></div></div></div><div class="message assistant"><div class="msg-body">Thanks for the screenshot. I can see the full page layout now. I will run an automated accessibility test on the login flow.<div style="background:var(--surface-elevated); border:1px solid var(--accent-orange); padding:var(--sm) var(--md); border-radius:4px; display:flex; justify-content:space-between; align-items:center; font-size:11px; margin-top:var(--sm);"><span style="display:flex; align-items:center; gap:var(--xs);"><div class="wizard-activity-pulse" style="width:6px; height:6px;"></div> <b>Automation</b>: Starting login flow verification</span><span style="color:var(--text-muted);">workspace_preview &rarr; automation_session</span></div></div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>4s</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">accessibility-tester</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">2,100</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">12.4k / 200k</span></div></div></div></div></div><div class="message assistant" style="border-color: var(--accent-orange);"><div class="msg-body" style="font-size:11px; color:var(--text-secondary);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2" style="vertical-align:middle; margin-right:4px;"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg> Agent took control of browser &mdash; <b>automation_session</b> active</div></div><div class="message user"><div class="msg-body">I paused the agent to inspect the failed password validation manually. The error was visible in the console &mdash; the min-length check was rejecting the test input.</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><button class="msg-control-btn" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>3:46 PM</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">accessibility-tester</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">620</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">14.0k / 200k</span></div></div></div></div></div><div class="message assistant"><div class="msg-body"><div style="background:var(--surface-elevated); border:1px solid var(--accent-blue); padding:var(--sm) var(--md); border-radius:4px; display:flex; justify-content:space-between; align-items:center; font-size:11px; margin-bottom:var(--sm);"><span style="display:flex; align-items:center; gap:var(--xs);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> <b>takeover_state</b>: user_paused &rarr; resumed</span><span style="color:var(--accent-lime);">OK</span></div>I see the validation issue. The password field requires 8+ characters but the test data was using <code>"test"</code> (4 chars). I have updated the test fixture to use <code>"testpass123"</code> and the flow now passes.<br><br>Resuming automation &mdash; running remaining checks: tab order, ARIA roles, error-state announcements.</div><div class="msg-hover-row"><div class="msg-actions"><button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><div class="msg-runtime-compact"><span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4.6</span><span class="sep">&middot;</span><span>12s</span><span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span><div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Opus 4.6</span></div><div class="popover-row"><span class="popover-label">Effort</span><span class="popover-value">High</span></div><div class="popover-row"><span class="popover-label">Persona</span><span class="popover-value">accessibility-tester</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">4,820</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">18.2k / 200k</span></div></div></div></div></div>` }
     };
 
+    (function mergeTerminalDemoThread() {
+      var tpl = document.getElementById('tplThreadTerminalDemo');
+      if (tpl) {
+        /* headerTitle/badgeTitle: top bar + role pill say ASSISTANT; title kept for mock consistency / future use */
+        mockThreads['thread-terminal-demo'] = { role: 'assistant', title: 'DEMO · Terminal loop', headerTitle: 'ASSISTANT', badgeTitle: 'ASSISTANT', mode: 'agent', html: tpl.innerHTML };
+      }
+    })();
+
     window.orchNodeDetailContent = {
       '1': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>1</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Phase</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-passed); color:#1A1A1A; padding:1px 4px; font-size:9px;">Passed</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>1m 20s</b></div></div></details>',
       '2': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Phase</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-running); color:#1A1A1A; padding:1px 4px; font-size:9px;">Running</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>0m 45s</b></div></div></details>',
@@ -8277,9 +11309,11 @@ impl Dashboard {
         if (thread.role !== 'assistant') { hdr.classList.remove('hidden'); hdr.querySelector('.workflowHeaderTitle').textContent = thread.title; }
         else { hdr.classList.add('hidden'); }
       });
-      document.querySelectorAll('.chatRoleBadge').forEach(badge => { badge.className = 'role-badge chatRoleBadge role-' + thread.role; badge.textContent = thread.title; });
+      var badgeLabel = thread.badgeTitle != null ? thread.badgeTitle : thread.title;
+      var headerLabel = thread.headerTitle != null ? thread.headerTitle : thread.title;
+      document.querySelectorAll('.chatRoleBadge').forEach(badge => { badge.className = 'role-badge chatRoleBadge role-' + thread.role; badge.textContent = badgeLabel; });
       document.querySelectorAll('.chatHeaderTitle').forEach(el => { 
-        el.textContent = thread.title; 
+        el.textContent = headerLabel; 
         if(thread.role === 'doc') { el.style.color = 'var(--accent-orange)'; }
         else if(thread.role === 'interviewer') { el.style.color = 'var(--accent-lime)'; }
         else if(thread.role === 'prd') { el.style.color = 'var(--accent-magenta)'; }
@@ -8288,6 +11322,7 @@ impl Dashboard {
       document.querySelectorAll('.pendingInterventionBlock').forEach(block => { block.classList.toggle('hidden', threadId !== 'thread2'); });
       // Update chat footer: subagent count + files touched per thread
       var footerData = {
+        'thread-terminal-demo': { agents: '0 active subagents', files: '', problems: true },
         'thread0': { agents: '2 active subagents', files: 'src/dashboard.rs <span class="ft-add">+42</span> <span class="ft-del">−8</span></span><span class="ft-file">src/components/header.rs <span class="ft-add">+12</span> <span class="ft-del">−3</span></span><span class="ft-file">styles/main.css <span class="ft-add">+5</span> <span class="ft-del">−2</span>' },
         'thread1': { agents: '0 active subagents', files: 'requirements-draft.md <span class="ft-add">+86</span> <span class="ft-del">−0</span>' },
         'thread2': { agents: '2 active subagents', files: 'migrations/20260318_workspace.sql <span class="ft-add">+54</span> <span class="ft-del">−0</span></span><span class="ft-file">src/schema/user.rs <span class="ft-add">+18</span> <span class="ft-del">−12</span></span><span class="ft-file">src/schema/project.rs <span class="ft-add">+8</span> <span class="ft-del">−4</span>' },
@@ -8298,9 +11333,10 @@ impl Dashboard {
         'thread7': { agents: '0 active subagents', files: 'multi-tenant-refactor.md <span class="ft-add">+124</span> <span class="ft-del">−0</span>' },
         'thread8': { agents: '1 active subagent', files: 'tests/e2e/login.spec.ts <span class="ft-add">+28</span> <span class="ft-del">−4</span>' }
       };
-      var fd = footerData[threadId] || { agents: '0 active subagents', files: '' };
+      var fd = footerData[threadId] || { agents: '0 active subagents', files: '', problems: false };
       var hasActive = fd.agents.indexOf('0') !== 0;
       var hasFiles = !!fd.files;
+      var hasProblems = !!fd.problems;
       document.querySelectorAll('.chatFooterSubagents').forEach(function(el) {
         if (hasActive) {
           el.innerHTML = '<span class="subagent-dot"></span><span>' + fd.agents + '</span>';
@@ -8317,8 +11353,17 @@ impl Dashboard {
           el.style.display = 'none';
         }
       });
+      document.querySelectorAll('.chatFooterProblems').forEach(function(el) {
+        if (hasProblems) {
+          el.innerHTML = '<span class="pm-problems-footer" role="button" tabindex="0" onclick="if(window.PM_TERMINAL_DEMO) PM_TERMINAL_DEMO.showBottomTab(\'problems\')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();if(window.PM_TERMINAL_DEMO)PM_TERMINAL_DEMO.showBottomTab(\'problems\');}">3 problems</span> <span style="color:var(--text-muted)">· filtered to demo project</span>';
+          el.style.display = 'block';
+        } else {
+          el.innerHTML = '';
+          el.style.display = 'none';
+        }
+      });
       document.querySelectorAll('.chat-stream-footer').forEach(function(el) {
-        el.style.display = (hasActive || hasFiles) ? 'block' : 'none';
+        el.style.display = (hasActive || hasFiles || hasProblems) ? 'block' : 'none';
       });
     };
 
@@ -8603,9 +11648,17 @@ impl Dashboard {
         setupResizer('editorSplitResizer', 'editorPane1', 'editorPane2');
         setupResizer('editorDashResizer', 'editorView', 'dashboardView');
         setupResizer('terminalResizer', 'center-row', 'bottomPanel', false);
-        setupResizer('termSplitH1', 'term1', 'term2');
-        setupResizer('termSplitH2', 'term3', 'term4');
-        setupResizer('termSplitV', 'term1', 'termBottomRow', false); // simple vertical
+        if (window.PM_TERMINAL_DEMO) window.PM_TERMINAL_DEMO.init();
+        if (window.switchBottomTab) window.switchBottomTab('terminal');
+        try {
+          var wantTerminalDemo = false;
+          if (typeof location !== 'undefined') {
+            var h = (location.hash || '').replace(/^#/, '');
+            if (h.indexOf('demo=terminal') >= 0) wantTerminalDemo = true;
+            if (typeof location.search === 'string' && location.search.indexOf('demo=terminal') >= 0) wantTerminalDemo = true;
+          }
+          if (wantTerminalDemo && window.switchToChatThread) window.switchToChatThread('thread-terminal-demo');
+        } catch (demoErr) { /* noop */ }
         
         const chatResizer = document.getElementById('chatResizer');
         const chatPanel = document.getElementById('chatPanel');
@@ -8794,6 +11847,7 @@ impl Dashboard {
             const bottomPanel = document.getElementById('bottomPanel');
             if (bottomPanel) {
                 bottomPanel.classList.toggle('collapsed');
+                collapseBottom.setAttribute('aria-expanded', bottomPanel.classList.contains('collapsed') ? 'false' : 'true');
                 if (bottomPanel.classList.contains('collapsed')) {
                     bottomPanel.style.height = '';
                     bottomPanel.style.flex = '';
@@ -8915,20 +11969,25 @@ impl Dashboard {
 
       /* ── Bottom Panel Tab Switching ── */
       window.switchBottomTab = function(tabName) {
-        // Update tab active state
         document.querySelectorAll('.bottom-tabs-left .tab').forEach(function(t) {
-          t.classList.toggle('active', t.getAttribute('data-bottom-tab') === tabName);
+          var on = t.getAttribute('data-bottom-tab') === tabName;
+          t.classList.toggle('active', on);
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          t.setAttribute('tabindex', on ? '0' : '-1');
         });
-        // Show/hide content
-        var termContent = document.getElementById('bottomTerminalContent');
-        var browserContent = document.getElementById('bottomBrowserContent');
-        if (tabName === 'browser') {
-          if (termContent) termContent.style.display = 'none';
-          if (browserContent) browserContent.style.display = 'flex';
-        } else {
-          if (termContent) termContent.style.display = '';
-          if (browserContent) browserContent.style.display = 'none';
-        }
+        var map = {
+          terminal: 'bottomTerminalHost',
+          problems: 'bottomProblemsHost',
+          output: 'bottomOutputHost',
+          ports: 'bottomPortsHost',
+          browser: 'bottomBrowserContent',
+          debug: 'bottomDebugHost'
+        };
+        Object.keys(map).forEach(function(key) {
+          var el = document.getElementById(map[key]);
+          if (!el) return;
+          el.classList.toggle('active', key === tabName);
+        });
       };
 
       window.toggleBottomBrowserTab = function() {
@@ -9357,5 +12416,36 @@ impl Dashboard {
   });
 })();
 </script>
+<!-- Liquid Glass SVG Filters (used by glass-dark / glass-light themes) -->
+<svg style="display:none">
+  <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
+    <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="1" seed="5" result="turbulence"/>
+    <feComponentTransfer in="turbulence" result="mapped">
+      <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5"/>
+      <feFuncG type="gamma" amplitude="0" exponent="1" offset="0"/>
+      <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5"/>
+    </feComponentTransfer>
+    <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap"/>
+    <feSpecularLighting in="softMap" surfaceScale="5" specularConstant="1" specularExponent="100" lighting-color="white" result="specLight">
+      <fePointLight x="-200" y="-200" z="300"/>
+    </feSpecularLighting>
+    <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage"/>
+    <feDisplacementMap in="SourceGraphic" in2="softMap" scale="80" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="glass-distortion-subtle" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
+    <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="1" seed="5" result="turbulence"/>
+    <feComponentTransfer in="turbulence" result="mapped">
+      <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5"/>
+      <feFuncG type="gamma" amplitude="0" exponent="1" offset="0"/>
+      <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5"/>
+    </feComponentTransfer>
+    <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap"/>
+    <feSpecularLighting in="softMap" surfaceScale="3" specularConstant="0.8" specularExponent="80" lighting-color="white" result="specLight">
+      <fePointLight x="-200" y="-200" z="300"/>
+    </feSpecularLighting>
+    <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage"/>
+    <feDisplacementMap in="SourceGraphic" in2="softMap" scale="30" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
 </body>
 </html>

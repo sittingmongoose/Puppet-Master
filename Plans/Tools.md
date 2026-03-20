@@ -72,18 +72,32 @@ Config is stored in TOML files at deterministic paths (global: `~/.config/puppet
 FileSafe runs **in addition to** tool permissions. A tool may be **allowed** by permission but still **blocked** by FileSafe. Tool permission = "may the agent call this tool?"; FileSafe = "may this specific invocation proceed?". See `Plans/FileSafe.md`. The policy engine applies both layers in order: permission first, then FileSafe. Full integration order: §10.6.
 
 ### 2.4.1 Central policy engine contract
+Every agent-usable tool attempt MUST pass through one canonical policy engine that resolves permission, approval/HITL, FileSafe, execution, terminal binding when relevant, and result normalization.
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
-Every agent-usable tool attempt MUST pass through one canonical policy engine that resolves permission, approval/HITL, FileSafe, execution, and result normalization.
 
 Canonical order:
 1. resolve tool identity and permission
 2. evaluate `allow` / `ask` / `deny`
 3. if `ask`, resolve approval or headless fallback
 4. apply FileSafe and other invocation validation
-5. execute or reject
-6. normalize the terminal outcome for persistence/analytics
+5. resolve terminal or shell binding for shell-capable actions
+6. execute or reject
+7. normalize the terminal outcome for persistence, analytics, and reveal-linkback behavior
 
-At minimum, the normalized terminal outcome set MUST distinguish:
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+Shell-binding rules:
+- `bash` and any canonical shell-backed execution path resolve through the terminal process-host contract when they create or bind shell state
+- non-interactive or hidden shell execution may suppress opening the terminal UI, but it still binds to canonical terminal-session state when execution actually occurs
+- denied or blocked shell calls do not mint fake live terminal sessions
+- chat command cards and other preview surfaces consume normalized terminal state rather than replacing terminal ownership
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+At minimum, the normalized tool-result taxonomy MUST distinguish:
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
 - `allowed_succeeded`
 - `allowed_runtime_error`
 - `permission_denied`
@@ -95,10 +109,11 @@ At minimum, the normalized terminal outcome set MUST distinguish:
 - `timed_out`
 - `post_scan_failure`
 
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
 This document owns the normalized tool-result taxonomy and policy order. Provider docs emit observations; storage docs persist normalized results.
 
-ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/CLI_Bridged_Providers.md
-
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 ### 2.5 Cross-plan references
 
 | Plan | Relation to tool permissions |
@@ -516,13 +531,23 @@ Tool events feed analytics and the Usage tool widget. Align with **storage-plan.
 - **Mid-run:** Run config is an immutable snapshot at start (FinalGUISpec §9.7). Changing Settings (including tool permissions) mid-run does **not** affect the active run; next run picks up the new config.
 
 ### 8.2 Policy application order and invocation flow
+1. **When:** Policy is evaluated when a tool is about to be invoked. For CLI-based platforms, the provider or runner may observe tool calls in the stream, but Puppet Master remains authoritative for policy, terminal binding, and normalized outcome recording.
+2. **Resolve binding:** For shell-capable calls, determine project, workspace tab, cwd, requested shell profile, and whether the call should bind to an existing terminal session or create a new one.
+3. **Allow:** Pass through to platform (or execute built-in); emit `tool.invoked`; when shell execution occurs, write transcript and command-block observations into the canonical terminal model.
+4. **Deny:** Do not pass to platform; return a structured error to the agent; emit `tool.denied` when supported.
+5. **Ask:** In Assistant, show approval UI; on approve, treat as allow for that call (or session approval). In Orchestrator/Interview, if no UI exists, map to **deny** or a **pending-HITL** state when HITL is enabled.
+6. **FileSafe:** After permission allows the tool, FileSafe still applies (for example bash blocklists, write scope, sensitive-path guards).
+7. **Completion:** Normalize the executed outcome and persist enough data for later same-session reveal, history, analytics, and runtime reconciliation.
 
-1. **When:** Policy is evaluated when a tool is about to be invoked. For CLI-based platforms, the Provider/runner typically sees tool calls in the stream; the **policy check** runs in the adapter/runner before executing or forwarding the tool call.
-2. **Allow:** Pass through to platform (or execute built-in); emit `tool.invoked` (and on completion, latency, success/error).
-3. **Deny:** Do not pass to platform; return a structured error to the agent (e.g. "Tool X is disabled for this run"); emit `tool.denied` if implemented.
-4. **Ask:** In Assistant, show approval UI; on approve, treat as allow for that call (or "approve for session"). In Orchestrator/Interview, if no UI (headless): map to **deny** or to a **pending-HITL** state if HITL is enabled at that tier (human-in-the-loop.md).
-5. **FileSafe:** After permission allows the tool, FileSafe still applies (e.g. bash command blocklist, write scope). Apply FileSafe in the same runner/adapter layer before actually executing.
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
 
+Shell-specific rules:
+- `Open in Terminal` later resolves to the same bound terminal session when that session still exists
+- a shell call blocked by permission or FileSafe does not create a success-shaped fallback terminal session
+- provider CLIs may stream shell observations, but Puppet Master records canonical `terminal_session_id`, normalized command identity, cwd, and outcome state
+- derived surfaces such as Output, Problems, and Ports consume these normalized records rather than inventing their own shell ownership
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md
 ### 8.3 Registry → platform CLI flag derivation
 
 The runner (or a dedicated module) derives platform-specific CLI flags from the **canonical** permission set so the platform only sees tools we allow. Example mapping (implement in platform_specs or runner):

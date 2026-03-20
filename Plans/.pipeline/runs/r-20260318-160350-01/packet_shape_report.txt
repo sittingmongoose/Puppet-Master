@@ -1,0 +1,19 @@
+Packet shape report for run_id: r-20260318-160350-01
+Status: BLOCKED
+
+Active blockers:
+
+- path: Plans/storage-plan.md
+  anchor: ### Additional shell/runtime identities required by the promoted Section 15 feature set
+  reason: contractref_too_far_from_operational_requirement
+  brief fix direction: Move an executable `ContractRef:` line to within 10 lines after the opening MUST statement, or place one immediately after that opening line.
+
+- path: Plans/Tools.md
+  anchor: ### 2.4.1 Central policy engine contract
+  reason: contractref_too_far_from_operational_requirement
+  brief fix direction: Add an executable `ContractRef:` line immediately after the opening MUST statement and another within 10 lines after the "At minimum ... MUST distinguish" line.
+
+- path: Plans/Run_Modes.md
+  anchor: ## 10. Acceptance criteria
+  reason: contractref_too_far_from_operational_requirement
+  brief fix direction: Add executable `ContractRef:` lines locally throughout the acceptance-criteria list so each MUST-bearing criterion has one within the verifier lookahead window.

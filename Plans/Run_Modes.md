@@ -190,20 +190,26 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Prov
 ### 5.3 DAE-specific kill conditions
 | Condition | Reason code | Description |
 |-----------|-------------|-------------|
-| Repeated shell failure | `kill.shell_failure` | Same shell command fails `max_same_shell_failure` consecutive times. |
+| Repeated shell failure | `kill.shell_failure` | Same canonical shell command fails `max_same_shell_failure` consecutive times. |
 | Write thrashing | `kill.write_thrash` | Same file written more than `max_write_thrashing` times within 10 minutes. |
 
 `kill.shell_failure` counting contract:
-- A shell failure increments the streak only when an actually executed canonical shell tool invocation ends with `tool_result.ok == false`, non-zero exit, timeout, or signal termination.
-- Permission denials, FileSafe blocks, validation failures, missing execution due to policy, and synthesized reconciler closures do **not** count as shell failures.
-- The "same shell command" identity is the canonical shell fingerprint `(tool_name, normalized_command, normalized_cwd)` after adapter normalization, including stripping provider wrapper boilerplate such as an outer `bash -lc` added by Puppet Master.
-- Success of the same fingerprint resets the streak to zero. Any executed shell invocation with a different fingerprint also resets the previous fingerprint's streak.
+- a shell failure increments the streak only when an actually executed canonical shell tool invocation ends with `tool_result.ok == false`, non-zero exit, timeout, or signal termination
+- permission denials, FileSafe blocks, validation failures, missing execution due to policy, and synthesized reconciler closures do **not** count as shell failures
+- the canonical shell fingerprint is `(tool_name, normalized_command, normalized_cwd)` after adapter normalization, including removal of provider wrapper boilerplate such as an outer `bash -lc` added by Puppet Master
+- user-interface-only terminal actions such as reveal, pin, rename, clear-scrollback, or pane movement do **not** count as executed shell invocations
+- explicit terminal restart or explicit session replacement resets shell-failure continuity because a new `terminal_session_id` is created
+- success of the same fingerprint resets the streak to zero; a different executed fingerprint also resets the previous fingerprint's streak
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 
 `kill.write_thrash` counting contract:
-- File identity is the normalized project-relative real path of the mutated jail path after symlink / `.` / `..` collapse.
-- A qualifying write is an actual content-changing create / overwrite / append / rename-destination / delete observed from the authoritative jail diff or equivalent live mutation metadata. Denied, blocked, no-diff, rollback, and Puppet-Master-owned post-processing writes do **not** count.
-- The window is a **sliding** 10-minute window using the run supervisor's monotonic clock. A kill occurs immediately when a new qualifying write would make the count exceed the configured ceiling for that file.
+- file identity is the normalized project-relative real path of the mutated jail path after symlink / `.` / `..` collapse
+- a qualifying write is an actual content-changing create / overwrite / append / rename-destination / delete observed from the authoritative jail diff or equivalent live mutation metadata
+- denied, blocked, no-diff, rollback, and Puppet-Master-owned post-processing writes do **not** count
+- the window is a **sliding** 10-minute window using the run supervisor's monotonic clock; a kill occurs immediately when a new qualifying write would make the count exceed the configured ceiling for that file
 
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/storage-plan.md
 ### 5.4 DAE end-of-run scans (mandatory)
 When a DAE run completes (any terminal outcome), the following scans MUST execute before the outcome is finalized:
 1. **FileSafe write-scope audit** — verify all files touched during the run are within the declared write scope.
@@ -218,7 +224,6 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Prov
 ---
 
 ## 6. Run outcome taxonomy
-
 <a id="OUTCOME-TAXONOMY"></a>
 
 Every run terminates with exactly one outcome value.
@@ -229,15 +234,19 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, PolicyRule:Decision
 |---------|---------|
 | `done.ok` | Run completed successfully; all objectives met. |
 | `done.failed` | Run terminated due to error, kill condition, or scan failure. |
-| `done.deferred` | Run paused; work remains but requires external input (e.g., HITL approval). |
+| `done.deferred` | Run paused; work remains but requires external input (for example HITL approval). |
 | `done.rotated` | Run terminated and a follow-up run was spawned (context rotation). |
 | `done.gutter` | Run terminated without meaningful progress; provider produced no actionable output. |
 
-The outcome MUST be recorded in the terminal `done` event of the normalized provider stream and persisted via `EventRecord` to seglog.
-The normalized provider `done.payload.status` remains a coarse transport-facing terminal status (`success | cancelled | failed`), while `done.payload.outcome` carries the canonical taxonomy above.
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
 
----
+Rules:
+- the outcome MUST be recorded in the terminal `done` event of the normalized provider stream and persisted via `EventRecord` to seglog
+- the normalized provider `done.payload.status` remains a coarse transport-facing terminal status (`success | cancelled | failed`), while `done.payload.outcome` carries the canonical taxonomy above
+- user-driven terminal restart or replacement mints a new runtime identity instead of mutating the prior run outcome in place
+- clearing scrollback or revealing an existing terminal session does not mint a new run outcome
 
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 ## 7. Mode effects on context management
 
 Mode influences context compilation, compaction, and rotation behavior. Detailed context-compilation contracts are in `Plans/FileSafe.md` (Part B); this section defines only the mode-specific deltas.
@@ -326,50 +335,86 @@ ContractRef: ContractName:Plans/Run_Modes.md#MODE-yolo, ContractName:Plans/FileS
 ---
 
 ## 10. Acceptance criteria
-
 These criteria are testable assertions that MUST hold for any conforming implementation.
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gates.md
 
 <a id="AC-01"></a>
 **AC-01:** In HTE strategy, any `tool_use` event observed in the provider stream MUST trigger kill condition `kill.hte_tool_observed` and terminate the run with `done.failed`.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md
+
 
 <a id="AC-02"></a>
 **AC-02:** In DAE strategy, end-of-run scans (§5.4) MUST execute for every terminal outcome. A scan failure MUST escalate the outcome to `done.failed`.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md
+
 
 <a id="AC-03"></a>
 **AC-03:** Mode selection is deterministic: given identical run envelope and config inputs, the resolution algorithm (§3) MUST produce the same `(mode, strategy)` pair.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+
 
 <a id="AC-04"></a>
 **AC-04:** In `ask` and `plan` modes, no project-file mutation may occur. Any write attempt to a project file MUST be blocked by the permission layer (not merely by FileSafe).
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md
+
 
 <a id="AC-05"></a>
 **AC-05:** In `yolo` mode, FileSafe guards MUST remain active. Disabling FileSafe while `yolo` is active MUST produce a user-visible warning (per `Plans/FileSafe.md` §10a).
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md
+
 
 <a id="AC-06"></a>
 **AC-06:** Budget limits (§4) MUST be enforced regardless of mode. Exceeding any budget MUST trigger the corresponding kill condition.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gates.md
+
 
 <a id="AC-07"></a>
 **AC-07:** Every run MUST terminate with exactly one outcome from the taxonomy (§6), recorded in the `done` event and persisted to seglog.
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md
+
 
 <a id="AC-08"></a>
 **AC-08:** UI/workflow state MUST normalize deterministically into the canonical runtime mode enum before strategy selection. `Interview`, `BrainStorm`, and `Crew` MUST NOT create additional runtime mode values.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+
 
 <a id="AC-09"></a>
 **AC-09:** In `regular` mode, `cli_bridged_strategy = "dae"` with `dae_allowed != true` MUST deterministically fall back to HTE and persist `strategy_resolution_reason = "regular_dae_disallowed"`.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md
+
 
 <a id="AC-10"></a>
 **AC-10:** In `yolo` mode, a provider with `dae_allowed != true` MUST fail before provider spawn with `stop_reason = "yolo_requires_dae_provider"`; it MUST NOT silently downgrade to HTE.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md
+
 
 <a id="AC-11"></a>
-**AC-11:** `kill.shell_failure` counts only actually executed shell failures for one canonical shell fingerprint. Policy denials, FileSafe blocks, and different shell fingerprints MUST NOT increment the same streak.
+**AC-11:** `kill.shell_failure` counts only actually executed shell failures for one canonical shell fingerprint. Policy denials, FileSafe blocks, UI-only terminal actions, and different shell fingerprints MUST NOT increment the same streak.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+
 
 <a id="AC-12"></a>
 **AC-12:** `kill.write_thrash` counts only qualifying content-changing writes to one normalized file identity within a sliding 10-minute window. Writes to different files, aged-out writes, and denied / blocked / no-diff operations MUST NOT trigger the ceiling.
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
+
 
 <a id="AC-13"></a>
 **AC-13:** Child/subagent/rotated follow-up runs MUST inherit the parent effective context overlay. A read-only parent run (`ask` or `plan`) MUST NOT widen into `full_execution` context in any child run.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
 
+
+<a id="AC-14"></a>
+**AC-14:** When a shell-backed invocation is bound to a terminal session, later `Open in Terminal` or `Show Terminal` actions MUST reveal that same `terminal_session_id` when it still exists instead of spawning a duplicate shell.
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md
+
+
+<a id="AC-15"></a>
+**AC-15:** Explicit terminal restart or replacement MUST mint a new `terminal_session_id`, while clear-scrollback and reveal-only actions MUST preserve the current runtime identity.
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
 ## Retry, Blocking, and Safe-Point Clarification Addendum (2026-03-08)
 
 ### 1. Mode interaction with runtime failure classes
