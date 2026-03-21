@@ -2,7 +2,7 @@
 
 ## Scope (STRICT)
 - Allowed edits: `Plans/**`
-- Allowed when explicitly requested: `AGENTS.md`, `.cursorrules`, `.claude/**`, `.cursor/**`, `PuppetMasterDashComp.html`
+- Allowed when explicitly requested: `AGENTS.md`, `.cursorrules`, `.claude/**`, `.cursor/**`, `PuppetMasterDashComp.html`, `PuppetMasterDashComp2.html`,
 - Disallowed: application code (e.g. `puppet-master-rs/**`), installers, runtime configs
 
 ## Do not hand-edit derived artifacts

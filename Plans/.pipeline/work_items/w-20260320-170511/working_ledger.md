@@ -1,0 +1,1559 @@
+# Working Ledger
+
+## Work Item
+- `w-20260320-170511`
+
+## Mode
+- `research`
+
+## Topic / Scope
+- Providers and multi-account support for the Puppet Master rewrite.
+
+## Objective
+- Preserve durable execution memory for research and design discussion about provider handling and multi-account support.
+- Keep enough context for later reconciliation, packetization, and downstream planning without treating this ledger as canonical.
+
+## Constraints / Non-Goals
+- Do not write planning-doc changes during research mode.
+- This ledger is execution memory only, not a source of truth.
+- Prefer alignment before packetization.
+- Prefer targeted reading first; do not do a broad repo sweep unless the discussion clearly requires it.
+- Everything discussed must be implementation-ready for MVP; do not defer critical behavior to a later phase.
+- Must account for GUI impact and Linux/macOS/Windows path differences.
+- Collaboration style requirement: surface bad ideas, weak assumptions, contradictions, and implementation risks directly.
+
+## Key Facts and Findings
+- Topic established: providers and multi-account support.
+- Intended role for follow-on work: researcher for rewrite planning docs.
+- Current work item was newly created for this topic; no prior `work_id` was established in this chat for the same work item.
+- Research mode is now active for this work item.
+- Existing plan docs already cover provider facades, multi-account state, models, usage, media, and GUI placement:
+- `Plans/CLI_Bridged_Providers.md`
+- `Plans/Multi-Account.md`
+- `Plans/Models_System.md`
+- `Plans/Media_Generation_and_Capabilities.md`
+- `Plans/usage-feature.md`
+- `Plans/FinalGUISpec.md`
+- `Plans/rewrite-tie-in-memo.md`
+- Current canon says Gemini is one direct provider family with mixed OAuth + API-key accounts and OAuth-first auto selection.
+- Current canon explicitly says Gemini is not a CLI subprocess/runtime path.
+- Current canon already models requested vs effective auth/account/provider state and expects this to remain user-visible.
+- Current canon spreads provider/account setup across Settings/Auth/Health/Usage surfaces rather than consolidating everything into a single Agent-Config page.
+- Current canon already expects Cursor under one facade with both `stream-json` and `acp` transports.
+- `Plans/rewrite-tie-in-memo.md` is stale on Cursor ACP support; current official Cursor docs show ACP support now exists.
+- Web research on current official Gemini CLI docs/repo confirms Gemini CLI is not just a thin subprocess:
+- headless prompt execution
+- JSON and stream-JSON outputs
+- hooks with structured contract
+- subagents
+- extensions
+- model routing
+- telemetry / OTLP output
+- ACP support
+- Gemini CLI repo shows account/session/config state is rooted under a Gemini home directory and can be redirected with `GEMINI_CLI_HOME`.
+- Gemini CLI storage includes settings, OAuth credentials, history, and other user state under the CLI home; this strongly implies multi-account isolation requires per-account state roots to avoid bleed-through.
+- Gemini CLI headless/streaming outputs expose structured events and usage/stat fields that appear sufficient for PM-side normalized usage capture.
+- Gemini CLI SDK is not a clean substitute for the full CLI control surface because advanced CLI features are not all implemented there.
+- OpenCode appears to separate provider catalog/model metadata, auth handling, and provider-specific transform quirks rather than hard-coding every provider as a bespoke one-off implementation.
+- OpenCode repo contains active handling/tests for Alibaba, MiniMax, and ZAI/Zhipu-related provider transforms.
+- OpenCode Desktop provider settings UI is a useful reference for information architecture, but it does not solve PM's multi-account complexity by itself.
+- `xeditor-monorepo` is useful as interaction inspiration only; it is not a strong candidate for direct adoption as an MVP-native PM core feature.
+- User clarified target direction:
+- Gemini remains a direct provider, but direct Gemini must become API-key only.
+- Gemini CLI must also be added as its own provider surface and should support native ACP.
+- Research focus now explicitly includes Gemini CLI multi-account, Cursor CLI multi-account, and Claude Code CLI multi-account.
+- Existing `Plans/Multi-Account.md` already contains one useful anchor for Claude Code:
+- it assumes config-dir-per-account via `CLAUDE_CONFIG_DIR`
+- but the rest of the current canon is stale/incomplete for the new Gemini/Cursor direction.
+- Current community evidence and cloned `clausona` repo strongly support the Claude Code pattern:
+- Claude Code profile switching is driven by `CLAUDE_CONFIG_DIR`.
+- account-specific auth lives in profile-specific `.claude.json`.
+- shared config/plugins/MCP/settings can be symlinked across profiles if desired.
+- session history can be isolated or merged.
+- per-profile usage can be reconstructed by inspecting account-specific config/session data.
+- `clausona` also derives a per-config-dir keychain service name, implying account isolation is not only filesystem-based but also credential-store scoped.
+- Current Cursor evidence now supports account/profile isolation via launch-time `--user-data-dir`.
+- Cursor staff explicitly described this as a workaround to get separate login state, settings, and project history.
+- This strongly suggests PM can support Cursor multi-account only by owning distinct Cursor user-data roots and launching Cursor/its CLI in that profile context; there is no clean in-process account switch contract today.
+- Gemini CLI repo + docs continue to support the same conclusion for multi-account:
+- `GEMINI_CLI_HOME` overrides the effective home.
+- Gemini state under that home includes `.gemini/settings.json`, OAuth credentials, account records, history, temp/bin, policies, skills, commands, and other persistent state.
+- Gemini CLI auth docs still support Sign in with Google, Gemini API key, and Vertex AI variants.
+- Gemini CLI ACP implementation advertises multiple auth methods and media/context capabilities directly in initialize/auth flows.
+- Gemini CLI headless docs explicitly expose structured JSON/JSONL output with stats and per-model usage breakdowns.
+- Gemini CLI settings docs set `model.compressionThreshold` default to `0.5`; PM's proposed default of `90%` would therefore be an intentional override, not alignment with provider-native defaults.
+- Shared mutable state is now better framed as a hybrid model, not a binary choice:
+- auth, account identity, cooldown state, usage state, and session history must stay isolated per account.
+- PM-managed overlays may be shared across accounts when provider/runtime allows it safely: instructions, projected PM skills, some MCP/tool definitions, and selected plugins/extensions.
+- Cursor's `--user-data-dir` workaround is an isolated-profile mechanism, not shared mutable state.
+- `clausona` demonstrates that Claude Code can safely share some mutable assets by symlink while still isolating `.claude.json` and usually `projects/`.
+- Gemini CLI should remain more conservative than Claude Code because more state is packed under the Gemini home and bleed risk is higher.
+- Current Cursor docs materially affect PM's instruction-sync model:
+- project rules live in `.cursor/rules/*.mdc`
+- `AGENTS.md` is supported as a simple alternative
+- `.cursorrules` is still supported but deprecated
+- current Cursor CLI docs say the CLI reads `AGENTS.md` and `CLAUDE.md` at project root alongside `.cursor/rules`
+- Gemini CLI instruction handling is now confirmed:
+- native context file is `GEMINI.md`
+- settings can override `context.fileName` to include alternatives such as `AGENTS.md`
+- context is hierarchical and can be loaded globally, by workspace ancestry, and JIT during tool access
+- OpenCode instruction handling is now confirmed:
+- native file is `AGENTS.md`
+- `CLAUDE.md` is fallback/compatibility, not the primary native format
+- OpenCode's Google/Gemini provider path does not switch instruction format to `GEMINI.md`; OpenCode still uses its own AGENTS/CLAUDE rule system
+- PM instruction control must therefore be provider-aware:
+- PM should keep one canonical instruction source internally
+- PM must project/sync provider-native instruction files and rule artifacts per runtime
+- PM must track drift and show projection targets in the GUI
+- PM skills cannot rely on one universal native provider format:
+- Gemini CLI and OpenCode have native or near-native skill systems that PM can project into
+- other providers may require instruction/rules projection rather than native skill parity
+- capability labeling should distinguish `native`, `projected`, `partial`, and `unsupported`
+- User clarified a new hard requirement:
+- PM must control and sync provider-native instruction/rules files from PM's AGENTS-layer intent, including `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, and Cursor rule artifacts
+- User clarified separate user-visible provider surfaces are acceptable and desired where control/capability differs materially:
+- `Gemini Direct` remains separate from `Gemini CLI`
+- OpenCode remains a separate first-class PM provider and an aggregation path for long-tail upstream providers
+- PM now has a stronger implementation-ready direction for runtime configuration:
+- Agent-Config should become the primary workspace for provider, account, model, effort, auto-switch, instruction-sync, and skill-projection controls
+- requested vs effective runtime state should be visible in that surface, not buried in diagnostics-only pages
+- Google auth terminology relevant to Gemini CLI was clarified:
+- `ADC` means Application Default Credentials
+- service accounts are non-human Google Cloud identities and should be treated as a separate auth family from OAuth users and API keys
+- Xeditor context-compression research outcome:
+- the interesting mechanism is `_context_updates`, where the model is required to summarize stale tool results on later tool calls.
+- summaries are persisted as `contextSummary` replacements for specific tool results and surfaced in the activity timeline.
+- this is not equivalent to PM's full chat/session compaction pipeline; it is a narrower "tool result summarization" mechanism.
+- Xeditor's approach is useful as inspiration for local, reversible context pruning of stale tool outputs, but it should not replace PM's canonical compaction design.
+- User clarified additional requirements:
+- OpenCode must be supported as its own provider because it acts as a provider aggregator for obscure/long-tail upstream providers.
+- direct PM providers still matter for popular providers; OpenCode is additive, not a replacement.
+- usage, cooldowns, priority, switch threshold, and graceful auto-switching must be modeled per account, not just per provider.
+- account-level usage/cooldown rules can differ even within the same provider family.
+- default model and default effort level must be selectable per provider in the GUI.
+- model refresh should happen automatically on app boot, with visible progress/status in the PM status bar.
+- Official/current OpenCode docs and existing PM plans confirm OpenCode is already intended as a first-class server-bridged provider:
+- local server at default `127.0.0.1:4096`
+- health via `GET /global/health`
+- provider discovery via `GET /provider`
+- auth endpoints exposed by the server
+- PM runtime transport remains HTTP/SSE; OpenCode is not a CLI-bridged runtime
+- Existing PM `Plans/Provider_OpenCode.md` currently assumes a mostly single-instance connection model:
+- one enabled flag
+- one host/port pair
+- one username/password pair
+- one optional CLI launcher path
+- this is likely too narrow if PM needs to support multiple OpenCode setups or config-root personas cleanly
+- OpenCode repo confirms strong usage fidelity:
+- message-level usage is normalized in session code (`Session.getUsage`)
+- ACP agent emits `usage_update`
+- usage includes input/output/reasoning/cache token breakdown and cost when available
+- model discovery is driven by provider/catalog data and not hardcoded.
+- OpenCode provider catalog (`models.dev`) already carries model-level capability metadata such as reasoning/tool/temperature support, limits, modalities, and pricing.
+- This reinforces the need for PM to treat capability metadata as dynamic and model-scoped.
+- OpenCode config docs confirm:
+- configuration sources are merged, not replaced
+- project, global, custom file, and inline config layers all interact
+- `OPENCODE_CONFIG_DIR` can point to a custom config directory that overrides agent/command/plugin discovery
+- OpenCode model configuration already supports provider/model-scoped options and variants
+- this strengthens the case for PM to keep raw OpenCode model IDs exact and to treat variants/capabilities as discovered, not hardcoded
+- Official OpenCode server docs were rechecked directly:
+- `opencode serve` is the documented headless HTTP server entrypoint
+- server transport remains HTTP/SSE even when launched by PM
+- server auth uses `OPENCODE_SERVER_PASSWORD` and optional `OPENCODE_SERVER_USERNAME`
+- TUI also starts a server, and clients can connect to existing servers
+- this confirms PM-managed OpenCode launch is compatible with keeping OpenCode in the `ServerBridge` transport class
+- Existing PM docs are now stale in at least one important place:
+- `Plans/assistant-chat-design.md` currently says Gemini has no effort support and Cursor has no separate effort control.
+- That is too rigid for the desired design because capability support may vary by backend and model and must not be hardcoded.
+- Gemini CLI repo shows model capability/config distinctions that matter for effort:
+- some models/features expose thinking-related settings (`thinkingLevel` for Gemini 3, `thinkingBudget` for 2.5-style flows)
+- ACP model listing currently returns model IDs/names/descriptions, but not a rich effort-capability contract by itself
+- this suggests PM may need a provider-specific capability enrichment step rather than relying only on minimal ACP model lists.
+- Gemini CLI auth docs confirm the supported auth families more concretely:
+- Google login / OAuth user
+- Gemini API key (`GEMINI_API_KEY`)
+- Vertex AI via ADC
+- Vertex AI via service account JSON key
+- Vertex AI via Google Cloud API key
+- headless mode officially recommends API key or Vertex AI flows
+- PM should therefore treat Gemini CLI auth family as a first-class capability discriminator
+- Gemini CLI model-selection precedence is explicit:
+- `--model`
+- `GEMINI_MODEL`
+- `settings.json` `model.name`
+- local model router if enabled
+- provider default
+- PM should use this to force deterministic requested model selection per run
+- Gemini CLI plan mode has its own model routing toggle (`general.plan.modelRouting`, default `true`)
+- this introduces a direct conflict risk with PM's own model/account routing and should not be left implicit
+- Nanobanana extension findings:
+- Gemini CLI extensions live under `<home>/.gemini/extensions`
+- installation is via `gemini extensions install <source>`
+- extensions take effect after CLI restart
+- `nanobanana` is an MCP-backed Gemini CLI extension
+- current version observed in repo: `1.0.12`
+- it expects `NANOBANANA_API_KEY` and supports multiple image-preview models
+- extension settings can store sensitive values, but PM may instead inject `NANOBANANA_API_KEY` at launch and avoid duplicating secrets into Gemini CLI-owned storage
+- Google OAuth policy nuance:
+- current official Google docs still support desktop/native OAuth in general
+- therefore the direct-Gemini OAuth removal appears to be an app-policy/compliance/public-distribution constraint for PM, not evidence that Google removed OAuth as a protocol entirely
+- this distinction matters because Gemini CLI can still legitimately expose OAuth-backed accounts while direct PM Gemini remains API-key only.
+- Official Anthropic Claude Code docs confirm `/cost` is for API users and subscribers should use `/stats` for usage patterns.
+- This implies Claude Code usage fidelity depends on account type:
+- API-backed Claude usage can be cost/token precise
+- subscription-backed Claude may expose usage patterns and cooldown pressure differently than API billing data
+- account-level rule variance is real and must be modeled explicitly.
+- Provider-matrix research is now separating high-confidence integrations from partial ones:
+- high-confidence current shapes: Gemini CLI, OpenCode, Claude Code memory/hooks/subagents, Cursor CLI rules/MCP/headless usage shape
+- medium-confidence current shapes: Cursor usage/cooldown fidelity, Claude subscription cooldown semantics, Gemini direct quota/cooldown exactness
+- lower-confidence direct-provider shapes still needing primary-source pass: Alibaba direct, MiniMax direct, Z.AI direct
+- OpenCode remains the most concrete near-term path for long-tail providers because its provider docs and transforms already cover MiniMax and Z.AI explicitly and handle Alibaba/DashScope quirks in code
+- OpenCode implementation details for coding-plan providers are now clearer from the model snapshot fixtures:
+- `minimax-coding-plan`
+- env: `MINIMAX_API_KEY`
+- npm/provider transport: `@ai-sdk/anthropic`
+- base API: `https://api.minimax.io/anthropic/v1`
+- name: `MiniMax Coding Plan (minimax.io)`
+- doc: `https://platform.minimax.io/docs/coding-plan/intro`
+- separate zero-cost model metadata under the coding-plan provider entry
+- `minimax-cn-coding-plan`
+- env: `MINIMAX_API_KEY`
+- npm/provider transport: `@ai-sdk/anthropic`
+- base API: `https://api.minimaxi.com/anthropic/v1`
+- name: `MiniMax Coding Plan (minimaxi.com)`
+- doc: `https://platform.minimaxi.com/docs/coding-plan/intro`
+- `zai-coding-plan`
+- env: `ZHIPU_API_KEY`
+- npm/provider transport: `@ai-sdk/openai-compatible`
+- base API: `https://api.z.ai/api/coding/paas/v4`
+- name: `Z.AI Coding Plan`
+- doc: `https://docs.z.ai/devpack/overview`
+- separate zero-cost model metadata under the coding-plan provider entry
+- `zhipuai-coding-plan`
+- env: `ZHIPU_API_KEY`
+- npm/provider transport: `@ai-sdk/openai-compatible`
+- base API: `https://open.bigmodel.cn/api/coding/paas/v4`
+- name: `Zhipu AI Coding Plan`
+- doc: `https://docs.bigmodel.cn/cn/coding-plan/overview`
+- Alibaba appears different in OpenCode:
+- provider entries found are `alibaba` and `alibaba-cn`, both using `DASHSCOPE_API_KEY` and OpenAI-compatible DashScope endpoints
+- no distinct `alibaba-coding-plan` provider entry was found in the OpenCode model snapshot
+- OpenCode still contains Alibaba-specific request shaping, especially `enable_thinking=true` for reasoning models on `alibaba-cn`
+- this means PM cannot simply assume OpenCode already split Alibaba Coding Plan into a separate provider entry the same way it did for MiniMax and Z.AI
+- Official vendor docs add an important direct-provider detail:
+- MiniMax Coding Plan uses a dedicated coding-plan API key and exposes rolling 5-hour prompt limits
+- Z.AI Coding Plan uses a dedicated coding API base URL distinct from the general API
+- Alibaba Coding Plan uses dedicated Coding Plan keys (`sk-sp-...`) and dedicated coding-plan base URLs distinct from the pay-as-you-go DashScope base URLs
+- reusable PM design pattern from OpenCode + official docs:
+- create separate provider entries for coding-plan variants when the upstream uses distinct base URLs and/or key types
+- keep pay-as-you-go providers separate from coding-plan providers rather than one provider with ambiguous mode flags
+- preserve provider-specific request quirks in a transform layer instead of hardcoding them into generic runtime logic
+- Local CLI probing improved confidence for the major CLI-backed providers:
+- `gemini` local binary confirms ACP, headless prompt mode, JSON/stream-json output, policy loading, MCP, extensions, hooks, and native skill management
+- `claude` local binary confirms native agents, effort selection, model selection, fallback model support, MCP, plugins, settings injection, and headless JSON/stream-json output
+- `cursor` on PATH is only the editor/remote CLI; the actual AI runtime surface PM should target locally is `cursor-agent` (also aliased as `agent`)
+- `cursor-agent` local binary confirms headless execution, JSON/stream-json output, explicit model selection, model listing, auth status, about/version probing, MCP management, and native rule generation
+- `cursor-agent models` returns a rich live model catalog with many reasoning variants encoded directly into model IDs, reinforcing that PM must discover these variants rather than infer them from vendor name alone
+- critical unresolved Cursor detail:
+- local `cursor-agent` help does not expose `--user-data-dir`
+- Cursor staff guidance still points to `cursor --user-data-dir=...` as the multi-account workaround
+- PM therefore still needs a concrete implementation decision for how Cursor account isolation will be applied to the agent runtime
+- Official coding-plan docs also sharpen quota/reset semantics:
+- Alibaba Coding Plan documents dedicated Coding Plan keys and fixed reset windows at 5-hour, weekly, and monthly boundaries
+- Z.AI Coding Plan documents a coding-plan-specific endpoint plus plan-dependent quota/reset behavior
+- MiniMax Coding Plan documents a dedicated coding-plan quota/remains API and fixed 5-hour reset behavior
+- Live headless runtime probes materially improved telemetry confidence:
+- `cursor-agent --print --output-format json --mode ask "Reply exactly OK"` returns a structured success payload with:
+- `session_id`
+- `request_id`
+- `duration_ms`
+- `duration_api_ms`
+- `usage.inputTokens`
+- `usage.outputTokens`
+- `usage.cacheReadTokens`
+- `usage.cacheWriteTokens`
+- `claude -p --output-format json --permission-mode plan "Reply exactly OK"` returns a structured success payload with:
+- `session_id`
+- `duration_ms`
+- `duration_api_ms`
+- `stop_reason`
+- `total_cost_usd`
+- detailed `usage`
+- `modelUsage`
+- `permission_denials`
+- `fast_mode_state`
+- `gemini -p ... --output-format json` returns structured session stats with:
+- `session_id`
+- `response`
+- per-model API totals
+- token totals including `prompt`, `total`, `cached`, `thoughts`, and `tool`
+- tool/file activity totals
+- Claude local auth probing also confirmed subscriber/account shape directly:
+- `claude auth status` returned `loggedIn: true`, `authMethod: "claude.ai"`, `apiProvider: "firstParty"`, and `subscriptionType: "pro"`
+- this is strong evidence that PM can distinguish at least some account-type differences natively rather than inferring them blindly
+- MCP/runtime integration surfaces are also confirmed locally:
+- `cursor-agent mcp list` returns configured MCP servers and readiness states
+- `claude mcp list` returns server locations plus connection/auth status
+- `gemini mcp list` works and reports configured-server state, though the current local profile has no MCP servers configured
+- Cursor multi-account isolation probes produced a more concrete result than expected:
+- setting a fresh `HOME` makes `cursor-agent status` report `Not logged in`
+- setting fresh `XDG_CONFIG_HOME` / `XDG_DATA_HOME` / `XDG_CACHE_HOME` also makes `cursor-agent status` report `Not logged in`
+- setting `CURSOR_USER_DATA_DIR` alone does **not** change the authenticated identity for `cursor-agent`; it still reports the existing logged-in account
+- current evidence therefore suggests Cursor Agent state isolation is tied to home/XDG roots, not the narrow `CURSOR_USER_DATA_DIR` knob by itself
+- Gemini multi-account isolation remains viable but exposed a fresh-profile bug/quirk during probing:
+- a fresh `GEMINI_CLI_HOME` correctly causes auth to fail and the CLI requests explicit auth configuration
+- however, the current nightly also throws a project-registry save error on a fresh empty home before returning the auth error
+- PM should therefore be ready to precreate expected Gemini home subpaths and/or tolerate this bootstrap quirk
+- Community/reference implementations now sharpen the PM load-balancing design:
+- `altalt-org/opencode-anthropic-multi-auth` uses:
+- quota-aware selection at session start based on Anthropic OAuth usage API
+- sticky session account assignment
+- 429-triggered failover
+- per-account `rateLimitedUntil`
+- OAuth token refresh and migration from existing OpenCode auth
+- this is useful for session-stickiness and quota-aware selection, but it is still fundamentally a provider-specific proxy/plugin pattern
+- `gaboe/oc-codex-multi-account` is more aligned with PM's desired architecture:
+- explicit account store keyed by alias
+- separate skip/cooldown reasons per account: rate-limited, model-unsupported, workspace-deactivated, auth-invalid
+- configurable rotation strategies: `sticky-threshold`, `round-robin`, `least-used`, `random`
+- threshold-aware recovery back to primary account
+- explicit rate-limit parsing into `fiveHour` and `weekly` windows
+- isolated per-account `CODEX_HOME` sandboxes for limit probing
+- this strongly reinforces PM's direction of separate health state, usage-pressure state, and resolution outcome
+- OpenCode upstream is also moving toward first-class multi-account OAuth support:
+- commit `5d0081834` in the fetched PR branch (`feat(auth): multi-account OAuth support with auto-relogin`) adds:
+- provider-scoped OAuth record pools
+- `active` record per namespace
+- ordered account lists
+- per-record health with `cooldownUntil`, `lastStatusCode`, `successCount`, `failureCount`
+- rotating fetch with cooldown-aware candidate selection, network retry handling, and auth-failure relogin
+- provider/server routes for listing usage, setting active account, deleting accounts, and updating labels
+- this is a strong signal that PM should model multi-account as a first-class auth/account subsystem, not as incidental provider-local metadata
+- Local Codex probing adds another practical anchor:
+- `codex login status` reports logged-in state directly
+- fresh `CODEX_HOME` reports `Not logged in`, confirming clean account sandboxing by home root
+- `codex exec --json` emits structured events (`thread.started`, `turn.started`, `error`, `item.completed`) rather than just plain text
+- non-JSON `codex exec` exposes `session id`, selected model/provider/effort, and a final `tokens used` summary
+- caveat: current local Codex state appears somewhat unhealthy (state-db migration warnings, websocket fallback, and 401s in fresh-home probing), so PM should not assume Codex local installs are always pristine
+- Additional CLI sandbox/bootstrap probing now makes the account-root contract much more concrete:
+- Cursor:
+- auth-bearing state is narrow: copying only `~/.config/cursor/auth.json` into an isolated home/XDG root is enough for `cursor-agent status`, `models`, and authenticated CLI use
+- runtime/profile state is broader and is generated on demand under isolated roots:
+- `~/.config/cursor/cli-config.json`
+- `~/.config/cursor/statsig-cache.json`
+- `~/.cursor/projects/...`
+- cache under `~/.cache/cursor-compile-cache`
+- fresh Cursor profiles require workspace trust again, which means trust is profile/account-local state
+- Claude Code:
+- copying only `.credentials.json` into an isolated `CLAUDE_CONFIG_DIR` is enough for `claude auth status` and authenticated headless execution
+- the CLI then generates the rest of the profile under that config dir:
+- `.claude.json`
+- `settings.json`
+- `projects/...`
+- `plans/`
+- `plugins/blocklist.json`
+- `mcp-needs-auth-cache.json`
+- Codex:
+- copying only `auth.json` into an isolated `CODEX_HOME` is enough for `codex login status` and authenticated `codex exec --json`
+- runtime state is then generated under that home:
+- `sessions/...`
+- `models_cache.json`
+- `logs_1.sqlite`
+- `state_5.sqlite`
+- `skills/.system/...`
+- sandbox helper binaries and temp assets under `tmp/...`
+- Gemini CLI:
+- a narrower auth/settings core copy is enough for authenticated headless execution; a full home clone is not strictly required
+- minimum practical bootstrap set observed locally:
+- `gemini-credentials.json`
+- `google_accounts.json`
+- `oauth_creds.json`
+- `settings.json`
+- `state.json`
+- `installation_id`
+- `projects.json`
+- optional extension-related files only matter if PM wants extension-backed features immediately
+- Gemini still remains the heaviest home because auth, extensions, MCP OAuth tokens, history, temp chats, and project registry all sit under one `.gemini` tree
+- Targeted doc reread confirmed specific drift:
+- `Plans/Multi-Account.md` still assumes one Gemini provider with mixed OAuth/API-key pools under one provider policy and understates Cursor isolation as config-path/manual switching
+- `Plans/FinalGUISpec.md` has the right shell ownership model for Agent-Config but does not yet own the new provider/account/instruction contract
+- cross-doc requested/effective runtime identity remains the stable extension point and should be extended rather than renamed
+- Targeted orchestrator/runtime-owner reread confirmed important contract boundaries:
+- `Plans/Prompt_Pipeline.md` still owns the canonical effective resolution record fields and currently persists `requested_platform`, `effective_platform`, `requested_model`, `effective_model`, `requested_auth_mode`, `effective_auth_mode`, `requested_account_policy`, `requested_account_id`, `requested_account_binding`, `effective_account_id`, `effective_account_label`, `effective_provider_identity`, and `account_switch_reason`
+- `Plans/orchestrator-subagent-integration.md` requires every tier run to emit requested/effective Persona plus requested/effective platform/model/variant and selection reason
+- orchestrator language still centers `platform` rather than the newer `provider_entry` term, so downstream reconciliation must extend rather than replace those canonical fields
+- provider-native directories remain seed/import sources only; PM-owned canonical state must stay above provider-native homes/configs even when PM manages projections into them
+- orchestrator runtime integration is explicitly provider-first and transport-aware (`cli-bridged`, `direct-provider`, `server-bridged`), which matches the emerging provider-entry/transport model
+- Targeted provider-doc reread exposed the next ontology seam:
+- `Plans/CLI_Bridged_Providers.md` still locks Gemini as one direct provider with mixed OAuth/API-key pools and no CLI runtime
+- `Plans/rewrite-tie-in-memo.md` still says Cursor is not ACP-native and still locks the older Gemini direct-only model
+- `Plans/Models_System.md` treats `provider_id/model_id` as the canonical model key, which is now in tension with separate runtime platforms such as `gemini_direct` vs `gemini_cli`
+- `Plans/Provider_OpenCode.md` already proves the distinction can exist: runtime platform `opencode` while model IDs preserve upstream provider namespaces like `anthropic/...`
+- This implies PM now needs an explicit distinction between:
+- runtime platform / provider entry used for execution selection
+- model provider namespace used for canonical model IDs
+- `Plans/Contracts_V0.md` confirms the canonical persisted vocabulary still centers:
+- `requested_platform` / `effective_platform`
+- `requested_auth_mode` / `effective_auth_mode`
+- `requested_account_policy`
+- `effective_account_id`
+- `effective_provider_identity`
+- provider summary/account `AuthState` fields `provider`, `auth_surface`, `account_id`, `account_label`, `provider_identity`
+- this means the newer provider-entry/family/transport schema must be additive and compatible with those canonical names rather than replacing them
+- Additional auth/bootstrap probing materially sharpened implementation gaps:
+- Gemini CLI:
+- local fresh-home probe showed the CLI crashes if `GEMINI_CLI_HOME` points to a missing directory; PM must precreate the home path before first run
+- once the home exists, headless mode returns a clean machine-readable auth/config error:
+- `Please set an Auth method in .../.gemini/settings.json or specify one of ... GEMINI_API_KEY, GOOGLE_GENAI_USE_VERTEXAI, GOOGLE_GENAI_USE_GCA`
+- official docs confirm interactive auth families:
+- Google sign-in
+- Gemini API key
+- Vertex AI via ADC (`gcloud`)
+- Vertex AI via service-account JSON
+- Vertex AI via Google Cloud API key
+- headless mode uses cached auth if present; otherwise env-var-driven auth is required
+- this means PM needs separate setup flows for:
+- interactive login/bootstrap
+- env-driven noninteractive account creation
+- narrow auth import/clone into a PM-owned home
+- Claude Code:
+- `claude auth login --help` confirms distinct login surfaces:
+- `--claudeai` subscription login
+- `--console` Anthropic Console / API billing login
+- optional `--email`
+- optional `--sso`
+- fresh isolated `CLAUDE_CONFIG_DIR` returns clean JSON auth status with `loggedIn: false`, `authMethod: "none"`
+- this means PM must explicitly model Claude account type at setup time; it is not just one generic Claude login
+- Cursor:
+- `cursor-agent` exposes browser login and also supports `--api-key` / `CURSOR_API_KEY`
+- `cursor-agent login` only exposes a minimal browser-oriented login flow plus `NO_OPEN_BROWSER`
+- fresh isolated home/XDG roots return `Not logged in`
+- this means PM must choose whether Cursor accounts are:
+- browser-auth profile roots
+- API-key accounts
+- or both
+- and PM must define the actual launch contract against `cursor-agent`, not only the editor-facing `cursor --user-data-dir` workaround
+
+## Gaps / Problems Identified
+- User-requested direction directly conflicts with existing canon in several places:
+- remove Gemini OAuth provider behavior vs current Gemini OAuth-first design
+- add Gemini CLI as a provider/runtime vs current "Gemini is direct only" design
+- move all provider/model/multi-account settings to Agent-Config vs current split-surface GUI design
+- Cursor ACP approach changed materially vs stale memo assumptions
+- Provider ontology is currently at risk of becoming confused:
+- "Gemini direct" and "Gemini CLI" may be incorrectly treated as identical provider behavior when they have different auth, control, state, and observability properties
+- Multi-account semantics for CLI-backed providers are not yet fully reconciled with direct-provider semantics.
+- Gemini CLI likely cannot safely support multiple accounts without PM managing isolated per-account homes/state roots.
+- Cross-platform filesystem handling is now a first-class design issue for CLI-backed multi-account providers because PM must manage stable per-account directories on Linux/macOS/Windows.
+- Usage/telemetry capture expectations are now higher than current docs fully specify for all bridged providers, especially Gemini CLI, Cursor CLI, Claude Code CLI, and OpenCode.
+- Gemini media design now has a mismatch:
+- current docs assume Gemini OAuth and API-key flows both participate in the same provider/media story
+- requested direction removes Gemini OAuth as a direct-provider path and adds Gemini CLI plus nanobanana extension concerns
+- Model normalization / cleaned display names are not yet pinned to a durable normalization contract.
+- Auto-compact threshold settings exist conceptually in provider tooling, but PM docs do not yet define a complete precedence chain for universal vs provider vs model overrides.
+- The user-facing decision "Gemini remains a direct provider and Gemini CLI is also a provider" is workable, but internally PM still needs a shared family/backend abstraction or duplicated logic will spread across routing, health, usage, and GUI code.
+- Gemini direct and Gemini CLI now intentionally diverge on auth policy:
+- direct Gemini should become API-key only.
+- Gemini CLI still supports Google sign-in and other auth paths unless PM explicitly constrains them.
+- This means GUI copy and account modeling must clearly distinguish provider runtime from vendor family.
+- Cursor multi-account is only a launch-profile workaround, not a clean provider-native account API.
+- Claude Code multi-account similarly appears to depend on config-dir switching rather than a first-class native account switch API.
+- Because Cursor and Claude isolation include settings/project history alongside auth, PM must decide what is shared vs isolated per account for each CLI-backed provider rather than assuming one rule fits all.
+- Xeditor-style incremental tool-result compression is interesting, but implementing it naively would create a second compression system unless it is explicitly integrated into PM's canonical context assembly/compaction model.
+- OpenCode currently appears in plans in multiple roles:
+- reference product / architectural baseline
+- external server-bridged provider to be supported directly
+- indirect aggregator for upstream providers PM may not support natively
+- downstream planning must keep those roles separate to avoid confusion.
+- Current model/effort handling in PM plans is too static:
+- provider-level support flags are not enough
+- some capability assumptions are already stale
+- PM needs dynamic backend/model capability data and explicit unknown-state handling.
+- Automatic model refresh on boot introduces UX/state questions:
+- whether stale cached models remain visible while refresh runs
+- what happens if refresh fails for one provider
+- how status bar progress communicates partial completion vs failure
+- Nanobanana install/update/version drift must be defined for isolated Gemini CLI account homes:
+- install once per account root
+- install once per shared template and fan out
+- or maintain a shared extension cache with per-account activation
+- Usage/cooldown logic is not just provider-scoped; it must support per-account rule variants, windows, reset semantics, and cooldown causes.
+- PM still needs exact proof of how much Cursor CLI exposes for native usage fidelity versus what must be inferred.
+- PM now has strong proof that Cursor exposes native structured per-run token usage plus account identity, version, active model, available models, MCP status, and session/request IDs.
+- Cursor cost and cooldown semantics still remain unproven.
+- The load-balancing evidence now suggests a stronger PM recommendation:
+- PM should not implement naive round-robin as the main strategy
+- PM should prefer sticky-primary / threshold-based-preemptive-switch / reason-coded-failover
+- round-robin can exist as an advanced strategy, but it should not be the default for PM
+- OpenCode account semantics inside PM still need a more exact design because PM talks to a user-run server rather than launching a per-account local CLI home.
+- Existing PM OpenCode planning likely understates the need for multiple OpenCode server/config profiles if users want more than one OpenCode setup or identity.
+- PM still needs exact rules for which provider assets are safe to share by overlay/symlink/copy versus which must always remain isolated.
+- Cursor rule projection is lossy compared with plain markdown instruction files because `.mdc` adds metadata and scope semantics; PM will need a deliberate translation policy rather than naive file-copy sync.
+- Gemini CLI media capability is not purely provider-level:
+- `nanobanana` requires `NANOBANANA_API_KEY`
+- OAuth-only Gemini CLI accounts therefore cannot be assumed to support nanobanana-backed media unless PM also attaches an API key
+- capability gating may need to be provider + account + auth-family aware
+- Gemini CLI also has internal model-routing/fallback behavior beyond PM control unless explicitly constrained.
+- If PM does not deliberately manage that interaction, requested vs effective model/account state may become ambiguous or misleading.
+- Current PM switching language is still too overloaded:
+- `health`, `cooldown`, `usage pressure`, and `resolution outcome` need separate state dimensions or the GUI/runtime contract will stay ambiguous
+- OpenCode UX still risks mislabeling server-discovered upstream identities as PM-owned accounts if the terminology is not tightened
+- Wide-reaching naming drift risk is now confirmed:
+- orchestrator-related docs already use requested/effective provider/model/effort/persona/account wording in multiple places
+- globally replacing `account` with `server profile` or similar would likely create cross-doc drift unless reconciled everywhere
+- Alibaba Coding Plan still has one implementation-time ambiguity even after official docs:
+- official guide and FAQ materials use slightly different Anthropic-compatible path shapes for the coding endpoint
+- PM can still safely model it as a distinct provider, but final base-URL literal should be revalidated at implementation time
+- Exact Cursor multi-account launch contract remains open:
+- current probes strongly suggest home/XDG-root isolation works for `cursor-agent`
+- `CURSOR_USER_DATA_DIR` alone does not appear sufficient for the agent runtime
+- PM still needs a final wrapper/launch policy that is narrow enough to be safe cross-platform and does not accidentally disturb unrelated child-process behavior
+- Gemini fresh-profile bootstrap behavior needs handling:
+- a pristine `GEMINI_CLI_HOME` can throw a project-registry save error before returning the expected auth error
+- PM may need to precreate bootstrap directories/files or treat first-run Gemini home initialization as a managed step
+- PM still needs one implementation decision on where load balancing actually lives:
+- provider-local adapters only
+- a shared PM selectable-unit scheduler with provider-specific telemetry adapters
+- or a hybrid where provider adapters surface raw pressure/health facts and PM owns the final selection policy
+- current evidence strongly favors the hybrid/shared-scheduler approach
+- PM should not copy the OpenCode-plugin architecture directly for its own core:
+- those plugins are useful references for heuristics and storage fields
+- but PM needs a unified cross-provider scheduler so requested/effective state, GUI, and usage remain coherent across Gemini/Cursor/Claude/Codex/OpenCode
+- PM now has enough evidence to reject a one-size-fits-all sandbox story:
+- Cursor, Claude, and Codex can all be bootstrapped from narrow auth-bearing files into PM-owned isolated roots
+- Gemini can also be bootstrapped more narrowly than a full clone, but its home is much more state-heavy and tightly coupled
+- PM therefore needs provider-specific bootstrap policy rather than one generic "copy the profile" rule
+- Exact overlay policy remains open:
+- which assets PM should centralize and reproject into each account root
+- which assets should remain strictly account-local even if technically shareable
+- current evidence supports keeping auth, trust, cooldown/usage state, transcripts/history, temp chats, and provider-generated session DBs account-local by default
+
+## Candidate Fixes / Design Directions
+- Recommended framing:
+- treat "provider family" separately from "execution backend" and "auth/account type"
+- example: Gemini family may have `gemini_direct` and `gemini_cli` backends rather than pretending one runtime can describe both cleanly
+- Keep requested vs effective runtime/account state visible; this is still the right abstraction for fallback and health.
+- For Gemini specifically, likely options are:
+- Option A: one top-level Gemini family with separate Direct and CLI backends under it
+- Option B: separate top-level providers (`Gemini Direct`, `Gemini CLI`)
+- Recommendation at this stage: Option A is cleaner for user understanding and multi-account reasoning, but only if backend differences stay explicit in the UI and data model.
+- For CLI-backed providers, define an explicit PM-owned account sandbox:
+- one PM account record maps to one isolated provider home/config root
+- PM launches CLI processes with provider-specific environment and home overrides
+- no shared mutable CLI home across accounts unless explicitly intended
+- Provider-specific sandbox/bootstrap recommendation is now concrete:
+- Cursor:
+- isolate by PM-owned `HOME`/`XDG_*` roots per account
+- seed auth via `.config/cursor/auth.json`
+- treat trust, chats, plans, MCP approvals, project transcripts, and profile settings as account-local unless PM explicitly reprojects them
+- Claude:
+- isolate by `CLAUDE_CONFIG_DIR` per account
+- seed auth via `.credentials.json`
+- treat generated `projects/`, `plans/`, `settings.json`, plugin state, and stats caches as account-local
+- Codex:
+- isolate by `CODEX_HOME` per account
+- seed auth via `auth.json`
+- treat sessions, model cache, state DB, shell snapshots, temp sandbox helpers, and generated system skills as account-local runtime state
+- Gemini CLI:
+- isolate by `GEMINI_CLI_HOME` per account
+- bootstrap with a managed auth/settings core rather than relying on pristine-home first run
+- treat extensions, history, tmp chats, project registry, and MCP OAuth tokens as account-local unless PM explicitly manages them as overlays
+- Separate provider implementation into three layers:
+- normalized provider/model catalog
+- account/auth records
+- runtime transport/backend contract (`direct_api`, `acp`, `stream_json`, `headless_json`, etc.)
+- For usage, require a provider-runtime contract that answers:
+- what can be measured natively
+- what must be inferred
+- what is unavailable and how UI shows that
+- Recommended PM-native scheduler contract now looks like:
+- one cross-provider `selectable unit` = concrete executable/account target
+- examples:
+- Gemini Direct account
+- Gemini CLI account home
+- Cursor account profile root
+- Claude config-dir account
+- Codex home account
+- OpenCode server profile plus upstream auth context
+- scheduler owns selection policy and reason codes
+- provider adapters own:
+- discovering selectable units
+- launching/connecting
+- surfacing pressure/health facts
+- surfacing capability facts
+- surfacing usage/cost/limit facts
+- applying provider-specific auth/bootstrap/update mechanics
+- default scheduler strategy should be:
+- sticky preferred unit
+- threshold-based preemptive switch at attempt boundaries
+- forced failover on hard exhaustion / auth failure / unsupported-model / workspace-deactivated / provider-unhealthy
+- recovery checks back to preferred unit after reset or interval
+- Exact scheduler schema to carry into reconciliation:
+- `selectable_unit`
+- `unit_id`: PM-stable unique id
+- `provider_entry_id`: user-visible provider entry such as `gemini_direct`, `gemini_cli`, `cursor_cli`, `claude_code_cli`, `codex_cli`, `opencode`
+- `provider_family_id`: vendor/family grouping such as `gemini`, `cursor`, `claude`, `openai`, `opencode`
+- `unit_kind`: `direct_account`, `cli_account_root`, `server_profile`
+- `account_id`: nullable only for server-profile-only cases
+- `connection_profile_id`: nullable except OpenCode / similar bridge cases
+- `auth_family`: `api_key`, `oauth_user`, `vertex_adc`, `vertex_service_account`, `vertex_api_key`, `subscription`, `chatgpt_oauth`, `server_managed`, or provider-specific equivalent
+- `root_path`: local sandbox root when applicable
+- `enabled`: boolean
+- `priority`: integer or ordered rank
+- `requested_default`: whether this is the provider default target
+- `effective_capabilities`: discovered capability block snapshot
+- `health_state`
+- `eligible`
+- `cooldown`
+- `hard_blocked`
+- `needs_configuration`
+- `unhealthy`
+- `disabled`
+- `pressure_state`
+- `nominal`
+- `approaching_threshold`
+- `threshold_reached`
+- `exhausted`
+- `unknown`
+- `resolution_outcome`
+- `honored`
+- `substituted`
+- `clamped`
+- `blocked`
+- `retried_on_fallback`
+- `requested_runtime`
+- `provider_entry_id`
+- `provider_family_id`
+- `account_id`
+- `connection_profile_id`
+- `model_id_raw`
+- `effort`
+- `compact_threshold`
+- `auth_family`
+- `effective_runtime`
+- same fields as requested runtime
+- plus `selectable_unit_id`
+- plus `reason_codes[]`
+- `reason_code` families:
+- selection: `preferred_unit_selected`, `highest_priority_selected`, `least_pressure_selected`
+- preemptive switch: `threshold_preemptive_switch`, `cooldown_preemptive_switch`, `preferred_recovered`
+- failover: `hard_exhaustion_failover`, `auth_failure_failover`, `workspace_deactivated_failover`, `model_unsupported_failover`, `provider_unhealthy_failover`
+- clamp/substitution: `effort_clamped`, `model_substituted`, `auth_family_capability_clamped`
+- blocked: `no_eligible_units`, `provider_disabled`, `provider_unconfigured`, `all_units_cooldown`, `all_units_hard_blocked`
+- recovery/observation: `usage_pressure_cleared`, `cooldown_expired`, `capabilities_refreshed`
+- behavior rule remains:
+- do not switch identity inside a running attempt unless the attempt hard-fails and the retry policy explicitly creates a new attempt
+- all auto-switching is recorded as a requested/effective delta, never hidden
+- For model normalization, store:
+- raw provider model id
+- normalized internal key
+- cleaned display label
+- provider family/backend ownership
+- capability metadata
+- For auto-compact thresholds, likely precedence should be:
+- global default
+- provider override
+- model override
+- effective runtime uses most-specific defined value
+- For GUI, likely collapse provider/model/account controls into Agent-Config as the primary surface, then demote Health/Usage pages to observability and diagnostics instead of configuration.
+- Agent-Config page contract is now concrete enough to treat as the primary GUI direction:
+- section `Global Defaults`
+- universal compact threshold default (target default `90%`)
+- boot-time model refresh indicator state plus manual refresh action
+- section `Providers`
+- enable/disable provider entries
+- provider-level default model
+- provider-level default effort
+- provider-level compact-threshold override
+- provider-level auto-switch threshold override
+- provider-level auth/account summary
+- section `Accounts / Profiles`
+- list selectable units for the selected provider entry
+- show auth family, priority, enabled state, health state, pressure state, last usage/cooldown summary, and sandbox/profile type
+- support add/import/login/bootstrap actions per provider-specific account type
+- section `Provider Pooling`
+- family-level pooling toggles, especially optional Gemini Direct + Gemini CLI shared family pool
+- default should remain off
+- when enabled, show preferred provider entry within the pooled family and disclose requested vs effective provider routing
+- section `Models`
+- raw model selection plus cleaned display labels
+- per-model effort selector when supported/discovered
+- per-model compact-threshold override when defined
+- unknown capability state must be shown explicitly rather than guessed
+- section `Instructions`
+- show four user-facing panes: `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, and `Cursor Rules`
+- PM maintains one canonical instruction source and projects into provider-native targets
+- each target gets `PM Controlled` vs `Manual Override`
+- each target also shows last sync time, drift state, and effective rendered contents/preview
+- for Cursor, the primary generated target should be `.cursor/rules/*.mdc`
+- `.cursorrules` is legacy compatibility only and should not be the primary managed target
+- section `Skills`
+- show native/projected/partial/unsupported status per provider
+- show what PM will project into provider-native skill/rule systems versus what stays PM-only
+- section `Effective Runtime`
+- always show requested vs effective provider entry, provider family, account, connection/server profile, model, effort, compact threshold, and reason codes
+- effective-state disclosure is part of normal configuration UX, not only diagnostics
+- Recommended Agent-Config state/data model:
+- `provider_entry`
+- `provider_entry_id`
+- `provider_family_id`
+- `transport_kind` = `direct_api | cli_runtime | server_bridge`
+- `display_name`
+- `enabled`
+- `supports_family_pooling`
+- `default_model_id_raw`
+- `default_effort`
+- `compact_threshold_override`
+- `auto_switch_threshold_override`
+- `boot_refresh_enabled`
+- `model_catalog_status`
+- `last_model_refresh_at`
+- `selectable_unit_ids[]`
+- `selectable_unit`
+- `unit_id`
+- `provider_entry_id`
+- `provider_family_id`
+- `unit_kind` = `direct_account | cli_account_root | server_profile`
+- `account_id`
+- `connection_profile_id`
+- `auth_family`
+- `enabled`
+- `priority`
+- `root_path`
+- `health_state`
+- `pressure_state`
+- `last_usage_snapshot`
+- `last_cooldown_snapshot`
+- `effective_capabilities`
+- `account_record`
+- `account_id`
+- `label`
+- `provider_identity`
+- `auth_family`
+- `credential_ref`
+- `enabled`
+- `priority`
+- `shared_overlay_policy`
+- `cooldown_policy_override`
+- `switch_threshold_override`
+- `allowed_roles`
+- `disallowed_roles`
+- `server_profile`
+- `connection_profile_id`
+- `label`
+- `launch_mode` = `managed_server | attach_existing`
+- `endpoint`
+- `server_auth_ref`
+- `config_root`
+- `enabled`
+- `priority`
+- `discovered_upstream_provider_ids[]`
+- `instruction_projection`
+- `canonical_revision`
+- `projection_target_kind` = `agents_md | claude_md | gemini_md | cursor_rules`
+- `control_mode` = `pm_controlled | manual_override`
+- `drift_state` = `in_sync | pm_outdated | provider_modified | projection_failed | unknown`
+- `last_projected_at`
+- `last_drift_check_at`
+- `target_path`
+- `preview_hash`
+- `requested_runtime_snapshot`
+- `provider_entry_id`
+- `provider_family_id`
+- `account_id`
+- `connection_profile_id`
+- `model_id_raw`
+- `effort`
+- `compact_threshold`
+- `auth_family`
+- `pool_scope`
+- `effective_runtime_snapshot`
+- same fields as requested plus:
+- `selectable_unit_id`
+- `resolution_outcome`
+- `reason_codes[]`
+- `resolved_capability_deltas[]`
+- `pool_scope` should support:
+- `provider_entry`
+- `provider_family`
+- family pooling remains opt-in, with Gemini Direct + Gemini CLI as the first explicit case
+- Orchestrator-alignment recommendation:
+- do not replace canonical `requested_platform` / `effective_platform` fields outright
+- instead map them deterministically from richer provider registry records
+- likely pattern:
+- `requested_platform` / `effective_platform` remain the cross-surface runtime handle
+- Agent-Config/provider registry carries additive fields such as `provider_entry_id`, `provider_family_id`, and `transport_kind`
+- requested/effective runtime snapshots may need additive fields rather than renaming orchestrator-owned ones
+- Recommended platform-mapping table:
+- `requested_platform` / `effective_platform` should identify the actual execution surface, not only the vendor family
+- proposed platform slugs:
+- `gemini_direct`
+- `gemini_cli`
+- `cursor_cli`
+- `claude_code`
+- `codex`
+- `github_copilot`
+- `opencode`
+- `alibaba_coding_plan`
+- `minimax_coding_plan`
+- `zai_coding_plan`
+- proposed family mapping:
+- `gemini_direct` -> family `gemini`
+- `gemini_cli` -> family `gemini`
+- `cursor_cli` -> family `cursor`
+- `claude_code` -> family `claude`
+- `codex` -> family `codex`
+- `github_copilot` -> family `github_copilot`
+- `opencode` -> family `opencode`
+- `alibaba_coding_plan` -> family `alibaba`
+- `minimax_coding_plan` -> family `minimax`
+- `zai_coding_plan` -> family `zai`
+- proposed transport mapping:
+- `gemini_direct` -> `direct_api`
+- `gemini_cli` -> `cli_runtime`
+- `cursor_cli` -> `cli_runtime`
+- `claude_code` -> `cli_runtime`
+- `codex` -> `direct_api`
+- `github_copilot` -> `direct_api`
+- `opencode` -> `server_bridge`
+- `alibaba_coding_plan` -> `direct_api`
+- `minimax_coding_plan` -> `direct_api`
+- `zai_coding_plan` -> `direct_api`
+- model-namespace rule:
+- runtime platform and model `provider_id` are not always the same thing
+- OpenCode already demonstrates this by executing on platform `opencode` while exposing upstream model IDs such as `anthropic/claude-sonnet-*`
+- Gemini Direct and Gemini CLI should likely both expose Google/Gemini model namespaces while remaining different runtime platforms
+- recommended additive model identity fields:
+- `runtime_platform_id`
+- `model_provider_id`
+- `model_id_raw`
+- `model_key = model_provider_id/model_id_raw`
+- availability/discovery records may need a composite uniqueness key using runtime platform + model key, because the same upstream model may be available through multiple platforms with different capabilities
+- requested/effective runtime history should preserve both:
+- execution platform (`gemini_cli` vs `gemini_direct`)
+- upstream provider identity where relevant (`google`, `anthropic`, `openai-compatible`, etc.)
+- `effective_provider_identity` should become the place where OpenCode-upstream or other bridge-specific upstream identity is frozen without collapsing platform identity
+- Nanobanana support should be treated as a concrete Gemini CLI extension-installation and capability-detection path, not as vague "Gemini media" magic.
+- Cursor CLI should be re-evaluated as an ACP-capable first-class CLI backend, not only a stream-json style bridge.
+- Refined provider/account recommendation:
+- keep Gemini Direct and Gemini CLI as separate user-visible provider entries if desired.
+- implement them under a shared Google/Gemini family model internally so model catalog normalization, vendor grouping, and some GUI organization can still be shared.
+- For CLI-backed providers, define a PM-managed launch profile contract:
+- each account has an account root / profile root / state root owned by PM.
+- PM launches the provider with the correct environment flags or CLI args for that account.
+- account switching in PM means switching launch roots, not mutating a shared profile in place.
+- Candidate per-provider isolation knobs:
+- Gemini CLI: `GEMINI_CLI_HOME`
+- Claude Code CLI: `CLAUDE_CONFIG_DIR`
+- Cursor CLI / Cursor app-family launch: `--user-data-dir`
+- Recommended sharing model for CLI-backed multi-account:
+- auth/session/account state MUST be isolated per account.
+- settings/plugins/MCP/extensions may be either isolated or PM-managed shared assets depending on provider capabilities and risk.
+- default should be conservative isolation unless there is a strong reason to share.
+- Overlay-policy contract should be explicit and typed, not a vague shared-vs-isolated switch:
+- `overlay_policy`
+- `policy_mode` = `isolated_only | pm_managed_overlays | custom_overlays`
+- `share_classes[]`
+- `deny_classes[]`
+- `projection_mode` = `copy | symlink | generated | provider_api`
+- `conflict_policy` = `pm_wins | manual_review | provider_wins`
+- `drift_detection` = `hash | mtime | disabled`
+- recommended overlay classes:
+- `instructions`
+- `skills`
+- `mcp_definitions`
+- `tool_definitions`
+- `hooks_config`
+- `extensions_catalog`
+- `plugins_catalog`
+- `workspace_trust`
+- `history`
+- `auth_state`
+- `runtime_cache`
+- `cooldown_residue`
+- `telemetry_state`
+- hard rule:
+- `auth_state`, `history`, `workspace_trust`, `runtime_cache`, `cooldown_residue`, and `telemetry_state` should be denied from sharing by default across all CLI-backed providers
+- recommended default overlay mode:
+- `pm_managed_overlays`
+- recommended default shared classes:
+- `instructions`
+- `skills`
+- optionally `mcp_definitions` where provider/runtime supports it cleanly
+- recommended default projection behavior:
+- generated files for instruction/rule artifacts
+- copy or generated for PM skill projections
+- symlink only as an implementation detail where the provider/runtime tolerates it safely; do not make symlink semantics the user-facing contract
+- per-provider default overlay posture:
+- `gemini_cli`
+- share: `instructions`, `skills`
+- isolate: `auth_state`, `history`, `mcp_oauth_tokens`, `extensions runtime state`, `project registry`, `temp chats`
+- pushback: do not default to shared Gemini extensions/plugins because state bleed risk is too high
+- `cursor_cli`
+- share: `instructions`, limited PM skill projections if Cursor rules/skills mapping is clean
+- isolate: `auth_state`, `workspace_trust`, `project history`, `mcp approvals`, runtime caches
+- pushback: trust and project history should remain account-local
+- `claude_code`
+- share: `instructions`, `skills`, optionally selected `mcp_definitions`
+- isolate: `auth_state`, `projects`, `plans`, `stats cache`, runtime session artifacts
+- `codex`
+- share: `instructions`, `skills`
+- isolate: `auth_state`, `sessions`, `state db`, `model cache`, temp helpers
+- `opencode`
+- share: PM instructions/skills through OpenCode-native projection
+- isolate: server auth, discovered upstream auth/runtime state, server-side session residue
+- Agent-Config overlay controls should exist but stay bounded:
+- provider-level default overlay posture
+- per-account/profile advanced overlay inspector
+- explicit warning when enabling any non-default shared class
+- no giant unrestricted "share everything" toggle
+- instruction panes should integrate with overlay state:
+- `PM Controlled` implies generated/projected artifact under the active overlay policy
+- `Manual Override` detaches only that target from PM sync; it does not redefine broader overlay policy
+- For Gemini CLI, PM should likely expose auth-mode restrictions per account/profile:
+- Google login account
+- Gemini API key account
+- Vertex/ADC/service-account account
+- direct Gemini provider stays API-key only regardless of what Gemini CLI supports.
+- For usage, PM should normalize three categories per provider/backend:
+- authoritative native usage/quota
+- authoritative session/tool stats from local runtime
+- inferred/estimated usage
+- UI must label which kind is being shown.
+- For Xeditor-like compression:
+- do not transplant the exact `_context_updates` protocol as-is.
+- better option is a PM-native concept of reversible tool-result summarization within the existing context-detail / compaction model if the benefit proves worth the complexity.
+- if exposed as a GUI setting at all, it should be framed as aggressive tool-result summarization before full compaction, not as a generic xeditor feature.
+- OpenCode design direction:
+- keep OpenCode as a first-class provider in PM
+- explicitly frame it as an aggregator/bridge provider for upstream vendors PM may not natively support
+- model IDs from OpenCode should preserve upstream provider identity (for example `anthropic/...`, `google/...`) while still being owned by the OpenCode runtime/backend in PM's effective-state record
+- Recommended capability model:
+- provider family/vendor
+- runtime/backend
+- account
+- model
+- effective capability block
+- capability block must carry at least: effort support, supported effort values or mode, multimodal support, tool support, context limits, cost/usage fidelity, cooldown-signal sources, and discovery freshness
+- Recommended refresh behavior:
+- on app boot, kick off background model refresh for every enabled provider/backend
+- keep last known cached models visible until refresh completes
+- status bar shows refresh in progress and per-provider failures without blocking the UI
+- explicit refresh button still exists for manual re-poll
+- Recommended default-selection chain for provider/account/model/effort/compact threshold:
+- global GUI default
+- provider default
+- model default
+- thread/session/manual override
+- run snapshot freezes requested state
+- execution resolves effective state from eligible accounts/models/capabilities
+- Shared-state recommendation is now more concrete:
+- do not make fully shared mutable state the universal default
+- default to isolated account roots plus PM-managed shared overlays
+- overlays should be explicit and provider-qualified rather than accidental by reuse of the same provider home/config root
+- Recommended instruction-sync architecture:
+- PM maintains one canonical instruction source internally
+- PM renders provider-specific outputs: `GEMINI.md`, `CLAUDE.md`, `AGENTS.md`, `.cursor/rules/*.mdc`, and compatible provider config references where needed
+- PM tracks per-provider projection status, write targets, and drift
+- Exact instruction/rules projection contract:
+- PM canonical source remains PM-owned `AGENTS.md` content model; provider-native files are projections, not peers
+- each selectable unit stores an `instruction_projection` record:
+- `canonical_revision`
+- `last_projected_at`
+- `projection_targets[]`
+- `drift_state`: `in_sync`, `pm_outdated`, `provider_modified`, `projection_failed`, `unknown`
+- `projection_targets[]` may include:
+- workspace `AGENTS.md`
+- workspace `CLAUDE.md`
+- workspace `GEMINI.md`
+- workspace `.cursor/rules/pm-generated.mdc`
+- provider/account-local config references where needed
+- projection rules:
+- OpenCode uses `AGENTS.md` as native target
+- Claude uses `CLAUDE.md` as native target
+- Gemini uses `GEMINI.md` as native target unless PM configures `context.fileName` to include `AGENTS.md`
+- Cursor should use `.cursor/rules/*.mdc` as the primary native projection target, with `AGENTS.md` compatibility maintained where useful
+- PM must not assume one file is enough:
+- if a provider/account root needs both provider-native and compatibility files, PM owns both
+- multi-account implication:
+- projected instruction files live in the workspace, but provider/account-local config that points at or augments them is still selectable-unit-local
+- PM must treat provider-native rule/settings files as generated artifacts derived from one canonical instruction model, then report drift if users edit them directly
+- PM should preview effective projected instructions in Agent-Config so users can see what each runtime actually receives
+- Agent-Config instruction GUI requirement is now explicit:
+- show four editable instruction panes in Agent-Config:
+- `AGENTS.md`
+- `CLAUDE.md`
+- `GEMINI.md`
+- `Cursor Rules`
+- pushback / implementation note:
+- official/current Cursor docs direction is:
+- Project Rules (`.cursor/rules/*.mdc`) are the primary native artifact
+- `.cursorrules` is still supported but legacy/deprecated
+- therefore `Cursor Rules` should be the user-facing label, while PM generates `.cursor/rules/*.mdc` first
+- `.cursorrules` should only exist as an optional compatibility projection if PM chooses to maintain it
+- default mode:
+- PM controls all four projections and keeps them semantically synced from one canonical PM instruction source
+- override mode:
+- user can mark any projection target as `PM Controlled` or `Manual Override`
+- manual override breaks semantic sync for that target only and must be shown as drifted/detached in the GUI
+- PM must show:
+- canonical instruction editor
+- per-target rendered preview
+- per-target control state: `controlled`, `manual_override`, `projection_failed`
+- per-target last sync time and drift warning
+- if the user edits a provider-native pane directly in GUI while it is PM-controlled, PM should either:
+- treat it as editing the canonical source and regenerate the others
+- or require the user to flip that pane to `Manual Override`
+- recommendation: require explicit `Manual Override` toggle before allowing provider-specific divergence so the state model stays explainable
+- Recommended PM skills architecture:
+- PM-owned skills remain canonical
+- provider integrations advertise whether PM skills are `native`, `projected`, `partial`, or `unsupported`
+- Gemini CLI and OpenCode should get native/projected skill integration first because they already have usable skill systems
+- providers without a true native skill system should fall back to rules/instruction projection rather than fake parity
+- Recommended Agent-Config information architecture:
+- global defaults section for universal compact threshold, boot-time model refresh, global auto-switch policy defaults, and canonical instruction/skill behavior
+- providers list showing enabled state, runtime type, account count, default model, default effort, refresh health, and usage-fidelity freshness
+- provider detail view with sections for Overview, Defaults, Models, Accounts, Instructions and Skills, and Advanced Runtime
+- always-visible effective runtime panel showing requested vs effective provider, account, auth family, model, effort, threshold, and reason codes
+- Recommended per-provider path ownership:
+- Linux: `$XDG_DATA_HOME/puppet-master/providers/...` or `~/.local/share/puppet-master/providers/...`
+- macOS: `~/Library/Application Support/Puppet Master/providers/...`
+- Windows: `%APPDATA%\\Puppet Master\\providers\\...`
+- Gemini CLI account root should map to `GEMINI_CLI_HOME`
+- Claude Code account root should map to `CLAUDE_CONFIG_DIR`
+- Cursor account root should map to `--user-data-dir`
+- OpenCode can additionally be isolated with `OPENCODE_CONFIG_DIR` if PM ever manages multiple OpenCode config roots/profiles
+- Recommended data model split:
+- `provider_definition`
+- `provider_account`
+- `provider_account_policy`
+- `provider_account_state`
+- `model_catalog_entry`
+- `provider_preferences`
+- `requested_effective_runtime`
+- Recommended account-selection behavior:
+- explicit account if healthy and eligible
+- otherwise provider default account if eligible
+- otherwise auto-switch policy
+- otherwise highest-priority eligible account
+- otherwise provider unavailable
+- Gemini family pooling decision:
+- PM should support an optional `Treat Gemini Direct and Gemini CLI as one multi-account pool` toggle in Agent-Config
+- default should be `off`
+- reason:
+- Gemini Direct and Gemini CLI have different auth families, control surfaces, capability surfaces, media behavior, extension behavior, and telemetry/cooldown semantics
+- when the toggle is `off`:
+- each provider entry has its own account pool and scheduler scope
+- when the toggle is `on`:
+- PM creates a family-level scheduler scope for `gemini`
+- selectable units from both `gemini_direct` and `gemini_cli` can compete in the same pool
+- family-pool guardrails:
+- PM may only auto-select a unit whose effective capabilities satisfy the requested model/media/effort/tooling needs
+- PM must record requested provider entry vs effective provider entry explicitly
+- PM must never silently route a request that depends on Gemini CLI-only features to Gemini Direct, or vice versa
+- GUI implication:
+- Agent-Config should show:
+- `Provider Pooling` or `Family Pooling` section
+- toggle for `Treat Gemini Direct and Gemini CLI as one pool`
+- explanation of what can differ between them
+- default preferred provider inside the Gemini family when pooling is enabled
+- requested/effective disclosure whenever the family pool selects the other Gemini backend
+- Recommended graceful auto-switch behavior:
+- do not switch mid-turn for soft-threshold pressure
+- switch at turn boundaries when threshold policy says a different account is preferable
+- allow failover retry on hard exhaustion/cooldown/unhealthy account during execution
+- always persist stable reason codes such as `soft_threshold_preemptive_switch`, `hard_exhaustion_failover`, `cooldown_active`, `account_unhealthy`, and `model_incompatible`
+- Auto-switch decision inputs should be per account:
+- enabled state
+- priority
+- current usage pressure
+- threshold percent
+- cooldown status and reset ETA
+- auth health
+- allowed roles/scopes
+- graceful-switch support
+- selection reason must be recorded every time.
+- Recommended usage-fidelity classification by backend:
+- Gemini CLI: high for per-run/session stats; potentially very high if PM captures telemetry file/OTLP; quota/cooldown fidelity depends on auth mode
+- OpenCode: high when upstream/provider includes usage; message-level usage/cost already normalized; may still vary by upstream provider
+- Claude Code: mixed; API accounts can be cost/token precise, subscriber accounts may require pattern/stats/cooldown inference
+- Cursor CLI: currently appears lower-confidence for direct token/cost fidelity unless Cursor exposes more through ACP/runtime surfaces; likely needs mixed direct and inferred reporting
+- Nanobanana recommendation:
+- PM installs the extension into each PM-managed Gemini CLI account home during account provisioning or capability enablement
+- PM tracks installed version explicitly
+- PM injects `NANOBANANA_API_KEY` from PM credential storage at launch rather than storing the same secret redundantly in Gemini CLI extension settings
+- PM verifies presence/version/capability during provider health/model-capability refresh
+- Refined nanobanana lifecycle recommendation:
+- if Gemini CLI media is considered baseline MVP behavior, install nanobanana automatically during Gemini CLI account provisioning or repair
+- record extension manifest version per account root
+- surface restart-required state after install/update
+- mark nanobanana media unavailable or partial on OAuth-only Gemini CLI accounts unless a compatible API key is also attached
+- Refined Gemini CLI control recommendation:
+- PM should pass an explicit `--model` per run so Gemini CLI's model precedence resolves to PM's requested model
+- PM should consider disabling `general.plan.modelRouting` in PM-managed Gemini CLI profiles unless PM explicitly wants Gemini CLI's internal plan/execution model split
+- PM must capture and surface any Gemini CLI effective-model changes caused by internal routing/fallback when they still occur
+- Effort-level recommendation:
+- no provider-wide hardcoded effort assumptions
+- store provider/backend/model-specific allowed values
+- if unknown, UI shows unknown/undiscovered rather than pretending unsupported
+- direct Gemini and Gemini CLI may expose different effort controls even for related vendor models, so GUI and runtime both need provider-backend-qualified capability records
+- OpenCode server/account recommendation:
+- treat the primary PM-managed unit as an OpenCode server profile or config profile, not a fake upstream provider account
+- discover provider list, auth methods, connected providers, and model catalog from the server
+- expose upstream provider identity in labels/selectors without pretending PM directly owns those upstream credentials
+- if PM needs multiple OpenCode identities, prefer multiple server/config profiles or endpoints over fake per-upstream-account switching
+- OpenCode-specific GUI recommendation:
+- Agent-Config should show OpenCode server profiles first, then discovered connected providers/models beneath each profile
+- if a profile is disconnected or unhealthy, PM should preserve last-known discovered models/providers with stale-state labeling rather than blanking the provider entirely
+- PM should surface which capabilities come from OpenCode discovery versus PM-local overrides
+- Refined OpenCode wording/UX recommendation:
+- use `Server Profiles` as the primary OpenCode abstraction in Agent-Config
+- label upstream auth state as `Connected in OpenCode`, not as PM-owned accounts
+- OpenCode should support two connection modes in PM:
+- `Managed Server` where PM launches `opencode serve` and owns process lifecycle/health
+- `Attach to Existing Server` where PM connects to an already running endpoint
+- even in `Managed Server` mode, execution transport remains HTTP/SSE rather than CLI-bridged runtime transport
+- user-facing OpenCode setup should treat the server as external software that PM can launch/manage, not as an in-process PM-native runtime
+- Refined switching/state recommendation:
+- separate selectable-unit health state, usage pressure state, and per-attempt resolution outcome state
+- this should be reflected consistently in Agent-Config, Usage, diagnostics, and requested/effective inspectors
+- Graceful fallback recommendation:
+- never change account/profile identity inside a running attempt
+- allow a new attempt for the same user message when retry/failover policy permits
+- this preserves clear ownership while still delivering graceful auto-switch behavior to the user
+- Recommended reason-code families:
+- selection (`manual_pin`, `provider_default`, `preferred_account_retained`, `highest_priority_eligible`, `lowest_pressure_eligible`, `auth_surface_match`, `server_profile_default`)
+- preemptive switch (`soft_threshold_preemptive_switch`, `cooldown_active`, `account_unhealthy`, `profile_unhealthy`, `credentials_expired`, `needs_configuration`, `provider_disconnected`)
+- in-run failover (`hard_exhaustion_failover`, `rate_limit_failover`, `auth_failure_failover`, `provider_outage_failover`, `transport_failure_failover`)
+- clamp/substitution (`model_unavailable`, `model_routed_by_provider`, `effort_unsupported`, `effort_clamped`, `capability_unknown`, `instruction_projection_partial`, `skill_projection_partial`)
+- blocked (`no_eligible_account`, `no_eligible_profile`, `policy_forbids_fallback`, `hard_constraint_forbids_fallback`, `provider_unavailable`)
+- recovery (`cooldown_expired`, `health_recovered`, `credentials_revalidated`, `provider_reconnected`)
+- Model-label normalization recommendation:
+- keep raw IDs exact for runtime/API use
+- keep normalized internal keys stable and collision-safe
+- cleaned GUI labels should be cosmetic only; do not destructively strip hyphens from canonical IDs
+
+## Impacted Docs
+- `Plans/CLI_Bridged_Providers.md`
+- `Plans/Multi-Account.md`
+- `Plans/Media_Generation_and_Capabilities.md`
+- `Plans/Models_System.md`
+- `Plans/usage-feature.md`
+- `Plans/FinalGUISpec.md`
+- `Plans/rewrite-tie-in-memo.md`
+- Likely additional downstream impact on any provider-health / auth / doctor-related planning docs once targeted reading expands.
+- `Plans/assistant-chat-design.md` and related context/compaction shards if Xeditor-inspired incremental summarization is adopted.
+- Any provider-specific doc for Cursor / Claude / OpenCode / Gemini once provider surfaces are re-specified.
+- `Plans/Provider_OpenCode.md` needs alignment with the clarified aggregator role and boot-refresh/status-bar behavior.
+- `Plans/assistant-chat-design.md` and `Plans/FinalGUISpec.md` need effort-control updates because current Gemini/Cursor assumptions are stale.
+
+## Decisions Already Resolved
+- Mode for this work item is `research`.
+- Work item status starts as `active`.
+- Topic framing includes both provider support and multi-account support.
+- Research will use targeted repo reading plus targeted current web research where platform/provider behavior may have changed.
+- Cursor ACP support is now treated as current reality, not an unsupported future assumption.
+- `xeditor-monorepo` is not currently considered a likely direct implementation dependency; at most it is UX inspiration.
+- User intent is now explicit:
+- Gemini Direct stays as a provider surface, but direct Gemini auth is API-key only.
+- Gemini CLI should be added and should support ACP.
+- multi-account research must cover Gemini CLI, Cursor, and Claude Code.
+- Working assumption for multi-account feasibility:
+- Gemini CLI will require isolated `GEMINI_CLI_HOME` roots.
+- Claude Code will require isolated `CLAUDE_CONFIG_DIR` roots.
+- Cursor will require isolated `--user-data-dir` roots.
+- OpenCode remains in scope as a real PM provider, not only as a reference implementation.
+- Direct Gemini is API-key only by policy/constraint, while Gemini CLI may still expose OAuth and API-backed accounts.
+- Automatic model refresh on app boot is now part of the intended direction; explicit manual refresh remains needed too.
+- Shared mutable state will not be the universal default; the working recommendation is isolated account roots plus PM-managed shared overlays.
+- PM must own provider-aware instruction/rules projection and sync rather than assuming one native file format across runtimes.
+- Current Cursor direction should target `.cursor/rules` plus root-level compatibility files, not rely on deprecated `.cursorrules` as the main path.
+- Cursor docs direction is now treated as explicit:
+- `.cursor/rules/*.mdc` is the primary/native rules path
+- `.cursorrules` is still supported as a legacy format, but PM should not use it as the primary managed artifact
+- Agent-Config is the intended primary configuration surface for providers, accounts, models, effort, auto-switching, instructions, and skills.
+- Separate user-visible provider entries are acceptable where runtime/auth/control differences are meaningful, even if PM keeps an internal shared vendor/family layer.
+- OpenCode should be treated primarily as a server-bridged provider with discovered auth/provider state rather than a local CLI-home provider like Gemini CLI/Cursor/Claude.
+- Nanobanana-backed media support depends on API-key availability even when Gemini CLI login itself is OAuth-capable.
+- Existing `Plans/Provider_OpenCode.md` is directionally correct about HTTP/SSE transport, but likely needs expansion from one connection record to one-or-many OpenCode server/config profiles.
+- Gemini capability modeling must distinguish:
+- `Gemini Direct` API-key direct calls
+- `Gemini CLI` with OAuth user auth
+- `Gemini CLI` with Gemini API key auth
+- `Gemini CLI` with Vertex ADC/service-account/API-key auth
+- the same user-visible vendor does not imply the same media, telemetry, or routing behavior
+- OpenCode should use `Server Profiles` as the primary Agent-Config abstraction instead of reusing normal multi-account account terminology.
+- Multi-account/switching design should explicitly separate health state, pressure state, and resolution outcome state.
+- Graceful auto-switch should occur only by creating a new attempt boundary, never by mutating identity inside a running attempt.
+- Naming-safety recommendation:
+- do not globally rename cross-provider `account` terminology yet
+- instead add `connection profile` / `server profile` as additive runtime identity fields
+- OpenCode UI may use `Server Profiles`, while cross-provider requested/effective runtime records keep `account` plus additional connection-profile fields where applicable
+- Overlay sharing should be bounded and typed, not open-ended shared mutable state
+- PM-managed overlays are the preferred mechanism for safe sharing; provider-native homes/config roots must not be broadly shared by default
+
+## Open Questions / Uncertainties
+- Hard readiness reassessment:
+- this work item is still **not implementation-ready**
+- the remaining gaps are now concrete blocker classes rather than vague uncertainty
+- blocker class: provider-specific auth/setup flows are still under-specified in GUI and state-transition detail
+- Gemini CLI:
+- exact first-run bootstrap/import UX per auth family is not pinned
+- exact Google OAuth flow ownership between PM and Gemini CLI browser/device flow is not pinned
+- exact Vertex ADC/service-account setup and validation UX is not pinned
+- exact failure/recovery states for bad/expired/missing per-auth-family setup are not yet fully enumerated
+- Cursor CLI:
+- exact PM launch/wrapper contract for account isolation is still not fully pinned against `cursor-agent` vs `cursor`
+- exact login/import/bootstrap UX for multiple Cursor accounts is not pinned
+- exact trust/bootstrap prompts and how PM surfaces or replays them are not pinned
+- Claude Code:
+- exact subscriber-vs-API account differences in setup, usage, and cooldown UX are still not fully pinned
+- emerging setup-flow requirement:
+- PM likely needs three bootstrap modes per provider where supported:
+- `Fresh Login`
+- `Import Existing Auth`
+- `Environment/API-Key Setup`
+- but the exact provider-by-provider availability matrix and resulting GUI/state transitions are not yet locked
+- blocker class: usage/cooldown semantics are still not fully normalized provider by provider
+- per-provider window types, reset semantics, hard vs soft cooldowns, and source-confidence labeling still need a full locked matrix
+- account switching thresholds are conceptually clear, but exact trigger rules and provider-specific fallback behavior are not fully tabulated
+- blocker class: skill projection/support is still under-specified
+- user asserted Codex, Copilot, Cursor, Claude, Gemini CLI, and OpenCode all support skills natively, but PM-side projection rules, packaging shape, and failure behavior are not yet locked provider by provider
+- exact native vs projected vs partial behavior still needs a final provider matrix
+- blocker class: instruction projection behavior is still missing file-level operational detail
+- exact write targets, conflict resolution, drift detection cadence, and restore behavior are not fully specified per provider/runtime
+- exact handling when a user manually edits provider-native files while PM control is enabled still needs a hard rule beyond generic drift-state language
+- blocker class: OpenCode is still not fully operationally specified
+- managed-server lifecycle is not fully pinned:
+- launch command/env
+- startup health timeout
+- credential bootstrap
+- reconnect behavior
+- multi-server profile behavior
+- upstream provider/account discovery refresh cadence
+- blocker class: model discovery/capability normalization is still not fully locked
+- exact normalization rules for duplicate model availability across multiple runtime platforms are still open
+- exact cleaned-label rules and collision handling are still not fully specified
+- exact effort-value discovery/normalization per provider/model still needs a final contract
+- blocker class: Agent-Config interaction design is still missing decisive operational flows
+- exact add account/import account/login/bootstrap flows per provider
+- exact manual pin / preferred account / priority reorder behavior
+- exact cooldown editing or override UX
+- exact requested/effective inspector placement and per-run visibility rules
+- blocker class: storage/event impact still needs one more pass
+- additive runtime fields are mostly identified, but not yet frozen against all affected docs and record types
+- exact placement of deep diagnostic IDs like `selectable_unit_id` remains unresolved
+- blocker class: cross-platform filesystem/path contract is still not fully written
+- root-directory layout strategy across Linux/macOS/Windows is directionally known but not yet pinned into implementation-ready path formulas, naming, migration/import rules, backup/cleanup rules, and collision handling
+- blocker class: provider capability/control parity is still incomplete
+- Codex and GitHub Copilot were intentionally deprioritized earlier; they still need the same implementation-ready matrix pass as the other providers
+- Gemini media capability updates still need the final merged contract across:
+- Gemini Direct API-only
+- Gemini CLI OAuth/API/Vertex auth families
+- nanobanana installation, versioning, health, and capability disclosure
+- Reconciliation readiness was reassessed:
+- current research is sufficient to identify major rewrites and contradictions, but not yet sufficient for a clean implementation-ready reconciliation pass
+- more detail is still needed before handoff, especially in provider-specific control/usage/GUI contracts
+- Multi-account GUI precedence is now effectively a layered model:
+- provider/family defaults in Agent-Config
+- optional agent/session override
+- run snapshot
+- effective scheduler resolution
+- Remaining uncertainty is detailed widget layout, not the precedence shape
+- Agent-Config information architecture is mostly resolved; remaining uncertainty is exact layout/interaction polish and not ownership of the controls
+- Remaining Agent-Config uncertainty is now mostly interaction detail:
+- whether `Instructions` is a top-level tab or a major section within Agent-Config
+- how to visually distinguish `Server Profiles` from normal account-based selectable units without inventing a different runtime ontology
+- how much inline usage/cooldown detail belongs in the account list vs a secondary inspector pane
+- Overlay-policy design must respect orchestrator ownership:
+- PM can project instructions and skills into provider-native locations, but provider-native files/directories cannot become the canonical runtime contract
+- requested/effective runtime state shown in Agent-Config must align with the same requested/effective fields already required by Prompt Pipeline and orchestrator docs
+- Remaining major uncertainty after the platform-mapping pass:
+- whether canon should rename `provider_id` inside model IDs for Gemini/OpenCode-era multi-platform availability, or keep `provider_id/model_id` and add an explicit runtime-platform field beside it
+- current recommendation is additive fields, not a breaking rename
+- Runtime-record additive-field recommendation:
+- keep the existing Prompt Pipeline effective-resolution record as canonical base
+- extend it with additive fields rather than renaming/removing existing ones
+- Contracts-vocabulary-safe naming recommendation:
+- prefer existing canonical terms where possible:
+- `platform` stays canonical for the runtime execution surface
+- `provider_identity` stays canonical for upstream/provider-native identity disclosure
+- `auth_surface` remains the account/provider auth-state term
+- new richer fields should avoid renaming these
+- recommended additive names that fit the current vocabulary:
+- keep `provider_family_id` as additive
+- prefer `transport_class` or reuse canonical `ProviderTransport` values instead of inventing unrelated transport labels in persisted records
+- prefer `connection_profile_id` for OpenCode/server-bridge additions
+- prefer `selectable_unit_id` only as an additive scheduler/debug field, not a user-facing replacement for `account_id`
+- avoid introducing a second canonical field named `provider` that collides with `AuthState.provider`
+- keep `effective_provider_identity` for upstream vendor/account disclosure and avoid overloading it with runtime-platform semantics
+- recommended additive requested/effective runtime fields:
+- `requested_provider_family_id?`
+- `effective_provider_family_id?`
+- `requested_transport_kind?`
+- `effective_transport_kind?`
+- `requested_connection_profile_id?`
+- `effective_connection_profile_id?`
+- `requested_selectable_unit_id?`
+- `effective_selectable_unit_id?`
+- `requested_pool_scope?`
+- `effective_pool_scope?`
+- `requested_compact_threshold?`
+- `effective_compact_threshold?`
+- `requested_effort?`
+- `effective_effort?`
+- `effective_resolution_outcome?`
+- `resolved_capability_deltas[]`
+- `effective_health_state?`
+- `effective_pressure_state?`
+- `instruction_projection_state?`
+- `skill_projection_state?`
+- `provider_usage_source_kind?`
+- `provider_signal_confidence?`
+- model identity additions:
+- `requested_model_provider_id?`
+- `effective_model_provider_id?`
+- `requested_runtime_platform_id?`
+- `effective_runtime_platform_id?`
+- rationale:
+- current canonical fields like `requested_platform`, `effective_platform`, `requested_model`, `effective_model`, `requested_auth_mode`, `effective_auth_mode`, `effective_account_id`, and `effective_provider_identity` should remain
+- additive fields carry the richer distinctions needed for:
+- Gemini Direct vs Gemini CLI
+- OpenCode runtime platform vs upstream provider namespace
+- provider-family pooling
+- selectable-unit resolution
+- compact-threshold/effort clamping visibility
+- usage/health cross-surface consistency
+- recommended field ownership by surface:
+- Prompt Pipeline / runtime snapshot owns the frozen requested/effective values
+- storage-plan persists them in runtime snapshot refs and usage records where relevant
+- Usage consumes `effective_*` fields plus usage-source-confidence fields
+- Agent-Config and Health may show live current values, but must not rename the frozen schema
+- recommended state-summary fields for cross-surface reuse:
+- `effective_health_state`
+- `effective_pressure_state`
+- `effective_resolution_outcome`
+- these should align with the scheduler vocabulary rather than each surface inventing local phrasing
+- usage-record extension recommendation:
+- current `usage_record` fields are close, but should probably gain:
+- `effective_provider_family_id?`
+- `effective_transport_kind?`
+- `effective_connection_profile_id?`
+- `effective_runtime_platform_id?`
+- `effective_model_provider_id?`
+- `effective_selectable_unit_id?`
+- `provider_usage_source_kind?`
+- `provider_signal_confidence?`
+- pushback:
+- do not try to cram live overlay policy or full projection details into every runtime snapshot
+- snapshots should freeze only the effective projection state/result, not the full editable overlay policy object
+- Canonical-vs-internal field split recommendation:
+- **Promote to canonical persisted requested/effective snapshot fields** when they explain user-visible execution identity or a requested/effective delta:
+- `requested_provider_family_id?`
+- `effective_provider_family_id?`
+- `requested_connection_profile_id?`
+- `effective_connection_profile_id?`
+- `requested_pool_scope?`
+- `effective_pool_scope?`
+- `requested_compact_threshold?`
+- `effective_compact_threshold?`
+- `requested_effort?`
+- `effective_effort?`
+- `effective_resolution_outcome?`
+- `resolved_capability_deltas[]`
+- `effective_health_state?`
+- `effective_pressure_state?`
+- `instruction_projection_state?`
+- `skill_projection_state?`
+- `requested_model_provider_id?`
+- `effective_model_provider_id?`
+- `requested_runtime_platform_id?`
+- `effective_runtime_platform_id?`
+- **Keep internal/provider-registry/scheduler-only by default** unless a later doc proves they must be audit-visible:
+- full `overlay_policy` object
+- `share_classes[]` / `deny_classes[]`
+- `projection_mode`
+- `conflict_policy`
+- `drift_detection`
+- `provider_entry_id` as a replacement for canonical `platform`
+- full `selectable_unit` record
+- `root_path`
+- `last_usage_snapshot`
+- `last_cooldown_snapshot`
+- provider-registry-only discovery timestamps/status caches
+- per-account shared-overlay advanced knobs
+- rationale for the split:
+- canonical snapshots should answer "what did the user ask for, what actually ran, and why was it different?"
+- internal/provider-registry state should answer "how did PM decide that and what can it do next time?"
+- special case recommendation:
+- `effective_selectable_unit_id?` is borderline; it is useful for deep diagnostics but probably too internal for the base canonical snapshot
+- better default is:
+- keep it out of the base `EventRecord`
+- allow it in deeper attempt/debug records or diagnostic payloads if needed
+- usage-record split recommendation:
+- canonical `usage_record` should only add fields that materially affect attribution, rollups, or cross-surface clarity:
+- `effective_provider_family_id?`
+- `effective_connection_profile_id?`
+- `effective_runtime_platform_id?`
+- `effective_model_provider_id?`
+- `provider_usage_source_kind?`
+- `provider_signal_confidence?`
+- avoid adding scheduler-internal IDs to `usage_record` unless a concrete reporting need appears
+- Contracts-vocabulary-safe pushback:
+- do not replace `requested_platform` / `effective_platform` with `provider_entry_id` in canonical persisted contracts
+- do not replace `auth_surface` / `requested_auth_mode` with backend-specific jargon
+- do not replace `account_id` with `selectable_unit_id` in user-facing or persisted canonical auth/routing fields
+- Gemini direct and Gemini CLI are now resolved as:
+- separate user-visible provider entries by default
+- optionally pooled at the Gemini family level if the user enables that in Agent-Config
+- How much PM can reliably control each CLI provider:
+- model selection
+- prompt/context injection
+- session resume
+- subagents
+- hook configuration
+- usage capture
+- What equivalent usage/telemetry capture is possible today for Cursor CLI, Claude Code CLI, and OpenCode.
+- Whether Alibaba / MiniMax / Z.AI should be direct-provider implementations in PM's own stack or normalized through a shared provider catalog contract.
+- Exact cross-platform directory scheme PM should own for CLI account homes and logs.
+- Whether model display-name cleanup should be purely cosmetic or also influence internal normalization/search/sorting.
+- For Gemini CLI, should PM expose Google-login accounts at all, or deliberately constrain Gemini CLI to API-key / Vertex-style accounts for consistency and reduced complexity?
+- For Cursor, what exact executable contract does PM control in desktop vs CLI-launch scenarios when using `--user-data-dir`, and how does that interact with ACP?
+- For Claude Code, which parts of profile state should PM share across accounts versus keep isolated by default?
+- For Gemini CLI, should PM share extensions/hooks/MCP definitions across account roots or keep every account fully isolated?
+- Whether PM should let users opt into additional shared overlays per provider/account, or keep sharing limited to a small fixed safe set.
+- Whether PM should support both account-root creation modes:
+- login/setup from scratch inside a fresh PM-owned root
+- import of a narrow auth-bearing seed into a PM-owned root
+- current local evidence says both are feasible for Cursor/Claude/Codex and probably Gemini, but PM still needs a user-facing policy
+- Exact Agent-Config state schema is still missing from canon even though the ownership and major sections are now mostly resolved
+- Exact mapping from the new `provider_entry` / `provider_family` concepts back onto orchestrator-owned `requested_platform` / `effective_platform` fields is still unresolved and must be nailed down before reconciliation to avoid parallel ontologies
+- Exact per-provider GUI exposure for advanced overlay classes is still open:
+- whether users see only recommended classes
+- or a more advanced expert-only matrix of overlay classes per provider/profile
+- Exact additive-field set still needs one last reconciliation pass against `Plans/Contracts_V0.md` so names align with the shared contract vocabulary before doc rewrites begin
+- The `Contracts_V0.md` pass reduced naming uncertainty materially:
+- canonical vocabulary should remain `platform`, `provider_identity`, `auth_surface`, `account_id`, and `requested/effective` runtime fields
+- remaining uncertainty is mostly which additive fields belong in canonical persisted snapshots versus staying provider-registry/internal-only
+- The canonical-vs-internal split is now mostly resolved:
+- audit-visible requested/effective identity and clamping/switching outcomes belong in canonical snapshots
+- scheduler mechanics, overlay configuration internals, and provider-home details stay internal unless a concrete audit/debug use case requires persistence
+- Whether PM should implement an xeditor-like summarize-stale-tool-results layer before normal compaction, or whether that is unnecessary complexity for MVP.
+- Exact account-level cooldown schema:
+- rolling window vs fixed reset
+- hard cooldown vs soft pressure
+- provider-native vs inferred
+- per-account override rules
+- How PM should represent OpenCode-backed upstream providers in the GUI:
+- single OpenCode provider with grouped upstream models/accounts
+- or partially expose upstream provider identity in selectors and usage panes
+- Whether boot-time model refresh should also refresh per-model capability metadata and effort enums, or whether some backends require a separate capability pass.
+- Exact OpenCode multi-account story in PM:
+- multiple OpenCode server/config profiles
+- one server with discovered connected providers only
+- or both, with clear user-visible distinctions
+- Whether PM should allow launching OpenCode with PM-selected `OPENCODE_CONFIG_DIR` in addition to connecting to externally managed server endpoints.
+- Exact OpenCode MVP scope:
+- connect-to-running-server only
+- or include PM-managed launch/config-profile UX immediately
+- Exact requested/effective precedence when one provider family may expose different selectable-unit types (for example server profiles for OpenCode vs accounts for other providers).
+- Exact PM policy for Gemini CLI internal routing:
+- force-disable where possible
+- tolerate but observe
+- or let Gemini CLI route silently and record effective model changes
+- Exact policy for nanobanana installation lifecycle:
+- install automatically on Gemini CLI enable
+- install only when media capability is enabled
+- update automatically or pin a known-good version
+- how PM attaches an API key for nanobanana when the Gemini CLI account itself uses OAuth or Vertex-style auth
+- Direct-provider research still missing before reconciliation can be implementation-ready:
+- official primary-source auth/usage/quota docs for Alibaba direct
+- official primary-source auth/usage/quota docs for MiniMax direct
+- official primary-source auth/usage/quota docs for Z.AI direct
+- exact PM skill-projection strategy for Cursor CLI and Claude Code where there is no direct SKILL.md-native parity with Gemini CLI/OpenCode
+
+## Packetization Notes
+- Packetization should wait until targeted research, terminology, flows, constraints, and impacted docs are captured.
+- Preserve exact terminology decisions once established, especially around provider, account, profile, tenant, and active/effective selection.
+- Packetization should preserve the contradiction set explicitly; downstream reconciliation will need to rewrite or split existing canon rather than layering new rules on top.
+- Evidence to carry forward:
+- Cursor ACP is current and materially changes the design
+- Gemini CLI supports ACP, hooks, subagents, telemetry, and isolated home-rooting
+- OpenCode pattern suggests separation of catalog/auth/transform/runtime concerns
+- Clausona provides a practical multi-account precedent for CLI-backed account isolation with shared-vs-isolated resource splitting.
+- Cursor forum guidance provides a practical precedent for user-data-dir based profile isolation.
+- Xeditor context compression is a tool-result summarization protocol, not a complete replacement for PM's compaction design.
+- OpenCode is both a supported PM provider and a provider-aggregation escape hatch; preserve that distinction explicitly.
+- Google OAuth/native-app docs indicate the direct-Gemini OAuth removal is likely a PM-specific policy/compliance constraint rather than a protocol removal.
+- Nanobanana can likely reuse PM-owned Gemini API credentials via launch-time env injection instead of duplicating secrets into Gemini CLI extension-managed storage.
+
+## Do-Not-Forget Details
+- Track rules, defaults, flows, contracts, state, data model, UI behavior, constraints, non-goals, acceptance criteria, and fallback behavior as they emerge.
+- Track provider/platform capability differences explicitly.
+- Track unresolved contradictions instead of smoothing them over.
+- Update this ledger after meaningful discovery clusters or decisions.
+- Keep pathing and account-isolation concrete for Linux/macOS/Windows; do not hand-wave filesystem ownership for CLI-backed providers.
+- Track both requested state and effective state for provider family, backend, account, auth mode, model, and compact threshold when relevant.
+- Track the exact reason-code set for account selection, failover, cooldown, and capability clamping so UI and logs stay consistent.
+- Track user-visible refresh/reload behavior for provider models and capability discovery.
+- Track whether shared assets (settings, plugins, MCP configs, extensions, hooks) are isolated, shared by symlink/copy/reference, or PM-managed centrally for each CLI-backed provider.
+- Track the provider-specific instruction projections explicitly:
+- Gemini CLI `GEMINI.md` and/or `context.fileName` overrides
+- Claude Code `CLAUDE.md`
+- Cursor `.cursor/rules/*.mdc`, `AGENTS.md`, and compatibility inputs
+- OpenCode `AGENTS.md` plus optional compatibility fallbacks/config instructions
+- Track PM skill projection status separately from instruction sync; they are related but not identical.
+- Track provider-native defaults that PM intentionally overrides, especially compaction/compression thresholds.
+- Track dynamic model/backend capability freshness and failure-to-refresh disclosure in the GUI.
+- Track OpenCode's dual role carefully: supported provider transport vs upstream-provider aggregation path.
+- Track auth-family-dependent capability differences, especially Gemini CLI media via nanobanana.
+- Track Gemini CLI internal routing separately from PM's own model/account failover so effective-state reasoning stays explainable.
+- Track the difference between raw model IDs, normalized internal keys, and cleaned GUI labels; never collapse them into one field.
+- Track the three state dimensions explicitly:
+- selectable-unit health state
+- usage pressure state
+- per-attempt resolution outcome state
+- Track the OpenCode wording contract carefully so the GUI never calls server-discovered upstream identities `PM accounts`.
+- Track provider-matrix confidence explicitly so downstream reconciliation does not accidentally treat partially researched direct providers as fully pinned.
+- Track additive naming carefully:
+- `account` remains in the cross-provider requested/effective vocabulary for now
+- `connection profile` / `server profile` is added where needed instead of replacing `account` everywhere
+- Track the Cursor runtime distinction explicitly:
+- `cursor` may be an editor/remote CLI surface
+- `cursor-agent` / `agent` may be the real PM integration surface
+- multi-account isolation may require a wrapper strategy around that runtime rather than a direct agent flag
+- Track the stronger local telemetry evidence:
+- Cursor emits structured token usage and session/request IDs in headless JSON mode
+- Claude emits structured token usage, modelUsage, and total cost in headless JSON mode
+- Gemini emits structured per-model stats including thought tokens and tool/file activity totals
+- Track reusable load-balancing heuristics separately from proxy-specific implementation details:
+- sticky session/account selection
+- threshold-based preemptive switching
+- separate cooldown reasons per account
+- recovery checks back to preferred/primary account
+- reason-coded failover instead of silent account rotation
+- Track the Cursor isolation result precisely:
+- fresh `HOME` isolates the agent account
+- fresh `XDG_*` roots also isolate the agent account
+- `CURSOR_USER_DATA_DIR` alone did not isolate the agent account in local probing
+- Track Gemini bootstrap quirk on fresh homes so PM initialization does not mistake it for a fatal unsupported state
+- Track OpenCode upstream direction:
+- OAuth pools with active/order/health per provider namespace
+- rotating fetch with cooldowns and relogin
+- provider-auth usage/set-active/delete/update routes
+- this lowers the risk that PM's multi-account direction diverges from the surrounding ecosystem
+- Track Codex specifics:
+- `CODEX_HOME` is a viable account sandbox primitive
+- `codex exec --json` provides structured event output
+- local Codex installs may have state-db/keyring quirks that PM should surface as health issues rather than assuming clean startup
+- Track sandbox/bootstrap asymmetry explicitly:
+- Cursor, Claude, and Codex all worked with narrow auth-seed bootstraps into fresh PM-owned roots
+- Gemini also worked with a narrower auth/settings core than expected, but its home remains much more state-heavy and coupled
+- Track account-local trust state:
+- fresh Cursor profiles require workspace trust again
+- PM must not assume one trusted account implies trust for another account profile
+- Track coding-plan reset semantics per provider/account, not just a generic cooldown bit:
+- Alibaba Coding Plan has 5-hour + weekly + monthly reset windows
+- MiniMax Coding Plan exposes dedicated remains/quota state with 5-hour resets
+- Z.AI Coding Plan uses plan-specific quota behavior and may vary by plan generation
