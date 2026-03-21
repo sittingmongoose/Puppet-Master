@@ -542,6 +542,1670 @@
   - Strongest repeated robustness lesson:
     - the places competitors still fall apart are not the demo seams; they are save/recovery, external-change handling, drag/drop, file explorer correctness, indexing churn, diff fidelity, remote/bootstrap, path normalization, runtime auth/polling, and cross-surface state coherence
   - This work item is now ready for reconciliation with a materially stronger implementation basis than before the fleet.
+- Seam walkthrough restart note (2026-03-20):
+  - Research mode resumed from reconciliation-ready state because the user wants to **work through all seams explicitly** rather than stopping at synthesis.
+  - A fresh seam queue is now tracked in session SQL:
+    - `seam-shell-identity-routing` (in progress)
+    - `seam-editor-core`
+    - `seam-diff-review-source-control`
+    - `seam-file-manager`
+    - `seam-search`
+    - `seam-preview-browser`
+    - `seam-lsp-indexing-autodetect`
+    - `seam-ssh-remote`
+    - `seam-terminal-runtime-environment`
+    - `seam-cross-cutting`
+    - `seam-reconciliation-synthesis`
+  - Working order is dependency-driven rather than cosmetic:
+    - start with shell/identity/routing because open/reveal/reuse/ownership rules constrain nearly every later seam
+    - then lock editor mutation truth, diff/review ownership, file-manager operations, search, preview, LSP/indexing, remote, terminal/runtime, and finally cross-cutting system rules
+  - Goal for this pass is not more broad benchmark collection; it is to turn the existing research into seam-by-seam implementation-ready PM decisions and reconciliation guidance.
+- Shell / identity / routing seam working note (2026-03-20):
+  - The existing primitives are basically correct; this seam does **not** need a brand-new abstraction.
+  - Canonical split to preserve:
+    - `route_target` = navigation/focus/destination-surface contract
+    - `OpenFile` = path-based source realization for stable workspace documents
+    - `OpenSubject` = identity-native source realization for generated/artifact-backed subjects
+  - Hard interpretation for reconciliation:
+    - shell destination and focus are always owned by `route_target`
+    - source realization always happens through `OpenFile` or `OpenSubject`
+    - browser-session, terminal-session, and dev-session reveals normalize through `route_target`; they must not overload `OpenSubject`
+    - `resume_url` remains transport only and must never become a parallel stronger route primitive
+  - Reuse / duplicate rules that should be treated as canonical:
+    - if the requested object is already revealed cleanly in the requested surface/scope, reuse the existing realization
+    - if remembered shell state would hide or misplace the requested object, `route_target` overrides remembered state
+    - repeated opens for the same generated/thread-backed subject reuse the same tab identity instead of creating duplicate tabs
+    - real workspace documents still follow one-tab-per-path-per-group and shared-buffer semantics
+    - explicit multi-group opens are allowed, but they should be deliberate via target/open disposition rather than accidental duplication
+  - Search/open normalization direction:
+    - all search/open entry points must end in the same route/open pipeline
+    - universal search, quick open, left search results, file-tree selection, file-manager search, symbol search, settings search, chat links, artifact/context pivots, and wizard/object links should not own bespoke open behavior
+    - settings/object/navigation results should normalize to `route_target`
+    - real workspace source results should normalize to `route_target` + `OpenFile`
+    - generated/artifact-backed source results should normalize to `route_target` + `OpenSubject`
+  - State ownership direction:
+    - `project_id` stays mandatory for route/open identity
+    - docked/floating state, widths, local panel layout, and other shell-realization details remain shell state rather than route identity
+    - per-project shell/editor/tree/session state should restore on project switch; global shell state should stay limited to app-wide preferences/chrome rather than document/resource identity
+  - Biggest remaining doc gap for this seam:
+    - the plans still need a more explicit **open disposition / reuse policy** so "reuse vs split vs detach vs reveal-only" cannot drift independently across quick open, search results, chat actions, file-tree actions, and artifact/context opens
+- Editor core seam working note (2026-03-20):
+  - Current docs already have many of the right local rules (explicit save failure, combined dirty+on-disk-change prompt, shared-buffer semantics, backend-owned revert/history, read-only reasons, large-file thresholds), but they still need a stricter **mutation and recovery authority model**.
+  - Canonical direction:
+    - there is one shared buffer authority per source document/path identity
+    - all text mutation sources must route into that same authority:
+      - user typing/paste/delete
+      - preview-generated bounded text patches
+      - FileSafe/LSP apply-edit paths
+      - backend restore/revert/history actions
+      - agent write-stream updates when a file is being generated
+    - the editor surface does not own independent restore points, alternate dirty branches, or bypass save paths
+  - Required reconciliation decision:
+    - **unsaved-content recovery is required, not optional**
+    - `FileManager.md` already treats recover-unsaved on crash/quit as required
+    - `storage-plan.md` still contains optional/later wording for unsaved buffer recovery
+    - this contradiction must be resolved in favor of required recovery with canonical ownership in storage/persistence docs
+  - State-model direction:
+    - model editor/buffer state as stable facets, not one overloaded ad hoc status string
+    - the core needs explicit orthogonal facts for at least:
+      - dirty vs clean
+      - read-only reason
+      - write-lock reason (e.g. agent writing)
+      - on-disk divergence / stale-disk detection
+      - degraded mode (binary / undecodable / too large / truncated)
+      - transient open/save/reload failure states
+    - this matters because combinations like dirty + changed-on-disk are already canonical in the docs and should not be forced through one flat state enum
+  - Save / revert / recovery direction:
+    - save remains explicit in MVP
+    - save success updates last-saved revision and clears dirty with visible confirmation
+    - save failure leaves dirty intact and must surface retry / save-as / reason explicitly
+    - revert/recovery/history stay backend-owned and push refresh notifications (`BufferReverted(path)` style) back into the shared buffer model
+    - `Save As` can no longer stay optional/vague if save failure paths are allowed to offer it; it needs a canonical contract
+  - Undo / redo direction:
+    - per-buffer undo/redo remains canonical for local text mutations
+    - shared-buffer multi-group semantics remain canonical (same buffer, same dirty state, per-view cursor/scroll)
+    - preview-applied text patches and single-file FileSafe/LSP apply-edit operations should land as one coherent undo step in the current buffer history when they mutate the open file in place
+    - multi-file rename/apply-edit/conflict actions should not pretend to be ordinary single-buffer undo; they belong to the broader diff/review/FileSafe transaction model
+  - Large-file / binary / encoding direction:
+    - keep the current requested-vs-effective mode split explicit:
+      - normal editable
+      - truncated read-only with optional load-full action
+      - blocked too-large
+      - binary read-only
+      - decode-failed read-only
+      - disk read-only
+    - read-only/degraded reasons must remain user-visible and stable
+  - Input correctness direction:
+    - accessibility / IME / selection / caret / clipboard behavior cannot remain implicit implementation detail
+    - browser/editor-wrapper research reinforced that cursor drift, IME handling, paste behavior, and selection fidelity are recurring failure seams
+    - PM should treat these as acceptance-criteria-level editor behavior, not polish
+  - Biggest remaining doc gap for this seam:
+    - the plans still need a more explicit **buffer transaction model** that says how user edits, preview edits, agent writes, FileSafe/LSP edits, restore/revert actions, and recovery replay interact with dirty state, undo grouping, and save authority
+- Diff / review / source-control seam working note (2026-03-20; still active):
+  - The plans are strongest when they keep PM's change surfaces layered rather than blended. Current docs imply the right split, but they do not yet state it crisply enough.
+  - Canonical layered change model emerging from the docs:
+    1. **buffer-local history**
+       - local text edits against one shared source buffer
+       - ordinary per-buffer undo/redo belongs here
+    2. **user-visible restore history**
+       - restore points / document checkpoints / rollback actions / revert-last-agent-edit
+       - explicit confirmation flow, backend-owned restore, buffer refresh after apply
+    3. **git / source-control history**
+       - staged/unstaged/conflicted changes, branch/worktree status, commit/history/graph, git compare/revert/discard/stash flows
+       - Source Control owns git-native actions
+    4. **runtime safe-point recovery**
+       - internal retry/remediation anchors for runs/blocked recovery
+       - MUST stay distinct from user-facing restore points
+  - Terminology and boundary rule that must stay hard:
+    - `safe point` = runtime/internal recovery anchor
+    - `restore point` = user-visible history/rewind anchor
+    - `rollback` = explicit user-confirmed restore flow
+    - these must not collapse into one vague "undo/recovery" concept
+  - Owner split that currently looks correct:
+    - **Chat** owns inline activity cards and compact change/diff previews
+    - **File Editor / compare surfaces** own source-level diff viewing and open/focus for concrete files/subjects
+    - **Source Control** owns git-native repo/worktree actions and status surfaces
+    - **FileSafe** owns mutation safety / blocked / restore-before-rerun enforcement, not the primary diff UX
+  - Chat-specific direction:
+    - operation cards are the correct pattern for `files changed` and `code diffs`
+    - chat should preview and route, not become a second canonical diff tool
+    - primary action from diff/edit cards should open the owner file/diff surface
+    - `revert last agent edit` belongs to restore/rollback history, not to ordinary buffer undo
+  - Editor/diff interaction direction:
+    - preview-generated source patches already correctly flow through shared buffer + dirty state + undo history
+    - single-file in-place mutations may participate in buffer undo history as one coherent step
+    - multi-file apply-edit / rename / repo-wide discard / hunk staging / worktree restore MUST NOT masquerade as ordinary editor undo
+  - Source-control direction:
+    - `Source Control` is already positioned as a compact worktree-first panel and should remain the owner of git-native actions
+    - file/file-manager surfaces may expose `Open in Source Control`, `Open diff`, and `Open compare`, but they must not absorb branch/history/worktree ownership
+  - Biggest current spec gaps for this seam:
+    - no explicit canonical **compare/diff identity contract** for routing and reuse across chat, file surfaces, and Source Control
+    - hunk-level action model remains underspecified (`stage`, `unstage`, `discard`, `apply`, `expand/collapse`, conflict actions)
+    - grouped undo/redo rules for diff-driven mutations are underspecified
+    - search-within-diff and conflict-resolution review UX are still thin
+    - **diff heat map / scrollbar change-marker behavior appears absent from the actual planning docs** even though it is explicitly in user scope and research notes
+    - chat-thread exposure of file diffs exists conceptually, but the exact preview-vs-open-vs-rollback behavior is not yet tight enough for implementation
+- GUI + worktree visibility note (2026-03-20):
+  - GUI implications need to be treated as part of seam reconciliation, not as a separate cosmetic pass.
+  - Current owner split to preserve:
+    - `FinalGUISpec.md` owns shell placement and visible cross-surface behavior
+    - `FileManager.md` owns compact repo/worktree context inside the file surface
+    - `WorktreeGitImprovement.md` owns worktree lifecycle/recovery rules
+    - `assistant-chat-design.md` owns compact preview cards that route into the real owner surfaces
+  - Existing useful anchors already present:
+    - File Manager may expose compact repo state in its header/strip, but it must not own commit/history/graph/worktree management
+    - when multiple worktrees or repo roots are relevant, File Manager must show which repo/worktree is active and preserve `repo_id` + `worktree_id` when handing off to Source Control
+    - Source Control is explicitly compact, worktree-first, and Git-native
+  - Recommendation for worktree visibility:
+    - **yes, PM should show worktree context**
+    - **no, it should probably not show a repetitive worktree symbol on every file row/tab by default**
+  - Reasoning:
+    - in the common case, the whole active project/workspace tab is already scoped to one repo/worktree, so repeating a worktree icon on every file is mostly noise
+    - the important UX need is not "mark every file as being in a worktree"; it is "make the current repo/worktree context obvious, preserve that context across handoffs, and make non-default/conflicted worktree state visible"
+  - Recommended ambient worktree-context model:
+    - **workspace tab / compact project context:** show a compact branch/worktree chip when the active project is a worktree-backed checkout or when the distinction from the main repo matters
+    - **File Manager header / Source Control strip:** show active repo/worktree label or chip there; this is the right place for `Open in Source Control`, `Open diff`, `Open compare`
+    - **Editor header / status / breadcrumb area:** show the active file's repo/worktree context when ambiguity exists (for example compare views, cross-worktree opens, detached review surfaces, or non-default worktree roots)
+    - **Source Control panel:** owns the full worktree list/switch/manage/conflict UI and any stronger worktree status presentation
+  - Row-level/file-level worktree indicators should be used sparingly:
+    - good for **mixed-root or mixed-worktree result lists** where rows from different roots are shown together (search results, compare lists, recents, perhaps chat activity cards)
+    - not ideal as a default icon next to every file in a normal single-worktree File Manager tree
+  - Strong-state visibility that likely *does* deserve badges/banners:
+    - conflicted worktree
+    - dirty/drifted worktree that blocks safe restore/retry
+    - historical or orphaned worktree requiring recovery/cleanup attention
+  - GUI reconciliation consequences:
+    - compare/open/review routing needs enough identity to preserve `project_id`, `repo_id`, and `worktree_id`
+    - diff cards in chat should open the correct owner surface in the correct worktree context rather than relying on path-only inference
+    - diff heat-map/change-marker work will need explicit GUI placement decisions (editor scrollbar, diff view scrollbar, or both) instead of being left implicit
+  - Impacted docs to watch during reconciliation:
+    - `Plans/FinalGUISpec.md`
+    - `Plans/FileManager.md`
+    - `Plans/WorktreeGitImprovement.md`
+    - `Plans/assistant-chat-design.md`
+- Same repo-relative file across multiple worktrees note (2026-03-20):
+  - User scenario: two agents may work simultaneously in different worktrees on the "same" logical file (same repo-relative path, different concrete worktree paths).
+  - Recommended PM behavior:
+    - user **should** be able to inspect both versions easily
+    - PM **should not** silently repurpose one ordinary editor tab into a content-swapping "toggle worktree version" surface
+  - Reasoning:
+    - ordinary editor tabs are path-backed and already assume one concrete file/buffer identity
+    - swapping the content of one tab between worktree variants would blur dirty state, undo history, save target, file-watch state, and chat/diff routing
+    - PM's existing model is cleaner when normal editing stays bound to one concrete path/worktree and cross-worktree inspection becomes an explicit compare/open action
+  - Recommended interaction model:
+    - normal open from chat/file-manager/source-control opens the exact concrete file in the exact `repo_id` + `worktree_id` context that originated the action
+    - if the same repo-relative path exists in other active worktrees, the editor/header may expose an explicit affordance such as:
+      - `Open other worktree version`
+      - `Compare with worktree...`
+      - optional compact chip/dropdown listing sibling worktree variants
+    - the best default user action is usually **side-by-side compare**, not blind toggle
+  - Optional toggle behavior:
+    - a lightweight switcher/chip is acceptable **inside a dedicated compare or multi-variant inspection surface**
+    - it is **not** recommended as the primary model for an ordinary single editor tab
+  - Identity/contract consequence:
+    - same repo-relative file across worktrees needs a distinct compare identity, something like:
+      - `project_id`
+      - `repo_id`
+      - `repo_relative_path`
+      - `left_worktree_id`
+      - `right_worktree_id`
+      - optional revision selectors
+    - path-only compare/open routing is not enough for this scenario
+  - GUI implications:
+    - editor/header/status/breadcrumb area is the right place to show `current worktree` plus `other variants available`
+    - chat activity cards from different agents must open the correct worktree variant rather than whichever tab happens to be active
+    - search/recent/changed-file lists that mix results from multiple worktrees should show row-level worktree badges
+    - ordinary File Manager trees do not need duplicate per-row worktree icons when the whole tree is already scoped to one active worktree
+  - Design bias:
+    - **edit one concrete variant**
+    - **compare across variants explicitly**
+    - **switch variants deliberately**
+    - do not hide worktree context behind a generic tab that silently changes identity
+- Diff / review / source-control seam lock note (2026-03-20):
+  - Owner model is now clear enough to treat this seam as substantially resolved for reconciliation.
+  - Explicit owner findings from current docs:
+    - `GitHub_Integration.md` now makes Source Control the Git-first owner of:
+      - working-tree changes
+      - diff and compare workflows
+      - stage / unstage / discard / commit / amend
+      - fetch / pull / push / sync
+      - branch / stash / history / commit detail
+    - `Changes` subview owns staged / unstaged / untracked / conflicted files, per-file diff pivot, and bulk stage/unstage/discard
+    - `History` + `Graph` own pivots into diff, changed files, compare-target selection, and worktree overlays
+    - `Worktrees` subview treats worktrees as first-class UI objects and each worktree row exposes compare/open/recover/prune/lineage actions plus dirty/conflict/orphaned/stale state
+  - Practical conclusion:
+    - the seam problem is **not** missing GUI ownership anymore
+    - the seam problem is now mostly **missing command/contract detail** needed to make the owned surfaces implementation-ready
+  - Concrete contract/command gaps still requiring reconciliation:
+    - there is `cmd.git.diff_open` and `cmd.git.diff_toggle_mode`, but no equally explicit canonical **compare-open / compare-target** command family
+    - there are path-level `stage` / `unstage` / `discard` commands, but no explicit **hunk-level** command family
+    - conflict-resolution commands and conflict-review transitions are still under-modeled
+    - the compare/diff identity model still needs to be stated explicitly so worktree-aware compare is not path-only
+  - Recommended reconciliation direction:
+    - introduce a canonical compare target contract keyed by repository identity rather than by UI-local selection state
+    - minimum fields should include:
+      - `project_id`
+      - `repo_id`
+      - optional `repo_relative_path`
+      - left/right selectors that can each bind to `worktree_id`, branch, commit, or revision target
+      - presentation hints such as `side_by_side` vs `unified`
+    - add explicit command coverage for:
+      - `compare_open`
+      - compare-target selection/update
+      - `stage_hunk`
+      - `unstage_hunk`
+      - `discard_hunk`
+      - conflict-resolution/open-resolution actions
+  - Cross-surface routing rule:
+    - chat cards and File Manager shortcuts may open diff/compare, but they should route into the owner Source Control/editor compare surface using concrete compare identity
+    - they should not invent their own ad hoc compare state from path strings alone
+  - Undo / rollback rule refined:
+    - buffer-local undo remains for in-buffer text mutation
+    - git/source-control discard/compare/stage actions are not ordinary editor undo
+    - restore points / rollback / revert-last-agent-edit remain explicit restore-history actions, not hidden behind git-panel affordances
+  - Heat-map/change-marker status:
+    - diff heat map / scrollbar change-marker behavior still appears absent from the actual planning docs and remains a true reconciliation gap
+- File Manager seam working note (2026-03-20; in progress):
+  - This seam is stronger than expected on drag/drop and repo-aware integration, but weaker than expected on the day-to-day tree interaction contract.
+  - Strongly specified already:
+    - external ↔ File Manager drag/drop is detailed across Windows/macOS/Linux, security boundaries, name conflicts, progress, partial failure, and floating-window behavior
+    - ignored-file behavior is directionally clear (`dimmed` by default, optional `Hide ignored`)
+    - compact Source Control strip is correctly limited to `Open in Source Control`, `Open diff`, and `Open compare`
+    - repo/worktree-aware file-tree context is already recognized and handoff to Source Control must preserve `repo_id` + `worktree_id`
+  - Main remaining gap cluster:
+    - the File Manager's own **search/filter model** is still not implementation-ready
+    - current text says "search" in the header and "type-ahead (or search) narrows to matching nodes", but it does not yet define:
+      - whether the header search is a persistent tree filter or a flat result list
+      - whether matching is name-only, repo-relative path, or fuzzy path
+      - whether hidden ignored files remain hidden even when they match
+      - whether the search scope is the active repo/worktree tree only or mixed-root aware
+      - how header search relates to keyboard type-ahead when focus is in the tree
+  - Recommended reconciliation direction for File Manager search:
+    - File Manager search should be treated as **local structural navigation**, not universal search and not full-text content search
+    - search scope should be the **active repo/worktree tree**
+    - matching should include at least file/folder name plus repo-relative path
+    - persistent header search should filter/reveal matching nodes **with ancestor folders preserved**, not replace the tree with an unrelated flat global result surface
+    - keyboard type-ahead should remain the lightweight in-tree selection jump when the search box is not focused
+    - if `Hide ignored` is enabled, ignored items should remain absent from the tree/filter results unless a future explicit "include ignored" control is added
+  - Tree action contract gap:
+    - context menu entries are listed (`New file`, `New folder`, `Rename`, `Delete`, `Copy full path`) but still need more explicit operation semantics for implementation-readiness
+    - especially:
+      - name validation / collision behavior
+      - single-select vs multi-select action rules
+      - recursive delete confirmation and failure behavior
+      - which actions are disabled when selection is mixed or invalid
+  - Candidate selection-model direction:
+    - default tree navigation remains single active row
+    - additive/range multi-select may be supported for bulk drag-out, delete, and path-copy actions
+    - open-on-enter/open-on-click should still target the active row, not bulk-open every selected file
+    - actions like `New file`, `New folder`, and `Rename` should require a single concrete target context
+  - Candidate context-menu direction:
+    - `New file` / `New folder` target the selected folder, or the parent folder when invoked on a file row, or project root when invoked from empty/header context
+    - `Rename` requires exactly one selected row
+    - `Delete` may support multi-select and must use explicit confirmation that names recursive folder delete when relevant
+    - `Copy full path` should copy one absolute path for single-select and a newline-delimited list for multi-select
+    - create/rename name validation should reject empty names, `.` / `..`, path separators, and platform-reserved invalid names before any filesystem mutation
+    - name collisions on create/rename should surface immediately and keep focus in the naming UI rather than failing silently
+  - "You are here" visibility:
+    - current wording says current-file highlight is optional
+    - recommendation: treat current-file reveal/highlight as required behavior when the current file exists inside the active visible tree context
+    - if the file is hidden by current filter/ignored settings, the GUI should indicate that the current file is filtered/hidden rather than silently failing to reveal it
+  - GUI consequences to preserve:
+    - header should likely carry the active repo/worktree chip plus the local tree-search field
+    - Git status badges in the tree remain read-only indicators
+    - stronger repo/worktree state belongs in the compact strip or Source Control, not as noisy per-row chrome
+  - Likely impacted docs during reconciliation:
+    - `Plans/FileManager.md`
+    - `Plans/FinalGUISpec.md`
+    - `Plans/GitHub_Integration.md`
+    - later cross-check with the dedicated search seam
+- Search seam working note (2026-03-20; in progress):
+  - Search is currently spread across multiple partially overlapping surfaces, and the docs still need a stronger taxonomy.
+  - Surfaces already evidenced in current plans:
+    - **Command palette (`Ctrl+K`)**: fuzzy search across pages, commands, recent items, and files; prefix modes for commands, file mentions, and slash commands
+    - **Chat history search**: explicit human and agent search over project-scoped chat history via Tantivy
+    - **Chat retrieval tools**: project-only `chatsearch`, `codesearch`, `logsearch`
+    - **Chat `@` mention**: file mention picker with name/path search, plus LSP symbol support when available
+    - **LSP navigation/search**: `documentSymbol` / `workspace/symbol` for Go to symbol, references panel for Find references, Problems link for diagnostics navigation
+    - **File Manager local search**: named in UI and implied as tree narrowing, but not yet cleanly specified
+  - Important tension:
+    - user intent requires a **project-scoped universal search bar**, especially for settings and other project-local entities
+    - current docs already make the command palette do a lot of "everything" search work
+    - this needs reconciliation: either the universal search bar *is* the command palette with clarified scope/behavior, or there are two distinct broad-search surfaces that need explicit differentiation
+  - Strong directional split emerging:
+    - **Universal search / command-palette tier** = broad project-scoped navigation/search surface across settings, pages, commands, files, and other project-local entities
+    - **Left search panel** = dedicated project/content search surface (likely file-content / grep-style results and replace workflows)
+    - **File Manager search** = local tree/navigation filter for the active repo/worktree tree
+    - **LSP symbol/ref search** = code-intelligence navigation/search, not generic project search
+    - **Chat history search** = chat-domain search, project-scoped
+  - Current planning-doc gap:
+    - the **left search panel / find-in-files content-search surface does not appear strongly specified in the planning docs yet**
+    - it exists in user requirements and seam inventory, but not yet as a clean owner-doc contract comparable to Chat History Search or Source Control Changes
+  - Open normalization questions for reconciliation:
+    - Is the universal search bar the same product surface as `Ctrl+K` command palette, or a sibling?
+    - Which result classes belong in the broad universal surface: settings, pages, commands, files, symbols, recent items, runs, artifacts, chat threads?
+    - Which surfaces may search settings? user requirement says universal search should especially search settings; local tree search should not inherit that behavior
+    - How do symbol search and quick open intersect with command palette vs dedicated editor shortcuts like `Ctrl+Shift+O`?
+    - How do left search results, universal search hits, and LSP/navigation hits normalize to the shared route/open pipeline without inventing bespoke open behavior?
+  - Current recommendation:
+    - treat `Ctrl+K`/command palette as the likely host for the broad universal-search behavior unless a distinct always-visible universal bar is deliberately retained
+    - keep File Manager search local and structural
+    - keep LSP symbol/ref search as editor/code-intelligence navigation
+    - explicitly add/repair a canonical left search panel spec for content search if it is still intended as MVP
+  - Additional evidence pass:
+    - `FinalGUISpec.md` already gives `Ctrl+K` / command palette fuzzy search over pages, commands, recent items, and files, plus prefix modes
+    - settings search also already exists inside Settings itself, with command-palette deep-link support for `Open setting: {name}`
+    - `assistant-chat-design.md` cleanly owns chat-domain search (`Chat History Search`) plus project-only retrieval/search tools (`chatsearch`, `codesearch`, `logsearch`)
+    - `LSPSupport.md` cleanly places `Go to symbol`, `Find references`, `References panel`, and symbol-aware `@` support in the LSP/code-intelligence domain
+    - `FileManager.md` still only lightly implies local tree search via header search and tree type-ahead
+  - Stronger reconciliation interpretation:
+    - **Universal search** should not be a second unrelated implementation next to command palette unless the product explicitly wants both
+    - a likely clean model is:
+      - command palette / universal search = broad project-scoped navigation/search surface
+      - left search panel = content search / replace / grep-style results
+      - file-manager search = local tree filter / location
+      - LSP symbol/ref search = semantic navigation
+      - chat history search = chat-domain retrieval/search
+  - Concrete current gap:
+    - the planning docs still do not appear to contain a strong owner spec for the **left search panel / find-in-files content-search workflow**
+    - that makes it one of the clearest remaining "missing implementation-ready seams" rather than just a wording cleanup
+- LSP architecture note (2026-03-20):
+  - PM should be the **LSP client and lifecycle owner**, not the language-analysis engine for most languages.
+  - Current plan direction from `Plans/LSPSupport.md`:
+    - PM is the **LSP client**
+    - PM talks to existing **language servers** such as `rust-analyzer`, `pyright`, `gopls`, `clangd`, etc.
+    - transport is normally **local stdio JSON-RPC**, with the server spawned as a local process
+    - capabilities are negotiated at initialize; PM uses only features both client and server advertise
+  - So for the user's question "what server?":
+    - usually **external local language-server binaries**, not a remote web service
+    - examples include:
+      - Rust → `rust-analyzer`
+      - Go → `gopls`
+      - C/C++ → `clangd`
+      - Python → `pyright` / `pylsp`-style server depending on chosen support set
+      - Slint UI → `slint-lsp`
+  - Recommended PM product posture:
+    - do **not** invent custom full language servers for mainstream languages as an MVP path
+    - instead build a PM-owned **server registry / discovery / config / lifecycle manager** around standard servers
+    - PM may add **PM-specific wrappers or bridges** only where needed:
+      - custom command/env wiring
+      - optional auto-install helpers
+      - remote/SSH bridge strategy
+      - project/worktree-aware server-root management
+      - exposing diagnostics/symbols to Assistant/Interview
+  - AI relationship:
+    - LSP is **not** "a separate AI"
+    - LSP provides deterministic language intelligence (diagnostics, definitions, references, symbols, completion, code actions)
+    - Assistant/Interview can consume that data, but the LSP engine itself is a separate subsystem from the model provider
+  - Important implementation consequence for later reconciliation:
+    - the real PM-owned surface is the **LSP orchestration layer**:
+      - choose/discover server
+      - spawn/restart/disable
+      - bind to project/worktree/root
+      - sync open/change/save documents
+      - route diagnostics/navigation/results into GUI and AI context
+    - not "write our own Rust analyzer / Python analyzer / Go analyzer"
+- External LSP research cluster (2026-03-20; official protocol + OpenCode pass):
+  - Microsoft LSP docs strongly reinforce that PM needs a **strict client lifecycle state machine**, not ad-hoc request firing:
+    - initialize -> initialized -> normal traffic
+    - shutdown -> exit
+    - after restart/crash, PM must replay open documents into the fresh session
+  - The biggest protocol/client footguns are now clear:
+    - URI/path normalization, especially Windows path/drive encoding
+    - LSP positions are **0-based** and typically **UTF-16 code-unit based**
+    - over-advertising capabilities PM does not truly support (dynamic registration, snippets, resolve support, progress)
+    - treating diagnostics as append-only instead of replacement-per-server+URI
+    - accepting stale responses after the document version moved on
+    - letting rename/code-action/workspace edits bypass PM's safe mutation path
+  - Strong product/implementation recommendation from official docs:
+    - PM should start with **static capability negotiation** and conservative client claims
+    - dynamic registration should stay off until PM truly implements register/unregister capability handling
+    - single-root / per-discovered-root sessions are the safe default; broader workspaceFolders aggregation should be additive and bounded
+  - OpenCode strongly validates several PM directions:
+    - built-in server registry plus custom server definitions
+    - local stdio JSON-RPC transport
+    - lazy spawn on first real need
+    - per-server root discovery rather than one root rule for every language
+    - diagnostics as important input into AI/assistant context
+  - OpenCode also exposes concrete pitfalls PM should avoid:
+    - weak restart/backoff/eviction behavior
+    - coarse/full-buffer-or-disk-resync style document updates instead of a true editor-authoritative shared document store
+    - limited surfaced status/error visibility
+    - session/process duplication and lack of stronger pooling/reuse policies
+    - operational sharp edges around auto-downloads and server-specific fragility
+  - Resulting PM architecture direction is getting sharper:
+    - authoritative **DocumentStore** / buffer-version / position-mapping layer
+    - **LspRegistry** for built-ins + overrides + custom entries
+    - **LspSupervisor** / per-session lifecycle + restart/backoff
+    - **LspSession** keyed by `(server_id, discovered_root)`; for worktrees, key by actual root path, not repo identity
+    - **DiagnosticsStore** shared by editor, Problems UI, and Assistant/Interview context
+    - **WorkspaceEditBridge** so rename/format/code-action edits always route through FileSafe-safe mutation handling
+  - GUI consequences now clearer:
+    - PM should have a native LSP status surface, not just hidden logs/config
+    - minimum useful surfaced state appears to be:
+      - server id/name
+      - root/worktree bound to the session
+      - initializing / ready / degraded / error / disabled
+      - install/download in progress
+      - restart action and recent failure reason
+      - log/trace reveal
+    - diagnostics should project consistently into:
+      - editor markers/gutter
+      - Problems panel
+      - assistant/interview context summary
+  - Early recommendation on what PM should copy vs improve:
+    - copy the registry + override model and per-server root heuristics
+    - improve process reuse, restart policy, status visibility, install governance, and path/exclusion control
+- Rust/client-architecture LSP research cluster (2026-03-20):
+  - Important ecosystem conclusion:
+    - there does **not** appear to be a Microsoft-blessed Rust equivalent of `vscode-languageclient`
+    - Microsoft docs explicitly leave client integration to tool implementors
+    - official/community SDK inventory lists Rust protocol crates/tools, but not a clear standard desktop-client SDK to architect PM around
+  - Strong recommendation from the Rust/client pass:
+    - PM should **own the client manager architecture**
+    - use Rust crates as building blocks under PM's architecture rather than bending PM around a prebuilt client framework
+  - Best current baseline stack direction:
+    - `lsp-types` for protocol types
+    - `tokio` for async runtime / process management / I/O
+    - `serde_json` for payload handling
+    - `tokio-util::sync::CancellationToken`
+    - `tracing` / trace sink for observability
+    - `async-lsp` is a possible internal session/wire helper **only if** it fits cleanly; not something PM should let dictate architecture
+  - Current avoid/reject guidance:
+    - do **not** treat `tower-lsp` as PM's client foundation (server-oriented)
+    - do **not** treat `lsp-server` as PM's client foundation (server scaffold / wrong shape for GUI-side client ownership)
+  - Native-client architecture cut is getting clearer and maps well to PM:
+    - `LspHost` / `LspSupervisor`
+    - `WorkspaceResolver`
+    - `LspSessionRegistry`
+    - `DocumentStore`
+    - `DocumentSyncEngine`
+    - `LspRequestBroker`
+    - freshness/version gate for stale-result dropping
+    - `CapabilityRegistry`
+    - `DiagnosticsStore`
+    - `LanguageIntelligenceFacade`
+    - `LspTraceService`
+  - Particularly useful client-pattern findings from Microsoft/VS Code-side examples:
+    - document memory becomes authoritative after `didOpen`
+    - request paths should flush pending sync before hover/completion/definition so the server is never queried against stale text
+    - diagnostics should be stored per server/session+URI and merged only in presentation
+    - UI should call semantic/intelligence facade methods, not JSON-RPC plumbing directly
+    - restart logic should be capped and explicit, not an infinite crash loop
+  - GUI / runtime implication for the planned Rust+Slint direction:
+    - all LSP/process I/O must live off the UI thread
+    - UI updates should land through the event-loop-safe handoff path
+    - remote/SSH should ideally become another `LspHost`/path-mapping layer rather than a second unrelated LSP architecture
+- LSP 3.17 position-encoding direction (2026-03-20):
+  - User direction: PM should support 3.17 position encoding **if it materially improves PM**.
+  - Current recommendation: **yes**, but with a compatibility-first rollout.
+  - Meaning:
+    - PM should be architected as a **per-session negotiated position-encoding client**
+    - PM should not hard-code "all LSP positions are UTF-16 forever" into core editor/document abstractions
+    - PM should still treat **UTF-16 as the guaranteed baseline/fallback** because it remains the mandatory compatibility floor in the spec ecosystem
+  - Recommended implementation posture:
+    - internal document/position layer should carry an explicit negotiated `position_encoding` per LSP session
+    - conversion should be centralized in one position-mapping service, not spread across hover/completion/diagnostics/rename handlers
+    - document versions and stale-result checks must remain independent of encoding choice
+  - Recommended rollout:
+    - phase 1: build the abstraction so PM can correctly consume `capabilities.positionEncoding` and honor per-session negotiated encoding
+    - phase 2: keep compatibility-first claims on the wire until server compatibility is proven broadly
+    - phase 3: if benchmarks and compatibility justify it, prefer `utf-8` for servers that reliably support it
+  - Recommendation against a risky shortcut:
+    - do **not** aggressively switch PM to "UTF-8-first everywhere" just because Rust internals are UTF-8-friendly
+    - the better long-term win is negotiation support + a strong conversion abstraction, not a brittle ecosystem gamble
+  - Concrete design consequence:
+    - `DocumentStore` / position-mapper / LSP session state must carry:
+      - internal text offset model
+      - negotiated LSP position encoding
+      - fast per-line conversion helpers/cache
+    - this will make PM better for:
+      - multi-server correctness
+      - future remote/SSH parity
+      - performance tuning later without protocol lock-in
+- Practical LSP server support matrix note (2026-03-20):
+  - Clarification on "all the LSP servers we need to integrate":
+    - the **broad support target** is larger than the **PM-managed/default install set**
+    - these need to be tracked separately so planning does not blur:
+      - "PM supports this server via built-in registry/discovery/config"
+      - vs
+      - "PM auto-installs/bundles/manages this server by default"
+  - Current broad support target:
+    - keep the long OpenCode-aligned built-in registry already captured in `Plans/LSPSupport.md` §3.2 as the baseline support set
+    - keep `slint-lsp` in the support target because it is strategically important for PM's own stack
+  - Important gap found in current planning docs:
+    - the long OpenCode-aligned table is useful, but it appears to under-call several common config/docs/container servers PM should explicitly track in reconciliation:
+      - JSON / HTML / CSS language servers
+      - Markdown LSP
+      - TOML LSP
+      - Dockerfile / broader Docker config LSP coverage
+      - GraphQL as an important adjacent API/config candidate
+  - Recommended PM support model:
+    - **support target / built-in registry definitions**:
+      - OpenCode-aligned long list already in `LSPSupport.md` §3.2
+      - plus explicit entries for:
+        - JSON
+        - HTML
+        - CSS
+        - Markdown
+        - TOML
+        - Dockerfile / Docker config family
+        - GraphQL
+    - **PM-managed/default first-class set** (best out-of-box value + maturity + cross-platform reality):
+      - Rust -> `rust-analyzer`
+      - TypeScript/JavaScript -> `typescript-language-server`
+      - Deno -> `deno lsp` (conditional root switch, not a second generic TS server)
+      - Python -> `pyright`
+      - Go -> `gopls`
+      - C/C++ -> `clangd`
+      - JSON / HTML / CSS -> VS Code language servers (or equivalent extracted package path)
+      - YAML -> `yaml-language-server`
+      - Markdown -> `Marksman`
+      - Bash -> `bash-language-server`
+      - Dockerfile -> Dockerfile language server
+      - TOML -> `Taplo`
+      - Slint UI -> `slint-lsp`
+  - Important packaging/install caveat:
+    - support target does **not** automatically mean PM should bundle or auto-download every server the same way
+    - some servers are straightforward npm/binary/toolchain installs
+    - some are better treated as toolchain-bound or manually provisioned until PM's install/download governance is fully locked
+    - `slint-lsp` remains in scope/support, but its shipping/auto-install posture should be treated as a separate packaging/legal decision rather than as an argument to omit support
+  - Practical outcome:
+    - Yes, PM now has a clearer "all servers we intend to support" model:
+      - broad registry support = OpenCode-aligned list + missing common config/docs/container additions
+      - first-class/default managed set = the practical cross-platform shortlist above
+- User correction on LSP server scope (2026-03-20):
+  - The canonical support target is **not** just the practical shortlist and is **not** merely the OpenCode-aligned list plus a few additions.
+  - User clarification:
+    - PM should treat the support target as the **deduped union** of:
+      - the official Microsoft implementors server catalog
+      - the OpenCode LSP server list
+    - duplicates are expected and should be normalized/deduped
+  - This supersedes the narrower framing in the previous note.
+  - Correct planning model now becomes:
+    - **support catalog scope** = deduped union of Microsoft implementor servers + OpenCode servers
+    - **default / first-class / PM-managed subset** = a smaller operational subset inside that larger support catalog
+  - Important implication:
+    - no future reconciliation step should accidentally collapse "all supported servers" back down to a convenience shortlist
+    - any shortlist is just a packaging/install/defaults classification inside the larger support catalog, not a replacement for the catalog itself
+  - Practical documentation consequence:
+    - the final LSP registry/support model likely needs a **machine-friendly catalog source or generated registry artifact** rather than relying only on hand-maintained prose tables, because the full support universe is now intentionally broad and duplicate-prone
+- User requirement: LSP settings/registry GUI (2026-03-20):
+  - PM must have a GUI settings surface that lets the user:
+    - enable/disable LSP globally
+    - enable/disable any server in the support catalog
+    - add new custom servers
+  - Existing plan already points in this direction (`Settings > LSP lists all servers and custom entries with validation`), but the clarified full-catalog scope means this must be treated as a **real registry-management UI**, not a tiny toggle list
+  - Minimum required behavior for the GUI now appears to be:
+    - global master toggle for LSP
+    - searchable/filterable server catalog list
+    - per-server enable/disable toggle
+    - add custom server action/form
+    - edit custom server action
+    - built-in override/reset behavior
+    - validation/error display for malformed command/config entries
+    - visible distinction between:
+      - catalog/built-in server
+      - built-in server with user override
+      - user-added custom server
+      - disabled vs enabled vs misconfigured vs unavailable
+  - Strongly recommended fields/capabilities for the add/edit server UI:
+    - stable server id
+    - display name
+    - command + args
+    - handled extensions / language selectors
+    - environment variables
+    - initialization options
+    - root-finder / root-discovery mode
+    - install/provisioning hint or notes
+    - global vs project-scope override
+  - Requested vs effective state is important here:
+    - if a server is enabled in global settings but disabled in a project override, the UI should show both the requested state and the effective state
+    - same idea applies when a server exists in the catalog but is unavailable because its binary/toolchain is missing
+  - GUI consequence of the giant support catalog:
+    - PM likely needs category/group/source metadata in the registry view (for example by language/ecosystem/source) so the settings page remains usable at scale
+    - this should be treated as part of MVP LSP usability, not polish
+- Remaining LSP gaps to make PM implementation-ready (2026-03-21):
+  - The big remaining work is **not** "should PM have LSP?" anymore. That is settled.
+  - The remaining work is to tighten the **contracts, state models, classification rules, and GUI behavior** so implementation cannot drift.
+  - Highest-priority unresolved packets:
+    - **1. Support catalog / registry SSOT**
+      - exact dedupe/canonicalization rules for the union of Microsoft server catalog + OpenCode list
+      - canonical server ids/names
+      - category/source metadata
+      - built-in vs override vs custom entry rules
+      - where the machine-friendly catalog artifact lives and how it is maintained/generated
+    - **2. Catalog classification model**
+      - for every catalog entry, classify:
+        - supported by registry
+        - first-class/default managed
+        - toolchain-bound/manual
+        - experimental/degraded
+        - deprecated/replaced
+      - this is where packaging/install/download/legal distinctions live; it must not be confused with support scope
+    - **3. Settings > LSP registry UI contract**
+      - exact information architecture for a giant server catalog
+      - search/filter/grouping behavior
+      - built-in override/reset flows
+      - add/edit custom server flows
+      - requested vs effective state display
+      - global vs project override precedence in UI
+      - unavailable/misconfigured/installing/error states and user actions
+    - **4. Per-server metadata contract**
+      - exact server entry schema beyond current basics:
+        - id / display name
+        - language/extensions/selectors
+        - command/env/init options
+        - root-discovery mode
+        - primary vs supplementary role
+        - install/provisioning hint
+        - status / availability metadata
+        - optional platform restrictions
+    - **5. Multi-server matching / conflict rules**
+      - how PM resolves multiple matching servers for one file
+      - primary vs supplementary diagnostics-only servers
+      - how diagnostics merge
+      - how code actions from multiple servers are surfaced
+      - how deno/typescript/eslint/oxlint-style overlaps generalize across the full catalog
+    - **6. Document sync + position contract**
+      - authoritative `DocumentStore` shape
+      - incremental/full sync rules
+      - pending-sync flush rules before feature requests
+      - URI normalization
+      - Windows path handling
+      - 3.17 position-encoding negotiation details and cache strategy
+      - stale-result/version gate behavior
+    - **7. Session / supervision / host contract**
+      - exact `LspHost` / `LspSupervisor` / `LspSession` states
+      - restart/backoff/eviction rules
+      - process reuse boundaries
+      - replay behavior after crash/restart
+      - trace/log model
+      - local vs remote host placement
+    - **8. Apply-edit / safety contract**
+      - exact path for rename / format / code action / workspace edits through FileSafe
+      - preview/approval rules
+      - change-annotation / confirmation behavior
+      - multi-file edit UX and rollback/error reporting
+    - **9. Remote/SSH LSP contract**
+      - where servers run for remote workspaces
+      - path mapping
+      - remote install/provisioning rules
+      - degraded mode when remote server is unavailable
+      - worktree/root identity across remote sessions
+      - how remote LSP stays the same architecture rather than a second subsystem
+    - **10. User-visible status / problems / chat integration**
+      - exact LSP status surface(s)
+      - Problems panel ownership/merging rules
+      - how diagnostics/symbols feed Assistant/Interview
+      - how LSP results appear in editor/search/chat surfaces without conflicting owner behavior
+  - Secondary but still implementation-relevant packets:
+    - protocol trace / debug tooling
+    - compatibility matrix / conformance tests across representative servers
+    - install/download governance and security policy
+    - large-workspace scaling limits
+    - fallback behavior when no server is available
+  - Summary:
+    - the biggest missing step is to convert the current good direction into a **fully explicit registry + lifecycle + override + GUI contract**
+    - once that is locked, actual implementation work should become much less ambiguous
+- LSP packet 1 working lock: support catalog SSOT (2026-03-21):
+  - What is already strong in current docs:
+    - `LSPSupport.md` already locks:
+      - an OpenCode-aligned built-in table + `slint-lsp`
+      - per-server root discovery
+      - primary vs supplementary conflict rules for major overlaps
+      - a baseline config shape (`disabled`, `command`, `extensions`, `env`, `initialization`)
+    - this means PM is **not** missing the idea of a registry; it is missing the **final canonical source-of-truth shape** after the user's broader support-catalog decision
+  - New requirement that changes the shape:
+    - support scope is now the **deduped union** of:
+      - Microsoft implementor servers catalog
+      - OpenCode server list
+      - plus PM-specific overlay entries where needed (for example `slint-lsp`)
+    - that scope is too large and duplicate-prone to keep implementation-ready using prose tables alone
+  - Working recommendation:
+    - final reconciliation should define a **machine-friendly LSP support catalog artifact** and treat prose tables as derived/readable views, not as the operational SSOT
+  - Recommended source layers:
+    - **upstream source snapshot A:** Microsoft implementor server catalog
+    - **upstream source snapshot B:** OpenCode LSP server list
+    - **PM normalization overlay:** PM-specific canonical ids, dedupe rules, PM-only entries, classifications, notes
+    - **generated effective catalog artifact:** the actual registry input used by runtime/settings/docs
+  - Recommended canonicalization / dedupe rules:
+    - every effective entry has one canonical `server_id` (stable, kebab-case)
+    - preserve upstream names in `aliases` / `source_names`
+    - if Microsoft + OpenCode clearly refer to the same underlying server/project, produce one effective PM entry with merged `sources`
+    - if two entries share an ecosystem/language but are materially different servers, keep both entries distinct
+    - PM-only entries (for example `slint-lsp`) enter through the PM overlay rather than by abusing one upstream source
+  - Recommended effective entry schema (minimum):
+    - `server_id`
+    - `display_name`
+    - `sources` (`microsoft`, `opencode`, `pm`)
+    - `source_names` / aliases
+    - `language_tags`
+    - `extensions` / selectors
+    - `platforms`
+    - `requirements`
+    - `root_discovery_mode` (or referenced root-finder id)
+    - `role_default` (`primary`, `supplementary`, `contextual`)
+    - `support_classification`
+    - `default_enabled`
+    - `provisioning_strategy`
+    - `availability_probe`
+    - `command_template` / launch hint
+    - `initialization_defaults`
+    - `notes`
+  - Recommended separation of concerns in that schema:
+    - **support scope** answers "does PM support this server in the registry?"
+    - **support classification** answers "how is it treated operationally?"
+    - the two must remain separate so PM does not confuse:
+      - supported by registry
+      - default-managed
+      - toolchain-bound/manual
+      - experimental/degraded
+      - deprecated/replaced
+  - Recommended override/custom rules:
+    - built-in/catalog entries have stable identity and cannot be deleted by the user
+    - user overrides attach to an existing `server_id` and may override only allowed config fields
+    - reset removes the override and reveals catalog defaults again
+    - custom servers live in a separate namespace and must not silently collide with built-in ids
+    - effective resolution order should be:
+      - catalog base entry
+      - global override
+      - project override
+      - runtime availability/effective-state evaluation
+  - Why this matters:
+    - Settings > LSP needs source metadata, state classification, and effective-state calculation
+    - runtime matching needs stable canonical ids and role metadata
+    - docs need a readable derived table without becoming the only true source
+  - Packet result:
+    - **support catalog SSOT direction is now sufficiently clear**
+    - next packet should move to the **Settings > LSP registry UI / override contract** using this catalog model as its base
+- LSP packet 2 working lock: Settings > LSP registry UI / overrides (2026-03-21):
+  - Current-doc split is now clear:
+    - `FinalGUISpec.md` currently provides the **generic settings/inspectors rules**:
+      - separate inherited / overridden / requested / effective / honored/skipped/clamped state
+      - large Settings page with two-level sidebar navigation and global search/deep links
+    - `LSPSupport.md` currently provides the **LSP-specific configuration content**:
+      - global LSP-related toggles
+      - built-in server list expectations
+      - custom-server add/edit/remove requirements
+      - validation behavior
+    - what is still missing is the **actual concrete LSP tab/panel UI contract** inside the GUI spec
+  - Working recommendation:
+    - final reconciliation should make `Settings > LSP` a **registry-management tab**, not a flat form
+  - Recommended page model:
+    - **tab header / top controls**
+      - global LSP master toggle
+      - scope selector (`Global` vs `Project`) for editable overrides
+      - search box scoped to server catalog/settings fields
+      - filter chips/toggles such as:
+        - All
+        - Enabled
+        - Disabled
+        - Overrides
+        - Custom
+        - Unavailable
+        - Errors/Misconfigured
+    - **main body split**
+      - left: searchable/filterable registry list
+      - right: detail/override editor for the selected server
+  - Recommended registry row model:
+    - enable/disable control
+    - display name + canonical id
+    - source badges (`Microsoft`, `OpenCode`, `PM`, `Custom`) as applicable
+    - classification badge (`Default managed`, `Manual/toolchain`, `Experimental`, etc.)
+    - selector summary (extensions/languages)
+    - state badges that keep requested and effective state separate
+      - example layers:
+        - row kind: built-in / overridden / custom
+        - requested: enabled / disabled / inherit
+        - effective: ready / disabled / unavailable / installing / degraded / error
+  - Recommended detail pane behavior:
+    - built-in rows:
+      - show catalog metadata read-only
+      - expose only overrideable fields for editing
+      - explicit `Override` / `Reset to catalog defaults` actions
+    - custom rows:
+      - full edit/remove actions
+    - detail fields should include at least:
+      - id / display name
+      - command + args
+      - extensions/selectors
+      - env
+      - initialization options
+      - root-discovery mode
+      - provisioning/install note
+      - platform restrictions if any
+      - source + classification metadata
+  - Override/effective-state rules that should be surfaced explicitly in UI:
+    - project scope must be able to express **inherit / enabled / disabled** rather than only a binary toggle
+    - effective state should be computed from:
+      - global master toggle
+      - catalog default
+      - global override
+      - project override
+      - runtime availability/provisioning result
+    - the UI must not hide when a server is "enabled in settings but unavailable in reality"
+  - Validation and UX rules that should be explicit in GUI spec:
+    - invalid custom-server fields block save/apply
+    - invalid initialization JSON blocks save/apply and focuses the field
+    - first error receives focus
+    - built-in rows cannot be deleted
+    - custom ids cannot collide with built-in ids
+  - Scale/UX consequence of the full support catalog:
+    - the registry list must support grouping/filtering by at least:
+      - language/ecosystem
+      - source
+      - state
+      - classification
+    - otherwise the giant union catalog will not be usable in practice
+  - Packet result:
+    - the LSP settings page is no longer just "a list of toggles"
+    - it should be treated as a **full requested/effective registry inspector + override editor**
+- LSP packet 3 working lock: per-server metadata + conflict rules (2026-03-21):
+  - Current-doc baseline:
+    - `LSPSupport.md` already locks:
+      - per-server root discovery
+      - one primary server per file
+      - supplementary diagnostics-only attachment for named overlaps
+      - deno/typescript/eslint/oxlint and vue/svelte/astro examples
+    - what was missing was the **general rule grammar** that scales across the full support catalog
+  - Working recommendation:
+    - every effective catalog entry should carry conflict/selection metadata, so PM adds new servers by filling metadata rather than inventing one-off overlap code
+  - Recommended additional per-entry metadata fields:
+    - `selection_mode`
+      - `standalone_primary` = ordinary full primary candidate
+      - `contextual_primary` = primary only when its context markers match
+      - `supplementary_diagnostics` = diagnostics-first sidecar server
+      - `standalone_diagnostics` = diagnostics-only server that may run even without a full primary
+    - `selection_family`
+      - overlap ecosystem/family key used for conflict handling (for example `ts-js`, `vue`, `svelte`, `astro`, `rust`, `yaml`)
+    - `primary_priority`
+      - deterministic tie-break numeric inside the same family after context/specificity rules
+    - `context_require`
+      - required markers/files/conditions to activate contextual-primary behavior
+    - `context_exclude`
+      - exclusion markers to suppress activation in the wrong project context
+    - `supplementary_for_families`
+      - which primary families this server may attach beside
+    - `capability_profile`
+      - what PM should request/use from this server (`full_language`, `diagnostics_actions`, etc.)
+    - `may_attach_without_primary`
+      - whether the server can still run in degraded diagnostics-only mode if no full primary exists
+  - Recommended generalized selection algorithm:
+    - 1. Gather all enabled + available catalog entries whose selectors match the file and platform
+    - 2. Resolve root/context for each candidate
+    - 3. Partition into:
+      - full primary candidates (`standalone_primary`, `contextual_primary` with satisfied context)
+      - supplementary/diagnostics candidates
+    - 4. Choose **one** effective primary using this precedence:
+      - filetype/framework specialist for the file's native extension wins over generic ecosystem server
+      - satisfied contextual-primary wins over generic standalone-primary in the same ecosystem
+      - higher `primary_priority` wins remaining ties
+      - stable `server_id` lexical order breaks final ties deterministically
+    - 5. Attach supplementary candidates only if:
+      - their `supplementary_for_families` allows the chosen primary family, or
+      - they are `standalone_diagnostics` and no primary exists
+    - 6. If no full primary exists but diagnostics-only candidates do:
+      - attach them in **degraded diagnostics-only mode**
+      - PM exposes diagnostics/actions/status, but not pretend full hover/completion/navigation exists
+  - Recommended generalized precedence interpretation:
+    - framework/composite-file specialists (for example `vue`, `svelte`, `astro`) win for their own native file types
+    - contextual ecosystem primaries (for example `deno`) win when their project markers match
+    - generic full language servers win over linter/diagnostics-only servers
+    - diagnostics/lint servers may coexist as sidecars but must not become accidental second full primaries
+  - Recommended diagnostics/actions interaction rules at this packet level:
+    - store diagnostics per `(server_id, session/root, uri)`; do not flatten storage
+    - merge only in presentation layers (Problems panel, editor markers, Assistant/Interview context)
+    - preserve source identity for every diagnostic
+    - supplementary code actions should be surfaced only as actions for that supplementary server's diagnostics and labeled by source
+    - exact merge/cap/truncation policy can be refined in the later diagnostics-integration packet, but source identity and per-server storage should already be locked now
+  - Recommended examples under the generalized model:
+    - `typescript`
+      - `selection_mode = standalone_primary`
+      - `selection_family = ts-js`
+    - `deno`
+      - `selection_mode = contextual_primary`
+      - `selection_family = ts-js`
+      - `context_require = [deno.json, deno.jsonc]`
+    - `eslint`, `oxlint`
+      - `selection_mode = supplementary_diagnostics`
+      - `selection_family = ts-js`
+      - `supplementary_for_families = [ts-js, vue, svelte, astro]` as applicable
+      - `may_attach_without_primary = true`
+    - `vue`, `svelte`, `astro`
+      - `selection_mode = standalone_primary`
+      - family-specific primaries for their native extensions
+      - generic TS-family diagnostics servers may attach as sidecars
+  - Why this matters:
+    - it avoids hard-coding pairwise overlap logic forever
+    - it gives Settings > LSP enough metadata to explain why a server is primary, supplementary, or degraded
+    - it lets PM support the full union catalog without pretending every server behaves the same
+  - Packet result:
+    - the per-server metadata/conflict model is now much closer to implementation-ready
+    - next packet should move to **document sync + session/supervision contracts**, because those rules now have a clearer primary/supplementary model to sit on top of
+- LSP packet 4 working lock: document sync + session/supervision contracts (2026-03-21):
+  - Current-doc baseline is stronger than it first looked:
+    - `LSPSupport.md` already locks:
+      - one process/session per `(server_id, root)`
+      - `didOpen` / debounced `didChange` / `didClose` / `didSave`
+      - stale response discard by document version
+      - shutdown order
+      - exponential restart backoff
+      - `workspaceFolders` cap
+      - virtual-document mechanics
+    - `FileManager.md` already locks the more important upstream invariant:
+      - one shared buffer per file path
+      - multiple views share one dirty state and one mutation authority
+      - restore/revert flows refresh the same underlying buffer instead of creating a second authority
+  - Working recommendation:
+    - PM should explicitly treat the shared **DocumentStore / buffer authority** as the only source of truth for any document that is open in the editor/document-pane surfaces
+    - disk is authoritative only for unopened documents or explicit reload/revert paths
+    - LSP sync must therefore consume the same mutation stream as:
+      - user typing
+      - agent writes/streaming updates
+      - FileSafe apply-edit / rename / format / code actions
+      - restore/revert actions
+      - preview/apply paths that mutate source
+  - Recommended LSP session identity:
+    - effective session key should be:
+      - `(host_id, server_id, root_identity)`
+    - where:
+      - `host_id` distinguishes local vs remote host placement later
+      - `root_identity` is the actual resolved root path/URI on that host
+      - worktrees remain distinct because their root paths are distinct even when they share one Git object database
+  - Recommended internal session state machine:
+    - `Starting`
+    - `Initializing`
+    - `Ready`
+    - `RestartBackoff`
+    - `Degraded`
+    - `ShuttingDown`
+    - `Stopped`
+    - meaning:
+      - only `Ready` may emit normal feature traffic
+      - `Starting` / `Initializing` may queue sync work but not user-visible feature requests directly
+      - `RestartBackoff` exposes countdown + last error
+      - `Degraded` means PM has paused normal automatic recovery or only diagnostics-only attachment is available
+  - Recommended document attachment model:
+    - a document is attached **once per session** (not once per view)
+    - opening the same file in two editor groups must not send duplicate `didOpen` to the same session
+    - primary and supplementary sessions maintain their own attachment/reference counts
+    - `didClose` is sent when the last attachment for that `(session, uri)` disappears (tab close, eviction, project close, or virtual-doc eviction)
+  - Recommended sync queue / barrier rules:
+    - sync events are FIFO per session
+    - document-scoped feature requests must not be sent until:
+      - the target session is `Ready`
+      - prior `didOpen`/`didChange` work for that document in that session has been flushed
+    - request behavior by class:
+      - hover/completion/signatureHelp:
+        - keep only the latest pending request per document/request-class while the session is not ready or while sync is pending
+        - cancel/drop older ones
+      - explicit navigation/editing actions (definition, references, rename, format, codeAction):
+        - wait behind the sync barrier once, then execute if still relevant
+  - Recommended `didChange` contract:
+    - debounce is **resetting/coalescing**, not fixed-window batching
+    - all mutations since the last sent sync for that session/doc become one sync batch
+    - if PM has trustworthy incremental edits and the server supports incremental sync, send incremental changes
+    - if incremental confidence is lost, send a whole-document replacement batch to re-baseline
+    - if sync confidence is still not trustworthy after that, restart the session and replay currently attached docs
+  - Recommended save/close behavior:
+    - successful save may emit `didSave` using the current document version/content state
+    - failed save does not emit `didSave`
+    - before `didClose`, cancel in-flight document-scoped requests for that `(session, uri)`
+    - clearing diagnostics on close should be per `(server/session, uri)` rather than flattening across all sources
+  - Recommended stale-result gate:
+    - every document-scoped request should carry enough freshness keys to reject stale replies:
+      - `session_epoch`
+      - `uri`
+      - `document_version`
+      - `request_generation` (or equivalent latest-of-class marker)
+    - response is applied only if:
+      - same live session epoch
+      - same URI
+      - current document version still matches request version
+      - request is still the latest relevant request for that action class
+    - late responses should be discarded silently in UX but visible in trace/logs
+  - Recommended URI/path/position contract:
+    - PM should create one canonical document identity at open time and reuse the same `DocumentUri` consistently for that document on that host
+    - same physical file must not gain duplicate open identities through case/slash/drive-letter variation
+    - UI/editor surfaces stay 1-based where already planned; LSP boundary remains 0-based
+    - 3.17 negotiated position encoding is per-session and must be handled by one centralized position-mapper service
+    - stale checks and document identity must remain independent of position encoding
+  - Recommended restart/replay contract:
+    - on crash/transport loss/sync-loss restart, PM should recreate the session and replay all currently attached documents for that session/root in deterministic URI order
+    - automatic restart should use the existing exponential backoff but also stop after a bounded crash budget, then leave the session in `Degraded` until user retry
+    - user-initiated restart resets crash budget/backoff immediately
+  - Recommended trace/log contract:
+    - each session should keep a bounded protocol/state trace buffer
+    - trace is an operational/debug surface, not canonical app history
+    - minimum surfaced fields:
+      - session key
+      - root
+      - current state
+      - last error
+      - restart attempt/backoff
+      - recent protocol trace reveal action
+  - Packet result:
+    - the sync/session contract is now much closer to implementation-ready
+    - next packet should move to **apply-edit safety + remote/status/chat surface integration**, because the underlying document/session authority is now clearer
+- LSP packet 5 working lock: apply-edit safety + remote/status/chat surfaces (2026-03-21):
+  - Current-doc split:
+    - **strongly locked already**
+      - LSP rename / format / code actions route through `workspace/applyEdit`
+      - LSP apply-edit uses the same FileSafe-backed mutation path as other agent/file mutations
+      - chat gets diagnostics in context, `@ symbol`, code-block hover/definition, and Problems link
+      - Problems panel and status-bar indicator are already owner surfaces for diagnostics/state
+    - **still comparatively weak**
+      - exact remote/SSH LSP host-placement and path-mapping behavior
+      - some exact GUI placement/details are cross-referenced but not fully spelled out in the GUI doc itself
+  - Working lock for apply-edit safety:
+    - all LSP-originated file mutations must remain on the **single FileSafe mutation path**
+    - this includes:
+      - rename
+      - format document / format range
+      - code-action edits
+      - any server-originated `workspace/applyEdit` / workspace edits
+    - consequences:
+      - write-scope guard applies exactly as it does for other mutations
+      - request metadata / allowed-file scope must be present for LSP mutation requests too
+      - no special LSP bypass for multi-file edits
+      - editor applies refreshed results through the shared buffer authority after the backend mutation path completes
+  - Recommended user-visible mutation behavior:
+    - preview-worthy actions (rename, multi-file code actions, broad formatting edits) should present a preview/confirmation step through the same safe mutation pipeline
+    - if a workspace edit partially fails, PM should surface explicit per-file failure, not a vague success shape
+    - read-only / locked / unavailable targets must fail explicitly with the same read-only/degraded reason language used elsewhere in the editor
+  - Working lock for remote/SSH architecture:
+    - remote LSP should **not** become a second unrelated subsystem
+    - it should fit the same session model by varying `host_id` / path mapping / provisioning behavior
+    - recommended remote principle:
+      - same registry
+      - same selection rules
+      - same session identity model
+      - different host placement + path mapping + availability evaluation
+    - remote effective modes should therefore be explicit, for example:
+      - `full_remote_lsp`
+      - `degraded_remote_diagnostics_only`
+      - `remote_edit_no_lsp`
+  - Recommended remote placement rule:
+    - when editing a remote workspace, LSP servers should run **near the workspace** (that is, on the remote host/workspace side) whenever PM supports that host class
+    - if PM cannot provision or run the required remote server, it must not silently pretend local-LSP-on-remote-paths is equivalent
+    - instead, surface explicit degraded effective capability
+  - Recommended remote/path-mapping contract:
+    - remote documents need canonical host-scoped URI/path identity
+    - path identity must distinguish:
+      - local workspace file
+      - remote workspace file on host A
+      - remote workspace file on host B
+    - LSP session/root identity and FileSafe mutation identity must use the same host-aware path model
+    - unsupported remote capabilities must fail deterministically rather than retargeting to the wrong runtime or local path
+  - Recommended degraded/availability behavior:
+    - separate these states clearly:
+      - configured/enabled
+      - available
+      - healthy/ready
+      - degraded
+      - unavailable
+    - if SSH connection drops:
+      - retain local editor buffer contents
+      - keep requested state visible
+      - show reconnect/degraded banner/state
+      - do not silently discard diagnostics context/history already known
+    - remote LSP unavailability should degrade specific capabilities (hover/completion/definition/diagnostics) explicitly, not collapse into one vague error
+  - Working lock for Problems / status / chat surface ownership:
+    - diagnostics storage remains per `(server/session, uri)` and is merged only in presentation
+    - owner surfaces:
+      - editor markers/gutter = immediate file-local projection
+      - Problems panel = canonical multi-file diagnostics list
+      - status indicator = current session/runtime health
+      - chat = context consumer and navigation surface, not the canonical owner of diagnostics state
+    - chat may show:
+      - diagnostics summary in context
+      - `@ symbol` results
+      - code-block hover/definition affordances
+      - Problems link in footer
+    - but chat must resolve back to the canonical editor/Problems destinations rather than becoming a second diagnostics manager
+  - Important remaining GUI clarification:
+    - the repo strongly references:
+      - Problems panel
+      - status-bar indicator
+      - chat footer Problems link
+      - SSH reconnect/degraded behavior
+    - but exact GUI-spec wording/placement still appears thinner than the conceptual contract
+    - reconciliation should therefore explicitly write these placements and degraded/empty/error states into the GUI owner docs instead of leaving them only as references
+  - Packet result:
+    - the LSP packet set is now materially tighter end-to-end:
+      - catalog
+      - settings UI
+      - per-server metadata/conflicts
+      - sync/session model
+      - apply-edit/remote/status/chat surfaces
+    - remaining work is less about LSP direction itself and more about folding these working locks back into the canonical planning docs during reconciliation
+- Search seam working lock (2026-03-21):
+  - Current owner surfaces are now clearer than they first looked:
+    - `FinalGUISpec.md §4.2` already gives **`Ctrl+K` / command palette** a broad fuzzy-search role across pages, commands, recent items, and files
+    - `FinalGUISpec.md` already gives **Settings** its own internal search plus command-palette deep-link behavior
+    - `assistant-chat-design.md §10` already gives **Chat History Search** a first-class chat-domain search UI and agent-callable retrieval path
+    - `Tools.md` already gives PM a **project-scoped `codesearch` backend** (Tantivy code index + LSP symbol assist + ripgrep fallback)
+    - `LSPSupport.md` already gives **symbol/ref navigation** a distinct LSP-owned search/navigation surface (`documentSymbol`, `workspace/symbol`, references, Problems)
+    - `FileManager.md §1` already gives the file tree a **local structural search/type-ahead** role
+  - Working seam lock:
+    - **Universal search** should be treated as the same product surface as the **command palette**, not as a second sibling bar
+    - universal search is **project-scoped**, not cross-project, and must explicitly cover **settings/navigation targets** in addition to the already-specified pages/commands/files/recent items
+    - universal search owns **broad navigation/entity lookup**
+    - it does **not** own dense file-content result workflows
+  - Canonical search-surface split:
+    - **Command palette / universal search**
+      - broad project-scoped navigation/search
+      - result classes should include:
+        - pages
+        - commands
+        - settings targets
+        - files
+        - recent items
+      - additional project entities may appear only if they behave as navigable entities, not as raw grep-result dumps
+    - **Search side panel**
+      - canonical owner for **find-in-files / content-search / replace-in-files**
+      - this is a distinct surface from command palette
+      - current docs do **not** yet specify it strongly enough, even though the backend story exists
+    - **File Manager search**
+      - local tree filter / type-ahead only
+      - must not inherit universal-search or file-content-search behavior
+    - **LSP symbol/ref search**
+      - semantic code navigation/search
+      - not a replacement for universal search or content search
+    - **Chat history search**
+      - chat-domain retrieval/search
+      - not the shell-wide universal search owner
+  - Current contradiction/gap cluster:
+    - PM already has a strong **code-search backend story** (`codesearch`, Tantivy, LSP assist, grep fallback), but no equivalently strong **user-facing Search panel owner contract**
+    - `FinalGUISpec.md §4.1` Activity Bar required surfaces do **not** include a Search panel
+    - the current side-panel shell model is one-visible-at-a-time and detachable, so a left Search panel cannot be hand-waved in later without explicit shell ownership
+    - `UI_Command_Catalog.md` currently lacks a canonical Search-panel/open-focus command family
+    - `FinalGUISpec.md §15.3` lists chat/evidence/ledger Tantivy indices but does not yet clearly surface the code-search/user-search relationship
+  - Recommended GUI lock if find-in-files remains MVP:
+    - add **Search** as a canonical Activity Bar side-panel destination (same shell model as Chat / Files / Source Control)
+    - add keyboard entrypoint for the panel (reasonable candidate: `Ctrl+Shift+F`)
+    - side panel should own:
+      - query box
+      - match options (at minimum case/word/regex)
+      - optional path/file filter
+      - virtualized results list
+      - replace workflow if replace-in-files remains MVP
+    - content-search result rows must open via the same route/open contract as every other file-opening flow:
+      - `OpenFile` for path + range
+      - normal route/focus behavior through the shared shell/open pipeline
+  - Recommended backend/routing lock:
+    - Search side panel should consume the existing **project-scoped code-search backend** in **text/content-search mode**
+    - LSP symbol mode stays owned by LSP navigation/search rather than turning the Search panel into a second symbol browser by default
+    - content-search results should carry stable path/range/snippet identity and route through the same open/highlight behavior as chat/file-manager/LSP opens
+  - Result:
+    - the search seam is now implementation-ready enough to reconcile
+    - the main remaining work is no longer taxonomy discovery; it is patching the canonical docs so the missing **Search side panel** owner contract becomes explicit
+- Preview/browser seam working lock (2026-03-21):
+  - Correct owner split is now much clearer:
+    - `Section15_MVP_Promoted_Features_Spec.md` is the canonical owner for the promoted browser/runtime model
+    - `FileManager.md` owns editor/file-surface preview behavior and explicitly routes HTML/browser behavior onto that canonical browser model
+    - `storage-plan.md` owns preview/browser persistence and restore identity
+    - `UI_Command_Catalog.md` owns the stable browser command family
+    - `FinalGUISpec.md` owns GUI placement and rendering-surface presentation, but still contains some residual wording that needs reconciliation
+  - Working taxonomy lock:
+    - **render-capable document preview** and **real browser-capable sessions** are related but not the same thing
+    - render-capable document surfaces include:
+      - source-linked preview
+      - split preview
+      - detached preview
+      - native image/document rendering
+    - browser-capable session classes are:
+      - `workspace_preview`
+      - `detached_preview`
+      - `automation_session`
+      - `auth_session`
+    - HTML/browser mode is the bridge case:
+      - it starts from a file/document subject
+      - but it runs on the canonical PM browser runtime/session model rather than a separate ad-hoc webview path
+  - Preview identity lock:
+    - `PreviewSession` is the durable rendered-subject identity contract
+    - `preview_subject_id` is the stable logical subject key
+    - moving the same subject between source-linked preview surfaces keeps the same preview identity when the subject/revision/surface-kind/transport contract still matches
+    - browser-capable surfaces layer a distinct `browser_session_id` + `session_class` on top of preview identity so browser tabs, detached windows, automation sessions, and auth flows do not collapse into one vague preview instance
+  - Browser identity/session lock:
+    - `workspace_preview` is the canonical in-shell browser session for normal browsing / HTML preview tied to a workspace tab
+    - `detached_preview` is a first-class detached browser surface linked to the same logical subject unless the user explicitly asks for separate detached state
+    - `automation_session` remains visibly separate, watchable, and not silently promoted to normal browsing
+    - `auth_session` remains isolated and never silently behaves like a normal restored browser tab
+  - GUI ownership lock:
+    - the **editor-tab browser surface** is the canonical in-shell host for `workspace_preview`
+    - detached preview/browser windows are first-class intended UX, not degraded escape hatches
+    - the **bottom panel is browser-adjacent only**
+      - logs
+      - evidence/downloads
+      - console/network summaries
+      - DevTools-adjacent panes
+    - the bottom panel must not own the canonical browsing session
+  - File/open routing lock:
+    - `Open` on HTML keeps source/editor mode
+    - `Open in Browser` creates/opens a `workspace_preview`
+    - `Open in Detached Browser` creates/opens a `detached_preview`
+    - split browser layout is a layout action after open, not a distinct open identity
+    - preview/browser flows must preserve logical subject identity instead of silently retargeting to some over-cap/LRU browser slot
+  - Interaction/capture lock:
+    - click-to-context in HTML/browser mode is **explicit**, not ambient
+    - ordinary browsing clicks or selection must not silently send context into chat
+    - capture privilege and source-mutation privilege remain separate even for workspace-backed HTML preview
+    - screenshots, context capture, share-with-agent, takeover, promotion, reopen/retry/keep-closed all route through the canonical browser command family keyed by `browser_session_id`
+  - Persistence/restore lock:
+    - preview state is stored by `preview_subject_id` / `preview_session_id`
+    - browser state is stored separately by `browser_session_id`
+    - browser records must surface:
+      - `session_class`
+      - requested/effective runtime
+      - requested/effective capabilities
+      - degradations / blocked actions
+      - profile scope
+      - restore policy
+      - takeover state
+    - detached preview shares the originating normal-browsing state unless the user explicitly chooses separate detached state
+  - Important reconciliation residue:
+    - most normative browser/preview text now agrees on the editor-tab-first model
+    - however `FinalGUISpec.md` still has stale summary/appendix wording that implies **Bottom Panel Browser tab** is the built-in browser / click-to-context owner
+    - `FileManager.md` still uses a `preview_mode` value named `browser_panel`, which is likely naming residue now that the canonical in-shell host is the editor-tab browser surface rather than a bottom-panel browser model
+  - Result:
+    - the preview/browser seam is research-locked and implementation-ready enough to reconcile
+    - the remaining work is mostly canonical-doc cleanup:
+      - remove or rewrite bottom-panel-primary browser residue
+      - normalize naming around `browser_panel` vs editor-tab browser / `workspace_preview`
+- LSP indexing/autodetect seam working lock (2026-03-21):
+  - This seam is actually a stack of distinct layers that the current docs sometimes blur together:
+    - **project-level coarse detection**
+      - used when adding/opening a project
+      - produces detected-language/framework summaries and project badges
+    - **preset suggestion / onboarding**
+      - optional user-facing language/framework preset choice
+      - may drive non-blocking tool-download suggestions
+    - **LSP attach resolution**
+      - actual runtime decision for which server(s) attach to a file, at which root, with which primary/supplementary role
+    - **per-project code indexing**
+      - search/retrieval/index freshness path independent of LSP session health
+    - **fallback search/symbol behavior**
+      - what still works when LSP is disabled, unavailable, or degraded
+  - Working lock on detection layers:
+    - coarse **project detection** is **advisory/project-scoped**, not the authoritative LSP binding decision
+    - its purpose is:
+      - project metadata
+      - language badges
+      - preset suggestion
+      - initial tool/LSP suggestion
+    - actual LSP runtime attachment remains **file/path/root/context-driven**
+      - extension match
+      - requirement/availability check
+      - root discovery
+      - primary/supplementary conflict resolution
+    - consequence:
+      - a project may be broadly detected as `Node.js` while a specific file tree still binds to `deno` as primary where the Deno markers win
+      - detected-language badges must not be mistaken for exact attached-server truth
+  - Current-doc strength:
+    - `GitHub_Integration.md` already gives a deterministic coarse project-detection heuristic on add/open (`Cargo.toml`, `package.json`, `pyproject.toml`, etc.)
+    - `FinalGUISpec.md` already expects:
+      - auto-detected project languages
+      - language badges
+      - LSP server selection in project state
+    - `LSPSupport.md` already gives the strong runtime half:
+      - built-in/custom server registry
+      - root discovery
+      - primary/supplementary selection
+      - one process per `(server_id, root)`
+      - workspaceFolders cap
+      - install/download toggles and install hints
+    - `storage-plan.md` already gives the **per-project Tantivy code index**:
+      - watcher/indexer producer
+      - `.gitignore` + sensitive-path exclusion
+      - chunked documents
+      - incremental writes + checkpoints
+  - Working lock on indexing:
+    - PM's **code index is a separate subsystem from LSP**
+    - it is project-scoped, watcher-driven, and remains useful even when LSP is off/unavailable
+    - LSP symbol search is complementary, not a replacement for the code index
+    - retrieval/search/autodetect flows must therefore treat these as separate sources:
+      - project detection output
+      - code index freshness/availability
+      - LSP session health/availability
+  - Working lock on fallback behavior:
+    - when LSP is unavailable, PM falls back to:
+      - code index / text search
+      - heuristic/regex outline or symbol path where available
+      - no diagnostics / no semantic language features
+    - install/download hints remain optional guidance, not fake success
+    - however the current canonical owner text for fallback is weak because:
+      - `LSPSupport.md` repeatedly points to `FileManager.md §12.1.4` and `§12.2.7`
+      - those sections do not appear to exist in the current `FileManager.md`
+  - Important contradictions / missing owner contracts:
+    - **FileManager preset/fallback references are stale**
+      - TOC and cross-doc references still imply a richer `§11` preset owner and `§12.1.4` / `§12.2.7` fallback/index owner than the current file actually contains
+    - **FinalGUISpec cross-reference drift**
+      - `FinalGUISpec.md` says language/framework auto-detection lives in `Projects (§7.3)`, but current `§7.3` is the shared route/open section
+    - **code index owner is behaviorally specified but not strongly surfaced as a user-facing/state-owning subsystem**
+      - storage-plan says the index exists
+      - Tools/chat assume it exists
+      - but the GUI/owner docs are still lighter on freshness, refresh, and failure presentation than on the LSP session side
+    - **re-detection cadence is still thin**
+      - docs clearly define detection on add/open
+      - they are weaker on when detected-language metadata refreshes later and how user override vs detected state is surfaced
+  - Recommended GUI/state lock:
+    - keep these states distinct in product language and state:
+      - `detected_languages` / project badges
+      - selected preset (if any)
+      - requested LSP enablement / server overrides
+      - effective attached LSP sessions
+      - code index freshness/health
+    - do not collapse them into one vague "language detected" or "LSP ready" badge
+    - useful surfaced states should include:
+      - project detection complete / unknown
+      - code index current / refreshing / stale / unavailable
+      - LSP session initializing / ready / degraded / error / disabled
+  - Result:
+    - the seam is research-locked and implementation-ready enough to reconcile
+    - the biggest remaining reconciliation work is not new architecture discovery; it is repairing stale owner/cross-reference gaps so:
+      - preset ownership is explicit
+      - fallback symbol/index behavior has a real owner section
+      - FinalGUISpec project/detection references point to real sections
+- SSH/remote seam working lock (2026-03-21):
+  - Correct owner split is much clearer than earlier broad sweeps suggested:
+    - `GitHub_Integration.md §C` is the actual top-level SSH owner for:
+      - SSH target add/edit/test/remove flows
+      - validation/auth/host-key rules
+      - add-existing-project from SSH
+      - remote-mode project context
+      - remote tool/provider execution
+    - `FinalGUISpec.md` is comparatively thin here:
+      - it confirms SSH is MVP
+      - it names `ssh_connections:v1`
+      - it shows planned `ssh/` module seams
+      - it carries connection-stability summary/risk language
+      - it cross-references `Settings > SSH` and file-editor SSH integration
+    - `Section15_MVP_Promoted_Features_Spec.md` contributes the cross-cutting rule that unsupported remote/multi-context launches must fail deterministically, not silently retarget
+    - `FileManager.md` remains a consuming surface for remote file-tree/editor behavior, but it is not the real SSH-mode owner
+  - Working lock on remote-mode identity and authority:
+    - **remote mode is a first-class project mode**, not a local project with an incidental SSH tunnel
+    - canonical working-folder identity is `user@host:remote/path`
+    - the remote host/path context is therefore part of project/runtime identity, not just connection metadata
+    - PM MUST NOT create a silent local checkout/mirror as the primary authority for a remote-mode project
+    - existing shared-buffer/editor/FileSafe rules still apply, but filesystem authority is the **remote filesystem**
+  - Working lock on subsystem behavior:
+    - **Git / Source Control**
+      - all `git` commands run on the remote host via SSH in the configured remote folder
+      - PM MUST NOT silently fall back to local `git` for remote-mode projects
+      - Source Control remains the worktree-first owner, but the worktree/repo context is now remote-host-scoped
+    - **File Manager / editor**
+      - the file tree shows the remote filesystem
+      - listing uses **SFTP by default** with SSH `find`/`ls` fallback
+      - file writes apply on the remote host; remote mode is not "download-edit-upload later" unless an explicit degraded cache/offline path is surfaced
+    - **Terminal**
+      - a project terminal for a remote-mode project MUST bind to an SSH session on that host
+      - opening a local shell for that project context is disallowed
+      - exact PTY/session-supervision details belong to the next `seam-terminal-runtime-environment`, but the owner direction is now locked
+    - **Agents / providers**
+      - PM agents execute on the remote machine in remote mode
+      - provider CLIs must exist on the remote and stream stdout/stderr back over SSH
+      - PM MUST NOT auto-install a missing provider CLI without explicit user consent
+    - **LSP**
+      - remote LSP should follow the already-locked host-aware architecture from the LSP packet work
+      - same client/session model, different `host_id` / provisioning / path identity
+      - remote LSP is not a second unrelated subsystem and must not imply a hidden local mirror
+  - Working lock on degraded/offline behavior:
+    - remote disconnect must be explicit across file tree, editor, terminal, git, and provider execution
+    - PM MUST NOT silently retarget remote-mode work onto local filesystem/git/shell behavior
+    - in-memory editor buffers should be retained across disconnect, with reconnect/pending-write state surfaced explicitly rather than fake success
+    - failed remote writes or apply operations should surface through the same FileSafe/degraded-language discipline as other file mutations
+    - unsupported remote/multi-context combinations should fail deterministically with a reason, not degrade into the wrong host/runtime
+  - Important contradictions / reconciliation debt:
+    - **retry-budget contradiction**
+      - `GitHub_Integration.md §C.4` says one bounded auto-retry, then explicit `Reconnect`
+      - `FinalGUISpec.md` risk summary says exponential backoff with up to five attempts
+      - working recommendation: keep the **30s keepalive** from `FinalGUISpec.md`, but treat the **one bounded auto-retry + manual reconnect** behavior from `GitHub_Integration.md` as the operational contract to reconcile toward
+    - **older remote-edit-only wording is now weaker than the SSH owner block**
+      - earlier broad-sweep notes and some `FileManager.md` language implied remote edit only with richer remote run/debug later
+      - `GitHub_Integration.md §C.3-C.4` is stronger and already locks remote terminal / agent / provider execution for remote mode
+      - reconciliation must choose and normalize this stronger remote-mode-project model
+    - **GUI wording is still thin**
+      - `FinalGUISpec.md` still lacks concrete owner text for `Settings > SSH`, remote-editor degraded copy, and terminal/session error states
+    - **File Manager remote state machine is still thin**
+      - `GitHub_Integration.md` locks the mode and transport direction, but `FileManager.md` still needs clearer remote permission/read-only/offline/refresh wording during reconciliation
+  - Result:
+    - the seam is now research-locked and implementation-ready enough to reconcile at the architecture/ownership level
+    - the next seam should focus on the terminal/runtime transport and supervision details that sit underneath this SSH-mode contract
+- Terminal/runtime/environment seam working lock (2026-03-21):
+  - Correct owner split is now much clearer:
+    - `Section15_MVP_Promoted_Features_Spec.md §3.14` is the canonical owner for:
+      - terminal section/tab/pane/session identity
+      - reveal/focus behavior
+      - interaction modes
+      - shell-integration disclosure tiers
+      - lifecycle states
+      - capability/degradation matrix
+      - subsystem split and non-ship rules
+    - `storage-plan.md` is the canonical owner for persisted/runtime-queryable state:
+      - `terminal_workspace_state`
+      - `terminal_session_record`
+      - `terminal_command_block`
+      - `dev_session_record`
+      - requested/effective renderer state
+      - shell-integration tier
+      - capability degradations
+      - restore outcome and transcript-retention tier
+    - `UI_Command_Catalog.md` + `Wiring_Matrix.md` now make the controller split explicit:
+      - `terminal workspace controller`
+      - `terminal session controller`
+      - `process-host controller`
+      - `dev-session controller`
+      - `runtime-surfaces controller`
+      - `shell layout controller`
+    - `Run_Modes.md` couples shell-backed runtime outcomes to `terminal_session_id` semantics:
+      - same-session reveal stays same identity
+      - restart/replacement mints a new runtime identity
+      - UI-only layout/reveal actions do not count as shell executions
+    - `FinalGUISpec.md` is mainly the GUI projection/recovery/inspector surface:
+      - `terminal_state:v1` is a GUI-facing projection only
+      - it must not imply live PTY continuity
+  - Working lock on subsystem ownership:
+    - **process-host controller**
+      - owns PTY/process allocation, spawn, resize, signal, exit observation, transport binding, cwd handoff, and environment handoff
+      - platform-specific host mechanics belong here, not in workspace/UI surfaces
+    - **terminal session controller + terminal engine/transcript buffer**
+      - own lifecycle state
+      - transcript continuity
+      - command-block anchoring
+      - requested/effective renderer disclosure
+      - shell-integration tier
+      - capability degradations
+      - restore outcome
+    - **terminal workspace controller**
+      - owns sections/tabs/panes, focus/reveal/move/rename/pin/close/detach/reattach behavior
+      - these are presentation/container actions and MUST NOT mint a new runtime identity unless the command explicitly restarts or replaces the session
+    - **dev-session controller**
+      - owns higher-level run/debug/hot-reload workflow continuity
+      - may link multiple terminal sessions and derived runtime surfaces without collapsing PTY identity into `dev_session_id`
+    - **runtime-surfaces controller**
+      - owns Output / Problems / Ports reveal and linkage
+      - Debug Console remains a distinct DAP-owned surface rather than a synonym for Terminal
+  - Working lock on identity and lifecycle:
+    - `terminal_session_id` means exact PTY continuity
+    - `terminal_tab_id`, `terminal_pane_id`, and `terminal_section_id` mean presentation continuity only
+    - `dev_session_id` means higher-level workflow continuity only
+    - `Open in Terminal` / `Show Terminal` reveal the existing session when it still exists
+    - only explicit `New Terminal`, explicit split, and explicit restart/replacement mint a new `terminal_session_id`
+    - `clear_scrollback` preserves runtime identity
+    - close-pane/close-tab are layout actions unless `termination_policy` requests shutdown
+    - terminal restore MUST NOT fake live PTY continuity after restart; restored sessions surface as verified-live or historical with explicit recovery controls/banners
+  - Working lock on renderer and shell-integration disclosure:
+    - canonical renderer modes are:
+      - `interactive_rich`
+      - `plain_log`
+      - `machine_export`
+      - `degraded_ascii`
+    - requested renderer mode is a preference; effective renderer mode is runtime truth and must stay queryable/disclosed
+    - canonical shell-integration tiers are:
+      - `rich`
+      - `basic`
+      - `opaque`
+    - command blocks are metadata layered over the canonical transcript, not a second shell implementation
+    - PM MUST NOT fabricate exact command boundaries, exact command text, or exact success semantics when shell integration is weaker than the observed evidence
+    - transcript continuity remains canonical even when command metadata degrades
+    - renderer downgrade or shell-integration loss updates effective capability state on the current session unless the user explicitly restarts/replaces it
+  - Working lock on process/render architecture:
+    - subsystem boundaries and ownership must remain explicit
+    - acceptance gates must exist for:
+      - process-host correctness
+      - renderer stability
+      - transcript integrity
+      - shell-integration degradation behavior
+      - cross-surface reveal behavior
+    - observability must exist for lifecycle transitions, resize, focus, attach/detach, renderer failures, PTY failures, performance counters, and structured session metadata
+    - a DOM-style "one widget per line forever" terminal core is explicitly **non-ship**
+  - Working lock on local/remote runtime routing:
+    - local project terminals bind to the local process host
+    - remote project terminals bind to the remote transport/SSH session from the SSH seam
+    - PM MUST NOT silently create a local shell for a remote-mode project
+    - unsupported SSH/WSL/container-or-similar launch contexts must fail deterministically with a reason rather than silently retargeting to the wrong runtime
+    - resulting effective host/cwd/shell profile/capability state must be disclosed in inspectors/banners
+  - Working lock on Output / Problems / Ports / Debug / chat:
+    - terminal transcript is the canonical interactive shell evidence
+    - Output is a derived structured process/build/runtime-output surface linked back to the owning `terminal_session_id` or `dev_session_id`, not a second shell owner
+    - Problems is a derived diagnostics surface with the same linkback discipline
+    - Ports is a derived endpoint/runtime surface with the same linkback discipline
+    - Debug Console is distinct from Terminal and follows DAP ownership even when linked to the same higher-level dev session
+    - chat command cards and dev-status rows remain preview/reveal surfaces only; they do not own shell lifecycle
+  - Important contradictions / reconciliation debt:
+    - `FinalGUISpec.md` still projects bottom-panel/runtime behavior more thinly than the newer Section 15 + storage/runtime identity model
+    - exact per-platform PTY implementation details remain implementation work, but the owner/controller split is now clear enough that this is no longer a research blocker
+    - the SSH retry-budget contradiction remains a cross-cutting cleanup item; terminal/runtime should consume the SSH seam's chosen remote behavior rather than reopen it here
+  - Result:
+    - the seam is research-locked and implementation-ready enough to reconcile
+    - the next seam should focus on cross-cutting cleanup: contradictory retries, stale cross-references, and subsystem/state terminology normalization across the already-locked seams
+- Cross-cutting seam working lock (2026-03-21):
+  - Repeated cross-seam contracts are now clear enough that they should be treated as universal rules rather than re-decided per subsystem:
+    - **requested vs effective state**
+      - the product repeatedly distinguishes requested state from effective runtime/capability state
+      - this now shows up in:
+        - LSP registry + attach state
+        - terminal renderer/runtime state
+        - browser/runtime capability state
+        - auth/runtime capability state
+      - cross-cutting rule:
+        - requested and effective state must remain queryable and user-disclosable where relevant
+        - consumer surfaces must not recompute effective state heuristically from current settings
+    - **canonical vs derived surfaces**
+      - canonical authority lives in source buffers, exact shell transcript/session state, and declared owner stores/contracts
+      - derived surfaces include:
+        - browser/preview renderings
+        - chat command cards
+        - Output / Problems / Ports
+        - code index and other projections
+      - cross-cutting rule:
+        - derived surfaces are first-class UX but must not replace canonical authority
+        - when capability degrades, derived surfaces may become stale or partial, but they must not fabricate authority they do not own
+    - **exact continuity vs presentation continuity vs workflow continuity**
+      - repeated examples now include:
+        - `terminal_session_id` vs `terminal_tab_id` / `terminal_pane_id` / `terminal_section_id` vs `dev_session_id`
+        - `preview_session_id` vs `browser_session_id` / `session_class`
+        - `route_target` / `OpenSubject` vs `OpenFile`
+      - cross-cutting rule:
+        - exact runtime/content continuity, presentation/container continuity, and higher-level workflow continuity must remain distinct identity layers
+        - no seam should collapse them into one generic "session" concept
+    - **health/freshness disclosure**
+      - `storage-plan.md` + `Crosswalk.md` already close:
+        - `projection_freshness`: `current | refreshing | stale`
+        - `projection_health`: `healthy | degraded | unavailable`
+      - cross-cutting rule:
+        - stale and degraded are not the same state
+        - mutating actions must gate/revalidate when surfaces are stale, degraded, or unavailable
+        - read-only fallback and degraded-copy must use the explicit health/freshness vocabulary rather than vague "might be wrong" language
+    - **no silent fallback across first-class contexts**
+      - repeated examples now include:
+        - remote projects must not silently fall back to local git/files/shell
+        - unsupported runtime contexts must fail deterministically rather than retargeting to the wrong host
+        - degraded browser/runtime or LSP capability must remain visible instead of pretending the requested mode succeeded
+      - cross-cutting rule:
+        - first-class requested contexts must either run as requested, degrade explicitly with effective-state disclosure, or fail deterministically with reason
+        - they must not silently collapse into a different context or owner surface
+  - Working lock on owner-vs-consumer discipline:
+    - `Crosswalk.md` should be treated as the universal boundary map for primitive ownership
+    - downstream docs may specialize realization/UI behavior, but they must not re-own primitives already assigned elsewhere
+    - especially important current examples:
+      - `Contracts_V0.md` / `Crosswalk.md` own `route_target` + `OpenSubject`; `FileManager.md` owns `OpenFile`; shell/UI docs consume those primitives
+      - `GitHub_Integration.md §C` owns SSH remote project mode; File Manager / terminal / LSP consume that host-scoped context
+      - `Section15_MVP_Promoted_Features_Spec.md` + `storage-plan.md` own terminal/runtime identity/state; chat and other surfaces reveal or summarize it
+  - Working lock on universal terminology/state language:
+    - normalize these terms across the affected docs:
+      - **requested** vs **effective**
+      - **canonical** vs **derived**
+      - **exact continuity** vs **presentation continuity** vs **workflow continuity**
+      - **healthy / degraded / unavailable**
+      - **current / refreshing / stale**
+      - **owner surface** vs **consumer/reveal surface**
+      - **host-aware identity** for remote-capable subsystems
+    - docs should avoid vague substitutes once a closed term already exists
+  - Highest-priority reconciliation debt now visible from the locked seams:
+    - **Search owner gap**
+      - GUI/docs still need an explicit canonical owner contract for the Search side panel / find-in-files surface
+    - **browser host residue**
+      - `FinalGUISpec.md` still contains bottom-panel-primary browser residue that conflicts with the now-locked editor-tab-first browser model
+    - **LSP preset/fallback/index drift**
+      - `LSPSupport.md` still points to `FileManager.md` preset/fallback/index sections that do not appear to exist in the current file
+      - `FinalGUISpec.md` language-detection cross-reference is still wrong
+    - **SSH retry contradiction**
+      - `GitHub_Integration.md` one-bounded-auto-retry behavior conflicts with `FinalGUISpec.md` five-attempt summary wording
+    - **remote-owner/crosswalk thinness**
+      - `Crosswalk.md` cites `GitHub_Integration.md`, but the newly-locked remote-first project-mode consequences are still not surfaced strongly enough in the boundary map
+    - **terminal projection/UI thinness**
+      - `FinalGUISpec.md` bottom-panel/runtime wording still under-expresses the stronger terminal/runtime identity model now locked through Section 15 + storage-plan + command catalog
+  - Result:
+    - the cross-cutting normalization is now clear enough to reconcile
+    - after this seam, the remaining work is no longer new discovery; it is final reconciliation synthesis and canonical-doc patch planning
+- Reconciliation-synthesis working lock (2026-03-21):
+  - The remaining work is now bounded reconciliation, not additional architecture discovery.
+  - SSOT / owner-doc posture after reconciliation should be:
+    - `Crosswalk.md`
+      - boundary map for primitive ownership and cross-doc routing
+    - `GitHub_Integration.md §C`
+      - SSH remote target ownership and remote-mode project context
+    - `LSPSupport.md`
+      - LSP support catalog, server-selection/conflict/runtime rules, and LSP-specific fallback behavior
+    - `FileManager.md`
+      - `OpenFile`, shared-buffer/editor/file-surface behavior, and file-manager-local search/filter behavior
+    - `Section15_MVP_Promoted_Features_Spec.md` + `storage-plan.md`
+      - terminal/runtime identity, persistence tiers, requested/effective runtime state, and cross-surface linkage
+    - `FinalGUISpec.md`
+      - shell realization, UI placement, inspectors, banners, and user-facing wording that consumes the owner docs above without re-owning them
+  - Minimal reconciliation sequence is now clear:
+    - **first: fix contradictions and stale references in canonical owner/consumer docs**
+      - normalize SSH reconnect wording in `FinalGUISpec.md` to the now-locked one-bounded-auto-retry behavior from `GitHub_Integration.md`
+      - remove bottom-panel-primary browser residue from `FinalGUISpec.md`
+      - repair `FinalGUISpec.md` language-detection cross-reference drift
+      - repair `LSPSupport.md` references to missing `FileManager.md` preset/fallback/index sections
+      - surface the stronger remote-first project-mode consequences in `Crosswalk.md`
+    - **second: add missing owner text where the architecture is already known**
+      - add the Search side-panel / find-in-files owner contract to `FinalGUISpec.md`
+      - strengthen `FinalGUISpec.md` terminal/runtime wording so it reflects the now-locked Section 15 + storage/runtime identity model
+      - strengthen `FileManager.md` remote permission/read-only/offline wording to match the locked SSH seam
+    - **third: normalize universal terminology across the affected docs**
+      - requested vs effective
+      - canonical vs derived
+      - healthy / degraded / unavailable
+      - current / refreshing / stale
+      - owner surface vs consumer/reveal surface
+      - exact continuity vs presentation continuity vs workflow continuity
+      - host-aware identity for remote-capable subsystems
+    - **fourth: close remaining wording drift**
+      - make unsaved-buffer recovery required in storage/persistence wording where it is still framed as optional
+      - ensure terminal/browser/LSP/search consumer surfaces use the same closed state vocabulary rather than ad hoc phrasing
+  - Reconciliation rule:
+    - patch owner docs first, then consumer docs and cross-references, then terminology cleanup
+    - do not re-open seam architecture unless a patch reveals a contradiction that the current working locks cannot absorb
+    - prefer deleting stale residue over adding another duplicate explanation in a consumer doc
+  - Ready-for-reconciliation conclusion:
+    - all remaining work is now explicit canonical-doc alignment with known targets
+    - no additional deep research is required before reconciliation begins
+    - this work item can return to `ready_for_reconciliation`
 - Current design questions, scope boundaries, and doc impact are not yet enumerated.
 - Relevant contracts, defaults, state rules, and UX expectations are not yet reviewed.
 - Early validated SSH/remote gaps:
