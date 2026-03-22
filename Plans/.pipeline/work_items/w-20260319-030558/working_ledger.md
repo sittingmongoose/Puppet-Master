@@ -2480,3 +2480,1240 @@
   - implementation patterns that are safe for a Rust + Slint, macOS/Linux/Windows product
 - Watch for explicit precedence/load-order rules where app-level config, project config, and runtime capabilities intersect (review rules, permissions, LSP, remote behavior).
 - During external synthesis, keep notes anonymized by target ID in durable work artifacts unless the user explicitly asks for a named mapping.
+
+## Discovery Cluster (2026-03-22 post-rollback gap confirmation)
+
+- User clarified that this pass is still **research / ledger fleshing**, not canonical reconciliation; only `working_ledger.md` and `meta.json` should be touched.
+- Prior unauthorized top-level plan edits were reverted; the current top-level docs were then re-checked directly to confirm which gaps are still genuinely open.
+- Confirmed remaining gap packets in the current top-level canonical docs:
+  - **Search owner / shell packet**
+    - `FinalGUISpec.md` still does not make **Search** a canonical Activity Bar / side-panel owner surface for find-in-files
+    - command palette / universal search exists, but find-in-files still lacks a strong explicit GUI owner contract
+    - `UI_Command_Catalog.md` still lacks a canonical `cmd.search.*` family
+  - **File-tree action packet**
+    - `FileManager.md` still says default placement is **left**
+    - file-tree context menu still only calls out `New file`, `New folder`, `Rename`, `Delete`, and `Copy full path`
+    - still missing explicit canonical behavior for:
+      - `Copy`
+      - `Cut`
+      - `Paste`
+      - `Copy relative path`
+      - `Add to Assistant Chat`
+      - `Open With…`
+      - `Open in Terminal`
+      - `Download / Save Local Copy`
+    - `FileManager.md` still carries stale `preview_mode = browser_panel` terminology
+  - **Preview / browser naming packet**
+    - `FileManager.md` still uses `browser_panel`
+    - `FinalGUISpec.md` still carries browser wording that makes the bottom-panel Browser tab sound more canonical than the editor-tab browser host direction locked in the research seam
+  - **Diff / review / Source Control packet**
+    - `GitHub_Integration.md` still uses user-facing **Git Panel** wording instead of **Source Control**
+    - current top-level docs still lack the fully explicit:
+      - compare-target vocabulary / defaults
+      - hunk-level command contract
+      - conflict-review command / surface contract
+      - diff-local search command contract
+      - Git change-marker / heat-map behavior
+    - this remains the strongest remaining “interaction depth” packet after the file/editor core
+  - **LSP packet**
+    - `LSPSupport.md` still uses local-only `(server_id, root)` session wording
+    - stale fallback/index references still point to `FileManager.md §12.1.4` / `§12.2.7`
+    - no explicit host-aware remote/SSH LSP contract is present yet
+  - **SSH / remote packet**
+    - retry-budget contradiction is still live:
+      - `GitHub_Integration.md` says one bounded auto-retry then explicit `Reconnect`
+      - `FinalGUISpec.md` says exponential backoff up to five attempts
+    - `FileManager.md` still looks thin on remote degraded/read-only/offline/refresh behavior even though the higher-level SSH owner direction is clearer elsewhere
+  - **Command / wiring packet**
+    - because `UI_Command_Catalog.md` still lacks `cmd.search.*`, `cmd.file.*`, and the richer Source Control / diff-review command families, the command/wiring layer is still not closed for those surfaces
+- Cross-check against session todos:
+  - these confirmed live gaps still align with the active reconciliation packets:
+    - `recon-shell-placement-consistency`
+    - `recon-file-action-commands`
+    - `recon-diff-review-depth`
+    - `recon-remote-lsp`
+    - `recon-search-command-family`
+    - `recon-feature-readiness-sweep`
+- Working conclusion:
+  - the remaining work is still mostly **canonical owner/contract fleshing**, not fresh architecture discovery
+  - the highest-value unresolved packets remain:
+    1. Search side-panel ownership + command family
+    2. File-tree action semantics + command coverage
+    3. Diff/review compare/hunk/conflict/heat-map behavior
+    4. Host-aware remote LSP + SSH degraded-state normalization
+    5. Browser/preview shell naming cleanup
+
+## Discovery Cluster (2026-03-22 diff undo/redo + chat/gui check)
+
+- User asked specifically whether **diff undo/redo** is fleshed out in:
+  - the editor
+  - the chat window
+  - and whether the GUI implications are fully written down
+- Current top-level-doc reality:
+  - **Editor generic undo/redo exists, but diff-specific undo/redo is not fully fleshed out**
+    - `FileManager.md` clearly specifies:
+      - per-buffer undo/redo
+      - preview-originated source edits update undo/redo history
+      - `Revert last agent edit`
+      - `Restore to… / History`
+    - but the docs still do **not** clearly close:
+      - whether diff/apply operations become single undo units or multiple buffer-history units
+      - how hunk-level actions, patch-apply actions, and conflict-resolution actions map to undo/redo vs Git/history restore
+      - whether diff-surface actions participate in editor undo directly, or only via source-buffer changes / restore pipelines
+      - exact grouping rules when one assistant action edits multiple files
+  - **Chat has diff visibility and rollback hooks, but not a fully fleshed diff/undo model**
+    - `assistant-chat-design.md` clearly specifies:
+      - files-touched strip with diff counts
+      - inline `code diffs` / diff-edit activity cards
+      - click-to-open from `Read:` / `Edited:` / files-touched entries
+      - `revert last agent edit` as an in-scope capability
+    - but the docs still do **not** clearly close:
+      - exact chat UX for diff preview vs open-in-editor vs open-in-diff
+      - scope of revert (`last edit`, `last turn`, per-file, per-thread, per-hunk?)
+      - how rollback/revert actions are represented in thread history and audit after execution
+      - whether chat ever exposes inline diff controls beyond open/focus + revert hooks
+  - **GUI implications are only partially fleshed**
+    - strong pieces already exist:
+      - files-touched strip
+      - inline operation-card family
+      - click-to-open into editor
+      - Source Control conceptually owns diff/compare
+    - but still-missing GUI contracts include:
+      - exact docked vs detached diff/review surface behavior
+      - hunk-action UI and conflict-review UI
+      - scrollbar heat-map / change-marker rendering and interaction
+      - how chat diff cards map into Source Control vs editor diff surfaces
+      - how dirty / reverted / conflicted / staged state feeds back into chat cards, file strips, and editor chrome
+- Working conclusion:
+  - **No**: diff undo/redo is not yet fully fleshed out end-to-end for editor + chat + GUI.
+  - The next high-value packet inside `recon-diff-review-depth` should explicitly close:
+    - diff action taxonomy (buffer edit vs Git mutation vs restore)
+    - undo/redo grouping rules
+    - chat diff/revert interaction contract
+    - GUI surface ownership and state feedback for all of the above
+
+## Discovery Cluster (2026-03-22 gap work-through sequence)
+
+- User explicitly re-authorized edits to `working_ledger.md` and `meta.json` while staying in research mode.
+- Agreed working method:
+  - keep the pass conversational / exploratory
+  - keep canonical docs untouched for now
+  - use the ledger to pin the remaining gap packets and their dependencies
+- Recommended packet order:
+  1. **Diff / review / undo / chat / GUI**
+     - deepest unresolved cross-surface packet
+     - drives editor behavior, chat behavior, Source Control ownership, and GUI state feedback
+  2. **Search owner + command family**
+     - shell ownership and command taxonomy packet
+     - easier to close once the larger diff/review routing picture is clear
+  3. **File-tree action semantics + GUI implications**
+     - action coverage packet (`Copy`, `Cut`, `Paste`, `Copy relative path`, `Add to Assistant Chat`, `Open With…`, `Open in Terminal`, `Download / Save Local Copy`)
+     - depends partly on shell/command vocabulary and remote-mode rules
+  4. **Remote LSP + SSH degraded/offline normalization**
+     - host-aware LSP contract + remote-mode retry/degraded-state packet
+     - depends partly on the file-manager and shell/GUI wording from earlier packets
+  5. **Preview / browser naming residue**
+     - mostly cleanup / normalization after the larger owner packets above
+- Why packet 1 goes first:
+  - it still contains the biggest unresolved product questions, not just wording drift
+  - it touches:
+    - editor undo/redo semantics
+    - assistant-chat diff / revert semantics
+    - Source Control vs editor diff/review ownership
+    - heat-map / change-marker rendering
+    - state feedback across chat, editor, and Source Control
+- Packet 1 sub-questions to close next:
+  - classify every diff-affecting action as one of:
+    - source-buffer edit
+    - Git mutation
+    - restore / rollback / checkpoint action
+  - define undo/redo grouping for:
+    - single-file assistant edits
+    - multi-file assistant edits
+    - hunk-level Git actions
+    - patch-apply / preview-apply actions
+    - conflict-resolution actions
+  - define chat interaction contract for:
+    - files-touched strip vs diff card vs open-in-editor vs open-in-diff
+    - revert scope (`last edit` vs `last turn` vs per-file vs per-thread)
+    - audit / history representation after revert or rollback
+  - define GUI ownership for:
+    - docked editor diff
+    - detached review window
+    - Source Control side-panel pivot / selection state
+    - scrollbar heat-map / gutter change markers
+    - dirty / staged / conflicted / reverted feedback loops
+- Working conclusion:
+  - the next live research step should stay inside packet 1 until its action taxonomy, revert scope, and GUI ownership are explicit enough that the later packets stop guessing about diff behavior
+
+## Discovery Cluster (2026-03-22 diff/review/undo/chat/gui working lock)
+
+- Packet 1 now has enough evidence to move from “gap exists” into a concrete working-lock model.
+- Existing top-level-doc strengths to preserve:
+  - `FileManager.md`
+    - per-buffer undo/redo exists
+    - preview-originated source edits feed normal undo/redo
+    - `Revert last agent edit`
+    - `Restore to… / History`
+  - `assistant-chat-design.md`
+    - files-touched strip with diff counts
+    - inline `code diffs` / diff-edit activity cards
+    - click-to-open from `Read:` / `Edited:` / files-touched entries
+    - `revert last agent edit` is in scope
+  - `GitHub_Integration.md`
+    - Source Control already clearly owns diff/compare/stage/unstage/discard/stash/history/graph/worktrees at a high level
+  - `Crosswalk.md`
+    - terminology split is already clear:
+      - `safe point` = runtime retry/remediation anchor
+      - `restore point` = user-visible history/rewind anchor
+      - `rollback` = explicit restore flow
+- Useful external benchmark signal for this packet:
+  - `bench-03`
+    - strongest pattern is a **single diff/review experience** for local and hosted review flows rather than separate ad-hoc compare widgets
+  - `bench-11`
+    - strong signal for **first-class diff/test widgets** plus durable session/hot-exit recovery, but also repeated warnings around undo/redo inconsistency
+  - thin-wrapper/editor-embed targets repeatedly underdeliver on robust diff/review semantics, which reinforces that PM should treat this as a first-class workspace capability rather than a light addon
+
+- Working taxonomy lock for diff-affecting actions:
+  1. **Source-buffer edits**
+     - examples:
+       - typing in editor
+       - preview-originated bounded patch apply
+       - assistant patch apply that mutates canonical source buffers
+       - conflict-result text edits in a source-backed result pane
+     - owner:
+       - File Editor shared buffer
+     - history model:
+       - participates in normal per-buffer undo/redo
+  2. **Git mutations**
+     - examples:
+       - stage
+       - unstage
+       - discard
+       - stash push/pop
+       - mark conflict resolved / stage resolution
+       - hunk-level Git actions
+     - owner:
+       - Source Control
+     - history model:
+       - **not** editor undo
+       - reversal is via inverse Git action or explicit restore flow
+  3. **Restore / rollback actions**
+     - examples:
+       - `Revert last agent edit`
+       - `Restore to…`
+       - checkpoint restore
+       - rewind / rollback
+     - owner:
+       - backend restore pipeline + FileSafe / document checkpoint path
+     - history model:
+       - not the same as “undo”
+       - resolves to a confirmed restoration event that refreshes affected buffers
+
+- Working undo/redo grouping recommendation:
+  - **single-file assistant mutation batch**
+    - one logical undo group in that file’s buffer
+  - **multi-file assistant mutation batch**
+    - one logical **thread/run receipt** spanning multiple files
+    - still materializes as one undo group **per affected file buffer**
+    - editor `Ctrl+Z` only undoes within the focused file
+    - cross-file rollback is handled by restore/revert actions, not global editor undo
+  - **preview apply / structured preview mutation**
+    - one accepted preview action = one undo group in the source buffer
+  - **hunk-level stage / unstage / discard**
+    - Git mutation, not editor undo
+  - **conflict-resolution buttons** (`accept ours`, `accept theirs`, `accept both`, etc.)
+    - should be treated as structured edits to the result buffer until the user resolves/stages
+    - text result still participates in editor undo while unresolved
+    - final resolve/stage remains a Git mutation, not editor undo
+
+- Working chat diff / revert interaction lock:
+  - files-touched strip remains the compact aggregate view
+  - clicking a path in files-touched / `Read:` / `Edited:` opens the canonical source file
+  - clicking a diff-oriented affordance should open the canonical diff/review surface, not a chat-local diff implementation
+  - chat may preview diffs and summarize edit counts, but chat should **not** become the owner of hunk-level stage/unstage/discard controls
+  - chat should stay an audit/preview layer with:
+    - open file
+    - open diff
+    - revert/restore entrypoints
+    - historical result/audit disclosure
+
+- Working GUI ownership lock:
+  - **Source Control side panel**
+    - owns change lists, selection, Git mutation commands, compare target selection, history/graph/worktree pivots
+  - **Docked editor diff/review**
+    - canonical detailed review surface in-shell
+  - **Detached review window**
+    - optional large-screen / focused review surface
+  - **Chat**
+    - compact preview/audit layer only
+    - opens/focuses editor diff or file editor instead of becoming a third review surface
+  - **Editor gutter + scrollbar overview**
+    - canonical home for change markers / heat-map summaries
+    - not chat
+
+- Working state-feedback lock:
+  - editor tab/chrome:
+    - dirty
+    - conflicted
+    - read-only/degraded
+    - change markers
+  - Source Control rows:
+    - staged / unstaged / untracked / conflicted
+  - chat file cards / files-touched strip:
+    - path + diff counts
+    - optional badges for reverted or conflict attention when thread history includes those actions
+    - chat history retains the original edit card even after revert; later revert card marks that the earlier mutation was superseded
+
+- Biggest remaining decision inside packet 1:
+  - what **`Revert last agent edit`** means by default in chat:
+    - most recent assistant mutation **batch/turn** across all affected files
+    - only the currently selected file
+    - prompt every time
+- Current recommendation:
+  - default `Revert last agent edit` to the **most recent assistant mutation batch/turn across all affected files**
+  - expose finer-grained per-file restore through file history / restore points
+  - keep per-hunk reversal in Source Control rather than chat
+
+- User decision (locked for this work item):
+  - `Revert last agent edit` in chat should default to **reverting the most recent assistant turn across all affected files**
+  - implication:
+    - chat revert is a turn-level restore action
+    - per-file restore remains available elsewhere
+    - per-hunk reversal stays in Source Control
+
+## Discovery Cluster (2026-03-22 search ownership + command family working lock)
+
+- Live canonical-doc gap remains confirmed:
+  - `FinalGUISpec.md`
+    - has Activity Bar / side-panel shell rules
+    - does **not** currently give Search a canonical side-panel owner slot for find-in-files
+    - detachable-panel occupancy list still omits Search
+  - `UI_Command_Catalog.md`
+    - still lacks a canonical `cmd.search.*` command family
+  - `FileManager.md`
+    - already has local tree search/type-ahead behavior
+    - already lets chat `@` mention source lists include recent/modified files and symbol-aware results
+  - therefore the search taxonomy is mostly known, but shell ownership and command IDs are still under-specified
+
+- External signal still supports the existing seam direction:
+  - `bench-13`
+    - strong value signal on async project search + command discoverability
+  - `bench-04`
+    - warns that file-tree discoverability and open/search ergonomics degrade when sidebar responsibilities blur
+  - implementation pattern takeaway:
+    - PM should not collapse command palette, file-tree filtering, semantic navigation, and content search into one vague “search” surface
+
+- Working search-domain split lock:
+  1. **Command Palette**
+     - project-scoped universal search host for:
+       - commands/actions
+       - route/navigation targets
+       - open-file / recent-file / quick-open style file targeting
+       - settings/jump targets
+       - optionally symbol/navigation entries when exposed through providers
+     - not the owner of persistent find-in-files results
+  2. **Search side panel**
+     - canonical owner of:
+       - find-in-files
+       - replace-in-files
+       - regex / case / whole-word toggles
+       - include/exclude scope filters
+       - persistent search result tree / list
+       - replace preview / replace confirmation flows
+     - this is the missing GUI shell owner that later reconciliation must add
+  3. **File Manager search**
+     - local tree filter / type-ahead only
+     - never the owner of project-wide content search results
+  4. **LSP navigation search**
+     - definitions, references, document symbols, workspace symbols
+     - semantically distinct from text search even when surfaced with a similar list UI
+  5. **Chat-domain search**
+     - thread/history/message retrieval only
+     - does not own file content search
+  6. **`@` mention picker**
+     - targeted context insertion picker
+     - may reuse file/symbol providers
+     - not canonical general search
+
+- Working GUI ownership lock:
+  - Search must become an explicit Activity Bar destination / side-panel occupant
+  - command palette remains global and transient
+  - File Manager retains local filter/search field for tree narrowing
+  - LSP result surfaces may deep-link into Search-style result lists or editor locations, but do not replace Search ownership for find-in-files
+
+- Working command-family lock for later reconciliation:
+  - add a canonical `cmd.search.*` family rather than letting each surface invent local commands
+  - minimum family should cover:
+    - show/focus Search panel
+    - start find-in-files
+    - start replace-in-files
+    - open a selected search result
+    - next/previous result navigation
+    - toggle regex / case / whole-word
+    - set or clear include/exclude scope
+    - collapse/expand result groups
+- Command-family rule:
+  - command palette, keyboard shortcuts, Search panel chrome, and context menus should all route through the same canonical `cmd.search.*` commands rather than duplicating semantics under file-manager/chat/lsp-local names
+
+## Discovery Cluster (2026-03-22 file-tree action semantics + GUI implications working lock)
+
+- Live canonical-doc state:
+  - stronger than expected:
+    - drag/drop is already deeply specified, including:
+      - cross-platform payload formats
+      - copy-vs-move default
+      - conflict handling
+      - security validation
+      - progress + feedback
+      - optional undo after drop
+    - editor text clipboard behavior is already specified
+    - `Open in Terminal` already normalizes to `cmd.terminal.show`
+  - still thin / under-specified:
+    - File Manager tree context menu still only names:
+      - New file
+      - New folder
+      - Rename
+      - Delete
+      - Copy full path
+    - no explicit tree-level contracts yet for:
+      - Copy / Cut / Paste of workspace nodes
+      - Copy relative path
+      - Add to Assistant Chat
+      - Open With...
+      - Download / Save Local Copy
+      - reveal/open-containing-folder style local handoff (if supported)
+    - `Save As` exists as an editor-oriented shortcut/menu concept, but tree-level copy/export semantics are not yet normalized
+
+- Working posture lock:
+  - the File Manager tree is **not just a navigator**
+  - it is the canonical workspace-node action surface for filesystem-adjacent operations on files/folders inside the active project context
+  - heavy Git actions still belong to Source Control
+  - heavy content search still belongs to Search
+  - editor text clipboard remains separate from workspace-node operations
+
+- Working action taxonomy for tree operations:
+  1. **Node creation / mutation**
+     - New file
+     - New folder
+     - Rename
+     - Delete
+  2. **Node transfer / duplication**
+     - Copy node
+     - Cut node
+     - Paste node into selected folder/root
+     - Download / Save Local Copy
+  3. **Node disclosure / routing**
+     - Copy full path
+     - Copy relative path
+     - Open in Terminal
+     - Open With...
+  4. **Node-to-chat context actions**
+     - Add to Assistant Chat
+
+- Working semantic lock per missing action:
+  - **Copy / Cut / Paste (tree nodes)**
+    - operates on workspace nodes, not text selections
+    - should use a dedicated file-operation clipboard model so text clipboard semantics are not overloaded
+    - `Copy` duplicates on paste
+    - `Cut` marks pending move and completes on paste
+    - paste target must be a folder or project root
+    - path validation / conflict handling should reuse the drag/drop conflict rules rather than inventing a second system
+  - **Copy relative path**
+    - path is relative to the active project root / active worktree root, not the process cwd of some random terminal
+  - **Add to Assistant Chat**
+    - inserts a canonical file reference into the active chat composer for the active project/thread context
+    - should not silently dump full file contents into the prompt at insertion time
+    - content reading remains an explicit later chat/tool step
+  - **Open With...**
+    - chooses among compatible PM-owned viewers/surfaces first:
+      - source editor
+      - image/media viewer
+      - HTML/browser preview
+      - diff/review surface when applicable
+    - optional system-default handoff can exist, but PM-native surfaces remain primary
+  - **Open in Terminal**
+    - reveals/focuses the owning terminal surface at the node’s directory context
+    - file selection uses parent directory as cwd
+    - does not mint a new session unless the user explicitly asks for a new terminal
+  - **Download / Save Local Copy**
+    - explicit export/copy-out flow to a user-chosen local destination
+    - does not change project-relative path identity
+    - is especially important for remote projects because it is the clean remote-to-local escape hatch
+
+- GUI implications lock:
+  - tree row context menu must become capability-aware instead of one fixed flat list
+  - minimum distinctions:
+    - file vs folder vs project-root row
+    - local vs remote host context
+    - writable vs read-only/degraded/offline state
+    - single-select vs multi-select
+  - disabled-state rules matter:
+    - write actions disable in read-only or degraded remote state
+    - `Download / Save Local Copy` remains available even when remote/project FS is read-only, unless source access itself is unavailable
+    - `Open in Terminal` disables only when no terminal-capable host/session path can be resolved
+
+- Working command-family implication:
+  - later reconciliation needs a canonical `cmd.file.*` family for workspace-node actions
+  - `cmd.terminal.show` already covers `Open in Terminal`
+  - other missing actions should not remain anonymous context-menu-only behavior
+
+- Design warning:
+  - do **not** collapse:
+    - text clipboard
+    - file-operation clipboard
+    - chat context insertion
+    - OS export/download
+  - they may all be user-visible “copy/paste/share” actions, but they have different payloads, permissions, undo models, and remote-host implications
+
+## Discovery Cluster (2026-03-22 remote LSP + SSH degraded/offline normalization working lock)
+
+- Live canonical-doc gaps remain confirmed:
+  - `LSPSupport.md`
+    - still models session/process reuse as one process per `(server_id, root)`
+    - still contains stale fallback/index references into old `FileManager.md` section numbers
+    - still does not make remote-host identity first-class in the attach/session key
+  - `GitHub_Integration.md`
+    - correctly owns remote-mode execution rules:
+      - remote file browsing
+      - remote git
+      - remote terminal
+      - remote agents/providers
+      - bounded SSH reconnect behavior = **one auto-retry**, then explicit `Reconnect`
+  - `FinalGUISpec.md`
+    - still says SSH reconnect uses exponential backoff with **max 5 attempts**
+  - `FileManager.md`
+    - still has strong generic read-only/failure states
+    - but current live wording is still thin on a normalized remote/offline/degraded editor-state vocabulary
+
+- Working ownership lock:
+  - `GitHub_Integration.md §C` remains the owner of remote host identity, SSH reconnect policy, and “remote means remote” execution semantics
+  - File Manager / editor / terminal / LSP consume that host-scoped context
+  - no surface may silently substitute local host behavior for a remote-mode project
+
+- Working host-aware session lock:
+  - LSP session/process key must be **host-aware**
+  - recommended identity:
+    - `(host_id, server_id, root_identity)`
+  - implications:
+    - same absolute path string on two different hosts is **not** the same LSP root
+    - a local project and a remote project never share an LSP session just because the path text matches
+    - reconnecting to a different remote host or different remote root mints a distinct session identity
+
+- Working requested/effective state lock:
+  - keep these distinct in the UI and runtime:
+    - requested remote host / active remote target
+    - effective host connectivity state
+    - requested LSP server selection
+    - effective attached LSP sessions
+    - LSP health (`initializing`, `ready`, `degraded`, `error`, `unavailable`)
+    - file editor/write availability
+  - do not flatten these into one generic “offline” badge
+
+- Working degraded/offline state model:
+  - **host connected**
+    - remote FS, git, terminal, and remote LSP may operate normally
+  - **host reconnecting**
+    - retain visible context and local buffers
+    - show reconnect banner / spinner state
+    - block operations that require confirmed remote round-trips unless they explicitly queue
+  - **host disconnected / unavailable**
+    - do not silently fall back to local git, local shell, local file writes, or local LSP
+    - open remote buffers remain visible as snapshots
+    - saves become explicit `pending write` or blocked actions rather than fake success
+    - new remote file listings/searches/diffs show unavailable state instead of stale pretending-to-be-live behavior
+
+- Working editor-state recommendation for remote files:
+  - if a remote file is already open when the host disconnects:
+    - preserve the buffer in memory
+    - clearly mark the file as remote-degraded
+    - unsaved local edits may remain in buffer memory, but write/flush requires reconnect and explicit confirmation of destination state
+  - recommended explicit user-visible reasons/states:
+    - `Remote host reconnecting`
+    - `Remote host unavailable`
+    - `Pending remote write`
+    - `Remote file is read-only`
+  - this preserves user work without pretending that the remote write already happened
+
+- Working LSP degraded-state lock:
+  - remote LSP sessions follow the same client architecture as local LSP, but attach to the remote host context
+  - when host connectivity drops:
+    - LSP sessions become `degraded` or `unavailable`
+    - semantic actions requiring live server round-trips disable or surface a clear unavailable state
+    - stale diagnostics/symbols must be visibly marked as stale rather than presented as fresh truth
+  - no hidden local fallback analyzer should appear for a remote project unless that is an explicitly separate supported mode
+
+- Working reconnect normalization:
+  - remote reconnect budget should reconcile to the `GitHub_Integration.md` owner rule:
+    - **one bounded auto-retry**
+    - then explicit manual `Reconnect`
+  - reason:
+    - remote mode is a first-class host context, not a background best-effort transport that churns indefinitely
+    - repeated hidden retries blur whether writes/git/LSP are actually live
+
+- Design warning:
+  - remote degradation needs a shared vocabulary across:
+    - File Manager
+    - File Editor
+    - Search
+    - Source Control
+    - Terminal
+    - LSP status / Problems
+    - chat actions that target remote files
+  - otherwise each surface will invent its own “offline”, “stale”, “retrying”, and “read-only” meanings
+
+## Discovery Cluster (2026-03-22 preview/browser naming cleanup working lock)
+
+- Live state is mostly aligned now, but not fully clean:
+  - `FileManager.md`
+    - strong current alignment:
+      - `Open in Browser` -> `workspace_preview`
+      - `Open in Detached Browser` -> `detached_preview`
+      - browser container model is editor/workspace-tab-first
+      - bottom-panel browser hosting is explicitly non-canonical
+    - remaining residue:
+      - `preview_mode` still lists `browser_panel`
+  - `UI_Command_Catalog.md`
+    - already aligned on `cmd.browser.*` with `open_workspace_preview`, `open_detached_preview`, `focus_browser_tab`, promotion, retry, reopen, and browser-session IDs
+  - `storage-plan.md`
+    - already aligned on:
+      - `preview_subject_id`
+      - `browser_session_id`
+      - `session_class`
+      - `workspace_preview`
+      - `detached_preview`
+    - restore/storage model is stronger than the remaining GUI prose
+  - `FinalGUISpec.md`
+    - still contains stale shell residue:
+      - executive-summary / MVP-location / numbered-summary wording still says or implies `Bottom Panel Browser`
+      - architecture bullets still say `Browser tab`
+      - storage table still says `browser_state:v1` rather than the stronger browser-session/projected storage language from `storage-plan.md`
+
+- Working terminology lock:
+  - `preview_subject_id` owns rendered-subject continuity
+  - `browser_session_id` + `session_class` own browser runtime/session continuity
+  - `workspace_preview` is the canonical in-shell browser host for file-backed HTML/workspace browsing
+  - `detached_preview` is the canonical detached browser/preview surface
+  - bottom panel may host **browser-adjacent** surfaces only; it is not the canonical browser host
+
+- Naming cleanup rule:
+  - retire residual labels such as:
+    - `browser_panel`
+    - `Bottom Panel Browser` as the canonical built-in-browser owner
+    - vague generic `Browser tab` wording when the distinction between editor-tab browser and browser-adjacent bottom-panel surfaces matters
+  - prefer explicit terms:
+    - editor-tab browser surface
+    - `workspace_preview`
+    - `detached_preview`
+    - browser-adjacent bottom-panel surfaces
+
+- Working restore/command implication:
+  - route/focus/open/reopen commands must target the canonical browser session model, not an old bottom-panel browser placeholder
+  - restore joins should continue to bind through `preview_subject_id` and `browser_session_id` rather than a generic “preview tab” concept
+
+- Working conclusion after this packet:
+  - the previously confirmed live gap packets now have explicit working-lock guidance in the ledger:
+    - diff/review/undo/chat/gui
+    - search ownership + command family
+    - file-tree action semantics + GUI implications
+    - remote LSP + SSH degraded/offline normalization
+    - preview/browser naming cleanup
+  - remaining work is canonical reconciliation, not additional architecture hunting
+
+## Discovery Cluster (2026-03-22 verification sweep — still not fully fleshed out)
+
+- User asked for a hard verification pass on whether any implementation-significant gaps still remain.
+- Direct spot-check against the live canonical docs confirms the answer is **yes**: the plan set is **not yet fully fleshed out**.
+
+- Confirmed remaining live gaps:
+  1. **`FinalGUISpec.md` still has dangling/missing GUI section references**
+     - section 7 currently ends at **§7.5**
+     - but the doc still cites or implies:
+       - `§7.16` Chat
+       - `§7.18` File Editor
+       - `§7.20` Bottom Panel / Browser / Problems / Debug / Ports
+       - `§7.4.2` Settings > LSP
+       - `§7.4.5` Settings > SSH
+       - `§7.4.6` Settings > Debug
+     - this is no longer just wording drift; it is a live cross-reference / ownership gap
+  2. **Search owner is still missing from the GUI shell**
+     - `FinalGUISpec.md` Activity Bar and side-panel occupancy still omit Search as a canonical side-panel destination
+     - `UI_Command_Catalog.md` still has no canonical `cmd.search.*` family
+     - search taxonomy is known, but the canonical shell owner and command family are still absent
+  3. **File-tree action surface is still thin**
+     - `FileManager.md` tree context menu still only names:
+       - New file
+       - New folder
+       - Rename
+       - Delete
+       - Copy full path
+     - the doc still does not explicitly normalize tree-level:
+       - Copy/Cut/Paste for workspace nodes
+       - Copy relative path
+       - Add to Assistant Chat
+       - Open With...
+       - Download / Save Local Copy
+  4. **Remote LSP contract is still not host-aware in canonical text**
+     - `LSPSupport.md` still models one process per `(server_id, root)`
+     - it still does not adopt the host-aware `(host_id, server_id, root_identity)` direction needed for SSH remote projects
+     - stale fallback/index references to old `FileManager` sections remain live
+  5. **Browser/preview naming residue is still live**
+     - `FileManager.md` still lists `preview_mode = browser_panel`
+     - `FinalGUISpec.md` still says `Bottom Panel Browser tab (§7.20)` in summary tables while also saying the bottom panel is not the canonical browser host
+  6. **Unsaved-buffer recovery contract is still contradictory**
+     - `FileManager.md` says recover-unsaved is **required**
+     - `storage-plan.md` still says recovery / unsaved buffers are **optional** and not required for MVP
+
+- Interpretation:
+  - research coverage is strong enough; the architecture is not missing
+  - but the canonical docs are **still not fully fleshed out / implementation-ready**
+  - the remaining work is now clearly a **reconciliation + doc-closing pass**, not more exploratory research
+
+## Discovery Cluster (2026-03-22 ledger-only re-sweep — feature coverage boundary check)
+
+- User re-affirmed the hard scope lock:
+  - only `working_ledger.md` and `meta.json` may be edited
+  - accidental canonical-doc edits were reverted
+  - do not start reconciliation again without explicit renewed permission
+
+- Purpose of this pass:
+  - verify whether the requested feature cluster still hides any material gaps beyond the packets already logged
+  - especially check the boundary between:
+    - file-tree actions
+    - media/browser preview
+    - chat context insertion
+    - command families
+
+- Direct confirmation of **already-strong** live coverage:
+  - `FileManager.md`
+    - drag/drop import + export semantics are already deeply specified
+    - image viewing is already first-class (`§8.1`, `§14`)
+    - HTML/browser preview and hot reload are already strong (`§8.2`, `§14`)
+    - browser evidence capture is already explicit:
+      - screenshots
+      - traces
+      - videos / recordings
+    - `Open in Browser` / `Open in Detached Browser` are already normalized to the PM browser session model
+    - `Open in Terminal` / `Show Terminal` already preserve existing terminal ownership rather than minting a new session
+    - tree baseline actions already named:
+      - New file
+      - New folder
+      - Rename
+      - Delete
+      - Copy full path
+  - `assistant-chat-design.md`
+    - `@` mention file insertion is already specified
+    - LSP-backed symbol insertion via `@` is already specified
+    - click-to-open from files-touched / `Read:` / `Edited:` is already specified
+  - `UI_Command_Catalog.md`
+    - `cmd.browser.*` is already materially fleshed out
+    - `cmd.terminal.show` already covers `Open in Terminal` / `Show Terminal`
+
+- Important boundary clarifications from this pass:
+  - **`Add to Assistant Chat` is not a missing chat capability**
+    - chat already has a canonical file/symbol insertion model via `@`
+    - the gap is specifically the **File Manager tree action entrypoint** into that existing model
+  - **media/browser support is not the missing architecture packet**
+    - image viewing, HTML preview, browser evidence capture, and browser-session semantics are already much stronger than the generic file-action surface
+    - the unresolved piece is tree-action normalization for:
+      - `Open With...`
+      - explicit export/download
+      - local-save-copy handoff
+  - **copy/cut/paste confusion remains a taxonomy risk**
+    - text clipboard
+    - file-operation clipboard
+    - chat context insertion
+    - export/download
+    - these are still easy to blur if not normalized explicitly during reconciliation
+
+- Still-live absences / partials confirmed by direct search:
+  - `FileManager.md` still does **not** explicitly name:
+    - `Open With...`
+    - `Add to Assistant Chat`
+    - `Download / Save Local Copy`
+    - tree-node `Copy / Cut / Paste`
+    - `Copy relative path`
+  - `UI_Command_Catalog.md` still has **no canonical `cmd.file.*` family**
+  - `UI_Command_Catalog.md` still has **no canonical `cmd.search.*` family**
+  - `assistant-chat-design.md`
+    - still treats undo / Git integration partly as comparison/gap language
+    - the work-item-locked default for `Revert last agent edit`:
+      - revert the most recent assistant turn across all affected files
+    - is still **not** expressed as finalized canonical behavior in the live doc set
+  - `FileManager.md` still has the previously confirmed structural issue:
+    - TOC advertises `§10`, `§11`, `§12`
+    - body still jumps to `Verification`, then `§13`, then `§14`
+  - `FileManager.md` still carries preview naming residue:
+    - `preview_mode = browser_panel`
+  - `FinalGUISpec.md` still carries shell/storage/reconnect residue:
+    - `browser_state:v1`
+    - `Bottom Panel Browser` MVP phrasing
+    - SSH retry wording with `max 5 attempts`
+    - missing / dangling section ownership refs for:
+      - `§7.16`
+      - `§7.18`
+      - `§7.20`
+      - `§7.4.2`
+      - `§7.4.5`
+      - `§7.4.6`
+  - `storage-plan.md` contradiction remains live:
+    - unsaved-buffer recovery is still marked optional there
+    - while `FileManager.md` still treats recover-unsaved as required
+
+- Working conclusion after this re-sweep:
+  - no new hidden architecture packet surfaced in the requested feature cluster
+  - the previously logged packets still correctly describe the real remaining work:
+    - diff/review/undo/chat/gui
+    - search ownership + command family
+    - file-tree action semantics + GUI implications
+    - remote LSP + SSH degraded/offline normalization
+    - preview/browser naming cleanup
+    - unsaved-buffer recovery contradiction
+  - useful narrowing from this pass:
+    - media/image/HTML/browser preview is largely implementation-ready already
+    - the unresolved work is primarily:
+      - shell ownership
+      - command-family coverage
+      - tree-action normalization
+      - host-aware remote/LSP wording
+      - browser naming residue
+      - recovery-contract alignment
+  - ledger-side research for this feature cluster appears saturated again
+  - remaining work is canonical reconciliation when/if explicitly authorized
+
+## Discovery Cluster (2026-03-22 status semantics correction)
+
+- `ready_for_reconciliation` was too strong / misleading while live canonical-doc gaps still remain.
+- Correct interpretation that had been used internally:
+  - research had identified the remaining packets clearly enough that the next phase would be reconciliation rather than broad exploration
+- User-facing / work-item status correction:
+  - keep `meta.json` status as `active` while the live doc set still contains unresolved implementation-significant gaps
+  - reserve `ready_for_reconciliation` for the point where the work item is actually being handed off cleanly, rather than merely “research feels saturated”
+
+## Discovery Cluster (2026-03-22 shell/search closure packet)
+
+- Direct shell confirmation from `FinalGUISpec.md §3.1`:
+  - the side panel is the **right-hand** activity-bar surface slot
+  - width budget is explicitly `240-480px`
+  - therefore Search/File Manager/Source Control/GitHub Actions/etc. should reconcile as **right-hand side-panel occupants**, not drifting page surfaces
+
+- Working shell-placement lock:
+  - the following are canonical **side-panel** occupants of the single right-hand slot:
+    - Search
+    - File Manager
+    - Source Control
+    - GitHub Actions
+    - Docker Manager
+    - Artifacts
+    - Chat
+    - Run & Debug
+  - none of the above should be described as canonical primary-content pages
+  - detach / re-dock must return these surfaces to the same right-hand slot when re-docked
+  - bottom panel remains runtime/diagnostic ownership only; browser remains editor/workspace-tab hosted
+
+- Working `cmd.search.*` family lock:
+  - `cmd.search.show { project_id, focus?: "query"|"results"|"replace", workspace_tab_id? }`
+    - layout/UI state only
+    - intended target for keyboard shortcut and command-palette entry
+  - `cmd.search.find_in_files { project_id, query, include_globs?, exclude_globs?, regex?, case_sensitive?, whole_word? }`
+    - canonical project text-search start/update action
+  - `cmd.search.replace_in_files { project_id, query, replacement, include_globs?, exclude_globs?, regex?, case_sensitive?, whole_word?, preview?: boolean }`
+    - canonical replace-in-files action
+  - `cmd.search.open_result { project_id, result_ref, disposition?: "current_group"|"other_group"|"split" }`
+    - opens the file/location through the canonical open-file contract
+  - `cmd.search.next_result { query_session_id? }`
+  - `cmd.search.prev_result { query_session_id? }`
+  - `cmd.search.toggle_regex { query_session_id? }`
+  - `cmd.search.toggle_case_sensitive { query_session_id? }`
+  - `cmd.search.toggle_whole_word { query_session_id? }`
+  - `cmd.search.set_scope { query_session_id?, include_globs?, exclude_globs?, roots? }`
+  - `cmd.search.clear_scope { query_session_id? }`
+  - `cmd.search.expand_all { query_session_id? }`
+  - `cmd.search.collapse_all { query_session_id? }`
+  - `cmd.search.replace_one { query_session_id, result_ref, replacement }`
+  - `cmd.search.replace_all { query_session_id, replacement }`
+
+- Search ownership rules locked:
+  - `Ctrl+Shift+F` should later dispatch `cmd.search.show` with query focus
+  - command palette may launch or focus Search, but is not the owner of persistent results
+  - diff-local search belongs to the diff/review owner, not `cmd.search.*`
+  - LSP references/workspace-symbol/document-symbol results remain LSP-owned even if their result list visually resembles Search
+  - File Manager search remains a local tree filter/type-ahead only
+
+- Later reconciliation targets:
+  - `FinalGUISpec.md`
+    - Activity Bar owner list
+    - side-panel occupancy text
+    - shortcut table
+    - missing Search subsection under `§7`
+  - `UI_Command_Catalog.md`
+    - new canonical `cmd.search.*` family
+
+## Discovery Cluster (2026-03-22 file-action command closure packet)
+
+- Direct command-pattern signal from `UI_Command_Catalog.md`:
+  - canonical commands use stable `cmd.<surface>.<verb>` IDs with structured payloads
+  - cross-surface affordances should dispatch those same IDs rather than inventing private context-menu-only behavior
+
+- Working `cmd.file.*` family lock:
+  - `cmd.file.new_file { project_id, parent_path }`
+  - `cmd.file.new_folder { project_id, parent_path }`
+  - `cmd.file.rename { project_id, path, new_name? }`
+  - `cmd.file.delete { project_id, paths: string[] }`
+  - `cmd.file.copy_full_path { project_id, path }`
+  - `cmd.file.copy_relative_path { project_id, path, root_kind?: "project"|"worktree" }`
+  - `cmd.file.copy_nodes { project_id, paths: string[] }`
+  - `cmd.file.cut_nodes { project_id, paths: string[] }`
+  - `cmd.file.paste_nodes { project_id, target_dir }`
+  - `cmd.file.open_with { project_id, path, target: "source_editor"|"image_viewer"|"workspace_preview"|"detached_preview"|"diff_review"|"system_default" }`
+  - `cmd.file.save_local_copy { project_id, source_paths: string[], destination_uri? }`
+
+- Explicit non-`cmd.file.*` routing lock:
+  - `Open in Terminal` continues to dispatch `cmd.terminal.show`
+  - `Add to Assistant Chat` should dispatch a **chat-owned** command because it mutates composer/context state, not filesystem state
+  - recommended canonical ID:
+    - `cmd.chat.add_file_reference { project_id, thread_id?, path, line_range? }`
+
+- Capability matrix lock:
+  - `new_file` / `new_folder`
+    - valid on project root or folder target
+  - `rename` / `delete` / path-copy actions
+    - valid on file or folder
+  - `open_with`
+    - file-only
+  - `cmd.chat.add_file_reference`
+    - file-only for MVP
+    - folder insertion remains out of scope until folder-context prompt semantics are defined explicitly
+  - `save_local_copy`
+    - valid for file or folder
+    - folder export copies recursively to a user-selected local destination
+    - remains the explicit remote-to-local escape hatch
+  - `copy_nodes` / `cut_nodes` / `paste_nodes`
+    - valid for file or folder
+    - support optional multi-select
+
+- Clipboard / transfer engine lock:
+  - workspace-node clipboard is a dedicated file-operation clipboard, not the system text clipboard
+  - paste and drag/drop must reuse one path-validation + conflict-resolution engine
+  - cut-pending state remains visibly armed until paste or clear
+  - successful paste should reuse the same progress + toast model as drag/drop rather than inventing a second feedback path
+
+- Later reconciliation targets:
+  - `FileManager.md`
+    - tree context menu / action semantics
+  - `UI_Command_Catalog.md`
+    - new canonical `cmd.file.*`
+    - new `cmd.chat.add_file_reference`
+
+## Discovery Cluster (2026-03-22 diff/review closure packet)
+
+- Direct live command anchors:
+  - `GitHub_Integration.md` already owns:
+    - `cmd.git.stage`
+    - `cmd.git.unstage`
+    - `cmd.git.discard`
+    - `cmd.git.diff_open`
+    - `cmd.git.diff_toggle_mode`
+  - `UI_Command_Catalog.md` already owns:
+    - `cmd.chat.rewind`
+    - `cmd.chat.revert`
+
+- Compare-target defaults lock:
+  - opening a file diff from the **unstaged** list defaults to:
+    - `index <-> working tree`
+  - opening a file diff from the **staged** list defaults to:
+    - `HEAD <-> index`
+  - opening an **untracked** file defaults to:
+    - `empty <-> working tree`
+  - opening a diff from **commit history** defaults to:
+    - `selected commit <-> first parent`
+  - opening a **conflicted** file defaults to:
+    - three-way conflict review (`base`, `ours`, `theirs`, `result`)
+
+- Required `cmd.git.*` additions lock:
+  - `cmd.git.diff_set_compare_target { target_kind: "head"|"index"|"merge_base"|"branch"|"commit"|"parent", ref? }`
+  - `cmd.git.diff_search { query, direction?: "next"|"prev" }`
+  - `cmd.git.stage_hunks { path, hunk_ids: string[] }`
+  - `cmd.git.unstage_hunks { path, hunk_ids: string[] }`
+  - `cmd.git.discard_hunks { path, hunk_ids: string[] }`
+  - `cmd.git.conflict_apply_resolution { path, conflict_id, resolution: "ours"|"theirs"|"both" }`
+
+- Undo / revert / rewind lock:
+  - hunk stage/unstage/discard actions are Git mutations, not editor undo
+  - conflict-resolution buttons produce structured edits in the result buffer and remain undoable until final stage / mark-resolved
+  - `cmd.chat.revert` is the correct canonical command entrypoint for **Revert last agent edit**
+  - when `target_message_id` is omitted:
+    - resolve to the latest assistant turn in the current thread that produced persisted file mutations
+  - if that turn touched multiple files:
+    - revert the whole turn across all affected files
+  - `cmd.chat.rewind` remains conversation-history rewind and must not silently stand in for file restore
+
+- Diff local-search ownership lock:
+  - diff-local search belongs to the Git diff/review surface
+  - it is **not** project-wide search and must not route through `cmd.search.find_in_files`
+
+- Heat-map / marker lock:
+  - editor gutter + scrollbar overview remain the only canonical change-marker / heat-map owners
+  - conflicted markers override staged/unstaged styling until resolved
+  - staged and unstaged state must remain visually distinguishable when both exist for one file
+  - revert/restore should surface as audit/history state plus toast/banner, not as a new persistent heat-map class
+
+- Later reconciliation targets:
+  - `GitHub_Integration.md`
+    - compare-target defaults
+    - hunk actions
+    - conflict review
+    - diff-local search
+  - `UI_Command_Catalog.md`
+    - added `cmd.git.*` coverage
+  - `assistant-chat-design.md`
+    - explicit `cmd.chat.revert` default semantics
+
+## Discovery Cluster (2026-03-22 remote LSP + recovery closure packet)
+
+- Direct owner anchors:
+  - `LSPSupport.md` still models reuse as one process per `(server_id, root)`
+  - `GitHub_Integration.md §C` remains the owner of remote execution rules and one-auto-retry reconnect policy
+
+- Host-aware replacement lock:
+  - root discovery may still start from the opened file path
+  - session/process reuse key must become:
+    - `(host_id, server_id, root_identity)`
+  - `root_identity` is the canonical on-host root identity, not a raw path string copied across hosts
+  - same textual path on different hosts never shares an LSP session
+
+- Shared remote-state vocabulary lock across File Manager / Search / Source Control / Terminal / Problems / LSP:
+  - **freshness**
+    - `current`
+    - `refreshing`
+    - `stale`
+  - **health**
+    - `healthy`
+    - `degraded`
+    - `unavailable`
+  - **write availability**
+    - `writable`
+    - `pending_write`
+    - `blocked`
+    - `read_only`
+  - do not flatten the above into one generic `offline` badge
+
+- Surface-specific implications lock:
+  - Search
+    - may display prior results as stale snapshot data
+    - new queries that require remote round-trips block or show unavailable when host is unavailable
+  - Source Control
+    - may display stale status/diff data explicitly
+    - must not silently fall back to local Git
+  - Problems / LSP
+    - prior diagnostics may remain visible but must be marked stale or unavailable
+  - open remote buffers
+    - remain visible as snapshots during disconnect
+    - local edits may remain buffered but do not imply remote write success
+
+- Recovery alignment lock:
+  - recover-unsaved is required MVP for both local and remote-backed buffers
+  - recovery snapshot represents **local unsaved buffer state only**
+  - it never implies that a remote write succeeded
+  - recommended recovered-remote banner copy:
+    - `Recovered local edits — remote destination not yet synchronized`
+  - reconnect or destination revalidation is required before save/flush
+  - `storage-plan.md` optional wording must later reconcile to required status
+
+- Later reconciliation targets:
+  - `LSPSupport.md`
+    - host-aware session key language
+    - stale cross-refs
+  - `FileManager.md`
+    - remote editor/search/write-state language
+  - `FinalGUISpec.md`
+    - reconnect wording consistency
+  - `storage-plan.md`
+    - recover-unsaved requirement row
+
+## Discovery Cluster (2026-03-22 ledger-only gap status after closure packets)
+
+- After the command/state closure packets above, the remaining ambiguity inside the active research seam is now low.
+- The work item still is **not reconciled** and the canonical docs still contain live gaps.
+- But the unresolved packets now have implementation-ready ledger guidance for:
+  - shell placement
+  - search command family
+  - file action command family
+  - chat file-reference routing
+  - diff compare defaults
+  - hunk/conflict command coverage
+  - chat revert vs rewind semantics
+  - host-aware remote LSP identity
+  - shared remote degraded-state vocabulary
+  - unsaved-buffer recovery alignment
+- At this point the remaining work is almost entirely transcription/reconciliation into canonical docs once explicitly authorized.
+
+## Discovery Cluster (2026-03-22 reconciliation handoff map for the six open packets)
+
+- This cluster converts the remaining open packets into a **doc-by-doc handoff map** so later reconciliation can execute surgically instead of re-discovering scope.
+
+- **Packet: `recon-shell-placement-consistency`**
+  - primary owner docs to patch later:
+    - `FinalGUISpec.md`
+  - exact live targets:
+    - `§4.1 Activity Bar` (`229-262`)
+      - Search is missing from required side-panel items and canonical side-panel descriptions
+    - page-surface wording around `349-351`
+      - still describes Source Control and similar surfaces as primary-content pages instead of side-panel occupants
+    - shell structure `§3.1` remains the anchor proving the side panel is the right-hand activity-bar slot
+  - required reconciliation outcome:
+    - Search explicitly joins the canonical side-panel occupant set
+    - shell wording consistently treats Search/File Manager/Source Control/GitHub Actions/Docker/Artifacts/Chat/Run & Debug as right-hand side-panel occupants
+    - detachable/docking prose no longer conflicts with that occupancy model
+  - acceptance check:
+    - no remaining canonical prose claims these surfaces are primary-content pages unless the statement is explicitly about a routed detail page rather than the activity-bar occupant itself
+
+- **Packet: `recon-search-command-family`**
+  - primary owner docs to patch later:
+    - `FinalGUISpec.md`
+    - `UI_Command_Catalog.md`
+  - exact live targets:
+    - `FinalGUISpec.md §4.1` (`229-262`)
+      - Search missing as shell owner
+    - `UI_Command_Catalog.md`
+      - no live `cmd.search.*` family exists
+  - required reconciliation outcome:
+    - add Search side-panel owner text in `FinalGUISpec.md`
+    - add the locked `cmd.search.*` family in `UI_Command_Catalog.md`
+    - normalize shortcut / command-palette / chrome actions onto `cmd.search.show`
+  - acceptance check:
+    - project text search, replace-in-files, scope filters, and result navigation all route through canonical `cmd.search.*`
+    - File Manager search remains local tree filter only
+    - diff-local search remains Git-owned, not `cmd.search.*`
+
+- **Packet: `recon-file-action-commands`**
+  - primary owner docs to patch later:
+    - `FileManager.md`
+    - `UI_Command_Catalog.md`
+    - small supporting touch in `assistant-chat-design.md` if needed
+  - exact live targets:
+    - `FileManager.md` context menu summary (`75-84`, especially `79`)
+      - only names New file / New folder / Rename / Delete / Copy full path
+    - `FileManager.md` browser/open surface wording (`392-399`, `568-590`)
+      - still needs normalization against `Open With...` and preview naming cleanup
+    - `FileManager.md` body structure break (`492` onward)
+      - missing advertised `§10`, `§11`, `§12`
+    - `UI_Command_Catalog.md`
+      - no live `cmd.file.*`
+      - no live `cmd.chat.add_file_reference`
+  - required reconciliation outcome:
+    - add explicit tree-action semantics for:
+      - copy/cut/paste nodes
+      - copy relative path
+      - add to Assistant Chat
+      - open with
+      - save local copy / download
+    - add canonical `cmd.file.*`
+    - add canonical `cmd.chat.add_file_reference`
+    - preserve `cmd.terminal.show` ownership for `Open in Terminal`
+  - acceptance check:
+    - every user-visible tree action dispatches a stable command ID or explicitly reuses an existing one
+    - no action remains anonymous context-menu-only behavior
+    - text clipboard, file-operation clipboard, chat insertion, and export/download remain distinct concepts
+
+- **Packet: `recon-diff-review-depth`**
+  - primary owner docs to patch later:
+    - `GitHub_Integration.md`
+    - `UI_Command_Catalog.md`
+    - `assistant-chat-design.md`
+    - supporting alignment in `FileManager.md`
+  - exact live targets:
+    - `GitHub_Integration.md`
+      - ownership prose around Source Control (`99-110`, `123-127`)
+      - command table (`745-763`) lacks compare-target, hunk, conflict, and diff-search commands
+    - `assistant-chat-design.md`
+      - gap table row at `1216` still frames undo/Git integration as a comparison/gap note
+    - `UI_Command_Catalog.md`
+      - no `cmd.git.*` coverage yet for hunk/conflict/compare-target additions
+  - required reconciliation outcome:
+    - add compare-target defaults
+    - add hunk stage/unstage/discard command coverage
+    - add conflict-resolution command coverage
+    - add diff-local search ownership/command coverage
+    - make `cmd.chat.revert` default semantics explicit:
+      - omitted `target_message_id` = latest assistant turn with persisted file mutations
+      - multi-file turn = revert whole turn across all affected files
+    - keep `cmd.chat.rewind` as conversation/history rewind only
+  - acceptance check:
+    - Git mutations never masquerade as editor undo
+    - chat remains preview/audit + restore entrypoint, not hunk-action owner
+    - editor gutter/scrollbar overview remain the only canonical heat-map owners
+
+- **Packet: `recon-remote-lsp`**
+  - primary owner docs to patch later:
+    - `LSPSupport.md`
+    - `FileManager.md`
+    - `FinalGUISpec.md`
+    - `GitHub_Integration.md` only if clarification text is needed
+  - exact live targets:
+    - `LSPSupport.md`
+      - root/session identity language in `§3.5-§3.6` (`142-181`) still says one process per `(server_id, root)`
+    - `FinalGUISpec.md`
+      - SSH reconnect wording at `1190` still says exponential backoff / max 5 attempts
+    - `FileManager.md`
+      - save/revert/editor state wording is still thinner than the locked remote degraded-state vocabulary
+  - required reconciliation outcome:
+    - replace local-only LSP session key language with `(host_id, server_id, root_identity)`
+    - reconcile reconnect wording to the `GitHub_Integration.md §C` owner rule:
+      - one bounded auto-retry
+      - then explicit `Reconnect`
+    - normalize remote freshness / health / write-availability vocabulary across editor, Search, Source Control, Problems, and LSP surfaces
+  - acceptance check:
+    - no canonical text implies silent local fallback for remote-mode projects
+    - stale remote data can remain visible, but must be labeled stale/degraded/unavailable appropriately
+
+- **Packet: `recon-recovery-contract-alignment`**
+  - primary owner docs to patch later:
+    - `storage-plan.md`
+    - `FileManager.md`
+  - exact live targets:
+    - `storage-plan.md` gap table (`623-636`, especially `631`)
+      - still says recovery / unsaved buffers are optional and not required for MVP
+    - `FileManager.md` save/revert section (`171-175`)
+      - already treats recover-unsaved and restore flows as required behavior
+  - required reconciliation outcome:
+    - make recover-unsaved required MVP in storage planning too
+    - preserve the lock that recovery snapshots represent **local unsaved buffer state**, not proof of successful remote write
+    - add explicit recovered-remote banner / explanation language during reconciliation
+  - acceptance check:
+    - no canonical plan text remains that says unsaved recovery is optional
+    - remote recovery semantics do not imply write success on a disconnected host
+
+- **Cross-packet browser residue cleanup that must ride with reconciliation**
+  - `FinalGUISpec.md`
+    - storage table (`1011-1015`) still uses `ssh_connections:v1` / `browser_state:v1`
+    - promoted-features table (`1204-1217`) still says `Bottom Panel Browser tab`
+    - risk table (`1188-1190`) still says `Browser tab (§7.20)` and `max 5 attempts`
+  - `FileManager.md`
+    - `570` still says `browser panel/window`
+    - `590` still lists `preview_mode = browser_panel`
+  - working rule:
+    - browser cleanup is not a separate seventh packet; it must be folded into shell-placement, file-action, and remote/recovery reconciliation so stale browser naming does not survive alongside the new command/state model
+
+- **Recommended reconciliation order once authorized**
+  1. `FinalGUISpec.md`
+     - fix shell ownership, Search, browser residue, reconnect wording, and stale storage keys
+  2. `FileManager.md`
+     - restore missing `§10-§12`, normalize tree actions, remove browser-panel residue, and deepen remote editor state wording
+  3. `UI_Command_Catalog.md`
+     - add `cmd.search.*`, `cmd.file.*`, `cmd.chat.add_file_reference`, and missing `cmd.git.*`
+  4. `GitHub_Integration.md`
+     - deepen compare/hunk/conflict/search-in-diff contract
+  5. `LSPSupport.md`
+     - convert to host-aware session identity and repair stale cross-refs
+  6. `storage-plan.md`
+     - align recover-unsaved requirement and browser/session storage wording
+  7. `assistant-chat-design.md`
+     - replace remaining gap-language around revert semantics with canonical behavior text
+
+- Tracking/status note:
+  - the six SQL packet todos remain `in_progress` intentionally
+  - reason:
+    - the ledger-side research/handoff is now strong
+    - but the canonical owner docs have **not** been reconciled yet
+    - closing those todos before reconciliation would blur “research packet closed” with “owner docs updated”

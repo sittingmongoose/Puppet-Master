@@ -258,6 +258,30 @@
 - critical unresolved Cursor detail:
 - local `cursor-agent` help does not expose `--user-data-dir`
 - Cursor staff guidance still points to `cursor --user-data-dir=...` as the multi-account workaround
+- PM's own native Skills system is already canonically specified and must remain the primary MVP runtime contract:
+- `Plans/Skills_System.md` is the SSOT for skill identity, discovery roots, search order, permissions, runtime surface, and GUI ownership.
+- `Plans/Prompt_Pipeline.md` and `Plans/FileSafe.md` already define the canonical runtime path:
+  1. resolve skills from the PM registry
+  2. permission-filter them
+  3. bundle selected skill content into compiled context as needed
+  4. preserve on-demand access through the PM `skill` tool
+- `Plans/Skills_System.md` explicitly says provider-native skill directories, agent files, and external packaging formats are discovery/import/export/interoperability inputs, not the canonical MVP runtime contract.
+- `Plans/MiscPlan.md` already reinforces the same rule:
+  - there is no MVP requirement to translate skills into separate provider-native runtime delivery mechanisms per provider
+  - runner wiring must preserve the canonical PM registry and PM `skill` tool behavior
+- OpenCode repo inspection supports this PM-native framing rather than undermining it:
+  - OpenCode's own skill system sits above its provider layer
+  - Codex, GitHub Copilot, and coding-plan providers inside OpenCode do not appear to require provider-specific skill plumbing
+  - this is a useful reference pattern for PM: provider differences affect auth/model/runtime transforms more than skill delivery
+- Corrected design direction:
+  - PM native skills are the canonical runtime path for MVP across providers
+  - provider-native skill files/formats remain compatibility, discovery, projection, or interoperability layers
+  - provider-specific skill work should focus on optional projection/import/export behavior and GUI disclosure, not replacing the PM registry/bundling/tool path
+- This correction invalidates the earlier drift toward a provider-by-provider native skill runtime matrix as the primary MVP design.
+- Remaining implementation questions for skills are narrower now:
+  - how PM optionally projects or mirrors PM skills into provider-native conventions for interoperability
+  - how the GUI surfaces projection state, drift, and override behavior per provider/runtime
+  - whether any provider needs extra runner hints so PM-bundled skills and the PM `skill` tool remain usable in practice
 - PM therefore still needs a concrete implementation decision for how Cursor account isolation will be applied to the agent runtime
 - Official coding-plan docs also sharpen quota/reset semantics:
 - Alibaba Coding Plan documents dedicated Coding Plan keys and fixed reset windows at 5-hour, weekly, and monthly boundaries
@@ -921,6 +945,164 @@
 - authoritative session/tool stats from local runtime
 - inferred/estimated usage
 - UI must label which kind is being shown.
+- Usage/cooldown semantics must use a generic window model rather than a hardcoded `5h/7d` assumption:
+- canonical usage-window fields should support:
+- `window_kind` = `rolling | fixed_reset | billing_cycle | session_only | unknown`
+- `window_label`
+- `window_scope` = `provider | account | account+model | org | server_profile`
+- `used_value`
+- `remaining_value`
+- `limit_value`
+- `reset_at`
+- `cooldown_until`
+- `pressure_state`
+- `source_kind`
+- `signal_confidence`
+- `hard_block`
+- precedence rule for limits/cooldowns:
+- per-account observed/provider-reported effective limits outrank generic provider-doc defaults
+- provider docs establish expected/default behavior
+- runtime/provider telemetry and observed account state establish effective behavior for that specific account
+- PM should preserve both `documented/default expectation` and `effective observed state` when they differ
+- limit/cooldown precedence and switching recommendation:
+- source precedence for effective routing state:
+- 1. explicit provider-reported hard block / cooldown / reset data for the specific account
+- 2. explicit provider-reported usage-window values for the specific account
+- 3. structured runtime output for the specific account/session
+- 4. durable observed account history derived from repeated provider/runtime signals
+- 5. provider-doc/default expectations for that product/account class
+- 6. heuristic/inferred local pressure only
+- PM should never let a lower-confidence source override a higher-confidence hard block
+- PM may let a higher-confidence source clear a lower-confidence inferred block
+- recommended normalized fields per window/account:
+- `documented_limit_profile?`
+- `effective_limit_profile?`
+- `effective_source_kind`
+- `effective_signal_confidence`
+- `observed_diverges_from_documented`
+- switching rule implications:
+- if authoritative account-specific data says `hard_block=true`, PM must not route to that account even if docs say the window should have reset already
+- if only inferred pressure exists and no authoritative cooldown exists, PM may preemptively switch, but should label the reason as inferred/soft rather than hard exhaustion
+- if docs say an account type should be blocked but live authoritative data shows availability, PM should trust the live account state and preserve the docs mismatch as diagnostic context only
+- manual overrides:
+- manual preference may override soft/inferred pressure selection, but must not override authoritative hard-block states
+- reset behavior:
+- when a known `reset_at` passes, PM should move the account to `validating` or `eligible_pending_recheck`, not blindly to `ready`
+- a successful revalidation or successful next run clears the cooldown state
+- account-variance rule:
+- PM should assume provider docs describe the default/current product semantics, but older or grandfathered accounts may have different limits or cooldown rules
+- this applies across all providers
+- therefore effective usage/cooldown state must be modeled per account from observed/provider-reported data first, with docs/defaults used only as baseline expectations
+- first-pass provider/account-type usage-cooldown matrix:
+- naming/grouping correction:
+- `Alibaba Coding Plan`, `MiniMax Coding Plan`, and `Z.AI Coding Plan` are user-visible provider names, but they belong in the same direct-provider/runtime bucket as `GitHub Copilot`, `Codex`, and `Gemini`
+- `Gemini` API key:
+- multi-source quota/usage model; not one fixed reset shape
+- `Gemini CLI` OAuth/API/Vertex:
+- strong per-run runtime stats, but quota/cooldown semantics remain auth-family dependent
+- `Cursor` browser-auth account:
+- strong local per-run usage; account/limit semantics likely need API augmentation
+- `Cursor` API-key account:
+- likely better for usage/account APIs than subscription semantics; still needs product-policy clarity
+- `Claude Code` subscription account:
+- usage/pressure visibility with weaker cost precision and provider-specific cooldown semantics
+- `Claude Code` console/API account:
+- stronger authoritative cost/usage precision
+- `Codex` ChatGPT/browser account:
+- strong local runtime stats; provider/runtime rate-limit hints should be parsed separately from token stats
+- `Codex` API-key account:
+- likely strongest authoritative cost/usage semantics
+- `GitHub Copilot`:
+- mixed org/account metrics plus runtime output; provider/org attribution must stay first-class
+- `OpenCode`:
+- strong per-run normalized usage; upstream cooldown semantics only as strong as OpenCode/upstream expose
+- direct providers with coding-plan-branded products:
+- `Alibaba Coding Plan`: fixed reset windows at 5-hour, weekly, and monthly boundaries from official docs
+- `MiniMax Coding Plan`: fixed 5-hour window plus explicit remains endpoint from official docs
+- `Z.AI Coding Plan`: plan-dependent quota/reset semantics on the coding-plan endpoint
+- UI disclosure rule:
+- Agent-Config and Usage should show when PM is using:
+- `Documented default`
+- `Observed effective`
+- `Inferred only`
+- scheduler implication:
+- PM should switch on normalized `pressure_state` / `hard_block`, not on provider-specific string parsing alone
+- Trigger-table recommendation for normalized pressure states:
+- `nominal`
+- entry conditions:
+- authoritative or observed remaining capacity above configured threshold
+- no active cooldown
+- no recent hard-block signal
+- switch behavior:
+- retain current/preferred account if otherwise healthy
+- `approaching_threshold`
+- entry conditions:
+- authoritative or observed remaining capacity at or below warning threshold but above switch threshold
+- or repeated soft provider warnings with no hard block
+- switch behavior:
+- do not switch automatically unless policy explicitly uses aggressive preemption
+- surface warning in Agent-Config and Usage
+- `threshold_reached`
+- entry conditions:
+- remaining capacity at or below configured switch threshold
+- or provider reports soft exhaustion soon / near-limit state
+- switch behavior:
+- eligible for preemptive switch at next attempt boundary
+- reason code should be `soft_threshold_preemptive_switch` or equivalent, not hard exhaustion
+- `exhausted`
+- entry conditions:
+- authoritative usage window reports zero remaining capacity
+- or provider/runtime emits a strong exhaustion/rate-limit signal that should block immediate reuse
+- switch behavior:
+- mark current window/account as hard block or cooldown according to signal
+- force failover on next eligible attempt
+- `unknown`
+- entry conditions:
+- no reliable authoritative or observed pressure data
+- switch behavior:
+- remain eligible unless separate health/auth state blocks the account
+- do not preemptively switch on `unknown` alone
+- Trigger-table recommendation for hard-block/cooldown events:
+- authoritative cooldown with `cooldown_until`
+- set `hard_block=true`
+- state becomes `cooldown`
+- account is skipped until revalidation after expiry
+- authoritative auth failure / expired credentials
+- set availability to `hard_blocked` or `needs_configuration`
+- do not retry automatically without recovery flow
+- inferred soft rate-limit only
+- keep `hard_block=false`
+- set pressure to `approaching_threshold` or `threshold_reached`
+- allow policy-based preemptive switch but keep account re-eligible for later validation
+- post-reset behavior:
+- if `reset_at` / `cooldown_until` passes:
+- state becomes `eligible_pending_recheck` / `validating`
+- successful validation or successful next run returns account to `nominal` or observed state
+- failed validation keeps account blocked/cooldown with updated evidence
+- First-pass provider/account trigger guidance:
+- `Gemini`
+- treat explicit quota/reset API data as authoritative when available
+- runtime token stats alone should influence pressure but not become a hard block by themselves
+- `Gemini CLI`
+- use runtime stats for pressure trend
+- only auth-family/project quota signals or strong runtime limit errors should create hard block
+- `Cursor CLI`
+- until official account-limit data is stronger, prefer soft/inferred pressure from runtime/API augmentation
+- avoid hard-blocking solely on weak inferred signals unless the runtime clearly reports a blocking limit/auth failure
+- `Claude Code CLI` subscription accounts
+- `/stats`-style visibility should generally inform pressure, not exact hard block, unless the runtime or provider explicitly signals blocking/exhaustion
+- `Claude Code CLI` console/API accounts
+- stronger authoritative billing/usage signals can drive harder pressure transitions
+- `Codex`
+- explicit rate-limit/reset hints and provider responses should outrank local token stats
+- browser/chatgpt and API-key accounts may differ in what becomes authoritative
+- `GitHub Copilot`
+- org/account metrics likely inform pressure strongly, but exact hard-block semantics still need stronger confirmation
+- `OpenCode`
+- OpenCode-normalized upstream signals can drive pressure, but PM should preserve whether the block is OpenCode-observed vs upstream-authoritative
+- coding-plan direct providers:
+- official reset/remains endpoints and documented windows should be treated as authoritative defaults
+- observed account-specific divergence still wins when available
 - For Xeditor-like compression:
 - do not transplant the exact `_context_updates` protocol as-is.
 - better option is a PM-native concept of reversible tool-result summarization within the existing context-detail / compaction model if the benefit proves worth the complexity.
@@ -1218,9 +1400,69 @@
 - blocker class: usage/cooldown semantics are still not fully normalized provider by provider
 - per-provider window types, reset semantics, hard vs soft cooldowns, and source-confidence labeling still need a full locked matrix
 - account switching thresholds are conceptually clear, but exact trigger rules and provider-specific fallback behavior are not fully tabulated
+- the normalization model and precedence rules are much clearer now; remaining work is concentrated in provider/account-specific evidence and final trigger tables rather than core model ambiguity
+- trigger-table structure is now much clearer; remaining work is mainly stronger provider-specific evidence for the weakest entries rather than missing scheduler semantics
 - blocker class: skill projection/support is still under-specified
 - user asserted Codex, Copilot, Cursor, Claude, Gemini CLI, and OpenCode all support skills natively, but PM-side projection rules, packaging shape, and failure behavior are not yet locked provider by provider
 - exact native vs projected vs partial behavior still needs a final provider matrix
+- the support-state vocabulary is much clearer now; remaining work is the exact per-provider packaging/install/write-target contract and Copilot confirmation
+- the support-state vocabulary is clearer and the Codex/Copilot classification is corrected; remaining work is the exact per-provider packaging/install/write-target contract, not whether those two support the standard
+- Skill support/projection matrix is now clearer and should not be flattened into a false `all support native skills the same way` story:
+- OpenCode repo inspection clarified an important architecture point:
+- OpenCode skills are primarily an OpenCode-native tool/discovery system, not per-provider implementations
+- evidence:
+- docs `packages/web/src/content/docs/skills.mdx` describe one `skill` tool that discovers `SKILL.md` files from `.opencode/skills`, `.claude/skills`, and `.agents/skills`
+- code `packages/opencode/src/skill/skill.ts` loads skills globally/project-locally, filters them by agent permissions, and formats a single `<available_skills>` tool description
+- tests `packages/opencode/test/tool/skill.test.ts` validate the skill tool behavior independently of provider
+- implication:
+- in OpenCode, providers such as Codex, GitHub Copilot, MiniMax Coding Plan, Z.AI Coding Plan, and Alibaba-related providers do not appear to have bespoke skill plumbing
+- they participate under the same OpenCode agent/tool stack, while provider differences live lower in auth/model/runtime transforms
+- provider-specific note from repo/docs:
+- OpenCode explicitly supports compatibility loading from `.claude/skills/*/SKILL.md` and `.agents/skills/*/SKILL.md`
+- there is also an env toggle `OPENCODE_DISABLE_CLAUDE_CODE_SKILLS`, which reinforces that skills are discovered globally by OpenCode rather than attached to one provider only
+- `Gemini CLI`
+- strongest native skill support
+- explicit skill commands exist: list, enable, disable, install, link, uninstall
+- PM can project skills as native Gemini CLI skills with high confidence
+- `OpenCode`
+- strong native skill support per docs
+- PM can project skills natively into OpenCode-owned skill/rule systems
+- coding-plan providers inside OpenCode should not be modeled as having special skill semantics:
+- MiniMax Coding Plan, Z.AI Coding Plan, Alibaba-family provider entries, Codex, and GitHub Copilot appear to share the same OpenCode-native skill tool behavior
+- provider differences there are mainly auth/model/runtime and not skill packaging semantics
+- `Claude Code CLI`
+- native reusable-agent/subagent support is real (`--agent`, `--agents`, `agents` command)
+- not literally the same primitive as Gemini/OpenCode `skills`, but close enough that PM can treat it as native-specialized-agent projection rather than plain prompt stuffing
+- `Cursor CLI`
+- strongest native reusable primitive appears to be rules generation / rules files, not a first-class `skills` command
+- PM should treat Cursor as `native rules + projected skills`, not as identical to Gemini-style native skills
+- `Codex`
+- user clarified Codex fully supports the skill standard and PM is **not** using the Codex CLI as the runtime architecture
+- PM should treat Codex as a direct provider with full skill-standard support rather than a partial CLI-derived case
+- `GitHub Copilot`
+- user clarified GitHub Copilot fully supports the skill standard and PM is **not** using a Copilot CLI runtime architecture
+- PM should treat GitHub Copilot as a direct provider with full skill-standard support
+- implementation recommendation:
+- PM skill packaging should separate:
+- canonical PM skill source
+- provider-native packaged projection
+- provider fallback instruction/rule projection
+- normalized support states should be:
+- `native`
+- `native_projected`
+- `projected`
+- `partial`
+- `unsupported`
+- provider-specific default mapping recommendation:
+- `Gemini CLI` -> `native_projected`
+- `OpenCode` -> `native_projected`
+- `Claude Code CLI` -> `native_projected` via agents/subagents
+- `Cursor CLI` -> `projected` via Cursor Rules plus any provider-native rule-generation helpers
+- `Codex` -> `native_projected`
+- `GitHub Copilot` -> `native_projected`
+- failure-behavior requirement:
+- PM must report per-skill projection/install state, not just provider-level support
+- if one skill fails to project/install, PM should mark `skill_projection_partial` rather than silently falling back
 - blocker class: instruction projection behavior is still missing file-level operational detail
 - exact write targets, conflict resolution, drift detection cadence, and restore behavior are not fully specified per provider/runtime
 - exact handling when a user manually edits provider-native files while PM control is enabled still needs a hard rule beyond generic drift-state language
@@ -1248,6 +1490,9 @@
 - root-directory layout strategy across Linux/macOS/Windows is directionally known but not yet pinned into implementation-ready path formulas, naming, migration/import rules, backup/cleanup rules, and collision handling
 - blocker class: provider capability/control parity is still incomplete
 - Codex and GitHub Copilot were intentionally deprioritized earlier; they still need the same implementation-ready matrix pass as the other providers
+- correction:
+- Codex and GitHub Copilot should be treated as direct providers in PM, not CLI-backed providers
+- user clarified both fully support the skill standard, so downstream planning should not preserve the older partial/CLI-derived assumptions
 - Gemini media capability updates still need the final merged contract across:
 - Gemini Direct API-only
 - Gemini CLI OAuth/API/Vertex auth families
@@ -1487,6 +1732,35 @@
 - OpenCode is both a supported PM provider and a provider-aggregation escape hatch; preserve that distinction explicitly.
 - Google OAuth/native-app docs indicate the direct-Gemini OAuth removal is likely a PM-specific policy/compliance constraint rather than a protocol removal.
 - Nanobanana can likely reuse PM-owned Gemini API credentials via launch-time env injection instead of duplicating secrets into Gemini CLI extension-managed storage.
+- PM native skills and CLI providers are now better aligned by existing canon than earlier discussion implied:
+- `Plans/Skills_System.md` is explicit that PM skill delivery is registry resolution + context bundling + PM `skill` tool access.
+- `Plans/Prompt_Pipeline.md` already inserts skill resolution/bundling before provider execution.
+- `Plans/Tools.md` explicitly says the PM `skill` tool does not require provider-native skill installation in MVP.
+- `Plans/CLI_Bridged_Providers.md` / `Plans/Contracts_V0.md` already require provider transports to be opaque to consumers, which supports PM-native skill delivery across CLI providers.
+- Correct design consequence:
+- CLI providers can use PM's native skill system directly through compiled context plus PM tool access.
+- provider-native skill files/systems are optional compatibility/projection layers, not the canonical MVP runtime path.
+- OpenCode repo inspection clarifies the optional compatibility-layer question:
+- OpenCode does have a compatibility/import layer for skill discovery, but it is not provider-specific for Codex or GitHub Copilot.
+- `packages/opencode/src/skill/skill.ts` scans OpenCode-native skill roots plus compatibility roots:
+  - `.opencode/skills`
+  - `~/.config/opencode/skills`
+  - `.claude/skills`
+  - `~/.claude/skills`
+  - `.agents/skills`
+  - `~/.agents/skills`
+- OpenCode docs confirm the same shared skill discovery model and shared native `skill` tool surface.
+- No evidence was found that OpenCode has separate Codex-specific or Copilot-specific skill installation/projection logic; those providers appear to consume the same top-level OpenCode skill system.
+- This supports PM using one canonical PM skill system with an optional compatibility layer that imports/exports shared skill conventions, not a per-provider native skill delivery matrix.
+- Reasons the optional compatibility layer should not be mandatory by default:
+  - it introduces duplication and drift against PM's canonical skill registry
+  - failures in projection can make a provider look misconfigured even when PM-native skills would still work
+  - CLI multi-account sandboxes would need duplicated projected state unless projection is carefully centralized
+  - provider-native compatibility files can imply provider-specific semantics that are weaker or different than PM's canonical skill/tool behavior
+- Better design direction:
+  - PM-native skills remain authoritative and always usable
+  - compatibility projection/import exists for interoperability and user expectations
+  - OpenCode-style shared compatibility roots are a good reference; provider-specific Codex/Copilot skill projection does not appear necessary from the OpenCode codebase
 
 ## Do-Not-Forget Details
 - Track rules, defaults, flows, contracts, state, data model, UI behavior, constraints, non-goals, acceptance criteria, and fallback behavior as they emerge.
@@ -1557,3 +1831,231 @@
 - Alibaba Coding Plan has 5-hour + weekly + monthly reset windows
 - MiniMax Coding Plan exposes dedicated remains/quota state with 5-hour resets
 - Z.AI Coding Plan uses plan-specific quota behavior and may vary by plan generation
+- Track the corrected skill/runtime boundary explicitly:
+- PM native skills remain canonical even for CLI providers
+- provider-native skill installs/mirrors are optional interoperability layers only
+- runner design must preserve PM bundling + PM `skill` tool access regardless of provider transport
+- Locked research direction:
+- follow OpenCode's lead for skills architecture at the layering level
+- one canonical PM-native skill system remains authoritative
+- optional shared compatibility import/export/projection layer sits above providers
+- do not introduce provider-specific Codex/Copilot/coding-plan skill delivery paths unless later evidence proves they are needed
+- Important guardrail:
+- follow OpenCode's architecture pattern, not its exact product-specific roots or collision policy
+- PM keeps its own canonical roots/search order from `Plans/Skills_System.md`
+- Compatibility-layer behavior is now sharper against existing PM canon:
+- PM already has the canonical import/discovery roots in `Plans/Skills_System.md`:
+  - project: `.puppet-master/skills`, `.claude/skills`, `.agents/skills`
+  - global: `~/.config/puppet-master/skills`, `~/.claude/skills`, `~/.agents/skills`
+- PM should therefore treat the compatibility layer primarily as:
+  - import/discovery compatibility for shared conventions
+  - optional export/projection for interoperability when explicitly enabled
+  - GUI-visible provenance/state (`bundled PM`, `imported`, `catalog-installed`, `shadowed`, `invalid`, `projected`)
+- PM should not add `.opencode/skills` roots just to mimic OpenCode; current PM canon explicitly rejects that.
+- PM should not adopt OpenCode's later-overwrites-earlier collision behavior; current PM canon explicitly keeps first-wins plus shadow visibility.
+- The most buildable PM-compatible posture is:
+  - always use the PM registry/bundling/`skill` tool path at runtime
+  - always import/discover from PM's canonical roots, including shared `.claude` / `.agents` compatibility roots
+  - only export/project to external/provider-native conventions when the user enables it or when a specific provider integration proves it materially useful
+- Agent-Config / Skills GUI should therefore eventually show at least:
+  - source/provenance
+  - validation/readiness state
+  - shadowed status
+  - projected/exported status
+  - runtime requirement gaps
+- Skill compatibility projection/export rules are now clearer:
+  - default posture should be `import/discover yes`, `export/project no`
+  - import/discovery always follows PM's canonical roots/search order from `Plans/Skills_System.md`
+  - export/projection should be explicit and target-based, not implicit and provider-wide
+  - preferred initial projection targets, if enabled, are shared convention roots rather than per-account/provider sandboxes:
+    - `.claude/skills`
+    - `.agents/skills`
+  - avoid default projection into provider-account sandboxes such as Gemini/Cursor/Claude per-account homes because that creates duplicated mutable state and multi-account sync drift
+  - projection/export should be modeled per target with visible state:
+    - `not_projected`
+    - `projected_in_sync`
+    - `projection_failed`
+    - `drifted`
+  - likely projection methods:
+    - `copy`
+    - `symlink` where platform/filesystem allow it
+    - avoid hidden generated duplicates in account sandboxes by default
+  - user-visible GUI statuses for Skills should likely distinguish:
+    - provenance/source: `PM bundled`, `Imported`, `Catalog`
+    - validation: `Valid`, `Invalid`
+    - collision: `Canonical`, `Shadowed`
+    - projection: `Not Projected`, `Projected`, `Projection Failed`, `Drifted`
+    - runtime: `Runnable`, `Permission Blocked`, `Missing Requirement`
+- Contradiction / drift to reconcile later:
+  - `Plans/MiscPlan.md` still contains language about passing allowed skills/paths to platform CLIs/SDKs for providers that support skills
+  - that wording is weaker/older than the clarified PM-native skills model and now risks reintroducing provider-specific runtime delivery drift
+  - `Plans/OpenCode_Deep_Extraction.md` contains an older delta note saying PM does not maintain `.claude/` and `.agents/` compatibility for skills
+  - that now conflicts with the current canonical `Plans/Skills_System.md`, which explicitly includes `.claude/skills` and `.agents/skills` as PM discovery roots
+- Cross-platform projection/export defaults are now clearer:
+  - default projection method should be `copy`, not `symlink`
+  - reason: symlink behavior is less portable and more failure-prone across Windows/macOS/Linux, especially with Windows privilege/policy variance
+  - `symlink` may exist as an advanced optional method where supported, but PM must not rely on it for default interoperability
+  - projection into shared workspace/global convention roots is much safer than projection into provider-account sandboxes
+  - path handling must always use canonical path APIs and OS-native separators; never hand-roll slash assumptions
+  - skill ID collision and shadowing remain logical-name based, not path-string based; Windows case-normalization must be handled carefully during discovery/projection bookkeeping
+- Recommended buildable projection policy:
+  - import/discover: always on
+  - export/project: off by default
+  - when enabled:
+    - target shared roots first (`.claude/skills`, `.agents/skills`)
+    - use `copy` as baseline
+    - offer `symlink` only as advanced/explicit and only when validation confirms support
+    - surface projection result per target immediately in GUI
+- Runner contract for PM-native skills during CLI-backed runs is now clearer:
+  - `Plans/Prompt_Pipeline.md`, `Plans/FileSafe.md`, and `Plans/Tools.md` together already imply the correct flow:
+    1. resolve allowed skills from PM registry
+    2. permission-filter them
+    3. bundle selected skill content into compiled context before provider execution
+    4. expose PM `skill` tool for on-demand lookup during the run
+    5. send provider request envelope with prompt/context/tool policy like any other run
+  - `Plans/CLI_Bridged_Providers.md` already gives the needed transport-agnostic shape:
+    - `prompt_parts`
+    - `context_files`
+    - `tool_policy`
+    - normalized `tool_use` / `tool_result` lifecycle
+  - Correct implementation consequence:
+    - CLI-backed providers should receive PM skill context through normal compiled prompt/context assembly, not through a mandatory provider-native skill install path
+    - PM `skill` remains a normal tool in the shared tool registry and should flow through the same tool-policy and normalized event pipeline as other PM tools
+  - The likely role of `list_skills_for_agent(project_root, permissions)` should be narrowed:
+    - source of allowed-skill metadata for context bundling / tool exposure / GUI preview
+    - not a per-provider native loader contract by default
+- Contradiction / drift to reconcile later:
+  - `Plans/MiscPlan.md` still has mixed wording:
+    - some sections correctly say runtime delivery is PM registry + bundling + `skill` tool
+    - other sections still say to pass skill names/paths to platform CLIs/SDKs for providers that support skills
+  - these sections need reconciliation so runner implementation is not split between two models
+- MCP architecture is now better aligned with the PM-native skills answer:
+  - `Plans/Tools.md`, `Plans/newtools.md`, and `Plans/Section15_MVP_Promoted_Features_Spec.md` already point to a host-managed MCP model
+  - canonical rule: PM owns MCP centrally (registry + health + permissions + secrets), then derives adapter config only where `CliBridge` providers require it
+  - `DirectApi` providers use the central registry directly; they do not rely on provider-side MCP config files
+  - OpenCode is `ServerBridge`, so PM should treat OpenCode MCP as a bridge/server capability surface, not as a separate competing MCP ownership model
+- Correct design consequence for skills that reference MCP:
+  - a PM skill may depend on one or more MCP servers/tools
+  - PM must validate those requirements against the central MCP registry before treating the skill as fully runnable
+  - if required MCP capability is missing/unhealthy, the skill should surface `Missing Requirement` / degraded readiness in GUI rather than failing silently at run time
+  - PM should not assume the provider can "figure it out" from the skill text alone
+- Best implementation framing:
+  - skill metadata/readiness model should include MCP requirements
+  - run assembly should check effective MCP availability for the active provider/runtime
+  - CLI providers get derived MCP adapter config at spawn time when required
+  - direct providers use PM-owned MCP tools directly
+  - OpenCode either uses PM's central MCP view or explicit bridge state mapping, but PM still owns requested/effective MCP readiness disclosure
+- Important unresolved seam:
+  - exact metadata source for a skill's MCP requirements is not yet locked
+  - options include explicit frontmatter fields, catalog metadata, or inferred runtime requirement records; this needs design work before implementation-ready status
+- MCP management direction is now sharper:
+  - PM should manage MCP centrally across all providers, but the phrase "install on provider" is not correct for every transport class
+  - better model is:
+    - one central PM MCP registry of configured servers
+    - per-provider/per-runtime adapter state showing whether each MCP server is usable for that execution surface
+    - optional provider-side derived config generation only where a provider transport requires it
+- Per transport class:
+  - `DirectApi` providers:
+    - no provider-side MCP installation concept
+    - PM-owned MCP tools are available directly through PM's central tool registry
+    - GUI should show these as `PM Native` / `Directly Available`, not `Installed on provider`
+  - `CliBridge` providers:
+    - PM can and should manage provider-facing MCP adapter config automatically
+    - this can be generated at spawn time into the actual run cwd/profile root rather than hand-managed by the user
+    - GUI can show these as `Bridged` / `Configured for Provider`
+  - `ServerBridge` (`OpenCode`):
+    - if PM launches OpenCode in managed mode, PM can potentially manage or project MCP config for that server profile
+    - if PM attaches to an existing OpenCode server, PM cannot assume ownership of internal server MCP state; it can inspect/reflect health and maybe update through server APIs if supported
+    - GUI should distinguish `PM Managed Server` vs `Attached External Server`
+- Recommended GUI model:
+  - one MCP Configuration surface listing all known MCP servers
+  - GUI wording should stay simple and user-facing:
+    - primary status should be `Working` when healthy
+    - otherwise show the concrete error/status/reason
+  - any provider-specific transport nuance should stay in secondary detail, not the main status wording
+  - actions should be per target/provider where meaningful:
+    - `Install` / `Configure`
+    - `Installing...` / `Configuring...`
+    - `Installed` / `Configured`
+    - `Repair`
+    - `Reconnect`
+    - `Remove`
+- Important guardrail:
+  - PM should automatically manage CLI MCP bridge config where feasible
+  - PM should not promise full automatic installation of every third-party server dependency if external runtimes or credentials are missing; GUI must surface prerequisites and partial setup clearly
+- MCP lifecycle clarification for CLI providers:
+  - PM should not "install MCP on every call"
+  - better model is:
+    1. register/configure the MCP server once in PM
+    2. generate/update provider-facing adapter config when the provider profile/workspace changes or the MCP config changes
+    3. validate/repair as needed
+    4. at run time, reuse that configured state
+  - spawn-time regeneration should be reserved for cases where the actual run cwd/worktree requires a derived file in that exact location
+  - even then, that should be treated as lightweight config synchronization, not reinstallation of the MCP server itself
+- Stronger recommendation:
+  - PM should own long-lived MCP configuration state per provider profile where the provider requires local config files
+  - PM may do lightweight last-mile sync at run start for worktree-specific paths
+  - PM should not perform full install/setup on each call because that would be slow, fragile, and hard to reason about
+- Current-doc MCP findings for CLI providers (official docs, March 22, 2026):
+  - Gemini CLI:
+    - official MCP docs live at `geminicli.com/docs/tools/mcp-server/`
+    - MCP config lives in `settings.json` under `mcpServers` plus global `mcp` settings
+    - settings locations are user `~/.gemini/settings.json` and workspace `.gemini/settings.json`
+    - `gemini mcp add` supports `--scope user|project` (default project), `--transport stdio|sse|http`, `--env`, `--header`, `--timeout`, `--trust`, `--include-tools`, `--exclude-tools`
+    - `gemini mcp list`, `remove`, `enable`, and `disable` are built-in; enablement state persists separately in `~/.gemini/mcp-server-enablement.json`
+    - Gemini supports OAuth for remote MCP servers and performs env sanitization/redaction by default
+    - stdio MCP servers only show/test as connected when the folder is trusted; untrusted folders block stdio MCP connectivity
+  - Cursor CLI:
+    - current official docs say Cursor CLI uses the same MCP configuration as the editor
+    - project config is `.cursor/mcp.json`, global config is `~/.cursor/mcp.json`
+    - Cursor supports stdio, SSE, and Streamable HTTP transports
+    - CLI docs/search results show `cursor-agent mcp list`, `list-tools`, `login`, and `disable`
+    - official January 8, 2026 changelog adds `/mcp enable` and `/mcp disable` commands to the CLI
+    - Cursor follows editor-like config precedence (`project -> global -> nested`) and auto-discovers parent configs
+  - Claude Code CLI:
+    - current official docs live at `code.claude.com/docs/en/mcp`
+    - `claude mcp add` supports `--transport http|sse|stdio`
+    - docs explicitly say SSE is deprecated and HTTP is preferred where available
+    - Claude supports three MCP scopes:
+      - local scope stored in `~/.claude.json` under the current project's path
+      - project scope stored in project-root `.mcp.json`
+      - user scope stored in `~/.claude.json`
+    - management commands include `claude mcp list`, `get`, `remove`, and `/mcp`
+    - Claude Code supports dynamic MCP `list_changed` notifications
+    - Claude.ai-connected MCP servers can automatically appear in Claude Code when using a Claude.ai login
+- Implementation implications from current docs:
+  - all three CLIs are mature enough that PM should manage MCP configuration as long-lived provider/profile state, not per-call installation
+  - Gemini CLI and Claude Code both have explicit project-vs-user scoping that PM can map onto project-shared vs profile-local MCP config
+  - Cursor CLI's "same config as editor" model means PM should treat Cursor MCP as config synchronization into Cursor profile/workspace config locations, not as an ad hoc per-run trick
+  - Gemini's trust model is a real blocker for stdio MCP servers in untrusted folders and must be surfaced in PM health/status
+- MCP + Skills integration is converging toward one buildable PM model:
+  - PM-native skills should carry explicit MCP requirement metadata rather than relying on heuristics from skill body text
+  - likely requirement split:
+    - required MCP servers
+    - optional MCP servers
+    - optionally required tools/capabilities within a server where needed
+  - PM should compute a per-skill readiness state from:
+    - skill validity
+    - permission state
+    - MCP requirement satisfaction
+    - provider/runtime effective MCP availability
+- Recommended skill readiness statuses now implied by the discussion:
+  - `Working`
+  - `Missing Requirement`
+  - `Permission Blocked`
+  - `Invalid`
+  - `Shadowed`
+  - `Projection Failed`
+- Recommended MCP server lifecycle states for GUI:
+  - `Working`
+  - `Not Configured`
+  - `Needs Auth`
+  - `Untrusted Folder`
+  - `Unhealthy`
+  - `Install Failed`
+  - `Unsupported`
+  - `External / Not Managed`
+- Direct / CLI / OpenCode MCP ownership is now better framed:
+  - Direct providers use PM-native MCP tools directly through the central registry
+  - CLI providers use PM-managed derived adapter config plus the same PM-native MCP registry/health model
+  - OpenCode must distinguish managed-server vs attached-external-server ownership, but PM still owns requested/effective readiness disclosure
