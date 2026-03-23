@@ -2729,6 +2729,10 @@
 - Current residual items are now relatively small and concrete:
 - reconciliation of the frozen field-placement/runtime rules into the stale planning docs listed in the rewrite map
 - any final copy polish during reconciliation should not change the now-locked underlying behavior/contracts
+- Acceptable carry-forward residue in this work item is now explicit:
+- historical notes remain for traceability where they help explain why the later design changed
+- rewrite-map targets remain because stale plan docs still need actual reconciliation edits
+- contradiction-tracking language remains where needed so reconciliation does not flatten meaningful distinctions or overwrite important deltas between old canon and the now-frozen model
 - Reconciliation readiness was reassessed:
 - current research is now sufficient to support a clean implementation-oriented reconciliation pass
 - remaining work is primarily doc reconciliation and wording consistency, not missing provider/control/GUI architecture
