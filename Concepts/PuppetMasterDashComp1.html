@@ -362,7 +362,7 @@
     /* === BENTO CARD — full liquid glass === */
     [data-theme^="glass"] .bento-card {
       position: relative;
-      overflow: hidden;
+      overflow: hidden auto;
       border: none;
       border-radius: 16px;
     }
@@ -2994,6 +2994,114 @@
       color: #1A1A1A;
     }
     [data-theme="retro-dark"] .chat-modes .mode.active { border: 2px solid #1A1A1A; }
+
+    /* Debug mode accent dot in dropdown */
+    .chat-dropdown-item[data-value="Debug"] { display: flex; align-items: center; gap: var(--sm); }
+    .chat-dropdown-item[data-value="Debug"]::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent-orange);
+      flex-shrink: 0;
+    }
+
+    /* Debug thread header */
+    .debug-thread-header {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: var(--border-radius);
+      padding: var(--md);
+      margin-bottom: var(--md);
+      font-size: 11px;
+    }
+    .debug-thread-header .debug-target {
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: var(--sm);
+      display: flex;
+      align-items: center;
+      gap: var(--sm);
+    }
+    .debug-thread-header .debug-target .debug-phase-badge {
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--accent-orange);
+      color: #1a1a1a;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .debug-thread-header .debug-meta-row {
+      display: flex;
+      gap: var(--lg);
+      color: var(--text-secondary);
+      flex-wrap: wrap;
+    }
+    .debug-thread-header .debug-meta-row span { display: flex; align-items: center; gap: 4px; }
+    .debug-dap-status {
+      color: var(--accent-lime);
+      font-weight: 600;
+    }
+    .debug-investigation-ctx {
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--border-radius);
+      padding: var(--sm) var(--md);
+      margin: var(--sm) 0 var(--md);
+      font-size: 10px;
+    }
+    .debug-investigation-ctx .ctx-title {
+      font-weight: 700;
+      font-size: 11px;
+      margin-bottom: var(--xs);
+      color: var(--text-primary);
+    }
+    .debug-investigation-ctx .ctx-item {
+      display: flex;
+      align-items: center;
+      gap: var(--sm);
+      padding: 2px 0;
+      color: var(--text-secondary);
+    }
+    .debug-investigation-ctx .ctx-item .ctx-type {
+      font-size: 9px;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .debug-export-btn {
+      background: var(--accent-orange);
+      color: #1a1a1a;
+      border: none;
+      border-radius: var(--border-radius);
+      padding: 4px 12px;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: var(--sm);
+    }
+    .debug-export-btn:hover { filter: brightness(1.1); }
+    .debug-reopen-controls {
+      display: flex;
+      gap: var(--sm);
+      margin-top: var(--sm);
+      font-size: 10px;
+    }
+    .debug-reopen-controls button {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: var(--border-radius);
+      padding: 3px 8px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 10px;
+    }
+    .debug-reopen-controls button:hover { color: var(--text-primary); border-color: var(--border); }
 
     .chat-header-workflow {
       display: flex;
@@ -10053,7 +10161,7 @@ cmd.terminal.focus_session — focus stream without layout reveal</pre>
                 <details open>
                   <summary>Default Persona Settings</summary>
                   <div class="details-content">
-                    <label>Default mode <select><option>regular</option><option>ask</option><option>plan</option><option>yolo</option></select></label>
+                    <label>Default mode <select><option>regular</option><option>ask</option><option>agent</option><option>debug</option><option>plan</option><option>deep-plan</option><option>yolo</option></select></label>
                     <label>Temperature <input type="range" min="0" max="100" value="70"></label>
                     <label>Top P <input type="range" min="0" max="100" value="90"></label>
                     <label>Reasoning effort <select><option>high</option><option>medium</option><option>low</option></select></label>
@@ -10194,6 +10302,10 @@ cmd.terminal.focus_session — focus stream without layout reveal</pre>
                     <label>cmd.chat.model <input type="text" value="/model"></label>
                     <label>cmd.chat.effort <input type="text" value="/effort"></label>
                     <label>cmd.chat.mode <input type="text" value="/mode"></label>
+                    <label>cmd.chat.open_debug_target_picker <input type="text" value="/debug-target"></label>
+                    <label>cmd.chat.export_investigation_bundle <input type="text" value="/export-investigation"></label>
+                    <label>cmd.chat.revoke_investigation_item <input type="text" value="/revoke-evidence"></label>
+                    <label>cmd.runtime.approve <input type="text" value="/approve"></label>
                   </div>
                 </details>
                 <details>
@@ -10329,6 +10441,20 @@ cmd.terminal.focus_session — focus stream without layout reveal</pre>
                     </div>
                     <div class="thread-hover-actions">
                       <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+                  <div class="chat-thread-item role-assistant" data-thread="thread-debug1" onclick="switchToChatThread('thread-debug1')">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">8m</span>
+                      <div class="thread-title" style="display:flex; align-items:center; gap:4px;"><span style="width:6px; height:6px; border-radius:50%; background:var(--accent-orange); display:inline-block;"></span> Debug: Login 401 Loop</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
+                      <div class="thread-summary">Investigating auth token refresh failure.<br>Phase: Root Cause &middot; DAP attached</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Export Bundle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></button>
                       <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
                     </div>
                   </div>
@@ -10534,8 +10660,9 @@ cmd.terminal.focus_session — focus stream without layout reveal</pre>
                           </button>
                           <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
                             <div class="chat-dropdown-list">
-                                <div class="chat-dropdown-item active" data-value="Agent">Agent</div>
                                 <div class="chat-dropdown-item" data-value="Ask">Ask</div>
+                                <div class="chat-dropdown-item active" data-value="Agent">Agent</div>
+                                <div class="chat-dropdown-item" data-value="Debug">Debug</div>
                                 <div class="chat-dropdown-item" data-value="Plan">Plan</div>
                                 <div class="chat-dropdown-item" data-value="Deep Plan">Deep Plan</div>
                             </div>
@@ -10819,7 +10946,7 @@ error[E0433]: unresolved import `slint`
 
     <footer class="status-bar">
       <div class="status-menu-wrap">
-        <button class="status-menu-btn" id="statusMenuBtn" title="Status">[i]</button>
+        <button class="status-menu-btn" id="statusMenuBtn" title="Status" onclick="event.stopPropagation(); document.getElementById('statusMenuDropdown').classList.toggle('visible')">[i]</button>
         <div class="status-menu-dropdown" id="statusMenuDropdown">
           <div class="menu-section">
             <div class="menu-section-title">Active server</div>
@@ -10936,6 +11063,20 @@ error[E0433]: unresolved import `slint`
                     </div>
                     <div class="thread-hover-actions">
                       <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+                  <div class="chat-thread-item role-assistant" data-thread="thread-debug1" onclick="switchToChatThread('thread-debug1')">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">8m</span>
+                      <div class="thread-title" style="display:flex; align-items:center; gap:4px;"><span style="width:6px; height:6px; border-radius:50%; background:var(--accent-orange); display:inline-block;"></span> Debug: Login 401 Loop</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
+                      <div class="thread-summary">Investigating auth token refresh failure.<br>Phase: Root Cause &middot; DAP attached</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Export Bundle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></button>
                       <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
                     </div>
                   </div>
@@ -11219,8 +11360,9 @@ error[E0433]: unresolved import `slint`
                           </button>
                           <div class="chat-dropdown-popover" style="bottom: 100%; top: auto; margin-bottom: 4px; left: 0;">
                             <div class="chat-dropdown-list">
-                                <div class="chat-dropdown-item active" data-value="Agent">Agent</div>
                                 <div class="chat-dropdown-item" data-value="Ask">Ask</div>
+                                <div class="chat-dropdown-item active" data-value="Agent">Agent</div>
+                                <div class="chat-dropdown-item" data-value="Debug">Debug</div>
                                 <div class="chat-dropdown-item" data-value="Plan">Plan</div>
                                 <div class="chat-dropdown-item" data-value="Deep Plan">Deep Plan</div>
                             </div>
@@ -12245,6 +12387,95 @@ status: completed with warnings</pre>
       }
     })();
 
+    // Debug investigation thread mock data
+    mockThreads['thread-debug1'] = {
+      role: 'assistant',
+      title: 'DEBUG: LOGIN 401 LOOP',
+      headerTitle: 'ASSISTANT',
+      badgeTitle: 'ASSISTANT',
+      mode: 'debug',
+      html: `
+<div class="debug-thread-header">
+  <div class="debug-target">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+    Login 401 Loop &mdash; auth/token_refresh.rs
+    <span class="debug-phase-badge">Root Cause</span>
+  </div>
+  <div class="debug-meta-row">
+    <span><b>Target:</b> POST /api/auth/refresh &rarr; 401</span>
+    <span><b>DAP:</b> <span class="debug-dap-status">Attached</span> (pid 48201)</span>
+    <span><b>Profile:</b> Debug Automation &middot; breakpoint-on-panic</span>
+    <span><b>Duration:</b> 8m 12s</span>
+  </div>
+</div>
+
+<div class="debug-investigation-ctx">
+  <div class="ctx-title">Investigation Context</div>
+  <div class="ctx-item"><span class="ctx-type">breakpoint</span> auth/token_refresh.rs:142 &mdash; refresh_token() entry</div>
+  <div class="ctx-item"><span class="ctx-type">variable</span> token.expires_at = 1711209600 (expired 2h ago)</div>
+  <div class="ctx-item"><span class="ctx-type">network</span> POST /api/auth/refresh &rarr; 401 Unauthorized (3 occurrences)</div>
+  <div class="ctx-item"><span class="ctx-type">log</span> WARN token_store: refresh token blacklisted after rotation race</div>
+  <div class="ctx-item"><span class="ctx-type">browser</span> Screenshot: login page redirect loop (captured via browser automation)</div>
+</div>
+
+<div class="message assistant">
+  <div class="msg-body">
+  I've attached the DAP debugger to the auth service and set breakpoints around the token refresh flow. Here's what I've found so far:
+
+  <div class="activity-card bash" style="border-left-color: var(--accent-orange);">
+    <div class="activity-card-header">
+      <span style="color:var(--accent-orange);">[Debug] Set breakpoint</span>
+      <span style="font-size:9px; color:var(--text-muted);">0.1s</span>
+    </div>
+    <div class="activity-card-body">auth/token_refresh.rs:142 &mdash; refresh_token() entry point</div>
+  </div>
+
+  <div class="activity-card bash" style="border-left-color: var(--accent-orange);">
+    <div class="activity-card-header">
+      <span style="color:var(--accent-orange);">[Debug] Inspect variable</span>
+      <span style="font-size:9px; color:var(--text-muted);">0.2s</span>
+    </div>
+    <div class="activity-card-body">token.expires_at = 1711209600 (2024-03-23T12:00:00Z) &mdash; expired 2 hours ago<br>token.refresh_token = "rt_9f8a...3b2c" &mdash; blacklisted after rotation race</div>
+  </div>
+
+  <div class="activity-card web" style="border-left-color: var(--accent-orange);">
+    <div class="activity-card-header">
+      <span style="color:var(--accent-orange);">[Browser] Automation capture</span>
+      <span style="font-size:9px; color:var(--text-muted);">1.8s</span>
+    </div>
+    <div class="activity-card-body">Navigated to /dashboard &rarr; redirected to /login &rarr; auto-refresh &rarr; /login (loop detected after 3 cycles)</div>
+  </div>
+
+  <b>Root cause identified:</b> The token rotation logic in <code>rotate_refresh_token()</code> has a race condition. When two concurrent requests both attempt to rotate the refresh token, the second rotation blacklists the first rotated token, causing both to fail. The client then falls into a redirect loop between the login page and the dashboard.
+
+  <div style="margin-top: var(--sm); padding: var(--sm) var(--md); background: var(--surface); border-radius: var(--border-radius); border: 1px solid var(--border-light); font-size: 11px;">
+    <b>Suggested fix:</b> Add a mutex lock on the token rotation path, or use a grace period for recently-rotated tokens (e.g., accept the previous refresh token for 30s after rotation).
+  </div>
+  </div>
+  <div class="msg-hover-row">
+    <div class="msg-actions">
+      <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    </div>
+    <div class="msg-runtime-compact">
+      <span style="color:var(--accent-orange);">Debug</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Sonnet 4.6</span><span class="sep">&middot;</span><span>8m</span>
+      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value" style="color:var(--accent-orange);">Debug</span></div><div class="popover-row"><span class="popover-label">Provider</span><span class="popover-value">Claude</span></div><div class="popover-row"><span class="popover-label">Model</span><span class="popover-value">Sonnet 4.6</span></div><div class="popover-row"><span class="popover-label">Debug Profile</span><span class="popover-value">breakpoint-on-panic</span></div><div class="popover-row"><span class="popover-label">Phase</span><span class="popover-value">Root Cause Analysis</span></div><div class="popover-row"><span class="popover-label">Evidence Items</span><span class="popover-value">5</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">12,840</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">18.6k / 128k</span></div></div>
+    </div>
+  </div>
+</div>
+
+<div style="display:flex; gap:var(--sm); padding:var(--sm) 0; align-items:center; flex-wrap:wrap;">
+  <button class="debug-export-btn" onclick="toast('cmd.chat.export_investigation_bundle &rarr; Exporting 5 evidence items...')">Export Investigation Bundle</button>
+  <div class="debug-reopen-controls">
+    <button onclick="toast('Reopening investigation with fresh context...')">Reopen</button>
+    <button onclick="toast('Retrying from last breakpoint...')">Retry</button>
+    <button onclick="toast('Superseding with new investigation...')">Supersede</button>
+    <button onclick="toast('Closing investigation. Evidence archived.')" style="color:var(--accent-magenta);">Close</button>
+  </div>
+</div>
+`
+    };
+
     window.orchNodeDetailContent = {
       '1': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>1</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Phase</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-passed); color:#1A1A1A; padding:1px 4px; font-size:9px;">Passed</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>1m 20s</b></div></div></details>',
       '2': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Phase</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-running); color:#1A1A1A; padding:1px 4px; font-size:9px;">Running</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>0m 45s</b></div></div></details>',
@@ -12298,8 +12529,24 @@ status: completed with warnings</pre>
         'thread5': { agents: '0 active subagents', files: '' },
         'thread6': { agents: '0 active subagents', files: 'build.rs <span class="ft-add">+4</span> <span class="ft-del">−2</span></span><span class="ft-file">dist/config.json <span class="ft-add">+1</span> <span class="ft-del">−0</span>' },
         'thread7': { agents: '0 active subagents', files: 'multi-tenant-refactor.md <span class="ft-add">+124</span> <span class="ft-del">−0</span>' },
-        'thread8': { agents: '1 active subagent', files: 'tests/e2e/login.spec.ts <span class="ft-add">+28</span> <span class="ft-del">−4</span>' }
+        'thread8': { agents: '1 active subagent', files: 'tests/e2e/login.spec.ts <span class="ft-add">+28</span> <span class="ft-del">−4</span>' },
+        'thread-debug1': { agents: '1 active subagent', files: 'auth/token_refresh.rs <span class="ft-add">+0</span> <span class="ft-del">−0</span> (inspecting)' }
       };
+      // Update mode dropdown button text to match thread mode
+      var modeLabel = thread.mode ? thread.mode.charAt(0).toUpperCase() + thread.mode.slice(1) : 'Agent';
+      if (modeLabel === 'Ask') modeLabel = 'Ask';
+      else if (modeLabel === 'Debug') modeLabel = 'Debug';
+      document.querySelectorAll('.chat-dropdown-btn span').forEach(function(s) {
+        if (['Agent','Ask','Debug','Plan','Deep Plan'].indexOf(s.textContent) !== -1) {
+          s.textContent = modeLabel;
+        }
+      });
+      // Update active state in dropdowns
+      document.querySelectorAll('.chat-dropdown-item[data-value]').forEach(function(item) {
+        if (['Agent','Ask','Debug','Plan','Deep Plan'].indexOf(item.getAttribute('data-value')) !== -1) {
+          item.classList.toggle('active', item.getAttribute('data-value') === modeLabel);
+        }
+      });
       var fd = footerData[threadId] || { agents: '0 active subagents', files: '', problems: false };
       var hasActive = fd.agents.indexOf('0') !== 0;
       var hasFiles = !!fd.files;
@@ -12645,7 +12892,32 @@ status: completed with warnings</pre>
 
 
       document.body.addEventListener('click', (e) => {
-        
+
+        // Close status menu dropdown on click outside
+        const statusDrop = document.getElementById('statusMenuDropdown');
+        if (statusDrop && statusDrop.classList.contains('visible') && !e.target.closest('.status-menu-wrap')) {
+            statusDrop.classList.remove('visible');
+        }
+
+        // Click editor tab to make it active (delegated)
+        const editorTab = e.target.closest('.editor-tabs .tab');
+        if (editorTab && !e.target.closest('.tab-close')) {
+            const tabs = editorTab.closest('.editor-tabs');
+            if (tabs) {
+                tabs.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                editorTab.classList.add('active');
+                const filename = editorTab.getAttribute('data-filename') || editorTab.textContent.trim().split(' ')[0];
+                const pane = editorTab.closest('.editor-pane');
+                if (pane) {
+                    const codeTarget = pane.querySelector('.editor-code');
+                    if (codeTarget) {
+                        codeTarget.textContent = '// Viewing ' + filename + '\n// (tab switched)';
+                    }
+                }
+            }
+            return;
+        }
+
         // Close editor tab
         const tabCloseBtn = e.target.closest('.tab-close');
         if (tabCloseBtn) {
