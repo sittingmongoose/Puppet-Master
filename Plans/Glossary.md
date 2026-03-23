@@ -46,6 +46,7 @@ ContractRef: Invariant:INV-010
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/storage-plan.md
 
 ### Runtime and routing terms
+
 - **Blocked Episode**: one runtime-owned blocked period anchored by `run_id`, `node_id`, and `blocked_sequence`.
 - **Execution Role**: the actor-role identity used for runtime disclosure and audit, distinct from provider/account identity.
 - **Operational Identity**: the side-effect or target-context identity used for external operations, distinct from provider/account identity.
@@ -62,6 +63,19 @@ ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Gra
 - **Command Block**: transcript-layer metadata anchored to one observed command invocation; it is not a replacement for the underlying terminal transcript.
 - **Shell Integration Tier**: the disclosed confidence tier for command/cwd/prompt metadata (`rich | basic | opaque`).
 - **Restore Outcome**: the disclosed recovery result for restored shell state (`restored_live | restored_exited | restored_disconnected | restored_without_history`).
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileManager.md
+
+### Debug investigation terms
+- **Debug Mode**: the Assistant chat workflow overlay for evidence-first automated diagnosis, fix, verification, and cleanup. It is not a runtime-mode enum value.
+- **Debugger / DAP Debugger**: the classical runtime debugger surface based on DAP. It is not the same thing as Debug Mode.
+- **Debug Console**: the runtime-output / debugger-adjacent console surface. It is not the same thing as Debug Mode.
+- **Investigation Context**: the visible, bounded bundle of target metadata, evidence summaries, instrumentation state, and verification outcomes carried by an active investigation.
+- **`investigation_id`**: the canonical cross-surface identity for one debugging investigation.
+- **`instrumentation_id`**: the canonical identity for one temporary instrumentation lane or reversible debug mutation set inside an investigation.
+- **`debug_target_kind`**: the canonical target enum `dev_session | browser_target | dap_session | agent_session | imported_bundle`.
+- **Verification Strength**: the canonical verification-result strength `none | weak | strong`; only `strong` supports silent auto-resolution.
+- **Attention Reason Code**: machine-readable reason indicating why an investigation needs explicit user awareness even when it is not hard-blocked.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileManager.md
 ## 3. Anti-drift documents

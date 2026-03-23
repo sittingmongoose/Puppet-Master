@@ -431,6 +431,25 @@ HTML preview uses the same built-in browser defined by the promoted browser owne
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/newtools.md, ContractName:Plans/storage-plan.md
 
+### 8.3A Debug target binding from editor and browser-backed files
+
+File-backed preview subjects may be used as Debug targets without changing File Manager ownership of open/reveal behavior.
+
+Required rules:
+- `workspace_preview` and `detached_preview` browser sessions may be selected as `browser_target` inputs for Debug Mode
+- target binding preserves canonical browser identity (`browser_session_id`, `session_class`, and any `preview_subject_id`) instead of using a raw path-only attach model
+- promoting a file-backed preview into an `automation_session` for reproduction keeps preview-subject identity separate from automation-session identity
+- File Manager owns source open / reveal and preview hosting, but it does not own investigation lifecycle, automation policy, or cleanup semantics
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+Run/debug preset reconciliation:
+- project presets and run/debug configurations continue to produce `dev_session` or debugger-oriented entrypoints
+- the classical DAP debugger surface remains separate from Assistant Debug Mode
+- opening source from a Debug artifact or Investigation Context uses canonical `OpenFile` / `OpenSubject` flows rather than feature-local path guessing
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md
+
 ### 8.4 Click-to-context when viewing HTML
 
 Click-to-context in HTML/browser mode is explicit and uses the same browser capture model as the main built-in browser.

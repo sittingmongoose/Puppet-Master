@@ -80,6 +80,52 @@ Rules:
 - runtime artifact open flows resolve through `OpenSubject` and route/open contracts rather than through feature-local path guessing
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/FinalGUISpec.md
+
+## 5A. Debug investigation grouping, manifests, and exports
+
+Runtime artifacts may participate in a shared Debug investigation without changing artifact-family ownership.
+
+Required cross-artifact grouping fields are:
+- `investigation_id?`
+- `instrumentation_id?`
+- `evidence_role?` (`baseline`, `repro`, `diagnosis`, `fix`, `verification`, `cleanup`)
+- `verification_strength?` (`none`, `weak`, `strong`)
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+
+Grouping rules:
+- any runtime artifact may be grouped under an investigation when `investigation_id` is present
+- investigation grouping does not invent a new artifact family; it is an index and navigation layer over the canonical artifact records
+- `context_snapshot`, `tool_llm_trace`, `failed_attempts`, `restore_point`, `before_after_snapshot`, and `subagent_lineage` are required participants for Debug Mode when emitted
+- artifact open/focus actions must route to the owning target surface (browser session, terminal session, debugger surface, file diff, or usage surface) rather than to an artifact-local shell
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
+
+Investigation bundle export is summary-first and pointer-based.
+
+Required bundle manifest fields are:
+- `schema_id = pm.investigation_bundle.schema.v1`
+- `bundle_id`
+- `investigation_id`
+- `target_summary`
+- `phase_history`
+- `context_items[]`
+- `artifact_refs[]`
+- `instrumentation_manifest[]`
+- `verification_summary`
+- `cleanup_state`
+- `redaction_and_omission_summary`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md
+
+Export and import rules:
+- raw screenshots, traces, logs, recordings, and diffs remain stored and opened through the shared runtime-artifact system; the bundle manifest references them instead of duplicating bytes inline
+- exporting an investigation writes `runtime_artifact.document` or equivalent manifest-linked metadata plus `debug.investigation.exported`
+- importing a bundle creates an `imported_bundle` debug target and preserves provenance about the external source rather than pretending the bundle is a live local runtime target
+- redacted, revoked, blocked, expired, and omitted items remain visible in the manifest summary so users can tell what was or was not carried forward
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md
+
 ## 6. reasoning_tokens and cost_usage
 **reasoning_tokens:** Required in the usage/cost_usage schema (integer, minimum 0). In the UI, display the field only when value > 0.
 

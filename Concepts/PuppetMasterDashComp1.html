@@ -4377,6 +4377,158 @@
     [data-theme^="retro"] .composer-chip { border-color: var(--accent-orange); border-radius: 0; }
     .composer-chip .close-chip { cursor: pointer; color: var(--text-muted); }
     .composer-chip .close-chip:hover { color: var(--accent-magenta); }
+
+    /* ── File-ref chip prefix badge ── */
+    .composer-chip.file-ref::before {
+      content: "FILE";
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--bg);
+      background: var(--accent-lime);
+      padding: 1px 4px;
+      border-radius: 3px;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+    [data-theme^="basic"] .composer-chip.file-ref::before { background: var(--accent-blue); }
+    [data-theme^="retro"] .composer-chip.file-ref { border-color: var(--accent-lime); }
+
+    /* ── Context menu (file tree right-click) ── */
+    .context-menu-mock {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 4px 0;
+      min-width: 210px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+      font-size: 11px;
+      z-index: 200;
+    }
+    [data-theme^="retro"] .context-menu-mock { border-radius: 0; border: 2px solid var(--accent-orange); }
+    [data-theme^="glass"] .context-menu-mock { backdrop-filter: blur(12px); background: rgba(30,30,50,0.85); }
+    .ctx-item {
+      padding: 5px 14px;
+      cursor: pointer;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    .ctx-item:hover { background: var(--accent-blue); color: #fff; }
+    .ctx-item.submenu-label {
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      cursor: default;
+      padding-top: 6px;
+    }
+    .ctx-item.submenu-label:hover { background: none; color: var(--text-muted); }
+    .ctx-item.indented { padding-left: 28px; }
+    .ctx-sep {
+      height: 1px;
+      background: var(--border-light);
+      margin: 3px 8px;
+    }
+    .ctx-sep-label {
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      padding: 4px 14px 2px;
+      font-weight: 600;
+    }
+
+    /* ── Remote state badges ── */
+    .remote-badge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 600;
+      padding: 1px 7px;
+      border-radius: 8px;
+      letter-spacing: 0.3px;
+      text-transform: lowercase;
+      vertical-align: middle;
+    }
+    .remote-badge.current { background: var(--accent-lime); color: #111; }
+    .remote-badge.stale { background: var(--accent-orange); color: #111; }
+    .remote-badge.refreshing { background: var(--accent-blue); color: #fff; }
+    .remote-badge.healthy { background: var(--accent-lime); color: #111; }
+    .remote-badge.degraded { background: var(--accent-orange); color: #111; }
+    .remote-badge.unavailable { background: var(--accent-magenta); color: #fff; }
+    .remote-badge.writable { background: var(--accent-lime); color: #111; }
+    .remote-badge.pending-write { background: var(--accent-orange); color: #111; }
+    .remote-badge.blocked { background: var(--accent-magenta); color: #fff; }
+    .remote-badge.read-only { background: var(--text-muted); color: var(--bg); }
+    [data-theme^="retro"] .remote-badge { border-radius: 0; font-family: var(--font-mono); }
+
+    /* ── Source Control subview tabs ── */
+    .sc-subview-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: var(--sm);
+      overflow-x: auto;
+      flex-shrink: 0;
+    }
+    .sc-subview-tabs .sc-tab {
+      padding: 4px 10px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .sc-subview-tabs .sc-tab:hover { color: var(--text-primary); }
+    .sc-subview-tabs .sc-tab.active {
+      color: var(--accent-blue);
+      border-bottom-color: var(--accent-blue);
+    }
+    [data-theme^="retro"] .sc-subview-tabs .sc-tab.active {
+      color: var(--accent-orange);
+      border-bottom-color: var(--accent-orange);
+    }
+
+    /* ── Search result items ── */
+    .search-result-item {
+      padding: 3px 10px 3px 24px;
+      font-size: 11px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .search-result-item:hover { background: rgba(255,255,255,0.04); color: var(--text-primary); }
+    [data-theme$="light"] .search-result-item:hover { background: rgba(0,0,0,0.04); }
+    .search-match {
+      background: rgba(255, 200, 50, 0.25);
+      padding: 0 2px;
+      border-radius: 2px;
+      color: var(--text-primary);
+    }
+    [data-theme$="light"] .search-match { background: rgba(255, 180, 0, 0.3); }
+
+    /* ── LSP registry rows ── */
+    .lsp-registry-row {
+      display: flex;
+      align-items: center;
+      gap: var(--sm);
+      padding: 5px 8px;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 11px;
+    }
+    .lsp-registry-row:last-child { border-bottom: none; }
+    .lsp-registry-row:hover { background: rgba(255,255,255,0.03); }
+    [data-theme$="light"] .lsp-registry-row:hover { background: rgba(0,0,0,0.03); }
+
     .highlight-selection { background: rgba(0, 150, 255, 0.3); border-bottom: 2px dashed var(--accent-blue); }
     .selectable-doc { user-select: text; }
 
@@ -6847,6 +6999,7 @@
         <nav class="activity-bar collapsed" id="activityBar">
           <div class="icon" title="Dashboard" id="dashboardToggleIcon"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg></span><span class="icon-label">HOME</span></div>
           <div class="icon" title="Chat"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="icon-label">CHAT</span></div>
+          <div class="icon" title="Search" data-target="panel-search"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><span class="icon-label">SEARCH</span></div>
           <div class="icon active" title="Files" data-target="panel-files"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg></span><span class="icon-label">FILES</span></div>
           <div class="icon" title="Run & Debug" data-target="panel-run"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></span><span class="icon-label">RUN</span></div>
           <div class="icon" title="Git" data-target="panel-git"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 15V9a3 3 0 0 0-3-3H9"/><line x1="6" y1="9" x2="6" y2="15"/></svg></span><span class="icon-label">GIT</span></div>
@@ -6873,7 +7026,7 @@
             <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
               <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
                 <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">WORKSPACE</summary>
-                <div class="file-tree">
+                <div class="file-tree" style="position:relative;" oncontextmenu="event.preventDefault(); showFileContextMenu(event)">
                   <div class="folder">▼ src/</div>
                   <div class="file" style="color:var(--accent-blue);">app.rs <span class="git-status" style="color:var(--accent-orange); float:right;">M</span></div>
                   <div class="file">main.rs</div>
@@ -6884,8 +7037,121 @@
                   <div class="file" style="padding-left:12px;">integration.rs</div>
                   <div class="file">Cargo.toml</div>
                   <div class="file">README.md</div>
+
+                  <!-- Context menu (right-click to show) -->
+                  <div class="context-menu-mock" id="fileContextMenu" style="display:none; position:absolute; z-index:200;">
+                    <div class="ctx-item" onclick="toast('cmd.file.new_file → prompting name...'); this.closest('.context-menu-mock').style.display='none'">New File</div>
+                    <div class="ctx-item" onclick="toast('cmd.file.new_folder → prompting name...'); this.closest('.context-menu-mock').style.display='none'">New Folder</div>
+                    <div class="ctx-sep"></div>
+                    <div class="ctx-item" onclick="toast('cmd.file.rename → prompting new name...'); this.closest('.context-menu-mock').style.display='none'">Rename</div>
+                    <div class="ctx-item" onclick="toast('cmd.file.delete → confirm deletion?'); this.closest('.context-menu-mock').style.display='none'" style="color:var(--accent-magenta);">Delete</div>
+                    <div class="ctx-sep"></div>
+                    <div class="ctx-item" onclick="toast('cmd.file.copy_full_path → ~/projects/puppet-master/src/app.rs'); this.closest('.context-menu-mock').style.display='none'">Copy Full Path</div>
+                    <div class="ctx-item" onclick="toast('cmd.file.copy_relative_path → src/app.rs'); this.closest('.context-menu-mock').style.display='none'">Copy Relative Path</div>
+                    <div class="ctx-sep"></div>
+                    <div style="padding:2px var(--md); font-size:9px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Clipboard (workspace-node)</div>
+                    <div class="ctx-item" onclick="toast('cmd.file.copy_nodes → workspace clipboard (not system)'); this.closest('.context-menu-mock').style.display='none'">Copy</div>
+                    <div class="ctx-item" onclick="toast('cmd.file.cut_nodes → armed for paste'); this.closest('.context-menu-mock').style.display='none'">Cut</div>
+                    <div class="ctx-item" onclick="toast('cmd.file.paste_nodes → validating target...'); this.closest('.context-menu-mock').style.display='none'">Paste</div>
+                    <div class="ctx-sep"></div>
+                    <div class="ctx-item" onclick="addFileChipToChat('src/app.rs'); this.closest('.context-menu-mock').style.display='none'" style="color:var(--accent-blue);">Add to Chat</div>
+                    <div class="ctx-item" onclick="toast('cmd.terminal.show → opening at src/'); this.closest('.context-menu-mock').style.display='none'">Open in Terminal</div>
+                    <div class="ctx-sep"></div>
+                    <div style="padding:2px var(--md); font-size:9px; color:var(--text-muted); font-weight:600;">OPEN WITH...</div>
+                    <div class="ctx-item" style="padding-left:var(--lg);" onclick="toast('cmd.file.open_with → source_editor'); this.closest('.context-menu-mock').style.display='none'">Source Editor</div>
+                    <div class="ctx-item" style="padding-left:var(--lg);" onclick="toast('cmd.file.open_with → image_viewer'); this.closest('.context-menu-mock').style.display='none'">Image Viewer</div>
+                    <div class="ctx-item" style="padding-left:var(--lg);" onclick="toast('cmd.file.open_with → workspace_preview'); this.closest('.context-menu-mock').style.display='none'">Workspace Preview</div>
+                    <div class="ctx-item" style="padding-left:var(--lg);" onclick="toast('cmd.file.open_with → detached_preview'); this.closest('.context-menu-mock').style.display='none'">Detached Preview</div>
+                    <div class="ctx-item" style="padding-left:var(--lg);" onclick="toast('cmd.file.open_with → diff_review'); this.closest('.context-menu-mock').style.display='none'">Diff Review</div>
+                    <div class="ctx-sep"></div>
+                    <div class="ctx-item" onclick="toast('cmd.file.save_local_copy → saving to ~/Downloads/...'); this.closest('.context-menu-mock').style.display='none'">Save Local Copy</div>
+                  </div>
                 </div>
               </details>
+            </div>
+          </div>
+
+          <div class="side-panel-view" id="panel-search">
+            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+              <span>SEARCH</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
+
+              <!-- Query input -->
+              <div style="margin-bottom:var(--sm);">
+                <div style="display:flex; gap:var(--xs); align-items:center;">
+                  <button style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:11px; padding:2px;" onclick="toggleSearchReplace(this)">&#9654;</button>
+                  <input class="wizard-input" placeholder="Search in files..." style="flex:1; padding:4px; font-size:11px;" id="searchQueryInput" oninput="filterSearchResults(this.value)">
+                </div>
+                <div id="searchReplaceRow" style="display:none; gap:var(--xs); align-items:center; margin-top:var(--xs);">
+                  <span style="width:18px;"></span>
+                  <input class="wizard-input" placeholder="Replace..." style="flex:1; padding:4px; font-size:11px;" id="searchReplaceInput">
+                  <button class="wizard-btn primary" style="padding:2px 8px; font-size:10px;" onclick="toast('cmd.search.replace_all → Replaced 7 occurrences across 3 files')">All</button>
+                </div>
+              </div>
+
+              <!-- Flags -->
+              <div style="display:flex; gap:var(--xs); margin-bottom:var(--md); align-items:center;">
+                <span class="chat-toggle-btn" title="Regex" onclick="this.classList.toggle('active'); toast('Regex: ' + (this.classList.contains('active') ? 'on' : 'off'))" style="font-size:10px; padding:2px 6px; font-family:monospace;">.*</span>
+                <span class="chat-toggle-btn" title="Case Sensitive" onclick="this.classList.toggle('active'); toast('Case sensitive: ' + (this.classList.contains('active') ? 'on' : 'off'))" style="font-size:10px; padding:2px 6px;">Aa</span>
+                <span class="chat-toggle-btn" title="Whole Word" onclick="this.classList.toggle('active'); toast('Whole word: ' + (this.classList.contains('active') ? 'on' : 'off'))" style="font-size:10px; padding:2px 6px; font-family:monospace;">\\b</span>
+                <span style="flex:1;"></span>
+                <select class="wizard-select" style="padding:var(--xs); font-size:10px;" onchange="toast('cmd.search.set_scope → ' + this.value)">
+                  <option>All Files</option>
+                  <option>Open Files</option>
+                  <option>Custom</option>
+                </select>
+              </div>
+
+              <!-- Results -->
+              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);" id="searchResultsSummary">RESULTS (7 in 3 files)</summary>
+                <div style="padding:var(--sm); font-size:11px;">
+
+                  <!-- src/app.rs results -->
+                  <div style="font-weight:600; padding:3px 0; color:var(--text-secondary); cursor:pointer;" onclick="toast('cmd.search.show → focus results for src/app.rs')">src/app.rs <span style="color:var(--text-muted); font-weight:normal;">(3)</span></div>
+                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → src/app.rs:14')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
+                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">14</span> let app = <span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span>::new();
+                  </div>
+                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → src/app.rs:42')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
+                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">42</span> impl <span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span> {
+                  </div>
+                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → src/app.rs:89')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
+                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">89</span> pub fn run(<span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span>) -&gt;
+                  </div>
+
+                  <!-- src/config.rs results -->
+                  <div style="font-weight:600; padding:3px 0; color:var(--text-secondary); margin-top:var(--sm); cursor:pointer;" onclick="toast('cmd.search.show → focus results for src/config.rs')">src/config.rs <span style="color:var(--text-muted); font-weight:normal;">(2)</span></div>
+                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → src/config.rs:3')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
+                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">3</span> use crate::<span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span>Config;
+                  </div>
+                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → src/config.rs:28')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
+                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">28</span> fn load_<span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span>_config()
+                  </div>
+
+                  <!-- tests/integration.rs results -->
+                  <div style="font-weight:600; padding:3px 0; color:var(--text-secondary); margin-top:var(--sm); cursor:pointer;" onclick="toast('cmd.search.show → focus results for tests/integration.rs')">tests/integration.rs <span style="color:var(--text-muted); font-weight:normal;">(2)</span></div>
+                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → tests/integration.rs:7')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
+                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">7</span> let test_<span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span> = setup();
+                  </div>
+                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → tests/integration.rs:45')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
+                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">45</span> assert!(<span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span>::valid());
+                  </div>
+
+                </div>
+              </details>
+
+              <!-- Replace selected -->
+              <div style="display:flex; gap:var(--xs);">
+                <button class="wizard-btn" style="flex:1; padding:4px; font-size:10px;" onclick="toast('cmd.search.replace_selected → replacing current match...')">Replace</button>
+                <button class="wizard-btn primary" style="flex:1; padding:4px; font-size:10px;" onclick="toast('cmd.search.replace_all → Replaced 7 across 3 files')">Replace All</button>
+              </div>
+              <div style="margin-top:var(--sm); display:flex; gap:var(--xs);">
+                <button class="wizard-btn" style="flex:1; padding:4px; font-size:10px;" onclick="toast('cmd.search.previous_result')">&#9650; Prev</button>
+                <button class="wizard-btn" style="flex:1; padding:4px; font-size:10px;" onclick="toast('cmd.search.next_result')">&#9660; Next</button>
+              </div>
+
             </div>
           </div>
 
@@ -6924,54 +7190,193 @@
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
             </div>
             <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
-              <div style="margin-bottom:var(--lg);">
-                <select class="wizard-select" style="padding:var(--xs); font-size:11px;">
-                  <option>main</option>
-                  <option>feature/gui-update</option>
-                  <option>hotfix/auth-bug</option>
-                </select>
+
+              <!-- Subview tab strip -->
+              <div class="sc-subview-tabs" style="display:flex; gap:2px; margin-bottom:var(--md); border-bottom:1px solid var(--border-light); padding-bottom:var(--xs);">
+                <span class="sc-tab active" onclick="switchSCSubview(this,'changes')">Changes</span>
+                <span class="sc-tab" onclick="switchSCSubview(this,'history')">History</span>
+                <span class="sc-tab" onclick="switchSCSubview(this,'graph')">Graph</span>
+                <span class="sc-tab" onclick="switchSCSubview(this,'worktrees')">Worktrees</span>
+                <span class="sc-tab" onclick="switchSCSubview(this,'branches')">Branches</span>
               </div>
-              
-              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">CHANGES <span class="git-status" style="float:right; color:var(--accent-orange);">3</span></summary>
-                <div class="file-tree" style="padding:var(--sm);">
-                  <div class="file" style="font-size:12px; padding:4px 0;">src/app.rs <span class="git-status" style="color:var(--accent-orange);">M</span></div>
-                  <div class="file" style="font-size:12px; padding:4px 0;">src/config.rs <span class="git-status added" style="color:var(--accent-lime);">A</span></div>
-                  <div class="file" style="font-size:12px; padding:4px 0; color:var(--text-muted);">Cargo.lock <span class="git-status" style="color:var(--text-muted);">U</span></div>
-                  <div style="margin-top:var(--sm); display:flex; gap:var(--xs);">
-                    <input type="text" class="wizard-input" placeholder="Message..." style="padding:4px; font-size:11px; flex:1;">
-                    <button class="wizard-btn primary" style="padding:4px 8px; font-size:11px;">Commit</button>
-                  </div>
-                </div>
-              </details>
 
-              <details class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">WORKTREES <span class="git-status" style="float:right;">2</span></summary>
-                <div class="file-tree" style="padding:var(--sm);">
-                  <div class="file" style="font-size:11px; padding:4px 0; border-bottom:1px solid var(--border-light);">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                      <b>main</b> <span class="status-badge" style="font-size:9px; padding:1px 4px;">Active</span>
-                    </div>
-                    <div style="color:var(--text-muted); margin-top:2px;">/puppet-master</div>
-                  </div>
-                  <div class="file" style="font-size:11px; padding:4px 0;">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                      <b>feature/gui-update</b> <span class="status-badge" style="font-size:9px; padding:1px 4px; background:var(--accent-orange); color:#1A1A1A;">Stale</span>
-                    </div>
-                    <div style="color:var(--text-muted); margin-top:2px;">/.puppet-master/worktrees/wt-1</div>
-                    <div style="margin-top:4px;"><a href="#" style="color:var(--accent-blue);">Recover</a> | <a href="#" style="color:var(--accent-magenta);">Prune</a></div>
-                  </div>
+              <!-- ═══ CHANGES subview ═══ -->
+              <div data-sc-view="changes">
+                <div style="margin-bottom:var(--md);">
+                  <select class="wizard-select" style="padding:var(--xs); font-size:11px; width:100%;" onchange="toast('Branch: ' + this.value)">
+                    <option>main</option>
+                    <option>feature/gui-update</option>
+                    <option>hotfix/auth-bug</option>
+                  </select>
                 </div>
-              </details>
 
-              <details class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">HISTORY & GRAPH</summary>
-                <div style="padding:var(--sm); font-size:11px; color:var(--text-secondary);">
-                  <div style="padding:4px 0; border-left: 2px solid var(--accent-blue); padding-left:var(--sm); margin-bottom:var(--xs);">abc12ef - Initial commit</div>
-                  <div style="padding:4px 0; border-left: 2px solid var(--accent-lime); padding-left:var(--sm);">def34ab - Update README</div>
-                  <button class="wizard-btn" style="width:100%; margin-top:var(--sm); padding:4px; font-size:10px;">View Full Graph</button>
+                <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">STAGED <span class="git-status" style="float:right; color:var(--accent-lime);">1</span></summary>
+                  <div class="file-tree" style="padding:var(--sm);">
+                    <div class="file" style="font-size:11px; padding:4px 0; display:flex; justify-content:space-between; align-items:center;">
+                      <span style="cursor:pointer;" onclick="toast('cmd.git.open_diff → src/config.rs (staged)')">src/config.rs <span class="git-status added" style="color:var(--accent-lime);">A</span></span>
+                      <span style="display:flex; gap:2px;">
+                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px;" onclick="toast('cmd.git.unstage_hunks → src/config.rs')" title="Unstage">−</button>
+                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px; color:var(--accent-magenta);" onclick="toast('cmd.git.discard_hunks → src/config.rs (confirm?)')" title="Discard">✕</button>
+                      </span>
+                    </div>
+                  </div>
+                </details>
+
+                <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">UNSTAGED <span class="git-status" style="float:right; color:var(--accent-orange);">2</span></summary>
+                  <div class="file-tree" style="padding:var(--sm);">
+                    <div class="file" style="font-size:11px; padding:4px 0; display:flex; justify-content:space-between; align-items:center;">
+                      <span style="cursor:pointer;" onclick="toast('cmd.git.open_diff → src/app.rs (unstaged)')">src/app.rs <span class="git-status" style="color:var(--accent-orange);">M</span></span>
+                      <span style="display:flex; gap:2px;">
+                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px;" onclick="toast('cmd.git.stage_hunks → src/app.rs')" title="Stage">+</button>
+                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px; color:var(--accent-magenta);" onclick="toast('cmd.git.discard_hunks → src/app.rs')" title="Discard">✕</button>
+                      </span>
+                    </div>
+                    <div class="file" style="font-size:11px; padding:4px 0; display:flex; justify-content:space-between; align-items:center; color:var(--text-muted);">
+                      <span style="cursor:pointer;" onclick="toast('cmd.git.open_diff → Cargo.lock (unstaged)')">Cargo.lock <span class="git-status">U</span></span>
+                      <span style="display:flex; gap:2px;">
+                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px;" onclick="toast('cmd.git.stage_hunks → Cargo.lock')" title="Stage">+</button>
+                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px; color:var(--accent-magenta);" onclick="toast('cmd.git.discard_hunks → Cargo.lock')" title="Discard">✕</button>
+                      </span>
+                    </div>
+                    <div style="font-size:9px; color:var(--text-muted); padding:var(--xs) 0; font-style:italic;">Hunk-level stage/unstage/discard available in diff view</div>
+                  </div>
+                </details>
+
+                <div style="display:flex; gap:var(--xs); margin-bottom:var(--md);">
+                  <input type="text" class="wizard-input" id="scCommitMsg" placeholder="Commit message..." style="padding:4px; font-size:11px; flex:1;">
+                  <button class="wizard-btn primary" style="padding:4px 8px; font-size:11px;" onclick="var msg=document.getElementById('scCommitMsg').value||'(empty)'; toast('Committed: ' + msg)">Commit</button>
                 </div>
-              </details>
+
+                <div style="margin-bottom:var(--md);">
+                  <input class="wizard-input" placeholder="Search in diff (SC owned, not project Search)" style="width:100%; padding:4px; font-size:10px;" oninput="if(this.value.length>2) toast('cmd.git.diff_search → ' + this.value)">
+                </div>
+
+                <div style="font-size:9px; color:var(--text-muted); padding:var(--xs) 0; margin-bottom:var(--md); border-left:2px solid var(--accent-orange); padding-left:var(--sm);">Git mutations do not participate in editor undo</div>
+
+                <details class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">CONFLICT REVIEW</summary>
+                  <div style="padding:var(--sm); font-size:11px;">
+                    <div style="padding:4px 0; font-weight:600; color:var(--accent-magenta);">src/merge_target.rs <span style="font-weight:normal; color:var(--text-muted);">— 1 conflict</span></div>
+                    <div style="display:flex; gap:var(--xs); margin-top:var(--sm); font-size:9px; color:var(--text-secondary);">
+                      <span style="padding:2px 6px; border:1px solid var(--border-light); border-radius:3px;">base</span>
+                      <span style="padding:2px 6px; border:1px solid var(--accent-blue); border-radius:3px; color:var(--accent-blue);">ours</span>
+                      <span style="padding:2px 6px; border:1px solid var(--accent-orange); border-radius:3px; color:var(--accent-orange);">theirs</span>
+                    </div>
+                    <div style="display:flex; gap:var(--xs); margin-top:var(--sm);">
+                      <button class="wizard-btn" style="padding:2px 6px; font-size:9px;" onclick="toast('cmd.git.conflict_apply_resolution → Accept Ours')">Apply Ours</button>
+                      <button class="wizard-btn" style="padding:2px 6px; font-size:9px;" onclick="toast('cmd.git.conflict_apply_resolution → Accept Theirs')">Apply Theirs</button>
+                      <button class="wizard-btn" style="padding:2px 6px; font-size:9px;" onclick="toast('Opening merge tool...')">Merge Tool</button>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">REMOTE PROJECTION STATE</summary>
+                  <div style="padding:var(--sm); font-size:11px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:3px 0;">
+                      <span style="color:var(--text-secondary);">Freshness</span>
+                      <span class="remote-badge current" style="cursor:pointer;" onclick="cycleBadge(this, ['current','refreshing','stale']); toast('Freshness: ' + this.textContent)">current</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:3px 0;">
+                      <span style="color:var(--text-secondary);">Health</span>
+                      <span class="remote-badge healthy" style="cursor:pointer;" onclick="cycleBadge(this, ['healthy','degraded','unavailable']); toast('Health: ' + this.textContent)">healthy</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:3px 0;">
+                      <span style="color:var(--text-secondary);">Write</span>
+                      <span class="remote-badge writable" style="cursor:pointer;" onclick="cycleBadge(this, ['writable','pending_write','blocked','read_only']); toast('Write: ' + this.textContent)">writable</span>
+                    </div>
+                    <button class="wizard-btn" style="width:100%; margin-top:var(--sm); padding:4px; font-size:10px; opacity:0.5;" onclick="toast('cmd.remote.reconnect → one bounded auto-retry...')">Reconnect</button>
+                    <div style="font-size:9px; color:var(--text-muted); margin-top:var(--xs);">Click badges to cycle states</div>
+                  </div>
+                </details>
+              </div>
+
+              <!-- ═══ HISTORY subview ═══ -->
+              <div data-sc-view="history" style="display:none;">
+                <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">COMMITS</summary>
+                  <div style="padding:var(--sm); font-size:11px;">
+                    <div style="padding:4px 0; border-bottom:1px solid var(--border-light); cursor:pointer;" onclick="toast('cmd.git.show_commit → abc12ef')">
+                      <div style="display:flex; justify-content:space-between;"><span style="color:var(--accent-blue); font-family:monospace;">abc12ef</span><span style="color:var(--text-muted); font-size:9px;">2h ago</span></div>
+                      <div>Initial commit</div>
+                      <div style="color:var(--text-muted); font-size:9px;">Author: dev@puppet-master.io</div>
+                    </div>
+                    <div style="padding:4px 0; border-bottom:1px solid var(--border-light); cursor:pointer;" onclick="toast('cmd.git.show_commit → def34ab')">
+                      <div style="display:flex; justify-content:space-between;"><span style="color:var(--accent-blue); font-family:monospace;">def34ab</span><span style="color:var(--text-muted); font-size:9px;">5h ago</span></div>
+                      <div>Update README and add config module</div>
+                      <div style="color:var(--text-muted); font-size:9px;">Author: dev@puppet-master.io</div>
+                    </div>
+                    <div style="padding:4px 0; cursor:pointer;" onclick="toast('cmd.git.show_commit → 789feed')">
+                      <div style="display:flex; justify-content:space-between;"><span style="color:var(--accent-blue); font-family:monospace;">789feed</span><span style="color:var(--text-muted); font-size:9px;">1d ago</span></div>
+                      <div>Set up Cargo workspace</div>
+                      <div style="color:var(--text-muted); font-size:9px;">Author: dev@puppet-master.io</div>
+                    </div>
+                  </div>
+                </details>
+                <div style="margin-bottom:var(--md);">
+                  <input class="wizard-input" placeholder="Filter commits..." style="width:100%; padding:4px; font-size:10px;" oninput="toast('Filtering: ' + this.value)">
+                </div>
+                <button class="wizard-btn" style="width:100%; padding:4px; font-size:10px;" onclick="toast('cmd.git.diff_set_compare_target → selecting compare base...')">Set Compare Target</button>
+              </div>
+
+              <!-- ═══ GRAPH subview ═══ -->
+              <div data-sc-view="graph" style="display:none;">
+                <div style="padding:var(--xl); text-align:center; color:var(--text-muted); font-size:11px;">
+                  <div style="font-size:24px; margin-bottom:var(--sm);">⑂</div>
+                  <div>Lineage graph visualization</div>
+                  <div style="margin-top:var(--sm); font-size:9px;">Branch ancestry, merge points, commit selection handoff</div>
+                  <button class="wizard-btn" style="margin-top:var(--md); padding:4px 12px; font-size:10px;" onclick="toast('Opening full graph view...')">Open Full Graph</button>
+                </div>
+              </div>
+
+              <!-- ═══ WORKTREES subview ═══ -->
+              <div data-sc-view="worktrees" style="display:none;">
+                <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">WORKTREES <span class="git-status" style="float:right;">2</span></summary>
+                  <div class="file-tree" style="padding:var(--sm);">
+                    <div class="file" style="font-size:11px; padding:4px 0; border-bottom:1px solid var(--border-light);">
+                      <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <b>main</b> <span class="status-badge" style="font-size:9px; padding:1px 4px;">Active</span>
+                      </div>
+                      <div style="color:var(--text-muted); margin-top:2px;">/puppet-master</div>
+                    </div>
+                    <div class="file" style="font-size:11px; padding:4px 0;">
+                      <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <b>feature/gui-update</b> <span class="status-badge" style="font-size:9px; padding:1px 4px; background:var(--accent-orange); color:#1A1A1A;">Stale</span>
+                      </div>
+                      <div style="color:var(--text-muted); margin-top:2px;">/.puppet-master/worktrees/wt-1</div>
+                      <div style="margin-top:4px;"><a href="#" onclick="event.preventDefault(); toast('Recovering worktree...')" style="color:var(--accent-blue);">Recover</a> | <a href="#" onclick="event.preventDefault(); toast('Pruning worktree...')" style="color:var(--accent-magenta);">Prune</a></div>
+                    </div>
+                  </div>
+                </details>
+              </div>
+
+              <!-- ═══ BRANCHES/STASH subview ═══ -->
+              <div data-sc-view="branches" style="display:none;">
+                <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">BRANCHES <span class="git-status" style="float:right;">3</span></summary>
+                  <div style="padding:var(--sm); font-size:11px;">
+                    <div style="padding:3px 0; cursor:pointer; display:flex; justify-content:space-between;" onclick="toast('Switch to main')"><span style="font-weight:600;">main</span> <span style="color:var(--accent-lime); font-size:9px;">current</span></div>
+                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to feature/gui-update')">feature/gui-update</div>
+                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to hotfix/auth-bug')">hotfix/auth-bug</div>
+                  </div>
+                </details>
+                <details class="bento-widget" style="border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">STASH <span class="git-status" style="float:right;">1</span></summary>
+                  <div style="padding:var(--sm); font-size:11px;">
+                    <div style="padding:3px 0; display:flex; justify-content:space-between; align-items:center;">
+                      <span style="cursor:pointer;" onclick="toast('Applying stash@{0}...')">stash@{0}: WIP on main</span>
+                      <div style="display:flex; gap:2px;">
+                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px;" onclick="toast('git stash pop')">Pop</button>
+                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px; color:var(--accent-magenta);" onclick="toast('git stash drop')">Drop</button>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+              </div>
+
             </div>
           </div>
 
@@ -9132,7 +9537,7 @@ impl Dashboard {
                   <!-- Formatters Card -->
                   <div class="bento-card" data-inspector-view="formatters" data-category="extensions" style="animation: slideInBottom 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 550ms forwards;">
                     <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M3 5h4"/><path d="M19 17v4"/><path d="M17 19h4"/></svg> Formatters & LSP</div>
-                    <div class="bento-desc">Code intelligence and formatting rules.</div>
+                    <div class="bento-desc">Searchable LSP registry and formatting rules.</div>
                     <div class="bento-surface row">
                       <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Scope <select style="width: 100%;"><option>Global</option><option>Project</option></select></label>
                       <label style="flex-direction: column; align-items: flex-start; gap: 4px; flex: 1;">Default Formatter <select style="width: 100%;"><option>Prettier</option><option>Rustfmt</option></select></label>
@@ -9714,23 +10119,58 @@ cmd.terminal.focus_session — focus stream without layout reveal</pre>
                   </div>
                 </details>
                 <details open>
-                  <summary>Language Servers (LSP)</summary>
+                  <summary>Language Servers (LSP Registry)</summary>
+                  <div class="details-content">
+                    <input class="wizard-input" placeholder="Search language servers..." style="width:100%; margin-bottom:var(--sm);" oninput="filterLSPRegistry(this.value)">
+                    <label><input type="checkbox" checked onchange="toast('LSP globally ' + (this.checked ? 'enabled' : 'disabled'))"> Enable all language servers</label>
+                    <div style="margin-top:var(--sm); border:1px solid var(--border-light); border-radius:4px; overflow:hidden;">
+                      <div class="lsp-registry-row" style="display:flex; justify-content:space-between; align-items:center; padding:4px var(--sm); border-bottom:1px solid var(--border-light); font-size:11px;">
+                        <div style="flex:1;">
+                          <div style="font-weight:600;">rust-analyzer</div>
+                          <div style="color:var(--text-muted); font-size:9px;">(local, rust-analyzer, /puppet-master)</div>
+                        </div>
+                        <span style="color:var(--accent-lime); font-size:10px; margin-right:var(--sm);">Ready</span>
+                        <input type="checkbox" checked onchange="toast('rust-analyzer ' + (this.checked ? 'enabled' : 'disabled'))">
+                      </div>
+                      <div class="lsp-registry-row" style="display:flex; justify-content:space-between; align-items:center; padding:4px var(--sm); border-bottom:1px solid var(--border-light); font-size:11px;">
+                        <div style="flex:1;">
+                          <div style="font-weight:600;">typescript-language-server</div>
+                          <div style="color:var(--text-muted); font-size:9px;">(ssh:dev-server, tsserver, /frontend)</div>
+                        </div>
+                        <span style="color:var(--accent-lime); font-size:10px; margin-right:var(--sm);">Ready</span>
+                        <input type="checkbox" checked onchange="toast('tsserver ' + (this.checked ? 'enabled' : 'disabled'))">
+                      </div>
+                      <div class="lsp-registry-row" style="display:flex; justify-content:space-between; align-items:center; padding:4px var(--sm); border-bottom:1px solid var(--border-light); font-size:11px;">
+                        <div style="flex:1;">
+                          <div style="font-weight:600;">pyright</div>
+                          <div style="color:var(--text-muted); font-size:9px;">(local, pyright, /puppet-master)</div>
+                        </div>
+                        <span style="color:var(--text-muted); font-size:10px; margin-right:var(--sm);">Disabled</span>
+                        <input type="checkbox" onchange="toast('pyright ' + (this.checked ? 'enabled' : 'disabled'))">
+                      </div>
+                      <div class="lsp-registry-row" style="display:flex; justify-content:space-between; align-items:center; padding:4px var(--sm); font-size:11px;">
+                        <div style="flex:1;">
+                          <div style="font-weight:600;">lua-language-server</div>
+                          <div style="color:var(--text-muted); font-size:9px;">(local, lua-ls, /puppet-master)</div>
+                        </div>
+                        <span style="color:var(--accent-orange); font-size:10px; margin-right:var(--sm);">Initializing...</span>
+                        <input type="checkbox" checked onchange="toast('lua-ls ' + (this.checked ? 'enabled' : 'disabled'))">
+                      </div>
+                    </div>
+                    <div style="font-size:9px; color:var(--text-muted); margin-top:var(--sm);">Session reuse key: (host_id, server_id, root_identity)</div>
+                    <button class="wizard-btn" style="width:100%; margin-top:var(--sm);" onclick="toast('Opening custom LSP server dialog...')">Add Custom LSP Server</button>
+                  </div>
+                </details>
+                <details>
+                  <summary>LSP Timing & Behavior</summary>
                   <div class="details-content">
                     <label><input type="checkbox"> Disable auto-LSP downloads</label>
                     <label><input type="checkbox" checked> lsp.didSave</label>
                     <label>didChangeDebounceMs <input type="number" value="300"></label>
                     <label>hoverTimeoutMs <input type="number" value="2000"></label>
                     <label>completionTimeoutMs <input type="number" value="1000"></label>
-                    <label>workspaceSymbolTimeoutMs <input type="number" value="5000"></label>
-                    <label>hoverDelayMs <input type="number" value="300"></label>
-                  </div>
-                </details>
-                <details>
-                  <summary>Editor Integration</summary>
-                  <div class="details-content">
                     <label><input type="checkbox" checked> Code lens</label>
                     <label><input type="checkbox" checked> Show diagnostics hint in chat</label>
-                    <button class="wizard-btn">Manage Custom LSP Servers</button>
                   </div>
                 </details>
               </div>
@@ -10041,6 +10481,16 @@ cmd.terminal.focus_session — focus stream without layout reveal</pre>
                     <span class="ft-file">src/dashboard.rs <span class="ft-add">+42</span> <span class="ft-del">−8</span></span>
                     <span class="ft-file">src/components/header.rs <span class="ft-add">+12</span> <span class="ft-del">−3</span></span>
                     <span class="ft-file">styles/main.css <span class="ft-add">+5</span> <span class="ft-del">−2</span></span>
+                    <span class="ft-file">src/routes.rs <span class="ft-add">+8</span> <span class="ft-del">−1</span></span>
+                    <span class="ft-file">src/models.rs <span class="ft-add">+3</span> <span class="ft-del">−0</span></span>
+                    <span class="ft-file ft-overflow" style="display:none;">src/utils.rs <span class="ft-add">+2</span> <span class="ft-del">−1</span></span>
+                    <span class="ft-file ft-overflow" style="display:none;">Cargo.toml <span class="ft-add">+1</span> <span class="ft-del">−0</span></span>
+                    <span class="ft-more" style="color:var(--accent-blue); cursor:pointer; font-size:10px; font-weight:600;" onclick="this.style.display='none'; this.parentElement.querySelectorAll('.ft-overflow').forEach(function(e){e.style.display=''})">+ 2 more</span>
+                  </div>
+                  <div style="display:flex; gap:var(--sm); padding:var(--xs) var(--md); align-items:center;">
+                    <button class="wizard-btn" style="font-size:10px; padding:2px 8px;" title="cmd.chat.revert — Restores file mutations from last assistant turn" onclick="toast('cmd.chat.revert → restoring files from last assistant turn...')">Revert Last Edit</button>
+                    <button class="wizard-btn" style="font-size:10px; padding:2px 8px; opacity:0.7;" title="cmd.chat.rewind — Conversation history only. Does NOT restore files." onclick="toast('cmd.chat.rewind → rewinding conversation (files unchanged)')">Rewind Chat</button>
+                    <span style="font-size:9px; color:var(--text-muted); margin-left:auto;">revert ≠ rewind</span>
                   </div>
                   <div class="chat-footer-problems chatFooterProblems" style="display:none; font-size:10px; color:var(--text-secondary); padding-top:2px;"></div>
                 </div>
@@ -10068,7 +10518,10 @@ cmd.terminal.focus_session — focus stream without layout reveal</pre>
   </div>
 </div>
 
-                    <div class="composer-chips-container" style="display:flex; flex-wrap:wrap; padding:0 var(--sm);"></div>
+                    <div class="composer-chips-container" style="display:flex; flex-wrap:wrap; padding:0 var(--sm);">
+                      <div class="composer-chip file-ref"><span>src/app.rs</span> <span class="close-chip" onclick="this.parentElement.remove()">&times;</span></div>
+                      <div class="composer-chip file-ref"><span>src/config.rs:14-28</span> <span class="close-chip" onclick="this.parentElement.remove()">&times;</span></div>
+                    </div>
                     <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
                     
                     <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm); border-top: 1px solid var(--border-light);">
@@ -10378,7 +10831,11 @@ error[E0433]: unresolved import `slint`
           </div>
           <div class="menu-section">
             <div class="menu-section-title">LSPs</div>
-            <div class="menu-section-content">rust-analyzer: Ready</div>
+            <div class="menu-section-content">
+              <div style="cursor:pointer; padding:2px 0;" onclick="toast('Settings > LSP > rust-analyzer')">Rust (rust-analyzer): <span style="color:var(--accent-lime);">Ready</span> <span style="color:var(--text-muted); font-size:9px;">(local, /, /puppet-master)</span></div>
+              <div style="cursor:pointer; padding:2px 0;" onclick="toast('Settings > LSP > tsserver')">TypeScript (tsserver): <span style="color:var(--accent-lime);">Ready</span> <span style="color:var(--text-muted); font-size:9px;">(ssh:dev-server, /, /frontend)</span></div>
+              <div style="cursor:pointer; padding:2px 0;" onclick="toast('Settings > LSP > pyright')">Python (pyright): <span style="color:var(--text-muted);">Disabled</span></div>
+            </div>
           </div>
           <div class="menu-section">
             <div class="menu-section-title">Plugins</div>
@@ -10394,6 +10851,7 @@ error[E0433]: unresolved import `slint`
       <span class="status-commit">abc12ef</span>
       <span class="status-sep">|</span>
       <span class="status-ssh">SSH: dev-server 45ms</span>
+      <span class="remote-badge current" style="font-size:9px; cursor:pointer;" onclick="cycleBadge(this, ['current','refreshing','stale']); toast('Remote freshness: ' + this.textContent)">current</span>
       <span class="status-ssh-rate">In: 12 KB/s | Out: 4 KB/s</span>
       <span class="status-sep">|</span>
       <span class="status-snapshot">Last snapshot: 10m ago</span>
@@ -10708,6 +11166,16 @@ error[E0433]: unresolved import `slint`
                     <span class="ft-file">src/dashboard.rs <span class="ft-add">+42</span> <span class="ft-del">−8</span></span>
                     <span class="ft-file">src/components/header.rs <span class="ft-add">+12</span> <span class="ft-del">−3</span></span>
                     <span class="ft-file">styles/main.css <span class="ft-add">+5</span> <span class="ft-del">−2</span></span>
+                    <span class="ft-file">src/routes.rs <span class="ft-add">+8</span> <span class="ft-del">−1</span></span>
+                    <span class="ft-file">src/models.rs <span class="ft-add">+3</span> <span class="ft-del">−0</span></span>
+                    <span class="ft-file ft-overflow" style="display:none;">src/utils.rs <span class="ft-add">+2</span> <span class="ft-del">−1</span></span>
+                    <span class="ft-file ft-overflow" style="display:none;">Cargo.toml <span class="ft-add">+1</span> <span class="ft-del">−0</span></span>
+                    <span class="ft-more" style="color:var(--accent-blue); cursor:pointer; font-size:10px; font-weight:600;" onclick="this.style.display='none'; this.parentElement.querySelectorAll('.ft-overflow').forEach(function(e){e.style.display=''})">+ 2 more</span>
+                  </div>
+                  <div style="display:flex; gap:var(--sm); padding:var(--xs) var(--md); align-items:center;">
+                    <button class="wizard-btn" style="font-size:10px; padding:2px 8px;" title="cmd.chat.revert — Restores file mutations from last assistant turn" onclick="toast('cmd.chat.revert → restoring files from last assistant turn...')">Revert Last Edit</button>
+                    <button class="wizard-btn" style="font-size:10px; padding:2px 8px; opacity:0.7;" title="cmd.chat.rewind — Conversation history only. Does NOT restore files." onclick="toast('cmd.chat.rewind → rewinding conversation (files unchanged)')">Rewind Chat</button>
+                    <span style="font-size:9px; color:var(--text-muted); margin-left:auto;">revert ≠ rewind</span>
                   </div>
                   <div class="chat-footer-problems chatFooterProblems" style="display:none; font-size:10px; color:var(--text-secondary); padding-top:2px;"></div>
                 </div>
@@ -10735,7 +11203,10 @@ error[E0433]: unresolved import `slint`
   </div>
 </div>
 
-                    <div class="composer-chips-container" style="display:flex; flex-wrap:wrap; padding:0 var(--sm);"></div>
+                    <div class="composer-chips-container" style="display:flex; flex-wrap:wrap; padding:0 var(--sm);">
+                      <div class="composer-chip file-ref"><span>src/app.rs</span> <span class="close-chip" onclick="this.parentElement.remove()">&times;</span></div>
+                      <div class="composer-chip file-ref"><span>src/config.rs:14-28</span> <span class="close-chip" onclick="this.parentElement.remove()">&times;</span></div>
+                    </div>
                     <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
                     
                     <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm); border-top: 1px solid var(--border-light);">
@@ -12915,6 +13386,86 @@ status: completed with warnings</pre>
       });
     }
   });
+
+  // ── Search panel: filter results by query ──
+  window.filterSearchResults = function(query) {
+    var items = document.querySelectorAll('#panel-search .search-result-item');
+    var q = query.toLowerCase();
+    var visibleCount = 0;
+    items.forEach(function(item) {
+      var show = !q || item.textContent.toLowerCase().indexOf(q) !== -1;
+      item.style.display = show ? '' : 'none';
+      if (show) visibleCount++;
+    });
+    var summary = document.getElementById('searchResultsSummary');
+    if (summary) summary.textContent = 'RESULTS (' + visibleCount + ' in 3 files)';
+  };
+
+  // ── File context menu ──
+  window.showFileContextMenu = function(event) {
+    event.preventDefault();
+    var menu = document.getElementById('fileContextMenu');
+    if (!menu) return;
+    menu.style.display = 'block';
+    var tree = event.currentTarget;
+    var rect = tree.getBoundingClientRect();
+    menu.style.left = Math.min(event.clientX - rect.left, 180) + 'px';
+    menu.style.top = (event.clientY - rect.top) + 'px';
+  };
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.context-menu-mock')) {
+      var m = document.getElementById('fileContextMenu');
+      if (m) m.style.display = 'none';
+    }
+  });
+
+  // ── Source Control subview switching ──
+  window.switchSCSubview = function(tabEl, viewName) {
+    tabEl.closest('.sc-subview-tabs').querySelectorAll('.sc-tab').forEach(function(t) { t.classList.remove('active'); });
+    tabEl.classList.add('active');
+    var panel = tabEl.closest('.panel-content');
+    panel.querySelectorAll('[data-sc-view]').forEach(function(v) {
+      v.style.display = v.getAttribute('data-sc-view') === viewName ? '' : 'none';
+    });
+  };
+
+  // ── Remote badge cycling (click to demo different states) ──
+  window.cycleBadge = function(el, states) {
+    var current = el.textContent.trim();
+    var idx = states.indexOf(current);
+    var next = states[(idx + 1) % states.length];
+    el.textContent = next;
+    states.forEach(function(s) { el.classList.remove(s.replace(/_/g, '-')); });
+    el.classList.add(next.replace(/_/g, '-'));
+  };
+
+  // ── LSP registry filtering ──
+  window.filterLSPRegistry = function(query) {
+    var rows = document.querySelectorAll('.lsp-registry-row');
+    var q = query.toLowerCase();
+    rows.forEach(function(row) {
+      row.style.display = (!q || row.textContent.toLowerCase().indexOf(q) !== -1) ? '' : 'none';
+    });
+  };
+
+  // ── File context menu → add chip to chat ──
+  window.addFileChipToChat = function(filename) {
+    var chipHtml = '<div class="composer-chip file-ref"><span>' + filename + '</span> <span class="close-chip" onclick="this.parentElement.remove()">&times;</span></div>';
+    document.querySelectorAll('.composer-chips-container').forEach(function(c) {
+      c.innerHTML += chipHtml;
+    });
+    if (typeof toast === 'function') toast('cmd.chat.add_file_reference → ' + filename);
+  };
+
+  // ── Toggle search replace row ──
+  window.toggleSearchReplace = function(btn) {
+    var row = document.getElementById('searchReplaceRow');
+    if (row) {
+      var showing = row.style.display !== 'none';
+      row.style.display = showing ? 'none' : 'flex';
+      btn.textContent = showing ? '▶' : '▼';
+    }
+  };
 
   if (window.switchToChatThread) { window.switchToChatThread('thread0'); }
   });

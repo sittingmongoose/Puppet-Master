@@ -93,6 +93,19 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchest
 `Tier Context` survives only as derived decomposition/view context when needed for prompt helpers or legacy labels. It does not remain the canonical runtime context.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Decision_Policy.md
+
+## Debug-capable investigation orchestration
+
+Orchestrator may launch shared investigations when builds, tests, environment setup, or runtime verification fail.
+
+Required rules:
+- Orchestrator does not switch into the Assistant `Debug` mode strip; instead, it uses the same shared investigation contracts and debug-capable tools under orchestration ownership
+- investigation state remains subordinate to the owning attempt / remediation lineage rather than replacing orchestrator run identity
+- delegated workers may contribute evidence, traces, or fixes to the same `investigation_id` when they are operating on the same issue
+- only one mutation-capable investigation may target the same project/worktree at a time unless the orchestrator explicitly isolates work in a separate worktree or host context
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/MiscPlan.md
+
 ## Dynamic Subagent Selection Architecture
 
 ### Project Context Detection

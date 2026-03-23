@@ -343,12 +343,32 @@ Reserved Assistant Chat slash commands use stable canonical UI command IDs.
 | `cmd.chat.web.map` | `/web map` | `{ url }` | map activity | Assistant chat |
 | `cmd.chat.skill.invoke` | `/skill` | `{ skill_ref, arguments? }` | skill invocation/load | Assistant chat |
 
-Rules:
-- `/cancel` is an alias path to `cmd.chat.stop`; it does not own a separate canonical command ID.
-- `/clear` is not part of the canonical reserved Assistant Chat command set.
-- Reserved slash commands MUST remain aligned with `Plans/assistant-chat-design.md` and MUST NOT be treated as user-overridable commands.
-
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Tools.md
+
+Mode rules:
+- `cmd.chat.mode.payload.mode` uses the canonical Assistant workflow values `ask | agent | debug | plan | deep_plan`
+- `/mode debug` is the canonical slash-path into Debug Mode; there is no separate `/debug` slash family in MVP
+- `/resume` remains the canonical resume path for blocked or recoverable Debug investigations; PM must not invent a parallel debug-only resume slash command
+- `/cancel` is an alias path to `cmd.chat.stop`; it does not own a separate canonical command ID
+- `/clear` is not part of the canonical reserved Assistant Chat command set
+- reserved slash commands MUST remain aligned with `Plans/assistant-chat-design.md` and MUST NOT be treated as user-overridable commands
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md
+
+#### Debug investigation action commands
+
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.chat.open_debug_target_picker` | `{ thread_id, project_id? }` | layout/UI state only | Assistant chat, command palette |
+| `cmd.chat.export_investigation_bundle` | `{ investigation_id, redaction_profile? }` | `debug.investigation.exported` | Assistant chat, Context Detail Pane, Artifacts |
+| `cmd.chat.revoke_investigation_item` | `{ investigation_id, item_id }` | `debug.investigation.context_item_state_changed` | Assistant chat, Context Detail Pane |
+
+Rules:
+- `cmd.chat.export` continues to export the thread; `cmd.chat.export_investigation_bundle` exports only the active or selected investigation bundle
+- `cmd.chat.revoke_investigation_item` changes Investigation Context visibility state and future prompt eligibility; it does not delete historical runtime artifacts
+- `cmd.chat.open_debug_target_picker` reveals the canonical target-binding flow rather than inventing a thread-local freeform attach path
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md
 
 ### 2.8 Assistant memory (Gist Review) commands
 These IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7.

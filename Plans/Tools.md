@@ -169,6 +169,27 @@ ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/
 > **Internal tools vs provider-exposed tools:** `capabilities.get` and `media.generate` are **Puppet Master internal tools** — they execute inside the Puppet Master process and are never forwarded to a provider CLI or server. In `capabilities.get` output, the `provider_tool` category is the umbrella non-media bucket and includes both provider-exposed tools (e.g., OpenCode tools discovered via `GET /provider`) and existing internal tool capabilities (e.g., read/grep/write/task). These non-media tool capabilities are **not** part of the media capability picker dropdown (§4.1 of `Plans/Media_Generation_and_Capabilities.md`), which shows only the four `media.*` capabilities. Permission and policy for all tool categories (internal, built-in, provider-exposed, MCP, custom) use the same model defined in `Plans/Permissions_System.md`.
 
 ContractRef: ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-PICKER, ContractName:Plans/Permissions_System.md
+
+### 3.1A Debug-capable tool classification
+
+The tool registry must classify **debug-capable** tools as a cross-surface capability family rather than as an Assistant-only silo.
+
+Required registry rules:
+- `debug_capable` is metadata on a tool or capability, not a new tool ID
+- tools and capabilities may also carry usage tags such as `debug`, `evidence_capture`, `instrumentation`, `reproduction`, and `verification`
+- built-in tools commonly participating in this family include `read`, `grep`, `glob`, `list`, `bash`, the edit group, `logsearch`, `logread`, `lsp`, and `task`
+- browser automation capabilities, DAP controls, runtime-artifact export helpers, eligible MCP tools, and eligible custom tools may also join the family when the registry metadata says they are debug-capable
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/newtools.md
+
+Cross-surface rules:
+- Assistant Debug Mode is the chat entrypoint that most aggressively prefers this family
+- Orchestrator, Interview, and delegated runs may use the same debug-capable tools under the same permission, artifact, and visibility contracts
+- tool availability, denials, and degraded capability state continue to flow through the same requested/effective policy system and persisted event stream
+- classifying a tool as debug-capable does not authorize hidden evidence ingress or bypass the normal permission model
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+
 ### 3.2 Edit group and ignore patterns
 
 - **Edit group:** `edit`, `write`, `patch`, and `multiedit` share one **edit** permission so that "allow file changes" is a single knob ([OpenCode](https://opencode.ai/docs/tools/): "The edit permission covers all file modifications (edit, write, patch, multiedit)").
@@ -408,6 +429,7 @@ Canonical input/output shapes align with [OpenCode built-in tools](https://openc
 ### 3.6 Task tool and the 42 subagents (Plans)
 
 ### 3.6A Task runtime addendum
+
 The `task` tool launches resumable delegated runs rather than opaque fire-and-forget work.
 
 Rules:
@@ -424,6 +446,18 @@ The **task** tool launches a subagent by type. The **subagent_type** parameter m
 - **Plans/interview-subagent-integration.md** -- Phase assignments (e.g. Scope & Goals → product-manager, Architecture → architect-reviewer, Product/UX → ux-researcher); cross-phase roles (technical-writer, knowledge-synthesizer, context-manager, etc.).
 
 **Implementation:** The central registry (e.g. `subagent_registry::is_valid_subagent_name(subagent_type)`) must be the single source of truth. When the **task** tool is invoked, validate `subagent_type` against the registry; if invalid, return a structured error (e.g. "Subagent type 'X' not in canonical list; see Plans/orchestrator-subagent-integration.md §4"). Persona content (SKILL.md) lives in `.github/agents/` and `.claude/agents/` (42 files); the runner loads the matching persona for the requested type.
+
+### 3.6B Delegated debug investigations
+
+Delegated runs launched through `task` may participate in an existing investigation.
+
+Required rules:
+- a delegated run launched inside an investigation inherits `investigation_id` plus a narrowed-or-equal permission snapshot
+- delegated runs may add evidence, instrumentation updates, and verification results to the shared investigation, but they must do so through the canonical investigation and runtime-artifact contracts
+- delegated runs must not create a second mutation-capable investigation against the same project/worktree unless a higher-level owner flow explicitly isolates the work in another worktree or host context
+- any delegated run that installs or mutates temporary instrumentation must also carry the cleanup contract for its own `instrumentation_id`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/MiscPlan.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 ### GitHubApiTool
 

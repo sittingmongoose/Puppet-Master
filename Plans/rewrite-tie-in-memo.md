@@ -99,17 +99,21 @@ ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractNa
 - **Plans/storage-plan.md** -- Canonical storage checklist (seglog, redb schema, projectors, analytics); other plans that persist state or emit events should reference it and call out seglog vs redb.
 
 ### Plans likely needing the most rewrite-aware edits
+
 - `Plans/newfeatures.md`
-  - Already calls out "single Rust/Iced process" and rejects a three-process architecture; should be updated to "single core agent loop + Slint UI" and ensure streaming parsing is in-provider and normalized into the unified event model
+  - keep treating it as historical/origin material only; promoted browser/debug/runtime behavior now lives in the reconciled owner docs
 - `Plans/assistant-chat-design.md`
-  - Keep UX modes/permissions, but re-anchor persistence/search assumptions to seglog/redb/Tantivy and to the unified event stream
-- `Plans/orchestrator-subagent-integration.md`
-  - Treat tier/subagent strategy as "orchestrator policy" sitting above Providers; streaming output parsing and tool gating should be defined once at provider/tool-registry level, not per-platform
-- `Plans/usage-feature.md`
-  - Recast "usage ledger" as projections/rollups over the seglog stream, with indexes in Tantivy (search) and aggregates in redb
-- `Plans/newtools.md`
-  - Align MCP/tool discovery and Doctor checks with the central tool registry/policy engine (no per-provider special casing)
-  - Carry Preview/Build/Docker/GitHub Actions contracts as Slint-target requirements and keep legacy Iced automation references migration-only
+  - keep chat-mode UX and slash-command behavior, but reconcile the mode strip, Investigation Context, and visible-vs-hidden evidence ingress with the rewrite storage/prompt model
+- `Plans/Run_Modes.md`, `Plans/Permissions_System.md`, and `Plans/storage-plan.md`
+  - keep the rewrite runtime/persistence model authoritative and ensure Debug stays an overlay, not a fifth runtime enum or a hidden global permission profile
+- `Plans/Prompt_Pipeline.md` and `Plans/Contracts_V0.md`
+  - carry Investigation Context, event types, and bounded attachment semantics through the canonical prompt/event contracts rather than leaving them as UI-only ideas
+- `Plans/Section15_MVP_Promoted_Features_Spec.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`, and `Plans/Runtime_Artifacts_Panel.md`
+  - retire stale browser / bottom-panel / `Debug` wording, keep Debug Mode distinct from the classical debugger surface, and preserve the visible browser-evidence contract
+- `Plans/Tools.md`, `Plans/newtools.md`, and `Plans/GitHub_Integration.md`
+  - keep debug-capable tooling cross-surface, registry-driven, remote-authority-safe, and compatible with the shared artifact/doctor pipeline
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
 ### Plans that are still conceptually valid (but should be reworded)
 - `Plans/FileSafe.md`

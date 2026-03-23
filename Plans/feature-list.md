@@ -9,6 +9,15 @@ This document exists to avoid losing features when writing rewrite implementatio
 
 ## Part 1 - Planned and New Features (from Plans)
 
+### 6A. Debug Mode and shared debug-capable tooling
+- Assistant Chat exposes `Debug` as a first-class primary mode distinct from the classical `Debugger` / DAP surface
+- Debug-capable tools remain shared platform capabilities across Assistant, Orchestrator, Interview, and delegated runs
+- investigations use canonical `investigation_id`, `instrumentation_id`, visible Investigation Context, and runtime-artifact linkage rather than hidden evidence ingress
+- default Debug behavior is fully automated, evidence-first reproduction / diagnosis / fix / verification / cleanup under a run-scoped Debug Automation Profile
+- remote Debug MVP applies to local projects and PM-managed remote-mode projects only; no arbitrary ad-hoc remote attach and no silent local fallback
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_Integration.md
+
 ### 1. Rewrite and architecture
 - node graph is the canonical orchestration model
 - `Feature Seam` and `Work Package` are first-class graph-owned objects

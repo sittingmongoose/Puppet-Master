@@ -305,6 +305,7 @@ ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
 ## 7. Deterministic defaults
 
 ### 7A. Preview/browser trust-tier capability matrix (2026-03-08)
+
 Preview/browser policy combines preview-runtime boundary rules with browser action permissions. Generated Markdown/Mermaid previews remain restricted preview surfaces; browser-capable sessions use the explicit browser permission-layer model and requested/effective disclosure.
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
@@ -342,6 +343,35 @@ Requested versus effective browser disclosure requirements:
 - browser degradation reasons use explicit values such as `platform_unsupported`, `runtime_unavailable`, `permission_not_granted`, `session_class_restricted`, and `temporarily_unavailable_after_recovery`
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+### 7B. Debug Automation Profile
+
+The **Debug Automation Profile** is a run-scoped permission overlay for active investigations. It is not a new global permissions-profile family.
+
+Required rules:
+- the profile is bound to `investigation_id` plus the owning project/worktree and any bound runtime identities
+- the profile may be activated from Assistant Debug Mode or from another PM surface that launches a shared investigation under the same contracts
+- the profile records requested versus effective grant state and may degrade when a requested capability is unavailable, unsupported, or denied by higher-priority policy
+- finishing, cancelling, superseding, or manually revoking the investigation also revokes the profile grant
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/human-in-the-loop.md
+
+Front-door grant scope:
+- repeated low-risk evidence reads may be pre-approved for the life of the investigation
+- bounded browser evidence capture, console/network read, screenshot/snapshot capture, trace start/stop, DAP inspect actions, project-scoped log reads, and declared-scope temporary instrumentation writes/removals may participate when policy allows
+- the profile does not bypass FileSafe scope, remote authority rules, or higher-priority deny rules
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md
+
+Non-bypassable actions that always require explicit confirmation remain:
+- auth-flow mutation and credential import/export
+- cookie or storage mutation outside previously approved isolated flows
+- offline mode, route mocking, or network interception that changes external behavior
+- package or tracer install outside the declared project/host scope
+- destructive process termination or broad repo mutation outside the declared debug scope
+- external publish or remote repo mutation side effects
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md
 
 When no rule matches at any precedence layer, the following tool defaults apply.
 
@@ -505,6 +535,30 @@ Rules:
 - blocked/recovery action visibility must use `allowed_action_ids[]` and blocked-episode identity rather than legacy request-era fields
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/FinalGUISpec.md
+
+### 10.10A Debug Automation Profile disclosure
+
+When a Debug Automation Profile is requested or active, the UI must disclose both requested and effective state.
+
+Required disclosure fields are:
+- `investigation_id`
+- grant origin (`front_door_approval`, `revalidated_after_resume`, or `not_granted`)
+- scope summary (project/worktree, target kind, bound runtime identities)
+- requested capability groups
+- effective capability groups
+- degraded or blocked capability groups with explicit reason codes
+- expiry / revocation state
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+Surface rules:
+- the active Debug thread header shows whether the profile is active, degraded, or blocked
+- detailed inspectors and the Permissions surface show requested/effective capability groups and the layer that clamped or denied them
+- recovery banners must disclose when a resumed investigation lost prior grants and now requires revalidation
+- high-risk actions that remain outside the profile must continue to surface explicit confirmation UI instead of being described as silently covered by the profile
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md
+
 ### 10.1 Dedicated Permissions tab
 
 A **Permissions** tab in Settings MUST provide the following sections as collapsible cards.

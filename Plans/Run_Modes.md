@@ -33,10 +33,26 @@ Runtime modes remain the canonical execution-posture family.
 Rules:
 - runtime modes are closed to `ask`, `plan`, `regular`, and `yolo`
 - workflow identity is preserved separately through `requested_mode_overlay` and `effective_mode_overlay`
-- overlay identity may be richer than runtime posture; for example `deep_plan` remains visible in the overlay fields while the runtime posture is still planning
-- chat-facing labels such as `Ask`, `Agent`, `Plan`, and `Deep Plan` are display derivations over shared overlay/runtime fields, not a replacement runtime schema
+- overlay identity may be richer than runtime posture; `deep_plan`, `debug`, `interview`, `brainstorm`, and `crew` are overlay values, not runtime-mode enum values
+- chat-facing labels such as `Ask`, `Agent`, `Debug`, `Plan`, and `Deep Plan` are display derivations over shared overlay/runtime fields, not a replacement runtime schema
+- the classical debugger surface and Debug Console are UI surfaces only and must never be serialized as runtime-mode values or overlay values
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+
+Canonical overlay / runtime examples:
+
+| Visible workflow label | requested/effective overlay | Canonical runtime mode | Notes |
+|---|---|---|---|
+| Ask | `ask` | `ask` | Always read-only. |
+| Plan | `plan` | `plan` | Read-only planning posture. |
+| Deep Plan | `deep_plan` | `plan` | Overlay preserves deeper planning identity. |
+| Agent | `agent` | `regular` or `yolo` | Standard execution posture. |
+| Debug | `debug` | `regular` by default, `yolo` only by explicit opt-in | Evidence-first investigation overlay. |
+| Interview | `interview` | `regular` or `plan` depending owner flow | Specialized routed workflow; not a new runtime enum. |
+| BrainStorm | `brainstorm` | `regular` or `plan` depending owner flow | Specialized routed workflow; not a new runtime enum. |
+| Crew | `crew` | `regular` or `plan` depending owner flow | Specialized routed workflow; not a new runtime enum. |
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 ### 1.1 `ask`
 `ask` is the read-only inspection and explanation posture.
@@ -96,46 +112,54 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Arc
 
 ## 3. Deterministic strategy selection
 
-Strategy selection is a pure function of `(ui_mode, config, policy)`. Given the same inputs, the same strategy MUST be selected.
+Strategy selection is a pure function of `(requested_runtime_mode, effective_mode_overlay, config, policy)`.
+
+Given the same inputs, the same strategy MUST be selected.
 
 ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3
 
-Before strategy selection, any surface-specific workflow state MUST normalize to the runtime mode enum in this document:
+Before strategy selection, any surface-specific workflow state MUST normalize to the runtime-mode enum in this document:
 
-| Surface state | Normalized runtime mode | Notes |
-|------|-------------------------|-------|
-| `Ask` | `ask` | Read-only posture. |
-| `Plan` (before execution) | `plan` | Read-only planning posture. |
-| Execute from Plan / Interview / BrainStorm / Crew with standard approvals | `regular` | Workflow overlays do not create extra runtime mode enum values. |
-| Explicit Regular posture | `regular` | Standard execute posture. |
-| Explicit YOLO posture | `yolo` | Full-automation posture. |
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
 
-`Interview`, `BrainStorm`, and `Crew` are workflow overlays, not additional runtime mode enum values.
+| Surface state | Effective overlay | Normalized runtime mode | Notes |
+|---|---|---|---|
+| `Ask` | `ask` | `ask` | Read-only posture. |
+| `Plan` | `plan` | `plan` | Read-only planning posture. |
+| `Deep Plan` | `deep_plan` | `plan` | Read-only planning posture with deeper overlay identity. |
+| `Agent` with standard approvals | `agent` | `regular` | Standard execute posture. |
+| `Debug` with standard approvals | `debug` | `regular` | Default Debug posture. |
+| `Debug` with explicit YOLO posture | `debug` | `yolo` | Power-user opt-in only. |
+| Execute from Interview / BrainStorm / Crew with standard approvals | `interview` / `brainstorm` / `crew` | `regular` | Workflow overlays do not create extra runtime-mode enum values. |
+| Explicit YOLO posture outside Debug | `agent` or specialized overlay | `yolo` | Full-automation posture. |
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
 
 | Mode | `writes_allowed` | Strategy | Selection rule |
-|------|-------------------|----------|----------------|
+|---|---|---|---|
 | `ask` | `false` | HTE | Always HTE; no opt-out. |
 | `plan` | `false` | HTE | Always HTE; no opt-out. |
-| `regular` | conditional | HTE (default) | HTE unless `cli_bridged_strategy == "dae"` in run config **AND** provider policy allows DAE. |
+| `regular` | conditional | HTE (default) | HTE unless `cli_bridged_strategy == "dae"` in run config **and** provider policy allows DAE. |
 | `yolo` | `true` | DAE | DAE with mandatory guardrails + scans. |
 
 **Resolution algorithm:**
 
-1. Read `ui_mode` from the run envelope (field: `mode`; enum: `ask | plan | regular | yolo`).
-2. If `mode ∈ {ask, plan}` → strategy = HTE. Return.
-3. If `mode == yolo` → strategy = DAE. Return.
+1. Read normalized runtime `mode` from the run envelope.
+2. If `mode ∈ {ask, plan}` -> strategy = HTE. Return.
+3. If `mode == yolo` -> strategy = DAE. Return.
 4. If `mode == regular`:
-   a. If run config contains `cli_bridged_strategy: "dae"` AND the active provider's policy flag `dae_allowed == true` → strategy = DAE. Return.
-   b. Otherwise → strategy = HTE. Return.
+   a. If run config contains `cli_bridged_strategy: "dae"` and the active provider policy flag `dae_allowed == true` -> strategy = DAE. Return.
+   b. Otherwise -> strategy = HTE. Return.
 
-ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md
 
-Resolution notes:
-- `regular` + `cli_bridged_strategy = "dae"` + `dae_allowed != true` MUST resolve to HTE with `strategy_resolution_reason = "regular_dae_disallowed"`.
-- `yolo` requires DAE. If the provider policy snapshot does not allow DAE, the run MUST fail before provider spawn with `stop_reason = "yolo_requires_dae_provider"`; it MUST NOT silently downgrade to HTE.
-- The resolved `mode`, `strategy`, and `strategy_resolution_reason` MUST be persisted on `run.started`.
+Debug-specific resolution notes:
+- `effective_mode_overlay = debug` with `mode ∈ {ask, plan}` is an invalid automated-debug combination and MUST be normalized before run spawn; the runtime must not execute a Debug investigation in read-only posture
+- the default Debug posture is `mode = regular` with HTE unless the user explicitly requests a DAE-capable posture and provider policy allows it
+- `yolo` still requires DAE; if the provider policy snapshot does not allow DAE, the run MUST fail before provider spawn with `stop_reason = "yolo_requires_dae_provider"`; it MUST NOT silently downgrade to HTE
+- `run.started` MUST persist `requested_mode_overlay`, `effective_mode_overlay`, `mode`, `strategy`, `strategy_resolution_reason`, and any active Debug Automation Profile snapshot
 
----
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 
 ## 4. Budget defaults
 
