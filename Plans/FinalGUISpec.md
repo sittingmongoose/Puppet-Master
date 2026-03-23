@@ -44,21 +44,21 @@ The current GUI uses a two-row header with 16 flat navigation buttons above a si
 Key changes from the current Iced GUI:
 - **Layout:** Single-page-at-a-time replaced with persistent IDE shell (Activity Bar, Primary Content, Side Panel, Bottom Panel)
 - **Navigation:** 16 flat buttons replaced with 5-group Activity Bar + Command Palette
-- **Settings restructure:** Old "Settings" becomes "App Settings"; old "Config" becomes "Settings"; Login and Doctor merged into unified Settings page (20 tabs in 5 groups with two-level sidebar navigation)
-- **New views:** Usage page, File Manager panel, File Editor panel (with instructions editor and SSH remote editing), Chat panel, Agent Activity pane
-- **Bottom panel:** Terminal (with tab management and pin semantics), Problems, Output, Ports (with hot reload controls), Browser (embedded webview with click-to-context), Debug (DAP-based integrated debugger)
-- **Themes:** Three theme families with full extensibility -- custom themes loadable from TOML files, custom font support, theme preview on hover
+- **Settings restructure:** Old `Settings` becomes `App Settings`; old `Config` becomes `Settings`; Login and Doctor merge into unified Settings
+- **New views:** Usage page, File Manager panel, editor surface, Chat panel, Agent Activity pane, Artifacts, Source Control, GitHub Actions, Docker Manager, and Run & Debug side-panel surfaces
+- **Bottom runtime zone:** Terminal, Problems, Output, Ports, and the classical **Debugger** / **DAP Debugger** live here; normal browsing and HTML preview remain editor-tab or detached-window browser surfaces rather than bottom-panel tabs
+- **Themes:** Three theme families with full extensibility and deterministic built-in variants
 - **Real-time:** Event-driven updates via Rust channels and `invoke_from_event_loop`, not polling
-- **Panels:** Chat and File Manager are detachable (dock/float/snap)
+- **Panels:** Chat and File Manager are detachable; shell state remains identity-safe when re-docked
 - **Project bar:** Instant project switching from title bar with full state preservation and reload
-- **Language detection:** Auto-detect project languages, display badges, suggest LSP and tool presets
-- **Sound effects:** Optional audio feedback for key events (run complete, HITL needed, errors) via `rodio`
-- **Catalog and sync:** Community content catalog with one-click install; config export/import bundles for cross-machine sync
+- **Language detection:** Auto-detect project languages, display badges, and suggest LSP/tool presets
+- **Sound effects:** Optional audio feedback for key events via `rodio`
+- **Catalog and sync:** Community content catalog with install/update/remove flows and config export/import bundles
 - **SSH remote editing:** Edit files on remote hosts via SSH/SFTP with connection management and offline resilience
-- **Run/debug:** Integrated debugging with DAP protocol, breakpoint management, run configurations
-- **Product name:** "Puppet Master" (per Plans/Glossary.md)
+- **Debug workflows:** Assistant Debug Mode is a first-class chat workflow overlay; the classical DAP surface remains a separate debugger surface
+- **Product name:** `Puppet Master`
 
----
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md
 
 ## 2. Tech Stack and Renderer
 
@@ -695,6 +695,7 @@ Rules:
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
 ### 7.4 Settings and inspectors
+
 Settings and inspectors separate:
 - inherited / overridden
 - requested
@@ -708,6 +709,19 @@ Rules:
 - chat-facing compact rows and popovers are compact surfaces, not the full detailed inspector tier
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md
+
+#### Assistant chat mode strip and debug investigation surfaces
+
+The primary Assistant mode strip presents `Ask`, `Agent`, `Debug`, `Plan`, and `Deep Plan` as the stable user-facing choices for the chat surface.
+
+Required UI rules:
+- selecting `Debug` switches the thread into the Debug overlay rather than opening the classical DAP debugger surface
+- the active Debug thread header shows target summary, investigation phase, Debug Automation Profile state, and bundle/export actions
+- the bottom runtime zone uses **Debugger** or **DAP Debugger** for the classical DAP surface and **Debug Console** for runtime output; the bare label `Debug` is not sufficient canonical copy for those runtime surfaces
+- detailed inspectors must show requested/effective overlay, canonical runtime mode, `investigation_id`, `debug_target_kind`, verification strength, and any degraded capability state when a Debug investigation is active
+- blocked or attention-required Debug investigations must surface explicit reason codes and shared allowed-action affordances rather than inventing a debug-only approval lane
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md
 
 ### Terminal settings ownership
 Settings owns durable terminal preferences and discoverability. Live session controls remain in terminal chrome and are not hidden inside durable settings.
@@ -954,7 +968,7 @@ puppet-master-rs/
 |   +-- panels/                       # Detachable panel content and shared runtime/browser hosts
 |   |   +-- chat_panel.slint
 |   |   +-- file_manager_panel.slint
-|   |   +-- bottom_panel.slint          # Terminal/Problems/Output/Ports/Debug tabs plus runtime-adjacent panes
+|   |   +-- bottom_panel.slint          # Terminal/Problems/Output/Ports/Debugger panes plus runtime-adjacent panes
 |   |   +-- browser_panel.slint         # NEW - Shared webview host reused by workspace-tab and detached browser surfaces
 |   |   +-- debug_panel.slint           # NEW - DAP debug UI (variables, call stack, breakpoints)
 |   +-- windows/                      # Secondary windows
@@ -1261,7 +1275,7 @@ cargo check
 | **HTML preview webview** | Medium | Embedding a webview for HTML hot-reload preview may conflict with the Skia renderer pipeline. Mitigation: Use `wry` or similar embeddable webview; ensure it sits in a separate native child window within the editor area. Fallback: render static HTML snapshots as images. |
 | **Steer submission mid-stream injection** | Medium | Injecting a new user message while the assistant is actively generating requires careful stream handling. Mitigation: Buffer the steer message; on next token boundary, prepend the steer to the ongoing context. Test that partial generation + steer produces coherent output. |
 | **Webview embedding (`wry`) conflicts** | High | Browser and HTML preview surfaces embed webviews that may conflict with the Skia renderer pipeline. Mitigation: Use native child windows positioned within Slint layout areas, keep browser ownership editor/workspace-tab-first, and ensure bottom-panel browser-adjacent panes never become the canonical browser host. |
-| **DAP debugger reliability** | Medium | Debug adapter communication is asynchronous and adapters may crash, hang, or produce unexpected output. Mitigation: Implement timeouts per DAP request (default 10s for evaluate, 30s for launch). Auto-restart crashed adapters once. Show clear error state in Debug tab when adapter is unresponsive. Cap concurrent debug sessions to 1 per project. |
+| **DAP debugger reliability** | Medium | Debug adapter communication is asynchronous and adapters may crash, hang, or produce unexpected output. Mitigation: Implement timeouts per DAP request (default 10s for evaluate, 30s for launch). Auto-restart crashed adapters once. Show clear error state in the Debugger surface when adapter is unresponsive. Cap concurrent debug sessions to 1 per project. |
 | **SSH connection stability** | Medium | SSH connections may drop unexpectedly (network change, host reboot, timeout). Mitigation: Keep-alive packets every 30s. On disconnect, retain local buffer contents and stale snapshot state, auto-retry once in a bounded way, then show an explicit `Reconnect` action. Never silently fall back to local execution for remote-mode projects. |
 | **Catalog service availability** | Low | Catalog index may be unavailable (network down, server offline). Mitigation: Bundle a fallback index with the app binary. Cache last-fetched index locally. Show "Catalog may be outdated" banner when using cached data. All catalog operations work offline with cached index. |
 | **Sound effects cross-platform audio** | Low | `rodio` audio playback may fail on some Linux configurations (missing PulseAudio/ALSA). Mitigation: Detect audio device availability at startup. If unavailable, disable sound effects silently and hide the toggle in Settings (or show "(audio unavailable)" label). No error toasts for missing audio. |
@@ -1328,23 +1342,22 @@ These decisions are final and must not be revisited during implementation:
 
 1. **Slint 1.15.1** -- no other UI framework
 2. **winit + Skia** default, **winit + FemtoVG-wgpu** fallback
-3. **No React/JS/TS/HTML/CSS** -- pure Rust + Slint
+3. **No React/JS/TS/HTML/CSS** -- pure Rust + Slint shell
 4. **IDE shell layout** -- Activity Bar + Primary Content + Side Panel + Bottom Panel
-5. **Three theme families** -- Retro Dark, Retro Light, Basic Modern (4 built-in variants + custom themes via TOML)
-6. **Settings restructure** -- unified page merging old Config + Settings + Login + Doctor (20 tabs in 5 groups, two-level sidebar navigation)
+5. **Three theme families** -- Retro Dark, Retro Light, Basic Modern (built-in variants + custom themes via TOML)
+6. **Settings restructure** -- unified page merging old Config + Settings + Login + Doctor
 7. **Event-driven updates** via `invoke_from_event_loop`, not polling
 8. **redb for layout persistence**, seglog for events, Tantivy for search
 9. **Model/platform selection via dropdowns**, not text entry
-10. **Product name: "Puppet Master"**
-11. **All 12 former "future considerations" are MVP** -- browser, instant project switch, sound effects, hot reload, instructions editor, custom themes, language detection, catalog, sync, SSH, debug, terminal tab management
-12. **Bottom panel has 6 tabs** -- Terminal, Problems, Output, Ports, Browser, Debug
-13. **Webview via `wry`** -- used for Browser tab and HTML preview
-14. **Debug via DAP** -- Debug Adapter Protocol for integrated debugging
-15. **SSH via system keychain** -- credentials stored in OS keychain, never in config files
+10. **Product name: `Puppet Master`**
+11. **All 12 former future considerations are MVP** -- browser, instant project switch, sound effects, hot reload, instructions editor, custom themes, language detection, catalog, sync, SSH, Debug Mode workflows, and terminal tab management
+12. **Bottom runtime zone includes the classical debugger surface** -- Terminal, Problems, Output, Ports, and Debugger / DAP Debugger remain runtime-zone occupants; browser-capable preview/browsing is not a bottom-panel debug substitute
+13. **Browser runtime contract is capability-first, not crate-name-first** -- implementation must satisfy the promoted browser/session model rather than hard-locking the spec to stale `wry` wording
+14. **Classical debugger uses DAP** -- the integrated debugger surface is DAP-based and distinct from Assistant Debug Mode
+15. **SSH uses system keychain / agent flows** -- credentials stay in OS-managed stores, never in config files
 
----
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md
 
-<a id="appendix-c-widget-grid"></a>
 ## Appendix C: Dashboard Widget Grid and Widget Catalog Integration (Addendum -- 2026-02-23)
 
 This appendix extends the Dashboard (section 7.2) from a rearrangeable card grid to a full widget grid with grid-based resizing, and introduces the add-widget flow for the Dashboard.

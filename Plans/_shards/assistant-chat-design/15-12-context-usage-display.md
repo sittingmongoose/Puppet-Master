@@ -1,4 +1,57 @@
 ## 12. Context usage display
+
+### 12.0A Investigation Context for Debug threads
+
+Debug threads expose a visible **Investigation Context** alongside the normal context-usage affordances.
+
+Investigation Context is the live, user-visible bundle of bounded evidence, target metadata, temporary instrumentation state, and verification outcomes that the assistant may use while an investigation is active.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+Required header fields:
+- `investigation_id`
+- `primary_target`
+- `debug_target_kind`
+- `current_phase`
+- `final_or_intermediate_state`
+- `verification_strength?`
+- `attention_reason_code?`
+- `blocked_reason_code?`
+- `active_instrumentation_count`
+- `last_updated_at_utc`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Glossary.md
+
+Required per-item states:
+- `active`
+- `redacted`
+- `revoked`
+- `blocked`
+- `expired`
+- `omitted`
+
+Only `active` and `redacted` items may be serialized into prompt context. `revoked`, `blocked`, `expired`, and `omitted` items remain visible for audit but must not be serialized as successful context.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
+
+Visibility rules:
+- Investigation Context is separate from ordinary browser/document composer chips
+- ordinary browser capture remains explicit and user-triggered
+- Debug auto-ingestion is allowed only inside an active investigation and must create visible Investigation Context items rather than hidden messages
+- every Investigation Context item must expose provenance, timestamp, redaction/truncation state, and a revoke action
+- raw logs, traces, screenshots, and recordings remain owned by Runtime Artifacts; Investigation Context carries bounded summaries and refs rather than raw unbounded payloads
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md
+
+Required actions from the Investigation Context surface:
+- `Open target`
+- `Open artifacts`
+- `Export bundle`
+- `Revoke item`
+- `Show raw in Context Detail Pane`
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md
+
 Per-thread context uses one compact chat entrypoint and one canonical detailed surface.
 
 Rules:

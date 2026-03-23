@@ -48,6 +48,26 @@ Action-family rules:
 - skip, abort, retry from safe point, and retry fresh remain action-family decisions surfaced through `allowed_action_ids[]`
 
 ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Graph_View.md
+
+### Debug automation front-door grants
+
+Debug Mode may ask for a run-scoped front-door grant that covers repeated low-risk investigation actions.
+
+Required rules:
+- the grant remains represented through the canonical blocked-runtime overlay rather than through a new request-centric debug approval model
+- the approval record is anchored by the owning blocked episode and investigation identity
+- shared runtime actions remain canonical; Debug Mode does not invent a separate approval transport
+- declining the grant keeps the investigation alive in a degraded or blocked state when possible rather than silently discarding the investigation
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+Scope rules:
+- the front-door grant may cover repeated low-risk evidence reads and declared-scope temporary instrumentation actions only
+- high-risk mutations, auth/state mutation, and publish-side effects still require their own explicit confirmations
+- revoking the grant or finishing the investigation revokes the front-door scope as well
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md
+
 ## Executive Summary
 
 **Human-in-the-Loop (HITL) mode** lets the user require explicit human approval at selected tier boundaries. The orchestrator completes all work within the current tier (phase, task, or subtask), then **pauses at the boundary** until the human reviews and approves before proceeding to the next phase, task, or subtask. HITL is a **setting**: it can be enabled independently at phase level, task level, and subtask level. All HITL toggles are **off by default**.

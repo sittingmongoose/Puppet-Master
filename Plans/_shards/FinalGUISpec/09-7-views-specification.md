@@ -58,6 +58,7 @@ Rules:
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
 ### 7.4 Settings and inspectors
+
 Settings and inspectors separate:
 - inherited / overridden
 - requested
@@ -71,6 +72,19 @@ Rules:
 - chat-facing compact rows and popovers are compact surfaces, not the full detailed inspector tier
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md
+
+#### Assistant chat mode strip and debug investigation surfaces
+
+The primary Assistant mode strip presents `Ask`, `Agent`, `Debug`, `Plan`, and `Deep Plan` as the stable user-facing choices for the chat surface.
+
+Required UI rules:
+- selecting `Debug` switches the thread into the Debug overlay rather than opening the classical DAP debugger surface
+- the active Debug thread header shows target summary, investigation phase, Debug Automation Profile state, and bundle/export actions
+- the bottom runtime zone uses **Debugger** or **DAP Debugger** for the classical DAP surface and **Debug Console** for runtime output; the bare label `Debug` is not sufficient canonical copy for those runtime surfaces
+- detailed inspectors must show requested/effective overlay, canonical runtime mode, `investigation_id`, `debug_target_kind`, verification strength, and any degraded capability state when a Debug investigation is active
+- blocked or attention-required Debug investigations must surface explicit reason codes and shared allowed-action affordances rather than inventing a debug-only approval lane
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md
 
 ### Terminal settings ownership
 Settings owns durable terminal preferences and discoverability. Live session controls remain in terminal chrome and are not hidden inside durable settings.

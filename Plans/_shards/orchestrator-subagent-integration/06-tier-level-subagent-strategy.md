@@ -20,3 +20,4 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchest
 `Tier Context` survives only as derived decomposition/view context when needed for prompt helpers or legacy labels. It does not remain the canonical runtime context.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Decision_Policy.md
+

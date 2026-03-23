@@ -333,5 +333,24 @@ ContractRef: ContractName:Plans/WorktreeGitImprovement.md, PolicyRule:Decision_P
   manual retry). MUST NOT silently swallow the disconnect.
   ContractRef: PolicyRule:Decision_Policy.md§2, Invariant:INV-003
 
+### C.4A Debug investigations on remote-mode projects
+
+Remote-mode Debug investigations must honor the same remote project authority model as every other remote PM workflow.
+
+Required rules:
+- code edits, log reads, shell commands, tracer installs, test runners, provider CLIs, and cleanup actions execute on the remote host context
+- PM must not silently mirror the project locally or fall back to local execution just because a Debug investigation is active
+- supported remote Debug MVP target kinds are PM-managed `dev_session`, PM-managed browser targets exposed by the remote project (including forwarded ports or remote-served app URLs), and `imported_bundle`
+- arbitrary ad-hoc attach to unmanaged remote processes or hosts is out of scope for MVP
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md
+
+Browser and evidence rules:
+- PM may capture browser evidence locally against a PM-managed remote project URL or forwarded port, but the resulting investigation must still preserve the owning remote project and host identity
+- remote browser evidence, logs, and artifacts must remain linked to the remote project context rather than being rewritten as local-project evidence
+- disconnects move the investigation into explicit degraded or blocked state after the one bounded reconnect attempt; they do not silently continue as local-only debugging
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Permissions_System.md
+
 ---
 

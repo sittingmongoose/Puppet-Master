@@ -7,19 +7,19 @@ The current GUI uses a two-row header with 16 flat navigation buttons above a si
 Key changes from the current Iced GUI:
 - **Layout:** Single-page-at-a-time replaced with persistent IDE shell (Activity Bar, Primary Content, Side Panel, Bottom Panel)
 - **Navigation:** 16 flat buttons replaced with 5-group Activity Bar + Command Palette
-- **Settings restructure:** Old "Settings" becomes "App Settings"; old "Config" becomes "Settings"; Login and Doctor merged into unified Settings page (20 tabs in 5 groups with two-level sidebar navigation)
-- **New views:** Usage page, File Manager panel, File Editor panel (with instructions editor and SSH remote editing), Chat panel, Agent Activity pane
-- **Bottom panel:** Terminal (with tab management and pin semantics), Problems, Output, Ports (with hot reload controls), Browser (embedded webview with click-to-context), Debug (DAP-based integrated debugger)
-- **Themes:** Three theme families with full extensibility -- custom themes loadable from TOML files, custom font support, theme preview on hover
+- **Settings restructure:** Old `Settings` becomes `App Settings`; old `Config` becomes `Settings`; Login and Doctor merge into unified Settings
+- **New views:** Usage page, File Manager panel, editor surface, Chat panel, Agent Activity pane, Artifacts, Source Control, GitHub Actions, Docker Manager, and Run & Debug side-panel surfaces
+- **Bottom runtime zone:** Terminal, Problems, Output, Ports, and the classical **Debugger** / **DAP Debugger** live here; normal browsing and HTML preview remain editor-tab or detached-window browser surfaces rather than bottom-panel tabs
+- **Themes:** Three theme families with full extensibility and deterministic built-in variants
 - **Real-time:** Event-driven updates via Rust channels and `invoke_from_event_loop`, not polling
-- **Panels:** Chat and File Manager are detachable (dock/float/snap)
+- **Panels:** Chat and File Manager are detachable; shell state remains identity-safe when re-docked
 - **Project bar:** Instant project switching from title bar with full state preservation and reload
-- **Language detection:** Auto-detect project languages, display badges, suggest LSP and tool presets
-- **Sound effects:** Optional audio feedback for key events (run complete, HITL needed, errors) via `rodio`
-- **Catalog and sync:** Community content catalog with one-click install; config export/import bundles for cross-machine sync
+- **Language detection:** Auto-detect project languages, display badges, and suggest LSP/tool presets
+- **Sound effects:** Optional audio feedback for key events via `rodio`
+- **Catalog and sync:** Community content catalog with install/update/remove flows and config export/import bundles
 - **SSH remote editing:** Edit files on remote hosts via SSH/SFTP with connection management and offline resilience
-- **Run/debug:** Integrated debugging with DAP protocol, breakpoint management, run configurations
-- **Product name:** "Puppet Master" (per Plans/Glossary.md)
+- **Debug workflows:** Assistant Debug Mode is a first-class chat workflow overlay; the classical DAP surface remains a separate debugger surface
+- **Product name:** `Puppet Master`
 
----
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md
 

@@ -134,3 +134,37 @@ The Slint rebuild must expose deterministic readiness checks before Preview/Buil
 
 ContractRef: ContractName:Plans/MiscPlan.md#doctor, ContractName:Plans/FinalGUISpec.md#74-settings-unified, ContractName:Plans/newtools.md#13-evidence-in-chat-contract-and-flow-research-evidence-media-chat, SchemaID:evidence.schema.json
 
+### 14.10A Debug automation and diagnostic tooling
+
+Tool discovery for Debug Mode must cover more than browser automation. The platform needs enough metadata to select reproduction, instrumentation, trace, and verification tooling automatically.
+
+Required discovery outputs are:
+- preferred local or remote dev/test runner
+- browser automation stack and visibility mode support
+- structured log and trace collectors
+- source-map or symbolization support where relevant
+- DAP adapter availability for the target language/runtime
+- temporary instrumentation install / rollback path when framework-native tracing is missing
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md
+
+Selection order:
+- project-native or repo-declared tooling first
+- already-installed environment tooling second
+- temporary, investigation-scoped tooling install only when a cleanup path exists and policy allows it
+- imported evidence bundles and manual attach remain fallback inputs, not the primary happy path
+
+ContractRef: ContractName:Plans/MiscPlan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
+
+Additional doctor checks for Debug Mode:
+
+| Check ID | Scope | Required signal | Failure behavior |
+|---|---|---|---|
+| `doctor.debug.browser-runtime` | web/debug | Browser runtime and visible automation path are available | keep Debug usable, but hide browser-target automation and explain fallback |
+| `doctor.debug.dap-adapter` | debugger | Target DAP adapter or equivalent inspect bridge is reachable | keep investigation usable, but mark classical debugger attach unavailable |
+| `doctor.debug.log-trace-pipeline` | evidence | Structured log or trace capture path is readable and bounded | keep run usable, but mark evidence degraded with explicit reason |
+| `doctor.debug.instrumentation-scope` | instrumentation | Temporary instrumentation can be written and later removed within declared scope | block instrumentation step and fall back to non-invasive evidence capture |
+| `doctor.debug.remote-host` | remote | Remote host satisfies required CLI / tracer / permission prerequisites for PM-managed debug actions | keep thread usable, but block remote debug execution and show remediation |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+

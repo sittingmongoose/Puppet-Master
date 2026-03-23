@@ -250,6 +250,31 @@ Any such extensions MUST remain additive and MUST NOT duplicate secrets or raw a
 
 ContractRef: ToolID:capabilities.get, ToolID:media.generate, PolicyRule:no_secrets_in_storage, ContractName:Plans/Media_Generation_and_Capabilities.md
 
+### 3.5 Debug investigation events
+
+Debug investigations use persisted `EventRecord` envelopes with the following stable `type` values.
+
+| Event type | Minimum payload |
+|---|---|
+| `debug.investigation.started` | `investigation_id`, `project_id`, `thread_id?`, `run_id?`, `initiator_surface`, `target_kind`, bounded `target_locator_summary`, `requested_mode_overlay`, `effective_mode_overlay`, `runtime_mode` |
+| `debug.investigation.state_changed` | `investigation_id`, `previous_phase?`, `phase`, `state`, `attention_reason_code?`, `blocked_reason_code?`, `verification_strength?` |
+| `debug.investigation.target_bound` | `investigation_id`, `target_kind`, `target_bindings`, `binding_state` |
+| `debug.investigation.context_item_added` | `investigation_id`, `item_id`, `item_kind`, `source_surface`, `state`, bounded `summary`, `artifact_ref?`, `redaction_state` |
+| `debug.investigation.context_item_state_changed` | `investigation_id`, `item_id`, `previous_state`, `state`, `reason_code?` |
+| `debug.investigation.instrumentation_state_changed` | `investigation_id`, `instrumentation_id`, `scope_kind`, `state`, `rollback_state`, `detail_ref?` |
+| `debug.investigation.verification_recorded` | `investigation_id`, `verification_strength`, bounded `verification_summary`, `artifact_refs?` |
+| `debug.investigation.exported` | `investigation_id`, `bundle_id`, `schema_id`, `item_count`, `artifact_count`, `redaction_profile` |
+| `debug.investigation.imported` | `investigation_id`, `bundle_id`, `source_kind`, `schema_id`, `imported_target_kind` |
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
+
+Event rules:
+- raw secrets, raw log dumps, raw trace blobs, and raw binary artifact bytes MUST NOT be duplicated inside these payloads
+- raw material is referenced through artifact or blob refs owned by the appropriate artifact system
+- bounded summaries must preserve redaction and omission state so downstream readers can tell what was intentionally trimmed or withheld
+
+ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md
+
 ---
 
 ## 4. Auth contracts
@@ -384,6 +409,39 @@ Rules:
 - Injected-context provenance metadata MUST record source kind, source path or stable ID, applied order, and whether redaction or summarization was applied before persistence or UI display.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/Contracts_V0.md#ContextInjectionToggles
+
+### 5.1A InvestigationContextAttachment
+
+`InvestigationContextAttachment` is the structured prompt-facing representation of active Debug investigation state.
+
+Required top-level fields are:
+- `investigation_id`
+- `debug_target_kind`
+- bounded `primary_target_summary`
+- `current_phase`
+- `state`
+- `verification_strength?`
+- `attention_reason_code?`
+- `blocked_reason_code?`
+- bounded `items[]`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Glossary.md
+
+Required item fields are:
+- `item_id`
+- `item_kind`
+- `state`
+- bounded `summary`
+- `artifact_refs[]?`
+- `redaction_state`
+- `captured_at_utc`
+
+Serialization rules:
+- only items in `active` or `redacted` state may be serialized as successful prompt context
+- `revoked`, `blocked`, `expired`, and `omitted` items remain visible for audit but are not serialized as successful prompt attachments
+- item order is deterministic and budget-aware; raw artifacts stay outside the instruction bundle
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 <a id="AttemptJournal"></a>
 ### 5.2 AttemptJournal

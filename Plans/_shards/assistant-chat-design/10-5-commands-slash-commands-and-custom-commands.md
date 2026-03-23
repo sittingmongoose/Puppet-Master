@@ -3,6 +3,19 @@
 The reserved slash-command surface is canonical and non-overridable.
 
 ### 5.1 Reserved built-ins
+
+#### `/mode debug`
+
+`/mode debug` remains a reserved built-in routed through `cmd.chat.mode` with payload `{ mode: "debug" }`.
+
+Required behavior:
+- invoking `/mode debug` switches the thread into the Debug overlay and either resumes the active investigation or opens the canonical target-discovery flow
+- `/mode debug` does not create a hidden secondary thread or hidden background mode state
+- entering Debug from `Plan` or `Deep Plan` leaves planning and creates an execution-capable thread posture; existing plan artifacts remain visible as ordinary context, not as an active planning lock
+- leaving Debug does not silently discard Investigation Context; completed or superseded investigations remain historically visible until explicitly closed or revoked
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Run_Modes.md
+
 Reserved built-ins for Assistant Chat are:
 - `/new`
 - `/model`

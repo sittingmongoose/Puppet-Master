@@ -533,18 +533,19 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.
 
 #### Capture to chat and evidence behavior
 
-Capture into chat is explicit and user-triggered.
+Capture into chat remains explicit and user-triggered for ordinary browsing.
 
+Required ordinary capture rules:
 - text selection uses `browser_selection_context`
 - element pick uses `browser_element_context`
 - native document selection continues to use `document_selection_context`
-- capture creates removable composer chips and MUST NOT silently send a hidden message
+- explicit capture creates removable composer chips and MUST NOT silently send a hidden message
 - if there is no writable active composer or thread, PM opens a new thread and records requested versus effective target
 - ordinary browsing clicks MUST NOT unexpectedly create or send chat context
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
 
-Accepted browser capture actions and labels are:
+Accepted explicit browser capture actions and labels remain:
 - `Add Selection to Chat`
 - `Add Selection + Screenshot`
 - `Add Selection + Full Screenshot`
@@ -554,9 +555,17 @@ Accepted browser capture actions and labels are:
 - `Add Screenshot to Chat`
 - `Add Full Screenshot to Chat`
 
-The default combined capture is context plus clipped screenshot. Full-page combined capture remains explicit.
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md
+Debug-investigation auto-ingestion is a separate visible contract.
+
+Rules for active investigations:
+- when a browser session is bound to an active investigation, bounded evidence may be added automatically to the visible Investigation Context
+- investigation auto-ingestion must create visible context items with provenance, timestamp, redaction/truncation state, and revoke controls
+- investigation auto-ingestion does not create hidden user messages, hidden composer chips, or invisible prompt-only payloads
+- the default combined manual capture remains context plus clipped screenshot; full-page combined capture remains explicit even during Debug Mode
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
 
 #### DevTools and watchable automation
 
@@ -693,6 +702,30 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-ch
 - completed screenshots, traces, and videos are preserved when possible
 
 ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+#### Debug investigation browser automation rules
+
+Active Debug investigations may bind a browser target and drive it through the canonical browser session model.
+
+Required rules:
+- browser-led reproduction and evidence capture run in a visible `automation_session` when PM is driving the browser
+- manual takeover is a pause/resume handoff, not simultaneous mixed human-and-agent control of the same active automation step
+- auth handoff continues to use isolated `auth_session` behavior and must not silently promote credentials or state into normal browsing
+- completed traces, recordings, screenshots, console summaries, and network summaries route into Runtime Artifacts and visible Investigation Context summaries
+- browser-target debugging for remote-mode projects is limited to PM-managed project targets such as forwarded URLs or project-owned web entrypoints; arbitrary remote attach remains out of scope for MVP
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/GitHub_Integration.md
+
+#### Debug investigation browser scenario matrix
+
+| scenario_id | preconditions | action | expected visible behavior | expected persistence |
+|---|---|---|---|---|
+| `debug_browser_auto_ingest_visible` | active investigation bound to a browser target | agent captures screenshot / console / network evidence | evidence appears as visible Investigation Context items and linked artifacts | `debug.investigation.context_item_added`, `runtime_artifact.*`, and any related `browser.context_captured` or browser-session refs |
+| `debug_browser_takeover_pause_resume` | visible automation session exists | user takes over or later resumes | browser remains visible, automation is paused/resumed without silent session reclassification | takeover state changes persist on the owning browser session and investigation |
+| `debug_browser_auth_handoff` | auth step is required mid-investigation | PM opens isolated auth session | auth work is isolated and explicit; normal browsing state is not silently mutated | auth session and investigation linkage persist with explicit scope and cleanup state |
+| `debug_browser_remote_project_target` | remote-mode project exposes a PM-managed URL or forwarded port | agent debugs browser target | UI stays bound to remote project authority; no silent local fallback or ad-hoc remote attach language | investigation and browser evidence retain remote project and browser identity refs |
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
 
 ## 4. Command families required by the promoted features
 The UI command catalog must expose stable commands for:

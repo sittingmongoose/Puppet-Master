@@ -312,6 +312,55 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assist
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
 
+#### Additions: Debug investigation persistence contract
+
+Debug investigations are first-class persisted runtime records that correlate target discovery, temporary instrumentation, evidence capture, verification, and cleanup across Assistant, Orchestrator, Interview, browser, terminal, and runtime-artifact surfaces.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
+
+**Required redb keys**
+- `debug_investigation_state.v1:{project_id}:{investigation_id}` -> JSON `{ investigation_id, thread_id?, run_id?, parent_attempt_id?, target_kind, target_locator_summary, target_bindings, requested_mode_overlay, effective_mode_overlay, runtime_mode, phase, state, attention_reason_code?, blocked_reason_code?, verification_strength?, active_context_item_ids[], active_instrumentation_ids[], debug_automation_profile_state, opened_at_utc, updated_at_utc, closed_at_utc? }`
+- `debug_investigation_index.v1:{project_id}` -> summary rows for open/recent investigations ordered by `updated_at_utc`
+- `debug_instrumentation_state.v1:{project_id}:{investigation_id}:{instrumentation_id}` -> JSON `{ scope_kind, scope_locator, state, rollback_state, created_by_run_id?, cleanup_required, cleanup_completed_at_utc?, failure_reason? }`
+- `debug_bundle_export.v1:{project_id}:{bundle_id}` -> JSON `{ investigation_id, schema_id, redaction_profile, item_count, artifact_count, created_at_utc }`
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/GitHub_Integration.md
+
+Required enums:
+- `debug_target_kind = dev_session | browser_target | dap_session | agent_session | imported_bundle`
+- investigation `phase = draft | discovering_targets | preparing_environment | capturing_baseline | instrumenting | reproducing | collecting_evidence | analyzing | applying_fix | verifying | cleaning_up | resolved | attention_required | blocked | failed | failed_cleanup | cancelled | superseded`
+- instrumentation `state = planned | preparing | active | rollback_pending | cleaned_up | revoked | failed_cleanup | unknown_after_recovery`
+
+ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
+
+**Required seglog event types**
+- `debug.investigation.started`
+- `debug.investigation.state_changed`
+- `debug.investigation.target_bound`
+- `debug.investigation.context_item_added`
+- `debug.investigation.context_item_state_changed`
+- `debug.investigation.instrumentation_state_changed`
+- `debug.investigation.verification_recorded`
+- `debug.investigation.exported`
+- `debug.investigation.imported`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+Browser capture reconciliation rule:
+- outside active investigations, `browser.context_captured` continues to represent explicit chip-based capture only
+- inside an active investigation, browser-derived evidence may additionally create visible Investigation Context items tied to the same `investigation_id`
+- investigation auto-ingestion must persist `browser_session_id`, `session_class`, `capture_kind`, bounded summary payload, and visibility state; it must not create a hidden user message
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md
+
+Restore rules:
+- restore rehydrates the same `investigation_id`, visible Investigation Context, and bound identity refs when available
+- restore must not silently restart live automation, DAP execution, or temporary instrumentation
+- if a previously active runtime identity is unavailable after recovery, the investigation persists with explicit degraded or blocked state rather than silent retargeting
+- any instrumentation left uncertain after crash or disconnect transitions to `unknown_after_recovery` until explicitly confirmed or cleaned up
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/MiscPlan.md, ContractName:Plans/Permissions_System.md
+
 #### Additions: Container publish / DockerHub / Unraid persistence contract
 
 This addendum defines the persistence required for Source Control, GitHub Actions, Docker Manager, and their Orchestrator linkage.

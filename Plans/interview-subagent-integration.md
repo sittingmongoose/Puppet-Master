@@ -142,10 +142,6 @@ This document covers the **interview flow** (multi-phase interview: Scope, Archi
 
 ### Cross-Phase Subagents
 
-Automatic runtime selection in Interview MUST use only IDs present in the canonical 42-entry subagent registry (`Plans/orchestrator-subagent-integration.md`). Older aliases such as `explore` are invalid; the canonical built-in ID is `explorer`.
-
-ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Personas.md
-
 **Document Generation:**
 - `technical-writer` -- Generate phase documents, AGENTS.md, requirements
 - `knowledge-synthesizer` -- Cross-phase analysis, technology matrix generation
@@ -163,6 +159,21 @@ ContractRef: ContractName:Plans/chain-wizard-flexibility.md#requirements-quality
 - `explorer` -- Read-only codebase / repository investigation when the interview needs local-project understanding before asking or validating questions.
 - `ux-researcher` -- Web research via Browser MCP (when configured). **Cited web search:** Interview (and Assistant, Orchestrator) use **cited web search** (inline citations + Sources list) from a single shared implementation; see **Plans/newtools.md** §8 (cited web search, [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited)-style) and **Plans/assistant-chat-design.md** §7.
 - `context-manager` -- Manage interview state and context across phases
+
+### Debug-capable validation and remediation
+
+Interview may use shared debug-capable tools during testing, verification, and environment validation phases, but it does not become the owner of Assistant Debug Mode.
+
+Required rules:
+- Interview-triggered debugging work uses the same `investigation_id`, evidence, instrumentation, and cleanup contracts as Assistant or Orchestrator investigations
+- any evidence gathered for interview validation must be summarized and linked, not pasted as raw unbounded logs into interview artifacts
+- temporary instrumentation introduced during interview validation must either be cleaned up before phase completion or be carried forward explicitly as unresolved work with cleanup state
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/MiscPlan.md
+
+Automatic runtime selection in Interview MUST use only IDs present in the canonical 42-entry subagent registry (`Plans/orchestrator-subagent-integration.md`). Older aliases such as `explore` are invalid; the canonical built-in ID is `explorer`.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Personas.md
 
 ## Capability Introspection and Media-Generation Gating
 

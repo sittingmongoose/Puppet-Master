@@ -48,6 +48,35 @@ The prompt pipeline consumes the following deterministic inputs:
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/FileSafe.md
 
 ### 1.2 Stage ordering (canonical)
+
+<a id="ASSEMBLY-PIPELINE"></a>
+
+The prompt MUST be assembled in this stage order:
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/Plugins_System.md
+
+1. **Resolve run config and surface context**: finalize the run envelope (tier/mode/platform/model), identify the active surface, and load the permissions snapshot.
+2. **Resolve Persona selection inputs**: detect Persona mode (`manual` / `auto` / `hybrid`), inspect natural-language Persona requests, and compute the requested Persona when present.
+3. **Resolve effective Persona and runtime state**: resolve Persona files, aliases, requested/effective platform/model/variant/runtime controls, and provider capability filtering.
+4. **Resolve skills**: resolve `default_skill_refs` and compute skill bundle inputs.
+5. **Compile context**: invoke the context compiler to produce compiled context artifacts and an `Injected Context` breakdown.
+6. **Normalize structured attachments**: normalize browser and native selection attachments and stage them in deterministic thread-prep order.
+7. **Assemble Instruction Bundle**: combine rules, Persona instructions, compiled context references, normalized attachment payloads, and effective runtime metadata needed for observability.
+8. **Apply plugin transforms and attach tool schemas**: apply allowed plugin prompt transforms, then include canonical tool definitions and any custom tool schemas.
+9. **Finalize**: emit the final prompt payload and effective-resolution metadata to the provider runner and event/history surfaces.
+
+Rule: stages 1–9 MUST be deterministic given the same inputs and filesystem state.
+
+ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Tools.md, PolicyRule:Decision_Policy.md§3
+
+Additional orchestration rules:
+- mode-specific context overlays are applied during **Stage 5 / Compile context**, before structured attachments and the Injected Context breakdown are emitted
+- `ask` and `plan` use the `read_only` overlay; `plan` additionally applies `plan_output_scaffold_v1`; `regular` and `yolo` use `full_execution`
+- child/subagent/rotated runs may narrow an inherited overlay, but they MUST NOT widen a read-only overlay into `full_execution`
+- when the active surface is **Orchestrator** or a delegated child/subagent run, the Instruction Bundle MUST carry the canonical orchestration flow contract `assess -> understand -> decompose -> act -> verify`
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+
 ### 1.2B Skill resolution and runtime delivery
 
 Skill runtime delivery is part of prompt assembly and context compilation.
@@ -98,49 +127,58 @@ This keeps browser capture and native document selection handoff deterministic a
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
 
-<a id="ASSEMBLY-PIPELINE"></a>
+### 1.2C Investigation Context normalization for Debug Mode
 
-The prompt MUST be assembled in this stage order:
+Before final conversation payload emission, the prompt pipeline MUST normalize visible Investigation Context items for active Debug investigations.
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/Plugins_System.md
+Required normalization rules:
+- normalization occurs after context compilation and before final conversation serialization
+- the investigation header summary is serialized before individual evidence items
+- items are sorted deterministically by operational priority (`target summary`, `baseline`, `active instrumentation`, `latest repro evidence`, `verification summary`) and then by capture time
+- only bounded summaries, refs, and structured fields are inlined; raw logs, traces, screenshots, and recordings remain external artifact refs
+- revoked, blocked, expired, and omitted items must not be serialized as successful prompt content
 
-1. **Resolve run config and surface context**: finalize the run envelope (tier/mode/platform/model), identify the active surface, and load the permissions snapshot.
-2. **Resolve Persona selection inputs**: detect Persona mode (`manual` / `auto` / `hybrid`), inspect natural-language Persona requests, and compute the requested Persona when present.
-3. **Resolve effective Persona and runtime state**: resolve Persona files, aliases, requested/effective platform/model/variant/runtime controls, and provider capability filtering.
-4. **Resolve skills**: resolve `default_skill_refs` and compute skill bundle inputs.
-5. **Compile context**: invoke the context compiler to produce compiled context artifacts and an `Injected Context` breakdown.
-6. **Normalize structured attachments**: normalize browser and native selection attachments and stage them in deterministic thread-prep order.
-7. **Assemble Instruction Bundle**: combine rules, Persona instructions, compiled context references, normalized attachment payloads, and effective runtime metadata needed for observability.
-8. **Apply plugin transforms and attach tool schemas**: apply allowed plugin prompt transforms, then include canonical tool definitions and any custom tool schemas.
-9. **Finalize**: emit the final prompt payload and effective-resolution metadata to the provider runner and event/history surfaces.
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
-Rule: stages 1–9 MUST be deterministic given the same inputs and filesystem state.
+Minimum serialized fields are:
+- `investigation_id`
+- `debug_target_kind`
+- bounded `primary_target_summary`
+- `current_phase`
+- `state`
+- `verification_strength?`
+- bounded per-item `summary`
+- `artifact_refs?`
+- `redaction_state`
+- `truncation_state`
 
-ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Tools.md, PolicyRule:Decision_Policy.md§3
-
-Additional orchestration rules:
-- mode-specific context overlays are applied during **Stage 5 / Compile context**, before structured attachments and the Injected Context breakdown are emitted
-- `ask` and `plan` use the `read_only` overlay; `plan` additionally applies `plan_output_scaffold_v1`; `regular` and `yolo` use `full_execution`
-- child/subagent/rotated runs may narrow an inherited overlay, but they MUST NOT widen a read-only overlay into `full_execution`
-- when the active surface is **Orchestrator** or a delegated child/subagent run, the Instruction Bundle MUST carry the canonical orchestration flow contract `assess -> understand -> decompose -> act -> verify`
-
-ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
 
 ### 1.3 Instruction Bundle structure
 
 <a id="INSTRUCTION-BUNDLE"></a>
 
-The compiled prompt MUST include an Instruction Bundle section that contains (at minimum):
-- Active mode and tier
-- Active Persona(s) identifiers
-- Rules context
+The compiled prompt MUST include an Instruction Bundle section that contains, at minimum:
+ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+- active runtime mode and tier
+- requested and effective workflow overlay when present
+- active Persona identifier(s)
+- rules context
+- tool-policy snapshot
 - Injected Context breakdown (paths + byte counts; truncation reason)
+- active Investigation Context summary when a Debug investigation is active or an imported investigation bundle is attached
 
-The canonical event-level contract for instruction bundle assembly is defined in `Plans/Contracts_V0.md`.
+The canonical event-level contract for instruction-bundle assembly is defined in `Plans/Contracts_V0.md`.
 
-ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/FinalGUISpec.md
+ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
 
----
+Rules:
+- Investigation Context inclusion is additive to the normal instruction/work/memory bundle ordering; it does not create a parallel prompt path
+- Debug investigations include bounded header fields and bounded item summaries only
+- revoked, blocked, expired, and omitted investigation items remain visible in UI history but do not serialize as successful prompt inputs
+- imported bundles use the same structured Investigation Context shape as live investigations, with provenance indicating imported origin
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
 
 ## 2. Compaction and pruning
 

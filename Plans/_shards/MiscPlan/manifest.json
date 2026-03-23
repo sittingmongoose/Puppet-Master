@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/MiscPlan.md",
-  "source_sha256": "4f37f533296efb66f0da98046cfb1c0cfa54894bbf9183ace42eb1c2cd2d97e0",
+  "source_sha256": "2c495e3f1c61e6290742b226ed36427f2bd77032acdf5b2a9477793e2749936c",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -164,9 +164,16 @@
     {
       "dest_path": "Plans/_shards/MiscPlan/23-runtime-cleanup-recovery-preservation-addendum-2026-03-09.md",
       "start_line": 1582,
-      "end_line": 1589,
-      "segment_sha256": "8cf1246e7893725d8a5721e4cfd723fb18e602c8e6d8de1b0bf0e8961260bc84",
+      "end_line": 1590,
+      "segment_sha256": "80f2d2d1d3d97d1dfa0f30b7d95d859cac614a72ed866a28c3f5205a9c9952d1",
       "heading": "## Runtime Cleanup / Recovery Preservation Addendum (2026-03-09)"
+    },
+    {
+      "dest_path": "Plans/_shards/MiscPlan/24-debug-investigation-instrumentation-cleanup-addendum-2026-03-23.md",
+      "start_line": 1591,
+      "end_line": 1601,
+      "segment_sha256": "c797caed7e925b7167a79d058ac2fbc6b7de434acac55888c82b8643b31031d7",
+      "heading": "## Debug investigation instrumentation cleanup addendum (2026-03-23)"
     }
   ]
 }

@@ -241,16 +241,26 @@ ContractRef: ContractName:Plans/Personas.md#STORAGE-LAYOUT
 
 ### 4.4 Mode and model overrides
 
-The command's `mode` and `model` fields, if set, override the session-level values for the duration of the command's run. The override precedence is:
+The command's `mode` and `model` fields, if set, override the session-level runtime posture and model selection for the duration of the command's run.
+
+Runtime override precedence is:
 
 | Source | Priority | Description |
-|--------|----------|-------------|
-| Command frontmatter `mode`/`model` | Highest | Applied for this command's run only. |
-| Session-level settings | Lower | Used when command does not specify. |
-| Persona `default_mode` | Lower still | Per `Plans/Personas.md` §5.3. |
-| System default | Lowest | `regular` mode; default model per provider. |
+|---|---|---|
+| Command frontmatter `mode` / `model` | Highest | Applied for this command's run only. |
+| Session-level runtime/model state | Lower | Used when the command does not specify overrides. |
+| Persona `default_mode` / `default_model` | Lower still | Persona-owned defaults. |
+| System default | Lowest | `regular` runtime mode; provider default model. |
 
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Personas.md#PERSONA-INJECTION
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Personas.md#PERSONA-INJECTION, ContractName:Plans/Models_System.md
+
+Debug-overlay reconciliation rules:
+- command frontmatter `mode` accepts only canonical runtime-mode values (`ask | plan | regular | yolo`)
+- `debug`, `deep_plan`, `interview`, `brainstorm`, and `crew` are overlay values and are not valid frontmatter runtime-mode values
+- a command launched from an active Debug thread inherits the thread's investigation context and overlay snapshot, but a frontmatter runtime override does not itself switch the thread into or out of Debug Mode
+- switching the visible Assistant workflow mode remains owned by the canonical UI command path (`cmd.chat.mode`), not by User Command frontmatter
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md
 
 ### 4.5 Template resolution order
 

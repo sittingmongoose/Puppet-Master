@@ -68,6 +68,18 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 
 ContractRef: ContractName:Plans/newfeatures.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
 
+### Debug canon reconciliation note (2026-03-23)
+
+The Debug Mode packet uses the following ownership split:
+- `assistant-chat-design.md` is the Assistant Debug Mode owner for mode-strip behavior, Investigation Context visibility, thread lifecycle, and slash-command expectations
+- `Run_Modes.md`, `Permissions_System.md`, and `storage-plan.md` own runtime posture, Debug Automation Profile behavior, and persisted investigation identity/state
+- `Section15_MVP_Promoted_Features_Spec.md` owns browser-target debug behavior and the visible browser evidence / automation contract
+- `Runtime_Artifacts_Panel.md`, `Contracts_V0.md`, `Prompt_Pipeline.md`, and `Tools.md` own artifact grouping, event fields, prompt assembly, and shared debug-capable tool semantics
+- `FinalGUISpec.md`, `UI_Command_Catalog.md`, `newtools.md`, `GitHub_Integration.md`, and `feature-list.md` are primary consumers for shell placement, command routing, tooling discovery, remote scope, and summary coverage
+- `Commands_System.md`, `Glossary.md`, `FileManager.md`, `human-in-the-loop.md`, `Architecture_Invariants.md`, `orchestrator-subagent-integration.md`, `interview-subagent-integration.md`, `Wiring_Matrix.md`, `rewrite-tie-in-memo.md`, and `MiscPlan.md` are required reconciliation companions
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
 | Plan | Primary scope | Notes / canonical intent |
 |------|--------------|--------------------------|
 | `rewrite-tie-in-memo.md` | Locked rewrite decisions | Canonical for rewrite constraints + deltas to apply elsewhere |
