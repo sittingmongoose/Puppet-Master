@@ -41,30 +41,34 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 
 ## Table of Contents
 
-1. [File Manager panel](#1-file-manager-panel)  
+1. [File Manager panel](#1-file-manager-panel)
     - [1.1 Drag and drop (external ↔ File Manager)](#11-drag-and-drop-external--file-manager)
 2. [In-app IDE-style editor (MVP)](#2-in-app-ide-style-editor-mvp)
 3. [@ mention in chat](#3-mention-in-chat)
-4. [Integration: File Manager, editor, and chat](#4-integration-file-manager-editor-and-chat)  
+4. [Integration: File Manager, editor, and chat](#4-integration-file-manager-editor-and-chat)
     - [4.1 Open-file contract](#41-open-file-contract)
 5. [Click-to-open from chat](#5-click-to-open-from-chat)
 6. [Out of scope](#6-out-of-scope)
 7. [Edge cases](#7-edge-cases)
 8. [Image viewer and HTML preview](#8-image-viewer-and-html-preview)
 9. [Tabs: Editor, Terminal, Browser](#9-tabs-editor-terminal-browser)
-10. [Editor enhancements (MVP)](#10-editor-enhancements-mvp)  
-    - [10.10 LSP support (MVP)](#1010-lsp-support-mvp)  
-    - [10.10.5 LSP features (MVP) -- editing and refactor](#10105-lsp-features-mvp--editing-and-refactor)  
-    - [10.10.6 LSP features (MVP) -- navigation and search](#10106-lsp-features-mvp--navigation-and-search)  
-    - [10.10.7 LSP features (MVP) -- display and editing UX](#10107-lsp-features-mvp--display-and-editing-ux)  
-    - [10.10.8 LSP and chat/agent integration (MVP)](#10108-lsp-and-chatagent-integration-mvp)
-11. [Language/framework presets](#11-languageframework-presets)
-12. [Gaps, potential problems, and enhancements](#12-gaps-potential-problems-and-enhancements)  
-    - [12.4 Suggested additions](#124-suggested-additions-consider-for-file-manager-and-editor)  
-    - [12.5 Implementation plan checklist](#125-implementation-plan-checklist)  
-    - [12.6 Multi-agent review](#126-multi-agent-review--addressed-in-main-body)
-
----
+10. [Editor navigation and semantic affordances](#10-editor-navigation-and-semantic-affordances)
+    - [10.1 Breadcrumbs and outline](#101-breadcrumbs-and-outline)
+    - [10.2 Go to symbol and semantic navigation](#102-go-to-symbol-and-semantic-navigation)
+    - [10.3 Diagnostics, gutter markers, and change markers](#103-diagnostics-gutter-markers-and-change-markers)
+    - [10.4 Definition, references, hover, and code actions](#104-definition-references-hover-and-code-actions)
+11. [File tree actions, local filter, and chat handoff](#11-file-tree-actions-local-filter-and-chat-handoff)
+    - [11.1 Canonical tree action catalog](#111-canonical-tree-action-catalog)
+    - [11.2 Clipboard, drag/drop, and transfer engine](#112-clipboard-dragdrop-and-transfer-engine)
+    - [11.3 Local tree filter, selection, and current-file reveal](#113-local-tree-filter-selection-and-current-file-reveal)
+    - [11.4 Open With and Save Local Copy](#114-open-with-and-save-local-copy)
+12. [Source Control handoff, compare, and review](#12-source-control-handoff-compare-and-review)
+    - [12.1 File-tree Source Control strip and diff entrypoints](#121-file-tree-source-control-strip-and-diff-entrypoints)
+    - [12.2 Compare-target defaults](#122-compare-target-defaults)
+    - [12.3 Hunk actions, conflict review, and diff-local search](#123-hunk-actions-conflict-review-and-diff-local-search)
+    - [12.4 Change-marker ownership and revert boundaries](#124-change-marker-ownership-and-revert-boundaries)
+13. [Git Status Integration](#13-git-status-integration)
+14. [Markdown, Mermaid, HTML, SVG, and Image Rendering](#14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum----2026-03-07)
 
 ## 1. File Manager panel
 
@@ -76,7 +80,7 @@ ContractRef: Plans/Decision_Policy.md, Plans/storage-plan.md §2.3, Plans/Tools.
 - **Virtualized file tree:** Only visible nodes are rendered; scroll position determines which slice of the tree is shown. Total height uses an estimated row height (AutoDecision: `row_height_px = 24`) so the scrollbar is correct. Supports deep trees; **very large directories** (e.g. node_modules): virtualize by row, apply a row cap per directory (AutoDecision: 10_000 entries; key `file_manager/row_cap_per_directory`) with "Show more" or type-ahead to narrow; AutoDecision: no explicit depth limit (children are loaded lazily on expand).
 - **Behavior:** Lists all files in the current project. **Selecting a file opens it in the in-app IDE-style editor** (§2). File Manager and editor share the same project context.
 - **.gitignore / exclude:** File tree respects `.gitignore` (and optionally a project exclude list). Ignored files/folders are **dimmed** by default. Optional user setting **"Hide ignored"** hides them entirely (toggle in header or Settings).
-- **Context menu:** New file, New folder (in selected directory, with name prompt); Rename; Delete (with confirmation); Copy full path to clipboard. Aligns with selectable labels and context menus (AGENTS.md).
+- **Context menu:** Summary-only entrypoint for the canonical file-tree action catalog in §11.1 and §11.4. Core actions include create/rename/delete/path copy, workspace-node clipboard actions, Add to Assistant Chat, Open in Terminal, Open With, and Save Local Copy. Aligns with selectable labels and context menus (AGENTS.md).
 - **Drag and drop (external ↔ File Manager):** User can **drop** files/folders from the desktop (or another app) **onto** a folder or project root in the tree (items are copied into that folder), and **drag** files/folders **out** of the tree onto the desktop or another app (copied to drop target). Copy is default; optional modifier for move. Full specification: **§1.1**.
 - **Expand/collapse persistence:** Which folders are expanded is persisted per project (e.g. in redb under project key); restore on reopen.
 - **Keyboard:** Arrow keys navigate the tree; Enter opens the selected file (or expands/collapses folders). Type-ahead (or search) narrows to matching nodes. Keyboard-only use must be supported for accessibility.
@@ -168,11 +172,24 @@ The app includes an **IDE-style editor** so users can open, view, and edit proje
 
 ### 2.2 Editing and saving
 
-- **Editable content:** Opened files are **editable** (not read-only preview). User can type, delete, and paste. Changes are tracked so the UI can show an unsaved (dirty) state.
-- **Save:** **Save** writes the current buffer to the file path (overwrite). Keyboard shortcut (e.g. Ctrl+S). Optional: **Save As** to a new path. **Save success feedback:** On successful save, clear dirty state and show brief feedback (e.g. "Saved" toast or status bar message, or clear unsaved indicator); user must be able to see that save succeeded. **Save failure:** On write failure (disk full, permission denied, path deleted, read-only file), keep the buffer **dirty**, do **not** update "last saved" content, and show an **error message** with **Retry** and optional **Save As**; do not silently fail.
-- **Unsaved indicator:** Each tab shows an unsaved indicator (e.g. dot or asterisk) when the buffer has unsaved changes. **Also** show unsaved state in at least one other stable place (e.g. window title or status bar) so it remains visible with many tabs or when the tab strip is scrolled. Closing a tab or switching project with unsaved changes prompts the user (Save / Discard / Cancel).
-- **Revert:** Optional **Revert** (reload from disk) and **Revert last agent edit** (from Assistant chat thread; assistant-chat-design §13); can integrate with Git/restore points per newfeatures.md. **Revert last agent edit contract:** Triggered by user action from chat (or editor menu). Backend (FileSafe/chat) performs the revert (e.g. Git restore); then the backend sends a **refresh notification** to the editor for that path (e.g. `BufferReverted(path)` or equivalent). The editor reloads that buffer from disk and updates the view; the editor does not perform the revert itself. See Plans/FileSafe.md.
-- **"Restore to…" / History (editor context menu):** The document pane (or editor context menu) offers a **"Restore to…"** or **"History"** action that lists restore points for the current file or session. The list is fetched from the **backend** (redb query — single source of truth; see Plans/newfeatures.md §8 and Plans/storage-plan.md). On user selection and confirm, the app runs the same restore pipeline as "revert last agent edit" / §8 rollback (conflict check, confirmation, file write-back), then sends a `BufferReverted(path)` refresh notification so the editor reloads the affected buffer(s) from disk. The editor does **not** store or create restore points; it only invokes the backend and refreshes. This aligns with Crosswalk §3.11 (`Primitive:DocumentCheckpoint`) and the shared-buffer contract in §2.4.1.
+- **Editable content:** Opened files are editable (not read-only preview). User edits update one shared authoritative buffer per file path.
+- **Save:** Save writes the current buffer to the file path. On success, dirty state clears and the user sees explicit success feedback. On failure (disk full, permission denied, path deleted, read-only file, disconnected remote destination), the buffer stays dirty, last-saved state does not advance, and the user gets visible recovery actions such as `Retry` and optional `Save As`.
+- **Unsaved indicator:** Each tab shows unsaved state, and at least one other stable shell location must also surface that state so it remains visible when the tab strip is crowded.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/FinalGUISpec.md
+
+- **Revert:** `Revert` reloads from disk. `Revert last agent edit` is a chat-owned restore action that routes through `cmd.chat.revert`; the editor never fabricates the revert itself.
+- **Revert last agent edit contract:** When `target_message_id` is omitted, the backend resolves it to the latest assistant turn in the active thread that produced persisted file mutations. If that turn touched multiple files, the revert applies to the whole turn across all affected files. After revert, the backend emits a refresh notification and the editor reloads the affected buffers.
+- **Restore to… / History:** The editor and document pane fetch restore points from the backend store and invoke the same restore pipeline; neither surface stores or manufactures restore points independently.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/FileSafe.md
+
+- **Recover unsaved (required MVP):** Unsaved-buffer recovery is required for both local and remote-backed buffers.
+- Recovery snapshots represent local unsaved buffer state only; they do not imply that a remote write succeeded.
+- For recovered remote-backed buffers, the banner copy is: `Recovered local edits — remote destination not yet synchronized`.
+- A recovered remote-backed buffer must reconnect or revalidate the destination before save/flush can claim success.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
 
 ### 2.3 Display and navigation
 
@@ -372,7 +389,7 @@ Implement in roughly this order so that contracts and single sources of truth ex
 - **Editor floating and main window closed:** AutoDecision: closing the main window does not exit the app if a floating editor window exists; the app exits when the last window closes (or on explicit Quit).
 - **Read-only and binary:** See §2.6 (and read-only reason in UI).
 - **Large files:** See §2.7 (threshold, hard cap, truncated + "Load full file").
-- **LSP and format/rename:** When LSP is in use, server crash or hang is handled per §10.10.4 (fallback, no editor crash). If format-on-save times out, save without formatting. If the file is renamed on disk (by LSP rename or externally), detect and prompt to save to new path or close. Symbol index staleness: see §12.2.7.
+- **LSP and format/rename:** When LSP is in use, server crash or hang follows the §10 editor/LSP fallback contract plus Plans/LSPSupport.md §8 (no editor crash). If format-on-save times out, save without formatting. If the file is renamed on disk (by LSP rename or externally), detect and prompt to save to new path or close. When LSP is stale or unavailable, symbol navigation falls back to the §10.2 heuristic/index path.
 
 ---
 
@@ -438,34 +455,18 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/rewrit
 ---
 
 ## 9. Tabs: Editor, Terminal, Browser
+
 ### 9A. Terminal tabs, panes, and sections
 Terminal containers are shell-workspace state, not a loose collection of generic bottom-panel tabs.
 
 Rules:
-- Puppet Master supports up to two terminal sections/components
-- each terminal section owns an ordered terminal-tab strip
-- each terminal tab contains from one to four panes
-- pane layout supports row and column splits and rebalances deterministically when a pane closes
-- tabs and panes can be reordered without changing the bound runtime identity
+- Puppet Master supports up to two terminal sections/components.
+- Each terminal section owns an ordered terminal-tab strip.
+- Each terminal tab contains from one to four panes.
+- Pane layout supports row and column splits and rebalances deterministically when a pane closes.
+- Tabs and panes can be reordered without changing the bound runtime identity.
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
-
-Terminal naming and focus rules:
-- explicit user labels override all automatic naming
-- when no explicit label exists, the tab title uses the strongest available session-derived label such as current task or cwd summary
-- pin state prevents accidental bulk-close behavior and remains visible in the tab strip
-- `Open in Terminal` and `Show Terminal` reveal the existing pane, tab, and section that already own the referenced `terminal_session_id`
-- explicit `New Terminal` and explicit split create new runtime identity instead of retargeting an unrelated pane silently
-
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md
-
-Capacity and close rules:
-- MVP does not use silent LRU eviction for terminal tabs
-- `Close Others` and similar bulk actions exclude pinned terminal tabs
-- closing a pane or tab that still owns a live session requires explicit close-versus-terminate semantics rather than silent process orphaning
-- moving a terminal tab between sections changes presentation only and MUST NOT mint a new `terminal_session_id`
-
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
 ### 9B. Browser tab and detached preview normalization (2026-03-08)
 The canonical browser container model is editor/workspace-tab-first for in-shell browsing.
@@ -486,9 +487,170 @@ Terminal tabs and browser tabs are nearby shell surfaces, but they are not inter
 Rules:
 - terminal tab semantics MUST NOT be reused as browser-session semantics
 - browser-tab caps and terminal-tab behavior are configured and disclosed independently
-- route and focus actions preserve the correct object kind (`browser_session`, `terminal_tab`, `terminal_pane`, `terminal_session`, or `dev_session`) instead of flattening them into one generic “tab” concept
+- route and focus actions preserve the correct object kind (`browser_session`, `terminal_tab`, `terminal_pane`, `terminal_session`, or `dev_session`) instead of flattening them into one generic tab concept
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
+
+## 10. Editor navigation and semantic affordances
+### 10.1 Breadcrumbs and outline
+Breadcrumbs are the editor-owned orientation surface above the active file.
+
+Rules:
+- the breadcrumb path is `file > symbol > block` when semantic structure is available
+- LSP `documentSymbol` is the preferred owner for outline/breadcrumb structure when a server is available
+- when LSP is unavailable, the editor falls back to heuristic outline extraction for the active file rather than hiding the feature entirely
+- breadcrumb clicks route through the same open-file and reveal contract as other editor navigation actions
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 10.2 Go to symbol and semantic navigation
+`Go to symbol` is an editor/navigation feature, not a Search side-panel substitute.
+
+Rules:
+- the default scope is the active document; an explicit workspace mode may widen the query when the user chooses it
+- when LSP is available, symbol results come from `documentSymbol` and `workspace/symbol`
+- when LSP is unavailable, the fallback path is text/index/heuristic symbol search rather than a silent feature drop
+- result rows show symbol kind, path, and line and open through the canonical editor open-file contract
+- command palette may host the launcher, but persistent semantic navigation ownership stays with the editor/LSP seam
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
+
+### 10.3 Diagnostics, gutter markers, and change markers
+Inline diagnostics and change markers are editor-owned visual layers.
+
+Rules:
+- diagnostics render as underlines, gutter markers, and Problems-panel pivots
+- editor gutter and scrollbar overview are the canonical owners for staged/unstaged/conflicted marker state and review heat-map summaries
+- conflicted markers override staged/unstaged styling until resolved
+- staged and unstaged state must remain visually distinguishable when both exist for one file
+- restore/revert outcomes surface as banner/toast/audit state rather than as a new persistent heat-map class
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/assistant-chat-design.md
+
+### 10.4 Definition, references, hover, and code actions
+Semantic editor actions reuse the same document authority and mutation path as normal editing.
+
+Rules:
+- go to definition, find references, hover, completion, signature help, code actions, and code lens all operate against the active authoritative document state
+- stale or version-mismatched responses are discarded rather than patched into the UI optimistically
+- workspace edits from format/rename/code action flow through the FileSafe-backed mutation path rather than bypassing normal file mutation rules
+- no LSP feature may silently attach to a local mirror for a remote-mode project
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md
+
+## 11. File tree actions, local filter, and chat handoff
+### 11.1 Canonical tree action catalog
+This section is the canonical owner for the full file-tree action catalog; earlier overview bullets are summary-only.
+
+**Create, rename, path, and delete actions**
+
+| UI action | Canonical command | Valid targets | Notes |
+|---|---|---|---|
+| New file | `cmd.file.new_file` | project root, folder | prompts for name and creates under selected directory |
+| New folder | `cmd.file.new_folder` | project root, folder | prompts for name and creates under selected directory |
+| Rename | `cmd.file.rename` | file, folder | prompts for `new_name` |
+| Delete | `cmd.file.delete` | file, folder, multi-select | explicit confirmation required |
+| Copy full path | `cmd.file.copy_full_path` | file, folder | system text clipboard |
+| Copy relative path | `cmd.file.copy_relative_path` | file, folder | resolves against project/worktree root context |
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md
+
+**Clipboard, handoff, open, and export actions**
+
+| UI action | Canonical command | Valid targets | Notes |
+|---|---|---|---|
+| Copy nodes | `cmd.file.copy_nodes` | file, folder, multi-select | workspace-node clipboard, not text clipboard |
+| Cut nodes | `cmd.file.cut_nodes` | file, folder, multi-select | visibly armed until paste/clear |
+| Paste nodes | `cmd.file.paste_nodes` | folder, project root | shared validation/conflict engine with drag/drop |
+| Add to Assistant Chat | `cmd.chat.add_file_reference` | file only (MVP) | visible composer chip; folder insertion out of scope |
+| Open in Terminal | `cmd.terminal.show` | file, folder | reveal existing terminal or open at containing dir |
+| Open With… | `cmd.file.open_with` | file only | targets: `source_editor`, `image_viewer`, `workspace_preview`, `detached_preview`, `diff_review` |
+| Save Local Copy / Download | `cmd.file.save_local_copy` | file, folder | explicit remote-to-local/export escape hatch |
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md
+
+### 11.2 Clipboard, drag/drop, and transfer engine
+File transfer actions share one validation and conflict-resolution engine.
+
+Rules:
+- the workspace-node clipboard is distinct from the system text clipboard
+- paste and drag/drop reuse one path-validation, conflict-resolution, and progress/toast path
+- cross-authority paste is blocked rather than silently re-routed
+- successful paste reuses the same progress and toast model as drag/drop
+- cut-pending state remains visibly armed until paste or clear
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+### 11.3 Local tree filter, selection, and current-file reveal
+File Manager search is intentionally local to the project tree.
+
+Rules:
+- the header/tree search box is a local tree filter/type-ahead only
+- it narrows visible nodes and selection inside the current project tree; it does not become a project-wide results host
+- the current-file reveal action scrolls and highlights the current editor file inside the tree when practical
+- keyboard navigation, multi-select, and context menus must stay coherent while the local filter is active
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
+
+### 11.4 Open With and Save Local Copy
+`Open With` and `Save Local Copy` are explicit user-visible escape hatches, not hidden fallback behavior.
+
+Rules:
+- `cmd.file.open_with` is file-only and MUST NOT expose a `system_default` target in MVP
+- `workspace_preview` and `detached_preview` are the only preview/browser open targets in this catalog
+- `diff_review` is the explicit handoff target for file-level compare/review entry
+- `cmd.file.save_local_copy` works for files and folders; folder export copies recursively to a user-selected local destination
+- remote-mode export uses `Save Local Copy` rather than a silent local mirror or cross-authority paste workaround
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
+
+## 12. Source Control handoff, compare, and review
+### 12.1 File-tree Source Control strip and diff entrypoints
+File Manager integrates with Source Control without stealing Git ownership.
+
+Rules:
+- the file-tree strip may expose compact repo state and pivots such as `Open in Source Control`, `Open diff`, and `Open compare`
+- Git badges in the tree remain read-only indicators until the user enters Source Control or an explicit diff/review surface
+- handoff to Source Control preserves `repo_id`, `worktree_id`, path, and compare origin when known
+- File Manager does not become the owner of commit, branch, graph, stash, or worktree management
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 12.2 Compare-target defaults
+Default compare targets depend on where the user entered diff/review.
+
+| Origin | Default compare target |
+|---|---|
+| unstaged list | `index <-> working tree` |
+| staged list | `HEAD <-> index` |
+| untracked file | `empty <-> working tree` |
+| commit history | `selected commit <-> first parent` |
+| conflicted file | `base`, `ours`, `theirs`, `result` |
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
+
+### 12.3 Hunk actions, conflict review, and diff-local search
+Fine-grained Git review remains Source Control owned.
+
+Rules:
+- hunk stage/unstage/discard actions remain Git mutations rather than editor undo
+- conflicted files open a conflict review surface with explicit `base`, `ours`, `theirs`, and `result` context
+- conflict resolution buttons write structured edits into the result buffer and remain undoable until final stage/mark-resolved
+- diff-local search belongs to the diff/review surface and does not route through project Search
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
+
+### 12.4 Change-marker ownership and revert boundaries
+Editor, Source Control, and Chat have distinct but connected restore/review responsibilities.
+
+Rules:
+- editor gutter and scrollbar overview own persistent change markers and review heat maps
+- Chat is preview/audit/restore-entrypoint only; it does not own hunk actions or persistent marker classes
+- `cmd.chat.revert` restores file mutations for one assistant turn; omitted `target_message_id` resolves to the latest assistant turn with persisted file mutations in the active thread
+- `cmd.chat.rewind` remains conversation-history rewind only and must not silently stand in for file restore
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileSafe.md
+
 ## Verification (AI-executable)
 
 ContractRef: Plans/Progression_Gates.md, Plans/evidence.schema.json
@@ -566,33 +728,49 @@ Supported modes for render-capable documents:
 - **Source**: normal text editor surface.
 - **Preview**: rendered-only surface.
 - **Split**: source + rendered preview side-by-side or stacked.
-- **Detached preview**: separate window using the same PreviewSession.
-- **Open in browser panel/window**: for full HTML/browser mode and other cases where a browser-like surface is the correct UX.
+- **Detached preview**: separate window using the same `PreviewSession`.
+- **Workspace browser**: browser-capable rendered mode hosted in the editor/workspace-tab shell as `workspace_preview`.
+- **Detached browser**: browser-capable rendered mode hosted in a detached preview/browser window as `detached_preview`.
 
-Defaults:
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
-- Markdown opens in source mode by default, with preview quickly available.
-- Mermaid blocks inside Markdown render in preview mode without changing the canonical source model.
-- `.mmd` files open in Mermaid source mode with a diagram preview affordance.
-- HTML opens in source mode by default and offers rendered/browser mode as a first-class alternate surface.
+Rules:
+- HTML opens in source mode by default and offers `Open in Browser` and `Open in Detached Browser` as first-class alternates.
+- Browser split is a second-step layout action after opening into `workspace_preview`; it is not a separate open target enum.
+- `Open in browser panel/window` is retired as canonical wording.
+- Image and SVG viewing remain native where appropriate and are not forced through browser runtime ownership.
+- Switching modes never changes the canonical source buffer model.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FileSafe.md
 
 ### 14.3 Preview state model
 
-The editor/file manager owns document-side state that binds to shared PreviewSession records.
+The editor/file manager owns document-side state that binds to shared `PreviewSession` and browser-session records.
 
 Minimum per-document UI state:
-
 - `document_id`
 - `path`
 - `content_kind`
 - `source_revision`
-- `preview_session_id` (if active)
-- `preview_mode` (`none`, `inline`, `split`, `detached`, `browser_panel`)
+- `preview_subject_id`
+- `preview_session_id?`
+- `browser_session_id?`
+- `preview_mode` (`none`, `preview_only`, `preview_split`, `detached_preview`, `workspace_preview`)
 - `trust_tier`
 - `can_structured_edit_preview`
 - `last_preview_error`
-- `export_preferences` (for example, Mermaid export format/theme)
+- `export_preferences`
 - `scroll_sync_enabled`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
+
+Rules:
+- `workspace_preview` and `detached_preview` replace the stale `browser_panel` mode vocabulary.
+- Browser-session identity is separate from preview-subject identity and may outlive one visible editor tab.
+- Preview recovery restores UI intent and recent state, but it does not require a persisted live webview instance or DOM state.
+- Preview editing continues to resolve to bounded source patches through the shared buffer model.
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 ### 14.4 Source/preview edit contract
 

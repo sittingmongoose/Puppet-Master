@@ -6,7 +6,7 @@
 **Date:** 2026-02-22  
 **Status:** Plan -- **LSP is MVP**  
 **Scope:** LSP (Language Server Protocol) is **in scope for the desktop MVP**. Desktop client integration, server management, **full LSP integration in the Chat Window** (diagnostics in context, @ file/symbol with LSP, code blocks with hover/Go to definition), and **additional enhancements** (Find references, Rename symbol, Format document, optional LSP diagnostics gate, Chat "Fix all"/"Rename"/"Where is this used?", etc.) -- see §9.1.  
-**Cross-references:** Plans/FileManager.md (§6, §10, §12.1.4), Plans/assistant-chat-design.md (§9, §9.1 LSP in Chat), Plans/00-plans-index.md, Plans/FinalGUISpec.md (§7.20 Bottom Panel, §7.16 Chat, §8.1 StatusBar), Plans/feature-list.md (§4 Verification gates), OpenCode (anomalyco/opencode) LSP implementation. **LSP gate, evidence, subagent selection (implementation spec):** §17.
+**Cross-references:** Plans/FileManager.md (§6, §10), Plans/assistant-chat-design.md (§9), Plans/00-plans-index.md, Plans/FinalGUISpec.md (§7.20 Bottom Panel, §7.16 Chat, §8.1 StatusBar), Plans/feature-list.md (§4 Verification gates), OpenCode (anomalyco/opencode) LSP implementation. **LSP gate, evidence, subagent selection (implementation spec):** §17.
 **SSOT references (DRY):** `Plans/Spec_Lock.json`, `Plans/DRY_Rules.md`, `Plans/Glossary.md`, `Plans/Decision_Policy.md`, `Plans/Progression_Gates.md`, `Plans/evidence.schema.json`, `Plans/Tools.md`.
 
 **ELI5/Expert copy alignment:** Authored tooltip/help text in this plan (for example setting hints and UI explanatory copy) must follow the dual-variant contract in `Plans/FinalGUISpec.md` §7.4.0. LSP server-returned hover/diagnostic payloads are dynamic external content and are outside authored dual-copy enforcement.
@@ -45,7 +45,7 @@ For each feature below: **inputs** (what the client sends or user does), **outpu
 | **Diagnostics** | Buffer URI, open/change/close; server sends `publishDiagnostics` | Underlines, gutter markers, Problems panel rows | Errors/warnings shown; click opens file at line | Timeout: show last known or empty; server crash → clear diagnostics, offer "Restart"; no server → no diagnostics | `lsp.<id>.disabled`, `lsp: false` | No diagnostics; optional install hint |
 | **Hover** | (URI, position), optional timeout | Tooltip (markdown or plain) | Tooltip at cursor | Timeout → show "Timed out", discard; stale (version changed) → discard; no server → no tooltip | `lsp.hoverTimeoutMs` | No hover; syntax-only if any |
 | **Autocomplete** | (URI, position, trigger), optional timeout | Inline completion list | List shows; select applies | Timeout → hide list, discard; stale → discard; no server → no LSP completions | `lsp.completionTimeoutMs` | Heuristic or no completion |
-| **Navigation** (go-to-def, outline, breadcrumbs) | (URI, position) or document; server capability | Jump to location or symbol list | Correct location/list | Timeout → show "Timed out", discard; no result → show "No definition"; no server → heuristic/outline | `lsp.workspaceSymbolTimeoutMs` (for workspace/symbol) | Heuristic symbol search, regex outline (§12.1.4) |
+| **Navigation** (go-to-def, outline, breadcrumbs) | (URI, position) or document; server capability | Jump to location or symbol list | Correct location/list | Timeout → show "Timed out", discard; no result → show "No definition"; no server → heuristic/outline | `lsp.workspaceSymbolTimeoutMs` (for workspace/symbol) | Heuristic symbol search, regex outline (FileManager §10.1-§10.2) |
 | **Inlay hints** | Document sync + visible range (optional) | Inline decorations (no buffer change) | Hints rendered | Timeout → skip or show cached; no server → no inlay hints | -- | No inlay hints |
 | **Semantic highlighting** | Document sync; server supports semanticTokens | Token types for coloring | More accurate colors | Not supported → fall back to syntax-only; no server → syntax-only | -- | Syntax-only highlighting |
 | **Code actions** | Range + diagnostics; user invokes | Context menu / lightbulb; apply edit | Edit applied via FileSafe | Timeout → hide actions; apply failure → show error, do not change buffer; no server → no code actions | -- | No code actions |
@@ -141,46 +141,46 @@ Servers are enabled when a file's extension matches and the requirement is met. 
 
 ### 3.5 Root discovery (per-server rules)
 
-For each server id (or group), the **root** is the directory used as the project root for that LSP process (one process per (server_id, root)). Root is discovered by walking **up** from the **file's directory** (the directory of the currently opened file) until a directory matching the rule is found. If no such directory is found, the server is not started for that file (or a fallback rule applies where noted).
+Root discovery is host-aware and context-driven.
 
-| Server id | Root discovery rule | Notes |
-|-----------|---------------------|--------|
-| rust | Nearest directory (walk up from file's dir) containing **Cargo.toml** | One server per Cargo workspace. |
-| eslint | Nearest directory containing **package.json** or **eslint.config.js** / **eslint.config.mjs** / **eslint.config.ts** | §3.3; v10 flat config. |
-| typescript | Nearest directory containing **package.json** | Node/TS project root. Excluded when deno wins (see §3.6). |
-| deno | Nearest directory containing **deno.json** or **deno.jsonc** | Deno project; takes precedence over typescript for same path when both present. |
-| slint-lsp | **File's directory**, or nearest directory containing **Cargo.toml** (if one server per Rust project desired) | §3.3.1; default: file's directory. |
-| pyright | Nearest directory containing **pyrightconfig.json** or **pyproject.toml** or **package.json** (e.g. Python in JS repo); else file's directory | default |
-| gopls | Nearest directory (walk up) containing **go.mod**; else file's directory | default |
-| clangd | Nearest directory containing **compile_commands.json** or **CMakeLists.txt** or **Makefile**; else file's directory | default |
-| jdtls | Nearest directory containing **pom.xml** or **build.gradle** / **build.gradle.kts**; else file's directory | default |
-| csharp, fsharp | Nearest directory containing **\*.sln** or **\*.csproj** / **\*.fsproj**; else file's directory | default |
-| php intelephense | Nearest directory containing **composer.json** or **package.json**; else file's directory | default |
-| astro, svelte, vue | Nearest directory containing **package.json** | default |
-| oxlint | Same as eslint: nearest **package.json** or **eslint.config.\*** | Lint-only; see §3.6. |
-| bash, clojure-lsp, dart, elixir-ls, gleam, hls, julials, kotlin-ls, lua-ls, nixd, ocaml-lsp, prisma, ruby-lsp, sourcekit-lsp, terraform, tinymist, yaml-ls, zls | **File's directory** | default when no canonical project file is specified. |
+Rules:
+- session reuse key is `(host_id, server_id, root_identity)`
+- `root_identity` is resolved from the effective project/worktree/remote root selected for the current document and server rules
+- project language detection and preset suggestion are advisory only; actual attachment resolves from file path, effective host context, server rules, and user overrides
+- remote-mode projects use remote host roots and MUST NOT silently attach against a hidden local mirror
 
-**Invocation:** The client calls the root finder with **path = currently opened file path** (e.g. absolute). The finder derives the file's directory and walks upward until the first directory matching the rule; it returns `Some(root_path)` or `None` if not found (or fallback to file's directory where the table says "else file's directory").
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+Root-selection steps:
+1. determine the effective host context for the file
+2. resolve candidate roots from file path and server heuristics
+3. apply explicit per-project or per-server overrides
+4. compute `root_identity` and attach/reuse the matching session if one exists
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Contracts_V0.md
 
 ### 3.6 Extension conflicts (multiple servers per extension)
 
-Some file extensions are served by **multiple** LSP servers (e.g. `.ts`/`.tsx` by typescript, eslint, deno, oxlint). The implementer must attach exactly one **primary** server for language features (diagnostics, hover, completion, navigation, etc.) and zero or more **supplementary** servers that contribute **diagnostics only** (and optionally code actions keyed to those diagnostics).
+Multiple servers may overlap for one language or file kind; overlap is resolved through explicit selection metadata rather than one-off hard-coded exceptions.
 
-**Rule:**
+Required metadata fields per effective catalog entry:
+- `selection_mode`
+- `selection_family`
+- `primary_priority`
+- `context_markers`
+- `supplementary_families`
+- `capability_profile`
+- `degraded_attach_rules`
 
-1. **Primary server (one per file):** For a given opened file path, **at most one** server is the **primary** for that file. The primary server is used for: diagnostics, hover, completion, go-to-definition, document/workspace symbol, signature help, inlay hints, code actions (from its diagnostics), code lens, and all other LSP features. Choice of primary is by **project context**:
-   - **deno vs typescript:** If the file's root (from root discovery) contains **deno.json** or **deno.jsonc**, use **deno** as primary for `.ts`, `.tsx`, `.js`, `.jsx`, `.mjs` in that tree. Otherwise use **typescript** as primary for those extensions (when typescript dependency/requirement is met).
-   - **typescript** is primary for TS/JS when not in a Deno root; **deno** is primary when in a Deno root.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
 
-2. **Supplementary servers (diagnostics only):** The following servers are **supplementary** for the extensions they share with a primary server. They are **not** used for hover, completion, or navigation; they **only** contribute diagnostics (and optionally code actions tied to those diagnostics). Merge their diagnostics with the primary's in the Problems panel and in LLM/Assistant context.
-   - **eslint:** Supplementary for `.ts`, `.tsx`, `.js`, `.jsx`, `.mjs`, `.cjs`, `.mts`, `.cts`, `.vue` (when eslint requirement is met). Primary for language features remains typescript or deno.
-   - **oxlint:** Supplementary for `.ts`, `.tsx`, `.js`, `.jsx`, `.mjs`, `.cjs`, `.mts`, `.cts`, `.vue`, `.astro`, `.svelte` (when oxlint dependency is met). Primary remains typescript or deno (or svelte/astro/vue where applicable).
+Rules:
+- one primary server may own a capability family when exclusivity is required
+- supplementary servers may coexist only when their capability families are declared compatible
+- effective overlap resolution must remain user-visible in Settings > LSP and status surfaces
+- remote/degraded attach rules must be explicit; the client must not fabricate healthy capability state when a server is disabled, unavailable, or partially attached
 
-3. **Priority order for primary:** When multiple servers could be primary for an extension (e.g. in a Deno repo that also has package.json), **deno** wins over **typescript** when root contains deno.json(c). For other conflicts (e.g. vue vs typescript for .vue), use the **language** server (e.g. **vue** for .vue, **svelte** for .svelte, **astro** for .astro) as primary for that extension; typescript/eslint/oxlint remain supplementary for diagnostics.
-
-4. **Summary for implementer:** For each opened file, (1) resolve root per §3.5 for each server that matches the file's extension; (2) choose **one** primary server by the rules above; (3) attach **all** matching supplementary servers for diagnostics only; (4) spawn one process per (server_id, root) and route requests accordingly (primary: full LSP; supplementary: only publishDiagnostics and optionally codeAction for their diagnostics).
-
-ContractRef: ContractName:Plans/LSPSupport.md
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
 
 ### 3.3 ESLint and ECMAScript/JavaScript (reinforced)
 
@@ -205,15 +205,15 @@ Our GUI is **Rust + Slint** (FinalGUISpec); we include **slint-lsp** so that edi
 ### 3.4 Implementation (server.ts)
 
 - **Code:** `packages/opencode/src/lsp/server.ts` -- server registry, root discovery, spawn logic for each built-in (including **eslint** for JS/TS).
-- **Server model:** One LSP server **process** per **(language, project root)**. Root is discovered per file (e.g. "nearest directory containing Cargo.toml" for Rust).
-- **Info shape:** `id`, `extensions[]`, `root(file) -> root path`, `spawn(root) -> Handle | undefined`. **Handle:** `process` (child process) + optional `initialization` (options sent in LSP `initialize`).
+- **Server model:** One LSP server **process** per **`(host_id, server_id, root_identity)`**. Root discovery still begins from the file context and server heuristics (e.g. "nearest directory containing Cargo.toml" for Rust), but the supervised session key is host-aware.
+- **Info shape:** `id`, `extensions[]`, `root(file, host_context) -> root identity`, `spawn(session_key) -> Handle | undefined`. **Handle:** `process` (child process) + optional `initialization` (options sent in LSP `initialize`).
 - **Root discovery:** **NearestRoot(includePatterns, excludePatterns)** -- walk up from the file's directory until a target file is found. Exclude patterns avoid wrong server (e.g. Deno vs Node). Some servers use a fixed root (e.g. instance directory).
-- **Lifecycle:** On file open, extension is matched to enabled servers; if a server is needed and not yet running for that root, it is **spawned** (stdio). Initialize handshake and optional `initializationOptions` complete the setup.
+- **Lifecycle:** On file open, extension is matched to enabled servers; if a server is needed and not yet running for that host/root identity, it is **spawned** (stdio). Initialize handshake and optional `initializationOptions` complete the setup.
 
 **Takeaways for us:**
 
 - Registry of servers by (id, extensions, root-finder, spawn).
-- Lazy spawn per (language, root); one process per root.
+- Lazy spawn per `(host_id, server_id, root_identity)`; one process per effective host/root identity.
 - Config to disable, override command, set env and initialization options (align with OpenCode's `lsp` schema).
 - Optional auto-install (we can defer or limit; e.g. rust-analyzer from PATH, pyright/gopls optional install).
 
@@ -236,78 +236,30 @@ Recommendation: use **lsp-types** plus one async LSP **client** crate that suppo
 
 ## 5. Integration with Our Editor (FileManager / Rewrite)
 
-- **Editor:** FileManager plan defines the in-app editor (tabs, buffers, save, syntax highlighting). **LSP is MVP** -- integrate from the start. See also **§5.1 LSP in the Chat Window** for Chat-specific integration.
-- **Integration (editor + Chat):**
-  - **Document sync:** On open/change/close (and save when configured) of a buffer, send the corresponding LSP notifications. **Decision:** Send `didSave` on buffer save by default; config key `lsp.didSave` (bool, default true). for the document URI. Use the same 1-based line/column and encoding as in FileManager. Prefer **incremental sync** in client capabilities when the server supports it (sends only changed ranges in `didChange`); otherwise full sync. Track document version for each buffer and include it in sync messages.
-  - **Diagnostics:** Subscribe to `textDocument/publishDiagnostics`; map `Diagnostic` to editor underlines and gutter markers; optionally a "Problems" panel (as in FinalGUISpec placeholder).
-  - **Hover:** On hover at (line, col), call `textDocument/hover` and show the result in a tooltip.
-  - **Completion:** On trigger (e.g. character or explicit), call `textDocument/completion` and show an inline completion list.
-  - **Breadcrumbs / Go to symbol:** Use LSP `documentSymbol` (or workspace/symbol) for outline and breadcrumbs when available (FileManager §10.1, §10.9).
-  - **Go to definition:** Use LSP `textDocument/definition` (and optionally references) instead of grep/index-only.
-  - **Inlay hints:** Request `textDocument/inlayHint`; render as inline decorations (no buffer change). Enable when server supports it.
-  - **Semantic highlighting:** Request `textDocument/semanticTokens` when supported; use for more accurate token types; fall back to syntax-only.
-  - **Code actions:** Request `textDocument/codeAction`; show in context menu or lightbulb; apply via `workspace/applyEdit` (through FileSafe/patch pipeline).
-  - **Code lens:** Request `textDocument/codeLens`; render actionable links above symbols; support invoke.
-  - **Signature help:** Request `textDocument/signatureHelp` when cursor is in a call; show signature and parameter hint.
-  - **Request timeout and cancellation:** Apply configurable timeouts per request type; send LSP cancellation when user navigates or edits to avoid stale results.
-  - **LSP status in UI:** Show current server and state (e.g. "Rust (rust-analyzer)", "Initializing...", "Ready", "Error: ...") in status bar or dedicated indicator.
-  - **Per-server enable/disable:** Honor config to disable a server globally or per project (`lsp.<id>.disabled`, `lsp: false`).
-  - **Fallback when LSP unavailable:** When no server is available for a language, keep heuristic symbol search and no diagnostics. **Install hint:** Dismissible banner once per (project, server_id) per session with message "Install \<server\> for diagnostics" and link to Settings > LSP (FinalGUISpec §7.4.2).
-  - **Diagnostics for LLM/Assistant:** Include current LSP diagnostics for relevant files in context fed to Assistant/Interview (assistant-chat-design §9.1 LSP support in Chat (MVP), tool context).
+The editor integrates with LSP through a shared authoritative document store and a host-aware session supervisor.
 
-ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md
+Rules:
+- the shared document store is the sole authority for open-document text
+- LSP document sync, hover, definition, references, completion, signature help, diagnostics, code actions, rename, and format all operate against that authoritative document state
+- feature requests are gated behind sync barriers so stale document versions do not leak into the UI
+- workspace edits from rename/format/code action flow through the same FileSafe-backed mutation path as other file edits
+- LSP never becomes the owner of Search, diff/review, or chat restore semantics
 
-**Editor feature behavior (inputs, outputs, edge cases, fallback):**
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md, ContractName:Plans/assistant-chat-design.md
 
-- **Document sync:** *Inputs:* buffer open/change/close (and optionally save); URI, version, content or contentChanges. *Outputs:* server has up-to-date view. *Success:* server acknowledges; *failure:* server crash → clear diagnostics for that server, offer Restart; transport error → log, mark server Error. *Config:* `lsp.didChangeDebounceMs`. *Fallback when LSP unavailable:* no sync; no diagnostics.
-- **Diagnostics:** *Inputs:* subscribe to `publishDiagnostics`. *Outputs:* underlines, gutter markers, Problems panel. *Success:* list shows file, line, message, severity; click opens file. *Edge cases:* timeout → keep last known or empty; server crash → clear diagnostics, offer Restart; empty list → show "No problems" when panel open. *Fallback when LSP unavailable:* no diagnostics; optional install hint.
-- **Hover:** *Inputs:* (URI, position). *Outputs:* tooltip. *Success:* show content (markdown/plain). *Failure:* timeout → show "Timed out", discard; document version changed → discard; no server → no tooltip. *Config:* `lsp.hoverTimeoutMs`. *Fallback when LSP unavailable:* no hover.
-- **Completion:** *Inputs:* (URI, position, trigger). *Outputs:* inline list; select applies. *Failure:* timeout → hide list; stale → discard. *Config:* `lsp.completionTimeoutMs`. *Fallback when LSP unavailable:* no LSP completions (heuristic if any).
-- **Breadcrumbs / Go to symbol:** *Inputs:* documentSymbol or workspace/symbol. *Outputs:* outline, breadcrumbs, symbol list. *Failure:* timeout → show "Timed out" or empty list. *Fallback when LSP unavailable:* heuristic/regex outline (FileManager §10.1, §12.1.4).
-- **Go to definition:** *Inputs:* (URI, position). *Outputs:* open file at location. *Failure:* timeout → "Timed out", discard; no result → "No definition"; stale → discard. *Fallback when LSP unavailable:* grep/index-only if available.
-- **Inlay hints, semantic highlighting, code actions, code lens, signature help:** *Inputs/outputs* per §1.1. *Failure:* timeout → skip or discard; no server → no feature. *Fallback when LSP unavailable:* no inlay hints; syntax-only highlighting; no code actions/code lens/signature help.
-- **Request timeout and cancellation:** On timeout → treat request as failed (show "Timed out" or discard); on navigate/edit → send LSP cancel, discard response when it arrives if version changed. *Fallback when LSP unavailable:* N/A.
-- **LSP status in UI:** Show server name + state (Initializing/Ready/Error); when no server, show nothing (omit). *Fallback when LSP unavailable:* show nothing (omit).
-- **Per-server enable/disable:** Honor `lsp.<id>.disabled`, `lsp: false`; disabled server not spawned. *Fallback when LSP unavailable:* same as no server for that language.
-- **Diagnostics for LLM/Assistant:** Include current diagnostics in context; when no server, omit. *Fallback when LSP unavailable:* omit from context.
+UI integration rules:
+- breadcrumbs, outline, go-to-symbol, hover, references, and code actions are editor/LSP-owned affordances
+- diagnostics feed editor markers and Problems, but Problems remains the owner of aggregated problem presentation
+- when LSP is unavailable, fallback navigation/index behavior is explicit and MUST NOT masquerade as healthy LSP state
+- remote-mode files reuse the same architecture with remote host identity; they are not a second LSP subsystem
 
-### 5.1 LSP in the Chat Window (MVP)
-
-The Chat Window must **fully take advantage of LSP** so the user and the Assistant benefit from language intelligence without leaving the chat. All of the following are **MVP** and must be implemented with LSP support.
-
-| Area | LSP usage | Requirement |
-|------|-----------|-------------|
-| **Diagnostics in Assistant context** | Feed current LSP diagnostics into the Assistant/Interview prompt | When building the context for the next Assistant turn, **include a summary of current LSP diagnostics** for the project (or for files @'d or recently edited): errors and warnings with file, line, message, severity, and source (e.g. rust-analyzer). The agent can then suggest fixes, explain errors, or prioritize work. Same for Interview when the project has open files or @'d files. **Cap:** Limit to **10 files** and **50 diagnostics total** in context; if more, truncate with "... and N more" in the summary to avoid token overflow. |
-| **@ file mention** | LSP-aware @ picker | **@ mention** (Plans/assistant-chat-design.md §9) continues to offer file/folder/symbol search. When LSP is available for the project, **@ symbol** (or "symbols" in the @ menu) uses **LSP workspace/symbol** (and optionally documentSymbol for current file) so the user can add a **symbol** (function, class, etc.) to context by name; results show path, line, kind. File list remains the primary @ result; symbols are an additional category when LSP is active. |
-| **Code blocks in messages** | Hover and go-to-definition from chat | **Code blocks** in assistant or user messages (inline or fenced) are **LSP-enabled** when the block has a known language and the project has an LSP server for it: **hover** over a symbol in the block shows LSP hover (type, docs) in a tooltip; **click-to-definition** (e.g. Ctrl+Click or Cmd+Click) on a symbol in a code block calls **textDocument/definition** (using a virtual document or the real file if the block maps to a project file) and opens the definition in the File Editor or scrolls to it. If the block is a snippet from a project file, use that file's URI and position for LSP requests; otherwise create a temporary/virtual document for the block and attach it to the appropriate LSP server for that language so hover/definition still work where possible. |
-| **Problems panel from Chat** | One-click to Problems | Chat **footer** strip offers a **link** (label: "N problems" when count > 0, "Problems" when zero), placed **right of context usage** (FinalGUISpec §7.16). Click opens the **Problems** tab (FinalGUISpec §7.20) filtered to the current project (or to files in context). **Filter definition:** Show diagnostics for all open files in the current project; when context has @'d files, optionally restrict to those files plus open. Implementer defines "current project" from app state (e.g. active project root or workspace folder). Empty/error states and accessibility: see FinalGUISpec §7.16. |
-| **Inline diagnostics for @'d files** | Optional hint in chat | When the user has **@'d** one or more files, optionally show a **compact hint** (e.g. "2 errors in @'d files") with a click-through to the Problems panel or to the first error location in the editor. **Default: off.** Config key `chat.show_at_diagnostics_hint` (bool, default false). |
-
-**Chat LSP -- inputs, outputs, success/failure, edge cases, fallback:**
-
-- **Diagnostics in Assistant context:** *Inputs:* current LSP diagnostics for project or @'d/recent files. *Outputs:* summary in Assistant/Interview prompt (file, line, message, severity, source). *Success:* agent sees errors/warnings. *Failure:* no server → omit from context; timeout → use last known or omit. *Edge case:* token limit → cap to 10 files, 50 diagnostics (§5.1); truncate with "... and N more". **Fallback when LSP unavailable:** Omit diagnostics from context; optional hint to install server.
-- **@ symbol (LSP-aware):** *Inputs:* user query in @ picker; workspace/symbol (and optionally documentSymbol). *Outputs:* symbol list (path, line, kind). *Success:* user can add symbol to context. *Failure:* timeout → show "Timed out" or empty list; no server → use text/index search. **Fallback when LSP unavailable:** Text-based or indexed symbol search (FileManager §12.1.4).
-- **Code blocks (hover + go-to-definition):** *Inputs:* code block language, symbol position; virtual or real URI. *Outputs:* tooltip on hover; open definition on click. *Success:* hover shows type/docs; click opens file at definition. *Failure:* timeout → show "Timed out", discard; no server → no hover/definition; virtual doc not supported → no LSP for that block. **Fallback when LSP unavailable:** No hover/definition in code blocks.
-- **Problems link from Chat:** *Inputs:* current diagnostics count for project/context. *Outputs:* link/badge "N problems" opening Problems panel. *Success:* panel opens filtered. *Failure:* no server → show "0 problems" or hide badge; server crash → clear count, offer Restart. **Fallback when LSP unavailable:** Hide badge or show "0 problems"; link still opens panel (empty or message "Open a file to see diagnostics.").
-- **Inline diagnostics for @'d files (optional):** *Inputs:* @'d file URIs, their diagnostics. *Outputs:* compact hint "K errors in @'d files" with click-through. *Success:* user sees hint and can jump to Problems or first error. *Failure:* no server → do not show hint. **Fallback when LSP unavailable:** Do not show hint.
-
-ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
-
-**Fallback when LSP unavailable:** When no LSP server is active for the project or language, @ symbol falls back to text-based or indexed symbol search (FileManager §12.1.4); code blocks in chat have no hover/definition; diagnostics in context are omitted. Optional one-time or dismissible hint to enable/install the LSP server.
-
-**Reference:** OpenCode uses LSP diagnostics to inform the LLM (opencode.ai/docs/lsp/); we extend that to Chat with diagnostics in prompt, LSP-aware @ symbol, and code-block hover/definition.
-
-**Server selection:** By file path → language (extension) → which server(s) handle that extension → project root for that file. Then one server process per (server id, root). Same idea as OpenCode's Info + root function. For **multi-root** (e.g. monorepo), consider sending only roots that have open files or a bounded set in `workspaceFolders` at initialize to avoid slow startup (see §7, §8).
-
-**Threading:** LSP is async (I/O). Run the client in an async runtime (e.g. tokio); keep the GUI layer (Slint) responsive by sending results back to the Slint event loop (e.g. via `slint::invoke_from_event_loop` or a model binding update). Avoid blocking the UI thread on LSP requests.
-
----
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
 
 ## 6. Scope and Phasing
 
 - **In scope for LSP MVP (this plan):** All features in §1, §5, and **§5.1 (LSP in the Chat Window)**, including: diagnostics, hover, completion, navigation (definition, references, symbol outline), inlay hints, semantic highlighting, code actions, code lens, signature help, request timeout/cancellation, LSP status in UI, per-server enable/disable, fallback when LSP unavailable (heuristic + optional install hint), **diagnostics in Assistant/Interview context**, **@ symbol with LSP workspace/symbol**, **code blocks in chat with hover and go-to-definition**, **Problems link from Chat**, and optional **inline diagnostics hint for @'d files**. Design and research for client-only integration: protocol usage, OpenCode-style server registry and lifecycle, Rust crates, and how it plugs into the File Manager and Chat.
 - **Out of scope here:** Full editor implementation details (tabs, buffers, presets) -- those stay in FileManager.md; this doc only covers LSP-specific bits.
-- **Phasing:** **LSP is MVP** -- implement with the desktop editor and Chat from the start. Use LSP when available; fallback to text-based/heuristic navigation and optional project index (FileManager §12.1.4) when LSP is disabled or unavailable.
+- **Phasing:** **LSP is MVP** -- implement with the desktop editor and Chat from the start. Use LSP when available; fallback to text-based/heuristic navigation and optional project index (FileManager §10.2) when LSP is disabled or unavailable.
 
 ---
 
@@ -333,7 +285,7 @@ Each mitigation is **actionable**: who does what, and when.
 | **Many open documents** | **Client:** Limit documents pushed to each server (e.g. only currently open tabs, or N most recent per root). **Editor/FileManager:** When a buffer is evicted (FileManager §12.2.1), **client** sends `didClose` for that URI so the server can free memory. **Config:** Optional cap (e.g. max 50 open docs per server) in Settings. |
 | **Large workspace at init** | **Client:** At initialize, send only roots that have at least one open document, capped at 10 (§7, §14.6). **When:** During `initialize` request; do not send thousands of paths. |
 | **didChange flood** | **Client:** Debounce `didChange` (default 100 ms after last edit; §7, §14.4). When server supports incremental sync, send only `contentChanges`; otherwise full content. **When:** On every buffer edit, start/reset debounce timer; on timer fire, send one `didChange`. |
-| **Symbol index staleness (without LSP)** | **FileManager:** §12.2.7 covers invalidation for heuristic index. **When LSP present:** Diagnostics and symbols come from server. **When LSP disabled or unavailable:** Keep regex/heuristic symbol path (FileManager §12.1.4); optional install hint. **Client:** No action for index; fallback is editor/FileManager responsibility. |
+| **Symbol index staleness (without LSP)** | **FileManager:** fallback symbol navigation lives in §10.2. **When LSP present:** Diagnostics and symbols come from server. **When LSP disabled or unavailable:** Keep regex/heuristic symbol path (FileManager §10.2); optional install hint. **Client:** No action for index; fallback is editor/FileManager responsibility. |
 | **TCP-only servers (e.g. Godot)** | **User:** Configures a **command** (e.g. `npx godot-lsp-stdio-bridge`) that speaks stdio to the app and TCP to the real server. **Client:** Spawn that command as the LSP server process; no change to client transport (stdio only). **Docs:** Document bridge pattern in user-facing docs; see §10. |
 
 ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md
@@ -424,7 +376,7 @@ Most LSP servers use **stdio** (spawn process, stdin/stdout = JSON-RPC). Some us
 - [ESLint v10 migration](https://eslint.org/docs/latest/use/migrate-to-10.0.0) -- flat config, Node requirements.
 - [slint-lsp](https://crates.io/crates/slint-lsp) -- LSP server for Slint (.slint); stdio; diagnostics, completion, goto definition, live-preview. See §3.3.1.
 - [Slint tooling (slint-lsp, fmt)](https://snapshots.slint.dev/master/docs/guide/tooling/manual-setup/#slint-lsp) -- setup, config, formatting.
-- Plans/FileManager.md (§6 out of scope, §10 editor enhancements, §11 presets, §12.1.4 symbol search without LSP, §12.2.7 symbol index staleness)
+- Plans/FileManager.md (§6 out of scope, §10 editor navigation and fallback symbol search, §11 file-tree actions and presets)
 - Plans/FinalGUISpec.md (placeholder for linter/build errors when LSP added)
 
 ---
@@ -443,7 +395,7 @@ Recommended ordering so an implementer can build incrementally with clear depend
   - **Hover:** textDocument/hover at cursor; show tooltip; timeout and stale discard (§1.1, §7). *Depends on: Document sync.*
   - **Completion:** textDocument/completion on trigger; render list and apply on select; timeout and stale discard. *Depends on: Document sync.*
   - **LSP status in UI:** Status bar (server name, Initializing/Ready/Error); §8 crash/restart behavior. *Depends on: Client + registry.*
-  - **Fallback when LSP unavailable:** Heuristic symbol search, no diagnostics; optional install hint (FileManager §12.1.4). *Depends on: Editor/FileManager.*
+  - **Fallback when LSP unavailable:** Heuristic symbol search, no diagnostics; optional install hint (FileManager §10.2). *Depends on: Editor/FileManager.*
   - **Phase 1 outcome:** User can open files, see diagnostics in editor and Problems panel, get hover and completion; status bar shows LSP state; fallback when no server.
 
 - **Phase 2 -- Editor navigation + Chat LSP:**
@@ -480,9 +432,9 @@ Recommended ordering so an implementer can build incrementally with clear depend
 - [ ] Request timeout and cancellation; discard or re-request on stale document version.
 - [ ] LSP status in UI: status bar or indicator (server name, Initializing/Ready/Error).
 - [ ] Per-server enable/disable: honor lsp.<id>.disabled and lsp: false. **GUI:** Settings > LSP: all built-in servers listed with Enable toggle (default on); user can turn any off. Global "Disable automatic LSP server downloads" toggle; per-server env and initialization options; custom LSP servers (add/edit/remove: command, extensions, env, initialization). See FinalGUISpec §7.4.2.
-- [ ] Server lifecycle: spawn on first file open for (server, root); restart on crash with backoff.
+- [ ] Server lifecycle: spawn on first file open for `(host_id, server_id, root_identity)`; restart on crash with backoff.
 - [ ] Support bridge pattern: custom command can be a stdio↔TCP bridge (e.g. Godot); document for users.
-- [ ] Fallback: when LSP disabled or server missing, keep heuristic symbol search and no diagnostics; optional install hint (FileManager §12.1.4).
+- [ ] Fallback: when LSP disabled or server missing, keep heuristic symbol search and no diagnostics; optional install hint (FileManager §10.2).
 - [ ] Diagnostics for LLM/Assistant: include current LSP diagnostics in context fed to Assistant/Interview.
 - [ ] **Additional enhancements (§9.1):** textDocument/formatting (format document/selection); textDocument/documentLink (clickable imports); optional: LSP diagnostics verification gate, LSP snapshot in evidence, Chat "Fix all" / "Rename" / "Where is this used?" / "Format file"; promote lsp tool when ready.
 
@@ -490,55 +442,25 @@ Recommended ordering so an implementer can build incrementally with clear depend
 
 ## 13. GUI requirements and cross-references
 
-Where each LSP feature appears in the UI. FinalGUISpec and FileManager are authoritative for layout; this section maps LSP behavior to those specs.
+Settings > LSP is a searchable registry-management surface, not a flat toggle list.
 
-| LSP feature | UI location | Spec reference | Notes |
-|-------------|-------------|----------------|-------|
-| **Diagnostics (list)** | Bottom panel → **Problems** tab | FinalGUISpec §7.20 | Table: file, line, message, severity, source. Click → open file at location. Filter by severity. Empty: "No problems detected" when LSP active with zero diagnostics; "Open a file to see diagnostics" when no LSP server is running. |
-| **Diagnostics (inline)** | Editor: underlines + **gutter markers** (left of line numbers) | FileManager §10 (editor enhancements) | Severity colors: error (red), warning (amber), info (blue). Gutter: icon or dot per line with diagnostic. |
-| **LSP status** | **Status bar** (bottom strip) | FinalGUISpec §3.2, §7.18, §8.1 StatusBar | Show server name + state: e.g. "rust-analyzer: Ready", "Initializing...", "Error: ...". When no server: show nothing (no "no LSP" indicator). |
-| **Hover** | **Tooltip** at cursor (or slightly offset) | Editor UX | Rich content: markdown when server provides it; else plain text. Themed; max width to avoid overflow. |
-| **Completion** | **Inline list** below cursor (or above if near bottom) | Editor UX | List of items (label, detail, kind icon); select with arrow keys + Enter; optional resolve on select. Trigger: typing, or explicit (e.g. Ctrl+Space). |
-| **Signature help** | **Popup** near cursor (e.g. below line) | Editor UX | Current signature + parameter highlight; optional previous/next overload. Dismiss on cursor move or Escape. |
-| **Inlay hints** | **Inline decorations** in editor (no buffer change) | Editor UX | Rendered in a different style (muted, smaller font); do not affect cursor/selection. Refresh on document change or on visible range change. |
-| **Code actions** | **Context menu** and/or **lightbulb** icon in gutter or on selection | Editor UX | "Quick fix" / "Refactor" entries; apply via workspace/applyEdit (FileSafe). |
-| **Code lens** | **Inline links** above applicable lines (e.g. "Run test", "3 references") | Editor UX | Click to invoke (e.g. run test, show references). Optional toggle to show/hide code lens. |
-| **Breadcrumbs** | Above or below editor (path-style: file > symbol > block) | FileManager §10.1 | When LSP available, use `documentSymbol` for outline; else heuristic (§10.1). |
-| **Go to symbol** | Command palette / quick open (e.g. Ctrl+Shift+O) + dropdown | FileManager §10.2 | List from LSP `documentSymbol` when available; else regex outline (§12.1.4). |
-| **Install hint (fallback)** | **Toast** or **dismissible banner** in editor area | Optional | One-time or per-session: "Install rust-analyzer for full support" with link to docs or Settings. |
-| **LSP server error / crash** | Status bar; optional Restart action | FinalGUISpec §7.18, §8.1; LSPSupport §8 | Status bar shows "Error: ..." for current editor context. Offer "Restart language server" (status bar context menu or Problems panel when diagnostics cleared). Do not block UI. |
-| **Problems link (Chat)** | Chat footer, right of context usage | FinalGUISpec §7.16, §7.20 | Label "N problems" when count > 0, "Problems" when 0. Placement: immediately right of context usage (context circle / "42k/128k"). Opens Problems tab filtered to project; when no project: "Select a project to see diagnostics". |
-| **Editor LSP shortcuts** | Editor, context menu | FinalGUISpec §7.18 | F12 = Go to definition; Shift+F12 = Find references; F2 = Rename; Ctrl+Space = completion; Ctrl+. = code actions; Ctrl+Shift+O = Go to symbol. Discoverable in Settings > Shortcuts. |
-| **LSP configuration** | **Settings > LSP** tab | FinalGUISpec §7.4.2 | Full GUI control: see below. |
+It MUST allow the user to:
+- globally enable or disable LSP
+- search and filter the full support catalog
+- enable or disable catalog entries
+- inspect source/classification badges and effective overlap resolution
+- add custom servers
+- inspect requested vs effective attach state per server and project context
 
-**Empty states:** Problems tab shows "No problems detected" when LSP active with zero diagnostics; "Open a file to see diagnostics" when no LSP server is running. Chat Problems link shows "Problems" (no number) when count is 0.
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
 
-**GUI feature behavior (inputs, outputs, edge cases, fallback when LSP unavailable):**
+Cross-surface rules:
+- File Manager and editor consume LSP state for semantic affordances
+- Search remains the owner of text search and replace-in-files
+- Problems remains the owner of aggregated diagnostics display
+- status surfaces disclose freshness, health, and effective capability state rather than hiding degraded attach conditions
 
-- **Diagnostics (list):** *Inputs:* publishDiagnostics per URI. *Outputs:* Problems tab table (file, line, message, severity, source); click → open file at location. *Edge cases:* Server crash → clear list, offer Restart; empty → "No problems detected" or "Open a file to see diagnostics". **Fallback when LSP unavailable:** No diagnostics; show "Open a file to see diagnostics" or hide/empty panel.
-- **Diagnostics (inline):** *Inputs:* same. *Outputs:* Underlines + gutter markers. *Edge cases:* Crash → clear underlines/gutter. **Fallback when LSP unavailable:** No underlines or gutter markers.
-- **LSP status:** *Inputs:* Server state (Initializing/Ready/Error). *Outputs:* Status bar text. *Edge cases:* No server → show nothing (or "No LSP" per §1.1). **Fallback when LSP unavailable:** Omit or "No LSP".
-- **Hover:** *Inputs:* (URI, position). *Outputs:* Tooltip. *Failure:* Timeout → "Timed out", discard; stale → discard. **Fallback when LSP unavailable:** No tooltip.
-- **Completion:** *Inputs:* (URI, position, trigger). *Outputs:* Inline list. *Failure:* Timeout/stale → discard. **Fallback when LSP unavailable:** No LSP completions.
-- **Signature help / Inlay hints / Code actions / Code lens:** *Outputs:* Popup, decorations, context menu/lightbulb, inline links. *Failure:* Timeout → skip. **Fallback when LSP unavailable:** No feature.
-- **Breadcrumbs / Go to symbol:** *Inputs:* documentSymbol. *Outputs:* Outline, symbol list. **Fallback when LSP unavailable:** Heuristic/regex outline (FileManager §10.1, §12.1.4).
-- **Install hint (fallback):** *Outputs:* Toast or dismissible banner. **Fallback when LSP unavailable:** Optional one-time or per-session hint to install server.
-- **Problems link (Chat):** *Inputs:* Diagnostics count. *Outputs:* "N problems" or "Problems"; click → Problems tab. **Fallback when LSP unavailable:** Show "Problems" (0) or hide; link still opens panel.
-
-**Config surface (Settings > LSP):** The GUI **must** expose all of the following in **Settings > LSP** (FinalGUISpec §7.4.2):
-
-- **Disable automatic LSP server downloads** -- Global toggle (default: off). When on, the app does not auto-download or auto-install any LSP server. Servers already on PATH or already installed are still used.
-- **Built-in servers** -- List of all built-in servers (§3.2). Each server has an **Enable** toggle; **all are on by default**. User can turn any server off individually. Per server, user can **configure**: **Environment variables** (key-value), **Initialization options** (key-value or JSON sent in LSP `initialize`).
-- **Custom LSP servers** -- Add / edit / remove custom servers. Each custom entry: **Name** (id), **Command** (array of strings), **Extensions** (comma-separated or list), and optionally **Environment variables** and **Initialization options**. **Edit** and **Remove** per row. Same schema as OpenCode (`command`, `extensions`, `env`, `initialization`).
-- **Code lens** -- Toggle to show/hide code lens in the editor (default: on). FinalGUISpec §7.18.
-- **Custom LSP server validation:** When adding or editing a custom server: (1) **Command** must be non-empty (at least one string; trim whitespace). If empty, show inline error "Command is required" and disable Save/Apply. (2) **Extensions** must be non-empty (at least one extension). If empty, show "At least one file extension is required" and disable Save/Apply. (3) **Name** (id) must be unique among custom servers; if duplicate, show "Name already used" and disable Save/Apply. Saving or applying with invalid fields is not allowed.
-- **Initialization options (JSON):** When the user edits **Initialization options** as JSON (built-in or custom servers), validate on blur or on Save. If invalid JSON: show inline error (e.g. "Invalid JSON: unexpected token at line N"), do **not** persist the value, block Save and focus the field. Do not send invalid JSON to the LSP server (use last known valid value or empty object). FinalGUISpec §7.4.2.
-
-ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md
-
-Settings are persisted in app config (redb); optional project-level overrides. See FinalGUISpec §7.4.2 for full UX detail.
-
----
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
 
 ## 14. Technical implementation (implementation guide source)
 
@@ -547,39 +469,47 @@ Settings are persisted in app config (redb); optional project-level overrides. S
 - **Decision:** LSP client and server registry live in the **same crate as the editor** (e.g. `puppet-master-rs/src/`) in a dedicated **submodule `src/lsp/`** containing:
   - `client.rs` -- LSP client wrapper (stdio transport, lifecycle, request/response).
   - `registry.rs` -- Server registry (id, extensions, root finder, spawn); reads config.
-  - `session.rs` or `server_handle.rs` -- Per-(server_id, root) process handle and state.
+  - `session.rs` or `server_handle.rs` -- Per-`(host_id, server_id, root_identity)` process handle and state.
   - `document.rs` or `sync.rs` -- Document version tracking and didOpen/didChange/didClose/didSave.
 - **Dependencies:** `lsp-types`, chosen LSP client crate (e.g. `lsp-client` or `async_lsp_client`), `tokio` for async. No need for tower-lsp unless implementing a server.
 
 ### 14.2 Core data structures (conceptual)
 
-- **LspConfig:** Global and per-server config (disabled, command, extensions, env, initialization). Loaded from app config / redb; project overrides if supported.
-- **ServerHandle:** One per (server_id, root). Fields: process handle, optional initialization options, current state (Initializing / Ready / Error), last error message. Map key: `(server_id, root_path)`.
-- **DocumentState:** Per open document: URI, version (monotonically increasing on edit), language id, optional server handle reference. Used for sync and stale-response checks.
-- **DiagnosticsCache:** Per document or per server: list of `Diagnostic` (uri, range, severity, message, source). Updated on `publishDiagnostics`; cleared when server exits or document closed.
+```text
+LspSessionKey {
+  project_id
+  host_id
+  server_id
+  root_identity
+}
 
-**Error types and handling:**
+LspSessionProjection {
+  key
+  lifecycle_state
+  freshness
+  health
+  requested_enabled
+  effective_enabled
+  capability_summary
+  restart_budget
+  last_error
+}
 
-- **Spawn failure:** Process failed to start (binary not found, permission denied, etc.). **Action:** Log error with server id and root; set ServerHandle state to **Error**; set last error message (e.g. "Failed to start rust-analyzer: command not found"); show user-visible message in status bar (e.g. "LSP Error: rust-analyzer failed to start") and optionally in a toast. Do not retry automatically; user can use "Restart language server" to retry.
-- **Init failure:** `initialize` or `initialized` handshake failed (e.g. server returned error or closed). **Action:** Log error; set state to **Error**; set last error message; clear diagnostics for that server's documents; show user-visible message in status bar. Tear down process (send shutdown/exit if possible, then close stdin). Do not retry automatically; user can Restart.
-- **Transport error:** Broken pipe, read/write error, or invalid JSON on stdio. **Action:** Log error; set state to **Error**; clear diagnostics for that server; show "LSP Error: connection lost" in status bar; tear down process. Offer "Restart language server" or trigger restart with backoff per policy below.
+DocumentBinding {
+  document_id
+  path
+  version
+  host_id
+  root_identity
+  attached_servers[]
+}
+```
 
-**Shutdown (order of operations):**
-
-1. Send `shutdown` request to server; wait for `shutdown` response with a **timeout** (e.g. **5 s**). If timeout, log and proceed.
-2. Send `exit` notification.
-3. Close stdin (and drop write half of transport) so the server can exit.
-4. Wait for process exit (with optional short timeout); if it does not exit, kill the process.
-5. Remove ServerHandle from registry; clear DiagnosticsCache for that server's documents.
-
-**Restart backoff:**
-
-- **Policy:** Exponential backoff: 1 s → 2 s → 4 s → 8 s → ... up to **max 60 s**. After a successful request (e.g. first successful response after init), reset backoff to 1 s for the next restart. On user-initiated "Restart language server", reset backoff and attempt restart immediately (no delay).
-- **Implementation:** Store per (server_id, root): `restart_attempt_count` or `next_retry_delay`; on crash/error, schedule restart after `min(next_retry_delay, 60_000)` ms; on success after init, set `next_retry_delay = 1000`; on explicit Restart, set delay to 0 and restart now.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
 
 ### 14.3 Message flow
 
-1. **User opens file** → Editor loads buffer → Resolve (path → extension → server id → root) → If server not running for (id, root), spawn process → Initialize handshake → Send `didOpen` with content + version.
+1. **User opens file** → Editor loads buffer → Resolve (path → extension → server id → effective host/root identity) → If server not running for `(host_id, server_id, root_identity)`, spawn process → Initialize handshake → Send `didOpen` with content + version.
 2. **User edits** → Buffer content changes → Increment version; **debounce** (e.g. 100 ms) → Send `didChange` (incremental if supported) with version.
 3. **Server sends publishDiagnostics** → Client receives → Update DiagnosticsCache for that URI → Notify UI (main thread) → Problems tab and gutter update.
 4. **User hovers** → Editor sends (uri, position) → Client sends `textDocument/hover` (with timeout) → On response, check document version; if stale, discard → Show tooltip.
@@ -607,41 +537,49 @@ ContractRef: ContractName:Plans/LSPSupport.md
 
 ### 14.6 workspaceFolders policy (decision)
 
-- **Recommendation:** At initialize, send **only roots that have at least one open document**, capped at **10** roots. If user has no open files, send project root if single-root, else empty list. Reduces startup cost and memory; document in implementation guide. Re-initialize not required when opening a file in a new root (server per root handles that).
+- **Recommendation:** At initialize, send **only roots that have at least one open document**, capped at **10** roots. If user has no open files, send project root if single-root, else empty list. Reduces startup cost and memory; document in implementation guide. Re-initialize not required when opening a file in a new root; the matching host-aware server session handles that.
 
 ### 14.7 Virtual documents (Chat code blocks)
 
 Code blocks in Chat messages (§5.1) that are not backed by a project file use **virtual documents** so hover and go-to-definition can still call the LSP.
 
 - **URI scheme:** Use a dedicated scheme so the client and server can distinguish virtual docs from file paths. Example: `puppet-master-virtual://chat/{language_id}/{opaque_id}` where `opaque_id` is a unique id per block (e.g. UUID or message-id + block index). Language id (e.g. `rust`, `typescript`) comes from the block's language tag.
-- **Creation:** When the user focuses or hovers over a code block in a Chat message that has a known language id and the project has an LSP server for that language, create a virtual document: assign a URI, set content to the block text, and attach it to the **server for that language and the project root** (same server that would handle a file with that extension). If the block maps to a real project file (e.g. "snippet from src/main.rs"), use the real file URI instead and do not create a virtual doc.
-- **Attachment:** Virtual documents are attached to the same (server_id, root) as would be used for a real file of that language in the project. Resolve language id → server id from the registry (e.g. `rust` → rust-analyzer); use project root for that context. Send `textDocument/didOpen` with the virtual URI, language id, and content so the server has the document.
+- **Creation:** When the user focuses or hovers over a code block in a Chat message that has a known language id and the project has an LSP server for that language, create a virtual document: assign a URI, set content to the block text, and attach it to the **server for that language and the effective host/root identity for the current project context** (same session that would handle a real file with that extension). If the block maps to a real project file (e.g. "snippet from src/main.rs"), use the real file URI instead and do not create a virtual doc.
+- **Attachment:** Virtual documents are attached to the same `(host_id, server_id, root_identity)` as would be used for a real file of that language in the project. Resolve language id → server id from the registry (e.g. `rust` → rust-analyzer); resolve against the effective host context rather than assuming local project root; then send `textDocument/didOpen` with the virtual URI, language id, and content so the server has the document.
 - **Lifecycle:** Send `textDocument/didOpen` when the virtual document is "opened" (e.g. when the user first hovers or requests definition in that block). Send `textDocument/didClose` when the block is no longer needed: when the user scrolls away from that message, when the message is collapsed, or when the Chat view is closed; or after T seconds idle (e.g. 300 s) if implementing eviction by timeout. Optionally retain a bounded set of recently used virtual docs (e.g. last 5) to avoid repeated didOpen/didClose on quick hover. Do not send `didChange` for virtual docs (blocks are immutable); if the user edits the message and the block content changes, treat as a new block (new opaque_id) and close the old virtual doc.
-- **Contract for implementer:** (1) Virtual URI never points to disk; (2) one virtual doc per code block instance (same block in UI = same opaque_id); (3) didOpen is sent when the block needs LSP (hover/definition); (4) didClose is sent when the block is evicted or the view is closed; (5) hover/definition requests for that block use the virtual URI and the same (server_id, root) as for that language.
+- **Contract for implementer:** (1) Virtual URI never points to disk; (2) one virtual doc per code block instance (same block in UI = same opaque_id); (3) didOpen is sent when the block needs LSP (hover/definition); (4) didClose is sent when the block is evicted or the view is closed; (5) hover/definition requests for that block use the virtual URI and the same `(host_id, server_id, root_identity)` as for that language in the current project context.
 
 ContractRef: ContractName:Plans/LSPSupport.md
 
 ### 14.8 Registry contract (ServerSpec)
 
-The server registry is the single source of truth for which LSP servers exist and how they are started. Each entry is a **server spec** with the following contract (Rust-friendly types below are conceptual; implement using your crate's `PathBuf`, `Result`, and process handle type).
+`ServerSpec` is the canonical machine-friendly catalog record for both built-in and custom servers.
 
-**ServerSpec (conceptual):**
+Minimum fields:
+- `server_id`
+- `display_name`
+- `source_tags[]`
+- `kind` (`managed_builtin`, `managed_catalog`, `custom`)
+- `language_tags[]`
+- `file_globs[]`
+- `selection_mode`
+- `selection_family`
+- `primary_priority`
+- `supplementary_families[]`
+- `context_markers[]`
+- `capability_profile`
+- `root_rules`
+- `host_support`
+- `degraded_attach_rules`
 
-- **id:** `String` -- Unique server identifier (e.g. `"rust"`, `"eslint"`, `"slint-lsp"`). Used in config as `lsp.servers.<id>.*` and as the process key with root.
-- **extensions:** `Vec<String>` -- File extensions this server handles (e.g. `[".rs"]`, `[".ts", ".tsx"]`). Used to match an opened file to a server (see §3.6 for primary vs supplementary).
-- **root_finder:** `fn(file_path: &Path) -> Option<PathBuf>` -- Given the **currently opened file path** (absolute), returns the project root for this server, or `None` if no root is found (server will not be started for that file). Implementation: take the parent directory of `file_path`, then walk upward until a directory matching the rule for this server id (§3.5) is found; return `Some(dir)` or, when the table specifies "else file's directory", return the file's directory when no marker is found.
-- **spawn:** `fn(root: &Path, config: &LspServerConfig) -> Result<ProcessHandle, SpawnError>` -- Starts the LSP server process with **cwd = root** and config overrides (command, env, initialization). Returns a handle to the process (stdio used for JSON-RPC). Called **lazily**: only when the first document open for that **(id, root)** occurs (see below).
-- **init_options:** `Option<Value>` -- Optional JSON object sent in the LSP `initialize` request as `initializationOptions`. May be overridden by config `lsp.servers.<id>.initialization`.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
 
-**When root_finder is invoked:** On every **document open** (user opens a file in the editor), the client gets the file path, then for each server whose **extensions** match the file's extension, the client calls that server's **root_finder(file_path)**. If it returns `Some(root)`, the client considers that server a candidate for this file (subject to §3.6 primary/supplementary).
+Registry rules:
+- the effective support catalog is the deduped union of Microsoft implementor data, OpenCode catalog data, and Puppet Master overlay metadata
+- user enable/disable and custom-server settings layer on top of the catalog instead of replacing it
+- derived prose tables may be generated from this registry, but this structure remains the SSOT
 
-**When spawn is called:** **Lazy, per (id, root).** When the client needs an LSP process for a given **(server_id, root)** (e.g. to send `didOpen` for a file that resolved to that root), it looks up whether a process for **(server_id, root)** already exists. If not, it calls **spawn(root, config)** once, stores the resulting `ProcessHandle` keyed by **(server_id, root)**, and uses that process for all documents under that root for that server. If spawn fails, the client does not retry for that (id, root) until the user retries (e.g. "Restart language server") or the config changes.
-
-**Summary for implementer:** (1) Registry is a list of ServerSpec (id, extensions, root_finder, spawn, optional init_options). (2) On file open: path → extensions → for each matching server, root_finder(path) → Option<root>; then apply §3.6 to pick primary and supplementary servers. (3) For each (id, root) that must run: if no process exists, spawn(root, config) and store handle; then send initialize and didOpen. (4) One process per (server_id, root); reuse for all documents under that root for that server.
-
-ContractRef: ContractName:Plans/LSPSupport.md
-
----
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md
 
 ## 15. Implementation phases and acceptance criteria
 
@@ -715,7 +653,7 @@ No core runtime LSP behavior remains implementation-defined after this section.
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
 ## Appendix: Implementation plan checklist (single ordered list for implementers)
 
-Use this as the **single, implementation-ready checklist** an agent can follow. Cross-references: §5.1 = LSP in the Chat Window; §9.1 = Additional enhancements (optional/recommended). FinalGUISpec §7.16 = Chat, §7.20 = Bottom Panel (Problems), §7.4.2 = Settings > LSP; FileManager §10.10, §12.1.4.
+Use this as the **single, implementation-ready checklist** an agent can follow. Cross-references: §5.1 = LSP in the Chat Window; §9.1 = Additional enhancements (optional/recommended). FinalGUISpec §7.16 = Chat, §7.20 = Bottom Panel (Problems), §7.4.2 = Settings > LSP; FileManager §10.
 
 **Acceptance (done when):** Each Phase 1-4 item is done when: (1) **Prerequisites:** App builds with lsp-types + chosen client crate; config schema and keys exist in storage. (2) **Phase 1:** Opening a file with a matching server spawns the server; diagnostics appear in Problems tab and gutter; hover and completion work with timeout/stale discard; status bar shows server state. (3) **Phase 2:** Go to definition, Find references, Rename, Format work; code actions apply via FileSafe; code lens invokes; Settings > LSP lists all servers and custom entries with validation. (4) **Phase 3:** Assistant/Interview context includes diagnostic summary (capped 10 files, 50 diagnostics); @ symbol includes LSP workspace/symbol; code blocks in Chat support hover and click-to-definition; Problems link in Chat footer opens Problems tab. (5) **Phase 4:** Optional gate, evidence snapshot, subagent bias, and Chat/Interview enhancements implemented per §9.1 or explicitly deferred and documented.
 
@@ -736,7 +674,7 @@ Use this as the **single, implementation-ready checklist** an agent can follow. 
 
 ### Phase 2: Editor (navigation and editing)
 
-- [ ] Implement textDocument/definition (Go to definition); F12 or Ctrl+Click opens definition in File Editor. Fallback: heuristic/index (FileManager §12.1.4).
+- [ ] Implement textDocument/definition (Go to definition); F12 or Ctrl+Click opens definition in File Editor. Fallback: heuristic/index (FileManager §10.2).
 - [ ] Implement textDocument/codeAction; show context menu or lightbulb; apply via workspace/applyEdit through FileSafe.
 - [ ] Implement textDocument/codeLens; render actionable links above symbols; support invoke (e.g. run test).
 - [ ] Implement textDocument/signatureHelp when cursor in call; show popup with signature and parameter highlight.
@@ -745,9 +683,9 @@ Use this as the **single, implementation-ready checklist** an agent can follow. 
 - [ ] Implement textDocument/references (Find references); add References panel or inline list in bottom panel; shortcut Shift+F12; click opens file at location.
 - [ ] Implement textDocument/rename and textDocument/prepareRename (Rename symbol); F2; show preview; apply via workspace/applyEdit (FileSafe).
 - [ ] Implement textDocument/formatting and textDocument/rangeFormatting (Format document / Format selection); shortcut e.g. Shift+Alt+F; apply via workspace/applyEdit.
-- [ ] Use documentSymbol (and workspace/symbol) for breadcrumbs and Go to symbol (FileManager §10.1, §10.9). Fallback: regex outline §12.1.4.
+- [ ] Use documentSymbol (and workspace/symbol) for breadcrumbs and Go to symbol (FileManager §10.1, §10.2). Fallback: regex outline §10.1.
 - [ ] Request timeout and cancellation; discard or re-request on stale document version. Per-server enable/disable: honor lsp.<id>.disabled and lsp: false. Settings > LSP per FinalGUISpec §7.4.2.
-- [ ] Server lifecycle: spawn on first file open for (server, root); restart on crash with backoff. Bridge pattern: custom command can be stdio↔TCP bridge (e.g. Godot); document for users.
+- [ ] Server lifecycle: spawn on first file open for `(host_id, server_id, root_identity)`; restart on crash with backoff. Bridge pattern: custom command can be stdio↔TCP bridge (e.g. Godot); document for users.
 
 ### Phase 3: Chat LSP (§5.1)
 
@@ -756,7 +694,7 @@ Use this as the **single, implementation-ready checklist** an agent can follow. 
 - [ ] **Code blocks in messages:** Code blocks in assistant/user messages support LSP hover (tooltip) and click-to-definition (e.g. Ctrl+Click); use virtual document or real file URI when block maps to project file; definition opens in File Editor.
 - [ ] **Problems link from Chat:** Chat footer or message area offers link or badge (e.g. "N problems") that opens Problems panel (FinalGUISpec §7.20) filtered to project or context.
 - [ ] **Optional:** When user has @'d files, show compact hint (e.g. "2 errors in @'d files") with click-through to Problems or first error.
-- [ ] Fallback when LSP unavailable: @ symbol uses text-based or indexed symbol search (FileManager §12.1.4); code blocks no hover/definition; omit diagnostics from context.
+- [ ] Fallback when LSP unavailable: @ symbol uses text-based or indexed symbol search (FileManager §10.2); code blocks no hover/definition; omit diagnostics from context.
 
 ### Phase 4: Optional (§9.1)
 

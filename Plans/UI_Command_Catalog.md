@@ -30,18 +30,26 @@ ContractRef: Primitive:UICommand, ContractName:Contracts_V0.md#UICommand
 ## 2. Canonical command IDs
 ### 2.0A Promoted Section 15 command families
 
-The command catalog MUST include stable IDs for the following families:
-ContractRef: UICommand:cmd.project.switch_active_tab, UICommand:cmd.project.open_in_new_workspace_tab, UICommand:cmd.workspace_tab.create, UICommand:cmd.workspace_tab.close, UICommand:cmd.chat.open_thread_context_details, UICommand:cmd.browser.share_with_agent, UICommand:cmd.browser.revoke_share_with_agent, UICommand:cmd.dev.start_session, UICommand:cmd.dev.stop_session, UICommand:cmd.catalog.install_item, UICommand:cmd.catalog.update_item, UICommand:cmd.catalog.remove_item, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
-- project switching and project open-in-new-workspace-tab
-- workspace tab create/close/reopen/move/focus
-- detached window open/reattach/close for supported surfaces
-- branch-from-restore and branch-open
-- thread context detail activation and compaction
-- browser open/focus/detach/share-with-agent/revoke-share
-- dev session start/stop/restart/show-output/show-ports
-- catalog install/update/remove/enable/disable/apply-later
+The command catalog normalizes Search, file-tree actions, Source Control diff/review, and chat restore handoff into stable command families.
 
-These IDs are canonical runtime commands, not informal action labels.
+Required families:
+- `cmd.search.*`
+- `cmd.file.*`
+- `cmd.source_control.*`
+- `cmd.git.*` diff/review commands listed below
+- `cmd.chat.add_file_reference`
+- `cmd.chat.revert`
+- `cmd.chat.rewind`
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md
+
+Family rules:
+- Search commands own persistent Search-panel behavior only; they do not replace command-palette navigation or semantic LSP navigation.
+- `cmd.file.*` covers file-tree actions only; it does not absorb terminal or chat-owned commands.
+- `cmd.chat.revert` and `cmd.chat.rewind` remain distinct commands with non-overlapping semantics.
+- Git diff/review commands mutate repository state and MUST NOT be described as editor undo.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/LSPSupport.md
 
 ### 2.0 Command entry contract (doc-level)
 Every command listed below MUST define:
@@ -289,20 +297,25 @@ Rules:
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
 
 #### Chat message action commands
-| Command ID | Payload | Domain event(s) | UI surface(s) |
-|---|---|---|---|
-| `cmd.chat.copy_message` | `{ thread_id, message_id }` | no persisted domain event | Message hover row |
-| `cmd.chat.edit_last_user_message` | `{ thread_id, message_id }` | layout/UI state only | Message hover row, composer |
-| `cmd.chat.resend_last_user_message` | `{ thread_id, message_id }` | runtime/thread rewind plus normal run-start events | Message hover row |
 
-Rules:
-- browser split remains a layout action rather than a first-class `Open in Browser Split` command
-- capture commands create removable composer chips and do not auto-send a hidden message
-- `cmd.browser.take_over` defaults to pausing the agent when the user chooses the default takeover path
-- a paused automation browser remains `automation_session` until `cmd.browser.promote_to_normal_browsing` succeeds
-- `cmd.chat.resend_last_user_message` rewinds/discards later generated work after that user message and then replays the message; it is not a transport retry alias
+| Command ID | Parameters | Behavior |
+|---|---|---|
+| `cmd.chat.copy_message` | `{ thread_id, message_id }` | Copy the rendered message content. |
+| `cmd.chat.delete_message` | `{ thread_id, message_id }` | Delete a user-authored message where allowed by policy. |
+| `cmd.chat.retry_message` | `{ thread_id, message_id }` | Re-run the selected failed/cancelled assistant turn. |
+| `cmd.chat.rewind` | `{ thread_id, target_message_id }` | Rewind conversation history only; does not restore files. |
+| `cmd.chat.revert` | `{ thread_id, target_message_id? }` | Restore persisted file mutations from one assistant turn; omitted `target_message_id` resolves to the latest assistant turn in the thread with persisted file mutations. |
+| `cmd.chat.add_file_reference` | `{ project_id, thread_id?, path, line_range? }` | Insert a visible file reference chip into the composer. File-only in MVP; folder references are out of scope. |
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md
+
+Revert rules:
+- when the resolved assistant turn touched multiple files, `cmd.chat.revert` reverts the whole turn across all affected files
+- after a successful revert, affected editors refresh from the canonical mutation pipeline
+- `cmd.chat.rewind` MUST NOT be used as a file-restore alias
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
 ### 2.7 Chat slash commands (reserved)
 
 Reserved Assistant Chat slash commands use stable canonical UI command IDs.
@@ -317,7 +330,7 @@ Reserved Assistant Chat slash commands use stable canonical UI command IDs.
 | `cmd.chat.compact_context` | `/compact` | `{ thread_id }` | `context.compaction.started`, `context.compaction.completed` | Assistant chat |
 | `cmd.chat.stop` | `/stop` | `{ thread_id? }` | stream stop / run stop behavior | Assistant chat |
 | `cmd.chat.resume` | `/resume` | `{ thread_id? }` | runtime recovery or resume action | Assistant chat |
-| `cmd.chat.rewind` | `/rewind` | `{ thread_id, target_message_id? }` | thread rewind UI / runtime action | Assistant chat |
+| `cmd.chat.rewind` | `/rewind` | `{ thread_id, target_message_id }` | thread rewind UI / runtime action | Assistant chat |
 | `cmd.chat.revert` | `/revert` | `{ thread_id, target_message_id? }` | restore/revert workflow | Assistant chat |
 | `cmd.chat.share` | `/share` | `{ thread_id, format? }` | share/export flow | Assistant chat |
 | `cmd.chat.settings` | `/settings` | `{}` | navigation only | Settings panel |
@@ -360,22 +373,71 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and
 ---
 ### 2.8A Side-panel and artifacts navigation commands
 
-Cross-surface navigation commands remain domain-readable wrappers.
+#### Search commands
 
-Canonical examples are:
-- `cmd.project.open`
-- `cmd.chat.focus_thread_context_details`
-- `cmd.artifacts.show_in_usage`
-- `cmd.artifacts.show_in_ledger`
-- `cmd.orchestrator.open_in_source_control`
+| Command ID | Parameters | Behavior |
+|---|---|---|
+| `cmd.search.show` | `{ project_id, focus?: "query" | "replace" | "results" }` | Reveal/focus the Search side panel. |
+| `cmd.search.find_in_files` | `{ project_id, query?, scope? }` | Run or re-run find-in-files in the Search panel. |
+| `cmd.search.replace_in_files` | `{ project_id, query?, replacement?, scope? }` | Run replace preview/apply flow in the Search panel. |
+| `cmd.search.open_result` | `{ project_id, result_id, disposition?: "current_tab" | "new_tab" | "split" }` | Open a Search result through the canonical file-open path. |
+| `cmd.search.next_result` | `{ project_id }` | Move to the next result row. |
+| `cmd.search.previous_result` | `{ project_id }` | Move to the previous result row. |
+| `cmd.search.set_scope` | `{ project_id, scope }` | Change include/exclude or logical scope selection. |
+| `cmd.search.toggle_flag` | `{ project_id, flag: "regex" | "case_sensitive" | "whole_word" }` | Toggle a search option. |
+| `cmd.search.replace_selected` | `{ project_id, result_id }` | Apply the replacement to one selected match/result. |
+| `cmd.search.replace_all` | `{ project_id, query_session_id }` | Apply all currently approved replacements for the active query session. |
 
-Rules:
-- wrapper commands stay public and readable
-- wrapper commands declare normalization metadata rather than inventing ad hoc route payloads
-- deprecated aliases are modeled distinctly from stable wrappers
-- the catalog does not require a large public `cmd.nav.*` family to achieve route consistency
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Crosswalk.md
+Search rules:
+- Search commands are side-panel scoped and MUST preserve query-session state instead of acting like transient palette commands.
+- remote queries and replaces use the effective remote host context; they MUST surface stale/degraded/unavailable state explicitly instead of silently falling back to local execution.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/LSPSupport.md
+
+#### File-tree action commands
+
+| Command ID | Parameters | Behavior |
+|---|---|---|
+| `cmd.file.new_file` | `{ project_id, parent_path }` | Create a new file under the selected directory. |
+| `cmd.file.new_folder` | `{ project_id, parent_path }` | Create a new folder under the selected directory. |
+| `cmd.file.rename` | `{ project_id, path, new_name }` | Rename a file or folder. |
+| `cmd.file.delete` | `{ project_id, paths[] }` | Delete one or more selected nodes after confirmation. |
+| `cmd.file.copy_full_path` | `{ project_id, path }` | Copy the absolute path to the text clipboard. |
+| `cmd.file.copy_relative_path` | `{ project_id, path }` | Copy the project-relative path to the text clipboard. |
+| `cmd.file.copy_nodes` | `{ project_id, paths[] }` | Copy one or more nodes into the workspace-node clipboard. |
+| `cmd.file.cut_nodes` | `{ project_id, paths[] }` | Arm one or more nodes for move into the workspace-node clipboard. |
+| `cmd.file.paste_nodes` | `{ project_id, destination_path }` | Paste nodes using the shared validation/conflict engine. |
+| `cmd.file.open_with` | `{ project_id, path, target: "source_editor" | "image_viewer" | "workspace_preview" | "detached_preview" | "diff_review" }` | Open the file using an explicit target. |
+| `cmd.file.save_local_copy` | `{ project_id, path }` | Export a file or folder to a user-chosen local destination. |
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileSafe.md
+
+File-tree rules:
+- the workspace-node clipboard is distinct from the system text clipboard
+- cross-authority paste is blocked rather than silently converted into export/import
+- `cmd.terminal.show` remains the canonical `Open in Terminal` target and is not redefined under `cmd.file.*`
+- `cmd.file.open_with` MUST NOT expose `system_default` in MVP
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+#### Source Control diff/review commands
+
+| Command ID | Parameters | Behavior |
+|---|---|---|
+| `cmd.source_control.show` | `{ project_id, subview?: "changes" | "history" | "graph" | "worktrees" | "branches_stash" }` | Reveal Source Control and optionally select a subview. |
+| `cmd.source_control.switch_subview` | `{ project_id, subview }` | Switch Source Control subview without leaving the side panel. |
+| `cmd.git.open_diff` | `{ project_id, repo_id, path, compare_origin? }` | Open diff/review for a file. |
+| `cmd.git.diff_set_compare_target` | `{ project_id, diff_session_id, compare_target }` | Change compare baseline/target. |
+| `cmd.git.diff_search` | `{ project_id, diff_session_id, query }` | Search within the active diff/review surface. |
+| `cmd.git.stage_hunks` | `{ project_id, diff_session_id, hunks[] }` | Stage selected hunks. |
+| `cmd.git.unstage_hunks` | `{ project_id, diff_session_id, hunks[] }` | Unstage selected hunks. |
+| `cmd.git.discard_hunks` | `{ project_id, diff_session_id, hunks[] }` | Discard selected hunks after confirmation. |
+| `cmd.git.conflict_apply_resolution` | `{ project_id, diff_session_id, strategy }` | Apply structured conflict resolution to the result buffer. |
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/Wiring_Matrix.md
+
 ## References
 - `Plans/Contracts_V0.md#UICommand`
 - `Plans/GitHub_API_Auth_and_Flows.md`

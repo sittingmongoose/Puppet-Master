@@ -96,20 +96,61 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan
 
 ### A.2 Changes
 
-The `Changes` subview owns staged, unstaged, untracked, and conflicted files, per-file diff pivot, bulk stage/unstage/discard, AI-assisted commit grouping/message help, commit/amend, and upstream sync state.
+The `Changes` subview is the Source Control owner for day-to-day file mutation review.
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileManager.md
+It MUST present:
+- unstaged files
+- staged files
+- untracked files
+- conflicted files
+- file-level diff entrypoints
+- hunk-level Git actions
+- conflict-review entrypoints
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+Default compare targets:
+
+| Origin | Default compare target |
+|---|---|
+| unstaged file | `index <-> working tree` |
+| staged file | `HEAD <-> index` |
+| untracked file | `empty <-> working tree` |
+| conflicted file | `base`, `ours`, `theirs`, `result` |
+
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+Rules:
+- hunk stage/unstage/discard are Git mutations, not editor undo
+- diff-local search is owned by the diff/review surface and MUST NOT be routed through project Search
+- conflict review uses explicit base/ours/theirs/result context and structured resolution actions
+- tree badges and editor markers consume Source Control projections but do not replace Source Control ownership
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/FileSafe.md
 
 ### A.3 History and Graph
 
-The `History` and `Graph` subviews are MVP scope, not later polish.
+`History` and `Graph` are MVP subviews of Source Control.
 
-Required behavior:
-- history lists commits for the active repo/worktree/branch
-- graph shows branch lineage, ahead/behind/diverged state, and selected-commit detail
-- both views can pivot into diff, changed files, compare target selection, and worktree overlays
+`History` owns:
+- commit list and filters
+- commit detail
+- changed-file pivots
+- commit-to-parent compare defaults
 
-ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md
+`Graph` owns:
+- lineage visualization
+- branch ancestry inspection
+- commit selection handoff into History or diff/review
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md
+
+Rules:
+- history compare defaults use `selected commit <-> first parent`
+- opening a file from commit history preserves the history compare origin for downstream review surfaces
+- package/lane/run lineage may appear as metadata, but Git lineage remains the canonical grouping axis
+
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 
 ### A.4 Worktrees
 
@@ -434,41 +475,32 @@ ContractRef: PolicyRule:no_secrets_in_storage, Invariant:INV-002
 
 ### C.3 Remote Project Context
 
-When a project is configured to use an SSH remote, the following rules MUST apply:
+A remote-mode project is a first-class project context bound to a remote host and remote path.
 
-ContractRef: ContractName:Plans/WorktreeGitImprovement.md, PolicyRule:Decision_Policy.md§2
+Remote-mode rules:
+- file browsing, file mutation, git operations, terminal launches, Search execution, Source Control projections, LSP execution, and provider-side project tools all run against the remote host context
+- remote-mode projects MUST NOT silently fall back to local checkout, local git, local shell, local Search, or local LSP execution
+- UI surfaces may retain stale snapshots while disconnected, but they must label them accurately and block new host-required mutations when the remote context is unavailable
 
-**Git Panel:**
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/storage-plan.md
 
-- The status bar working folder MUST display `user@host:remote/path`.
-  ContractRef: PolicyRule:Decision_Policy.md§2
-- All `git` commands MUST be executed on the remote via SSH subprocess:
-  `ssh [-p <port>] [-J <jump>] <user>@<host> "cd <remote_folder> && git <args>"`.
-  MUST NOT run `git` locally for remote-mode projects.
-  ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/WorktreeGitImprovement.md
+Shared remote-state vocabulary:
 
-**File Manager:**
+| Axis | Values | Meaning |
+|---|---|---|
+| `freshness` | `current`, `refreshing`, `stale` | Whether the projection reflects current host state |
+| `health` | `healthy`, `degraded`, `unavailable` | Whether the underlying host/service path is functioning |
+| `write_availability` | `writable`, `pending_write`, `blocked`, `read_only` | Whether mutations may currently succeed |
 
-- The file tree MUST show the remote filesystem. File listing MUST use SFTP or an
-  SSH `find`/`ls` pipeline; the choice is implementation-defined (deterministic default:
-  SFTP when available, SSH pipeline as fallback).
-  ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/FileManager.md
-- File edits MUST be applied on the remote (write via SFTP or heredoc over SSH).
-  MUST NOT create a local checkout for remote-mode projects.
-  ContractRef: PolicyRule:Decision_Policy.md§2
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Wiring_Matrix.md
 
-**Terminal:**
+Connection-loss rules:
+- on unexpected disconnect, Puppet Master performs one bounded auto-retry
+- if that retry does not recover the host context, the UI exposes an explicit `Reconnect` action
+- local unsaved editor buffers may continue to exist, but they are disclosed as local recovery state rather than as confirmed remote writes
+- Search, Source Control, Problems, and LSP may continue to show stale snapshots while new operations are blocked or degraded
 
-- The local terminal tab MUST open an SSH session to the remote; no local shell MUST be
-  opened for remote-mode projects.
-  ContractRef: PolicyRule:Decision_Policy.md§2
-
-**Agents and execution:**
-
-- Puppet Master agents MUST run on the remote machine, not locally, in remote mode.
-  ContractRef: PolicyRule:Decision_Policy.md§2
-
----
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
 
 ### C.4 Tool & Provider Execution on Remote
 
@@ -737,52 +769,22 @@ ContractRef: PolicyRule:Decision_Policy.md§2, Invariant:INV-003, ContractName:P
 
 ## E. UI Command IDs Reserved by This Document
 
-All new UICommand IDs defined by this spec MUST be added to `Plans/UI_Command_Catalog.md`
-before implementation. IDs inherited from the existing catalog are marked *(existing)*.
+Source Control and remote project flows reserve the following command IDs:
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, Invariant:INV-007, Invariant:INV-012
+| Command ID | Purpose |
+|---|---|
+| `cmd.source_control.show` | Reveal the Source Control side panel, optionally selecting a subview |
+| `cmd.source_control.switch_subview` | Switch Source Control subviews within the side panel |
+| `cmd.git.open_diff` | Open file diff/review |
+| `cmd.git.diff_set_compare_target` | Change diff baseline/target |
+| `cmd.git.diff_search` | Search within diff/review |
+| `cmd.git.stage_hunks` | Stage selected hunks |
+| `cmd.git.unstage_hunks` | Unstage selected hunks |
+| `cmd.git.discard_hunks` | Discard selected hunks |
+| `cmd.git.conflict_apply_resolution` | Apply a structured conflict-resolution action |
+| `cmd.remote.reconnect` | Retry reconnect for the active remote-mode project context |
 
-| Command ID | Section | Args schema (keys only) | Expected events / notes |
-|---|---|---|---|
-| `cmd.github.connect` | §B.1, §D.1, §D.3 | `{}` | *(existing)* device-code flow |
-| `cmd.github.disconnect` | §B.1 | `{}` | *(existing)* token removal |
-| `cmd.git.stage` | §A.2, §A.4 | `{ paths: string[] }` | no persisted domain event (index update) |
-| `cmd.git.unstage` | §A.2, §A.4 | `{ paths: string[] }` | no persisted domain event (index update) |
-| `cmd.git.discard` | §A.2 | `{ paths: string[] }` | no persisted domain event (working-tree restore) |
-| `cmd.git.diff_open` | §A.3 | `{ path: string }` | no persisted domain event (UI panel open) |
-| `cmd.git.diff_toggle_mode` | §A.3 | `{ mode: "side_by_side" \| "unified" }` | no persisted domain event (UI state toggle) |
-| `cmd.git.commit` | §A.4 | `{ message: string, body?: string, amend?: boolean }` | `git.commit.completed` |
-| `cmd.git.push` | §A.4 | `{ remote?: string, branch?: string }` | `git.push.completed` or `git.push.failed` |
-| `cmd.git.pull` | §A.4 | `{ strategy?: "rebase" \| "merge" }` | `git.pull.completed` or `git.pull.failed` |
-| `cmd.git.sync` | §A.4 | `{}` | pull then push events |
-| `cmd.git.fetch` | §A.4 | `{}` | no persisted domain event (remote ref update) |
-| `cmd.git.branch_switch` | §A.4 | `{ branch: string, stash?: boolean, discard?: boolean }` | `git.branch.switched` |
-| `cmd.git.branch_create` | §A.4 | `{ name: string, from?: string }` | `git.branch.created` |
-| `cmd.git.stash_push` | §A.4 | `{ message?: string }` | `git.stash.pushed` |
-| `cmd.git.stash_list` | §A.4 | `{}` | no persisted domain event (UI dropdown populate) |
-| `cmd.git.stash_pop` | §A.4 | `{ index: integer }` | `git.stash.popped` or `git.stash.conflict` |
-| `cmd.github.pr_list` | §B.2 | `{}` | no persisted domain event (API fetch + cache) |
-| `cmd.github.pr_detail` | §B.2 | `{ pr_number: integer }` | no persisted domain event (API fetch + cache) |
-| `cmd.github.issue_list` | §B.2 | `{}` | no persisted domain event (API fetch + cache) |
-| `cmd.github.actions_list` | §B.3 | `{}` | no persisted domain event (API fetch + cache) |
-| `cmd.github.actions_run_detail` | §B.3 | `{ run_id: integer }` | no persisted domain event (API fetch) |
-| `cmd.github.actions_job_expand` | §B.3 | `{ job_id: integer }` | no persisted domain event (UI expand) |
-| `cmd.github.actions_view_logs` | §B.3 | `{ job_id: integer }` | no persisted domain event (log fetch) |
-| `cmd.github.actions_download_log` | §B.3 | `{ run_id: integer }` | no persisted domain event (file download) |
-| `cmd.ssh.remote_add` | §C.1 | `{}` | `ssh.remote.added` |
-| `cmd.ssh.remote_edit` | §C.2 | `{ id: string }` | `ssh.remote.updated` |
-| `cmd.ssh.remote_remove` | §C.2 | `{ id: string }` | `ssh.remote.removed` |
-| `cmd.ssh.remote_test` | §C.2 | `{ id: string }` | `ssh.remote.test_result` |
-| `cmd.ssh.remote_set_active` | §C.2 | `{ id: string }` | `ssh.remote.active_changed` |
-| `cmd.project.add_existing` | §D.1 | `{ path?: string, ssh_remote_id?: string, ssh_path?: string }` | `project.added` |
-| `cmd.project.new_local` | §D.2 | `{ name: string, parent_path: string, init_git?: boolean, preset?: string }` | `project.created` |
-| `cmd.project.new_github_repo` | §D.3 | `{ name: string, description?: string, private: boolean, ... }` | `project.created`, `git.clone.completed` |
-| `cmd.project.open` | §D.1, §D.2, §D.3 | `{ project_id: string }` | no persisted domain event (navigation) |
-| `cmd.project.chain_wizard_open_deferred` | §D.1, §D.2, §D.3 | `{ project_id: string, wizard_id: string, default_intent: string, project_path: string, remote_repo_ref?: object, deferred_wizard_payload_ref?: string }` | `wizard.opened`, `wizard.deferred_payload.loaded` |
-
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, Invariant:INV-007, Invariant:INV-011, Invariant:INV-012, Gate:GATE-010
-
----
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FinalGUISpec.md
 
 ## F. redb Configuration Keys Reserved by This Document
 

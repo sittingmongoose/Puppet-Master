@@ -12,7 +12,7 @@
 ## Topic / Scope
 
 - Investigate a **debug mode analogous to Cursor’s**: fast loop from failure → structured context (logs, stacks, locations) → assisted diagnosis/edits, without turning this ledger into a product spec.
-- Framed for **Puppet Master rewrite / planning** work (exact product surface TBD by research).
+- Framed for **Puppet Master rewrite / planning** work across Assistant chat, shared tool/tool-permission infrastructure, runtime artifacts, browser/debug surfaces, and PM-managed remote-mode execution.
 - **User intent (refined in chat):** user **points PM at a debug target** — e.g. **local app, dev server, website,** or other runnable surface — and expects a **Cursor-like** loop (hypotheses → evidence from that target → fix in workspace). **Also** wants **Copilot-style** affordances to **feed the chat agent structured info** (session/telemetry snapshot attach), including for **PM’s own** agent run when that helps.
 
 ## Objective
@@ -25,6 +25,16 @@
 - Ledger is **execution memory only** — not canonical, not cited in planning docs.
 - Research mode: **no edits to** `Plans/*.md` planning documents from this thread; steward/packetize stages own those updates.
 - Do not treat this file as a draft planning document.
+
+## Current completeness verdict (2026-03-22 final audit pass)
+
+- The operative design in this ledger is now **implementation-ready at the planning level**.
+- No remaining product/architecture gaps should force reconciliation or implementation to invent primary behavior for Debug Mode.
+- Remaining work after this pass is:
+  - translating these decisions into canonical planning docs
+  - tuning numeric defaults during implementation/prototyping
+  - optional future enhancements explicitly marked later as non-blocking follow-ons
+- Earlier exploratory sections such as **Initial gaps** and **Historical candidate fixes** remain in the ledger for research continuity, but the **authoritative current defaults** are the later sections beginning with **1) Proposed implementation-ready shape** and the closure sections added below.
 
 ## Key Facts and Findings
 
@@ -39,7 +49,7 @@
 - **Repo pointers (targeted, non-exhaustive):**
   - `Plans/FileManager.md`: **presets** tie into **run/debug** and toolchains (dependency ordering with LSP/editor work); debug is part of the broader workbench story, not a free-floating panel.
   - Related research (`w-20260319-030558` ledger, not canonical): themes include **Debug Console / Output / Problems** following **dev-session / terminal context**, **build/debug integration** as a sparse area, and **remote run/debug deferred** behind remote-edit MVP — relevant if PM’s debug story touches remote or SSH workflows.
-  - Derived storage-plan shards mention **JSONL mirror** and **`logsearch` / “why did this fail”** style retrieval — **possible** alignment for a future “debug/diagnostics” retrieval plane (treat as hint until reconciled into hand-authored plans).
+  - Derived storage-plan shards mention **JSONL mirror** and **`logsearch` / “why did this fail”** style retrieval — historical hint toward a future “debug/diagnostics” retrieval plane (treat as hint until reconciled into hand-authored plans).
 - **Competitive / OSS landscape (web + docs pass, Mar 2026 — not vendor truth forever):**
   - **Few public clones** of Cursor’s full loop (**temp app instrumentation → dedicated local collector in IDE → user repro → auto cleanup**). Most tools split the problem across chat, tests, or observability.
   - **GitHub Copilot / VS Code — orthogonal “debug”:** [Agent Debug Log](https://code.visualstudio.com/docs/copilot/chat/chat-debug-view) + **Chat Debug view** instrument **the Copilot session** (tool calls, prompts, OTLP export, `/troubleshoot`) — **not** your running app via injected logs. Valuable as a **second product axis** (“debug the assistant”).
@@ -68,7 +78,7 @@
 
 ### Verification pass — architecture constraints confirmed (2026-03-22)
 
-- **Chat/runtime model separation is already real:** `Plans/Run_Modes.md` and `Plans/assistant-chat-design.md` confirm that `Ask`, `Plan`, `Deep Plan`, and `Agent` are chat-facing labels or overlays over canonical runtime modes `ask | plan | regular | yolo`. Implication: a PM “debug” experience should most likely be modeled as a **workflow overlay and/or target/evidence package**, not as a brand-new runtime mode. If PM exposes a visible `Debug` picker, it still needs to normalize into the existing runtime mode family.
+- **Chat/runtime model separation is already real:** `Plans/Run_Modes.md` and `Plans/assistant-chat-design.md` confirm that `Ask`, `Plan`, `Deep Plan`, and `Agent` are chat-facing labels or overlays over canonical runtime modes `ask | plan | regular | yolo`. Implication: a PM “debug” experience should be modeled as a **workflow overlay and target/evidence package**, not as a brand-new runtime mode. If PM exposes a visible `Debug` picker, it still needs to normalize into the existing runtime mode family.
 - **One tool registry already spans PM surfaces:** `Plans/Tools.md` defines a **central tool registry** for built-in, MCP, provider, custom, and skill-backed tools, with shared permissions and eventing. Implication: **debug adapters/evidence collectors should plug into that registry** and be available to Assistant, Interview, Orchestrator, Crew/subagents, etc. — not invented as a chat-only side system.
 - **Web/debug substrate already exists in PM docs:** `Plans/Section15_MVP_Promoted_Features_Spec.md`, `Plans/Permissions_System.md`, `Plans/UI_Command_Catalog.md`, `Plans/storage-plan.md`, and `Plans/Runtime_Artifacts_Panel.md` already define most of the **browser-backed debug path**:
   - `automation_session` is explicitly for **testing, verification, debugging, and other live automation**
@@ -86,9 +96,11 @@
 - **Debug-capable tools are platform-wide capabilities:** the browser automation/testing path, tracers/logging/debugging tools, log inspection, and related evidence tools are **not chat-mode-exclusive**. Any PM agent surface (for example Orchestrator) may use them when relevant under the shared tool registry and permission model.
 - **Debug Mode is still an explicit Assistant chat mode:** in the Assistant chat window, **Debug Mode** should appear as a deliberate user choice alongside the other chat modes. When the user chooses it, they describe the problem and the assistant agent and/or subagents should run the evidence-first debugging workflow using the shared debug-capable toolchain.
 - **This resolves the earlier tension between “global tools” and “chat mode”:** Debug Mode is the **chat entry posture and workflow contract** for Assistant conversations, while the tools themselves remain **cross-surface PM capabilities**.
-- **Implication for reconciliation:** `Plans/assistant-chat-design.md` likely needs to grow from the current visible chat mode set (`Ask`, `Agent`, `Plan`, `Deep Plan`) to include **Debug Mode** explicitly, while `Plans/Run_Modes.md` can still keep runtime posture separate if Debug Mode is modeled as a chat/workflow overlay rather than a new execution-posture enum.
+- **Implication for reconciliation:** `Plans/assistant-chat-design.md` needs to grow from the current visible chat mode set (`Ask`, `Agent`, `Plan`, `Deep Plan`) to include **Debug Mode** explicitly, while `Plans/Run_Modes.md` can still keep runtime posture separate because Debug Mode is modeled as a chat/workflow overlay rather than a new execution-posture enum.
 
-## Gaps / Problems Identified
+## Initial gaps / problems identified (historical; resolved below)
+
+These were the starting seams from the early audit. They are preserved for research continuity, but they are **not** the current blocker list. Later sections in this ledger resolve the operative design defaults.
 
 - **Primary failure domain** still unknown: Rust tests, long-running agent/daemon, Tauri/UI, integration tests, provider round-trips, etc.
 - **Operator model** unclear: human-first (read + assist) vs agent-first (drives reruns and instrumentation).
@@ -98,9 +110,9 @@
 - **Debug target taxonomy** not specified: **local process**, **URL + browser**, **mobile**, **remote env**, **no repo** — each needs different **evidence adapters** and **permission** stories.
 - **Current PM specs do not define a visible attach path for tool-emitted debug evidence:** browser capture is explicit-user-attach only; agent/session traces and runtime bundles need a bounded, user-visible debug attach model if they are to enter chat automatically or semi-automatically.
 - **Debug identity model is incomplete:** PM already has `terminal_session_id`, `dev_session_id`, `browser_session_id`, and DAP-style debug identity, but the work item has not yet decided whether it needs a higher-level `investigation` / `bundle` identity to group evidence across those existing anchors.
-- **Mode taxonomy risk:** PM’s current chat/runtime model strongly suggests **overlay + target/evidence model**, while the original request phrased this as a possible **fifth chat mode**. That needs explicit reconciliation so UI labels, compact labels, runtime normalization, and permission posture do not drift apart.
+- **Mode taxonomy risk:** PM’s current chat/runtime model strongly suggests **overlay + target/evidence model**, while the original request also framed this as a **fifth chat mode**. That needed explicit reconciliation so UI labels, compact labels, runtime normalization, and permission posture did not drift apart.
 
-## Candidate Fixes / Design Directions
+## Historical candidate fixes / design directions
 
 - **A — Cursor-parity “instrumentation loop”:** policy + UI for temporary logs, local sink, explicit “repro now” handoff, cleanup pass. *Pros:* strong for heisenbugs. *Cons:* highest trust/safety/review surface; needs clear diff visibility and rollback.
 - **B — Test/build-first debug:** structured `cargo test` / build failure objects, maps to paths, optional verbosity. *Pros:* narrow, auditable, no code mutation. *Cons:* weak for runtime-only failures.
@@ -134,7 +146,7 @@
 
 Recommendation:
 - PM should expose **Debug Mode** as the umbrella workflow/mode across all three planes
-- PM should **share infrastructure** across all three planes where possible (tool registry, artifacts, permissions, identities)
+- PM should **share infrastructure** across all three planes through the shared tool registry, artifacts, permissions, and identity models already defined in PM
 - **All agents keep access to the same tools at any time** under the shared tool registry and permission model; Debug Mode is **not** an exclusive capability gate
 - **Debug Mode is specifically an explicit Assistant chat mode choice**
 - Debug Mode should be treated as an **evidence-first investigation posture**, not a weak suggestion
@@ -167,7 +179,7 @@ Recommendation:
   - `Debug`
   - `Plan`
   - `Deep Plan`
-- Existing items such as `Interview`, `BrainStorm`, and `Crew` likely need to remain **secondary workflows / overlays / launch paths** rather than peers in the same primary mode strip, or Assistant mode IA will stay internally contradictory.
+- For Debug Mode reconciliation, treat `Interview`, `BrainStorm`, and `Crew` as **secondary workflows / overlays / launch paths** rather than peers in the primary Assistant mode strip.
 - Entering **Debug Mode** should create a clear **execution-capable** posture, not a read-only posture. It is not another planning variant.
 - If no project is open, Debug Mode should degrade to only those target kinds that remain meaningful without a project (for example `agent_session` or `imported_bundle`) and explicitly disclose what is unavailable.
 - Assistant-chat reconciliation should add:
@@ -239,7 +251,7 @@ Important caveat:
 
 - **Debug Mode** should refer to the assistant-led investigation workflow.
 - Classical DAP debugging should remain a supported adapter/surface, but it should not own the umbrella word “Debug” in user-facing copy once Debug Mode ships.
-- Reconciliation should likely rename the classical surface/tab/copy to **Debugger** or **DAP Debugger** wherever needed to avoid ongoing ambiguity.
+- Reconciliation should rename the classical surface/tab label to **Debugger** and may use **DAP Debugger** in explanatory copy where extra precision helps.
 
 ### 2) Core object model
 
@@ -276,13 +288,23 @@ Recommended high-level investigation states:
 - `resolved`
 - `attention_required`
 - `blocked`
+- `failed`
 - `failed_cleanup`
 - `cancelled`
+- `superseded`
 
 Important rules:
 - one investigation may span multiple concrete surfaces (for example browser + dev session + agent-session trace)
 - the user-facing status should always surface the **current phase**, the **primary target**, and whether **temporary instrumentation is active**
 - cleanup failure is not the same as analysis failure; it needs a separate state because the app bug might be fixed while temporary debug mutations still remain
+- final-state mapping is deterministic:
+  - `resolved` pairs with `stop_reason_code = investigation.resolved_verified` or `investigation.analysis_only_completed`
+  - `attention_required` pairs with `stop_reason_code = investigation.attention_required` plus `attention_required_reason_code`
+  - `blocked` pairs with `stop_reason_code = investigation.blocked` plus shared `blocked_reason_code`
+  - `failed` pairs with `stop_reason_code = investigation.verification_failed | investigation.no_repro_observed | investigation.budget_exhausted | investigation.runtime_unavailable | investigation.target_unreachable | investigation.adapter_unavailable`
+  - `failed_cleanup` pairs with `stop_reason_code = investigation.cleanup_failed`
+  - `cancelled` pairs with `stop_reason_code = investigation.cancelled_by_user`
+  - `superseded` pairs with `stop_reason_code = investigation.superseded`
 
 ### 3) Adapter model
 
@@ -298,7 +320,7 @@ Important rules:
 - **Agent-session adapter**
   - entry points: “why did the agent fail / what did it do / troubleshoot this run”
   - evidence source should reuse existing runtime-artifact types such as **`tool_llm_trace`**, **`context_snapshot`**, **`failed_attempts`**, and **`subagent_lineage`**
-  - should support bounded attach to the thread plus later export/import where productized
+  - must support bounded attach to the thread plus later export/import under the same investigation model
 - **DAP adapter**
   - classical debugger stays a separate UI/surface
   - investigation flows may attach bounded debugger state (stack, frame, variable summary, stopped location) when available, but this does not redefine DAP as the same feature as runtime investigation
@@ -308,7 +330,7 @@ Important rules:
 
 ### 3.1) Global debug-capable tool groups
 
-To reconcile “global tools” with “Debug Mode prefers them”, PM likely needs a concept equivalent to **debug-capable tool groups / tags** inside the central tool registry. Suggested groups:
+To reconcile “global tools” with “Debug Mode prefers them”, PM should use **debug-capable tool groups / tags** inside the central tool registry. Suggested groups:
 - `debug.target_discovery`
 - `debug.browser_automation`
 - `debug.logs_and_console`
@@ -330,7 +352,7 @@ Rules:
 Recommended automatic escalation order:
 1. Reuse existing evidence already available from the target or prior failed run.
 2. Use non-invasive readback and capture (logs, console, network, Problems, Output, traces already available).
-3. Enable/install non-invasive tracers, wrappers, or debugger attachments where possible.
+3. Enable/install non-invasive tracers, wrappers, or debugger attachments when the active target and policy permit them.
 4. Apply temporary instrumentation patches only when prior tiers are insufficient.
 5. Apply tentative durable fix.
 6. Re-run automated verification.
@@ -385,20 +407,59 @@ Recommended preparation outputs:
 - restart / relaunch requirements
 - cleanup obligations for any temporary provisioning work
 
+### 3.5) Target discovery, auto-selection, and workspace-binding rules
+
+Debug Mode needs deterministic target binding because the user expects the default flow to be fully automated.
+
+Target-selection precedence:
+1. **explicit user-chosen target** in the current debug request
+2. **existing investigation target** when resuming or continuing the same investigation
+3. **workspace-bound live target** already linked to the current project/thread:
+   - active `dev_session_id`
+   - active workspace preview / `automation_session`
+   - active DAP session
+4. **attached imported bundle** when the current request is explicitly about supplied evidence rather than a live target
+5. **agent_session** when the request is explicitly about PM’s own run/session behavior or no project-backed target is available
+
+Tie-breaking rules:
+- if exactly one candidate exists at the highest precedence tier, PM selects it automatically
+- if multiple candidates exist at the same highest precedence tier and one is already linked to the current thread/investigation, reuse that one
+- if multiple same-tier candidates remain and no deterministic winner exists, enter `attention_required` with `attention_required_reason_code = target_selection_required`; PM must not guess
+
+Workspace-binding rules:
+- a target is **workspace-bound** when PM can map it to the current project identity through one of:
+  - `project_id`
+  - `dev_session_id`
+  - workspace preview/browser identity
+  - DAP session identity
+  - explicit user-confirmed project binding
+- durable fixes are allowed only for workspace-bound targets or for PM-owned surfaces such as `agent_session`
+- arbitrary URL investigations start as **diagnose/verify-only browser investigations**
+- an arbitrary URL may upgrade into a durable-fix investigation only after PM binds it to a workspace-backed target
+
+Arbitrary-URL binding precedence:
+1. matching workspace preview/browser subject already open for the current project
+2. matching active dev-session port/base URL for the current project
+3. explicit user confirmation that the URL belongs to the current workspace/project
+
+If no workspace binding can be established:
+- PM may still reproduce, capture, analyze, export, and produce an implementation suggestion
+- PM must not apply a durable fix to project files under the fiction that the arbitrary URL is already bound
+
 ### 4) Evidence and attach contract
 
 - **Tool/runtime evidence should remain bounded at source**
   - browser actions return bounded summaries
   - session/debug traces attach bounded snapshots rather than raw unbounded logs by default
 - **Persistent evidence should reuse the existing runtime-artifact pipeline**
-  - likely grouped under `investigation_id` using existing artifact kinds first
+  - grouped under `investigation_id` using existing artifact kinds first
   - open/focus actions must route back to canonical browser/dev/debugger/session identities
 - **Debug mode does not monopolize these artifacts/tools**
   - any agent surface may produce or consume them when relevant
   - Debug Mode changes the **default operating behavior** toward structured evidence loops and proactive use of the debug-capable toolchain, but it does not limit the agent to only those tools
 - **Chat attach must stay visible**
   - PM must not violate the current “no hidden browser capture injection” rule
-  - when an investigation is active, PM can materialize a visible **Investigation Context** card/chip/panel state (name TBD) representing the current bounded debug bundle
+  - when an investigation is active, PM materializes a visible **Investigation Context** card/chip/panel state representing the current bounded debug bundle
   - attach/removal/revocation should be explicit and user-visible even if the active run can directly consume tool results during the same turn
 
 ### 4.1) Automated evidence ingestion in Debug Mode
@@ -413,9 +474,45 @@ Recommended model:
 - Debug Mode creates a visible **live investigation bundle** whose contents update automatically as tools emit bounded evidence
 - the active debug run may consume that live bundle automatically without waiting for manual per-capture attach clicks
 
+### 4.1.1) Live Investigation Context contract
+
+Canonical user-visible term: **Investigation Context**.
+
+Exactly one active Investigation Context may be attached to a given Assistant Debug thread at a time.
+
+Required Investigation Context header fields:
+- `investigation_id`
+- `primary_target`
+- `current_phase`
+- `final_or_intermediate_state`
+- `stop_reason_code?`
+- `attention_required_reason_code?`
+- `blocked_reason_code?`
+- `active_instrumentation`
+- `last_updated_at_utc`
+
+Required per-item states inside the Investigation Context:
+- `active`
+- `redacted`
+- `revoked`
+- `blocked`
+- `expired`
+- `omitted`
+
+Attach/revoke rules:
+- in-scope tool-emitted evidence for the active investigation enters the Investigation Context as `active` unless redaction/truncation forces another state
+- `revoked` items remain in artifact/audit history but are excluded from future prompt assembly
+- `blocked` and `expired` items never serialize as successful prompt attachments
+- `omitted` items are counted in summary metadata and export manifests but do not auto-enter prompt assembly
+
+Lifecycle rules:
+- reopening a thread with an active or interrupted investigation restores the Investigation Context from persisted investigation state
+- completed investigations reopen as **historical Investigation Context** records by default; they do not auto-resume execution
+- the Investigation Context must always show whether the linked runtime identities are currently healthy, stale, or unavailable
+
 ### 4.2) Investigation bundle contents
 
-Likely minimum bundle components:
+Required live-bundle components:
 - target metadata
 - current phase/status
 - latest failure summary
@@ -528,19 +625,25 @@ Recommended `attention_required_reason_code` enum:
 
 Recommended auxiliary field:
 - `budget_kind?` with values:
+  - `target_discovery_attempts`
+  - `prepare_attempts`
   - `instrumentation_passes`
+  - `invasive_instrumentation_passes`
   - `fix_candidates`
   - `repro_attempts`
   - `verification_attempts`
   - `package_or_tool_installs`
   - `browser_scenario_branches`
   - `no_new_evidence_loops`
+  - `active_temporary_instrumentation_lanes`
+  - `cleanup_retries`
+  - `attention_required_resume_cycles`
   - `elapsed_wall_time`
 
 Rules:
 - when a flow is waiting for a human assist but can continue in the same investigation after that assist, state = `attention_required` with `attention_required_reason_code`
 - when automation truly cannot continue until a prerequisite changes, state = `blocked` with the shared `blocked_reason_code`
-- when a budget trips, state may be `failed` or `attention_required` depending on whether user recovery is meaningful, but `stop_reason_code` MUST still be `budget_exhausted` with `budget_kind`
+- when a budget trips, state may be `failed` or `attention_required` depending on whether user recovery is meaningful, but `stop_reason_code` MUST still be `investigation.budget_exhausted` with `budget_kind`
 - when a cleanup residue remains after the app issue appears fixed, use lifecycle state `failed_cleanup` and `stop_reason_code = investigation.cleanup_failed`
 
 ### 4.4) Export / import bundle recommendation
@@ -737,6 +840,20 @@ Recommended recovery actions from `attention_required`:
 - switch target/adapter
 - cancel the investigation
 
+### 4.6.1) Resume, reopen, and interrupted-investigation behavior
+
+Resume/reopen rules:
+- `attention_required`: do not auto-resume execution; reopen the Investigation Context with the current reason code and allowed recovery actions
+- `blocked`: render the canonical blocked-state UI and do not auto-execute until the prerequisite changes
+- `failed_cleanup`: reopen directly into cleanup-recovery state; PM must not start a new mutation-capable debug loop against the same target until the residue is resolved, rolled back, or explicitly promoted into the durable fix lane
+- `resolved`, `failed`, `cancelled`, and `superseded`: reopen as historical records only unless the user explicitly starts a new investigation or resumes cleanup on a retained residue state
+
+Session revalidation rules on reopen:
+- PM must revalidate linked `dev_session_id`, `browser_session_id`, DAP session identity, and remote authority before resuming execution
+- if the linked runtime identity is stale but recoverable, enter `attention_required` with `session_reconnect_required`
+- if the linked runtime identity no longer exists and no deterministic rebinding target exists, enter `attention_required` with `target_selection_required`
+- PM must not silently mint a different target identity on reopen just to continue execution
+
 ### 5) MVP boundary recommendation
 
 **In scope for MVP**
@@ -775,6 +892,25 @@ Recommended exclusions for MVP:
 
 Recommended fallback:
 - when a remote investigation lacks required remote prerequisites or loses SSH continuity, move to `attention_required` / `blocked` with explicit recovery actions rather than silently retargeting locally
+
+### 5.2) Cross-investigation ownership and conflict policy
+
+Because debug-capable tools are shared across PM surfaces, PM needs a deterministic ownership rule whenever multiple investigations touch the same mutable target.
+
+Ownership rules:
+- only one **mutation-capable** active investigation may own a given `project_id` at a time
+- only one active investigation may own temporary instrumentation for a given workspace tree / `dev_session_id` / `browser_session_id`
+- non-owning investigations may still consume existing evidence/artifacts in read-only fashion
+
+Conflict handling:
+- if a second investigation tries to start mutation-capable work against an owned target, PM must either:
+  - keep it read-only, or
+  - explicitly supersede the current owner
+- superseding transitions the older owner to lifecycle state `superseded`
+- PM must not allow two active investigations to add overlapping temporary instrumentation to the same target concurrently
+
+Cross-surface rule:
+- this ownership policy applies equally to Assistant Debug, Orchestrator, and any other PM agent surface that uses the shared debug-capable toolchain
 
 ### 6) MVP instrumentation contract
 
@@ -819,6 +955,37 @@ Rules:
 - durable fixes and temporary instrumentation must remain separate artifact/diff lineages
 - cleanup failure must remain visible even if the app issue itself appears fixed
 
+### 6.1.2) Per-scope cleanup and rollback rules
+
+Each instrumentation scope needs deterministic cleanup behavior:
+
+- **env/config activation**
+  - revert the exact temporary flag/toggle/value PM introduced
+  - if the change lived only in process env, cleanup occurs by stopping/restarting without the temporary env
+  - if PM edited a config file, treat that edit under the same rollback rules as `temporary source patch instrumentation`
+
+- **ephemeral tool install**
+  - uninstall only tooling/packages that PM installed during the current investigation
+  - never uninstall pre-existing user tooling just because PM used it
+  - if deterministic uninstall is unavailable, leave explicit residue, emit the uninstall/recovery steps, and enter `failed_cleanup`
+
+- **wrapper/launcher instrumentation**
+  - revert the exact wrapper/launch-command/env deltas introduced for the investigation
+  - if a wrapper script or launcher file was edited, restore from restore point or generated revert patch
+
+- **temporary source patch instrumentation**
+  - remove only the temporary instrumentation hunks/markers added for the investigation
+  - if a durable fix overlaps the same file/hunk, PM must preserve the durable fix lane while stripping the temporary instrumentation lane
+  - if PM cannot separate the two safely, it must stop and require explicit recovery/review rather than silently dropping one
+
+- **debugger/profiler attach instrumentation**
+  - detach the temporary attach/profiler session
+  - if detach fails but no durable workspace mutation remains, keep the failure localized to the runtime/session state and do not pretend cleanup succeeded
+
+Shared rules:
+- cleanup state is tracked per instrumentation lane, not just per investigation
+- any residual item that survives cleanup must be listed in `cleanup_summary.residual_items[]`
+
 ### 6.2) Durable-fix vs temporary-debug mutations
 
 Debug Mode must keep at least three mutation classes distinct:
@@ -845,6 +1012,28 @@ Debug Mode should try to verify and clean up automatically:
 - if verification succeeds, remove temporary instrumentation immediately
 - if verification fails, either escalate the evidence strategy or explicitly stop with remaining instrumentation state surfaced
 - if cleanup fails, enter `failed_cleanup` rather than pretending success
+
+### 6.4.1) Interruption, cancel, and disconnect semantics
+
+Interruption rules when temporary mutations are active:
+- **user cancels investigation**
+  - transition immediately to `cleaning_up`
+  - if cleanup succeeds, final state = `cancelled`
+  - if cleanup fails or residue remains, final state = `failed_cleanup`
+
+- **investigation is superseded by another owner**
+  - older investigation transitions to `cleaning_up`
+  - if cleanup succeeds, final state = `superseded`
+  - if cleanup fails or residue remains, final state = `failed_cleanup`
+
+- **PM/agent process crash or app restart while temporary mutations may still be active**
+  - on restore, reopen as `attention_required` unless cleanup can resume immediately and deterministically
+  - before any new mutation-capable step, PM must either resume cleanup, roll back to restore point, or explicitly convert surviving temporary mutations into the durable fix lane
+
+- **browser/runtime/SSH disconnect while temporary mutations are active**
+  - if the owning target can be revalidated, resume cleanup or the investigation under the same `investigation_id`
+  - if the owning target cannot currently be revalidated, enter `attention_required` with `session_reconnect_required`
+  - after cleanup retries are exhausted, unresolved residue becomes `failed_cleanup`
 
 ### 6.4.2) Verification heuristics by adapter
 
@@ -926,7 +1115,7 @@ Common rules for all adapters:
 Recommended extra field:
 - `heuristic_version = debug_verify.v1` so future tuning can evolve without making older exported investigation bundles ambiguous
 
-### 6.4.1) Cleanup guarantee default
+### 6.4.3) Cleanup guarantee default
 
 Recommended MVP cleanup default:
 - **automatic strip/cleanup is the normal path**
@@ -944,17 +1133,17 @@ Required cleanup behavior:
 Important nuance:
 - if the user intentionally wants to keep a temporary mutation, PM must convert it into the **durable fix lane** instead of silently leaving it mislabeled as temporary instrumentation
 
-### 6.5) Feature completeness areas still needing explicit spec text
+### 6.5) Canonical reconciliation payload (not remaining design gaps)
 
-The major areas still needing fuller packet-ready detail are:
-- the exact Assistant mode-strip and overlay model once Debug Mode is added
-- the concrete `investigation_id` / live bundle schema and lifecycle
-- target discovery and auto-selection rules
-- the auto-ingestion/visible-bundle contract for evidence
-- detailed per-scope instrumentation cleanup and rollback semantics across env/install/source-patch scopes
-- final event/schema placement for Debug-specific enums and bundle records across canonical docs
-- exact target-discovery heuristics by stack/framework/runtime family
-- exact file-by-file reconciliation changes for Assistant chat, Run Modes, Permissions, Runtime Artifacts, Section 15, and Final GUI copy
+The following items are **already resolved above** and must be translated into canonical docs during reconciliation:
+- Assistant mode-strip and Debug overlay model
+- `investigation_id` / live Investigation Context schema and lifecycle
+- target discovery, auto-selection, and workspace-binding rules
+- auto-ingestion / visible Investigation Context contract for evidence
+- per-scope instrumentation cleanup and rollback semantics
+- Debug-specific enums and bundle-record placement in canonical event/storage docs
+- target-discovery heuristics and adapter selection defaults
+- file-by-file canonical doc changes for Assistant chat, Run Modes, Permissions, Runtime Artifacts, Section 15, and Final GUI copy
 
 ### 7) Implementation-ready acceptance criteria for reconciliation
 
@@ -968,6 +1157,12 @@ The major areas still needing fuller packet-ready detail are:
 - Debug Mode can drive browser/dev-session/assistant-trace/DAP-backed workflows without restricting those tools to Debug Mode only
 - Debug Mode causes the agent to actively prefer evidence-producing debug flows first, while still allowing the broader shared toolset when needed
 - if temporary instrumentation is used, PM discloses it, verifies it, and either removes it cleanly or leaves an explicit rollback/recovery state
+- target binding is deterministic; PM either auto-selects a single highest-precedence target or enters `attention_required` rather than guessing
+- interruption/cancel/disconnect behavior with active temporary mutations is explicit and does not leave residue as a silent side effect
+- cross-investigation ownership prevents concurrent overlapping mutation-capable debug loops against the same target
+- machine-readable `stop_reason_code`, `attention_required_reason_code`, and `budget_kind` are persisted and surfaced
+- auto-resolution requires `verification_strength = strong`; weak verification cannot silently produce success
+- post-cleanup verification is required before PM can claim a clean resolved state after temporary instrumentation
 
 ### 7.1) Reconciliation checklist by file
 
@@ -1048,7 +1243,7 @@ These are candidate wording anchors reconciliation can reuse to keep terminology
 
 ## Impacted Docs
 
-- `Plans/FileManager.md` (presets, run/debug dependencies — likely touchpoint when reconciling).
+- `Plans/FileManager.md` (presets, run/debug dependencies — touchpoint when reconciling).
 - **`Plans/Section15_MVP_Promoted_Features_Spec.md` §3.18** — SSOT for **built-in browser** named actions, session classes, DevTools, capture.
 - **`Plans/rewrite-tie-in-memo.md`**, **`Plans/FinalGUISpec.md`** (reconcile stale bottom-panel / `wry` wording vs CEF/editor-tab canon).
 - **`Plans/UI_Command_Catalog.md`**, **`Plans/storage-plan.md`**, **`Plans/assistant-chat-design.md`**, **`Plans/Permissions_System.md`**, **`Plans/newtools.md`**, **`Plans/Runtime_Artifacts_Panel.md`**, **`Plans/feature-list.md`**.
@@ -1075,13 +1270,12 @@ These are candidate wording anchors reconciliation can reuse to keep terminology
 - **Recommended browser handoff model:** use explicit pause/resume inside an isolated automation session with `attention_required` for auth/manual-repro boundaries; do not support chaotic concurrent mixed steering as the MVP co-pilot model.
 - **Web-validated direction:** current agent-debugging and browser-automation guidance aligns with PM favoring redacted summary packs, bounded evidence windows, isolated session handoff, resume/audit trails, and least-privilege browser takeover rather than raw dump attachment or broad shared-session control.
 - **Recommended detail defaults:** initial budgets, stop-reason codes, attention-required reason codes, export bundle schema, export size limits, and adapter-specific verification heuristics are now specified for MVP packetization.
+- **Final audit result:** no remaining implementation-blocking product/architecture gaps remain in this ledger; downstream work is canonical-doc reconciliation plus optional tuning/future enhancements.
 
-## Open Questions / Uncertainties
+## Non-blocking follow-ons / future tuning
 
-- Top pain: **tests**, **daemon**, **desktop shell**, **LLM/tool pipeline**, or **mix**?
-- For **website** debugging: recommend MVP supports both workspace-owned preview targets and arbitrary URLs, but arbitrary-URL investigations should be explicitly capture/diagnose-first and may not offer durable-fix workflows unless bound to a workspace.
 - Future tuning after prototyping: whether initial numeric defaults need relaxing/tightening once real investigations are exercised.
-- Whether arbitrary-URL investigations should later gain a more formal path to bind themselves to a workspace/repo for durable-fix flows.
+- Future enhancement: richer arbitrary-URL-to-workspace binding UX beyond the deterministic MVP binding rules above.
 - Future expansion beyond the MVP handoff model: richer co-piloting, collaborative browser steering, or broader remote parity once the default pause/resume model proves stable.
 
 ## Packetization Notes
@@ -1102,10 +1296,10 @@ These are candidate wording anchors reconciliation can reuse to keep terminology
 ## Do-Not-Forget Details
 
 - Preserve **non-citation** rule for this ledger in downstream stages.
-- If implementing **instrumentation**, plan for **secrets in logs**, **PII**, and **diff fatigue** — likely need allowlisted log shapes or structured fields.
+- If implementing **instrumentation**, plan for **secrets in logs**, **PII**, and **diff fatigue** — use allowlisted log shapes or structured fields rather than free-form dump capture.
 - Contrast **user-visible “debug mode”** (agent mode) with **developer logging level** `debug` to avoid terminology collisions in plans and UI.
 - Competitors often **do not** replicate Cursor’s **app instrumentation + extension log sink**; they **combine** test loops, explain-error, assistant telemetry, or **external** observability — position PM clearly vs those axes.
-- **Built-in browser** is a **differentiator** for **web/debug**: plan reconciliation should tie **debug targets**, **agent browser tools**, and **attach-to-chat** payloads into one story where possible.
+- **Built-in browser** is a **differentiator** for **web/debug**: plan reconciliation should tie **debug targets**, **agent browser tools**, and **attach-to-chat** payloads into one coherent story.
 - PM already has a rule that **normal browser capture is visible and explicit**; any debug-evidence auto-feed that bypasses manual chip capture must be intentionally specified as a separate mechanism.
 - PM already has **Debug/classical debugger** language in core GUI docs; because the user still wants **Debug** as the umbrella mode, reconciliation must handle the copy and IA carefully instead of pretending the collision does not exist.
 - `dev_session_id` should remain the first candidate correlation key for process/test/dev-server debug; `terminal_session_id` remains for exact shell continuity; `browser_session_id` / `session_class` remain for web/debug evidence.
