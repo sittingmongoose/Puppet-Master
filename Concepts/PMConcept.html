@@ -4579,13 +4579,52 @@
       overflow: hidden;
     }
     .editor-gutter {
-      padding: var(--md) var(--sm);
+      padding: var(--md) 0;
       font-family: 'Consolas', monospace;
       font-size: 12px;
       color: var(--text-muted);
       text-align: right;
       border-right: 1px solid var(--border-light);
+      position: relative;
     }
+    .gutter-line {
+      display: flex;
+      align-items: center;
+      height: 18px;
+      line-height: 18px;
+      padding-right: var(--sm);
+    }
+    .gutter-marker {
+      width: 3px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-right: 4px;
+      cursor: pointer;
+      border-radius: 1px;
+    }
+    .gutter-marker.added   { background: var(--accent-lime); }
+    .gutter-marker.modified { background: var(--accent-blue); }
+    .gutter-marker.deleted  { background: var(--accent-magenta); width: 8px; height: 3px; align-self: flex-end; }
+    .gutter-marker.conflict { background: var(--accent-orange); animation: conflict-pulse 1.2s ease-in-out infinite; }
+    .gutter-marker.staged   { background: var(--accent-lime); opacity: 0.5; }
+    @keyframes conflict-pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .gutter-line-num {
+      flex: 1;
+      min-width: 20px;
+    }
+
+    /* ── Scrollbar overview / diff heat marks in minimap ── */
+    .minimap-marker {
+      position: absolute;
+      right: 2px;
+      width: 6px;
+      height: 3px;
+      border-radius: 1px;
+    }
+    .minimap-marker.mm-added   { background: var(--accent-lime); }
+    .minimap-marker.mm-modified { background: var(--accent-blue); }
+    .minimap-marker.mm-deleted  { background: var(--accent-magenta); }
+    .minimap-marker.mm-conflict { background: var(--accent-orange); }
     .editor-code {
       flex: 1;
       padding: var(--md);
@@ -7164,6 +7203,7 @@
       );
       opacity: 0.3;
       margin-left: var(--md);
+      position: relative;
     }
     
     .tab-close {
@@ -8144,7 +8184,21 @@
                 <span class="tab">main.rs <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
               </div>
               <div class="editor-area">
-                <div class="editor-gutter">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10</div>
+                <div class="editor-gutter">
+                  <div class="gutter-line"><span class="gutter-marker" title="line 1: unchanged"></span><span class="gutter-line-num">1</span></div>
+                  <div class="gutter-line"><span class="gutter-marker modified" title="line 2: modified (unstaged)" onclick="toast('Inline diff: let app = PuppetApp::new() → App::new()')"></span><span class="gutter-line-num">2</span></div>
+                  <div class="gutter-line"><span class="gutter-marker modified" title="line 3: modified (unstaged)" onclick="toast('Inline diff: app.start() → app.run().unwrap()')"></span><span class="gutter-line-num">3</span></div>
+                  <div class="gutter-line"><span class="gutter-marker" title="line 4: unchanged"></span><span class="gutter-line-num">4</span></div>
+                  <div class="gutter-line"><span class="gutter-marker" title="line 5: unchanged"></span><span class="gutter-line-num">5</span></div>
+                  <div class="gutter-line"><span class="gutter-marker added" title="line 6: added (staged)" onclick="toast('Staged addition: pub struct Dashboard')"></span><span class="gutter-line-num">6</span></div>
+                  <div class="gutter-line"><span class="gutter-marker added" title="line 7: added (staged)" onclick="toast('Staged addition: widgets field')"></span><span class="gutter-line-num">7</span></div>
+                  <div class="gutter-line"><span class="gutter-marker added" title="line 8: added (staged)" onclick="toast('Staged addition: closing brace')"></span><span class="gutter-line-num">8</span></div>
+                  <div class="gutter-line"><span class="gutter-marker" title="line 9: unchanged"></span><span class="gutter-line-num">9</span></div>
+                  <div class="gutter-line"><span class="gutter-marker conflict" title="line 10: CONFLICT (base/ours/theirs)" onclick="toast('Conflict on line 10 — click to open 3-way merge')"></span><span class="gutter-line-num">10</span></div>
+                  <div class="gutter-line"><span class="gutter-marker" title="line 11: unchanged"></span><span class="gutter-line-num">11</span></div>
+                  <div class="gutter-line"><span class="gutter-marker" title="line 12: unchanged"></span><span class="gutter-line-num">12</span></div>
+                  <div class="gutter-line"><span class="gutter-marker" title="line 13: unchanged"></span><span class="gutter-line-num">13</span></div>
+                </div>
                 <div class="editor-code" id="editorCodeTarget">fn main() {
     let app = App::new();
     app.run().unwrap();
@@ -8159,7 +8213,11 @@ impl Dashboard {
         Self { widgets: vec![] }
     }
 }</div>
-                <div class="editor-minimap"></div>
+                <div class="editor-minimap">
+                  <span class="minimap-marker mm-modified" style="top:10%; right:2px;" title="Modified lines 2-3"></span>
+                  <span class="minimap-marker mm-added" style="top:40%; right:2px;" title="Added lines 6-8"></span>
+                  <span class="minimap-marker mm-conflict" style="top:72%; right:2px;" title="Conflict on line 10"></span>
+                </div>
               </div>
             </div>
             
@@ -8179,11 +8237,19 @@ impl Dashboard {
                 </span>
               </div>
               <div class="editor-area" id="editorPane2Code">
-                <div class="editor-gutter">1<br>2<br>3<br>4</div>
+                <div class="editor-gutter">
+                  <div class="gutter-line"><span class="gutter-marker" title="line 1: unchanged"></span><span class="gutter-line-num">1</span></div>
+                  <div class="gutter-line"><span class="gutter-marker modified" title="line 2: modified (staged)" onclick="toast('Staged diff: Config::from_env() → Config::default()')"></span><span class="gutter-line-num">2</span></div>
+                  <div class="gutter-line"><span class="gutter-marker" title="line 3: unchanged"></span><span class="gutter-line-num">3</span></div>
+                  <div class="gutter-line"><span class="gutter-marker deleted" title="line 4: line deleted below (unstaged)" onclick="toast('Deleted: pub fn validate_config() -> bool { true }')"></span><span class="gutter-line-num">4</span></div>
+                </div>
                 <div class="editor-code">pub fn load_config() -> Config {
     Config::default()
 }</div>
-                <div class="editor-minimap"></div>
+                <div class="editor-minimap">
+                  <span class="minimap-marker mm-modified" style="top:30%; right:2px;" title="Modified line 2"></span>
+                  <span class="minimap-marker mm-deleted" style="top:85%; right:2px;" title="Deletion after line 4"></span>
+                </div>
               </div>
 
               <!-- Browser Tab Content (hidden until browser tab clicked) -->
@@ -12452,6 +12518,9 @@ status: completed with warnings</pre>
         ).forEach(function(el) {
           el.style.removeProperty('opacity');
           el.style.removeProperty('filter');
+        });
+        document.querySelectorAll('.pane-container').forEach(function(el) {
+          el.style.removeProperty('opacity');
         });
       }
       function clearTerminalDragVisuals() {
