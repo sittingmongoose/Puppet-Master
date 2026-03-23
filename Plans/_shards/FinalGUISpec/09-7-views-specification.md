@@ -11,14 +11,28 @@ Rules:
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Widget_System.md, ContractName:Plans/Crosswalk.md
 
 ### 7.2 Source Control
-Source Control is a narrow, compact, worktree-first panel.
+
+Source Control is the side-panel owner for Git-native repository work in the rewrite shell.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md
+
+Required subviews:
+- `Changes`
+- `History`
+- `Graph`
+- `Worktrees`
+- `Branches / Stash`
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
 
 Rules:
-- rows are concrete worktrees/branches/paths
-- package, lane, and run context appear as metadata rather than as the primary grouping axis
-- Git-native actions remain in Source Control, not in Orchestrator
+- The `Changes` subview owns staged, unstaged, untracked, and conflicted lists, compare-target defaults, per-file diff entrypoints, hunk actions, and conflict review entrypoints.
+- The `History` and `Graph` subviews are MVP and own commit browsing, changed-file pivots, commit-detail compare selection, and lineage overlays.
+- Diff-local search belongs to the Source Control diff/review surface; it is not routed through the Search side panel.
+- Package, lane, run, or remediation lineage appear as metadata where relevant, not as the primary grouping axis.
+- Git-native actions remain Source Control owned and MUST NOT be described as editor undo.
 
-ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
 
 ### 7.3 Shared route and open behavior
 Views consume the canonical navigation/source-open primitives.
@@ -102,6 +116,7 @@ Context Detail Pane inspector rules:
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
 ### 7.5 Project and attention surfaces
+
 Project cards and the attention center consume project-summary and project-attention projections.
 
 Rules:
@@ -110,3 +125,23 @@ Rules:
 - attention rows, palette opens, and cross-surface pivots resolve through the same internal route contract
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
+
+#### Search side-panel owner
+Search is the persistent project text-search and replace-in-files surface.
+
+Rules:
+- Search owns query text, replacement text, include/exclude globs, regex/case/whole-word toggles, result grouping, and replace preview/apply flow.
+- `cmd.search.show` is the canonical shortcut and command-palette entrypoint for this surface.
+- Search result opens route through the canonical open-file contract rather than through feature-local payloads.
+- File Manager search remains a local tree filter/type-ahead only.
+- LSP symbol/reference results may visually resemble Search, but their ownership and fallback rules remain LSP-specific.
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/LSPSupport.md
+
+Remote/degraded rules:
+- Search may keep prior remote results as an explicitly stale snapshot.
+- New remote queries or replace operations that need host round-trips must surface `stale`, `degraded`, or `unavailable` state explicitly instead of silently re-running locally.
+- Replace-in-files MUST respect remote write availability before presenting a success-shaped UI.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
+

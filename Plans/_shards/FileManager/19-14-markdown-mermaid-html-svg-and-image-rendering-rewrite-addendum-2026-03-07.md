@@ -26,33 +26,49 @@ Supported modes for render-capable documents:
 - **Source**: normal text editor surface.
 - **Preview**: rendered-only surface.
 - **Split**: source + rendered preview side-by-side or stacked.
-- **Detached preview**: separate window using the same PreviewSession.
-- **Open in browser panel/window**: for full HTML/browser mode and other cases where a browser-like surface is the correct UX.
+- **Detached preview**: separate window using the same `PreviewSession`.
+- **Workspace browser**: browser-capable rendered mode hosted in the editor/workspace-tab shell as `workspace_preview`.
+- **Detached browser**: browser-capable rendered mode hosted in a detached preview/browser window as `detached_preview`.
 
-Defaults:
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
-- Markdown opens in source mode by default, with preview quickly available.
-- Mermaid blocks inside Markdown render in preview mode without changing the canonical source model.
-- `.mmd` files open in Mermaid source mode with a diagram preview affordance.
-- HTML opens in source mode by default and offers rendered/browser mode as a first-class alternate surface.
+Rules:
+- HTML opens in source mode by default and offers `Open in Browser` and `Open in Detached Browser` as first-class alternates.
+- Browser split is a second-step layout action after opening into `workspace_preview`; it is not a separate open target enum.
+- `Open in browser panel/window` is retired as canonical wording.
+- Image and SVG viewing remain native where appropriate and are not forced through browser runtime ownership.
+- Switching modes never changes the canonical source buffer model.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FileSafe.md
 
 ### 14.3 Preview state model
 
-The editor/file manager owns document-side state that binds to shared PreviewSession records.
+The editor/file manager owns document-side state that binds to shared `PreviewSession` and browser-session records.
 
 Minimum per-document UI state:
-
 - `document_id`
 - `path`
 - `content_kind`
 - `source_revision`
-- `preview_session_id` (if active)
-- `preview_mode` (`none`, `inline`, `split`, `detached`, `browser_panel`)
+- `preview_subject_id`
+- `preview_session_id?`
+- `browser_session_id?`
+- `preview_mode` (`none`, `preview_only`, `preview_split`, `detached_preview`, `workspace_preview`)
 - `trust_tier`
 - `can_structured_edit_preview`
 - `last_preview_error`
-- `export_preferences` (for example, Mermaid export format/theme)
+- `export_preferences`
 - `scroll_sync_enabled`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
+
+Rules:
+- `workspace_preview` and `detached_preview` replace the stale `browser_panel` mode vocabulary.
+- Browser-session identity is separate from preview-subject identity and may outlive one visible editor tab.
+- Preview recovery restores UI intent and recent state, but it does not require a persisted live webview instance or DOM state.
+- Preview editing continues to resolve to bounded source patches through the shared buffer model.
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 ### 14.4 Source/preview edit contract
 

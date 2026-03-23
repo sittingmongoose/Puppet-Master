@@ -19,7 +19,10 @@ Canonical source: [Plans/FileManager.md](../../FileManager.md)
 - [11-7-edge-cases.md](11-7-edge-cases.md) — ## 7. Edge cases
 - [12-8-image-viewer-and-html-preview.md](12-8-image-viewer-and-html-preview.md) — ## 8. Image viewer and HTML preview
 - [13-9-tabs-editor-terminal-browser.md](13-9-tabs-editor-terminal-browser.md) — ## 9. Tabs: Editor, Terminal, Browser
-- [14-verification-ai-executable.md](14-verification-ai-executable.md) — ## Verification (AI-executable)
-- [15-13-git-status-integration.md](15-13-git-status-integration.md) — ## 13. Git Status Integration
-- [16-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md](16-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md) — ## 14. Markdown, Mermaid, HTML, SVG, and Image Rendering (Rewrite Addendum -- 2026-03-07)
-- [17-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md](17-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md) — ## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)
+- [14-10-editor-navigation-and-semantic-affordances.md](14-10-editor-navigation-and-semantic-affordances.md) — ## 10. Editor navigation and semantic affordances
+- [15-11-file-tree-actions-local-filter-and-chat-handoff.md](15-11-file-tree-actions-local-filter-and-chat-handoff.md) — ## 11. File tree actions, local filter, and chat handoff
+- [16-12-source-control-handoff-compare-and-review.md](16-12-source-control-handoff-compare-and-review.md) — ## 12. Source Control handoff, compare, and review
+- [17-verification-ai-executable.md](17-verification-ai-executable.md) — ## Verification (AI-executable)
+- [18-13-git-status-integration.md](18-13-git-status-integration.md) — ## 13. Git Status Integration
+- [19-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md](19-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md) — ## 14. Markdown, Mermaid, HTML, SVG, and Image Rendering (Rewrite Addendum -- 2026-03-07)
+- [20-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md](20-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md) — ## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)

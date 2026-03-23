@@ -1,47 +1,64 @@
 ## 15. Persistence
 
 ### 15.1 redb Schema
+
+**Shell, layout, and editor state**
+
 | Key | Content | Write Frequency |
 |-----|---------|----------------|
-| `layout:v1` | Panel dock state per panel (docked side + width, or floating position/size); center splits; bottom panel height; terminal-section dock state; detached-terminal geometry; split ratios for terminal sections. Single JSON blob for atomic read/write. | On change (debounced 300ms) |
+| `layout:v1` | Panel dock state per panel (docked side + width, or floating position/size); center splits; bottom runtime-panel height; detached-window geometry; split ratios for terminal sections. Single JSON blob for atomic read/write. | On change (debounced 300ms) |
 | `dashboard_layout:v1` | Ordered list of dashboard card IDs + grid column count | On change (debounced 300ms) |
 | `activity_bar_order:v1` | Ordered list of activity bar item IDs + separator position | On change (debounced 300ms) |
 | `theme:v1` | Current ThemeVariant enum value | On change |
 | `editor_state:v1:{project_id}` | Open tabs, active tab, scroll/cursor position per project | On change (debounced 500ms) |
-| `onboarding:v1` | Tour completion flag, first-run flags | On change |
-| `collapse_state:v1` | Per-view collapse states for collapsible sections | On change (debounced 300ms) |
-| `custom_layouts:v1` | Named custom layout definitions (up to 5) | On change |
-| `settings:v1` | All app settings and config, including terminal appearance defaults and shortcut preferences | On save |
+| `filetree_state:v1:{project_id}` | Expanded folder set, local filter text, and tree scroll position | On change (debounced 300ms) |
+| `search_panel_state.v1:{project_id}` | Search side-panel UI state: last query, replacement text, toggles, include/exclude globs, expanded groups, selected result ref, and active query session ref | On change (debounced 250ms) |
+| `project_state:v1:{project_id}` | Per-project shell snapshot: editor tabs, file-tree expansion, chat thread selection, last active side-panel occupant, active view, language badges, requested/effective LSP selection summary, last-focused Search/Source Control refs, and remote-context summary | On change (debounced 300ms) |
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md
+
+**Chat, settings, and review state**
+
+| Key | Content | Write Frequency |
+|-----|---------|----------------|
+| `settings:v1` | Durable app settings and preferences | On save |
+| `config:v1` | Full app config struct (all Settings values including permissions, shortcuts, LSP registry settings, Search defaults, and file-manager behavior) | On change (debounced 200ms) |
 | `chat_state:v1` | Unsent input text, queued messages, active thread selection | On change (debounced 200ms) |
-| `wizard_state:v1:{project_id}` | Current wizard step, form data | On change (debounced 300ms) |
-| `document_pane_state:v1:{project_id}:{page_context}` | Embedded document pane state: selected document, selected view (`document | plan_graph`), scroll/cursor state, history selection, approval stage | On change (debounced 200ms) |
-| `document_checkpoints:v1:{project_id}` | Checkpoint metadata for restorable document states (`before_multi_pass`, `after_user_edit_1`, etc.) | On checkpoint create/restore |
+| `wizard_state:v1:{project_id}` | Current wizard step and form data | On change (debounced 300ms) |
+| `document_pane_state:v1:{project_id}:{page_context}` | Embedded document-pane state: selected document, selected view, scroll/cursor state, history selection, and approval stage | On change (debounced 200ms) |
+| `document_checkpoints:v1:{project_id}` | Checkpoint metadata for restorable document states | On checkpoint create/restore |
 | `review_findings_summary:v1:{project_id}:{run_id}` | Findings summary payload for requirements/interview review runs | On review completion/update |
 | `review_approval_gate:v1:{project_id}:{run_id}` | Final approval decision state and precondition flags | On approval state change |
 | `slash_commands:v1` | Custom slash commands (application-wide) | On save |
 | `slash_commands:v1:{project_id}` | Custom slash commands (project-wide) | On save |
-| `filetree_state:v1:{project_id}` | Expanded folder paths set, scroll position | On change (debounced 300ms) |
-| `config:v1` | Full app config struct (all Settings tab values including tool permissions, cleanup, shortcuts overrides, skill permissions, and terminal settings) | On change (debounced 200ms) |
-| `projects:v1` | Project registry: list of known projects with paths, detected languages, last-opened timestamps, health status, per-project config overrides | On change |
-| `project_state:v1:{project_id}` | Per-project state snapshot: editor tabs, file tree expansion, chat thread selection, panel layout, active view, language badges, LSP server selection, and last-focused terminal section or tab refs | On change (debounced 300ms) |
-| `ssh_connections:v1` | SSH connection profiles: name, host, port, username, auth method, last-connected timestamp (passwords stored in system keychain, NOT here) | On save |
-| `debug_configs:v1:{project_id}` | Per-project run/debug configurations (launch.json equivalent), breakpoints (file + line + condition + enabled), debug adapter preferences | On save |
-| `catalog_index:v1` | Cached catalog index: item list with name, version, category, description, installed flag. Timestamp of last refresh. | On catalog refresh |
-| `sync_history:v1` | Last export date, last import date, backup file paths | On export/import |
-| `browser_state:v1` | Browser tab URLs, bookmarks, history (last 100 entries), pinned tabs | On change (debounced 500ms) |
-| `terminal_state:v1` | GUI-facing projection of per-project terminal workspace state: ordered terminal sections, terminal tabs, pane tree, labels, pin state, selected pane refs, dock/detach presentation, linked dev-session refs, recovery banners, bounded transcript snapshot refs, and command-block summary refs. It never implies live PTY continuity and never stores secrets. | On change (debounced 300ms) |
-| `sound_prefs:v1` | Sound effects master toggle, per-event toggles, volume level | On change |
-| `hotreload_state:v1:{project_id}` | Dev-session reload state, build command, watched paths, linked terminal-session refs, and last-known output or ports linkage | On change |
+| `projects:v1` | Project registry: known projects with paths, detected languages, last-opened timestamps, health status, and per-project overrides | On change |
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
+
+**Preview, browser, recovery, LSP, and remote keys**
+
+| Key | Content | Write Frequency |
+|-----|---------|----------------|
+| `preview_state.v1:{project_id}:{preview_subject_id}` | Preview UI state keyed by document/artifact subject: mode, attached surface, export prefs, scroll sync, and last error | On change (debounced 300ms) |
+| `preview_source_artifact.v1:{project_id}:{artifact_id}` | Artifact-backed preview metadata and source linkage | On change |
+| `browser_session_state.v1:{project_id}:{browser_session_id}` | Browser session state: session class, workspace tab, preview subject, requested/effective runtime and capabilities, blocked actions, profile scope, restore policy, and last error | On change (debounced 300ms) |
+| `browser_profile_state.v1:{project_id}:{profile_scope}` | Browser history/bookmarks and project-scoped profile state | On change (debounced 500ms) |
+| `editor_unsaved_buffer.v1:{project_id}:{document_id}` | Recoverable local unsaved buffer snapshot, capture metadata, host/path identity, and write-availability state at capture time | On change (debounced 500ms) |
+| `search_query_state.v1:{project_id}:{query_session_id}` | Query-session snapshot: query, replacement, scope, result snapshot ref, freshness, health, and last error | On query update/complete |
+| `lsp_session_state.v1:{project_id}:{host_id}:{server_id}:{root_identity}` | Host-aware LSP session projection: state, freshness, health, restart metadata, capability summary, and last error | On lifecycle change |
+| `lsp_diagnostics_snapshot.v1:{project_id}:{host_id}:{server_id}:{root_identity}` | Diagnostics snapshot ref(s), counts, capture time, freshness, and health for the owning host-aware LSP session | On diagnostics update |
+| `ssh_remotes/{id}` | Saved SSH remote record: nickname, host, port, user, auth method, remote folder, jump host, and last test metadata. No secrets. | On save |
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
 Normative mapping notes:
-- the canonical durable review/bundle contract is owned by `Plans/storage-plan.md` (`bundle.{bundle_id}`, `doc_registry.{bundle_id}`, `notes_index.{bundle_id}`, `note.{bundle_id}.{note_id}`, `document_pane_state.{bundle_id}`, `final_review_output.{bundle_id}`)
-- GUI-facing keys in this table are logical or UI projections and MUST NOT become competing SSOTs with incompatible field shapes
-- `terminal_state:v1` remains the GUI projection boundary; canonical terminal record families and transcript rules are owned by `Plans/storage-plan.md`
-- findings-summary and final-gate restoration MUST resolve back to the canonical bundle or review records defined in `Plans/storage-plan.md`
+- `ssh_remotes/{id}` replaces the stale flat `ssh_connections:v1` concept in GUI-facing persistence summaries.
+- `preview_state.v1:*`, `preview_source_artifact.v1:*`, `browser_session_state.v1:*`, and `browser_profile_state.v1:*` replace the stale single-blob `browser_state:v1` model.
+- Search and LSP rows in this section are GUI-facing projections and MUST resolve back to owner-doc contracts in `Plans/storage-plan.md`, `Plans/FileManager.md`, and `Plans/LSPSupport.md`.
+- `editor_unsaved_buffer.v1:*` stores local unsaved buffer state only and MUST NOT imply that a remote write succeeded.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md#3.9, ContractName:Plans/Crosswalk.md#3.10
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md
+
 ### 15.2 seglog Projections (for Usage)
 
 - Usage events (tokens, cost, platform, tier, session, thread_id) appended to seglog

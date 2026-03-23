@@ -51,11 +51,11 @@ puppet-master-rs/
 |   |   +-- file_editor.slint         # NEW
 |   |   +-- agent_activity.slint      # NEW
 |   |   +-- not_found.slint
-|   +-- panels/                       # Detachable panel content
+|   +-- panels/                       # Detachable panel content and shared runtime/browser hosts
 |   |   +-- chat_panel.slint
 |   |   +-- file_manager_panel.slint
-|   |   +-- bottom_panel.slint          # Terminal/Problems/Output/Ports/Debug tabs plus browser-adjacent panes
-|   |   +-- browser_panel.slint         # NEW - Webview host + URL bar + bookmarks
+|   |   +-- bottom_panel.slint          # Terminal/Problems/Output/Ports/Debug tabs plus runtime-adjacent panes
+|   |   +-- browser_panel.slint         # NEW - Shared webview host reused by workspace-tab and detached browser surfaces
 |   |   +-- debug_panel.slint           # NEW - DAP debug UI (variables, call stack, breakpoints)
 |   +-- windows/                      # Secondary windows
 |       +-- floating_panel.slint

@@ -1,0 +1,47 @@
+## 10. Editor navigation and semantic affordances
+### 10.1 Breadcrumbs and outline
+Breadcrumbs are the editor-owned orientation surface above the active file.
+
+Rules:
+- the breadcrumb path is `file > symbol > block` when semantic structure is available
+- LSP `documentSymbol` is the preferred owner for outline/breadcrumb structure when a server is available
+- when LSP is unavailable, the editor falls back to heuristic outline extraction for the active file rather than hiding the feature entirely
+- breadcrumb clicks route through the same open-file and reveal contract as other editor navigation actions
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 10.2 Go to symbol and semantic navigation
+`Go to symbol` is an editor/navigation feature, not a Search side-panel substitute.
+
+Rules:
+- the default scope is the active document; an explicit workspace mode may widen the query when the user chooses it
+- when LSP is available, symbol results come from `documentSymbol` and `workspace/symbol`
+- when LSP is unavailable, the fallback path is text/index/heuristic symbol search rather than a silent feature drop
+- result rows show symbol kind, path, and line and open through the canonical editor open-file contract
+- command palette may host the launcher, but persistent semantic navigation ownership stays with the editor/LSP seam
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
+
+### 10.3 Diagnostics, gutter markers, and change markers
+Inline diagnostics and change markers are editor-owned visual layers.
+
+Rules:
+- diagnostics render as underlines, gutter markers, and Problems-panel pivots
+- editor gutter and scrollbar overview are the canonical owners for staged/unstaged/conflicted marker state and review heat-map summaries
+- conflicted markers override staged/unstaged styling until resolved
+- staged and unstaged state must remain visually distinguishable when both exist for one file
+- restore/revert outcomes surface as banner/toast/audit state rather than as a new persistent heat-map class
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/assistant-chat-design.md
+
+### 10.4 Definition, references, hover, and code actions
+Semantic editor actions reuse the same document authority and mutation path as normal editing.
+
+Rules:
+- go to definition, find references, hover, completion, signature help, code actions, and code lens all operate against the active authoritative document state
+- stale or version-mismatched responses are discarded rather than patched into the UI optimistically
+- workspace edits from format/rename/code action flow through the FileSafe-backed mutation path rather than bypassing normal file mutation rules
+- no LSP feature may silently attach to a local mirror for a remote-mode project
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md
+

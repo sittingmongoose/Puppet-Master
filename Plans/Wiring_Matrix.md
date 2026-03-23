@@ -326,14 +326,20 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-ch
 This section is normative and not an example/template section.
 ## Source Control, GitHub Actions, and Docker Manager Wiring Addendum (2026-03-12)
 
-Minimum required new rows for the final packet apply:
-- `btn.panel.source_control` -> `cmd.panel.switch`
-- `btn.panel.github_actions` -> `cmd.panel.switch`
-- `btn.panel.docker_manager` -> `cmd.panel.switch`
-- Source Control subview switches -> `cmd.source_control.switch_subview`
-- worktree compare / recover / prune controls -> `cmd.git.worktree.*`
-- GitHub Actions rerun / cancel / dispatch / pin / admin CRUD controls -> `cmd.github.actions.*`
-- Docker Manager container / image / compose / build-bake / registry / kubernetes controls -> `cmd.docker.*` and `cmd.docker.k8s.*`
-- Orchestrator cross-surface pivots -> `cmd.orchestrator.open_in_source_control`, `cmd.orchestrator.open_in_github_actions`, `cmd.orchestrator.open_in_docker_manager`
+This wiring addendum also covers Search, File Manager action handoff, chat restore/file-reference actions, and host-aware LSP/remote projections because those seams now share one shell slot and one cross-surface identity model.
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/Orchestrator_Page.md
+| Surface / flow | Canonical command / route | Owner doc | Downstream consumers / notes |
+|---|---|---|---|
+| Show Search panel | `cmd.search.show` | `Plans/FinalGUISpec.md` + `Plans/UI_Command_Catalog.md` | Right-hand side panel owner for find/replace-in-files |
+| Run find/replace in files | `cmd.search.find_in_files`, `cmd.search.replace_in_files` | `Plans/UI_Command_Catalog.md` | Query-session state persists in `Plans/storage-plan.md`; remote execution rules live in `Plans/GitHub_Integration.md` |
+| Open Search result | `cmd.search.open_result` | `Plans/UI_Command_Catalog.md` | Uses shared open-file contract from `Plans/FileManager.md` |
+| File-tree actions | `cmd.file.*` | `Plans/FileManager.md` + `Plans/UI_Command_Catalog.md` | Reuse FileSafe-backed transfer/mutation path |
+| Add file to chat | `cmd.chat.add_file_reference` | `Plans/assistant-chat-design.md` | Visible composer chips; file-only in MVP |
+| Revert last agent edit | `cmd.chat.revert` | `Plans/assistant-chat-design.md` | Refreshes editors via canonical mutation pipeline |
+| Rewind chat only | `cmd.chat.rewind` | `Plans/assistant-chat-design.md` | Must not restore files |
+| Source Control subview switch | `cmd.source_control.switch_subview` | `Plans/GitHub_Integration.md` | Keeps Source Control in the right-hand side-panel slot |
+| Diff compare target / search / hunks | `cmd.git.diff_set_compare_target`, `cmd.git.diff_search`, `cmd.git.stage_hunks`, `cmd.git.unstage_hunks`, `cmd.git.discard_hunks`, `cmd.git.conflict_apply_resolution` | `Plans/GitHub_Integration.md` | Diff-local search stays Source Control owned |
+| Host-aware LSP session projection | `(host_id, server_id, root_identity)` session key | `Plans/LSPSupport.md` | Consumed by editor, Problems, status, and persistence |
+| Remote reconnect | `cmd.remote.reconnect` | `Plans/GitHub_Integration.md` | One bounded auto-retry precedes this explicit action |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md

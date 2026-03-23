@@ -1,23 +1,24 @@
 ## 18. Promoted Features (Formerly Future Considerations)
 
-All items previously listed as "future considerations" have been promoted to MVP scope and are fully specified in their respective sections:
+All items previously listed as future considerations are MVP scope and are fully specified in their owner docs:
 
 | Feature | MVP Location |
 |---------|-------------|
-| Built-in browser / click-to-context | Bottom Panel Browser tab (§7.20) |
+| Built-in browser / click-to-context | Rendering Surface Addendum + `Plans/FileManager.md` §8 and §14 |
+| Search / find in files / replace in files | Activity Bar + Command Palette boundary + Search owner contract in this doc; `Plans/UI_Command_Catalog.md` `cmd.search.*` |
 | Instant project switch | Workspace-tab project switch model (§3.4) |
 | Sound effects | UX Patterns §10.13 + Settings > General |
-| Hot reload controls | Bottom Panel Ports tab (§7.20) |
-| In-app instructions editor | File Editor instructions mode (§7.18) |
+| Hot reload controls | Runtime/dev surfaces in `Plans/assistant-chat-design.md` §22 and `Plans/FileManager.md` §14.6 |
+| In-app instructions editor | File Editor instructions mode in `Plans/FileManager.md` |
 | Additional themes / custom themes | Theme extensibility (§6.6) |
-| Language/framework auto-detection | Projects (§7.3) |
-| Catalog / one-click install | Settings > Catalog tab (§7.4.3) |
-| Sync bundle manager | Settings > Sync tab (§7.4.4) |
-| SSH remote editing | Settings > SSH tab (§7.4.5) + File Editor SSH integration (§7.18) |
-| Run/debug configurations | Bottom Panel Debug tab (§7.20) + Settings > Debug (§7.4.6) |
-| Terminal/browser tabs (pin + caps) | Bottom Panel terminal tab management (§7.20) |
+| Language/framework auto-detection and LSP-aware navigation | Project state + `Plans/LSPSupport.md` + `Plans/FileManager.md` §10 |
+| Catalog / one-click install | Settings > Catalog tab |
+| Sync bundle manager | Settings > Sync tab |
+| SSH remote editing | `Plans/GitHub_Integration.md` §C + `Plans/FileManager.md` remote buffer/search behavior |
+| Run/debug configurations | Run & Debug side-panel surface + Settings > Debug |
+| Browser/terminal tabs, pinning, and preview modes | `Plans/FileManager.md` §9 and §14 + Rendering Surface Addendum |
 
-No features are deferred. All items in this specification are MVP scope.
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/LSPSupport.md
 
----
+No features in this specification are deferred.
 

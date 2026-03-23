@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/assistant-chat-design.md",
-  "source_sha256": "71f90f0ad12277103d0cd9414eedc50f98e3a3f7b1e4f50e21aab56897d06db7",
+  "source_sha256": "b367d5a4ee9045e73444e4053a06af50efa56a915c5ac2c46a692f76851873e2",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -87,175 +87,175 @@
     {
       "dest_path": "Plans/_shards/assistant-chat-design/12-9-file-manager-ide-style-editor-and-mention.md",
       "start_line": 575,
-      "end_line": 624,
-      "segment_sha256": "7fe4f7a9be2136c9b26eed4e5cabae17f6f7a7c77483623edbfd3b930f7f1797",
+      "end_line": 602,
+      "segment_sha256": "be365f7db50f46524d9a65026ef2c5b68849586813c33ebd57b6acac339427e2",
       "heading": "## 9. File Manager, IDE-style editor, and @ Mention"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/13-10-chat-history-search.md",
-      "start_line": 625,
-      "end_line": 686,
+      "start_line": 603,
+      "end_line": 664,
       "segment_sha256": "94eb90f2d96c5462dbc8d1a8f879443a941838b2c2292ae3deeb3872f6423d7a",
       "heading": "## 10. Chat History Search"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/14-11-threads-and-chat-management.md",
-      "start_line": 687,
-      "end_line": 718,
+      "start_line": 665,
+      "end_line": 696,
       "segment_sha256": "4ab9b66061336826c026260d8d964666b5e4a8b93e65d4f0ca269282478b7c24",
       "heading": "## 11. Threads and chat management"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/15-12-context-usage-display.md",
-      "start_line": 719,
-      "end_line": 769,
+      "start_line": 697,
+      "end_line": 747,
       "segment_sha256": "1ce6a6e6e486837dfaa9734403bd9daf32e6f89729ec1ed4546a0c45c151c76e",
       "heading": "## 12. Context usage display"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/16-13-activity-transparency-search-bash-and-file-activity.md",
-      "start_line": 770,
-      "end_line": 886,
+      "start_line": 748,
+      "end_line": 864,
       "segment_sha256": "c0d86e82308c81a6a4274fa28788b43cb656c18c7e69dd246120a8caf3373c59",
       "heading": "## 13. Activity transparency: search, bash, and file activity"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/17-14-subagents-crew.md",
-      "start_line": 887,
-      "end_line": 927,
+      "start_line": 865,
+      "end_line": 905,
       "segment_sha256": "a6b0e58bd64265f133edc1899a4a65d14e54176d46c0ff79ac03171dd92c9b94",
       "heading": "## 14. Subagents & Crew"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/18-15-plan-mode-crew-mode.md",
-      "start_line": 928,
-      "end_line": 941,
+      "start_line": 906,
+      "end_line": 919,
       "segment_sha256": "b082a6cf3535f6694a97f535312c1b4fc13cdeb4c2c30247d4bec9156e23c49c",
       "heading": "## 15. Plan Mode + Crew Mode"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/19-16-interview-phase-ux-chat-surface.md",
-      "start_line": 942,
-      "end_line": 976,
+      "start_line": 920,
+      "end_line": 954,
       "segment_sha256": "8b221deeadbb75434949415cafa2d8d45cf3befbeddac59fc09aacfc3a475f93",
       "heading": "## 16. Interview Phase UX (Chat Surface)"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/20-17-context-truncation.md",
-      "start_line": 977,
-      "end_line": 1106,
+      "start_line": 955,
+      "end_line": 1084,
       "segment_sha256": "a956d0a876f5850e8522d5b861717c14560d4032233f88806b0b2e66c64359fc",
       "heading": "## 17. Context & Truncation"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/21-18-brainstorm-mode.md",
-      "start_line": 1107,
-      "end_line": 1120,
+      "start_line": 1085,
+      "end_line": 1098,
       "segment_sha256": "c44bfeedec527538260314996e62c2301b4c95247964d5bc463a19b5a36da242",
       "heading": "## 18. BrainStorm Mode"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/22-19-documentation-audience-ai-overseer.md",
-      "start_line": 1121,
-      "end_line": 1131,
+      "start_line": 1099,
+      "end_line": 1109,
       "segment_sha256": "e8eea7fe77ebe17717e46d369f8d58d2db784043bc9c8a38ac304e3adaf3b231",
       "heading": "## 19. Documentation Audience (AI Overseer)"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/23-20-references.md",
-      "start_line": 1132,
-      "end_line": 1153,
+      "start_line": 1110,
+      "end_line": 1131,
       "segment_sha256": "e84ce707b3eb9a13f11ecb3b0d0898f7d424efa084dc68b424d6efe8d9975ac9",
       "heading": "## 20. References"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/24-21-dashboard-warnings-and-calls-to-action.md",
-      "start_line": 1154,
-      "end_line": 1173,
+      "start_line": 1132,
+      "end_line": 1151,
       "segment_sha256": "209042864eff3ceb517e976a7fc7e3f6002d3e772d5b1ec63ad70fac82d9d373",
       "heading": "## 21. Dashboard Warnings and Calls to Action"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/25-22-live-testing-tools-and-hot-reload.md",
-      "start_line": 1174,
-      "end_line": 1201,
+      "start_line": 1152,
+      "end_line": 1179,
       "segment_sha256": "0e6b8f18509099b84befd9fe23dfd692abc39349b97aae9a264a3b373e8594d7",
       "heading": "## 22. Live Testing Tools and Hot Reload"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/26-23-gaps-competitive-comparison-and-enhancements.md",
-      "start_line": 1202,
-      "end_line": 1309,
-      "segment_sha256": "2215c481ad094ddbd1f5687883eb7f0b5575f7db1415886699ce93ba9fd74e68",
+      "start_line": 1180,
+      "end_line": 1280,
+      "segment_sha256": "ed62e773f247b459825a453526eefdb005460144303d7a9d452071552c9f4034",
       "heading": "## 23. Gaps, Competitive Comparison, and Enhancements"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/27-24-chat-thread-performance-virtualization-and-flicker-avoidance.md",
-      "start_line": 1310,
-      "end_line": 1362,
+      "start_line": 1281,
+      "end_line": 1333,
       "segment_sha256": "018346a671d7e8f209d93518643e5d0d9f13e2661997ce3a8d858539113e0d16",
       "heading": "## 24. Chat thread performance, virtualization, and flicker avoidance"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/28-25-context-circle-enhancements-addendum-2026-02-23.md",
-      "start_line": 1363,
-      "end_line": 1369,
+      "start_line": 1334,
+      "end_line": 1340,
       "segment_sha256": "fb75d8645866627a939ae9d2bd7f1ad2ee6357e84b64d19695d60b0f2dbd78ac",
       "heading": "## 25. Context Circle Enhancements (Addendum -- 2026-02-23)"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/29-26-per-pass-validation-modelprovider-settings-invariant-sweep.md",
-      "start_line": 1370,
-      "end_line": 1476,
+      "start_line": 1341,
+      "end_line": 1447,
       "segment_sha256": "f78237c1ca52de98b37416bdf4b52d7ee1fd2e8ebeeea31675bbd841488615b3",
       "heading": "## 26. Per-Pass Validation Model/Provider Settings (Invariant Sweep)"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/30-27-persona-control-in-assistant-chat-2026-03-06.md",
-      "start_line": 1477,
-      "end_line": 1591,
+      "start_line": 1448,
+      "end_line": 1562,
       "segment_sha256": "9357ebf4d4a82a37b152c354c3dd72a4be5297f1927597cdfab4b3fca36cd7c8",
       "heading": "## 27. Persona Control in Assistant Chat (2026-03-06)"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/31-28-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces-2026-03-07.md",
-      "start_line": 1592,
-      "end_line": 1792,
+      "start_line": 1563,
+      "end_line": 1763,
       "segment_sha256": "37c35a120e21b44570cf729c54ed6e4021bfc800ee6b4a88339cd1a5ac761458",
       "heading": "## 28. Markdown and Mermaid Rendering in Chat and Planning Surfaces (2026-03-07)"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/32-29-natural-language-mode-invocation-and-wizard-escalation-2026-03-08.md",
-      "start_line": 1793,
-      "end_line": 1901,
+      "start_line": 1764,
+      "end_line": 1872,
       "segment_sha256": "a0e766f885f0d9cb97e7d6ee738f0d17a2cfcaaa83c202804b8698bea04bf52e",
       "heading": "## 29. Natural-language Mode Invocation and Wizard Escalation (2026-03-08)"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/33-blocked-thread-state-and-recovery-addendum-2026-03-08.md",
-      "start_line": 1902,
-      "end_line": 1948,
+      "start_line": 1873,
+      "end_line": 1919,
       "segment_sha256": "711ef8bc598e2ad4a44a9deb4addb1f8d50f01e39a2345b664aa3556e0cf404b",
       "heading": "## blocked Thread State and Recovery Addendum (2026-03-08)"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/34-runtime-blocked-recovery-thread-state-addendum-2026-03-09.md",
-      "start_line": 1949,
-      "end_line": 1974,
+      "start_line": 1920,
+      "end_line": 1945,
       "segment_sha256": "490db90bd6e5a768b986b9420fa35e4c4505b4319935a9fb0b502826bd77ea6e",
       "heading": "## Runtime Blocked / Recovery Thread-State Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/35-blocked-thread-message-and-persistence-reconciliation-addendum-2026-03-09.md",
-      "start_line": 1975,
-      "end_line": 2000,
+      "start_line": 1946,
+      "end_line": 1971,
       "segment_sha256": "1188729188e6a361cd55748b8ab469f607d6e1eb474ffa37b0e6749cd5304a9d",
       "heading": "## Blocked Thread Message and Persistence Reconciliation Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/36-unified-thread-blocked-state-lifecycle.md",
-      "start_line": 2001,
-      "end_line": 2030,
+      "start_line": 1972,
+      "end_line": 2001,
       "segment_sha256": "2e4fa56e2d3642d2486ee22771ff9021b0a7da1a264586f229fdb5547c901c61",
       "heading": "## Unified Thread Blocked-State Lifecycle"
     }

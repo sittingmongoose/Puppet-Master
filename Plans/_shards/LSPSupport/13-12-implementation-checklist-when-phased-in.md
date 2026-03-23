@@ -12,7 +12,7 @@ Recommended ordering so an implementer can build incrementally with clear depend
   - **Hover:** textDocument/hover at cursor; show tooltip; timeout and stale discard (§1.1, §7). *Depends on: Document sync.*
   - **Completion:** textDocument/completion on trigger; render list and apply on select; timeout and stale discard. *Depends on: Document sync.*
   - **LSP status in UI:** Status bar (server name, Initializing/Ready/Error); §8 crash/restart behavior. *Depends on: Client + registry.*
-  - **Fallback when LSP unavailable:** Heuristic symbol search, no diagnostics; optional install hint (FileManager §12.1.4). *Depends on: Editor/FileManager.*
+  - **Fallback when LSP unavailable:** Heuristic symbol search, no diagnostics; optional install hint (FileManager §10.2). *Depends on: Editor/FileManager.*
   - **Phase 1 outcome:** User can open files, see diagnostics in editor and Problems panel, get hover and completion; status bar shows LSP state; fallback when no server.
 
 - **Phase 2 -- Editor navigation + Chat LSP:**
@@ -49,9 +49,9 @@ Recommended ordering so an implementer can build incrementally with clear depend
 - [ ] Request timeout and cancellation; discard or re-request on stale document version.
 - [ ] LSP status in UI: status bar or indicator (server name, Initializing/Ready/Error).
 - [ ] Per-server enable/disable: honor lsp.<id>.disabled and lsp: false. **GUI:** Settings > LSP: all built-in servers listed with Enable toggle (default on); user can turn any off. Global "Disable automatic LSP server downloads" toggle; per-server env and initialization options; custom LSP servers (add/edit/remove: command, extensions, env, initialization). See FinalGUISpec §7.4.2.
-- [ ] Server lifecycle: spawn on first file open for (server, root); restart on crash with backoff.
+- [ ] Server lifecycle: spawn on first file open for `(host_id, server_id, root_identity)`; restart on crash with backoff.
 - [ ] Support bridge pattern: custom command can be a stdio↔TCP bridge (e.g. Godot); document for users.
-- [ ] Fallback: when LSP disabled or server missing, keep heuristic symbol search and no diagnostics; optional install hint (FileManager §12.1.4).
+- [ ] Fallback: when LSP disabled or server missing, keep heuristic symbol search and no diagnostics; optional install hint (FileManager §10.2).
 - [ ] Diagnostics for LLM/Assistant: include current LSP diagnostics in context fed to Assistant/Interview.
 - [ ] **Additional enhancements (§9.1):** textDocument/formatting (format document/selection); textDocument/documentLink (clickable imports); optional: LSP diagnostics verification gate, LSP snapshot in evidence, Chat "Fix all" / "Rename" / "Where is this used?" / "Format file"; promote lsp tool when ready.
 

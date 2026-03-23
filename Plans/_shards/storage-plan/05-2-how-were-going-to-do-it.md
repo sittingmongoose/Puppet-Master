@@ -217,6 +217,25 @@ Rules:
 
 #### Additions: Preview session + browser rendering persistence contract
 
+#### Additions: Editor recovery, Search query sessions, and host-aware LSP projections
+
+Required durable records for this seam cluster:
+- `editor_unsaved_buffer.v1:{project_id}:{document_id}`
+- `search_panel_state.v1:{project_id}`
+- `search_query_state.v1:{project_id}:{query_session_id}`
+- `lsp_session_state.v1:{project_id}:{host_id}:{server_id}:{root_identity}`
+- `lsp_diagnostics_snapshot.v1:{project_id}:{host_id}:{server_id}:{root_identity}`
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md
+
+Persistence rules:
+- editor unsaved-buffer snapshots are local recovery artifacts only and MUST NOT imply successful remote persistence
+- Search panel state and Search query-session state are distinct; one captures UI intent, the other captures a specific executed query snapshot
+- LSP session projections are keyed by `(host_id, server_id, root_identity)` and capture lifecycle, freshness, health, requested/effective enablement, and restart metadata
+- stale and degraded are separate axes and MUST NOT collapse into one generic offline state
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md
+
 ##### Artifact-backed preview identity and restore
 
 Preview persistence MUST support both document-backed and artifact-backed subjects.

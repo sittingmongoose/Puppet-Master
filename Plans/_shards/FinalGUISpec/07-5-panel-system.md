@@ -1,19 +1,27 @@
 ## 5. Panel System
 
 ### 5.1 Detachable Panels
-**Side-panel occupancy contract (one at a time; last-click wins):** The side panel is the single activity-bar-driven side-panel slot. Run & Debug, Git (GitHub), Docker Manage, Source Control, Unraid, Artifacts, Chat, and File Manager can occupy it one at a time. See §4.1 Activity Bar for which icon shows which panel. Detach and re-dock support is limited to the panels and shell surfaces listed below.
 
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
+The side panel is the single activity-bar-driven right-hand slot. Search, Chat, File Manager, Source Control, GitHub Actions, Docker Manager, Artifacts, and Run & Debug all live in that slot, one occupant at a time.
 
-The following surfaces support detach and re-dock:
-- **Chat panel**
-- **File Manager panel**
-- **Primary terminal section**
-- **Secondary terminal section** when opened
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
 
-Other views (Dashboard, Settings, Orchestrator, Source Control, and similar page surfaces) remain in the primary content area and are not generic detachable panels.
+Detach and re-dock support for this feature cluster is mandatory for:
+- Search panel
+- Chat panel
+- File Manager panel
+- Primary terminal section
+- Secondary terminal section when opened
 
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
+
+Additional rules:
+- Re-docking restores a detachable surface to the canonical right-hand side-panel slot or bottom runtime zone without minting a new logical surface identity.
+- Source Control, GitHub Actions, Docker Manager, Artifacts, and Run & Debug may remain docked-only in MVP while still using the same slot and shell-state vocabulary.
+- The bottom runtime zone is not the canonical host for normal browsing, HTML preview, or persistent Search results.
+- Browser surfaces remain editor/workspace-tab hosted or detached-window hosted according to the preview/browser session model.
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
 ### Terminal section presentation rules
 - the primary terminal section defaults to the bottom runtime zone

@@ -58,46 +58,46 @@ Servers are enabled when a file's extension matches and the requirement is met. 
 
 ### 3.5 Root discovery (per-server rules)
 
-For each server id (or group), the **root** is the directory used as the project root for that LSP process (one process per (server_id, root)). Root is discovered by walking **up** from the **file's directory** (the directory of the currently opened file) until a directory matching the rule is found. If no such directory is found, the server is not started for that file (or a fallback rule applies where noted).
+Root discovery is host-aware and context-driven.
 
-| Server id | Root discovery rule | Notes |
-|-----------|---------------------|--------|
-| rust | Nearest directory (walk up from file's dir) containing **Cargo.toml** | One server per Cargo workspace. |
-| eslint | Nearest directory containing **package.json** or **eslint.config.js** / **eslint.config.mjs** / **eslint.config.ts** | §3.3; v10 flat config. |
-| typescript | Nearest directory containing **package.json** | Node/TS project root. Excluded when deno wins (see §3.6). |
-| deno | Nearest directory containing **deno.json** or **deno.jsonc** | Deno project; takes precedence over typescript for same path when both present. |
-| slint-lsp | **File's directory**, or nearest directory containing **Cargo.toml** (if one server per Rust project desired) | §3.3.1; default: file's directory. |
-| pyright | Nearest directory containing **pyrightconfig.json** or **pyproject.toml** or **package.json** (e.g. Python in JS repo); else file's directory | default |
-| gopls | Nearest directory (walk up) containing **go.mod**; else file's directory | default |
-| clangd | Nearest directory containing **compile_commands.json** or **CMakeLists.txt** or **Makefile**; else file's directory | default |
-| jdtls | Nearest directory containing **pom.xml** or **build.gradle** / **build.gradle.kts**; else file's directory | default |
-| csharp, fsharp | Nearest directory containing **\*.sln** or **\*.csproj** / **\*.fsproj**; else file's directory | default |
-| php intelephense | Nearest directory containing **composer.json** or **package.json**; else file's directory | default |
-| astro, svelte, vue | Nearest directory containing **package.json** | default |
-| oxlint | Same as eslint: nearest **package.json** or **eslint.config.\*** | Lint-only; see §3.6. |
-| bash, clojure-lsp, dart, elixir-ls, gleam, hls, julials, kotlin-ls, lua-ls, nixd, ocaml-lsp, prisma, ruby-lsp, sourcekit-lsp, terraform, tinymist, yaml-ls, zls | **File's directory** | default when no canonical project file is specified. |
+Rules:
+- session reuse key is `(host_id, server_id, root_identity)`
+- `root_identity` is resolved from the effective project/worktree/remote root selected for the current document and server rules
+- project language detection and preset suggestion are advisory only; actual attachment resolves from file path, effective host context, server rules, and user overrides
+- remote-mode projects use remote host roots and MUST NOT silently attach against a hidden local mirror
 
-**Invocation:** The client calls the root finder with **path = currently opened file path** (e.g. absolute). The finder derives the file's directory and walks upward until the first directory matching the rule; it returns `Some(root_path)` or `None` if not found (or fallback to file's directory where the table says "else file's directory").
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+Root-selection steps:
+1. determine the effective host context for the file
+2. resolve candidate roots from file path and server heuristics
+3. apply explicit per-project or per-server overrides
+4. compute `root_identity` and attach/reuse the matching session if one exists
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Contracts_V0.md
 
 ### 3.6 Extension conflicts (multiple servers per extension)
 
-Some file extensions are served by **multiple** LSP servers (e.g. `.ts`/`.tsx` by typescript, eslint, deno, oxlint). The implementer must attach exactly one **primary** server for language features (diagnostics, hover, completion, navigation, etc.) and zero or more **supplementary** servers that contribute **diagnostics only** (and optionally code actions keyed to those diagnostics).
+Multiple servers may overlap for one language or file kind; overlap is resolved through explicit selection metadata rather than one-off hard-coded exceptions.
 
-**Rule:**
+Required metadata fields per effective catalog entry:
+- `selection_mode`
+- `selection_family`
+- `primary_priority`
+- `context_markers`
+- `supplementary_families`
+- `capability_profile`
+- `degraded_attach_rules`
 
-1. **Primary server (one per file):** For a given opened file path, **at most one** server is the **primary** for that file. The primary server is used for: diagnostics, hover, completion, go-to-definition, document/workspace symbol, signature help, inlay hints, code actions (from its diagnostics), code lens, and all other LSP features. Choice of primary is by **project context**:
-   - **deno vs typescript:** If the file's root (from root discovery) contains **deno.json** or **deno.jsonc**, use **deno** as primary for `.ts`, `.tsx`, `.js`, `.jsx`, `.mjs` in that tree. Otherwise use **typescript** as primary for those extensions (when typescript dependency/requirement is met).
-   - **typescript** is primary for TS/JS when not in a Deno root; **deno** is primary when in a Deno root.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
 
-2. **Supplementary servers (diagnostics only):** The following servers are **supplementary** for the extensions they share with a primary server. They are **not** used for hover, completion, or navigation; they **only** contribute diagnostics (and optionally code actions tied to those diagnostics). Merge their diagnostics with the primary's in the Problems panel and in LLM/Assistant context.
-   - **eslint:** Supplementary for `.ts`, `.tsx`, `.js`, `.jsx`, `.mjs`, `.cjs`, `.mts`, `.cts`, `.vue` (when eslint requirement is met). Primary for language features remains typescript or deno.
-   - **oxlint:** Supplementary for `.ts`, `.tsx`, `.js`, `.jsx`, `.mjs`, `.cjs`, `.mts`, `.cts`, `.vue`, `.astro`, `.svelte` (when oxlint dependency is met). Primary remains typescript or deno (or svelte/astro/vue where applicable).
+Rules:
+- one primary server may own a capability family when exclusivity is required
+- supplementary servers may coexist only when their capability families are declared compatible
+- effective overlap resolution must remain user-visible in Settings > LSP and status surfaces
+- remote/degraded attach rules must be explicit; the client must not fabricate healthy capability state when a server is disabled, unavailable, or partially attached
 
-3. **Priority order for primary:** When multiple servers could be primary for an extension (e.g. in a Deno repo that also has package.json), **deno** wins over **typescript** when root contains deno.json(c). For other conflicts (e.g. vue vs typescript for .vue), use the **language** server (e.g. **vue** for .vue, **svelte** for .svelte, **astro** for .astro) as primary for that extension; typescript/eslint/oxlint remain supplementary for diagnostics.
-
-4. **Summary for implementer:** For each opened file, (1) resolve root per §3.5 for each server that matches the file's extension; (2) choose **one** primary server by the rules above; (3) attach **all** matching supplementary servers for diagnostics only; (4) spawn one process per (server_id, root) and route requests accordingly (primary: full LSP; supplementary: only publishDiagnostics and optionally codeAction for their diagnostics).
-
-ContractRef: ContractName:Plans/LSPSupport.md
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
 
 ### 3.3 ESLint and ECMAScript/JavaScript (reinforced)
 
@@ -122,15 +122,15 @@ Our GUI is **Rust + Slint** (FinalGUISpec); we include **slint-lsp** so that edi
 ### 3.4 Implementation (server.ts)
 
 - **Code:** `packages/opencode/src/lsp/server.ts` -- server registry, root discovery, spawn logic for each built-in (including **eslint** for JS/TS).
-- **Server model:** One LSP server **process** per **(language, project root)**. Root is discovered per file (e.g. "nearest directory containing Cargo.toml" for Rust).
-- **Info shape:** `id`, `extensions[]`, `root(file) -> root path`, `spawn(root) -> Handle | undefined`. **Handle:** `process` (child process) + optional `initialization` (options sent in LSP `initialize`).
+- **Server model:** One LSP server **process** per **`(host_id, server_id, root_identity)`**. Root discovery still begins from the file context and server heuristics (e.g. "nearest directory containing Cargo.toml" for Rust), but the supervised session key is host-aware.
+- **Info shape:** `id`, `extensions[]`, `root(file, host_context) -> root identity`, `spawn(session_key) -> Handle | undefined`. **Handle:** `process` (child process) + optional `initialization` (options sent in LSP `initialize`).
 - **Root discovery:** **NearestRoot(includePatterns, excludePatterns)** -- walk up from the file's directory until a target file is found. Exclude patterns avoid wrong server (e.g. Deno vs Node). Some servers use a fixed root (e.g. instance directory).
-- **Lifecycle:** On file open, extension is matched to enabled servers; if a server is needed and not yet running for that root, it is **spawned** (stdio). Initialize handshake and optional `initializationOptions` complete the setup.
+- **Lifecycle:** On file open, extension is matched to enabled servers; if a server is needed and not yet running for that host/root identity, it is **spawned** (stdio). Initialize handshake and optional `initializationOptions` complete the setup.
 
 **Takeaways for us:**
 
 - Registry of servers by (id, extensions, root-finder, spawn).
-- Lazy spawn per (language, root); one process per root.
+- Lazy spawn per `(host_id, server_id, root_identity)`; one process per effective host/root identity.
 - Config to disable, override command, set env and initialization options (align with OpenCode's `lsp` schema).
 - Optional auto-install (we can defer or limit; e.g. rust-analyzer from PATH, pyright/gopls optional install).
 

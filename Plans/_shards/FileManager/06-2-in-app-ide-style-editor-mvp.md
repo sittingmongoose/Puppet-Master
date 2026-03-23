@@ -12,11 +12,24 @@ The app includes an **IDE-style editor** so users can open, view, and edit proje
 
 ### 2.2 Editing and saving
 
-- **Editable content:** Opened files are **editable** (not read-only preview). User can type, delete, and paste. Changes are tracked so the UI can show an unsaved (dirty) state.
-- **Save:** **Save** writes the current buffer to the file path (overwrite). Keyboard shortcut (e.g. Ctrl+S). Optional: **Save As** to a new path. **Save success feedback:** On successful save, clear dirty state and show brief feedback (e.g. "Saved" toast or status bar message, or clear unsaved indicator); user must be able to see that save succeeded. **Save failure:** On write failure (disk full, permission denied, path deleted, read-only file), keep the buffer **dirty**, do **not** update "last saved" content, and show an **error message** with **Retry** and optional **Save As**; do not silently fail.
-- **Unsaved indicator:** Each tab shows an unsaved indicator (e.g. dot or asterisk) when the buffer has unsaved changes. **Also** show unsaved state in at least one other stable place (e.g. window title or status bar) so it remains visible with many tabs or when the tab strip is scrolled. Closing a tab or switching project with unsaved changes prompts the user (Save / Discard / Cancel).
-- **Revert:** Optional **Revert** (reload from disk) and **Revert last agent edit** (from Assistant chat thread; assistant-chat-design §13); can integrate with Git/restore points per newfeatures.md. **Revert last agent edit contract:** Triggered by user action from chat (or editor menu). Backend (FileSafe/chat) performs the revert (e.g. Git restore); then the backend sends a **refresh notification** to the editor for that path (e.g. `BufferReverted(path)` or equivalent). The editor reloads that buffer from disk and updates the view; the editor does not perform the revert itself. See Plans/FileSafe.md.
-- **"Restore to…" / History (editor context menu):** The document pane (or editor context menu) offers a **"Restore to…"** or **"History"** action that lists restore points for the current file or session. The list is fetched from the **backend** (redb query — single source of truth; see Plans/newfeatures.md §8 and Plans/storage-plan.md). On user selection and confirm, the app runs the same restore pipeline as "revert last agent edit" / §8 rollback (conflict check, confirmation, file write-back), then sends a `BufferReverted(path)` refresh notification so the editor reloads the affected buffer(s) from disk. The editor does **not** store or create restore points; it only invokes the backend and refreshes. This aligns with Crosswalk §3.11 (`Primitive:DocumentCheckpoint`) and the shared-buffer contract in §2.4.1.
+- **Editable content:** Opened files are editable (not read-only preview). User edits update one shared authoritative buffer per file path.
+- **Save:** Save writes the current buffer to the file path. On success, dirty state clears and the user sees explicit success feedback. On failure (disk full, permission denied, path deleted, read-only file, disconnected remote destination), the buffer stays dirty, last-saved state does not advance, and the user gets visible recovery actions such as `Retry` and optional `Save As`.
+- **Unsaved indicator:** Each tab shows unsaved state, and at least one other stable shell location must also surface that state so it remains visible when the tab strip is crowded.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/FinalGUISpec.md
+
+- **Revert:** `Revert` reloads from disk. `Revert last agent edit` is a chat-owned restore action that routes through `cmd.chat.revert`; the editor never fabricates the revert itself.
+- **Revert last agent edit contract:** When `target_message_id` is omitted, the backend resolves it to the latest assistant turn in the active thread that produced persisted file mutations. If that turn touched multiple files, the revert applies to the whole turn across all affected files. After revert, the backend emits a refresh notification and the editor reloads the affected buffers.
+- **Restore to… / History:** The editor and document pane fetch restore points from the backend store and invoke the same restore pipeline; neither surface stores or manufactures restore points independently.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/FileSafe.md
+
+- **Recover unsaved (required MVP):** Unsaved-buffer recovery is required for both local and remote-backed buffers.
+- Recovery snapshots represent local unsaved buffer state only; they do not imply that a remote write succeeded.
+- For recovered remote-backed buffers, the banner copy is: `Recovered local edits — remote destination not yet synchronized`.
+- A recovered remote-backed buffer must reconnect or revalidate the destination before save/flush can claim success.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
 
 ### 2.3 Display and navigation
 

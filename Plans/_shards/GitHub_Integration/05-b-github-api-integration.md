@@ -284,41 +284,32 @@ ContractRef: PolicyRule:no_secrets_in_storage, Invariant:INV-002
 
 ### C.3 Remote Project Context
 
-When a project is configured to use an SSH remote, the following rules MUST apply:
+A remote-mode project is a first-class project context bound to a remote host and remote path.
 
-ContractRef: ContractName:Plans/WorktreeGitImprovement.md, PolicyRule:Decision_Policy.md§2
+Remote-mode rules:
+- file browsing, file mutation, git operations, terminal launches, Search execution, Source Control projections, LSP execution, and provider-side project tools all run against the remote host context
+- remote-mode projects MUST NOT silently fall back to local checkout, local git, local shell, local Search, or local LSP execution
+- UI surfaces may retain stale snapshots while disconnected, but they must label them accurately and block new host-required mutations when the remote context is unavailable
 
-**Git Panel:**
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/storage-plan.md
 
-- The status bar working folder MUST display `user@host:remote/path`.
-  ContractRef: PolicyRule:Decision_Policy.md§2
-- All `git` commands MUST be executed on the remote via SSH subprocess:
-  `ssh [-p <port>] [-J <jump>] <user>@<host> "cd <remote_folder> && git <args>"`.
-  MUST NOT run `git` locally for remote-mode projects.
-  ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/WorktreeGitImprovement.md
+Shared remote-state vocabulary:
 
-**File Manager:**
+| Axis | Values | Meaning |
+|---|---|---|
+| `freshness` | `current`, `refreshing`, `stale` | Whether the projection reflects current host state |
+| `health` | `healthy`, `degraded`, `unavailable` | Whether the underlying host/service path is functioning |
+| `write_availability` | `writable`, `pending_write`, `blocked`, `read_only` | Whether mutations may currently succeed |
 
-- The file tree MUST show the remote filesystem. File listing MUST use SFTP or an
-  SSH `find`/`ls` pipeline; the choice is implementation-defined (deterministic default:
-  SFTP when available, SSH pipeline as fallback).
-  ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/FileManager.md
-- File edits MUST be applied on the remote (write via SFTP or heredoc over SSH).
-  MUST NOT create a local checkout for remote-mode projects.
-  ContractRef: PolicyRule:Decision_Policy.md§2
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Wiring_Matrix.md
 
-**Terminal:**
+Connection-loss rules:
+- on unexpected disconnect, Puppet Master performs one bounded auto-retry
+- if that retry does not recover the host context, the UI exposes an explicit `Reconnect` action
+- local unsaved editor buffers may continue to exist, but they are disclosed as local recovery state rather than as confirmed remote writes
+- Search, Source Control, Problems, and LSP may continue to show stale snapshots while new operations are blocked or degraded
 
-- The local terminal tab MUST open an SSH session to the remote; no local shell MUST be
-  opened for remote-mode projects.
-  ContractRef: PolicyRule:Decision_Policy.md§2
-
-**Agents and execution:**
-
-- Puppet Master agents MUST run on the remote machine, not locally, in remote mode.
-  ContractRef: PolicyRule:Decision_Policy.md§2
-
----
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
 
 ### C.4 Tool & Provider Execution on Remote
 

@@ -4,22 +4,15 @@ This section reviews the Assistant & Chat plan for **gaps**, **potential problem
 
 ### 23.1 Gaps (all adopted as MVP)
 
-| Gap | Description | Recommendation |
-|-----|-------------|----------------|
-| **Thinking/reasoning visibility** | §15 mentions "thought stream" for Interview; the plan does not explicitly require a **toggle** to show/hide extended thinking in **Assistant** chat (e.g. when platform streams `thinking` events). Newfeatures.md §12 and §15.6 define stream event viz and "Interleaved Thinking Toggle" but are not cited in this plan. | Add a brief requirement: Assistant chat can show/hide extended thinking when the normalized stream provides it; align with Plans/newfeatures.md §12, §15.6. |
-| **Slash commands** | Competitors (OpenCode, Codex, Claude Code, Gemini) support slash commands (e.g. `/model`, `/compact`, `/new`, `/export`). This plan does not mention slash commands or a command palette for chat. | Consider adding: chat supports slash-style or command-palette actions (e.g. switch model, new thread, export, compact session) for keyboard-first users; can be phased after MVP. |
-| **Session export / share** | OpenCode has `/export` (conversation to Markdown) and `/share`; Codex has resume/transcripts. This plan has "chat history search" but no explicit **export conversation** (e.g. to Markdown) or **share session** (link or bundle). | Add: user can export current thread (or conversation) to Markdown (or JSON); optional "share session" (e.g. bundle for support or replay) as enhancement. |
-| **Session compact / compress** | OpenCode's `/compact` compresses session history. We have §16 (context & truncation) and newfeatures.md §10 (auto-compaction) but no explicit **user-triggered "compact this session"** in chat. | Consider: user-initiated "Compact session" (or "Summarize and continue") in chat, triggering the same compaction logic as auto-compact; document in §16 or reference newfeatures.md §10. |
-| **Model switch mid-thread** | Plan says "Platform/model/effort are selectable at any time" and "context is passed along" when switching; it does not say **where** (toolbar, thread header, slash command) or whether the **current run** is cancelled when the user switches model mid-stream. | **Addressed in §1.1:** Controls in chat header or footer; change applies to next turn; current run continues with previous selection unless user stops it; `/model` can open model selector. |
-| **Multiple queued messages** | §4 describes one queued message above the chat with edit + "Send now." It does not say how **multiple** queued messages are shown (stack, list, one at a time with "next"). | Clarify: when more than one message is queued, show a list or ordered stack above the chat, each with edit and "Send now" (or "Send next"); ordering and reorder/remove should be specified. |
-| **Undo / Git integration for edits** | OpenCode documents undo/redo with Git for file changes. Plan mentions File Manager and agent "what it changed" but not **user-undo** of agent file edits (e.g. "Revert last edit" or Git-based rollback). | Consider: "Revert last agent edit" or link to restore points / Git (newfeatures.md §8, §15.3); can live in activity transparency (§12) or a separate control. |
-| **Interrupt vs. steer semantics** | Codex has had bugs where ESC acts like "steer" instead of true interrupt. Plan has "Stop" and "Send now (steer)" but does not distinguish **hard stop** (cancel current turn, no new input) vs. **steer** (inject new message as next input). | Clarify: "Stop" = cancel current run, no message sent; "Send now" = steer (inject message). Ensure UI and backend do not conflate the two. |
-| **Permission granularity** | Claude Code has plan / default / acceptEdits / bypassPermissions; we have YOLO vs Regular and "approve once" vs "approve for session." We do not have an explicit **read-only (plan) mode** in the mode table; Ask is read-only but not named as "plan." | Consider: explicit "Plan (read-only)" mode or alias in UI for Ask when user wants plan-only behavior; or document that Ask maps to platform plan/read-only where available. |
-| **LSP / language intelligence** | **LSP** = Language Server Protocol (editor + Chat: diagnostics, hover, go-to-definition, etc.). | **In scope for MVP.** Plans/LSPSupport.md §5.1 (LSP in the Chat Window); assistant-chat-design §9.1. Full LSP in editor (FileManager.md) and Chat (diagnostics in context, @ symbol with LSP, code-block hover/definition, Problems link). |
-| **Agent skills (Gemini-style)** | Gemini has "Agent Skills" (load-on-demand by trigger). Newfeatures.md §6 mentions skills. | Reference newfeatures.md §6; skill triggers can be added when we implement skills. |
-| **Resume / rewind in chat** | Resume thread from state; rewind/restore to message N. | **Adopted:** §11 (Threads) now requires resume and rewind; §5 (Commands) exposes them. |
-| **Inbox / per-agent threads** | **Inbox-per-agent** = one conversation thread per agent (e.g. Antigravity). We have multiple threads and crew, not "inbox per agent." | Out of scope for MVP; we do not model inbox-per-agent. |
-| **Real-time collaboration** | **Real-time collaboration** = multiple humans (or humans + agents) editing the same project at once with live updates. | Out of scope for MVP; not in this plan. |
+The following MVP gap closures are now adopted as normative behavior for chat integration:
+
+- visible file-reference chips rather than hidden context injection
+- explicit `cmd.chat.add_file_reference` ownership for file handoff
+- explicit separation between `cmd.chat.revert` (file restore) and `cmd.chat.rewind` (conversation rewind)
+- chat consumption of Search, Source Control, and LSP results without taking over their owner responsibilities
+- browser/preview and remote recovery copy aligned with the shared requested/effective and no-silent-fallback contracts
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
 
 ### 23.2 Potential problems (risks and ambiguities)
 
@@ -53,10 +46,10 @@ This section reviews the Assistant & Chat plan for **gaps**, **potential problem
 | **Bash / tools in chat** | -- | ✅ Read, Edit, Bash, etc. | -- | -- | -- | ✅ | ✅ §13 |
 | **Activity transparency** | -- | -- | -- | -- | ✅ Artifacts, logs | -- | ✅ §13 (search, bash, files read/changed) |
 | **Agent skills (load by trigger)** | -- | Skills/hooks | -- | ✅ Agent Skills | -- | -- | ⚠️ newfeatures §6; not in this plan |
-| **Undo / Git for edits** | ✅ Undo/redo + Git | -- | -- | -- | -- | -- | ✅ §13 (revert last agent edit) |
+| **Undo / Git for edits** | ✅ Undo/redo + Git | -- | -- | -- | -- | -- | ✅ §9 (revert last agent edit) |
 | **Session sharing** | ✅ `/share` | -- | -- | -- | -- | -- | ✅ §11 (session share) |
 
-**Summary:** All listed features are now in scope: steer/queue (§4), context display (§12), permissions (§3), MCP (§7), @ mention (§9), **LSP in Chat (§9.1, Plans/LSPSupport.md §5.1)**, activity transparency (§13), multi-agent (§14-§15), slash commands (§5), export (§6), thinking toggle (§13), model switch (§1), user compact (§17), resume/rewind (§11), revert edit (§13), session share (§11). **LSP is MVP** (editor + Chat). Inbox-per-agent and real-time collaboration are out of scope for the initial desktop MVP (see glossary in table above).
+**Summary:** All listed features are now in scope: steer/queue (§4), context display (§12), permissions (§3), MCP (§7), @ mention (§9), **LSP-aware chat/editor integration (§9, Plans/LSPSupport.md §5)**, activity transparency (§13), multi-agent (§14-§15), slash commands (§5), export (§6), thinking toggle (§13), model switch (§1), user compact (§17), resume/rewind (§11), revert edit (§9), session share (§11). **LSP is MVP** (editor + Chat). Inbox-per-agent and real-time collaboration are out of scope for the initial desktop MVP (see glossary in table above).
 
 ### 23.4 Adopted enhancements (all MVP)
 
@@ -70,7 +63,7 @@ All of the following are **MVP requirements** and are already reflected in the m
 6. **Model/platform change UI** -- §1: chat header or thread settings; applies to next turn.
 7. **User-triggered Compact session** -- §17: user can run compaction from chat.
 8. **Resume / rewind** -- §11: resume thread, rewind/restore to message (branch/rollback).
-9. **Revert last agent edit** -- §13: revert from thread, tied to Git/restore points.
+9. **Revert last agent edit** -- §9: revert from thread via the canonical file-restore pipeline.
 10. **Session share** -- §11: produce shareable bundle (messages + metadata, no secrets).
 11. **HITL: new thread spawned** -- §21: CtA on Dashboard; a **new thread** is spawned with an appropriate name for the HITL prompt.
 12. **No project selected** -- §1: many chat features do not work when no project is selected; only application rules apply.

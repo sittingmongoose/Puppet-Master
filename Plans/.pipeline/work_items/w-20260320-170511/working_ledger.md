@@ -23,6 +23,108 @@
 - Collaboration style requirement: surface bad ideas, weak assumptions, contradictions, and implementation risks directly.
 
 ## Key Facts and Findings
+- Existing GitHub canon already separates GitHub provider auth into two hard realms:
+- `github_api` for GitHub REST/platform operations such as repo create, fork, PR, and permission checks
+- `copilot_github` for the GitHub Copilot provider path only
+- `github_api` and `copilot_github` tokens/state must never be cross-consumed
+- Setup/Login and Doctor must report those realms separately, and multi-account handling must allow independent account lists/status for each realm
+- Local Git/worktree operations remain separate again: they use the local `git` binary and are not driven by either `github_api` or `copilot_github` auth
+- Design implication: switching GitHub Copilot accounts for provider multi-account must not change Git transport, worktree state, or GitHub API account binding; those are independent surfaces and must stay independent in storage, GUI, and runtime routing
+- Current official GitHub Copilot docs add an important provider-native instruction/agent layer that PM has not yet fully integrated into the current design:
+- repository-wide instructions in `.github/copilot-instructions.md`
+- path-specific instructions in `.github/instructions/*.instructions.md`
+- agent-specific instructions in one or more `AGENTS.md` files, where the nearest file wins
+- Copilot also accepts root `CLAUDE.md` or `GEMINI.md` as alternatives for agent instructions
+- custom agents are separate Markdown profiles in `.github/agents/*.agent.md` with YAML frontmatter, prompt, optional tools, optional `mcp-server` configuration, and optional model selection
+- Design implication: the earlier four-pane instruction model (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `Cursor Rules`) is not sufficient by itself if PM wants implementation-ready parity for GitHub Copilot; PM likely needs provider-specific advanced instruction/agent surfaces in addition to the shared panes
+- Current OpenAI Codex product docs still explicitly support `AGENTS.md` as a native guidance surface for Codex tasks, reinforcing that PM's AGENTS-centered canonical instruction model remains aligned with Codex rather than conflicting with it
+- Existing PM docs still contain an important stale assumption for Codex and GitHub Copilot:
+- `Plans/usage-feature.md` still frames both as CLI-driven usage collection paths
+- `Plans/Multi-Account.md` still carries CLI-oriented wording for Codex and metrics/CLI wording for Copilot
+- user clarified PM is not using Codex CLI or Copilot CLI as the runtime architecture
+- Design implication: those docs need reconciliation from `CLI/runtime outputs + CLI auth/import` toward direct-provider auth/runtime semantics, while preserving the separate `copilot_github` auth realm and Codex direct-provider auth methods
+- Current official-source direct-provider findings now sharpen that drift:
+- Codex official product guidance is now centered on ChatGPT-plan usage with included limits plus optional API-key usage, rather than a CLI-first story
+- Codex usage is explicitly plan-dependent and can use weekly and 5-hour style limits for ChatGPT-plan access; API-key usage is a separate path and should not be conflated with plan-included limits
+- This suggests current canon in `Plans/Contracts_V0.md` that emphasizes `OAuthDeviceCode` for Codex direct-provider auth is at least partially stale and needs re-validation against current OpenAI product/auth behavior
+- GitHub Copilot official product docs now expose a richer direct-provider surface than the current PM plans model:
+- repository custom instructions
+- path-specific instructions
+- custom agent profiles with model/tool/MCP configuration
+- usage tied to premium-request/billing-entity semantics rather than just generic CLI metrics
+- Design implication: Copilot direct-provider setup and usage must account for account plus billing entity / org context, and Codex direct-provider setup must distinguish ChatGPT-plan auth from API-key auth
+- Direct-provider runtime identity now needs a sharper separation between auth identity and quota/billing identity:
+- `effective_account_id` alone is not enough for providers where one auth identity can operate under different billing entities, orgs, or entitlement buckets
+- GitHub Copilot is the clearest current case: account auth and billing entity / org context can both affect effective usage, limits, and switching
+- Codex also needs auth-family-sensitive identity because `ChatGPT account` usage and `API key` usage are different entitlement/quota buckets even if they map to the same human owner
+- Recommended additive runtime fields for direct providers:
+- `requested_billing_entity_id?`
+- `effective_billing_entity_id?`
+- `effective_billing_entity_label?`
+- `effective_entitlement_class?` (examples: `chatgpt_plan`, `api_billed`, `org_subscription`, `coding_plan`)
+- These should be additive to the existing canonical runtime record rather than replacing `effective_account_id` or `effective_provider_identity`
+- Direct-provider GUI implication:
+- Agent-Config account rows for providers like GitHub Copilot and Codex need to show both account identity and effective entitlement context when relevant
+- Usage views also need to group or label windows by the actual entitlement bucket that governs usage/cooldown, not only by account label
+- User-facing copy should stay simple:
+- primary identity line = account label / provider identity
+- secondary identity line = billing entity / org / entitlement bucket when that affects limits or switching
+- requested vs effective inspector should explicitly show when the same auth identity stayed constant but the effective billing entity or entitlement bucket changed
+- Current direct-provider setup/auth direction is now clearer:
+- `Codex` should be modeled around `Sign in with ChatGPT` and `Use API Key` as the real setup/auth families
+- `GitHub Copilot` should be modeled around GitHub OAuth-backed account identity plus effective billing entity / organization context where usage and premium-request semantics depend on it
+- This reinforces that direct-provider setup flows cannot be copy-pasted from the CLI-provider model
+- Current-source refinement:
+- Codex official product guidance explicitly distinguishes ChatGPT-plan usage from API-key usage; these are different entitlement/usage buckets even under one product
+- GitHub Copilot official docs explicitly require selecting a billing entity for premium requests when the signed-in user belongs to multiple organizations/enterprises
+- Design implication: for direct-provider setup, a `logged in` state may still be incomplete if the entitlement/billing context is unresolved; PM needs a partial-setup/configuration state for that case rather than pretending auth alone is sufficient
+- Direct-provider button/state flows are now concrete enough to lock at the design level:
+- `Codex`
+- add-account entry choices:
+- `Sign in with ChatGPT`
+- `Use API Key`
+- ChatGPT path:
+- `Sign In` -> `Signing In...` -> `Logged In`
+- then `Validate` -> `Validating...` -> `Ready`
+- API-key path:
+- `Save Key` -> `Saving...` -> `Saved`
+- then `Validate` -> `Validating...` -> `Ready`
+- logout path:
+- `Log Out` -> `Logging Out...` -> `Logged Out`
+- refresh path:
+- `Refresh Usage` -> `Refreshing...` -> refreshed state without mutating auth state
+- `GitHub Copilot`
+- add-account entry choice:
+- `Sign in with GitHub`
+- sign-in path:
+- `Sign In` -> `Signing In...` -> `Logged In`
+- if exactly one valid billing entity is discovered:
+- `Validate` -> `Validating...` -> `Ready`
+- if multiple valid billing entities are discovered:
+- state becomes `Needs setup`
+- explanatory text should say the user must choose a billing entity for premium requests
+- action:
+- `Choose Billing Entity`
+- billing-entity action:
+- `Choose Billing Entity` -> `Saving...` -> `Saved`
+- then `Validate` -> `Validating...` -> `Ready`
+- refresh path:
+- `Refresh Usage` -> `Refreshing...` -> refreshed usage/entitlement state
+- logout path:
+- `Log Out` -> `Logging Out...` -> `Logged Out`
+- Hard rule:
+- direct-provider actions must follow the same asynchronous button-state contract as CLI/server providers
+- `Logged In` is still not sufficient to mark the account `Ready` until entitlement context and validation are complete when the provider requires them
+- Copilot modeling recommendation is getting firmer:
+- do not duplicate one GitHub OAuth login into many fake top-level account records just because multiple org/billing entities exist
+- better model:
+- one auth-backed account record
+- one or more selectable entitlement/billing contexts beneath it
+- scheduler chooses the effective selectable unit from both account identity and billing context
+- this keeps GUI/account management cleaner and avoids conflating auth identity with quota bucket identity
+- usage interaction implication:
+- the same account row may need to show multiple entitlement/billing buckets in its expanded usage view when provider semantics require that
+- PM should still choose one effective bucket for the active runtime and make that visually clear
 - Topic established: providers and multi-account support.
 - Intended role for follow-on work: researcher for rewrite planning docs.
 - Current work item was newly created for this topic; no prior `work_id` was established in this chat for the same work item.
@@ -1315,6 +1417,177 @@
 - keep raw IDs exact for runtime/API use
 - keep normalized internal keys stable and collision-safe
 - cleaned GUI labels should be cosmetic only; do not destructively strip hyphens from canonical IDs
+- Model normalization contract is getting clearer:
+- keep canonical model identity exactly as `provider_id/model_id`
+- do not rewrite or prettify canonical IDs for runtime/storage
+- introduce separate additive layers:
+- raw canonical ID: `provider_id/model_id`
+- runtime platform ID: the execution surface (`gemini`, `gemini_cli`, `opencode`, `cursor_cli`, etc.)
+- normalized internal key for GUI indexing/collision-safe grouping
+- cosmetic display label for user-facing dropdowns/cards
+- GUI cleaning rules should be cosmetic only:
+- may replace separators for readability
+- may add spacing/title-casing where safe
+- may expose vendor/model family labels
+- must not erase meaningful variant signals such as `thinking`, `mini`, `pro`, version numbers, or coding-plan naming
+- collision rule:
+- if two discovered entries would render the same cleaned label, GUI must disambiguate with secondary text such as provider/runtime/auth-family/billing context rather than mutating the canonical ID
+- overlap examples PM must preserve:
+- same raw vendor model reachable through different runtime platforms (`gemini` vs `gemini_cli`, `opencode` bridging upstream provider models)
+- same family with different reasoning variants encoded in the raw ID (common in Cursor catalogs)
+- same provider family with coding-plan vs pay-as-you-go products
+- GUI recommendation:
+- primary label = cleaned cosmetic model name
+- secondary label = provider/runtime context when needed for disambiguation
+- advanced/detail view should still show the exact raw canonical ID
+- Cleaned-label policy is now clearer:
+- safe cosmetic transforms:
+- replace repeated separators with readable spacing
+- title-case or sentence-case where it improves readability without changing meaning
+- collapse raw vendor repetition when already shown elsewhere in the row
+- preserve meaningful raw tokens:
+- `mini`
+- `pro`
+- `flash`
+- `thinking`
+- version numbers (`2.5`, `3`, `4.1`, etc.)
+- coding-plan product wording
+- do not invent friendly names that hide the real purchasable or selectable model name
+- picker/display placement recommendation:
+- model picker primary text = cleaned model label
+- model picker secondary text = runtime platform label when the same or similar model name appears in more than one runtime surface
+- Usage surface should prefer the effective runtime platform plus cleaned model label together when attribution matters
+- requested/effective runtime inspectors should show:
+- cleaned label for scanability
+- exact raw canonical ID on detail/expand
+- runtime platform separately, never fused into the canonical model ID
+- if a provider exposes raw IDs that already look user-friendly, PM should avoid gratuitous rewriting
+- Provider-by-provider implementation-readiness audit is now clearer:
+- `Gemini`
+- strong on direct-provider identity, API-key-only auth direction, shared runtime fields, and GUI placement
+- still missing final implementation detail on direct quota/cooldown fidelity and exact media/capability contract after the OAuth removal
+- Gemini direct-provider quota/media edge-case direction is now clearer:
+- direct Gemini remains API-key only in PM
+- but API key alone is not always the real quota identity
+- Gemini/Google usage and quota semantics can be project-based, so PM must preserve project/billing context when it materially changes effective limits
+- multiple Gemini API keys should not automatically be treated as independent quota buckets unless they map to genuinely separate project/quota contexts
+- this reinforces the need for existing/additive runtime identity like `effective_project_id` and possibly explicit entitlement/billing context when known
+- media/capability implication:
+- Gemini direct media capabilities should be tied to the same effective auth/account/project resolution as normal text/tool usage
+- PM should not create a fake separate media-account model for direct Gemini
+- GUI/cooldown implication:
+- if quota/reset confidence is weak or project attribution is ambiguous, PM should label Gemini usage as estimated/partial rather than authoritative
+- `Gemini CLI`
+- strong on account isolation (`GEMINI_CLI_HOME`), structured usage, MCP support, auth-family matrix, and PM-managed wrapper direction
+- still missing final implementation detail on bootstrap quirks, model-routing override policy, and exact project-vs-profile config ownership
+- `Cursor CLI`
+- strong on CLI control surface, structured run usage, MCP support, and PM-owned home/XDG isolation direction
+- still missing final implementation detail on the exact account bootstrap UX and exact provider-native config ownership/repair boundaries
+- Cursor CLI bootstrap/config-ownership direction is now clearer:
+- PM should treat the PM-managed Cursor profile root (HOME/XDG-owned sandbox) as the canonical account boundary for the runtime
+- PM should not rely on editor-oriented `--user-data-dir` as the core account-isolation mechanism for `cursor-agent`
+- bootstrap should support at least:
+- browser sign-in
+- API-key setup if PM exposes that path
+- import existing auth into a PM-managed profile
+- PM-owned config surfaces inside the profile should be explicit:
+- MCP adapter config
+- PM-managed instruction/rule projections
+- other PM-generated provider integrations
+- profile-local/native state that should remain Cursor-owned and account-local includes:
+- auth/session state
+- trust
+- chat/project history
+- runtime caches
+- any provider-native ephemeral state not explicitly managed by PM
+- repair/drift rule:
+- PM should only repair/overwrite the PM-managed portions of the profile/config surfaces it owns
+- it should not treat the whole Cursor profile as disposable if the user/customization touches unrelated native state
+- bootstrap UX implication:
+- after sign-in/import, PM should validate using `cursor-agent` itself, not editor-side assumptions
+- if trust or first-run prompts are still unresolved for the active workspace, account state may be auth-ready but not fully operational for a given run context
+- `Claude Code CLI`
+- strong on profile isolation, MCP support, structured usage surface, and setup-state model
+- still missing final implementation detail on subscriber-vs-API cooldown semantics and exact scope/overlay defaults
+- `OpenCode`
+- strong on provider role, managed-vs-attached server split, server-profile model, usage normalization, and aggregator semantics
+- still missing final implementation detail on managed-server lifecycle, attached-server MCP ownership limits, and exact upstream provider/account discovery refresh behavior
+- OpenCode managed-server lifecycle is now clearer at the contract level:
+- PM should support two explicit server-profile modes:
+- `Managed Server`
+- `Attach to Existing Server`
+- `Managed Server` contract:
+- PM owns launch command, env, health wait, reconnect attempts, shutdown behavior, and last-known discovery cache for that profile
+- PM should launch `opencode serve` with the selected config/environment for the profile
+- PM should wait for health and then run provider/model discovery before marking the profile usable
+- if discovery fails after server health succeeds, the profile should remain connected-but-degraded rather than pretending it is fully ready
+- `Attach to Existing Server` contract:
+- PM owns endpoint/auth config for the profile and health/discovery polling
+- PM does not own the process lifecycle
+- PM should preserve last-known provider/model discovery with stale labeling when the external server is temporarily unavailable
+- discovery/refresh recommendation:
+- health and provider discovery should be separate steps and separate statuses
+- provider/model discovery should refresh:
+- on initial connect
+- on explicit `Refresh Models` / `Refresh Providers`
+- after reconnect
+- optionally on app boot/profile activation
+- OpenCode config behavior matters:
+- because OpenCode merges project/global/custom config sources, PM must treat server discovery as runtime-derived state, not one static config snapshot
+- GUI implication:
+- OpenCode profile row needs at least:
+- process/connect state
+- health state
+- discovery state
+- last sync time
+- connected endpoint/config summary
+- upstream provider/model stale-vs-live labeling
+- `Codex`
+- direct-provider direction is much clearer than before: multi-account across ChatGPT/OAuth-style auth and API-key auth must coexist
+- still missing final implementation detail on the exact current official auth flow wording and exact quota/cooldown mapping between ChatGPT-plan and API-key buckets
+- Codex auth/usage split is now clear enough to treat as a design contract:
+- PM should model `Codex` with at least two auth families:
+- `ChatGPT`
+- `API key`
+- these are not just different credentials; they are different entitlement/usage buckets
+- ChatGPT-backed Codex usage follows included plan limits and reset semantics defined by the user's ChatGPT plan
+- API-key-backed Codex usage follows billed API usage and should not be merged into the same cooldown/usage pool
+- account-model implication:
+- many ChatGPT-backed Codex accounts and many API-key-backed Codex accounts may coexist under the same `Codex` provider entry
+- switching, usage display, cooldown behavior, and preferred-account logic must preserve auth-family identity
+- setup/auth implication:
+- `Sign in with ChatGPT` should be treated as the primary interactive path
+- `Use API Key` remains a parallel account path, not a fallback hidden inside the same account record
+- likely Codex-specific entitlement labeling should stay simple in the GUI:
+- `Plan: ChatGPT <tier>` when known
+- `Usage Bucket: API billed` for API-key accounts
+- `GitHub Copilot`
+- strong on auth-realm separation from Git/GitHub API, provider-native instruction/agent surfaces, and billing-entity-aware account model
+- still missing final implementation detail on exact billing-entity selection UX, premium-request quota mapping, and how many entitlement contexts should be cached per account record
+- GitHub Copilot quota/blocking semantics are now clearer:
+- PM should not model Copilot as only `has premium requests left` vs `does not`
+- effective blocked/pressure state may come from:
+- no billing entity selected when multiple are available
+- included premium requests exhausted
+- paid overage disallowed by the selected organization/enterprise policy
+- provider/runtime-side auth or entitlement failure
+- GUI copy and reason codes should make those differences explicit rather than collapsing them into generic cooldown
+- likely Copilot-specific reason-code examples:
+- `billing_entity_required`
+- `included_premium_exhausted`
+- `paid_overage_disallowed`
+- `copilot_entitlement_missing`
+- `copilot_org_policy_blocked`
+- usage/cooldown recommendation:
+- Copilot may need a split between hard block states and soft pressure states that are not simple countdown windows
+- some limits may reset by plan/billing cycle rather than short rolling windows
+- PM should not force all Copilot usage into the same `5h/7d` mental model
+- `Alibaba Coding Plan`, `MiniMax Coding Plan`, `Z.AI Coding Plan`
+- direct-provider architectural direction is strong enough by using OpenCode as the implementation reference
+- still missing only confirmatory post-build verification, not a major design gap, because user explicitly chose to treat OpenCode's implementation as the interim source of truth
+- Cross-provider conclusion:
+- the largest remaining blockers are no longer generic architecture problems
+- they are provider-specific operational details, GUI wording/flows, and a small number of unresolved identity/quota mappings
 
 ## Impacted Docs
 - `Plans/CLI_Bridged_Providers.md`
@@ -1331,6 +1604,147 @@
 - `Plans/assistant-chat-design.md` and `Plans/FinalGUISpec.md` need effort-control updates because current Gemini/Cursor assumptions are stale.
 
 ## Decisions Already Resolved
+- Direct-provider setup-state machine direction is now concrete:
+- `Logged Out`
+- `Logging In`
+- `Logged In`
+- `Needs setup`
+- `Validating`
+- `Ready`
+- `Auth expired`
+- `Validation failed`
+- `Logging Out`
+- provider-specific entitlement/billing resolution can keep an account in `Needs setup` after auth succeeds
+- MCP projection contract is now clearer from existing PM canon plus current CLI docs:
+- PM owns one canonical MCP registry, one secret/credential model, one health model, and one requested/effective availability model
+- `DirectApi` providers (`Gemini`, `Codex`, `GitHub Copilot`, `Alibaba Coding Plan`, `MiniMax Coding Plan`, `Z.AI Coding Plan`) should use PM-native MCP only; no provider-side MCP config files are canonical for them
+- `CliBridge` providers (`Cursor CLI`, `Claude Code CLI`, `Gemini CLI`) require derived adapter config in provider-native locations, but that config is generated from PM canon and is not a second source of truth
+- preferred timing for `CliBridge` adapters remains spawn-time generation into the actual run cwd / worktree when project-local files are required; long-lived user/profile config can also be maintained where the provider supports it, but PM must still treat the central registry as authoritative
+- `ServerBridge` / OpenCode is a split case:
+- managed OpenCode server: PM may project/configure MCP for that server profile
+- attached external OpenCode server: PM can inspect and reflect MCP state but should not claim it fully owns it
+- this yields a three-level lifecycle for each MCP server:
+- `Registered in PM`
+- `Configured for provider/runtime`
+- `Operational`
+- GUI should expose simple status (`Working` or concrete reason) while internal state keeps these layers separate
+- Skill/tool requirement readiness should evaluate against the effective MCP lifecycle stage, not just whether a server exists in the registry
+- CLI-provider MCP adapter policy is now specific enough to state:
+- `Cursor CLI`
+- canonical provider-native locations remain:
+- project/worktree: `.cursor/mcp.json`
+- user/profile: `~/.cursor/mcp.json` within the PM-managed profile root
+- PM should treat profile-level config as the durable base and generate/refresh project/worktree adapter config when the active run needs project-local visibility
+- PM control on:
+- PM may rewrite the PM-managed sections/files
+- manual override should detach that target from PM control rather than silently merging conflicting edits
+- `Claude Code CLI`
+- canonical provider-native locations remain:
+- project/worktree: `.mcp.json`
+- user/profile: `~/.claude.json` within the PM-managed `CLAUDE_CONFIG_DIR`
+- PM should treat user/profile scope as the durable base and emit project-local `.mcp.json` only when needed for the active worktree/project context
+- because Claude has explicit local/project/user scope, PM needs to preserve scope intentionally rather than flatten everything into one file
+- `Gemini CLI`
+- canonical provider-native locations remain:
+- user/profile: `~/.gemini/settings.json` within `GEMINI_CLI_HOME`
+- project/worktree: `.gemini/settings.json`
+- PM should prefer profile-level MCP config as the durable base and generate project-local `.gemini/settings.json` only when project-scoped MCP visibility is needed
+- Gemini trust rules matter: stdio MCP servers may remain unavailable in untrusted folders even when config exists, so `Configured` and `Operational` must stay separate states
+- Cross-provider overwrite/repair policy recommendation:
+- PM-managed targets should use explicit managed sections/files where possible
+- if provider-native config is manually edited while PM control is on, PM should surface drift and offer:
+- `Repair`
+- `Review changes`
+- `Detach from PM control`
+- PM should not silently overwrite unrelated non-PM-managed config outside its owned sections when a provider format allows safe coexistence
+- Instruction-file drift and repair policy is now getting concrete:
+- PM control must be explicit per target, not implicit global magic
+- each instruction/rules target should have one control mode:
+- `PM Controlled`
+- `Manual Override`
+- while a target is `PM Controlled`, PM owns projection into that target and must track:
+- canonical revision
+- last projected revision
+- last drift check
+- drift state
+- recommended drift states:
+- `In Sync`
+- `PM Outdated`
+- `Provider Modified`
+- `Projection Failed`
+- `Unknown`
+- if a user edits a `PM Controlled` target directly, PM should mark `Provider Modified` rather than silently overwriting on the next refresh
+- repair flow should be explicit:
+- `Review changes`
+- `Repair` (reapply PM-controlled version)
+- `Keep provider version and detach`
+- PM should not silently merge divergent instruction content; that is too hard to explain and too easy to get wrong
+- this applies to shared panes (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, Cursor Rules) and to provider-native advanced targets such as GitHub Copilot instruction/agent files when PM is managing them
+- multi-account implication:
+- instruction drift belongs to the projection target, not to account auth identity
+- shared workspace targets should not duplicate per account
+- account-local or provider-profile-local targets can drift independently and must show that independently in the GUI
+- GitHub Copilot account switching must be independent from built-in Git and GitHub API integration:
+- Copilot provider auth uses `copilot_github`
+- GitHub API repo/fork/PR operations use `github_api`
+- local Git/worktree operations use local git state
+- switching Copilot accounts must not mutate or implicitly switch the GitHub API realm, git remotes, worktree ownership, or repository transport state
+- The shared four-pane instruction model is no longer sufficient by itself:
+- it still matters as the shared cross-provider baseline
+- but GitHub Copilot-native `.github/copilot-instructions.md`, path-scoped `.github/instructions/*.instructions.md`, and `.github/agents/*.md` custom agents need explicit provider-native treatment if PM wants implementation-ready parity
+- Instruction control rule:
+- PM should never silently reconcile user edits into PM-controlled instruction targets
+- it must surface drift and require an explicit choice to repair or detach
+- Codex and GitHub Copilot should be treated operationally as direct providers throughout the planning set:
+- no PM dependency on Codex CLI or Copilot CLI for the canonical runtime path
+- no CLI-root sandbox model for their multi-account implementation
+- usage, auth, skills, MCP, and instruction contracts for those two need to be written around direct-provider behavior
+- Codex direct-provider setup should no longer be modeled as a simple clone of the older CLI auth story:
+- PM likely needs to distinguish `ChatGPT account` vs `API key` as the real setup/auth families
+- ChatGPT-plan included limits and API-key billed usage are different usage/cooldown buckets and must not be merged
+- GitHub Copilot direct-provider setup should explicitly include billing-entity / org context as part of effective account identity when provider usage/quota semantics depend on it
+- Direct-provider account identity should be modeled as layered:
+- auth identity
+- provider account record
+- optional billing entity / org / entitlement bucket
+- PM should keep auth identity and billing/quota identity separate in both storage and GUI, then show the combined effective runtime resolution when a provider depends on both
+- Agent-Config and Usage should not flatten direct-provider quota context into one generic `account` label:
+- account rows stay the primary control surface
+- entitlement/billing context should appear as a secondary chip/line and in the expanded inspector
+- requested/effective runtime panels must be able to show:
+- same account, different entitlement bucket
+- same entitlement bucket, different account
+- both account and entitlement changed
+- Codex must support multi-account across both OAuth/ChatGPT and API-key auth families under one provider entry:
+- example supported shape: many Codex OAuth accounts plus many Codex API-key accounts coexisting under `Codex`
+- those accounts remain separate selectable units with separate usage/cooldown and must not be merged into one flat pool without preserving auth-family identity
+- Direct-provider setup-state implication:
+- `Logged in` is not always the same as `Ready`
+- some providers may need:
+- auth complete
+- entitlement/billing entity resolved
+- validation complete
+- only then should the account become fully `Ready`
+- Agent-Config row contract for mixed direct-provider accounts now needs to be explicit:
+- one row per account record, even when multiple rows belong to the same provider and human owner
+- visible row fields should include:
+- account label
+- auth family
+- primary provider identity
+- current state
+- pressure/cooldown summary
+- entitlement/billing secondary line when relevant
+- actions
+- expanded inspector should include:
+- provider identity details
+- entitlement/billing entity details
+- usage windows tied to that bucket
+- requested vs effective participation details
+- validation/auth history
+- setup actions and repair actions
+- Example shape:
+- multiple `Codex` rows can coexist with the same human owner but different auth families (`ChatGPT`, `API key`)
+- multiple `GitHub Copilot` billing contexts should preferably appear under one GitHub account row as selectable entitlement contexts rather than as duplicated fake account rows
 - Mode for this work item is `research`.
 - Work item status starts as `active`.
 - Topic framing includes both provider support and multi-account support.
@@ -1402,6 +1816,37 @@
 - account switching thresholds are conceptually clear, but exact trigger rules and provider-specific fallback behavior are not fully tabulated
 - the normalization model and precedence rules are much clearer now; remaining work is concentrated in provider/account-specific evidence and final trigger tables rather than core model ambiguity
 - trigger-table structure is now much clearer; remaining work is mainly stronger provider-specific evidence for the weakest entries rather than missing scheduler semantics
+- Usage-page and cooldown interaction model is now clearer at the behavior level:
+- Usage should not just show numbers; it needs to explain routing pressure and switching in plain language
+- account/profile rows or cards should show:
+- primary identity
+- active/effective marker
+- pressure/cooldown state
+- current windows/usage where known
+- next reset/countdown where known
+- source-confidence label
+- recent switch or failover reason when relevant
+- if data is stale or inferred, UI must say so explicitly rather than rendering it as authoritative
+- recommended user-facing states remain:
+- `Working`
+- `Needs setup`
+- `Needs permission`
+- `Has problems`
+- `Warning`
+- for usage/cooldown specifically, supporting plain-language subtext should explain:
+- whether PM switched because of threshold/cooldown/auth failure
+- whether reset time is known vs estimated vs unknown
+- whether values are provider-reported vs inferred from runtime/error history
+- interaction recommendation:
+- rows/cards should expand into a detailed inspector with:
+- per-window breakdown
+- last known reset/cooldown source
+- recent switch history/reasons
+- auth/validation status
+- actions such as `Refresh Usage`, `Revalidate`, `Set Preferred`, `Edit Threshold`, `Open Provider Settings`
+- cooldown timers should tick live when the reset/cooldown time is known
+- unknown timers should display as `Unknown reset` / `Unknown cooldown end`, not fake countdowns
+- stale snapshots should remain visible but clearly labeled `Stale`
 - blocker class: skill projection/support is still under-specified
 - user asserted Codex, Copilot, Cursor, Claude, Gemini CLI, and OpenCode all support skills natively, but PM-side projection rules, packaging shape, and failure behavior are not yet locked provider by provider
 - exact native vs projected vs partial behavior still needs a final provider matrix
@@ -1466,6 +1911,16 @@
 - blocker class: instruction projection behavior is still missing file-level operational detail
 - exact write targets, conflict resolution, drift detection cadence, and restore behavior are not fully specified per provider/runtime
 - exact handling when a user manually edits provider-native files while PM control is enabled still needs a hard rule beyond generic drift-state language
+- GitHub Copilot specifically broadens this blocker:
+- PM still needs an explicit implementation decision for how Agent-Config will expose and sync:
+- `.github/copilot-instructions.md`
+- `.github/instructions/*.instructions.md`
+- `.github/agents/*.agent.md`
+- relative to the shared panes for `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, and Cursor rules
+- drift-state vocabulary and explicit repair/detach flows are now clearer, but exact drift-check timing and exact target ownership boundaries per provider/runtime still need one final pass
+- blocker class: model normalization is now narrowed
+- raw-ID canon is already clear; remaining work is the exact cleaned-label/disambiguation policy and where runtime-platform context appears in model pickers, Usage, and requested/effective inspectors
+- this policy is now much clearer; remaining work is mostly edge-case review for collisions and provider-specific awkward raw names rather than a missing core contract
 - blocker class: OpenCode is still not fully operationally specified
 - managed-server lifecycle is not fully pinned:
 - launch command/env
@@ -1483,6 +1938,21 @@
 - exact manual pin / preferred account / priority reorder behavior
 - exact cooldown editing or override UX
 - exact requested/effective inspector placement and per-run visibility rules
+- blocker class: direct-provider parity for Codex and GitHub Copilot is still incomplete
+- current docs still preserve stale CLI-oriented assumptions in at least `Plans/usage-feature.md` and `Plans/Multi-Account.md`
+- this affects setup/auth flows, usage sourcing, MCP strategy, and instruction/skill projection assumptions
+- exact current official auth flow for Codex direct-provider use is still not fully pinned from primary docs beyond the clear ChatGPT-plan + API-key split
+- exact GitHub Copilot billing-entity / premium-request modeling still needs to be translated into PM account/cooldown semantics
+- exact canonical placement of billing-entity / entitlement fields across `Prompt_Pipeline.md`, `Contracts_V0.md`, `storage-plan.md`, and Usage still needs one deliberate pass so direct-provider account identity does not drift across docs
+- exact GUI wording for entitlement/billing labels still needs a consistency pass:
+- avoid exposing raw internal terms where the provider has clearer product language
+- examples likely need provider-specific display text such as `Organization`, `Billing Entity`, `Plan`, or `Usage Bucket`
+- blocker class: MCP provider projection still needs one more implementation pass
+- exact adapter-generation policy per CLI provider is not yet frozen:
+- which config is profile-global vs project-local vs worktree-local
+- when PM repairs existing provider-native MCP config vs overwrites/rebuilds it
+- how PM handles manual overrides/drift in provider-native MCP config while PM control is enabled
+- how OpenCode attached-server MCP state is inspected and represented without pretending PM owns it
 - blocker class: storage/event impact still needs one more pass
 - additive runtime fields are mostly identified, but not yet frozen against all affected docs and record types
 - exact placement of deep diagnostic IDs like `selectable_unit_id` remains unresolved
@@ -2029,16 +2499,107 @@
   - Cursor CLI's "same config as editor" model means PM should treat Cursor MCP as config synchronization into Cursor profile/workspace config locations, not as an ad hoc per-run trick
   - Gemini's trust model is a real blocker for stdio MCP servers in untrusted folders and must be surfaced in PM health/status
 - MCP + Skills integration is converging toward one buildable PM model:
-  - PM-native skills should carry explicit MCP requirement metadata rather than relying on heuristics from skill body text
-  - likely requirement split:
-    - required MCP servers
-    - optional MCP servers
-    - optionally required tools/capabilities within a server where needed
+  - PM-native skills should carry explicit dependency metadata rather than relying on heuristics from skill body text
+  - better design than MCP-only fields:
+    - `required_tool_refs`
+    - `optional_tool_refs`
+  - these should use canonical PM tool registry names, so MCP-backed tools are not a special separate mechanism
+  - this lets one skill requirement model cover:
+    - MCP-backed tools
+    - built-in PM tools
+    - provider-exposed tools where they are canonically registered
   - PM should compute a per-skill readiness state from:
     - skill validity
     - permission state
-    - MCP requirement satisfaction
-    - provider/runtime effective MCP availability
+    - required tool availability
+    - provider/runtime effective tool availability
+- This is a stronger design than MCP-specific skill metadata because it aligns directly with the central registry and requested/effective tool-resolution model already defined in `Plans/Tools.md`
+- Skill dependency metadata placement is now leaning clearly toward `SKILL.md` frontmatter:
+  - current PM canon already makes `SKILL.md` frontmatter the skill's identity/schema surface (`name`, `description`, optional metadata)
+  - Personas already reference skills by id through `default_skill_refs`, so keeping dependency metadata inside the skill itself keeps the skill self-describing and portable
+  - PM-only sidecar/overlay metadata for required tools would add a second source of truth and make import/export/interoperability worse
+- Current likely design direction:
+  - extend `SKILL.md` frontmatter with optional fields such as:
+    - `required_tool_refs`
+    - `optional_tool_refs`
+  - validate these against the canonical tool registry when possible
+  - unknown tool refs should probably surface as warnings/readiness failures rather than silently pass
+- Reason this is better:
+  - imported skills remain self-contained
+  - catalog-installed skills can declare requirements without extra PM-only records
+  - GUI can show readiness directly from the skill file plus current runtime state
+- Skill validation/readiness split now needs to be explicit:
+  - `schema invalid`:
+    - malformed frontmatter
+    - invalid field types
+    - invalid skill name/description rules
+    - invalid `required_tool_refs` / `optional_tool_refs` shape
+    - result: skill is `Invalid`, not runnable
+  - `unknown tool ref`:
+    - tool ref is syntactically valid but not found in the canonical PM tool registry
+    - result should not masquerade as success
+    - likely GUI/runtime state: `Missing Requirement` or a more specific `Unknown Tool Ref`
+  - `known tool ref but unavailable in current context`:
+    - tool exists in registry, but effective availability is blocked by provider/runtime/project/persona/permission/health state
+    - result: skill is valid but not currently runnable; show `Missing Requirement` or `Permission Blocked` with the exact reason
+- Recommended policy direction:
+  - `required_tool_refs` problems should block runnable readiness
+  - `optional_tool_refs` problems should warn but not block runnable readiness
+  - PM should surface the exact failing refs in the Skills GUI instead of flattening everything into one generic error
+- User-facing wording correction:
+  - internal readiness/error categories should not be exposed directly as raw status labels in the GUI
+  - user-facing skill state should use plain language such as:
+    - `Ready`
+    - `Needs setup`
+    - `Needs permission`
+    - `Has problems`
+    - `Warning`
+  - the specific technical reason should appear as secondary explanatory text, for example:
+    - `Needs setup` — `Context7 is not configured`
+    - `Needs permission` — `This skill needs access to context7_query_docs`
+    - `Has problems` — `The skill file has invalid frontmatter`
+    - `Warning` — `Optional tool websearch_cited is unavailable`
+  - keep internal state names for logic/telemetry only; do not let them leak into the primary GUI copy
+- Skills GUI interaction model is becoming clearer:
+  - each skill row/card should show:
+    - name
+    - short description
+    - provenance/source
+    - primary user-facing state (`Ready`, `Needs setup`, `Needs permission`, `Has problems`, `Warning`)
+    - one-line remediation text when not `Ready`
+    - primary action button matched to the issue
+  - examples of remediation/action pairing:
+    - `Needs setup` + `Context7 is not configured for this provider` + action `Set up Context7`
+    - `Needs permission` + `This skill needs access to Context7 Docs` + action `Review permissions`
+    - `Has problems` + `The skill file has invalid frontmatter` + action `Edit skill`
+    - `Warning` + `Optional tool Web Search is unavailable` + action `Review tool setup`
+  - expanded skill inspector should show:
+    - required tools and current status of each
+    - optional tools and current status of each
+    - projection/export status
+    - validation details
+    - shadowed/duplicate info if relevant
+    - exact provider/runtime-specific blockers where relevant
+  - strong UX rule:
+    - every non-ready state should have an obvious next step in the same surface
+    - users should not have to infer whether they need MCP setup, permission changes, or skill-file edits
+- Provenance/source wording needs to be explicit, not vague:
+  - source should not just mean "project vs global path"
+  - GUI should tell the user where the skill came from, for example:
+    - `Bundled with PM`
+    - `Imported from disk`
+    - `Installed from catalog`
+    - `Installed from GitHub`
+  - and then separately show the current local file path/location
+  - if the install source is GitHub or catalog, the GUI should preserve that origin metadata rather than collapsing it into only a filesystem path
+- Provenance should be actionable:
+  - if a skill was installed from GitHub, the GUI should show the actual GitHub URL as a clickable link
+  - if a skill was installed from a catalog entry, the GUI should show the catalog/source link where available
+  - provenance should therefore store both a human-readable origin label and a canonical origin URL when one exists
+- Edit flow requirement confirmed:
+  - users must be able to edit the skill from the Skills GUI
+  - this should include inline or embedded editing of `SKILL.md` with validation on save
+  - source metadata/origin should remain visible even after local edits; editing a GitHub/catalog-installed skill should not erase its provenance
 - Recommended skill readiness statuses now implied by the discussion:
   - `Working`
   - `Missing Requirement`
@@ -2059,3 +2620,44 @@
   - Direct providers use PM-native MCP tools directly through the central registry
   - CLI providers use PM-managed derived adapter config plus the same PM-native MCP registry/health model
   - OpenCode must distinguish managed-server vs attached-external-server ownership, but PM still owns requested/effective readiness disclosure
+- MCP Configuration page is ready for a more exact PM shape:
+  - one row/card per configured MCP server
+  - visible fields should include:
+    - server name
+    - brief description
+    - primary user-facing status (`Working` or a plain-language problem)
+    - one-line remediation text when not working
+    - scope/ownership hint where relevant (`PM managed`, `project only`, `external`)
+    - primary action button
+  - expanded inspector should show:
+    - server command / transport / endpoint
+    - required credentials/auth status
+    - exposed tool names
+    - provider/runtime availability detail
+    - last successful health check
+    - logs or last error text
+    - install/config sync state for CLI providers where applicable
+  - direct providers should not be described as having the MCP "installed on provider"; the GUI should instead express that the MCP server is `Working` or not and show provider/runtime usability as secondary detail
+  - CLI providers should expose that PM has configured/synced the MCP bridge when relevant, but the main user-facing state should still be simple status + reason
+- Likely action set for MCP rows:
+  - `Set up`
+  - `Configure`
+  - `Repair`
+  - `Reconnect`
+  - `Disable`
+  - `Remove`
+  - `View logs`
+  - all with explicit pending/success/failure state transitions like the provider-account buttons
+- Remaining MCP GUI drift to reconcile later:
+  - some existing plan language still frames MCP configuration as provider-centric toggles, while the stronger current direction is server-centric with per-provider/runtime effective availability
+- Cursor multi-account clarification:
+  - user clarified PM only cares about the CLI/runtime, not the editor surface
+  - the Cursor developer's `cursor --user-data-dir=...` guidance is therefore not sufficient as the main PM multi-account contract
+  - PM's runtime integration target is `cursor-agent`
+  - local probing showed:
+    - fresh `HOME` isolates the `cursor-agent` account
+    - fresh `XDG_*` roots also isolate the `cursor-agent` account
+    - `CURSOR_USER_DATA_DIR` alone did not isolate the `cursor-agent` account in local probing
+  - current best design direction is therefore:
+    - for PM-managed Cursor CLI accounts, prefer stronger profile isolation via PM-owned home/config/data roots
+    - do not rely on `--user-data-dir` as the core account-isolation mechanism for the CLI runtime

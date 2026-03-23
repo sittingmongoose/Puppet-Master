@@ -12,7 +12,7 @@
 - [ESLint v10 migration](https://eslint.org/docs/latest/use/migrate-to-10.0.0) -- flat config, Node requirements.
 - [slint-lsp](https://crates.io/crates/slint-lsp) -- LSP server for Slint (.slint); stdio; diagnostics, completion, goto definition, live-preview. See §3.3.1.
 - [Slint tooling (slint-lsp, fmt)](https://snapshots.slint.dev/master/docs/guide/tooling/manual-setup/#slint-lsp) -- setup, config, formatting.
-- Plans/FileManager.md (§6 out of scope, §10 editor enhancements, §11 presets, §12.1.4 symbol search without LSP, §12.2.7 symbol index staleness)
+- Plans/FileManager.md (§6 out of scope, §10 editor navigation and fallback symbol search, §11 file-tree actions and presets)
 - Plans/FinalGUISpec.md (placeholder for linter/build errors when LSP added)
 
 ---

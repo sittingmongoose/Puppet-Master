@@ -9,7 +9,7 @@
 - **Editor floating and main window closed:** AutoDecision: closing the main window does not exit the app if a floating editor window exists; the app exits when the last window closes (or on explicit Quit).
 - **Read-only and binary:** See §2.6 (and read-only reason in UI).
 - **Large files:** See §2.7 (threshold, hard cap, truncated + "Load full file").
-- **LSP and format/rename:** When LSP is in use, server crash or hang is handled per §10.10.4 (fallback, no editor crash). If format-on-save times out, save without formatting. If the file is renamed on disk (by LSP rename or externally), detect and prompt to save to new path or close. Symbol index staleness: see §12.2.7.
+- **LSP and format/rename:** When LSP is in use, server crash or hang follows the §10 editor/LSP fallback contract plus Plans/LSPSupport.md §8 (no editor crash). If format-on-save times out, save without formatting. If the file is renamed on disk (by LSP rename or externally), detect and prompt to save to new path or close. When LSP is stale or unavailable, symbol navigation falls back to the §10.2 heuristic/index path.
 
 ---
 

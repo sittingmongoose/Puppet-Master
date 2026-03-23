@@ -228,9 +228,10 @@ Primary content: 1280 - 48 - 48 = 1184px wide
 
 ### 4.1 Activity Bar
 
-The activity bar is the canonical entry point for persistent side-panel operational surfaces.
+The activity bar is the canonical entry point for persistent right-hand side-panel operational surfaces.
 
 Required side-panel items for this feature set:
+- `search`
 - `chat`
 - `files`
 - `source_control`
@@ -239,45 +240,54 @@ Required side-panel items for this feature set:
 - `artifacts`
 - `run_debug`
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/GitHub_Integration.md
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md
 
 Required shell rules:
-- Source Control and GitHub Actions are separate activity-bar destinations.
-- The legacy combined `Git (GitHub)` surface is retired as canonical shell behavior.
-- Docker Manager is the canonical container/runtime side-panel destination.
-- Kubernetes does not get a separate activity-bar item for MVP; it is a Docker Manager subview.
-- Unraid does not require a separate top-level activity-bar item; Publish / Unraid lives inside Docker Manager.
-- Activity-bar labels, tooltips, keyboard shortcuts, and `cmd.panel.switch` IDs MUST use the same surface vocabulary.
+- Search, File Manager, Source Control, GitHub Actions, Docker Manager, Artifacts, Chat, and Run & Debug occupy the single right-hand side-panel slot defined by the shell.
+- None of those surfaces are described as canonical primary-content pages unless the statement is explicitly about a routed detail page launched from the surface.
+- Activity-bar labels, tooltips, shortcuts, and command IDs MUST use the same surface vocabulary across shell chrome, command palette, and wiring tables.
+- Detachable side-panel surfaces return to the same right-hand slot when re-docked.
+- The bottom runtime zone remains terminal/output/problems/debug/ports territory; normal browsing and HTML preview remain editor/workspace-tab hosted.
 
-ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
 Canonical side-panel descriptions:
 
 | Panel ID | Canonical label | Purpose |
 |---|---|---|
+| `search` | Search | Project-wide find-in-files and replace-in-files with persistent query/result state |
+| `files` | File Manager | Project tree, local tree filter, file actions, and editor handoff |
 | `source_control` | Source Control | Git-first repo state, changes, history, graph, branches/stash, and worktrees |
 | `github_actions` | GitHub Actions | GitHub-hosted workflows, runs, logs, dispatch, and admin settings |
 | `docker_manager` | Docker Manager | Containers, images, compose, registries, build/bake, Publish / Unraid, and project-focused Kubernetes |
+| `artifacts` | Artifacts | Runtime/browser/build artifacts and cross-surface evidence navigation |
+| `chat` | Assistant Chat | Threaded assistant workflows, context management, and activity transparency |
+| `run_debug` | Run & Debug | Runtime diagnostics, problems, debug, output, and ports entry surface |
 
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/UI_Command_Catalog.md
-
-Unchanged primary-content and bottom-panel surfaces continue to follow the rest of this document.
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md
 
 ### 4.2 Command Palette
 
-`Ctrl+K` (primary) or `Ctrl+P` (alternative) opens a centered overlay (~500-600px wide, top third of window) with fuzzy search across all pages, commands, and actions.
+`Ctrl+K` (primary) or `Ctrl+P` (alternative) opens a centered overlay (~500-600px wide, top third of window) with fuzzy search across project navigation targets, commands, recent items, and explicit open targets.
 
-**Prefix modes:**
-- No prefix: everything (pages, commands, recent items, files)
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
+
+Prefix modes:
+- no prefix: pages, commands, recent items, files, and explicit open targets
 - `>`: commands only
-- `@`: file mentions (same as chat @ mention)
-- `/`: slash commands
+- `@`: file and symbol mention flow for chat/context entry
+- `/`: reserved slash commands
 
-**Behavior:**
-- Recently used items appear first (recency weighting)
-- Each entry shows: action name, keyboard shortcut (if any), category badge
-- Arrow keys to navigate, Enter to select, Escape to dismiss
-- Fuzzy matching: "das" matches "Dashboard", "dsh" matches "Dashboard"
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/LSPSupport.md
+
+Boundary rules:
+- The command palette is a transient project-scoped navigation/command surface, not the owner of persistent find-in-files results.
+- The Search side panel owns persistent project text search, replace-in-files, scope filters, and query-session result state.
+- The command palette may launch or focus Search through `cmd.search.show`, but it does not keep the persistent result list after dismissal.
+- File Manager search remains a local tree filter/type-ahead only.
+- LSP symbol, reference, and diagnostic surfaces retain semantic ownership even when the command palette hosts a launcher or quick-open affordance.
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Wiring_Matrix.md
 
 ### 4.3 Breadcrumb
 
@@ -285,10 +295,9 @@ At the top of the primary content area, a breadcrumb strip (20px) shows `Group >
 
 ### 4.4 Keyboard Shortcuts
 
-**Artifacts panel and side-panel toggling:** Any shortcuts for "Open Artifacts panel," "Toggle side panel," or switching between side-panel content (Git, Docker, Unraid, Artifacts, Chat, Files) MUST be registered in the shortcut registry and appear in Settings > Shortcuts. Activity bar icon clicks are the primary interaction; keyboard shortcuts are additive and must stay consistent with §4.1 and §5.
+Search, File Manager, Source Control, Chat, Artifacts, and runtime-surface shortcuts MUST be registered in the shortcut registry and appear in Settings > Shortcuts. Activity-bar icon clicks remain primary; shortcuts are additive and must stay consistent with `cmd.search.*`, `cmd.file.*`, `cmd.chat.*`, `cmd.source_control.*`, and shell layout rules.
 
-
-**Artifacts panel and side-panel toggling:** Any shortcuts for "Open Artifacts panel," "Toggle side panel," or switching between side-panel content (Git, Docker, Unraid, Artifacts, Chat, Files) MUST be registered in the shortcut registry and appear in Settings > Shortcuts. Activity bar icon clicks are the primary interaction; keyboard shortcuts are additive and must stay consistent with §4.1 and §5.
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FileManager.md
 
 **Tier 1 -- Essential (learn day one):**
 
@@ -298,57 +307,71 @@ At the top of the primary content area, a breadcrumb strip (20px) shows `Group >
 | `Ctrl+L` | Focus chat input |
 | `Ctrl+N` | New chat thread |
 | `Ctrl+Shift+E` | Toggle File Manager |
+| `Ctrl+Shift+F` | Show Search with query focus |
 | `Escape` | Close palette / panel / stop agent |
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md
 
 **Tier 2 -- Productive (learn in first week):**
 
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl+1` through `Ctrl+5` | Jump to activity bar group 1-5 default page |
+| `Ctrl+1` through `Ctrl+8` | Jump to activity-bar item 1-8 in current order |
 | `Ctrl+Enter` | Send message (in chat) |
 | `Tab` | Queue message (in chat, steer mode) |
 | `Ctrl+Shift+,` | Open settings |
-| `Ctrl+\` | Toggle side panel (Chat/Files) |
-| `Ctrl+Shift+\`` | Toggle bottom panel (Terminal) |
+| `Ctrl+\` | Toggle current side-panel occupant |
+| `Ctrl+Shift+H` | Show Search with replace focus |
+| `Ctrl+Shift+\`` | Toggle bottom runtime panel |
 | `Ctrl+W` | Close current tab/panel |
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
 
 **Tier 3 -- Power user (discoverable via palette):**
 
 | Shortcut | Action |
 |----------|--------|
 | `Ctrl+Shift+D` | Toggle Dashboard |
-| `Ctrl+Shift+\` | Detach/re-dock side panel |
+| `Ctrl+Shift+\` | Detach/re-dock active detachable side-panel or terminal section |
 | `Alt+Up/Down` | Cycle through chat threads |
 | `Ctrl+Shift+C` | Compact current session |
-| `Ctrl+Shift+X` | Export thread |
 | `Ctrl+Shift+P` | Open project switcher |
 | `F5` | Start/Continue debug |
 | `F10` | Step Over (debug) |
 | `F11` | Step Into (debug) |
 | `Shift+F11` | Step Out (debug) |
 | `Shift+F5` | Stop debug |
-| `Ctrl+Shift+B` | Focus Browser |
 
-**Shortcut registry:** A Rust-side registry maps (modifiers + key) to actions. Platform-specific modifier normalization (Cmd on macOS, Ctrl on Windows/Linux). The "Keyboard shortcuts" help view is auto-generated from this registry.
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md
 
----
+Shortcut registry rule: A Rust-side registry maps (modifiers + key) to commands or route/open actions. Platform-specific modifier normalization (Cmd on macOS, Ctrl on Windows/Linux) remains mandatory, and the Keyboard Shortcuts help view is auto-generated from the registry.
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
 ## 5. Panel System
 
 ### 5.1 Detachable Panels
-**Side-panel occupancy contract (one at a time; last-click wins):** The side panel is the single activity-bar-driven side-panel slot. Run & Debug, Git (GitHub), Docker Manage, Source Control, Unraid, Artifacts, Chat, and File Manager can occupy it one at a time. See §4.1 Activity Bar for which icon shows which panel. Detach and re-dock support is limited to the panels and shell surfaces listed below.
 
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
+The side panel is the single activity-bar-driven right-hand slot. Search, Chat, File Manager, Source Control, GitHub Actions, Docker Manager, Artifacts, and Run & Debug all live in that slot, one occupant at a time.
 
-The following surfaces support detach and re-dock:
-- **Chat panel**
-- **File Manager panel**
-- **Primary terminal section**
-- **Secondary terminal section** when opened
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
 
-Other views (Dashboard, Settings, Orchestrator, Source Control, and similar page surfaces) remain in the primary content area and are not generic detachable panels.
+Detach and re-dock support for this feature cluster is mandatory for:
+- Search panel
+- Chat panel
+- File Manager panel
+- Primary terminal section
+- Secondary terminal section when opened
 
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
+
+Additional rules:
+- Re-docking restores a detachable surface to the canonical right-hand side-panel slot or bottom runtime zone without minting a new logical surface identity.
+- Source Control, GitHub Actions, Docker Manager, Artifacts, and Run & Debug may remain docked-only in MVP while still using the same slot and shell-state vocabulary.
+- The bottom runtime zone is not the canonical host for normal browsing, HTML preview, or persistent Search results.
+- Browser surfaces remain editor/workspace-tab hosted or detached-window hosted according to the preview/browser session model.
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
 ### Terminal section presentation rules
 - the primary terminal section defaults to the bottom runtime zone
@@ -625,14 +648,28 @@ Rules:
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Widget_System.md, ContractName:Plans/Crosswalk.md
 
 ### 7.2 Source Control
-Source Control is a narrow, compact, worktree-first panel.
+
+Source Control is the side-panel owner for Git-native repository work in the rewrite shell.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md
+
+Required subviews:
+- `Changes`
+- `History`
+- `Graph`
+- `Worktrees`
+- `Branches / Stash`
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
 
 Rules:
-- rows are concrete worktrees/branches/paths
-- package, lane, and run context appear as metadata rather than as the primary grouping axis
-- Git-native actions remain in Source Control, not in Orchestrator
+- The `Changes` subview owns staged, unstaged, untracked, and conflicted lists, compare-target defaults, per-file diff entrypoints, hunk actions, and conflict review entrypoints.
+- The `History` and `Graph` subviews are MVP and own commit browsing, changed-file pivots, commit-detail compare selection, and lineage overlays.
+- Diff-local search belongs to the Source Control diff/review surface; it is not routed through the Search side panel.
+- Package, lane, run, or remediation lineage appear as metadata where relevant, not as the primary grouping axis.
+- Git-native actions remain Source Control owned and MUST NOT be described as editor undo.
 
-ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
 
 ### 7.3 Shared route and open behavior
 Views consume the canonical navigation/source-open primitives.
@@ -716,6 +753,7 @@ Context Detail Pane inspector rules:
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
 ### 7.5 Project and attention surfaces
+
 Project cards and the attention center consume project-summary and project-attention projections.
 
 Rules:
@@ -724,6 +762,26 @@ Rules:
 - attention rows, palette opens, and cross-surface pivots resolve through the same internal route contract
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
+
+#### Search side-panel owner
+Search is the persistent project text-search and replace-in-files surface.
+
+Rules:
+- Search owns query text, replacement text, include/exclude globs, regex/case/whole-word toggles, result grouping, and replace preview/apply flow.
+- `cmd.search.show` is the canonical shortcut and command-palette entrypoint for this surface.
+- Search result opens route through the canonical open-file contract rather than through feature-local payloads.
+- File Manager search remains a local tree filter/type-ahead only.
+- LSP symbol/reference results may visually resemble Search, but their ownership and fallback rules remain LSP-specific.
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/LSPSupport.md
+
+Remote/degraded rules:
+- Search may keep prior remote results as an explicitly stale snapshot.
+- New remote queries or replace operations that need host round-trips must surface `stale`, `degraded`, or `unavailable` state explicitly instead of silently re-running locally.
+- Replace-in-files MUST respect remote write availability before presenting a success-shaped UI.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
+
 ## 11. Anti-Flickering and Scroll Preservation
 
 ### 11.1 Core Principle
@@ -893,11 +951,11 @@ puppet-master-rs/
 |   |   +-- file_editor.slint         # NEW
 |   |   +-- agent_activity.slint      # NEW
 |   |   +-- not_found.slint
-|   +-- panels/                       # Detachable panel content
+|   +-- panels/                       # Detachable panel content and shared runtime/browser hosts
 |   |   +-- chat_panel.slint
 |   |   +-- file_manager_panel.slint
-|   |   +-- bottom_panel.slint          # Terminal/Problems/Output/Ports/Debug tabs plus browser-adjacent panes
-|   |   +-- browser_panel.slint         # NEW - Webview host + URL bar + bookmarks
+|   |   +-- bottom_panel.slint          # Terminal/Problems/Output/Ports/Debug tabs plus runtime-adjacent panes
+|   |   +-- browser_panel.slint         # NEW - Shared webview host reused by workspace-tab and detached browser surfaces
 |   |   +-- debug_panel.slint           # NEW - DAP debug UI (variables, call stack, breakpoints)
 |   +-- windows/                      # Secondary windows
 |       +-- floating_panel.slint
@@ -985,47 +1043,64 @@ Chat messages, file trees, log outputs, evidence lists, and other long lists use
 ## 15. Persistence
 
 ### 15.1 redb Schema
+
+**Shell, layout, and editor state**
+
 | Key | Content | Write Frequency |
 |-----|---------|----------------|
-| `layout:v1` | Panel dock state per panel (docked side + width, or floating position/size); center splits; bottom panel height; terminal-section dock state; detached-terminal geometry; split ratios for terminal sections. Single JSON blob for atomic read/write. | On change (debounced 300ms) |
+| `layout:v1` | Panel dock state per panel (docked side + width, or floating position/size); center splits; bottom runtime-panel height; detached-window geometry; split ratios for terminal sections. Single JSON blob for atomic read/write. | On change (debounced 300ms) |
 | `dashboard_layout:v1` | Ordered list of dashboard card IDs + grid column count | On change (debounced 300ms) |
 | `activity_bar_order:v1` | Ordered list of activity bar item IDs + separator position | On change (debounced 300ms) |
 | `theme:v1` | Current ThemeVariant enum value | On change |
 | `editor_state:v1:{project_id}` | Open tabs, active tab, scroll/cursor position per project | On change (debounced 500ms) |
-| `onboarding:v1` | Tour completion flag, first-run flags | On change |
-| `collapse_state:v1` | Per-view collapse states for collapsible sections | On change (debounced 300ms) |
-| `custom_layouts:v1` | Named custom layout definitions (up to 5) | On change |
-| `settings:v1` | All app settings and config, including terminal appearance defaults and shortcut preferences | On save |
+| `filetree_state:v1:{project_id}` | Expanded folder set, local filter text, and tree scroll position | On change (debounced 300ms) |
+| `search_panel_state.v1:{project_id}` | Search side-panel UI state: last query, replacement text, toggles, include/exclude globs, expanded groups, selected result ref, and active query session ref | On change (debounced 250ms) |
+| `project_state:v1:{project_id}` | Per-project shell snapshot: editor tabs, file-tree expansion, chat thread selection, last active side-panel occupant, active view, language badges, requested/effective LSP selection summary, last-focused Search/Source Control refs, and remote-context summary | On change (debounced 300ms) |
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md
+
+**Chat, settings, and review state**
+
+| Key | Content | Write Frequency |
+|-----|---------|----------------|
+| `settings:v1` | Durable app settings and preferences | On save |
+| `config:v1` | Full app config struct (all Settings values including permissions, shortcuts, LSP registry settings, Search defaults, and file-manager behavior) | On change (debounced 200ms) |
 | `chat_state:v1` | Unsent input text, queued messages, active thread selection | On change (debounced 200ms) |
-| `wizard_state:v1:{project_id}` | Current wizard step, form data | On change (debounced 300ms) |
-| `document_pane_state:v1:{project_id}:{page_context}` | Embedded document pane state: selected document, selected view (`document | plan_graph`), scroll/cursor state, history selection, approval stage | On change (debounced 200ms) |
-| `document_checkpoints:v1:{project_id}` | Checkpoint metadata for restorable document states (`before_multi_pass`, `after_user_edit_1`, etc.) | On checkpoint create/restore |
+| `wizard_state:v1:{project_id}` | Current wizard step and form data | On change (debounced 300ms) |
+| `document_pane_state:v1:{project_id}:{page_context}` | Embedded document-pane state: selected document, selected view, scroll/cursor state, history selection, and approval stage | On change (debounced 200ms) |
+| `document_checkpoints:v1:{project_id}` | Checkpoint metadata for restorable document states | On checkpoint create/restore |
 | `review_findings_summary:v1:{project_id}:{run_id}` | Findings summary payload for requirements/interview review runs | On review completion/update |
 | `review_approval_gate:v1:{project_id}:{run_id}` | Final approval decision state and precondition flags | On approval state change |
 | `slash_commands:v1` | Custom slash commands (application-wide) | On save |
 | `slash_commands:v1:{project_id}` | Custom slash commands (project-wide) | On save |
-| `filetree_state:v1:{project_id}` | Expanded folder paths set, scroll position | On change (debounced 300ms) |
-| `config:v1` | Full app config struct (all Settings tab values including tool permissions, cleanup, shortcuts overrides, skill permissions, and terminal settings) | On change (debounced 200ms) |
-| `projects:v1` | Project registry: list of known projects with paths, detected languages, last-opened timestamps, health status, per-project config overrides | On change |
-| `project_state:v1:{project_id}` | Per-project state snapshot: editor tabs, file tree expansion, chat thread selection, panel layout, active view, language badges, LSP server selection, and last-focused terminal section or tab refs | On change (debounced 300ms) |
-| `ssh_connections:v1` | SSH connection profiles: name, host, port, username, auth method, last-connected timestamp (passwords stored in system keychain, NOT here) | On save |
-| `debug_configs:v1:{project_id}` | Per-project run/debug configurations (launch.json equivalent), breakpoints (file + line + condition + enabled), debug adapter preferences | On save |
-| `catalog_index:v1` | Cached catalog index: item list with name, version, category, description, installed flag. Timestamp of last refresh. | On catalog refresh |
-| `sync_history:v1` | Last export date, last import date, backup file paths | On export/import |
-| `browser_state:v1` | Browser tab URLs, bookmarks, history (last 100 entries), pinned tabs | On change (debounced 500ms) |
-| `terminal_state:v1` | GUI-facing projection of per-project terminal workspace state: ordered terminal sections, terminal tabs, pane tree, labels, pin state, selected pane refs, dock/detach presentation, linked dev-session refs, recovery banners, bounded transcript snapshot refs, and command-block summary refs. It never implies live PTY continuity and never stores secrets. | On change (debounced 300ms) |
-| `sound_prefs:v1` | Sound effects master toggle, per-event toggles, volume level | On change |
-| `hotreload_state:v1:{project_id}` | Dev-session reload state, build command, watched paths, linked terminal-session refs, and last-known output or ports linkage | On change |
+| `projects:v1` | Project registry: known projects with paths, detected languages, last-opened timestamps, health status, and per-project overrides | On change |
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
+
+**Preview, browser, recovery, LSP, and remote keys**
+
+| Key | Content | Write Frequency |
+|-----|---------|----------------|
+| `preview_state.v1:{project_id}:{preview_subject_id}` | Preview UI state keyed by document/artifact subject: mode, attached surface, export prefs, scroll sync, and last error | On change (debounced 300ms) |
+| `preview_source_artifact.v1:{project_id}:{artifact_id}` | Artifact-backed preview metadata and source linkage | On change |
+| `browser_session_state.v1:{project_id}:{browser_session_id}` | Browser session state: session class, workspace tab, preview subject, requested/effective runtime and capabilities, blocked actions, profile scope, restore policy, and last error | On change (debounced 300ms) |
+| `browser_profile_state.v1:{project_id}:{profile_scope}` | Browser history/bookmarks and project-scoped profile state | On change (debounced 500ms) |
+| `editor_unsaved_buffer.v1:{project_id}:{document_id}` | Recoverable local unsaved buffer snapshot, capture metadata, host/path identity, and write-availability state at capture time | On change (debounced 500ms) |
+| `search_query_state.v1:{project_id}:{query_session_id}` | Query-session snapshot: query, replacement, scope, result snapshot ref, freshness, health, and last error | On query update/complete |
+| `lsp_session_state.v1:{project_id}:{host_id}:{server_id}:{root_identity}` | Host-aware LSP session projection: state, freshness, health, restart metadata, capability summary, and last error | On lifecycle change |
+| `lsp_diagnostics_snapshot.v1:{project_id}:{host_id}:{server_id}:{root_identity}` | Diagnostics snapshot ref(s), counts, capture time, freshness, and health for the owning host-aware LSP session | On diagnostics update |
+| `ssh_remotes/{id}` | Saved SSH remote record: nickname, host, port, user, auth method, remote folder, jump host, and last test metadata. No secrets. | On save |
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
 Normative mapping notes:
-- the canonical durable review/bundle contract is owned by `Plans/storage-plan.md` (`bundle.{bundle_id}`, `doc_registry.{bundle_id}`, `notes_index.{bundle_id}`, `note.{bundle_id}.{note_id}`, `document_pane_state.{bundle_id}`, `final_review_output.{bundle_id}`)
-- GUI-facing keys in this table are logical or UI projections and MUST NOT become competing SSOTs with incompatible field shapes
-- `terminal_state:v1` remains the GUI projection boundary; canonical terminal record families and transcript rules are owned by `Plans/storage-plan.md`
-- findings-summary and final-gate restoration MUST resolve back to the canonical bundle or review records defined in `Plans/storage-plan.md`
+- `ssh_remotes/{id}` replaces the stale flat `ssh_connections:v1` concept in GUI-facing persistence summaries.
+- `preview_state.v1:*`, `preview_source_artifact.v1:*`, `browser_session_state.v1:*`, and `browser_profile_state.v1:*` replace the stale single-blob `browser_state:v1` model.
+- Search and LSP rows in this section are GUI-facing projections and MUST resolve back to owner-doc contracts in `Plans/storage-plan.md`, `Plans/FileManager.md`, and `Plans/LSPSupport.md`.
+- `editor_unsaved_buffer.v1:*` stores local unsaved buffer state only and MUST NOT imply that a remote write succeeded.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md#3.9, ContractName:Plans/Crosswalk.md#3.10
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md
+
 ### 15.2 seglog Projections (for Usage)
 
 - Usage events (tokens, cost, platform, tier, session, thread_id) appended to seglog
@@ -1181,44 +1256,45 @@ cargo check
 | **Theme global property update batching** | Low | Switching 20+ theme properties could cause intermediate re-renders. Mitigation: Slint batches property changes within a single `invoke_from_event_loop` call; always set all theme properties in one callback. |
 | **Dashboard card drag-and-drop** | Medium | Drag-reorder logic for dashboard cards is custom and complex. Mitigation: Use a simple ordered-list model with drag-handle + click-to-swap as MVP; full drag-and-drop is enhancement. Test with varying card counts (2-12). |
 | **Floating window data sync race conditions** | High | Multiple windows reading/writing the same VecModel can race. Mitigation: All model mutations go through `invoke_from_event_loop` on the main event loop (single writer). Floating windows receive updates via the same shared `Rc<VecModel>`. Never clone+replace the model; always mutate in-place. |
-| **LSP server lifecycle management** | Medium | Multiple LSP servers (one per language) running simultaneously. Mitigation: Launch servers lazily (on file open for that language). Kill servers on project close. Cap concurrent servers (e.g., max 5). Handle server crashes gracefully (auto-restart once, then show error in status bar). |
+| **LSP server lifecycle management** | Medium | Multiple LSP servers may exist across local and remote hosts. Mitigation: Key server supervision by `(host_id, server_id, root_identity)`, launch lazily on file open, restart boundedly on crashes, and expose stale/degraded/unavailable state instead of silently mirroring remote projects locally. |
 | **External drag-and-drop platform APIs** | Medium | Requires platform-specific integration (Windows IDropTarget, macOS NSDraggingDestination, Linux Xdnd/Wayland). Mitigation: Abstract behind a trait; implement per-platform. If Slint exposes native drop events, use those instead. Test on all three platforms. |
 | **HTML preview webview** | Medium | Embedding a webview for HTML hot-reload preview may conflict with the Skia renderer pipeline. Mitigation: Use `wry` or similar embeddable webview; ensure it sits in a separate native child window within the editor area. Fallback: render static HTML snapshots as images. |
 | **Steer submission mid-stream injection** | Medium | Injecting a new user message while the assistant is actively generating requires careful stream handling. Mitigation: Buffer the steer message; on next token boundary, prepend the steer to the ongoing context. Test that partial generation + steer produces coherent output. |
-| **Webview embedding (`wry`) conflicts** | High | Both the Browser tab (§7.20) and HTML preview (§7.18) embed webviews that may conflict with the Skia renderer pipeline. Mitigation: Use `wry` native child windows positioned within Slint layout areas. Each webview runs in its own OS-level child window overlaid on the Slint surface. Test: resize behavior, z-ordering when panels overlap, theme-aware chrome. Fallback: render static screenshots of web pages as images if webview embedding proves unstable. |
+| **Webview embedding (`wry`) conflicts** | High | Browser and HTML preview surfaces embed webviews that may conflict with the Skia renderer pipeline. Mitigation: Use native child windows positioned within Slint layout areas, keep browser ownership editor/workspace-tab-first, and ensure bottom-panel browser-adjacent panes never become the canonical browser host. |
 | **DAP debugger reliability** | Medium | Debug adapter communication is asynchronous and adapters may crash, hang, or produce unexpected output. Mitigation: Implement timeouts per DAP request (default 10s for evaluate, 30s for launch). Auto-restart crashed adapters once. Show clear error state in Debug tab when adapter is unresponsive. Cap concurrent debug sessions to 1 per project. |
-| **SSH connection stability** | Medium | SSH connections may drop unexpectedly (network change, host reboot, timeout). Mitigation: Keep-alive packets every 30s. On disconnect, retain local buffer contents and show reconnect banner. Auto-reconnect with exponential backoff (1s, 2s, 4s, max 30s, max 5 attempts). After max attempts, show manual "Reconnect" button. Store credentials in system keychain, never in config files. |
+| **SSH connection stability** | Medium | SSH connections may drop unexpectedly (network change, host reboot, timeout). Mitigation: Keep-alive packets every 30s. On disconnect, retain local buffer contents and stale snapshot state, auto-retry once in a bounded way, then show an explicit `Reconnect` action. Never silently fall back to local execution for remote-mode projects. |
 | **Catalog service availability** | Low | Catalog index may be unavailable (network down, server offline). Mitigation: Bundle a fallback index with the app binary. Cache last-fetched index locally. Show "Catalog may be outdated" banner when using cached data. All catalog operations work offline with cached index. |
 | **Sound effects cross-platform audio** | Low | `rodio` audio playback may fail on some Linux configurations (missing PulseAudio/ALSA). Mitigation: Detect audio device availability at startup. If unavailable, disable sound effects silently and hide the toggle in Settings (or show "(audio unavailable)" label). No error toasts for missing audio. |
 | **Custom theme validation** | Low | User-created theme TOML files may have invalid colors, missing tokens, or malformed syntax. Mitigation: Validate all custom themes on load. Skip invalid themes with a warning toast on Settings open. Never crash on invalid theme files. Use base theme values for any missing or invalid tokens. |
 | **Settings page tab count (24 tabs)** | Medium | 24 tabs across 5 groups requires careful navigation. Mitigation: Two-level sidebar navigation is mandatory (not optional). Group headers are collapsible. Search/filter across all settings via a search bar at the top of the Settings sidebar. Deep-link support: command palette "Open setting: {name}" jumps directly to the relevant tab and scrolls to the field. |
-| **Project switch state reload performance** | Medium | Switching projects triggers full state reload (editor tabs, file tree, chat threads, config, LSP servers). Mitigation: Load in priority order: (1) config (instant, from redb), (2) file tree (async scan, show skeleton), (3) editor tabs (lazy, only load active tab content), (4) LSP (background restart), (5) chat threads (lazy load). Show skeleton placeholders during reload. Target: <500ms to interactive. |
-| **File watcher resource consumption** | Low | Hot reload file watcher (§7.20 Ports) monitors project directories for changes. Large projects (>10k files) may consume significant inotify/FSEvents handles. Mitigation: Use `notify` crate with debounced mode. Watch only source directories (exclude node_modules, target, .git, build). Configurable watch paths in Settings. Cap watchers at 5000 paths; if exceeded, show "Watching root directory only" fallback. |
+| **Project switch state reload performance** | Medium | Switching projects triggers full state reload (editor tabs, file tree, chat threads, config, LSP servers). Mitigation: Load in priority order: (1) config (instant, from redb), (2) file tree (async scan, show skeleton), (3) editor tabs (lazy, only load active tab content), (4) LSP/Search/Source Control projections (background refresh), (5) chat threads (lazy load). Show skeleton placeholders during reload. Target: <500ms to interactive. |
+| **File watcher resource consumption** | Low | Hot reload and preview watchers monitor project directories for changes. Large projects (>10k files) may consume significant inotify/FSEvents handles. Mitigation: Use `notify` crate with debounced mode. Watch only relevant source directories. Cap watchers and disclose fallback when root-only watching is required. |
 
----
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/LSPSupport.md
 
 ## 18. Promoted Features (Formerly Future Considerations)
 
-All items previously listed as "future considerations" have been promoted to MVP scope and are fully specified in their respective sections:
+All items previously listed as future considerations are MVP scope and are fully specified in their owner docs:
 
 | Feature | MVP Location |
 |---------|-------------|
-| Built-in browser / click-to-context | Bottom Panel Browser tab (§7.20) |
+| Built-in browser / click-to-context | Rendering Surface Addendum + `Plans/FileManager.md` §8 and §14 |
+| Search / find in files / replace in files | Activity Bar + Command Palette boundary + Search owner contract in this doc; `Plans/UI_Command_Catalog.md` `cmd.search.*` |
 | Instant project switch | Workspace-tab project switch model (§3.4) |
 | Sound effects | UX Patterns §10.13 + Settings > General |
-| Hot reload controls | Bottom Panel Ports tab (§7.20) |
-| In-app instructions editor | File Editor instructions mode (§7.18) |
+| Hot reload controls | Runtime/dev surfaces in `Plans/assistant-chat-design.md` §22 and `Plans/FileManager.md` §14.6 |
+| In-app instructions editor | File Editor instructions mode in `Plans/FileManager.md` |
 | Additional themes / custom themes | Theme extensibility (§6.6) |
-| Language/framework auto-detection | Projects (§7.3) |
-| Catalog / one-click install | Settings > Catalog tab (§7.4.3) |
-| Sync bundle manager | Settings > Sync tab (§7.4.4) |
-| SSH remote editing | Settings > SSH tab (§7.4.5) + File Editor SSH integration (§7.18) |
-| Run/debug configurations | Bottom Panel Debug tab (§7.20) + Settings > Debug (§7.4.6) |
-| Terminal/browser tabs (pin + caps) | Bottom Panel terminal tab management (§7.20) |
+| Language/framework auto-detection and LSP-aware navigation | Project state + `Plans/LSPSupport.md` + `Plans/FileManager.md` §10 |
+| Catalog / one-click install | Settings > Catalog tab |
+| Sync bundle manager | Settings > Sync tab |
+| SSH remote editing | `Plans/GitHub_Integration.md` §C + `Plans/FileManager.md` remote buffer/search behavior |
+| Run/debug configurations | Run & Debug side-panel surface + Settings > Debug |
+| Browser/terminal tabs, pinning, and preview modes | `Plans/FileManager.md` §9 and §14 + Rendering Surface Addendum |
 
-No features are deferred. All items in this specification are MVP scope.
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/LSPSupport.md
 
----
+No features in this specification are deferred.
 
 ## Appendix A: Cross-References
 

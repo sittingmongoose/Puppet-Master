@@ -27,20 +27,61 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan
 
 ### A.2 Changes
 
-The `Changes` subview owns staged, unstaged, untracked, and conflicted files, per-file diff pivot, bulk stage/unstage/discard, AI-assisted commit grouping/message help, commit/amend, and upstream sync state.
+The `Changes` subview is the Source Control owner for day-to-day file mutation review.
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileManager.md
+It MUST present:
+- unstaged files
+- staged files
+- untracked files
+- conflicted files
+- file-level diff entrypoints
+- hunk-level Git actions
+- conflict-review entrypoints
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+Default compare targets:
+
+| Origin | Default compare target |
+|---|---|
+| unstaged file | `index <-> working tree` |
+| staged file | `HEAD <-> index` |
+| untracked file | `empty <-> working tree` |
+| conflicted file | `base`, `ours`, `theirs`, `result` |
+
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+Rules:
+- hunk stage/unstage/discard are Git mutations, not editor undo
+- diff-local search is owned by the diff/review surface and MUST NOT be routed through project Search
+- conflict review uses explicit base/ours/theirs/result context and structured resolution actions
+- tree badges and editor markers consume Source Control projections but do not replace Source Control ownership
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/FileSafe.md
 
 ### A.3 History and Graph
 
-The `History` and `Graph` subviews are MVP scope, not later polish.
+`History` and `Graph` are MVP subviews of Source Control.
 
-Required behavior:
-- history lists commits for the active repo/worktree/branch
-- graph shows branch lineage, ahead/behind/diverged state, and selected-commit detail
-- both views can pivot into diff, changed files, compare target selection, and worktree overlays
+`History` owns:
+- commit list and filters
+- commit detail
+- changed-file pivots
+- commit-to-parent compare defaults
 
-ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md
+`Graph` owns:
+- lineage visualization
+- branch ancestry inspection
+- commit selection handoff into History or diff/review
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md
+
+Rules:
+- history compare defaults use `selected commit <-> first parent`
+- opening a file from commit history preserves the history compare origin for downstream review surfaces
+- package/lane/run lineage may appear as metadata, but Git lineage remains the canonical grouping axis
+
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 
 ### A.4 Worktrees
 
