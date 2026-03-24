@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.evidence.schema.v1",
   "evidence_id": "plan-sharding-2026-03-23",
-  "created_at_utc": "2026-03-23T02:19:20.695460+00:00",
+  "created_at_utc": "2026-03-23T18:22:10.301715+00:00",
   "node": {
     "node_id": "plan-sharding"
   },
@@ -917,7 +917,7 @@
     },
     {
       "path": "Plans/_shards/MiscPlan/24-debug-investigation-instrumentation-cleanup-addendum-2026-03-23.md",
-      "change_type": "added"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/MiscPlan/manifest.json",
@@ -1797,263 +1797,135 @@
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/07-debug-capable-investigation-orchestration.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/07-dynamic-subagent-selection-architecture.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/08-dynamic-subagent-selection-architecture.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/08-integration-with-orchestrator.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/09-benefits.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/09-integration-with-orchestrator.md",
-      "change_type": "added"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/10-benefits.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/10-implementation-phases.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/11-implementation-phases.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/11-provider-connectivity-smoke-tests-subagent-invocation-testing.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/12-plan-mode-strategy-defaults.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/12-provider-connectivity-smoke-tests-subagent-invocation-testing.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/13-gui-and-backend-scope-all-in-scope-now.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/13-plan-mode-strategy-defaults.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/14-gaps-and-clarifications.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/14-gui-and-backend-scope-all-in-scope-now.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/15-dry-method-compliance.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/15-gaps-and-clarifications.md",
-      "change_type": "added"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/16-dry-method-compliance.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/16-potential-issues.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/17-interviewer-enhancements-and-config-wiring.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/17-potential-issues.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/18-avoiding-built-but-not-wired.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/18-interviewer-enhancements-and-config-wiring.md",
-      "change_type": "added"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/19-avoiding-built-but-not-wired.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/19-start-and-end-verification-at-phase-task-and-subtask.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/20-considerations.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/20-start-and-end-verification-at-phase-task-and-subtask.md",
-      "change_type": "added"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/21-considerations.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/21-platform-capability-next-steps.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/22-implementation-notes-where-code-lives-and-what-to-add.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/22-platform-capability-next-steps.md",
-      "change_type": "added"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/23-implementation-notes-where-code-lives-and-what-to-add.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/23-parallel-execution-subagent-integration.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/24-parallel-execution-subagent-integration.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/24-platform-specific-capabilities-extensions.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/25-leveraging-platform-capabilities-for-subagent-integration.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/25-platform-specific-capabilities-extensions.md",
-      "change_type": "added"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/26-leveraging-platform-capabilities-for-subagent-integration.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/26-updated-implementation-architecture.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/27-benefits-of-platform-capabilities.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/27-updated-implementation-architecture.md",
-      "change_type": "added"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/28-benefits-of-platform-capabilities.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/28-implementation-considerations.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/29-implementation-considerations.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/29-next-steps.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/30-autonomous-qa-loop-pattern-integration.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/30-next-steps.md",
-      "change_type": "added"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/31-autonomous-qa-loop-pattern-integration.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/31-change-summary.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/32-change-summary.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/32-persona-and-effective-runtime-resolution-addendum-2026-03-06.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/33-persona-and-effective-runtime-resolution-addendum-2026-03-06.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/33-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-08.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/34-runtime-scheduler-consumer-subagent-reconciliation-addendum-2026-03-09.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/34-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-08.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/35-runtime-scheduler-consumer-reconciliation-addendum-2026-03-09.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/35-runtime-scheduler-consumer-subagent-reconciliation-addendum-2026-03-09.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/36-orchestrator-runtime-consumer-and-remediation-execution-reconciliation-addendum-2026-03-09.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/36-runtime-scheduler-consumer-reconciliation-addendum-2026-03-09.md",
-      "change_type": "added"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/37-orchestrator-runtime-consumer-and-remediation-execution-reconciliation-addendum-2026-03-09.md",
-      "change_type": "added"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/37-runtime-enum-and-counter-alignment-addendum.md",
-      "change_type": "deleted"
-    },
-    {
-      "path": "Plans/_shards/orchestrator-subagent-integration/38-runtime-consumer-alignment.md",
-      "change_type": "deleted"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/38-runtime-enum-and-counter-alignment-addendum.md",
-      "change_type": "added"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/39-runtime-consumer-alignment.md",
-      "change_type": "added"
+      "change_type": "modified"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/manifest.json",

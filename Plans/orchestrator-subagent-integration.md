@@ -72,28 +72,18 @@ Rules:
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
 ## Tier-Level Subagent Strategy
+Canonical worker strategy remains graph-owned rather than tier-owned, but provider/runtime selection for node workers must now use the reconciled runtime ontology.
 
-Canonical worker strategy is graph-owned rather than tier-owned.
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Graph_View.md
 
-Default worker policy is:
-- node execution default = `subagent`
-- retry default = `fresh worker`
+Required orchestration rules:
+- node execution selects from the same provider-entry / account-or-profile model used elsewhere in the rewrite.
+- the orchestrator may request a provider family pool, but the frozen requested/effective runtime snapshot must still identify the concrete provider entry selected for each node worker.
+- OpenCode subagent execution selects a server profile, not an account row.
+- GitHub Copilot and Codex subagent execution use direct-provider account rows rather than legacy CLI assumptions.
+- orchestrator-side skill and MCP behavior follows the PM-native skill/MCP model and does not require provider-specific native skill delivery contracts.
 
-GUI override surface must allow:
-- `subagent` vs `agent`
-- `fresh worker` vs `reused worker`
-
-Governance strategy is:
-- package-local governance through `Package Overseer`
-- seam-level integration governance through `Seam Overseer`
-- node execution through node workers bound to `execution_unit_context`
-
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
-
-`Tier Context` survives only as derived decomposition/view context when needed for prompt helpers or legacy labels. It does not remain the canonical runtime context.
-
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Decision_Policy.md
-
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Skills_System.md
 ## Debug-capable investigation orchestration
 
 Orchestrator may launch shared investigations when builds, tests, environment setup, or runtime verification fail.
@@ -963,7 +953,7 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 |-----------|---------------|-----------------|-------------|
 | Platform CLI smoke | Real CLI + minimal subagent cmd | Exit success, non-empty/parseable output | Env-gated or manual |
 | Subagent-invocation integration | Orchestrator's command/call for tier+subagent | Invocation succeeds; output shape / no "invalid" errors | Env-gated or manual |
-| Plan mode CLI verification | Real CLI + plan mode flags | Exit success; plan-mode flag present and honored | Env-gated or manual |
+| Plan mode CLI verification | Real CLI + plan mode flags for CLI-bridged providers | Exit success; plan-mode flag present and honored | Env-gated or manual |
 
 Both sections should be referenced from Phase 5 and from any "Testing" or "Verification" summary in the plan so implementers and reviewers know that real CLI and invocation-path verification are in scope.
 
@@ -971,9 +961,9 @@ Both sections should be referenced from Phase 5 and from any "Testing" or "Verif
 
 ### 3. Plan Mode CLI Verification (Real-CLI Tests)
 
-**Purpose:** Confirm that each platform's CLI accepts and honors plan mode when invoked with the same flags the orchestrator uses (e.g. `--mode=plan`, `--permission-mode plan`, `--sandbox read-only`). This validates plan mode end-to-end in the real CLIs, not just that we pass the right args.
+**Purpose:** Confirm that each CLI-bridged platform accepts and honors plan mode when invoked with the same flags the orchestrator uses for that CLI surface (for example `--mode=plan` or `--permission-mode plan`). This validates plan mode end-to-end in the real CLIs, not just that we pass the right args.
 
-**Scope:** One plan-mode test per CLI-bridged provider (Cursor, Claude Code). For Direct-provider backends (e.g., Gemini), verify plan-mode behavior via API-based calls (plan mode is internal to Puppet Master, not provider CLI flags). Each test runs the real CLI with plan mode enabled and a minimal prompt, then asserts process success and (where possible) that the platform behaved in a plan-like way (e.g. read-only, or plan output present).
+**Scope:** One plan-mode test per CLI-bridged provider (`Cursor CLI`, `Claude Code CLI`). Direct providers (`Gemini`, `Codex`, `GitHub Copilot`) are verified through PM runtime-policy and provider-integration tests rather than through CLI plan-mode commands. Each CLI test runs the real CLI with plan mode enabled and a minimal prompt, then asserts process success and, where possible, that the platform behaved in a plan-like way.
 
 **Environment gating:** Same as other CLI tests: require CLI on PATH and (where applicable) auth; gate with an env var (e.g. `RUN_PLAN_MODE_CLI_TESTS=1`) and use `#[ignore]` so CI without CLIs/auth still passes.
 
@@ -983,9 +973,6 @@ Both sections should be referenced from Phase 5 and from any "Testing" or "Verif
 - **Per-platform commands (must match runner build_args when plan_mode is true):**
   - **Cursor:** `agent -p "Reply with only: PLAN_OK" --mode plan --output-format json`. Assert exit code 0 and non-empty stdout; optionally assert `--mode` and `plan` appear in the effective command or in logs.
   - **Claude:** `claude -p "Reply with only: PLAN_OK" --permission-mode plan --no-session-persistence --output-format text`. Assert exit code 0 and stdout contains expected token or is non-empty.
-  - **Codex:** `codex exec "Reply with only: PLAN_OK" --sandbox read-only --json --color never --cd <workspace>`. Assert exit code 0 and non-empty stdout (read-only sandbox implies plan-like behavior).
-  - **Gemini:** Gemini is a Direct API provider; verify plan-mode API call by sending a plan-constrained request via the Gemini API. Assert a successful response with non-empty output.
-  - **Copilot:** Run with the same flags the Copilot runner uses when `plan_mode` is true (omit `--allow-all-paths` / `--allow-all-urls`), e.g. `copilot -p "Reply with only: PLAN_OK" --allow-all-tools --stream off -s`. Assert exit code 0 and non-empty stdout.
 - **Assertions:** (1) Process exit success. (2) Stdout non-empty (or parseable JSON where applicable). (3) Optionally: verify that the command line actually contained the plan-mode flag (e.g. by logging the command and asserting the flag string is present, or by using the same builder as the runner and checking args).
 - **Artifacts:** Optionally capture stdout/stderr to `.puppet-master/evidence/plan-mode-cli-<platform>.log` for debugging.
 - **Documentation:** Document in plan and code that these tests are optional/manual in CI; list env var `RUN_PLAN_MODE_CLI_TESTS=1` and that auth must be configured for the corresponding platform.
@@ -993,7 +980,7 @@ Both sections should be referenced from Phase 5 and from any "Testing" or "Verif
 **Test location and naming:**
 
 - **File:** `puppet-master-rs/tests/plan_mode_cli_verification.rs` (or under `puppet-master-rs/tests/integration/`).
-- **Tests:** `cursor_plan_mode_cli`, `codex_plan_mode_cli`, `claude_plan_mode_cli`, `gemini_plan_mode_cli`, `copilot_plan_mode_cli`.
+- **Tests:** `cursor_plan_mode_cli`, `claude_plan_mode_cli`.
 - **Runner:** Use `#[ignore]` by default with reason "requires installed CLI and auth; set RUN_PLAN_MODE_CLI_TESTS=1"; run with `cargo test --ignored` or `cargo test plan_mode_cli` when env is set.
 
 **Fleshed-out example (Cursor plan mode):**
@@ -1041,9 +1028,9 @@ Plan mode is implemented per tier (phase, task, subtask, iteration) and flows fr
 |-----------|---------------------------|--------|
 | Cursor    | `--mode plan` (else `--force`) | Native; read-only planning then execute. |
 | Claude    | `--permission-mode plan`       | Native; read-only analysis. |
-| Codex     | `--sandbox read-only` (no `--full-auto`) | Read-only sandbox; no native "plan" flag. |
+| Codex     | PM direct-provider runtime policy | Direct provider; plan constraints are enforced by PM runtime policy rather than Codex CLI flags. |
 | Gemini    | Direct API plan-mode request              | Gemini is a Direct API provider; plan constraints applied via API parameters. |
-| Copilot   | Omit `--allow-all-paths` / `--allow-all-urls` when plan_mode | Restrictive mode; no dedicated plan flag in CLI. |
+| GitHub Copilot | PM direct-provider runtime policy | Direct provider; plan constraints are enforced by PM runtime policy and effective entitlement context. |
 
 ### Plan Mode & Platform CLI Updates (Last ~2 Months)
 
@@ -1059,9 +1046,10 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 - **0.100 (Feb 12):** ReadOnlyAccess policy, memory slash commands (`/m_update`, `/m_drop`), experimental JS REPL, app-server websocket refresh.
 - **0.101 (Feb 12):** Memory/model stability, model slug preservation.
 - **0.104 (Feb 18):** Distinct approval IDs for multi-approval shell commands; app-server v2 (thread archive notifications); `WS_PROXY`/`WSS_PROXY`; safety-check and cwd-prompt fixes.
-- **Sandbox:** `--sandbox read-only | workspace-write | danger-full-access`; no native "plan" flag; our use of `--sandbox read-only` for plan mode remains correct.
-- **Subagents/MCP:** Codex as MCP server (`codex mcp-server`) exposes `codex`/`codex-reply` tools; community `codex-subagents-mcp` uses profiles (e.g. `sandbox_mode = "read-only"` for review).
-- **Impact:** No change to plan-mode mapping. Subagent/MCP integration for Codex is relevant for orchestrator subagent invocation.
+- **Runtime posture:** Codex is a Direct provider in PM, not a CLI-bridged runtime in this stack.
+- **Plan mode:** PM enforces plan constraints through requested/effective runtime policy, account selection, and permission posture rather than through Codex CLI flags.
+- **Upstream context:** Upstream Codex CLI and MCP-server capabilities remain relevant as ecosystem reference points, but they are not the canonical PM execution path for Codex.
+- **Impact:** Keep orchestrator assumptions aligned with the direct-provider model and avoid reintroducing Codex CLI-specific plan-mode mapping into PM runtime canon.
 
 **Claude Code**
 - **v2.1.41-v2.1.45 (Feb 2026):** CLI auth commands, Windows ARM64, prompt cache and startup improvements; v2.1.45: Sonnet 4.6, `spinnerTipsOverride`, rate-limit telemetry type updates, `enabledPlugins`/`extraKnownMarketplaces` from `--add-dir`, permission destination persistence, plugin command availability fix.
@@ -1076,15 +1064,16 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 - **Doctor / verification checks (Direct-provider):** API key present; `models.list` works; capability gating is consistent with Settings toggles; media routing matches `Plans/Media_Generation_and_Capabilities.md` (Cursor image routes to Cursor-native; Gemini media requires key and compatible model).
 - **Impact:** No provider CLI flags or provider-local config files are used for Gemini in this stack.
 
-**GitHub Copilot CLI**
+**GitHub Copilot**
 - **Jan 14-21, 2026:** Plan mode in interactive UI (Shift+Tab); advanced reasoning models; GPT-5.2-Codex; inline steering; background delegation `&`; `/review`; context auto-compaction; automation flags (`--silent`, `--share`, `--available-tools`, `--excluded-tools`).
-- **Plan mode:** Interactive only (Shift+Tab); no dedicated `--plan` flag for headless `-p` usage. Programmatic use remains `-p` with existing flags; our "omit `--allow-all-paths`/`--allow-all-urls` when plan_mode" remains the way to get more restrictive behavior in headless.
-- **Provider bridge:** Plan mode remains interactive in Copilot UI; headless runs continue through CLI-bridged restrictive flags.
-- **Impact:** No change to our headless plan-mode mapping; document that native plan mode is interactive; if Copilot adds a headless plan flag, switch to it in runner and platform_specs.
+- **Runtime posture:** GitHub Copilot is a Direct provider in PM, not a CLI-bridged runtime in this stack.
+- **Plan mode:** PM enforces plan constraints through direct-provider runtime policy, selected billing entity, and effective entitlement context rather than through Copilot CLI flags.
+- **Provider behavior:** Provider-side interactive plan affordances are upstream behavior, not the canonical PM runtime contract.
+- **Impact:** Keep orchestrator assumptions aligned with the direct-provider model and avoid encoding Copilot CLI-specific fallback behavior as PM canon.
 
 **Summary for this plan**
-- Plan mode: CLI plan-mode applies to Cursor and Claude Code only; Gemini is Direct-provider (no CLI plan-mode flags or CLI config files in this stack). Codex and Copilot headless behaviors remain unchanged.
-- Subagents/hooks/plugins: Several providers have had relevant changes (Cursor plugins/async subagents; Codex MCP; Claude plugins/hooks; Gemini skills/policies/subagents; Copilot provider/CLI behavior). Keep platform-capabilities and subagent-integration sections in sync with release notes and official docs.
+- Plan mode: CLI plan-mode applies to Cursor and Claude Code only. `Gemini`, `Codex`, and `GitHub Copilot` are Direct providers in PM and should be modeled through PM runtime policy rather than CLI flags or CLI config files.
+- Subagents/hooks/plugins: Several providers have had relevant changes (Cursor plugins/async subagents; Codex ecosystem MCP context; Claude plugins/hooks; Gemini skills/policies/subagents; Copilot provider behavior). Keep platform-capabilities and subagent-integration sections in sync with release notes and official docs without reintroducing stale runtime classifications.
 
 **Gaps vs "use plan mode for every request":**
 
@@ -1092,8 +1081,7 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 2. **No global override** -- There is no single "use plan mode for all tiers" or "prefer plan mode by default" setting; only per-tier toggles in Config and Wizard.
 3. **No one-click "all tiers"** -- Enabling plan mode for every tier requires toggling four tier cards.
 4. **Subagent invocations** -- When subagent integration is added, `ExecutionRequest` built for subagent runs must receive the same `plan_mode` as the tier (so plan mode is applied to every request, including subagent calls).
-5. **Copilot** -- If the CLI gains a native headless plan flag (e.g. `--plan`), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
-5. **Copilot** -- If the CLI gains a native headless plan flag (e.g. `--plan`), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
+5. **GitHub Copilot** -- If upstream provider surfaces expose a stronger direct-provider planning control or effective-runtime signal, prefer that canonical direct-provider contract over any legacy CLI-oriented fallback language in `platform_specs` and related docs.
 
 ### Canonical decision
 
@@ -7139,40 +7127,45 @@ Level 2 (After Task 1):
 
 
 ## Platform-Specific Capabilities & Extensions
-
 ### Platform capability overview
 
-Runtime integration is provider-first; transport varies by ProviderTransport (CLI-bridged, direct-provider, server-bridged). Platform capability work in this plan is limited to:
-- native CLI features (flags, modes, output schemas)
-- platform hook systems
-- skills/plugins/extensions
-- MCP connectivity
+Platform capability handling is provider-first and uses three execution classes:
+- direct providers
+- CLI-bridged providers
+- server-bridged providers
 
-SDK orchestration is not an implementation target in this plan.
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Prompt_Pipeline.md
 
-### Capability Surface by Platform
+### Capability surface by platform
 
-**Cursor**
-- CLI modes (`--mode=plan|ask`), stream output, subagent/plugin/hook support where available.
-- MCP usage and tool discovery via CLI-compatible paths.
+**Cursor CLI**
+- `cursor-agent` is the execution runtime.
+- PM-managed account roots and PM-derived MCP/instruction projections define the CLI boundary.
+
+**Claude Code CLI**
+- CLI-backed execution with subscriber, console/API, and SSO setup families.
+- PM-native skill and MCP handling remains canonical.
+
+**Gemini direct**
+- direct API-key provider.
+- runtime invocation is not a CLI subprocess.
+
+**Gemini CLI**
+- separate CLI-backed provider entry.
+- may expose routing behavior that differs from the originally requested model.
 
 **Codex**
-- `codex exec` is the runtime invocation path.
-- Optional `codex mcp-server` interop where it fits tool architecture.
-- Hook/config behavior through CLI/config files only.
-
-**Claude Code**
-- `claude -p` and headless flags are the runtime invocation path.
-- Agent files (`.claude/agents`) and hooks are consumed through CLI/runtime behavior.
-
-**Gemini**
-- Gemini is a Direct API provider; runtime invocation uses the Gemini API directly (not a CLI subprocess).
-- Extension/hook surfaces are orchestrator-level only.
+- direct provider with `ChatGPT` and `API key` account rows.
+- no Codex CLI runtime requirement in this plan.
 
 **GitHub Copilot**
-- `copilot -p` (or `npx -y @github/copilot`) is the runtime invocation path.
-- Skills/extensions and CLI flags only; no SDK invocation path.
+- direct provider with billing/entity semantics beneath the auth-backed account row.
+- no Copilot CLI runtime requirement in this plan.
 
+**OpenCode**
+- server-bridged provider via managed or attached server profiles.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
 ## Leveraging Platform Capabilities for Subagent Integration
 
 ### Strategy 1: Platform-Specific Subagent Packages

@@ -91,48 +91,60 @@ OpenCode's CLI (`opencode`) can launch a TUI/server and also supports non-intera
 ## 5. Connection Contract
 
 ### 5.1 Server Discovery and Connection
+OpenCode connection is profile-driven.
 
-Puppet Master MUST support connecting to an OpenCode server via explicit configuration:
+Each OpenCode row in PM is a `Server Profile` with one of two modes:
+- `Managed Server`
+- `Attach to Existing Server`
 
-| Config Field | Type | Default | Description |
-|---|---|---|---|
-| `opencode_enabled` | `bool` | `false` | Enable/disable OpenCode provider |
-| `opencode_connection_method` | `enum` | `"server"` | `server` (direct HTTP to configured host/port) or `cli_launcher` (attempt local launch/discovery via `opencode`, then connect via HTTP) |
-| `opencode_host` | `string` | `"127.0.0.1"` | OpenCode server hostname |
-| `opencode_port` | `u16` | `4096` | OpenCode server port |
-| `opencode_cli_path` | `string` | `""` | Optional CLI launcher/discovery fallback path; if empty, resolve `opencode` from PATH |
-| `opencode_username` | `string` | `"opencode"` | HTTP basic auth username |
-| `opencode_password` | `string` | `""` | HTTP basic auth password (from credential store) |
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
-**Server URL derivation:** `http://{opencode_host}:{opencode_port}`
+Required profile fields:
+- `connection_profile_id`
+- `label`
+- `profile_mode`
+- endpoint summary (`host`, `port`, or explicit base URL)
+- optional credential refs for HTTP auth
+- health state
+- discovery state
+- last discovery snapshot metadata
+- PM ownership mode
 
-**Connection method semantics (normative):**
-- `server` is the primary and recommended mode: Puppet Master connects directly to the configured OpenCode server URL/port.
-- `cli_launcher` is fallback-only behavior: Puppet Master may use `opencode` (configured path or PATH lookup) to launch/discover a local server, then all runtime calls still use HTTP/SSE.
+Connection rules:
+- `Managed Server` means PM owns launch command, environment/config selection, reconnect attempts, and shutdown behavior.
+- `Attach to Existing Server` means PM owns endpoint/auth configuration and health/discovery polling only.
+- all runtime calls remain HTTP/SSE server-bridge calls regardless of whether PM launched the process.
+- profile selection freezes into `connection_profile_id` in the requested/effective runtime snapshot before execution.
 
-**Non-optional transport constraint:** Regardless of connection method, OpenCode runtime transport remains **server-bridged HTTP/SSE**. Puppet Master MUST NOT treat OpenCode as a CLI-bridged provider transport.
-
-**Secrets policy:** The password MUST NOT be stored in plain text config files. It MUST be stored in the OS credential store (same policy as other provider secrets).
-
-ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-002, PolicyRule:no_secrets_in_storage
-
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
 ### 5.2 Health Check
+Health and discovery are separate states.
 
-Before any run, Puppet Master MUST perform a health check:
+PM must evaluate OpenCode profiles in this order:
+1. connection / launch state
+2. health check result
+3. discovery refresh result
 
-ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md#AuthState
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
 
-```
-GET /global/health
-→ { "healthy": true, "version": "<version>" }
-```
+Canonical profile states:
+- `Configured`
+- `Launching` or `Connecting`
+- `Connected`
+- `Discovering`
+- `Ready`
+- `Connected (stale discovery)`
+- `Connected (discovery failed)`
+- `Disconnected`
+- `Launch failed`
 
-**Failure states from health check:**
-- **Connection refused / timeout:** OpenCode server not running → emit diagnostic `provider_outage_or_network`; surface server-realm auth state as `AuthFailed` until reachable.
-- **401 Unauthorized:** Auth required/credentials wrong → `LoggedOut`.
-- **200 with `healthy: false`:** Server unhealthy → emit diagnostic `provider_outage_or_network`; surface server-realm auth state as `AuthFailed`.
-- **200 with `healthy: true`:** Server reachable/auth OK → `LoggedIn` (OpenCode server realm).
+Rules:
+- a profile is not fully `Ready` until health succeeds and discovery completes.
+- if health succeeds but discovery fails, the profile remains connected but degraded.
+- if a previously ready profile disconnects, PM preserves the last-known discovery snapshot and marks it stale rather than blanking the provider/model surface.
+- attached profiles may be healthy while still `ExternalNotManaged` for some management affordances.
 
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/CLI_Bridged_Providers.md
 ### 5.3 Auth realms and sign-in surfaces
 
 OpenCode has two auth realms that Puppet Master MUST represent in UX (terminology per `Plans/CLI_Bridged_Providers.md`):
@@ -325,22 +337,32 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-002, ContractName
 ## 10. GUI Configuration
 
 ### 10.1 Provider Settings (Settings Page)
+OpenCode appears in Agent-Config and provider settings as a server-profile-driven provider.
 
-OpenCode appears in the provider list with these configuration fields:
+Required fields and actions:
 
-| Field | Widget | Description |
-|---|---|---|
-| **Enable OpenCode** | Toggle switch | Master enable/disable |
-| **Connection Method** | Segmented control / dropdown | `Direct server` or `CLI launcher/discovery fallback` |
-| **Server Host** | Text input | Default: `127.0.0.1` |
-| **Server Port** | Number input | Default: `4096` |
-| **CLI Path (optional)** | File path input | Optional fallback path to `opencode`; used only when connection method is `CLI launcher/discovery fallback` |
-| **Username** | Text input | Default: `opencode` |
-| **Password** | Password input (stored in credential store) | For HTTP basic auth |
-| **Sign in to Provider** | Button/link | Opens OpenCode provider auth flow (`/provider/auth` + callback path) |
-| **Test Connection** | Button | Runs health check and reports status |
-| **Connection Status** | Status badge | Shows `Connected`, `Disconnected`, `Auth Required`, etc. |
+| Field / action | Purpose |
+|---|---|
+| `Enable OpenCode` | Master provider toggle |
+| `Add Managed Server` | Create a profile that PM launches and supervises |
+| `Add Attached Server` | Create a profile for an already-running external server |
+| endpoint/base URL inputs | Configure the server address |
+| optional auth inputs | Configure HTTP auth via credential refs |
+| `Reconnect` | Retry connection for the selected profile |
+| `Restart Server` | Restart a managed profile |
+| `Refresh Discovery` | Re-run provider/model discovery |
+| `Detach from PM control` | Convert a managed/controlled projection target to external/manual control where supported |
+| status badges | Show connection, health, discovery, and stale-cache state |
 
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md
+
+UI rules:
+- the primary row label is the profile label, not an implied account identity.
+- the inspector shows connection mode, endpoint summary, discovery freshness, and PM ownership mode.
+- skills and MCP settings shown under an OpenCode profile must preserve the distinction between PM-owned canon and OpenCode-reflected state.
+- attached profiles must not expose lifecycle actions that imply PM owns the remote process.
+
+ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md
 ### 10.2 Tier Configuration
 
 When OpenCode is enabled, it appears in the platform dropdown for any tier. Model selection shows models discovered from the OpenCode server, grouped by underlying provider.

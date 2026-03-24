@@ -141,25 +141,16 @@ This document covers the **interview flow** (multi-phase interview: Scope, Archi
   - Validate CI/CD integration for tests
 
 ### Cross-Phase Subagents
+Cross-phase subagents continue to serve document generation, answer validation, quality review, and research operations, but they now inherit the reconciled PM-native tool and skill model.
 
-**Document Generation:**
-- `technical-writer` -- Generate phase documents, AGENTS.md, requirements
-- `knowledge-synthesizer` -- Cross-phase analysis, technology matrix generation
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md
 
-**Answer Validation:**
-- `debugger` -- Validate technical feasibility of answers
-- `code-reviewer` -- Validate technical decisions and architecture choices
+Cross-phase rules:
+- cited web search, PM-native skills, and PM-native MCP availability are resolved by PM before provider execution rather than delegated to provider-native wiring.
+- skill readiness for interview helpers is determined from `required_tool_refs` and `optional_tool_refs`, not by heuristics or provider-specific assumptions.
+- interview subagents inherit the same requested/effective runtime disclosure fields and provider-entry vocabulary used elsewhere.
 
-**Quality Review:**
-- `requirements-quality-reviewer` -- Cross-phase quality gate; validates requirements artifacts against the Requirements Completion Contract (`Plans/chain-wizard-flexibility.md`). Produces a `requirements_quality_report` artifact (`SchemaID:pm.requirements_quality_report.schema.v1`, file: `Plans/requirements_quality_report.schema.json`). May propose `auto_fixes_applied[]`; cannot directly edit requirements files — edits are applied via Pass 2 of the Three-Pass Canonical Validation Workflow (`Plans/chain-wizard-flexibility.md`). If `needs_user_clarification[]` is non-empty after autofill, signals `attention_required` to the orchestrator, which surfaces the clarification through the thread + Dashboard CtA system.
-
-ContractRef: ContractName:Plans/chain-wizard-flexibility.md#requirements-quality-escalation-semantics, SchemaID:pm.requirements_quality_report.schema.v1
-
-**Research Operations:**
-- `explorer` -- Read-only codebase / repository investigation when the interview needs local-project understanding before asking or validating questions.
-- `ux-researcher` -- Web research via Browser MCP (when configured). **Cited web search:** Interview (and Assistant, Orchestrator) use **cited web search** (inline citations + Sources list) from a single shared implementation; see **Plans/newtools.md** §8 (cited web search, [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited)-style) and **Plans/assistant-chat-design.md** §7.
-- `context-manager` -- Manage interview state and context across phases
-
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
 ### Debug-capable validation and remediation
 
 Interview may use shared debug-capable tools during testing, verification, and environment validation phases, but it does not become the owner of Assistant Debug Mode.
@@ -2895,28 +2886,23 @@ Provider-native agent exports or prompt syntaxes MAY exist as optional interoper
 ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Personas.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 ## Platform-Specific Limitations & Workarounds
+### Cursor CLI
 
-### Cursor CLI Limitation (Feb 2026)
-**Issue:** `/subagent-name` syntax is currently broken in Cursor CLI (works in editor)
-**Workaround Options:**
-1. Use Cursor editor for subagent-enabled interviews
-2. Fallback to direct platform invocation without subagents
-3. Monitor Cursor releases for CLI fix
+Cursor interview execution targets `cursor-agent` and inherits the same trust and profile-isolation rules as the rest of the CLI integration.
 
+### Codex
 
-### Codex MCP Server Requirement
-**Issue:** Codex subagents require MCP server mode
-**Solution:**
-- Detect if `codex mcp-server` is available
-- Provide clear error message if MCP server not running
-- Document MCP server setup in user guide
+PM interview execution does not require a Codex CLI MCP-server runtime. Codex in PM is a direct provider with `ChatGPT` and `API key` account rows.
 
-### Claude Code Dynamic vs File-Based
-**Decision:** Support both methods
-- Default to file-based (simpler, more reliable)
-- Option to use `--agents` JSON flag for dynamic subagents
-- Configuration option to choose method
+### Claude Code CLI
 
+Claude Code may support file-based and runtime-scoped agent facilities. PM still treats CLI-native subagent files as compatibility or delivery details beneath the PM-native skill/instruction model.
+
+### GitHub Copilot
+
+GitHub Copilot is a direct provider in PM. Premium-request or billing-entity requirements are handled through the same account-row plus entitlement-context model used elsewhere.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/FinalGUISpec.md
 ## Testing Strategy
 
 ### Subagent File Management Tests
