@@ -657,10 +657,12 @@ Each topic below lists 1-5 specific points where Puppet Master's implementation 
 3. **Bun-specific commands**: Several formatters use `BunProc.which()` for execution. Puppet Master substitutes with `which`-based system-level package detection and direct process invocation.
 
 ### 9F. Skills
-1. **External skill compatibility**: OpenCode discovers skills from `.claude/` and `.agents/` directories for compatibility. Puppet Master uses its own skill directory convention (`~/.config/puppet-master/skills/<name>/SKILL.md` and `.puppet-master/skills/`) per `Plans/Skills_System.md`. Compatibility with `.claude/` and `.agents/` directories is not maintained.
-2. **Remote skill discovery**: The `Discovery.pull()` URL-based skill download mechanism needs a Rust HTTP client equivalent.
-3. **Skill-as-command registration**: Skills automatically become commands. Puppet Master adopts this behavior: skills automatically register as slash commands, per `Plans/Skills_System.md`.
+1. **Architecture pattern, not ownership transfer:** OpenCode's skills system is a useful reference because it sits above the provider layer. Puppet Master should follow that pattern architecturally while keeping PM-native skills as the canonical runtime path.
+2. **Compatibility roots:** PM maintains its own canonical roots and also imports compatible roots such as `.claude/skills` and `.agents/skills` per the PM skill system. Compatibility import does not make those external roots canonical.
+3. **Projection posture:** Provider-native or tool-native skill projection is optional compatibility only. PM should not require Codex-specific or GitHub-Copilot-specific skill packaging inside OpenCode because OpenCode itself applies one skill system above its provider list.
+4. **Discovery vs runtime:** OpenCode-style discovery compatibility is useful, but PM runtime correctness still depends on PM registry resolution, readiness validation, context bundling, and the PM `skill` tool.
 
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/MiscPlan.md, ContractName:Plans/Provider_OpenCode.md
 ### 9G. Plugins
 1. **Plugin runtime**: OpenCode plugins are JavaScript/TypeScript modules loaded via `import()`. Puppet Master's Rust backend must define its own plugin API (WASM, dynamic libraries, subprocess-based, or scripting language bindings).
 2. **Hook interface**: The `Hooks` interface has ~15 named hooks. Puppet Master supports the hook subset defined in `Plans/Plugins_System.md §4`; unsupported hooks are silently ignored at registration.

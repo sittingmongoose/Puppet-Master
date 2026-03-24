@@ -377,7 +377,9 @@ This addendum defines the persistence required for Source Control, GitHub Action
 ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md, PolicyRule:no_secrets_in_storage
 
 ### Required redb keys
-The promoted orchestrator/runtime rewrite requires durable record and projection families that do not depend on `tier_id` as the primary cross-surface key.
+The promoted provider/runtime rewrite and the updated terminal/editor model require durable record and projection families that preserve concrete runtime surfaces, account/profile identity, entitlement attribution, and terminal layout continuity.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
 
 Required canonical record and projection families include:
 - `attempt_record.v1:{project_id}:{run_id}:{node_id}:{attempt_id}`
@@ -390,17 +392,28 @@ Required canonical record and projection families include:
 - `concern_record.v1:{project_id}:{concern_id}`
 - `project_summary.v1:{project_id}`
 - `project_attention_item.v1:{project_id}:{attention_item_id}`
+- `provider_account_record.v1:{provider_id}:{account_id}`
+- `provider_entitlement_context_record.v1:{provider_id}:{account_id}:{billing_entity_id}`
+- `server_profile_record.v1:{provider_id}:{connection_profile_id}`
 - `account_pressure_episode.v1:{provider_id}:{account_id}:{episode_id}`
 - `account_switch_event.v1:{provider_id}:{event_id}`
 - `terminal_workspace_state.v1:{project_id}:{workspace_tab_id}`
 - `terminal_section_record.v1:{project_id}:{terminal_section_id}`
 - `terminal_tab_record.v1:{project_id}:{terminal_tab_id}`
 - `terminal_pane_record.v1:{project_id}:{terminal_pane_id}`
+- `terminal_leaf_pane_record.v1:{project_id}:{terminal_leaf_pane_id}`
+- `terminal_workgroup_record.v1:{project_id}:{terminal_workgroup_id}`
+- `editor_terminal_panel_state.v1:{project_id}:{workspace_tab_id}:{editor_terminal_panel_id}`
 - `terminal_session_record.v1:{project_id}:{terminal_session_id}`
 - `terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}`
 - `dev_session_record.v1:{project_id}:{dev_session_id}`
+- `mcp_server_record.v1:{mcp_server_id}`
+- `mcp_runtime_availability.v1:{mcp_server_id}:{provider_id}:{runtime_subject_id}`
+- `mcp_tool_record.v1:{mcp_server_id}:{tool_id}`
+- `skill_record.v1:{skill_id}`
+- `skill_runtime_readiness.v1:{skill_id}:{provider_id}:{runtime_subject_id}`
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Multi-Account.md
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/Skills_System.md
 
 Required identity and attribution fields across runtime-linked record families include:
 - `project_id`
@@ -413,45 +426,51 @@ Required identity and attribution fields across runtime-linked record families i
 - `lane_id?`
 - `worktree_id?`
 - `execution_role?`
+- `requested_platform?`
+- `effective_platform?`
+- `provider_family_id?`
+- `requested_runtime_platform_id?`
+- `effective_runtime_platform_id?`
+- `requested_model?`
+- `effective_model?`
+- `requested_auth_mode?`
+- `effective_auth_mode?`
 - `requested_account_policy?`
 - `requested_account_id?`
-- `requested_account_binding?`
+- `requested_billing_entity_id?`
 - `effective_account_id?`
+- `effective_billing_entity_id?`
+- `effective_billing_entity_label?`
+- `effective_entitlement_class?`
+- `connection_profile_id?`
 - `account_switch_reason?`
 - `provider_attempt_ref?`
 - `usage_event_ref?`
-- `operational_identity?`
 - `workspace_tab_id?`
 - `terminal_section_id?`
 - `terminal_tab_id?`
 - `terminal_pane_id?`
+- `terminal_leaf_pane_id?`
+- `terminal_workgroup_id?`
+- `editor_terminal_panel_id?`
 - `terminal_session_id?`
 - `dev_session_id?`
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md, ContractName:Plans/assistant-chat-design.md
 
 Projection-state families must expose both freshness and health:
 - `projection_freshness`: `current | refreshing | stale`
 - `projection_health`: `healthy | degraded | unavailable`
 
 Rules:
-- stale and degraded are different states and must not collapse into one generic trust field
-- mutating actions must revalidate or gate when projections are stale, degraded, or unavailable
-- record-backed inspection in History and Ledger remains available even when summary projections lose trust
+- stale and degraded are different states and must not collapse into one generic trust field.
+- account-backed runtime records and server-profile-backed runtime records remain distinct durable shapes even though the GUI presents them in one runtime ontology.
+- usage attribution records store effective billing/entity context when it explains the active quota bucket, but they do not persist scheduler-only debug internals.
+- GUI projection key `terminal_state:v1` may remain a GUI-facing projection name, but canonical ownership stays with terminal workspace, section, workgroup, tab, leaf-pane, panel, session, and command-block records.
+- route restoration resolves through canonical record identity, not through feature-local ad hoc payloads.
+- PM-generated CLI adapter config and projection files are derived artifacts and MUST NOT become the canonical ownership store for accounts, MCP state, instruction state, or skills.
 
-ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FinalGUISpec.md
-
-Historical restore and preview identities remain subject-first:
-- `doc:<document_id>`
-- `artifact:<artifact_id>`
-
-Rules:
-- `resume_url` persists serialized transport only
-- route restoration resolves through canonical record identity, not through feature-local ad hoc payloads
-- `tier_runtime_record` may survive only as a derived compatibility projection; it is not canonical runtime identity
-- GUI projection key `terminal_state:v1` remains a GUI-facing projection and MUST resolve back to the canonical terminal record families above rather than replacing them
-
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Contracts_V0.md
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
 ### Naming and migration rules
 - `docker_manage_surface_state` is legacy naming and MUST migrate to `docker_manager.project_state.{project_id}`.
 - `requested_auth_mode` and `effective_*` snapshots remain separate fields.

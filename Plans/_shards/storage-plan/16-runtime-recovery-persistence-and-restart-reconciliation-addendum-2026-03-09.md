@@ -121,17 +121,22 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 Attempts from older generations, or in-flight attempts that cannot resume after restart, transition to `stale_historical`. They remain queryable but are never resumable.
 
 ### Identity and field-name rules
-- canonical blocked-action field is `allowed_action_ids[]`
-- canonical persisted references use `*_ref` fields; raw `*_path` naming is compatibility-only
-- requested vs effective persona/platform/model state must remain queryable from runtime records so UI surfaces do not reconstruct it heuristically
-- terminal requested/effective capability disclosure uses explicit fields such as `requested_renderer_mode?`, `effective_renderer_mode`, `shell_integration_tier`, `capability_degradations[]`, `restore_outcome`, and transcript-retention tier
-- `terminal_session_id` is the canonical meaning of same-session shell continuity; `dev_session_id` is higher-level workflow continuity only
+Canonical naming and identity rules:
+- persisted requested/effective runtime base fields keep the names defined in `Plans/Contracts_V0.md`
+- additive runtime disclosure fields MAY extend those snapshots but MUST NOT rename or shadow them
+- canonical persisted references use stable `*_id` or `*_ref` fields; user-facing labels remain additive disclosure fields only
+- `account_id` identifies account-backed runtime subjects
+- `connection_profile_id` identifies server-profile-backed runtime subjects
+- `terminal_session_id` remains PTY continuity identity
+- `terminal_workgroup_id`, `terminal_leaf_pane_id`, and `editor_terminal_panel_id` identify the terminal layout objects introduced by the updated bottom-terminal/editor model
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
 
-Additional rules:
-- GUI projection key `terminal_state:v1` may remain as a compatibility-facing projection name, but canonical storage ownership stays with terminal workspace, session, and command-block records
-- restored historical terminal records MUST NOT be misreported as live sessions solely because durable metadata exists
-- requested terminal presentation preferences do not override the effective restore outcome or effective capability state captured for that historical record
+Additional runtime-field rules:
+- `requested_platform` and `effective_platform` identify the concrete provider entry/runtime surface used for execution.
+- `provider_family_id` is additive and groups pooled or related runtime surfaces without replacing the concrete provider entry fields.
+- `requested_runtime_platform_id`, `effective_runtime_platform_id`, `requested_model_provider_id`, `effective_model_provider_id`, and billing/entity fields are additive disclosure fields only.
+- `selectable_unit_id` remains diagnostic/scheduler data and MUST NOT become a canonical persisted runtime identity field.
+- terminal historical records MUST preserve the effective restore outcome and capability degradation state captured for that record; the UI MUST NOT infer those values later from current local capabilities.
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md

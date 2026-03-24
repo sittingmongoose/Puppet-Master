@@ -24,68 +24,60 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 ---
 
 ## 1. Canonical model identifier
-
 <a id="MODEL-ID"></a>
 
 ### 1.1 Format
 
-A model is identified by the compound string `provider_id/model_id`:
+A model is identified canonically by `provider_id/model_id`.
 
-- **`provider_id`**: The provider slug (e.g., `anthropic`, `openai`, `google`, `copilot`, `bedrock`).
-- **`model_id`**: The provider-specific model name (e.g., `claude-sonnet-4`, `gpt-5`, `gemini-3-pro`).
+Rules:
+- split on the first `/` only.
+- `provider_id/model_id` remains the stored and runtime-canonical model identifier.
+- label cleanup, grouping, family pooling, and runtime-platform grouping must never rewrite the canonical identifier.
 
-The canonical parse rule: split on the **first** `/` character. Everything before the first `/` is `provider_id`; everything after (including subsequent `/` characters) is `model_id`.
+ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md
 
-Example: `anthropic/claude-sonnet-4` → provider `anthropic`, model `claude-sonnet-4`.
+### 1.2 Runtime-platform distinction
 
-ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/CLI_Bridged_Providers.md
+Model identity and runtime-platform identity are separate concerns.
 
-### 1.2 Validation
+Required fields:
+- `requested_model` / `effective_model` keep the canonical model id
+- `requested_runtime_platform_id` / `effective_runtime_platform_id` disclose the concrete runtime surface
+- `requested_model_provider_id` / `effective_model_provider_id` disclose the model vendor namespace when that differs from the runtime surface label
 
-- `provider_id` MUST be a non-empty string matching a registered provider in the provider registry.
-- `model_id` MUST be a non-empty string.
-- The combined `provider_id/model_id` MUST be unique within the set of available models.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md
 
----
+### 1.3 Display-name policy
 
+GUI labels may clean spacing or casing for readability, but they must preserve meaningful tokens such as version, `mini`, `pro`, `flash`, `thinking`, and coding-plan suffixes.
+
+Duplicate runtime availability remains runtime-qualified. If the same canonical model appears through multiple runtime surfaces, the UI disambiguates with secondary runtime-platform context instead of minting a fake new canonical model id.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md
 ## 2. Model and runtime selection priority
-
 <a id="SELECTION-PRIORITY"></a>
 
-When determining which platform/model/variant/runtime controls to use for a given Agent run, the following precedence applies (first match wins):
+Model and runtime selection remains deterministic and follows the same requested/effective runtime pipeline used elsewhere.
 
 | Priority | Source | Description |
-|----------|--------|-------------|
-| 1 (highest) | **Explicit override** | Run envelope, CLI flag, manual surface selection, or per-tier model setting from the active run config. |
-| 2 | **Persona runtime preferences** | Per-Persona `default_platform`, `default_model`, `default_variant`, `temperature`, `top_p`, and `reasoning_effort` (§5). |
-| 3 | **Surface/tier/phase defaults** | Chat, Interview, Requirements Builder, Orchestrator, or Multi-Pass defaults defined by the active surface contract. |
-| 4 | **Global/project config defaults** | `config.model`, `config.default_variant`, and equivalent config defaults. |
-| 5 | **Last used** | Reads `model.json` from state directory; checks each `{providerID, modelID}` against available providers. |
-| 6 (lowest) | **Internal/provider defaults** | Sorts available models by internal priority list, then by `"latest"` suffix, then alphabetically. First match wins. |
+|---|---|---|
+| 1 | explicit override | run envelope, manual picker, tier override, or surface-level override |
+| 2 | Persona runtime preferences | per-Persona defaults for provider entry, model, variant, and supported controls |
+| 3 | surface defaults | Chat, Interview, Builder, Orchestrator, or profile defaults |
+| 4 | project/global defaults | configuration defaults including preferred runtime family or model |
+| 5 | last used | previous user choice when still valid |
+| 6 | internal/provider fallback | provider/runtime default chosen after capability filtering |
 
-Rule: Given the same inputs (config, Persona, surface defaults, variant state, available providers), effective runtime selection MUST be deterministic.
+ContractRef: PolicyRule:Decision_Policy.md§3, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
 
-Interpretation note:
-- A user-selected variant during a live session is an explicit override (priority 1).
-- A Persona-specified `default_variant` participates at priority 2.
-- `config.default_variant` participates at priority 4.
+Selection rules:
+- the runtime first resolves the concrete provider entry/runtime surface, then the effective model within that surface.
+- `provider_family_id` may influence pooling or fallback, but it does not replace the concrete provider entry selection.
+- if the runtime internally reroutes to another effective model or model variant, that deviation is captured as runtime evidence; it does not rewrite the frozen requested selection.
+- model availability and capability checks must consider the concrete runtime surface, not just the vendor model namespace.
 
-ContractRef: PolicyRule:Decision_Policy.md§3, ContractName:Plans/Run_Modes.md
-
-### 2.1 Internal priority list
-
-The internal default priority list (lowest precedence, used when no other source specifies a model):
-
-```
-["gpt-5", "claude-sonnet-4", "big-pickle", "gemini-3-pro"]
-```
-
-This list is **configurable** via `config.model_priority` (ordered array of model ID substrings). Models matching an earlier entry are preferred. Among matches at the same priority, models with a `"latest"` suffix are preferred, then alphabetical order.
-
-ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
-
----
-
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
 ## 3. Model options configuration
 
 <a id="MODEL-OPTIONS"></a>
@@ -306,67 +298,52 @@ ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#MEDIA-GENER
 ---
 
 ## 7. GUI requirements
-
 <a id="GUI-MODELS"></a>
 
-Model selection and variant management surfaces exist in multiple locations.
+Model selection surfaces must distinguish human-friendly labels from canonical stored ids.
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md, ContractName:Plans/Prompt_Pipeline.md
 
 ### 7.1 Model picker (Chat panel)
 
-The Chat panel (`Plans/FinalGUISpec.md` §7.16) MUST include a **model picker** dropdown:
+The chat model picker shows:
+- primary label: cleaned model name for readability
+- secondary label: runtime platform when needed for disambiguation
+- capability indicators where available
 
-1. **Current model display:** Show the active model as `provider/model` (truncated if needed) in the Chat input toolbar.
-2. **Dropdown:** Lists all available models grouped by provider. Each entry: model name, provider badge, capability indicators (context window size, vision support).
-3. **Variant quick-switch:** Below the model list, show enabled variants as labeled buttons or a sub-section. Clicking a variant sets the model to the variant's target.
-4. **Search:** Filter models by name (substring, case-insensitive).
-5. **Selection behavior:** Selecting a model sets it as the active model for the current session (priority 1 override). Selecting a variant sets the variant (priority 3).
+Rules:
+- selecting a model creates a priority-1 requested override.
+- if two runtime surfaces expose the same canonical model id, the picker must show the concrete runtime surface on the secondary line.
+- the detailed inspector must always expose the exact raw canonical model id.
 
-### 7.2 Models tab (Settings)
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md
 
-A dedicated **Models** tab in Settings MUST provide:
+### 7.2 Settings > Models
 
-1. **Provider list:** Collapsible cards per registered provider. Each card shows: provider name, auth status badge, model count, expand to show models.
+Settings must show:
+- provider/runtime grouping
+- concrete runtime surface availability
+- current defaults and their source
+- availability or capability gaps without inferring unsupported when discovery is merely silent or stale
 
-2. **Per-model options:** Expanding a model row shows editable fields for `max_output_tokens`, `temperature`, `top_p`, `reasoning_effort` (where supported). "Reset to defaults" per field.
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
 
-3. **Model priority list:** An ordered list editor for `config.model_priority` (drag to reorder, add/remove entries). Shows the effective resolution order.
+### 7.3 Variant and effort controls
 
-4. **Default model:** Dropdown to set `config.model` (the priority-4 default). Shows current effective model with source label (e.g., "From config", "Last used", "Internal default").
+Variant and effort controls remain runtime-qualified capability data.
 
-### 7.3 Variant picker (Settings > Models)
+Rules:
+- effort support is never inferred solely from model-name similarity.
+- unavailable, silent, or stale discovery should display `Unknown` instead of asserting `Unsupported`.
+- the GUI must keep requested and effective reasoning/effort selections distinct when a runtime clamps or ignores them.
 
-Within the Models tab:
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
 
-1. **Variant list:** Table of all variants (built-in + custom). Columns: Name, Model, Description, Status (enabled/disabled/unavailable).
-2. **Enable/disable toggle:** Per-variant toggle. Disabled variants hidden from Chat picker.
-3. **Add custom variant:** "Add variant" button with fields: name, model (dropdown from available models), description.
-4. **Edit/Remove:** Edit and remove buttons for custom variants. Built-in variants can only be disabled.
-5. **Default variant:** Dropdown to set `config.default_variant` (persisted across sessions).
+### 7.4 Detailed inspectors
 
-### 7.4 Per-Persona model override editor (Settings > Advanced > Personas)
+Detailed inspectors show the exact raw canonical model id, concrete runtime surface, and any effective reroute or clamp the provider performed.
 
-When editing a Persona in the Personas management card (`Plans/Personas.md` §4):
-
-1. **`default_platform` field:** Dropdown populated from available providers. Option for "Inherit (no override)" which sets `null`.
-2. **`default_model` field:** Dropdown populated from available models. Shows `provider_id/model_id`. Option for "Inherit (no override)" which sets `null`.
-3. **`default_variant` field:** Dropdown populated from enabled variants. Option for "Inherit (no override)".
-4. **Runtime control fields:** `temperature`, `top_p`, and `reasoning_effort` controls are shown only when the active provider capability matrix marks them `supported` or `partially_supported`; unsupported controls are disabled with explanatory UI.
-
-These fields are stored in the PERSONA.md frontmatter and applied at priority 2 in the runtime selection chain (§2).
-
-ContractRef: ContractName:Plans/Models_System.md#PERSONA-CAPABILITY-MATRIX, ContractName:Plans/FinalGUISpec.md
-
-### 7.5 ELI5/Expert copy
-
-Model UI elements follow the app-level Interaction Mode (Expert/ELI5) toggle per `Plans/FinalGUISpec.md` §7.4.0. Tooltip keys: `tooltip.models.*` prefix.
-
-- **ELI5:** Chat model picker shows only model names (no provider prefix). Settings Models tab shows only default model dropdown and variant enable/disable. Per-model options hidden.
-- **Expert:** Full view with all sections visible.
-
----
-
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
 ## 8. OpenCode baseline and Puppet Master deltas
 
 <a id="BASELINE-DELTAS"></a>

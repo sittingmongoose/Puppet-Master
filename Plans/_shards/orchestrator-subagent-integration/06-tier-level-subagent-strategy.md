@@ -1,23 +1,13 @@
 ## Tier-Level Subagent Strategy
+Canonical worker strategy remains graph-owned rather than tier-owned, but provider/runtime selection for node workers must now use the reconciled runtime ontology.
 
-Canonical worker strategy is graph-owned rather than tier-owned.
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Graph_View.md
 
-Default worker policy is:
-- node execution default = `subagent`
-- retry default = `fresh worker`
+Required orchestration rules:
+- node execution selects from the same provider-entry / account-or-profile model used elsewhere in the rewrite.
+- the orchestrator may request a provider family pool, but the frozen requested/effective runtime snapshot must still identify the concrete provider entry selected for each node worker.
+- OpenCode subagent execution selects a server profile, not an account row.
+- GitHub Copilot and Codex subagent execution use direct-provider account rows rather than legacy CLI assumptions.
+- orchestrator-side skill and MCP behavior follows the PM-native skill/MCP model and does not require provider-specific native skill delivery contracts.
 
-GUI override surface must allow:
-- `subagent` vs `agent`
-- `fresh worker` vs `reused worker`
-
-Governance strategy is:
-- package-local governance through `Package Overseer`
-- seam-level integration governance through `Seam Overseer`
-- node execution through node workers bound to `execution_unit_context`
-
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
-
-`Tier Context` survives only as derived decomposition/view context when needed for prompt helpers or legacy labels. It does not remain the canonical runtime context.
-
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Decision_Policy.md
-
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Skills_System.md

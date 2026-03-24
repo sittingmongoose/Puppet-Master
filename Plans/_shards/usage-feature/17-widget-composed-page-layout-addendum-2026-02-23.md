@@ -60,24 +60,25 @@ Configuration is persisted alongside the widget layout per Plans/Widget_System.m
 ContractRef: ContractName:Plans/Widget_System.md#5
 
 ### Multi-Account Widget as First-Class Catalog Entry
+The multi-account widget remains a first-class catalog entry, but it is now a status and observability widget rather than the canonical setup surface.
 
-The `widget.multi_account` widget is a **first-class entry** in the widget catalog (Plans/Widget_System.md section 2.2). It is not an afterthought or sub-component.
+ContractRef: ContractName:Plans/Widget_System.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md
 
-**Content displayed:**
-- Per-platform account list: account name, status indicator (active/inactive/cooldown).
-- Active account highlight per platform.
-- Cooldown state: countdown timer for rate-limited accounts.
-- Usage per account: 5h/7d bars per account (where available).
+Required content:
+- provider entry or server-profile row label
+- active/effective marker
+- plain-language status (`Working` or a concrete reason)
+- pressure/cooldown summary
+- source-confidence / stale label where needed
+- direct link/action into Agent-Config for setup, validation, or repair
 
-**Data source:** redb multi-account registry per Plans/Multi-Account.md section 4 + platform APIs for live usage.
+Rules:
+- the widget does not replace Agent-Config for account management, billing/entity selection, instruction control, skills, or MCP setup.
+- one GitHub Copilot auth-backed row may show a selected organization/billing entity beneath it rather than rendering duplicate top-level rows.
+- OpenCode server profiles appear alongside account-backed rows with explicit profile-mode labels.
+- the widget must not imply that every provider row has literal installed-local-state semantics; some rows are account-backed, some are server-profile-backed.
 
-**Placements:**
-- **Primary**: available on the Usage page (included in default layout above).
-- **Settings**: Multi-Account setup/management lives in Settings (per Plans/Multi-Account.md GUI requirements). The widget shows status, not setup.
-- **Dashboard**: user can optionally add to Dashboard via the add-widget flow.
-
-ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Widget_System.md#2.2
-
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
 ### Reuse on Dashboard via Add-Widget Flow
 
 All widgets that appear on the Usage page are **also hostable on the Dashboard**. Users can add any Usage widget to the Dashboard through the add-widget flow (Plans/Widget_System.md section 4):

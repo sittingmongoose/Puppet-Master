@@ -249,242 +249,151 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md#ASSEMBLY-PIPELINE
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md#COMPACTION, ContractName:Plans/Run_Modes.md
 ## 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)
+This section locks the final requested/effective runtime pipeline for provider family selection, account or server-profile resolution, billing/entity attribution, and PM-native skills/MCP assembly.
 
-This addendum expands the prompt pipeline to mirror the OpenCode-style role-resolution mechanics while preserving Puppet Master architecture.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Models_System.md
 
 ### 6.1 Expanded pre-prompt resolution stages
 
-The following stages refine the canonical ordering in §1.2 by expanding stages 1–3 into explicit Persona/runtime resolution steps before final prompt payload emission.
+Before final prompt payload emission, the runtime MUST resolve the following in order:
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md#ASSEMBLY-PIPELINE, ContractName:Plans/Prompt_Pipeline.md#PROVIDER-CAPABILITY-FILTERING
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Provider_OpenCode.md
 
-Before final prompt payload emission, the runtime MUST resolve:
+1. surface context and workflow overlay
+2. requested provider entry and requested runtime controls
+3. provider family and runtime-platform candidate set
+4. eligible account rows and server-profile rows
+5. entitlement or billing-entity selection where required
+6. effective provider/runtime/model/auth/account-or-profile resolution
+7. PM-native skill readiness and permission filtering
+8. PM-owned MCP/tool availability
+9. instruction bundle assembly
+10. final run snapshot freeze and provider handoff
 
-1. **Surface context**
-   Chat / Interview / Requirements Builder / Orchestrator / Multi-Pass / child subagent.
-2. **Task context**
-   Examples: discussion, clarification, planning, research, drafting, review, code execution, debugging, production-readiness validation.
-3. **Persona selection mode**
-   manual / auto / hybrid.
-4. **Requested Persona**
-   From explicit UI selection, structured config, surface assignment, natural-language invocation, or none.
-5. **Effective Persona**
-   After resolver, alias normalization, fallback, and provider availability checks.
-6. **Requested/effective runtime controls**
-   platform/model/variant/temperature/top_p/reasoning_effort/talkativeness.
-7. **Provider capability filtering**
-   Remove or downgrade unsupported Persona controls; record reasons.
-8. **Instruction assembly**
-   Combine rules + Persona instructions + compiled context + tool schemas.
-9. **Final runtime payload emission**
-   To provider runner/CLI/server bridge.
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Provider_OpenCode.md
 
-<a id="PERSONA-SELECTION-SOURCE-ENUM"></a>
 ### 6.2 Selection-source enumeration
 
-`persona_selection_source` MUST be one of:
+`persona_selection_source` remains the canonical requested-Persona source enum.
+
+`runtime_selection_source` is additive and SHOULD distinguish at least:
 - `manual_ui`
-- `auto_surface_resolver`
 - `surface_default`
 - `config_default`
-- `user_natural_language`
+- `persona_preference`
+- `auto_family_pool`
 - `fallback`
 
-The runtime MUST also store a human-readable `selection_reason`.
+The runtime MUST also persist a human-readable `selection_reason` suitable for detailed inspectors and audit history.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
 ### 6.2.1 Canonical requested-Persona precedence
 
-When multiple Persona-selection inputs exist, the runtime MUST compute `requested_persona` using this precedence (highest wins):
+Requested Persona precedence remains unchanged:
+1. explicit run-envelope or manual surface override
+2. active scoped natural-language override
+3. surface-specific explicit mapping
+4. surface auto resolver candidate
+5. config default
+6. canonical fallback
 
-1. **Explicit run-envelope/manual surface override**
-   A structured run input, manual picker choice, or surface action targeted at the current execution.
-2. **Active scoped natural-language override**
-   A previously resolved natural-language override whose scope still applies to the current execution. If multiple active scoped overrides apply, the most specific owner wins:
-   - `subagent`
-   - `node`
-   - `run`
-   - `turn`
-   - `session`
-3. **Surface-specific explicit mapping**
-   A configured Interview stage override, Builder stage/pass override, Orchestrator execution-scope override, or equivalent mapped Persona source.
-4. **Surface auto resolver candidate**
-   The Persona proposed by the active surface resolver based on actor type, operation type, scope level, and repo context.
-5. **Config default**
-   A project/global default Persona configured for the surface.
-6. **Canonical fallback**
-   The fallback Persona defined by the active surface contract. If a surface contract does not define one, use `general-purpose`.
+Runtime/provider selection occurs after requested Persona resolution and MUST NOT rewrite the winning requested-Persona source.
 
-`persona_selection_source` MUST reflect the winning source category, not every candidate that was considered.
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
 
-### 6.2.2 Scoped override lifecycle contract
+### 6.2.2 Runtime, account, and profile resolution stages
 
-Natural-language Persona overrides MUST persist enough state to be replayable and auditable.
+Provider/runtime resolution rules:
+- `requested_platform` and `effective_platform` identify the concrete provider entry or runtime surface selected for execution.
+- `provider_family_id` is additive and groups equivalent or pooled runtime surfaces without replacing the concrete provider entry.
+- account-backed providers resolve an effective account row.
+- server-bridged providers resolve an effective `connection_profile_id`.
+- providers whose quota semantics depend on billing or organization context may also resolve an effective billing/entity bucket.
 
-Required lifecycle rules:
-- `turn` scope expires after the next eligible execution on the same thread/surface.
-- `session` scope remains active until cleared or replaced within the same thread/session.
-- `run` scope applies only to the current run tree.
-- `node` scope applies only to the owning execution unit.
-- `subagent` scope applies only to the targeted delegated child run.
+Examples:
+- `Gemini` direct and `Gemini CLI` are separate runtime surfaces that may belong to the same family pool.
+- `Codex` resolves separate account rows for `ChatGPT` and `API key` auth families.
+- `GitHub Copilot` resolves one auth-backed account row plus a selected billing entity when premium-request semantics require it.
+- `OpenCode` resolves a managed or attached server profile rather than an account row.
 
-If a scoped override no longer has a valid owner object, it MUST be discarded before resolution and recorded as expired rather than silently reused.
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md
 
 ### 6.3 Natural-language Persona invocation in prompt assembly
-### 6.3.1 Invocation guardrails and ambiguity handling
 
-Natural-language Persona invocation MUST be conservative enough to avoid false positives.
+Natural-language Persona invocation remains conservative and applies only to Persona resolution.
 
-Detection scope:
-- Inspect only the latest user-authored freeform message content for the current surface.
-- Ignore quoted prior messages, pasted logs, code blocks, tool output, and file excerpts.
-- Do not resolve a Persona override from third-person discussion such as "the explorer persona is useful here" unless the utterance also contains an imperative/request pattern.
+It MUST NOT be used to silently rewrite:
+- the requested provider entry
+- the requested auth family
+- the selected billing entity
+- the selected server profile
 
-Required trigger patterns:
-- imperative/request forms such as `use`, `switch to`, `be`, `answer as`, `act as`, or `for this use`
-- the trigger must appear in the same clause/span as the matched Persona candidate
+Those selections remain explicit policy or configuration decisions surfaced through Agent-Config and runtime inspectors.
 
-Match order (highest confidence first):
-1. exact canonical Persona ID
-2. exact display name
-3. exact alias
-4. normalized token match (case/punctuation/kebab normalization)
-5. fuzzy match only when there is exactly one clear winner after normalization
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
 
-Ambiguity rules:
-- If two or more candidates remain at the same confidence tier, the runtime MUST ask for clarification and MUST NOT apply an override speculatively.
-- If no candidate survives the guardrails, continue without override and do not emit `persona_selection_source = user_natural_language`.
+<a id="EFFECTIVE-RESOLUTION-RECORD"></a>
+### 6.4 Effective resolution record
 
-Migration/alias rule:
-- Legacy input such as `explore` MAY resolve as an alias to `explorer`, but persistence and UI display MUST always normalize to `explorer`.
+The frozen requested/effective runtime snapshot MUST preserve these canonical base fields:
 
-Before Persona auto resolution completes, the pipeline must inspect the current user instruction/message for natural-language Persona requests.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
 
-Examples that SHOULD be recognized:
-- `Use Explorer`
-- `Switch to Collaborator`
-- `Be a Rust engineer`
-- `Answer as a technical writer`
-- `Use the security auditor for this`
-
-Resolution behavior:
-- If a clear Persona match exists, create a `requested_persona` override before auto selection.
-- Determine default override scope from phrasing:
-  - one-turn phrasing -> turn scope,
-  - persistent phrasing -> session scope.
-- If no reliable match exists, proceed without override or trigger clarification according to surface policy.
-
-### 6.4 Auto Persona resolution requirements
-
-Auto mode MUST be deterministic and surface-aware.
-
-Examples of required auto behavior:
-- Rust repo + code-edit task -> `rust-engineer`
-- planning/discussion mode -> `collaborator`
-- repo discovery/read-only investigation -> `explorer`
-- external-source research/synthesis -> `researcher` or `deep-researcher` depending on depth
-- documentation drafting -> `technical-writer`
-- security review -> `security-auditor`
-- implementation-focused security work -> `security-engineer`
-- deployment/IaC implementation -> `devops-engineer`
-- production readiness validation -> `sre`
-
-Rule: auto mode MUST always expose the selected effective Persona and reason. It MUST NEVER emit an opaque `Auto` state with no resolved output.
-
-### 6.5 Effective resolution record
-The effective resolution record captures the frozen requested/effective runtime identity used for a specific execution handoff.
-
-Required fields are:
-- `requested_mode_overlay`
-- `effective_mode_overlay`
-- `requested_runtime_mode`
-- `effective_runtime_mode`
-- `requested_persona`
-- `effective_persona`
-- `persona_selection_source`
-- `selection_reason`
-- `persona_override_scope`
-- `persona_override_owner_id`
 - `requested_platform`
 - `effective_platform`
 - `requested_model`
 - `effective_model`
-- `requested_variant`
-- `effective_variant`
 - `requested_auth_mode`
 - `effective_auth_mode`
-- `requested_account_policy`
-- `requested_account_id?`
-- `requested_account_binding?`
-- `effective_account_id?`
-- `effective_account_label?`
-- `effective_provider_identity?`
-- `account_switch_reason?`
-- `effective_temperature?`
-- `effective_top_p?`
-- `effective_reasoning_effort?`
-- `effective_talkativeness?`
-- `applied_persona_controls[]`
-- `skipped_persona_controls[]`
-- `execution_role`
-- `operational_identity?`
+- `effective_account_id`
+- `effective_provider_identity`
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md
+Additive runtime-disclosure fields MAY include:
+- `provider_family_id`
+- `connection_profile_id`
+- `requested_runtime_platform_id`
+- `effective_runtime_platform_id`
+- `requested_model_provider_id`
+- `effective_model_provider_id`
+- `requested_billing_entity_id`
+- `effective_billing_entity_id`
+- `effective_billing_entity_label`
+- `effective_entitlement_class`
+- `effective_project_id`
+- `account_switch_reason`
+- `usage_signal_confidence`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
 
 Rules:
-- requested and effective values remain mandatory runtime concepts and must not collapse into one field
-- overlay identity and runtime posture are both required so historical views can preserve `deep_plan` without redefining the canonical runtime-posture family
-- `requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `interview`, `brainstorm`, and `crew`
-- runtime posture values remain governed by `Plans/Run_Modes.md`
-- historical views show the frozen record captured for that execution and do not recompute from current settings
-- `requested_persona_id` and `effective_persona_id` are not canonical persisted field names
-- actor type and operation type outrank stack hints in auto-resolution
+- additive fields MUST NOT shadow or rename the canonical base fields.
+- the frozen snapshot is captured before provider handoff and is not recomputed from later UI state.
+- if the provider internally re-routes to another effective model or runtime surface, the actual outcome is captured as runtime/event evidence while the frozen requested snapshot remains auditable.
+- `selectable_unit_id` remains a scheduler/debug artifact and MUST NOT be promoted into the base frozen record.
 
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Personas.md, ContractName:Plans/FinalGUISpec.md
-### 6.6 Provider capability filtering stage
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md
 
-Persona controls must pass through provider capability filtering before prompt/model execution.
+### 6.5 PM-native skills, MCP, and instruction assembly
 
-Processing rule:
-1. collect requested Persona controls,
-2. compare them to the provider capability matrix,
-3. apply supported controls,
-4. downgrade or skip partially supported/unsupported controls,
-5. record every skipped control with a reason,
-6. expose the resulting effective state to the UI.
+Skill/tool/MCP resolution is part of the prompt pipeline, not a provider-specific afterthought.
 
-Rule: `talkativeness` is a Persona instruction-layer control, not a provider runtime knob. It does not pass through provider runtime capability filtering; instead, it is applied during Instruction Bundle assembly whenever a Persona is active. `model_default` means no additional verbosity directive is injected.
+Required rules:
+- PM resolves skills from the PM registry and compatibility roots before provider execution begins.
+- skill readiness is computed from `required_tool_refs` and `optional_tool_refs` plus permission state.
+- PM-owned MCP availability is computed before run handoff and may generate CLI adapter config for bridged runtimes when required.
+- provider-native skill or MCP files are optional projections. They are never the canonical runtime source of truth.
+- bundling the selected PM-native skill content is mandatory for runtime correctness; the `skill` tool is the on-demand augmentation path.
 
-ContractRef: ContractName:Plans/Models_System.md#PERSONA-CAPABILITY-MATRIX, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md, ContractName:Plans/MiscPlan.md
 
-### 6.7 OpenCode baseline mapping
+### 6.6 UI transparency requirement
 
-This pipeline deliberately mirrors the mechanics observed in OpenCode:
-- select runtime role by name,
-- resolve role prompt and model before the model call,
-- merge runtime options/variant,
-- merge role and session permissions for tool gating.
+Before the run starts, Agent-Config and other detailed inspectors MUST be able to predict the likely effective runtime from the same resolution pipeline.
 
-Puppet Master implements the same effective behavior through Persona resolution rather than OpenCode `agent` terminology.
+After the run starts, the frozen snapshot and any observed provider deviations MUST remain visible without heuristically recomputing the original decision.
 
-### 6.8 UI transparency requirement
-
-Prompt assembly must emit enough state for UI surfaces to display:
-- effective Persona,
-- effective platform/model,
-- effective talkativeness when not `model_default`,
-- selection reason,
-- applied controls,
-- skipped controls,
-- and current scope of any natural-language Persona override.
-
-### 6.9 Acceptance criteria addendum
-
-- Prompt assembly must include Persona/runtime resolution before final provider invocation.
-- Natural-language Persona invocation must be parsed before auto selection finalization.
-- Unsupported Persona controls must be skipped explicitly and surfaced.
-- Persona `talkativeness` must be applied through instruction assembly even when the provider does not expose sampling controls such as `temperature` or `top_p`.
-- Effective resolution record must be available for thread history, activity panes, and run inspection UIs.
-
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
 ## Remediation and Retry Metadata Addendum (2026-03-08)
 
 Prompt assembly must carry the minimum metadata needed for deterministic remediation, retry, and audit behavior without widening execution authority.

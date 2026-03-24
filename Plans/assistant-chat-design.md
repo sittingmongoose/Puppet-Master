@@ -895,16 +895,18 @@ Rules:
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
 
 ### 13.3 Bash and terminal ownership
-Assistant Chat may preview shell-backed work inline, but the canonical interactive session remains the Terminal surface.
-
-Rules:
-- one inline command card corresponds to one observed command invocation
-- collapsed preview defaults to 5 lines; expanded preview defaults to 15 lines
-- `Open in Terminal` and `Show Terminal` resolve to exact-session reveal when a `terminal_session_id` binding exists
-- chat owns a compact audit and preview layer; Terminal owns the canonical interactive PTY session
+Assistant Chat may preview shell-backed work inline, but the canonical interactive runtime remains the terminal workspace.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
 
+Rules:
+- one inline command card still corresponds to one observed command invocation or session reference.
+- `Open in Terminal` and `Show Terminal` resolve to the exact referenced terminal session, workgroup, and leaf pane when that linkage exists.
+- chat owns compact audit and preview receipts; the bottom runtime terminal workspace owns the canonical PTY layout and interaction state.
+- the bottom runtime workspace uses workgroups and subtabs rather than one flat strip of unrelated tabs.
+- editor-embedded terminal panels are secondary presentations of existing terminal leaf panes and do not become independent chat-owned runtimes.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
 ### Command-card model
 Command cards are transcript-adjacent summaries rather than a second shell implementation.
 
@@ -1274,13 +1276,17 @@ Rules:
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FileManager.md
 
 ### Dev-session and terminal binding
-- a dev session may own or link multiple terminal sessions without collapsing them into one PTY identity
-- `Show Output`, `Show Problems`, and `Show Ports` reveal the surfaces linked to the current `dev_session_id`
-- `Open in Terminal` from a dev-status row reveals the primary or last-active `terminal_session_id` for that dev session when one exists
-- stopping a dev session preserves historical shell evidence and linked surface history even when the live process has exited
+A dev session may own or link multiple terminal sessions without collapsing them into one PTY identity.
+
+Rules:
+- a dev session may span multiple workgroups, leaf panes, and editor-embedded terminal panels.
+- `Show Output`, `Show Problems`, and `Show Ports` reveal the surfaces linked to the current `dev_session_id` without changing the canonical owning runtime records.
+- `Open in Terminal` from a dev-status row reveals the primary or last-active terminal leaf pane for that dev session when one exists.
+- closing a workgroup or pane that is mirrored in the editor stack must remove or update the associated editor panel references.
+- if a pane exists only in the editor stack, the bottom workspace surfaces placeholder guidance rather than pretending the pane no longer exists.
+- stopping a dev session preserves historical shell evidence and linked surface history even when the live process has exited.
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
-
 ### Project-switch and close rules
 - switching projects recalculates effective shell, tool, and dev-session state for the new project context
 - background activity from the old project remains visible through badges and attention surfaces tied to its own project and session identities

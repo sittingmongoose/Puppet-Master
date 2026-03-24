@@ -351,36 +351,71 @@ ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-p
 ## 5. Panel System
 
 ### 5.1 Detachable Panels
+The shell supports detachable panels, but detachment never changes canonical surface identity.
 
-The side panel is the single activity-bar-driven right-hand slot. Search, Chat, File Manager, Source Control, GitHub Actions, Docker Manager, Artifacts, and Run & Debug all live in that slot, one occupant at a time.
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
 
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
-
-Detach and re-dock support for this feature cluster is mandatory for:
+Required detachable surfaces:
 - Search panel
 - Chat panel
 - File Manager panel
-- Primary terminal section
-- Secondary terminal section when opened
+- bottom terminal workspace
+- editor-embedded terminal panels when they are promoted out of the editor stack
+
+Rules:
+- re-docking restores the same logical surface identity rather than minting a new panel type.
+- the bottom terminal workspace remains the canonical host for runtime terminals.
+- editor-embedded terminal panels are secondary presentations of terminal leaf panes, not separate PTY sessions.
+- normal browsing and preview/browser sessions remain governed by the browser/session model, not by terminal detachment rules.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md
+### Terminal section presentation rules
+The bottom runtime zone uses a workgroup-first terminal information architecture.
+
+#### Bottom runtime information architecture
+
+The canonical structure is:
+- workgroups as the primary horizontal strip
+- subtabs for each leaf terminal pane inside the active workgroup
+- an optional split-pane tree inside each workgroup
+
+The bottom strip is laid out as left / center / right regions.
+- center hosts the workgroup cluster plus the active subtab row
+- right hosts split, add, collapse, and related terminal actions
+- the separate command-log strip is retired from the canonical layout
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Command_Catalog.md
+
+#### Split grid and editor embeddings
+
+Terminal panes may be organized as a row/column split tree.
+
+Rules:
+- visible gutters and resizers are part of the canonical layout, not optional decoration.
+- workgroups own the accent used by the workgroup pill and the active subtab highlight.
+- the terminal grid must not use a split-parent opacity enter animation that dims all children during reorder or drag operations.
+- the editor may host a multi-panel terminal stack. Each panel references an existing terminal leaf pane and workgroup rather than creating a second terminal session.
+- if a pane is currently editor-only, the bottom runtime zone shows placeholder language explaining that the pane lives in the editor stack and can be restored there or dropped back into the bottom workspace.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+#### Drag-and-drop contract
+
+Terminal DnD accepts pane, subtab, and workgroup payloads.
+
+Required behavior:
+- same-group pane reorder swaps leaf panes in the workgroup split tree.
+- dropping a workgroup on the editor resolves to the focused leaf pane in that workgroup, falling back to the first leaf when needed.
+- DnD cleanup must clear stale hover, opacity, and drag classes after rebuild or dragend so terminal panes do not remain visually dimmed.
+- drag handlers for pane drop targets must work when the cursor is over pane-body content, not only over outer chrome.
 
 ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
 
-Additional rules:
-- Re-docking restores a detachable surface to the canonical right-hand side-panel slot or bottom runtime zone without minting a new logical surface identity.
-- Source Control, GitHub Actions, Docker Manager, Artifacts, and Run & Debug may remain docked-only in MVP while still using the same slot and shell-state vocabulary.
-- The bottom runtime zone is not the canonical host for normal browsing, HTML preview, or persistent Search results.
-- Browser surfaces remain editor/workspace-tab hosted or detached-window hosted according to the preview/browser session model.
+#### Motion and accessibility
 
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+Reduced motion applies to terminal enter animations where those animations are still used, but not to removed split-parent fade effects.
 
-### Terminal section presentation rules
-- the primary terminal section defaults to the bottom runtime zone
-- the product may expose a second terminal section either as an additional docked runtime section or as a detached runtime window, but it remains the same canonical terminal-section concept in both cases
-- Output, Problems, Debug Console, and Ports follow the owning terminal or dev-session context; they do not become separately detached mini-shells
-- detaching a terminal section preserves its section identity, tab order, pane tree, and linked session bindings
-- re-docking a terminal section restores it without minting new terminal-session identity
-
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
 ### 5.2 Panel State Machine
 
 Per panel: **DOCKED** <-> **FLOATING**. Same Slint component is used inline when docked or as the root of a separate Slint `Window` when floating.
@@ -695,34 +730,78 @@ Rules:
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
 ### 7.4 Settings and inspectors
-
-Settings and inspectors separate:
-- inherited / overridden
-- requested
-- effective
-- honored / skipped / clamped
-
-Rules:
-- detailed runtime identity inspectors must show provider, model, persona, account, worker-policy, and terminal-runtime requested/effective state where relevant
-- compact surfaces may show only material deltas
-- historical views use frozen captured state and do not recompute from current settings
-- chat-facing compact rows and popovers are compact surfaces, not the full detailed inspector tier
+Settings and inspectors separate requested state, effective state, inherited defaults, and repaired or degraded runtime outcomes.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md
 
+Required inspector rule:
+- compact surfaces may show only material deltas, but the full inspector tier must always expose provider entry, model, auth family, account or server profile, billing/entity context when relevant, and the reason PM selected that runtime.
+- historical views use frozen captured state and do not recompute from current settings.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
+
 #### Assistant chat mode strip and debug investigation surfaces
 
-The primary Assistant mode strip presents `Ask`, `Agent`, `Debug`, `Plan`, and `Deep Plan` as the stable user-facing choices for the chat surface.
+The primary Assistant mode strip still presents `Ask`, `Agent`, `Debug`, `Plan`, and `Deep Plan`.
 
 Required UI rules:
-- selecting `Debug` switches the thread into the Debug overlay rather than opening the classical DAP debugger surface
-- the active Debug thread header shows target summary, investigation phase, Debug Automation Profile state, and bundle/export actions
-- the bottom runtime zone uses **Debugger** or **DAP Debugger** for the classical DAP surface and **Debug Console** for runtime output; the bare label `Debug` is not sufficient canonical copy for those runtime surfaces
-- detailed inspectors must show requested/effective overlay, canonical runtime mode, `investigation_id`, `debug_target_kind`, verification strength, and any degraded capability state when a Debug investigation is active
-- blocked or attention-required Debug investigations must surface explicit reason codes and shared allowed-action affordances rather than inventing a debug-only approval lane
+- `Debug` remains the assistant investigation overlay rather than a synonym for the classical DAP debugger.
+- detailed inspectors for debug investigations show requested/effective overlay, canonical runtime mode, `investigation_id`, target kind, and any degraded capability state.
+- the classical debugger surfaces continue to use explicit copy such as `Debugger`, `DAP Debugger`, and `Debug Console`.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md
 
+#### Agent-Config
+
+Agent-Config is the canonical provider-management surface.
+
+Required section order:
+1. `Overview`
+2. `Defaults`
+3. `Accounts / Profiles`
+4. `Models`
+5. `Instructions`
+6. `Skills`
+7. `Advanced Runtime`
+
+The `Effective Runtime` inspector remains persistently visible while the user changes provider defaults, account/profile selections, instruction control, skills, or advanced runtime options.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md
+
+#### Usage and provider state inspectors
+
+Usage and provider inspectors must show:
+- current effective account or server profile
+- current effective auth mode
+- current effective billing/entity context when it explains quota behavior
+- pressure/cooldown summary
+- source-confidence or stale status when data is inferred or older than the current runtime state
+- direct actions such as `Refresh Usage`, `Revalidate`, `Choose Billing Entity`, `Reconnect`, or `Restart Server` when relevant
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/FinalGUISpec.md
+
+### Terminal settings ownership
+
+Terminal layout controls belong to the terminal workspace and its inspector, not to ad-hoc chat-only widgets.
+
+Rules:
+- workgroups, subtabs, pane trees, and editor panel references persist as terminal workspace state.
+- detached terminal windows preserve section identity and reconnect to the same logical workspace records when reattached.
+- editor terminal panel controls act on the referenced pane rather than inventing parallel session ownership.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
+
+### Terminal inspector rules
+
+Terminal inspectors must expose:
+- active workgroup
+- focused leaf pane
+- bound terminal session id
+- linked dev-session id when present
+- editor embedding state
+- restore outcome / degraded capability state for historical sessions
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md
 ### Terminal settings ownership
 Settings owns durable terminal preferences and discoverability. Live session controls remain in terminal chrome and are not hidden inside durable settings.
 

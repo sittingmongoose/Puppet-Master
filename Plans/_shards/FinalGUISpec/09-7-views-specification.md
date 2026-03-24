@@ -58,34 +58,78 @@ Rules:
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
 ### 7.4 Settings and inspectors
-
-Settings and inspectors separate:
-- inherited / overridden
-- requested
-- effective
-- honored / skipped / clamped
-
-Rules:
-- detailed runtime identity inspectors must show provider, model, persona, account, worker-policy, and terminal-runtime requested/effective state where relevant
-- compact surfaces may show only material deltas
-- historical views use frozen captured state and do not recompute from current settings
-- chat-facing compact rows and popovers are compact surfaces, not the full detailed inspector tier
+Settings and inspectors separate requested state, effective state, inherited defaults, and repaired or degraded runtime outcomes.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md
 
+Required inspector rule:
+- compact surfaces may show only material deltas, but the full inspector tier must always expose provider entry, model, auth family, account or server profile, billing/entity context when relevant, and the reason PM selected that runtime.
+- historical views use frozen captured state and do not recompute from current settings.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
+
 #### Assistant chat mode strip and debug investigation surfaces
 
-The primary Assistant mode strip presents `Ask`, `Agent`, `Debug`, `Plan`, and `Deep Plan` as the stable user-facing choices for the chat surface.
+The primary Assistant mode strip still presents `Ask`, `Agent`, `Debug`, `Plan`, and `Deep Plan`.
 
 Required UI rules:
-- selecting `Debug` switches the thread into the Debug overlay rather than opening the classical DAP debugger surface
-- the active Debug thread header shows target summary, investigation phase, Debug Automation Profile state, and bundle/export actions
-- the bottom runtime zone uses **Debugger** or **DAP Debugger** for the classical DAP surface and **Debug Console** for runtime output; the bare label `Debug` is not sufficient canonical copy for those runtime surfaces
-- detailed inspectors must show requested/effective overlay, canonical runtime mode, `investigation_id`, `debug_target_kind`, verification strength, and any degraded capability state when a Debug investigation is active
-- blocked or attention-required Debug investigations must surface explicit reason codes and shared allowed-action affordances rather than inventing a debug-only approval lane
+- `Debug` remains the assistant investigation overlay rather than a synonym for the classical DAP debugger.
+- detailed inspectors for debug investigations show requested/effective overlay, canonical runtime mode, `investigation_id`, target kind, and any degraded capability state.
+- the classical debugger surfaces continue to use explicit copy such as `Debugger`, `DAP Debugger`, and `Debug Console`.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md
 
+#### Agent-Config
+
+Agent-Config is the canonical provider-management surface.
+
+Required section order:
+1. `Overview`
+2. `Defaults`
+3. `Accounts / Profiles`
+4. `Models`
+5. `Instructions`
+6. `Skills`
+7. `Advanced Runtime`
+
+The `Effective Runtime` inspector remains persistently visible while the user changes provider defaults, account/profile selections, instruction control, skills, or advanced runtime options.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md
+
+#### Usage and provider state inspectors
+
+Usage and provider inspectors must show:
+- current effective account or server profile
+- current effective auth mode
+- current effective billing/entity context when it explains quota behavior
+- pressure/cooldown summary
+- source-confidence or stale status when data is inferred or older than the current runtime state
+- direct actions such as `Refresh Usage`, `Revalidate`, `Choose Billing Entity`, `Reconnect`, or `Restart Server` when relevant
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/FinalGUISpec.md
+
+### Terminal settings ownership
+
+Terminal layout controls belong to the terminal workspace and its inspector, not to ad-hoc chat-only widgets.
+
+Rules:
+- workgroups, subtabs, pane trees, and editor panel references persist as terminal workspace state.
+- detached terminal windows preserve section identity and reconnect to the same logical workspace records when reattached.
+- editor terminal panel controls act on the referenced pane rather than inventing parallel session ownership.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
+
+### Terminal inspector rules
+
+Terminal inspectors must expose:
+- active workgroup
+- focused leaf pane
+- bound terminal session id
+- linked dev-session id when present
+- editor embedding state
+- restore outcome / degraded capability state for historical sessions
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md
 ### Terminal settings ownership
 Settings owns durable terminal preferences and discoverability. Live session controls remain in terminal chrome and are not hidden inside durable settings.
 

@@ -13,13 +13,17 @@ Rules:
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FileManager.md
 
 ### Dev-session and terminal binding
-- a dev session may own or link multiple terminal sessions without collapsing them into one PTY identity
-- `Show Output`, `Show Problems`, and `Show Ports` reveal the surfaces linked to the current `dev_session_id`
-- `Open in Terminal` from a dev-status row reveals the primary or last-active `terminal_session_id` for that dev session when one exists
-- stopping a dev session preserves historical shell evidence and linked surface history even when the live process has exited
+A dev session may own or link multiple terminal sessions without collapsing them into one PTY identity.
+
+Rules:
+- a dev session may span multiple workgroups, leaf panes, and editor-embedded terminal panels.
+- `Show Output`, `Show Problems`, and `Show Ports` reveal the surfaces linked to the current `dev_session_id` without changing the canonical owning runtime records.
+- `Open in Terminal` from a dev-status row reveals the primary or last-active terminal leaf pane for that dev session when one exists.
+- closing a workgroup or pane that is mirrored in the editor stack must remove or update the associated editor panel references.
+- if a pane exists only in the editor stack, the bottom workspace surfaces placeholder guidance rather than pretending the pane no longer exists.
+- stopping a dev session preserves historical shell evidence and linked surface history even when the live process has exited.
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
-
 ### Project-switch and close rules
 - switching projects recalculates effective shell, tool, and dev-session state for the new project context
 - background activity from the old project remains visible through badges and attention surfaces tied to its own project and session identities

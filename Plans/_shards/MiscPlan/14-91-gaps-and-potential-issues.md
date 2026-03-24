@@ -127,17 +127,17 @@ ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/or
 - **Tooltip when key map not loaded:** Before the key map is built (e.g. config not yet loaded), show action label only or "(Loading...)" where shortcut labels appear; never show blank or "(undefined)" (§7.11).
 
 ### 9.1.21 Skills: discovery, permissions, and runner wiring
-Skills runtime behavior is canonicalized as registry discovery + permission filtering + context bundling + `skill` tool access.
-
-Implications:
-- there is no MVP requirement to define separate provider-native runtime delivery mechanisms per provider
-- runner wiring is responsible for preserving the canonical registry and tool behavior, not for translating every skill into provider-specific native packaging
-- provider-native skill files remain discovery/import/export/interoperability concerns only
-- permission checks apply before bundling and before on-demand `skill` tool access
-
-MiscPlan should therefore reference the primary SSOTs for runtime behavior rather than carrying a stale “implementation plan must list per provider” requirement.
+Skills runtime behavior is canonicalized as registry discovery, permission filtering, readiness validation, context bundling, and on-demand `skill` tool access.
 
 ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md
+
+Runner implications:
+- there is no MVP requirement to invent a separate provider-native skill runtime-delivery matrix for each provider.
+- direct providers consume PM-native skill bundling and PM tool availability.
+- CLI-bridged providers may receive compatibility projections only when explicitly enabled, but runtime correctness still depends on PM-native bundling plus the PM `skill` tool.
+- server-bridged providers such as OpenCode remain subject to the same PM-native skill canon.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Multi-Account.md
 ### 9.1.22 Shortcuts and Skills: implementation summary
 
 **Known risks**

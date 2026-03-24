@@ -1,35 +1,40 @@
 ## Platform-Specific Capabilities & Extensions
-
 ### Platform capability overview
 
-Runtime integration is provider-first; transport varies by ProviderTransport (CLI-bridged, direct-provider, server-bridged). Platform capability work in this plan is limited to:
-- native CLI features (flags, modes, output schemas)
-- platform hook systems
-- skills/plugins/extensions
-- MCP connectivity
+Platform capability handling is provider-first and uses three execution classes:
+- direct providers
+- CLI-bridged providers
+- server-bridged providers
 
-SDK orchestration is not an implementation target in this plan.
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Prompt_Pipeline.md
 
-### Capability Surface by Platform
+### Capability surface by platform
 
-**Cursor**
-- CLI modes (`--mode=plan|ask`), stream output, subagent/plugin/hook support where available.
-- MCP usage and tool discovery via CLI-compatible paths.
+**Cursor CLI**
+- `cursor-agent` is the execution runtime.
+- PM-managed account roots and PM-derived MCP/instruction projections define the CLI boundary.
+
+**Claude Code CLI**
+- CLI-backed execution with subscriber, console/API, and SSO setup families.
+- PM-native skill and MCP handling remains canonical.
+
+**Gemini direct**
+- direct API-key provider.
+- runtime invocation is not a CLI subprocess.
+
+**Gemini CLI**
+- separate CLI-backed provider entry.
+- may expose routing behavior that differs from the originally requested model.
 
 **Codex**
-- `codex exec` is the runtime invocation path.
-- Optional `codex mcp-server` interop where it fits tool architecture.
-- Hook/config behavior through CLI/config files only.
-
-**Claude Code**
-- `claude -p` and headless flags are the runtime invocation path.
-- Agent files (`.claude/agents`) and hooks are consumed through CLI/runtime behavior.
-
-**Gemini**
-- Gemini is a Direct API provider; runtime invocation uses the Gemini API directly (not a CLI subprocess).
-- Extension/hook surfaces are orchestrator-level only.
+- direct provider with `ChatGPT` and `API key` account rows.
+- no Codex CLI runtime requirement in this plan.
 
 **GitHub Copilot**
-- `copilot -p` (or `npx -y @github/copilot`) is the runtime invocation path.
-- Skills/extensions and CLI flags only; no SDK invocation path.
+- direct provider with billing/entity semantics beneath the auth-backed account row.
+- no Copilot CLI runtime requirement in this plan.
 
+**OpenCode**
+- server-bridged provider via managed or attached server profiles.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md

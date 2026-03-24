@@ -10,9 +10,9 @@ Plan mode is implemented per tier (phase, task, subtask, iteration) and flows fr
 |-----------|---------------------------|--------|
 | Cursor    | `--mode plan` (else `--force`) | Native; read-only planning then execute. |
 | Claude    | `--permission-mode plan`       | Native; read-only analysis. |
-| Codex     | `--sandbox read-only` (no `--full-auto`) | Read-only sandbox; no native "plan" flag. |
+| Codex     | PM direct-provider runtime policy | Direct provider; plan constraints are enforced by PM runtime policy rather than Codex CLI flags. |
 | Gemini    | Direct API plan-mode request              | Gemini is a Direct API provider; plan constraints applied via API parameters. |
-| Copilot   | Omit `--allow-all-paths` / `--allow-all-urls` when plan_mode | Restrictive mode; no dedicated plan flag in CLI. |
+| GitHub Copilot | PM direct-provider runtime policy | Direct provider; plan constraints are enforced by PM runtime policy and effective entitlement context. |
 
 ### Plan Mode & Platform CLI Updates (Last ~2 Months)
 
@@ -28,9 +28,10 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 - **0.100 (Feb 12):** ReadOnlyAccess policy, memory slash commands (`/m_update`, `/m_drop`), experimental JS REPL, app-server websocket refresh.
 - **0.101 (Feb 12):** Memory/model stability, model slug preservation.
 - **0.104 (Feb 18):** Distinct approval IDs for multi-approval shell commands; app-server v2 (thread archive notifications); `WS_PROXY`/`WSS_PROXY`; safety-check and cwd-prompt fixes.
-- **Sandbox:** `--sandbox read-only | workspace-write | danger-full-access`; no native "plan" flag; our use of `--sandbox read-only` for plan mode remains correct.
-- **Subagents/MCP:** Codex as MCP server (`codex mcp-server`) exposes `codex`/`codex-reply` tools; community `codex-subagents-mcp` uses profiles (e.g. `sandbox_mode = "read-only"` for review).
-- **Impact:** No change to plan-mode mapping. Subagent/MCP integration for Codex is relevant for orchestrator subagent invocation.
+- **Runtime posture:** Codex is a Direct provider in PM, not a CLI-bridged runtime in this stack.
+- **Plan mode:** PM enforces plan constraints through requested/effective runtime policy, account selection, and permission posture rather than through Codex CLI flags.
+- **Upstream context:** Upstream Codex CLI and MCP-server capabilities remain relevant as ecosystem reference points, but they are not the canonical PM execution path for Codex.
+- **Impact:** Keep orchestrator assumptions aligned with the direct-provider model and avoid reintroducing Codex CLI-specific plan-mode mapping into PM runtime canon.
 
 **Claude Code**
 - **v2.1.41-v2.1.45 (Feb 2026):** CLI auth commands, Windows ARM64, prompt cache and startup improvements; v2.1.45: Sonnet 4.6, `spinnerTipsOverride`, rate-limit telemetry type updates, `enabledPlugins`/`extraKnownMarketplaces` from `--add-dir`, permission destination persistence, plugin command availability fix.
@@ -45,15 +46,16 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 - **Doctor / verification checks (Direct-provider):** API key present; `models.list` works; capability gating is consistent with Settings toggles; media routing matches `Plans/Media_Generation_and_Capabilities.md` (Cursor image routes to Cursor-native; Gemini media requires key and compatible model).
 - **Impact:** No provider CLI flags or provider-local config files are used for Gemini in this stack.
 
-**GitHub Copilot CLI**
+**GitHub Copilot**
 - **Jan 14-21, 2026:** Plan mode in interactive UI (Shift+Tab); advanced reasoning models; GPT-5.2-Codex; inline steering; background delegation `&`; `/review`; context auto-compaction; automation flags (`--silent`, `--share`, `--available-tools`, `--excluded-tools`).
-- **Plan mode:** Interactive only (Shift+Tab); no dedicated `--plan` flag for headless `-p` usage. Programmatic use remains `-p` with existing flags; our "omit `--allow-all-paths`/`--allow-all-urls` when plan_mode" remains the way to get more restrictive behavior in headless.
-- **Provider bridge:** Plan mode remains interactive in Copilot UI; headless runs continue through CLI-bridged restrictive flags.
-- **Impact:** No change to our headless plan-mode mapping; document that native plan mode is interactive; if Copilot adds a headless plan flag, switch to it in runner and platform_specs.
+- **Runtime posture:** GitHub Copilot is a Direct provider in PM, not a CLI-bridged runtime in this stack.
+- **Plan mode:** PM enforces plan constraints through direct-provider runtime policy, selected billing entity, and effective entitlement context rather than through Copilot CLI flags.
+- **Provider behavior:** Provider-side interactive plan affordances are upstream behavior, not the canonical PM runtime contract.
+- **Impact:** Keep orchestrator assumptions aligned with the direct-provider model and avoid encoding Copilot CLI-specific fallback behavior as PM canon.
 
 **Summary for this plan**
-- Plan mode: CLI plan-mode applies to Cursor and Claude Code only; Gemini is Direct-provider (no CLI plan-mode flags or CLI config files in this stack). Codex and Copilot headless behaviors remain unchanged.
-- Subagents/hooks/plugins: Several providers have had relevant changes (Cursor plugins/async subagents; Codex MCP; Claude plugins/hooks; Gemini skills/policies/subagents; Copilot provider/CLI behavior). Keep platform-capabilities and subagent-integration sections in sync with release notes and official docs.
+- Plan mode: CLI plan-mode applies to Cursor and Claude Code only. `Gemini`, `Codex`, and `GitHub Copilot` are Direct providers in PM and should be modeled through PM runtime policy rather than CLI flags or CLI config files.
+- Subagents/hooks/plugins: Several providers have had relevant changes (Cursor plugins/async subagents; Codex ecosystem MCP context; Claude plugins/hooks; Gemini skills/policies/subagents; Copilot provider behavior). Keep platform-capabilities and subagent-integration sections in sync with release notes and official docs without reintroducing stale runtime classifications.
 
 **Gaps vs "use plan mode for every request":**
 
@@ -61,8 +63,7 @@ The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect p
 2. **No global override** -- There is no single "use plan mode for all tiers" or "prefer plan mode by default" setting; only per-tier toggles in Config and Wizard.
 3. **No one-click "all tiers"** -- Enabling plan mode for every tier requires toggling four tier cards.
 4. **Subagent invocations** -- When subagent integration is added, `ExecutionRequest` built for subagent runs must receive the same `plan_mode` as the tier (so plan mode is applied to every request, including subagent calls).
-5. **Copilot** -- If the CLI gains a native headless plan flag (e.g. `--plan`), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
-5. **Copilot** -- If the CLI gains a native headless plan flag (e.g. `--plan`), we should prefer it over "omit allow-all" and document it in `platform_specs` and AGENTS.md.
+5. **GitHub Copilot** -- If upstream provider surfaces expose a stronger direct-provider planning control or effective-runtime signal, prefer that canonical direct-provider contract over any legacy CLI-oriented fallback language in `platform_specs` and related docs.
 
 ### Canonical decision
 

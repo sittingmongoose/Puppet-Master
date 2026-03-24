@@ -1,0 +1,39 @@
+Packet Shape Report
+Run ID: r-20260320-170511-01
+Status: BLOCKED
+
+Checked failure modes:
+- non-insertable packet content
+- malformed replace_section body
+- missing heading anchor in source
+- overlapping anchor application order
+- structured-container mispacketization
+- canonicalization-destabilizing shape
+- ContractRef locality compatibility
+
+No blockers were found for:
+- non-insertable packet content
+- malformed replace_section body
+- overlapping anchor application order
+- structured-container mispacketization
+- canonicalization-destabilizing shape
+
+Blockers:
+
+1)
+path: Plans/storage-plan.md
+anchor: `### 15.1 redb Schema`
+reason: missing_heading_anchor_in_source
+brief fix direction: Re-emit this storage update against a heading that exists in the current source doc. The current packet targets a non-existent `### 15.1 redb Schema` heading, so Scribe cannot apply the replacement.
+
+2)
+path: Plans/Prompt_Pipeline.md
+anchor: `## 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)`
+reason: contractref_too_far_from_operational_requirement
+brief fix direction: Add a verifier-local `ContractRef:` line within the next 10 non-heading, non-fence lines after `Before final prompt payload emission, the runtime MUST resolve the following in order:`. The current ContractRef is above the operational line, which the verifier does not count.
+
+3)
+path: Plans/Prompt_Pipeline.md
+anchor: `## 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)`
+reason: contractref_too_far_from_operational_requirement
+brief fix direction: Add a verifier-local `ContractRef:` line within the next 10 non-heading, non-fence lines after `The frozen requested/effective runtime snapshot MUST preserve these canonical base fields:`. The current ContractRef appears later in the section, outside the verifier's lookahead window.

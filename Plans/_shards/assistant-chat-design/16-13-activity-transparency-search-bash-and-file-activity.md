@@ -38,16 +38,18 @@ Rules:
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
 
 ### 13.3 Bash and terminal ownership
-Assistant Chat may preview shell-backed work inline, but the canonical interactive session remains the Terminal surface.
-
-Rules:
-- one inline command card corresponds to one observed command invocation
-- collapsed preview defaults to 5 lines; expanded preview defaults to 15 lines
-- `Open in Terminal` and `Show Terminal` resolve to exact-session reveal when a `terminal_session_id` binding exists
-- chat owns a compact audit and preview layer; Terminal owns the canonical interactive PTY session
+Assistant Chat may preview shell-backed work inline, but the canonical interactive runtime remains the terminal workspace.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
 
+Rules:
+- one inline command card still corresponds to one observed command invocation or session reference.
+- `Open in Terminal` and `Show Terminal` resolve to the exact referenced terminal session, workgroup, and leaf pane when that linkage exists.
+- chat owns compact audit and preview receipts; the bottom runtime terminal workspace owns the canonical PTY layout and interaction state.
+- the bottom runtime workspace uses workgroups and subtabs rather than one flat strip of unrelated tabs.
+- editor-embedded terminal panels are secondary presentations of existing terminal leaf panes and do not become independent chat-owned runtimes.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
 ### Command-card model
 Command cards are transcript-adjacent summaries rather than a second shell implementation.
 

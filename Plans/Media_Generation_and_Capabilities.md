@@ -223,21 +223,33 @@ Resolution order for `model_override`:
 ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
 
 ### 2.4 Backend routing
-**Cursor backend special case:**
-- When the active backend is Cursor **and** `kind=image`: route via Cursor-native image generation. No Gemini account or API key is required.
-- When the active backend is Cursor **and** `kind` is `video`, `tts`, or `music`: the capability is disabled with `disabled_reason: BACKEND_UNSUPPORTED`.
+Cursor remains the special-case backend for Cursor-native image generation.
 
 ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:Decision_Policy.md§2
 
-**All non-Cursor backends:**
-- Media generation uses the same canonical Gemini requested/effective auth/account resolution model as standard Gemini provider usage.
-- Resolve `requested_auth_mode`, provider capability block, eligible auth surfaces, and the eligible account pool before dispatch.
-- If the resolved effective account is OAuth-backed and media-capable, route with that OAuth-backed Gemini account context.
-- If the resolved effective account is API-key-backed and media-capable, route with that API-key-backed Gemini account context.
-- If no eligible Gemini account exists for the resolved request/policy, media capabilities are disabled with `disabled_reason: NOT_CONFIGURED`.
-- Explicit `oauth` and explicit `api_key` requests use the same no-silent-cross-fallback rule as the rest of the Gemini provider.
+Cursor rules:
+- when the active backend is Cursor and `kind=image`, route via Cursor-native image generation.
+- when the active backend is Cursor and `kind` is `video`, `tts`, or `music`, disable the capability with `disabled_reason: BACKEND_UNSUPPORTED`.
 
-ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/rewrite-tie-in-memo.md
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/usage-feature.md
+
+All non-Cursor backends follow the canonical Gemini media routing model.
+
+Required routing order:
+1. resolve the requested provider/runtime surface for media
+2. resolve the requested/effective auth family and eligible account or profile set
+3. choose the concrete runtime surface that actually supports the requested media kind
+4. record the resulting requested/effective runtime snapshot
+
+Media routing rules:
+- Gemini direct media follows the direct Gemini provider path only.
+- Gemini CLI media uses the Gemini CLI runtime only when the required helper path is configured and a compatible API-key-backed media route exists.
+- when Gemini CLI media depends on nanobanana, PM installs and updates nanobanana per PM-managed Gemini CLI account root only when media is enabled.
+- PM injects `NANOBANANA_API_KEY` at launch instead of duplicating secrets into provider-managed config.
+- OAuth-only or Vertex-backed Gemini CLI accounts without a compatible API-key media path are `media_partial` or `media_unavailable` rather than silently cross-falling back.
+- when family pooling chooses `Gemini` direct instead of `Gemini CLI` because of media capability, the requested/effective runtime disclosure must make that switch visible.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
 ### 2.5 Response shape
 
 ```json
@@ -578,9 +590,10 @@ When multiple visible capabilities are disabled for the same missing-configurati
 ContractRef: ToolID:capabilities.get, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
 ### 4.4 Cursor backend behavior
 When the active backend is Cursor:
-- **Image** is **enabled** without requiring Gemini credentials because it routes via Cursor-native image generation.
-- **Video**, **TTS**, and **Music** are **disabled** with `disabled_reason: BACKEND_UNSUPPORTED`.
-- Cursor's image special case does not create a separate Gemini account model; non-Cursor media still follows the canonical Gemini requested/effective auth/account flow.
+- image remains enabled through Cursor-native image generation
+- video, TTS, and music remain disabled with `disabled_reason: BACKEND_UNSUPPORTED`
+- Cursor's image special case does not create a separate Gemini account model
+- non-Cursor media still follows the canonical requested/effective Gemini routing model described in `### 2.4 Backend routing`
 
 ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
 ### 4.5 Click behavior

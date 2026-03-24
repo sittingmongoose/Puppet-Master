@@ -146,7 +146,7 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 |-----------|---------------|-----------------|-------------|
 | Platform CLI smoke | Real CLI + minimal subagent cmd | Exit success, non-empty/parseable output | Env-gated or manual |
 | Subagent-invocation integration | Orchestrator's command/call for tier+subagent | Invocation succeeds; output shape / no "invalid" errors | Env-gated or manual |
-| Plan mode CLI verification | Real CLI + plan mode flags | Exit success; plan-mode flag present and honored | Env-gated or manual |
+| Plan mode CLI verification | Real CLI + plan mode flags for CLI-bridged providers | Exit success; plan-mode flag present and honored | Env-gated or manual |
 
 Both sections should be referenced from Phase 5 and from any "Testing" or "Verification" summary in the plan so implementers and reviewers know that real CLI and invocation-path verification are in scope.
 
@@ -154,9 +154,9 @@ Both sections should be referenced from Phase 5 and from any "Testing" or "Verif
 
 ### 3. Plan Mode CLI Verification (Real-CLI Tests)
 
-**Purpose:** Confirm that each platform's CLI accepts and honors plan mode when invoked with the same flags the orchestrator uses (e.g. `--mode=plan`, `--permission-mode plan`, `--sandbox read-only`). This validates plan mode end-to-end in the real CLIs, not just that we pass the right args.
+**Purpose:** Confirm that each CLI-bridged platform accepts and honors plan mode when invoked with the same flags the orchestrator uses for that CLI surface (for example `--mode=plan` or `--permission-mode plan`). This validates plan mode end-to-end in the real CLIs, not just that we pass the right args.
 
-**Scope:** One plan-mode test per CLI-bridged provider (Cursor, Claude Code). For Direct-provider backends (e.g., Gemini), verify plan-mode behavior via API-based calls (plan mode is internal to Puppet Master, not provider CLI flags). Each test runs the real CLI with plan mode enabled and a minimal prompt, then asserts process success and (where possible) that the platform behaved in a plan-like way (e.g. read-only, or plan output present).
+**Scope:** One plan-mode test per CLI-bridged provider (`Cursor CLI`, `Claude Code CLI`). Direct providers (`Gemini`, `Codex`, `GitHub Copilot`) are verified through PM runtime-policy and provider-integration tests rather than through CLI plan-mode commands. Each CLI test runs the real CLI with plan mode enabled and a minimal prompt, then asserts process success and, where possible, that the platform behaved in a plan-like way.
 
 **Environment gating:** Same as other CLI tests: require CLI on PATH and (where applicable) auth; gate with an env var (e.g. `RUN_PLAN_MODE_CLI_TESTS=1`) and use `#[ignore]` so CI without CLIs/auth still passes.
 
@@ -166,9 +166,6 @@ Both sections should be referenced from Phase 5 and from any "Testing" or "Verif
 - **Per-platform commands (must match runner build_args when plan_mode is true):**
   - **Cursor:** `agent -p "Reply with only: PLAN_OK" --mode plan --output-format json`. Assert exit code 0 and non-empty stdout; optionally assert `--mode` and `plan` appear in the effective command or in logs.
   - **Claude:** `claude -p "Reply with only: PLAN_OK" --permission-mode plan --no-session-persistence --output-format text`. Assert exit code 0 and stdout contains expected token or is non-empty.
-  - **Codex:** `codex exec "Reply with only: PLAN_OK" --sandbox read-only --json --color never --cd <workspace>`. Assert exit code 0 and non-empty stdout (read-only sandbox implies plan-like behavior).
-  - **Gemini:** Gemini is a Direct API provider; verify plan-mode API call by sending a plan-constrained request via the Gemini API. Assert a successful response with non-empty output.
-  - **Copilot:** Run with the same flags the Copilot runner uses when `plan_mode` is true (omit `--allow-all-paths` / `--allow-all-urls`), e.g. `copilot -p "Reply with only: PLAN_OK" --allow-all-tools --stream off -s`. Assert exit code 0 and non-empty stdout.
 - **Assertions:** (1) Process exit success. (2) Stdout non-empty (or parseable JSON where applicable). (3) Optionally: verify that the command line actually contained the plan-mode flag (e.g. by logging the command and asserting the flag string is present, or by using the same builder as the runner and checking args).
 - **Artifacts:** Optionally capture stdout/stderr to `.puppet-master/evidence/plan-mode-cli-<platform>.log` for debugging.
 - **Documentation:** Document in plan and code that these tests are optional/manual in CI; list env var `RUN_PLAN_MODE_CLI_TESTS=1` and that auth must be configured for the corresponding platform.
@@ -176,7 +173,7 @@ Both sections should be referenced from Phase 5 and from any "Testing" or "Verif
 **Test location and naming:**
 
 - **File:** `puppet-master-rs/tests/plan_mode_cli_verification.rs` (or under `puppet-master-rs/tests/integration/`).
-- **Tests:** `cursor_plan_mode_cli`, `codex_plan_mode_cli`, `claude_plan_mode_cli`, `gemini_plan_mode_cli`, `copilot_plan_mode_cli`.
+- **Tests:** `cursor_plan_mode_cli`, `claude_plan_mode_cli`.
 - **Runner:** Use `#[ignore]` by default with reason "requires installed CLI and auth; set RUN_PLAN_MODE_CLI_TESTS=1"; run with `cargo test --ignored` or `cargo test plan_mode_cli` when env is set.
 
 **Fleshed-out example (Cursor plan mode):**

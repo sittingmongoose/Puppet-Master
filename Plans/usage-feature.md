@@ -134,25 +134,53 @@ Estimated-cost rule:
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
 ### Cursor -- API (usage/account only; not for model invocation)
+Cursor usage is account and plan augmentation only. PM does not use a Cursor API for model invocation.
 
-- **Distinction:** The **Cursor API** is for **augmenting usage/account data only** -- usage, limits, plan, billing, etc. We **do not** use it to engage with the platform to run models. Model invocation stays **CLI + OAuth** (subscription auth only). AGENTS.md "No API available" refers to "no API for invoking models"; the Cursor API that exists is a different surface (usage/account/limits) and does not conflict with our "CLI-only for execution, OAuth for auth" policy.
-- **Availability:** Cursor exposes an API we can call to get usage/limits/account info. Using it only augments the Usage view; we do not use it to send prompts or run agents.
-- **Auth:** For API calls (usage/account): `CURSOR_API_KEY` for headless/CI or app auth where applicable. Model runs continue to use OAuth/subscription via the CLI.
-- **What we can get:** Usage, limits, or plan info where the API exposes it. **Deterministic default:** Cursor API augmentation is **disabled** until a Spec Lock update pins the endpoint contract; local aggregation from `usage.jsonl` remains the primary source of truth for 5h/7d and ledger.
-- **Usage feature:** When implemented, call the Cursor API only for usage/limits/account data (with rate limiting and fallback to local aggregation); show Cursor usage and limits in the Usage view. If the API does not expose 5h/7d, keep local aggregation from `usage.jsonl` as primary and use the API for any extra fields (e.g. plan, feature flags).
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md
 
-### Codex -- CLI + provider data
+Canonical usage-source classes for Cursor are:
+- `provider-reported`
+- `team-admin-reported`
+- `inferred_from_runtime_refusal`
 
-- **Availability:** Run Codex via `codex exec ...` after OAuth/device-code auth (`codex login` / `codex login --device-auth`) or `CODEX_API_KEY` in headless contexts.
-- **What we can get:** Structured CLI output (`--json` / JSONL), run metadata, and error parsing (including 5-hour window reset hints). Optional provider-side usage/quota endpoints can augment plan/limit display when available.
-- **Usage feature:** Persist per-run usage metadata parsed from CLI events into `usage.jsonl`, and enrich with provider quota/reset data where supported. No SDK integration path.
+Rules:
+- PM must not invent a fake universal remaining-request counter when Cursor exposes only plan totals, team allotments, or runtime/editor refusal signals.
+- monthly included usage or request-allotment semantics are shown honestly as plan-cycle data rather than forced into a short rolling-window countdown.
+- `cursor-agent` remains the runtime target for execution and account validation.
+- `CURSOR_API_KEY` is an advanced/non-default setup path and does not change the CLI runtime ownership model.
+- Usage UI must disclose whether the data comes from provider-reported plan data, team-admin data, or inferred refusal/runtime evidence.
 
-### Copilot -- CLI + REST metrics
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
+### Codex -- Direct provider
+Codex is a direct provider in PM and supports multiple accounts across two distinct auth families:
+- `Sign in with ChatGPT`
+- `Use API Key`
 
-- **Availability:** Run Copilot through the CLI after GitHub OAuth/device auth (`/login`) or token auth (`GITHUB_TOKEN` / `GH_TOKEN`).
-- **What we can get:** CLI run outputs plus GitHub REST metrics (`/orgs/{org}/copilot/metrics`) for org-level usage and limits.
-- **Usage feature:** Record per-run usage from CLI output into `usage.jsonl`, and augment with GitHub metrics API data when tokens are configured. No SDK integration path.
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
 
+Usage rules:
+- ChatGPT-backed Codex usage and API-key-backed Codex usage are distinct entitlement buckets.
+- PM MUST NOT merge those buckets into one shared pressure or cooldown pool, even when they belong to the same human owner.
+- plan-backed Codex accounts may expose included-usage windows and provider refusals.
+- API-key-backed Codex accounts behave as API-billed usage and may not have the same reset semantics.
+- Usage rows must label the bucket plainly, for example `Plan: ChatGPT Pro` or `Usage Bucket: API billed`.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
+### GitHub Copilot -- Direct provider
+GitHub Copilot is a direct provider in PM.
+
+PM keeps one auth-backed account row per GitHub login and may resolve one effective billing/entity context beneath that row when premium-request semantics require it.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Usage and blocked-state rules:
+- premium-request exhaustion, paid-overage policy, org policy blocks, and entitlement-missing states are distinct conditions and must not all be flattened into a generic cooldown.
+- blocked reasons should remain explicit, including `billing_entity_required`, `included_premium_exhausted`, `paid_overage_disallowed`, `copilot_entitlement_missing`, and `copilot_org_policy_blocked`.
+- if multiple billing entities are available, the account may be `Logged in` but still `Needs setup` until the user chooses the effective billing entity.
+- Usage and status surfaces must show the selected billing/entity context whenever it explains the active quota bucket.
+- GitHub repository auth and local git/worktree behavior remain independent from GitHub Copilot account switching.
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md
 ### Claude Code -- Admin API (existing)
 
 - **Availability:** Anthropic **Admin API** (`/v1/organizations/usage_report/claude_code`); env: `ANTHROPIC_API_KEY`. Already documented in AGENTS.md.
@@ -160,28 +188,48 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Arti
 - **Usage feature:** Use Admin API for 5h/7d or org windows when key is set; use stream-json usage events for per-run tokens and optional mid-stream context %. No SDK required for CLI-based runs.
 
 ### Gemini -- Direct-provider (local counters + estimated cost)
-- **Availability:** Gemini is a **Direct-provider** with one provider surface and mixed account pools. Supported auth surfaces include OAuth and API key; Google credential-based execution remains capability-gated where supported.
-- **What we show (authoritative):** One shared Gemini usage surface built from the canonical `UsageRecord` pipeline. It may combine provider runtime usage, provider quota APIs, provider usage APIs, provider error hints, and project rollups, but it MUST keep source/effective-mode labels visible.
-- **Mode-aware labeling:** OAuth-backed quota views may be labeled `Gemini quota` when provider semantics are authoritative. API-key/local-only views MUST use source-qualified wording such as `Gemini (estimated)` when authoritative quota data is unavailable.
+Gemini usage must distinguish the direct provider from Gemini CLI while still allowing family-level pooling when policy permits.
 
-ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+#### Gemini direct
 
-- **Account attribution:** Gemini usage records SHOULD expose `effective_account_id`, `effective_auth_mode`, `provider_account_id?`, `signal_confidence`, and `effective_project_id?`.
-- **Project context:** OAuth-backed Gemini usage may require configured/effective project context. That context is part of the effective runtime identity and MUST NOT be inferred from token presence alone.
-- **Naming:** Use `Gemini API key` / `Google API key` terminology. Do not hardcode `AI Studio key` as the canonical product boundary.
-- **Media:** Media generation follows the same requested/effective auth/account rules as normal Gemini usage rather than a separate key-only account system.
+`Gemini` is the direct API-key provider entry.
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/rewrite-tie-in-memo.md
+Rules:
+- direct Gemini account rows are API-key-backed only.
+- quota identity may depend on effective Google project context as well as the key itself.
+- when PM cannot prove authoritative remaining quota, the UI must show `estimated` or equivalent source-qualified wording rather than pretending the numbers are definitive.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Media_Generation_and_Capabilities.md
+
+#### Gemini CLI
+
+`Gemini CLI` is a separate provider entry.
+
+Rules:
+- Gemini CLI may use OAuth, direct API key, or Vertex/Google credential families depending the configured account row.
+- trust can affect runtime MCP visibility, so `Configured` and `Working` must remain separate states.
+- provider-side model routing may still override the explicitly requested model in some flows; PM must show requested/effective differences rather than assuming full determinism.
+- usage/cooldown behavior depends on the active auth family and may range from authoritative remaining counters to softer or inferred pressure.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+#### Family-pooling rule
+
+When policy pools Gemini direct and Gemini CLI together, the Usage surface must still show which concrete runtime surface actually handled the run and why.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
 ### Summary table (augmentation sources)
-| Platform   | Primary augmentation | Auth / env | Notes |
-|-----------|----------------------|------------|-------|
-| **Cursor** | API (usage/limits/account only; not for model invocation) | `CURSOR_API_KEY` / app auth | OAuth + CLI for running models; Cursor API augmentation is disabled until Spec Lock pins an endpoint contract. |
-| **Codex** | CLI stream + provider data | CLI login / `CODEX_API_KEY` | Per-run usage from CLI JSON/JSONL + optional provider quota data. |
-| **Copilot** | CLI + REST metrics API | `GITHUB_TOKEN` / `GH_TOKEN` | Per-run usage from CLI; org-level from `/orgs/{org}/copilot/metrics`. |
-| **Claude** | Admin API + stream-json usage | `ANTHROPIC_API_KEY` | Org usage + plan; per-run tokens from stream. |
-| **Gemini** | Shared usage pipeline with auth/account attribution; provider runtime usage, quota APIs, usage APIs, error hints, and project rollups as available | Gemini OAuth accounts and/or Gemini API-key accounts; provider/account policy selects the effective auth surface | One provider surface; OAuth and API-key buckets are distinct and MUST remain source-labeled. |
+| Provider entry | Primary usage sources | Auth / setup context | UI disclosure rule |
+|---|---|---|---|
+| **Cursor CLI** | provider-reported plan data, team-admin reporting, inferred runtime refusal | `cursor-agent` login default; API key advanced/non-default | show source-confidence; do not fake precise remaining counters |
+| **Codex** | direct provider usage, plan windows, provider refusals, API-billed usage | `ChatGPT` or `API key` account rows | keep plan-backed and API-billed buckets separate |
+| **GitHub Copilot** | provider quotas, premium-request semantics, runtime refusals, policy blocks | GitHub login plus selected billing/entity context when required | show billing/entity and blocked reason explicitly |
+| **Claude Code CLI** | API/admin usage where available, runtime signals, softer subscriber stats | subscriber, console/API, or SSO account rows | show whether data is authoritative or inferred |
+| **Gemini** | provider usage, quota APIs, project attribution, error hints | direct API-key account rows | show project attribution and estimated-vs-authoritative status honestly |
+| **Gemini CLI** | CLI/runtime signals, config/trust state, provider counters when available | OAuth, API-key, ADC, service-account, or Vertex account rows | show concrete runtime surface and auth family |
+| **OpenCode** | server health/discovery plus upstream provider usage where exposed through the server | managed or attached server profiles | separate connected/discovery status from actual provider availability |
 
-ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/FinalGUISpec.md
 ## Data and Backend (conceptual)
 ### Cost_usage runtime artifact and Show in Ledger / Show in Usage
 The `cost_usage` runtime artifact is an attribution record only. It uses the same canonical usage pipeline and schema as `usage.event`.
@@ -610,24 +658,25 @@ Configuration is persisted alongside the widget layout per Plans/Widget_System.m
 ContractRef: ContractName:Plans/Widget_System.md#5
 
 ### Multi-Account Widget as First-Class Catalog Entry
+The multi-account widget remains a first-class catalog entry, but it is now a status and observability widget rather than the canonical setup surface.
 
-The `widget.multi_account` widget is a **first-class entry** in the widget catalog (Plans/Widget_System.md section 2.2). It is not an afterthought or sub-component.
+ContractRef: ContractName:Plans/Widget_System.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md
 
-**Content displayed:**
-- Per-platform account list: account name, status indicator (active/inactive/cooldown).
-- Active account highlight per platform.
-- Cooldown state: countdown timer for rate-limited accounts.
-- Usage per account: 5h/7d bars per account (where available).
+Required content:
+- provider entry or server-profile row label
+- active/effective marker
+- plain-language status (`Working` or a concrete reason)
+- pressure/cooldown summary
+- source-confidence / stale label where needed
+- direct link/action into Agent-Config for setup, validation, or repair
 
-**Data source:** redb multi-account registry per Plans/Multi-Account.md section 4 + platform APIs for live usage.
+Rules:
+- the widget does not replace Agent-Config for account management, billing/entity selection, instruction control, skills, or MCP setup.
+- one GitHub Copilot auth-backed row may show a selected organization/billing entity beneath it rather than rendering duplicate top-level rows.
+- OpenCode server profiles appear alongside account-backed rows with explicit profile-mode labels.
+- the widget must not imply that every provider row has literal installed-local-state semantics; some rows are account-backed, some are server-profile-backed.
 
-**Placements:**
-- **Primary**: available on the Usage page (included in default layout above).
-- **Settings**: Multi-Account setup/management lives in Settings (per Plans/Multi-Account.md GUI requirements). The widget shows status, not setup.
-- **Dashboard**: user can optionally add to Dashboard via the add-widget flow.
-
-ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Widget_System.md#2.2
-
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
 ### Reuse on Dashboard via Add-Widget Flow
 
 All widgets that appear on the Usage page are **also hostable on the Dashboard**. Users can add any Usage widget to the Dashboard through the add-widget flow (Plans/Widget_System.md section 4):

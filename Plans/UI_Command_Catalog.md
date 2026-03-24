@@ -248,14 +248,22 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 #### Terminal session and layout commands
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
-| `cmd.terminal.show` | `{ project_id, workspace_tab_id?, terminal_session_id?, terminal_tab_id?, terminal_pane_id?, section_id? }` | layout/UI state only | chat command cards, command palette, output/problems/ports linkbacks |
-| `cmd.terminal.new_tab` | `{ project_id, workspace_tab_id, section_id?, cwd?, shell_profile?, title? }` | `terminal.session.created`, `terminal.layout.changed` | terminal header, command palette, toolbar |
-| `cmd.terminal.split_pane` | `{ terminal_tab_id, source_pane_id, split:'horizontal'|'vertical', cwd?, shell_profile?, title? }` | `terminal.session.created`, `terminal.layout.changed` | terminal tab chrome |
+| `cmd.terminal.show` | `{ project_id, workspace_tab_id?, terminal_session_id?, terminal_workgroup_id?, terminal_leaf_pane_id?, terminal_section_id?, editor_terminal_panel_id? }` | layout/UI state only | chat command cards, command palette, output/problems/ports linkbacks |
+| `cmd.terminal.new_tab` | `{ project_id, workspace_tab_id, terminal_section_id?, cwd?, shell_profile?, title? }` | `terminal.session.created`, `terminal.layout.changed` | terminal header, command palette, toolbar |
+| `cmd.terminal.activate_workgroup` | `{ terminal_workgroup_id }` | layout/UI state only | bottom workgroup strip |
+| `cmd.terminal.activate_subtab` | `{ terminal_workgroup_id, terminal_leaf_pane_id }` | layout/UI state only | subtab row |
+| `cmd.terminal.reorder_workgroup` | `{ terminal_section_id, from_index, to_index }` | `terminal.layout.changed` | bottom workgroup strip |
+| `cmd.terminal.reorder_subtab` | `{ terminal_workgroup_id, source_leaf_pane_id, target_leaf_pane_id }` | `terminal.layout.changed` | subtab row |
+| `cmd.terminal.split_pane` | `{ terminal_workgroup_id, source_leaf_pane_id, split:'horizontal'|'vertical', cwd?, shell_profile?, title? }` | `terminal.session.created`, `terminal.layout.changed` | terminal pane chrome |
+| `cmd.terminal.add_leaf` | `{ terminal_workgroup_id, cwd?, shell_profile?, title? }` | `terminal.session.created`, `terminal.layout.changed` | bottom strip action cluster |
+| `cmd.terminal.embed_in_editor` | `{ terminal_workgroup_id, terminal_leaf_pane_id, editor_target_id? }` | `terminal.layout.changed` | editor drop host, command palette |
+| `cmd.terminal.remove_from_editor` | `{ editor_terminal_panel_id }` | `terminal.layout.changed` | editor terminal panel chrome |
+| `cmd.terminal.undock_all_from_editor` | `{ project_id, workspace_tab_id }` | `terminal.layout.changed` | editor terminal stack chrome |
 | `cmd.terminal.focus_session` | `{ terminal_session_id }` | layout/UI state only | command cards, output/problems/ports linkbacks |
 | `cmd.terminal.move_tab_to_section` | `{ terminal_tab_id, target_section_id }` | `terminal.layout.changed` | terminal tab context menu |
 | `cmd.terminal.rename_tab` | `{ terminal_tab_id, title }` | `terminal.layout.changed` | terminal tab chrome |
 | `cmd.terminal.pin_tab` | `{ terminal_tab_id, pinned }` | `terminal.layout.changed` | terminal tab chrome |
-| `cmd.terminal.close_pane` | `{ terminal_pane_id, termination_policy? }` | `terminal.layout.changed`, `terminal.session.state_changed` | terminal pane chrome |
+| `cmd.terminal.close_pane` | `{ terminal_leaf_pane_id, termination_policy? }` | `terminal.layout.changed`, `terminal.session.state_changed` | terminal pane chrome |
 | `cmd.terminal.close_tab` | `{ terminal_tab_id, termination_policy? }` | `terminal.layout.changed`, `terminal.session.state_changed` | terminal tab chrome |
 | `cmd.terminal.clear_scrollback` | `{ terminal_session_id }` | `terminal.session.state_changed` | terminal chrome, command palette |
 | `cmd.terminal.restart_session` | `{ terminal_session_id }` | `terminal.session.restarting`, `terminal.session.created` | terminal chrome, recovery banner |
@@ -264,8 +272,7 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 | `cmd.terminal.detach_section` | `{ terminal_section_id }` | `terminal.layout.changed` | terminal section chrome, command palette |
 | `cmd.terminal.reattach_section` | `{ terminal_section_id, dock_target? }` | `terminal.layout.changed` | detached terminal window, command palette |
 
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
-
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 #### Dev-session commands
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|

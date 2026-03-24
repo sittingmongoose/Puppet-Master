@@ -78,21 +78,19 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipe
 ## Impacts on existing Plans (deltas to keep consistency)
 
 ### Immediate contradictions to resolve in Plans (so requirements do not fight each other)
-- **UI tech:** any plan text that assumes **Iced** UI implementation should be treated as *UX requirements only*, not a widget/library implementation commitment.
-- **UI scaling migration:** Iced custom scaling mechanics (for example token-by-token multiplication layers) MUST be treated as legacy implementation references; Slint-target sections MUST describe native Slint scaling paths.
+The following contradictions must be retired during reconciliation so the rewrite does not preserve parallel canon.
 
-ContractRef: ContractName:Plans/Contracts_V0.md#8
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md
 
-- **Storage:** any plan that proposes **SQLite** for run/session/history storage needs to be reframed as **event-sourced** storage with seglog/redb/Tantivy projections.
-- **Provider abstraction:** platform-specific execution terminology in touched sections must use **Provider** + unified event model, especially for streaming output and tool gating.
-- **Gemini auth/account:** stale canon that says Gemini UI defaults to API key, or that OAuth is merely an optional fallback to the same bucket, MUST be retired. The canonical model is one provider with mixed OAuth/API-key account pools, OAuth-first default preference under `auto`, no silent cross-surface fallback for explicit auth requests, and requested/effective auth/account identity visible across surfaces.
+- **Provider split:** retire any wording that treats Gemini direct and Gemini CLI as one mixed provider surface.
+- **Direct-provider canon:** retire any wording that describes Codex or GitHub Copilot as CLI-driven runtime providers in PM.
+- **OpenCode ontology:** retire `server` / `cli_launcher` language that obscures the canonical `Managed Server` / `Attach to Existing Server` server-profile model.
+- **Runtime vocabulary:** keep `requested_platform` / `effective_platform` canonical and add family/runtime-platform/billing fields additively rather than minting a parallel primary vocabulary.
+- **Skill and MCP ownership:** retire any wording that makes provider-native skill or MCP configuration the primary runtime path; PM-native skills and PM-native MCP remain canonical.
+- **Cursor runtime boundary:** retire `--user-data-dir` as the CLI multi-account isolation contract; PM-managed `HOME` / `XDG_*` roots for `cursor-agent` are the canonical CLI boundary.
+- **Terminal/editor GUI canon:** retire the older flat bottom-terminal strip, single editor dock slot, and separate command-log strip assumptions in favor of workgroups, subtabs, split-pane trees, multi-panel editor terminal stack, and explicit DnD semantics.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
-
-- **Gemini media:** any plan text that implies non-Cursor Gemini media is API-key-only MUST be retired; media follows the same Gemini auth/account model as standard provider usage.
-- **Automation references:** any mention of Iced-era automation must be treated as a **migration reference pattern only**; rewrite deliverables target Slint runtime contracts and shared evidence schema.
-
-ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/rewrite-tie-in-memo.md
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/assistant-chat-design.md
 ### Storage consistency
 - All run/session/artifact/checkpoint persistence and event emission must align with **Plans/storage-plan.md** (seglog writer, redb schema, projector pipeline, analytics scan).
 - When adding or editing plans that touch runs, sessions, settings, or artifacts, add a cross-reference to storage-plan.md and specify whether the plan assumes seglog events, redb tables, or both.

@@ -281,60 +281,27 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:D
 **Checklist:** See §8.8.
 
 ### 7.10 Backend: Agent Skills
+Backend skill handling follows the PM-native runtime model.
 
-Backend components required so the Agent Skills GUI (§7.8) and skill-aware flows (orchestrator, interview, platform runners) work.
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md
 
-> **SSOT cross-references:** Plugin-level skill injection (skills loaded by plugins) is defined in `Plans/Plugins_System.md` §4 (Custom Tool Registration). Skill permissions follow `Plans/Permissions_System.md` §5 (`skill` key). Persona skill refs and per-Persona skill disabling follow `Plans/Personas.md` §3.2. OpenCode baseline for skills is in `Plans/OpenCode_Deep_Extraction.md` §7F.
+Required backend behavior:
+- discover skills from PM roots plus compatible import roots defined by the canonical skill system.
+- validate `SKILL.md` frontmatter, including `required_tool_refs` and `optional_tool_refs`.
+- compute runtime readiness before launch from validation state, permission state, and tool availability.
+- bundle PM-selected skill content into the compiled context.
+- expose the PM `skill` tool for on-demand skill retrieval during the run.
+- treat provider-native skill directories and file formats as optional import/export/projection layers only.
 
-**Discovery paths (DRY:DATA:skill_search_paths):**
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/Multi-Account.md
 
-- Define the ordered list of (base_dir, relative_path) or full paths to search for `skills/<name>/SKILL.md`. Include:
-  - Project: `.puppet-master/skills`, `.claude/skills`, `.agents/skills` -- resolve relative to project root (walk up from cwd to git worktree or use configured project path).
-  - Global: `~/.config/puppet-master/skills`, `~/.claude/skills`, `~/.agents/skills`.
-- **discover_skills(project_root: Option<&Path>) -> Vec<SkillInfo>:** Walk each path; for each `<base>/<name>/SKILL.md` found, collect name, path, source (project vs global). Deduplicate by name (first-wins per load order: project paths first, then global; within each, `.puppet-master` before `.claude` before `.agents`). Tag **DRY:FN:discover_skills**.
+Projection rules:
+- import/discovery from compatible roots is always allowed when enabled by canon.
+- projection/export is optional and explicit.
+- projection state and drift state must be tracked per target.
+- a projection failure does not mean PM-native skill runtime delivery failed.
 
-**Skill content and frontmatter:**
-
-- **SkillInfo:** Struct with at least `name: String`, `description: String`, `path: PathBuf`, `source: SkillSource` (Project | Global), and optionally `license`, `compatibility`, `metadata` from frontmatter.
-- **load_skill(path: &Path) -> Result<SkillInfo>:** Read `SKILL.md`, parse YAML frontmatter (first delimited block), validate `name` and `description` (length and name rules per §7.8). Parse body as markdown (keep raw for agent use). Tag **DRY:FN:load_skill**.
-- **Name validation:** 1-64 chars, `^[a-z0-9]+(-[a-z0-9]+)*$`, and name must match directory name. Reject or warn on invalid names in GUI and in discovery.
-
-**Permissions:**
-
-- **Config shape:** `GuiConfig.skill_permissions` (or equivalent): map from skill name (or pattern, e.g. `internal-*`) to `allow | deny | ask`. Pattern-based matching supports wildcards (e.g. `internal-*`). Default: e.g. `*: allow` if unset.
-- **resolve_skill_permission(name: &str, permissions: &SkillPermissions) -> Permission:** Return allow / deny / ask for a given skill name. Tag **DRY:FN:resolve_skill_permission**.
-- When listing skills in GUI or when building agent context, filter or annotate by permission (denied skills hidden or greyed out; ask requires runtime prompt if implemented).
-
-**CRUD and persistence:**
-
-- **Create:** Create directory `<base>/<name>/` and write `SKILL.md` with valid frontmatter and placeholder body. Base chosen by user (project or global).
-- **Update:** Overwrite or patch `SKILL.md` at known path; re-validate frontmatter and name.
-- **Delete:** Remove skill folder only after user confirmation; optional "Disable" that only sets permission to deny without deleting files.
-- Persist only **permissions** and any "pinned" or "favorite" list in config; skill content lives on disk. Discovery is stateless from disk.
-
-**Integration with runners and prompts:**
-
-- When building iteration context or prompt for a platform that supports skills (see platform_specs and orchestrator plan), include allowed skill names and paths (or the loaded content) so the CLI/SDK can load them (e.g. via `skill` tool or equivalent). Backend exposes: `list_skills_for_agent(project_root, permissions) -> Vec<SkillInfo>` that returns only allowed skills with their paths (and optionally loaded content). Tag **DRY:FN:list_skills_for_agent**.
-
-ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
-
-**Discovery and runtime delivery:**
-
-- Skills runtime behavior follows the canonical SSOT path: registry discovery, permission filtering, context bundling, and on-demand `skill` tool access. Provider-native formats remain discovery/import/export/interoperability inputs rather than a separate MVP runtime delivery matrix.
-
-**Error handling (backend):**
-
-- **load_skill:** Invalid frontmatter → return `Err` with message (e.g. "Invalid YAML frontmatter"). Missing SKILL.md → return `Err` ("SKILL.md not found"). Name/description validation failure → return `Err` with field and rule (e.g. "name must match directory").
-- **Create:** If target directory already exists and contains SKILL.md → return error; do not overwrite (see §7.11). If directory exists but no SKILL.md, implementation must decide (error vs create SKILL.md only).
-- **Update/Delete:** File not found or permission denied → return `Err`; do not corrupt in-memory state.
-- **Config write (permissions):** On save failure, return `Err` to caller; GUI shows toast and keeps in-memory edits for retry.
-
-**Module placement:**
-
-- New module `src/skills/` (or under `src/config/`): `mod.rs`, `discovery.rs`, `frontmatter.rs`, `permissions.rs`. Keep discovery and load pure so they can be tested without GUI. Tag all public types and functions with DRY as above.
-
-**Checklist:** See §8.9.
-
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 ### 7.11 Shortcuts and Skills: gaps, enhancements, implementation readiness
 
 This subsection closes open decisions and documents gaps so an **implementation plan** can be derived without ambiguity. It also lists optional enhancements and states readiness for implementation planning.

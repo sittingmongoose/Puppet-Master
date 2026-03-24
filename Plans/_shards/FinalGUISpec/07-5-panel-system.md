@@ -1,36 +1,71 @@
 ## 5. Panel System
 
 ### 5.1 Detachable Panels
+The shell supports detachable panels, but detachment never changes canonical surface identity.
 
-The side panel is the single activity-bar-driven right-hand slot. Search, Chat, File Manager, Source Control, GitHub Actions, Docker Manager, Artifacts, and Run & Debug all live in that slot, one occupant at a time.
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
 
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
-
-Detach and re-dock support for this feature cluster is mandatory for:
+Required detachable surfaces:
 - Search panel
 - Chat panel
 - File Manager panel
-- Primary terminal section
-- Secondary terminal section when opened
+- bottom terminal workspace
+- editor-embedded terminal panels when they are promoted out of the editor stack
+
+Rules:
+- re-docking restores the same logical surface identity rather than minting a new panel type.
+- the bottom terminal workspace remains the canonical host for runtime terminals.
+- editor-embedded terminal panels are secondary presentations of terminal leaf panes, not separate PTY sessions.
+- normal browsing and preview/browser sessions remain governed by the browser/session model, not by terminal detachment rules.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md
+### Terminal section presentation rules
+The bottom runtime zone uses a workgroup-first terminal information architecture.
+
+#### Bottom runtime information architecture
+
+The canonical structure is:
+- workgroups as the primary horizontal strip
+- subtabs for each leaf terminal pane inside the active workgroup
+- an optional split-pane tree inside each workgroup
+
+The bottom strip is laid out as left / center / right regions.
+- center hosts the workgroup cluster plus the active subtab row
+- right hosts split, add, collapse, and related terminal actions
+- the separate command-log strip is retired from the canonical layout
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Command_Catalog.md
+
+#### Split grid and editor embeddings
+
+Terminal panes may be organized as a row/column split tree.
+
+Rules:
+- visible gutters and resizers are part of the canonical layout, not optional decoration.
+- workgroups own the accent used by the workgroup pill and the active subtab highlight.
+- the terminal grid must not use a split-parent opacity enter animation that dims all children during reorder or drag operations.
+- the editor may host a multi-panel terminal stack. Each panel references an existing terminal leaf pane and workgroup rather than creating a second terminal session.
+- if a pane is currently editor-only, the bottom runtime zone shows placeholder language explaining that the pane lives in the editor stack and can be restored there or dropped back into the bottom workspace.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+#### Drag-and-drop contract
+
+Terminal DnD accepts pane, subtab, and workgroup payloads.
+
+Required behavior:
+- same-group pane reorder swaps leaf panes in the workgroup split tree.
+- dropping a workgroup on the editor resolves to the focused leaf pane in that workgroup, falling back to the first leaf when needed.
+- DnD cleanup must clear stale hover, opacity, and drag classes after rebuild or dragend so terminal panes do not remain visually dimmed.
+- drag handlers for pane drop targets must work when the cursor is over pane-body content, not only over outer chrome.
 
 ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
 
-Additional rules:
-- Re-docking restores a detachable surface to the canonical right-hand side-panel slot or bottom runtime zone without minting a new logical surface identity.
-- Source Control, GitHub Actions, Docker Manager, Artifacts, and Run & Debug may remain docked-only in MVP while still using the same slot and shell-state vocabulary.
-- The bottom runtime zone is not the canonical host for normal browsing, HTML preview, or persistent Search results.
-- Browser surfaces remain editor/workspace-tab hosted or detached-window hosted according to the preview/browser session model.
+#### Motion and accessibility
 
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+Reduced motion applies to terminal enter animations where those animations are still used, but not to removed split-parent fade effects.
 
-### Terminal section presentation rules
-- the primary terminal section defaults to the bottom runtime zone
-- the product may expose a second terminal section either as an additional docked runtime section or as a detached runtime window, but it remains the same canonical terminal-section concept in both cases
-- Output, Problems, Debug Console, and Ports follow the owning terminal or dev-session context; they do not become separately detached mini-shells
-- detaching a terminal section preserves its section identity, tab order, pane tree, and linked session bindings
-- re-docking a terminal section restores it without minting new terminal-session identity
-
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
 ### 5.2 Panel State Machine
 
 Per panel: **DOCKED** <-> **FLOATING**. Same Slint component is used inline when docked or as the root of a separate Slint `Window` when floating.

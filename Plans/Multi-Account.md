@@ -87,115 +87,104 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:no_secrets_
 ---
 
 ## 4. Data model
-### 4.1 Account profile (canonical)
+The multi-account system is built from provider entries, account records, entitlement contexts, server profiles, and the derived selectable units PM uses at runtime.
 
-Each provider registry entry contains ordered `accounts[]` with stable per-account records.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md
 
-Minimum account fields:
+### 4.1 Provider entry (canonical)
+
+Each provider entry represents one concrete runtime surface, not a loose vendor family label.
+
+Examples:
+- `gemini` direct provider
+- `gemini_cli`
+- `cursor_cli`
+- `claude_code_cli`
+- `codex`
+- `github_copilot`
+- `opencode`
+
+`provider_family_id` is additive grouping metadata only and MUST NOT replace the concrete provider entry id.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Models_System.md, ContractName:Plans/usage-feature.md
+
+### 4.2 Account record (canonical)
+
+Account-backed providers store ordered account rows with stable ids.
+
+Minimum fields:
 - `account_id`
+- `provider_id`
 - `label`
-- `auth_surface` = `oauth | api_key | google_credentials | device_code | cli_interactive` (provider-specific subset)
+- `auth_surface`
 - `enabled`
-- `priority` (integer; lower number = higher priority)
+- `priority`
 - `provider_identity?`
 - `credential_ref`
 - `configured_project_id?`
+- `selected_billing_entity_id?`
 - `threshold_override?`
-- `switch_mode_override?`
-- `cooldown_until?`
 - `retry_budget?`
-- `allowed_roles?`
-- `disallowed_roles?`
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#AuthState, PolicyRule:no_secrets_in_storage
-
-Rules:
-- `account_id` is the stable internal identifier.
-- `label` is user-facing and editable.
-- `provider_identity` is provider-native identity metadata only and MUST NOT replace `account_id`.
-- `credential_ref` is the canonical non-secret handle for OS-stored credentials.
-- Secrets, API keys, bearer tokens, refresh tokens, and raw credential payloads MUST remain outside redb/seglog.
-
-ContractRef: ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md#INV-002
-
-### 4.2 Project policy and precedence
-
-Project-owned provider policy supports:
-- provider block (`enabled`, default switch mode, default threshold, selection mode, default auth-surface order, account list)
-- role-by-provider overrides
-- role-by-account overrides
-- manual preferred-account override/debug control
-
-Canonical precedence:
-1. provider default
-2. account override
-3. role-by-provider override
-4. role-by-account override
-5. run snapshot freezes effective policy space
-6. attempt/message selects effective account within that frozen space
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, PolicyRule:Decision_Policy.md§3
-
-### 4.3 Account state model
-
-Account state uses orthogonal account-scoped dimensions:
-- `credential_state` = `missing | present | expired | invalid | revoked`
-- `configuration_state` = `ready | needs_configuration | validation_required`
-- `availability_state` = `eligible | cooldown | hard_blocked | disabled`
+- `cooldown_until?`
+- `availability_state`
+- `configuration_state`
+- `credential_state`
 
 Rules:
-- provider-level `AuthJobState` chips are derived from these dimensions; they are not a replacement for them.
-- `needs_configuration` is the canonical user-facing partial-setup state for Gemini OAuth accounts.
-- account-scoped state applies equally to Gemini OAuth and Gemini API-key profiles under the same provider.
+- `account_id` is the internal stable key.
+- `provider_identity` is descriptive metadata only.
+- secrets remain outside config/state stores.
+- separate auth families that change quota semantics remain separate account rows.
 
-ContractRef: ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/FinalGUISpec.md
+Examples:
+- Codex `ChatGPT` and Codex `API key` rows are separate account rows.
+- Gemini direct API-key accounts are separate rows from Gemini CLI auth-backed rows because they live on different provider entries.
 
-### 4.4 Provider capability block
+ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/usage-feature.md
 
-Each provider advertises the capability fields needed for account routing and recovery. Useful canonical fields include:
-- `supports_multi_account`
-- `account_identity_kind`
-- `auth_recovery_methods`
-- `switch_boundary`
-- `quota_signal_sources`
-- `quota_signal_confidence`
-- `supports_threshold_switch`
-- `supports_hard_exhaustion_detection`
-- `supports_rate_limit_detection`
-- `supports_reset_countdown`
-- `supports_manual_set_active`
-- `supports_cooldown`
-- `supports_retry_budget`
-- `supports_role_scoped_account_pools`
+### 4.3 Entitlement and billing context
 
-Gemini capability posture:
-- `supports_multi_account = true`
-- `switch_boundary = attempt_or_message`
-- `supports_threshold_switch = true`
-- `supports_hard_exhaustion_detection = true`
-- `supports_rate_limit_detection = true`
-- `supports_reset_countdown = true`
-- `supports_manual_set_active = true`
-- `supports_cooldown = true`
-- `supports_retry_budget = true`
-- `supports_role_scoped_account_pools = true`
+Some account-backed providers resolve an additional quota or policy bucket beneath the auth identity.
 
-ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/usage-feature.md
+Required behavior:
+- GitHub Copilot keeps one auth-backed account row and one or more billing/entity contexts beneath it.
+- billing/entity selection is cached per account row.
+- changing billing/entity selection affects subsequent runs only; it does not mutate an in-flight attempt.
+- entitlement context is surfaced in requested/effective runtime records through additive fields only.
 
-### 4.5 Selection flow (canonical)
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
 
-Selection flow for any new attempt/message:
-1. determine execution role
-2. determine requested provider/model/effort/persona/auth mode/account policy
-3. load provider capability block
-4. resolve allowed auth surfaces from requested auth mode
-5. load eligible account pool for provider + role + allowed auth surfaces
-6. filter out disabled, disallowed, cooldown, hard-blocked, or unusable accounts
-7. prefer current account if still healthy enough
-8. otherwise choose the highest-priority eligible account within the highest-ranked viable auth surface
-9. record requested vs effective provider/model/effort/persona/auth/account and selection reason
+### 4.4 Server profile (canonical)
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md§3
+Server-bridged providers use server profiles instead of account rows.
+
+Minimum fields:
+- `connection_profile_id`
+- `provider_id`
+- `label`
+- `profile_mode = managed | attached`
+- endpoint/config summary
+- health state
+- discovery state
+- PM ownership mode
+- last discovery snapshot metadata
+
+`connection_profile_id` is the stable internal key for OpenCode runtime selection.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+### 4.5 Selectable unit and runtime resolution
+
+The scheduler resolves one selectable unit per attempt boundary.
+
+Selectable-unit rules:
+- account-backed providers select one effective account row and, when required, one effective billing/entity context.
+- server-bridged providers select one effective server profile.
+- the selected unit freezes into requested/effective runtime disclosure before provider handoff.
+- the same auth identity with multiple billing/entity contexts does not become multiple fake top-level accounts.
+- account rows and server-profile rows share one runtime ontology in Agent-Config and Usage, but their stored identities remain distinct.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md
 ## 5. Auto-rotation
 - **Switch boundary:** Switching happens only at attempt/message boundaries. Never switch mid-attempt.
 - **Completed ownership rule:** A completed message/attempt always belongs to the account it actually used. The next message/attempt re-resolves and may switch immediately.
@@ -241,23 +230,26 @@ Manual controls:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Contracts_V0.md#AuthPolicy
 ## 6. Provider-specific behavior
-| Provider | Account identity / auth surfaces | Usage / health signals | Recovery / switching notes |
-|----------|----------------------------------|------------------------|----------------------------|
-| **Claude Code** | One CLI profile/config per account; `CliInteractive` auth surface | Anthropic usage API + PTY/runtime signals | Optional session migrate/resume remains provider-specific; cooldown on auth/rate-limit failure |
-| **Codex** | Mixed OAuth/device-code/API-key support depending transport/runtime | CLI/runtime usage + provider signals where available | 429/auth failure may move to the next eligible account at the next boundary |
-| **Gemini** | One provider with mixed `oauth` and `api_key` account pools; `GoogleCredentials` is capability-gated execution support where applicable | Provider runtime usage, provider quota API, provider usage API, provider error hints, and project rollups with signal-confidence labeling | OAuth and API key are distinct auth surfaces/quota planes; multiple OAuth and API-key accounts may coexist; media follows the same requested/effective auth/account rules as standard Gemini usage |
-| **GitHub Copilot** | Multiple GitHub identities / org-scoped account choices under direct-provider auth | GitHub metrics + runtime/error signals | Separate GitHub auth realm semantics remain isolated from generic GitHub API auth |
-| **Cursor** | Multiple config-path identities; manual or profile-driven switching | Provider-specific local/runtime signals only | No session migration; manual path/config controls remain provider-specific |
-| **OpenCode** | Server-managed provider identities exposed through server-bridged capabilities | Server/runtime signals | Server credentials remain distinct from provider-native auth managed behind the server bridge |
+| Provider entry | Identity shape | Usage / health signals | Recovery and switching notes |
+|---|---|---|---|
+| **Gemini** | Direct API-key account rows only | provider/runtime usage, quota APIs, project attribution, error hints | project context may affect effective quota identity; media capability follows the same requested/effective account model |
+| **Gemini CLI** | CLI-backed account rows across OAuth, API-key, and Vertex/Google credential families | provider settings, CLI/runtime signals, trust-gated MCP visibility, softer or authoritative counters depending auth family | PM pre-creates account roots, validates auth/config separately, and may observe provider-side model rerouting |
+| **Cursor CLI** | `cursor-agent` profile/account rows; browser login default, API key advanced/non-default | provider-reported, team-admin-reported, or inferred runtime/editor refusal signals | PM-owned `HOME`/`XDG_*` roots define account isolation; API-key path is advanced only |
+| **Claude Code CLI** | CLI-backed account rows across subscriber, console/API, and SSO families | API-backed accounts can use stronger authoritative usage; subscriber accounts may rely on softer or inferred pressure | scope-aware config overlays and softer threshold behavior for subscriber paths |
+| **Codex** | Direct-provider account rows separated by `ChatGPT` and `API key` auth families | plan-backed included usage vs API-billed usage are separate buckets | PM must not merge plan-backed and API-billed usage/cooldowns |
+| **GitHub Copilot** | one GitHub-auth-backed account row with one or more billing/entity contexts | premium-request quotas, org policy blocks, entitlement validation, runtime errors | blocked states may be policy-based rather than timer-based; billing entity selection can gate readiness after login |
+| **OpenCode** | server profiles only (`Managed Server` or `Attach to Existing Server`) | health, discovery, and server-managed provider/model state | PM owns lifecycle only for managed profiles; attached profiles remain partially reflect-only |
 
-ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/usage-feature.md, ContractName:Plans/rewrite-tie-in-memo.md
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md
 
-Rules:
-- Same-provider accounts are not interchangeable.
-- Provider capability data determines whether threshold switching, reset countdown, cooldown, retry budget, and role-scoped pools are supported.
-- Gemini copy and UI MUST NOT present OAuth and API-key accounts as the same plan/bucket.
+Provider rules:
+- same-provider rows are not interchangeable when auth family, billing/entity context, or profile mode changes quota or recovery behavior.
+- `Gemini` direct and `Gemini CLI` are separate provider entries and may still participate in one family pool when policy allows.
+- Codex and GitHub Copilot are direct providers, not CLI-backed execution surfaces in PM.
+- GitHub API auth used for repository operations remains independent from GitHub Copilot provider auth.
+- OpenCode skills and MCP behavior sit above the provider list exposed by OpenCode; PM should not invent Codex- or Copilot-specific skill plumbing inside the OpenCode server profile.
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md#AuthPolicy, ContractName:Plans/usage-feature.md
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/FinalGUISpec.md
 ## 7. Runner / orchestration contract
 
 The multi-account contract applies across assistant, interviewer, builders, overseers, and node workers.
@@ -312,50 +304,96 @@ Priority and stickiness rules:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, PolicyRule:Decision_Policy.md§3
 ## 9. GUI requirements (UX only)
-All of the following are UX requirements only; implementation may use the future UI stack without changing these behavioral contracts.
+All of the following remain UX requirements independent of implementation stack.
 
-### 9.1 Setup + Health / Doctor visibility
+### 9.1 Agent-Config structure
 
-- Setup and Health / Doctor MUST show the same provider summary for multi-account providers: current effective account, current effective auth mode, account count, cooldown/rate-limit summary, and last auth/config validation timestamp when available.
-- Providers with account-scoped configuration state MUST surface `needs_configuration` and `validation_required` explicitly.
-- Gemini MUST appear as one provider card with grouped account lists for `OAuth` and `API key`, not as pseudo-providers.
+Agent-Config is the canonical management surface for provider defaults, accounts/profiles, models, instructions, skills, and advanced runtime controls.
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/rewrite-tie-in-memo.md
+Required section order:
+1. `Overview`
+2. `Defaults`
+3. `Accounts / Profiles`
+4. `Models`
+5. `Instructions`
+6. `Skills`
+7. `Advanced Runtime`
 
-### 9.2 Config / Authentication view
+A persistent `Effective Runtime` inspector remains visible in the provider detail flow and predicts the likely requested/effective runtime before launch.
 
-- List accounts with label, auth-surface badge, provider identity metadata, configured project id when present, auth/configuration/availability state, priority, threshold, cooldown, and retry-budget summary.
-- The provider-level control shows `requested_auth_mode = auto | oauth | api_key` for Gemini.
-- Default Gemini auth preference is OAuth first under `auto`.
-- Users may add accounts, remove accounts, edit priority integers, and set a manual preferred account as an override/debug control.
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/usage-feature.md
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/storage-plan.md
+### 9.2 Account and profile rows
 
-### 9.3 Usage view
+Each row shows:
+- label
+- auth family or profile mode
+- current state
+- pressure/cooldown summary
+- entitlement/billing secondary line when relevant
+- last validation or health timestamp
+- primary actions appropriate to the row type
 
-- Usage shows one shared Gemini surface with explicit source/effective-mode labels and account attribution.
-- Show current effective account, current effective auth mode, switch reason, cooldown state, and signal-confidence/source labeling where available.
-- OAuth-backed and API-key/local-only usage MUST NOT be merged into one unlabeled bucket.
+Row rules:
+- Codex `ChatGPT` and `API key` rows remain separate top-level rows.
+- GitHub Copilot shows one auth-backed account row and exposes available billing entities in the inspector rather than minting fake top-level accounts.
+- OpenCode shows server-profile rows labeled as `Managed Server` or `Attach to Existing Server`.
+- row actions include `Add Account`, `Add Profile`, `Set Preferred`, `Refresh Usage`, `Revalidate`, and profile-specific repair/reconnect actions where applicable.
 
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/rewrite-tie-in-memo.md
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
 
-### 9.4 In-session / status surfaces
-In-session and status surfaces must stay aligned with the shared requested/effective runtime model.
+### 9.3 Setup and remediation UX
+
+Provider/account setup flows must distinguish authentication from readiness.
+
+Required states:
+- `Logged out`
+- `Logging in`
+- `Logged in`
+- `Needs setup`
+- `Validating`
+- `Ready`
+- `Auth expired`
+- `Validation failed`
+- `Logging out`
 
 Rules:
-- status bars, thread headers, and run/session context surfaces show the current effective account, current effective auth mode, and relevant cooldown or pressure state when supported
-- the compact chat message popover may stay smaller than the full detailed runtime inspector, but the richer Context Detail Pane and other detailed inspectors must still expose effective account/auth details when supported
-- approaching-limit warnings remain account-specific where the provider exposes enough detail
-- media actions follow the same effective-auth/effective-account resolution model as normal Gemini usage; they are not a separate account system
+- `Logged in` is not the same as `Ready`.
+- Copilot may require `Choose Billing Entity` before reaching `Ready`.
+- Vertex/Google Cloud Gemini CLI setups may require credentials, project/location selection, and trust validation before reaching `Ready`.
+- Cursor CLI browser login is the default path; API key is exposed as an advanced optional path only.
+- provider-reported cooldowns remain read-only facts; PM pause and recheck controls are separate overlays.
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/storage-plan.md
-### 9.5 Notifications
+ContractRef: ContractName:Plans/Contracts_V0.md#Setup/Health-lifecycle-contracts, ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md
 
-- Auto-switch notifications MUST identify the effective account selected and why (for example `threshold_preemptive_switch`, `hard_exhaustion`, `rate_limit_pressure`, `account_unavailable`, or `policy_disallowed_current_account`).
-- Notifications MUST NOT pretend a switch succeeded when no eligible backup account exists.
-- Manual override / preferred-account mode remains visible so the user can understand why automation did or did not switch.
+### 9.4 Usage and runtime visibility
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+Usage and status surfaces MUST show:
+- current effective account or server profile
+- current effective auth mode
+- current effective billing/entity context when relevant
+- pressure/cooldown state
+- source-confidence, stale, or estimated labels when data is not authoritative
+- switch/failover reason when PM changed the selected unit
+
+Usage rows should prefer plain-language statuses such as `Working` or a concrete failure reason instead of transport-internal terminology.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 9.5 Instructions, skills, and MCP in Agent-Config
+
+Agent-Config must expose:
+- shared instruction panes (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `Cursor Rules`)
+- provider-native advanced panes for GitHub Copilot
+- PM-native skills with readiness/fix text/actions
+- PM-native MCP servers with per-provider/runtime effective status in inspectors
+
+Rules:
+- provider-native files under PM control expose `In Sync`, `PM Outdated`, `Provider Modified`, `Projection Failed`, or `Unknown` drift states with `Repair`, `Detach`, and `View diff` actions.
+- skill rows use plain-language statuses, fix text, and a primary remediation action.
+- MCP rows are server-centric at the top level; per-provider/runtime state appears in the inspector rather than pretending every provider has a literal install state.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
 ## 10. Phase 2 (native auth) -- when available
 
 When the new auth system for Codex, Copilot, Gemini (and optionally Claude) lands (in-process tokens, HTTP calls):

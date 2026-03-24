@@ -76,25 +76,17 @@ ContractRef: ContractName:Plans/Glossary.md, PolicyRule:Decision_Policy.md§1
 ---
 
 ## Direct-provider companion requirements
-This document primarily defines bridged transports. For decision completeness, direct-provider integrations MUST follow this companion matrix:
+This doc owns the CLI-bridged provider surfaces only. Direct-provider canon lives in the companion owner docs, but every bridged provider section here must preserve the same requested/effective runtime vocabulary and additive runtime fields.
 
-| Provider | Transport class | Required auth paths | Companion rules |
-|---|---|---|---|
-| Codex | `DirectApi` | browser OAuth, headless device-code, API key | No SDK install flow in Puppet Master. Requested/effective auth identity still follows the shared runtime snapshot model. |
-| GitHub Copilot | `DirectApi` | GitHub device flow (`/login/device/code` + `/login/oauth/access_token`) | Polling + auth state updates required. GitHub auth realms remain isolated where specified elsewhere. |
-| Gemini/Google | `DirectApi` | OAuth, API key, Google credential-based mode | One provider with mixed account pools. Default `requested_auth_mode` is `auto` with OAuth-first provider preference. Explicit `oauth` and explicit `api_key` requests MUST NOT silently cross-fallback. Media follows the same requested/effective auth/account rules as normal Gemini usage. Not a CLI subprocess path for auth/runtime. |
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md
+Companion split rules:
+- `Gemini` direct and `Gemini CLI` are separate provider entries.
+- `Codex` and `GitHub Copilot` are direct providers and MUST NOT be reintroduced here as CLI runtime rows.
+- `provider_family_id` groups related surfaces but does not replace the concrete provider entry id.
+- bridged providers must surface the same canonical requested/effective base fields plus the additive runtime-platform, billing/entity, and connection-profile fields when they apply.
 
-Direct-provider integrations MUST emit the same normalized provider stream schema as bridged transports.
-
-Direct-provider integrations MUST expose the provider capability data needed for routing, usage, and recovery, including `supports_multi_account`, `switch_boundary`, `quota_signal_sources`, `quota_signal_confidence`, `auth_recovery_methods`, `supports_threshold_switch`, `supports_rate_limit_detection`, `supports_reset_countdown`, `supports_manual_set_active`, `supports_cooldown`, `supports_retry_budget`, and `supports_role_scoped_account_pools` where applicable.
-
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/storage-plan.md
-
-Direct-provider integrations MUST NOT rely on per-platform experimental feature switches in Puppet Master (GUI, config keys, or provider invocation). Experimental CLI flags and legacy provider-specific settings are treated as implementation detail and MUST NOT be surfaced as experimental toggles in the Slint rewrite.
-
-ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/Architecture_Invariants.md#INV-009, ContractName:Plans/FinalGUISpec.md
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Provider_OpenCode.md
 ## Provider facade
 
 ### Contract shape (facade)
@@ -269,48 +261,34 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, ContractName:Pl
 ---
 
 ## Cursor provider
-
 ### Transports under one facade
-Cursor MUST support both transports:
-1. **stream-json transport**: spawn Cursor CLI and parse JSONL stdout.
-2. **ACP transport**: expose an ACP agent endpoint whose internal execution engine is the same Cursor stream-json path.
-ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, ContractName:Plans/Architecture_Invariants.md#INV-009, Gate:GATE-009
 
-Consumers MUST NOT branch on transport type.
-ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-009, Gate:GATE-009
+`cursor-agent` is the runtime target for PM's Cursor CLI integration.
 
-### stream-json transport requirements
-**CLI resolution**
-- CLI resolution MUST use `platform_specs.rs` as the single source of truth for binary names and invocation flags.
-ContractRef: ContractName:Plans/DRY_Rules.md#2, SchemaID:Spec_Lock.json#locked_decisions.providers, Gate:GATE-009
+PM-owned account isolation for Cursor CLI is defined by a managed home/config/data/cache root for the child runtime, not by editor-style `--user-data-dir` launch tricks.
 
-**Invocation shape (normative)**
-- Output format MUST be `stream-json` for event-stream consumers.
-ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, Gate:GATE-009
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
-- When incremental text is required, the adapter MUST emit `text_delta` events during the run (not only at the end).
-ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-009, Gate:GATE-009
+### stream-json / ACP requirements
 
-**Large prompt handling**
-- If the fully rendered prompt exceeds 32 KiB (32768) bytes, the adapter MUST pass the prompt via stdin (not as a CLI argument).
-ContractRef: CodePath:puppet-master-rs/src/platforms/cursor.rs#LARGE_PROMPT_THRESHOLD, Gate:GATE-009
+Cursor runtime rules:
+- PM may ingest Cursor stream output and ACP output under one facade, but the account boundary is still the managed `cursor-agent` profile root.
+- `cursor-agent login` is the default browser-auth entry path.
+- top-level API key usage remains an advanced, non-default setup path.
+- trust is an operational state, not a hidden implementation detail; a row may be authenticated yet still not operational for a given workspace until trust or runtime validation is complete.
 
-**Correlation**
-- If Cursor-native correlation IDs are available, attach them to `provider_native_ids` and copy into emitted diagnostics (do not invent new normalized fields).
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md
 
-### ACP transport requirements
-ACP transport is an alternate frontend for the same Provider.
+### MCP and instruction projection requirements
 
-**Normative behavior**
-- ACP transport MUST:
-  - accept ACP sessions and prompts,
-  - convert each prompt into a `ProviderRequestEnvelope` (same contract),
-  - execute via the Cursor stream-json transport internally,
-  - forward normalized events back to the ACP client as ACP session updates.
-ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, ContractName:Plans/Architecture_Invariants.md#INV-009, Gate:GATE-009
+MCP and instruction ownership rules for Cursor:
+- PM owns the canonical MCP registry and canonical shared instructions.
+- durable Cursor-facing MCP config is generated into the PM-managed Cursor profile root.
+- project-local `.cursor/mcp.json` or `.cursor/rules/*.mdc` projections are generated only when the active workspace actually needs them.
+- `.cursor/rules/*.mdc` is the primary Cursor rules surface; `.cursorrules` is compatibility only.
+- PM repairs only PM-owned generated files and must surface drift instead of silently overwriting user-managed files.
 
----
-
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 ## Claude Code provider
 
 ### Required capabilities
@@ -357,47 +335,36 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-001, Gate:GATE-00
 ---
 
 ## OpenCode provider
-
 ### Transport: HTTP (server-bridged)
-OpenCode is a server-bridged provider backend: Puppet Master communicates via HTTP REST requests and SSE event streams with a locally-running OpenCode server, rather than spawning a CLI subprocess.
 
-### HTTP transport requirements
-- Puppet Master MUST connect to the OpenCode server at the configured `host:port` (default `127.0.0.1:4096`).
-- Health checks MUST use `GET /global/health` before each run.
-- Model discovery MUST use `GET /provider` (no hardcoded fallback models).
-- OpenCode server docs endpoint `/doc` SHOULD be used for local diagnostics/manual verification.
+OpenCode is always a server-bridged provider in PM.
 
-### Connection method contract (OpenCode)
-- **Direct server (default):** connect to configured server URL/port and run via HTTP/SSE.
-- **CLI launcher/discovery fallback (optional):** use `opencode` path (or PATH lookup) only to launch/discover local server, then continue with HTTP/SSE transport.
-- Consumers MUST NOT branch on direct-server vs launcher fallback; both paths emit the same normalized provider stream.
+The canonical runtime subject is a server profile, not an account row.
 
-### Session lifecycle → run lifecycle
-Each Puppet Master run maps to one OpenCode session:
-1. **Create session:** `POST /session` → returns session `id`.
-2. **Send prompt:** `POST /session/:id/message` (sync) or `POST /session/:id/prompt_async` + `GET /event` SSE (async).
-3. **Receive response:** Parse response parts into normalized events.
-4. **Delete session:** `DELETE /session/:id` after run completes.
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md
 
-Process isolation policy: each iteration creates a new session and deletes it after completion (no session reuse).
+### Server profile modes
 
-> Full integration details: `Plans/Provider_OpenCode.md`
+OpenCode supports two profile modes:
+- `Managed Server`
+- `Attach to Existing Server`
 
-### Capability reporting (OpenCode)
-OpenCode-discovered tools MUST feed into `capabilities.get` with `category: "provider_tool"` so agents and users can discover them via capability introspection. Media generation capabilities (`media.*`) are Puppet Master internal tools and are NOT part of the OpenCode provider; for routing, Cursor image generation is a defined special case while non-Cursor media uses Gemini-key-backed APIs (see `Plans/Media_Generation_and_Capabilities.md` [§2.4](Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE)). Full OpenCode capability reporting requirements: `Plans/Provider_OpenCode.md` §8.
+Rules:
+- managed profiles let PM own launch, reconnect, shutdown, and PM-generated config.
+- attached profiles let PM own endpoint/auth config and health checks, but not the remote process lifecycle.
+- health state and discovery state are separate; the GUI may show `Connected (stale discovery)` or `Connected (discovery failed)` rather than flattening everything into connected/disconnected.
+- last-known discovery is preserved and marked stale when a previously healthy profile becomes temporarily unavailable.
 
-ContractRef: ToolID:capabilities.get, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM, ContractName:Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
 
-### Acceptance criteria (OpenCode-specific)
-1. When the OpenCode server is reachable, Puppet Master can create a session, prompt, receive normalized events, and delete the session through the unified Provider facade.
-2. OpenCode runs produce the same normalized event types (`text_delta`, `tool_use`, `tool_result`, `usage`, `done`) as CLI-bridged provider runs — consumers do not branch on transport.
-3. Health/version/auth failures map to canonical states and diagnostics: not installed, server unreachable, auth required/expired, and version mismatch.
-4. OpenCode provider auth/sign-in actions use OpenCode auth surfaces (`/provider/auth` + callback endpoints) while preserving the same provider-agnostic UI command flow.
+### Skills and MCP under OpenCode
 
-ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Architecture_Invariants.md#INV-009, Gate:GATE-009
+OpenCode-specific skill and MCP rules:
+- OpenCode's own skill system sits above its provider list, so PM must not create Codex-specific or Copilot-specific skill projection rules inside an OpenCode profile.
+- PM-native skills remain canonical and may be mirrored into compatible roots when the user enables projection.
+- managed OpenCode profiles may receive PM-managed MCP server configuration when the server supports it; attached profiles remain reflect-only unless PM explicitly adopts a server-side management API.
 
----
-
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/Tools.md
 ## Tool-call correlation + reconciliation
 
 ### Correlation requirements (normative)
