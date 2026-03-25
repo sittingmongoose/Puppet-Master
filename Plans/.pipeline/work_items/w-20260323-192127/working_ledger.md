@@ -17,6 +17,15 @@
 - context handling and compaction
 - parent-to-subagent and subagent-to-subagent communication
 - Persona impact on agents and subagents
+- Scope expanded again to include OpenCode Copilot-specific behavior and upstream issue/PR research on:
+- Copilot subagent invocation and provider/TOS boundaries
+- billing differences between native subagents and plain runs
+- context caching and provider-side caching behavior
+- `setCacheKey`
+- large-context / 1M beta handling
+- compaction and cache-hit regressions
+- subagent context visibility
+- skill/tool/permission/MCP propagation into subagents
 
 ## Objective
 - Audit the planning set for subagent buildability and spec completeness.
@@ -67,6 +76,49 @@
 - OpenCode agent/persona impact is runtime-native and strong:
 - agent definitions carry prompt, permissions, model, variant, steps, and options
 - child sessions inherit task-specific permission narrowing plus agent-specific runtime defaults
+- OpenCode current upstream dev checkout has moved forward from the earlier inspected commit and now sits at `9330bc5339b3ca82975f768200450d4c9aabcd35`.
+- OpenCode Copilot handling is adapter-specific rather than runtime-specific:
+- `packages/opencode/src/plugin/copilot.ts` sets `x-initiator` to distinguish `agent` vs `user`
+- subagent child sessions (`session.parentID`) are force-marked as `agent`
+- compaction requests are force-marked as `agent`
+- this means OpenCode preserves child-session canon while still adapting Copilot billing/request classification
+- OpenCode does not appear to enforce a hard “only Copilot parents may launch Copilot-native subagents” rule in core task/session logic.
+- `task.ts` launches a child session and resolves the child model from the child agent config or parent message model; no provider-family guard was found.
+- This implies PM will need its own explicit provider/TOS guard for Copilot-native subagent routing.
+- OpenCode `setCacheKey` behavior is concrete and session-scoped:
+- provider config supports `options.setCacheKey`
+- `ProviderTransform.options()` maps it to `promptCacheKey = sessionID`
+- OpenAI always gets a prompt cache key; other providers only do when configured
+- OpenCode also sets `store = false` for OpenAI and GitHub Copilot SDK paths
+- OpenCode provider-side caching markers are message/content-level and provider-specific:
+- Anthropic/OpenRouter use `cacheControl`
+- Bedrock uses `cachePoint`
+- OpenAI-compatible uses `cache_control`
+- Copilot uses `copilot_cache_control`
+- Current caching application is still gated mainly by Anthropic-like model detection, including model-id heuristics added to address custom Bedrock inference profile misses.
+- OpenCode `llm.ts` still assembles the initial system prompt as one joined string before optional plugin transforms.
+- An open PR (`#14203`) argues this causes avoidable prompt-cache misses because static agent/provider prompt text is concatenated with dynamic environment/instruction text.
+- Current code tries to preserve a two-part structure only if plugins already split the system array, so the full cache-fix is not yet landed.
+- OpenCode compaction logic has been hardened in `session/compaction.ts`:
+- overflow now reserves output headroom even when `limit.input` exists
+- this directly addresses earlier compaction-too-early / no-headroom regressions
+- compaction is still modeled as a hidden agent pass with a resumable summary handoff
+- OpenCode still has an unresolved compaction replay hazard:
+- `message-v2.ts` injects synthetic user text `"What did we do so far?"` for compaction parts
+- upstream issue `#13838` reports this causes unwanted recap behavior and rule violations
+- OpenCode test coverage now explicitly codifies prior compaction bugs and related issue references (`#10634`, `#8089`, `#11086`, `#12621`).
+- OpenCode subagent context visibility is session-centric:
+- parent TUI shows a `view subagents` affordance
+- child sessions are navigable directly
+- child session header/sidebar show token/context and cost info
+- parent view aggregates child permissions/questions
+- OpenCode does not appear to embed a live child transcript inline inside the parent transcript by default; PM inline expansion would be a PM-native UX extension.
+- OpenCode child sessions inherit tool/MCP availability via the standard session prompt/tool resolution path:
+- tools come from `ToolRegistry.tools(...)`
+- MCP tools are added via `MCP.tools()`
+- permission checks merge agent permission plus session permission
+- skill context is added only when `skill` permission remains enabled for the agent
+- this validates PM’s need to define explicit child inheritance rules rather than assuming they happen automatically.
 - Core docs reviewed included:
 - `Plans/orchestrator-subagent-integration.md`
 - `Plans/interview-subagent-integration.md`
@@ -127,6 +179,12 @@
 - Plan-mode / read-only semantics conflict with planning-time subagent usage in assistant chat.
 - Active-subagent UI visibility requires richer live data than the tracking state some docs persist.
 - Worktree and coordination identity still falls back to `tier_id` or filesystem heuristics in places that should be `run/node/attempt/lane/worktree` keyed.
+- OpenCode validates the need for adapter-specific billing/caching behavior, but it does not by itself satisfy PM’s Copilot TOS constraint that only Copilot providers may route into Copilot-native subagent behavior.
+- OpenCode child-session visibility is strong, but PM’s planned inline subagent card + expandable transcript view is still a separate UX contract that needs its own runtime payloads.
+- OpenCode still shows unresolved tension between compaction continuity and caching correctness:
+- synthetic replay messages solve some resume/loop mechanics
+- but they can also distort billing classification, cache behavior, and model intent
+- PM should avoid inheriting this exact mechanism blindly.
 
 ## Candidate Fixes / Design Directions
 - Establish one canonical delegated-run contract:
@@ -159,6 +217,17 @@
 - Lock a single persistence owner for active-agent tracking, cross-session continuity, approval checkpoints, and interview resume state.
 - Clarify plan-mode legality for delegated research/subagents or explicitly forbid it across all surfaces.
 - Tighten OpenCode adapter mapping so it preserves canonical PM identities rather than remapping them to provider session ids.
+- Add a PM adapter-level field for provider-effective invocation kind / billing kind so canonical child runs can still map to native Copilot subagents where allowed.
+- Add a hard provider routing rule for Copilot:
+- only Copilot-rooted runs may invoke Copilot-native subagent mode
+- non-Copilot parents may still launch PM child runs that use Copilot as a normal provider call only if that remains TOS-safe and intentionally supported
+- otherwise deny or degrade explicitly
+- Avoid synthetic fake-user compaction replay text in PM; use explicit continuation metadata or system/handoff channels instead.
+- Keep prompt-cache-friendly separation between static Persona/provider prompt content and dynamic environment/instruction/context content.
+- Define PM child visibility as richer than OpenCode:
+- inline collapsed subagent cards in the parent thread
+- expandable embedded child transcript/thought window
+- optional full child-run open/navigation path if needed later
 
 ## Impacted Docs
 - `Plans/orchestrator-subagent-integration.md`
@@ -192,6 +261,8 @@
 - crew semantics
 - provider-native agent files as PM runtime canon
 - Work item is ready to hand off for reconciliation after the research brief is delivered.
+- OpenCode confirms that canonical child-session identity and provider-specific Copilot billing headers can coexist; PM does not need to choose one or the other.
+- OpenCode does not remove the need for PM-specific Copilot provider restrictions; those appear to be a PM policy requirement rather than an upstream invariant.
 
 ## Open Questions / Uncertainties
 - Whether the intended long-term design keeps any non-Assistant continuity system distinct from Assistant memory, or whether current “memory manager” language is residual drift.
@@ -201,6 +272,11 @@
 - Whether PM wants child runs to be user-openable/navigable the way OpenCode child sessions are, or only summarized inline in parent surfaces.
 - Whether PM wants child runs to be allowed to raise user questions directly, or whether all user-question boundaries stay parent-owned.
 - How much crew/message-board functionality is still desired once the simpler child-session delegation model is treated as the baseline.
+- Whether OpenCode uses a materially different Copilot invocation path for native subagents vs plain runs, and how that affects billing.
+- How OpenCode resolved Copilot context/compaction/cache-hit regressions and whether those fixes imply PM-side cache-key or compaction rules.
+- Whether PM should allow any cross-provider child run that changes provider family mid-lineage, or whether only Copilot needs that hard restriction.
+- Whether PM wants child-run context percentages/cost surfaced inline in chat cards, or only inside the expanded transcript view.
+- Whether PM wants compaction to preserve cache affinity by keeping child/session cache keys stable across resume, branch, and manual compact-now actions.
 
 ## Packetization Notes
 - Raw findings volume was high enough to support a large reconciliation packet.
@@ -227,3 +303,8 @@
 - `@agent-name` is translated into a task-tool call, not a special runtime bus
 - compaction is handled by a hidden compaction agent plus separate pruning
 - no concrete upstream evidence found for native peer-to-peer subagent messaging
+- Copilot-specific facts worth preserving:
+- `x-initiator` classification matters materially for billing/premium consumption
+- OpenCode marks child sessions and compaction as `agent`
+- `setCacheKey` is session-scoped and likely critical for provider-side cache reuse
+- unresolved synthetic-message patterns are a likely source of billing/cache/context drift if copied directly
