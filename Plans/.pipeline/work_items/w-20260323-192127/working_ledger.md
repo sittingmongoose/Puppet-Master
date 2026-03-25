@@ -26,6 +26,18 @@
 - compaction and cache-hit regressions
 - subagent context visibility
 - skill/tool/permission/MCP propagation into subagents
+- Scope narrowed on provider coverage to the PM-supported runtime surfaces only:
+- `Codex` direct
+- `Copilot` direct
+- `OpenCode` server
+- Alibaba coding-plan direct
+- Z.AI coding-plan direct
+- MiniMax coding-plan direct
+- `Gemini` direct via API
+- `Gemini CLI`
+- `Claude Code CLI`
+- `Cursor CLI`
+- Scope expanded again to include PM `dynamic context shrinking` as a distinct context-reduction layer above ordinary compaction, using the user-provided external compression references as research input.
 
 ## Objective
 - Audit the planning set for subagent buildability and spec completeness.
@@ -119,6 +131,103 @@
 - permission checks merge agent permission plus session permission
 - skill context is added only when `skill` permission remains enabled for the agent
 - this validates PM’s need to define explicit child inheritance rules rather than assuming they happen automatically.
+- Provider-wide OpenCode research shows Copilot is not the only backend with materially different runtime rules.
+- User clarified a PM provider-model fact that must be preserved:
+- `Gemini` is not direct-only in PM.
+- `Gemini` direct via API key/OAuth is one runtime surface.
+- `Gemini CLI` is another bridged runtime surface that can authenticate via OAuth and may also be configured with API credentials.
+- This currently conflicts with some PM text that still describes Gemini as direct-only.
+- PM docs already contain some of the corrected shape elsewhere:
+- `Prompt_Pipeline.md` says `Gemini` direct and `Gemini CLI` are separate runtime surfaces in the same family pool.
+- `CLI_Bridged_Providers.md` and `Contracts_V0.md` still contain direct-only phrasing that likely needs reconciliation.
+- User also clarified additional provider families that must be included in the subagent/runtime matrix:
+- Alibaba coding-plan providers
+- Z.AI coding-plan providers
+- MiniMax coding-plan providers
+- These likely ride through OpenAI-compatible or Anthropic-like transform paths, so effort/control support and cache/runtime behavior must be verified rather than assumed.
+- Effort-level control is now a first-class compatibility thread:
+- PM needs explicit per-surface support for reasoning/effort controls
+- this must cover direct providers, bridged CLIs, and subagents
+- OpenCode evidence already shows effort mapping is highly provider-specific across OpenAI, Copilot, Anthropic, Bedrock, Gemini, Groq, Azure, OpenRouter, Venice, Alibaba-compatible, ZAI-compatible, etc.
+- PM dynamic-context-shrinking / context-reduction spec anchors were re-confirmed:
+- `Prompt_Pipeline.md` owns compaction and rotation rules
+- `assistant-chat-design.md` owns `Compact Now`, Context Lens, and `Subcompact`
+- `Models_System.md` ties overflow detection to auto-compaction
+- `assistant-memory-subsystem.md` ties memory injection to Assistant-only context assembly and explicitly forbids forwarding Assistant memory to subagents
+- PM already has a richer context-shaping system than OpenCode:
+- global/session compaction
+- user-triggered compact-now
+- Context Lens mute/focus/subcompact
+- retrieved context injection
+- Assistant-only memory capsule/retrieval injection
+- This makes PM more powerful, but also raises a bigger consistency risk if compaction, subcompact, retrieval, and subagent handoff are not normalized together.
+- PM provider scope for the current design pass is now explicitly limited to:
+- `Codex` direct
+- `Copilot` direct
+- `OpenCode` server
+- Alibaba coding-plan direct
+- Z.AI coding-plan direct
+- MiniMax coding-plan direct
+- `Gemini` direct via API
+- `Gemini CLI`
+- `Claude Code CLI`
+- `Cursor CLI`
+- User clarified that PM `dynamic context shrinking` is not Gemini-specific and is not the same thing as ordinary context compaction.
+- External compression reference research was added from the user-provided Reddit thread and linked codebase.
+- Dynamic context shrinking is now confirmed as a distinct layer:
+- it is not whole-session compaction
+- it is incremental tool-result compression driven on every tool call via `_context_updates`
+- tool results are labeled with stable `tcN` handles
+- the model can replace stale full tool results with short summaries without extra LLM calls
+- compression summaries are persisted back into chat/tool-call history and surfaced as timeline events
+- the reference implementation also uses per-tool default context policies (`full`, `summarize`, `meta_only`, `exclude`), which is a useful reference for PM’s tool-result context shaping
+- This strongly suggests PM should separate at least three mechanisms instead of blending them:
+- provider-side prompt caching
+- PM dynamic context shrinking of stale context blocks/tool results
+- PM compaction/rotation when the fully assembled payload still does not fit
+- PM `Subcompact` is conceptually closer to targeted dynamic context shrinking than to OpenCode’s hidden-agent compaction, but current PM docs do not yet define whether `Subcompact` is model-authored, runtime-authored, or tool-result-scoped.
+- PM still needs one explicit rule for how dynamic context shrinking interacts with:
+- retrieved context injection
+- Assistant-only memory exclusion from subagents
+- subagent spawn/resume handoff bundles
+- manual `Compact Now`
+- automatic compaction
+- PM Assistant-memory constraints are explicit and strong:
+- Assistant memory is Assistant-only
+- Orchestrator / Interview / requirements / subagents use `NullMemoryProvider`
+- Assistant memory must not be forwarded to subagents via prompts, tools, handoffs, or hidden metadata
+- Therefore, subagent continuity must rely on normal runtime context/handoff contracts, not on the Assistant memory subsystem.
+- User wants explicit preservation of Copilot native subagent cost savings.
+- Current working assumption remains: PM should preserve native Copilot subagent routing where allowed instead of flattening everything into ordinary provider calls.
+- OpenCode maintains substantial provider-specific transform and loader behavior for:
+- OpenAI
+- GitHub Copilot
+- Anthropic
+- Google / Google Vertex / Google Vertex Anthropic
+- Azure / Azure Cognitive Services
+- Amazon Bedrock
+- OpenRouter
+- XAI / Groq / Together / DeepInfra / Venice / ZAI / Alibaba-compatible transports
+- Key non-Copilot provider-specific findings:
+- **OpenAI / Azure family**
+- OpenCode prefers the Responses API for OpenAI; compatibility issues exist for Chat-Completions-only proxies (`#15016`, `#7793`).
+- Azure loaders switch between `responses()` and `chat()` based on `useCompletionUrls`; non-OpenAI Azure-hosted models have had hangs when forced down the wrong API path (`#12949`, `#17552`).
+- OpenCode strips OpenAI item ids from request bodies by default and keeps them only for Azure when `store=true`, explicitly following Codex-style semantics in `provider.ts`.
+- **Anthropic / Bedrock / cache stack**
+- Anthropic-specific prompt caching depends on message/cache marker placement plus, in some deployments, `metadata.user_id` support (`#11083`, `#11276`, earlier `#8138`).
+- Bedrock has region/model-id rewrite logic for cross-region inference prefixes; multiple upstream issues show that prefixing heuristics can produce invalid model ids in some regions or for some model families (`#12824`, `#16747`, `#18812`).
+- Bedrock/Anthropic cache enablement has had misses when model ids do not match the expected Anthropic detection path (`#9803`).
+- **Google / Gemini / Vertex**
+- Gemini/Vertex tool schemas are stricter than generic JSON Schema; OpenCode has a Gemini schema sanitizer and still has open issues around `anyOf`/combiners and numeric enums (`#14788`, `#12908`, `#12827`, `#12911`).
+- Gemini / OpenAI-compatible providers can emit tool calls while still reporting `finish_reason = stop`, causing loop/control-flow bugs if runtime logic trusts finish reason too literally (`#14972`).
+- Google Vertex Anthropic 1M-context handling is tricky and still shifting:
+- issues disagree on whether the correct signal is a header or body field depending on endpoint/runtime path (`#14003`, `#17494`, `#14055`)
+- global vs regional endpoint behavior differs materially
+- model id suffixes or shadow variants may be required to unlock the effective 1M window
+- **OpenRouter**
+- OpenCode already sets `prompt_cache_key`, but upstream reports show TTL matters (`#16848`, `#16850`) and cost accounting for cache-write tokens may still be wrong (`#18440`).
+- **General provider lesson**
+- provider-specific API-shape mismatches are common enough that PM must keep adapter policy explicit and must not assume one generic direct-provider loop is sufficient for all model families.
 - Core docs reviewed included:
 - `Plans/orchestrator-subagent-integration.md`
 - `Plans/interview-subagent-integration.md`
@@ -185,6 +294,18 @@
 - synthetic replay messages solve some resume/loop mechanics
 - but they can also distort billing classification, cache behavior, and model intent
 - PM should avoid inheriting this exact mechanism blindly.
+- PM direct-provider docs currently understate how provider-specific the direct path still needs to be:
+- PM provider docs are also internally inconsistent on Gemini surface taxonomy:
+- some text says Gemini is direct-provider only
+- some text says Gemini direct and Gemini CLI are separate runtime surfaces
+- this is now a confirmed reconciliation target, not just a user preference
+- OpenAI-like surfaces may need API-family selection (`responses` vs `chat` vs plain language model)
+- Google/Gemini surfaces need schema sanitization and finish-reason normalization
+- Bedrock needs region/profile/model-id resolution rules beyond generic provider selection
+- OpenRouter needs explicit cache TTL/accounting policy if PM wants reliable cost + cache behavior
+- PM context-reduction specs are powerful but under-integrated with subagents:
+- current docs do not yet clearly lock how `Compact Now`, auto-compaction, rotation, Context Lens `Subcompact`, retrieved context injection, and delegated child-run handoffs interact
+- current memory docs correctly forbid Assistant-memory forwarding to subagents, but PM still needs a separate child-handoff continuity contract so subagents are not starved of necessary context
 
 ## Candidate Fixes / Design Directions
 - Establish one canonical delegated-run contract:
@@ -222,6 +343,47 @@
 - only Copilot-rooted runs may invoke Copilot-native subagent mode
 - non-Copilot parents may still launch PM child runs that use Copilot as a normal provider call only if that remains TOS-safe and intentionally supported
 - otherwise deny or degrade explicitly
+- Add a provider-compatibility contract for direct providers:
+- Add a provider-compatibility contract for all PM runtime surfaces, not just direct providers:
+- direct provider
+- CLI-bridged
+- server-bridged
+- family-pooled surfaces such as Gemini direct + Gemini CLI
+- API family selection (`responses` / `chat` / model-language primitive)
+- schema sanitization requirements
+- cache-key and cache-TTL support
+- model-id rewrite rules
+- finish-reason normalization rules
+- usage-accounting field mapping
+- Reconcile Gemini taxonomy across docs:
+- `Gemini` direct and `Gemini CLI` should both exist as concrete runtime-platform entries
+- `provider_family_id` groups them without collapsing them
+- auth/account selection and effort/control support should be surface-specific
+- For Gemini/Vertex, define a PM-owned schema sanitizer and a post-tool loop rule that does not trust provider `finish_reason` alone.
+- For OpenAI/Azure-family adapters, define explicit per-model/per-provider API-family selection instead of a one-size-fits-all Responses assumption.
+- For Bedrock, define deterministic region/model-id rewrite rules and explicit no-rewrite exemptions for ARNs / provider-native ids that are already canonical.
+- For OpenRouter, define both cache-key and cache-TTL policy plus explicit cache-write token accounting.
+- Add a PM context-continuity contract covering:
+- Add a PM context-continuity and context-reduction contract covering:
+- incremental dynamic context shrinking of stale context blocks/tool results
+- auto-compaction
+- user-triggered compact-now
+- rotation
+- Context Lens subcompact summaries
+- retrieved context injection
+- subagent spawn/resume handoff bundles
+- Ensure this continuity contract is explicitly separate from Assistant memory.
+- Build the next provider/runtime compatibility matrix only for the PM-supported surfaces listed above; avoid reopening unsupported-provider design space.
+- Verify effort/reasoning controls per PM-supported surface rather than assuming one generic cross-provider mapping.
+- Dynamic context shrinking should be user-configurable in GUI Settings:
+- master enable/disable switch
+- per-category control over what is eligible for shrinking
+- default eligibility should be conservative to protect cache behavior and reduce surprise
+- Protect provider-side cache affinity while implementing dynamic context shrinking:
+- preserve stable cache keys across normal continuation/resume where appropriate
+- avoid unnecessary mutation of static prompt segments
+- avoid synthetic replay patterns that rewrite stable context in ways that reduce prompt-cache hits
+- Preserve Copilot native subagent routing as a cost-sensitive optimization path when the runtime surface and TOS permit it.
 - Avoid synthetic fake-user compaction replay text in PM; use explicit continuation metadata or system/handoff channels instead.
 - Keep prompt-cache-friendly separation between static Persona/provider prompt content and dynamic environment/instruction/context content.
 - Define PM child visibility as richer than OpenCode:
@@ -263,6 +425,19 @@
 - Work item is ready to hand off for reconciliation after the research brief is delivered.
 - OpenCode confirms that canonical child-session identity and provider-specific Copilot billing headers can coexist; PM does not need to choose one or the other.
 - OpenCode does not remove the need for PM-specific Copilot provider restrictions; those appear to be a PM policy requirement rather than an upstream invariant.
+- Dynamic context shrinking is now a required PM feature.
+- Dynamic context shrinking must be configurable from GUI Settings.
+- Default shrinking scope:
+- enabled for tool results
+- disabled by default for retrieved-context blocks
+- disabled by default for plan/report blocks
+- Optional user-enabled shrinking scope:
+- retrieved-context blocks
+- plan/report blocks
+- Dynamic context shrinking must be designed to avoid avoidable prompt-cache regressions seen in comparable runtimes:
+- keep static prompt segments stable
+- keep cache keys stable where continuation semantics allow
+- avoid synthetic replay/mutation patterns that damage cache affinity
 
 ## Open Questions / Uncertainties
 - Whether the intended long-term design keeps any non-Assistant continuity system distinct from Assistant memory, or whether current “memory manager” language is residual drift.
@@ -277,6 +452,25 @@
 - Whether PM should allow any cross-provider child run that changes provider family mid-lineage, or whether only Copilot needs that hard restriction.
 - Whether PM wants child-run context percentages/cost surfaced inline in chat cards, or only inside the expanded transcript view.
 - Whether PM wants compaction to preserve cache affinity by keeping child/session cache keys stable across resume, branch, and manual compact-now actions.
+- Whether PM wants dynamic context shrinking to be:
+- model-authored on every tool call
+- runtime-authored using deterministic summarizers
+- or hybrid, with different rules for tool results vs message regions
+- Whether PM wants shrinking handles to be tool-result-only or general context-block ids that can also represent retrieved context, plan chunks, or subagent summaries.
+- Whether PM wants `Subcompact` to be implemented as one-shot user-triggered compression over message regions, or as the same canonical compression system exposed through a user-selected scope.
+- Exact GUI settings shape for dynamic context shrinking:
+- whether category toggles live under one feature group or per-surface/per-thread advanced settings
+- whether the user can tune aggressiveness thresholds in addition to on/off + category scope
+- Whether PM wants child runs to inherit compressed parent summaries verbatim, or to receive a separately normalized handoff bundle built from the pre-compressed source state.
+- Which PM direct-provider surfaces need per-model API-family selection tables from day one (likely OpenAI-family and Azure-family).
+- Exact PM taxonomy for Gemini runtime surfaces after reconciliation:
+- `gemini` direct
+- `gemini-cli` bridged
+- whether both share a family pool but differ in auth/account/control capabilities
+- Whether PM wants to expose provider cache configuration knobs directly in UI/settings or keep them internal/automatic.
+- How much of OpenCode’s Bedrock region-prefix behavior PM should mirror versus replace with stricter discovered-capability data.
+- Whether PM wants any subagent to inherit Context Lens / subcompact summaries verbatim or whether child runs receive a separately normalized handoff bundle derived from the parent’s shaped context.
+- Whether PM wants explicit subagent-visible disclosure of compaction/dynamic-shrinking state so the user can inspect what the child actually received.
 
 ## Packetization Notes
 - Raw findings volume was high enough to support a large reconciliation packet.
@@ -302,9 +496,35 @@
 - child sessions are linked by `parentID`
 - `@agent-name` is translated into a task-tool call, not a special runtime bus
 - compaction is handled by a hidden compaction agent plus separate pruning
+- Dynamic-context-shrinking facts worth preserving:
+- shrinking is incremental and piggybacks on normal tool calls
+- `_context_updates` is required on every tool call, with `[]` when no compression is needed
+- already-compressed results should not be re-compressed
+- stable tool-call handles are required for safe targeted replacement
+- shrinking is visible in activity/history, not a hidden silent mutation
+- User direction locked:
+- PM should implement dynamic context shrinking as a required feature rather than leaving it as an optional future enhancement.
+- User direction locked:
+- dynamic context shrinking must be switchable in GUI Settings
+- tool-result shrinking is on by default
+- retrieved-context-block shrinking is optional and off by default
+- plan/report-block shrinking is optional and off by default
 - no concrete upstream evidence found for native peer-to-peer subagent messaging
 - Copilot-specific facts worth preserving:
 - `x-initiator` classification matters materially for billing/premium consumption
 - OpenCode marks child sessions and compaction as `agent`
 - `setCacheKey` is session-scoped and likely critical for provider-side cache reuse
 - unresolved synthetic-message patterns are a likely source of billing/cache/context drift if copied directly
+- Additional provider facts worth preserving:
+- Gemini-specific PM facts worth preserving:
+- Gemini direct and Gemini CLI are separate runtime surfaces
+- they may share a provider family but not necessarily the same auth/control/cost/caching behavior
+- effort support must be evaluated per surface, not per family label
+- Compression/memory facts worth preserving:
+- PM has richer compaction/compression/context-shaping than OpenCode and therefore more integration risk
+- Assistant memory is intentionally not a subagent continuity mechanism
+- subagent continuity needs its own explicit handoff/context contract
+- OpenAI-like providers may require per-surface `responses` vs `chat` routing
+- Gemini/Vertex need stricter tool-schema normalization than generic JSON Schema
+- Bedrock model ids may need region-aware rewriting, but over-rewriting is dangerous
+- OpenRouter prompt caching is not complete without TTL and correct cache-write accounting

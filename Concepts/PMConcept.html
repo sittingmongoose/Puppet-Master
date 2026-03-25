@@ -873,21 +873,19 @@
       overflow: visible;
     }
     [data-theme^="glass"] .bottom-tabs .tab {
-      padding: 2px 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 0px 2px;
+      border-radius: 3px;
+      border: none;
       background: rgba(255, 255, 255, 0.04);
       transition: all 0.2s ease;
-      font-size: 11px;
+      font-size: 8px;
     }
     [data-theme^="glass"] .bottom-tabs .tab:hover {
       background: rgba(255, 255, 255, 0.10);
-      border-color: rgba(255, 255, 255, 0.12);
     }
     [data-theme^="glass"] .bottom-tabs .tab.active {
       color: var(--accent-blue);
       background: rgba(34, 211, 238, 0.14);
-      border-color: rgba(34, 211, 238, 0.25);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       text-shadow: 0 0 8px rgba(34, 211, 238, 0.35);
@@ -902,19 +900,17 @@
       -webkit-backdrop-filter: blur(8px);
     }
     [data-theme^="glass"] .terminal-tab {
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 3px;
+      border: none;
       background: rgba(255, 255, 255, 0.03);
       transition: all 0.2s ease;
     }
     [data-theme^="glass"] .terminal-tab:hover {
       background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.10);
       color: var(--text-primary);
     }
     [data-theme^="glass"] .terminal-tab.active {
       background: rgba(34, 211, 238, 0.12);
-      border-color: rgba(34, 211, 238, 0.22);
       color: var(--text-primary);
       box-shadow: 0 0 10px rgba(34, 211, 238, 0.10),
         inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
@@ -935,19 +931,16 @@
       border-bottom: 1px solid rgba(8, 145, 178, 0.08);
     }
     [data-theme="glass-light"] .bottom-tabs .tab {
-      border-color: rgba(8, 145, 178, 0.06);
       background: rgba(8, 145, 178, 0.04);
       color: #2a4a5a;
     }
     [data-theme="glass-light"] .bottom-tabs .tab:hover {
       background: rgba(8, 145, 178, 0.10);
-      border-color: rgba(8, 145, 178, 0.12);
       color: #1a3a4a;
     }
     [data-theme="glass-light"] .bottom-tabs .tab.active {
       color: #044050;
       background: rgba(8, 145, 178, 0.18);
-      border-color: rgba(8, 145, 178, 0.30);
       text-shadow: none;
       font-weight: 600;
       box-shadow: 0 0 12px rgba(8, 145, 178, 0.10),
@@ -957,18 +950,15 @@
       border-bottom: 1px solid rgba(8, 145, 178, 0.06);
     }
     [data-theme="glass-light"] .terminal-tab {
-      border-color: rgba(8, 145, 178, 0.05);
       background: rgba(8, 145, 178, 0.03);
       color: #3a5a6a;
     }
     [data-theme="glass-light"] .terminal-tab:hover {
       background: rgba(8, 145, 178, 0.08);
-      border-color: rgba(8, 145, 178, 0.10);
       color: #1a3a4a;
     }
     [data-theme="glass-light"] .terminal-tab.active {
       background: rgba(8, 145, 178, 0.14);
-      border-color: rgba(8, 145, 178, 0.22);
       color: #044050;
       box-shadow: 0 0 10px rgba(8, 145, 178, 0.08),
         inset 0 1px 0 0 rgba(255, 255, 255, 0.40);
@@ -1874,7 +1864,7 @@
        ====================================================== */
 
     [data-theme="glass-dark"] .editor-tabs {
-      padding: 0 10px 0;
+      padding: 0 10px 0 16px;
       gap: 4px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       background: transparent;
@@ -1898,7 +1888,8 @@
       border-radius: 6px 6px 0 0;
     }
     [data-theme="glass-dark"] .editor-tabs .tab.tab-focused {
-      box-shadow: 0 0 10px rgba(45, 212, 191, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      background: rgba(45, 212, 191, 0.10);
+      box-shadow: inset 0 0 10px rgba(45, 212, 191, 0.20), inset 0 -2px 0 rgba(45, 212, 191, 0.4);
     }
 
     [data-theme="glass-dark"] .editor-tabs .tab:hover:not(.active) {
@@ -2123,7 +2114,10 @@
     /* Editor panes — flat top (tabs sit flush), rounded bottom */
     [data-theme="glass-dark"] .editor-pane {
       border-radius: 0 0 12px 12px;
+    }
+    [data-theme="glass-dark"] .editor-pane .editor-area {
       overflow: hidden;
+      border-radius: 0 0 12px 12px;
     }
 
     /* Bottom panel — uniform rounded corners */
@@ -2265,7 +2259,7 @@
        Glass Light: editor tab styling
        ====================================================== */
     [data-theme="glass-light"] .editor-tabs {
-      padding: 0 10px 0;
+      padding: 0 10px 0 16px;
       gap: 4px;
       border-bottom: 1px solid rgba(8, 145, 178, 0.08);
       background: transparent;
@@ -2333,7 +2327,10 @@
     }
     [data-theme="glass-light"] .editor-pane {
       border-radius: 0 0 12px 12px;
+    }
+    [data-theme="glass-light"] .editor-pane .editor-area {
       overflow: hidden;
+      border-radius: 0 0 12px 12px;
     }
     [data-theme="glass-light"] .bottom-panel {
       border-radius: 10px;
@@ -4028,6 +4025,17 @@
       color: var(--accent-orange);
     }
     .file-tree .file .git-status.added { color: var(--accent-lime); }
+    .file-tree .file.file-active {
+      background: rgba(59, 130, 246, 0.12);
+      color: var(--accent-blue) !important;
+      border-radius: 3px;
+    }
+    [data-theme="glass-dark"] .file-tree .file.file-active {
+      background: rgba(45, 212, 191, 0.10);
+    }
+    [data-theme="glass-light"] .file-tree .file.file-active {
+      background: rgba(8, 145, 178, 0.10);
+    }
     .files-status {
       padding: var(--sm) var(--md);
       font-size: 11px;
@@ -4052,17 +4060,17 @@
 
     .bottom-tabs {
       height: auto;
-      min-height: 24px;
+      min-height: 18px;
       display: flex;
       align-items: center;
       flex-wrap: nowrap;
-      padding: 1px 6px 1px 8px;
-      gap: var(--sm);
+      padding: 1px 3px;
+      gap: 1px;
       border-bottom: var(--border-width) solid var(--border);
-      font-size: 11px;
+      font-size: 8px;
       overflow: visible;
     }
-    .bottom-tabs-left { display: flex; flex: 0 0 auto; flex-wrap: wrap; gap: 4px; align-items: center; overflow: visible; }
+    .bottom-tabs-left { display: flex; flex: 0 0 auto; flex-wrap: nowrap; gap: 1px; align-items: center; overflow: visible; }
     .pm-term-center-outer {
       flex: 1 1 0%;
       min-width: 0;
@@ -4640,10 +4648,12 @@
     #editorView.pm-editor-term-drop-hover { outline: 2px dashed var(--accent-lime); outline-offset: -4px; }
     .bottom-tabs-right { display: flex; gap: var(--sm); align-items: center; flex: 0 0 auto; }
     .bottom-tabs .tab {
-      padding: 1px 5px;
+      padding: 0px 2px;
       cursor: pointer;
       color: var(--text-secondary);
-      font-size: 11px;
+      font-size: 8px;
+      white-space: nowrap;
+      letter-spacing: 0.2px;
     }
     .bottom-tabs .tab.active { color: var(--accent-lime); }
     [data-theme="basic-light"] .bottom-tabs .tab.active,
@@ -4817,7 +4827,7 @@
     .terminal-tabstrip {
       display: flex;
       align-items: center;
-      gap: 2px;
+      gap: 1px;
       padding: 2px var(--sm);
       background: var(--surface);
       border-bottom: 1px solid var(--border-light);
@@ -4826,19 +4836,18 @@
     .terminal-tab {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      padding: 2px 7px;
-      font-size: 11px;
+      gap: 1px;
+      padding: 0px 2px;
+      font-size: 8px;
       cursor: pointer;
       color: var(--text-secondary);
-      border: 1px solid transparent;
-      border-radius: var(--border-radius);
+      border: none;
+      border-radius: 3px;
       white-space: nowrap;
     }
     .terminal-tab:hover { color: var(--text-primary); background: var(--surface-elevated); }
     .terminal-tab.active {
       color: var(--text-primary);
-      border-color: var(--border-light);
       background: var(--surface-elevated);
     }
     .terminal-tab.pinned::after { content: '\2022'; color: var(--accent-orange); font-weight: bold; margin-left: 2px; }
@@ -5325,9 +5334,10 @@
     }
     .editor-tabs {
       display: flex;
-      padding: var(--xs) var(--md) 0;
+      padding: var(--xs) var(--md) 0 calc(var(--md) + 8px);
       gap: 2px;
       border-bottom: var(--border-width) solid var(--border);
+      overflow: visible;
     }
     .editor-tabs .tab {
       padding: var(--xs) var(--md);
@@ -5347,15 +5357,22 @@
       content:''; position:absolute; bottom:0; left:6px; right:6px;
       height:2px; background: var(--accent-blue); border-radius:1px;
     }
-    /* Glow only on the last-clicked/focused tab */
+    /* Glow only on the last-clicked/focused tab — uses inset glow + background to avoid overflow clipping */
     .editor-tabs .tab.tab-focused {
-      box-shadow: 0 0 8px rgba(59, 130, 246, 0.35);
+      background: rgba(59, 130, 246, 0.10);
+      box-shadow: inset 0 0 8px rgba(59, 130, 246, 0.25), inset 0 -2px 0 rgba(59, 130, 246, 0.5);
+    }
+    [data-theme="glass-dark"] .editor-tabs .tab.tab-focused {
+      background: rgba(45, 212, 191, 0.10);
+      box-shadow: inset 0 0 10px rgba(45, 212, 191, 0.20), inset 0 -2px 0 rgba(45, 212, 191, 0.4);
     }
     [data-theme="glass-light"] .editor-tabs .tab.tab-focused {
-      box-shadow: 0 0 8px rgba(8, 145, 178, 0.30);
+      background: rgba(8, 145, 178, 0.10);
+      box-shadow: inset 0 0 8px rgba(8, 145, 178, 0.20), inset 0 -2px 0 rgba(8, 145, 178, 0.4);
     }
     [data-theme^="retro"] .editor-tabs .tab.tab-focused {
-      box-shadow: 0 0 6px rgba(0, 255, 0, 0.3);
+      background: rgba(0, 255, 65, 0.08);
+      box-shadow: inset 0 0 6px rgba(0, 255, 0, 0.20), inset 0 -2px 0 rgba(0, 255, 0, 0.4);
     }
     .editor-tabs .tab .dot { color: var(--accent-orange); }
 
@@ -5390,6 +5407,8 @@
       text-align: right;
       border-right: 1px solid var(--border-light);
       position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
     }
     .gutter-line {
       height: 18px;
@@ -5461,10 +5480,10 @@
     }
     [data-theme$="light"] .minimap-viewport { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.08); }
     .minimap-heat-strip {
-      position:absolute; right:0; width:5px; border-radius:1px; opacity:0.85;
+      position:absolute; right:0; width:4px; border-radius:1px; opacity:0.85;
       transition: opacity 0.2s, width 0.2s;
     }
-    .minimap-heat-strip:hover { width:9px; opacity:1; }
+    .minimap-heat-strip:hover { width:7px; opacity:1; }
     .minimap-heat-strip.hs-added { background: var(--accent-lime); }
     .minimap-heat-strip.hs-modified { background: var(--accent-blue); }
     .minimap-heat-strip.hs-deleted { background: var(--accent-magenta); }
@@ -8037,7 +8056,7 @@
     }
     
     .editor-minimap {
-      width: 28px;
+      width: 22px;
       border-left: 1px solid var(--border-light);
       background: var(--surface);
       position: relative;
@@ -8543,7 +8562,7 @@
         padding-right: var(--xs) !important;
       }
       .editor-minimap {
-        width: 30px;
+        width: 20px;
       }
 
       .primary-content {
@@ -8663,11 +8682,14 @@
                 <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">WORKSPACE</summary>
                 <div class="file-tree" style="position:relative;" oncontextmenu="event.preventDefault(); showFileContextMenu(event)">
                   <div class="folder">▼ src/</div>
-                  <div class="file" style="color:var(--accent-blue);">app.rs <span class="git-status" style="color:var(--accent-orange); float:right;">M</span></div>
-                  <div class="file">main.rs</div>
-                  <div class="folder" style="padding-left:12px;">▼ views/</div>
-                  <div class="file" style="padding-left:24px;">dashboard.rs</div>
-                  <div class="file" style="padding-left:24px;">config.rs <span class="git-status added" style="color:var(--accent-lime); float:right;">A</span></div>
+                  <div class="file" data-filename="app.rs" style="color:var(--accent-blue);">app.rs <span class="git-status" style="color:var(--accent-orange); float:right;">M</span></div>
+                  <div class="file" data-filename="main.rs">main.rs</div>
+                  <div class="file" data-filename="orchestrator.rs">orchestrator.rs <span class="git-status" style="color:var(--accent-orange); float:right;">M</span></div>
+                  <div class="file" data-filename="workspace.rs">workspace.rs</div>
+                  <div class="folder" style="padding-left:12px;">▼ core/</div>
+                  <div class="file" data-filename="config.rs" style="padding-left:24px;">config.rs <span class="git-status added" style="color:var(--accent-lime); float:right;">A</span></div>
+                  <div class="file" data-filename="types.rs" style="padding-left:24px;">types.rs <span class="git-status" style="color:var(--accent-orange); float:right;">M</span></div>
+                  <div class="file" data-filename="errors.rs" style="padding-left:24px;">errors.rs</div>
                   <div class="folder">▼ tests/</div>
                   <div class="file" style="padding-left:12px;">integration.rs</div>
                   <div class="file">Cargo.toml</div>
@@ -17133,60 +17155,62 @@ status: completed with warnings</pre>
             e.stopPropagation(); // stop click from bubbling
         }
         
-        // Click file in file tree to open tab
+        // Click file in file tree to open in correct editor pane
         const fileItem = e.target.closest('.file-tree .file');
         if (fileItem && !e.target.closest('.git-status') && !e.target.closest('.folder')) {
-            const filename = fileItem.textContent.trim().split(' ')[0];
-            const lowerName = filename.toLowerCase();
-            const ext = lowerName.includes('.') ? lowerName.split('.').pop() : '';
+            var filename = fileItem.getAttribute('data-filename') || fileItem.textContent.trim().split(' ')[0];
 
-            const pane1 = document.getElementById('editorPane1');
-            const edView = document.getElementById('editorView');
+            // Highlight clicked file in sidebar
+            document.querySelectorAll('.file-tree .file').forEach(function(f) { f.classList.remove('file-active'); });
+            fileItem.classList.add('file-active');
+
+            // Show editor view
+            var edView = document.getElementById('editorView');
             if (edView) edView.style.display = 'flex';
-            if (pane1) {
-                pane1.style.display = 'flex';
-                const tabs = pane1.querySelector('.editor-tabs');
-                if (tabs) {
-                    tabs.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                    const newTab = document.createElement('span');
-                    newTab.className = 'tab active';
-                    newTab.draggable = true;
-                    newTab.setAttribute('data-filename', filename);
-                    newTab.addEventListener('dragstart', e => {
-                        e.dataTransfer.setData('text/plain', filename);
-                    });
-                    newTab.innerHTML = `${filename} <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
-                    tabs.appendChild(newTab);
-                }
-                const codeTarget = pane1.querySelector('.editor-code');
-                if (codeTarget) {
-                    let fakeCode = `// Viewing ${filename}\n\n`;
 
-                    if (filename === 'app.rs') {
-                        fakeCode += `use std::time::Duration;\n\n#[derive(Debug, Clone)]\npub struct AppConfig {\n    pub profile: String,\n    pub max_concurrent_runs: usize,\n    pub dashboard_enabled: bool,\n}\n\n#[derive(Debug, Clone, Copy)]\npub enum OrchestratorMode {\n    Planner,\n    Executor,\n    DashboardOnly,\n}\n\npub struct App {\n    config: AppConfig,\n    mode: OrchestratorMode,\n}\n\nimpl App {\n    pub fn new(profile: &str) -> Self {\n        Self {\n            config: AppConfig {\n                profile: profile.to_string(),\n                max_concurrent_runs: 4,\n                dashboard_enabled: true,\n            },\n            mode: OrchestratorMode::Planner,\n        }\n    }\n\n    pub fn from_env() -> Self {\n        // In the real app we would read env vars, files, etc.\n        Self::new(\"dev\")\n    }\n\n    pub fn run(&self) -> anyhow::Result<()> {\n        tracing::info!(profile = %self.config.profile, \"starting orchestrator app\");\n        // spin up scheduler, agents, and dashboard\n        Ok(())\n    }\n}\n\npub fn bootstrap() -> anyhow::Result<()> {\n    let app = App::from_env();\n    app.run()?;\n    Ok(())\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n\n    #[test]\n    fn bootstrap_uses_dev_profile_by_default() {\n        let app = App::new(\"dev\");\n        assert_eq!(app.config.profile, \"dev\");\n    }\n}\n`;
-                    } else if (filename === 'main.rs') {
-                        fakeCode += `use puppet_master::app::bootstrap;\n\nfn main() {\n    // Pretend CLI parsing layer\n    let profile = std::env::var(\"PUPPET_PROFILE\").unwrap_or_else(|_| \"dev\".to_string());\n\n    if let Err(err) = run_with_profile(&profile) {\n        eprintln!(\"fatal: {err:?}\");\n        std::process::exit(1);\n    }\n}\n\nfn run_with_profile(profile: &str) -> anyhow::Result<()> {\n    println!(\"starting Puppet Master with profile={profile}\");\n    // In the real binary we would wire tracing, metrics, etc.\n    bootstrap()?;\n    Ok(())\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n\n    #[test]\n    fn dev_profile_is_fast_and_chatty() {\n        let result = run_with_profile(\"dev\");\n        assert!(result.is_ok());\n    }\n}\n`;
-                    } else if (filename === 'dashboard.rs') {
-                        fakeCode += `#[derive(Debug, Clone)]\npub struct WidgetId(pub &'static str);\n\n#[derive(Debug, Clone)]\npub struct DashboardWidget {\n    pub id: WidgetId,\n    pub title: &'static str,\n    pub span: (u8, u8), // (columns, rows)\n}\n\n#[derive(Debug, Default)]\npub struct DashboardLayout {\n    pub widgets: Vec<DashboardWidget>,\n}\n\nimpl DashboardLayout {\n    pub fn default_main() -> Self {\n        Self {\n            widgets: vec![\n                DashboardWidget { id: WidgetId(\"orch_status\"), title: \"Orchestrator Status\", span: (2, 2) },\n                DashboardWidget { id: WidgetId(\"run_graph\"), title: \"Run Graph\", span: (2, 2) },\n                DashboardWidget { id: WidgetId(\"agents\"), title: \"Agents\", span: (1, 2) },\n                DashboardWidget { id: WidgetId(\"activity_log\"), title: \"Activity Log\", span: (3, 1) },\n            ],\n        }\n    }\n\n    pub fn visible_ids(&self) -> impl Iterator<Item = &WidgetId> {\n        self.widgets.iter().map(|w| &w.id)\n    }\n}\n\npub fn render_to_tui(layout: &DashboardLayout) {\n    // Here we would draw the grid in a terminal UI or web canvas.\n    for widget in &layout.widgets {\n        println!(\"rendering widget: {} ({:?})\", widget.title, widget.span);\n    }\n}\n`;
-                    } else if (filename === 'config.rs') {
-                        fakeCode += `use serde::Deserialize;\n\n#[derive(Debug, Deserialize, Clone)]\npub struct Config {\n    pub profile: String,\n    pub unraid_url: Option<String>,\n    pub max_parallel_plans: usize,\n}\n\nimpl Default for Config {\n    fn default() -> Self {\n        Self {\n            profile: \"dev\".to_string(),\n            unraid_url: None,\n            max_parallel_plans: 2,\n        }\n    }\n}\n\npub fn load_config() -> anyhow::Result<Config> {\n    // In reality we would merge env, CLI, and files.\n    let mut cfg = Config::default();\n    if let Ok(profile) = std::env::var(\"PUPPET_PROFILE\") {\n        cfg.profile = profile;\n    }\n    Ok(cfg)\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n\n    #[test]\n    fn uses_defaults_when_env_is_missing() {\n        let cfg = load_config().unwrap();\n        assert_eq!(cfg.profile, \"dev\");\n    }\n}\n`;
-                    } else if (filename === 'integration.rs') {
-                        fakeCode += `use crate::app::bootstrap;\n\n#[test]\nfn end_to_end_plan_run_succeeds() {\n    // A tiny fantasy of what a happy-path integration test might look like.\n    let result = bootstrap();\n    assert!(result.is_ok(), \"expected bootstrap to succeed\");\n}\n\n#[test]\nfn dashboard_can_render_after_first_plan() {\n    // Here we would drive a fake plan through the orchestrator and\n    // assert that the dashboard state contains at least one completed run.\n    assert!(true, \"dashboard rendering is not wired yet in this demo\");\n}\n`;
-                    } else if (filename === 'Cargo.toml') {
-                        fakeCode += `[package]\nname = \"puppet-master\"\nversion = \"0.1.0\"\nedition = \"2021\"\ndescription = \"Agentic orchestrator + dashboard for complex automation workflows\"\nauthors = [\"You <you@example.com>\"]\n\n[dependencies]\nserde = { version = \"1.0\", features = [\"derive\"] } # configuration + JSON\ntokio = { version = \"1.30\", features = [\"full\"] }  # async runtime for agents\nreqwest = { version = \"0.11\", features = [\"json\"] } # talking to remote services\ntracing = \"0.1\"                                      # structured logging\nanyhow = \"1\"                                         # ergonomic error handling\nclap = { version = \"4\", features = [\"derive\"] }     # CLI for the binary\n\n[features]\n# Enable extra widgets and endpoints for the dashboard.\ndashboard = []\n# Talk to an Unraid box for storage and compute.\nunraid-integration = []\n`;
-                    } else if (filename === 'README.md') {
-                        fakeCode += `# Puppet Master\n\nA modern, highly extensible orchestrator and agentic IDE for long-running automation.\n\n## Quick start\n\nbash\n  cargo build --release\n  ./target/release/puppet-master --profile dev\n\n## Core concepts\n\n- Orchestrator: coordinates plans, agents, and external systems.\n- Agent: a focused worker that owns part of the workflow.\n- Dashboard: a live view over plans, runs, and logs.\n- Pipelines: composable graphs describing how work flows.\n\n## Next steps\n\n- Point the orchestrator at a real repo.\n- Configure a few sample plans.\n- Hook it into your existing CI so every change gets a rehearsal run.\n`;
-                    } else if (ext === 'rs') {
-                        fakeCode += `// Module extracted from ${filename}\n\npub struct ComponentState {\n    pub id: String,\n    pub healthy: bool,\n}\n\npub fn reconcile(state: &mut ComponentState) {\n    if !state.healthy {\n        println!(\"restarting {}\", state.id);\n        state.healthy = true;\n    }\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n\n    #[test]\n    fn unhealthy_components_are_restarted() {\n        let mut s = ComponentState { id: \"demo\".into(), healthy: false };\n        reconcile(&mut s);\n        assert!(s.healthy);\n    }\n}\n`;
-                    } else if (ext === 'md') {
-                        fakeCode += `# ${filename}\n\nDesign note for a Puppet Master component.\n\n## Context\n\nDescribe which part of the orchestrator this document belongs to\n(dashboard, planner, agents, storage, etc.).\n\n## Open questions\n\n- How should this component report progress back to the dashboard?\n- What failure modes do we expect in production?\n\n## Sketch\n\n- Start a lightweight agent process.\n- Stream structured events into the run graph.\n- Persist enough state to resume after a crash.\n`;
-                    } else if (ext === 'toml') {
-                        fakeCode += `# configuration for ${filename}\n\n[orchestrator]\nprofile = \"dev\"\nmax_parallel_plans = 4\n\n[unraid]\nurl = \"http://unraid.local\"\nshares = [\"puppet-artifacts\", \"puppet-cache\"]\n`;
-                    } else {
-                        fakeCode += `// Generic content for ${filename}\n\nfunction init() {\n  // No-op (removed debug logging)\n}\n`;
+            // Route FILE_DATA files to the correct pane
+            var pane1Files = ['app.rs','main.rs','orchestrator.rs','workspace.rs'];
+            var pane2Files = ['config.rs','types.rs','errors.rs'];
+
+            if (pane1Files.indexOf(filename) !== -1 && typeof switchEditorPane1Tab === 'function') {
+                var pane1 = document.getElementById('editorPane1');
+                if (pane1) pane1.style.display = 'flex';
+                switchEditorPane1Tab(filename);
+            } else if (pane2Files.indexOf(filename) !== -1 && typeof switchEditorPane2CodeTab === 'function') {
+                var pane2 = document.getElementById('editorPane2');
+                if (pane2) pane2.style.display = 'flex';
+                switchEditorPane2CodeTab(filename);
+            } else {
+                // Fallback for non-FILE_DATA files (Cargo.toml, README.md, etc.)
+                var lowerName = filename.toLowerCase();
+                var ext = lowerName.includes('.') ? lowerName.split('.').pop() : '';
+                var pane1 = document.getElementById('editorPane1');
+                if (pane1) {
+                    pane1.style.display = 'flex';
+                    var tabs = pane1.querySelector('.editor-tabs');
+                    if (tabs) {
+                        tabs.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+                        var newTab = document.createElement('span');
+                        newTab.className = 'tab active';
+                        newTab.draggable = true;
+                        newTab.setAttribute('data-file', filename);
+                        newTab.innerHTML = filename + ' <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+                        tabs.appendChild(newTab);
                     }
-
-                    codeTarget.innerHTML = fakeCode.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    var codeTarget = pane1.querySelector('.editor-code');
+                    if (codeTarget) {
+                        var fakeCode = '// Viewing ' + filename + '\n\n';
+                        if (filename === 'Cargo.toml') {
+                            fakeCode += '[package]\nname = "puppet-master"\nversion = "0.1.0"\nedition = "2021"\n\n[dependencies]\nserde = { version = "1.0", features = ["derive"] }\ntokio = { version = "1.30", features = ["full"] }\nreqwest = { version = "0.11", features = ["json"] }\ntracing = "0.1"\nanyhow = "1"\nclap = { version = "4", features = ["derive"] }\n';
+                        } else if (filename === 'README.md') {
+                            fakeCode += '# Puppet Master\n\nA modern orchestrator and agentic IDE.\n\n## Quick start\n\ncargo build --release\n./target/release/puppet-master --profile dev\n';
+                        } else if (ext === 'rs') {
+                            fakeCode += '// Module: ' + filename + '\n\npub struct ComponentState {\n    pub id: String,\n    pub healthy: bool,\n}\n';
+                        } else {
+                            fakeCode += '// Content for ' + filename + '\n';
+                        }
+                        codeTarget.innerHTML = fakeCode.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    }
                 }
             }
         }
@@ -18169,7 +18193,7 @@ status: completed with warnings</pre>
         '    Ok(())',
         '}'
       ],
-      diffs: {4:'added',18:'modified',19:'modified',20:'modified',26:'added',27:'added',28:'added',30:'added',31:'added',32:'added',39:'added',40:'added',44:'added',45:'modified',48:'added',49:'added',50:'added',51:'added',52:'added',53:'added',54:'added',57:'added',58:'added',59:'added',60:'added',61:'added',62:'added',70:'added',71:'added',72:'added',73:'added',74:'added',75:'added',76:'added',77:'added',78:'added'}
+      diffs: {4:'added',18:'modified',19:'modified',20:'modified',26:'added',27:'added',28:'added',30:'deleted',31:'deleted',32:'deleted',39:'modified',40:'modified',44:'conflict',45:'modified',48:'added',49:'added',50:'added',51:'added',52:'modified',53:'modified',54:'added',57:'deleted',58:'deleted',59:'deleted',60:'deleted',61:'deleted',62:'deleted',70:'added',71:'added',72:'added',73:'modified',74:'added',75:'added',76:'added',77:'added',78:'deleted'}
     },
     'orchestrator.rs': {
       path: 'src/orchestrator.rs',
@@ -18455,7 +18479,7 @@ status: completed with warnings</pre>
         '        .map(String::from)',
         '}'
       ],
-      diffs: {2:'added',17:'added',20:'added',21:'added',22:'added',23:'added',24:'added',25:'added',26:'added',27:'added',28:'added',31:'added',32:'added',33:'added',34:'added',35:'added',37:'added',38:'added',39:'added',40:'added',41:'added',42:'added',43:'added',45:'added',46:'added',47:'added',48:'added',50:'added',52:'added',53:'added',54:'added',55:'added',56:'added',57:'added',58:'added',59:'added',60:'added',61:'added',62:'added',63:'added',73:'modified',82:'modified',83:'added',88:'modified',91:'modified',92:'modified',93:'modified',108:'added',112:'added',113:'added',114:'added',115:'added',116:'added',117:'added',118:'added',119:'added',120:'added'}
+      diffs: {2:'added',17:'modified',20:'conflict',21:'conflict',22:'conflict',23:'added',24:'added',25:'added',26:'deleted',27:'deleted',28:'deleted',31:'modified',32:'modified',33:'modified',34:'added',35:'added',37:'deleted',38:'deleted',39:'deleted',40:'added',41:'added',42:'added',43:'added',45:'modified',46:'modified',47:'modified',48:'modified',50:'added',52:'modified',53:'modified',54:'deleted',55:'deleted',56:'deleted',57:'added',58:'added',59:'added',60:'added',61:'added',62:'added',63:'added',73:'modified',82:'modified',83:'conflict',88:'modified',91:'deleted',92:'deleted',93:'deleted',108:'added',112:'added',113:'modified',114:'modified',115:'deleted',116:'deleted',117:'added',118:'added',119:'modified',120:'added'}
     },
     'config.rs': {
       path: 'src/config.rs',
@@ -18764,7 +18788,7 @@ status: completed with warnings</pre>
         '    }',
         '}'
       ],
-      diffs: {5:'added',20:'added',21:'added',22:'added',23:'added',24:'added',25:'added',28:'added',29:'added',30:'added',31:'added',32:'added',33:'added',36:'added',37:'added',38:'added',39:'added',40:'added',41:'added',46:'modified',47:'modified',49:'added',50:'added',55:'added',56:'added',57:'added',58:'added',59:'added',60:'added',61:'added',62:'added',63:'added',64:'added',66:'added',67:'added',68:'added',69:'added',70:'added',71:'added',72:'added',73:'added',74:'added',75:'added',76:'added'}
+      diffs: {5:'added',20:'modified',21:'modified',22:'added',23:'added',24:'deleted',25:'deleted',28:'added',29:'added',30:'conflict',31:'conflict',32:'added',33:'added',36:'added',37:'added',38:'deleted',39:'deleted',40:'deleted',41:'added',46:'modified',47:'modified',49:'added',50:'added',55:'added',56:'modified',57:'modified',58:'deleted',59:'deleted',60:'added',61:'added',62:'added',63:'conflict',64:'added',66:'modified',67:'modified',68:'added',69:'added',70:'deleted',71:'deleted',72:'added',73:'added',74:'modified',75:'added',76:'added'}
     }
   };
 
@@ -18828,11 +18852,16 @@ status: completed with warnings</pre>
     };
     codeEl.onmouseleave = function() { highlight.style.display = 'none'; };
 
+    // Sync gutter scroll with code scroll
+    codeEl.onscroll = function() {
+      gutterEl.scrollTop = codeEl.scrollTop;
+      if (minimapEl) {
+        requestAnimationFrame(function() { updateMinimapViewport(minimapEl, codeEl); });
+      }
+    };
+
     if (minimapEl) {
       renderMinimap(minimapEl, fd, animate);
-      codeEl.onscroll = function() {
-        requestAnimationFrame(function() { updateMinimapViewport(minimapEl, codeEl); });
-      };
     }
 
     setupDiffFlash(codeEl);
