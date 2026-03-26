@@ -98,6 +98,18 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Arc
 
 <a id="STRATEGY-DAE"></a>
 ### 2.2 DAE — Delegated Agent Execution
+
+#### 2.2.1 DAE worktree context
+
+When a DAE executes inside a worktree (orchestrator-owned or assistant-owned), the execution context carries the worktree identity:
+- `working_directory` is set to the worktree root path
+- `worktree_id`, `worktree_branch`, and `is_worktree` fields are present in the execution context
+- File operations, git operations, terminal sessions, and LSP root identity all resolve to the worktree path
+
+This applies regardless of whether the DAE was triggered by Orchestrator or by Assistant Chat.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assistant-chat-design.md
+
 - The provider CLI **executes tools itself** (file edits, shell commands, etc.).
 - Puppet Master spawns the CLI in a jailed workspace, ingests the `stream-json` normalized event stream, and enforces policy via guards, reconciliation, and kill-switches.
 - DAE uses an **ephemeral Puppet Master-managed jail** (prefer a dedicated worktree; otherwise an equivalent isolated workspace) and the provider sees only jail paths.
@@ -481,6 +493,21 @@ Rules:
 Execution mode affects which recovery actions can be taken immediately, but mode does not redefine the underlying classification.
 
 ### Mode rules
+
+#### Worktree invariant across modes
+
+All assistant chat modes (Ask, Agent, Plan, Deep Plan, Debug) operate within the active thread's worktree when one is bound:
+- Ask mode: reads files from worktree
+- Agent mode: edits files in worktree
+- Plan/Deep Plan mode: executes plans in worktree context
+- Debug mode: debug operations target worktree
+
+Mode transitions do not change worktree binding — binding is a thread-level property, not a mode-level property.
+
+Worktree commands (`cmd.chat.worktree.*`) are available in all modes, subject to their when-clauses. The worktree header button and dropdown menu are always visible regardless of current mode.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/UI_Command_Catalog.md
+
 - interactive modes may present auth, approval, and clarification actions directly
 - non-interactive/headless modes that cannot present a required action yield `blocked_reason_code = headless_ask_denied`
 - a later mode change may satisfy the prerequisite and allow resume, but it does not rewrite the original blocked classification

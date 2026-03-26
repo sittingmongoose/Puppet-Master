@@ -42,3 +42,4 @@ Canonical source: [Plans/assistant-chat-design.md](../../assistant-chat-design.m
 - [34-runtime-blocked-recovery-thread-state-addendum-2026-03-09.md](34-runtime-blocked-recovery-thread-state-addendum-2026-03-09.md) — ## Runtime Blocked / Recovery Thread-State Addendum (2026-03-09)
 - [35-blocked-thread-message-and-persistence-reconciliation-addendum-2026-03-09.md](35-blocked-thread-message-and-persistence-reconciliation-addendum-2026-03-09.md) — ## Blocked Thread Message and Persistence Reconciliation Addendum (2026-03-09)
 - [36-unified-thread-blocked-state-lifecycle.md](36-unified-thread-blocked-state-lifecycle.md) — ## Unified Thread Blocked-State Lifecycle
+- [37-worktrees-in-assistant.md](37-worktrees-in-assistant.md) — ## Worktrees in Assistant

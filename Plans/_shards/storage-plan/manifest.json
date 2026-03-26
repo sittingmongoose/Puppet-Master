@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/storage-plan.md",
-  "source_sha256": "e415d95362da4d4797b0bf1e7275d52a59003dfc5d1f67b8b4180b2b31c9d0d2",
+  "source_sha256": "446b1e929652ffc9920347b54a2b5e612304fbb27f83b64c29a6aadeeefdc6f8",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -122,9 +122,16 @@
     {
       "dest_path": "Plans/_shards/storage-plan/17-permission-snapshot-storage-and-safe-point-namespace-addendum.md",
       "start_line": 1092,
-      "end_line": 1131,
-      "segment_sha256": "84f01c57aa1dd038653111497d802d81e056ac99706565d5ff4f5d93f4942acf",
+      "end_line": 1132,
+      "segment_sha256": "0247387c552fda23466b1dfcce90aa50ea1f90669bbeea58531373e7c998d991",
       "heading": "## Permission Snapshot Storage and Safe-Point Namespace Addendum"
+    },
+    {
+      "dest_path": "Plans/_shards/storage-plan/18-assistant-worktree-binding-storage-addendum.md",
+      "start_line": 1133,
+      "end_line": 1204,
+      "segment_sha256": "f89e50c39b33ffdfad54c28b8e683d1ebb6875b4b877a55829c997787d9dfc08",
+      "heading": "## Assistant Worktree Binding Storage Addendum"
     }
   ]
 }

@@ -212,9 +212,16 @@ ContractRef: ContractName:Plans/Permissions_System.md#TOOL-KEYS, ContractName:Pl
 
 ### 4.1 Working directory
 
-Template resolution (file includes, shell injection) uses the **active project root** as the working directory. If no project is active, the user's home directory is used.
+The active working directory for command execution resolves as follows:
 
-ContractRef: PolicyRule:Decision_Policy.md§2
+1. If the active context has a bound worktree (`is_worktree` is true in execution context), use the **worktree root path**
+2. Otherwise, use the **active project root**
+
+This applies to all command execution contexts: Assistant Chat (all modes), Orchestrator DAE, terminal sessions, and file operations.
+
+When a thread with a bound worktree is active in Assistant Chat, all `cmd.chat.*` commands execute against the worktree root. When no worktree is bound, they execute against the project root.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md
 
 ### 4.2 Subtask execution
 

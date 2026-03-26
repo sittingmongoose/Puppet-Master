@@ -124,6 +124,24 @@ Rules:
 - restore-and-branch creates a visible alternate thread/session lineage with stable labels and origin metadata
 
 ### 1.5 Thread usage surface
+
+#### 1.5.1 Assistant worktree integration
+
+Threads can optionally be bound to git worktrees, enabling isolated branch-per-thread workflows. This is an MVP feature gated behind a per-project setting.
+
+**Surface points:**
+- Chat header worktree button (visible when project is a git repo)
+- Thread selector worktree icon (shows branch glyph when thread has worktree)
+- Source Control Worktrees accordion section (unified inventory of all worktrees)
+- File manager breadcrumb worktree toggle
+- Settings > Branching > Assistant Worktrees (10 configuration keys)
+- Merge-back dialog (squash/merge/rebase, PR, export)
+- Pre-merge test gate (auto-detect or configured command)
+
+**Primary spec:** `Plans/assistant-chat-design.md` §Worktrees in Assistant
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
 Per-thread context detail uses one compact inspect/action entrypoint plus one canonical detailed surface.
 
 Rules:

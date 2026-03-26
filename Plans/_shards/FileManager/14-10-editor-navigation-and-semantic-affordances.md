@@ -1,14 +1,26 @@
 ## 10. Editor navigation and semantic affordances
 ### 10.1 Breadcrumbs and outline
-Breadcrumbs are the editor-owned orientation surface above the active file.
 
-Rules:
-- the breadcrumb path is `file > symbol > block` when semantic structure is available
-- LSP `documentSymbol` is the preferred owner for outline/breadcrumb structure when a server is available
-- when LSP is unavailable, the editor falls back to heuristic outline extraction for the active file rather than hiding the feature entirely
-- breadcrumb clicks route through the same open-file and reveal contract as other editor navigation actions
+The breadcrumb bar at the top of each file panel follows the chain:
 
-ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+`file > symbol > block`
+
+Each crumb is clickable and shows a dropdown (siblings at that depth).
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md
+
+**Worktree toggle in breadcrumb:**
+
+When the active chat thread has a bound worktree and `file_manager.worktree_follow_thread` is `true`:
+- Breadcrumb prepends a worktree indicator crumb: `🌿 <branch_name> > file > symbol > block`
+- The worktree crumb is a toggle: click to switch the file manager root between worktree path and project root
+- Visual: muted icon when showing project root; accent when showing worktree
+- Tooltip: "Showing worktree: <branch_name>" or "Showing project root"
+- Thread switch auto-updates the breadcrumb worktree crumb when `worktree_follow_thread` is on
+
+When the thread has no worktree binding, or when `worktree_follow_thread` is `false`, the worktree crumb is absent and the breadcrumb reverts to the standard `file > symbol > block` chain.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
 
 ### 10.2 Go to symbol and semantic navigation
 `Go to symbol` is an editor/navigation feature, not a Search side-panel substitute.

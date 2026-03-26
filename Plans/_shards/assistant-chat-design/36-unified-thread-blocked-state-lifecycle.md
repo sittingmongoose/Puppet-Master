@@ -28,3 +28,4 @@ Rules:
 Thread blocked notices persist enough identity to restore the same blocked surfaces and action set after restart or resume.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
+

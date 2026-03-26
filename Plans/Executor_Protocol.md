@@ -278,6 +278,24 @@ ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Run_Modes
 
 ### 8. Safe points
 
+#### 8.1 Worktree snapshot in safe-point payloads
+
+When an execution unit runs inside a worktree (thread-owned or orchestrator-owned), the safe-point event payload MUST include:
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+
+| Field | Type | Description |
+|---|---|---|
+| `worktree_id` | string? | ID of bound worktree, null if running in main repo |
+| `worktree_path` | string? | Absolute path of worktree on disk |
+| `worktree_branch` | string? | Branch checked out in worktree |
+| `worktree_dirty` | bool | Whether worktree has uncommitted changes at snapshot time |
+
+These fields enable remediation/resume to restore the correct execution context. They are advisory for recovery — the canonical binding source is the redb projection from seglog events.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+
+
 Before any mutation-capable node attempt, the executor MUST create or attach a runtime safe point.
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/WorktreeGitImprovement.md
 
@@ -540,3 +558,44 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan
 - There is no practical maximum value.
 
 ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+## Execution Context: Worktree Handoff
+
+When Orchestrator or Assistant Chat creates an execution unit that should run inside a worktree, the execution context handoff includes worktree identity.
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+
+### Worktree-aware execution unit context
+
+The execution context MUST include:
+- `working_directory`: set to worktree root path (not project root) when worktree is bound
+- `worktree_id`: identifier of the target worktree
+- `worktree_branch`: branch name checked out in worktree
+- `is_worktree`: bool flag distinguishing worktree context from main repo context
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+**Caller responsibilities:**
+- Orchestrator sets these fields when launching a DAE in a lane-owned worktree
+- Assistant Chat sets these fields when the active thread has a bound worktree and the user runs agent-mode or plan-mode work
+- If `is_worktree` is false or absent, execution defaults to project root
+
+**Executor responsibilities:**
+- File operations resolve relative to `working_directory`
+- Git operations target the worktree, not the main repo
+- Terminal sessions start in `working_directory`
+- LSP root identity uses worktree path when `is_worktree` is true
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Commands_System.md
+
+### Mode interaction
+
+All assistant chat modes (Ask, Agent, Plan, Deep Plan, Debug) operate within the thread's worktree when one is bound:
+- Ask mode: read-only context from worktree files
+- Agent mode: file edits go to worktree
+- Plan/Deep Plan mode: plans execute in worktree context
+- Debug mode: debug operations target worktree
+
+Mode transitions do not affect worktree binding — the binding is thread-level, not mode-level.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md

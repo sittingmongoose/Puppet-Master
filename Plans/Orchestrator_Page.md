@@ -167,14 +167,28 @@ Rules:
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Decision_Policy.md
 
 ## 11. Source Control boundary
-Orchestrator owns package/seam/lane operational truth. Source Control owns compact worktree-first Git operations.
 
-Rules:
-- worktree path and branch are secondary identity in Orchestrator and primary identity in Source Control
-- lane identity is human-readable in Orchestrator and historical even after a live worktree is archived or removed
-- cleanup posture belongs to Orchestrator; concrete archive/prune/remove actions live in Source Control
+Source Control owns compact worktree-first Git operations and the unified worktree inventory UI.
 
-ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md
+Orchestrator owns lane/package/seam operational context, history/lineage, and concern/recovery/governance. Orchestrator does not duplicate a raw worktree inventory; it shows lane/worktree summary in the Progress tab.
+
+Assistant Chat owns thread-level worktree binding, merge-back flow, and natural-language worktree operations. Assistant-owned worktrees appear in the Source Control inventory alongside orchestrator-owned and manual worktrees.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md
+
+**Ownership model:**
+- `owner_run_id` / `owner_tier_id` → orchestrator-owned
+- `owner_thread_id` → assistant-owned
+- neither → manual (user-created)
+
+All three categories are visible in the Source Control Worktrees accordion. Owner metadata (Thread, Orch, Manual) is displayed as a label on each worktree row.
+
+Cleanup posture:
+- Orchestrator-owned: governed by runner contract cleanup policy
+- Assistant-owned: user-initiated via thread delete, chat dropdown, or Source Control remove action
+- Manual: user-initiated via Source Control remove action
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Contracts_V0.md
 
 ## 12. Concern and notification model
 Concern is first-class.

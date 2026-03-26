@@ -79,19 +79,20 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integr
 
 ### 1.1 Chat controls: platform, model, and reasoning/effort
 
-The chat window must allow the user to change platform, model, and reasoning/effort without leaving the chat.
+The chat window must allow the user to change platform, model, reasoning/effort, and worktree binding without leaving the chat.
 
-Required controls (placement: chat header or footer strip, same area as the context indicator / mode controls):
+Required controls (placement: chat header strip, same area as the context indicator / mode controls):
 
 | Control | Requirement |
 |---|---|
 | **Platform** | Dropdown listing available platforms. Selection applies to the current thread and the next turn. Data comes from `platform_specs`; no hardcoding. |
 | **Model** | Dropdown listing models for the currently selected platform. Models are dynamically discovered where supported, cached, and user-manageable via Settings or a manage-models entrypoint. Fallback model lists come from `platform_specs::fallback_model_ids(platform)`. |
 | **Reasoning / effort** | Shown only when the active platform supports it. Applies to the next turn rather than interrupting an in-flight response. |
+| **Worktree** | Icon button (rightmost in header strip, after Reasoning/effort). Dropdown for per-thread worktree binding: create, unbind, merge, PR, remove. Visual states: unbound (dimmed glyph), bound-clean (lit glyph), bound-dirty (lit glyph + dot indicator), bound-conflict (lit glyph + warning triangle). Hidden when the active project has no git repository. Full specification in the "Worktrees in Assistant" section below. |
 
-ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/WorktreeGitImprovement.md
 
-A *turn* is one complete user -> agent exchange: one user message plus the full agent response, including tool calls and final result. Changing platform, model, or effort takes effect on the next turn. If the user changes settings while a response is streaming, the current response completes with the prior selection.
+A *turn* is one complete user -> agent exchange: one user message plus the full agent response, including tool calls and final result. Changing platform, model, effort, or worktree binding takes effect on the next turn. If the user changes settings while a response is streaming, the current response completes with the prior selection.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
 

@@ -200,6 +200,31 @@ Rules:
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
 ### 2.6 Chat context usage commands
+
+#### 2.6.1 Assistant worktree commands
+
+Six commands for assistant thread-level worktree operations. All share `when:activeThreadExists && projectIsGitRepo && !projectIsRemoteNonSSH`.
+
+| Command ID | Label | Description | Extra when clause |
+|---|---|---|---|
+| `cmd.chat.worktree.create` | Create Worktree | Creates worktree for active thread, opens bind dialog | `!activeThreadHasWorktree` |
+| `cmd.chat.worktree.remove` | Remove Worktree | Removes active thread's worktree (confirmation dialog if dirty) | `activeThreadHasWorktree` |
+| `cmd.chat.worktree.bind_existing` | Bind Existing Worktree | Opens picker of unowned worktrees to bind to active thread | `!activeThreadHasWorktree` |
+| `cmd.chat.worktree.open_files` | Open Worktree Files | Opens worktree root in file manager | `activeThreadHasWorktree` |
+| `cmd.chat.worktree.merge` | Merge Worktree | Opens merge-back dialog for active thread's worktree | `activeThreadHasWorktree` |
+| `cmd.chat.worktree.create_pr` | Create PR | Opens PR creation panel for active thread's worktree branch | `activeThreadHasWorktree && projectHasGitHubRemote` |
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Commands_System.md
+
+**Context variable definitions:**
+- `activeThreadExists`: a chat thread is selected in the assistant panel
+- `activeThreadHasWorktree`: active thread has a non-null worktree binding in redb
+- `projectIsGitRepo`: active project has a `.git` directory
+- `projectIsRemoteNonSSH`: project is remote-mode but not SSH-tunneled (worktrees unsupported)
+- `projectHasGitHubRemote`: project git config contains a `github.com` remote URL
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_Integration.md
+
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
 | `cmd.chat.compact_context` | `{ thread_id }` | `context.compaction.started`, `context.compaction.completed` | Chat context circle click affordance, command palette |
@@ -324,6 +349,24 @@ Revert rules:
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
 ### 2.7 Chat slash commands (reserved)
+
+#### 2.7.1 Worktree slash command aliases
+
+These slash commands map directly to the `cmd.chat.worktree.*` commands above, providing keyboard-accessible entry points from the chat input.
+
+| Slash command | Maps to | Notes |
+|---|---|---|
+| `/worktree create` | `cmd.chat.worktree.create` | Same when clause |
+| `/worktree remove` | `cmd.chat.worktree.remove` | Same when clause |
+| `/worktree bind` | `cmd.chat.worktree.bind_existing` | Same when clause |
+| `/worktree merge` | `cmd.chat.worktree.merge` | Same when clause |
+| `/worktree pr` | `cmd.chat.worktree.create_pr` | Same when clause |
+| `/worktree open` | `cmd.chat.worktree.open_files` | Same when clause |
+
+Slash command autocompletion shows available subcommands filtered by current when-clause state. Unavailable commands appear grayed with tooltip explaining why (e.g., "No worktree bound to this thread").
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md
+
 
 Reserved Assistant Chat slash commands use stable canonical UI command IDs.
 

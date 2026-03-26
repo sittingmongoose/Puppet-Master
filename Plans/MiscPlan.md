@@ -107,6 +107,23 @@ REQUIREMENTS.md specifies "Clean working directory state (git checkout to last c
 
 ### 3.3 Cleanup Scope
 
+#### 3.3.1 Assistant worktree persistence
+
+Assistant-owned worktrees (identified by `owner_thread_id`) are NOT subject to the runner contract cleanup policy that governs orchestrator-owned worktrees. They are persistent by default.
+
+**Cleanup triggers for assistant worktrees:**
+- User clicks Remove in chat header dropdown → confirmation dialog if worktree is dirty
+- User deletes thread → cleanup behavior follows `branching.assistant_worktree_cleanup_default` setting: `ask` (show dialog), `keep` (unbind only, keep worktree on disk as manual), `remove` (remove worktree from disk)
+- User clicks Remove in Source Control worktree row → confirmation dialog if dirty or thread-bound
+- Force-remove via Doctor (orphan cleanup) — only for worktrees with no matching binding and no owner_thread_id
+
+**App uninstall:** Worktree directories under `.puppet-master/worktrees/` are cleaned up by the uninstall process. Branches created in the main repo remain (git data is preserved).
+
+**Completed threads:** When a thread reaches terminal/completed state, its worktree binding remains intact. The user can still merge, create PR, or remove. This allows completed work to be reviewed and integrated at the user's pace.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
+
+
 - **Main repo path:** When not using worktrees, cleanup runs in `paths.workspace` (or configured project root).
 - **Worktrees:** When a tier runs in a worktree, cleanup runs in that worktree path only; do not clean the main working tree for that tier's artifacts.
 - **After execution:** `cleanup_after_execution` runs in the same directory the agent used (main repo or that tier's worktree).

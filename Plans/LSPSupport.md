@@ -464,7 +464,26 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-cha
 
 ## 14. Technical implementation (implementation guide source)
 
-### 14.1 Module and crate layout
+### 14.1 Worktree root_identity handling
+
+LSP sessions are keyed by `(host_id, server_id, root_identity)`. When a file belongs to a worktree rather than the main project root, the LSP root_identity MUST use the worktree path.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+
+**Behavior:**
+- When a thread with a bound worktree is active and the user opens files from that worktree, LSP sessions use `root_identity = worktree_path`
+- If an LSP session for `(host_id, server_id, worktree_path)` does not exist, one is started (warm-start on worktree creation if feasible)
+- When the worktree is removed, the associated LSP session is shut down gracefully
+- Multiple worktrees may each have their own LSP session for the same server_id (each with a different root_identity)
+
+**Thread switch behavior:**
+- Switching threads does NOT kill LSP sessions for the previous thread's worktree — they remain available for background diagnostics and are reused if the user switches back
+- LSP session lifecycle is tied to worktree existence, not thread focus
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+
+
+### 14.2 Module and crate layout
 
 - **Decision:** LSP client and server registry live in the **same crate as the editor** (e.g. `puppet-master-rs/src/`) in a dedicated **submodule `src/lsp/`** containing:
   - `client.rs` -- LSP client wrapper (stdio transport, lifecycle, request/response).
@@ -473,7 +492,7 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-cha
   - `document.rs` or `sync.rs` -- Document version tracking and didOpen/didChange/didClose/didSave.
 - **Dependencies:** `lsp-types`, chosen LSP client crate (e.g. `lsp-client` or `async_lsp_client`), `tokio` for async. No need for tower-lsp unless implementing a server.
 
-### 14.2 Core data structures (conceptual)
+### 14.3 Core data structures (conceptual)
 
 ```text
 LspSessionKey {
@@ -507,7 +526,7 @@ DocumentBinding {
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
 
-### 14.3 Message flow
+### 14.4 Message flow
 
 1. **User opens file** → Editor loads buffer → Resolve (path → extension → server id → effective host/root identity) → If server not running for `(host_id, server_id, root_identity)`, spawn process → Initialize handshake → Send `didOpen` with content + version.
 2. **User edits** → Buffer content changes → Increment version; **debounce** (e.g. 100 ms) → Send `didChange` (incremental if supported) with version.
@@ -521,13 +540,13 @@ All LSP I/O on **async task** (tokio); route UI updates to the Slint event loop 
 
 ContractRef: ContractName:Plans/LSPSupport.md
 
-### 14.4 Config schema and storage
+### 14.5 Config schema and storage
 
 - **Keys:** `lsp.enabled` (bool, default true), `lsp.servers.<id>.disabled` (bool), `lsp.servers.<id>.command` (string array), `lsp.servers.<id>.extensions` (string array), `lsp.servers.<id>.env` (object), `lsp.servers.<id>.initialization` (object). **Decision:** Config namespace is `lsp.servers.<id>.*`; support legacy alias `lsp.<id>.disabled` (read/write maps to `lsp.servers.<id>.disabled`). Align with OpenCode schema for compatibility.
 - **Storage:** App-level in **redb** (or existing config YAML) under a key like `config.lsp`. Project-level override: optional file in project root (e.g. `.puppet-master/lsp.json`) or key under project id in redb.
 - **Debounce / timeouts:** Store in Settings → Editor or Developer: `lsp.didChangeDebounceMs` (default **100**, range 50-500), `lsp.hoverTimeoutMs` (default **5000**), `lsp.completionTimeoutMs` (default **5000**), `lsp.workspaceSymbolTimeoutMs` (default **10000**), `lsp.hoverDelayMs` (default **300**, range 100-1000, delay before sending hover request). All timeouts user-configurable. Document in implementation guide.
 
-### 14.5 Trigger and refresh behavior
+### 14.6 Trigger and refresh behavior
 
 - **Completion:** Trigger on typing (all characters) or on explicit shortcut (e.g. Ctrl+Space). Send `CompletionContext` with `triggerKind`: Invoked or TriggerCharacter.
 - **Hover:** Trigger on cursor idle; delay **300 ms** (config `lsp.hoverDelayMs`, default 300) before sending hover request to avoid flooding; cancel previous hover request on cursor move.
@@ -535,11 +554,11 @@ ContractRef: ContractName:Plans/LSPSupport.md
 - **Code actions:** Request on context menu open or lightbulb click; pass current range + diagnostics for that range (`CodeActionContext`).
 - **Signature help:** Trigger when cursor enters a call (e.g. after `(`); re-request on cursor move within the call.
 
-### 14.6 workspaceFolders policy (decision)
+### 14.7 workspaceFolders policy (decision)
 
 - **Recommendation:** At initialize, send **only roots that have at least one open document**, capped at **10** roots. If user has no open files, send project root if single-root, else empty list. Reduces startup cost and memory; document in implementation guide. Re-initialize not required when opening a file in a new root; the matching host-aware server session handles that.
 
-### 14.7 Virtual documents (Chat code blocks)
+### 14.8 Virtual documents (Chat code blocks)
 
 Code blocks in Chat messages (§5.1) that are not backed by a project file use **virtual documents** so hover and go-to-definition can still call the LSP.
 
@@ -551,7 +570,7 @@ Code blocks in Chat messages (§5.1) that are not backed by a project file use *
 
 ContractRef: ContractName:Plans/LSPSupport.md
 
-### 14.8 Registry contract (ServerSpec)
+### 14.9 Registry contract (ServerSpec)
 
 `ServerSpec` is the canonical machine-friendly catalog record for both built-in and custom servers.
 

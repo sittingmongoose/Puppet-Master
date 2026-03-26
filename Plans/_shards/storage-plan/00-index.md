@@ -23,3 +23,4 @@ Canonical source: [Plans/storage-plan.md](../../storage-plan.md)
 - [15-runtime-attempt-safe-point-queue-analysis-reconciliation-addendum-2026-03-09.md](15-runtime-attempt-safe-point-queue-analysis-reconciliation-addendum-2026-03-09.md) — ## Runtime Attempt / Safe Point / Queue Analysis Reconciliation Addendum (2026-03-09)
 - [16-runtime-recovery-persistence-and-restart-reconciliation-addendum-2026-03-09.md](16-runtime-recovery-persistence-and-restart-reconciliation-addendum-2026-03-09.md) — ## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)
 - [17-permission-snapshot-storage-and-safe-point-namespace-addendum.md](17-permission-snapshot-storage-and-safe-point-namespace-addendum.md) — ## Permission Snapshot Storage and Safe-Point Namespace Addendum
+- [18-assistant-worktree-binding-storage-addendum.md](18-assistant-worktree-binding-storage-addendum.md) — ## Assistant Worktree Binding Storage Addendum

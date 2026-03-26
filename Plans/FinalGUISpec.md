@@ -684,6 +684,13 @@ ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Widget_
 
 ### 7.2 Source Control
 
+#### 7.2.1 Accordion layout
+
+Source Control uses a vertically stacked collapsible accordion layout instead of horizontal tabs. Section order: Changes, Worktrees, Branches/Stash, History, Graph. Full specification in `Plans/GitHub_Integration.md` §A.1.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
+
+
 Source Control is the side-panel owner for Git-native repository work in the rewrite shell.
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md
@@ -730,6 +737,19 @@ Rules:
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
 ### 7.4 Settings and inspectors
+
+#### 7.4.1 Assistant Worktrees settings subsection
+
+Settings > Branching tab includes a new subsection "Assistant Worktrees" below existing branching controls. Contains 10 project-level settings organized in 3 visual sub-groups:
+
+- **Creation:** Auto-create worktree for new threads (bool, default off), Base branch for assistant worktrees (string, inherits from base_branch), Creation timeout (integer stepper, 5-300s, default 30s)
+- **Merge & Testing:** Run tests before merging (bool, default on), Pre-merge test command (string, empty = auto-detect), Test timeout (integer stepper, 30-1800s, default 300s), What to test (enum: merged_result|branch_only, default merged_result)
+- **Behavior:** Thread delete cleanup (enum: ask|keep|remove, default ask), File manager follows thread worktree (bool, default on), Worktree count warning threshold (integer stepper, 0-100, default 10, 0 = disabled)
+
+Full setting key definitions are canonical in `Plans/assistant-chat-design.md` §W.5 and persisted via `Plans/storage-plan.md`.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
 Settings and inspectors separate requested state, effective state, inherited defaults, and repaired or degraded runtime outcomes.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md
@@ -1938,6 +1958,20 @@ The Dashboard must distinguish:
 - auto-dismiss only when the wizard leaves `blocked`
 
 ### 2. Assistant thread selector / badges
+
+#### 2.1 Worktree icon in thread selector
+
+Each thread row in the thread selector displays a worktree icon when the thread has an active worktree binding.
+
+- **Position:** Left gutter of thread row, vertically below the status badge (running/blocked/attention)
+- **Icon:** Theme-consistent branch/tree glyph from icon set
+- **Visibility:** Present only when thread has a worktree binding; absent (no placeholder) when unbound
+- **Hover tooltip:** Branch name, status pill text, worktree path
+- **Icon color:** Clean: `icon-secondary`. Dirty: `accent-warning`. Conflict: `accent-error`. Colors resolve through theme tokens across all three built-in themes.
+- **Stale projection:** Icon shows last-known state with subtle desaturation; tooltip appends "(status may be outdated)"
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
+
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
 Thread and session navigation uses persistent shell surfaces.
