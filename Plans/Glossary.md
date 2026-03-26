@@ -30,6 +30,21 @@ ContractRef: Invariant:INV-010
 ## 2. Core terms
 
 ### Orchestrator rewrite terms
+
+### Assistant worktree terms
+
+| Term | Definition |
+|---|---|
+| **thread worktree binding** | A 1:1 association between an assistant chat thread and a git worktree. Persisted via seglog events and projected into redb. A thread can have at most one worktree; a worktree can be bound to at most one thread. |
+| **assistant worktree** | A git worktree whose `owner_thread_id` field identifies it as owned by an assistant chat thread. Distinguished from orchestrator-owned (`owner_run_id`/`owner_tier_id`) and manual (no owner) worktrees. |
+| **worktree header button** | The button in the assistant chat header (between model selector and context-usage) that provides worktree create/bind/remove/merge/PR actions for the active thread. |
+| **merge-back flow** | The process of integrating assistant worktree changes into the target branch. Four paths: local merge (squash/merge/rebase), PR creation, export (patch/diff/stash), and natural-language merge via assistant. |
+| **pre-merge test gate** | Optional automated test execution before merge-back. Tests run against the merged result (default) or branch only. Auto-detects test commands from 9 project types. Configurable, on by default. |
+| **SC accordion** | Source Control's vertically stacked collapsible section layout: Changes, Worktrees, Branches/Stash, History, Graph. Fixed order, multiple sections openable, persist state per project. |
+| **worktree filter** | Segmented control in SC Worktrees section: All \| Threads \| Orchestrator \| Manual. Filters visible worktree rows by owner type. Default: All. Persisted per project. |
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
+
 - **Feature Seam**: a first-class graph-owned integration object representing one cross-package feature boundary.
 - **Work Package**: a first-class graph-owned execution/governance object representing package-local work within a seam.
 - **Package Overseer**: the governance actor responsible for one work package.

@@ -31,6 +31,29 @@ ContractRef: ContractName:Plans/Contracts_V0.md
 
 ## 1. Events (persisted)
 
+### 1.1 Assistant worktree seglog events
+
+Eleven events for assistant thread-level worktree binding, merge, PR, and pre-merge testing lifecycle.
+
+| Event type | Fields | Seglog stream |
+|---|---|---|
+| `chat.thread_worktree_bound` | `thread_id`, `worktree_id`, `branch_name`, `worktree_path`, `binding_origin` (`manual`\|`auto_create`) | `chat` |
+| `chat.thread_worktree_unbound` | `thread_id`, `worktree_id`, `reason` (`user_unbind`\|`user_remove`\|`thread_delete`\|`path_missing`) | `chat` |
+| `chat.thread_worktree_renamed` | `thread_id`, `worktree_id`, `old_branch_name`, `new_branch_name` | `chat` |
+| `chat.thread_worktree_create_failed` | `thread_id`, `error`, `binding_origin` | `chat` |
+| `chat.thread_worktree_merged` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy` (`squash`\|`merge`\|`rebase`), `result_commit_sha` | `chat` |
+| `chat.thread_worktree_merge_failed` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy`, `error`, `has_conflicts` (bool) | `chat` |
+| `chat.thread_worktree_pr_created` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `pr_url`, `pr_number` | `chat` |
+| `chat.thread_worktree_pr_failed` | `thread_id`, `worktree_id`, `branch_name`, `error`, `phase` (`push`\|`api`) | `chat` |
+| `chat.thread_worktree_pre_merge_test_started` | `thread_id`, `worktree_id`, `command`, `test_target` (`merged_result`\|`branch_only`\|`both`), `strategy` | `chat` |
+| `chat.thread_worktree_pre_merge_test_passed` | `thread_id`, `worktree_id`, `command`, `duration_ms`, `strategy` | `chat` |
+| `chat.thread_worktree_pre_merge_test_failed` | `thread_id`, `worktree_id`, `command`, `exit_code`, `duration_ms`, `strategy`, `user_override` (bool) | `chat` |
+
+All events are append-only. Naming uses underscore-separated `chat.thread_worktree_*` to match existing `chat.thread_created` convention. All events include standard seglog envelope fields (event_id, timestamp_utc, etc.) per the base event contract.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md
+
+
 <a id="1.1"></a>
 <a id="EventRecord"></a>
 ### 1.1 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)
@@ -537,9 +560,25 @@ Older request-centric payloads may continue to carry `request_id` for lineage an
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
 ## 7. UICommand
+
+### 7.1 Assistant worktree command registrations
+
+Six UICommand registrations for assistant worktree operations. All require `activeThreadExists && projectIsGitRepo && !projectIsRemoteNonSSH`.
+
+| Command ID | Label | Icon | Category | Extra when clause |
+|---|---|---|---|---|
+| `cmd.chat.worktree.create` | Create Worktree | `worktree-add` | chat | `!activeThreadHasWorktree` |
+| `cmd.chat.worktree.remove` | Remove Worktree | `worktree-remove` | chat | `activeThreadHasWorktree` |
+| `cmd.chat.worktree.bind_existing` | Bind Existing Worktree | `worktree-link` | chat | `!activeThreadHasWorktree` |
+| `cmd.chat.worktree.open_files` | Open Worktree Files | `folder-opened` | chat | `activeThreadHasWorktree` |
+| `cmd.chat.worktree.merge` | Merge Worktree | `git-merge` | chat | `activeThreadHasWorktree` |
+| `cmd.chat.worktree.create_pr` | Create PR | `git-pull-request-create` | chat | `activeThreadHasWorktree && projectHasGitHubRemote` |
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md, ContractName:Plans/assistant-chat-design.md
+
 `UICommand` is the canonical command envelope. Shared navigation and identity-open primitives sit underneath public wrapper commands rather than beside them.
 
-### 7.1 UICommand envelope
+### 7.2 UICommand envelope
 Required envelope fields are:
 - `command_id`
 - `command_kind`
@@ -564,7 +603,7 @@ Rules:
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Crosswalk.md
 
-### 7.2 `route_target`
+### 7.3 `route_target`
 `route_target` is the canonical navigation-and-focus contract.
 
 Required fields:
@@ -646,7 +685,7 @@ Rules:
 
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
 
-### 7.3 `OpenSubject`
+### 7.4 `OpenSubject`
 `OpenSubject` is the canonical identity-native source-open contract.
 
 Required fields:

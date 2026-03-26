@@ -43,6 +43,38 @@
 - Audit the planning set for subagent buildability and spec completeness.
 - Surface local underspecification, cross-doc drift, runtime/storage mismatches, and missing user-visible behavior contracts before implementation.
 - Compare the current Puppet Master plans against the actual OpenCode implementation, especially where OpenCode may offer a proven cross-provider pattern.
+- Current collaboration phase: close the remaining reconciliation gaps one by one, starting with UI/wiring gaps (Context Lens commands + placement), then adjacent stale legacy sections, then any remaining settings/config surfaces.
+- Current narrowed gap pass:
+- close the Context Lens command/wiring gap first, using the locked top-right placement, icon+dropdown control, multi-select behavior, and dropdown `Turn Off` action as the controlling UX constraints
+- next remaining feature-surface gap after Context Lens:
+- normalize the crew default-model/provider configuration surface and the first-run crew confirmation UX so `FinalGUISpec` / settings surfaces are as explicit as the settled runtime rules
+- next remaining normalization gap after crew settings:
+- normalize `Plans/Commands_System.md` so `subtask: true` commands follow the full child-run contract (Persona resolution, requested/effective surface, capability narrowing, dependency classification, and no-silent-fallback behavior)
+- next remaining normalization gap after command subtasks:
+- make child-run skills/plugins/MCP inheritance explicit in the specs so children receive only the effective compatible subset of the parent-allowed capability universe
+- next remaining gap after capability-inheritance wording:
+- rewrite stale legacy sections in `WorktreeGitImprovement.md`, `interview-subagent-integration.md`, and smaller `Run_Modes.md` touchpoints that still assume old crew persistence, memory, or provider-native invocation behavior
+- Explicit rewrite-outright directives for stale legacy sections:
+- `Plans/WorktreeGitImprovement.md`
+- delete/replace any text that treats crew coordination messages under `.puppet-master/memory/*` as canonical
+- delete/replace any text that assumes long-lived reusable git/worktree crew identities as the default model
+- delete/replace any text that assumes cross-session child/crew memory managers as a required dependency for git/worktree coordination
+- replacement assumptions must use canonical storage/event state, disposable child default, and crew shared-state (not memory) only where still needed
+- `Plans/interview-subagent-integration.md`
+- delete/replace any text that points Interview child continuity at `src/core/memory.rs` or `.puppet-master/memory/*`
+- delete/replace any text that treats provider-native `/fleet`, `/delegate`, `/agent`, or similar commands as normative runtime invocation behavior
+- delete/replace any text that leaves old `phase_subagents` / provider-native command-name assumptions active beside the newer Persona-stage contract
+- replacement assumptions must use PM child-run canon, Persona-stage selection, canonical storage/handoff state, and provider-native exports/imports as interoperability only
+- `Plans/Run_Modes.md`
+- delete/replace any crew/subagent overlay wording that could imply children may widen parent mode authority
+- delete/replace any ambiguous wording that leaves `plan`-mode delegated child legality unclear after the newer read-only delegated-research decision
+- replacement assumptions must make parent mode a hard ceiling and keep crew as an overlay, not a separate runtime-mode enum
+- `Plans/Commands_System.md`
+- delete/replace any command-subtask wording that implies command children are a lighter-weight exception to the child-run contract
+- replacement assumptions must state that `subtask: true` commands enter the same canonical child-run resolution/permission/capability model
+- `Plans/UI_Command_Catalog.md` / `Plans/Wiring_Matrix.md` / `Plans/FinalGUISpec.md`
+- delete/replace any loose Context Lens wording that leaves placement or control semantics ambiguous
+- replacement assumptions must use the locked top-right placement, icon+dropdown affordance, multi-select support in all modes, and dropdown `Turn Off`
 
 ## Constraints / Non-Goals
 - Do not treat this ledger as canonical or mention it in planning docs.
@@ -299,6 +331,22 @@
 - some text says Gemini is direct-provider only
 - some text says Gemini direct and Gemini CLI are separate runtime surfaces
 - this is now a confirmed reconciliation target, not just a user preference
+- Second-sweep drift findings:
+- `Plans/Commands_System.md` still has a simplified `subtask: true` contract that does not yet mention required/optional child dependency, requested-vs-effective provider/runtime surface, no-silent-fallback behavior, or child capability narrowing details
+- `Plans/WorktreeGitImprovement.md` still contains legacy crew/memory patterns that write coordination state into `.puppet-master/memory/*` and assume long-lived git/worktree crews; this conflicts with the newer disposable-child default, Assistant-only memory boundary, and canonical storage/event model
+- `Plans/interview-subagent-integration.md` still contains legacy hook/memory references (`src/core/memory.rs`, `.puppet-master/memory/*`) and old platform-invocation tests (`/fleet`, `/delegate`, `/agent`) that conflict with the current direct-provider and child-run canon
+- `Plans/Run_Modes.md` is broadly aligned on read-only ceilings, but should still be treated as a reconciliation hotspot so child overlays, crew overlays, and read-only delegated children are explicitly normalized against the newer subagent contract
+- `Plans/Skills_System.md` and `Plans/Plugins_System.md` do not appear to contain explicit child-run inheritance language, so reconciliation should add or cross-reference the locked rule that children receive only the effective compatible subset of parent-allowed skills/plugins/MCP capabilities
+- Third-sweep drift findings:
+- `Plans/UI_Command_Catalog.md` and `Plans/Wiring_Matrix.md` appear to wire `Compact Now` but do not yet expose explicit command/wiring rows for Context Lens mode activation, message selection toggles, `Subcompact` create/revert, or the now-locked top-right Context Lens control placement
+- Context Lens command/wiring gap is now more specific:
+- command/wiring must support multi-select in all modes
+- command/wiring must support the dropdown `Turn Off` action in addition to mode selection
+- `Plans/FinalGUISpec.md` references subagent inline blocks and chat surfaces broadly, but the exact Context Lens control placement (top-right, immediately right of the search bar, icon + dropdown arrow) is not visibly normalized there yet
+- `Plans/FinalGUISpec.md` / adjacent settings docs do not yet obviously describe the crew default-model configuration surface and first-run crew confirmation flow that were locked in the ledger
+- Final concise sweep conclusion:
+- no new major product/system seams were discovered beyond the already-captured reconciliation targets
+- remaining work is primarily explicit wiring/catalog/spec-surface normalization plus outright rewrite of stale contradictory sections
 - OpenAI-like surfaces may need API-family selection (`responses` vs `chat` vs plain language model)
 - Google/Gemini surfaces need schema sanitization and finish-reason normalization
 - Bedrock needs region/profile/model-id resolution rules beyond generic provider selection
@@ -407,6 +455,80 @@
 - `Plans/WorktreeGitImprovement.md`
 - `Plans/FileSafe.md`
 - `Plans/assistant-memory-subsystem.md`
+- `Plans/Commands_System.md`
+- `Plans/Run_Modes.md`
+- `Plans/Skills_System.md`
+- `Plans/Plugins_System.md`
+- Concrete reconciliation hotspots now confirmed:
+- `Plans/assistant-chat-design.md`
+- `## 14. Subagents & Crew`
+- `### 14.1 Subagent visibility in thread -- implementation detail`
+- `## 15. Plan Mode + Crew Mode`
+- `## 17. Context & Truncation`
+- `### 17.5 Project retrieval injection (chat/code/logs)`
+- `### 17.6 Context Lens (Mute / Focus / Subcompact)`
+- `### 27.6 Subagent and child-run display`
+- `### 27.7 Provider compatibility disclosure in chat`
+- `Plans/orchestrator-subagent-integration.md`
+- `## Plan Mode Strategy & Defaults`
+- `## Gaps and Clarifications`
+- `### Delegated tool-contract alignment`
+- `### 4. Subagent -- Backend`
+- `Plans/Tools.md`
+- `### 2.3 Session vs run; subagents`
+- `### 3.6 Task tool and the 42 subagents (Plans)`
+- `### 3.6A Task runtime addendum`
+- `### 8.0 Event payloads (seglog)`
+- `Plans/Personas.md`
+- `### 1.2 Subagent`
+- `### 5.1 Selection`
+- `### 5.2 Context injection`
+- `## 7. Relationship to the Persona registry and delegated-subagent registry`
+- `Plans/Prompt_Pipeline.md`
+- `## 2. Compaction and pruning`
+- `### 6.2.2 Runtime, account, and profile resolution stages`
+- `### Required handoff bundle`
+- `## Runtime Attempt Snapshot and Handoff Bundle`
+- `Plans/storage-plan.md`
+- `### 2.2 seglog: format, writer, rotation`
+- `### 2.3 redb: schema, migrations, key patterns`
+- `### 4.4 Activity transparency payloads`
+- `### Canonical records`
+- `Plans/Contracts_V0.md`
+- child/subagent lifecycle event family needs insertion near the runtime attempt/chat event contracts
+- `Plans/Provider_OpenCode.md`
+- provider correlation and child-session mapping sections need reconciliation against PM child-run canon
+- `Plans/CLI_Bridged_Providers.md`
+- provider routing policy
+- structured request envelope / provider request envelope
+- OpenCode provider section
+- runtime correlation addenda
+- `Plans/Models_System.md`
+- `### 10.4 Provider Persona Capability Matrix`
+- runtime retry/fallback ownership addenda
+- `Plans/Permissions_System.md`
+- `## 8. Resolution algorithm`
+- blocked/snapshot addenda
+- `Plans/assistant-memory-subsystem.md`
+- `## 1. Capability boundary (Assistant-only)`
+- `## 8. Integration points`
+- `Plans/Commands_System.md`
+- `## 4. Custom Commands`
+- `### 4.2 Command execution model`
+- `### 4.3 Persona selection`
+- `Plans/Run_Modes.md`
+- crew overlay rows
+- child/subagent overlay inheritance rules
+- `Plans/Skills_System.md`
+- child/subagent inheritance should be added or cross-referenced explicitly
+- `Plans/Plugins_System.md`
+- child/subagent/plugin visibility and capability inheritance should be added or cross-referenced explicitly
+- `Plans/UI_Command_Catalog.md`
+- add Context Lens command IDs for mode activation, message selection toggles, subcompact create/revert, and clear/reset
+- `Plans/Wiring_Matrix.md`
+- add concrete rows for the Context Lens control and actions
+- `Plans/FinalGUISpec.md`
+- normalize exact Context Lens control placement and crew default-config / first-run confirmation UX
 
 ## Decisions Already Resolved
 - Work item mode is `audit`.
@@ -468,6 +590,24 @@
 - Chat-UX clarifications now locked:
 - provider/model details for child runs should appear on mouse hover, consistent with other chat bubbles, rather than occupying the default collapsed card body
 - PM should treat spawning many subagents in parallel as a normal supported behavior, not a special-case path
+- Assistant-chat Context Lens placement/control direction now clarified:
+- Context Lens should appear in the top-right of the chat window, immediately to the right of the search bar
+- the default control is an icon with a dropdown arrow
+- clicking the control opens the mode menu for `Mute`, `Focus`, and `Subcompact`
+- Context Lens selection/control behavior now clarified:
+- all Context Lens modes (`Mute`, `Focus`, `Subcompact`) must support selecting multiple messages at once
+- the dropdown must also include a `Turn Off` action that clears/deactivates Context Lens mode, matching the current PM concept artifact
+- Context Lens command behavior direction now clarified:
+- `Mute` and `Focus` should apply immediately as the user toggles selected messages in the active mode
+- `Subcompact` should require an explicit apply action because it creates a local summary and already has a warning/confirmation requirement
+- Context Lens command-ID direction now clarified:
+- `cmd.chat.context_lens.toggle`
+- `cmd.chat.context_lens.set_mode`
+- `cmd.chat.context_lens.turn_off`
+- `cmd.chat.context_lens.toggle_message_selection`
+- `cmd.chat.context_lens.clear_selection`
+- `cmd.chat.context_lens.apply_subcompact`
+- `cmd.chat.context_lens.revert_subcompact`
 - User clarified that PM may need to support very large parallel fan-out (for example dozens or even ~99 child runs at once), so grouping/aggregation must be a first-class UX behavior rather than a rare visual nicety.
 - Large parallel fan-out inspection direction now clarified:
 - very large child batches should not expand directly into a flat list of dozens of child cards
@@ -590,6 +730,74 @@
 - first crew-mode invocation should ask to use the configured default crew if one exists; otherwise it should ask which models to use
 - PM must resolve model -> provider/runtime mapping before launch and reconfirm when mappings/defaults/restrictions materially change
 - default crew reuse is acceptable when the confirmed mapping remains valid and unchanged
+- Crew provider-coupling direction now clarified:
+- if any crew member is configured to use `Copilot`, the entire crew should auto-set to `Copilot`
+- if the user changes any crew member off `Copilot`, the entire crew should move off `Copilot`
+- `Copilot` is therefore treated as a crew-level provider selection constraint rather than a per-member freely mixed provider in the default crew editor
+- Crew settings-surface direction now clarified:
+- default crew configuration should live under the model/runtime settings surface rather than under Personas
+- preferred placement for reconciliation: `Settings > Models` with a `Default Crew` subsection
+- MVP `Default Crew` subsection should expose:
+- enable/disable default crew
+- editable ordered list of crew members
+- per-member model selector
+- per-member provider/runtime surface selector
+- when `Copilot` is selected for any member, the UI should immediately normalize the entire crew to `Copilot` and disclose that this is a crew-level provider constraint
+- Crew first-run confirmation UX direction now clarified:
+- if a valid default crew exists, first invocation asks whether to use the default crew
+- if not, ask which models to use
+- after model selection, PM resolves model -> provider/runtime mapping and confirms or discloses the effective crew when ambiguity/restriction-sensitive mapping exists
+- Crew-board communication direction now clarified:
+- crew members coordinate through an explicit attributable crew board rather than hidden peer channels
+- crew-board messages are task-scoped coordination state, not hidden memory or a capability bypass
+- the board is inspectable on demand, while the parent remains responsible for user-facing summarization and escalation
+- Crew synthesis direction now clarified:
+- parent owns final synthesis for crew output
+- convergence strengthens confidence but does not require repeating duplicate arguments
+- material disagreement must be surfaced honestly rather than flattened into false consensus
+- targeted follow-up is appropriate when disagreement remains material to a required decision
+- Dynamic context shrinking authorship direction now clarified:
+- use a hybrid model
+- live automatic shrinking may be model-authored
+- runtime may apply deterministic safeguards/fallback summarization
+- user-invoked `Subcompact` may use the same underlying shrinking mechanism but remains a distinct explicit action
+- Dynamic context shrinking scope direction now clarified:
+- shrinking handles must support more than tool-result-only cases because retrieved-context blocks and plan/report blocks can also be eligible when enabled
+- child handoff must be reconstructed from canonical source state plus current effective shaping state rather than copied verbatim from already-shrunk parent context
+- Dynamic context shrinking settings direction now clarified:
+- MVP settings should expose one feature group with a master enable/disable switch plus category toggles
+- MVP should not expose user-tunable aggressiveness thresholds; threshold behavior stays internal/deterministic
+- Dynamic context shrinking threshold direction now clarified:
+- a stale eligible dynamic block becomes auto-shrinkable when it exceeds a large-block threshold or the assembled context crosses the pressure threshold
+- baseline large-block threshold should be token-aware and conservative (target roughly 1200 tokens or equivalent normalized size for a single eligible block)
+- baseline pressure threshold should begin around 70% of the effective context window
+- above a higher pressure band (target roughly 85%), PM may shrink additional stale eligible blocks in enabled categories before invoking larger compaction behavior
+- safe-to-shrink signaling should use a structured per-tool-call update list keyed by stable block refs, with an empty list when no shrink updates are requested
+- Cache-affinity direction now clarified:
+- preserve stable cache identity across ordinary continuation/resume within the same logical run lineage
+- branch, rewind, replacement, and other lineage-changing actions should establish a new cache lineage
+- manual `Compact Now` should not by itself force a new cache lineage unless it also changes the logical run lineage
+- Supported direct-surface API-family-table direction now clarified:
+- day-one explicit API-family routing tables are required for supported direct surfaces that may expose more than one compatible API style
+- current likely day-one table set: `Codex` direct, `Gemini` direct, Alibaba coding-plan direct, Z.AI coding-plan direct, and MiniMax coding-plan direct
+- `Copilot` direct remains a special native-path case rather than a generic API-family-table case
+- Provider-cache-config direction now clarified:
+- provider cache behavior should remain internal/automatic for MVP rather than exposed as a general user-facing settings surface
+- Child-inspector diagnostic scope direction now clarified:
+- hover metadata plus the expanded child-panel context-state disclosures are MVP
+- full cost/context-usage inspectors for each child are deferred secondary diagnostics rather than MVP blockers
+- Gemini runtime-surface taxonomy direction now clarified:
+- `gemini` direct and `gemini-cli` are separate runtime surfaces
+- they may share a provider family while differing in auth/control/cost/caching behavior
+- effort/capability evaluation must occur per surface, not per family label
+- OpenCode-alignment direction now clarified:
+- PM should borrow the child-session/delegation pattern without requiring provider-native session-tree semantics on direct providers
+- PM canonical child-run identity remains the SSOT even when a direct provider exposes no native child-session tree
+- Child context-shaping inheritance direction now clarified:
+- children must receive a normalized handoff bundle derived from canonical source state plus current effective shaping state
+- they do not inherit parent Context Lens / subcompact summaries verbatim as the only source of truth
+- Child context-state disclosure direction now clarified:
+- subagent-expanded panels should disclose relevant context-shaping state sufficiently for the user to understand what the child received
 - Child-run status taxonomy direction now clarified:
 - `queued` = created but not yet started
 - `running` = actively executing/streaming
@@ -603,42 +811,8 @@
 - policy/tool/provider denial normally renders as `blocked`
 
 ## Open Questions / Uncertainties
-- Whether the intended long-term design keeps any non-Assistant continuity system distinct from Assistant memory, or whether current “memory manager” language is residual drift.
-- Whether plan-mode should permit any delegated read-only child research at all, given current Run Modes and Permissions language.
 - Whether some duplicate/addendum text is transitional and expected to be deleted, or currently intended as active normative content.
-- How far PM wants to follow the OpenCode child-session model for direct providers that do not expose comparable session trees.
-- Whether PM wants child runs to be user-openable/navigable the way OpenCode child sessions are, or only summarized inline in parent surfaces.
-- Whether PM wants child runs to be allowed to raise user questions directly, or whether all user-question boundaries stay parent-owned.
-- How much crew/message-board functionality is still desired once the simpler child-session delegation model is treated as the baseline.
-- Whether OpenCode uses a materially different Copilot invocation path for native subagents vs plain runs, and how that affects billing.
-- How OpenCode resolved Copilot context/compaction/cache-hit regressions and whether those fixes imply PM-side cache-key or compaction rules.
-- Whether PM should allow any cross-provider child run that changes provider family mid-lineage, or whether only Copilot needs that hard restriction.
-- Whether PM wants child-run context percentages/cost surfaced inline in chat cards, or only inside the expanded transcript view.
-- Whether PM wants compaction to preserve cache affinity by keeping child/session cache keys stable across resume, branch, and manual compact-now actions.
-- Whether PM wants dynamic context shrinking to be:
-- model-authored on every tool call
-- runtime-authored using deterministic summarizers
-- or hybrid, with different rules for tool results vs message regions
-- Whether PM wants shrinking handles to be tool-result-only or general context-block ids that can also represent retrieved context, plan chunks, or subagent summaries.
-- Whether PM wants `Subcompact` to be implemented as one-shot user-triggered compression over message regions, or as the same canonical compression system exposed through a user-selected scope.
-- Exact GUI settings shape for dynamic context shrinking:
-- whether category toggles live under one feature group or per-surface/per-thread advanced settings
-- whether the user can tune aggressiveness thresholds in addition to on/off + category scope
-- Exact conservative auto-trigger thresholds still need to be specified:
-- size threshold(s)
-- context-pressure threshold(s)
-- explicit safe-to-shrink signal shape from model/runtime
-- Exact handoff rule between shrunk effective context and canonical source state still needs to be specified for subagent spawn/resume.
-- Whether PM wants child Persona selection to default from explicit task/subagent selection only, or whether there is any controlled fallback from parent Persona family/traits when no explicit child Persona is provided.
-- Which PM direct-provider surfaces need per-model API-family selection tables from day one (likely OpenAI-family and Azure-family).
-- Exact PM taxonomy for Gemini runtime surfaces after reconciliation:
-- `gemini` direct
-- `gemini-cli` bridged
-- whether both share a family pool but differ in auth/account/control capabilities
-- Whether PM wants to expose provider cache configuration knobs directly in UI/settings or keep them internal/automatic.
-- How much of OpenCode’s Bedrock region-prefix behavior PM should mirror versus replace with stricter discovered-capability data.
-- Whether PM wants any subagent to inherit Context Lens / subcompact summaries verbatim or whether child runs receive a separately normalized handoff bundle derived from the parent’s shaped context.
-- Whether PM wants explicit subagent-visible disclosure of compaction/dynamic-shrinking state so the user can inspect what the child actually received.
+- Whether reconciliation should explicitly mark older conflicting sections as superseded-in-place before deleting them, or simply rewrite them outright during the canonicalization pass.
 
 ## Packetization Notes
 - Raw findings volume was high enough to support a large reconciliation packet.

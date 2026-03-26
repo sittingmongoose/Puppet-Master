@@ -86,6 +86,7 @@ Canonical navigation/source-open ownership is:
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
 ### 3.4 Source Control and lane/worktree ownership
+
 Canonical source-control ownership is:
 - Source Control is worktree-first and compact
 - Orchestrator is lane/package/seam operational view
@@ -94,7 +95,28 @@ Canonical source-control ownership is:
 
 ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Orchestrator_Page.md
 
-### 3.5 Projection-state ownership
+### 3.5 Assistant thread worktree binding ownership
+
+Thread-to-worktree binding is owned by `Plans/assistant-chat-design.md`.
+
+| Aspect | Owner doc | Consumer docs |
+|---|---|---|
+| Binding data model (1:1, thread↔worktree) | assistant-chat-design.md | storage-plan.md, Contracts_V0.md |
+| Seglog events (`chat.thread_worktree_*`) | assistant-chat-design.md | storage-plan.md, Contracts_V0.md, Wiring_Matrix.md |
+| Commands (`cmd.chat.worktree.*`) | assistant-chat-design.md | UI_Command_Catalog.md, Commands_System.md, Contracts_V0.md |
+| Settings (10 keys) | assistant-chat-design.md | storage-plan.md, FinalGUISpec.md |
+| Merge-back flow | assistant-chat-design.md | GitHub_Integration.md, Executor_Protocol.md |
+| Pre-merge test gate | assistant-chat-design.md | storage-plan.md, Executor_Protocol.md |
+| SC accordion & filter | GitHub_Integration.md | storage-plan.md, FinalGUISpec.md, Wiring_Matrix.md |
+| Worktree record extension (`owner_thread_id`) | storage-plan.md | WorktreeGitImprovement.md, Orchestrator_Page.md |
+| File manager worktree toggle | FileManager.md | assistant-chat-design.md, storage-plan.md |
+| LSP worktree root_identity | LSPSupport.md | assistant-chat-design.md, Executor_Protocol.md |
+
+**Freshness / health projection:** Thread worktree binding state follows the two-dimensional projection model (freshness=current|refreshing|stale × health=healthy|degraded|unavailable) defined in storage-plan.md §Projection state.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/DRY_Rules.md
+
+### 3.6 Projection-state ownership
 Projection-state ownership is:
 - `projection_freshness` is closed to `current | refreshing | stale`
 - `projection_health` is closed to `healthy | degraded | unavailable`

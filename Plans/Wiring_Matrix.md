@@ -348,6 +348,58 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assist
 
 ## Source Control, GitHub Actions, and Docker Manager Wiring Addendum (2026-03-12)
 
+### Assistant Worktree Wiring Addendum
+
+Cross-component wiring for the assistant thread-to-worktree binding feature.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Contracts_V0.md
+
+**Chat ↔ WorktreeManager wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Chat header button `Create Worktree` | WorktreeManager `create_worktree` | User clicks header button or `cmd.chat.worktree.create` | thread_id, branch_name, base_ref → worktree_id, path |
+| Chat dropdown `Remove Worktree` | WorktreeManager `remove_worktree` | User confirms removal | worktree_id → success/error |
+| Chat dropdown `Bind Existing` | WorktreeManager `list_worktrees` | User opens bind dialog | → unbound worktree list |
+| Chat merge dialog | WorktreeManager `merge_worktree` | User confirms merge | worktree_id, target_branch, strategy → result |
+| Chat merge dialog | WorktreeManager `create_pr` | User clicks Create PR | worktree_id, branch, target → pr_url |
+| Auto-create (thread creation) | WorktreeManager `create_worktree` | `branching.assistant_auto_worktree` is true | thread_id, auto-generated branch name |
+
+**Chat ↔ Source Control wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| SC Worktrees accordion `Open Thread` | Chat panel navigation | User clicks Open Thread in worktree row | thread_id → scroll to thread |
+| SC Worktrees accordion `Merge` | Chat merge dialog (or standalone) | User clicks Merge on thread-owned row | worktree_id, thread_id → merge dialog |
+| SC filter control | redb filter key | User changes filter | filter enum → persisted key |
+| Chat worktree bound/unbound events | SC worktree list refresh | Seglog event processed | worktree_id → refresh row |
+
+**Chat ↔ File Manager wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Thread switch (with worktree) | File manager root | Thread selected, `worktree_follow_thread` true | worktree_path → set FM root |
+| Breadcrumb worktree toggle | File manager root | User clicks worktree crumb | toggle between worktree_path and project_root |
+| Worktree unbound/removed | File manager root reset | Binding removed | → reset FM root to project_root |
+| Chat `Open Worktree Files` | File manager panel | User clicks from header dropdown | worktree_path → open FM panel at path |
+
+**Chat ↔ LSP wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Thread switch (with worktree) | LSP root_identity | Thread selected | worktree_path → LSP session key (host_id, server_id, root_identity) |
+| Worktree created | LSP warm-start | New worktree available | worktree_path → background indexing |
+
+**Chat ↔ Executor wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Thread with worktree enters Agent/Plan/Debug mode | Executor working_directory | Execution unit created | worktree_path → execution context |
+| Pre-merge test | Executor | Merge dialog test phase | command, worktree_path → terminal execution |
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Run_Modes.md
+
+
 This wiring addendum also covers Search, File Manager action handoff, chat restore/file-reference actions, and host-aware LSP/remote projections because those seams now share one shell slot and one cross-surface identity model.
 
 | Surface / flow | Canonical command / route | Owner doc | Downstream consumers / notes |
