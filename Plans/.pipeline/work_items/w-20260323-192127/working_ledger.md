@@ -438,6 +438,169 @@
 - keep static prompt segments stable
 - keep cache keys stable where continuation semantics allow
 - avoid synthetic replay/mutation patterns that damage cache affinity
+- Dynamic context shrinking trigger posture is now resolved to conservative automatic shrinking, not aggressive eager shrinking.
+- Trigger contract direction now locked:
+- a block becomes eligible only after it is no longer part of the current working set
+- shrinking may trigger based on block size, context-pressure thresholds, or explicit model/runtime indication that the block is safe to shrink
+- the most recent still-active result in the current line of work must not be shrunk automatically
+- Current-working-set direction now locked:
+- a block remains in the current working set when it is the latest active result in the current branch of work, directly supports the next intended action, participates in an unresolved comparison/approval/question/validation state, or is explicitly focused/pinned by the user
+- a block leaves the current working set when a newer result supersedes it for the same purpose, its finding has been carried forward, or the run has clearly moved to a different branch of work
+- Subagent handoff direction now clarified:
+- child runs must not blindly inherit the parent Persona
+- child Persona/runtime role is selected for the child task and may differ materially from the parent role
+- handoff should carry current runtime/task/context state without silently copying the parent Persona identity
+- child runs should also support their own local dynamic context shrinking under the same canonical rules, using the child run’s own working set and effective context
+- Child Persona resolution direction now clarified:
+- explicitly requested child Persona wins
+- otherwise child Persona resolves from the requested subagent/task type
+- parent Persona is at most a weak routing hint, not an automatic default override
+- if no safe specialized match exists, resolution should fall back to a general-purpose child Persona rather than copying the parent Persona identity
+- Communication-channel direction now clarified:
+- parent -> child communication is always allowed for tasking, handoff context, constraints, and follow-up instructions
+- child -> parent communication is always allowed for results, progress, clarification needs, blocked states, and expansion/rehydration requests
+- child <-> child communication is not part of baseline subagents and should require an explicit crew/message-board mode
+- child -> user communication is not direct by default; children escalate to the parent and the parent decides whether to surface a user question or request
+- Baseline subagent communication contract direction now clarified:
+- parent -> child should support initial task assignment, follow-up instructions, cancellation, retry/resume direction, and runtime/permission notices
+- child -> parent should support result, progress, blocked, clarification-needed, context-expansion-needed, user-input-requested, failed, and cancelled signals
+- crew mode is the only planned baseline exception for child <-> child coordination, and it should go through an explicit attributable board/channel rather than hidden direct links
+- Chat-UX clarifications now locked:
+- provider/model details for child runs should appear on mouse hover, consistent with other chat bubbles, rather than occupying the default collapsed card body
+- PM should treat spawning many subagents in parallel as a normal supported behavior, not a special-case path
+- User clarified that PM may need to support very large parallel fan-out (for example dozens or even ~99 child runs at once), so grouping/aggregation must be a first-class UX behavior rather than a rare visual nicety.
+- Large parallel fan-out inspection direction now clarified:
+- very large child batches should not expand directly into a flat list of dozens of child cards
+- the primary batch card should expand into intermediate subgroups of 10 children each
+- each subgroup of 10 can then expand into 10 inline child cards for inspection
+- users should be able to collapse one subgroup and move to the next without losing the larger batch context
+- Batch/subgroup expansion direction now clarified:
+- top-level batch cards should roll up counts and problematic states across all children
+- subgroup summaries should expose local problematic states so users know which subgroup to inspect first
+- only one subgroup should expand by default at a time unless the user explicitly opens additional subgroups
+- Subgroup ordering/inspection direction now clarified:
+- canonical child order should stay launch order
+- subgroup boundaries should also follow launch order
+- problematic states should be surfaced in subgroup summaries and an optional attention strip rather than by reordering the canonical child list live
+- Expanded child-panel direction now clarified:
+- collapsed child card shows Persona, task, and status
+- provider/model details should appear on hover
+- expanded child panel should show live work stream, thought stream, current state block, context-state disclosures, and final result summary when finished
+- full raw tool payloads and giant diagnostics should not be default-expanded content
+- Parent-thread clarification/escalation direction now clarified:
+- children do not question the user directly by default
+- child clarification/context-expansion/user-input signals move the child into `awaiting_parent`
+- the parent chooses whether to resolve internally, send more context, ask the user in the main thread, or cancel/reassign the child
+- when the user must be asked, the parent surfaces a normal main-thread question that references the child context rather than exposing a hidden child channel
+- Parent-side multi-child escalation direction now clarified:
+- the parent should deduplicate and consolidate overlapping child escalations where possible
+- the parent should ask the minimum necessary number of user-facing questions
+- shared answers may be fanned back out to multiple waiting children
+- Cross-provider child-launch direction now clarified:
+- cross-provider child runs are generally allowed across supported PM runtime surfaces, subject to compatibility/policy checks
+- Copilot-native subagent routing is a hard exception:
+- only a Copilot-rooted parent may launch a Copilot-native subagent path
+- non-Copilot parents must not route into Copilot-native subagent semantics
+- strict deny is preferred over speculative downgrade for non-Copilot -> Copilot-native requests
+- Child-surface fallback direction now clarified:
+- explicit child surface requests should not silently fallback when incompatible/unavailable
+- implicit/orchestrator-selected child surface resolution may fallback to another compatible surface
+- requested vs effective child surface and fallback reason should remain visible in metadata
+- Child effort/reasoning direction now clarified:
+- child runs get their own effective effort setting rather than blindly inheriting the parent’s provider-native effort value
+- resolution order is explicit child request, child Persona/task preference, weak parent hint, then target-surface default
+- PM should resolve canonical effort intent first and translate it per target provider/runtime surface
+- requested vs effective effort and any remap reason should remain visible in metadata
+- Child capability-inheritance direction now clarified:
+- permissions inherit by parent ceiling and may only narrow further
+- tools/skills/MCP inherit as an effective compatible subset of the parent-allowed capability universe
+- children must not gain capabilities the parent did not effectively have
+- requested vs effective child capability set and narrowing/drop reasons should remain visible for debugging
+- Child missing-capability direction now clarified:
+- children must not self-elevate when they lack a required capability
+- children may continue with an alternate approach, request rerouting/replacement, request more context, or report a blocked state
+- parent decides whether to reframe, reroute, replace, ask the user, or cancel
+- missing-capability cases map to `awaiting_parent` when rerouting/reframing is possible and to `blocked` when hard policy/runtime/tool restrictions stop progress
+- Child retry/reroute/replacement direction now clarified:
+- retry = same child logical identity/lineage with a new attempt
+- reroute = same logical child task with a different effective runtime surface/capability path
+- replacement = new child Persona/task shape and therefore a new child run
+- children may request retry/reroute/replacement, but the parent decides; children do not self-reroute or self-replace
+- Child cancellation/cleanup direction now clarified:
+- cancellation is parent-controlled and explicit
+- PM should support single-child, subgroup, and batch-wide cancellation
+- cancelled children remain visible in history; cleanup releases runtime/provider resources without erasing the child record
+- waiting or blocked children resolve cleanly into cancelled when the parent cancels them
+- Child resume direction now clarified:
+- resume rebuilds the child from canonical state plus current effective shaping state, not only from the last transmitted prompt
+- resume applies to paused/interrupted non-terminal children; cancelled and superseded children remain terminal
+- resume, retry, reroute, and replacement remain distinct lifecycle actions
+- batch/subgroup structures should be reconstructible from canonical child records rather than brittle UI-only state
+- Canonical child persistence direction now clarified:
+- PM needs canonical child-run records for identity/lineage, role/routing, lifecycle state, attempt/resume state, effective capabilities/runtime state, context/handoff state, grouping structure, and result/history refs
+- batch/group membership and launch order are canonical; ephemeral UI expansion state is not
+- Canonical child event-model direction now clarified:
+- PM needs normalized child lifecycle events for spawn/start/progress/work/thought/pause/block/outcome/retry/reroute/resume/grouping/context-shrinking transitions
+- chat/storage/orchestration should project from those canonical events rather than inventing separate child-only shadow state machines
+- Parent child-orchestration direction now clarified:
+- parent needs a projected child-orchestration facet over canonical child records/events rather than a separate ad hoc child-state store
+- parent should track active/waiting/blocked/completed/escalation counts and batch rollups
+- parent run status and parent child-orchestration state should remain distinct concepts
+- Required-vs-optional child direction now clarified:
+- each child launch should carry an explicit dependency classification (`required` vs `optional`)
+- unresolved required children block dependent parent completion; unresolved optional children do not
+- required/optional semantics attach to the logical child task and persist across reroute/replacement
+- Parent summary direction now clarified:
+- parent should summarize child work by dependency and impact rather than dumping raw child activity
+- required child outcomes, blockers, major failures, and important optional findings should be prioritized in that order
+- large fan-out should be summarized at the batch level by default, with individual child naming only when materially relevant
+- Mode interaction direction now clarified:
+- `ask` and `plan` may launch read-only delegated children only
+- `plan` allows read-only delegated research children, including required planning dependencies
+- child mode must never exceed parent mode authority; parent mode acts as a ceiling
+- Plan-mode child-output direction now clarified:
+- plan-mode children produce planning inputs rather than execution artifacts
+- materially relevant child outputs should remain inspectable in canonical child history and also be normalized into parent planning context/artifact projections
+- required unresolved plan-mode children keep the parent plan provisional rather than falsely complete
+- Subagent lifecycle assumption now clarified:
+- subagents are disposable by default
+- default expectation is spawn -> run -> finish/cancel -> end, not long-term reopen/reuse
+- reopening/reusing an existing subagent should be treated as an exception path used only when there is a concrete benefit
+- crew mode is a plausible exception where longer-lived/reopenable child identities may still be useful
+- in normal flows, if more work is needed later, PM should prefer spawning a new child rather than reopening an old disposable child
+- Disposable-child implication now clarified:
+- subagent continuity should live primarily in parent state, canonical child records, and normalized handoff bundles rather than in child-local long-term identity assumptions
+- Memory interaction direction now clarified:
+- Assistant memory remains Assistant-only and is never forwarded to subagents
+- disposable children do not get durable personal memory by default
+- child continuity comes from handoff/state/records rather than a child-local memory layer
+- Crew-mode framing is now clarified:
+- crew mode is primarily a multi-model coordination feature rather than merely a multi-persona feature
+- in typical crew use, multiple children may share the same Persona/task framing while differing by model/provider selection
+- example crew shape: multiple explorers or debuggers running in parallel on different models, then coordinating findings
+- Personas may still differ in crew mode, but model diversity is the main differentiator
+- user should be able to configure default crew model/provider selections in agent config
+- first crew-mode invocation should confirm the model set with the user:
+- if a default crew is configured, ask whether to use the default crew
+- otherwise ask which models to use
+- after model selection, PM should confirm/resolve the providers for those models before launch
+- Crew-mode default behavior direction now clarified:
+- default crew framing should usually keep the same task and often the same Persona across members, with diversity coming from model/provider choice
+- Crew selection-flow direction now clarified:
+- first crew-mode invocation should ask to use the configured default crew if one exists; otherwise it should ask which models to use
+- PM must resolve model -> provider/runtime mapping before launch and reconfirm when mappings/defaults/restrictions materially change
+- default crew reuse is acceptable when the confirmed mapping remains valid and unchanged
+- Child-run status taxonomy direction now clarified:
+- `queued` = created but not yet started
+- `running` = actively executing/streaming
+- `awaiting_parent` = paused pending parent decision/context/escalation handling
+- `blocked` = unable to proceed due to tool/policy/provider/runtime constraint
+- `complete` = finished successfully
+- `failed` = attempted execution and ended unsuccessfully
+- `cancelled` = intentionally stopped before completion
+- signal mapping direction:
+- `clarification_needed`, `user_input_requested`, and `context_expansion_requested` normally render as `awaiting_parent`
+- policy/tool/provider denial normally renders as `blocked`
 
 ## Open Questions / Uncertainties
 - Whether the intended long-term design keeps any non-Assistant continuity system distinct from Assistant memory, or whether current “memory manager” language is residual drift.
@@ -461,7 +624,12 @@
 - Exact GUI settings shape for dynamic context shrinking:
 - whether category toggles live under one feature group or per-surface/per-thread advanced settings
 - whether the user can tune aggressiveness thresholds in addition to on/off + category scope
-- Whether PM wants child runs to inherit compressed parent summaries verbatim, or to receive a separately normalized handoff bundle built from the pre-compressed source state.
+- Exact conservative auto-trigger thresholds still need to be specified:
+- size threshold(s)
+- context-pressure threshold(s)
+- explicit safe-to-shrink signal shape from model/runtime
+- Exact handoff rule between shrunk effective context and canonical source state still needs to be specified for subagent spawn/resume.
+- Whether PM wants child Persona selection to default from explicit task/subagent selection only, or whether there is any controlled fallback from parent Persona family/traits when no explicit child Persona is provided.
 - Which PM direct-provider surfaces need per-model API-family selection tables from day one (likely OpenAI-family and Azure-family).
 - Exact PM taxonomy for Gemini runtime surfaces after reconciliation:
 - `gemini` direct
@@ -509,6 +677,8 @@
 - tool-result shrinking is on by default
 - retrieved-context-block shrinking is optional and off by default
 - plan/report-block shrinking is optional and off by default
+- User direction locked:
+- conservative automatic shrinking is preferred over aggressive always-on shrinking
 - no concrete upstream evidence found for native peer-to-peer subagent messaging
 - Copilot-specific facts worth preserving:
 - `x-initiator` classification matters materially for billing/premium consumption
