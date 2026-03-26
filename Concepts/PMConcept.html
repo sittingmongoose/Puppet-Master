@@ -4153,31 +4153,31 @@
     .pm-term-wg-tab {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 5px 14px;
+      gap: 3px;
+      padding: 2px 6px;
       border-radius: 999px;
-      border: 2px solid color-mix(in srgb, var(--wg-accent, var(--text-muted)) 55%, var(--border-light));
+      border: 1px solid color-mix(in srgb, var(--wg-accent, var(--text-muted)) 55%, var(--border-light));
       background: color-mix(in srgb, var(--surface-elevated) 88%, var(--wg-accent, transparent) 12%);
       color: var(--text-secondary);
-      font-size: 11px;
+      font-size: 9px;
       font-weight: 700;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.02em;
       cursor: pointer;
-      max-width: 168px;
+      max-width: 120px;
       flex-shrink: 0;
       position: relative;
       overflow: hidden;
       transition: box-shadow 0.35s ease, border-color 0.25s ease, transform 0.22s cubic-bezier(0.34, 1.4, 0.64, 1), background 0.25s ease, color 0.2s ease;
     }
     .pm-term-wg-tab:hover { transform: translateY(-1px) scale(1.02); }
-    .pm-term-wg-tab svg { flex-shrink: 0; opacity: 0.95; color: var(--wg-accent, var(--text-secondary)); transition: color 0.2s ease; }
+    .pm-term-wg-tab svg { width: 9px; height: 9px; flex-shrink: 0; opacity: 0.95; color: var(--wg-accent, var(--text-secondary)); transition: color 0.2s ease; }
     .pm-term-wg-tab span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .pm-term-wg-tab.pm-term-tab-active {
       border-color: var(--wg-accent, var(--accent-lime));
       color: var(--text-primary);
       background: color-mix(in srgb, var(--surface-elevated) 68%, var(--wg-accent, var(--accent-lime)) 32%);
-      outline: 2px solid var(--wg-accent, var(--accent-lime));
-      outline-offset: 2px;
+      outline: 1px solid var(--wg-accent, var(--accent-lime));
+      outline-offset: 1px;
       z-index: 2;
       transform: translateY(-1px);
       animation: pmTabGlow 3s ease-in-out infinite;
@@ -4198,17 +4198,17 @@
     .pm-term-subtab {
       display: inline-flex;
       align-items: center;
-      gap: 3px;
-      padding: 2px 6px 3px 5px;
+      gap: 2px;
+      padding: 1px 3px 2px 3px;
       border-radius: 3px;
       border: 1px solid color-mix(in srgb, var(--border-light) 70%, transparent);
-      border-left: 3px solid var(--sub-accent, var(--text-muted));
-      border-bottom: 2px solid transparent;
+      border-left: 2px solid var(--sub-accent, var(--text-muted));
+      border-bottom: 1px solid transparent;
       background: color-mix(in srgb, var(--terminal-bg, var(--surface)) 92%, transparent);
       font-family: ui-monospace, 'Consolas', 'Monaco', monospace;
-      font-size: 8px;
+      font-size: 7px;
       font-weight: 600;
-      letter-spacing: 0.07em;
+      letter-spacing: 0.03em;
       text-transform: uppercase;
       cursor: pointer;
       flex-shrink: 0;
@@ -4219,7 +4219,7 @@
     }
     .pm-term-subtab:hover { transform: translateY(-1px); }
     .pm-term-subtab span { color: var(--sub-text, var(--text-muted)); transition: color 0.2s ease; }
-    .pm-term-subtab svg { width: 9px; height: 9px; flex-shrink: 0; opacity: 0.95; color: var(--sub-text, var(--text-muted)); transition: color 0.2s ease; }
+    .pm-term-subtab svg { width: 7px; height: 7px; flex-shrink: 0; opacity: 0.95; color: var(--sub-text, var(--text-muted)); transition: color 0.2s ease; }
     .pm-term-subtab.pm-term-drop-hover {
       outline: 2px dashed var(--wg-accent, var(--sub-accent, var(--accent-lime)));
       outline-offset: 1px;
@@ -4455,7 +4455,7 @@
       border-radius: 10px;
       border: 1px solid var(--border-light);
       border-left-width: 1px;
-      padding: 2px 8px 2px 6px;
+      padding: 1px 4px 1px 3px;
       background: color-mix(in srgb, var(--terminal-bg, var(--surface)) 85%, transparent);
     }
     [data-theme^="basic"] .pm-term-subtab.pm-term-subtab-focused {
@@ -4487,10 +4487,11 @@
     [data-theme^="retro"] .pm-term-wg-tab {
       font-family: var(--display-font, 'Orbitron', sans-serif);
       border-radius: 0;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.02em;
       text-transform: uppercase;
-      font-size: 10px;
-      border-width: 2px;
+      font-size: 8px;
+      border-width: 1px;
+      padding: 2px 5px;
     }
     [data-theme="retro-dark"] .pm-term-subtab {
       background: var(--terminal-bg);
