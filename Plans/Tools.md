@@ -63,10 +63,32 @@ Config is stored in TOML files at deterministic paths (global: `~/.config/puppet
 
 ### 2.3 Session vs run; subagents
 
-- **Session (Assistant):** `always` approval inserts a session-scoped allow rule; does not persist across restarts. See `Plans/Permissions_System.md` §6.2.
-- **Run (Orchestrator/Interview):** Permissions are fixed from run config at start; no interactive ask unless HITL is enabled at tier boundaries (`Plans/human-in-the-loop.md`).
-- **Subagents:** `todowrite` and `todoread` default to **deny** for subagent runs. Run config may override. All other tools use the default table (`Plans/Permissions_System.md` §7).
+A PM subagent is a child run. It is not a special-case provider-local actor and it is not defined by provider-native agent-file syntax.
 
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+Canonical child-run identity fields:
+- `child_run_id`
+- `parent_run_id`
+- `thread_id`
+- `batch_id?`
+- `subgroup_id?`
+- `attempt_id?`
+- requested/effective Persona and runtime fields
+- effective provider invocation kind as additive adapter metadata
+
+Provider behavior may still differ. A canonical child run may map to:
+- a native provider subagent path
+- a native provider child-session path
+- a plain provider run
+
+That adapter-level difference does not change the PM child-run canon.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md
+
+Subagents are disposable by default. Completion, cancellation, or failure normally ends that child. Follow-up work should usually spawn a new child rather than reopen an old one.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md
 ### 2.4 Interaction with FileSafe
 
 FileSafe runs **in addition to** tool permissions. A tool may be **allowed** by permission but still **blocked** by FileSafe. Tool permission = "may the agent call this tool?"; FileSafe = "may this specific invocation proceed?". See `Plans/FileSafe.md`. The policy engine applies both layers in order: permission first, then FileSafe. Full integration order: §10.6.
@@ -430,23 +452,41 @@ Canonical input/output shapes align with [OpenCode built-in tools](https://openc
 
 ### 3.6A Task runtime addendum
 
-The `task` tool launches resumable delegated runs rather than opaque fire-and-forget work.
+The `task` tool launches canonical child runs.
 
-Rules:
-- task invocations should preserve a stable delegated run/task identity so later history and UI surfaces can correlate follow-ups and results
-- task runs inherit a narrowed-or-equal permission snapshot rather than inventing a looser child policy
-- top-level assistant flows remain the owner of direct user questionnaire prompting unless runtime explicitly delegates that boundary
-- subagent assumptions about `todowrite` / `todoread` availability must honor the subagent-default deny policy unless run config explicitly overrides it
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md
 
-ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+Required task-tool launch contract:
+- validate the requested child against `subagent_registry` when the launch path names a subagent type.
+- resolve requested and effective Persona separately from requested and effective runtime surface.
+- classify each child as `required` or `optional` for parent progress.
+- inherit the parent permission ceiling and compatible capability universe, then narrow as needed.
+- preserve requested versus effective runtime surface, effort, and capability state in metadata.
 
-The **task** tool launches a subagent by type. The **subagent_type** parameter must be one of the **canonical 42 subagents** documented in the Plans folder:
+No-silent-fallback rules:
+- explicit user or command requests for child runtime surface must fail clearly or ask for a new choice if unavailable.
+- implicit orchestrator-selected runtime surfaces may fallback to another compatible surface.
+- fallback reason must be recorded in metadata.
 
-- **Plans/orchestrator-subagent-integration.md §4** -- Known subagent names (DRY:DATA:subagent_registry): Phase (3), Task language (9), Task domain (8), Task framework (4), Subtask (8), Iteration (2), Cross-phase/Interview (8, including `explorer` and `requirements-quality-reviewer`) = **42 total**. Used for orchestrator tier selection, GUI validation, and task-tool validation.
-- **Plans/interview-subagent-integration.md** -- Phase assignments (e.g. Scope & Goals → product-manager, Architecture → architect-reviewer, Product/UX → ux-researcher); cross-phase roles (technical-writer, knowledge-synthesizer, context-manager, etc.).
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Commands_System.md, ContractName:Plans/storage-plan.md
 
-**Implementation:** The central registry (e.g. `subagent_registry::is_valid_subagent_name(subagent_type)`) must be the single source of truth. When the **task** tool is invoked, validate `subagent_type` against the registry; if invalid, return a structured error (e.g. "Subagent type 'X' not in canonical list; see Plans/orchestrator-subagent-integration.md §4"). Persona content (SKILL.md) lives in `.github/agents/` and `.claude/agents/` (42 files); the runner loads the matching persona for the requested type.
+Copilot-native routing rule:
+- only a Copilot-rooted parent may launch a Copilot-native subagent path.
+- a non-Copilot parent must not route into Copilot-native subagent semantics.
+- the correct outcome is strict deny, not silent downgrade.
 
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md
+
+Child lifecycle semantics exposed by `task`:
+- retry = same logical child with a new attempt.
+- reroute = same logical child task under a different effective runtime surface.
+- replacement = a new child run because the role or task shape changed materially.
+- cancellation is parent-controlled and explicit.
+- resume applies only to non-terminal interrupted or waiting children.
+
+The `task` tool must not treat command subtasks, interview children, crew members, or orchestrator children as different runtime classes. They all enter the same canonical child-run model.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Commands_System.md
 ### 3.6B Delegated debug investigations
 
 Delegated runs launched through `task` may participate in an existing investigation.
@@ -553,11 +593,51 @@ Snapshot for implementation; re-verify with Doctor or platform docs at implement
 
 ### 8.0 Event payloads (seglog)
 
-Tool events feed analytics and the Usage tool widget. Align with **storage-plan.md** §2.2.
+Subagent, crew, and context-shaping events must project from a single canonical family.
 
-- **`tool.invoked`:** Emitted when a tool call is allowed and execution completes. Payload: `tool_name` (string, required), `run_id` (string, required), `thread_id` (string, optional), `latency_ms` (number, required; wall-clock execution time in milliseconds), `success` (boolean, required), `error` (string, optional when success is false). See storage-plan.md §2.2.
-- **`tool.denied`:** Emitted when policy blocks (deny) or user declines ask. Payload: `tool_name`, `run_id`, `thread_id` (optional), `reason` (required: `permission_denied` or `user_declined`). Do not emit for FileSafe blocks. redb: `tool_permissions` in app config (`config:v1`); rollups key `rollups` / `tool_usage.{window}` per §8.4.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 
+Required child lifecycle event families:
+- `subagent.spawn_requested`
+- `subagent.spawned`
+- `subagent.started`
+- `subagent.progress`
+- `subagent.work_delta`
+- `subagent.thought_delta`
+- `subagent.awaiting_parent`
+- `subagent.blocked`
+- `subagent.context_expansion_requested`
+- `subagent.user_input_requested`
+- `subagent.completed`
+- `subagent.failed`
+- `subagent.cancel_requested`
+- `subagent.cancelled`
+- `subagent.superseded`
+- `subagent.retry_requested`
+- `subagent.retried`
+- `subagent.rerouted`
+- `subagent.resumed`
+- `subagent.context_shrunk`
+- `subagent.context_rehydrated`
+
+Required crew event families:
+- `crew.created`
+- `crew.member_started`
+- `crew.member_completed`
+- `crew.message_posted`
+- `crew.completed`
+
+Minimum event payload identity fields:
+- `thread_id`
+- `parent_run_id`
+- `child_run_id?`
+- `batch_id?`
+- `subgroup_id?`
+- `attempt_id?`
+- requested/effective Persona and runtime fields where relevant
+- timestamp
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Provider_OpenCode.md
 ### 8.1 Config persistence
 
 - **Where:** Tool permissions live in the same config as the rest of Settings (e.g. `GuiConfig` in memory, persisted to redb as `config:v1` per FinalGUISpec §15.1). Use the key **`tool_permissions`** (object: tool name or wildcard → `"allow"` | `"deny"` | `"ask"`, or per-tool object for granular rules per §10.1).

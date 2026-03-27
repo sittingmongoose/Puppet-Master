@@ -1,0 +1,14 @@
+PACKET SHAPE CHECK
+run_id: r-20260323-192127-02
+result: BLOCKED
+
+blockers:
+- path: Plans/assistant-chat-design.md
+  anchor: ## 14. Subagents & Crew
+  reason: contractref_too_far_from_operational_requirement
+  brief fix direction: Replace the local ContractRef immediately after the child-status MUST line with an executable ContractRef that includes a verifier-recognized category prefix such as ContractName: or UICommand: within the same lookahead window.
+
+- path: Plans/Contracts_V0.md
+  anchor: ## Canonical Runtime Event, Outcome, and Action Contract Reconciliation Addendum (2026-03-09)
+  reason: contractref_too_far_from_operational_requirement
+  brief fix direction: Replace the local ContractRef immediately after the chat-facing projection MUST line with an executable ContractRef that includes a verifier-recognized category prefix such as ContractName: or EventType: within the same lookahead window.

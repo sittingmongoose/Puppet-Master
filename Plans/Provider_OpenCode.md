@@ -171,36 +171,42 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Arc
 
 ### 6.1 ProviderRequestEnvelope → OpenCode API
 
-The `ProviderRequestEnvelope` fields map to OpenCode API calls as follows:
+OpenCode is a server-bridged adapter over the PM child-run model.
 
-| Envelope Field | OpenCode Mapping |
-|---|---|
-| `run_id` | Puppet Master internal correlation; not sent to OpenCode |
-| `thread_id` | Maps to OpenCode session ID (create via `POST /session`) |
-| `platform` | `"opencode"` |
-| `transport` | `"http"` (new transport type) |
-| `model_id` | `body.model.providerID` + `body.model.modelID` in prompt request |
-| `mode` | `plan` → use OpenCode `plan` agent; `execute` → use OpenCode `build` agent |
-| `working_directory` | Set via OpenCode project config (server runs in a specific directory) |
-| `prompt_parts` | Maps to `body.parts` array in `POST /session/:id/message` |
-| `tool_policy` | Maps to `body.tools` map in prompt request (tool enable/disable) |
-| `timeout` | Client-side HTTP timeout |
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
 
+Mapping rules:
+- PM `thread_id`, `run_id`, `parent_run_id`, and `child_run_id` remain canonical PM lineage fields.
+- OpenCode session ids are additive provider correlation fields only.
+- PM must not rewrite `thread_id` into an OpenCode session id.
+- PM preserves requested versus effective runtime/model/effort state even when OpenCode internally uses agent/session configuration.
+
+Required preserved envelope fields:
+- `run_id`
+- `thread_id`
+- `parent_run_id?`
+- `child_run_id?`
+- `attempt_id?`
+- mode and execution strategy
+- working directory and workspace roots
+- prompt parts
+- tool policy and permission snapshot refs
+- requested/effective runtime fields
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md
 ### 6.2 Session Lifecycle → Run Lifecycle
 
-Each Puppet Master "run" maps to one OpenCode session:
+OpenCode child sessions map to PM child runs; they do not replace them.
 
-1. **Create session:** `POST /session` → `{ "title": "<run_id>" }` → returns session with `id`
-2. **Send prompt:** `POST /session/:id/message` with prompt parts, model, and agent
-3. **Receive response:** Synchronous response with `{ info: Message, parts: Part[] }`
-4. **Or async:** `POST /session/:id/prompt_async` + listen on `GET /event` SSE stream
-5. **Abort if needed:** `POST /session/:id/abort`
-6. **Delete session:** `DELETE /session/:id` (cleanup after run completes)
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-**Process isolation policy:** Each Puppet Master iteration creates a **new OpenCode session** and deletes it after completion. No session reuse across iterations.
+Mapping rules:
+- OpenCode `task_id` is a resumable provider correlation handle for the PM child run.
+- OpenCode `parentID` is additive provider lineage, not PM’s only parent-child truth.
+- PM retry, reroute, resume, and replacement semantics remain PM-owned regardless of how OpenCode resumes a child session.
+- completed disposable children are not treated as durable reusable actors merely because OpenCode can reopen session history.
 
-ContractRef: PolicyRule:CU-P2-T12 (fresh process/session per iteration)
-
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md
 ### 6.3 Normalized Event Stream Mapping
 
 OpenCode response parts map to Puppet Master normalized events:
@@ -241,18 +247,23 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Con
 
 ### 6.5 Unified Provider Trait / Capability / Policy Constraints
 
-OpenCode integration MUST satisfy the same Provider boundary rules as other providers:
+OpenCode-specific behavior must preserve PM policy constraints rather than silently overriding them.
 
-- Conform to the unified Provider trait/facade contract (request envelope in, normalized event stream out).
-- Publish capability flags through the shared provider capability mechanism (no OpenCode-only capability plumbing).
-- Consume the same tool-policy snapshot semantics as other providers.
-- Avoid UI special-casing beyond provider configuration and discovered model/auth state.
-- Normalize OpenCode events/tool calls into canonical provider stream events before UI/persistence consumers.
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/CLI_Bridged_Providers.md
 
-ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md
+Required adapter behaviors:
+- preserve PM requested/effective runtime and capability disclosure.
+- keep provider-native agent files and provider-native invocation syntax in the interoperability lane only.
+- support additive provider correlation for child sessions and billing-sensitive behaviors.
+- preserve prompt-cache-friendly separation between stable static prompt content and dynamic environment or instruction content.
+- avoid synthetic fake-user replay messages as PM’s continuity mechanism.
 
----
+OpenCode/Copilot-specific notes:
+- OpenCode uses `x-initiator` classification for Copilot-sensitive requests.
+- PM may use equivalent additive provider metadata where billing classification depends on whether a call is user- or agent-initiated.
+- that adapter-specific behavior does not weaken the PM strict-deny rule for non-Copilot parents attempting Copilot-native child routing.
 
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md
 ## 7. Model Discovery
 
 ### 7.1 Dynamic Model List

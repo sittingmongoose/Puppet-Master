@@ -182,29 +182,55 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Arti
 
 ## 2. Compaction and pruning
 
-<a id="COMPACTION"></a>
+Context reduction in PM has multiple layers and they must remain distinct.
 
-### 2.1 When compaction occurs
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Models_System.md, ContractName:Plans/assistant-memory-subsystem.md
 
-Compaction is triggered when:
-- The platform reports context overflow, or
-- The run exceeds configured context budgets, or
-- The user requests compaction explicitly.
+### 2.1 Distinct layers
 
-Mode-specific deltas are defined in `Plans/Run_Modes.md`; compaction marker lifecycle is defined in `Plans/FileSafe.md` Part B.
+| Layer | Purpose | Canonical behavior |
+|---|---|---|
+| Provider-side caching | Improve provider prompt/cache reuse | Adapter concern; preserve stable cache-friendly prompt structure. |
+| Dynamic context shrinking | Incrementally shrink stale dynamic blocks while the run continues | Required PM feature; applies conservatively to eligible stale blocks. |
+| Subcompact | User-invoked local summary over selected message regions | Uses the same shrinking substrate where possible, but remains an explicit UI action. |
+| Compaction | Larger continuity-preserving reduction when the assembled payload still does not fit or the user explicitly compacts | Separate from dynamic shrinking. |
+| Rotation | Spawn a follow-up run when compaction still cannot keep the run within limits | Separate from compaction and shrinking. |
 
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/FileSafe.md
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-### 2.2 Pruning contract
+### 2.2 Dynamic context shrinking
 
-Rule: Pruning MUST be deterministic and MUST preserve the most recent, relevant context.
+Dynamic context shrinking is required and GUI-configurable.
 
-Rule: Tool-call outputs for protected tools MUST NOT be pruned. The protected-tool set includes `skill` (see `Plans/OpenCode_Deep_Extraction.md` baseline and `Plans/Run_Modes.md`).
+Defaults:
+- enabled for tool-result blocks
+- disabled by default for retrieved-context blocks
+- disabled by default for plan/report blocks
+- one master enable/disable switch plus per-category toggles
+- no user-facing aggressiveness tuning in MVP
 
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/OpenCode_Deep_Extraction.md
+Eligibility and trigger rules:
+- a block is eligible only after it leaves the current working set.
+- the most recent still-active result in the current line of work must not be auto-shrunk.
+- current-working-set protection also covers focused/pinned items and unresolved comparison/approval/question/validation state.
+- conservative automatic shrinking begins for a stale eligible block around a large-block threshold of roughly 1200 tokens or equivalent normalized size.
+- context-pressure shrinking begins around 70% of the effective context window and may become more aggressive above roughly 85% before full compaction is considered.
+- tool calls carry structured `_context_updates`; `[]` means no shrink updates were requested.
 
----
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
 
+### 2.3 Cache-affinity and stability rules
+
+PM must not reproduce cache-hit regressions caused by mutating stable prompt structure.
+
+Rules:
+- do not rewrite the stable prompt spine consisting of static system/provider/Persona/tool-definition content.
+- preserve stable cache lineage across ordinary continuation and resume within the same logical run lineage.
+- branch, rewind, replacement, and other lineage-changing actions establish a new cache lineage.
+- `Compact Now` does not, by itself, force a new cache lineage unless it also changes logical run lineage.
+- do not inject synthetic fake-user replay text such as recap prompts solely to preserve continuity.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
 ## 3. Rotation (follow-up run spawning)
 
 <a id="ROTATION"></a>
@@ -463,21 +489,30 @@ Rules:
 - downstream providers and consumers MUST NOT infer missing runtime identity from prompt text alone
 ## Runtime Attempt Snapshot and Handoff Bundle
 
-The prompt pipeline MUST emit the same immutable runtime handoff bundle used by the provider envelope.
+The runtime handoff bundle is the continuity contract for child runs, retries, reroutes, and resumes.
 
-Required fields:
-- `run_id`
-- `node_id`
-- `attempt_id`
-- `scheduler_pass_id`
-- `replan_generation`
-- requested/effective model snapshot ids
-- requested/effective permission snapshot ids
-- `mutation_capable`
-- `safe_point_id?`
-- remediation lineage refs when present
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Contracts_V0.md
 
-Rules:
-- snapshots are captured at attempt start and are immutable for that attempt
-- retry/resume/rerun flows always create a new handoff bundle with a new `attempt_id`
-- downstream providers and consumers MUST NOT infer missing runtime identity from prompt text alone
+Required bundle contents:
+- parent and child lineage identifiers
+- task statement and success criteria
+- required versus optional dependency classification
+- requested and effective Persona/runtime/model/effort state
+- effective permission ceiling and compatible capability set
+- current working-set refs in full fidelity
+- focused or pinned refs in full fidelity unless explicitly muted
+- shrunk dynamic blocks in their current shrunk form plus source refs for rehydration
+- current retrieval injection state when enabled
+- current Context Lens shaping state when relevant
+- explicit statement that Assistant memory is excluded
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Skills_System.md, ContractName:Plans/Plugins_System.md
+
+Handoff rules:
+- children do not blindly inherit the parent prompt or the parent Persona.
+- children receive a reconstructed bundle derived from canonical source state plus current effective shaping state.
+- if a child needs deeper detail from a shrunk block, the runtime may rehydrate from canonical source refs.
+- resume rebuilds from canonical state plus current shaping state; it does not trust only the last transmitted prompt.
+- completed disposable children are not the default continuity mechanism for later work; later work normally spawns a fresh child.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Tools.md

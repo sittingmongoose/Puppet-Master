@@ -28,32 +28,15 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 ## 1. Canonical mode definitions
 ### 1.0 Runtime mode and workflow-overlay separation
 
-Runtime modes remain the canonical execution-posture family.
+Runtime modes and workflow overlays must stay distinct.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 Rules:
-- runtime modes are closed to `ask`, `plan`, `regular`, and `yolo`
-- workflow identity is preserved separately through `requested_mode_overlay` and `effective_mode_overlay`
-- overlay identity may be richer than runtime posture; `deep_plan`, `debug`, `interview`, `brainstorm`, and `crew` are overlay values, not runtime-mode enum values
-- chat-facing labels such as `Ask`, `Agent`, `Debug`, `Plan`, and `Deep Plan` are display derivations over shared overlay/runtime fields, not a replacement runtime schema
-- the classical debugger surface and Debug Console are UI surfaces only and must never be serialized as runtime-mode values or overlay values
-
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
-
-Canonical overlay / runtime examples:
-
-| Visible workflow label | requested/effective overlay | Canonical runtime mode | Notes |
-|---|---|---|---|
-| Ask | `ask` | `ask` | Always read-only. |
-| Plan | `plan` | `plan` | Read-only planning posture. |
-| Deep Plan | `deep_plan` | `plan` | Overlay preserves deeper planning identity. |
-| Agent | `agent` | `regular` or `yolo` | Standard execution posture. |
-| Debug | `debug` | `regular` by default, `yolo` only by explicit opt-in | Evidence-first investigation overlay. |
-| Interview | `interview` | `regular` or `plan` depending owner flow | Specialized routed workflow; not a new runtime enum. |
-| BrainStorm | `brainstorm` | `regular` or `plan` depending owner flow | Specialized routed workflow; not a new runtime enum. |
-| Crew | `crew` | `regular` or `plan` depending owner flow | Specialized routed workflow; not a new runtime enum. |
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/orchestrator-subagent-integration.md
-
+- `ask`, `plan`, `regular`, and `yolo` are the runtime-mode canon.
+- `debug`, `deep_plan`, `interview`, `brainstorm`, and `crew` are overlays or routed workflow identities rather than extra runtime-mode enum values.
+- overlay choice must not widen runtime authority.
+- children inherit the parent runtime ceiling and may narrow it only.
 ### 1.1 `ask`
 `ask` is the read-only inspection and explanation posture.
 
@@ -332,44 +315,35 @@ Overflow detection triggers when total tokens exceed the model's usable context 
 
 ## 9. Puppet Master deltas
 
-This section defines where Puppet Master diverges from the OpenCode baseline. Each delta is a normative requirement.
+### 9.1 `ask`
 
-ContractRef: ContractName:Plans/Run_Modes.md, PolicyRule:Decision_Policy.md§2
+`ask` is read-only. It may launch delegated read-only research children but may not launch execution or mutation children.
 
-<a id="DELTA-ask"></a>
-### 9.1 `ask` — strictly read-only, HTE, no delegated tool execution
-- **Delta from baseline:** OpenCode's `ask` semantics allow the user to approve individual tool calls via the `ask` permission. Puppet Master's `ask` mode is **strictly read-only** — mutating tools are `deny` (not `ask`), and no delegated tool execution occurs.
-- **Strategy:** HTE only. No DAE opt-in path.
-- **Rationale:** Eliminates ambiguity; `ask` mode guarantees zero mutations.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
 
-ContractRef: ContractName:Plans/Run_Modes.md#MODE-ask
+### 9.2 `plan`
 
-<a id="DELTA-plan"></a>
-### 9.2 `plan` — read-only planning output, HTE, no delegated tool execution
-- **Delta from baseline:** OpenCode allows plan-mode agents to write to `.opencode/plans/*.md`. Puppet Master's `plan` mode produces plan output as a returned artifact; no project-file writes.
-- **Strategy:** HTE only. No DAE opt-in path.
-- **Rationale:** Clean separation between planning and execution phases.
+`plan` is read-only planning posture. It may launch delegated read-only research children, including required planning dependencies, but it may not widen into implementation authority.
 
-ContractRef: ContractName:Plans/Run_Modes.md#MODE-plan
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md
 
-<a id="DELTA-regular"></a>
-### 9.3 `regular` — HTE default; DAE only via explicit opt-in AND policy allow
-- **Delta from baseline:** OpenCode's default `build` agent executes tools directly (analogous to DAE). Puppet Master defaults to HTE — the platform executes all tools itself — to maintain full policy control. DAE requires explicit config (`cli_bridged_strategy: "dae"`) plus provider-level policy approval.
-- **Strategy:** HTE default; DAE opt-in per §3.
-- **Rationale:** HTE-by-default gives Puppet Master complete tool-call audit, policy enforcement, and rollback capability.
+### 9.3 `regular`
 
-ContractRef: ContractName:Plans/Run_Modes.md#MODE-regular, ContractName:Plans/CLI_Bridged_Providers.md
+`regular` allows full child-run behavior subject to permission, provider, and capability rules.
 
-<a id="DELTA-yolo"></a>
-### 9.4 `yolo` — DAE allowed, guardrails + scans mandatory
-- **Delta from baseline:** OpenCode has no explicit "yolo" mode; its closest equivalent is running with all permissions set to `allow`. Puppet Master formalizes `yolo` as a named mode with mandatory FileSafe guardrails and end-of-run scans, ensuring safety even when approval prompts are suppressed.
-- **Strategy:** DAE with mandatory scans per §5.4.
-- **Rationale:** Named mode makes the risk posture explicit and auditable. FileSafe is the primary protection layer (see `Plans/FileSafe.md` §10a).
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md
 
-ContractRef: ContractName:Plans/Run_Modes.md#MODE-yolo, ContractName:Plans/FileSafe.md
+### 9.4 `yolo`
 
----
+`yolo` may permit broader execution behavior, but it still cannot bypass child capability narrowing, provider restrictions, or the Copilot-native routing exception.
 
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Permissions_System.md
+
+### 9.5 Crew overlay
+
+Crew is an overlay over the current parent mode, not a separate runtime mode. A crew launched from `plan` remains read-only; a crew launched from `regular` or `yolo` inherits that higher parent ceiling while still respecting all other constraints.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
 ## 10. Acceptance criteria
 These criteria are testable assertions that MUST hold for any conforming implementation.
 

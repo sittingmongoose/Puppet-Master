@@ -225,50 +225,40 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assista
 
 ### 4.2 Subtask execution
 
-<a id="SUBTASK"></a>
+When `subtask: true` is set, the command launches a canonical child run through the same delegated-run contract used everywhere else.
 
-When `subtask: true` is set in the command frontmatter:
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
 
-1. The resolved template is submitted as a child run (subagent task) via the `task` tool (`Plans/Tools.md` §3.6).
-2. The parent run records the linkage in the event ledger: a `tool.invoked` event with `tool_name: "task"` and payload containing the command name and child `run_id`.
-3. The child run inherits the parent's project context but uses the command's `persona`, `mode`, and `model` overrides if set.
-4. The child run's output is returned to the parent as a tool-call result.
+Required behavior:
+- resolve requested and effective Persona/runtime/model/effort state using the same pipeline as any other child run.
+- classify the child as `required` or `optional`; `required` is the safer default for command subtasks unless the command explicitly declares advisory behavior.
+- inherit and then narrow the parent permission ceiling and compatible capability universe.
+- record the parent-child linkage in canonical event and storage records.
+- do not silently fallback when the command explicitly requested a runtime surface that is unavailable or incompatible.
 
-When `subtask: false` (default), the resolved template is submitted as a primary prompt in the current chat thread.
-
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md#EventRecord
-
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
 ### 4.3 Persona selection
 
-If the command specifies a `persona`, that Persona is resolved via `Plans/Personas.md` §2.3 and injected into the run context. If the Persona is unresolved (not found), a warning is logged and the run proceeds with the current session Persona.
+Command subtasks follow the canonical child Persona resolution order.
 
-If no `persona` is specified, the current session Persona (if any) is used.
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
 
-ContractRef: ContractName:Plans/Personas.md#STORAGE-LAYOUT
-
+Rules:
+- explicit command Persona override wins.
+- otherwise the command-provided task or child type resolves Persona through the normal child Persona pipeline.
+- parent Persona is at most a weak hint.
+- child Persona does not silently copy the parent Persona.
 ### 4.4 Mode and model overrides
 
-The command's `mode` and `model` fields, if set, override the session-level runtime posture and model selection for the duration of the command's run.
+Command overrides are explicit child requests, not bypasses around the runtime model.
 
-Runtime override precedence is:
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md
 
-| Source | Priority | Description |
-|---|---|---|
-| Command frontmatter `mode` / `model` | Highest | Applied for this command's run only. |
-| Session-level runtime/model state | Lower | Used when the command does not specify overrides. |
-| Persona `default_mode` / `default_model` | Lower still | Persona-owned defaults. |
-| System default | Lowest | `regular` runtime mode; provider default model. |
-
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Personas.md#PERSONA-INJECTION, ContractName:Plans/Models_System.md
-
-Debug-overlay reconciliation rules:
-- command frontmatter `mode` accepts only canonical runtime-mode values (`ask | plan | regular | yolo`)
-- `debug`, `deep_plan`, `interview`, `brainstorm`, and `crew` are overlay values and are not valid frontmatter runtime-mode values
-- a command launched from an active Debug thread inherits the thread's investigation context and overlay snapshot, but a frontmatter runtime override does not itself switch the thread into or out of Debug Mode
-- switching the visible Assistant workflow mode remains owned by the canonical UI command path (`cmd.chat.mode`), not by User Command frontmatter
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md
-
+Rules:
+- command mode overrides are capped by parent mode authority.
+- command model/runtime surface overrides become explicit child requests.
+- explicit requests do not silently fallback.
+- requested versus effective runtime/model/effort fields remain visible when remaps occur because of compatibility or policy.
 ### 4.5 Template resolution order
 
 Template resolution proceeds in this order:

@@ -1,0 +1,36 @@
+Packet Shape Report
+run_id: r-20260323-192127-01
+checked_at_utc: 2026-03-26T21:18:30Z
+
+STATUS: BLOCKED (6 defects)
+
+Blockers:
+1. path: Plans/assistant-chat-design.md
+   anchor: ## 14. Subagents & Crew
+   reason: contractref_too_far_from_operational_requirement
+   brief fix direction: Move or add a local ContractRef line within the verifier lookahead window after the operational line "The chat thread and child-run runtime MUST use the same visible status vocabulary."
+
+2. path: Plans/Contracts_V0.md
+   anchor: <file_end append>
+   reason: contractref_too_far_from_operational_requirement
+   brief fix direction: Add a local ContractRef line within the verifier lookahead window after the operational line about chat-facing projection events preserving canonical child identity fields.
+
+3. path: Plans/Contracts_V0.md
+   anchor: <file_end append>
+   reason: packet_not_canonicalizable_as_emitted
+   brief fix direction: Re-express the subagent/crew lifecycle contract inside the existing event-owned sections rather than as a file-end addendum; use heading-owned replacement/insert shape.
+
+4. path: Plans/Wiring_Matrix.md
+   anchor: <file_end append>
+   reason: structured_container_wrong_anchor
+   brief fix direction: Move the Context Lens wiring rows into the existing wiring-owned section/addendum container instead of appending a new file-end section.
+
+5. path: Plans/Crosswalk.md
+   anchor: <file_end append>
+   reason: packet_not_canonicalizable_as_emitted
+   brief fix direction: Fold the subagent/crew/context-shaping ownership content into the existing ownership-boundaries structure rather than appending a new addendum at file end.
+
+6. path: Plans/usage-feature.md
+   anchor: <file_end append>
+   reason: packet_not_canonicalizable_as_emitted
+   brief fix direction: Place the usage-source reconciliation content inside the existing data/backend or ownership-related section rather than as a file-end addendum.

@@ -35,9 +35,17 @@ An **Agent** is a running AI execution unit. It is a concrete instance within a 
 <a id="DEF-SUBAGENT"></a>
 ### 1.2 Subagent
 
-A **Subagent** is an Agent spawned by another Agent (or by the Orchestrator on behalf of an Agent) to perform a delegated task. Subagents are invoked via the `task` tool (`Plans/Tools.md` §3.6). The parent Agent receives the Subagent's output as tool-call results. Subagents inherit the parent's permission ruleset merged with session-level permissions.
+A subagent is a child run that resolves a Persona for the child task. It is not merely “the parent Persona, but smaller,” and it is not defined by provider-native agent-file syntax.
 
-<a id="DEF-PERSONA"></a>
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+Rules:
+- the child Persona may differ materially from the parent Persona.
+- the child Persona does not auto-inherit from the parent.
+- provider-native agent files may seed or export Persona content, but PM Persona storage remains canonical.
+- crew mode may reuse the same Persona across many members while varying the model/provider selection.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
 ### 1.3 Persona (canonical term)
 
 A **Persona** is the assigned role definition that shapes an Agent's or Subagent's behavior. It is a static, declarative artifact — a YAML-frontmatter Markdown file — that acts as a **behavior-and-runtime contract**. In addition to identity, instructions, default permissions, and skill references, a Persona MAY declare provider/model/variant preferences, optional runtime control preferences, tool-usage guidance, aliases, and UI-facing metadata. When the Orchestrator or Interview phase manager selects a Persona for a run, the Persona's content and runtime metadata feed both the Agent's compiled context and the effective runtime resolution flow.
@@ -244,34 +252,42 @@ Persona management UI elements follow the app-level Interaction Mode (Expert/ELI
 
 ### 5.1 Selection
 
-Cross-surface requested/effective Persona precedence is canonically defined in `Plans/Prompt_Pipeline.md` (§6.2–§6.5). This section does **not** redefine that global precedence.
+Persona selection must be deterministic and must not silently collapse child roles into the parent Persona.
 
-This section defines only how **Orchestrator auto mode** produces candidate Persona IDs before the global prompt-pipeline precedence is applied:
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md
 
-1. **Plan/execution hard requirement:** If the PRD or plan contains a hard Persona/subagent requirement for the current execution unit, emit that candidate first.
-2. **Orchestrator auto candidate generation:** If no hard requirement exists, the Orchestrator's selector generates candidates from project context, language, domain, framework, actor type, operation type, and scope level.
-3. **Orchestrator config constraints:** Disabled/required/override lists may narrow or replace the Orchestrator-generated candidate set as defined in `Plans/orchestrator-subagent-integration.md`.
+Canonical child Persona resolution order:
+1. explicitly requested child Persona
+2. child subagent type or child task-type mapping
+3. weak parent Persona hint only when compatible and still ambiguous
+4. safe general-purpose fallback
 
-The candidate produced here becomes a `surface_default` or `auto_surface_resolver` input to the global requested/effective Persona resolution flow; it does **not** bypass manual selection, scoped natural-language overrides, or higher-priority run-envelope inputs.
+Compatibility guard:
+- the weak parent hint cannot override the requested child task.
+- it cannot override runtime/provider restrictions.
+- it cannot be used to widen permissions or mode.
+- if no specialized match is safe, the fallback is a general child Persona, not a copy of the parent Persona.
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md#PERSONA-SELECTION-SOURCE-ENUM, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Personas.md#STORAGE-LAYOUT
+Crew default:
+- crew members normally share the same task framing.
+- they often share the same Persona.
+- model/provider diversity, not Persona diversity, is the default defining behavior of crew mode.
 
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/orchestrator-subagent-integration.md
 ### 5.2 Context injection
 
-Once a Persona is resolved, its content is injected into the Agent's compiled context by the **context compiler** (`Plans/FileSafe.md` Part B). The injection follows these rules:
+Persona injection for child runs operates on a reconstructed handoff bundle, not on a blind copy of the parent prompt state.
 
-1. The Persona's Markdown body is prepended to the Instruction Bundle (per `Plans/Contracts_V0.md#InstructionBundleAssembly`).
-2. The Persona's `default_mode` (if set and not overridden by run config) influences the run mode for that Agent.
-3. The Persona's `default_permissions_profile` (if set) is applied as the base permission ruleset, with run-config and tier-level overrides layered on top.
-4. The Persona's `default_skill_refs` are loaded and their content added to the context.
-5. The Persona's runtime-preference fields (`default_platform`, `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`) feed the effective runtime resolution flow defined by `Plans/Models_System.md` and `Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD`.
-6. The Persona's `talkativeness` field is compiled into a standardized behavior directive in the Instruction Bundle. `model_default` adds no extra verbosity directive. The other values instruct the active Agent to be more or less expansive/collaborative while preserving correctness, schema compliance, and any stricter user/system length requirements.
-7. The Persona's tool-guidance fields (`preferred_tools`, `discouraged_tools`, `tool_usage_guidance`) influence planning/tool choice but MUST NOT replace Permissions allow/ask/deny enforcement.
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md
 
-**Interview integration:** The Interview phase manager uses the same injection mechanism. For each interview phase, the phase-assigned Persona(s) are resolved and injected into the phase prompt. Persona overrides do not change *which* Personas the Interview selects — they only supply custom description/instruction content for those selected Personas (per `Plans/interview-subagent-integration.md` — "Subagent personas" in §Relationship).
+Child Persona context rules:
+- inject the effective child Persona content resolved from PM Persona storage.
+- include current task, working context, required constraints, and requested/effective runtime state.
+- include the current effective context-shaping state without making a lossy child copy the only truth.
+- do not forward Assistant memory to child runs.
+- child runs inherit only the effective compatible subset of parent-allowed tools, skills, plugins, and MCP capabilities.
 
-ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/FileSafe.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Models_System.md#SELECTION-PRIORITY, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Permissions_System.md
-
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Permissions_System.md
 ### 5.3 Run-mode interaction
 
 The Persona's `default_mode` field interacts with the run mode system (`Plans/Run_Modes.md`) as follows:
@@ -320,45 +336,26 @@ ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Personas.md#PE
 
 ## 7. Relationship to the Persona registry and delegated-subagent registry
 
-<a id="REGISTRY-RELATIONSHIP"></a>
+The split between `persona_registry` and `subagent_registry` is mandatory.
 
-Puppet Master now distinguishes between two related but non-identical registries:
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Tools.md
 
 ### 7.1 Canonical `persona_registry`
 
-`persona_registry` is the canonical set of **valid Persona IDs** for runtime resolution across Chat, Interview, Requirements Builder, Orchestrator, Multi-Pass Review, and delegated child runs.
-
-At minimum, `persona_registry` MUST include:
-- every ID in the canonical delegated-subagent registry, **plus**
-- the non-delegated built-ins required by Persona/runtime resolution:
-  - `collaborator`
-  - `general-purpose`
-  - `researcher`
-  - `deep-researcher`
-  - `sre`
-
-Automatic surface resolution, natural-language resolution, stored overrides, and validation of requested/effective Persona IDs MUST validate against `persona_registry`, not against the delegated-subagent subset.
+`persona_registry` owns runtime Persona definitions and Persona IDs used for selection, storage, GUI management, and prompt injection.
 
 ### 7.2 Canonical `subagent_registry`
 
-`subagent_registry` remains the canonical subset of Persona IDs that are valid for **delegated subagent/task-tool execution** and provider-facing delegated-run validation.
+`subagent_registry` owns launchable delegated child-run types. It validates names used by `task`, orchestrator routing, interview routing, and command subtasks.
 
-Rules:
-- Every `subagent_registry` entry MUST also exist in `persona_registry`.
-- `persona_registry` MAY contain IDs that are **not** valid delegated subagents.
-- Task-tool validation and delegated-run launch paths validate against `subagent_registry`.
-- Chat/Interview/Builder/Orchestrator surface resolution validates against `persona_registry`.
+### 7.3 Required relationship rules
 
-### 7.3 Why the split is required
+- a launchable subagent type may resolve to a Persona, but the registries are not the same structure.
+- Interview stage configuration must persist canonical Persona-oriented field names; legacy `phase_subagents` and `phase_secondary_subagents` are migration aliases only.
+- provider-native command names such as `/subagent`, `/agent`, `/fleet`, or `/delegate` are not registry IDs.
+- new content must use the requested/effective runtime naming already established elsewhere; stale `*_persona_id` drift should be normalized during reconciliation.
 
-The Persona system now includes valid runtime Personas that are not purely delegated-subagent identities. Examples include `collaborator` for questioning/planning, `general-purpose` as a generic execution fallback, and `researcher` / `deep-researcher` for explicit research modes.
-
-It is therefore incorrect to treat the delegated-subagent list as the complete set of valid runtime Personas.
-
-ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md
-
----
-
+ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Contracts_V0.md
 ## 8. OpenCode baseline and Puppet Master deltas
 
 <a id="BASELINE-DELTAS"></a>

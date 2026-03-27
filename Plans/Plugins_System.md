@@ -355,6 +355,20 @@ Individual plugins can be disabled via `config.plugins.disabled.<plugin_id> = tr
 
 ### 7.3 Per-Persona plugin overrides
 
+### 7.4 Child-run plugin and MCP inheritance
+
+Plugin and MCP effects for child runs are inherited as an effective compatible subset, not as a blind copy of the parent environment.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md
+
+Rules:
+- child-visible plugin behavior exists only when the child runtime path supports it and the parent effectively allowed it.
+- plugin behavior must not function as a backdoor that widens child permissions or tool authority.
+- MCP availability follows the same parent-ceiling and compatibility-subset rule.
+- requested versus effective dropped capability details should remain visible for debugging.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
 A Persona MAY list plugins to disable for runs using that Persona, via the `disabled_plugins` field in the PERSONA.md frontmatter (defined in `Plans/Personas.md` §3.2):
 
 ```yaml

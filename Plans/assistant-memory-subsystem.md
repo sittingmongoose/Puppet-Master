@@ -389,33 +389,37 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_
 <a id="8-integration-points"></a>
 ## 8. Integration points
 
+Assistant memory is intentionally separate from child-run continuity, crew shared state, and context-shaping systems.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
+
 ### 8.1 Assistant prompt builder
 
-Required calls:
-- `build_capsule(project_id, now)`
-- `search(project_id, user_message, now, k)`
+Assistant uses the real memory subsystem. Assistant memory remains Assistant-only.
 
-Rule: Assistant prompt builder MUST invoke both APIs for project-scoped turns and MUST skip both when no project is selected.
-ContractRef: ContractName:Plans/assistant-chat-design.md#17-context--truncation, ConfigKey:assistant.memory.enabled
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
 
-### 8.2 Project switching
+### 8.2 Child-run continuity
 
-On project switch:
-1. Write a handoff gist in the old project (`kind = Handoff`)
-2. Flush pending memory/index updates for old project
-3. Load capsule for the new project
+Subagents, Interview, Orchestrator, requirements builder, and crew members use `NullMemoryProvider` and receive no Assistant memory payload.
 
-Rule: Project switch handling MUST isolate old/new project memory state and MUST NOT cross-inject records across project boundaries.
-ContractRef: ContractName:Plans/assistant-memory-subsystem.md#2-physical-storage-layout, ContractName:Plans/assistant-chat-design.md#11-threads-and-chat-management
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md
 
-### 8.3 Rules separation
+Child continuity comes from:
+- canonical child records
+- reconstructed handoff bundles
+- current effective shaping state
+- crew shared state when crew mode is active
 
-Rule: Rules pipeline output MUST remain unchanged when gists are added/edited; memory appears only in the memory injection path.
-ContractRef: ContractName:Plans/agent-rules-context.md, ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract
+It does not come from hidden child-local long-term memory.
 
----
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md
 
-<a id="9-deterministic-defaults"></a>
+### 8.3 Crew shared state
+
+Crew shared state may persist longer than an individual child, but it is explicit coordination state rather than personal memory for disposable subagents.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
 ## 9. Deterministic defaults
 
 ### 9.1 Core defaults
