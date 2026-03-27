@@ -86,6 +86,8 @@
       --accent-magenta: #FF1493;
       --accent-lime: #00FF41;
       --accent-orange: #FF7F27;
+      --accent-warning: #FFB300;
+      --accent-error: #FF5252;
       --graph-pending: #6C757D;
       --graph-running: #FF9800;
       --graph-passed: #4CAF50;
@@ -113,6 +115,8 @@
       --accent-magenta: #FF1493;
       --accent-lime: #00FF41;
       --accent-orange: #FF7F27;
+      --accent-warning: #F57C00;
+      --accent-error: #D32F2F;
       --graph-pending: #ADB5BD;
       --graph-running: #FFB74D;
       --graph-passed: #66BB6A;
@@ -140,6 +144,8 @@
       --accent-magenta: #D32F2F;
       --accent-lime: #0B8043;
       --accent-orange: #E65100;
+      --accent-warning: #E65100;
+      --accent-error: #C62828;
       --graph-pending: #ADB5BD;
       --graph-running: #FF9800;
       --graph-passed: #4CAF50;
@@ -170,6 +176,8 @@
       --accent-magenta: #FF69B4;
       --accent-lime: #3DD68C;
       --accent-orange: #FFA347;
+      --accent-warning: #FFB74D;
+      --accent-error: #EF5350;
       --graph-pending: #6C757D;
       --graph-running: #FF9800;
       --graph-passed: #4CAF50;
@@ -206,6 +214,8 @@
       --accent-magenta: #f472b6;
       --accent-lime: #2dd4bf;
       --accent-orange: #fb923c;
+      --accent-warning: #FFAB40;
+      --accent-error: #FF5252;
       --graph-pending: rgba(100, 116, 139, 0.6);
       --graph-running: #fbbf24;
       --graph-passed: #34d399;
@@ -246,6 +256,8 @@
       --accent-magenta: #db2777;
       --accent-lime: #0d9488;
       --accent-orange: #ea580c;
+      --accent-warning: #EF6C00;
+      --accent-error: #E53935;
       --graph-pending: #9ca3af;
       --graph-running: #d97706;
       --graph-passed: #059669;
@@ -8457,6 +8469,233 @@
     .cdp-raw-view { display: none; padding: var(--md); font-family: monospace; font-size: 10px; color: var(--text-secondary); white-space: pre-wrap; background: var(--surface); overflow: auto; max-height: 600px; }
     .cdp-raw-view.visible { display: block; }
 
+    /* ============================================================
+       Puppet Master — New Component Stylesheet
+       Worktree management, subagent cards, source control,
+       crew collaboration, batch fan-out.
+       ============================================================ */
+
+    /* --- Worktree Binding Button --- */
+    .wt-bind-btn { width: 32px; height: 32px; background: none; border: none; cursor: pointer; position: relative; display: flex; align-items: center; justify-content: center; }
+    .wt-bind-btn.wt-unbound { opacity: 0.4; filter: grayscale(1); }
+    .wt-bind-btn.wt-bound { opacity: 1; color: var(--accent-lime); }
+    .wt-dirty-dot { position: absolute; top: 2px; right: 2px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-warning); animation: wtDirtyPulse 2s infinite; }
+    .wt-conflict-triangle { position: absolute; top: 1px; right: 1px; color: var(--accent-error); font-size: 8px; }
+
+    /* --- Worktree Dropdown --- */
+    .wt-bind-dropdown { width: 260px; position: absolute; top: 100%; right: 0; z-index: 200; background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); padding: 4px 0; opacity: 0; pointer-events: none; transform: translateY(-4px); transition: all 0.15s ease; }
+    .wt-bind-dropdown.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .wt-info-row { padding: 10px 14px; border-bottom: 1px solid var(--border-light); }
+    .wt-branch-name { font-weight: 700; font-size: 12px; font-family: monospace; color: var(--text-primary); margin-bottom: 2px; }
+    .wt-path { font-size: 10px; color: var(--text-muted); margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .wt-separator { height: 1px; background: var(--border-light); margin: 2px 0; }
+    .wt-action-row { padding: 7px 14px; cursor: pointer; font-size: 11px; color: var(--text-secondary); transition: background 0.12s; }
+    .wt-action-row:hover { background: var(--surface); color: var(--text-primary); }
+    .wt-action-row.destructive { color: var(--accent-error); }
+    .wt-action-row.destructive:hover { background: rgba(255,82,82,0.08); }
+
+    /* --- Status Pills --- */
+    .wt-status-pill { display: inline-block; font-size: 9px; padding: 2px 8px; border-radius: 10px; font-weight: 600; line-height: 1.4; }
+    .wt-status-pill.clean { background: rgba(0,255,65,0.12); color: var(--accent-lime); }
+    .wt-status-pill.dirty { background: rgba(255,179,0,0.12); color: var(--accent-warning); }
+    .wt-status-pill.conflict { background: rgba(255,82,82,0.12); color: var(--accent-error); }
+    .wt-status-pill.active { background: rgba(100,181,246,0.12); color: var(--accent-blue); }
+
+    /* --- Create Worktree Modal --- */
+    .wt-create-modal { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.55); display: flex; align-items: center; justify-content: center; animation: modalFadeIn 0.2s ease; }
+    .wt-modal-inner { width: 420px; max-width: 90vw; background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 12px; padding: 24px; box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+    .wt-modal-inner h3 { font-family: var(--display-font); font-size: 16px; margin: 0 0 16px 0; color: var(--text-primary); }
+    .wt-modal-inner label { display: block; font-size: 11px; color: var(--text-secondary); margin-bottom: 12px; }
+    .wt-modal-inner input, .wt-modal-inner select { width: 100%; margin-top: 4px; padding: 6px 10px; background: var(--surface); border: 1px solid var(--border-light); border-radius: 6px; color: var(--text-primary); font-size: 12px; box-sizing: border-box; }
+    .wt-collision-warning { margin-top: 8px; padding: 10px 12px; background: rgba(255,179,0,0.08); border-left: 3px solid var(--accent-warning); border-radius: 0 6px 6px 0; font-size: 11px; color: var(--text-secondary); }
+    .wt-error-msg { margin-top: 8px; font-size: 11px; color: var(--accent-error); }
+    .wt-creating { animation: wtCreateLoading 1.2s ease-in-out infinite; }
+
+    /* --- Merge Modal --- */
+    .wt-merge-modal { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.55); display: flex; align-items: center; justify-content: center; animation: modalFadeIn 0.2s ease; }
+    .wt-merge-inner { width: 500px; max-width: 90vw; background: var(--surface-elevated); border: 1px solid var(--border-light); border-radius: 12px; padding: 24px; box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+    .wt-merge-strategy { display: flex; gap: 0; margin-bottom: 16px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-light); }
+    .seg-btn { flex: 1; padding: 8px 0; text-align: center; font-size: 11px; font-weight: 600; cursor: pointer; background: var(--surface); color: var(--text-secondary); border: none; transition: all 0.15s; }
+    .seg-btn:hover { background: var(--surface-elevated); }
+    .seg-btn.active { background: var(--accent-blue); color: white; }
+    .wt-merge-commit-msg { width: 100%; min-height: 80px; font-family: monospace; font-size: 11px; resize: vertical; margin-top: 4px; padding: 8px 10px; background: var(--surface); border: 1px solid var(--border-light); border-radius: 6px; color: var(--text-primary); box-sizing: border-box; }
+    .wt-merge-guard { margin: 12px 0; padding: 10px 12px; border-left: 3px solid var(--accent-warning); background: rgba(255,179,0,0.06); border-radius: 0 6px 6px 0; font-size: 11px; }
+    .wt-test-output { margin: 12px 0; padding: 10px; font-family: monospace; font-size: 10px; background: var(--background); border-radius: 6px; max-height: 200px; overflow-y: auto; white-space: pre-wrap; line-height: 1.6; }
+    .wt-test-pass { border-left: 3px solid var(--accent-lime); }
+    .wt-test-fail { border-left: 3px solid var(--accent-error); }
+    .wt-post-merge-banner { margin: 12px 0; padding: 12px 14px; background: rgba(0,255,65,0.06); border: 1px solid rgba(0,255,65,0.15); border-radius: 8px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; }
+
+    /* --- Subagent Inline Cards --- */
+    .subagent-card { border: 1px solid var(--border-light); border-radius: 8px; margin: 10px 0; overflow: hidden; background: var(--surface); }
+    .subagent-card-header { display: flex; align-items: center; gap: 8px; padding: 10px 14px; cursor: pointer; transition: background 0.15s; flex-wrap: wrap; }
+    .subagent-card-header:hover { background: var(--surface-elevated); }
+    .sa-chevron { width: 12px; height: 12px; transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); flex-shrink: 0; color: var(--text-muted); }
+    .subagent-card.expanded .sa-chevron { transform: rotate(90deg); }
+    .sa-persona-label { font-weight: 700; font-size: 12px; color: var(--accent-blue); white-space: nowrap; }
+    .sa-task-summary { flex: 1; font-size: 11px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+    .sa-progress-bar { width: 60px; height: 4px; background: var(--border-light); border-radius: 2px; overflow: hidden; flex-shrink: 0; }
+    .sa-progress-fill { height: 100%; border-radius: 2px; background: var(--accent-blue); transition: width 0.6s cubic-bezier(0.4,0,0.2,1); }
+    .sa-model-badge { font-size: 9px; padding: 2px 7px; border: 1px solid var(--border-light); border-radius: 10px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
+    .sa-status-badge { font-size: 9px; padding: 2px 8px; border-radius: 10px; font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+    .sa-status-badge.queued { background: var(--surface-elevated); color: var(--text-muted); border: 1px dashed var(--border-light); }
+    .sa-status-badge.running { background: rgba(100,181,246,0.15); color: var(--accent-blue); animation: saStatusPulse 2s infinite; }
+    .sa-status-badge.awaiting { background: rgba(255,171,64,0.15); color: var(--accent-warning); }
+    .sa-status-badge.blocked { background: rgba(255,82,82,0.12); color: var(--accent-error); }
+    .sa-status-badge.complete { background: rgba(0,255,65,0.10); color: var(--accent-lime); }
+    .sa-status-badge.failed { background: rgba(255,82,82,0.12); color: var(--accent-error); }
+    .sa-status-badge.cancelled { background: rgba(128,128,128,0.10); color: var(--text-muted); opacity: 0.7; }
+    .sa-expanded-body { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s; }
+    .subagent-card.expanded .sa-expanded-body { max-height: 800px; opacity: 1; padding: 0 14px 14px; }
+    .sa-stream-section { margin-bottom: 10px; }
+    .sa-stream-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 5px; }
+    .sa-work-stream { font-size: 11px; font-family: monospace; background: var(--background); padding: 10px; border-radius: 6px; max-height: 160px; overflow-y: auto; line-height: 1.6; }
+    .sa-work-stream .tool-call { color: var(--accent-magenta); }
+    .sa-work-stream .tool-result { color: var(--text-muted); font-style: italic; }
+    .sa-thought-stream { font-size: 11px; color: var(--text-secondary); font-style: italic; padding: 10px; background: var(--surface-elevated); border-radius: 6px; border-left: 3px solid var(--accent-magenta); line-height: 1.5; }
+    .sa-state-block { padding: 8px 10px; border: 1px solid var(--border-light); border-radius: 6px; font-size: 11px; background: var(--surface-elevated); }
+    .sa-state-block .state-label { font-weight: 700; font-size: 10px; color: var(--accent-warning); margin-bottom: 4px; }
+    .sa-state-block.blocked-state .state-label { color: var(--accent-error); }
+    .sa-context-state { padding: 6px 10px; font-size: 10px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+    .sa-result-block { padding: 10px; background: rgba(0,255,65,0.04); border: 1px solid rgba(0,255,65,0.12); border-radius: 6px; font-size: 11px; margin-top: 8px; }
+    .sa-elapsed { font-size: 9px; color: var(--text-muted); margin-left: auto; flex-shrink: 0; }
+
+    /* --- Batch Card --- */
+    .sa-batch-card { border: 2px solid var(--border-light); border-radius: 10px; padding: 16px; margin: 12px 0; background: var(--surface); }
+    .sa-batch-header { font-weight: 700; font-size: 14px; color: var(--text-primary); display: flex; justify-content: space-between; align-items: center; }
+    .sa-batch-summary { display: flex; gap: 14px; font-size: 11px; margin: 10px 0; padding: 8px 0; border-bottom: 1px solid var(--border-light); flex-wrap: wrap; }
+    .sa-batch-summary span { display: flex; align-items: center; gap: 4px; }
+    .count-running { color: var(--accent-blue); font-weight: 600; }
+    .count-complete { color: var(--accent-lime); font-weight: 600; }
+    .count-queued { color: var(--text-muted); }
+    .count-failed { color: var(--accent-error); font-weight: 600; }
+    .count-blocked { color: var(--accent-warning); font-weight: 600; }
+    .sa-batch-group { border: 1px solid var(--border-light); border-radius: 8px; margin: 8px 0; overflow: hidden; }
+    .sa-batch-group-header { padding: 10px 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 600; transition: background 0.15s; }
+    .sa-batch-group-header:hover { background: var(--surface-elevated); }
+    .sa-batch-group-header .bg-chevron { width: 10px; height: 10px; transition: transform 0.2s; color: var(--text-muted); }
+    .sa-batch-group.expanded .bg-chevron { transform: rotate(90deg); }
+    .sa-batch-group.expanded > .sa-batch-group-header .sa-chevron { transform: rotate(90deg); }
+    .sa-batch-group-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .sa-batch-group.expanded .sa-batch-group-body { max-height: 2000px; }
+    .sa-batch-group-body .subagent-card { margin: 0; border-radius: 0; border-left: none; border-right: none; border-top: none; }
+    .sa-batch-group-body .subagent-card:last-child { border-bottom: none; }
+    .sa-batch-footer { font-size: 10px; color: var(--text-muted); margin-top: 10px; font-style: italic; }
+
+    /* --- Crew Board --- */
+    .sa-crew-board { border: 2px solid rgba(100,181,246,0.25); border-radius: 10px; padding: 16px; margin: 12px 0; background: rgba(100,181,246,0.03); }
+    .sa-crew-header { font-weight: 700; font-size: 14px; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .sa-crew-members-bar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+    .sa-crew-member-chip { display: flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border-light); font-size: 10px; background: var(--surface); font-weight: 600; }
+    .sa-crew-member-chip .member-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .sa-crew-member-chip .member-model { font-weight: 400; color: var(--text-muted); font-size: 9px; }
+    .sa-crew-debate { border-top: 1px solid var(--border-light); padding-top: 12px; }
+    .sa-crew-msg { padding: 10px 14px; margin: 8px 0; border-radius: 8px; font-size: 11px; background: var(--surface); line-height: 1.5; animation: crewDebateSlide 0.3s ease; }
+    .sa-crew-msg .crew-author { font-weight: 700; font-size: 10px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .sa-crew-msg.from-architect { border-left: 3px solid var(--accent-blue); }
+    .sa-crew-msg.from-architect .crew-author { color: var(--accent-blue); }
+    .sa-crew-msg.from-security { border-left: 3px solid var(--accent-magenta); }
+    .sa-crew-msg.from-security .crew-author { color: var(--accent-magenta); }
+    .sa-crew-msg.from-api { border-left: 3px solid var(--accent-lime); }
+    .sa-crew-msg.from-api .crew-author { color: var(--accent-lime); }
+    .sa-crew-msg.from-lead { border-left: 3px solid var(--accent-orange); }
+    .sa-crew-msg.from-lead .crew-author { color: var(--accent-orange); }
+    .sa-crew-synthesis { background: rgba(0,255,65,0.04); border: 1px solid rgba(0,255,65,0.15); padding: 14px; border-radius: 8px; margin-top: 12px; font-size: 11px; line-height: 1.6; }
+    .sa-crew-synthesis .synth-title { font-weight: 700; font-size: 12px; margin-bottom: 8px; color: var(--accent-lime); }
+    .sa-crew-confirmation { background: var(--surface-elevated); padding: 14px; border-radius: 8px; margin: 12px 0; border: 1px solid var(--border-light); }
+    .sa-crew-confirmation .conf-title { font-weight: 700; font-size: 11px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); }
+    .sa-crew-member-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 11px; border-bottom: 1px solid var(--border-light); }
+    .sa-crew-member-row:last-child { border-bottom: none; }
+    .sa-crew-member-row .role-label { font-weight: 600; color: var(--text-primary); }
+    .sa-crew-member-row .model-label { color: var(--text-muted); font-family: monospace; font-size: 10px; }
+
+    /* --- Source Control Accordion --- */
+    .sc-accordion { display: flex; flex-direction: column; }
+    .sc-accordion-section { border-bottom: 1px solid var(--border-light); }
+    .sc-accordion-header { display: flex; align-items: center; gap: 6px; padding: 9px var(--md); cursor: pointer; font-size: 10px; font-weight: 700; font-family: var(--display-font); letter-spacing: 0.05em; text-transform: uppercase; user-select: none; transition: background 0.15s; color: var(--text-secondary); }
+    .sc-accordion-header:hover { background: var(--surface); color: var(--text-primary); }
+    .sc-accordion-header .sc-chevron { width: 10px; height: 10px; transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); flex-shrink: 0; color: var(--text-muted); }
+    .sc-accordion-section.sc-open > .sc-accordion-header .sc-chevron { transform: rotate(90deg); }
+    .sc-accordion-section.open > .sc-accordion-header .sa-chevron { transform: rotate(90deg); display: inline-block; }
+    .sc-accordion-header .sc-badge-count { margin-left: auto; font-size: 9px; padding: 1px 7px; border-radius: 8px; background: rgba(100,181,246,0.12); color: var(--accent-blue); font-weight: 700; font-family: var(--body-font); }
+    .sc-accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0.4,0,0.2,1); }
+    .sc-accordion-section.sc-open > .sc-accordion-body { max-height: 600px; overflow-y: auto; }
+    .sc-accordion-section.open > .sc-accordion-body { max-height: 2000px; overflow-y: auto; }
+    .sc-wt-filter-bar { display: flex; gap: 3px; padding: 6px var(--md); border-bottom: 1px solid var(--border-light); }
+    .sc-wt-filter-btn { font-size: 9px; padding: 3px 10px; border-radius: 12px; cursor: pointer; border: 1px solid var(--border-light); background: transparent; color: var(--text-secondary); font-weight: 600; transition: all 0.15s; }
+    .sc-wt-filter-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+    .sc-wt-filter-btn.active { background: var(--accent-blue); color: white; border-color: var(--accent-blue); }
+    .sc-wt-row { padding: 9px var(--md); border-bottom: 1px solid rgba(128,128,128,0.1); cursor: pointer; transition: background 0.12s; }
+    .sc-wt-row:hover { background: var(--surface); }
+    .sc-wt-line1 { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+    .sc-wt-line2 { display: flex; align-items: center; gap: 6px; font-size: 10px; margin-top: 3px; color: var(--text-muted); }
+    .sc-wt-branch { font-weight: 700; font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sc-wt-owner { font-size: 9px; color: var(--text-secondary); }
+    .sc-wt-detail { max-height: 0; overflow: hidden; transition: max-height 0.25s ease; padding: 0 var(--md); }
+    .sc-wt-row.sc-wt-expanded .sc-wt-detail { max-height: 320px; padding: 8px var(--md) 10px; }
+    .sc-wt-detail-field { font-size: 10px; padding: 3px 0; display: flex; gap: 8px; }
+    .sc-wt-detail-field .field-label { color: var(--text-muted); min-width: 65px; flex-shrink: 0; }
+    .sc-wt-detail-field .field-value { color: var(--text-primary); font-family: monospace; font-size: 10px; user-select: all; }
+    .sc-wt-action-btns { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
+    .sc-wt-action-btns button { font-size: 9px; padding: 3px 10px; }
+    .sc-history-entry { padding: 7px var(--md); border-bottom: 1px solid rgba(128,128,128,0.1); font-size: 11px; display: flex; gap: 8px; align-items: baseline; }
+    .sc-history-entry:hover { background: var(--surface); }
+    .sc-history-hash { font-family: monospace; color: var(--accent-blue); font-size: 10px; flex-shrink: 0; font-weight: 600; }
+    .sc-history-msg { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sc-history-meta { font-size: 9px; color: var(--text-muted); flex-shrink: 0; white-space: nowrap; }
+    .sc-graph-view { padding: var(--md); font-family: monospace; font-size: 10px; line-height: 1.6; white-space: pre; color: var(--text-secondary); }
+
+    /* --- Thread Worktree Glyph --- */
+    .thread-wt-glyph { display: inline-flex; width: 8px; height: 8px; margin-right: 2px; vertical-align: middle; flex-shrink: 0; border-radius: 50%; border: 2px solid currentColor; }
+    .thread-wt-glyph.wt-clean { color: var(--accent-lime); }
+    .thread-wt-glyph.wt-dirty { color: var(--accent-warning); animation: wtDirtyPulse 2s infinite; }
+    .thread-wt-glyph.wt-conflict { color: var(--accent-error); }
+    .thread-wt-glyph.wt-stale { filter: saturate(0.3); opacity: 0.6; }
+
+    /* --- File Manager Worktree Breadcrumb --- */
+    .fm-wt-breadcrumb { display: flex; align-items: center; gap: 6px; padding: 6px var(--md); border-bottom: 1px solid var(--border-light); font-size: 10px; background: var(--surface); }
+    .fm-wt-breadcrumb .fm-wt-icon { width: 12px; height: 12px; color: var(--accent-lime); flex-shrink: 0; }
+    .fm-wt-breadcrumb .fm-wt-branch { font-weight: 700; font-family: monospace; color: var(--text-primary); }
+    .fm-wt-breadcrumb .fm-wt-swap { cursor: pointer; padding: 3px; border-radius: 4px; background: none; border: none; color: var(--text-muted); display: flex; transition: background 0.12s; }
+    .fm-wt-breadcrumb .fm-wt-swap:hover { background: var(--surface-elevated); color: var(--text-primary); }
+
+    /* --- New Keyframe Animations --- */
+    @keyframes saStatusPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }
+    @keyframes wtDirtyPulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.4); opacity: 0.7; } }
+    @keyframes wtCreateLoading { 0%,100% { box-shadow: 0 0 0 0 rgba(100,181,246,0.4); } 50% { box-shadow: 0 0 0 8px rgba(100,181,246,0); } }
+    @keyframes crewDebateSlide { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+
+    /* --- Glass Theme Overrides for New Components --- */
+    [data-theme^="glass"] .subagent-card { backdrop-filter: blur(10px); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+    [data-theme^="glass"] .sa-crew-board { backdrop-filter: blur(10px); background: rgba(45,212,191,0.04); border-color: rgba(45,212,191,0.15); }
+    [data-theme^="glass"] .sa-batch-card { backdrop-filter: blur(8px); background: rgba(255,255,255,0.03); }
+    [data-theme^="glass"] .wt-bind-dropdown { backdrop-filter: blur(14px); background: rgba(20,30,40,0.85); }
+    [data-theme^="glass"] .wt-create-modal .wt-modal-inner { backdrop-filter: blur(20px); background: rgba(20,30,40,0.9); }
+    [data-theme^="glass"] .wt-merge-modal .wt-merge-inner { backdrop-filter: blur(20px); background: rgba(20,30,40,0.9); }
+    [data-theme^="glass"] .sc-accordion-header { backdrop-filter: blur(6px); }
+    [data-theme^="glass"] .sa-crew-msg { backdrop-filter: blur(4px); background: rgba(255,255,255,0.03); }
+    [data-theme^="glass"] .fm-wt-breadcrumb { backdrop-filter: blur(8px); background: rgba(255,255,255,0.03); }
+    [data-theme^="glass"] .sa-thought-stream { backdrop-filter: blur(4px); background: rgba(244,114,182,0.06); }
+
+    /* --- Retro Theme Overrides for New Components --- */
+    [data-theme^="retro"] .subagent-card { border-radius: 0; border: var(--border-width) solid var(--border); }
+    [data-theme^="retro"] .sa-persona-label { font-family: var(--display-font); letter-spacing: 1px; text-transform: uppercase; }
+    [data-theme^="retro"] .sa-crew-board { border-radius: 0; border: var(--border-width) solid var(--accent-blue); }
+    [data-theme^="retro"] .sa-batch-card { border-radius: 0; }
+    [data-theme^="retro"] .wt-bind-dropdown { border-radius: 0; }
+    [data-theme^="retro"] .wt-create-modal .wt-modal-inner { border-radius: 0; border: var(--border-width) solid var(--border); }
+    [data-theme^="retro"] .wt-merge-modal .wt-merge-inner { border-radius: 0; border: var(--border-width) solid var(--border); }
+    [data-theme^="retro"] .sc-accordion-header { border-radius: 0; font-family: var(--display-font); }
+    [data-theme^="retro"] .sa-status-badge { border-radius: 0; }
+    [data-theme^="retro"] .wt-status-pill { border-radius: 0; }
+    [data-theme^="retro"] .sc-wt-filter-btn { border-radius: 0; }
+    [data-theme^="retro"] .sa-crew-member-chip { border-radius: 0; }
+    [data-theme^="retro"] .seg-btn { border-radius: 0; }
+    [data-theme^="retro"] .wt-merge-strategy { border-radius: 0; }
+    [data-theme^="retro"] .sa-batch-group { border-radius: 0; }
+
+    /* --- End New Component Stylesheet --- */
+
     /* --- Chat footer status --- */
     .chat-footer-status { font-size: 10px; color: var(--text-muted); padding: var(--xs) var(--md); display: flex; align-items: center; gap: var(--sm); }
     .chat-footer-status .subagent-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-lime); display: inline-block; animation: pulse 1.5s infinite; }
@@ -8672,10 +8911,22 @@
               <span>FILES</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
             </div>
+            <!-- Worktree breadcrumb -->
+            <div class="fm-wt-breadcrumb">
+              <button style="background:none; border:none; color:var(--text-secondary); cursor:pointer; display:flex; align-items:center; gap:4px; font-size:10px; padding:0;" onclick="toggleFileManagerRoot(this)">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+                <span style="color:var(--accent-blue);">feat/dashboard-v2</span>
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <span style="color:var(--text-muted);">/</span>
+              <span>puppet-master-rs</span>
+              <span style="color:var(--text-muted);">/</span>
+              <span>src</span>
+            </div>
             <div class="files-search">
               <div class="search-input-wrap">
                 <input type="text" placeholder="Search files..." class="wizard-input" style="flex:1;">
-                <button class="wizard-btn">🔍</button>
+                <button class="wizard-btn" style="font-size:11px;">Search</button>
               </div>
             </div>
             <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
@@ -8849,16 +9100,97 @@
             </div>
             <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
 
-              <!-- Subview tab strip -->
-              <div class="sc-subview-tabs" style="display:flex; gap:2px; margin-bottom:var(--md); border-bottom:1px solid var(--border-light); padding-bottom:var(--xs);">
-                <span class="sc-tab active" onclick="switchSCSubview(this,'changes')">Changes</span>
-                <span class="sc-tab" onclick="switchSCSubview(this,'history')">History</span>
-                <span class="sc-tab" onclick="switchSCSubview(this,'graph')">Graph</span>
-                <span class="sc-tab" onclick="switchSCSubview(this,'worktrees')">Worktrees</span>
-                <span class="sc-tab" onclick="switchSCSubview(this,'branches')">Branches</span>
+              <!-- Accordion replaces tab strip for Source Control subviews -->
+              <div class="sc-accordion">
+
+              <!-- Worktrees section (new, at top) -->
+              <div class="sc-accordion-section open">
+                <div class="sc-accordion-header">
+                  <span class="sa-chevron">&#9656;</span>
+                  <span>Worktrees</span>
+                  <span style="font-size:9px; color:var(--text-muted); margin-left:auto;">5 active</span>
+                </div>
+                <div class="sc-accordion-body">
+                  <div class="sc-wt-filter-bar">
+                    <button class="sc-wt-filter-btn active" onclick="filterWorktrees(this,'all')">All</button>
+                    <button class="sc-wt-filter-btn" onclick="filterWorktrees(this,'clean')">Clean</button>
+                    <button class="sc-wt-filter-btn" onclick="filterWorktrees(this,'dirty')">Dirty</button>
+                    <button class="sc-wt-filter-btn" onclick="filterWorktrees(this,'conflict')">Conflict</button>
+                  </div>
+                  <div class="sc-wt-row" data-wt-state="clean" onclick="this.classList.toggle('expanded')">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="wt-status-pill clean">clean</span>
+                      <span style="font-weight:600;">feat/dashboard-v2</span>
+                      <span style="color:var(--text-muted); font-size:9px; margin-left:auto;">thread0</span>
+                    </div>
+                    <div class="sc-wt-detail">
+                      <div style="font-size:10px; color:var(--text-secondary);">Base: main &middot; +42 -8 &middot; 3 files &middot; Last commit: 4m ago</div>
+                      <div style="display:flex; gap:var(--xs); margin-top:4px;">
+                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px;" onclick="event.stopPropagation(); toast('Opening diff for feat/dashboard-v2')">Diff</button>
+                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px;" onclick="event.stopPropagation(); showMergeModal()">Merge</button>
+                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px; color:var(--accent-error);" onclick="event.stopPropagation(); toast('Removing worktree feat/dashboard-v2...')">Remove</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sc-wt-row" data-wt-state="dirty" onclick="this.classList.toggle('expanded')">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="wt-status-pill dirty">2 dirty</span>
+                      <span style="font-weight:600;">feat/schema-update</span>
+                      <span style="color:var(--text-muted); font-size:9px; margin-left:auto;">thread2</span>
+                    </div>
+                    <div class="sc-wt-detail">
+                      <div style="font-size:10px; color:var(--text-secondary);">Base: main &middot; +80 -16 &middot; 5 files &middot; Last commit: 8m ago</div>
+                      <div style="display:flex; gap:var(--xs); margin-top:4px;">
+                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px;" onclick="event.stopPropagation(); toast('Opening diff for feat/schema-update')">Diff</button>
+                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px;" onclick="event.stopPropagation(); toast('Stashing changes...')">Stash</button>
+                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px;" onclick="event.stopPropagation(); showMergeModal()">Merge</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sc-wt-row" data-wt-state="clean" onclick="this.classList.toggle('expanded')">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="wt-status-pill clean">clean</span>
+                      <span style="font-weight:600;">feat/oauth2-pkce</span>
+                      <span style="color:var(--text-muted); font-size:9px; margin-left:auto;">thread-subagents</span>
+                    </div>
+                    <div class="sc-wt-detail">
+                      <div style="font-size:10px; color:var(--text-secondary);">Base: main &middot; +122 -11 &middot; 4 files &middot; Last commit: 1m ago</div>
+                    </div>
+                  </div>
+                  <div class="sc-wt-row" data-wt-state="dirty" onclick="this.classList.toggle('expanded')">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="wt-status-pill dirty">1 dirty</span>
+                      <span style="font-weight:600;">feat/multi-tenant</span>
+                      <span style="color:var(--text-muted); font-size:9px; margin-left:auto;">thread-worktree-merge</span>
+                    </div>
+                    <div class="sc-wt-detail">
+                      <div style="font-size:10px; color:var(--text-secondary);">Base: main &middot; +130 -4 &middot; 3 files &middot; Tests: 1 failing</div>
+                    </div>
+                  </div>
+                  <div class="sc-wt-row" data-wt-state="clean" onclick="this.classList.toggle('expanded')">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="wt-status-pill clean">clean</span>
+                      <span style="font-weight:600;">perf/analytics-opt</span>
+                      <span style="color:var(--text-muted); font-size:9px; margin-left:auto;">thread-escalation</span>
+                    </div>
+                    <div class="sc-wt-detail">
+                      <div style="font-size:10px; color:var(--text-secondary);">Base: main &middot; +0 -0 &middot; 2 files (read-only) &middot; Blocked</div>
+                    </div>
+                  </div>
+                  <button class="wizard-btn" style="width:100%; margin-top:var(--sm); font-size:10px;" onclick="showCreateWorktreeModal()">+ New Worktree</button>
+                </div>
               </div>
 
-              <!-- ═══ CHANGES subview ═══ -->
+              <!-- Changes section (wraps existing content) -->
+              <div class="sc-accordion-section open">
+                <div class="sc-accordion-header">
+                  <span class="sa-chevron">&#9656;</span>
+                  <span>Changes</span>
+                  <span style="font-size:9px; color:var(--text-muted); margin-left:auto;">1 staged, 2 unstaged</span>
+                </div>
+                <div class="sc-accordion-body">
+
+              <!-- ═══ CHANGES subview (inside accordion) ═══ -->
               <div data-sc-view="changes">
                 <div style="margin-bottom:var(--md);">
                   <select class="wizard-select" style="padding:var(--xs); font-size:11px; width:100%;" onchange="toast('Branch: ' + this.value)">
@@ -8950,9 +9282,20 @@
                   </div>
                 </details>
               </div>
+                </div><!-- /sc-accordion-body -->
+              </div><!-- /sc-accordion-section Changes -->
+
+              <!-- History accordion section -->
+              <div class="sc-accordion-section">
+                <div class="sc-accordion-header">
+                  <span class="sa-chevron">&#9656;</span>
+                  <span>History</span>
+                  <span style="font-size:9px; color:var(--text-muted); margin-left:auto;">3 commits</span>
+                </div>
+                <div class="sc-accordion-body">
 
               <!-- ═══ HISTORY subview ═══ -->
-              <div data-sc-view="history" style="display:none;">
+              <div data-sc-view="history">
                 <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
                   <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">COMMITS</summary>
                   <div style="padding:var(--sm); font-size:11px;">
@@ -8978,47 +9321,46 @@
                 </div>
                 <button class="wizard-btn" style="width:100%; padding:4px; font-size:10px;" onclick="toast('cmd.git.diff_set_compare_target → selecting compare base...')">Set Compare Target</button>
               </div>
+                </div><!-- /sc-accordion-body -->
+              </div><!-- /sc-accordion-section History -->
 
-              <!-- ═══ GRAPH subview ═══ -->
-              <div data-sc-view="graph" style="display:none;">
+              <!-- Graph accordion section -->
+              <div class="sc-accordion-section">
+                <div class="sc-accordion-header">
+                  <span class="sa-chevron">&#9656;</span>
+                  <span>Graph</span>
+                </div>
+                <div class="sc-accordion-body">
+              <div data-sc-view="graph">
                 <div style="padding:var(--xl); text-align:center; color:var(--text-muted); font-size:11px;">
-                  <div style="font-size:24px; margin-bottom:var(--sm);">⑂</div>
+                  <div style="font-size:24px; margin-bottom:var(--sm);">&#9794;</div>
                   <div>Lineage graph visualization</div>
                   <div style="margin-top:var(--sm); font-size:9px;">Branch ancestry, merge points, commit selection handoff</div>
                   <button class="wizard-btn" style="margin-top:var(--md); padding:4px 12px; font-size:10px;" onclick="toast('Opening full graph view...')">Open Full Graph</button>
                 </div>
               </div>
-
-              <!-- ═══ WORKTREES subview ═══ -->
-              <div data-sc-view="worktrees" style="display:none;">
-                <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
-                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">WORKTREES <span class="git-status" style="float:right;">2</span></summary>
-                  <div class="file-tree" style="padding:var(--sm);">
-                    <div class="file" style="font-size:11px; padding:4px 0; border-bottom:1px solid var(--border-light);">
-                      <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <b>main</b> <span class="status-badge" style="font-size:9px; padding:1px 4px;">Active</span>
-                      </div>
-                      <div style="color:var(--text-muted); margin-top:2px;">/puppet-master</div>
-                    </div>
-                    <div class="file" style="font-size:11px; padding:4px 0;">
-                      <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <b>feature/gui-update</b> <span class="status-badge" style="font-size:9px; padding:1px 4px; background:var(--accent-orange); color:#1A1A1A;">Stale</span>
-                      </div>
-                      <div style="color:var(--text-muted); margin-top:2px;">/.puppet-master/worktrees/wt-1</div>
-                      <div style="margin-top:4px;"><a href="#" onclick="event.preventDefault(); toast('Recovering worktree...')" style="color:var(--accent-blue);">Recover</a> | <a href="#" onclick="event.preventDefault(); toast('Pruning worktree...')" style="color:var(--accent-magenta);">Prune</a></div>
-                    </div>
-                  </div>
-                </details>
+                </div>
               </div>
 
-              <!-- ═══ BRANCHES/STASH subview ═══ -->
-              <div data-sc-view="branches" style="display:none;">
+              <!-- Branches & Stash accordion section -->
+              <div class="sc-accordion-section">
+                <div class="sc-accordion-header">
+                  <span class="sa-chevron">&#9656;</span>
+                  <span>Branches & Stash</span>
+                  <span style="font-size:9px; color:var(--text-muted); margin-left:auto;">3 branches, 1 stash</span>
+                </div>
+                <div class="sc-accordion-body">
+              <div data-sc-view="branches">
                 <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
                   <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">BRANCHES <span class="git-status" style="float:right;">3</span></summary>
                   <div style="padding:var(--sm); font-size:11px;">
                     <div style="padding:3px 0; cursor:pointer; display:flex; justify-content:space-between;" onclick="toast('Switch to main')"><span style="font-weight:600;">main</span> <span style="color:var(--accent-lime); font-size:9px;">current</span></div>
                     <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to feature/gui-update')">feature/gui-update</div>
                     <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to hotfix/auth-bug')">hotfix/auth-bug</div>
+                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to feat/dashboard-v2')">feat/dashboard-v2</div>
+                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to feat/oauth2-pkce')">feat/oauth2-pkce</div>
+                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to feat/multi-tenant')">feat/multi-tenant</div>
+                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to perf/analytics-opt')">perf/analytics-opt</div>
                   </div>
                 </details>
                 <details class="bento-widget" style="border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
@@ -9034,7 +9376,10 @@
                   </div>
                 </details>
               </div>
+                </div>
+              </div>
 
+              </div><!-- /sc-accordion -->
             </div>
           </div>
 
@@ -13037,12 +13382,15 @@
                 <a href="#a-branching" class="settings-tab" data-filter="core">Tiers & Branching</a>
 
                 
-<div class="settings-group-header">Features <span class="badge">5</span></div>
+<div class="settings-group-header">Features <span class="badge">8</span></div>
                 <a href="#a-memory" class="settings-tab" data-filter="features">Memory & Context</a>
                 <a href="#a-models" class="settings-tab" data-filter="features">Models & Media</a>
                 <a href="#a-security" class="settings-tab" data-filter="features">Security & FileSafe</a>
                 <a href="#a-containers" class="settings-tab" data-filter="features">Containers & Registry</a>
                 <a href="#a-interview" class="settings-tab" data-filter="features">Interview & Orchestrator</a>
+                <a href="#a-worktrees" class="settings-tab" data-filter="features">Worktrees</a>
+                <a href="#a-crew" class="settings-tab" data-filter="features">Crew Mode</a>
+                <a href="#a-subagents" class="settings-tab" data-filter="features">Subagents</a>
 
                 <div class="settings-group-header">System <span class="badge">4</span></div>
                 <a href="#a-auth" class="settings-tab" data-filter="system">Authentication & Accounts</a>
@@ -13180,6 +13528,53 @@
                       <label style="width: 100%;"><input type="checkbox" checked> Research subagents</label>
                     </div>
                     <button class="bento-action" style="margin-top: auto;">Configure 9 settings...</button>
+                  </div>
+                  <!-- Worktrees Card -->
+                  <div class="bento-card" data-inspector-view="worktrees" data-category="features" style="animation: slideInRight 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 650ms forwards;">
+                    <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg> Worktrees</div>
+                    <div class="bento-desc">Per-thread git worktree management and isolation.</div>
+                    <div class="bento-surface row">
+                      <label style="width: 100%;"><input type="checkbox" checked> Auto-create worktree on new thread</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Bind thread to worktree on switch</label>
+                      <label style="width: 100%;"><input type="checkbox"> Auto-stash on worktree switch</label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Default Merge Strategy <select style="width: 100%;"><option>Squash</option><option>Merge Commit</option><option>Rebase</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Pre-Merge Guard <select style="width: 100%;"><option>Run tests + lint</option><option>Run tests only</option><option>Skip</option></select></label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Show worktree glyph in thread sidebar</label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Worktree Root <input type="text" value="../.worktrees" style="width: 100%; font-family: var(--font-mono); font-size: 10px;"></label>
+                      <label style="width: 100%;"><input type="checkbox"> Prompt before removing worktree</label>
+                    </div>
+                    <button class="bento-action" style="margin-top: auto;">Configure 12 settings...</button>
+                  </div>
+                  <!-- Crew Mode Card -->
+                  <div class="bento-card" data-inspector-view="crew" data-category="features" style="animation: zoomInBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 700ms forwards;">
+                    <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Crew Mode</div>
+                    <div class="bento-desc">Multi-model deliberation and consensus settings.</div>
+                    <div class="bento-surface row">
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Default Crew Size <select style="width: 100%;"><option>3 members</option><option>5 members</option><option>7 members</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Consensus Mode <select style="width: 100%;"><option>Majority vote</option><option>Unanimous</option><option>Lead decides</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Max Debate Rounds <input type="number" value="4" min="1" max="10" style="width: 100%;"></label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Show debate board in chat</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Auto-synthesize after consensus</label>
+                      <label style="width: 100%;"><input type="checkbox"> Allow cross-provider crews (external models)</label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Default Lead Role <select style="width: 100%;"><option>Architect</option><option>Security</option><option>Product</option><option>Auto-assign</option></select></label>
+                    </div>
+                    <button class="bento-action" style="margin-top: auto;">Configure 10 settings...</button>
+                  </div>
+                  <!-- Subagents Card -->
+                  <div class="bento-card" data-inspector-view="subagents" data-category="features" style="animation: slideInLeft 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 750ms forwards;">
+                    <div class="bento-header"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bento-icon"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg> Subagents</div>
+                    <div class="bento-desc">Spawn limits, escalation policies, and batch control.</div>
+                    <div class="bento-surface row">
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Max Concurrent Subagents <input type="number" value="25" min="1" max="50" style="width: 100%;"></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Batch Group Size <input type="number" value="10" min="5" max="25" style="width: 100%;"></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Default Model for Subagents <select style="width: 100%;"><option>Haiku 4.5 (fast)</option><option>Sonnet 4.6 (balanced)</option><option>Opus 4 (powerful)</option></select></label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Escalation Policy <select style="width: 100%;"><option>Escalate to parent</option><option>Auto-resolve</option><option>Pause and notify</option></select></label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Show inline cards in chat</label>
+                      <label style="width: 100%;"><input type="checkbox" checked> Show thought stream</label>
+                      <label style="width: 100%;"><input type="checkbox"> Auto-expand running subagents</label>
+                      <label style="flex-direction: column; align-items: flex-start; gap: 4px; width: 100%;">Policy: Schema Modification <select style="width: 100%;"><option>Requires approval</option><option>Auto-allow</option><option>Deny</option></select></label>
+                    </div>
+                    <button class="bento-action" style="margin-top: auto;">Configure 15 settings...</button>
                   </div>
                   <!-- Auth Card -->
                   <div class="bento-card" data-inspector-view="auth" data-category="system" style="animation: zoomInBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 50ms forwards;">
@@ -14201,6 +14596,25 @@ error[E0433]: unresolved import `slint`
                     </div>
                   </span>
                   <a href="#" onclick="event.preventDefault(); if(window.PM_TERMINAL_DEMO) PM_TERMINAL_DEMO.showBottomTab('problems');" style="color:var(--accent-orange); border: 1px solid var(--accent-orange); display:flex; align-items:center; gap:4px; text-decoration: none; padding:2px 8px; border-radius:4px; font-weight:600; cursor:pointer;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Issues</a>
+                  <div class="wt-bind-wrap" style="position:relative;">
+                    <button class="wt-bind-btn wt-bound-clean" onclick="toggleWorktreeDropdown(this)" title="Worktree binding">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+                      <span class="wt-bind-label">feat/dashboard-v2</span>
+                      <span class="wt-status-pill clean">clean</span>
+                    </button>
+                    <div class="wt-bind-dropdown">
+                      <div style="font-weight:600; font-size:10px; padding:4px 8px; color:var(--text-muted);">Switch Worktree</div>
+                      <div style="padding:3px 8px; font-size:11px; cursor:pointer;" onclick="bindWorktree('feat/dashboard-v2')" onmouseenter="this.style.background='var(--surface-elevated)'" onmouseleave="this.style.background=''">feat/dashboard-v2 <span class="wt-status-pill clean" style="font-size:8px;">clean</span></div>
+                      <div style="padding:3px 8px; font-size:11px; cursor:pointer;" onclick="bindWorktree('feat/schema-update')" onmouseenter="this.style.background='var(--surface-elevated)'" onmouseleave="this.style.background=''">feat/schema-update <span class="wt-status-pill dirty" style="font-size:8px;">2 dirty</span></div>
+                      <div style="padding:3px 8px; font-size:11px; cursor:pointer;" onclick="bindWorktree('feat/oauth2-pkce')" onmouseenter="this.style.background='var(--surface-elevated)'" onmouseleave="this.style.background=''">feat/oauth2-pkce <span class="wt-status-pill clean" style="font-size:8px;">clean</span></div>
+                      <div style="padding:3px 8px; font-size:11px; cursor:pointer;" onclick="bindWorktree('feat/multi-tenant')" onmouseenter="this.style.background='var(--surface-elevated)'" onmouseleave="this.style.background=''">feat/multi-tenant <span class="wt-status-pill dirty" style="font-size:8px;">1 dirty</span></div>
+                      <div style="padding:3px 8px; font-size:11px; cursor:pointer;" onclick="bindWorktree('perf/analytics-opt')" onmouseenter="this.style.background='var(--surface-elevated)'" onmouseleave="this.style.background=''">perf/analytics-opt <span class="wt-status-pill clean" style="font-size:8px;">clean</span></div>
+                      <div style="border-top:1px solid var(--border-light); margin-top:4px; padding-top:4px;">
+                        <div style="padding:3px 8px; font-size:11px; cursor:pointer; color:var(--accent-blue);" onclick="showCreateWorktreeModal()" onmouseenter="this.style.background='var(--surface-elevated)'" onmouseleave="this.style.background=''">+ Create New Worktree</div>
+                        <div style="padding:3px 8px; font-size:11px; cursor:pointer; color:var(--text-muted);" onclick="unbindWorktree()" onmouseenter="this.style.background='var(--surface-elevated)'" onmouseleave="this.style.background=''">Unbind</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="panel-actions" style="display: flex; gap: var(--xs);">
@@ -14290,6 +14704,77 @@ error[E0433]: unresolved import `slint`
                     </div>
                     <div class="thread-hover-actions">
                       <button class="thread-action-btn" title="Export Bundle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+                  <!-- New threads: subagents, crew, worktree-merge, batch-fanout, escalation -->
+                  <div class="chat-thread-item role-assistant" data-thread="thread-subagents" onclick="switchToChatThread('thread-subagents')">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">2m</span>
+                      <div class="thread-title" style="display:flex; align-items:center; gap:4px;"><span class="thread-wt-glyph wt-clean"></span> Refactor: Auth Module</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
+                      <div class="thread-summary">3 subagents: OAuth2, session adapter, tests<br>feat/oauth2-pkce &middot; 2 running</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+                  <div class="chat-thread-item role-assistant" data-thread="thread-crew" onclick="switchToChatThread('thread-crew')">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">3m</span>
+                      <div class="thread-title">Crew: API Design Review</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
+                      <div class="thread-summary">3-model crew deliberation<br>Architect + Security + API &middot; consensus reached</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+                  <div class="chat-thread-item role-assistant" data-thread="thread-worktree-merge" onclick="switchToChatThread('thread-worktree-merge')">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">5m</span>
+                      <div class="thread-title" style="display:flex; align-items:center; gap:4px;"><span class="thread-wt-glyph wt-dirty"></span> Multi-Tenant Migration</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"></div>
+                      <div class="thread-summary">Merge pending &middot; 1 test failing<br>feat/multi-tenant &middot; squash to main</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+                  <div class="chat-thread-item role-assistant" data-thread="thread-batch-fanout" onclick="switchToChatThread('thread-batch-fanout')">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">4m</span>
+                      <div class="thread-title">Test Suite Parallelization</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
+                      <div class="thread-summary">25 subagents: 8 done, 11 running, 2 failed<br>~2 min remaining</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+                  <div class="chat-thread-item role-assistant" data-thread="thread-escalation" onclick="switchToChatThread('thread-escalation')">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">2m</span>
+                      <div class="thread-title" style="display:flex; align-items:center; gap:4px;"><span class="thread-wt-glyph wt-clean"></span> Database Optimization</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"></div>
+                      <div class="thread-summary">2 subagents: 1 awaiting, 1 blocked<br>perf/analytics-opt &middot; needs guidance</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
                       <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
                     </div>
                   </div>
@@ -14666,6 +15151,25 @@ error[E0433]: unresolved import `slint`
                     </div>
                   </span>
                   <a href="#" onclick="event.preventDefault(); if(window.PM_TERMINAL_DEMO) PM_TERMINAL_DEMO.showBottomTab('problems');" style="color:var(--accent-orange); border: 1px solid var(--accent-orange); display:flex; align-items:center; gap:4px; text-decoration: none; padding:2px 8px; border-radius:4px; font-weight:600; cursor:pointer;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Issues</a>
+                  <div class="wt-bind-wrap" style="position:relative;">
+                    <button class="wt-bind-btn wt-bound-clean" onclick="toggleWorktreeDropdown(this)" title="Worktree binding">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+                      <span class="wt-bind-label">feat/dashboard-v2</span>
+                      <span class="wt-status-pill clean">clean</span>
+                    </button>
+                    <div class="wt-bind-dropdown">
+                      <div style="font-weight:600; font-size:10px; padding:4px 8px; color:var(--text-muted);">Switch Worktree</div>
+                      <div style="padding:3px 8px; font-size:11px; cursor:pointer;" onclick="bindWorktree('feat/dashboard-v2')" onmouseenter="this.style.background='var(--surface-elevated)'" onmouseleave="this.style.background=''">feat/dashboard-v2 <span class="wt-status-pill clean" style="font-size:8px;">clean</span></div>
+                      <div style="padding:3px 8px; font-size:11px; cursor:pointer;" onclick="bindWorktree('feat/schema-update')" onmouseenter="this.style.background='var(--surface-elevated)'" onmouseleave="this.style.background=''">feat/schema-update <span class="wt-status-pill dirty" style="font-size:8px;">2 dirty</span></div>
+                      <div style="padding:3px 8px; font-size:11px; cursor:pointer;" onclick="bindWorktree('feat/oauth2-pkce')" onmouseenter="this.style.background='var(--surface-elevated)'" onmouseleave="this.style.background=''">feat/oauth2-pkce <span class="wt-status-pill clean" style="font-size:8px;">clean</span></div>
+                      <div style="padding:3px 8px; font-size:11px; cursor:pointer;" onclick="bindWorktree('feat/multi-tenant')" onmouseenter="this.style.background='var(--surface-elevated)'" onmouseleave="this.style.background=''">feat/multi-tenant <span class="wt-status-pill dirty" style="font-size:8px;">1 dirty</span></div>
+                      <div style="padding:3px 8px; font-size:11px; cursor:pointer;" onclick="bindWorktree('perf/analytics-opt')" onmouseenter="this.style.background='var(--surface-elevated)'" onmouseleave="this.style.background=''">perf/analytics-opt <span class="wt-status-pill clean" style="font-size:8px;">clean</span></div>
+                      <div style="border-top:1px solid var(--border-light); margin-top:4px; padding-top:4px;">
+                        <div style="padding:3px 8px; font-size:11px; cursor:pointer; color:var(--accent-blue);" onclick="showCreateWorktreeModal()" onmouseenter="this.style.background='var(--surface-elevated)'" onmouseleave="this.style.background=''">+ Create New Worktree</div>
+                        <div style="padding:3px 8px; font-size:11px; cursor:pointer; color:var(--text-muted);" onclick="unbindWorktree()" onmouseenter="this.style.background='var(--surface-elevated)'" onmouseleave="this.style.background=''">Unbind</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="panel-actions" style="display: flex; gap: var(--xs);">
@@ -14755,6 +15259,77 @@ error[E0433]: unresolved import `slint`
                     </div>
                     <div class="thread-hover-actions">
                       <button class="thread-action-btn" title="Export Bundle"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+                  <!-- New threads: subagents, crew, worktree-merge, batch-fanout, escalation -->
+                  <div class="chat-thread-item role-assistant" data-thread="thread-subagents" onclick="switchToChatThread('thread-subagents')">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">2m</span>
+                      <div class="thread-title" style="display:flex; align-items:center; gap:4px;"><span class="thread-wt-glyph wt-clean"></span> Refactor: Auth Module</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
+                      <div class="thread-summary">3 subagents: OAuth2, session adapter, tests<br>feat/oauth2-pkce &middot; 2 running</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+                  <div class="chat-thread-item role-assistant" data-thread="thread-crew" onclick="switchToChatThread('thread-crew')">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">3m</span>
+                      <div class="thread-title">Crew: API Design Review</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
+                      <div class="thread-summary">3-model crew deliberation<br>Architect + Security + API &middot; consensus reached</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+                  <div class="chat-thread-item role-assistant" data-thread="thread-worktree-merge" onclick="switchToChatThread('thread-worktree-merge')">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">5m</span>
+                      <div class="thread-title" style="display:flex; align-items:center; gap:4px;"><span class="thread-wt-glyph wt-dirty"></span> Multi-Tenant Migration</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"></div>
+                      <div class="thread-summary">Merge pending &middot; 1 test failing<br>feat/multi-tenant &middot; squash to main</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+                  <div class="chat-thread-item role-assistant" data-thread="thread-batch-fanout" onclick="switchToChatThread('thread-batch-fanout')">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">4m</span>
+                      <div class="thread-title">Test Suite Parallelization</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
+                      <div class="thread-summary">25 subagents: 8 done, 11 running, 2 failed<br>~2 min remaining</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+                  <div class="chat-thread-item role-assistant" data-thread="thread-escalation" onclick="switchToChatThread('thread-escalation')">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">2m</span>
+                      <div class="thread-title" style="display:flex; align-items:center; gap:4px;"><span class="thread-wt-glyph wt-clean"></span> Database Optimization</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"></div>
+                      <div class="thread-summary">2 subagents: 1 awaiting, 1 blocked<br>perf/analytics-opt &middot; needs guidance</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
                       <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
                     </div>
                   </div>
@@ -16685,6 +17260,655 @@ status: completed with warnings</pre>
 `
     };
 
+    // ── Thread: Subagents Demo ──────────────────────────────────────
+    mockThreads['thread-subagents'] = {
+      role: 'assistant',
+      title: 'Refactor: Auth Module',
+      headerTitle: 'ASSISTANT',
+      badgeTitle: 'ASSISTANT',
+      mode: 'agent',
+      html: `
+<div class="message user">
+  <div class="msg-body">Refactor the auth module to support OAuth2 PKCE flow alongside the existing session-based auth. Keep backward compatibility.</div>
+</div>
+
+<div class="message assistant">
+  <div class="msg-body">
+  I'll split this into three parallel workstreams. Spawning subagents now&hellip;
+
+  <div class="activity-card bash">
+    <div class="activity-card-header">
+      <span>Spawn 3 subagents</span>
+      <span style="font-size:9px; color:var(--text-muted);">0.3s</span>
+    </div>
+    <div class="activity-card-body">oauth2-specialist &middot; session-migrator &middot; test-writer</div>
+  </div>
+
+  <!-- Subagent 1: OAuth2 Specialist (expanded, running) -->
+  <div class="subagent-card expanded" data-sa-id="sa-oauth2">
+    <div class="subagent-card-header" onclick="this.closest('.subagent-card').classList.toggle('expanded')">
+      <span class="sa-chevron">&#9656;</span>
+      <span class="sa-persona-label" style="color:var(--accent-blue);">OAuth2 Specialist</span>
+      <span class="sa-task-summary">Implement PKCE flow in auth/oauth2.rs</span>
+      <span class="sa-status-badge running">running</span>
+      <span class="sa-model-badge">Sonnet 4.6</span>
+      <div class="sa-progress-bar"><div class="sa-progress-fill" style="width:65%"></div></div>
+    </div>
+    <div class="sa-expanded-body">
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Work Stream</div>
+        <div class="sa-work-stream">
+          <div class="activity-card file" style="margin:4px 0;">
+            <div class="activity-card-header"><span>Read auth/session.rs</span><span style="font-size:9px; color:var(--text-muted);">0.4s</span></div>
+            <div class="activity-card-body">Analyzed SessionManager trait &mdash; 142 lines, 6 public methods</div>
+          </div>
+          <div class="activity-card bash" style="margin:4px 0;">
+            <div class="activity-card-header"><span>Grep "impl OAuth"</span><span style="font-size:9px; color:var(--text-muted);">0.2s</span></div>
+            <div class="activity-card-body">No existing OAuth implementation found &mdash; clean slate</div>
+          </div>
+          <div class="activity-card file" style="margin:4px 0; border-left-color:var(--accent-lime);">
+            <div class="activity-card-header"><span style="color:var(--accent-lime);">Edit auth/oauth2.rs</span><span style="font-size:9px; color:var(--text-muted);">2.1s</span></div>
+            <div class="activity-card-body">+86 lines &mdash; PKCE challenge generation, token exchange, callback handler</div>
+          </div>
+        </div>
+      </div>
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Thought Stream</div>
+        <div class="sa-thought-stream">The existing SessionManager trait needs an abstraction layer. I&rsquo;ll create an AuthProvider trait that both OAuth2 and Session can implement. The PKCE verifier must be stored server-side in a short-lived cache &mdash; using the existing Redis connection for this. Code challenge method will be S256 per RFC 7636 best practice.</div>
+      </div>
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Context</div>
+        <div class="sa-context-state">
+          <span>14.2k / 128k tokens (11%)</span>
+          <span>&middot;</span>
+          <span>Elapsed: 1m 42s</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subagent 2: Session Migrator (collapsed, running) -->
+  <div class="subagent-card" data-sa-id="sa-session-migrator">
+    <div class="subagent-card-header" onclick="this.closest('.subagent-card').classList.toggle('expanded')">
+      <span class="sa-chevron">&#9656;</span>
+      <span class="sa-persona-label" style="color:var(--accent-lime);">Session Migrator</span>
+      <span class="sa-task-summary">Create backward-compatible session adapter</span>
+      <span class="sa-status-badge running">running</span>
+      <span class="sa-model-badge">Haiku 4.5</span>
+      <div class="sa-progress-bar"><div class="sa-progress-fill" style="width:40%"></div></div>
+    </div>
+    <div class="sa-expanded-body">
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Work Stream</div>
+        <div class="sa-work-stream">
+          <div class="activity-card file" style="margin:4px 0;">
+            <div class="activity-card-header"><span>Read auth/session.rs</span><span style="font-size:9px; color:var(--text-muted);">0.3s</span></div>
+            <div class="activity-card-body">Mapping existing session API surface for adapter layer</div>
+          </div>
+        </div>
+      </div>
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Thought Stream</div>
+        <div class="sa-thought-stream">The SessionAdapter needs to wrap both providers transparently. Existing callers use session.authenticate() &mdash; I&rsquo;ll keep that as the unified entry point with a provider discriminator.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subagent 3: Test Writer (collapsed, queued) -->
+  <div class="subagent-card" data-sa-id="sa-test-writer">
+    <div class="subagent-card-header" onclick="this.closest('.subagent-card').classList.toggle('expanded')">
+      <span class="sa-chevron">&#9656;</span>
+      <span class="sa-persona-label" style="color:var(--accent-magenta);">Test Writer</span>
+      <span class="sa-task-summary">Write integration tests for dual auth pathways</span>
+      <span class="sa-status-badge queued">queued</span>
+      <span class="sa-model-badge">Sonnet 4.6</span>
+      <div class="sa-progress-bar"><div class="sa-progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="sa-expanded-body">
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Status</div>
+        <div class="sa-thought-stream">Waiting for OAuth2 Specialist and Session Migrator to complete before generating test harness.</div>
+      </div>
+    </div>
+  </div>
+
+  All three subagents are active. The OAuth2 Specialist is making good progress on the PKCE implementation. Once the Session Migrator finishes the adapter layer, the Test Writer will generate integration tests covering both auth flows.
+  </div>
+  <div class="msg-hover-row">
+    <div class="msg-actions">
+      <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    </div>
+    <div class="msg-runtime-compact">
+      <span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4</span><span class="sep">&middot;</span><span>1m 42s</span>
+      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Subagents</span><span class="popover-value">3 (2 running, 1 queued)</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">28,400</span></div><div class="popover-row"><span class="popover-label">Context</span><span class="popover-value">42.1k / 200k</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.24</span></div></div>
+    </div>
+  </div>
+</div>
+`
+    };
+
+    // ── Thread: Crew Mode Demo ──────────────────────────────────────
+    mockThreads['thread-crew'] = {
+      role: 'assistant',
+      title: 'Crew: API Design Review',
+      headerTitle: 'ASSISTANT',
+      badgeTitle: 'ASSISTANT',
+      mode: 'agent',
+      html: `
+<div class="sa-crew-confirmation" style="margin-bottom:var(--md);">
+  <div style="font-weight:600; font-size:12px; margin-bottom:var(--sm);">Crew Assembled &mdash; 3 Members</div>
+  <div style="display:flex; gap:var(--sm); flex-wrap:wrap;">
+    <div style="display:flex; align-items:center; gap:6px; padding:4px 10px; background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:var(--border-radius); font-size:11px;">
+      <span style="width:8px; height:8px; border-radius:50%; background:var(--accent-blue);"></span>
+      <b>Lead Architect</b>
+      <span style="color:var(--text-muted);">Claude Opus 4 / PM Runtime</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:6px; padding:4px 10px; background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:var(--border-radius); font-size:11px;">
+      <span style="width:8px; height:8px; border-radius:50%; background:var(--accent-magenta);"></span>
+      <b>Security Expert</b>
+      <span style="color:var(--text-muted);">Claude Sonnet 4.6 / PM Runtime</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:6px; padding:4px 10px; background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:var(--border-radius); font-size:11px;">
+      <span style="width:8px; height:8px; border-radius:50%; background:var(--accent-lime);"></span>
+      <b>API Specialist</b>
+      <span style="color:var(--text-muted);">Gemini 2.5 Pro / Gemini Direct</span>
+    </div>
+  </div>
+</div>
+
+<div class="message user">
+  <div class="msg-body">Design the REST API for our multi-tenant workspace management. We need endpoints for workspace CRUD, member management, and role-based access control.</div>
+</div>
+
+<div class="message assistant">
+  <div class="msg-body">
+  The crew is deliberating. Here is the debate board:
+
+  <div class="sa-crew-board">
+    <div class="sa-crew-header">
+      <span style="font-weight:600;">Crew Debate</span>
+      <div class="sa-crew-members-bar">
+        <span class="sa-crew-member-chip" style="border-color:var(--accent-blue);">Architect</span>
+        <span class="sa-crew-member-chip" style="border-color:var(--accent-magenta);">Security</span>
+        <span class="sa-crew-member-chip" style="border-color:var(--accent-lime);">API</span>
+      </div>
+    </div>
+    <div class="sa-crew-debate">
+      <div class="sa-crew-msg from-architect">
+        <div style="font-weight:600; font-size:10px; margin-bottom:4px; color:var(--accent-blue);">Lead Architect</div>
+        I propose a resource-oriented REST design. Top-level resource is <code>/v1/workspaces</code>, with nested sub-resources for members and roles:
+        <div style="margin:6px 0; padding:6px 8px; background:var(--surface); border-radius:var(--border-radius); font-family:var(--font-mono); font-size:10px; white-space:pre;">GET    /v1/workspaces
+POST   /v1/workspaces
+GET    /v1/workspaces/{id}
+PATCH  /v1/workspaces/{id}
+DELETE /v1/workspaces/{id}
+GET    /v1/workspaces/{id}/members
+POST   /v1/workspaces/{id}/members
+DELETE /v1/workspaces/{id}/members/{uid}</div>
+        URL-based versioning (<code>/v1/</code>) gives us clean deprecation paths. Each workspace is a tenant boundary.
+      </div>
+
+      <div class="sa-crew-msg from-security">
+        <div style="font-weight:600; font-size:10px; margin-bottom:4px; color:var(--accent-magenta);">Security Expert</div>
+        RBAC needs scoped tokens. I recommend workspace-level JWTs with embedded role claims rather than API keys for member management. The token payload should include:
+        <div style="margin:6px 0; padding:6px 8px; background:var(--surface); border-radius:var(--border-radius); font-family:var(--font-mono); font-size:10px; white-space:pre;">{ "sub": "user_id",
+  "wid": "workspace_id",
+  "role": "admin|editor|viewer",
+  "scope": ["ws:read","ws:write","members:manage"] }</div>
+        API keys should be restricted to machine-to-machine integrations only, never for member management. Also: all DELETE endpoints need <code>X-Confirm-Delete</code> header to prevent accidental removal.
+      </div>
+
+      <div class="sa-crew-msg from-api">
+        <div style="font-weight:600; font-size:10px; margin-bottom:4px; color:var(--accent-lime);">API Specialist</div>
+        Agreed on resource structure. For pagination, I strongly recommend cursor-based over offset-based &mdash; workspace member lists can grow large and offset pagination breaks with concurrent writes. Proposed response envelope:
+        <div style="margin:6px 0; padding:6px 8px; background:var(--surface); border-radius:var(--border-radius); font-family:var(--font-mono); font-size:10px; white-space:pre;">{ "data": [...],
+  "cursor": { "next": "eyJ...", "has_more": true },
+  "meta": { "total_estimate": 1284 } }</div>
+        Rate limiting should be per-workspace, not per-user. Suggest <code>X-RateLimit-Workspace</code> headers.
+      </div>
+
+      <div class="sa-crew-msg from-architect">
+        <div style="font-weight:600; font-size:10px; margin-bottom:4px; color:var(--accent-blue);">Lead Architect</div>
+        Excellent points from both. Synthesizing positions now&hellip;
+      </div>
+    </div>
+  </div>
+
+  <div class="sa-crew-synthesis">
+    <div style="font-weight:600; font-size:11px; margin-bottom:var(--sm);">Synthesis &mdash; Unified API Design</div>
+    <div style="font-size:11px; line-height:1.6;">
+      <b>Endpoints:</b> Resource-oriented REST at <code>/v1/workspaces</code> with nested <code>/members</code> and <code>/roles</code> sub-resources.<br>
+      <b>Auth:</b> Workspace-scoped JWTs with embedded role claims. API keys restricted to M2M integrations. <code>X-Confirm-Delete</code> required on destructive operations.<br>
+      <b>Pagination:</b> Cursor-based with <code>next</code> token and <code>total_estimate</code> in meta. Default page size 50, max 200.<br>
+      <b>Rate Limiting:</b> Per-workspace quotas. Headers: <code>X-RateLimit-Workspace</code>, <code>X-RateLimit-Remaining</code>, <code>X-RateLimit-Reset</code>.<br>
+      <b>Versioning:</b> URL-based (<code>/v1/</code>, <code>/v2/</code>) with 6-month deprecation windows.
+    </div>
+  </div>
+
+  The crew has reached consensus. Would you like me to generate the OpenAPI spec or start implementing the endpoint handlers?
+  </div>
+  <div class="msg-hover-row">
+    <div class="msg-actions">
+      <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    </div>
+    <div class="msg-runtime-compact">
+      <span>Crew</span><span class="sep">&middot;</span><span>3 models</span><span class="sep">&middot;</span><span>2m 18s</span>
+      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Crew</span></div><div class="popover-row"><span class="popover-label">Members</span><span class="popover-value">3</span></div><div class="popover-row"><span class="popover-label">Debate Rounds</span><span class="popover-value">4</span></div><div class="popover-row"><span class="popover-label">Consensus</span><span class="popover-value" style="color:var(--accent-lime);">Reached</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">34,200</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.41</span></div></div>
+    </div>
+  </div>
+</div>
+`
+    };
+
+    // ── Thread: Worktree Merge Demo ─────────────────────────────────
+    mockThreads['thread-worktree-merge'] = {
+      role: 'assistant',
+      title: 'Multi-Tenant Migration',
+      headerTitle: 'ASSISTANT',
+      badgeTitle: 'ASSISTANT',
+      mode: 'agent',
+      html: `
+<div class="message user">
+  <div class="msg-body">Implement the multi-tenant database schema migration with row-level security.</div>
+</div>
+
+<div class="message assistant">
+  <div class="msg-body">
+  Working on the tenant isolation migration. I&rsquo;ve created the schema and RLS policies.
+
+  <div class="activity-card file">
+    <div class="activity-card-header">
+      <span>Read src/schema/tenant.rs</span>
+      <span style="font-size:9px; color:var(--text-muted);">0.6s</span>
+    </div>
+    <div class="activity-card-body">Existing single-tenant schema &mdash; 4 tables, no tenant_id column</div>
+  </div>
+
+  <div class="activity-card file" style="border-left-color:var(--accent-lime);">
+    <div class="activity-card-header">
+      <span style="color:var(--accent-lime);">Edit migrations/20260318_tenants.sql</span>
+      <span style="font-size:9px; color:var(--text-muted);">1.8s</span>
+    </div>
+    <div class="activity-card-body">+54 lines &mdash; ALTER TABLE ADD tenant_id, CREATE POLICY tenant_isolation, CREATE INDEX idx_tenant_created</div>
+  </div>
+
+  <div class="activity-card file" style="border-left-color:var(--accent-lime);">
+    <div class="activity-card-header">
+      <span style="color:var(--accent-lime);">Edit src/tenant/rls.rs</span>
+      <span style="font-size:9px; color:var(--text-muted);">2.4s</span>
+    </div>
+    <div class="activity-card-body">+38 lines &mdash; RLS policy enforcement middleware, tenant context propagation</div>
+  </div>
+
+  Migration is ready. Here are the pre-merge results:
+
+  <!-- Merge UI -->
+  <div class="wt-merge-modal" style="position:relative; display:block; background:transparent;">
+    <div class="wt-merge-inner" style="position:relative; transform:none; max-width:100%;">
+      <div style="font-weight:600; font-size:12px; margin-bottom:var(--sm);">Merge to main</div>
+      <div style="display:flex; gap:2px; margin-bottom:var(--sm);">
+        <button class="seg-btn active" onclick="selectMergeStrategy(this,'squash')">Squash</button>
+        <button class="seg-btn" onclick="selectMergeStrategy(this,'merge')">Merge</button>
+        <button class="seg-btn" onclick="selectMergeStrategy(this,'rebase')">Rebase</button>
+      </div>
+      <div style="font-size:10px; color:var(--text-muted); margin-bottom:var(--xs);">Target: <b>main</b></div>
+      <textarea class="wt-merge-commit-msg" rows="3">feat(tenant): add multi-tenant schema with RLS policies
+
+Add tenant_id to all tables, create row-level security
+policies for tenant isolation, and add migration script.</textarea>
+
+      <div style="margin:var(--sm) 0; padding:var(--xs) var(--sm); background:rgba(255,179,0,0.1); border:1px solid var(--accent-warning); border-radius:var(--border-radius); font-size:10px; color:var(--accent-warning);">
+        Warning: 1 uncommitted file in worktree (src/tenant/rls.rs has unstaged changes)
+      </div>
+
+      <!-- Test output -->
+      <div class="wt-test-output">
+        <div style="font-weight:600; font-size:10px; margin-bottom:var(--xs);">Pre-Merge Tests</div>
+        <div class="wt-test-pass">test tenant::isolation_test ... ok <span style="color:var(--text-muted);">(0.8s)</span></div>
+        <div class="wt-test-fail">test tenant::rls_policy_test ... FAILED <span style="color:var(--text-muted);">(1.2s)</span></div>
+        <div class="wt-test-pass">test tenant::migration_test ... ok <span style="color:var(--text-muted);">(0.3s)</span></div>
+        <div style="margin-top:var(--xs); padding-top:var(--xs); border-top:1px solid var(--border-light); font-size:10px;">
+          <span style="color:var(--accent-error);">failures:</span><br>
+          <span style="padding-left:12px; color:var(--text-secondary);">tenant::rls_policy_test &mdash; assertion failed: expected admin role to bypass RLS</span>
+        </div>
+        <div style="margin-top:var(--xs); font-size:10px; font-weight:600;">
+          test result: <span style="color:var(--accent-error);">FAILED</span>. 2 passed; 1 failed
+        </div>
+      </div>
+
+      <div style="display:flex; gap:var(--sm); margin-top:var(--sm);">
+        <button class="wizard-btn" style="background:var(--accent-error); color:#fff; border:none;" onclick="toast('Merging with 1 failure...')">Merge Anyway</button>
+        <button class="wizard-btn" onclick="toast('Merge cancelled')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post-merge banner -->
+  <div class="wt-post-merge-banner" style="margin-top:var(--sm);">
+    <span>Branch <b>feat/multi-tenant</b> merged into <b>main</b> via squash.</span>
+    <div style="display:flex; gap:var(--sm);">
+      <button class="wizard-btn" style="font-size:10px;" onclick="toast('Worktree retained for follow-up work')">Keep Worktree</button>
+      <button class="wizard-btn" style="font-size:10px; color:var(--accent-error);" onclick="toast('Removing worktree feat/multi-tenant...')">Remove Worktree</button>
+    </div>
+  </div>
+  </div>
+  <div class="msg-hover-row">
+    <div class="msg-actions">
+      <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    </div>
+    <div class="msg-runtime-compact">
+      <span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4</span><span class="sep">&middot;</span><span>4m 12s</span>
+      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Worktree</span><span class="popover-value">feat/multi-tenant</span></div><div class="popover-row"><span class="popover-label">Merge Status</span><span class="popover-value" style="color:var(--accent-warning);">Tests Failing</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">22,100</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.18</span></div></div>
+    </div>
+  </div>
+</div>
+`
+    };
+
+    // ── Thread: Batch Fan-Out Demo (25 subagents) ───────────────────
+    mockThreads['thread-batch-fanout'] = {
+      role: 'assistant',
+      title: 'Test Suite Parallelization',
+      headerTitle: 'ASSISTANT',
+      badgeTitle: 'ASSISTANT',
+      mode: 'agent',
+      html: `
+<div class="message user">
+  <div class="msg-body">Run the full integration test suite in parallel. Each test module should get its own subagent.</div>
+</div>
+
+<div class="message assistant">
+  <div class="msg-body">
+  Spawning 25 subagents for parallel test execution.
+
+  <div class="sa-batch-card">
+    <div class="sa-batch-header" onclick="this.closest('.sa-batch-card').classList.toggle('expanded')">
+      <span class="sa-chevron">&#9656;</span>
+      <span style="font-weight:600;">Integration Test Suite</span>
+      <span style="color:var(--text-muted); font-size:10px;">&mdash; 25 subagents</span>
+    </div>
+    <div class="sa-batch-summary">
+      <span class="sa-status-badge complete" style="font-size:9px;">8 complete</span>
+      <span class="sa-status-badge running" style="font-size:9px;">11 running</span>
+      <span class="sa-status-badge queued" style="font-size:9px;">3 queued</span>
+      <span class="sa-status-badge failed" style="font-size:9px;">2 failed</span>
+      <span class="sa-status-badge blocked" style="font-size:9px;">1 blocked</span>
+    </div>
+
+    <!-- Subgroup 1 (1-10) EXPANDED -->
+    <div class="sa-batch-group expanded">
+      <div class="sa-batch-group-header" onclick="this.closest('.sa-batch-group').classList.toggle('expanded')">
+        <span class="sa-chevron">&#9656;</span>
+        <span>Group 1 (1&ndash;10)</span>
+        <span style="color:var(--text-muted); font-size:10px;">7 complete &middot; 2 running &middot; 1 failed</span>
+      </div>
+      <div class="sa-batch-group-body">
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">auth_tests</span>
+            <span class="sa-status-badge complete" style="font-size:8px;">complete</span>
+            <span style="font-size:9px; color:var(--text-muted);">34s</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">user_tests</span>
+            <span class="sa-status-badge complete" style="font-size:8px;">complete</span>
+            <span style="font-size:9px; color:var(--text-muted);">28s</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">workspace_tests</span>
+            <span class="sa-status-badge complete" style="font-size:8px;">complete</span>
+            <span style="font-size:9px; color:var(--text-muted);">45s</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">permission_tests</span>
+            <span class="sa-status-badge running" style="font-size:8px;">running</span>
+            <span style="font-size:9px; color:var(--text-muted);">62%</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+            <div class="sa-progress-bar" style="width:60px;"><div class="sa-progress-fill" style="width:62%"></div></div>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">billing_tests</span>
+            <span class="sa-status-badge complete" style="font-size:8px;">complete</span>
+            <span style="font-size:9px; color:var(--text-muted);">22s</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">notification_tests</span>
+            <span class="sa-status-badge complete" style="font-size:8px;">complete</span>
+            <span style="font-size:9px; color:var(--text-muted);">31s</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px; color:var(--accent-error);">search_tests</span>
+            <span class="sa-status-badge failed" style="font-size:8px;">failed</span>
+            <span style="font-size:9px; color:var(--accent-error);">Timeout after 120s</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">storage_tests</span>
+            <span class="sa-status-badge complete" style="font-size:8px;">complete</span>
+            <span style="font-size:9px; color:var(--text-muted);">19s</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">migration_tests</span>
+            <span class="sa-status-badge running" style="font-size:8px;">running</span>
+            <span style="font-size:9px; color:var(--text-muted);">80%</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+            <div class="sa-progress-bar" style="width:60px;"><div class="sa-progress-fill" style="width:80%"></div></div>
+          </div>
+        </div>
+        <div class="subagent-card" style="margin:2px 0;">
+          <div class="subagent-card-header" style="padding:4px 8px;">
+            <span class="sa-persona-label" style="font-size:10px;">api_rate_limit_tests</span>
+            <span class="sa-status-badge complete" style="font-size:8px;">complete</span>
+            <span style="font-size:9px; color:var(--text-muted);">15s</span>
+            <span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subgroup 2 (11-20) collapsed -->
+    <div class="sa-batch-group">
+      <div class="sa-batch-group-header" onclick="this.closest('.sa-batch-group').classList.toggle('expanded')">
+        <span class="sa-chevron">&#9656;</span>
+        <span>Group 2 (11&ndash;20)</span>
+        <span style="color:var(--text-muted); font-size:10px;">1 complete &middot; 7 running &middot; 1 failed &middot; 1 blocked</span>
+      </div>
+      <div class="sa-batch-group-body">
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">webhook_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">45%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">email_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">33%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">audit_log_tests</span><span class="sa-status-badge complete" style="font-size:8px;">complete</span><span style="font-size:9px; color:var(--text-muted);">41s</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">export_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">58%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">import_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">22%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px; color:var(--accent-error);">realtime_tests</span><span class="sa-status-badge failed" style="font-size:8px;">failed</span><span style="font-size:9px; color:var(--accent-error);">Connection refused</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">scheduler_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">71%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">cache_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">55%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">queue_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">10%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">tenant_isolation_tests</span><span class="sa-status-badge blocked" style="font-size:8px;">blocked</span><span style="font-size:9px; color:var(--text-muted);">needs migration_tests</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+      </div>
+    </div>
+
+    <!-- Subgroup 3 (21-25) collapsed -->
+    <div class="sa-batch-group">
+      <div class="sa-batch-group-header" onclick="this.closest('.sa-batch-group').classList.toggle('expanded')">
+        <span class="sa-chevron">&#9656;</span>
+        <span>Group 3 (21&ndash;25)</span>
+        <span style="color:var(--text-muted); font-size:10px;">2 running &middot; 3 queued</span>
+      </div>
+      <div class="sa-batch-group-body">
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">graphql_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">38%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">analytics_tests</span><span class="sa-status-badge running" style="font-size:8px;">running</span><span style="font-size:9px; color:var(--text-muted);">12%</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">backup_tests</span><span class="sa-status-badge queued" style="font-size:8px;">queued</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">compliance_tests</span><span class="sa-status-badge queued" style="font-size:8px;">queued</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+        <div class="subagent-card" style="margin:2px 0;"><div class="subagent-card-header" style="padding:4px 8px;"><span class="sa-persona-label" style="font-size:10px;">e2e_smoke_tests</span><span class="sa-status-badge queued" style="font-size:8px;">queued</span><span class="sa-model-badge" style="font-size:8px;">Haiku 4.5</span></div></div>
+      </div>
+    </div>
+
+    <div style="padding:var(--sm) var(--md); font-size:10px; color:var(--text-muted); border-top:1px solid var(--border-light);">
+      Estimated completion: ~2 min remaining &middot; 2 failures need attention
+    </div>
+  </div>
+
+  The test suite is running across 25 parallel subagents. Group 1 is nearly complete with 1 failure in <code>search_tests</code> (timeout). I&rsquo;ll investigate once the full run finishes.
+  </div>
+  <div class="msg-hover-row">
+    <div class="msg-actions">
+      <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    </div>
+    <div class="msg-runtime-compact">
+      <span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4</span><span class="sep">&middot;</span><span>3m 45s</span>
+      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent (Batch)</span></div><div class="popover-row"><span class="popover-label">Subagents</span><span class="popover-value">25 total</span></div><div class="popover-row"><span class="popover-label">Running</span><span class="popover-value">11</span></div><div class="popover-row"><span class="popover-label">Failed</span><span class="popover-value" style="color:var(--accent-error);">2</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">86,400</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.92</span></div></div>
+    </div>
+  </div>
+</div>
+`
+    };
+
+    // ── Thread: Escalation Demo ─────────────────────────────────────
+    mockThreads['thread-escalation'] = {
+      role: 'assistant',
+      title: 'Database Optimization',
+      headerTitle: 'ASSISTANT',
+      badgeTitle: 'ASSISTANT',
+      mode: 'agent',
+      html: `
+<div class="message user">
+  <div class="msg-body">Optimize the slow queries in the analytics dashboard. The P95 latency is 4.2s, target is under 500ms.</div>
+</div>
+
+<div class="message assistant">
+  <div class="msg-body">
+  Spawning two subagents to analyze the query performance and schema.
+
+  <div class="activity-card bash">
+    <div class="activity-card-header">
+      <span>Spawn 2 subagents</span>
+      <span style="font-size:9px; color:var(--text-muted);">0.2s</span>
+    </div>
+    <div class="activity-card-body">query-analyzer &middot; schema-reviewer</div>
+  </div>
+
+  <!-- Subagent 1: Query Analyzer (awaiting parent) -->
+  <div class="subagent-card expanded" data-sa-id="sa-query-analyzer">
+    <div class="subagent-card-header" onclick="this.closest('.subagent-card').classList.toggle('expanded')">
+      <span class="sa-chevron">&#9656;</span>
+      <span class="sa-persona-label" style="color:var(--accent-orange);">Query Analyzer</span>
+      <span class="sa-task-summary">Analyze slow analytics queries</span>
+      <span class="sa-status-badge awaiting">awaiting parent</span>
+      <span class="sa-model-badge">Sonnet 4.6</span>
+      <div class="sa-progress-bar"><div class="sa-progress-fill" style="width:55%"></div></div>
+    </div>
+    <div class="sa-expanded-body">
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Work Stream</div>
+        <div class="sa-work-stream">
+          <div class="activity-card bash" style="margin:4px 0;">
+            <div class="activity-card-header"><span>EXPLAIN ANALYZE on dashboard_metrics</span><span style="font-size:9px; color:var(--text-muted);">0.8s</span></div>
+            <div class="activity-card-body">Seq Scan on events (cost=0.00..48291.12 rows=1284000) &mdash; missing index on tenant_id + created_at</div>
+          </div>
+          <div class="activity-card file" style="margin:4px 0;">
+            <div class="activity-card-header"><span>Read src/analytics/queries.rs</span><span style="font-size:9px; color:var(--text-muted);">0.3s</span></div>
+            <div class="activity-card-body">Found 3 queries with full table scans, 2 with N+1 patterns</div>
+          </div>
+        </div>
+      </div>
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Escalation</div>
+        <div class="sa-state-block" style="border-left-color:var(--accent-warning);">
+          <div style="font-weight:600; color:var(--accent-warning); font-size:10px; margin-bottom:4px;">Needs Clarification</div>
+          <div style="font-size:11px;">Should I add composite indexes on <code>tenant_id + created_at</code>, or restructure to materialized views? Both approaches have trade-offs:</div>
+          <ul style="font-size:10px; margin:4px 0 0 16px; color:var(--text-secondary);">
+            <li><b>Composite indexes:</b> Fast to implement, ~60% latency reduction, but increases write overhead by ~15%</li>
+            <li><b>Materialized views:</b> Best read performance (sub-100ms), but adds refresh lag and storage cost</li>
+          </ul>
+          <div style="font-size:10px; color:var(--accent-warning); margin-top:var(--xs);">Waiting for parent to decide approach&hellip;</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subagent 2: Schema Reviewer (blocked) -->
+  <div class="subagent-card expanded" data-sa-id="sa-schema-reviewer">
+    <div class="subagent-card-header" onclick="this.closest('.subagent-card').classList.toggle('expanded')">
+      <span class="sa-chevron">&#9656;</span>
+      <span class="sa-persona-label" style="color:var(--accent-error);">Schema Reviewer</span>
+      <span class="sa-task-summary">Review schema for optimization opportunities</span>
+      <span class="sa-status-badge blocked">blocked</span>
+      <span class="sa-model-badge">Sonnet 4.6</span>
+      <div class="sa-progress-bar"><div class="sa-progress-fill" style="width:20%"></div></div>
+    </div>
+    <div class="sa-expanded-body">
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Work Stream</div>
+        <div class="sa-work-stream">
+          <div class="activity-card file" style="margin:4px 0;">
+            <div class="activity-card-header"><span>Read src/analytics/schema.rs</span><span style="font-size:9px; color:var(--text-muted);">0.4s</span></div>
+            <div class="activity-card-body">Schema has 12 tables, identified 3 candidates for denormalization</div>
+          </div>
+        </div>
+      </div>
+      <div class="sa-stream-section">
+        <div class="sa-stream-label">Blocked</div>
+        <div class="sa-state-block" style="border-left-color:var(--accent-error);">
+          <div style="font-weight:600; color:var(--accent-error); font-size:10px; margin-bottom:4px;">Policy Denial</div>
+          <div style="font-size:11px;">Cannot modify production schema without admin approval.</div>
+          <div style="font-size:10px; color:var(--text-muted); margin-top:4px;">
+            Policy: <code>policy.schema_modification_requires_approval</code><br>
+            Required: <code>role:db-admin</code> or explicit user override
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:var(--md); padding:var(--sm) var(--md); background:var(--surface-elevated); border:1px solid var(--border-light); border-radius:var(--border-radius); font-size:11px;">
+    <b>Parent mediation:</b> The Query Analyzer needs guidance on approach. Given our read-heavy workload (95% reads, 5% writes), I recommend <b>composite indexes</b> as the safer first step &mdash; the 15% write overhead is acceptable given our traffic pattern. Materialized views can be Phase 2 once we validate the index approach in staging.
+    <div style="margin-top:var(--sm); display:flex; gap:var(--sm);">
+      <button class="wizard-btn" onclick="toast('Directing Query Analyzer: use composite indexes')">Approve Indexes</button>
+      <button class="wizard-btn" onclick="toast('Directing Query Analyzer: use materialized views')">Use Mat. Views</button>
+      <button class="wizard-btn" onclick="toast('Granting schema-reviewer db-admin role for this session')">Override Policy</button>
+    </div>
+  </div>
+  </div>
+  <div class="msg-hover-row">
+    <div class="msg-actions">
+      <button class="msg-control-btn" title="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+    </div>
+    <div class="msg-runtime-compact">
+      <span>Agent</span><span class="sep">&middot;</span><span>Claude</span><span class="sep">&middot;</span><span>Opus 4</span><span class="sep">&middot;</span><span>2m 06s</span>
+      <span class="info-icon" onclick="this.nextElementSibling.classList.toggle('visible')"><span style="font-size:10px; font-weight:700; font-style:italic; font-family:Georgia,serif;">i</span></span>
+      <div class="msg-runtime-popover"><div class="popover-row"><span class="popover-label">Mode</span><span class="popover-value">Agent</span></div><div class="popover-row"><span class="popover-label">Subagents</span><span class="popover-value">2 (0 running)</span></div><div class="popover-row"><span class="popover-label">Escalations</span><span class="popover-value" style="color:var(--accent-warning);">1 awaiting</span></div><div class="popover-row"><span class="popover-label">Blocks</span><span class="popover-value" style="color:var(--accent-error);">1 policy</span></div><div class="popover-row"><span class="popover-label">Tokens</span><span class="popover-value">18,600</span></div><div class="popover-row"><span class="popover-label">Est. Cost</span><span class="popover-value">$0.16</span></div></div>
+    </div>
+  </div>
+</div>
+`
+    };
+
     window.orchNodeDetailContent = {
       '1': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>1</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Phase</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-passed); color:#1A1A1A; padding:1px 4px; font-size:9px;">Passed</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>1m 20s</b></div></div></details>',
       '2': '<details open class="bento-widget" style="margin-bottom:var(--sm); border:1px solid var(--border-light); border-radius:4px; background:var(--surface-elevated);"><summary style="padding:var(--sm) var(--md); font-weight:bold; font-size:11px; cursor:pointer;">Node Summary</summary><div style="padding:var(--sm) var(--md); font-size:11px;"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Node ID</span> <b>2</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Type</span> <b>Phase</b></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">State</span> <span class="status-badge" style="background:var(--graph-running); color:#1A1A1A; padding:1px 4px; font-size:9px;">Running</span></div><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span style="color:var(--text-secondary);">Duration</span> <b>0m 45s</b></div></div></details>',
@@ -16739,7 +17963,12 @@ status: completed with warnings</pre>
         'thread6': { agents: '0 active subagents', files: 'build.rs <span class="ft-add">+4</span> <span class="ft-del">−2</span></span><span class="ft-file">dist/config.json <span class="ft-add">+1</span> <span class="ft-del">−0</span>' },
         'thread7': { agents: '0 active subagents', files: 'multi-tenant-refactor.md <span class="ft-add">+124</span> <span class="ft-del">−0</span>' },
         'thread8': { agents: '1 active subagent', files: 'tests/e2e/login.spec.ts <span class="ft-add">+28</span> <span class="ft-del">−4</span>' },
-        'thread-debug1': { agents: '1 active subagent', files: 'auth/token_refresh.rs <span class="ft-add">+0</span> <span class="ft-del">−0</span> (inspecting)' }
+        'thread-debug1': { agents: '1 active subagent', files: 'auth/token_refresh.rs <span class="ft-add">+0</span> <span class="ft-del">−0</span> (inspecting)' },
+        'thread-subagents': { agents: '3 active subagents', files: 'auth/oauth2.rs <span class="ft-add">+86</span> <span class="ft-del">−0</span></span><span class="ft-file">auth/session.rs <span class="ft-add">+24</span> <span class="ft-del">−8</span></span><span class="ft-file">auth/mod.rs <span class="ft-add">+12</span> <span class="ft-del">−3</span>' },
+        'thread-crew': { agents: '3 crew members active', files: '' },
+        'thread-worktree-merge': { agents: '0 active subagents', files: 'migrations/20260318_tenants.sql <span class="ft-add">+54</span> <span class="ft-del">−0</span></span><span class="ft-file">src/tenant/mod.rs <span class="ft-add">+38</span> <span class="ft-del">−4</span></span><span class="ft-file">src/tenant/rls.rs <span class="ft-add">+38</span> <span class="ft-del">−0</span>' },
+        'thread-batch-fanout': { agents: '25 subagents (11 running)', files: 'tests/**/*.rs (read-only analysis)' },
+        'thread-escalation': { agents: '2 subagents (0 running)', files: 'src/analytics/queries.rs <span class="ft-add">+0</span> <span class="ft-del">−0</span></span><span class="ft-file">src/analytics/schema.rs <span class="ft-add">+0</span> <span class="ft-del">−0</span>' }
       };
       // Update mode dropdown button text to match thread mode
       var modeLabel = thread.mode ? thread.mode.charAt(0).toUpperCase() + thread.mode.slice(1) : 'Agent';
@@ -16788,6 +18017,8 @@ status: completed with warnings</pre>
       document.querySelectorAll('.chat-stream-footer').forEach(function(el) {
         el.style.display = (hasActive || hasFiles || hasProblems) ? 'block' : 'none';
       });
+      // Update worktree button state for this thread
+      if (window.updateWorktreeButtonForThread) updateWorktreeButtonForThread(threadId);
     };
 
     window.toggleChatDropdown = function(type) {
@@ -16835,6 +18066,192 @@ status: completed with warnings</pre>
         document.querySelectorAll('.context-lens-popover').forEach(function(p) { p.classList.remove('active'); });
       }
     });
+
+    // ── Worktree binding functions ──────────────────────────────────
+    window.toggleWorktreeDropdown = function(btn) {
+      var wrap = btn.closest('.wt-bind-wrap') || btn.parentElement;
+      var dd = wrap.querySelector('.wt-bind-dropdown');
+      if (!dd) return;
+      dd.classList.toggle('active');
+    };
+    window.showCreateWorktreeModal = function() {
+      document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) { d.classList.remove('active'); });
+      var modal = document.getElementById('wtCreateModal');
+      if (modal) { modal.classList.add('active'); }
+      else {
+        var m = document.createElement('div');
+        m.className = 'wt-create-modal active';
+        m.id = 'wtCreateModal';
+        m.innerHTML = '<div class="wt-modal-inner">' +
+          '<div style="font-weight:600; font-size:13px; margin-bottom:var(--sm);">Create Worktree</div>' +
+          '<label style="font-size:10px; color:var(--text-secondary); display:block; margin-bottom:2px;">Branch Name</label>' +
+          '<input type="text" style="width:100%; padding:4px 8px; background:var(--surface); border:1px solid var(--border-light); border-radius:var(--border-radius); color:var(--text-primary); font-size:11px; margin-bottom:var(--sm);" placeholder="feat/my-feature" />' +
+          '<label style="font-size:10px; color:var(--text-secondary); display:block; margin-bottom:2px;">Base Branch</label>' +
+          '<select style="width:100%; padding:4px 8px; background:var(--surface); border:1px solid var(--border-light); border-radius:var(--border-radius); color:var(--text-primary); font-size:11px; margin-bottom:var(--md);">' +
+          '<option>main</option><option>develop</option><option>release/v2.4</option></select>' +
+          '<div style="display:flex; gap:var(--sm); justify-content:flex-end;">' +
+          '<button class="wizard-btn" onclick="hideCreateWorktreeModal()">Cancel</button>' +
+          '<button class="wizard-btn" style="background:var(--accent-blue); color:#fff; border-color:var(--accent-blue);" onclick="createWorktree(this)">Create</button>' +
+          '</div></div>';
+        document.body.appendChild(m);
+      }
+    };
+    window.hideCreateWorktreeModal = function() {
+      var m = document.getElementById('wtCreateModal');
+      if (m) m.classList.remove('active');
+    };
+    window.createWorktree = function(btn) {
+      var modal = btn.closest('.wt-modal-inner') || btn.closest('.wt-create-modal');
+      var input = modal.querySelector('input');
+      var name = input ? input.value : 'feat/new-branch';
+      if (!name) { if (window.toast) toast('Branch name required'); return; }
+      btn.textContent = 'Creating...';
+      btn.disabled = true;
+      setTimeout(function() {
+        hideCreateWorktreeModal();
+        if (window.toast) toast('Worktree created: ' + name);
+        document.querySelectorAll('.wt-bind-btn').forEach(function(b) {
+          b.classList.remove('wt-unbound');
+          b.classList.add('wt-bound-clean');
+          var lbl = b.querySelector('.wt-bind-label');
+          if (lbl) lbl.textContent = name;
+        });
+        btn.textContent = 'Create';
+        btn.disabled = false;
+      }, 800);
+    };
+    window.bindWorktree = function(name) {
+      document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) { d.classList.remove('active'); });
+      document.querySelectorAll('.wt-bind-btn').forEach(function(b) {
+        b.classList.remove('wt-unbound', 'wt-bound-dirty', 'wt-bound-conflict');
+        b.classList.add('wt-bound-clean');
+        var lbl = b.querySelector('.wt-bind-label');
+        if (lbl) lbl.textContent = name;
+      });
+      if (window.toast) toast('Bound to worktree: ' + name);
+    };
+    window.unbindWorktree = function() {
+      document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) { d.classList.remove('active'); });
+      document.querySelectorAll('.wt-bind-btn').forEach(function(b) {
+        b.className = 'wt-bind-btn wt-unbound';
+        var lbl = b.querySelector('.wt-bind-label');
+        if (lbl) lbl.textContent = 'No worktree';
+      });
+      if (window.toast) toast('Worktree unbound');
+    };
+
+    // ── Merge modal functions ───────────────────────────────────────
+    window.showMergeModal = function() {
+      var modal = document.getElementById('wtMergeModal');
+      if (modal) { modal.classList.add('active'); }
+      else {
+        var m = document.createElement('div');
+        m.className = 'wt-merge-modal active';
+        m.id = 'wtMergeModal';
+        m.innerHTML = '<div class="wt-merge-inner">' +
+          '<div style="font-weight:600; font-size:13px; margin-bottom:var(--sm);">Merge to main</div>' +
+          '<div style="display:flex; gap:2px; margin-bottom:var(--sm);">' +
+          '<button class="seg-btn active" onclick="selectMergeStrategy(this,\'squash\')">Squash</button>' +
+          '<button class="seg-btn" onclick="selectMergeStrategy(this,\'merge\')">Merge</button>' +
+          '<button class="seg-btn" onclick="selectMergeStrategy(this,\'rebase\')">Rebase</button></div>' +
+          '<textarea class="wt-merge-commit-msg" rows="3" placeholder="Commit message..."></textarea>' +
+          '<div style="display:flex; gap:var(--sm); justify-content:flex-end; margin-top:var(--sm);">' +
+          '<button class="wizard-btn" onclick="hideMergeModal()">Cancel</button>' +
+          '<button class="wizard-btn" style="background:var(--accent-lime); color:#111; border-color:var(--accent-lime);" onclick="executeMerge(this)">Merge</button>' +
+          '</div></div>';
+        document.body.appendChild(m);
+      }
+    };
+    window.hideMergeModal = function() {
+      var m = document.getElementById('wtMergeModal');
+      if (m) m.classList.remove('active');
+    };
+    window.selectMergeStrategy = function(btn, strategy) {
+      var parent = btn.parentElement;
+      parent.querySelectorAll('.seg-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+    };
+    window.executeMerge = function(btn) {
+      btn.textContent = 'Merging...';
+      btn.disabled = true;
+      setTimeout(function() {
+        hideMergeModal();
+        if (window.toast) toast('Merge complete. Branch squashed into main.');
+        btn.textContent = 'Merge';
+        btn.disabled = false;
+      }, 1200);
+    };
+
+    // ── Subagent card expand/collapse (event delegation) ────────────
+    document.addEventListener('click', function(e) {
+      var header = e.target.closest('.subagent-card-header');
+      if (header && !e.target.closest('.sa-batch-group')) {
+        header.closest('.subagent-card').classList.toggle('expanded');
+      }
+    });
+
+    // ── Batch subgroup expand/collapse ──────────────────────────────
+    document.addEventListener('click', function(e) {
+      var gh = e.target.closest('.sa-batch-group-header');
+      if (gh) { gh.closest('.sa-batch-group').classList.toggle('expanded'); }
+    });
+
+    // ── Source control accordion toggle ─────────────────────────────
+    document.addEventListener('click', function(e) {
+      var ah = e.target.closest('.sc-accordion-header');
+      if (ah) {
+        var section = ah.closest('.sc-accordion-section');
+        if (section) section.classList.toggle('open');
+      }
+    });
+
+    // ── Worktree filter bar ─────────────────────────────────────────
+    window.filterWorktrees = function(btn, filter) {
+      var bar = btn.closest('.sc-wt-filter-bar');
+      bar.querySelectorAll('.sc-wt-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var rows = btn.closest('.sc-accordion-body').querySelectorAll('.sc-wt-row');
+      rows.forEach(function(r) {
+        if (filter === 'all') { r.style.display = ''; }
+        else { r.style.display = r.getAttribute('data-wt-state') === filter ? '' : 'none'; }
+      });
+    };
+
+    // ── File manager worktree root toggle ───────────────────────────
+    window.toggleFileManagerRoot = function(btn) {
+      var bc = btn.closest('.fm-wt-breadcrumb');
+      var dd = bc.querySelector('.fm-wt-root-dropdown');
+      if (dd) dd.classList.toggle('active');
+    };
+
+    // ── Outside click: close worktree dropdowns ─────────────────────
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.wt-bind-wrap') && !e.target.closest('.wt-bind-dropdown')) {
+        document.querySelectorAll('.wt-bind-dropdown').forEach(function(d) { d.classList.remove('active'); });
+      }
+    });
+
+    // ── Update worktree button state per thread ─────────────────────
+    var wtThreadData = {
+      'thread0': { state: 'bound-clean', label: 'feat/dashboard-v2' },
+      'thread1': { state: 'unbound', label: 'No worktree' },
+      'thread2': { state: 'bound-dirty', label: 'feat/schema-update' },
+      'thread3': { state: 'bound-clean', label: 'fix/auth-refresh' },
+      'thread-subagents': { state: 'bound-clean', label: 'feat/oauth2-pkce' },
+      'thread-crew': { state: 'unbound', label: 'No worktree' },
+      'thread-worktree-merge': { state: 'bound-dirty', label: 'feat/multi-tenant' },
+      'thread-batch-fanout': { state: 'unbound', label: 'No worktree' },
+      'thread-escalation': { state: 'bound-clean', label: 'perf/analytics-opt' },
+      'thread-debug1': { state: 'bound-clean', label: 'debug/login-401' }
+    };
+    window.updateWorktreeButtonForThread = function(threadId) {
+      var data = wtThreadData[threadId] || { state: 'unbound', label: 'No worktree' };
+      document.querySelectorAll('.wt-bind-btn').forEach(function(btn) {
+        btn.className = 'wt-bind-btn wt-' + data.state;
+        var lbl = btn.querySelector('.wt-bind-label');
+        if (lbl) lbl.textContent = data.label;
+      });
+    };
 
     function setChatPanelVisible(visible) {
       const cp = document.getElementById('chatPanel');
