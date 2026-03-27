@@ -1,14 +1,33 @@
 ## 15. Plan Mode + Crew Mode
 
-- Plan mode produces a **plan + todo list**. Execution of that plan can be:
-  - **Regular agent** (single agent),  
-  - **Crew** (multi-agent coordination), or  
-  - **Agent + subagents** (main agent plus specialized subagents).  
-- The **manager/orchestrator** can automatically decide which execution strategy to use, or the **user can request** one (e.g. "execute with a crew", "use subagents for steps 2 and 3").  
-- Implementation must allow:
-  - Entering Plan mode, then choosing "execute with crew" (or similar) after the plan is ready.  
-  - Entering Crew mode (or "use a crew") and having the crew work from an existing plan or from a new plan created in the same flow.  
-- No conflicting assumptions: e.g. plan output format should be consumable by both single-agent and crew execution paths.
+Plan-mode and crew-mode rules must align with the PM child-run contract.
 
----
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md
 
+### Plan-mode delegated work
+
+`ask` and `plan` may launch delegated child runs only for read-only research or analysis.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md
+
+Rules:
+- no code-writing, file mutation, or execution child may be launched from `ask` or `plan`.
+- required planning dependencies may still be child runs as long as they remain read-only.
+- parent mode is a hard ceiling; a child may narrow but must not widen parent authority.
+- unresolved required planning children keep the plan provisional rather than falsely complete.
+
+### Crew-mode planning interaction
+
+Crew is an overlay, not a new runtime-mode enum. A crew launched from `plan` remains read-only; a crew launched from `regular` or `yolo` inherits those parent ceilings and guardrails.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Models_System.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+### Crew selection flow
+
+When crew mode is first invoked for a relevant scope:
+- if a valid default crew exists, ask whether to use the default crew.
+- otherwise ask which models to use.
+- after model selection, resolve and confirm provider/runtime mapping where ambiguity or restriction-sensitive mapping exists.
+- if any crew member is configured to use Copilot, the entire crew normalizes to Copilot as a crew-level provider constraint.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md

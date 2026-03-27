@@ -1018,186 +1018,19 @@ Other platforms follow the same pattern: use the exact plan-mode flags from the 
 
 ## Plan Mode Strategy & Defaults
 
-### Current State
+The orchestrator must follow the reconciled PM rule for delegated work in `ask` and `plan`.
 
-Plan mode is implemented per tier (phase, task, subtask, iteration) and flows from GUI/config → tier config → `IterationContext.plan_mode` → `ExecutionRequest.plan_mode` → each platform runner. Start-chain flows (interview, PRD generator, etc.) already use `plan_mode: true` explicitly.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md
 
-**Per-platform implementation (today):**
+Canonical decision:
+- `ask` and `plan` may launch delegated child runs only for read-only research or analysis.
+- required planning dependencies may still be child runs when they remain read-only.
+- parent mode is a hard ceiling.
+- the orchestrator must not silently widen a read-only planning run into execution authority.
 
-| Platform   | Plan mode implementation | Notes |
-|-----------|---------------------------|--------|
-| Cursor    | `--mode plan` (else `--force`) | Native; read-only planning then execute. |
-| Claude    | `--permission-mode plan`       | Native; read-only analysis. |
-| Codex     | PM direct-provider runtime policy | Direct provider; plan constraints are enforced by PM runtime policy rather than Codex CLI flags. |
-| Gemini    | Direct API plan-mode request              | Gemini is a Direct API provider; plan constraints applied via API parameters. |
-| GitHub Copilot | PM direct-provider runtime policy | Direct provider; plan constraints are enforced by PM runtime policy and effective entitlement context. |
+The orchestrator should classify planning children as `required` or `optional` so planning completion and summarization behave deterministically.
 
-### Plan Mode & Platform CLI Updates (Last ~2 Months)
-
-The following summarizes recent CLI releases (Dec 2025 - Feb 2026) that affect plan mode, subagents, hooks, plugins, and related behavior. Use this to keep `platform_specs`, runners, and AGENTS.md aligned with current behavior.
-
-**Cursor (agent / cursor-agent)**
-- **Jan 16, 2026:** Plan mode and Ask mode in CLI: `/plan` or `--mode=plan`, `/ask` or `--mode=ask`; cloud handoff with `&`; one-click MCP auth; word-level diffs.
-- **v2.4 (Jan 22):** Subagents (parallel, custom configs).
-- **v2.5 (Feb 17):** Plugins (marketplace: skills, subagents, MCP, hooks, rules); async subagents (can spawn child subagents); sandbox network access controls.
-- **Impact:** Plan mode implementation (`--mode plan`) is correct. Subagent and plugin support has expanded; consider documenting plugins and async subagents in platform capabilities.
-
-**Codex**
-- **0.100 (Feb 12):** ReadOnlyAccess policy, memory slash commands (`/m_update`, `/m_drop`), experimental JS REPL, app-server websocket refresh.
-- **0.101 (Feb 12):** Memory/model stability, model slug preservation.
-- **0.104 (Feb 18):** Distinct approval IDs for multi-approval shell commands; app-server v2 (thread archive notifications); `WS_PROXY`/`WSS_PROXY`; safety-check and cwd-prompt fixes.
-- **Runtime posture:** Codex is a Direct provider in PM, not a CLI-bridged runtime in this stack.
-- **Plan mode:** PM enforces plan constraints through requested/effective runtime policy, account selection, and permission posture rather than through Codex CLI flags.
-- **Upstream context:** Upstream Codex CLI and MCP-server capabilities remain relevant as ecosystem reference points, but they are not the canonical PM execution path for Codex.
-- **Impact:** Keep orchestrator assumptions aligned with the direct-provider model and avoid reintroducing Codex CLI-specific plan-mode mapping into PM runtime canon.
-
-**Claude Code**
-- **v2.1.41-v2.1.45 (Feb 2026):** CLI auth commands, Windows ARM64, prompt cache and startup improvements; v2.1.45: Sonnet 4.6, `spinnerTipsOverride`, rate-limit telemetry type updates, `enabledPlugins`/`extraKnownMarketplaces` from `--add-dir`, permission destination persistence, plugin command availability fix.
-- **Plan mode:** `--permission-mode plan` (unchanged).
-- **Subagents:** `.claude/agents/` markdown definitions; built-in Explore/Plan/General-purpose; CLI/runtime subagent support.
-- **Hooks:** SessionStart, UserPromptSubmit, PreToolUse, PermissionRequest, PostToolUse, SubagentStart/SubagentStop, etc.; config via `/hooks` or `~/.claude/settings.json` / project settings.
-- **Plugins:** `.claude-plugin/plugin.json`; skills namespaced as `/plugin-name:skill-name`.
-- **Impact:** Plan mode and subagent/hook/plugin docs are still accurate; v2.1.45 plugin and `--add-dir` behavior may matter for project-specific plugins.
-
-**Gemini (Direct API provider)**
-- **Plan mode:** Plan mode is enforced by Puppet Master (prompt/routing/policy). Gemini receives a plan-constrained request when `plan_mode` is enabled.
-- **Doctor / verification checks (Direct-provider):** API key present; `models.list` works; capability gating is consistent with Settings toggles; media routing matches `Plans/Media_Generation_and_Capabilities.md` (Cursor image routes to Cursor-native; Gemini media requires key and compatible model).
-- **Impact:** No provider CLI flags or provider-local config files are used for Gemini in this stack.
-
-**GitHub Copilot**
-- **Jan 14-21, 2026:** Plan mode in interactive UI (Shift+Tab); advanced reasoning models; GPT-5.2-Codex; inline steering; background delegation `&`; `/review`; context auto-compaction; automation flags (`--silent`, `--share`, `--available-tools`, `--excluded-tools`).
-- **Runtime posture:** GitHub Copilot is a Direct provider in PM, not a CLI-bridged runtime in this stack.
-- **Plan mode:** PM enforces plan constraints through direct-provider runtime policy, selected billing entity, and effective entitlement context rather than through Copilot CLI flags.
-- **Provider behavior:** Provider-side interactive plan affordances are upstream behavior, not the canonical PM runtime contract.
-- **Impact:** Keep orchestrator assumptions aligned with the direct-provider model and avoid encoding Copilot CLI-specific fallback behavior as PM canon.
-
-**Summary for this plan**
-- Plan mode: CLI plan-mode applies to Cursor and Claude Code only. `Gemini`, `Codex`, and `GitHub Copilot` are Direct providers in PM and should be modeled through PM runtime policy rather than CLI flags or CLI config files.
-- Subagents/hooks/plugins: Several providers have had relevant changes (Cursor plugins/async subagents; Codex ecosystem MCP context; Claude plugins/hooks; Gemini skills/policies/subagents; Copilot provider behavior). Keep platform-capabilities and subagent-integration sections in sync with release notes and official docs without reintroducing stale runtime classifications.
-
-**Gaps vs "use plan mode for every request":**
-
-1. **Default is off** -- All tiers default to `plan_mode: false` in `default_config` and in YAML, so users must enable it per tier.
-2. **No global override** -- There is no single "use plan mode for all tiers" or "prefer plan mode by default" setting; only per-tier toggles in Config and Wizard.
-3. **No one-click "all tiers"** -- Enabling plan mode for every tier requires toggling four tier cards.
-4. **Subagent invocations** -- When subagent integration is added, `ExecutionRequest` built for subagent runs must receive the same `plan_mode` as the tier (so plan mode is applied to every request, including subagent calls).
-5. **GitHub Copilot** -- If upstream provider surfaces expose a stronger direct-provider planning control or effective-runtime signal, prefer that canonical direct-provider contract over any legacy CLI-oriented fallback language in `platform_specs` and related docs.
-
-### Canonical decision
-
-Runtime `plan_mode` defaults remain **migration-safe OFF** for phase/task/subtask/iteration until a project or user explicitly opts in. This aligns with `Plans/Run_Modes.md`, where `plan` is a distinct read-only runtime mode rather than the default execution posture.
-
-A future convenience control MAY enable "all tiers plan-first" in one action, but it MUST write explicit per-tier config rather than changing the default.
-
-### Recommendations
-
-**1. Keep migration-safe default off for all tiers**
-
-- In `default_config.rs`, set `plan_mode: false` for `phase`, `task`, `subtask`, and `iteration`.
-- In `config_override.rs` and YAML defaults, use `plan_mode: false`.
-- Rationale: Existing projects should not be forced into plan mode on first load. Users can still enable plan mode quickly via global toggle or one-click action.
-
-**2. Global "Use plan mode for all tiers" (in scope -- see "GUI and Backend Scope" below)**
-
-- Add a single GUI control (e.g. in Config, above or beside tier cards): "Use plan mode for all tiers" that:
-  - When turned on: sets `plan_mode: true` for phase, task, subtask, and iteration.
-  - When turned off: sets `plan_mode: false` for all (or restores last per-tier values if we store them).
-- Optionally persist a "prefer plan mode" user preference only after explicit opt-in, so new tiers/configs remain migration-safe by default.
-
-**3. One-click "Enable plan mode for all tiers" (in scope)**
-
-- In Config (and optionally Wizard), add a button or link: "Enable plan mode for all tiers" that sets all four tier `plan_mode` to `true` in one action (single message or batch update).
-- Complements the global toggle and makes it easy to align with "plan mode for every request" without editing each card.
-
-**4. Ensure plan mode flows into subagent invocations**
-
-- When building `ExecutionRequest` (or equivalent) for subagent runs (e.g. in `execute_tier_with_subagents` or the platform adapter), pass through the tier's `plan_mode` (from `TierConfig` or `IterationContext`) so that:
-  - Every orchestrator-driven request (including subagent calls) respects the tier's plan mode setting.
-- In the subagent integration plan and code, explicitly document that `plan_mode` is taken from the tier and applied to the request used for the subagent.
-
-**5. Platform-specific robustness (in scope)**
-
-- **Gemini:** Gemini is a Direct API provider; plan-mode constraints are applied via API parameters. No CLI settings file check is needed.
-- **Copilot:** When a native plan flag exists, add it to `platform_specs` and the Copilot runner (e.g. `--plan` or equivalent) and use it when `plan_mode` is true, instead of or in addition to omitting `--allow-all-paths` / `--allow-all-urls`.
-- **Codex:** Current "read-only sandbox" behavior is a reasonable stand-in for plan mode; if Codex adds an explicit plan/read-only flag, prefer that and document in AGENTS.md.
-
-**6. Tooltip and discoverability (in scope)**
-
-- Update the `tier.plan_mode` tooltip to state that plan mode is recommended for all tiers for best results (e.g. "Recommended: enable for all tiers for more reliable, step-by-step behavior").
-- In Wizard, keep default plan mode toggles at false and provide a visible one-click "Enable plan mode for all tiers" action for opt-in behavior.
-
-**7. GUI gaps summary (cross-plan)**
-
-- **Config:** Plan mode and subagent UI live in Config (Tiers tab, optional global toggle, Subagents section). **MiscPlan** adds cleanup/evidence under Config → Advanced (§7.5); **Worktree** adds Branching tab controls. Ensure a single Save persists the whole GuiConfig (including plan mode, subagents, cleanup, branching) and that the Option B run-config build (see §config-wiring above) includes all of these so the run sees current UI state.
-- **Unwired / implementation status:** For a consolidated list of unwired features, missing GUI controls, and implementation status (interview config, run config Option B, cleanup, Doctor), see **MiscPlan §9.1.18**.
-- **Platform CLI capabilities (hooks, skills, plugins, extensions):** This plan documents them in **"Platform-Specific Capabilities & Extensions"** below. We pass subagent names and plan mode via **prompt/CLI args**; we do not require Cursor plugins or Claude hooks for core orchestration. **MiscPlan §7.6** summarizes how cleanup/prepare are implemented in Puppet Master and how we might optionally leverage or document platform hooks/skills. When changing subagent invocation, keep platform_specs and AGENTS.md aligned with CLI release notes.
-- **Plans/newfeatures.md:** For **orchestration prompt** injection (§1: session-level "assess → decompose → act → verify" via `--append-system-prompt`), **background/async agents** (§2: queue, git branch per run, output dir, GUI panel), and **hook system** (§9: event hooks as extension point at tier/iteration boundaries), see newfeatures; those features extend this plan without replacing tier or subagent structure.
-
-### Implementation checklist
-
-**Plan mode -- backend**
-- [ ] Keep default `plan_mode` as `false` for all tiers in `default_config.rs`, `config_override.rs`, and GUI defaults.
-- [ ] Add `use_plan_mode_all_tiers` (and optional `last_per_tier_plan_mode`) to persisted config; apply in tier config load/sync so all tiers become true/false when global is toggled.
-- [ ] Ensure subagent/invocation path receives tier `plan_mode` and passes it into `ExecutionRequest` (document in subagent plan and in code).
-
-**Plan mode -- frontend (Config)**
-- [ ] Add global "Use plan mode for all tiers" toggle in Config (above tier cards); message and handler; persist; when global on, tier plan_mode toggles disabled and show true.
-- [ ] Add "Enable plan mode for all tiers" one-click button in Config; message and handler; persist.
-- [ ] Update `tier.plan_mode` tooltip in `widgets/tooltips.rs` to recommend enabling for all tiers; add Gemini plan-mode hint on tier card when platform is Gemini and plan mode on.
-
-**Plan mode -- frontend (Wizard)**
-- [ ] Default plan mode to false for new runs in Wizard; add "Enable plan mode for all tiers" in Wizard when tier plan-mode toggles exist.
-
-**Subagent -- backend**
-- [ ] Add subagent config struct and load/save from `config.yaml` (or app config); orchestrator uses `enable_tier_subagents`, `tier_overrides`, `disabled_subagents`, `required_subagents`.
-
-**Subagent -- frontend (Config)**
-- [ ] Add "Subagents" section on Config: enable toggle, tier overrides (per-tier list or multi-select), disabled/required lists; messages and handlers; persist to same config as backend.
-- [ ] Add **Subagent personas / info setup:** seed/import available subagent persona definitions from provider-native directories (for example project `.claude/agents`) into Puppet Master Persona storage; user can add their own and delete any imported or user-created Persona; optional AI/batch trim writes a normalized lower-footprint copy back into Puppet Master storage; list with name + description; "Edit" opens Persona editing against canonical Puppet Master storage; prompt builder / runner resolves the Persona from Puppet Master storage when invoking that subagent (see Gap §11).
-
-**Doctor**
-- [ ] Gemini is a Direct API provider; no CLI settings check is needed. Doctor validates Gemini API key presence when any tier uses Gemini.
-- [ ] **Plans/newtools.md:** Add Doctor checks for (1) headless tool exists/runs when project planned custom headless tool, (2) platform CLI versions (e.g. `agent --version`, `codex --version`), (3) MCP/Context7 reachable per platform. Use newtools §8.2 for per-platform MCP config reference; §11 and §12.6 for headless-tool and MCP check details.
-
-**Other**
-- [ ] When Copilot (or Codex) gains a native plan flag, add it to `platform_specs` and the runner and update AGENTS.md.
-- [ ] **Fully test plan mode in the CLIs:** Add plan mode CLI verification tests (run each platform CLI with plan mode enabled; assert exit success and correct flags); env-gated like `platform_cli_smoke` (e.g. `RUN_PLAN_MODE_CLI_TESTS=1`). See "3. Plan Mode CLI Verification" in this plan.
-- [ ] Unit tests for global plan-mode toggle and one-click; subagent config load/apply tests.
-- [ ] **Resolve gaps:** Before or during implementation, resolve each item in **"Gaps and Clarifications"** (persistence location for plan-mode global, subagent in GuiConfig, Doctor config source, canonical subagent list, tier-overrides shape, orchestrator/subagent code path, Message/handlers, TierId type, **interview config wiring -- Gap §9**, **platform-specific parsers -- Gap §10**, **subagent persona registry and injection -- Gap §11**).
-- [ ] **Mitigate potential issues:** Review **"Potential Issues"** and address defaults, validation, platform adapters, caching, and persistence so the feature is robust in production.
-- [ ] **DRY method and widget catalog:** Check `docs/gui-widget-catalog.md` before adding UI; use existing widgets; tag new reusable items with `DRY:WIDGET:`, `DRY:FN:`, or `DRY:DATA:`; run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` after widget changes.
-- [ ] **Interview config wiring:** Wire interview settings per **"Interviewer Enhancements and Config Wiring"**: add `min_questions_per_phase` and `max_questions_per_phase` (Option for unlimited) to `InterviewOrchestratorConfig`, set from `gui_config.interview` in `app.rs`, use in PhaseManager and phase-complete logic and prompts; add GUI controls (Min / Max with Unlimited). Wire `require_architecture_confirmation` and `vision_provider` into `InterviewOrchestratorConfig` and use in interview flow (architecture gate; vision platform when image flows exist).
-- [ ] **Config-wiring validation at each tier:** Implement `validate_config_wiring_for_tier` (or equivalent) and call it at **Phase start, Task start, Subtask start, Iteration start** in the main orchestrator (and at phase/sub-tier start in the interview orchestrator). See **"Avoiding Built but Not Wired"** and **Implementation Notes -- Config-wiring validation**.
-
-**Config-Wiring Validation: Required vs Optional Fields (Resolved):**
-
-| Field | Category | On Missing |
-|-------|----------|------------|
-| `platform` | Required | **Fail** — cannot execute without a Provider |
-| `model` | Required | **Fail** — cannot execute without a model |
-| `working_directory` | Required | **Fail** — cannot execute without a target directory |
-| `effort` | Optional | **Warn** — use Provider default |
-| `plan_mode` | Optional | **Warn** — use global default (`false`) |
-| `subagents` | Optional | **Warn** — use tier-level default assignment |
-| `custom_hooks` | Optional | **Warn** — no hooks applied |
-| `max_turns` | Optional | **Warn** — use Provider default (unlimited) |
-| `timeout` | Optional | **Warn** — no timeout |
-
-Validation runs at tier start via `validate_config_wiring_for_tier()`. Required field failures emit `config.validation.failed` seglog event and halt. Optional field warnings emit `config.validation.warning` and proceed with defaults.
-- [ ] **AGENTS.md wiring checklist:** Add to AGENTS.md (e.g. under Pre-Completion Verification Checklist or DO): for any new execution-affecting config, follow the three-step wiring checklist (add to execution config, set at construction from GUI/file, use in runtime); link to this plan or REQUIREMENTS.md.
-- [ ] **Start and end verification:** Implement start-of-phase/task/subtask verification (config-wiring + wiring/readiness: GUI? backend? steps make sense? gaps?) and end-of-phase/task/subtask verification (wiring re-check + acceptance gate + quality verification / code review). See **"Start and End Verification at Phase, Task, and Subtask"**; resolve gaps there (quality definition per tier, readiness checklist source of truth, interview-phase mirror).
-- [ ] **Lifecycle hooks:** Implement BeforeTier/AfterTier hooks (track active subagent, inject context, prune stale state, validate handoff format). Leverage platform-native hooks where available (Cursor, Claude, Gemini); use orchestrator-level middleware for all platforms. Use file-based coordination for Codex/Copilot. See **"Lifecycle and Quality Features"**.
-- [ ] **Structured handoff validation:** Implement `validate_subagent_output()` with platform-specific parsers (JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot). Enforce `SubagentOutput` format (task_report, downstream_context, findings). Retry on malformed output; fail-safe after retry.
-- [ ] **Remediation loop:** Implement remediation loop for Critical/Major findings. Parse findings from reviewer subagent; block completion on Critical/Major; re-run overseer + reviewer until resolved or max retries; escalate to parent-tier on max retries. Minor/Info findings log and proceed.
-- [ ] **Cross-session memory:** Implement `save_memory()` and `load_memory()` for architectural decisions, patterns, tech choices, pitfalls. Persist at Phase completion; load at run start; inject into Phase 1 context. Use for subagent selection (e.g., "project uses Rust" → prefer rust-engineer).
-- [ ] **Active agent tracking:** Track `active_subagent: Option<String>` in `TierContext`; update in BeforeTier/AfterTier hooks; persist to `.puppet-master/state/active-subagents.json`; expose for logging, debugging, GUI display.
-- [ ] **Safe error handling:** Wrap hooks and verification functions in `safe_hook_main()` that guarantees structured output (JSON or Result) even on failure. Hooks must never crash the session.
-- [ ] **Lazy lifecycle:** Create verification state directories on first write (no setup command); prune stale state (>2 hours) in BeforeTier hook (no teardown command).
-
-This keeps plan mode easy to enable for every request while preserving migration-safe defaults and per-tier control.
-
----
-
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
 ## GUI and Backend Scope (All In-Scope Now)
 
 All previously "optional" or "later" plan-mode and subagent GUI/backend items are **in scope now**. The following specifies frontend and backend so they work end-to-end.
@@ -1224,10 +1057,25 @@ All previously "optional" or "later" plan-mode and subagent GUI/backend items ar
 
 ### 4. Subagent -- Backend
 
-- **Config model:** Add (or extend) a struct for subagent config used at runtime (e.g. in `config/` or `types/config.rs`): `enable_tier_subagents: bool`, `tier_overrides: TierSubagentOverrides` (e.g. map tier → list of subagent names), `disabled_subagents: Vec<String>`, `required_subagents: Vec<String>` (optional). Load from `.puppet-master/config.yaml` under `subagentConfig`; if missing, use defaults: `enable_tier_subagents: true`, empty overrides, empty disabled/required.
-- **Orchestrator:** When selecting subagents for a tier, if `enable_tier_subagents` is false, skip subagent invocation (or use a single "general" path). If true, run selection logic then apply overrides: for that tier, if `tier_overrides` has an entry, use it (or merge/filter with selected list). Filter out any in `disabled_subagents`; optionally require any in `required_subagents`.
-- **Persistence:** When the GUI changes subagent settings, write back to config (YAML or same store as rest of app config); single save path that includes subagent config.
+The orchestrator launches PM child runs, not provider-native ad hoc agent processes.
 
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/storage-plan.md
+
+Backend requirements:
+- every delegated launch creates a canonical child-run record.
+- each child is marked `required` or `optional`.
+- child routing resolves requested versus effective Persona, runtime surface, model, and effort.
+- capability narrowing is applied before launch.
+- child lifecycle actions remain distinct: retry, reroute, replacement, resume, cancellation.
+- parent orchestration state is a projection over child records/events, not a separate ad hoc store.
+
+Parent orchestration responsibilities:
+- maintain child rollups by batch and subgroup.
+- consolidate overlapping child escalations before asking the user.
+- summarize required child outcomes before optional findings.
+- keep unresolved required children from being treated as complete.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
 ### 5. Subagent -- Frontend (Config)
 
 - **DRY:** Check `docs/gui-widget-catalog.md` before adding controls; use existing toggler, styled_button, layout helpers; tag new reusable widgets/helpers with `DRY:WIDGET:` or `DRY:FN:`; run `scripts/generate-widget-catalog.sh` after changes.
@@ -1275,193 +1123,19 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 ### 4. Canonical list of subagent names
 
 ### Delegated tool-contract alignment
-Delegated runtime behavior stays aligned with the centralized Assistant Chat and tool-contract model rather than defining orchestrator-local variants.
+
+Orchestrator delegation enters the same `task` tool child-run contract used elsewhere.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Commands_System.md, ContractName:Plans/interview-subagent-integration.md
 
 Rules:
-- `task` launches delegated runs with narrowed-or-equal permission snapshots rather than freeform child policy
-- `todowrite` and `todoread` stay denied by default for subagent runs unless run config explicitly re-enables them
-- delegated execution consumes the same normalized TODO schema as approved chat planning output
-- direct user questionnaire prompting stays on the top-level assistant/question-flow surface unless runtime explicitly delegates that boundary
+- no provider-native `/subagent`, `/agent`, `/fleet`, or `/delegate` syntax is normative orchestrator runtime behavior.
+- launch validation goes through `subagent_registry` and the requested/effective runtime pipeline.
+- explicit runtime-surface requests do not silently fallback.
+- Copilot-native routing remains strict-denied unless the parent is already Copilot-rooted.
+- command subtasks and orchestrator child runs are not separate runtime classes.
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
-
-**Clarification:** `DRY:DATA:subagent_registry` is the canonical list for **delegated subagent/task-tool execution**, not the complete set of valid runtime Personas.
-
-Non-delegated surface resolution (Chat, Interview, Requirements Builder, Orchestrator planning/review frames, and natural-language Persona resolution) MUST validate against the broader `persona_registry` defined in `Plans/Personas.md` §7.
-
-Any automatic selection logic in this document that produces a non-delegated Persona (for example `collaborator`, `general-purpose`, `researcher`, `deep-researcher`, or `sre`) MUST validate against `persona_registry` rather than being rejected for absence from the delegated-subagent subset.
-
-- **Gap:** The plan scatters subagent names across Tier-Level Subagent Strategy (project-manager, rust-engineer, code-reviewer, ...). The GUI and backend need a **single shared list** for validation and multi-select.
-- **Clarify:** Add a **"Known subagent names"** section or table in this plan (or a constant in code, e.g. in `platform_specs` or a new `subagent_registry` module) listing all allowed names: phase (project-manager, architect-reviewer, product-manager), task (rust-engineer, python-pro, ..., backend-developer, ...), subtask (code-reviewer, test-automator, ...), iteration (debugger, qa-expert, ...). Use this for UI multi-select and for validating override/disabled/required lists.
-
-**Known subagent names (canonical list for UI and validation):**
-
-**DRY:DATA:subagent_registry** -- Single source of truth for all subagent names. This list must be implemented as a constant or module (`src/core/subagent_registry.rs`) and used for:
-- UI multi-select/autocomplete
-- Validation of override/disabled/required lists
-- Language/framework → subagent mapping
-- Platform availability checks
-- **Task tool** (`Plans/Tools.md`): `subagent_type` must be one of these names; validate with `subagent_registry::is_valid_subagent_name()`
-
-**Full set: 42 subagents.** Persona definitions are stored per `Plans/Personas.md` §2 (project-local: `.puppet-master/personas/<persona_id>/PERSONA.md`; global: `~/.config/puppet-master/personas/<persona_id>/PERSONA.md`). Persona schema, validation, GUI management, and context injection rules are defined in `Plans/Personas.md` (canonical SSOT). The orchestrator and interview use subsets by tier/phase; the **task** tool accepts any valid name from this list.
-
-| Category | Names |
-|----------|--------|
-| Phase | `project-manager`, `architect-reviewer`, `product-manager` |
-| Task (language) | `rust-engineer`, `python-pro`, `javascript-pro`, `typescript-pro`, `swift-expert`, `java-architect`, `csharp-developer`, `php-pro`, `golang-pro` |
-| Task (domain) | `backend-developer`, `frontend-developer`, `fullstack-developer`, `mobile-developer`, `devops-engineer`, `database-administrator`, `security-auditor`, `performance-engineer` |
-| Task (framework) | `react-specialist`, `vue-expert`, `nextjs-developer`, `laravel-specialist` |
-| Subtask | `code-reviewer`, `test-automator`, `technical-writer`, `api-designer`, `ui-designer`, `security-engineer`, `accessibility-tester`, `compliance-auditor` |
-| Iteration | `debugger`, `qa-expert` |
-| Cross-phase / Interview | `ux-researcher`, `sql-pro`, `prompt-engineer`, `knowledge-synthesizer`, `deployment-engineer`, `context-manager`, `explorer`, `requirements-quality-reviewer` |
-
-**Implementation:** Create `src/core/subagent_registry.rs` with:
-
-**DRY requirement:** This module is the single source of truth for all subagent names. Do not hardcode subagent names anywhere else in the codebase. All code that needs subagent names must use functions from this module.
-
-```rust
-// DRY:DATA:subagent_registry — Canonical list of all subagent names
-// DRY requirement: This is the only place subagent names should be defined. All other code must use functions from this module.
-pub mod subagent_registry {
-    use std::collections::HashMap;
-
-    // DRY:DATA:subagent_names_by_category — Subagents grouped by tier/category
-    pub const PHASE_SUBAGENTS: &[&str] = &[
-        "project-manager",
-        "architect-reviewer",
-        "product-manager",
-    ];
-
-    pub const TASK_LANGUAGE_SUBAGENTS: &[&str] = &[
-        "rust-engineer",
-        "python-pro",
-        "javascript-pro",
-        "typescript-pro",
-        "swift-expert",
-        "java-architect",
-        "csharp-developer",
-        "php-pro",
-        "golang-pro",
-    ];
-
-    pub const TASK_DOMAIN_SUBAGENTS: &[&str] = &[
-        "backend-developer",
-        "frontend-developer",
-        "fullstack-developer",
-        "mobile-developer",
-        "devops-engineer",
-        "database-administrator",
-        "security-auditor",
-        "performance-engineer",
-    ];
-
-    pub const TASK_FRAMEWORK_SUBAGENTS: &[&str] = &[
-        "react-specialist",
-        "vue-expert",
-        "nextjs-developer",
-        "laravel-specialist",
-    ];
-
-    pub const SUBTASK_SUBAGENTS: &[&str] = &[
-        "code-reviewer",
-        "test-automator",
-        "technical-writer",
-        "api-designer",
-        "ui-designer",
-        "security-engineer",
-        "accessibility-tester",
-        "compliance-auditor",
-    ];
-
-    pub const ITERATION_SUBAGENTS: &[&str] = &[
-        "debugger",
-        "qa-expert",
-    ];
-
-    // Cross-phase / Interview (used by interview-subagent-integration.md and task tool)
-    pub const CROSS_PHASE_SUBAGENTS: &[&str] = &[
-        "ux-researcher",
-        "sql-pro",
-        "prompt-engineer",
-        "knowledge-synthesizer",
-        "deployment-engineer",
-        "context-manager",
-        "explorer",
-        "requirements-quality-reviewer",
-    ];
-
-    // DRY:DATA:all_subagent_names — Union of all subagent names (42 total)
-    pub fn all_subagent_names() -> Vec<String> {
-        let mut all = Vec::new();
-        all.extend(PHASE_SUBAGENTS.iter().map(|s| s.to_string()));
-        all.extend(TASK_LANGUAGE_SUBAGENTS.iter().map(|s| s.to_string()));
-        all.extend(TASK_DOMAIN_SUBAGENTS.iter().map(|s| s.to_string()));
-        all.extend(TASK_FRAMEWORK_SUBAGENTS.iter().map(|s| s.to_string()));
-        all.extend(SUBTASK_SUBAGENTS.iter().map(|s| s.to_string()));
-        all.extend(ITERATION_SUBAGENTS.iter().map(|s| s.to_string()));
-        all.extend(CROSS_PHASE_SUBAGENTS.iter().map(|s| s.to_string()));
-        all
-    }
-
-    // DRY:DATA:language_to_subagent_mapping — Language → subagent mapping
-    pub fn get_subagent_for_language(lang: &str) -> Option<String> {
-        let mapping: HashMap<&str, &str> = HashMap::from([
-            ("rust", "rust-engineer"),
-            ("python", "python-pro"),
-            ("javascript", "javascript-pro"),
-            ("typescript", "typescript-pro"),
-            ("swift", "swift-expert"),
-            ("java", "java-architect"),
-            ("csharp", "csharp-developer"),
-            ("php", "php-pro"),
-            ("go", "golang-pro"),
-        ]);
-
-        mapping.get(lang).map(|s| s.to_string())
-    }
-
-    // DRY:DATA:framework_to_subagent_mapping — Framework → subagent mapping
-    pub fn get_subagent_for_framework(framework: &str) -> Option<String> {
-        let framework_lower = framework.to_lowercase();
-        let mapping: HashMap<&str, &str> = HashMap::from([
-            ("react", "react-specialist"),
-            ("vue", "vue-expert"),
-            ("nextjs", "nextjs-developer"),
-            ("next.js", "nextjs-developer"),
-            ("laravel", "laravel-specialist"),
-        ]);
-
-        mapping.get(framework_lower.as_str()).map(|s| s.to_string())
-    }
-
-    // DRY:FN:is_valid_subagent_name — Validate subagent name against canonical list
-    pub fn is_valid_subagent_name(name: &str) -> bool {
-        all_subagent_names().contains(&name.to_string())
-    }
-
-    // DRY:FN:get_subagents_for_tier — Get subagents available for a tier type
-    pub fn get_subagents_for_tier(tier_type: TierType) -> Vec<String> {
-        match tier_type {
-            TierType::Phase => PHASE_SUBAGENTS.iter().map(|s| s.to_string()).collect(),
-            TierType::Task => {
-                let mut all = Vec::new();
-                all.extend(TASK_LANGUAGE_SUBAGENTS.iter().map(|s| s.to_string()));
-                all.extend(TASK_DOMAIN_SUBAGENTS.iter().map(|s| s.to_string()));
-                all.extend(TASK_FRAMEWORK_SUBAGENTS.iter().map(|s| s.to_string()));
-                all
-            }
-            TierType::Subtask => SUBTASK_SUBAGENTS.iter().map(|s| s.to_string()).collect(),
-            TierType::Iteration => ITERATION_SUBAGENTS.iter().map(|s| s.to_string()).collect(),
-        }
-    }
-}
-```
-
-ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
-
-Use the union of all names for override/disabled/required lists; optionally restrict multi-select by tier in the UI.
-
-
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Run_Modes.md
 ### 5. Tier overrides: one list per tier vs contextual keys
 
 - **Gap:** YAML shows `tierOverrides.phase.default`, `.phase.architecture`, `.phase.product`, `.task.rust`, `.task.python`, etc. The GUI section says "for each tier (phase/task/subtask/iteration), a text field or list editor for override subagent names."
@@ -2760,7 +2434,7 @@ where
 
 **Built-in hooks (implement in `src/core/hooks/builtin.rs`):**
 
-1. **ActiveSubagentTrackerHook** (BeforeTier): Sets `active_subagent` in `TierContext`; persists to `.puppet-master/state/active-subagents.json`.
+1. **ActiveSubagentTrackerHook** (BeforeTier): Sets `active_subagent` in `TierContext`; persists tracking updates through canonical runtime storage and projection.
 2. **TierContextInjectorHook** (BeforeTier): Injects current phase/task/subtask status, config snapshot, known gaps into subagent prompt.
 3. **StaleStatePrunerHook** (BeforeTier): Prunes verification state older than 2 hours; creates state directories on first write.
 4. **HandoffValidatorHook** (AfterTier): Validates subagent output format (calls `validate_subagent_output`); requests retry on malformed output.
@@ -2841,7 +2515,7 @@ async fn execute_tier(&self, tier_id: &str) -> Result<()> {
 
 **BeforeTier hook responsibilities (detailed):**
 
-- **Track active subagent:** Record which subagent is active at this tier (e.g., `active_subagent: Option<String>` in `TierContext`). Persist to `.puppet-master/state/active-subagents.json` with format: `{ "tier_id": "1.1.1", "active_subagent": "rust-engineer", "timestamp": "2026-02-18T10:30:00Z" }`.
+- **Track active subagent:** Record which subagent is active at this tier (e.g., `active_subagent: Option<String>` in `TierContext`). Persist the tracking change through canonical runtime events and storage projections rather than through `.puppet-master/state/active-subagents.json`.
 - **Inject tier context:** Add current phase/task/subtask status, config snapshot, and known gaps to subagent prompt or context. Format: "Current tier: {tier_id}, Type: {tier_type}, Platform: {platform}, Model: {model}. Known gaps: {gaps}. Config: {config_summary}."
 - **Prune stale state:** Clean up verification state older than threshold (e.g., 2 hours). Check modification time of files in `.puppet-master/verification/<session-id>/`; delete if `mtime < now - 2 hours`.
 - **Lazy state creation:** Create verification state directories on first write (no explicit setup commands). Create `.puppet-master/verification/<session-id>/` if it doesn't exist when first hook writes state.
@@ -2849,7 +2523,7 @@ async fn execute_tier(&self, tier_id: &str) -> Result<()> {
 **AfterTier hook responsibilities (detailed):**
 
 - **Validate subagent output format:** Check that output matches structured handoff contract (see #2 below). Call `validate_subagent_output(output, platform)`; return `validation_passed: false` if malformed.
-- **Track completion:** Update active subagent tracking (clear `active_subagent` in `TierContext`), mark tier completion state in `.puppet-master/state/active-subagents.json`.
+- **Track completion:** Update active subagent tracking (clear `active_subagent` in `TierContext`) and mark tier completion through the same canonical runtime projection used for active tracking.
 - **Safe error handling:** Guarantee structured output even on hook failure. Wrap hook execution in `safe_hook_main`; on panic or error, return `{ "status": "error", "message": "...", "details": {...} }` instead of crashing.
 
 **Platform-native hook integration:**
@@ -3641,9 +3315,9 @@ match remediation_result {
 
 **Integration with existing quality verification:** This extends the existing "required reviewer subagent" requirement. The reviewer must output structured findings with severity; the orchestrator enforces the remediation loop. The remediation loop runs **after** the gate passes but **before** tier completion, ensuring Critical/Major issues are addressed before advancing.
 
-### 4. Cross-Session Knowledge Persistence (`save_memory`)
+### 4. Cross-Run Knowledge Continuity
 
-**Concept:** Persist architectural decisions, established patterns, tech choices, and lessons learned across runs. When a new run starts, load prior context to maintain continuity.
+**Concept:** Persist architectural decisions, established patterns, tech choices, and lessons learned across runs through canonical runtime storage, planning artifacts, and handoff bundles. When a new run starts, load prior context from those canonical sources to maintain continuity.
 
 **What to persist:**
 
@@ -3652,256 +3326,31 @@ match remediation_result {
 - **Tech choices:** Dependency versions, tool configurations, environment setup.
 - **Pitfalls encountered:** Known issues, workarounds, anti-patterns to avoid.
 
-**Storage structure:**
+**Canonical storage posture:**
 
-```rust
-// src/core/memory.rs (new file)
+- orchestration continuity is derived from seglog/redb-backed runtime state, stored plan outputs, and normalized handoff bundles.
+- `.puppet-master/memory/*` is not the canonical continuity source for orchestrator child runs.
+- continuity records should be queryable and attributable without requiring a memory-manager sidecar file hierarchy.
 
-use serde::{Deserialize, Serialize};
-use std::path::PathBuf;
-use chrono::{DateTime, Utc};
+**When to persist:** At phase completion, especially after planning/architecture work, extract durable decisions and patterns from canonical outputs and store them through the same runtime/project persistence path used for other orchestrator artifacts.
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct ArchitectureMemory {
-    pub decisions: Vec<ArchitecturalDecision>,
-    pub last_updated: DateTime<Utc>,
-}
+**When to load:** At run start, before Phase 1 begins, assemble continuity context from canonical persisted decisions, stored outputs, and handoff projections. The same continuity inputs may inform child selection (for example, a prior Rust decision may bias toward a Rust-focused child Persona), but they do not create subagent-specific durable memory.
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct ArchitecturalDecision {
-    pub category: String, // e.g., "tech_stack", "design_pattern", "framework"
-    pub decision: String, // e.g., "Rust + Actix Web"
-    pub rationale: Option<String>,
-    pub alternatives_considered: Vec<String>,
-    pub timestamp: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct PatternsMemory {
-    pub patterns: Vec<EstablishedPattern>,
-    pub last_updated: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct EstablishedPattern {
-    pub name: String, // e.g., "TDD", "Code organization", "Naming conventions"
-    pub description: String,
-    pub examples: Vec<String>,
-    pub timestamp: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct TechChoicesMemory {
-    pub choices: Vec<TechChoice>,
-    pub last_updated: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct TechChoice {
-    pub category: String, // e.g., "dependency", "tool", "environment"
-    pub name: String, // e.g., "clippy", "rustfmt"
-    pub version: Option<String>,
-    pub config: Option<serde_json::Value>,
-    pub timestamp: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct PitfallsMemory {
-    pub pitfalls: Vec<Pitfall>,
-    pub last_updated: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Pitfall {
-    pub issue: String, // Description of the issue
-    pub workaround: Option<String>,
-    pub anti_pattern: Option<String>, // What to avoid
-    pub context: Option<String>, // When this applies
-    pub timestamp: DateTime<Utc>,
-}
-
-pub struct MemoryManager {
-    memory_dir: PathBuf,
-}
-
-// DRY:DATA:MemoryManager — Cross-session memory management
-impl MemoryManager {
-    // DRY:FN:new — Create memory manager
-    pub fn new(memory_dir: Option<PathBuf>) -> Self {
-        let memory_dir = memory_dir.unwrap_or_else(|| {
-            PathBuf::from(".puppet-master").join("memory")
-        });
-        Self { memory_dir }
-    }
-
-    // DRY:FN:save_architecture — Save architectural decision
-    /// Save architectural decision
-    pub async fn save_architecture(&self, decision: ArchitecturalDecision) -> Result<()> {
-        let mut arch = self.load_architecture().await?;
-        arch.decisions.push(decision);
-        arch.last_updated = Utc::now();
-        self.save_file("architecture.json", &arch).await
-    }
-
-    /// Load architectural decisions
-    pub async fn load_architecture(&self) -> Result<ArchitectureMemory> {
-        self.load_file("architecture.json").await
-            .unwrap_or_else(|_| ArchitectureMemory {
-                decisions: Vec::new(),
-                last_updated: Utc::now(),
-            })
-    }
-
-    /// Save pattern
-    pub async fn save_pattern(&self, pattern: EstablishedPattern) -> Result<()> {
-        let mut patterns = self.load_patterns().await?;
-        patterns.patterns.push(pattern);
-        patterns.last_updated = Utc::now();
-        self.save_file("patterns.json", &patterns).await
-    }
-
-    /// Load patterns
-    pub async fn load_patterns(&self) -> Result<PatternsMemory> {
-        self.load_file("patterns.json").await
-            .unwrap_or_else(|_| PatternsMemory {
-                patterns: Vec::new(),
-                last_updated: Utc::now(),
-            })
-    }
-
-    /// Save tech choice
-    pub async fn save_tech_choice(&self, choice: TechChoice) -> Result<()> {
-        let mut tech = self.load_tech_choices().await?;
-        tech.choices.push(choice);
-        tech.last_updated = Utc::now();
-        self.save_file("tech-choices.json", &tech).await
-    }
-
-    /// Load tech choices
-    pub async fn load_tech_choices(&self) -> Result<TechChoicesMemory> {
-        self.load_file("tech-choices.json").await
-            .unwrap_or_else(|_| TechChoicesMemory {
-                choices: Vec::new(),
-                last_updated: Utc::now(),
-            })
-    }
-
-    /// Save pitfall
-    pub async fn save_pitfall(&self, pitfall: Pitfall) -> Result<()> {
-        let mut pitfalls = self.load_pitfalls().await?;
-        pitfalls.pitfalls.push(pitfall);
-        pitfalls.last_updated = Utc::now();
-        self.save_file("pitfalls.json", &pitfalls).await
-    }
-
-    /// Load pitfalls
-    pub async fn load_pitfalls(&self) -> Result<PitfallsMemory> {
-        self.load_file("pitfalls.json").await
-            .unwrap_or_else(|_| PitfallsMemory {
-                pitfalls: Vec::new(),
-                last_updated: Utc::now(),
-            })
-    }
-
-    /// Load all memory and format for prompt injection
-    pub async fn load_all_for_prompt(&self) -> Result<String> {
-        let arch = self.load_architecture().await?;
-        let patterns = self.load_patterns().await?;
-        let tech = self.load_tech_choices().await?;
-        let pitfalls = self.load_pitfalls().await?;
-
-        let mut prompt = String::new();
-
-        if !arch.decisions.is_empty() {
-            prompt.push_str("## Previous Architectural Decisions\n\n");
-            for decision in &arch.decisions {
-                prompt.push_str(&format!("- **{}**: {}\n", decision.category, decision.decision));
-                if let Some(rationale) = &decision.rationale {
-                    prompt.push_str(&format!("  Rationale: {}\n", rationale));
-                }
-            }
-            prompt.push('\n');
-        }
-
-        if !patterns.patterns.is_empty() {
-            prompt.push_str("## Established Patterns\n\n");
-            for pattern in &patterns.patterns {
-                prompt.push_str(&format!("- **{}**: {}\n", pattern.name, pattern.description));
-            }
-            prompt.push('\n');
-        }
-
-        if !tech.choices.is_empty() {
-            prompt.push_str("## Tech Choices\n\n");
-            for choice in &tech.choices {
-                prompt.push_str(&format!("- **{}**: {}", choice.category, choice.name));
-                if let Some(version) = &choice.version {
-                    prompt.push_str(&format!(" ({})", version));
-                }
-                prompt.push('\n');
-            }
-            prompt.push('\n');
-        }
-
-        if !pitfalls.pitfalls.is_empty() {
-            prompt.push_str("## Known Pitfalls to Avoid\n\n");
-            for pitfall in &pitfalls.pitfalls {
-                prompt.push_str(&format!("- {}\n", pitfall.issue));
-                if let Some(workaround) = &pitfall.workaround {
-                    prompt.push_str(&format!("  Workaround: {}\n", workaround));
-                }
-            }
-        }
-
-        Ok(prompt)
-    }
-
-    async fn save_file<T: Serialize>(&self, filename: &str, data: &T) -> Result<()> {
-        std::fs::create_dir_all(&self.memory_dir)?;
-        let path = self.memory_dir.join(filename);
-        let json = serde_json::to_string_pretty(data)?;
-        std::fs::write(path, json)?;
-        Ok(())
-    }
-
-    async fn load_file<T: for<'de> Deserialize<'de>>(&self, filename: &str) -> Result<T> {
-        let path = self.memory_dir.join(filename);
-        let json = std::fs::read_to_string(path)?;
-        let data: T = serde_json::from_str(&json)?;
-        Ok(data)
-    }
-}
-```
-
-**When to persist:** At Phase completion (especially Phase 1: Planning/Architecture). Use `memory_manager.save_architecture()`, `save_pattern()`, `save_tech_choice()`, `save_pitfall()` functions. Extract decisions/patterns from Phase 1 output (e.g., parse "We chose Rust + Actix" → save as architectural decision).
-
-**When to load:** At run start, before Phase 1 begins. Call `memory_manager.load_all_for_prompt()` and inject into Phase 1 context. Also use for subagent selection (e.g., "project uses Rust" → prefer `rust-engineer`; "established TDD pattern" → include `test-automator`).
-
-**Platform-specific implementation:** Platform-agnostic -- memory persistence is orchestrator-level. All platforms benefit from loaded context injected into prompts. Memory files are stored in `.puppet-master/memory/` as JSON files, readable by all platforms.
+**Platform-specific implementation:** Platform-agnostic. All platforms benefit from canonical continuity inputs injected into prompts, but the continuity source remains runtime storage and structured artifacts rather than memory files.
 
 ### 5. Active Agent Tracking
 
-**Concept:** Track which subagent is currently active at each tier. Store in tier context and expose for logging, debugging, and audit trails.
+Active child tracking must project from canonical storage and events rather than from mutable side files.
 
-**Tracking:**
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
 
-- **Per tier:** `active_subagent: Option<String>` in `TierContext`.
-- **Per run:** `active_subagents: HashMap<TierId, String>` in orchestrator state.
-- **Persistence:** Write to `.puppet-master/state/active-subagents.json` (updated on each tier start).
+Rules:
+- `active-agents.json` is not canonical runtime truth.
+- child visibility, conflict prevention, and status rollups come from seglog/redb projections.
+- launch order, batch membership, subgroup membership, and parent-child lineage are canonical projection fields.
+- stale child entries are resolved through canonical status and expiry logic, not side-file cleanup heuristics.
 
-**BeforeTier hook:** Sets `active_subagent` when tier starts (from subagent selection or override).
-
-**AfterTier hook:** Clears `active_subagent` when tier completes.
-
-**Use cases:**
-
-- **Logging:** "Phase X: active subagent = architect-reviewer"
-- **Debugging:** "Why did this tier fail? Check active subagent logs."
-- **Audit trails:** "Which subagents ran in this run? See active-subagents.json."
-- **GUI display:** Show active subagent in tier status UI.
-
-**Platform-specific implementation:** Platform-agnostic -- tracking is orchestrator-level. All platforms benefit from the same tracking mechanism.
-
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
 ### 6. Safe Error Handling (Guaranteed Structured Output)
 
 **Concept:** Hooks and verification functions must never crash the session. Use wrappers that guarantee structured output (JSON or Result) even on failure.
@@ -4227,15 +3676,15 @@ Short notes so implementers know where to put code and what the orchestrator alr
 
 ### Agent coordination
 
-- **Where:** New module `src/core/agent_coordination.rs` for file-based coordination (cross-platform). Platform runners read/write the shared state and consume injected coordination context.
-- **What:** (1) **File-based coordination (cross-platform):** Implement `AgentCoordinator` that manages `active-agents.json` state file. Register agents before execution (including platform field), update status during execution (files being edited, current operation), unregister after execution. Get coordination context for prompt injection. **This enables cross-platform coordination** -- Codex agents can see Claude agents' status, and vice versa. All platforms read/write to the same JSON file. (2) **Prompt injection:** Inject coordination context into each agent's prompt (active agents with platform info, files being modified, warnings about conflicts). Include platform identifier so agents know which platform other agents are using. (3) **Status updates:** Extract file operations from agent output (parse file paths, use platform hooks/provider events) and update coordination state periodically. (4) **Conflict prevention:** Check coordination state before execution to detect file conflicts; warn agents or delay execution if conflicts detected. Works across platforms via file-based coordination.
-- **When called:** Register agent before tier execution (include platform from tier_config); update status during execution (periodically or on file operations); unregister after execution. Use file-based coordination for all platforms. See **"Agent Coordination and Communication"** for full details and cross-platform examples.
+- **Where:** New module `src/core/agent_coordination.rs` for cross-platform coordination over canonical runtime state. Platform runners read projected coordination state and consume injected coordination context; optional debug mirrors may exist, but they are not the source of truth.
+- **What:** (1) **Canonical coordination projection (cross-platform):** Implement `AgentCoordinator` over child-run state, lineage, current file activity, and platform/runtime metadata projected from seglog/redb. Register agents before execution, update status during execution from hooks/provider events/tool activity, unregister or terminally resolve after execution. **This enables cross-platform coordination** without making `active-agents.json` the canon. (2) **Prompt injection:** Inject coordination context into each agent's prompt (active agents with platform info, files being modified, warnings about conflicts). Include platform identifier so agents know which platform other agents are using. (3) **Status updates:** Extract file operations from agent output (parse file paths, use platform hooks/provider events) and update canonical coordination state periodically. (4) **Conflict prevention:** Check projected coordination state before execution to detect file conflicts; warn agents or delay execution if conflicts detected.
+- **When called:** Register agent before tier execution (include platform from tier_config); update status during execution (periodically or on file operations); unregister after execution by resolving the child run through canonical status projection. See **"Agent Coordination and Communication"** for full details and cross-platform examples.
 
 ### Lifecycle hooks and quality features
 
-- **Where:** New module `src/core/hooks.rs` or `src/verification/hooks.rs` for hook system; `src/core/memory.rs` for cross-session persistence (`save_memory`, `load_memory`); extend `SubagentOutput` in `src/types/` for structured handoff format; remediation loop in orchestrator completion logic (`src/core/orchestrator.rs`).
-- **What:** (1) **BeforeTier/AfterTier hooks:** Implement hook traits, register hooks per tier type, call automatically at tier boundaries. For platforms with native hooks (Cursor, Claude, Gemini), register Puppet Master hooks that delegate where possible; for Codex/Copilot, use orchestrator-level middleware and file-based coordination. (2) **Structured handoff validation:** `validate_subagent_output()` with platform-specific parsers (JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot). (3) **Remediation loop:** Parse findings from reviewer subagent output; filter Critical/Major; block completion and re-run until resolved or max retries; escalate to parent-tier on max retries. (4) **Cross-session memory:** Save architectural decisions/patterns/tech choices at Phase completion; load at run start; inject into Phase 1 context. (5) **Active agent tracking:** `active_subagent: Option<String>` in `TierContext`; update in BeforeTier/AfterTier hooks; persist to `.puppet-master/state/active-subagents.json`. (6) **Safe error handling:** Wrap hooks and verification in `safe_hook_main()` that guarantees structured output even on failure. (7) **Lazy lifecycle:** Create verification state on first write; prune stale state (>2 hours) in BeforeTier hook. (8) **Contract enforcement:** AfterTier hook validates handoff format; retry on malformed output; fail-safe after retry.
-- **When called:** Hooks run automatically at tier boundaries (before `verify_tier_start`, after `verify_tier_end`). Memory persists at Phase completion; loads at run start. Remediation loop runs when Critical/Major findings detected. See **"Lifecycle and Quality Features"** for full details and platform-specific implementation notes.
+- **Where:** New module `src/core/hooks.rs` or `src/verification/hooks.rs` for hook system; canonical persistence and recovery projections in seglog/redb for continuity; extend `SubagentOutput` in `src/types/` for structured handoff format; remediation loop in orchestrator completion logic (`src/core/orchestrator.rs`).
+- **What:** (1) **BeforeTier/AfterTier hooks:** Implement hook traits, register hooks per tier type, call automatically at tier boundaries. For platforms with native hooks (Cursor, Claude, Gemini), register Puppet Master hooks that delegate where possible; for Codex/Copilot, use orchestrator-level middleware and canonical coordination projection. (2) **Structured handoff validation:** `validate_subagent_output()` with platform-specific parsers (JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot). (3) **Remediation loop:** Parse findings from reviewer subagent output; filter Critical/Major; block completion and re-run until resolved or max retries; escalate to parent-tier on max retries. (4) **Cross-run continuity:** Persist architectural decisions, patterns, and tech choices as canonical outputs and projections at Phase completion; reload them at run start through handoff/context assembly rather than child-memory files. (5) **Active agent tracking:** `active_subagent: Option<String>` in `TierContext`; update in BeforeTier/AfterTier hooks; persist through canonical runtime storage and projections. (6) **Safe error handling:** Wrap hooks and verification in `safe_hook_main()` that guarantees structured output even on failure. (7) **Lazy lifecycle:** Create verification state on first write; prune stale state (>2 hours) in BeforeTier hook. (8) **Contract enforcement:** AfterTier hook validates handoff format; retry on malformed output; fail-safe after retry.
+- **When called:** Hooks run automatically at tier boundaries (before `verify_tier_start`, after `verify_tier_end`). Cross-run continuity persists at Phase completion and loads through run-start context assembly. Remediation loop runs when Critical/Major findings detected. See **"Lifecycle and Quality Features"** for full details and platform-specific implementation notes.
 
 ### Considerations #6 (Subagent availability / files)
 
@@ -4391,25 +3840,25 @@ When multiple agents/subagents run concurrently (parallel subtasks, different ti
 
 1. **Shared state files (existing):** All agents read `progress.txt`, `AGENTS.md`, `prd.json` -- these provide **asynchronous** coordination (agents see what others have done, not what they're doing now).
 
-2. **Real-time coordination state (new, cross-platform):** Add `.puppet-master/state/active-agents.json` that tracks:
+2. **Real-time coordination state (new, cross-platform):** Add a canonical coordination projection, optionally mirrored to `.puppet-master/state/active-agents.json` for debugging, that tracks:
    - Which agents/subagents are currently active (including platform: "codex", "claude", "cursor", "gemini", "copilot")
    - What files/modules each agent is working on
    - What operations each agent is performing (e.g., "editing src/api.rs", "running tests")
    - Platform identifier (so agents know which platform other agents are using)
    - Timestamp of last update
 
-   **This file-based coordination works across ALL platforms** -- a Codex agent can see what a Claude agent is doing, and vice versa. All platforms read/write to the same JSON file.
+   **This projected coordination works across ALL platforms** -- a Codex agent can see what a Claude agent is doing, and vice versa. All platforms consume the same canonical coordination state even if a debug JSON mirror exists.
 
 3. **Provider-bridge coordination (current):**
 
    - No same-platform shared thread/session coordination path is active.
-   - Codex and Copilot follow the same file-based coordination contract as Cursor/Claude/Gemini.
-   - Cross-platform and same-platform coordination both use `active-agents.json` + prompt injection.
+   - Codex and Copilot follow the same projected coordination contract as Cursor/Claude/Gemini.
+   - Cross-platform and same-platform coordination both use canonical coordination state + prompt injection.
 
 4. **Cross-worktree awareness:** Even when agents run in separate worktrees, they can:
    - Read shared state files from main repo (progress.txt, prd.json)
-   - Read active-agents.json to see what others are doing (regardless of platform)
-   - Write their own status to active-agents.json before starting work
+   - Read the projected active-agent state to see what others are doing (regardless of platform)
+   - Write their own status through the same projected coordination path before starting work
    - Update status as they work (file being edited, operation in progress)
 
 5. **Prompt injection:** Inject coordination context into each agent's prompt:
@@ -4453,7 +3902,7 @@ When a Codex agent and a Claude Code agent work simultaneously:
      }
 
 3. Codex agent begins editing src/api.rs:
-   - Updates active-agents.json:
+   - Updates coordination projection:
      {
        "agent_id": "rust-engineer-1.1.1",
        "platform": "codex",
@@ -4467,13 +3916,13 @@ When a Codex agent and a Claude Code agent work simultaneously:
    - Agent understands context and avoids editing src/api.rs
 
 5. Codex agent completes:
-   - Unregisters from active-agents.json
+   - Unregisters from coordination projection
    - Claude Code agent can now safely edit src/api.rs for tests
 ```
 
 **Platform field in coordination state:**
 
-The `active-agents.json` includes a `platform` field so agents know which platform other agents are using:
+The coordination projection includes a `platform` field so agents know which platform other agents are using:
 
 ```json
 {
@@ -4706,7 +4155,7 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, tier_id)).await?;
 
 **Provider coordination model (Codex/Copilot included):**
 
-- **Canonical mode:** File-based coordination (`active-agents.json`) for all platforms.
+- **Canonical mode:** Coordination projection for all platforms, optionally mirrored to `active-agents.json` for debugging.
 - **Scope:** Works for same-platform and cross-platform crews using the same state schema.
 - **Runtime path:** Direct-provider invocation via direct provider calls (no local CLI bridge); no SDK threads/sessions.
 - **Prompt contract:** Every subagent receives coordination context built from shared state.
@@ -4742,7 +4191,7 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, tier_id)).await?;
 **Example coordination flow (cross-platform):**
 
 ```
-1. Agent A (rust-engineer, Codex) starts Subtask A: registers in active-agents.json
+1. Agent A (rust-engineer, Codex) starts Subtask A: registers in the coordination projection
    - agent_id: "rust-engineer-1.1.1"
    - platform: "codex"
    - current_operation: "Starting implementation of API endpoint"
@@ -4757,496 +4206,46 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, tier_id)).await?;
    - Prompt includes: "**Active Agents:** rust-engineer (Codex) is editing src/api.rs (started 1 minute ago). **Your Task:** Add tests for POST /users endpoint. Wait for rust-engineer to finish src/api.rs before adding tests."
 
 4. Agent B (Claude Code) waits or works on other files, then proceeds when Agent A (Codex) finishes
-   - Cross-platform coordination: Claude agent sees Codex agent's status via shared file
+   - Cross-platform coordination: Claude agent sees Codex agent's status via the shared coordination projection
 
 5. Agent A (Codex) completes: unregisters from coordination state
    - Agent B (Claude Code) can now safely edit src/api.rs for tests
 ```
 
-**Key point:** File-based coordination enables **cross-platform communication**. A Codex agent and a Claude Code agent can coordinate through `active-agents.json` even when they run on different providers/CLIs.
+**Key point:** Canonical coordination projection enables **cross-platform communication**. A Codex agent and a Claude Code agent can coordinate through the same active-agent state even when they run on different providers/CLIs.
 
 **Provider-bridge runner integration (canonical):**
 
-- **All platform runners (Cursor, Codex, Claude, Gemini, Copilot):** read/update file-based coordination state (`active-agents.json`) and consume the same prompt injection contract.
-- **No shared provider sessions/threads:** orchestrator keeps fresh-process isolation per iteration and uses files/events for coordination.
+- **All platform runners (Cursor, Codex, Claude, Gemini, Copilot):** read/update canonical coordination state and consume the same prompt injection contract.
+- **No shared provider sessions/threads:** orchestrator keeps fresh-process isolation per iteration and uses canonical projections plus events for coordination.
 
 **Implementation notes:**
 
-- **Where:** New module `src/core/agent_coordination.rs` for file-based coordination; platform runners only read/write coordination state and consume injected context.
+- **Where:** New module `src/core/agent_coordination.rs` for canonical coordination projection; platform runners read/write coordination state and consume injected context.
 - **What:** Implement `AgentCoordinator`, inject coordination context into prompts, and keep status updates provider-agnostic.
 - **When:** Register agent before execution; update status during execution (periodically or on file operations); unregister after execution.
 
 ### Puppet Master Crews (Teams/Fleets Alternative)
 
-**Concept:** Build a Puppet Master-native multi-agent communication system called **"Crews"** that enables subagents to talk to each other directly. Crews can be invoked by users (platform-specific) or by the orchestrator (cross-platform coordination). This provides agent-to-agent communication and gives the orchestrator ("boss agent") full visibility into subagent interactions.
-
-**Feature Name:** "Crews" (can be invoked as "crew" or "crews" in commands/prompts)
-
-**Two modes of operation:**
-
-1. **User-initiated Crews (platform-specific) -- Future: Assistant feature:**
-   - **Status:** Not yet implemented. Will be enabled when the "Assistant" feature is added.
-   - User will invoke crew via command/prompt: "use a crew", "create a crew", "crew", "crews"
-   - Crew will use the **currently selected platform** (from tier config or GUI selection)
-   - Example: If user has Copilot selected → Crew spawns Copilot subagents
-   - Example: If user has Claude Code selected → Crew spawns Claude Code subagents
-   - **Rationale:** User needs control over which platform to use (subscription limits, preferences, capabilities)
-   - **Note:** Platform selection logic will be defined when Assistant feature is designed (see Gap #37)
-
-2. **Orchestrator-initiated Crews (platform-specific per tier, cross-platform coordination via message board) -- Current implementation:**
-   - Orchestrator automatically creates crews for each tier that needs subagents
-   - **Respects tier-level platform configuration:**
-     - Task level with platform = Codex → Crew uses Codex subagents
-     - Subtask level with platform = Copilot → Crew uses Copilot subagents
-   - Each crew uses the platform specified in that tier's config
-    - **Cross-platform coordination:** Different crews (different platforms) coordinate via shared message board (`agent-messages.json`) and coordination state (`active-agents.json`)
-    - **Rationale:** Orchestrator respects tier-level platform selections while enabling cross-platform coordination through shared state
-
-**Canonical crew contract:**
-- A Crew is a runtime coordination construct, not a replacement for tier or node ownership.
-- Canonical crew state is persisted via seglog/redb (`crew.started`, `crew.member_*`, `crew.message_posted`, `crew.completed` plus `runs -> crew.*` projections).
-- File-based message boards such as `agent-messages.json` or `active-agents.json` are debug/interop mirrors only and MUST be rebuildable from canonical events.
-- Crew permissions are bounded by the member run's platform, strategy, tool policy, and FileSafe scope; crew membership does not widen those permissions.
-
-ContractRef: Primitive:Seglog, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md
-
-**User-initiated Crew invocation (Future: Assistant feature):**
-
-**Status:** Not yet implemented. This will be enabled when the "Assistant" feature is added.
-
-```rust
-// Future implementation (when Assistant feature is added):
-// User command examples:
-// "use a crew to implement authentication"
-// "create a crew for testing"
-// "crew: implement API endpoint"
-// "crews: add tests and documentation"
-
-// In orchestrator (via Assistant), detect crew invocation
-if prompt.contains("crew") || prompt.contains("crews") || prompt.contains("use a crew") || prompt.contains("create a crew") {
-    // Deterministic platform selection (no prompting):
-    // 1) tier config platform (when in a tier context)
-    // 2) Assistant thread/platform selection (when present)
-    // 3) fallback: cursor
-    let platform = self.resolve_platform_for_crew()?; // e.g., Platform::Cursor
-
-    // Parse crew request (extract task, subagents needed)
-    let crew_request = parse_crew_request(&prompt)?;
-
-    // Create crew with platform-specific subagents
-    let crew = Crew::new(platform, crew_request.subagents, crew_request.task);
-
-    // Spawn crew (all subagents use same platform)
-    crew.execute().await?;
-}
-```
-
-**Platform selection for user-initiated crews (Future consideration):**
-
-- **Source:** Current tier config platform, or GUI platform selection if in GUI mode
-- **Fallback:** If no platform selected, use deterministic default platform (cursor)
-- **Validation:** Ensure platform supports subagents (all providers support subagents via coordination)
-- **Note:** Exact implementation will be defined when Assistant feature is designed (see Gap #37)
-
-**Example user-initiated crew flow (Future):**
-
-```
-User: "use a crew to implement authentication system"
-Current platform: Copilot (from tier config or GUI)
-
-Orchestrator (via Assistant):
-1. Detects "crew" invocation
-2. Gets current platform: Copilot
-3. Parses request: task = "implement authentication system"
-4. Selects subagents: ["backend-developer", "security-auditor", "test-automator"]
-5. Creates crew with Copilot platform
-6. Spawns 3 Copilot subagents (all using Copilot CLI)
-7. Agents coordinate via Crew communication system (file-based)
-8. All agents can talk to each other, orchestrator monitors
-```
-
-**Orchestrator-initiated crew flow:**
-
-```
-Orchestrator needs to coordinate:
-- Codex agent (rust-engineer) working on Subtask A
-- Claude Code agent (test-automator) working on Subtask B (parallel)
-
-Orchestrator:
-1. Creates cross-platform crew automatically
-2. Registers both agents in crew
-3. Agents coordinate via file-based coordination
-4. Agents can communicate via message board
-5. Orchestrator monitors all communication
-```
-
-**Crew structure:**
-
-```rust
-// src/core/crews.rs (new module)
-
-use crate::types::Platform;
-
-#[derive(Debug, Clone)]
-// DRY:DATA:Crew — Crew (multi-agent team) structure
-pub struct Crew {
-    pub crew_id: String, // UUID
-    pub name: Option<String>, // User-provided name (optional)
-    pub platform: Platform, // Platform for user-initiated crews; None for orchestrator cross-platform crews
-    pub subagents: Vec<CrewSubagent>,
-    pub task: String, // Crew's overall task
-    pub created_by: CrewCreator, // User or Orchestrator
-    pub created_at: DateTime<Utc>,
-    pub status: CrewStatus,
-}
-
-#[derive(Debug, Clone)]
-pub enum CrewCreator {
-    User { user_id: Option<String> },
-    Orchestrator { tier_id: String },
-}
-
-#[derive(Debug, Clone)]
-pub struct CrewSubagent {
-    pub agent_id: String, // e.g., "rust-engineer", "test-automator"
-    pub agent_type: String, // Subagent type/name
-    pub platform: Platform, // For orchestrator crews, can differ from crew.platform
-    pub tier_id: Option<String>, // Which tier this subagent is working on
-    pub status: SubagentStatus,
-}
-
-#[derive(Debug, Clone, PartialEq)]
-pub enum CrewStatus {
-    Forming, // Crew being created
-    Active, // Crew members working
-    Waiting, // Crew waiting for something
-    Complete, // Crew finished task
-    Disbanded, // Crew disbanded
-}
-
-#[derive(Debug, Clone, PartialEq)]
-pub enum SubagentStatus {
-    Pending, // Not started yet
-    Active, // Currently working
-    Waiting, // Waiting for another subagent
-    Complete, // Finished
-    Blocked, // Blocked on something
-}
-```
-
-**Crew communication:**
-
-Crew members communicate via the message board (`agent-messages.json`), but messages are scoped to the crew:
-
-```rust
-impl Crew {
-    // DRY:FN:post_to_crew — Post message to crew
-    // DRY REQUIREMENT: Validate crew subagent names using subagent_registry::is_valid_subagent_name()
-    /// Post message to crew (all crew members see it)
-    pub async fn post_to_crew(&self, message: AgentMessage) -> Result<()> {
-        // DRY: Validate crew subagent names — DO NOT allow invalid subagent names in crew
-        for subagent in &self.subagents {
-            if !subagent_registry::is_valid_subagent_name(&subagent.agent_type) {
-                return Err(anyhow!("Invalid subagent name in crew: {}", subagent.agent_type));
-            }
-        }
-        // Set message routing to crew members
-        message.to_tier_id = None; // Override tier_id
-        message.crew_id = Some(self.crew_id.clone()); // Scope to crew
-
-        communicator.post_message(message).await
-    }
-
-    /// Get messages for crew
-    pub async fn get_crew_messages(&self) -> Result<Vec<AgentMessage>> {
-        communicator.get_messages_for_crew(&self.crew_id).await
-    }
-}
-```
-
-**User-initiated crew example:**
-
-```rust
-// User: "create a crew with rust-engineer, test-automator, and code-reviewer to implement authentication"
-
-// Parse crew request
-let crew_request = CrewRequest {
-    subagents: vec!["rust-engineer".to_string(), "test-automator".to_string(), "code-reviewer".to_string()],
-    task: "implement authentication".to_string(),
-    platform: None, // Will use current platform
-};
-
-// Get current platform
-let current_platform = tier_config.platform; // e.g., Platform::Copilot
-
-// Create crew
-let crew = Crew {
-    crew_id: uuid::Uuid::new_v4().to_string(),
-    name: Some("Authentication Crew".to_string()),
-    platform: current_platform, // Copilot
-    subagents: vec![
-        CrewSubagent {
-            agent_id: format!("rust-engineer-{}", crew.crew_id),
-            agent_type: "rust-engineer".to_string(),
-            platform: current_platform, // All use Copilot
-            tier_id: None,
-            status: SubagentStatus::Pending,
-        },
-        CrewSubagent {
-            agent_id: format!("test-automator-{}", crew.crew_id),
-            agent_type: "test-automator".to_string(),
-            platform: current_platform, // All use Copilot
-            tier_id: None,
-            status: SubagentStatus::Pending,
-        },
-        CrewSubagent {
-            agent_id: format!("code-reviewer-{}", crew.crew_id),
-            agent_type: "code-reviewer".to_string(),
-            platform: current_platform, // All use Copilot
-            tier_id: None,
-            status: SubagentStatus::Pending,
-        },
-    ],
-    task: "implement authentication".to_string(),
-    created_by: CrewCreator::User { user_id: None },
-    created_at: Utc::now(),
-    status: CrewStatus::Forming,
-};
-
-// Execute crew (spawn all subagents using Copilot)
-crew.execute().await?;
-```
-
-**Orchestrator-initiated crew example:**
-
-```rust
-// Orchestrator creates crews per tier, respecting tier platform config
-
-// Task level (1.1) has platform = Codex
-let task_tier_config = tier_config_for(TierType::Task, "1.1");
-// task_tier_config.platform = Platform::Codex
-
-let task_crew = Crew {
-    crew_id: uuid::Uuid::new_v4().to_string(),
-    name: None,
-    platform: task_tier_config.platform, // Codex (from tier config)
-    subagents: vec![
-        CrewSubagent {
-            agent_id: "rust-engineer-1.1".to_string(),
-            agent_type: "rust-engineer".to_string(),
-            platform: task_tier_config.platform, // Codex (all use same platform)
-            tier_id: Some("1.1".to_string()),
-            status: SubagentStatus::Active,
-        },
-        CrewSubagent {
-            agent_id: "backend-developer-1.1".to_string(),
-            agent_type: "backend-developer".to_string(),
-            platform: task_tier_config.platform, // Codex (all use same platform)
-            tier_id: Some("1.1".to_string()),
-            status: SubagentStatus::Active,
-        },
-    ],
-    task: "Implement API endpoints".to_string(),
-    created_by: CrewCreator::Orchestrator { tier_id: "1.1".to_string() },
-    created_at: Utc::now(),
-    status: CrewStatus::Active,
-};
-
-// Subtask level (1.1.1) has platform = Copilot
-let subtask_tier_config = tier_config_for(TierType::Subtask, "1.1.1");
-// subtask_tier_config.platform = Platform::Copilot
-
-let subtask_crew = Crew {
-    crew_id: uuid::Uuid::new_v4().to_string(),
-    name: None,
-    platform: subtask_tier_config.platform, // Copilot (from tier config)
-    subagents: vec![
-        CrewSubagent {
-            agent_id: "test-automator-1.1.1".to_string(),
-            agent_type: "test-automator".to_string(),
-            platform: subtask_tier_config.platform, // Copilot (all use same platform)
-            tier_id: Some("1.1.1".to_string()),
-            status: SubagentStatus::Active,
-        },
-    ],
-    task: "Add tests for API endpoint".to_string(),
-    created_by: CrewCreator::Orchestrator { tier_id: "1.1.1".to_string() },
-    created_at: Utc::now(),
-    status: CrewStatus::Active,
-};
-
-// Both crews coordinate via shared message board (cross-platform coordination)
-// Task crew (Codex) and Subtask crew (Copilot) can communicate through agent-messages.json
-// Orchestrator monitors all crews regardless of platform
-```
-
-**Cross-platform coordination example:**
-
-```
-Task level (1.1):
-  Platform: Codex
-  Crew: Codex subagents (rust-engineer, backend-developer)
-
-Subtask level (1.1.1):
-  Platform: Copilot
-  Crew: Copilot subagents (test-automator)
-
-Coordination:
-  - Codex crew members coordinate via shared state files and provider event updates
-  - Copilot crew members coordinate via shared state files and provider event updates
-  - Cross-platform coordination: Codex crew and Copilot crew communicate via shared message board (agent-messages.json)
-  - Orchestrator monitors all crews and can see cross-platform communication
-```
-
-**Crew state file:**
-
-```json
-// .puppet-master/state/crews.json
-
-{
-  "crews": [
-    {
-      "crew_id": "abc-123",
-      "name": "Authentication Crew",
-      "platform": "copilot",
-      "created_by": { "type": "user" },
-      "subagents": [
-        {
-          "agent_id": "rust-engineer-abc-123",
-          "agent_type": "rust-engineer",
-          "platform": "copilot",
-          "tier_id": null,
-          "status": "active"
-        }
-      ],
-      "task": "implement authentication",
-      "status": "active",
-      "created_at": "2026-02-18T10:00:00Z"
-    },
-    {
-      "crew_id": "xyz-789",
-      "name": null,
-      "platform": "codex",
-      "created_by": { "type": "orchestrator", "tier_id": "1.1" },
-      "subagents": [
-        {
-          "agent_id": "rust-engineer-1.1",
-          "agent_type": "rust-engineer",
-          "platform": "codex",
-          "tier_id": "1.1",
-          "status": "active"
-        },
-        {
-          "agent_id": "backend-developer-1.1",
-          "agent_type": "backend-developer",
-          "platform": "codex",
-          "tier_id": "1.1",
-          "status": "active"
-        }
-      ],
-      "task": "Implement API endpoints",
-      "status": "active",
-      "created_at": "2026-02-18T10:01:00Z"
-    },
-    {
-      "crew_id": "def-456",
-      "name": null,
-      "platform": "copilot",
-      "created_by": { "type": "orchestrator", "tier_id": "1.1.1" },
-      "subagents": [
-        {
-          "agent_id": "test-automator-1.1.1",
-          "agent_type": "test-automator",
-          "platform": "copilot",
-          "tier_id": "1.1.1",
-          "status": "active"
-        }
-      ],
-      "task": "Add tests for API endpoint",
-      "status": "active",
-      "created_at": "2026-02-18T10:02:00Z"
-    }
-  ],
-  "last_updated": "2026-02-18T10:02:00Z"
-}
-```
-
-**Note:** Each orchestrator-initiated crew uses the platform from its tier config. Crew xyz-789 (Task 1.1) uses Codex because Task tier config specifies Codex. Crew def-456 (Subtask 1.1.1) uses Copilot because Subtask tier config specifies Copilot. They coordinate cross-platform via shared message board.
-
-**GUI integration (Current and Future):**
-
-**Current implementation (orchestrator-initiated crews only):**
-- **Crew monitoring:** Show active orchestrator-initiated crews, crew members, crew communication
-- **Crew status:** Display crew progress, subagent status, messages
-- **Crew actions:** View crew details, cancel crew, view messages
-- **Crew filtering:** Filter by platform, status, tier
-
-**Future implementation (when Assistant feature is added):**
-- **Crew creation:** User can create crews from GUI (select platform, subagents, task, optional name)
-- **Crew settings:** GUI settings panel for crew configuration (max crew size, timeout, etc.)
-- **Assistant integration:** GUI integration with Assistant feature for user-initiated crew creation
-
-**GUI components to add:**
-
-1. **Crews tab/page** (new view in GUI)
-2. **Crew list widget** (shows all crews with status)
-3. **Crew detail view** (expandable crew details)
-4. **Crew message viewer** (messages within crew)
-5. **Crew status badges** (visual status indicators)
-6. **Crew filter controls** (filter by platform, status, tier)
-7. **Crew cancellation dialog** (confirm cancellation)
-8. **Future: Crew creation dialog** (when Assistant feature is added)
-
-**Command parsing:**
-
-```rust
-// Detect crew invocation in prompts
-fn detect_crew_invocation(prompt: &str) -> Option<CrewRequest> {
-    let lower = prompt.to_lowercase();
-
-    if lower.contains("crew") || lower.contains("crews") {
-        // Parse crew request
-        // Extract: subagents, task, optional name
-        // ...
-    }
-
-    None
-}
-```
-
-**Benefits of "Crews" name:**
-
-- **Intuitive:** "Crew" suggests a team working together
-- **Flexible:** Can be singular ("crew") or plural ("crews")
-- **Distinct:** Different from "Teams" (Claude) and "Fleets" (Copilot)
-- **Memorable:** Easy to remember and type
-
-**Implementation notes:**
-
-- **Where:** New module `src/core/crews.rs` for crew management; extend `src/core/agent_communication.rs` for crew-scoped messaging; extend GUI views for crew monitoring
-- **What:** Implement `Crew` struct, crew creation (orchestrator-initiated only for now), crew execution, crew communication, GUI components for crew visibility
-- **When:**
-  - **Current:** Orchestrator creates crew for tier → use platform from tier config (`tier_config_for(tier_type, tier_id).platform`)
-  - **Future (Assistant feature):** User invokes crew → create platform-specific crew using deterministic platform selection (no prompting; fallback = cursor)
-  - Cross-platform coordination happens automatically via shared message board (`agent-messages.json`)
-
-**GUI implementation requirements:**
-
-- **Where:** New GUI view `src/views/crews.rs` for crew monitoring; extend `src/app.rs` with crew-related messages and handlers
-- **What:** Implement crew list view, crew detail view, crew message viewer, crew status indicators, crew filter controls, crew cancellation dialog
-- **Messages:** Add crew-related messages (e.g., `Message::CrewsTabSelected`, `Message::CrewDetailExpanded(String)`, `Message::CrewCancelled(String)`, `Message::CrewFilterChanged(...)`)
-- **Data loading:** Load crews from `.puppet-master/state/crews.json`, messages from `agent-messages.json`, coordination state from `active-agents.json`
-- **Update frequency:** Event-driven updates for crew status changes, polling every 5 seconds for messages
-- **Future (Assistant feature):** When Assistant feature is added, extend GUI with crew creation dialog, crew settings panel, Assistant integration
-
-**Key implementation detail:**
-
-When orchestrator creates a crew for a tier, it must:
-1. Get tier config: `let tier_config = tier_config_for(tier_type, tier_id)?;`
-2. Use tier platform: `crew.platform = tier_config.platform;`
-3. All crew subagents use same platform: `subagent.platform = tier_config.platform;`
-4. Crew coordinates with other crews (different platforms) via shared message board
-
+Crew mode is a multi-model coordination overlay over child runs.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
+
+Canonical crew rules:
+- members are child runs.
+- model/provider diversity is the default distinguishing axis.
+- the same task and often the same Persona are preserved across the crew.
+- member-to-member coordination occurs through an attributable crew board.
+- the parent owns final synthesis and user-facing escalation.
+- crew shared state is explicit shared coordination state, not hidden long-term member memory.
+
+Crew defaults and confirmation:
+- default crews live in the model/runtime settings surface.
+- first crew invocation asks whether to use the default crew if one exists.
+- after model choice, PM resolves each member’s provider/runtime surface and discloses the resulting mapping.
+- if any member is Copilot, the crew normalizes to Copilot as a crew-level provider constraint.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/CLI_Bridged_Providers.md
 ### Gaps and Potential Issues for Crews Feature
 
 **Gap #37: Platform selection ambiguity for user-initiated crews (Future: Assistant feature)**
@@ -5610,7 +4609,7 @@ impl Crew {
 **GUI data sources:**
 - Load crews from `.puppet-master/state/crews.json`
 - Load messages from `.puppet-master/state/agent-messages.json` (filtered by crew_id)
-- Load coordination state from `.puppet-master/state/active-agents.json` (for member status)
+- Load coordination state from the canonical active-agent projection (optionally mirrored to `.puppet-master/state/active-agents.json` for debugging) for member status
 
 **GUI update frequency:**
 - Crew list: Update on crew status change (event-driven)
@@ -5829,7 +4828,7 @@ The communication system extends the existing coordination state with a message 
 
 ```
 .puppet-master/state/
-├── active-agents.json          # Existing: agent status tracking
+├── active-agents.json          # Optional debug mirror of agent status tracking
 └── agent-messages.json         # New: agent-to-agent messages
 ```
 
@@ -6766,9 +5765,9 @@ impl AgentCoordinator {
 **Issue:** If provider event ingestion fails (e.g. adapter parse errors, stream interruption), coordination updates can degrade, and there is no explicit fallback policy.
 
 **Mitigation:**
-- **Fallback detection:** Detect event-ingestion failures (parser error, stream timeout, malformed event). Automatically continue with file-based baseline updates.
-- **Baseline-first coordination:** Keep file-based coordination as the canonical path; event ingestion is an enrichment layer only.
-- **Error handling:** Log ingestion failures but do not block execution. Continue with baseline file-based coordination.
+- **Fallback detection:** Detect event-ingestion failures (parser error, stream timeout, malformed event). Automatically continue with baseline coordination projection updates.
+- **Baseline-first coordination:** Keep canonical coordination projection as the primary path; event ingestion is an enrichment layer only.
+- **Error handling:** Log ingestion failures but do not block execution. Continue with baseline coordination projection updates.
 
 **Gap #36: Coordination metrics and monitoring**
 

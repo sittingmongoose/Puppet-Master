@@ -24,10 +24,25 @@ All previously "optional" or "later" plan-mode and subagent GUI/backend items ar
 
 ### 4. Subagent -- Backend
 
-- **Config model:** Add (or extend) a struct for subagent config used at runtime (e.g. in `config/` or `types/config.rs`): `enable_tier_subagents: bool`, `tier_overrides: TierSubagentOverrides` (e.g. map tier → list of subagent names), `disabled_subagents: Vec<String>`, `required_subagents: Vec<String>` (optional). Load from `.puppet-master/config.yaml` under `subagentConfig`; if missing, use defaults: `enable_tier_subagents: true`, empty overrides, empty disabled/required.
-- **Orchestrator:** When selecting subagents for a tier, if `enable_tier_subagents` is false, skip subagent invocation (or use a single "general" path). If true, run selection logic then apply overrides: for that tier, if `tier_overrides` has an entry, use it (or merge/filter with selected list). Filter out any in `disabled_subagents`; optionally require any in `required_subagents`.
-- **Persistence:** When the GUI changes subagent settings, write back to config (YAML or same store as rest of app config); single save path that includes subagent config.
+The orchestrator launches PM child runs, not provider-native ad hoc agent processes.
 
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/storage-plan.md
+
+Backend requirements:
+- every delegated launch creates a canonical child-run record.
+- each child is marked `required` or `optional`.
+- child routing resolves requested versus effective Persona, runtime surface, model, and effort.
+- capability narrowing is applied before launch.
+- child lifecycle actions remain distinct: retry, reroute, replacement, resume, cancellation.
+- parent orchestration state is a projection over child records/events, not a separate ad hoc store.
+
+Parent orchestration responsibilities:
+- maintain child rollups by batch and subgroup.
+- consolidate overlapping child escalations before asking the user.
+- summarize required child outcomes before optional findings.
+- keep unresolved required children from being treated as complete.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
 ### 5. Subagent -- Frontend (Config)
 
 - **DRY:** Check `docs/gui-widget-catalog.md` before adding controls; use existing toggler, styled_button, layout helpers; tag new reusable widgets/helpers with `DRY:WIDGET:` or `DRY:FN:`; run `scripts/generate-widget-catalog.sh` after changes.

@@ -59,312 +59,71 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/
 
 ### 2.2 seglog: format, writer, rotation
 
-#### Persona/runtime payload registration
+Seglog is the canonical event source for child runs, crews, and context-shaping transitions.
 
-The event table above is expanded by the canonical Persona/runtime snapshot contract from `Plans/Contracts_V0.md`.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md
 
-Required payload additions:
-- `run.started` MUST include the full Persona/runtime snapshot once prompt/runtime resolution is complete.
-- `run.completed` MUST include the final Persona/runtime snapshot actually used for the completed run, including any clamped or skipped controls.
-- `chat.subagent_started` MUST include:
-  - `subagent_run_id`
-  - `task_label`
-  - `requested_persona`
-  - `effective_persona`
-  - `persona_selection_source`
-  - `selection_reason`
-  - `effective_platform`
-  - `effective_model`
-  - optional `effective_variant`
-  - optional `effective_reasoning_effort`
-  - optional `effective_talkativeness`
-  - `applied_persona_controls[]`
-  - `skipped_persona_controls[]`
-- `chat.subagent_completed` MUST include the same fields plus completion `status`.
-- `run.persona_stage_changed` MUST carry:
-  - `persona_stage`
-  - `run_id`
-  - `node_id?`
-  - `attempt_id?`
-  - the full Persona/runtime snapshot active for that stage transition.
+Required event families for this feature set:
+- child lifecycle events
+- crew lifecycle and crew-board message events
+- context-shrunk and context-rehydrated events
+- requested/effective runtime selection events when surfaced as runtime changes
+- blocked and awaiting-parent state transitions for child runs
 
-Approval visibility rule:
-- If an approval-blocked episode is raised after Persona/runtime state has already resolved, the persisted blocked record SHOULD include or reference the current Persona/runtime snapshot so approval UI and replay can display what the user is approving.
+Side files such as `active-agents.json` and `active-subagents.json` are not canonical event sources.
 
-**Event envelope (per record):** Persisted seglog records MUST use `Plans/Contracts_V0.md#EventRecord`. Each appended record is a single line or frame so we can tail easily. Recommended persisted format: **newline-delimited JSON** (NDJSON).
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/usage-feature.md
 
-```json
-{
-  "schema": "pm.event.v0",
-  "ts": "2026-02-21T12:00:00Z",
-  "seq": 12345,
-  "type": "chat.message",
-  "run_id": "PM-...",
-  "thread_id": "TH-...",
-  "payload": { ... }
-}
-```
+Rotation and rebuild rules:
+- seglog must contain enough lineage data to reconstruct child batches, subgroups, and crew membership.
+- group/subgroup UI expansion state is not canonical.
+- launch order, batch membership, subgroup membership, and parent-child lineage are canonical.
 
-- `EventEnvelopeV1` examples elsewhere are compatibility-only and MUST NOT be treated as the persisted write contract.
-- Concrete payload schemas are registered here; the top-level envelope remains owned by `Plans/Contracts_V0.md`.
-
-**Event types (minimum set for chat + usage + runs):**
-
-| type | Purpose | payload (key fields) |
-|------|---------|----------------------|
-| `chat.message` | User or assistant message appended to a thread | `thread_id`, `role`, `content`, `message_id`, optional `attachments`, `model`. For **assistant** messages, optional **`usage`** (e.g. `tokens_in`, `tokens_out`, `cost`, `reasoning_tokens`) so per-thread usage can be derived from messages without querying usage.event; canonical usage remains `usage.event` with `thread_id`. |
-| `chat.thread_created` | New thread | `thread_id`, `project_id`, `title` |
-| `run.started` | Orchestrator or Assistant run started | `run_id`, `project_id`, optional `thread_id`, `mode`, `strategy`, `strategy_resolution_reason`, optional requested/effective runtime snapshot refs |
-| `run.completed` | Run finished (success or failure) | `run_id`, `status`, `outcome`, optional `stop_reason`, optional `budget_key`, optional `budget_limit`, optional `observed_value`, optional **`usage`** (summary for this run: e.g. `tokens_in`, `tokens_out`, `cost`, `thread_id`) so consumers can get run-level usage without scanning `usage.event`. Canonical per-request usage remains `usage.event`; `run.completed.usage` is a convenience snapshot for dashboards and the thread-scoped Context Detail Pane. |
-| `usage.event` | Token/request/error event for Usage/Ledger | `usage_event_ref`, optional `run_id`, optional `thread_id`, optional `node_id`, optional `attempt_id`, `platform`, `tokens_in`, `tokens_out`, `timestamp`, optional `cost`, `reasoning_tokens`, `cache_read`, `cache_write` |
-| `tool.invoked` | Tool call (for analytics) | `tool_name`, `latency_ms`, `run_id`; optional **`success`** (bool), **`error`** (string), **`thread_id`** for error rate and Usage tool widget (Plans/Tools.md §8.0). |
-| `tool.denied` | Tool call blocked by policy (optional) | `tool_name`, `run_id`, `reason` (e.g. "permission_denied", "user_declined") for audit (Plans/Tools.md §8.0). |
-
-**Additional event types (full feature set):** The following support assistant-chat-design, orchestrator, interview, and human-in-the-loop. Projectors and analytics scan may ignore unknown types until needed.
-
-| type | Purpose | payload (key fields) |
-|------|---------|----------------------|
-| `chat.queue_updated` (or `queue_add` / `queue_remove` / `queue_edit` / `queue_clear`) | Queue state per thread (§4.1, §11) | `thread_id`, `message_id`, `text` (for add/edit) |
-| `chat.thread_archived`, `chat.thread_deleted` | Archive (hide but keep searchable) or permanent delete (§11) | `thread_id`, optional `project_id` |
-| `chat.plan_todo_updated` | Plan and todo per thread (§11) | `thread_id`, plan/todo payload |
-| `chat.subagent_started`, `chat.subagent_completed` | Subagent lifecycle in thread (§14.1) | `thread_id`, `subagent_id` or persona name, optional `task_label` |
-| `run.tier_started`, `run.tier_completed` | Compatibility replay events for legacy tier-boundary views | `run_id`, optional `node_id`, optional `work_package_id`, optional `feature_seam_id`, optional derived tier label |
-| `run.iteration_started`, `run.iteration_completed` | Iteration boundaries | `run_id`, `iteration_id`, `status` |
-| `run.verification_result` | Verification passed/failed | `run_id`, `tier`, `passed`, optional details |
-| `interview.started`, `interview.completed` | Interview session | `interview_id`, `project_id`, optional `thread_id` |
-| `interview.phase_started`, `interview.phase_completed` | Interview phase | `interview_id`, `phase`, optional result |
-| `interview.document_generated` | Interview artifact for projectors/Tantivy | `interview_id`, `doc_type`, `path` or content ref |
-| `hitl.approval_requested`, `hitl.approved`, `hitl.rejected`, `hitl.cancelled` | Compatibility approval event family for blocked runtime state | optional `request_id` for lineage, `run_id`, `node_id`, `blocked_sequence`, `message`, ordered `allowed_action_ids[]`, `timestamp`; resolution events add `resolution`, optional `reject_resolution`, optional `rationale` |
-| `editor.file_opened`, `editor.file_closed`, `editor.tab_switched`, `editor.buffer_saved`, `editor.buffer_reverted` | Editor lifecycle (FileManager.md §2.9) | `project_id`, `path` or `path_hash`, optional tab index / session_id |
-| `restore_point.created` | Auto-snapshot before turn/tool mutation (newfeatures.md §8) | `restore_point_id`, `project_id`, `turn_id` or `iteration_id`, `timestamp`, `file_snapshots` list: `{ path, content_hash, blob_ref }` (or inline marker for small blobs) |
-| `restore_point.pruned` | Retention cleanup of old restore points (§8) | `restore_point_id`, `project_id`, `reason` (e.g. `age_exceeded`, `count_exceeded`) |
-| `rollback.requested` | Agent or user requests rollback (§8) | `restore_point_id`, `requester` (`agent` or `user`), `scope` (`narrow` or `broad`), optional `thread_id` |
-| `rollback.confirmed` | User confirms rollback (§8) | `restore_point_id`, `conflicts` (list of conflicted files, may be empty) |
-| `rollback.completed` | Rollback applied successfully (§8) | `restore_point_id`, `files_restored` (list of paths written back) |
-| `rollback.cancelled` | User cancelled rollback (§8) | `restore_point_id`, optional `reason` |
-| `config.validation.passed`, `config.validation.warning`, `config.validation.failed` | Runtime execution-unit config validation result | `run_id`, optional `node_id`, optional `attempt_id`, requested/effective platform/model/runtime fields, `issues[]` |
-| `run.persona_stage_changed` | Runtime Persona/runtime stage transition | `run_id`, optional `node_id`, optional `attempt_id`, `persona_stage`, requested/effective Persona/runtime snapshot, `selection_reason` |
-| `platform.capability_evaluated` | Platform capability snapshot + gating decision | `run_id`, `platform`, `snapshot`, `precedence_source`, `gated_features[]` |
-| `run.qa_cycle_started`, `run.qa_cycle_completed` | Autonomous QA loop lifecycle | `run_id`, optional `node_id`, optional `attempt_id`, `cycle`, `blocking_findings`, `outcome` |
-| `crew.started`, `crew.member_started`, `crew.member_completed`, `crew.message_posted`, `crew.completed` | Crew lifecycle and shared-board traffic | `crew_id`, `run_id`, member ids, message metadata, lifecycle status |
-| `run.background_enqueued`, `run.background_state_changed` | Background / async run queue lifecycle | `run_id`, `project_id`, `thread_id`, `state`, `queue_position`, optional `worktree_path`, optional `branch_name` |
-
-**Writer API:** One module (e.g. `storage::seglog::Writer`) that:
-
-1. Opens the current segment file in append mode (or creates it).
-2. Serializes the event to the envelope format.
-3. Appends the line (with newline); flushes so projectors can tail.
-4. Optionally updates an in-memory or redb "last seq" for durability guarantees.
-
-**Contract:** `append(event)` returns `Result<(), SeglogError>`. On failure (e.g. disk full, I/O error), no partial record is written; caller must handle the error (e.g. surface to user, stop appending, optional retry). redb open and write operations return Result; caller must handle open failure (e.g. corrupt DB → do not open; show error or offer recover-from-backup).
-
-**Rotation:** When the current segment reaches a size limit (e.g. 64 MB) or a new day, close it and start a new file (e.g. `events_2026-02-21.ndjson`). Projectors and analytics scans must be able to list and read segments in order (by name or by embedded timestamp). **Retention:** Policy for deleting or archiving old segments (e.g. keep 90 days) so disk is bounded; document in §6.
-
-#### 2.2.1 Replay, rebuild, and compaction contract
-
-- `seglog` is the only canonical ledger. `redb`, Tantivy, and the JSONL mirror are disposable projections and MUST be rebuildable from `seglog`.
-- Replay/rebuild MUST capture a deterministic `target_seq`, build into scratch outputs, verify logical equivalence, and promote only on success. Live checkpoints/projections MUST remain unchanged on replay failure.
-- Runtime resume means restart from the last durable safe boundary recorded by checkpoint state; it does not require provider-process or transport-session reattachment.
-- Compaction is a file-boundary optimization only. It MUST NOT rewrite event payloads or change `seq` values.
-- Compaction MUST NEVER include the active writer segment.
-- Once compaction exists, durable projector and analytics checkpoints MUST use `seq` as the canonical resume token. Segment/offset MAY remain an optimization, not the sole durable identifier.
-
-ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/rewrite-tie-in-memo.md, PolicyRule:Decision_Policy.md§2
-
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md
 ### 2.3 redb: schema, migrations, key patterns
 
-#### Persona resolution persistence contract
+redb projections must be strong enough to rebuild child-run, crew, and context-shaping state after restart without relying on ad hoc JSON side files.
 
-redb MUST persist the user-visible Persona-resolution state that the GUI exposes.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestrator-subagent-integration.md
 
-Minimum keys / records:
-- `config:chat.persona`
-  - `mode` (`manual | auto | hybrid`)
-  - optional `manual_persona`
-  - optional `locked_persona`
-  - optional per-thread default override policy
-- `config:interview.persona`
-  - `mode`
-  - `stage_persona_overrides`
-  - `phase_primary_personas`
-  - `phase_secondary_personas`
-  - optional per-stage platform/model overrides
-- `config:builder.persona`
-  - `mode`
-  - `stage_personas`
-  - `review_pass_personas`
-  - optional per-stage platform/model overrides
-  - optional next-run explicit override
-- `config:orchestrator.persona`
-  - `mode`
-  - `tier_personas`
-  - `operation_frame_personas`
-  - optional per-tier platform/model overrides
-  - optional next-run explicit override
-- `thread_state:{thread_id}:persona_override`
-  - `requested_persona`
-  - `scope` (`turn | session | run | task | subagent`)
-  - `owner_id`
-  - `selection_source`
-  - `created_seq`
-  - optional `expires_after_seq`
-  - optional `cleared_seq`
+Minimum canonical record families:
+- `child_run`
+- `child_attempt`
+- `child_batch`
+- `child_subgroup`
+- `crew`
+- `crew_member`
+- `crew_message`
+- `child_context_state`
+- `planning_child_output_projection`
 
-Rules:
-- GUI controls MUST read/write these records rather than inventing surface-local state.
-- Session-scoped and task-scoped natural-language Persona overrides MUST survive restart if they were active before shutdown.
-- Replay from seglog remains canonical; redb stores the current projected state for fast restore.
+Minimum `child_run` fields:
+- `child_run_id`, `parent_run_id`, `thread_id`
+- `batch_id?`, `subgroup_id?`, launch order
+- requested/effective Persona and runtime surface fields
+- requested/effective effort fields
+- required/optional dependency classification
+- status, terminal reason, blocked reason, awaiting-parent reason
+- provider correlation fields as additive metadata only
 
-#### Additions: Preview session + browser rendering persistence contract
+Minimum `child_attempt` fields:
+- `attempt_id`
+- retry count
+- reroute history
+- resumable handle when present
+- requested/effective surface for that attempt
 
-#### Additions: Editor recovery, Search query sessions, and host-aware LSP projections
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
 
-Required durable records for this seam cluster:
-- `editor_unsaved_buffer.v1:{project_id}:{document_id}`
-- `search_panel_state.v1:{project_id}`
-- `search_query_state.v1:{project_id}:{query_session_id}`
-- `lsp_session_state.v1:{project_id}:{host_id}:{server_id}:{root_identity}`
-- `lsp_diagnostics_snapshot.v1:{project_id}:{host_id}:{server_id}:{root_identity}`
+Minimum context-state fields:
+- stable block refs
+- shrink generation
+- current working-set refs
+- Context Lens overlay refs
+- rehydration-capable source refs
+- compacted/rotated lineage markers where applicable
 
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md
-
-Persistence rules:
-- editor unsaved-buffer snapshots are local recovery artifacts only and MUST NOT imply successful remote persistence
-- Search panel state and Search query-session state are distinct; one captures UI intent, the other captures a specific executed query snapshot
-- LSP session projections are keyed by `(host_id, server_id, root_identity)` and capture lifecycle, freshness, health, requested/effective enablement, and restart metadata
-- stale and degraded are separate axes and MUST NOT collapse into one generic offline state
-
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md
-
-##### Artifact-backed preview identity and restore
-
-Preview persistence MUST support both document-backed and artifact-backed subjects.
-
-**Canonical subject key**
-- `preview_subject_id = doc:<document_id>` or `artifact:<artifact_id>`
-
-**Required redb keys**
-- `preview_state.v1:{project_id}:{preview_subject_id}` -> JSON `{ preview_mode, last_preview_session_id, last_attached_surface, preview_surface_kind, export_preferences, scroll_sync_enabled, last_error }`
-- `preview_source_artifact.v1:{project_id}:{artifact_id}` -> JSON `{ artifact_kind, source_kind, origin_surface, thread_id?, message_id?, source_revision, source_text_ref, backing_document_id?, last_saved_path? }`
-
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Runtime_Artifacts_Panel.md
-
-**Projector rule**
-- lifecycle events may continue to carry `document_id` or `artifact_id`, but projectors MUST derive `preview_subject_id` deterministically for restore and UI-state joins
-- restore MUST NOT require a historical live browser/webview instance or persisted DOM state
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md
-
-##### Browser session state and profile isolation
-
-Browser-capable sessions persist separately from preview-subject identity.
-
-**Required redb keys**
-- `browser_session_state.v1:{project_id}:{browser_session_id}` -> JSON `{ session_class, workspace_tab_id?, preview_subject_id?, requested_browser_runtime, effective_browser_runtime, requested_capabilities, effective_capabilities, capability_degradations, blocked_actions, permission_tier, profile_scope, restore_policy, takeover_state, last_selected_tab?, last_error? }`
-- `browser_profile_state.v1:{project_id}:{profile_scope}` -> JSON `{ history, bookmarks, cookie_store_ref?, local_storage_ref?, session_storage_ref? }`
-- `browser_profile_state.external.v1:{profile_scope}` -> JSON `{ history, bookmarks }` for explicitly separate detached or other externalized non-project browsing profiles when supported
-
-ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
-
-Partitioning rules:
-- `workspace_preview` uses project-scoped persistent browser state
-- `detached_preview` shares the originating normal-browsing state unless the user explicitly creates separate detached state
-- `automation_session` uses separate ephemeral profile state by default
-- `auth_session` uses isolated auth/profile state
-- browser state MUST NOT silently bleed across profile scopes
-
-ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
-
-##### Browser lifecycle events and payloads
-
-**Required seglog event types**
-- `preview.session.created`
-- `preview.session.state_changed`
-- `preview.session.attached`
-- `preview.session.detached`
-- `preview.session.closed`
-- `preview.session.reloaded`
-- `preview.session.exported`
-- `preview.action.requested`
-- `preview.action.completed`
-- `browser.session.created`
-- `browser.session.state_changed`
-- `browser.session.takeover_state_changed`
-- `browser.session.promoted`
-- `browser.session.closed`
-- `browser.context_captured`
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Runtime_Artifacts_Panel.md
-
-**Minimum event payloads**
-- `preview.session.*`: `project_id`, `preview_session_id`, `preview_subject_id`, `source_kind`, `preview_surface_kind`, `transport_mode`, `attached_surface`, `source_revision`, optional `error_code`
-- `preview.action.*`: `project_id`, `preview_session_id`, `node_id`, `operation`, `result_code`, optional `patch_summary`
-- `browser.session.*`: `project_id`, `browser_session_id`, `session_class`, `workspace_tab_id?`, `preview_subject_id?`, `requested_browser_runtime`, `effective_browser_runtime`, `requested_capabilities`, `effective_capabilities`, `capability_degradations`, `blocked_actions`, `permission_tier`, `profile_scope`, `restore_policy`, `takeover_state`, optional `error_code`
-- `browser.context_captured`: `project_id`, optional `thread_id`, `browser_session_id`, `session_class`, `capture_kind`, `capture_id`, `page_url`, bounded summary payload
-- browser-linked `runtime_artifact.*` records for screenshots, traces, videos, and recordings MUST carry `browser_session_id` and `session_class` when they originate from a browser session
-
-ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md
-
-**Restore rule**
-- redb restores browser/preview UI intent and recent state
-- seglog remains the canonical source for lifecycle/audit history
-- requested/effective browser runtime/capability snapshots are persisted as frozen runtime history and are not recomputed heuristically from current settings
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
-
-#### Additions: Debug investigation persistence contract
-
-Debug investigations are first-class persisted runtime records that correlate target discovery, temporary instrumentation, evidence capture, verification, and cleanup across Assistant, Orchestrator, Interview, browser, terminal, and runtime-artifact surfaces.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
-
-**Required redb keys**
-- `debug_investigation_state.v1:{project_id}:{investigation_id}` -> JSON `{ investigation_id, thread_id?, run_id?, parent_attempt_id?, target_kind, target_locator_summary, target_bindings, requested_mode_overlay, effective_mode_overlay, runtime_mode, phase, state, attention_reason_code?, blocked_reason_code?, verification_strength?, active_context_item_ids[], active_instrumentation_ids[], debug_automation_profile_state, opened_at_utc, updated_at_utc, closed_at_utc? }`
-- `debug_investigation_index.v1:{project_id}` -> summary rows for open/recent investigations ordered by `updated_at_utc`
-- `debug_instrumentation_state.v1:{project_id}:{investigation_id}:{instrumentation_id}` -> JSON `{ scope_kind, scope_locator, state, rollback_state, created_by_run_id?, cleanup_required, cleanup_completed_at_utc?, failure_reason? }`
-- `debug_bundle_export.v1:{project_id}:{bundle_id}` -> JSON `{ investigation_id, schema_id, redaction_profile, item_count, artifact_count, created_at_utc }`
-
-ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/GitHub_Integration.md
-
-Required enums:
-- `debug_target_kind = dev_session | browser_target | dap_session | agent_session | imported_bundle`
-- investigation `phase = draft | discovering_targets | preparing_environment | capturing_baseline | instrumenting | reproducing | collecting_evidence | analyzing | applying_fix | verifying | cleaning_up | resolved | attention_required | blocked | failed | failed_cleanup | cancelled | superseded`
-- instrumentation `state = planned | preparing | active | rollback_pending | cleaned_up | revoked | failed_cleanup | unknown_after_recovery`
-
-ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
-
-**Required seglog event types**
-- `debug.investigation.started`
-- `debug.investigation.state_changed`
-- `debug.investigation.target_bound`
-- `debug.investigation.context_item_added`
-- `debug.investigation.context_item_state_changed`
-- `debug.investigation.instrumentation_state_changed`
-- `debug.investigation.verification_recorded`
-- `debug.investigation.exported`
-- `debug.investigation.imported`
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Runtime_Artifacts_Panel.md
-
-Browser capture reconciliation rule:
-- outside active investigations, `browser.context_captured` continues to represent explicit chip-based capture only
-- inside an active investigation, browser-derived evidence may additionally create visible Investigation Context items tied to the same `investigation_id`
-- investigation auto-ingestion must persist `browser_session_id`, `session_class`, `capture_kind`, bounded summary payload, and visibility state; it must not create a hidden user message
-
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md
-
-Restore rules:
-- restore rehydrates the same `investigation_id`, visible Investigation Context, and bound identity refs when available
-- restore must not silently restart live automation, DAP execution, or temporary instrumentation
-- if a previously active runtime identity is unavailable after recovery, the investigation persists with explicit degraded or blocked state rather than silent retargeting
-- any instrumentation left uncertain after crash or disconnect transitions to `unknown_after_recovery` until explicitly confirmed or cleaned up
-
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/MiscPlan.md, ContractName:Plans/Permissions_System.md
-
-#### Additions: Container publish / DockerHub / Unraid persistence contract
-
-This addendum defines the persistence required for Source Control, GitHub Actions, Docker Manager, and their Orchestrator linkage.
-
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/assistant-memory-subsystem.md
 ### Scope split
 
 | Scope | Store | What belongs here |

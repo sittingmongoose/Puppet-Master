@@ -14,14 +14,19 @@ Define the **Provider facade** used by Puppet Master to run **bridged providers*
 This document is architecture/contract focused. It defines *what must be true* at the Provider boundary.
 
 ## Provider routing policy (locked)
-- **Cursor + Claude Code:** CLI-bridged only.
-- **OpenCode:** server-bridged (HTTP REST + SSE).
-- **Codex + Copilot + Gemini:** direct-provider auth/calls (OAuth/device/API key as applicable); these are outside this document's bridged transport mechanics.
 
-ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, ContractName:Plans/Contracts_V0.md
+Provider routing must preserve PM child-run canon while making surface-specific behavior explicit.
 
----
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
 
+Routing rules:
+- explicit user or command requests for a child runtime surface do not silently fallback.
+- implicit orchestrator-selected child surfaces may fallback to another compatible surface.
+- requested versus effective runtime surface must remain visible in metadata.
+- `gemini` direct and `gemini-cli` are separate runtime surfaces.
+- Copilot-native child routing is a special exception governed by PM policy rather than generic provider compatibility logic.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
 ## Non-goals
 - Defining the canonical persistent event model (SSOT: `Plans/storage-plan.md`).
 - Defining tool schemas or the full permission table (SSOT: `Plans/Tools.md` + `Plans/FileSafe.md` + `Plans/human-in-the-loop.md`).
@@ -127,43 +132,26 @@ The existing execution request in code is the baseline (`puppet-master-rs/src/ty
 - Explicit prompt parts (text blocks + file references)
 
 ### ProviderRequestEnvelope (V0)
-This envelope is transport-agnostic: a stream-json CLI transport and an ACP transport MUST accept the same envelope.
-ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, PolicyRule:Decision_Policy.md§2, Gate:GATE-009
 
-| Field | Required | Description |
-|---|---:|---|
-| `run_id` | ✅ | Stable run correlation ID (caller-provided). |
-| `thread_id` | ✅ | Stable thread correlation ID for persistence/seglog linkage (see `Plans/storage-plan.md`). |
-| `platform` | ✅ | Platform selector for bridged providers covered here (Cursor, Claude Code, OpenCode). |
-| `transport` | ✅ | `stream-json`, `acp`, or `http`. |
-| `model_id` | ✅ | Model identifier passed through to the underlying transport runtime (CLI args for Cursor/Claude; HTTP body fields for OpenCode). |
-| `run_mode` | ✅ | Canonical Puppet Master runtime mode: `ask`, `plan`, `regular`, or `yolo`. |
-| `execution_strategy` | ✅ | Canonical execution strategy resolved from `Plans/Run_Modes.md`: `hte` or `dae`. |
-| `strategy_resolution_reason` | ✅ | Stable reason code for the resolved strategy (for example `ask_forces_hte`, `plan_forces_hte`, `regular_default_hte`, `regular_dae_opt_in`, `regular_dae_disallowed`, `yolo_requires_dae`). |
-| `mode` | ✅ | Provider-facing execution hint `plan` or `execute`. This field is derived from `run_mode` + `execution_strategy` and is **not** the canonical Puppet Master runtime mode. |
-| `working_directory` | ✅ | CWD/primary workspace directory. |
-| `workspace_roots` | ✅ | Ordered list of roots the provider is allowed to reference. |
-| `prompt_parts` | ✅ | Ordered prompt parts: text blocks plus file references (paths/URIs). |
-| `context_files` | ✅ | Explicit file attachments list for CLIs that support file attachment prompts; also used by reconciliation when available. |
-| `tool_policy` | ✅ | Snapshot of tool permissions keyed by Tool ID (allow/deny/ask semantics SSOT: `Plans/Tools.md`). |
-| `budget` | ✅ | Effective budget snapshot for this run (`max_wall_ms`, `max_same_shell_failure`, `max_write_thrashing`, etc.). |
-| `env` | ✅ | Environment variables to set for the provider process. |
-| `timeout` | ✅ | `{ soft_ms, hard_ms }`. |
-| `client_hints` | ⛔️ | Optional opaque map for transport-specific hints; see constraints below. |
-| `origin` | ✅ | Identifies request source (e.g., orchestrator vs ACP client); see constraints below. |
-| `provider_native_ids` | ⛔️ | Optional correlation bundle for provider-native IDs (e.g., conversation id). |
+The ProviderRequestEnvelope must carry enough child-run identity to keep PM lineage canonical across bridged providers.
 
-**Normative constraints:**
-- The envelope MUST be sufficient to replay the provider run (modulo model nondeterminism) without referring to UI state.
-- The envelope MUST be stable across transports: ACP requests MUST be convertible into the same envelope.
-- `run_mode`, `execution_strategy`, `strategy_resolution_reason`, and `budget` are part of the replay contract and MUST be preserved across all transports.
-- The envelope MUST NOT embed tool schemas; only tool IDs and policy decisions.
-- `client_hints` MUST NOT change normalized semantics (it may only affect transport mechanics).
-- Behavior MUST NOT branch on `origin` (audit-only).
-ContractRef: ContractName:Plans/DRY_Rules.md#2, ContractName:Plans/Tools.md, PolicyRule:Decision_Policy.md§4, Gate:GATE-009
+Required fields for child-run execution:
+- `run_id`
+- `thread_id`
+- `parent_run_id?`
+- `child_run_id?`
+- `attempt_id?`
+- requested/effective Persona fields
+- requested/effective runtime surface fields
+- requested/effective model and effort fields
+- capability and permission snapshot refs
+- lineage-preserving prompt parts and attachment refs
 
----
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
+The bridged-provider envelope must not collapse PM lineage into provider-native session identity.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md
 ## Normalized provider stream schema (V0)
 
 ### Source-of-truth
@@ -335,36 +323,16 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-001, Gate:GATE-00
 ---
 
 ## OpenCode provider
-### Transport: HTTP (server-bridged)
 
-OpenCode is always a server-bridged provider in PM.
+OpenCode remains a bridged provider under this facade, but PM canon stays child-run-based.
 
-The canonical runtime subject is a server profile, not an account row.
-
-ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md
-
-### Server profile modes
-
-OpenCode supports two profile modes:
-- `Managed Server`
-- `Attach to Existing Server`
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md, ContractName:Plans/Tools.md
 
 Rules:
-- managed profiles let PM own launch, reconnect, shutdown, and PM-generated config.
-- attached profiles let PM own endpoint/auth config and health checks, but not the remote process lifecycle.
-- health state and discovery state are separate; the GUI may show `Connected (stale discovery)` or `Connected (discovery failed)` rather than flattening everything into connected/disconnected.
-- last-known discovery is preserved and marked stale when a previously healthy profile becomes temporarily unavailable.
-
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
-
-### Skills and MCP under OpenCode
-
-OpenCode-specific skill and MCP rules:
-- OpenCode's own skill system sits above its provider list, so PM must not create Codex-specific or Copilot-specific skill projection rules inside an OpenCode profile.
-- PM-native skills remain canonical and may be mirrored into compatible roots when the user enables projection.
-- managed OpenCode profiles may receive PM-managed MCP server configuration when the server supports it; attached profiles remain reflect-only unless PM explicitly adopts a server-side management API.
-
-ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/Tools.md
+- OpenCode child-session or task-session behavior is additive correlation data for PM child runs.
+- PM thread and run identity are not remapped to OpenCode session ids.
+- OpenCode-specific cache, billing, and correlation behavior belongs in the OpenCode adapter, not in generic bridged-provider routing.
+- provider-native agent definitions remain interoperability inputs rather than PM runtime canon.
 ## Tool-call correlation + reconciliation
 
 ### Correlation requirements (normative)

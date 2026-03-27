@@ -184,6 +184,20 @@ Rule: The permission engine MUST support granular rules over Skill IDs for the `
 
 ### 5.2 External directory guard
 
+### 5.3 Child-run inheritance
+
+Skills do not blindly copy into child runs. A child receives only the effective compatible subset of the parent-allowed skill universe.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md
+
+Rules:
+- a child may use a skill only if the parent effectively allowed it.
+- the target runtime surface must support the behavior needed by that skill.
+- child Persona or task-specific narrowing may disable a skill that the parent still had.
+- a child must not gain skill-powered capability that exceeds the parent ceiling.
+
+ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
+
 Skills may be discovered outside the project root (global roots).
 
 Rule: Discovered skill roots MUST be treated as allowed roots for the `skill` tool path checks and for `external_directory` guard evaluation.

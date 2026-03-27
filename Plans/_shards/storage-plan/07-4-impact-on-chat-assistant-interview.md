@@ -56,13 +56,26 @@ Rules:
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
 
 ### 4.4 Activity transparency payloads
-`tool.invoked` / `tool.denied` payloads may attach bounded feature-specific metadata under `payload.meta`.
 
-Recommended chat-facing additions include:
-- web activity meta (`web_operation`, `support_tier`, `execution_path`, `sources_ref`, `provider_fallback_summary`)
-- question-flow refs (`question_ids[]`, questionnaire state refs when needed)
-- command-card preview refs and session-linkage metadata
-- plan/todo tracker refs
+Activity transparency payloads must support the parent thread child-card UX and crew inspection surfaces.
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
 
+Required activity projections:
+- child started
+- child progress / work / thought deltas
+- child blocked / awaiting-parent / failed / cancelled
+- child completed
+- batch rollups and subgroup rollups
+- crew-board message summaries when crew mode is active
+- context-shrunk / context-rehydrated disclosures when relevant to the child
+
+Expanded child-panel payload minimums:
+- status
+- work stream
+- thought stream
+- current state reason when non-happy-path
+- result summary when finished
+- provider/model/effort metadata for hover or details surfaces
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md

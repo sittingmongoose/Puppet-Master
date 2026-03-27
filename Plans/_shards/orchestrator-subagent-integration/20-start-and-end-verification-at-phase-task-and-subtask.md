@@ -943,7 +943,7 @@ where
 
 **Built-in hooks (implement in `src/core/hooks/builtin.rs`):**
 
-1. **ActiveSubagentTrackerHook** (BeforeTier): Sets `active_subagent` in `TierContext`; persists to `.puppet-master/state/active-subagents.json`.
+1. **ActiveSubagentTrackerHook** (BeforeTier): Sets `active_subagent` in `TierContext`; persists tracking updates through canonical runtime storage and projection.
 2. **TierContextInjectorHook** (BeforeTier): Injects current phase/task/subtask status, config snapshot, known gaps into subagent prompt.
 3. **StaleStatePrunerHook** (BeforeTier): Prunes verification state older than 2 hours; creates state directories on first write.
 4. **HandoffValidatorHook** (AfterTier): Validates subagent output format (calls `validate_subagent_output`); requests retry on malformed output.
@@ -1024,7 +1024,7 @@ async fn execute_tier(&self, tier_id: &str) -> Result<()> {
 
 **BeforeTier hook responsibilities (detailed):**
 
-- **Track active subagent:** Record which subagent is active at this tier (e.g., `active_subagent: Option<String>` in `TierContext`). Persist to `.puppet-master/state/active-subagents.json` with format: `{ "tier_id": "1.1.1", "active_subagent": "rust-engineer", "timestamp": "2026-02-18T10:30:00Z" }`.
+- **Track active subagent:** Record which subagent is active at this tier (e.g., `active_subagent: Option<String>` in `TierContext`). Persist the tracking change through canonical runtime events and storage projections rather than through `.puppet-master/state/active-subagents.json`.
 - **Inject tier context:** Add current phase/task/subtask status, config snapshot, and known gaps to subagent prompt or context. Format: "Current tier: {tier_id}, Type: {tier_type}, Platform: {platform}, Model: {model}. Known gaps: {gaps}. Config: {config_summary}."
 - **Prune stale state:** Clean up verification state older than threshold (e.g., 2 hours). Check modification time of files in `.puppet-master/verification/<session-id>/`; delete if `mtime < now - 2 hours`.
 - **Lazy state creation:** Create verification state directories on first write (no explicit setup commands). Create `.puppet-master/verification/<session-id>/` if it doesn't exist when first hook writes state.
@@ -1032,7 +1032,7 @@ async fn execute_tier(&self, tier_id: &str) -> Result<()> {
 **AfterTier hook responsibilities (detailed):**
 
 - **Validate subagent output format:** Check that output matches structured handoff contract (see #2 below). Call `validate_subagent_output(output, platform)`; return `validation_passed: false` if malformed.
-- **Track completion:** Update active subagent tracking (clear `active_subagent` in `TierContext`), mark tier completion state in `.puppet-master/state/active-subagents.json`.
+- **Track completion:** Update active subagent tracking (clear `active_subagent` in `TierContext`) and mark tier completion through the same canonical runtime projection used for active tracking.
 - **Safe error handling:** Guarantee structured output even on hook failure. Wrap hook execution in `safe_hook_main`; on panic or error, return `{ "status": "error", "message": "...", "details": {...} }` instead of crashing.
 
 **Platform-native hook integration:**
@@ -1824,9 +1824,9 @@ match remediation_result {
 
 **Integration with existing quality verification:** This extends the existing "required reviewer subagent" requirement. The reviewer must output structured findings with severity; the orchestrator enforces the remediation loop. The remediation loop runs **after** the gate passes but **before** tier completion, ensuring Critical/Major issues are addressed before advancing.
 
-### 4. Cross-Session Knowledge Persistence (`save_memory`)
+### 4. Cross-Run Knowledge Continuity
 
-**Concept:** Persist architectural decisions, established patterns, tech choices, and lessons learned across runs. When a new run starts, load prior context to maintain continuity.
+**Concept:** Persist architectural decisions, established patterns, tech choices, and lessons learned across runs through canonical runtime storage, planning artifacts, and handoff bundles. When a new run starts, load prior context from those canonical sources to maintain continuity.
 
 **What to persist:**
 
@@ -1835,256 +1835,31 @@ match remediation_result {
 - **Tech choices:** Dependency versions, tool configurations, environment setup.
 - **Pitfalls encountered:** Known issues, workarounds, anti-patterns to avoid.
 
-**Storage structure:**
+**Canonical storage posture:**
 
-```rust
-// src/core/memory.rs (new file)
+- orchestration continuity is derived from seglog/redb-backed runtime state, stored plan outputs, and normalized handoff bundles.
+- `.puppet-master/memory/*` is not the canonical continuity source for orchestrator child runs.
+- continuity records should be queryable and attributable without requiring a memory-manager sidecar file hierarchy.
 
-use serde::{Deserialize, Serialize};
-use std::path::PathBuf;
-use chrono::{DateTime, Utc};
+**When to persist:** At phase completion, especially after planning/architecture work, extract durable decisions and patterns from canonical outputs and store them through the same runtime/project persistence path used for other orchestrator artifacts.
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct ArchitectureMemory {
-    pub decisions: Vec<ArchitecturalDecision>,
-    pub last_updated: DateTime<Utc>,
-}
+**When to load:** At run start, before Phase 1 begins, assemble continuity context from canonical persisted decisions, stored outputs, and handoff projections. The same continuity inputs may inform child selection (for example, a prior Rust decision may bias toward a Rust-focused child Persona), but they do not create subagent-specific durable memory.
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct ArchitecturalDecision {
-    pub category: String, // e.g., "tech_stack", "design_pattern", "framework"
-    pub decision: String, // e.g., "Rust + Actix Web"
-    pub rationale: Option<String>,
-    pub alternatives_considered: Vec<String>,
-    pub timestamp: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct PatternsMemory {
-    pub patterns: Vec<EstablishedPattern>,
-    pub last_updated: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct EstablishedPattern {
-    pub name: String, // e.g., "TDD", "Code organization", "Naming conventions"
-    pub description: String,
-    pub examples: Vec<String>,
-    pub timestamp: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct TechChoicesMemory {
-    pub choices: Vec<TechChoice>,
-    pub last_updated: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct TechChoice {
-    pub category: String, // e.g., "dependency", "tool", "environment"
-    pub name: String, // e.g., "clippy", "rustfmt"
-    pub version: Option<String>,
-    pub config: Option<serde_json::Value>,
-    pub timestamp: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct PitfallsMemory {
-    pub pitfalls: Vec<Pitfall>,
-    pub last_updated: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Pitfall {
-    pub issue: String, // Description of the issue
-    pub workaround: Option<String>,
-    pub anti_pattern: Option<String>, // What to avoid
-    pub context: Option<String>, // When this applies
-    pub timestamp: DateTime<Utc>,
-}
-
-pub struct MemoryManager {
-    memory_dir: PathBuf,
-}
-
-// DRY:DATA:MemoryManager — Cross-session memory management
-impl MemoryManager {
-    // DRY:FN:new — Create memory manager
-    pub fn new(memory_dir: Option<PathBuf>) -> Self {
-        let memory_dir = memory_dir.unwrap_or_else(|| {
-            PathBuf::from(".puppet-master").join("memory")
-        });
-        Self { memory_dir }
-    }
-
-    // DRY:FN:save_architecture — Save architectural decision
-    /// Save architectural decision
-    pub async fn save_architecture(&self, decision: ArchitecturalDecision) -> Result<()> {
-        let mut arch = self.load_architecture().await?;
-        arch.decisions.push(decision);
-        arch.last_updated = Utc::now();
-        self.save_file("architecture.json", &arch).await
-    }
-
-    /// Load architectural decisions
-    pub async fn load_architecture(&self) -> Result<ArchitectureMemory> {
-        self.load_file("architecture.json").await
-            .unwrap_or_else(|_| ArchitectureMemory {
-                decisions: Vec::new(),
-                last_updated: Utc::now(),
-            })
-    }
-
-    /// Save pattern
-    pub async fn save_pattern(&self, pattern: EstablishedPattern) -> Result<()> {
-        let mut patterns = self.load_patterns().await?;
-        patterns.patterns.push(pattern);
-        patterns.last_updated = Utc::now();
-        self.save_file("patterns.json", &patterns).await
-    }
-
-    /// Load patterns
-    pub async fn load_patterns(&self) -> Result<PatternsMemory> {
-        self.load_file("patterns.json").await
-            .unwrap_or_else(|_| PatternsMemory {
-                patterns: Vec::new(),
-                last_updated: Utc::now(),
-            })
-    }
-
-    /// Save tech choice
-    pub async fn save_tech_choice(&self, choice: TechChoice) -> Result<()> {
-        let mut tech = self.load_tech_choices().await?;
-        tech.choices.push(choice);
-        tech.last_updated = Utc::now();
-        self.save_file("tech-choices.json", &tech).await
-    }
-
-    /// Load tech choices
-    pub async fn load_tech_choices(&self) -> Result<TechChoicesMemory> {
-        self.load_file("tech-choices.json").await
-            .unwrap_or_else(|_| TechChoicesMemory {
-                choices: Vec::new(),
-                last_updated: Utc::now(),
-            })
-    }
-
-    /// Save pitfall
-    pub async fn save_pitfall(&self, pitfall: Pitfall) -> Result<()> {
-        let mut pitfalls = self.load_pitfalls().await?;
-        pitfalls.pitfalls.push(pitfall);
-        pitfalls.last_updated = Utc::now();
-        self.save_file("pitfalls.json", &pitfalls).await
-    }
-
-    /// Load pitfalls
-    pub async fn load_pitfalls(&self) -> Result<PitfallsMemory> {
-        self.load_file("pitfalls.json").await
-            .unwrap_or_else(|_| PitfallsMemory {
-                pitfalls: Vec::new(),
-                last_updated: Utc::now(),
-            })
-    }
-
-    /// Load all memory and format for prompt injection
-    pub async fn load_all_for_prompt(&self) -> Result<String> {
-        let arch = self.load_architecture().await?;
-        let patterns = self.load_patterns().await?;
-        let tech = self.load_tech_choices().await?;
-        let pitfalls = self.load_pitfalls().await?;
-
-        let mut prompt = String::new();
-
-        if !arch.decisions.is_empty() {
-            prompt.push_str("## Previous Architectural Decisions\n\n");
-            for decision in &arch.decisions {
-                prompt.push_str(&format!("- **{}**: {}\n", decision.category, decision.decision));
-                if let Some(rationale) = &decision.rationale {
-                    prompt.push_str(&format!("  Rationale: {}\n", rationale));
-                }
-            }
-            prompt.push('\n');
-        }
-
-        if !patterns.patterns.is_empty() {
-            prompt.push_str("## Established Patterns\n\n");
-            for pattern in &patterns.patterns {
-                prompt.push_str(&format!("- **{}**: {}\n", pattern.name, pattern.description));
-            }
-            prompt.push('\n');
-        }
-
-        if !tech.choices.is_empty() {
-            prompt.push_str("## Tech Choices\n\n");
-            for choice in &tech.choices {
-                prompt.push_str(&format!("- **{}**: {}", choice.category, choice.name));
-                if let Some(version) = &choice.version {
-                    prompt.push_str(&format!(" ({})", version));
-                }
-                prompt.push('\n');
-            }
-            prompt.push('\n');
-        }
-
-        if !pitfalls.pitfalls.is_empty() {
-            prompt.push_str("## Known Pitfalls to Avoid\n\n");
-            for pitfall in &pitfalls.pitfalls {
-                prompt.push_str(&format!("- {}\n", pitfall.issue));
-                if let Some(workaround) = &pitfall.workaround {
-                    prompt.push_str(&format!("  Workaround: {}\n", workaround));
-                }
-            }
-        }
-
-        Ok(prompt)
-    }
-
-    async fn save_file<T: Serialize>(&self, filename: &str, data: &T) -> Result<()> {
-        std::fs::create_dir_all(&self.memory_dir)?;
-        let path = self.memory_dir.join(filename);
-        let json = serde_json::to_string_pretty(data)?;
-        std::fs::write(path, json)?;
-        Ok(())
-    }
-
-    async fn load_file<T: for<'de> Deserialize<'de>>(&self, filename: &str) -> Result<T> {
-        let path = self.memory_dir.join(filename);
-        let json = std::fs::read_to_string(path)?;
-        let data: T = serde_json::from_str(&json)?;
-        Ok(data)
-    }
-}
-```
-
-**When to persist:** At Phase completion (especially Phase 1: Planning/Architecture). Use `memory_manager.save_architecture()`, `save_pattern()`, `save_tech_choice()`, `save_pitfall()` functions. Extract decisions/patterns from Phase 1 output (e.g., parse "We chose Rust + Actix" → save as architectural decision).
-
-**When to load:** At run start, before Phase 1 begins. Call `memory_manager.load_all_for_prompt()` and inject into Phase 1 context. Also use for subagent selection (e.g., "project uses Rust" → prefer `rust-engineer`; "established TDD pattern" → include `test-automator`).
-
-**Platform-specific implementation:** Platform-agnostic -- memory persistence is orchestrator-level. All platforms benefit from loaded context injected into prompts. Memory files are stored in `.puppet-master/memory/` as JSON files, readable by all platforms.
+**Platform-specific implementation:** Platform-agnostic. All platforms benefit from canonical continuity inputs injected into prompts, but the continuity source remains runtime storage and structured artifacts rather than memory files.
 
 ### 5. Active Agent Tracking
 
-**Concept:** Track which subagent is currently active at each tier. Store in tier context and expose for logging, debugging, and audit trails.
+Active child tracking must project from canonical storage and events rather than from mutable side files.
 
-**Tracking:**
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
 
-- **Per tier:** `active_subagent: Option<String>` in `TierContext`.
-- **Per run:** `active_subagents: HashMap<TierId, String>` in orchestrator state.
-- **Persistence:** Write to `.puppet-master/state/active-subagents.json` (updated on each tier start).
+Rules:
+- `active-agents.json` is not canonical runtime truth.
+- child visibility, conflict prevention, and status rollups come from seglog/redb projections.
+- launch order, batch membership, subgroup membership, and parent-child lineage are canonical projection fields.
+- stale child entries are resolved through canonical status and expiry logic, not side-file cleanup heuristics.
 
-**BeforeTier hook:** Sets `active_subagent` when tier starts (from subagent selection or override).
-
-**AfterTier hook:** Clears `active_subagent` when tier completes.
-
-**Use cases:**
-
-- **Logging:** "Phase X: active subagent = architect-reviewer"
-- **Debugging:** "Why did this tier fail? Check active subagent logs."
-- **Audit trails:** "Which subagents ran in this run? See active-subagents.json."
-- **GUI display:** Show active subagent in tier status UI.
-
-**Platform-specific implementation:** Platform-agnostic -- tracking is orchestrator-level. All platforms benefit from the same tracking mechanism.
-
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
 ### 6. Safe Error Handling (Guaranteed Structured Output)
 
 **Concept:** Hooks and verification functions must never crash the session. Use wrappers that guarantee structured output (JSON or Result) even on failure.

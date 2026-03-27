@@ -2,35 +2,24 @@
 
 ### 1. Subagent Configuration
 
-Add to `InterviewOrchestratorConfig`:
+Interview uses the reconciled PM child-run and Persona-stage model.
 
-```rust
-pub struct InterviewOrchestratorConfig {
-    // ... existing fields ...
-    
-    /// Subagent configuration per phase
-    pub subagent_config: Option<SubagentConfig>,
-}
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md
 
-pub struct SubagentConfig {
-    /// Enable subagents for phase-specific expertise
-    pub enable_phase_subagents: bool,
-    /// Enable subagents for research operations
-    pub enable_research_subagents: bool,
-    /// Enable subagents for answer validation
-    pub enable_validation_subagents: bool,
-    /// Enable subagents for document generation
-    pub enable_document_subagents: bool,
-    /// Map phase ID to primary subagent name
-    pub phase_subagents: HashMap<String, String>,
-    /// Map phase ID to secondary subagent names
-    pub phase_secondary_subagents: HashMap<String, Vec<String>>,
-}
-```
+Canonical Interview rules:
+- Interview child work launches PM child runs.
+- stage and phase behavior resolve Personas rather than relying on legacy provider-native phase-subagent command names.
+- provider-native invocation syntax is interoperability-only, not Interview runtime canon.
+- requested/effective runtime fields must remain visible for Interview child launches.
 
+Legacy migration rule:
+- `phase_subagents` and `phase_secondary_subagents` are migration aliases only.
+- new persisted canonical Interview config must use Persona-oriented stage fields.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md
 ### 2. Prompt Template Enhancement
 
-Modify `prompt_templates.rs` to include subagent invocation instructions:
+Modify `prompt_templates.rs` to include Interview child-run guidance based on stage and Persona resolution:
 
 ```rust
 pub fn generate_system_prompt(
@@ -42,25 +31,25 @@ pub fn generate_system_prompt(
 ) -> String {
     // ... existing prompt generation ...
     
-    // Add subagent instructions if configured
+    // Add Interview child-run guidance if configured
     if let Some(subagent_cfg) = subagent_config {
-        if subagent_cfg.enable_phase_subagents {
-            if let Some(subagent_name) = subagent_cfg.phase_subagents.get(&phase_id) {
-                parts.push(format!(
-                    "\n**Subagent Support:**\n\
-                     You can invoke the {} subagent for specialized expertise:\n\
-                     - Use `/{} <task>` to delegate research or validation tasks\n\
-                     - Use `/{} validate <decision>` to validate technical decisions\n\
-                     - The subagent will provide expert analysis in this domain",
-                    subagent_name, subagent_name, subagent_name
-                ));
-            }
+        let stage_persona = resolve_interview_stage_persona(phase_index, subagent_cfg, config);
+        if let Some(persona_id) = stage_persona {
+            parts.push(format!(
+                "\n**Interview Child-Run Support:**\n\
+                 This phase may delegate research or validation work to a PM child run.\n\
+                 - Requested Persona: {persona_id}\n\
+                 - Preserve requested/effective runtime visibility for any delegated work\n\
+                 - Use PM child-run/task delegation semantics rather than legacy provider-native `/subagent` commands"
+            ));
         }
     }
     
     // ... rest of prompt ...
 }
 ```
+
+Legacy `phase_subagents` examples in older Interview notes are migration-era illustrations only. Rewrite-era Interview prompt guidance must resolve stage/Persona selection first and then launch PM child runs through the shared child-run contract.
 
 ### 3. Research Engine Integration
 
@@ -346,7 +335,7 @@ ContractRef: ContractName:Plans/Personas.md, Primitive:Seglog, ContractName:Plan
 
 **BeforeValidation responsibilities:**
 
-- **Load validation subagent:** Determine validation subagent for this phase (from `SubagentConfig.phase_subagents` or fallback)
+- **Load validation runner:** Determine the validation Persona/runtime selection for this phase from the stage-resolved Interview configuration or fallback.
 - **Build validation context:** Build validation context with question, answer, phase info, and prior phase decisions
 - **Check subagent availability:** Verify validation subagent is available for the configured platform
 

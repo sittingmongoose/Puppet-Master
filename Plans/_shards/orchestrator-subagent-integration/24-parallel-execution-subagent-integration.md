@@ -146,25 +146,25 @@ When multiple agents/subagents run concurrently (parallel subtasks, different ti
 
 1. **Shared state files (existing):** All agents read `progress.txt`, `AGENTS.md`, `prd.json` -- these provide **asynchronous** coordination (agents see what others have done, not what they're doing now).
 
-2. **Real-time coordination state (new, cross-platform):** Add `.puppet-master/state/active-agents.json` that tracks:
+2. **Real-time coordination state (new, cross-platform):** Add a canonical coordination projection, optionally mirrored to `.puppet-master/state/active-agents.json` for debugging, that tracks:
    - Which agents/subagents are currently active (including platform: "codex", "claude", "cursor", "gemini", "copilot")
    - What files/modules each agent is working on
    - What operations each agent is performing (e.g., "editing src/api.rs", "running tests")
    - Platform identifier (so agents know which platform other agents are using)
    - Timestamp of last update
 
-   **This file-based coordination works across ALL platforms** -- a Codex agent can see what a Claude agent is doing, and vice versa. All platforms read/write to the same JSON file.
+   **This projected coordination works across ALL platforms** -- a Codex agent can see what a Claude agent is doing, and vice versa. All platforms consume the same canonical coordination state even if a debug JSON mirror exists.
 
 3. **Provider-bridge coordination (current):**
 
    - No same-platform shared thread/session coordination path is active.
-   - Codex and Copilot follow the same file-based coordination contract as Cursor/Claude/Gemini.
-   - Cross-platform and same-platform coordination both use `active-agents.json` + prompt injection.
+   - Codex and Copilot follow the same projected coordination contract as Cursor/Claude/Gemini.
+   - Cross-platform and same-platform coordination both use canonical coordination state + prompt injection.
 
 4. **Cross-worktree awareness:** Even when agents run in separate worktrees, they can:
    - Read shared state files from main repo (progress.txt, prd.json)
-   - Read active-agents.json to see what others are doing (regardless of platform)
-   - Write their own status to active-agents.json before starting work
+   - Read the projected active-agent state to see what others are doing (regardless of platform)
+   - Write their own status through the same projected coordination path before starting work
    - Update status as they work (file being edited, operation in progress)
 
 5. **Prompt injection:** Inject coordination context into each agent's prompt:
@@ -208,7 +208,7 @@ When a Codex agent and a Claude Code agent work simultaneously:
      }
 
 3. Codex agent begins editing src/api.rs:
-   - Updates active-agents.json:
+   - Updates coordination projection:
      {
        "agent_id": "rust-engineer-1.1.1",
        "platform": "codex",
@@ -222,13 +222,13 @@ When a Codex agent and a Claude Code agent work simultaneously:
    - Agent understands context and avoids editing src/api.rs
 
 5. Codex agent completes:
-   - Unregisters from active-agents.json
+   - Unregisters from coordination projection
    - Claude Code agent can now safely edit src/api.rs for tests
 ```
 
 **Platform field in coordination state:**
 
-The `active-agents.json` includes a `platform` field so agents know which platform other agents are using:
+The coordination projection includes a `platform` field so agents know which platform other agents are using:
 
 ```json
 {
@@ -461,7 +461,7 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, tier_id)).await?;
 
 **Provider coordination model (Codex/Copilot included):**
 
-- **Canonical mode:** File-based coordination (`active-agents.json`) for all platforms.
+- **Canonical mode:** Coordination projection for all platforms, optionally mirrored to `active-agents.json` for debugging.
 - **Scope:** Works for same-platform and cross-platform crews using the same state schema.
 - **Runtime path:** Direct-provider invocation via direct provider calls (no local CLI bridge); no SDK threads/sessions.
 - **Prompt contract:** Every subagent receives coordination context built from shared state.
@@ -497,7 +497,7 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, tier_id)).await?;
 **Example coordination flow (cross-platform):**
 
 ```
-1. Agent A (rust-engineer, Codex) starts Subtask A: registers in active-agents.json
+1. Agent A (rust-engineer, Codex) starts Subtask A: registers in the coordination projection
    - agent_id: "rust-engineer-1.1.1"
    - platform: "codex"
    - current_operation: "Starting implementation of API endpoint"
@@ -512,496 +512,46 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, tier_id)).await?;
    - Prompt includes: "**Active Agents:** rust-engineer (Codex) is editing src/api.rs (started 1 minute ago). **Your Task:** Add tests for POST /users endpoint. Wait for rust-engineer to finish src/api.rs before adding tests."
 
 4. Agent B (Claude Code) waits or works on other files, then proceeds when Agent A (Codex) finishes
-   - Cross-platform coordination: Claude agent sees Codex agent's status via shared file
+   - Cross-platform coordination: Claude agent sees Codex agent's status via the shared coordination projection
 
 5. Agent A (Codex) completes: unregisters from coordination state
    - Agent B (Claude Code) can now safely edit src/api.rs for tests
 ```
 
-**Key point:** File-based coordination enables **cross-platform communication**. A Codex agent and a Claude Code agent can coordinate through `active-agents.json` even when they run on different providers/CLIs.
+**Key point:** Canonical coordination projection enables **cross-platform communication**. A Codex agent and a Claude Code agent can coordinate through the same active-agent state even when they run on different providers/CLIs.
 
 **Provider-bridge runner integration (canonical):**
 
-- **All platform runners (Cursor, Codex, Claude, Gemini, Copilot):** read/update file-based coordination state (`active-agents.json`) and consume the same prompt injection contract.
-- **No shared provider sessions/threads:** orchestrator keeps fresh-process isolation per iteration and uses files/events for coordination.
+- **All platform runners (Cursor, Codex, Claude, Gemini, Copilot):** read/update canonical coordination state and consume the same prompt injection contract.
+- **No shared provider sessions/threads:** orchestrator keeps fresh-process isolation per iteration and uses canonical projections plus events for coordination.
 
 **Implementation notes:**
 
-- **Where:** New module `src/core/agent_coordination.rs` for file-based coordination; platform runners only read/write coordination state and consume injected context.
+- **Where:** New module `src/core/agent_coordination.rs` for canonical coordination projection; platform runners read/write coordination state and consume injected context.
 - **What:** Implement `AgentCoordinator`, inject coordination context into prompts, and keep status updates provider-agnostic.
 - **When:** Register agent before execution; update status during execution (periodically or on file operations); unregister after execution.
 
 ### Puppet Master Crews (Teams/Fleets Alternative)
 
-**Concept:** Build a Puppet Master-native multi-agent communication system called **"Crews"** that enables subagents to talk to each other directly. Crews can be invoked by users (platform-specific) or by the orchestrator (cross-platform coordination). This provides agent-to-agent communication and gives the orchestrator ("boss agent") full visibility into subagent interactions.
-
-**Feature Name:** "Crews" (can be invoked as "crew" or "crews" in commands/prompts)
-
-**Two modes of operation:**
-
-1. **User-initiated Crews (platform-specific) -- Future: Assistant feature:**
-   - **Status:** Not yet implemented. Will be enabled when the "Assistant" feature is added.
-   - User will invoke crew via command/prompt: "use a crew", "create a crew", "crew", "crews"
-   - Crew will use the **currently selected platform** (from tier config or GUI selection)
-   - Example: If user has Copilot selected → Crew spawns Copilot subagents
-   - Example: If user has Claude Code selected → Crew spawns Claude Code subagents
-   - **Rationale:** User needs control over which platform to use (subscription limits, preferences, capabilities)
-   - **Note:** Platform selection logic will be defined when Assistant feature is designed (see Gap #37)
-
-2. **Orchestrator-initiated Crews (platform-specific per tier, cross-platform coordination via message board) -- Current implementation:**
-   - Orchestrator automatically creates crews for each tier that needs subagents
-   - **Respects tier-level platform configuration:**
-     - Task level with platform = Codex → Crew uses Codex subagents
-     - Subtask level with platform = Copilot → Crew uses Copilot subagents
-   - Each crew uses the platform specified in that tier's config
-    - **Cross-platform coordination:** Different crews (different platforms) coordinate via shared message board (`agent-messages.json`) and coordination state (`active-agents.json`)
-    - **Rationale:** Orchestrator respects tier-level platform selections while enabling cross-platform coordination through shared state
-
-**Canonical crew contract:**
-- A Crew is a runtime coordination construct, not a replacement for tier or node ownership.
-- Canonical crew state is persisted via seglog/redb (`crew.started`, `crew.member_*`, `crew.message_posted`, `crew.completed` plus `runs -> crew.*` projections).
-- File-based message boards such as `agent-messages.json` or `active-agents.json` are debug/interop mirrors only and MUST be rebuildable from canonical events.
-- Crew permissions are bounded by the member run's platform, strategy, tool policy, and FileSafe scope; crew membership does not widen those permissions.
-
-ContractRef: Primitive:Seglog, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md
-
-**User-initiated Crew invocation (Future: Assistant feature):**
-
-**Status:** Not yet implemented. This will be enabled when the "Assistant" feature is added.
-
-```rust
-// Future implementation (when Assistant feature is added):
-// User command examples:
-// "use a crew to implement authentication"
-// "create a crew for testing"
-// "crew: implement API endpoint"
-// "crews: add tests and documentation"
-
-// In orchestrator (via Assistant), detect crew invocation
-if prompt.contains("crew") || prompt.contains("crews") || prompt.contains("use a crew") || prompt.contains("create a crew") {
-    // Deterministic platform selection (no prompting):
-    // 1) tier config platform (when in a tier context)
-    // 2) Assistant thread/platform selection (when present)
-    // 3) fallback: cursor
-    let platform = self.resolve_platform_for_crew()?; // e.g., Platform::Cursor
-
-    // Parse crew request (extract task, subagents needed)
-    let crew_request = parse_crew_request(&prompt)?;
-
-    // Create crew with platform-specific subagents
-    let crew = Crew::new(platform, crew_request.subagents, crew_request.task);
-
-    // Spawn crew (all subagents use same platform)
-    crew.execute().await?;
-}
-```
-
-**Platform selection for user-initiated crews (Future consideration):**
-
-- **Source:** Current tier config platform, or GUI platform selection if in GUI mode
-- **Fallback:** If no platform selected, use deterministic default platform (cursor)
-- **Validation:** Ensure platform supports subagents (all providers support subagents via coordination)
-- **Note:** Exact implementation will be defined when Assistant feature is designed (see Gap #37)
-
-**Example user-initiated crew flow (Future):**
-
-```
-User: "use a crew to implement authentication system"
-Current platform: Copilot (from tier config or GUI)
-
-Orchestrator (via Assistant):
-1. Detects "crew" invocation
-2. Gets current platform: Copilot
-3. Parses request: task = "implement authentication system"
-4. Selects subagents: ["backend-developer", "security-auditor", "test-automator"]
-5. Creates crew with Copilot platform
-6. Spawns 3 Copilot subagents (all using Copilot CLI)
-7. Agents coordinate via Crew communication system (file-based)
-8. All agents can talk to each other, orchestrator monitors
-```
-
-**Orchestrator-initiated crew flow:**
-
-```
-Orchestrator needs to coordinate:
-- Codex agent (rust-engineer) working on Subtask A
-- Claude Code agent (test-automator) working on Subtask B (parallel)
-
-Orchestrator:
-1. Creates cross-platform crew automatically
-2. Registers both agents in crew
-3. Agents coordinate via file-based coordination
-4. Agents can communicate via message board
-5. Orchestrator monitors all communication
-```
-
-**Crew structure:**
-
-```rust
-// src/core/crews.rs (new module)
-
-use crate::types::Platform;
-
-#[derive(Debug, Clone)]
-// DRY:DATA:Crew — Crew (multi-agent team) structure
-pub struct Crew {
-    pub crew_id: String, // UUID
-    pub name: Option<String>, // User-provided name (optional)
-    pub platform: Platform, // Platform for user-initiated crews; None for orchestrator cross-platform crews
-    pub subagents: Vec<CrewSubagent>,
-    pub task: String, // Crew's overall task
-    pub created_by: CrewCreator, // User or Orchestrator
-    pub created_at: DateTime<Utc>,
-    pub status: CrewStatus,
-}
-
-#[derive(Debug, Clone)]
-pub enum CrewCreator {
-    User { user_id: Option<String> },
-    Orchestrator { tier_id: String },
-}
-
-#[derive(Debug, Clone)]
-pub struct CrewSubagent {
-    pub agent_id: String, // e.g., "rust-engineer", "test-automator"
-    pub agent_type: String, // Subagent type/name
-    pub platform: Platform, // For orchestrator crews, can differ from crew.platform
-    pub tier_id: Option<String>, // Which tier this subagent is working on
-    pub status: SubagentStatus,
-}
-
-#[derive(Debug, Clone, PartialEq)]
-pub enum CrewStatus {
-    Forming, // Crew being created
-    Active, // Crew members working
-    Waiting, // Crew waiting for something
-    Complete, // Crew finished task
-    Disbanded, // Crew disbanded
-}
-
-#[derive(Debug, Clone, PartialEq)]
-pub enum SubagentStatus {
-    Pending, // Not started yet
-    Active, // Currently working
-    Waiting, // Waiting for another subagent
-    Complete, // Finished
-    Blocked, // Blocked on something
-}
-```
-
-**Crew communication:**
-
-Crew members communicate via the message board (`agent-messages.json`), but messages are scoped to the crew:
-
-```rust
-impl Crew {
-    // DRY:FN:post_to_crew — Post message to crew
-    // DRY REQUIREMENT: Validate crew subagent names using subagent_registry::is_valid_subagent_name()
-    /// Post message to crew (all crew members see it)
-    pub async fn post_to_crew(&self, message: AgentMessage) -> Result<()> {
-        // DRY: Validate crew subagent names — DO NOT allow invalid subagent names in crew
-        for subagent in &self.subagents {
-            if !subagent_registry::is_valid_subagent_name(&subagent.agent_type) {
-                return Err(anyhow!("Invalid subagent name in crew: {}", subagent.agent_type));
-            }
-        }
-        // Set message routing to crew members
-        message.to_tier_id = None; // Override tier_id
-        message.crew_id = Some(self.crew_id.clone()); // Scope to crew
-
-        communicator.post_message(message).await
-    }
-
-    /// Get messages for crew
-    pub async fn get_crew_messages(&self) -> Result<Vec<AgentMessage>> {
-        communicator.get_messages_for_crew(&self.crew_id).await
-    }
-}
-```
-
-**User-initiated crew example:**
-
-```rust
-// User: "create a crew with rust-engineer, test-automator, and code-reviewer to implement authentication"
-
-// Parse crew request
-let crew_request = CrewRequest {
-    subagents: vec!["rust-engineer".to_string(), "test-automator".to_string(), "code-reviewer".to_string()],
-    task: "implement authentication".to_string(),
-    platform: None, // Will use current platform
-};
-
-// Get current platform
-let current_platform = tier_config.platform; // e.g., Platform::Copilot
-
-// Create crew
-let crew = Crew {
-    crew_id: uuid::Uuid::new_v4().to_string(),
-    name: Some("Authentication Crew".to_string()),
-    platform: current_platform, // Copilot
-    subagents: vec![
-        CrewSubagent {
-            agent_id: format!("rust-engineer-{}", crew.crew_id),
-            agent_type: "rust-engineer".to_string(),
-            platform: current_platform, // All use Copilot
-            tier_id: None,
-            status: SubagentStatus::Pending,
-        },
-        CrewSubagent {
-            agent_id: format!("test-automator-{}", crew.crew_id),
-            agent_type: "test-automator".to_string(),
-            platform: current_platform, // All use Copilot
-            tier_id: None,
-            status: SubagentStatus::Pending,
-        },
-        CrewSubagent {
-            agent_id: format!("code-reviewer-{}", crew.crew_id),
-            agent_type: "code-reviewer".to_string(),
-            platform: current_platform, // All use Copilot
-            tier_id: None,
-            status: SubagentStatus::Pending,
-        },
-    ],
-    task: "implement authentication".to_string(),
-    created_by: CrewCreator::User { user_id: None },
-    created_at: Utc::now(),
-    status: CrewStatus::Forming,
-};
-
-// Execute crew (spawn all subagents using Copilot)
-crew.execute().await?;
-```
-
-**Orchestrator-initiated crew example:**
-
-```rust
-// Orchestrator creates crews per tier, respecting tier platform config
-
-// Task level (1.1) has platform = Codex
-let task_tier_config = tier_config_for(TierType::Task, "1.1");
-// task_tier_config.platform = Platform::Codex
-
-let task_crew = Crew {
-    crew_id: uuid::Uuid::new_v4().to_string(),
-    name: None,
-    platform: task_tier_config.platform, // Codex (from tier config)
-    subagents: vec![
-        CrewSubagent {
-            agent_id: "rust-engineer-1.1".to_string(),
-            agent_type: "rust-engineer".to_string(),
-            platform: task_tier_config.platform, // Codex (all use same platform)
-            tier_id: Some("1.1".to_string()),
-            status: SubagentStatus::Active,
-        },
-        CrewSubagent {
-            agent_id: "backend-developer-1.1".to_string(),
-            agent_type: "backend-developer".to_string(),
-            platform: task_tier_config.platform, // Codex (all use same platform)
-            tier_id: Some("1.1".to_string()),
-            status: SubagentStatus::Active,
-        },
-    ],
-    task: "Implement API endpoints".to_string(),
-    created_by: CrewCreator::Orchestrator { tier_id: "1.1".to_string() },
-    created_at: Utc::now(),
-    status: CrewStatus::Active,
-};
-
-// Subtask level (1.1.1) has platform = Copilot
-let subtask_tier_config = tier_config_for(TierType::Subtask, "1.1.1");
-// subtask_tier_config.platform = Platform::Copilot
-
-let subtask_crew = Crew {
-    crew_id: uuid::Uuid::new_v4().to_string(),
-    name: None,
-    platform: subtask_tier_config.platform, // Copilot (from tier config)
-    subagents: vec![
-        CrewSubagent {
-            agent_id: "test-automator-1.1.1".to_string(),
-            agent_type: "test-automator".to_string(),
-            platform: subtask_tier_config.platform, // Copilot (all use same platform)
-            tier_id: Some("1.1.1".to_string()),
-            status: SubagentStatus::Active,
-        },
-    ],
-    task: "Add tests for API endpoint".to_string(),
-    created_by: CrewCreator::Orchestrator { tier_id: "1.1.1".to_string() },
-    created_at: Utc::now(),
-    status: CrewStatus::Active,
-};
-
-// Both crews coordinate via shared message board (cross-platform coordination)
-// Task crew (Codex) and Subtask crew (Copilot) can communicate through agent-messages.json
-// Orchestrator monitors all crews regardless of platform
-```
-
-**Cross-platform coordination example:**
-
-```
-Task level (1.1):
-  Platform: Codex
-  Crew: Codex subagents (rust-engineer, backend-developer)
-
-Subtask level (1.1.1):
-  Platform: Copilot
-  Crew: Copilot subagents (test-automator)
-
-Coordination:
-  - Codex crew members coordinate via shared state files and provider event updates
-  - Copilot crew members coordinate via shared state files and provider event updates
-  - Cross-platform coordination: Codex crew and Copilot crew communicate via shared message board (agent-messages.json)
-  - Orchestrator monitors all crews and can see cross-platform communication
-```
-
-**Crew state file:**
-
-```json
-// .puppet-master/state/crews.json
-
-{
-  "crews": [
-    {
-      "crew_id": "abc-123",
-      "name": "Authentication Crew",
-      "platform": "copilot",
-      "created_by": { "type": "user" },
-      "subagents": [
-        {
-          "agent_id": "rust-engineer-abc-123",
-          "agent_type": "rust-engineer",
-          "platform": "copilot",
-          "tier_id": null,
-          "status": "active"
-        }
-      ],
-      "task": "implement authentication",
-      "status": "active",
-      "created_at": "2026-02-18T10:00:00Z"
-    },
-    {
-      "crew_id": "xyz-789",
-      "name": null,
-      "platform": "codex",
-      "created_by": { "type": "orchestrator", "tier_id": "1.1" },
-      "subagents": [
-        {
-          "agent_id": "rust-engineer-1.1",
-          "agent_type": "rust-engineer",
-          "platform": "codex",
-          "tier_id": "1.1",
-          "status": "active"
-        },
-        {
-          "agent_id": "backend-developer-1.1",
-          "agent_type": "backend-developer",
-          "platform": "codex",
-          "tier_id": "1.1",
-          "status": "active"
-        }
-      ],
-      "task": "Implement API endpoints",
-      "status": "active",
-      "created_at": "2026-02-18T10:01:00Z"
-    },
-    {
-      "crew_id": "def-456",
-      "name": null,
-      "platform": "copilot",
-      "created_by": { "type": "orchestrator", "tier_id": "1.1.1" },
-      "subagents": [
-        {
-          "agent_id": "test-automator-1.1.1",
-          "agent_type": "test-automator",
-          "platform": "copilot",
-          "tier_id": "1.1.1",
-          "status": "active"
-        }
-      ],
-      "task": "Add tests for API endpoint",
-      "status": "active",
-      "created_at": "2026-02-18T10:02:00Z"
-    }
-  ],
-  "last_updated": "2026-02-18T10:02:00Z"
-}
-```
-
-**Note:** Each orchestrator-initiated crew uses the platform from its tier config. Crew xyz-789 (Task 1.1) uses Codex because Task tier config specifies Codex. Crew def-456 (Subtask 1.1.1) uses Copilot because Subtask tier config specifies Copilot. They coordinate cross-platform via shared message board.
-
-**GUI integration (Current and Future):**
-
-**Current implementation (orchestrator-initiated crews only):**
-- **Crew monitoring:** Show active orchestrator-initiated crews, crew members, crew communication
-- **Crew status:** Display crew progress, subagent status, messages
-- **Crew actions:** View crew details, cancel crew, view messages
-- **Crew filtering:** Filter by platform, status, tier
-
-**Future implementation (when Assistant feature is added):**
-- **Crew creation:** User can create crews from GUI (select platform, subagents, task, optional name)
-- **Crew settings:** GUI settings panel for crew configuration (max crew size, timeout, etc.)
-- **Assistant integration:** GUI integration with Assistant feature for user-initiated crew creation
-
-**GUI components to add:**
-
-1. **Crews tab/page** (new view in GUI)
-2. **Crew list widget** (shows all crews with status)
-3. **Crew detail view** (expandable crew details)
-4. **Crew message viewer** (messages within crew)
-5. **Crew status badges** (visual status indicators)
-6. **Crew filter controls** (filter by platform, status, tier)
-7. **Crew cancellation dialog** (confirm cancellation)
-8. **Future: Crew creation dialog** (when Assistant feature is added)
-
-**Command parsing:**
-
-```rust
-// Detect crew invocation in prompts
-fn detect_crew_invocation(prompt: &str) -> Option<CrewRequest> {
-    let lower = prompt.to_lowercase();
-
-    if lower.contains("crew") || lower.contains("crews") {
-        // Parse crew request
-        // Extract: subagents, task, optional name
-        // ...
-    }
-
-    None
-}
-```
-
-**Benefits of "Crews" name:**
-
-- **Intuitive:** "Crew" suggests a team working together
-- **Flexible:** Can be singular ("crew") or plural ("crews")
-- **Distinct:** Different from "Teams" (Claude) and "Fleets" (Copilot)
-- **Memorable:** Easy to remember and type
-
-**Implementation notes:**
-
-- **Where:** New module `src/core/crews.rs` for crew management; extend `src/core/agent_communication.rs` for crew-scoped messaging; extend GUI views for crew monitoring
-- **What:** Implement `Crew` struct, crew creation (orchestrator-initiated only for now), crew execution, crew communication, GUI components for crew visibility
-- **When:**
-  - **Current:** Orchestrator creates crew for tier → use platform from tier config (`tier_config_for(tier_type, tier_id).platform`)
-  - **Future (Assistant feature):** User invokes crew → create platform-specific crew using deterministic platform selection (no prompting; fallback = cursor)
-  - Cross-platform coordination happens automatically via shared message board (`agent-messages.json`)
-
-**GUI implementation requirements:**
-
-- **Where:** New GUI view `src/views/crews.rs` for crew monitoring; extend `src/app.rs` with crew-related messages and handlers
-- **What:** Implement crew list view, crew detail view, crew message viewer, crew status indicators, crew filter controls, crew cancellation dialog
-- **Messages:** Add crew-related messages (e.g., `Message::CrewsTabSelected`, `Message::CrewDetailExpanded(String)`, `Message::CrewCancelled(String)`, `Message::CrewFilterChanged(...)`)
-- **Data loading:** Load crews from `.puppet-master/state/crews.json`, messages from `agent-messages.json`, coordination state from `active-agents.json`
-- **Update frequency:** Event-driven updates for crew status changes, polling every 5 seconds for messages
-- **Future (Assistant feature):** When Assistant feature is added, extend GUI with crew creation dialog, crew settings panel, Assistant integration
-
-**Key implementation detail:**
-
-When orchestrator creates a crew for a tier, it must:
-1. Get tier config: `let tier_config = tier_config_for(tier_type, tier_id)?;`
-2. Use tier platform: `crew.platform = tier_config.platform;`
-3. All crew subagents use same platform: `subagent.platform = tier_config.platform;`
-4. Crew coordinates with other crews (different platforms) via shared message board
-
+Crew mode is a multi-model coordination overlay over child runs.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
+
+Canonical crew rules:
+- members are child runs.
+- model/provider diversity is the default distinguishing axis.
+- the same task and often the same Persona are preserved across the crew.
+- member-to-member coordination occurs through an attributable crew board.
+- the parent owns final synthesis and user-facing escalation.
+- crew shared state is explicit shared coordination state, not hidden long-term member memory.
+
+Crew defaults and confirmation:
+- default crews live in the model/runtime settings surface.
+- first crew invocation asks whether to use the default crew if one exists.
+- after model choice, PM resolves each member’s provider/runtime surface and discloses the resulting mapping.
+- if any member is Copilot, the crew normalizes to Copilot as a crew-level provider constraint.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/CLI_Bridged_Providers.md
 ### Gaps and Potential Issues for Crews Feature
 
 **Gap #37: Platform selection ambiguity for user-initiated crews (Future: Assistant feature)**
@@ -1365,7 +915,7 @@ impl Crew {
 **GUI data sources:**
 - Load crews from `.puppet-master/state/crews.json`
 - Load messages from `.puppet-master/state/agent-messages.json` (filtered by crew_id)
-- Load coordination state from `.puppet-master/state/active-agents.json` (for member status)
+- Load coordination state from the canonical active-agent projection (optionally mirrored to `.puppet-master/state/active-agents.json` for debugging) for member status
 
 **GUI update frequency:**
 - Crew list: Update on crew status change (event-driven)
@@ -1584,7 +1134,7 @@ The communication system extends the existing coordination state with a message 
 
 ```
 .puppet-master/state/
-├── active-agents.json          # Existing: agent status tracking
+├── active-agents.json          # Optional debug mirror of agent status tracking
 └── agent-messages.json         # New: agent-to-agent messages
 ```
 
@@ -2521,9 +2071,9 @@ impl AgentCoordinator {
 **Issue:** If provider event ingestion fails (e.g. adapter parse errors, stream interruption), coordination updates can degrade, and there is no explicit fallback policy.
 
 **Mitigation:**
-- **Fallback detection:** Detect event-ingestion failures (parser error, stream timeout, malformed event). Automatically continue with file-based baseline updates.
-- **Baseline-first coordination:** Keep file-based coordination as the canonical path; event ingestion is an enrichment layer only.
-- **Error handling:** Log ingestion failures but do not block execution. Continue with baseline file-based coordination.
+- **Fallback detection:** Detect event-ingestion failures (parser error, stream timeout, malformed event). Automatically continue with baseline coordination projection updates.
+- **Baseline-first coordination:** Keep canonical coordination projection as the primary path; event ingestion is an enrichment layer only.
+- **Error handling:** Log ingestion failures but do not block execution. Continue with baseline coordination projection updates.
 
 **Gap #36: Coordination metrics and monitoring**
 

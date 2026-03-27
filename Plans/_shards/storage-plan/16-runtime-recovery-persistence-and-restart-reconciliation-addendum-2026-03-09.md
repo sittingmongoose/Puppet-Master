@@ -87,31 +87,26 @@ Minimum fields:
 ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Orchestrator_Page.md
 
 ### Canonical records
-1. `attempt_record`
-   - fields include `scheduler_pass_id`, requested/effective persona snapshot refs, requested/effective model snapshot refs, requested/effective permission snapshot refs, `requested_auth_mode?`, `effective_auth_mode?`, `requested_account_policy?`, `effective_account_id?`, `effective_project_id?`, `account_switch_reason?`, `replan_generation`, `mutation_capable`, `safe_point_id?`, `provider_attempt_ref?`, remediation lineage refs, and terminal outcome fields
-2. `blocked_projection`
-   - fields include `blocked_reason_code`, ordered `allowed_action_ids[]`, `preserved_local_work`, `requires_safe_point_restore?`, prerequisite metadata, `failure_class?`, `detail_ref?`, `attempt_id?`, and `thread_id?`
-3. `usage_record`
-   - fields include `run_kind`, `run_id`, `node_id?`, `attempt_id?`, `thread_id?`, `usage_event_ref?`, `effective_platform`, `effective_model`, `effective_auth_mode?`, `effective_account_id?`, `provider_account_id?`, `usage_source_kind?`, `signal_confidence?`, `effective_project_id?`, `input_tokens`, `output_tokens`, `total_tokens`, `estimated_cost?`, and usage timestamps suitable for rollups and ledger views
-4. `evidence_record`
-   - fields include `summary`, `summary_kind?`, evidence refs, and any parent-summary/handoff refs needed by completed-prose surfaces
-5. `thread_blocked_notice`
-   - fields include `node_id?`, `attempt_id?`, active blocked metadata, `message_id`, and `resume_url?`
-6. `wizard_runtime_state`
-   - fields include `wizard_status`, `wizard_step`, `blocked_reason_code?`, `clarification_round_count`, `report_ref?`, `resume_url?`, `decomposition_degraded`, `degradation_reason?`, and `replan_generation?`
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md#EventRecord
+Canonical records for this feature set must support rebuild, resume, auditability, and UI reconstruction without hidden side stores.
 
-7. `terminal_workspace_state`
-   - fields include ordered terminal sections, section presentation (`docked` or `detached`), selected section or tab refs, tab order, pane tree, pane-to-session bindings, labels, pin state, linked `dev_session_id?`, recovery banners, and bounded transcript-snapshot refs used by GUI projection `terminal_state:v1`
-8. `terminal_session_record`
-   - fields include `terminal_session_id`, `project_id`, `workspace_tab_id`, `cwd_snapshot`, `shell_profile_label?`, `shell_integration_tier`, `requested_renderer_mode?`, `effective_renderer_mode`, `capability_degradations[]`, lifecycle state, exit or stop metadata, transcript-retention tier, restore outcome, transcript refs, and linked `dev_session_id?`
-9. `terminal_command_block`
-   - fields include `command_block_id`, transcript anchor refs, observed command label when supported, confidence tier, start and end timestamps, cwd snapshot, exit metadata, and state such as `running`, `succeeded`, `failed`, `terminated`, or `degraded_observation`
-10. `dev_session_record`
-    - fields include `dev_session_id`, intent or mode, lifecycle state, linked terminal session refs, linked Output or Problems or Ports refs, reload mode (`hot_reload` or `live_reload` or `none`), port bindings, and last-known recovery state
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestrator-subagent-integration.md
 
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+Required canonical records:
+- child runs and attempts
+- child batch and subgroup structure
+- crew and crew-board state
+- planning-output projections derived from plan-mode children
+- context-shaping state tied to stable block refs
+- requested/effective runtime snapshots for child launches
+- blocked-episode and awaiting-parent correlation metadata
+
+Canonical truth exclusions:
+- `.puppet-master/memory/*` is not canonical child or crew continuity storage.
+- `active-agents.json` and `active-subagents.json` are not canonical live-state stores.
+- provider-native session trees are correlation data, not PM identity.
+
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/WorktreeGitImprovement.md
 ### Counter rule
 - `attempt_count` is the total started attempts for the node in the run
 - `automatic_retry_count`, `prerequisite_resume_count`, `manual_resume_count`, and `remediation_retry_count` remain independent stored counters

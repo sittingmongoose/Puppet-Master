@@ -90,6 +90,38 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 
 #### Assistant chat mode strip and debug investigation surfaces
 
+#### Assistant chat Context Lens control
+
+The Context Lens control belongs to the assistant chat header area in the top-right of the chat window.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
+
+Required layout and behavior:
+- place the control immediately to the right of the chat search bar.
+- render it as an icon with a dropdown arrow.
+- the dropdown exposes `Mute`, `Focus`, `Subcompact`, and `Turn Off`.
+- all Context Lens modes support selecting multiple messages at once.
+- `Mute` and `Focus` apply immediately while selection toggles occur.
+- `Subcompact` requires an explicit apply action and confirmation step.
+
+#### Default Crew (Settings > Models)
+
+Default Crew configuration belongs under the model/runtime settings surface.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+Minimum MVP fields:
+- enable or disable Default Crew
+- ordered member list
+- per-member model selector
+- per-member provider/runtime surface selector
+
+Required UX rules:
+- on first crew invocation, ask whether to use the default crew when one exists.
+- if no default crew exists, ask which models to use.
+- after model selection, resolve and disclose the effective provider/runtime mapping.
+- if any member is set to Copilot, the whole crew normalizes to Copilot and the UI explains that Copilot is a crew-level provider constraint.
+
 The primary Assistant mode strip still presents `Ask`, `Agent`, `Debug`, `Plan`, and `Deep Plan`.
 
 Required UI rules:

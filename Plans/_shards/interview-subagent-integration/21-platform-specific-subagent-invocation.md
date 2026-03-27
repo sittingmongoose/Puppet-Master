@@ -8,22 +8,25 @@ ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Models_System.md
 
 ### Interview Persona config contract
 
-Interview MUST persist Persona settings separately from legacy provider-native subagent interoperability details.
+Interview Persona configuration is stage-driven and normalized to PM Persona terminology.
 
-ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/FinalGUISpec.md#17.8, ContractName:Plans/orchestrator-subagent-integration.md
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
 
-Required fields:
-- `mode` (`manual | auto | hybrid`)
-- `stage_persona_overrides` (map of `questioning | research | validation | drafting | review` -> Persona ID)
-- `phase_primary_personas` (map of phase_id -> Persona ID)
-- `phase_secondary_personas` (map of phase_id -> ordered Persona IDs)
-- optional per-stage platform/model overrides
+Canonical persisted fields:
+- `mode`
+- `stage_persona_overrides`
+- `phase_primary_personas`
+- `phase_secondary_personas`
+- optional per-stage model/runtime overrides
 - optional next-run explicit override
 
-If older config names such as `phase_subagents` / `phase_secondary_subagents` are retained for migration/backward compatibility, their values MUST be interpreted as canonical Persona IDs, not as provider-native command names.
+Rules:
+- legacy `phase_subagents` names remain migration aliases only.
+- validation and persistence must normalize aliases to canonical Persona IDs.
+- delegated launch validation still goes through `subagent_registry`.
+- stage-level Persona resolution goes through `persona_registry`.
 
-ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/orchestrator-subagent-integration.md
-
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
 ### Requested/effective Interview contract
 
 Inputs:

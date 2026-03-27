@@ -1,6 +1,6 @@
 ## Lifecycle and Quality Enhancements for Interview Flow
 
-The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines lifecycle hooks, structured handoff validation, remediation loops, and cross-session memory. These features can enhance the **interview flow** to improve reliability, quality, and continuity across interview phases.
+The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines lifecycle hooks, structured handoff validation, remediation loops, and canonical continuity handling. These features can enhance the **interview flow** to improve reliability, quality, and continuity across interview phases.
 
 ### 1. Interview Phase Hooks (BeforePhase/AfterPhase)
 
@@ -10,14 +10,14 @@ The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines lif
 
 - **Track active subagent:** Record which subagent is active for this phase (e.g., `product-manager` for Phase 1, `architect-reviewer` for Phase 2) in interview state.
 - **Inject phase context:** Add current phase status, previous phase decisions, detected GUI frameworks, and known gaps to subagent prompt or context.
-- **Load cross-session memory:** Load prior interview decisions (architecture, patterns, tech choices) from canonical memory projections (seglog/redb-backed) and inject into phase context.
+- **Load canonical continuity inputs:** Load prior interview decisions (architecture, patterns, tech choices) from canonical runtime storage, persisted Interview outputs, and handoff projections, then inject them into phase context.
 - **Prune stale state:** Clean up or compact stale projections/checkpoints per canonical storage policy; do not rely on deleting ad-hoc files as the primary lifecycle mechanism.
 
 **AfterPhase hook responsibilities:**
 
 - **Validate subagent output format:** Check that phase subagent output matches structured handoff contract (see orchestrator plan §2).
 - **Track completion:** Update active subagent tracking, mark phase completion state.
-- **Save memory:** Persist architectural decisions, patterns, tech choices from this phase to canonical interview memory storage (especially Architecture & Technology phase).
+- **Persist durable decisions:** Persist architectural decisions, patterns, and tech choices from this phase into canonical Interview outputs and storage projections (especially Architecture & Technology phase).
 - **Safe error handling:** Guarantee structured output even on hook failure.
 
 **Implementation:** Create `src/interview/hooks.rs` with `BeforePhaseHook` and `AfterPhaseHook` traits. Register hooks per phase type. Call hooks automatically at phase boundaries (before `process_ai_turn` for a new phase, after phase completion). Use the same hook registry pattern as orchestrator hooks (`HookRegistry`), but with interview-specific contexts. Any file-path examples in this section are legacy examples only; rewrite-era canonical persistence is seglog + redb projection.
@@ -33,7 +33,7 @@ let before_ctx = BeforePhaseContext {
     phase_type: current_phase.phase_type,
     platform: config.primary_platform.platform,
     model: config.primary_platform.model.clone(),
-    selected_subagents: get_phase_subagents(&config, &current_phase.id)?,
+    selected_subagents: resolve_phase_personas(&config, &current_phase.id)?,
     previous_decisions: load_previous_phase_decisions(&state)?,
     detected_gui_frameworks: state.detected_gui_frameworks.clone(),
     known_gaps: get_known_gaps_for_phase(&current_phase.id)?,
@@ -60,9 +60,9 @@ let after_ctx = AfterPhaseContext {
 
 let after_result = self.hook_registry.execute_after_phase(&after_ctx)?;
 
-// Save memory if Architecture phase
+// Persist durable phase decisions if Architecture phase
 if current_phase.phase_type == PhaseType::ArchitectureTechnology {
-    self.memory_manager.save_architecture_decisions(&extract_decisions(&phase_output)).await?;
+    self.persist_phase_decisions(&extract_decisions(&phase_output)).await?;
 }
 ```
 
@@ -83,33 +83,17 @@ if current_phase.phase_type == PhaseType::ArchitectureTechnology {
 
 ### 3. Cross-Session Memory for Interview Decisions
 
-**Concept:** Persist interview decisions (architecture, patterns, tech choices) to canonical interview memory storage so future interview runs or orchestrator runs can load prior context.
+Interview continuity must come from canonical runtime state, stored outputs, and handoff bundles, not from child-memory files.
 
-**What to persist from interview:**
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md
 
-- **Architectural decisions:** Tech stack choices, design patterns, framework selections (from Architecture & Technology phase).
-- **Established patterns:** Code organization, naming conventions, testing strategies (from Testing & Verification phase).
-- **Tech choices:** Dependency versions, tool configurations (from Architecture phase and technology matrix).
-- **GUI framework decisions:** Selected framework tools, custom headless tool plans (from Testing phase and newtools plan).
+Rules:
+- `.puppet-master/memory/*` is not canonical Interview child or crew continuity storage.
+- `src/core/memory.rs`-style memory assumptions are not the rewrite-era Interview continuity mechanism.
+- Assistant memory is not forwarded into Interview subagents.
+- resume and recovery use canonical storage plus handoff reconstruction.
 
-**When to persist:**
-
-- **At phase completion:** Especially Architecture & Technology phase (save architectural decisions), Testing & Verification phase (save patterns and tool choices).
-- **At interview completion:** Save all accumulated decisions and patterns.
-
-**When to load:**
-
-- **At interview start:** Load all canonical memory projections and inject into Phase 1 (Scope & Goals) context.
-- **At each phase start:** Load relevant memory (e.g., Architecture phase loads prior architectural decisions).
-
-**Integration:** Use the same `MemoryManager` from orchestrator plan (`src/core/memory.rs`). In interview orchestrator, call `memory_manager.save_architecture_decisions()`, `save_pattern()`, `save_tech_choice()` at phase completion. Call `memory_manager.load_all_for_prompt()` at interview start and inject into Phase 1 prompt.
-
-**Resume / checkpoint rule (normative):**
-- At minimum, persist `interview_id`, `wizard_id`, `phase_plan`, `current_phase_id`, `awaiting_user_answer`, `awaiting_final_approval`, `active_run_kind`, `active_validation_issue_ids[]`, and references to the latest staged artifact bundle / quality report.
-- Resume MUST reconstruct the same effective phase order and the same unresolved issue set; it MUST NOT silently regenerate a different plan on restore.
-
-ContractRef: Primitive:Seglog, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Project_Output_Artifacts.md
-
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md
 ### 4. Active Agent Tracking for Interview Phases
 
 **Concept:** Track which subagent is currently active at each interview phase. Store in interview state and expose for logging, debugging, and audit trails.
@@ -119,7 +103,7 @@ ContractRef: Primitive:Seglog, ContractName:Plans/chain-wizard-flexibility.md, C
 
 **BeforePhase tracking responsibilities:**
 
-- **Determine active subagent:** Determine which subagent is active for this phase (from `SubagentConfig.phase_subagents` or override)
+- **Determine active subagent:** Determine which Interview child Persona/runtime combination is active for this phase from stage resolution or an explicit override.
 - **Set active subagent:** Set `active_subagent` in `InterviewPhaseState` for current phase
 - **Update interview tracking:** Update `active_subagents` HashMap in interview orchestrator state
 - **Persist tracking state:** Persist active subagent tracking to canonical interview state projection (optionally mirrored to a debug file)
@@ -236,10 +220,7 @@ impl InterviewOrchestrator {
         let tracking = self.active_subagent_tracker.get_tracking(phase_id).await?;
         
         if let Some(tracking) = tracking {
-            let archive_path = format!(
-                ".puppet-master/memory/interview-{}-subagents.json",
-                self.state.interview_id
-            );
+            let archive_path = canonical_interview_tracking_archive_path(&self.state.interview_id);
             
             // Load existing archive or create new
             let mut archive: Vec<ActiveSubagentState> = if std::path::Path::new(&archive_path).exists() {
@@ -334,9 +315,9 @@ impl ActiveSubagentTracker {
 
 ### Implementation Notes
 
-- **Where:** New module `src/interview/hooks.rs` for interview-specific hooks; reuse `src/core/memory.rs` and `src/core/remediation.rs` from orchestrator plan.
-- **What:** Implement `BeforePhaseHook` and `AfterPhaseHook` traits; integrate with `MemoryManager` for persistence; use `validate_subagent_output()` for structured handoff; use `RemediationLoop` for validation remediation.
-- **When:** Hooks run automatically at phase boundaries; memory persists at phase completion and loads at interview start; remediation loop runs when Critical/Major findings detected.
+- **Where:** New module `src/interview/hooks.rs` for interview-specific hooks; reuse canonical remediation/runtime primitives from orchestrator-aligned systems rather than a child-memory sidecar.
+- **What:** Implement `BeforePhaseHook` and `AfterPhaseHook` traits; persist Interview continuity through canonical storage and outputs; use `validate_subagent_output()` for structured handoff; use `RemediationLoop` for validation remediation.
+- **When:** Hooks run automatically at phase boundaries; continuity persists at phase completion and loads at interview start through canonical projections; remediation loop runs when Critical/Major findings detected.
 
-**Cross-reference:** See orchestrator plan "Lifecycle and Quality Features" for full implementation details of hooks, structured handoff, remediation loops, and memory persistence. See orchestrator plan "Puppet Master Crews" for crew implementation details and how crews can enhance interview phases.
+**Cross-reference:** See orchestrator plan "Lifecycle and Quality Features" for full implementation details of hooks, structured handoff, remediation loops, and canonical continuity handling. See orchestrator plan "Puppet Master Crews" for crew implementation details and how crews can enhance interview phases.
 

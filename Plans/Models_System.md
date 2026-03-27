@@ -488,39 +488,35 @@ Persistence / visibility:
 <a id="PERSONA-CAPABILITY-MATRIX"></a>
 ### 10.4 Provider Persona Capability Matrix (canonical support states)
 
-Each provider transport must declare support state for each Persona control using:
-- `supported`
-- `partially_supported`
-- `unsupported`
+Capability and effort evaluation must be performed per runtime surface, not by loose provider-family assumptions.
 
-#### Minimum capability keys
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Run_Modes.md
 
-- `persona_prompt_body`
-- `persona_model_preference`
-- `persona_variant_preference`
-- `persona_reasoning_effort`
-- `persona_temperature`
-- `persona_top_p`
-- `persona_tool_guidance`
-- `persona_tool_permissions`
-- `persona_subagents`
-- `persona_native_definition_files`
+Supported surfaces for this change set:
 
-#### Initial baseline expectations (current planning assumption)
+| Surface | Class | Key notes |
+|---|---|---|
+| `codex` direct | direct-provider | Explicit API-family selection may be required. |
+| `copilot` direct | direct-provider | Native subagent billing/routing behavior is special and not freely mixed from non-Copilot parents. |
+| `opencode` server | server-bridged | PM child runs map to OpenCode session lineage additively. |
+| `alibaba-coding-plan` direct | direct-provider | Effort and API-family behavior must be treated as provider-specific, not assumed OpenAI-equivalent. |
+| `zai-coding-plan` direct | direct-provider | Same requested/effective runtime and effort rules apply. |
+| `minimax-coding-plan` direct | direct-provider | Same requested/effective runtime and effort rules apply. |
+| `gemini` direct | direct-provider | Distinct runtime surface from Gemini CLI. |
+| `gemini-cli` | CLI-bridged | Distinct auth/control/cache/runtime surface from Gemini direct. |
+| `claude-code-cli` | CLI-bridged | CLI-bridged capability set and runtime controls. |
+| `cursor-cli` | CLI-bridged | CLI-bridged capability set and runtime controls. |
 
-| Provider transport | Prompt body | Model pref | Variant pref | Effort | Temperature | Top_p | Tool guidance | Tool permissions | Subagents | Native persona/agent defs |
-|---|---|---|---|---|---|---|---|---|---|---|
-| Claude Code | supported | supported | supported | supported | unsupported | unsupported | supported | supported | supported | supported via `.claude/agents` |
-| Cursor CLI | supported | partially_supported | partially_supported | unsupported | unsupported | unsupported | supported | partially_supported | partially_supported | partially_supported / undocumented for CLI parity |
-| OpenCode / ServerBridge baseline | supported | supported | supported | partially_supported via runtime options | supported | supported | supported | supported | supported | supported via agent config/files |
-| Direct/API providers | supported | supported | supported | provider-dependent | supported when API supports it | supported when API supports it | supported | provider-dependent / PM-enforced | PM-managed | PM-managed |
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Commands_System.md, ContractName:Plans/FinalGUISpec.md
 
-Notes:
-- These states are planning defaults and must be updated as provider implementations are verified.
-- GUI and runtime must use the same matrix source.
+Matrix rules:
+- `gemini` direct and `gemini-cli` are separate surfaces even when grouped by a higher-level provider family.
+- effort support is evaluated per surface.
+- tool-schema normalization and loop-control behavior may vary by surface.
+- provider-native agent or session files are not PM runtime canon.
+- Copilot-native subagent routing remains a special policy path, not a general per-member crew mixing behavior.
 
-ContractRef: ContractName:Plans/Models_System.md#PERSONA-CAPABILITY-MATRIX, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#PROVIDER-CAPABILITY-FILTERING
-
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/orchestrator-subagent-integration.md
 ### 10.4.1 Capability evaluation granularity
 
 The matrix in §10.4 defines the **transport-level baseline** only. Effective Persona-control support for a specific run MUST be computed as the intersection of:
@@ -682,10 +678,29 @@ Rules:
 - UI and artifact surfaces read model snapshot IDs from attempt records rather than inferring them from provider names alone
 ## Requested / Effective Model Snapshot Alignment
 
-Model selection and retry ownership remain separate concerns.
+Requested and effective model/runtime fields must stay visible for child runs, crew members, and surfaced planning/runtime decisions.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+Child effort resolution order:
+1. explicit child effort request
+2. child Persona or task preference
+3. weak parent hint
+4. target-surface default
 
 Rules:
-- attempt start persists stable requested/effective model snapshot identifiers
-- retries and resumes do not silently change model identity unless the canonical runtime policy explicitly creates a new attempt with new snapshot IDs
-- model fallback behavior MUST NOT rewrite blocked reason or retry classification semantics
-- UI and artifact surfaces read model snapshot IDs from attempt records rather than inferring them from provider names alone
+- PM resolves canonical effort intent first, then translates it per target surface.
+- remapped effort values remain visible as requested versus effective.
+- explicit runtime surface requests do not silently fallback.
+- implicit orchestrator-selected runtime surfaces may fallback, but the fallback reason must be visible.
+
+Default Crew configuration belongs under the model/runtime settings surface.
+
+Minimum Default Crew settings model:
+- enable or disable Default Crew
+- ordered list of crew members
+- per-member model selector
+- per-member provider/runtime surface selector
+- immediate normalization of the whole crew to Copilot when any member selects Copilot
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/CLI_Bridged_Providers.md

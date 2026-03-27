@@ -301,23 +301,41 @@ Canonical input/output shapes align with [OpenCode built-in tools](https://openc
 
 ### 3.6A Task runtime addendum
 
-The `task` tool launches resumable delegated runs rather than opaque fire-and-forget work.
+The `task` tool launches canonical child runs.
 
-Rules:
-- task invocations should preserve a stable delegated run/task identity so later history and UI surfaces can correlate follow-ups and results
-- task runs inherit a narrowed-or-equal permission snapshot rather than inventing a looser child policy
-- top-level assistant flows remain the owner of direct user questionnaire prompting unless runtime explicitly delegates that boundary
-- subagent assumptions about `todowrite` / `todoread` availability must honor the subagent-default deny policy unless run config explicitly overrides it
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md
 
-ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+Required task-tool launch contract:
+- validate the requested child against `subagent_registry` when the launch path names a subagent type.
+- resolve requested and effective Persona separately from requested and effective runtime surface.
+- classify each child as `required` or `optional` for parent progress.
+- inherit the parent permission ceiling and compatible capability universe, then narrow as needed.
+- preserve requested versus effective runtime surface, effort, and capability state in metadata.
 
-The **task** tool launches a subagent by type. The **subagent_type** parameter must be one of the **canonical 42 subagents** documented in the Plans folder:
+No-silent-fallback rules:
+- explicit user or command requests for child runtime surface must fail clearly or ask for a new choice if unavailable.
+- implicit orchestrator-selected runtime surfaces may fallback to another compatible surface.
+- fallback reason must be recorded in metadata.
 
-- **Plans/orchestrator-subagent-integration.md §4** -- Known subagent names (DRY:DATA:subagent_registry): Phase (3), Task language (9), Task domain (8), Task framework (4), Subtask (8), Iteration (2), Cross-phase/Interview (8, including `explorer` and `requirements-quality-reviewer`) = **42 total**. Used for orchestrator tier selection, GUI validation, and task-tool validation.
-- **Plans/interview-subagent-integration.md** -- Phase assignments (e.g. Scope & Goals → product-manager, Architecture → architect-reviewer, Product/UX → ux-researcher); cross-phase roles (technical-writer, knowledge-synthesizer, context-manager, etc.).
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Commands_System.md, ContractName:Plans/storage-plan.md
 
-**Implementation:** The central registry (e.g. `subagent_registry::is_valid_subagent_name(subagent_type)`) must be the single source of truth. When the **task** tool is invoked, validate `subagent_type` against the registry; if invalid, return a structured error (e.g. "Subagent type 'X' not in canonical list; see Plans/orchestrator-subagent-integration.md §4"). Persona content (SKILL.md) lives in `.github/agents/` and `.claude/agents/` (42 files); the runner loads the matching persona for the requested type.
+Copilot-native routing rule:
+- only a Copilot-rooted parent may launch a Copilot-native subagent path.
+- a non-Copilot parent must not route into Copilot-native subagent semantics.
+- the correct outcome is strict deny, not silent downgrade.
 
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md
+
+Child lifecycle semantics exposed by `task`:
+- retry = same logical child with a new attempt.
+- reroute = same logical child task under a different effective runtime surface.
+- replacement = a new child run because the role or task shape changed materially.
+- cancellation is parent-controlled and explicit.
+- resume applies only to non-terminal interrupted or waiting children.
+
+The `task` tool must not treat command subtasks, interview children, crew members, or orchestrator children as different runtime classes. They all enter the same canonical child-run model.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Commands_System.md
 ### 3.6B Delegated debug investigations
 
 Delegated runs launched through `task` may participate in an existing investigation.

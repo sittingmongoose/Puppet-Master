@@ -97,12 +97,21 @@ When chat spawns subagents/child runs, the inline subagent blocks must show:
 
 ### 27.7 Provider compatibility disclosure in chat
 
-If the active provider cannot honor a requested Persona control, chat must disclose that at least in details/tooltip/history form.
+Chat surfaces must disclose requested versus effective runtime choice when the distinction matters to user trust or behavior.
 
-Examples:
-- `Skipped: temperature unsupported by Claude Code transport`
-- `Skipped: top_p unsupported by Cursor CLI transport`
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md
 
+Required disclosure behavior:
+- provider/model for a child run is visible on hover in the collapsed card.
+- the expanded child panel may show requested versus effective runtime surface, effective effort, and fallback reason when a remap occurred.
+- explicit user-chosen runtime surfaces must not silently fallback without disclosure.
+- Copilot-native routing restrictions must surface as incompatibility or denial rather than silently degrading into a different execution path.
+
+Crew-mode disclosure:
+- the default crew confirmation surface shows each member as `model -> provider/runtime surface`.
+- when Copilot forces crew-wide provider normalization, the UI explains that Copilot is being treated as a crew-level provider constraint.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md
 ### 27.8 Chat acceptance criteria addendum
 
 - Assistant chat must support explicit natural-language Persona invocation.

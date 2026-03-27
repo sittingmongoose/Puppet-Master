@@ -426,28 +426,34 @@ ContractRef: ContractName:Plans/FileSafe.md, PolicyRule:no_secrets_in_storage
 
 ## 8. Resolution algorithm
 
-The policy engine evaluates permission for a single tool invocation using this deterministic order.
+Permission resolution must account for parent ceilings, child narrowing, runtime mode ceilings, and canonical blocked versus awaiting-parent outcomes.
 
-1. **Mode override:**
-   - If the run mode is `yolo`, return `allow` for tool-permission evaluation only. Non-bypassable special guards are still evaluated later.
-   - If the run mode is `ask` or `plan`, and the tool mutates project/workspace state or launches delegated execution (`edit`, `bash`, `task`, `repo.import`, `media.generate`), return `deny`.
-   - State-only planning helpers (`question`, `todoread`, `todowrite`) and web research tools do not enter the blanket `ask`/`plan` deny set; they continue through normal resolution.
-2. **Session cache (Assistant only):** if this tool+context matches a session-scoped `allow` rule, return `allow` unless a non-bypassable special guard overrides it.
-3. **Persona overrides:** if the active Persona has a matching rule, use it.
-4. **Project-level rules:** if `.puppet-master/permissions.toml` contains a matching rule, use it.
-5. **Global-level rules:** if the global permissions file contains a matching rule, use it.
-6. **Defaults:** use the default from §7.
-7. **Special guards:** evaluate `external_directory`, `doom_loop`, and `external_publish_side_effect`. If a guard is more restrictive than the earlier result, the guard wins.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md
 
-ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3, ContractName:Plans/Run_Modes.md
+Resolution sequence:
+1. establish parent effective runtime mode ceiling
+2. establish parent effective permission ceiling
+3. resolve requested child Persona and runtime surface
+4. compute effective child capability subset from the parent-allowed universe
+5. apply child Persona or task-specific narrowing
+6. apply target-surface compatibility narrowing
+7. classify the result as allowed, awaiting parent action, or blocked
 
-Rules:
-- PM-native Ask and Plan semantics are authoritative; do not relax them by analogy to OpenCode.
-- Plan remains read-only with respect to project files, but it may still use clarifying questions, web research, and plan/TODO state tracking.
-- A permission outcome for historical activity must be reconstructable from the persisted snapshot and event trail rather than recomputed from current settings.
+Child-specific invariants:
+- children may narrow but must not widen the parent mode ceiling.
+- children may narrow but must not widen the parent permission ceiling.
+- children may not self-elevate tools, skills, plugins, or MCP access.
+- missing capability cases that can be handled by parent rerouting or reframing map to `awaiting_parent`.
+- hard provider, tool, policy, or permission restrictions map to `blocked`.
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/storage-plan.md
 
+Blocked payload rules:
+- canonical action field is `allowed_action_ids[]`.
+- `recovery_options[]` and `allowed_actions[]` are deprecated compatibility terms only.
+- a blocked child must preserve the exact blocking rule or guard key and the effective permission snapshot reference.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Progression_Gates.md
 ## 9. Persistence and storage
 
 <a id="PERSISTENCE"></a>

@@ -1,41 +1,95 @@
 ## 14. Subagents & Crew
 
-- **Automatic subagents:** The chat can **automatically spawn subagents** when it determines that a task benefits from specialized help (e.g. research, code review, debugging). Logic should align with orchestrator subagent selection where applicable (e.g. `subagent_registry`, task type).
-- **User-requested subagents:** The user can explicitly ask the agent to use subagents (e.g. "use a code reviewer for this" or "run this with subagents").
-- **Subagent visibility in the thread:** When a subagent is **active** in the thread, the chat must show **in the message stream** (inline in the thread):
-  - **Which persona** is being used (e.g. "Rust Expert", "Technical Writer", "Code Reviewer") -- the display name from `subagent_registry` or persona config.
-  - **What they are working on** -- a short description or task (e.g. "Reviewing `src/lib.rs`", "Researching best practices for ..."). This can come from the orchestrator/subagent runtime (current step or task label) or from the first message/tool call assigned to that subagent.
-  So the user always sees which specialist is active and what they're doing, without leaving the chat. Behavior aligns with Cursor's in-thread subagent indicators.
-- **Subagents kept in thread history:** The **subagents used** in the thread must be **kept in the chat thread history**. Each subagent block (persona + task) is a first-class entry in the message/event stream: when the user scrolls back or re-opens the thread, they see not only user and assistant messages but also **which subagents ran and what they did** at those points in time (e.g. "Rust Expert -- Reviewing `src/lib.rs`", "Technical Writer -- Drafting API docs"). Persist these blocks with the thread so the full audit trail -- who (which persona) worked on what and when -- is always visible in the thread history.
-- **Crew mode:** A **Crew** is a multi-agent group (see Plans/orchestrator-subagent-integration.md). The user can invoke crew via:
-  - A **button** in the chat UI, or  
-  - A natural-language request (e.g. "use a crew" or "run this with a crew").  
-- **Crew + Plan:** Plan mode and Crew mode **must work together**: e.g. user can run Plan mode and then execute the plan with a crew, or run a crew for a planned set of steps. See §15.
+Subagents and crews use the PM child-run model. A subagent is a child run with its own identity, lifecycle, requested/effective runtime state, and inspectable history. Subagents are disposable by default: spawn, run, complete/cancel/fail, then remain in history instead of being treated as reusable long-lived actors.
 
-### 14.1 Subagent visibility in thread -- implementation detail
-Subagent entries remain inline thread objects rather than sidebar-only state.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-Required visible fields are:
-- persona display name
-- short task label
-- effective model when known
-- time or duration state
-- worker indicator showing that the entry is a subagent activity block
+### Inline subagent cards
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+Every child run MUST appear inline in the parent thread as a visually distinct subagent card.
 
-Visual treatment rules:
-- subagent blocks stay in the same base card family as assistant/agent activity entries
-- subagent blocks use a subtle alternate accent, border, chip, or similar flourish so the user can distinguish them at a glance
-- active subagent blocks may use a distinct running animation from the primary active agent animation
-- the distinction must remain subtle; this is not a separate radically different layout system
-- completed subagent blocks remain in thread history as first-class persisted entries
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
+Collapsed card content:
 
-Multiple-subagent rules:
-- each active subagent may render as its own block, or the UI may collapse to a compact grouped state when several are active at once
-- whichever presentation is used, the footer active-subagent count and inline blocks must stay consistent
-- persisted history keeps the specific subagent entries rather than only the grouped summary count
+| Field | Requirement |
+|---|---|
+| Persona | Show the effective child Persona label. |
+| Task | Show the child task label in plain language. |
+| Status | Show the current status badge. |
+| Provider/model | Shown on hover, matching the hover metadata pattern used by other chat bubbles. |
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orchestrator-subagent-integration.md
+Expanded panel content:
+
+| Region | Requirement |
+|---|---|
+| Work stream | Live progress and work activity visible while the child is running. |
+| Thought stream | Visible and visually distinct from the work stream. |
+| State block | Shows blocked, awaiting-parent, failure, or cancellation reason when relevant. |
+| Context state | Shows relevant context-shaping disclosures, including context-expansion/rehydration requests and whether dynamic context shrinking affected the child. |
+| Result block | Shows a concise final outcome summary once the child completes. |
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### Child status taxonomy
+
+The chat thread and child-run runtime MUST use the same visible status vocabulary.
+ContractRef: ContractName: child_status_projection. Child status projection into chat MUST remain a direct projection of canonical child lifecycle state and MUST NOT create a separate chat-only status enum. [Source: Tools.md#event-model; Contracts_V0.md#canonical-runtime-event-outcome-and-action-contract-reconciliation-addendum-2026-03-09]
+
+| Status | Meaning |
+|---|---|
+| `queued` | Child exists but has not started active execution yet. |
+| `running` | Child is actively executing or streaming work. |
+| `awaiting_parent` | Child is paused pending parent action, clarification, or more context. |
+| `blocked` | Child cannot proceed because of tool, permission, policy, provider, or runtime restriction. |
+| `complete` | Child finished successfully. |
+| `failed` | Child attempted execution and ended unsuccessfully. |
+| `cancelled` | Child was intentionally stopped before completion. |
+
+Signal mapping rules:
+- `clarification_needed`, `user_input_requested`, and `context_expansion_requested` render as `awaiting_parent`.
+- policy/tool/provider/runtime denials render as `blocked`.
+- replacement/supersession is preserved as terminal reason metadata even when the visible terminal status is `cancelled`.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+### Parallel fan-out, batch cards, and subgroup inspection
+
+Parallel child spawning is a first-class behavior. The thread must not assume only one or two children exist.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Rules:
+- small fan-out may render as separate child cards.
+- large fan-out renders as one top-level batch card.
+- expanding a large batch card opens intermediate subgroups of 10 children each.
+- expanding a subgroup opens the 10 inline child cards for that subgroup.
+- only one subgroup is expanded by default unless the user explicitly opens more.
+- canonical child order remains launch order; status changes do not reorder the child list.
+- subgroup and batch summaries surface blocked, awaiting-parent, and failed counts so the user knows where attention is needed.
+
+### Parent-mediated clarification and escalation
+
+Children do not question the user directly by default. A child escalates to the parent; the parent decides whether to answer from existing context, send more context, ask the user, reroute, or cancel the child.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
+If user input is required:
+- the child card shows `awaiting_parent` with the reason.
+- the parent emits the actual user-facing question in the main thread.
+- the user answers the parent thread, not a hidden child channel.
+
+### Crew mode
+
+Crew mode is a multi-model coordination overlay over the child-run system. It does not replace child cards, child history, or parent-owned synthesis.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Models_System.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+Default crew behavior:
+- same task framing across members.
+- often the same Persona across members.
+- diversity comes primarily from model/provider choice.
+- crew members coordinate through an explicit attributable crew board.
+- the parent owns final synthesis, user-facing summarization, and user escalation.
+
+Crew boards are inspectable on demand. They are not hidden memory and do not grant capabilities.

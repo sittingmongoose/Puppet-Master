@@ -20,10 +20,32 @@ Config is stored in TOML files at deterministic paths (global: `~/.config/puppet
 
 ### 2.3 Session vs run; subagents
 
-- **Session (Assistant):** `always` approval inserts a session-scoped allow rule; does not persist across restarts. See `Plans/Permissions_System.md` §6.2.
-- **Run (Orchestrator/Interview):** Permissions are fixed from run config at start; no interactive ask unless HITL is enabled at tier boundaries (`Plans/human-in-the-loop.md`).
-- **Subagents:** `todowrite` and `todoread` default to **deny** for subagent runs. Run config may override. All other tools use the default table (`Plans/Permissions_System.md` §7).
+A PM subagent is a child run. It is not a special-case provider-local actor and it is not defined by provider-native agent-file syntax.
 
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+Canonical child-run identity fields:
+- `child_run_id`
+- `parent_run_id`
+- `thread_id`
+- `batch_id?`
+- `subgroup_id?`
+- `attempt_id?`
+- requested/effective Persona and runtime fields
+- effective provider invocation kind as additive adapter metadata
+
+Provider behavior may still differ. A canonical child run may map to:
+- a native provider subagent path
+- a native provider child-session path
+- a plain provider run
+
+That adapter-level difference does not change the PM child-run canon.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md
+
+Subagents are disposable by default. Completion, cancellation, or failure normally ends that child. Follow-up work should usually spawn a new child rather than reopen an old one.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md
 ### 2.4 Interaction with FileSafe
 
 FileSafe runs **in addition to** tool permissions. A tool may be **allowed** by permission but still **blocked** by FileSafe. Tool permission = "may the agent call this tool?"; FileSafe = "may this specific invocation proceed?". See `Plans/FileSafe.md`. The policy engine applies both layers in order: permission first, then FileSafe. Full integration order: §10.6.

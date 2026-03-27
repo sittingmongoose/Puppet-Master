@@ -341,15 +341,21 @@ Rules:
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
 ### Ownership and consumption
 
-Usage remains a shared surface consumed by chat, runtime, Orchestrator, and Source Control-adjacent artifacts.
+Usage data for child runs, crew mode, and provider-sensitive subagent execution is derived from canonical runtime records and provider usage envelopes, not from side files or transient UI state. `active-subagents.json`, `active-agents.json`, and similar convenience artifacts are not canonical sources of billing or quota truth.
 
-Rules:
-- graph and Orchestrator consumers must stop aggregating by `tier_id`
-- `Show in Usage` pivots route through usage identity and `route_target`
-- account pressure and account-switch history remain visible as shared provider-runtime behavior, not as a second quota system
-- stale/degraded usage projections must disclose `projection_freshness` and `projection_health` before live actions rely on them
+ContractRef: Usage attribution for subagents and crews MUST be derived from canonical child-run records plus provider/runtime usage envelopes, and side files MUST NOT be treated as billing or quota canon. [Source: storage-plan.md#canonical-child-run-records-and-batch-structure; CLI_Bridged_Providers.md#provider-routing-policy-locked]
 
-ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
+Ownership is split as follows:
+
+- canonical child identity, lineage, and batch membership come from runtime storage and event records
+- requested versus effective runtime surface comes from provider routing resolution
+- Copilot-native child routing constraints remain provider-policy constraints, not local UI preferences
+- crew usage views aggregate usage across the child runs that belong to the same crew batch or task context
+
+ContractRef: Requested-versus-effective provider/runtime state MUST remain available to usage accounting and inspection so mixed-provider crews and rerouted children do not collapse into ambiguous totals. [Source: Models_System.md#provider-surface-capability-and-effort-resolution; CLI_Bridged_Providers.md#provider-routing-policy-locked]
+
+Usage consumers may present child-level or crew-level summaries, but those projections must remain derived from the same canonical accounting base. Optional helper children and required children may be filtered differently in UX, yet they do not create different billing truth sources.
+ContractRef: Usage summaries MAY differ by UX slice, but all child and crew usage displays MUST project from the same canonical accounting base. [Source: assistant-chat-design.md#14-subagents--crew; storage-plan.md#canonical-child-run-records-and-batch-structure]
 ### Rule
 There is one usage schema. Compatibility shims may ingest older sources, but new runtime surfaces MUST NOT define alternate token/model attribution records.
 
@@ -586,7 +592,7 @@ ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpe
 |------|--------|
 | 2026-02-21 | Initial plan: Usage as first-class app/GUI feature; quota visibility, ledger, optional analytics; alignment with AGENTS.md and newfeatures; external references (OpenSync, yume, openclaudecto, OpenCode Monitor). GUI-based usage (not CLI like OpenCode Monitor). |
 | 2026-02-21 | Fleshed out: Gaps (5h/7d not in GUI, no live APIs in GUI path, Ledger vs usage_tracker split, quota only from errors, alert threshold, analytics, interview/orchestrator policy); Potential problems (API secrets, rate limits, two tracker types, platform semantics, file size, stale data, multi-project); Enhancements (time-window selector, reset countdown, per-tier usage, export, header compact, Doctor integration, cost column, alerts history). |
-| 2026-02-21 | Data sources: added "Data Sources: State Files (JSON/JSONL)" -- usage.jsonl is primary source for Ledger and 5h/7d aggregation; summary.json (STATE_FILES §5.3) and active-subagents.json can enrich. State-file-first approach so we get most Usage info from existing JSON/JSONL without platform APIs. |
+| 2026-02-21 | Data sources: added "Data Sources: State Files (JSON/JSONL)" as an early draft direction. That historical note is now superseded by canonical child-run/runtime accounting: `usage.jsonl` and similar state files may still appear as implementation artifacts, but `active-subagents.json` is not canonical usage truth. |
 | 2026-02-21 | Fleshed out Gaps, Potential Problems, Enhancements: each gap has Current state / Desired / Acceptance; each problem has Risk / Impact / Mitigation; each enhancement has Benefit / Notes / Phase. |
 | 2026-02-21 | Per-platform usage data: added section on Cursor API (augment with usage/limits; CURSOR_API_KEY); Codex CLI stream/provider data; Copilot CLI + metrics API; Claude Admin API + stream-json (existing); Gemini (direct-provider: local counters + estimated cost; optional AI Studio link; no CLI usage assumptions). Summary table and implementation order. |
 | 2026-02-21 | Clarified Cursor API: usage/account/limits only -- we do not use it for model invocation; model engagement stays OAuth + CLI. AGENTS.md "No API available" refers to model invocation; Cursor has a separate API for augmenting the Usage view. |
