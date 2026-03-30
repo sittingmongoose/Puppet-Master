@@ -461,7 +461,7 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and
 
 | Command ID | Parameters | Behavior |
 |---|---|---|
-| `cmd.search.show` | `{ project_id, focus?: "query" | "replace" | "results" }` | Reveal/focus the Search side panel. |
+| `cmd.search.show` | `{ project_id, focus?: "query" | "replace" | "results" }` | Reveal or focus the Search side panel. |
 | `cmd.search.find_in_files` | `{ project_id, query?, scope? }` | Run or re-run find-in-files in the Search panel. |
 | `cmd.search.replace_in_files` | `{ project_id, query?, replacement?, scope? }` | Run replace preview/apply flow in the Search panel. |
 | `cmd.search.open_result` | `{ project_id, result_id, disposition?: "current_tab" | "new_tab" | "split" }` | Open a Search result through the canonical file-open path. |
@@ -471,12 +471,18 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and
 | `cmd.search.toggle_flag` | `{ project_id, flag: "regex" | "case_sensitive" | "whole_word" }` | Toggle a search option. |
 | `cmd.search.replace_selected` | `{ project_id, result_id }` | Apply the replacement to one selected match/result. |
 | `cmd.search.replace_all` | `{ project_id, query_session_id }` | Apply all currently approved replacements for the active query session. |
+| `cmd.search.rebuild_regex_index` | `{ project_id }` | Trigger a full rebuild of the per-project sparse n-gram index. Equivalent to the `Rebuild Index` settings action. |
+| `cmd.search.evict_remote_cache` | `{ project_id }` | Evict the selected project's remote cache after confirmation. |
+| `cmd.search.clear_all_remote_caches` | `{}` | Open the global `Clear All Remote Caches` confirmation flow. |
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
 
 Search rules:
-- Search commands are side-panel scoped and MUST preserve query-session state instead of acting like transient palette commands.
-- remote queries and replaces use the effective remote host context; they MUST surface stale/degraded/unavailable state explicitly instead of silently falling back to local execution.
+- Search commands are side-panel scoped and preserve query-session state instead of behaving like transient palette commands.
+- Remote queries and replace operations use the effective remote host context; they surface `stale`, `degraded`, or `unavailable` state explicitly instead of silently falling back to local execution.
+- When the regex toggle is active, find-in-files uses the same sparse n-gram acceleration as agent `grep`.
+- A stale-but-valid snapshot remains accelerated. `(unindexed)` is reserved for the true raw-ripgrep fallback path.
+- Index-management commands route through canonical settings and confirmation surfaces rather than hidden background-only actions.
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/LSPSupport.md
 

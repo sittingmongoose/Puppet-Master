@@ -391,12 +391,23 @@ ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpe
 ### Gap 6: Analytics not implemented
 
 - **Current state**
-  - No analytics view. Metrics view shows run-level/platform execution stats (e.g. subtask metrics), not usage-by-date, usage-by-project, or cost-by-model.
-  - No export of usage or analytics (Ledger has "Export Ledger" but no date-range or analytics export).
+  - No analytics view. Metrics view shows run-level or platform execution stats, not usage-by-date, usage-by-project, or cost-by-model.
+  - No export of usage or analytics (`Export Ledger` exists, but there is no date-range or analytics export).
 - **Desired**
   - Analytics section or page: aggregate usage by date range, platform, project (if multi-project later), and model; optional cost when available; export current view as CSV/JSON.
 - **Acceptance**
-  - User can see "Usage last 7d / 30d by platform" and "By model" (and optionally cost), and export the visible data.
+  - User can see `Usage last 7d / 30d by platform` and `By model` (and optionally cost), and export the visible data.
+
+**Index-accelerated grep analytics field:**
+
+The `tool.invoked` seglog event for `grep` includes an optional `index_used: boolean` field. When `true`, the per-project sparse n-gram index accelerated the query by narrowing candidates before ripgrep verification. When `false` or absent, grep used the raw-ripgrep path because the index was missing, disabled, corrupted, still building without a valid snapshot, or skipped for query-specific reasons (for example no extractable literals, non-ASCII case-insensitive literals, or the 64-gram complexity cap).
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+This field enables analytics views to report:
+- percentage of grep calls that were index-accelerated vs fallback
+- correlation between index availability and grep latency
+- per-project index health (for example, projects with frequent fallback may need index configuration tuning or cache repair)
 
 ### Gap 7: Interview vs. orchestrator usage policy
 

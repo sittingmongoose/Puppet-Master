@@ -30,7 +30,20 @@
 | **Primary content** | `VerticalLayout` (flex: 1) | fills remaining space | Active page view; scrollable internally per page |
 | **Side panel** | `VerticalLayout` | width: 240-480px, resizable | Hosts the currently selected activity-bar side-panel surface; one visible at a time; detachable where supported |
 | **Bottom panel** | `VerticalLayout` | height: 120-300px, collapsible | Terminal, Problems, Output tabs |
-| **Status bar** | `HorizontalLayout` | height: 24px fixed | Chat mode, platform/model dropdowns, context usage, orchestrator status |
+| **Status bar** | `HorizontalLayout` | height: 24px fixed | Chat mode, platform/model dropdowns, context usage, orchestrator status, and regex-index progress / refresh disclosure |
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+
+**Status bar - Indexing indicator:**
+
+When a sparse n-gram index build or refresh is in progress for any active project, the status bar shows an index-state indicator.
+- Show only for work lasting >2 seconds so sub-second incremental updates do not flash.
+- First build for a project: display `Building search index - first build may take several minutes` with progress percentage when available.
+- Later rebuilds: display `Indexing` or `Refreshing index` with project-sensitive progress.
+- If a stale-but-valid snapshot is still serving grep or Search, the indicator may show refresh progress, but the UI must not imply that Search is fully unindexed.
+- The indicator disappears on completion or cancellation.
+- The Search results pane, not the status bar, owns the subtle `(unindexed)` annotation when a query truly fell back to raw ripgrep.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
 
 ### 3.3 System Tray
 

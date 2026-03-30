@@ -176,6 +176,30 @@ If no launcher rule yields a valid hit, return `NotFound`. (ContractRef: Primiti
 
 ---
 
+
+### Remote indexer binary locator
+
+For non-Git remote projects, PM ships a standalone sparse n-gram indexer binary per target architecture. The binary is a PM-managed build helper, not a provider CLI, and is used only to build the remote-side snapshot that will later be queried locally.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+
+**Shipped architectures:** x86_64 and aarch64.
+
+**Remote architecture detection:** Run `uname -m` over SSH before transfer to determine the correct binary.
+
+**Deployment rules:**
+- On first use for a remote project, PM scp's the matching indexer binary to the remote host.
+- After transfer, PM integrity-checks the binary via xxh3 hash comparison.
+- PM MUST NOT execute binaries received from the remote host; it only transfers and runs PM-built helper binaries.
+- If no matching binary is available for the detected architecture, PM falls back to unindexed ripgrep over SSH and surfaces degraded acceleration rather than attempting cross-architecture execution.
+
+ContractRef: Invariant:INV-002, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/GitHub_Integration.md
+
+**Cleanup:**
+- The helper binary (roughly 5 MB) is left on the remote host for reuse across sessions.
+- On project close or disconnect, PM may offer optional cleanup.
+- On uninstall, PM performs best-effort cleanup over SSH.
+
 ## Validation contract (commands, version parsing, permission checks)
 
 ### Command selection (SSOT)

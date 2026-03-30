@@ -38,14 +38,15 @@ In addition to explicit human/agent search, the Assistant Chat context pipeline 
 
 ### 10.2 Agent-callable search tools (project-only)
 
-To support both explicit agent reasoning and smart retrieval, provide agent-callable tools (or MCP equivalents) that query the project indices:
+To support both explicit agent reasoning and smart retrieval, provide project-scoped agent-callable tools (or MCP equivalents) that query the project indices:
 
-- `chatsearch(query, filters={thread_id?, time_range?}, k)` → hits with `thread_id`, `message_id`, `ts`, snippet, score.
-- `codesearch(query, path?, mode={text|symbol}, k)` → hits with `path`, line/range, snippet (symbol-aware when LSP available).
-- `logsearch(query, filters={time_range?, run_id?, thread_id?, tool_name?, level?}, k)` → hits with `event_id`/`blob_ref`, `ts`, short summary/snippet.
-- `logread(ref)` → full payload (bounded by size caps; subject to stricter permission defaults).
+- `chatsearch(query, filters={thread_id?, time_range?}, k)` -> hits with `thread_id`, `message_id`, `ts`, snippet, score.
+- `codesearch(query, path?, mode={text|symbol}, k)` -> hits with `path`, line/range, snippet (symbol-aware when LSP is available).
+- `logsearch(query, filters={time_range?, run_id?, thread_id?, tool_name?, level?}, k)` -> hits with `event_id` / `blob_ref`, `ts`, short summary or snippet.
+- `logread(ref)` -> full payload (bounded by size caps; subject to stricter permission defaults).
+- `grep(pattern, path?, glob?)` -> transparent regex search over project files. When the per-project sparse n-gram index can narrow the query, grep uses it without changing the interface, limit, timeout, or permission model. When the index is missing, disabled, corrupted, building without a valid snapshot, or skipped for query-specific reasons, grep falls back to raw ripgrep. Stale-but-valid snapshots remain usable, and dirty-layer freshness guarantees still apply.
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
 
 ### 10.3 Scoping and performance: per-project indices (required)
 

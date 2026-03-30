@@ -68,97 +68,67 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileManager.
 
 #### 7.4.1 Assistant Worktrees settings subsection
 
-Settings > Branching tab includes a new subsection "Assistant Worktrees" below existing branching controls. Contains 10 project-level settings organized in 3 visual sub-groups:
+Settings > Branching tab includes a new subsection `Assistant Worktrees` below existing branching controls. It contains 10 project-level settings organized in three visual sub-groups:
 
-- **Creation:** Auto-create worktree for new threads (bool, default off), Base branch for assistant worktrees (string, inherits from base_branch), Creation timeout (integer stepper, 5-300s, default 30s)
-- **Merge & Testing:** Run tests before merging (bool, default on), Pre-merge test command (string, empty = auto-detect), Test timeout (integer stepper, 30-1800s, default 300s), What to test (enum: merged_result|branch_only, default merged_result)
-- **Behavior:** Thread delete cleanup (enum: ask|keep|remove, default ask), File manager follows thread worktree (bool, default on), Worktree count warning threshold (integer stepper, 0-100, default 10, 0 = disabled)
+- **Creation:** Auto-create worktree for new threads (bool, default off), Base branch for assistant worktrees (string, inherits from `base_branch`), Creation timeout (integer stepper, 5-300s, default 30s)
+- **Merge & Testing:** Run tests before merging (bool, default on), Pre-merge test command (string, empty = auto-detect), Test timeout (integer stepper, 30-1800s, default 300s), What to test (enum: `merged_result | branch_only`, default `merged_result`)
+- **Behavior:** Thread delete cleanup (enum: `ask | keep | remove`, default `ask`), File manager follows thread worktree (bool, default on), Worktree count warning threshold (integer stepper, 0-100, default 10, 0 = disabled)
 
-Full setting key definitions are canonical in `Plans/assistant-chat-design.md` §W.5 and persisted via `Plans/storage-plan.md`.
+Full setting-key definitions remain canonical in `Plans/assistant-chat-design.md` and are persisted via `Plans/storage-plan.md`.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+#### 7.4.2 Indexing settings subsection
+
+Settings > Project tab includes a dedicated **Indexing** section for sparse-n-gram index controls. This section is separate from search settings and general settings.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/Architecture_Invariants.md
+
+**Local project settings** (always visible):
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| Enable regex index | bool toggle | ON | Master toggle. Per-project with a global default. Turning it off cancels any in-progress build and cleans partial generation output |
+| Large file threshold | integer stepper | 10 MB | Files above this size are excluded from the index but remain searchable via ripgrep fallback. Range: 1-100 MB |
+| Index exclusion patterns | editable list | `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`, `*.min.js`, `*.min.css`, `*.map`, `*.generated.*`, `*.g.dart`, `*.pb.go` | Files matching these patterns are excluded from the index but remain searchable via ripgrep fallback. Separate from grep ignore rules |
+| Follow symlinks | bool toggle | OFF | When ON, index traversal follows symlinks after canonicalization and root validation. When OFF, symlinks are not followed |
+| Rebuild Index | button | - | Triggers a full rebuild. Non-destructive because the index is a cache |
+| Index disk usage | read-only label | - | Shows the local regex-index footprint |
+| Index state | read-only badge | - | Surfaces `building`, `ready`, `refreshing`, `stale`, `disabled`, or `error` for the active project |
+
+**Remote SSH project settings** (shown in addition to local settings; greyed out for local projects):
+
+| Setting | Type | Default | Scope | Description |
+|---------|------|---------|-------|-------------|
+| Shallow clone | bool toggle | OFF | Global default + per-project override | Uses `--depth=1` for the bare clone. Lower disk footprint, reduced history |
+| Partial clone | bool toggle | OFF | Global default + per-project override | Uses `--filter=blob:none`. Smaller initial footprint, slower first full build |
+| Remote cache disk usage | read-only label | - | - | Shows `Remote cache: {total} - Index: {index}, Git: {git}` |
+| Evict remote cache | button + confirmation | - | - | Deletes the selected project's remote cache. Next open performs clone/build again |
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+#### 7.4.3 Global storage / remote-cache administration subsection
+
+Settings > Storage includes a global **Remote Cache Administration** subsection for cross-project cache policy.
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| Remote cache retention | integer stepper (days) | 30 | Evict project caches after inactivity exceeds this threshold |
+| Remote cache size limit | size field | `min(50 GB, 10% of free disk at first cache creation)` | Global disk-pressure trigger for LRU remote-cache eviction |
+| Total remote cache usage | read-only label | - | Shows aggregate disk usage across all remote project caches |
+| Clear All Remote Caches | destructive button + confirmation | - | Deletes every `r/{hash8}` remote cache root. Projects rebuild on next open |
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 
 Settings and inspectors separate requested state, effective state, inherited defaults, and repaired or degraded runtime outcomes.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md
 
 Required inspector rule:
-- compact surfaces may show only material deltas, but the full inspector tier must always expose provider entry, model, auth family, account or server profile, billing/entity context when relevant, and the reason PM selected that runtime.
+- compact surfaces may show only material deltas, but the full inspector tier always exposes provider entry, model, auth family, account or server profile, billing/entity context when relevant, and the reason PM selected that runtime.
 - historical views use frozen captured state and do not recompute from current settings.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
-
-#### Assistant chat mode strip and debug investigation surfaces
-
-#### Assistant chat Context Lens control
-
-The Context Lens control belongs to the assistant chat header area in the top-right of the chat window.
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
-
-Required layout and behavior:
-- place the control immediately to the right of the chat search bar.
-- render it as an icon with a dropdown arrow.
-- the dropdown exposes `Mute`, `Focus`, `Subcompact`, and `Turn Off`.
-- all Context Lens modes support selecting multiple messages at once.
-- `Mute` and `Focus` apply immediately while selection toggles occur.
-- `Subcompact` requires an explicit apply action and confirmation step.
-
-#### Default Crew (Settings > Models)
-
-Default Crew configuration belongs under the model/runtime settings surface.
-
-ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/CLI_Bridged_Providers.md
-
-Minimum MVP fields:
-- enable or disable Default Crew
-- ordered member list
-- per-member model selector
-- per-member provider/runtime surface selector
-
-Required UX rules:
-- on first crew invocation, ask whether to use the default crew when one exists.
-- if no default crew exists, ask which models to use.
-- after model selection, resolve and disclose the effective provider/runtime mapping.
-- if any member is set to Copilot, the whole crew normalizes to Copilot and the UI explains that Copilot is a crew-level provider constraint.
-
-The primary Assistant mode strip still presents `Ask`, `Agent`, `Debug`, `Plan`, and `Deep Plan`.
-
-Required UI rules:
-- `Debug` remains the assistant investigation overlay rather than a synonym for the classical DAP debugger.
-- detailed inspectors for debug investigations show requested/effective overlay, canonical runtime mode, `investigation_id`, target kind, and any degraded capability state.
-- the classical debugger surfaces continue to use explicit copy such as `Debugger`, `DAP Debugger`, and `Debug Console`.
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md
-
-#### Agent-Config
-
-Agent-Config is the canonical provider-management surface.
-
-Required section order:
-1. `Overview`
-2. `Defaults`
-3. `Accounts / Profiles`
-4. `Models`
-5. `Instructions`
-6. `Skills`
-7. `Advanced Runtime`
-
-The `Effective Runtime` inspector remains persistently visible while the user changes provider defaults, account/profile selections, instruction control, skills, or advanced runtime options.
-
-ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md
-
-#### Usage and provider state inspectors
-
-Usage and provider inspectors must show:
-- current effective account or server profile
-- current effective auth mode
-- current effective billing/entity context when it explains quota behavior
-- pressure/cooldown summary
-- source-confidence or stale status when data is inferred or older than the current runtime state
-- direct actions such as `Refresh Usage`, `Revalidate`, `Choose Billing Entity`, `Reconnect`, or `Restart Server` when relevant
-
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/FinalGUISpec.md
 
 ### Terminal settings ownership
 
@@ -171,18 +141,6 @@ Rules:
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
 
-### Terminal inspector rules
-
-Terminal inspectors must expose:
-- active workgroup
-- focused leaf pane
-- bound terminal session id
-- linked dev-session id when present
-- editor embedding state
-- restore outcome / degraded capability state for historical sessions
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md
-### Terminal settings ownership
 Settings owns durable terminal preferences and discoverability. Live session controls remain in terminal chrome and are not hidden inside durable settings.
 
 Terminal settings must include:
@@ -198,6 +156,17 @@ Terminal settings must include:
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
 
 ### Terminal inspector rules
+
+Terminal inspectors must expose:
+- active workgroup
+- focused leaf pane
+- bound terminal session id
+- linked dev-session id when present
+- editor embedding state
+- restore outcome / degraded capability state for historical sessions
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md
+
 Detailed terminal inspectors and banners must disclose, where relevant:
 - `terminal_session_id`
 - `dev_session_id?`
@@ -237,18 +206,23 @@ Rules:
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
 
 #### Search side-panel owner
+
 Search is the persistent project text-search and replace-in-files surface.
 
 Rules:
 - Search owns query text, replacement text, include/exclude globs, regex/case/whole-word toggles, result grouping, and replace preview/apply flow.
 - `cmd.search.show` is the canonical shortcut and command-palette entrypoint for this surface.
 - Search result opens route through the canonical open-file contract rather than through feature-local payloads.
-- File Manager search remains a local tree filter/type-ahead only.
+- File Manager search remains a local tree filter or type-ahead only.
 - LSP symbol/reference results may visually resemble Search, but their ownership and fallback rules remain LSP-specific.
+- When the regex toggle is ON, Search uses the same sparse n-gram backend as agent `grep`.
+- Search inherits the same dirty-layer freshness guarantee as agent `grep`; recently edited files must remain searchable even when the base snapshot is stale.
+- A stale-but-valid regex snapshot remains eligible for acceleration while background refresh runs. Show `(unindexed)` only when the query actually fell back to raw ripgrep.
+- When the index is unavailable, disabled, corrupted, or skipped for query-specific reasons, Search falls back to raw ripgrep on all files.
 
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/LSPSupport.md
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
 
-Remote/degraded rules:
+Remote and degraded rules:
 - Search may keep prior remote results as an explicitly stale snapshot.
 - New remote queries or replace operations that need host round-trips must surface `stale`, `degraded`, or `unavailable` state explicitly instead of silently re-running locally.
 - Replace-in-files MUST respect remote write availability before presenting a success-shaped UI.

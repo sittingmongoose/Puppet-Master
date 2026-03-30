@@ -10,7 +10,7 @@ The following built-in tools are the **target set** for the central tool registr
 | **edit** | Modify existing files via exact string replacements | `edit` | Primary code-edit path. FileSafe write scope can restrict which files. |
 | **write** | Create new files or overwrite existing ones | (same as `edit`) | Same permission as edit; overwrites if file exists. |
 | **read** | Read file contents; supports line ranges | `read` | FileSafe security filter can block sensitive paths (.env, keys). Large files: line-range or size cap. |
-| **grep** | Search file contents with regex; file pattern filtering | `grep` | ripgrep under the hood; respect .gitignore unless .ignore overrides. |
+| **grep** | Search file contents with regex; file pattern filtering. Transparently accelerated by the per-project sparse n-gram index when available; the same backend also serves Search-panel regex mode | `grep` | Same limits and permission posture as existing grep. Respect .gitignore unless .ignore overrides. Stale snapshots remain queryable; fallback to raw ripgrep only when the index is missing, building without a valid snapshot, corrupted, disabled, or the query cannot be narrowed |
 | **glob** | Find files by glob pattern (e.g. `**/*.ts`) | `glob` | Returns paths sorted by modification time. Same ignore rules as grep. |
 | **list** | List files and directories; accepts glob filters | `list` | Same ignore rules. Depth/result limits to avoid huge listings. |
 | **patch** | Apply patch files to the codebase | (same as `edit`) | Unified diff; same write scope as edit. |
@@ -22,24 +22,8 @@ The following built-in tools are the **target set** for the central tool registr
 | **webcrawl** | Crawl a site or section | `webcrawl` | Multi-page crawl; bounded by permission and fan-out limits. |
 | **webmap** | Map site structure | `webmap` | Site-structure discovery with bounded traversal. |
 | **question** | Ask the user structured questions during execution | `question` | Supports both single-question and multi-question questionnaire flows. Only meaningful when HITL/UI can show prompts. |
-| **skill** | Load a skill (e.g. SKILL.md) into the conversation | `skill` | Path or name → content; validate path is under allowed roots. |
-| **todowrite** | Create/update normalized plan TODO state during the session | `todowrite` | Uses the canonical normalized TODO schema. Subagent default: deny unless explicitly re-enabled. |
-| **todoread** | Read current normalized plan TODO state | `todoread` | Returns the canonical normalized TODO schema. Subagent default: deny unless explicitly re-enabled. |
-| **lsp** (MVP) | LSP read/navigation operations plus approval-gated rename | `lsp` | No feature flag; available when LSP client is enabled. Canonical read operations include definition, references, hover, document/workspace symbol, implementation, and call hierarchy. See §3.4.1 and §3.5E. |
-| **task** | Launch subagents (matches subagent type) | `task` | **subagent_type** must be one of the **canonical 42 subagents** documented in Plans (orchestrator-subagent-integration.md §4, interview-subagent-integration.md). Validate with subagent_registry; see §3.6. |
-| **chatsearch** | Search project chat history (threads/messages) via Tantivy chat index | `chatsearch` | Project-only scope; supports filters (thread_id/time); result/hit limits per §3.5. Used for agent search + auto retrieval. |
-| **codesearch** | Code search within the **project workspace / project root** | `codesearch` | MVP backend is multi-tier: Tantivy code index + LSP workspace/symbol + ripgrep fallback. Result and timeout limits per §3.5. |
-| **logsearch** | Search project log summaries (runs/tools/bash) via Tantivy logs index | `logsearch` | Project-only; returns summaries + refs (event_id/blob_ref). Use `logread` for full payload. |
-| **logread** | Read full log payload referenced by `logsearch` | `logread` | Subject to stricter permissions + size caps; prefer summaries in-chat; full payload is expandable/collapsible. |
-| **repo.import** | Import an external repo into the project workspace (e.g. GitHub) | `repo.import` | Requires explicit user intent; governed by network + external_directory + GitHub auth rules; produces audit entry. See assistant-chat-design.md §7.4. |
-| **capabilities.get** | Return all available capabilities (media + provider-tool) with enablement status, disabled reasons, and setup hints | `capabilities.get` | Internal tool; not forwarded to providers. Default allow (§10.2). Full contract: `Plans/Media_Generation_and_Capabilities.md` [§1](Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM). |
-| **media.generate** | Generate media (image / video / tts / music) via structured request envelope with optional per-request model override | `media.generate` | Internal tool; backed by Gemini API key (or Cursor-native for images). Default ask (§10.2). Full contract: `Plans/Media_Generation_and_Capabilities.md` [§2](Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE). |
 
-ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Media_Generation_and_Capabilities.md
-
-> **Internal tools vs provider-exposed tools:** `capabilities.get` and `media.generate` are **Puppet Master internal tools** — they execute inside the Puppet Master process and are never forwarded to a provider CLI or server. In `capabilities.get` output, the `provider_tool` category is the umbrella non-media bucket and includes both provider-exposed tools (e.g., OpenCode tools discovered via `GET /provider`) and existing internal tool capabilities (e.g., read/grep/write/task). These non-media tool capabilities are **not** part of the media capability picker dropdown (§4.1 of `Plans/Media_Generation_and_Capabilities.md`), which shows only the four `media.*` capabilities. Permission and policy for all tool categories (internal, built-in, provider-exposed, MCP, custom) use the same model defined in `Plans/Permissions_System.md`.
-
-ContractRef: ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-PICKER, ContractName:Plans/Permissions_System.md
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
 
 ### 3.1A Debug-capable tool classification
 
@@ -238,13 +222,50 @@ This subsection supplements the per-tool table below with required behavior for 
 - **Secrets policy:** Persisted chat index content MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (mandatory strict secrets scrubbing before persistence).
 - **Context Lens integration:** When Context Lens mutes messages, chatsearch MUST exclude muted message_ids from results returned to the agent (or annotate them as excluded so the context packer can drop them).
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md
+
 **codesearch (project workspace code search; MVP multi-tier)**
 - **Primary backend:** Tantivy code index (filesystem watcher + chunked documents; see Plans/storage-plan.md).
 - **Secondary backend:** LSP `workspace/symbol` and/or `documentSymbol` for symbol-aware search when LSP is active (Plans/LSPSupport.md).
-- **Fallback backend:** text grep/ripgrep (`grep` tool) when index is unavailable or query requires regex semantics.
+- **Fallback backend:** text grep (`grep` tool, index-accelerated when sparse n-gram index is available) when Tantivy index is unavailable or query requires regex semantics.
 - **Output:** Return best-effort results with stable `{ path, line_or_range, snippet, kind? }`.
 - **Ignore + sensitive guards:** Respect `.gitignore` by default; exclude `.env` and `.env.*` (allow `.env.example`) consistent with FileSafe + Permissions defaults.
 - **Secrets policy:** Any indexed/stored snippet text MUST be secrets-scrubbed before persistence to Tantivy.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/FileSafe.md
+
+**grep (index-accelerated regex search; MVP)**
+
+The `grep` tool keeps its existing interface and transparently uses a per-project sparse n-gram regex index when that index can narrow the query.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
+
+- **External contract:** Same signature (`pattern`, `path?`, `glob?`), same project scoping, same result limit (1000), same timeout (30s), and same read-only permission posture as today's `grep`. Search-panel regex mode uses the same backend; there is no new user-facing or agent-facing tool name.
+- **Correctness model:** The index is only a candidate reducer. Final results always come from ripgrep verification on authoritative file content. Hash collisions, stale base snapshots, and broad dirty-layer candidate inclusion may increase candidate count, but MUST NOT change final correctness.
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md, Invariant:INV-002
+
+- **Sparse n-gram model:** This is not a classic fixed-trigram index. Build time extracts **all** sparse n-grams from normalized file content. Query time extracts only a **minimal covering set** from normalized literals. That asymmetric build/query contract is the core selectivity/performance property.
+- **Frequency table contract:** Boundary weighting uses a shipped 256x256 `u16` base table derived from The Stack Smol, counted on ASCII-lowercased bytes, blended with per-project frequencies using `effective[a][b] = 0.5 * base[a][b] + 0.5 * project[a][b]`. The blended table is stored per project in `frequency_table.bin` and is shared by both build and query logic. It is recomputed only on full rebuilds.
+- **Boundary-failure fallback:** When weighting cannot place sparse boundaries for a segment of length >= 3, extraction falls back to fixed-width 3-gram boundaries so the segment remains discoverable.
+- **Byte-level operation rule:** N-gram extraction and frequency counting operate on raw bytes. Implementers MUST NOT decode content to Unicode at any point in the indexing or query pipeline. ASCII-only lowercasing (`u8::to_ascii_lowercase`) is the only transformation; non-ASCII bytes pass through unchanged.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
+
+- **Query flow:** Parse regex with `regex-syntax` -> extract literals -> strip `\r` -> ASCII-lowercase -> classify conjunction vs alternation -> compute a minimal covering n-gram set -> hash with xxh3 -> binary-search `lookup.bin` -> load Roaring Bitmap postings -> intersect within required-literal groups -> union across alternations -> resolve file IDs via `file_map.bin` -> apply path/glob filters -> add dirty-layer paths -> run ripgrep only on candidate files.
+- **Alternation rule:** Alternation uses union-of-intersections, not pure intersection. `foo|bar` means files containing foo OR bar, not files containing both.
+- **Query skip rules:** Skip the index and run raw ripgrep when no literals can be extracted, when a case-insensitive query contains non-ASCII literals, or when the covering set exceeds 64 n-grams.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
+
+- **Freshness model:** PM-mediated writes update the dirty layer synchronously before returning success. Dirty entries are generation-aware path records, not a second canonical search index. All dirty paths are unconditionally included in candidate verification, and deleted dirty paths suppress stale base-index hits.
+- **Stale-index rule:** There is no stale-threshold cutoff. When an index snapshot exists, it remains queryable while background refresh or re-anchor work runs. Raw ripgrep fallback is reserved for missing, building-without-valid-snapshot, corrupted, disabled, or query-skip conditions.
+- **Verification fault tolerance:** Per-file verification races (`ENOENT`, permission denied, deleted-between-candidate-and-verify, transient I/O errors) are skip-and-continue conditions, not whole-query failures.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
+
+- **Filtering rules:** The index respects the same `.gitignore` / `.ignore` baseline as `grep`, applies mandatory secret-path exclusions, excludes binary files using ripgrep-style null-byte detection, honors the per-project large-file threshold (default 10 MB), and applies separate index-exclusion patterns for low-value or generated content.
+- **User-facing search:** When the Search panel regex toggle is ON, the same sparse n-gram path accelerates find-in-files. Search inherits the same dirty-layer freshness guarantee and the same fallback causes as agent `grep`.
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+- **Performance / acceptance targets:** Indexed query latency target is <20 ms across repository sizes. Full-build targets are <2 minutes for <=500 MB, <10 minutes for <=5 GB, and <30 minutes for <=50 GB on SSD-class storage. Incremental rebuilds may temporarily use roughly 1.5x index size in RAM because extraction is incremental but serialization is full-snapshot rewrite. SSD storage is the supported baseline for repositories above 5 GB. Steady-state memory: peak RSS contribution typically <500 MB (only the lookup table is mmap'd; postings are streamed via offset). Dirty-layer insert: <1 ms per path (synchronous HashMap update). Typical index size: 1-10% of source code size. Build threads run at low priority (`thread-priority` crate, `ThreadPriority::Min`; macOS Apple Silicon additionally uses `QOS_CLASS_UTILITY`) to avoid editor starvation.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
 
 **logsearch / logread (project logs)**
 - **logsearch input:** `query: string`, optional `filters: { time_range?, run_id?, thread_id?, tool_name?, level? }`, `k?: number`.
@@ -255,47 +276,10 @@ This subsection supplements the per-tool table below with required behavior for 
 - **Secrets policy:** Log summaries/snippets and any persisted payload returned by logread MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (mandatory strict secrets scrubbing before persistence).
 - **Blob resolution:** `blob_ref` resolves to `storage/blobs/projects/{project_id}/logs/...` (see Plans/storage-plan.md).
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
 **repo.import (external repo import; separate from workspace search)**
 - **Input:** `{ source: string (URL or owner/repo), dest_path?, mode?: "new_project"|"add_workspace_root"|"temporary_mount" }`.
-- **Behavior:** Resolve auth/clone URLs (GitHub via GitHubApiTool when applicable), then acquire repo via clone/download. Must not overwrite existing directories without explicit user confirmation.
-- **Audit:** Always emit an audit entry in the thread (assistant-chat-design.md §13).
-- **Permissions:** Default `ask` + respect network allow/deny rules and `external_directory` constraints.
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
-Canonical input/output shapes align with [OpenCode built-in tools](https://opencode.ai/docs/tools/#built-in); platform runners normalize to/from these. Error conditions and limits are enforced by the adapter/runner before or after calling the platform.
-
-**bash execution limits (required):**
-- **Timeout:** default `120s` per bash invocation. On timeout, the adapter terminates the process, returns collected stdout/stderr up to that point, and marks the tool result as timed out.
-- **Output cap:** default `512 KiB` per stream (`stdout`, `stderr`). If a stream exceeds the cap, the adapter truncates the in-thread payload, marks the result as truncated, and preserves the full payload in the persisted log/seglog record when available.
-- **CWD resolution:** default to the active project/workspace root. In multi-root projects, use the root containing the active file when one exists; otherwise use the first configured workspace root. Explicit `cwd` overrides are allowed only within the permitted workspace scope.
-- **User-visible behavior:** thread/audit rendering must disclose timeouts and truncation explicitly; it must not present partial output as complete output.
-
-| Tool | Canonical input (key params) | Canonical output / result shape | Error conditions | Limits |
-|------|-----------------------------|----------------------------------|------------------|--------|
-| **bash** | `command: string`, `cwd?: string` | `stdout: string`, `stderr: string`, `exit_code: number`, `timed_out?: boolean`, `truncated?: boolean` | Permission denied (tool or FileSafe), command blocklist, timeout, non-zero exit | Timeout `120s` default; output cap `512 KiB` per stream by default; CWD = project/workspace per §3.5 bash limits |
-| **edit** | `path: string`, `old_string: string`, `new_string: string` | `path: string`, `updated: boolean` | File not found, path not in write scope (FileSafe), permission denied | Single replacement per call; file size cap (e.g. 2 MiB) |
-| **write** | `path: string`, `contents: string` | `path: string`, `created: boolean` | Path not in write scope, permission denied | File size cap (e.g. 2 MiB) |
-| **read** | `path: string`, `offset?: number`, `limit?: number` (line range) | `contents: string`, `path: string` | File not found, path in sensitive list (.env etc.), permission denied | Line range or size cap (e.g. 10_000 lines or 1 MiB); offset/limit 0-based |
-| **grep** | `pattern: string`, `path?: string`, `glob?: string` | `matches: Array<{ path, line_number, line }>` | Invalid regex, permission denied | Result limit (e.g. 1000 matches); timeout (e.g. 30s); respect .gitignore unless .ignore overrides |
-| **glob** | `pattern: string` (e.g. `**/*.ts`) | `paths: string[]` | Permission denied | Result limit (e.g. 2000 paths); timeout (e.g. 15s); sorted by mtime |
-| **list** | `path: string`, `glob?: string` | `entries: Array<{ name, type: "file"\|"dir" }>` | Path not found, permission denied | Depth limit (e.g. 1 for shallow); result limit (e.g. 500) |
-| **patch** | `patch: string` (unified diff) | `applied: string[]` (paths) | Malformed patch, path not in write scope, patch reject | Single patch; paths must be in write scope |
-| **multiedit** | `edits: Array<{ path, old_string, new_string }>` | `results: Array<{ path, updated }>` | Same as edit per item; first failure fails batch | Max edits per call (e.g. 50); same file size cap as edit |
-| **webfetch** | `url: string` | `content: string`, `status?: number` | URL not in allowlist / in denylist (FileSafe), timeout, HTTP error | Timeout (e.g. 30s); response size cap (e.g. 1 MiB); document domains in audit |
-| **websearch** | `query: string` | `results: Array<{ title, url, snippet }>` | Provider disabled or unavailable, rate limit, permission denied | Result limit (e.g. 10); optional query rate limit |
-| **webextract** | `url: string` | extracted page/site content + provenance refs | Permission denied, target unavailable, timeout | Same bounded network and response-size constraints as web tools generally |
-| **webresearch** | `task: string` | multi-source research result + sources/provenance | Provider disabled or unavailable, rate limit, permission denied | Result count and research-budget limits |
-| **webcrawl** | `url: string` | crawl results + traversed-source refs | Permission denied, timeout, crawl fan-out capped | Traversal/fan-out limit plus timeout |
-| **webmap** | `url: string` | site map / structure summary + source refs | Permission denied, timeout | Traversal/fan-out limit plus timeout |
-| **question** | `mode`, `header?`, `prompt?`, `questions[]` | `status`, `answers[]`, optional backward-compatible `answer_text?` | HITL unavailable (headless) → `unavailable`; dismiss/time-out are explicit outcomes | Blocking until user responds, dismisses, times out, or HITL is unavailable |
-| **skill** | `path_or_name: string` | `content: string`, `name: string` | Path outside allowed roots, file not found, permission denied | Size cap (e.g. 64 KiB); path under allowed roots only |
-| **todowrite** | `todos: Array<{ todo_id, title, summary, status, dependencies[]?, owner_hint?, verification_hint?, notes?, order_index? }>` | normalized todo-state acknowledgment / updated state | Subagent default deny; permission denied | Single normalized todo list per run/session/thread |
-| **todoread** | -- | `todos: Array<{ todo_id, title, summary, status, dependencies[]?, owner_hint?, verification_hint?, notes?, order_index? }>` | Subagent default deny; permission denied | N/A |
-| **lsp** | canonical `operation`, `path`, operation-specific params, `newName?` (rename only) | operation-specific read/navigation result; rename: `pending_approval` + edits or `rejected` | LSP unavailable, no server for language, timeout, invalid path/position, server crash mid-call | Timeout per request (e.g. 10s); return "LSP unavailable" or "LSP server error" on disconnect/crash |
-| **task** | `subagent_type: string`, `prompt: string`, ... | `result: object` (subagent output) | Tool denied, subagent type unknown (not in canonical 42), launch failure | Per run config (max concurrent subagents etc.); validate subagent_type with subagent_registry (§3.6) |
-| **codesearch** | `query: string`, `path?: string` | `results: Array<{ path, line, snippet }>` or symbol results when LSP available | Permission denied, search backend unavailable | Result limit (e.g. 100); timeout (e.g. 15s) |
-
-**LSP sub-operations:** For `lsp`, `operation` determines the LSP method and return shape: `references` → `textDocument/references`; `definition` → `textDocument/definition`; `hover` → `textDocument/hover`; `rename` → `textDocument/prepareRename` + `textDocument/rename`, result pending user approval (§3.4.1). When the LSP server crashes or disconnects mid-call, return a structured error (e.g. `{ "error": "lsp_unavailable", "message": "LSP server closed or timed out" }`) so the agent can retry or fall back.
 
 ### 3.6 Task tool and the 42 subagents (Plans)
 

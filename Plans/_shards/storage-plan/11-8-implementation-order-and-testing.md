@@ -40,11 +40,23 @@
 
 ### 8.3 Startup and shutdown
 
-**Startup order:** (1) Resolve app data root (env override optional). (2) Create `storage/seglog`, `storage/redb`, `storage/jsonl`, `storage/tantivy` if missing. (3) Open redb, run migrations (create namespaces and set schema_version on first run). (4) Open seglog writer (create first segment on first append if dir empty). (5) Start projectors (e.g. background threads or async tasks that tail seglog and write JSONL/Tantivy/checkpoints). (6) Optionally start analytics scan scheduler. This runs at app init (e.g. main or before UI).
+**Startup order:** (1) Resolve app data root (env override optional). (2) Create `storage/seglog`, `storage/redb`, `storage/jsonl`, `storage/tantivy` if missing. (3) Open redb and run migrations. (4) Open the seglog writer. (5) Start projectors that tail seglog and write JSONL/Tantivy/checkpoints. (6) Start optional analytics schedulers and per-project index services.
 
-**Shutdown:** (1) Signal projectors to stop (and flush). (2) Wait for projectors to commit last checkpoint and flush outputs (Tantivy commit, JSONL flush). (3) Flush and close seglog writer. (4) Close redb. Shutdown must complete within a timeout (e.g. 5s) or force-close to avoid hangs.
+**Regex-index startup recovery:** After a project context is known and before the first indexed `grep` or Search-panel regex query for that project:
+1. Scan the relevant `regex_index/` directory.
+2. Pick the highest valid `gen-{N}/` candidate.
+3. Validate `index_meta.json`, per-file xxh3 checksums, and `lookup.bin` sizing / offsets before mmap.
+4. For Git-backed caches, verify `anchor_sha` is still reachable (`git cat-file -t {anchor_sha}`). Unreachable anchors invalidate the snapshot and trigger rebuild from current HEAD.
+5. If a valid snapshot exists, create `IndexSnapshot`, mmap `lookup.bin`, and mark the project `ready`.
+6. If no valid snapshot exists, mark the project `no_index` and transparently serve raw ripgrep until the background full build completes.
+7. Delete orphaned or partial generations opportunistically during this recovery path.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Architecture_Invariants.md
 
-**Concurrency and single-writer:** The seglog writer is held by the main process; only one thread (or the main event loop) may call append, or append is protected by a mutex if multiple threads enqueue events. In-process single-writer guarantee: exactly one Writer instance; appends are serialized so that seq is monotonic and no concurrent appends occur. Projectors only **read** (tail) seglog and do not hold the writer; they run in background threads/tasks.
+**Shutdown:** (1) Signal projectors to stop and flush outputs. (2) Cancel in-flight regex builds and wait briefly for partial-generation cleanup. (3) Flush and close the seglog writer. (4) Close redb. (5) Leave the last valid regex snapshot and any reusable remote cache state in place; ordinary shutdown does not evict caches.
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+**Concurrency and single-writer rules:** Seglog remains a single-writer stream. Regex-index publication is likewise single-writer per project: one build path publishes snapshots, while readers use lock-free `ArcSwap` snapshots and never observe partially-written generations.
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
 
 ### 8.4 First run / empty state
 

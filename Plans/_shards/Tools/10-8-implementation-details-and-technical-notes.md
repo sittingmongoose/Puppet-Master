@@ -47,6 +47,13 @@ Minimum event payload identity fields:
 - timestamp
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Provider_OpenCode.md
+
+Tool invocation events:
+
+The `tool.invoked` event for `grep` MUST include an optional `index_used: boolean` field indicating whether the sparse n-gram index was used to accelerate the query. When `true`, the index narrowed the candidate file set before ripgrep verification. When `false` or absent, raw ripgrep was used on all files (fallback path).
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md
+
 ### 8.1 Config persistence
 
 - **Where:** Tool permissions live in the same config as the rest of Settings (e.g. `GuiConfig` in memory, persisted to redb as `config:v1` per FinalGUISpec §15.1). Use the key **`tool_permissions`** (object: tool name or wildcard → `"allow"` | `"deny"` | `"ask"`, or per-tool object for granular rules per §10.1).
