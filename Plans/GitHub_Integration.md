@@ -531,8 +531,9 @@ Remote-mode rules:
 - file browsing, file mutation, git operations, terminal launches, Search execution, Source Control projections, LSP execution, and provider-side project tools all run against the remote host context
 - remote-mode projects MUST NOT silently fall back to local checkout, local git, local shell, local Search, or local LSP execution
 - UI surfaces may retain stale snapshots while disconnected, but they must label them accurately and block new host-required mutations when the remote context is unavailable
+- **Search index acceleration exception:** the sparse n-gram index is a local acceleration cache, not a local authority. Candidate narrowing may happen locally, but correctness always comes from verification against authoritative project content
 
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
 
 Shared remote-state vocabulary:
 
@@ -552,26 +553,82 @@ Connection-loss rules:
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
 
+#### Remote Git project search cache
+
+For remote Git projects, PM keeps a local bare-clone-backed search cache so regex grep stays mostly local while final correctness still reflects remote content.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/BinaryLocator_Spec.md, ContractName:Plans/Architecture_Invariants.md
+
+1. **Local bare clone:** On project open, PM clones the remote repository into `.puppet-master/cache/r/{hash8}/git/`. Clone type follows project/global settings (full, shallow, partial). If the repository is reachable only from the remote network, PM streams a remote-initiated `git bundle` back to the local cache. If bare-clone setup fails for auth or topology reasons, PM falls back to the non-Git remote path.
+2. **Submodules:** Bare clones do not support `--recurse-submodules`. PM parses `.gitmodules`, rejects paths containing `..`, clones each submodule into `.puppet-master/cache/r/{hash8}/git/m/{sub_hash8}/`, recurses to depth 5, treats removed submodules as deletions, and replaces clones when submodule URLs change.
+   - **Path canonicalization security rule (general):** All paths received from `.gitmodules`, remote file-change notifications, dirty-staging writes, file watcher events, or any other inbound source are canonicalized and validated with `starts_with(project_root)` or `starts_with(cache_root)` before filesystem use. This applies to every inbound path source, not only submodule paths.
+3. **Build reads:** The regex index builds from Git objects via `git cat-file --batch`; it never assumes a working tree exists in the bare clone.
+4. **Verification path:** Candidate verification uses `git show {anchor_sha}:{path}` piped to ripgrep. Bare-clone results are never treated as authoritative without that verification pass.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
+
+5. **Dirty staging and PM-mediated writes:**
+   - Files <=1 MB arrive with content and are written immediately into `.puppet-master/cache/r/{hash8}/dirty/{relative_path}`.
+   - Files >1 MB dirty-mark immediately, begin async prefetch, and may block up to 5 seconds before falling back to single-file SSH verification if prefetch is still incomplete.
+   - PM-mediated writes MUST stage the updated content locally before returning success so write-then-grep freshness is preserved even before watcher round-trips arrive.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/Wiring_Matrix.md
+
+6. **Fetch cadence and stale-snapshot rule:**
+   - fetch on project open
+   - fetch every 5 minutes after the previous fetch-plus-build cycle completes
+   - fetch on explicit sync or pull actions
+   - when HEAD advances, compute `git diff --name-only old_anchor..new_HEAD` and dirty-mark those paths before incremental rebuild starts
+   - there is no stale-threshold disable rule; a stale-but-valid snapshot remains queryable while the refresh pipeline runs
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md
+
+7. **Re-anchor, verification tolerance, and startup recovery:**
+   - re-anchor merges staged dirty content into the rebuild before publication
+   - staging and dirty records clear only after the new generation publishes, using generation-stamped clearing
+   - startup recovery validates metadata, checksums, and anchor reachability before loading a snapshot; invalid or unreachable snapshots rebuild from current HEAD
+   - per-file verification races are skip-and-continue conditions, not whole-query failures
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/Architecture_Invariants.md
+
+#### Remote non-Git project search cache
+
+For non-Git remote projects, PM uses remote-build / local-query / remote-verify.
+
+ContractRef: ContractName:Plans/BinaryLocator_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
+
+1. **Remote indexer helper:** PM ships a standalone sparse-n-gram indexer binary for x86_64 and aarch64, detects architecture via `uname -m`, transfers the matching binary, integrity-checks it, and never executes binaries received from the remote host.
+2. **Remote build:** The helper scans remote files locally on the remote host, computes the same blended frequency table as local builds, and emits `postings.bin`, `lookup.bin`, `file_map.bin`, `frequency_table.bin`, and `index_meta.json`.
+3. **Local query + remote verify:** Queries use the local transferred snapshot, but verification runs over SSH only on candidate paths.
+4. **Dirty-path correctness:** Locally tracked dirty paths remain part of remote verification until a rebuild has incorporated them. This rule closes the false-negative gap between change notification and rebuild completion.
+5. **Rebuild triggers:** dirty-path threshold >1000 files, 30-minute periodic rebuild while the project stays open, or degraded-mode periodic full rebuild when watcher support is unavailable.
+6. **Cleanup:** the helper binary is reused across sessions; cleanup is optional on disconnect and best-effort on uninstall.
+ContractRef: ContractName:Plans/BinaryLocator_Spec.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/storage-plan.md
+
+#### Remote cache settings and administration
+
+- project settings expose `shallow clone`, `partial clone`, per-project remote-cache size, and `Evict remote cache`
+- both clone toggles default OFF and support global defaults plus per-project overrides
+- global storage settings own remote-cache retention (default 30 days), global cache size limit (`min(50 GB, 10% of free disk at first cache creation)`), and `Clear All Remote Caches`
+- caches are not evicted on ordinary project close; eviction is inactivity-driven, pressure-driven, or user-driven
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
 ### C.4 Tool & Provider Execution on Remote
 
 ContractRef: ContractName:Plans/WorktreeGitImprovement.md, PolicyRule:Decision_Policy.md§2
 
-- **Git operations:** run via SSH command on remote as specified in §C.3.
+- **Git operations:** run via SSH command on the remote host as specified in §C.3.
   ContractRef: ContractName:Plans/WorktreeGitImprovement.md
-- **File browsing:** SFTP or SSH `find`/`ls` pipeline (deterministic default: SFTP when
-  available; SSH pipeline as fallback).
+- **File browsing:** uses SFTP when available, with SSH `find` / `ls` pipelines as fallback.
   ContractRef: PolicyRule:Decision_Policy.md§2
-- **AI provider CLIs:** MUST be installed on the remote machine. Puppet Master MUST invoke
-  them via SSH subprocess and MUST stream stdout/stderr back over SSH to the local UI in
-  real time.
+- **AI provider CLIs:** MUST be installed on the remote machine. Puppet Master invokes them via SSH subprocess and streams stdout/stderr back to the local UI in real time.
   ContractRef: PolicyRule:Decision_Policy.md§2
-- Error — provider CLI not found on remote: show
-  `Provider CLI not found on remote — install <provider_name> on <host>` with a `Dismiss`
-  action. MUST NOT attempt to install the CLI automatically without explicit user consent.
+- **Grep (index-accelerated):**
+  - Git-backed remote projects query the local index, verify base-snapshot candidates via local `git show ... | rg`, and verify dirty/staged paths from the local dirty cache first.
+  - Non-Git remote projects query the local transferred index and verify only candidate paths over SSH.
+  - Per-file verification races are skip-and-continue conditions; the query remains successful if other candidate files can still be checked.
+  - Local candidate reduction MUST NOT be treated as a final answer without authoritative verification.
+  ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
+- Error - provider CLI not found on remote: show `Provider CLI not found on remote - install <provider_name> on <host>` with a `Dismiss` action. MUST NOT attempt silent installation.
   ContractRef: PolicyRule:Decision_Policy.md§2, Invariant:INV-003
-- Error — SSH session drops mid-run: show `SSH session lost — reconnecting…` and
-  auto-retry the connection once (bounded: 1 auto-retry, then show `Reconnect` button for
-  manual retry). MUST NOT silently swallow the disconnect.
+- Error - SSH session drops mid-run: show `SSH session lost - reconnecting...`, auto-retry once, then expose `Reconnect` for manual retry. MUST NOT silently swallow the disconnect.
   ContractRef: PolicyRule:Decision_Policy.md§2, Invariant:INV-003
 
 ### C.4A Debug investigations on remote-mode projects

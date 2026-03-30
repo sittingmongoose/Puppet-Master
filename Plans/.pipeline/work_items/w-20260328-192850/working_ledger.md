@@ -389,7 +389,7 @@ Instead of A2A, fix the real problems OpenCode exposed:
 
 ## Phase 3: Gap Analysis — PM Plans/ Docs vs OpenCode Failures
 
-### FULLY COVERED (PM design already handles these — no action needed)
+### FULLY COVERED (16 items — no action needed)
 1. **Tool result correlation (INV-001)** — Every tool_use gets matching tool_result or synthetic one; orphaned IDs impossible. Contracts_V0 + CLI_Bridged_Providers reconciler.
 2. **Kill conditions** — 9 named kill conditions (token ceiling, wall-clock, filesafe violation, shell_failure, write_thrash, post_scan_failure, etc.). Run_Modes §5.
 3. **Tool timeouts** — Per-tool defaults (bash 120s, web 30s, LSP 10s, glob 15s), configurable per-run, wall-clock budget. Tools §3.5.
@@ -405,65 +405,122 @@ Instead of A2A, fix the real problems OpenCode exposed:
 13. **History serialization boundaries** — Deterministic message boundaries, frozen runtime snapshots, no stale replay. Prompt_Pipeline §1.2-1.3.
 14. **Database safety (SQLite avoidance)** — PM uses seglog + redb, not SQLite. Single-writer guarantee. storage-plan §2.3.
 15. **Hidden operations tracking** — Normalized event stream captures ALL provider events; no silent background calls by architecture.
+16. **Undo/revert system** — Extensively specified: cmd.chat.revert (assistant-chat-design §9, UI_Command_Catalog, FileManager §2.2) reverts all file mutations from one assistant turn. cmd.chat.rewind for conversation-only. Per-buffer undo/redo in FileManager §2.6. Safe-point rollback pipeline in FileSafe + WorktreeGitImprovement. restore_safe_point_then_retry gate in Commands_System. All MVP-adopted.
 
-### PARTIALLY COVERED (Foundation exists, specific gaps remain)
-16. **Permission inheritance granularity** — Framework exists (parent ceiling, child narrowing), but per-tool pattern inheritance not detailed. Permissions_System §8.
-17. **Merge-not-replace semantics** — Precedence layers defined, but explicit "never replace" rule implicit not explicit.
-18. **Max concurrent subagents** — Crew-level limits specified, but per-agent concurrency and defaults are gaps. orchestrator-subagent §Gap #40.
-19. **Per-task timeout override** — Per-run budgets exist, per-subagent/per-task not specified.
-20. **Workspace isolation** — DAE jail + external_directory guard exist, but no per-subagent path filtering in HTE. Permissions §3.3-3.4, Run_Modes §2.2.
-21. **Tool dispatch isolation enforcement** — End-of-run scans specified (post-hoc), but pre-dispatch path validation is a gap.
-22. **Tool argument validation** — Malformed JSON recovery exists in reconciler, but no PRE-execution schema validation layer. CLI_Bridged_Providers §3.
-23. **Doom loop / retry strategy** — Error classification mandatory + max_retryable_errors=3 ceiling, but no per-error-type limits, no variable-truncation detection. Executor_Protocol §7, Run_Modes §5.
-24. **Truncation handling** — Token ceiling + output caps exist, but finishReason="length" not explicitly handled; truncated empty {} not blocked. Run_Modes §4.
-25. **Streaming resilience** — Retry/backoff mentioned as "runtime policy", circuit breaker in lessons, but no algorithm/constants specified. Provider_OpenCode §13.
-26. **Error differentiation (401/429/quota)** — 401 and rate-limit separated in Provider_OpenCode, but quota-exceeded handling vague.
-27. **Provider capability declarations** — Lesson documented (supportsAssistantMessagePrefill, maxPayloadSize), but NO schema defined anywhere.
-28. **Token type segregation** — Architecture aware of cache_read/cache_write/reasoning, but storage schema not locked in reviewed files.
-29. **Atomic writes** — Backup/restore mentioned, but no temp+fsync+rename implementation specified. FileSafe line 27.
-30. **Snapshot integrity** — Worktree cleanup exists, but NO exit code validation on git operations mandated. WorktreeGitImprovement.
-31. **Concurrent edit safety** — Identity scoping excellent (per-session, per-project), but no modification tokens, no file locking, no conflict resolution.
-32. **Windows path safety** — Path length limits + filename sanitization exist, but shell escape sequence problem (backslash corruption) not addressed. FileManager, WorktreeGitImprovement.
-33. **Large file/tool output handling** — Chunking for search index exists, but no pre-flight overflow check for tool outputs in context budget.
-34. **Multi-instance coordination** — Single-writer seglog specified, but inter-process locking deferred ("if we ever support..."). storage-plan §6.
-35. **Compaction context preservation** — Size tracking exists, but instruction context preservation THROUGH compaction not guaranteed.
-36. **Large instruction file cap** — Size visibility exists, but no hard cap on injection preventing immediate compaction loop.
-37. **Storage migration** — Infrastructure mentioned (versioned schema, migration runner), but versioning strategy vague, path detection absent.
-38. **MCP startup timeout / lazy-load** — Unavailability handling exists, but timeout config and lazy-load mechanics not specified. Tools §8.7.
-39. **MCP tool list resilience** — Requested-vs-effective model exists, but retry/reconnect not specified. Tools §5.
-40. **MCP invalid data isolation** — Structured errors for LSP, but MCP-specific graceful degradation not specified.
-41. **Resource bounding** — TTL policies, crew size limits, memory pruning exist scattered, but no unified collection framework, no LRU, no ring buffers.
+### PARTIALLY COVERED — RESOLVED (26 items — resolutions decided)
 
-### CRITICAL GAPS (Not addressed at all — need new design work)
-42. **Recursion depth limits** — NO max_recursion_depth or max_nesting_level anywhere. Complete gap.
-43. **Hook/policy enforcement across ALL agents** — Only HTE/DAE strategies covered; plugin/hook enforcement for nested subagents not specified.
-44. **Signal handling (SIGTERM/SIGINT/SIGHUP)** — Zero specification anywhere. No process group management, no child termination cascade.
-45. **MCP OAuth state management** — OAuth entirely absent from Tools.md, Plugins_System.md, Skills_System.md. No token lifecycle, no atomic writes, no race protection.
-46. **MCP schema validation / cycle detection** — No circular $ref detection, no model-specific schema sanitizers (Gemini anyOf/const), no recursion depth limit for schema resolution.
-47. **Windows MCP subsystem** — Zero Windows-specific MCP handling.
-48. **Windows OAuth callbacks** — Platform-specific OAuth not designed.
-49. **Undo/revert system** — Zero mentions across all Plans. No snapshot tracking, no PatchParts for async edits, no undo state machine.
-50. **Spending limit enforcement** — usage-feature.md acknowledges as "Gap 5". No enforcement mechanism, no consequence spec.
-51. **Thinking block preservation for KV cache** — thinking_delta defined but no rule preventing stripping during compaction/replay.
-52. **Configurable compaction threshold per model** — Hard-coded thresholds only; no per-model configuration.
-53. **Google provider cachePoint annotations** — Not implemented; known gap from OpenCode #17568.
-54. **OAuth + cache_control HTTP 400 workaround** — Listed as known issue; no mitigation designed.
-55. **Proactive token refresh (heartbeat)** — Listed as PM LESSON but NOT specified in any plan; only reactive recovery exists.
-56. **Cost sign-flip on model switch** — No validation or prevention rule for negative cost aggregation.
+#### Cluster A: Permissions & Recursion Control
+- **#16 Permission inheritance granularity** → In Permissions_System §8 step 4, add that tool-specific argument pattern rules propagate downward — child inherits both action AND restricting patterns from parent.
+- **#17 Merge-not-replace semantics** → Add clarifying sentence in §2.4: "Higher-precedence layers shadow lower layers on a per-rule basis; they do not replace the entire ruleset."
+- **#18 Max concurrent subagents** → Three-level concurrency: max_concurrent_crews_per_platform (default 4), max_concurrent_agents_per_crew (default 8), max_total_active_agents (default 32). All configurable.
+
+#### Cluster B: Execution Safety & Doom Loops
+- **#22 Tool argument pre-validation** → Add pre-dispatch validation gate in Tools.md §10.6: schema.validate_tool_args() after policy check. Provider-specific normalizers (GLM unquoting, Qwen XML stripping) run before schema validation. Invalid args → diagnostic + structured error, no execution.
+- **#23 Doom loop / per-error retry limits** → Per-class retry matrix in Executor_Protocol.md §7: provider_transient=3 (exp backoff 1s/2s/4s), structured_output_invalid=2 (no backoff), auth_expired=1 (after refresh), permission_denied=0, filesafe_blocked=0, storage_io=1. Exact-match detection: same (tool_name, args_hash, error_message) twice consecutively → kill.identical_failure. Backoff base 1s, max 8s.
+- **#24 Truncation handling (finishReason)** → Reconciler rule: finishReason=length with incomplete tool_use → close with tool_result(ok=false, error=truncated_by_length), do NOT synthesize/execute. Empty/minimal args rejected via #22 pre-validation. Add finishReason mapping to normalized event stream in CLI_Bridged_Providers.md.
+- **#33 Large tool output in context budget** → Post-execution truncation with model-visible marker (already 512 KiB). Add context budget accounting — if remaining context <15% of window after tool output, emit diagnostic warning. No pre-flight prediction.
+- **#21 Tool dispatch-time isolation** → Two-tier defense-in-depth: (1) Pre-dispatch: extend policy.may_execute_tool() to check path args against FileSafe write-scope before execution. (2) Post-hoc: keep end-of-run scans as safety net.
+
+#### Cluster C: Workspace & File Safety
+- **#20 Workspace isolation (per-subagent)** → Resolved by existing design. HTE inherits parent write-scope; DAE has jail. Add clarifying note.
+- **#29 Atomic writes** → [Validated by OpenCode research: OC uses naive os.WriteFile() for all non-DB files] All FileSafe-managed file mutations MUST use atomic write: write to `<target>.tmp.<random>` same dir → fsync → rename. Applies to seglog entries, redb ops, config/state.
+- **#30 Snapshot integrity (git exit codes)** → Every git subprocess invocation MUST check exit code. Non-zero on git add/commit/stash/checkout = hard error. After git add, verify with git status --porcelain. Silent failures MUST NOT propagate stale state. Target: WorktreeGitImprovement.md or FileSafe.
+- **#31 Concurrent edit safety** → Optimistic concurrency: before writing, check file mtime/hash against what was read. If changed → conflict error. No file locking. DAE reconciliation already diffs against canonical workspace.
+
+#### Cluster D: Process Lifecycle & Signals
+- **#19 Per-task timeout override** → Add timeout_ms field to subagent task envelope in orchestrator-subagent-integration.md. Default: inherit parent remaining budget. Override: capped at parent remaining. Kill: kill.task_timeout.
+- **#41 Resource bounding (unified)** → Lightweight invariant in storage-plan.md: every persistent/long-lived collection MUST declare max cardinality OR TTL (or both). Key collections: seglog=TTL, sessions=max_total_active_agents, MCP handles=registered count, LSP=open project count.
+- **#34 Multi-instance coordination** → On startup, PM acquires flock on `<project>/.puppet-master/pm.lock`. If held, start read-only/viewer mode or prompt user.
+
+#### Cluster E: MCP Resilience
+- **#38 MCP startup timeout / lazy-load** → startup_timeout_ms default 10s, mark degraded on timeout. Lazy-load: spawn on first tool call, not PM startup. Background readiness probe, retry once, then unavailable.
+- **#39 MCP tool list resilience** → listTools() retry 3x with 1s backoff. If all fail, use last-known tool list (stale). Periodic refresh every 5min. Never permanent-kill: failed → degraded, not unavailable.
+- **#40 MCP invalid data isolation** → Same pattern as LSP: malformed → structured error + diagnostic, no crash. Schema violation → mcp_schema_mismatch envelope. Per-tool timeout 30s default, configurable per-server.
+
+#### Cluster F: Provider & Streaming
+- **#25 Streaming resilience** → Stream disconnect → reconnect/resume, max 3 retries. Exp backoff 1s→2s→4s, jittered ±25%. Circuit breaker: 5 consecutive failures in 2min → open 30s → half-open → close/reopen. Constants configurable per-provider.
+- **#26 Error differentiation** → Classification matrix in CLI_Bridged_Providers.md: 401=auth_expired (refresh+1), 403=permission_denied (0), 429=rate_limited (Retry-After/30s), 402=quota_exceeded (0, upgrade prompt), 5xx=provider_transient (per #23 matrix).
+- **#27 Provider capability schema** → [Validated by OpenCode research: OC has only 2 booleans + scattered if-else, Gemini disableCache never wired] Formal capability schema in Models_System.md (§10.4.3 references but doesn't define): streaming, tool_use, thinking_blocks, cache_control (key variant), assistant_prefill, max_payload_bytes, image_input, parallel_tool_calls, cache_with_oauth. NOTE: PM has TWO Gemini providers (Direct=API only, CLI=OAuth+API wrapped) — separate entries with distinct capabilities.
+- **#32 Windows path safety** → All paths to shell commands MUST be shell-escaped for target platform. On Windows: quote, double backslashes, or convert to forward slashes. Tool dispatch layer handles escaping — tools MUST NOT do their own.
+
+#### Cluster G: Billing & Caching
+- **#28 Token type segregation** → [Validated by OpenCode: OC has 4 fields at provider level but AGGREGATES to 2 in DB — breakdown lost, reasoning_tokens untracked] Lock segregated schema in Contracts_V0.md: input_tokens, output_tokens, cache_read_input_tokens, cache_creation_input_tokens, reasoning_tokens, total_tokens, cost_usd. ALL persisted separately in seglog, NEVER aggregated at storage layer.
+
+#### Cluster H: Prompt & Session
+- **#35 Compaction context preservation** → Invariant in Prompt_Pipeline.md: system prompt, persona instructions, active tool schemas, user-pinned context, blocks tagged compaction_immune:true MUST survive all compaction passes unchanged. Compaction operates ONLY on conversation history and tool output blocks.
+- **#36 Large instruction file cap** → Guard: total compaction-immune content MUST NOT exceed 30% of effective context window. If exceeded, truncate lowest-priority pinned content (FIFO). System prompt and persona never truncated. Threshold configurable per-model.
+- **#37 Storage migration versioning** → Schema version: integer, monotonic, in seglog header. Migration runner: forward-only, no downgrades. Path detection: config > $PUPPET_MASTER_DATA_DIR > project dir > global dir. Backup seglog+redb before any migration.
+
+### CRITICAL GAPS — RESOLVED (14 items — resolutions decided)
+
+#### Cluster A: Permissions & Recursion Control
+- **#42 Recursion depth limits** → Add max_nesting_depth=4 and max_total_spawned_agents=99 as run-envelope budget fields in Run_Modes.md §4. Kill conditions: kill.recursion_depth, kill.agent_count. Overridable per-run.
+- **#43 Hook/policy enforcement all agents** → Explicit invariant in Permissions_System.md §1.2: policy.may_execute_tool() MUST be called before every tool dispatch regardless of nesting depth, execution strategy, or invocation path. Includes all child/subagent/crew contexts.
+
+#### Cluster D: Process Lifecycle
+- **#44 Signal handling (SIGTERM/SIGHUP)** → New section in Run_Modes.md: (1) SIGTERM/SIGINT → graceful shutdown: cancel runs (done.cancelled), terminate child process groups (SIGTERM→5s→SIGKILL providers, 3s MCP/LSP), flush seglog. (2) Process groups: setsid for CLI providers and MCP servers, signal group not PIDs. (3) SIGHUP → reload config without killing runs. (4) Crash recovery: detect incomplete seglog entries on startup, mark done.crashed.
+
+#### Cluster E: MCP Resilience
+- **#45 MCP OAuth lifecycle** → New subsection in Tools.md §8.7, cross-ref GitHub_API_Auth_and_Flows.md. Tokens in shared credential store. Atomic refresh via compare-and-swap. Token sharing keyed by provider+scope, not MCP server. Shared local HTTP listener for callbacks.
+- **#46 MCP schema cycle detection** → Track visited $refs, break on revisit → replace with {}, log warning. Max depth 32. Provider schema adapters: Gemini rewrites anyOf→oneOf, strips const. Schema size cap: reject >64 KiB after resolution.
+- **#47 Windows MCP subsystem** → CREATE_NEW_PROCESS_GROUP instead of setsid. Graceful: CTRL_BREAK_EVENT→3s→TerminateProcess. Path normalization with \\?\ for long paths.
+- **#48 Windows OAuth callbacks** → Bind 127.0.0.1 only (no firewall prompt). Try configured port, fall back ephemeral. Fallback: manual copy-paste auth code flow. Universal approach.
+
+#### Cluster G: Billing & Caching
+- **#50 Spending limit enforcement** → [Validated by OpenCode: OC has ZERO spending limit enforcement — no config, no logic, only server-side Gemini 429 parsing] PM: (1) Pre-request estimate via input tokens × model pricing, block with kill.budget_exceeded. (2) Post-response actual cost check, stop with done.budget_exceeded. (3) Warning at 80% configurable threshold. (4) Per-run AND per-session budgets. Target: usage-feature.md.
+- **#51 Thinking block preservation** → [Validated by OpenCode: OC only tracks for Anthropic, no preservation rule, reasoning_tokens uncosted] Invariant in Prompt_Pipeline.md: thinking/reasoning blocks MUST be preserved through compaction/replay. May summarize but MUST NOT silently strip. If provider doesn't support thinking in replay, adapter converts to compatible format. reasoning_tokens tracked in UsageEvent.
+- **#52 Per-model compaction threshold** → Fields: pressure_start_pct (default 70), pressure_aggressive_pct (default 85), large_block_threshold (default 1200). Defaults in Models_System.md, overridable per-model. Exposed in user settings GUI under advanced model settings.
+- **#53 Google cachePoint annotations** → [Validated by OpenCode: ONLY Anthropic has active markers; Google/OpenAI/Copilot/Bedrock passive] KEY INSIGHT: Google caching is fundamentally different — server-side cachedContent API, not per-message markers. PM: per-provider cache strategy in Prompt_Pipeline.md: Anthropic=ephemeral markers, Google=cachedContent API adapter, OpenAI=cache_control metadata, Bedrock=currently unsupported. NOTE: TWO Gemini providers (Direct + CLI) with distinct capabilities.
+- **#54 OAuth + cache_control HTTP 400** → Guard in CLI_Bridged_Providers.md: when OAuth AND provider rejects cache_control with OAuth, adapter strips markers before sending. Capability matrix includes cache_with_oauth:true|false per provider.
+
+#### Cluster I: Remaining
+- **#55 Proactive token refresh** → Pre-expiry check before each provider call: if token within 20% of expiry → refresh first. No background timer — check-before-use. Fallback: reactive refresh after 401. Target: GitHub_API_Auth_and_Flows.md.
+- **#56 Cost sign-flip on model switch** → Invariant in usage-feature.md: cost values MUST be monotonically non-decreasing within session. cost_usd per UsageEvent always ≥ 0. Model switches do NOT reset historical costs. Negative usage clamped to zero + diagnostic.
+
+## Phase 4: Resolved Decisions
+
+### Decisions Already Resolved (all phases)
+- A2A spec v1.0.0 is the evaluation target (latest stable)
+- Research restricted to Plans/ docs (not old code)
+- A2A REJECTED for internal orchestration (Phase 1 conclusion, user agreed)
+- Phase 2 pivot: learn from OpenCode's mistakes to strengthen PM implementation
+- All 10 deep-dive categories completed with 500+ issues analyzed
+- Phase 3 gap analysis: 8 parallel agents, all Plans/ docs reviewed
+- Phase 4 resolution: all 41 items discussed and decided with user
+- #49 (undo/revert) reclassified from CRITICAL GAP to COVERED after finding extensive specs
+- PM has TWO Gemini providers: Gemini Direct (API only) and Gemini CLI (OAuth + API, CLI-wrapped) — separate capability entries required
+
+### Impacted Docs (consolidated from all phases)
+- `Plans/Run_Modes.md` — recursion depth budgets (#42), signal handling (#44), per-task timeout note
+- `Plans/Permissions_System.md` — tool dispatch invariant (#43), pattern inheritance (#16), merge semantics (#17)
+- `Plans/orchestrator-subagent-integration.md` — concurrency limits (#18), task timeout_ms (#19)
+- `Plans/Tools.md` — pre-validation gate (#22), MCP lazy-load (#38), MCP retry (#39), MCP isolation (#40), MCP OAuth (#45), schema cycles (#46), Windows MCP (#47)
+- `Plans/Executor_Protocol.md` — per-class retry matrix (#23)
+- `Plans/CLI_Bridged_Providers.md` — finishReason mapping (#24), error classification (#26), OAuth+cache guard (#54), streaming resilience (#25)
+- `Plans/Models_System.md` — provider capability matrix (#27), compaction thresholds (#52)
+- `Plans/Contracts_V0.md` — token type segregation schema (#28)
+- `Plans/usage-feature.md` — spending limits (#50), cost sign-flip invariant (#56)
+- `Plans/Prompt_Pipeline.md` — compaction immunity (#35), instruction cap (#36), thinking block preservation (#51), per-provider cache strategy (#53)
+- `Plans/FileSafe.md` — atomic writes (#29), git exit codes (#30), optimistic concurrency (#31)
+- `Plans/FileManager.md` — Windows path escaping (#32)
+- `Plans/storage-plan.md` — resource bounding contract (#41), multi-instance lock (#34), migration versioning (#37)
+- `Plans/WorktreeGitImprovement.md` — git exit code invariant (#30)
+- `Plans/GitHub_API_Auth_and_Flows.md` — proactive token refresh (#55), Windows OAuth callbacks (#48)
+- `Plans/Provider_OpenCode.md` — streaming resilience constants (#25)
 
 ## Open Questions / Uncertainties
-- Should the 15 CRITICAL GAPS become individual work items or a single omnibus amendment?
-- Which gaps should be MVP-blocking vs post-MVP?
-- Should undo/revert (Gap #49) be a new Plan doc or an addition to FileSafe?
-- Should recursion depth (Gap #42) go into Permissions_System.md or orchestrator-subagent-integration.md?
-- Should signal handling (Gap #44) be a standalone survival/lifecycle spec or distributed across docs?
+- All 41 gap resolutions decided — no open design questions remain
+- **ALL 41 gaps are MVP-BLOCKING** — user decision, no post-MVP deferrals
+- Packetization sequencing TBD: which docs to amend first?
 
 ## Packetization Notes
-- Phase 1 (A2A) complete: REJECTED for internal use, possible future external interop
-- Phase 2 (OpenCode deep-dive) complete: 10 categories, 500+ issues, comprehensive lessons
-- Packetization should focus on: gap analysis (PM docs vs OpenCode failures) → specific doc amendments
-- Highest-leverage fixes: tool validation layer, resource lifecycle, compaction preservation, permission inheritance
-- Evidence base is strong enough for packetization — all 10 categories have concrete issue numbers and architectural lessons
+- Phase 1 (A2A): REJECTED for internal use, possible future external interop
+- Phase 2 (OpenCode deep-dive): 10 categories, 500+ issues, comprehensive lessons
+- Phase 3 (gap analysis): 8 parallel agents, all Plans/ docs reviewed, 16 covered, 26 partial, 14 critical (1 reclassified to covered)
+- Phase 4 (resolution): all 41 items discussed and decided with user, validated against OpenCode source code
+- Ready for packetization: all resolutions are concrete enough for doc amendments
+- OpenCode source code was cloned and analyzed for: spending limits (none exist), provider capabilities (2 booleans + scattered if-else), token segregation (aggregated at DB, breakdown lost), atomic writes (naive os.WriteFile), Google cache (passive only, Anthropic only active)
+- Highest-impact amendments: recursion depth (#42), spending limits (#50), signal handling (#44), provider capability matrix (#27), thinking block preservation (#51)
 
 ## Do-Not-Forget Details
 - User explicitly said most/all providers support A2A
@@ -473,6 +530,12 @@ Instead of A2A, fix the real problems OpenCode exposed:
 - A2A v1.0.0 released with JSON-RPC, gRPC, and HTTP+JSON bindings
 - PM normalized event stream already handles what A2A tries to do, but with full observability
 - The 9-stage prompt pipeline is a critical differentiator that A2A would undermine
+- PM has TWO Gemini providers: Gemini Direct (API only) and Gemini CLI (OAuth + API, CLI-wrapped) — capabilities differ, must be separate entries in capability matrix
+- OpenCode has ZERO client-side spending limit enforcement — only server-side 429 parsing
+- OpenCode token segregation is lost at DB layer (4 fields → 2 aggregated), reasoning_tokens untracked
+- OpenCode atomic writes: SQLite excellent, file writes naive (os.WriteFile everywhere)
+- OpenCode cache: ONLY Anthropic has active markers; all others passive. Google is architecturally different (server-side cachedContent API)
+- Google caching requires a fundamentally different adapter approach than Anthropic/OpenAI
 - OpenCode infinite recursion bug (#18100) shows what happens without proper orchestration control
 - OpenCode plan mode bypass (#6527) shows what happens without permission inheritance
 - Estimated user cost impact of caching bugs: $155-800/user/month — A2A would make this worse

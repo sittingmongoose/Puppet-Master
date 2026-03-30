@@ -1,0 +1,15 @@
+Packet Shape Report
+===================
+run_id: r-20260328-192938-02
+checked_packet: Plans/.pipeline/research_packet.json
+
+RESULT: NO PACKET-SHAPE BLOCKERS FOUND
+
+Checks passed:
+- non-insertable packet content
+- malformed replace_section body
+- missing heading anchor in source
+- overlapping anchor application order
+- structured-container mispacketization
+- canonicalization-destabilizing shape
+- ContractRef locality compatibility (emulated from current verifier logic)

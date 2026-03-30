@@ -30,19 +30,18 @@ ContractRef: Primitive:Invariant, PolicyRule:Decision_Policy.md§1
 
 <a id="INV-002"></a>
 ## INV-002 -- No secrets in persistent storage
+
 **Rule:** Secrets (tokens, credentials, private keys) MUST NOT be written to:
 - seglog event stream
 - redb projections
 - Tantivy indexes
+- sparse n-gram regex-index artifacts (`frequency_table.bin`, `postings.bin`, `lookup.bin`, `file_map.bin`, `index_meta.json`) except for secrets-scrubbed derived content and project-relative paths
 - plaintext logs, evidence bundles, or state files
 
 **Allowed persistence:** OS credential store only.
 
-ContractRef: SchemaID:Spec_Lock.json#locked_decisions.storage, SchemaID:evidence.schema.json, PolicyRule:no_secrets_in_storage
+ContractRef: SchemaID:Spec_Lock.json#locked_decisions.storage, SchemaID:evidence.schema.json, PolicyRule:no_secrets_in_storage, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
 
----
-
-<a id="INV-003"></a>
 ## INV-003 -- UI SSOT (no bespoke UI behavior)
 **Rule:** UI copy, buttons, and view behavior MUST be specified in the canonical UI SSOT docs and typed command layer; plan docs may reserve IDs but must not invent ad-hoc UI behaviors.
 
@@ -68,13 +67,11 @@ ContractRef: Primitive:Provider, ContractName:Plans/CLI_Bridged_Providers.md
 
 <a id="INV-006"></a>
 ## INV-006 -- Providers are storage-isolated
-**Rule:** Providers and provider adapters MUST NOT write directly to persistent storage (seglog/redb/Tantivy). They emit normalized events; storage writers/projectors own persistence.
 
-ContractRef: Primitive:Provider, Primitive:SessionStore, ContractName:Plans/Crosswalk.md
+**Rule:** Providers and provider adapters MUST NOT write directly to persistent storage (`seglog`, `redb`, `Tantivy`, sparse n-gram index files, or remote-cache state). They emit normalized events or tool results; PM-owned storage writers, projectors, and cache managers own persistence.
 
----
+ContractRef: Primitive:Provider, Primitive:SessionStore, ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md
 
-<a id="INV-007"></a>
 ## INV-007 -- No stringly-typed IDs outside SSOT
 **Rule:** Stable IDs (Tool IDs, UICommand IDs, ConfigKey names, schema IDs) MUST NOT be re-invented as ad-hoc string literals in multiple places. They must be defined once (SSOT) and referenced everywhere else.
 

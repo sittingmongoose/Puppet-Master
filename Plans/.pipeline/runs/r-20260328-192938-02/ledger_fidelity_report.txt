@@ -1,0 +1,252 @@
+LEDGER FIDELITY AUDIT REPORT
+=============================
+Run ID: r-20260328-192938-02
+Topic: Instant Grep — Sparse N-gram Regex Index Integration
+Ledger: Plans/.pipeline/work_items/w-20260328-192938/working_ledger.md (841 lines)
+Packet touched: 12 planning docs (20 anchor replacements + 1 insert)
+Audit date: 2026-03-30
+
+
+1) AUDIT SUMMARY
+================
+
+Overall verdict: PASS — docs preserve the canonical detail level needed for implementation.
+
+The 841-line ledger produced a research packet that updated 12 planning docs across 21
+anchors. The vast majority of locked decisions, architectural rules, data-format contracts,
+state machines, query flows, and integration contracts survived into the correct owner docs
+at full canonical detail. 13 deduplicated fidelity gaps were found — none are blockers, 5
+are medium severity, and 8 are low. All are recoverable with single-sentence or short-
+paragraph additions; no structural rewrite is required.
+
+Main risk themes:
+  a) Build-thread resource management details (thread priority, cross-project pool) not
+     in any doc — an implementer would have to guess.
+  b) Platform-specific implementation guardrails (endianness, mmap share_mode,
+     longPathAware, byte-level-not-Unicode) are implied but never explicitly stated.
+  c) Two performance targets from the ledger (dirty-layer <1ms, RSS <500MB) did not
+     survive into the performance-targets section.
+  d) General path-canonicalization security rule is partially documented (submodules only)
+     but not stated as a broad policy covering all inbound path sources.
+
+
+2) CHUNKING / DELEGATION SUMMARY
+=================================
+
+Ledger was split mechanically by top-level heading boundaries into 4 chunks:
+
+  Chunk A — lines 1-94    (94 lines)  Preamble, Key Facts, Gaps
+  Chunk B — lines 95-279  (185 lines) Design Spec: Architecture → Index Build Lifecycle
+  Chunk C — lines 280-449 (170 lines) Design Spec: Freshness → UX/Settings/Impacted Docs
+  Chunk D — lines 450-841 (392 lines) Decisions Already Resolved + Open Questions
+
+4 subauditors, each given:
+  - its ledger chunk only
+  - the research packet structure (doc_intents + anchors)
+  - the subset of planning docs most relevant to that chunk
+
+Chunk-to-doc cluster assignments:
+  A → Tools.md, storage-plan.md, FinalGUISpec.md, assistant-chat-design.md
+  B → Tools.md, storage-plan.md, Architecture_Invariants.md, Glossary.md, Wiring_Matrix.md
+  C → Tools.md, storage-plan.md, FinalGUISpec.md, GitHub_Integration.md,
+      assistant-chat-design.md, UI_Command_Catalog.md, BinaryLocator_Spec.md,
+      usage-feature.md, Wiring_Matrix.md
+  D → All 12 docs (decisions cross-cut everything)
+
+
+3) LEDGER OBLIGATIONS SUMMARY
+==============================
+
+Total canon-relevant obligations extracted across all chunks: 161
+
+  Chunk A: 16 obligations (context/facts/gaps → doc coverage)
+  Chunk B: 34 obligations (core index design, formats, lifecycle)
+  Chunk C: 43 obligations (freshness, integrations, remote, security, perf)
+  Chunk D: 73 obligations (formal locked decisions D01-D15 + Q1-Q73)
+
+Note: Chunk D significantly overlaps B and C (decisions restate design-spec items).
+After deduplication the effective obligation set is ~100 unique canonical items.
+
+Major obligation clusters:
+  1. Query flow pipeline and skip rules (B, D)
+  2. Binary file format contracts (B, D)
+  3. Storage layout and directory structure (A, B)
+  4. Freshness model / dirty layer (A, C, D)
+  5. Remote mode: Git and non-Git paths (C, D)
+  6. Index build lifecycle and state machine (B, C)
+  7. Performance targets (A, C, D)
+  8. Security hardening and path validation (C, D)
+  9. UX indicators and settings (C, D)
+  10. Integration contracts (grep, search panel, codesearch) (C, D)
+
+Clusters most at risk of stubbing/loss: #7 (performance targets), #8 (security),
+and build-thread resource management (subset of #6).
+
+
+4) FINDINGS
+===========
+
+After deduplication of overlapping subauditor findings, 13 unique fidelity gaps remain.
+
+--- MEDIUM SEVERITY (5) ---
+
+FIDELITY-01  severity: medium
+  where: Plans/storage-plan.md — build lifecycle section (~line 404-405)
+         Plans/Tools.md — performance targets (line 417)
+  ledger obligation: Build threads use `thread-priority` crate at ThreadPriority::Min on
+    all platforms, plus QOS_CLASS_UTILITY on macOS Apple Silicon via
+    pthread_set_qos_class_self_np, to prevent editor starvation.
+  current state: storage-plan.md says "one active build slot per project" and "supersede
+    via CancellationToken" but never names the crate, the priority level, or the macOS
+    QoS class. Build is described as "background" without priority contract.
+  recovery: Add to storage-plan.md build-pipeline section: "Build threads use
+    `thread-priority` crate (`ThreadPriority::Min` on all platforms; additionally
+    `QOS_CLASS_UTILITY` on macOS Apple Silicon) to prevent editor starvation."
+  sources: FID-B04, FID-D01
+
+FIDELITY-02  severity: medium
+  where: Plans/storage-plan.md — build lifecycle section
+         Plans/Tools.md — no mention
+  ledger obligation: Multi-project build resource model: per-project build slot, shared
+    common thread pool across projects, FIFO queuing when pool is saturated.
+  current state: "one active build slot per project" is stated but no shared thread pool
+    or FIFO queuing policy for cross-project resource contention is documented anywhere.
+  recovery: Add to storage-plan.md build lifecycle: "Projects share a common build thread
+    pool. When the pool is saturated, pending builds queue FIFO."
+  sources: FID-B03
+
+FIDELITY-03  severity: medium
+  where: Plans/storage-plan.md — binary file contracts subsection
+  ledger obligation: All binary index files (file_map.bin, lookup.bin, postings.bin) use
+    little-endian byte order with no inter-field padding.
+  current state: storage-plan.md defines magic bytes, header fields, and field sizes but
+    never specifies byte order or padding rules. An implementer could use big-endian or
+    add alignment padding.
+  recovery: Add one rule: "All binary index files use little-endian byte order with no
+    inter-field padding."
+  sources: FID-B01
+
+FIDELITY-04  severity: medium
+  where: Plans/GitHub_Integration.md §C.3 + Plans/storage-plan.md (security)
+  ledger obligation: ALL inbound paths (from .gitmodules, dirty-staging notifications,
+    remote file-change events, file watcher) must be canonicalized and validated with
+    starts_with(project_root) or starts_with(cache_root) before filesystem use.
+  current state: GitHub_Integration.md rejects ".." in submodule paths. FinalGUISpec.md
+    mentions symlink canonicalization. But the GENERAL security rule covering dirty-staging
+    and remote-watcher paths is never stated. A malicious remote path in a dirty
+    notification could write outside cache_root.
+  recovery: Add explicit security rule to GitHub_Integration.md §C.3 or storage-plan.md
+    dirty-layer section: "All paths received from remote file-change notifications,
+    dirty-staging writes, or file watcher events are canonicalized and validated with
+    starts_with(project_root/cache_root) before filesystem use."
+  sources: FID-C01, FID-D04
+
+FIDELITY-05  severity: medium
+  where: Plans/Tools.md — performance targets (line 417)
+  ledger obligation: Peak RSS contribution typically <500 MB even for large repos.
+    Only lookup table is mmap'd; postings are streamed.
+  current state: Tools.md lists query latency, build times, incremental memory spike
+    (1.5x), and SSD baseline. Steady-state RSS cap is absent. Without this, implementers
+    have no memory budget for the mmap strategy.
+  recovery: Add: "Steady-state memory: peak RSS contribution typically <500 MB (only
+    lookup table is mmap'd; postings are streamed via offset). Incremental rebuilds
+    spike to ~1.5x index size temporarily."
+  sources: FID-C03
+
+--- LOW SEVERITY (8) ---
+
+FIDELITY-06  severity: low
+  where: Plans/storage-plan.md — binary file contracts
+  ledger obligation: Hash collision merge mechanism: two n-grams with same xxh3 hash ->
+    posting lists merged (Roaring union) at index time; one entry per unique hash in
+    lookup table.
+  current state: Tools.md states correctness consequence; storage-plan.md describes sorted
+    pairs (implying one-per-hash). Explicit merge mechanism absent.
+  recovery: Add one sentence to storage-plan.md lookup.bin contract.
+  sources: FID-B02
+
+FIDELITY-07  severity: low
+  where: Plans/storage-plan.md — frequency table section
+  ledger obligation: Base frequency table compiled into PM binary as a static const (not
+    shipped as a separate file).
+  current state: Docs say "shipped" / "derived from" without specifying delivery mechanism.
+  recovery: Clarify: "The base table is compiled into the PM binary as a `static` constant."
+  sources: FID-B05
+
+FIDELITY-08  severity: low
+  where: Plans/storage-plan.md — regex-index layout, Plans/Tools.md
+  ledger obligation: Index size benchmarks (1-10% of source code size) with specific
+    repo-size examples for implementor sizing guidance.
+  current state: No sizing guidance in any planning doc. FinalGUISpec has "Index disk
+    usage" label but no expected values.
+  recovery: Add informational sizing note to storage-plan.md.
+  sources: FID-A01
+
+FIDELITY-09  severity: low
+  where: Plans/storage-plan.md — remote cache layout
+  ledger obligation: Remote project local cache footprint estimate (~1-10% of source +
+    Git cache) for capacity planning.
+  current state: Directory layout fully specified, but no expected disk footprint given.
+  recovery: Add one sentence estimating total local footprint.
+  sources: FID-A02
+
+FIDELITY-10  severity: low
+  where: Plans/Tools.md — performance targets
+  ledger obligation: Dirty layer update latency target: <1ms per path.
+  current state: Not mentioned in performance targets. Query latency, build times, and
+    incremental memory are there; dirty-layer insertion latency is absent.
+  recovery: Add: "Dirty-layer insert: <1 ms per path (synchronous HashMap update)."
+  sources: FID-C02
+
+FIDELITY-11  severity: low
+  where: Plans/storage-plan.md — concurrent access section
+  ledger obligation: Platform-specific mmap file-handle rules: Windows memmap2
+    share_mode(0x7) (FILE_SHARE_READ|WRITE|DELETE), Linux/macOS inode-via-fd safety.
+  current state: Windows MapViewOfFile 64KB alignment is documented. Generation
+    directories are documented. But share_mode defense-in-depth and inode safety
+    rationale are not.
+  recovery: Add platform-notes paragraph to concurrent-access section.
+  sources: FID-C04
+
+FIDELITY-12  severity: low
+  where: Plans/storage-plan.md, Plans/FinalGUISpec.md (Windows compatibility)
+  ledger obligation: Dual Windows MAX_PATH mitigation: hash-based short paths AND
+    <longPathAware>true</longPathAware> in Windows app manifest.
+  current state: Hash-based short paths (r/{hash8}) are documented. The longPathAware
+    manifest entry is not mentioned.
+  recovery: Add to storage-plan.md Windows notes.
+  sources: FID-D02
+
+FIDELITY-13  severity: low
+  where: Plans/storage-plan.md, Plans/Tools.md
+  ledger obligation: Explicit negative constraint: "Implementers MUST NOT decode content
+    to Unicode for frequency table or n-gram extraction. Byte-level operation."
+  current state: Docs say "ASCII-lowercased bytes" which implies byte-level operation
+    but never state the explicit negative constraint as a guardrail.
+  recovery: Add implementer note: "N-gram extraction and frequency counting operate on
+    raw bytes. Implementers MUST NOT decode content to Unicode."
+  sources: FID-D03
+
+
+5) FINAL VERDICT
+================
+
+Totals after deduplication:
+  Total unique obligations audited: ~100 (after cross-chunk dedup)
+  Fully carried: ~87
+  Fidelity gaps: 13
+    Blockers:  0
+    High:      0
+    Medium:    5
+    Low:       8
+
+The 5 medium findings are all single-sentence recoveries — no structural doc rewrite is
+needed. The most implementation-impactful gaps are FIDELITY-01 (thread priority crate),
+FIDELITY-03 (binary endianness), and FIDELITY-05 (RSS budget), as these are values an
+implementer would have to invent independently without them. FIDELITY-04 (path
+canonicalization security) is the most security-relevant gap.
+
+No canonical architecture, flow, contract, state machine, or integration rule was lost.
+The docs are implementation-ready with the noted additions.
+
+<ledger_fidelity_complete/>

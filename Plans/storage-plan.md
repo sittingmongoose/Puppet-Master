@@ -69,60 +69,98 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 
 ### 2.1 File locations and directory layout
 
-All storage lives under a single **app data root** (e.g. `~/.puppet-master/` or `$XDG_DATA_HOME/puppet-master/` on Linux; `%APPDATA%/puppet-master` on Windows; `~/Library/Application Support/puppet-master` on macOS). Project-specific data (e.g. per-project seglog or redb) may live under **project root / project workspace** (e.g. `.puppet-master/`) when we want isolation per workspace; the plan below assumes **app-global** seglog/redb by default, with **project_id** or **project_path** in keys where needed.
+All storage lives under a single **app data root** (for example `~/.puppet-master/`, `$XDG_DATA_HOME/puppet-master/`, `%APPDATA%/puppet-master`, or `~/Library/Application Support/puppet-master`). Project-scoped runtime state still lives under `.puppet-master/` inside the workspace when the feature is inherently project-local.
 
 | Path (relative to app data root) | Purpose |
 |----------------------------------|---------|
-| `storage/seglog/` | seglog segment files (or single `events.log`). Append-only. |
-| `storage/redb/` | redb database file(s). One main DB (e.g. `state.redb`) for settings, sessions, checkpoints, rollups; schema versioned via migrations. |
-| `storage/jsonl/` | Human-readable JSONL mirror of seglog (one file per day or one rolling file). Written by projector. |
-| `storage/tantivy/projects/{project_id}/` | **Per-project** Tantivy index directories (e.g. `chat`, `code`, `logs`, optional `docs`). Built by projectors/watchers. Per-project indices are required for project-only search scoping and for long-lived performance (see §2.4 and Plans/assistant-chat-design.md §10.3). |
-| `storage/blobs/` | Blob store for large persisted payloads referenced by `blob_ref` (e.g. secrets-scrubbed tool/log payloads used by `logread`). |
-| `storage/backups/` | Optional: point-in-time copies of redb or seglog for recovery. |
+| `storage/seglog/` | Append-only seglog segments or rolling event log files |
+| `storage/redb/` | redb database files for settings, checkpoints, snapshots, and rollups |
+| `storage/jsonl/` | Human-readable JSONL mirror emitted by projectors |
+| `storage/tantivy/projects/{project_id}/` | Per-project Tantivy indices (`chat`, `code`, `logs`, optional `docs`) |
+| `storage/blobs/` | Blob store for large secrets-scrubbed payloads referenced by `blob_ref` |
+| `storage/backups/` | Optional point-in-time recovery copies |
 
-**Implementation:** Resolve app data root at startup (env override optional). Create `storage/seglog`, `storage/redb`, `storage/jsonl`, `storage/tantivy` if missing. Use a single redb file for MVP; split by domain (e.g. `state.redb`, `rollups.redb`) only if needed later.
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
 
-#### 2.1.1 Assistant-only memory stores (separate physical boundary)
+#### Local project regex-index layout
 
-Assistant memory is specified canonically in `Plans/assistant-memory-subsystem.md` and is intentionally separated from system storage in this document.
-Canonical system storage defaults in this plan remain app-global (`storage/redb/state.redb`); the Assistant-memory spec's `.puppet-master/project/state/system.redb` reference is a project-state packaging alias and does not redefine system-storage ownership here.
+| Path (relative to project root) | Purpose |
+|----------------------------------|---------|
+| `.puppet-master/project/state/regex_index/` | Root directory for the per-project sparse n-gram index |
+| `.puppet-master/project/state/regex_index/frequency_table.bin` | Project-specific blended frequency table (256x256 `u16`) used by both build and query |
+| `.puppet-master/project/state/regex_index/gen-{N}/` | Generation-numbered snapshot directory (`u64`) |
+| `.puppet-master/project/state/regex_index/gen-{N}/postings.bin` | Roaring Bitmap posting lists keyed by xxh3 hash |
+| `.puppet-master/project/state/regex_index/gen-{N}/lookup.bin` | Sorted mmap-friendly hash-to-offset table |
+| `.puppet-master/project/state/regex_index/gen-{N}/file_map.bin` | `u32 file_id -> relative path` mapping, forward-slash normalized |
+| `.puppet-master/project/state/regex_index/gen-{N}/index_meta.json` | Snapshot metadata: anchor, schema version, checksums, generation, compatibility flags |
 
-Rule: Assistant memory MUST use separate per-project physical stores (`.puppet-master/project/state/assistant_memory.redb`, `.puppet-master/project/state/assistant_memory_index/`, `.puppet-master/project/state/assistant_memory_vectors.usearch`) while preserving system storage contracts in this plan.
-ContractRef: ContractName:Plans/assistant-memory-subsystem.md#2-physical-storage-layout, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/Tools.md, Invariant:INV-002, ContractName:Plans/Architecture_Invariants.md
 
-Rule: Assistant memory evidence persistence MUST follow the SSOT EvidenceRef pointer-only contract and MUST NOT inline large diffs/logs into memory records.
-ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary, ContractName:Plans/assistant-memory-subsystem.md#3-data-model
+#### Remote Git project regex-index cache layout
 
-Rule: The separation boundary exists to avoid writer contention/coupling and MUST NOT change `seglog` as the canonical system event source.
-ContractRef: ContractName:Plans/assistant-memory-subsystem.md#2-physical-storage-layout, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Contracts_V0.md#EventRecord
+| Path (relative to app data root) | Purpose |
+|----------------------------------|---------|
+| `.puppet-master/cache/r/{hash8}/` | Remote project cache root (`hash8` = first 8 chars of xxh3(project_id)) |
+| `.puppet-master/cache/r/{hash8}/git/` | Bare Git clone for the primary repository |
+| `.puppet-master/cache/r/{hash8}/git/m/{sub_hash8}/` | Bare Git clones for submodules (recursive, max depth 5) |
+| `.puppet-master/cache/r/{hash8}/dirty/` | Local staging area for remote dirty-file content used by verification and re-anchor merge |
+| `.puppet-master/cache/r/{hash8}/regex_index/` | Same snapshot layout as local projects (`frequency_table.bin` + `gen-{N}/...`) |
+| `.puppet-master/cache/r/{hash8}/manifest.json` | `hash8 -> project_id/submodule_path` mapping for recovery, MAX_PATH mitigation, and cleanup |
 
-#### 2.1.2 Per-project seglog isolation mode
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/BinaryLocator_Spec.md
 
-Puppet Master supports two deterministic seglog storage scopes:
+#### Remote non-Git project regex-index cache layout
 
-- `app_global` (default): canonical seglog is stored under the app data root (`storage/seglog/`).
-- `project_local`: canonical seglog is stored under the active project root at `.puppet-master/state/seglog/`.
+| Path (relative to app data root) | Purpose |
+|----------------------------------|---------|
+| `.puppet-master/cache/r/{hash8}/` | Remote project cache root |
+| `.puppet-master/cache/r/{hash8}/regex_index/` | Transferred sparse n-gram snapshot built on the remote host |
+| `.puppet-master/cache/r/{hash8}/regex_index/frequency_table.bin` | Remotely computed blended frequency table copied to local cache |
+| `.puppet-master/cache/r/{hash8}/regex_index/gen-{N}/postings.bin` | Transferred postings snapshot |
+| `.puppet-master/cache/r/{hash8}/regex_index/gen-{N}/lookup.bin` | Transferred lookup snapshot |
+| `.puppet-master/cache/r/{hash8}/regex_index/gen-{N}/file_map.bin` | Transferred file map snapshot |
+| `.puppet-master/cache/r/{hash8}/regex_index/gen-{N}/index_meta.json` | Transferred metadata snapshot |
 
-**Config contract (single source of truth):**
-- `storage.seglog.scope = app_global | project_local`
-- Default: `app_global`
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/BinaryLocator_Spec.md, ContractName:Plans/Tools.md
 
-**Path contract for `project_local`:**
-- Seglog directory: `.puppet-master/state/seglog/`
-- JSONL mirror for that seglog stream: `.puppet-master/state/jsonl/`
-- Seglog backups for that project: `.puppet-master/state/backups/seglog/`
+Total local footprint for a remote project: Git cache (varies by clone depth and history size) + sparse n-gram index (~1-10% of source size). Shallow and partial clone settings reduce the Git cache portion; index size scales with current source tree size, not repository history depth.
 
-**Scope rule:**
-- `project_local` isolates the canonical seglog stream and its immediately derived seglog-local artifacts (JSONL mirror and seglog backups) to the active project.
-- redb remains app-global unless a separate plan explicitly changes that contract.
-- Tantivy remains per-project as already defined in §2.4.
+#### Binary file contracts
 
-**Activation / failure semantics:**
-- `project_local` MAY be used only when an active project root exists.
-- If `storage.seglog.scope = project_local` and no project is open, Puppet Master MUST fail fast before starting a run that would emit events. It MUST NOT silently fall back to `app_global`.
-- If the project root exists but `.puppet-master/state/seglog/` cannot be created or written, seglog initialization MUST fail and event-producing flows MUST stop before persistence begins.
+All binary index files use **little-endian** byte order with no inter-field padding.
 
-ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Contracts_V0.md#EventRecord
+- **`file_map.bin`:** header `PMFM` + `schema_version:u32` + `entry_count:u32`. Entries are `path_byte_length:u32` + UTF-8 path bytes. File IDs are generation-local only and MUST NOT be treated as stable across builds or across snapshot generations.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md
+
+- **`lookup.bin`:** header `PMLK` + `schema_version:u32` + `entry_count:u32`. Entries are sorted `(xxh3_hash:u64, postings_offset:u64)` pairs. `lookup.bin` remains a separate mmap file from offset 0; if a future packed format combines files, the lookup region MUST begin at a 64 KB-aligned offset for Windows `MapViewOfFile` compatibility. Startup validation checks both `12 + entry_count * 16` sizing and every referenced postings offset before mmap. When two distinct n-grams produce the same xxh3 64-bit hash, their posting lists are merged at index time (Roaring union); the lookup table has exactly one entry per unique hash. Collisions broaden candidates but never affect correctness.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Architecture_Invariants.md
+
+- **`postings.bin`:** header `PMPL` + `schema_version:u32`. Entries are `bitmap_byte_length:u32` + portable-format Roaring Bitmap bytes. Postings store `u32` file IDs only; line-level precision always comes from ripgrep verification on candidate files.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md
+
+- **`index_meta.json`:** metadata object with these required fields: `anchor_sha: string | null`, `build_timestamp_utc: string`, `schema_version: u32`, `file_count: u32`, `generation: u64`, `checksums: { file_map, lookup, postings }`, `case_sensitive_fs: bool`, and `roaring_format: "portable"`. Dirty-layer state is NOT persisted in `index_meta.json`; it is reconstructed as needed because the index is a cache.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md, Invariant:INV-002
+
+#### Frequency table, path compatibility, and validation rules
+
+- **Base table source:** `frequency_table.bin` is derived from a shipped 256x256 `u16` base matrix built from The Stack Smol, counted on CRLF-stripped ASCII-lowercased bytes. The base table is compiled into the PM binary as a `static` constant (`[u16; 65536]`, ~128 KB); it is not shipped as a separate file.
+- **Blend rule:** Local and remote full builds compute per-project counts on the same normalized byte stream and blend them with the base table using `effective[a][b] = 0.5 * base[a][b] + 0.5 * project[a][b]`.
+- **Stability rule:** `frequency_table.bin` is shared by both build and query logic and is recomputed only on full rebuilds. Incremental rebuilds reuse the current stored table.
+- **Boundary-failure fallback:** When weighting cannot place sparse boundaries for a segment of length >= 3, the builder and query path fall back to fixed-width 3-gram extraction for that segment.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md
+
+- **Path normalization:** `file_map.bin` stores forward-slash relative paths on every platform. Conversion to native separators happens only at I/O time.
+- **Filesystem compatibility:** `case_sensitive_fs` records whether the snapshot was built on a case-sensitive filesystem. On case-insensitive filesystems, bare-clone path enumeration deduplicates by lowercase path and logs collisions.
+- **Startup validation:** snapshot load validates the per-file xxh3 checksums, the lookup-table size and offsets, and (for Git snapshots) whether `anchor_sha` is still reachable. Unreachable anchors or invalid metadata invalidate the generation and force rebuild.
+- **Windows MAX_PATH mitigation:** In addition to the `hash8` short-path scheme for cache directories, the PM Windows app manifest declares `<longPathAware>true</longPathAware>` as defense-in-depth against MAX_PATH limits.
+- **OS indexer exclusion:** regex-index directories use OS-specific indexer exclusions (`FILE_ATTRIBUTE_NOT_CONTENT_INDEXED` on Windows, `.metadata_never_index` on macOS; none required on Linux) to reduce contention.
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Tools.md
+
+#### Index sizing guidance
+
+Sparse n-gram index is typically 1-10% of source code size: 50 MB source produces ~0.5-5 MB index, 500 MB → ~5-50 MB, 1 GB → ~50-100 MB, 50 GB → ~2-5 GB. Only the hash lookup table is mmap'd in process memory; the OS pages in what is needed per query. Peak RSS contribution is typically <500 MB even for large repositories.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md
 
 ### 2.2 seglog: format, writer, rotation
 
@@ -311,6 +349,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Accoun
 - account-scoped state uses the canonical names `credential_state`, `configuration_state`, and `availability_state`.
 
 ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md#AuthState
+
 ### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints
 
 **Consumption model:** Each projector runs in a loop (or is triggered periodically):
@@ -324,29 +363,51 @@ ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Permissions_Sy
 
 **Tantivy indices (required per project):** Indices are written under `storage/tantivy/projects/{project_id}/…` to enforce **project-only scoping** and keep performance stable for long-lived projects (Plans/assistant-chat-design.md §10.3). Separate index per domain:
 
-- **chat (required):** Documents from `chat.message` (and optionally `chat.thread_created` / `chat.thread_updated`).  
-  **Fields (minimum):** `project_id`, `thread_id`, `message_id`, `role`, `ts`, `content`.  
-  **Optional fields:** `archived`, `deleted`, `context_overlay_flags` (muted/subcompacted markers) to support Context Lens filtering.  
+- **chat (required):** Documents from `chat.message` (and optionally `chat.thread_created` / `chat.thread_updated`).
+  **Fields (minimum):** `project_id`, `thread_id`, `message_id`, `role`, `ts`, `content`.
+  **Optional fields:** `archived`, `deleted`, `context_overlay_flags` (muted/subcompacted markers) to support Context Lens filtering.
   **Use:** Chat history search (human + agent), and smart auto-retrieval (RAG) from prior project threads.
 
-- **code (required, MVP):** A project-scoped code search index for the **project workspace / project root**.  
-  **Producer:** A file-watcher + indexer (can be implemented as a “projector” even though the source is filesystem change events rather than seglog). The indexer must respect `.gitignore` by default and apply FileSafe-style sensitive-path exclusions (see below).  
-  **Chunking:** Index large files as chunks so results return tight snippets (e.g. 4–16 KiB chunks with `chunk_id` and byte/line range metadata).  
-  **Fields (minimum):** `project_id`, `path`, `chunk_id`, `content`, `language?`, `mtime` (or `content_hash`).  
+- **code (required, MVP):** A project-scoped code search index for the **project workspace / project root**.
+  **Producer:** A file-watcher + indexer (can be implemented as a "projector" even though the source is filesystem change events rather than seglog). The indexer must respect `.gitignore` by default and apply FileSafe-style sensitive-path exclusions (see below).
+  **Chunking:** Index large files as chunks so results return tight snippets (e.g. 4–16 KiB chunks with `chunk_id` and byte/line range metadata).
+  **Fields (minimum):** `project_id`, `path`, `chunk_id`, `content`, `language?`, `mtime` (or `content_hash`).
   **Use:** `codesearch` tool and auto-retrieval for code grounding. LSP symbol search remains complementary (symbol-aware), not a replacement.
 
-- **logs (required, MVP):** A project-scoped logs/search index based on **log summaries** with pointers to full payload.  
-  **Producers:** seglog projectors that consume `tool.invoked`, `tool.denied`, `run.*`, `bash.*`, and error events and emit index documents.  
-  **Index the summary, not the blob:** Store only compact summaries/snippets in Tantivy; store full (secrets-scrubbed) payload as a blob/file under `storage/blobs/…` referenced by `blob_ref` (or event id) so log search stays fast and storage remains bounded.  
-  **Fields (minimum):** `project_id`, `ts`, `thread_id?`, `run_id?`, `tool_name?`, `level?`, `summary`, `blob_ref` (or `event_id`).  
-  **Use:** `logsearch` tool, auto-retrieval for “why did this fail,” and UI debugging surfaces.
+- **logs (required, MVP):** A project-scoped logs/search index based on **log summaries** with pointers to full payload.
+  **Producers:** seglog projectors that consume `tool.invoked`, `tool.denied`, `run.*`, `bash.*`, and error events and emit index documents.
+  **Index the summary, not the blob:** Store only compact summaries/snippets in Tantivy; store full (secrets-scrubbed) payload as a blob/file under `storage/blobs/…` referenced by `blob_ref` (or event id) so log search stays fast and storage remains bounded.
+  **Fields (minimum):** `project_id`, `ts`, `thread_id?`, `run_id?`, `tool_name?`, `level?`, `summary`, `blob_ref` (or `event_id`).
+  **Use:** `logsearch` tool, auto-retrieval for "why did this fail," and UI debugging surfaces.
 
-- **docs (optional):** Index selected long-form docs or generated artifacts if needed for retrieval (“teach” mode, doc lookup). Prefer indexing doc summaries/pointers rather than full bodies when possible.
+- **docs (optional):** Index selected long-form docs or generated artifacts if needed for retrieval ("teach" mode, doc lookup). Prefer indexing doc summaries/pointers rather than full bodies when possible.
 
-**Sensitive indexing + persistence guards (chat + code + logs):**
-- **PolicyRule:no_secrets_in_storage / INV-002 (mandatory):** Any text persisted to seglog/redb/Tantivy/blob files MUST be passed through a strict secrets scrubber that removes tokens/credentials/private keys. This mandatory scrub is always-on and not user-configurable.
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md
+
+**File watcher: dual-consumer model (Tantivy + sparse n-gram index):**
+
+The project file watcher is a shared event source with two independent consumers:
+1. **Tantivy code indexer** — receives file-change events, re-indexes affected chunks in the per-project Tantivy code index.
+2. **Sparse n-gram indexer** — receives the same file-change events, adds changed paths to the dirty layer (HashMap with generation stamps). PM-mediated writes (agent/tool writes) update the dirty layer synchronously (before returning to caller) and do NOT rely on the file watcher for freshness. The file watcher serves as backup/dedup for PM-mediated writes and as the primary notification path for external changes (user edits in other tools, git operations).
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md
+
+File watcher overflow handling (applies to both consumers): When the OS emits an overflow/rescan event (inotify `IN_Q_OVERFLOW`, FSEvents "must scan", Windows RDCW buffer overflow): Tantivy triggers a full re-index of the code domain. Sparse n-gram indexer marks ALL indexed files as dirty (invalidating the dirty layer), which triggers the >1000-file re-anchor threshold immediately. Windows: use a generous watcher buffer size (64 KB) to reduce overflow frequency.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md
+
+**Sensitive indexing + persistence guards (chat + code + logs + regex n-grams):**
+- **PolicyRule:no_secrets_in_storage / INV-002 (mandatory):** Any text persisted to seglog/redb/Tantivy/blob files/sparse n-gram index MUST be passed through a strict secrets scrubber that removes tokens/credentials/private keys. This mandatory scrub is always-on and not user-configurable. For the sparse n-gram index, scrubbing occurs before n-gram extraction — n-grams are extracted from scrubbed content.
 - **Path-based exclusions (mandatory):** Default deny indexing of `.env` and `.env.*` while allowing `.env.example` (align with Permissions_System default `.env` deny semantics). Exclude common key/cert paths (e.g. `*.pem`, `*.key`, `id_rsa*`) from indexing and from log/blob persistence when detected.
 - **Additional heuristic redaction (optional; default OFF):** `retrieval.redaction.secretish_enabled` MAY apply an additional aggressive heuristic redaction pass (on top of the mandatory scrub) to log-summary indexing, snippet display, and retrieved-context injection.
+
+ContractRef: Invariant:INV-002, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Permissions_System.md
+
+**Byte-level operation constraint:**
+
+N-gram extraction and frequency-table counting operate on raw bytes (`u8`). Implementers MUST NOT decode content to Unicode at any point in the indexing or query pipeline. The only byte transformation is ASCII-only lowercasing (`u8::to_ascii_lowercase`: bytes 0x41-0x5A map to 0x61-0x7A; all other bytes pass through unchanged) applied after CRLF stripping.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Architecture_Invariants.md
 
 **Blob refs (logs):**
 - Store log payload blobs under `storage/blobs/projects/{project_id}/logs/` with a deterministic filename (e.g. `{event_id}.json` or `{content_hash}.json`).
@@ -354,17 +415,54 @@ ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Permissions_Sy
 
 **Schema per index:** Define fields (text, keyword, date) and build documents from event payloads / filesystem scanner output. Index is written incrementally (add/update documents) and periodically committed.
 
-**Checkpoints:** Stored in redb under `checkpoints` namespace. Value encodes enough to resume: e.g. `{ "segment": "events_2026-02-21.ndjson", "offset": 123456 }` or `{ "seq": 99999 }`. On startup, projector reads checkpoint, opens seglog from that position, and continues. Code indexer maintains its own checkpoint (e.g. last scan watermark / file mtime map) and supports a full rebuild when schema changes.
+**Checkpoints:** Stored in redb under `checkpoints` namespace. Value encodes enough to resume: e.g. `{ "segment": "events_2026-02-21.ndjson", "offset": 123456 }` or `{ "seq": 99999 }`. On startup, projector reads checkpoint, opens seglog from that position, and continues. Code indexer maintains its own checkpoint (e.g. last scan watermark / file mtime map) and supports a full rebuild when schema changes. Sparse n-gram indexer maintains its own checkpoint via `index_meta.json` (anchor SHA, generation number) — rebuilt automatically on schema version mismatch.
 
-#### 2.4.1 JSONL mirror + projector contract
+**Regex index build lifecycle and publication:**
 
-- The JSONL mirror is a regenerable projection of seglog and MUST preserve `EventRecord` lines verbatim.
-- Daily layout is canonical: `events_YYYY-MM-DD.jsonl` under the selected JSONL root.
-- The mirror projector MUST append and flush mirror output before advancing its durable checkpoint.
-- On restart after a crash, the projector MUST resume from the last durable checkpoint and MUST NOT duplicate already committed mirror lines.
-- Projector and analytics freshness notifications to the UI are derived from committed projection state; ad-hoc polling is not the correctness source.
+Per-project lifecycle states are `no_index`, `building_full`, `ready`, `rebuilding_incremental`, `error`, and `cancelling`.
+- Build queue rule: one active build slot per project. New triggers during a build supersede the in-flight build; the current build observes cancellation between file iterations, cleans partial `gen-{N}` output, and then the newest queued build starts.
+- Build thread resource management: projects share a common build thread pool. When the pool is saturated, pending builds queue FIFO. Build threads use `thread-priority` crate (`ThreadPriority::Min` on all platforms; additionally `QOS_CLASS_UTILITY` on macOS Apple Silicon via `pthread_set_qos_class_self_np`) to prevent editor starvation.
+- Project-ready gate: the first build waits for project-ready (file watcher established; project context resolved; other per-project services initialized) so changes are not missed during initial indexing.
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Tools.md
 
-ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/FinalGUISpec.md
+Build triggers:
+- project open -> validate or full build
+- schema/version mismatch -> full rebuild
+- explicit rebuild command or settings action -> full rebuild
+- remote fetch or local HEAD advance -> dirty-mark + incremental rebuild
+- dirty-layer threshold >1000 files -> re-anchor / incremental rebuild
+- remote non-Git degraded watcher -> periodic 30-minute rebuild while the project remains open
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+Build and publish path:
+1. Resolve the new anchor (`HEAD` for Git, current remote/local snapshot boundary for non-Git).
+2. Reuse the stored `frequency_table.bin` unless a full rebuild is required.
+3. Read changed files from filesystem, bare-clone objects, or the remote indexer feed; scrub and normalize before extraction.
+4. Extract sparse n-grams and build postings in memory or on streaming buffers.
+5. Serialize a full new snapshot into `gen-{N+1}/` (`postings.bin`, `lookup.bin`, `file_map.bin`, `index_meta.json`).
+6. `sync_all()` every file before publication.
+7. Publish the new `IndexSnapshot` via `ArcSwap<Arc<IndexSnapshot>>`.
+8. Retain old generations until no in-flight reader still holds them.
+- Platform-specific mmap safety: on Windows, `memmap2` file handles are opened with `share_mode(0x7)` (`FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE`) as defense-in-depth for concurrent generation access. On Linux and macOS, mmap'd file deletion is safe via inode-by-fd semantics; generation directories eliminate the need for rename-while-mapped.
+9. On disk full, checksum failure, or cancellation: delete the partial generation and keep serving the last valid snapshot (or raw ripgrep if none exists).
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Architecture_Invariants.md
+
+**Dirty-layer concurrency and freshness contract:**
+
+- DirtyLayer is a generation-aware map keyed by path with deleted-state tracking. Remote staged file content is an adjunct verification cache, not the canonical dirty-layer model.
+- PM-mediated writes insert the dirty record synchronously before returning success; file-watcher notifications are the backup and dedup path for PM writes and the primary path for external changes.
+- Every dirty path is added to query candidate verification, and every deleted dirty path suppresses stale base-index hits.
+- Re-anchor records `build_generation` and clears only dirty entries with `generation <= build_generation` so changes made during a long-running build survive into the next cycle.
+- Dirty-layer state is in-memory only; crash recovery may lose it because the index is a cache rather than the source of truth.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
+
+**Incremental rebuild and degradation rules:**
+
+- Incremental rebuild means incremental extraction of changed files, not patch-in-place posting mutation. Snapshot serialization is always a full rewrite of `postings.bin`, `lookup.bin`, and `file_map.bin`.
+- `frequency_table.bin` is never recomputed during incremental updates because that would invalidate existing n-gram hashes.
+- A stale but valid snapshot remains queryable while background refresh runs. There is no stale-threshold rule that disables the index once it exists.
+- The file-watcher overflow path described above is the all-dirty / immediate re-anchor path for the regex index; Windows uses a 64 KB watcher buffer to reduce overflow frequency.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
 
 ### 2.5 Analytics scan jobs
 
@@ -602,11 +700,23 @@ ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integra
 
 ### 8.3 Startup and shutdown
 
-**Startup order:** (1) Resolve app data root (env override optional). (2) Create `storage/seglog`, `storage/redb`, `storage/jsonl`, `storage/tantivy` if missing. (3) Open redb, run migrations (create namespaces and set schema_version on first run). (4) Open seglog writer (create first segment on first append if dir empty). (5) Start projectors (e.g. background threads or async tasks that tail seglog and write JSONL/Tantivy/checkpoints). (6) Optionally start analytics scan scheduler. This runs at app init (e.g. main or before UI).
+**Startup order:** (1) Resolve app data root (env override optional). (2) Create `storage/seglog`, `storage/redb`, `storage/jsonl`, `storage/tantivy` if missing. (3) Open redb and run migrations. (4) Open the seglog writer. (5) Start projectors that tail seglog and write JSONL/Tantivy/checkpoints. (6) Start optional analytics schedulers and per-project index services.
 
-**Shutdown:** (1) Signal projectors to stop (and flush). (2) Wait for projectors to commit last checkpoint and flush outputs (Tantivy commit, JSONL flush). (3) Flush and close seglog writer. (4) Close redb. Shutdown must complete within a timeout (e.g. 5s) or force-close to avoid hangs.
+**Regex-index startup recovery:** After a project context is known and before the first indexed `grep` or Search-panel regex query for that project:
+1. Scan the relevant `regex_index/` directory.
+2. Pick the highest valid `gen-{N}/` candidate.
+3. Validate `index_meta.json`, per-file xxh3 checksums, and `lookup.bin` sizing / offsets before mmap.
+4. For Git-backed caches, verify `anchor_sha` is still reachable (`git cat-file -t {anchor_sha}`). Unreachable anchors invalidate the snapshot and trigger rebuild from current HEAD.
+5. If a valid snapshot exists, create `IndexSnapshot`, mmap `lookup.bin`, and mark the project `ready`.
+6. If no valid snapshot exists, mark the project `no_index` and transparently serve raw ripgrep until the background full build completes.
+7. Delete orphaned or partial generations opportunistically during this recovery path.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Architecture_Invariants.md
 
-**Concurrency and single-writer:** The seglog writer is held by the main process; only one thread (or the main event loop) may call append, or append is protected by a mutex if multiple threads enqueue events. In-process single-writer guarantee: exactly one Writer instance; appends are serialized so that seq is monotonic and no concurrent appends occur. Projectors only **read** (tail) seglog and do not hold the writer; they run in background threads/tasks.
+**Shutdown:** (1) Signal projectors to stop and flush outputs. (2) Cancel in-flight regex builds and wait briefly for partial-generation cleanup. (3) Flush and close the seglog writer. (4) Close redb. (5) Leave the last valid regex snapshot and any reusable remote cache state in place; ordinary shutdown does not evict caches.
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+**Concurrency and single-writer rules:** Seglog remains a single-writer stream. Regex-index publication is likewise single-writer per project: one build path publishes snapshots, while readers use lock-free `ArcSwap` snapshots and never observe partially-written generations.
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
 
 ### 8.4 First run / empty state
 
